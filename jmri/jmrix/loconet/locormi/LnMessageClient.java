@@ -7,7 +7,7 @@ import com.sun.java.util.collections.LinkedList;
  * Client for the RMI LocoNet server.
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Id: LnMessageClient.java,v 1.3 2002-03-30 06:04:57 jacobsen Exp $
+ * @version $Id: LnMessageClient.java,v 1.4 2002-04-02 10:35:21 kiwi64ajs Exp $
  */
 
 public class LnMessageClient extends LnTrafficRouter {
@@ -26,6 +26,16 @@ public class LnMessageClient extends LnTrafficRouter {
      * Forward messages to the server.
      */
 	public void sendLocoNetMessage(LocoNetMessage m) {
+        try{
+            if( lnMessageBuffer != null )
+                lnMessageBuffer.sendLocoNetMessage( m );
+            else
+                log.warn( "sendLocoNetMessage: no connection to server" ) ;
+        }
+        catch( java.rmi.RemoteException ex )
+        {
+            log.warn( "sendLocoNetMessage: Exception: " + ex );
+        }
 	}
 
     // messages that are received from the server should
