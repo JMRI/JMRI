@@ -84,9 +84,7 @@ public abstract class VariableValue implements java.beans.PropertyChangeListener
 
 	public int getState()  { return _state; }
 	public void setState(int state) {
-		if (_state != state || _state == UNKNOWN) prop.firePropertyChange("State", new Integer(_state), new Integer(state));
-		_state = state;
-		switch (_state) {
+		switch (state) {
 			case UNKNOWN : setColor(COLOR_UNKNOWN ); break;
 			case EDITTED : setColor(COLOR_EDITTED ); break;
 			case READ    : setColor(COLOR_READ    ); break;
@@ -94,6 +92,8 @@ public abstract class VariableValue implements java.beans.PropertyChangeListener
 			case FROMFILE: setColor(COLOR_FROMFILE); break;
 			default:      log.error("Inconsistent state: "+_state);
 		}
+		if (_state != state || _state == UNKNOWN) prop.firePropertyChange("State", new Integer(_state), new Integer(state));
+		_state = state;
 	}
 	private int _state = UNKNOWN;
 	

@@ -21,8 +21,47 @@ import junit.framework.Assert;
 import jmri.*;
 import jmri.progdebugger.*;
 
-public class LongAddrVariableValueTest extends TestCase {
+public class LongAddrVariableValueTest extends VariableValueTest {
 
+	// abstract members invoked by tests in parent VariableValueTest class
+	VariableValue makeVar(String name, String comment, boolean readOnly,
+							int cvNum, String mask, int minVal, int maxVal,
+							Vector v, JLabel status) {
+		// make sure next CV exists
+		CvValue cvNext = new CvValue(cvNum+1);
+		cvNext.setValue(0);
+		v.setElementAt(cvNext, cvNum+1);
+		return new LongAddrVariableValue(name, comment, readOnly, cvNum, mask, minVal, maxVal, v, status);
+	}
+
+
+	void setValue(VariableValue var, String val) {
+		((JTextField)var.getValue()).setText(val);
+		((JTextField)var.getValue()).postActionEvent();	
+	}
+	
+	void setReadOnlyValue(VariableValue var, String val) {
+		((LongAddrVariableValue)var).setValue(Integer.valueOf(val).intValue());
+	}
+	
+	void checkValue(VariableValue var, String comment, String val) {
+		Assert.assertEquals(comment, val, ((JTextField)var.getValue()).getText() );
+	}
+		
+	void checkReadOnlyValue(VariableValue var, String comment, String val) {
+		Assert.assertEquals(comment, val, ((JLabel)var.getValue()).getText() );
+	}
+		
+	// end of abstract members
+	
+	// some of the premade tests don't quite make sense; override them here.
+	
+	public void testVariableValueCreate() {}// mask is ignored by LongAddr
+	public void testVariableFromCV() {}     // low CV is upper part of address
+	public void testVariableValueRead() {}	// due to multi-cv nature of LongAddr
+	public void testVariableValueWrite() {} // due to multi-cv nature of LongAddr
+	public void testVariableCvWrite() {}    // due to multi-cv nature of LongAddr
+	public void testWriteSynch2() {}        // programmer synch is different
 	// can we create long address , then manipulate the variable to change the CV?
 	public void testLongAddressCreate() {
 		Vector v = createCvVector();
@@ -45,7 +84,7 @@ public class LongAddrVariableValueTest extends TestCase {
 		assert(cv18.getValue() == 189);
 	}
 	
-	// can we change the CV and see the result in the Variable?
+	// can we change both CVs and see the result in the Variable?
 	public void testLongAddressFromCV() {
 		Vector v = createCvVector();
 		CvValue cv17 = new CvValue(17);

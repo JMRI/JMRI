@@ -1,5 +1,5 @@
 /** 
- * DecVariableValueTest.java
+ * HexVariableValueTest.java
  *
  * Description:	
  * @author			Bob Jacobsen
@@ -19,13 +19,13 @@ import junit.framework.Assert;
 import jmri.*;
 import jmri.progdebugger.*;
 
-public class DecVariableValueTest extends VariableValueTest {
+public class HexVariableValueTest extends VariableValueTest {
 
 	// abstract members invoked by tests in parent VariableValueTest class
 	VariableValue makeVar(String name, String comment, boolean readOnly,
 							int cvNum, String mask, int minVal, int maxVal,
 							Vector v, JLabel status) {
-		return new DecVariableValue(name, comment, readOnly, cvNum, mask, minVal, maxVal, v, status);
+		return new HexVariableValue(name, comment, readOnly, cvNum, mask, minVal, maxVal, v, status);
 	}
 
 
@@ -35,15 +35,17 @@ public class DecVariableValueTest extends VariableValueTest {
 	}
 	
 	void setReadOnlyValue(VariableValue var, String val) {
-		((DecVariableValue)var).setValue(Integer.valueOf(val).intValue());
+		((HexVariableValue)var).setValue(Integer.valueOf(val).intValue());
 	}
 	
 	void checkValue(VariableValue var, String comment, String val) {
-		Assert.assertEquals(comment, val, ((JTextField)var.getValue()).getText() );
+		String hexval = Integer.toHexString(Integer.valueOf(val).intValue());
+		Assert.assertEquals(comment, hexval, ((JTextField)var.getValue()).getText() );
 	}
 		
 	void checkReadOnlyValue(VariableValue var, String comment, String val) {
-		Assert.assertEquals(comment, val, ((JLabel)var.getValue()).getText() );
+		String hexval = Integer.toHexString(Integer.valueOf(val).intValue());
+		Assert.assertEquals(comment, hexval, ((JLabel)var.getValue()).getText() );
 	}
 		
 	// end of abstract members
@@ -51,23 +53,23 @@ public class DecVariableValueTest extends VariableValueTest {
 
 	// from here down is testing infrastructure
 	
-	public  DecVariableValueTest(String s) {
+	public  HexVariableValueTest(String s) {
 		super(s);
 	}
 
 	// Main entry point
 	static public void main(String[] args) {
 		jmri.tests.AllTest.initLogging();
-		String[] testCaseName = { DecVariableValueTest.class.getName()};
+		String[] testCaseName = { HexVariableValueTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 	
 	// test suite from all defined tests
 	public static Test suite() {
-		TestSuite suite = new TestSuite( DecVariableValueTest.class);
+		TestSuite suite = new TestSuite( HexVariableValueTest.class);
 		return suite;
 	}
 	
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance( DecVariableValueTest.class.getName());
+	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance( HexVariableValueTest.class.getName());
 
 }

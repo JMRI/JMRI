@@ -170,7 +170,12 @@ public class PaneProgFrame extends javax.swing.JFrame  {
 				&& (layout = attr.getValue()) != null
 				&& (layout.equals("above") || layout.equals("below"))) 
 			orient = BoxLayout.Y_AXIS;		
+		
 		v.setLayout(new BoxLayout(v, orient));
+		//if (orient == BoxLayout.Y_AXIS)
+		//	v.setLayout(new BoxLayout(v, orient));
+		//else 
+		//	v.setLayout(new FlowLayout());
 		
 		// get the name, load it up
 		String name = var.getAttribute("name").getValue();
@@ -215,7 +220,8 @@ public class PaneProgFrame extends javax.swing.JFrame  {
 			rep.setMaximumSize(rep.getPreferredSize());
 			v.add(rep);
 			// set tooltip if specified
-			if ( (attr = var.getAttribute("tooltip")) != null && attr.getValue() != null) rep.setToolTipText(attr.getValue());
+			if ( (attr = var.getAttribute("tooltip")) != null && attr.getValue() != null) 
+				rep.setToolTipText(attr.getValue());
 		}
 	}
 

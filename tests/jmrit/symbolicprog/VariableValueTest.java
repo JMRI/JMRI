@@ -104,7 +104,7 @@ public abstract class VariableValueTest extends TestCase {
 		int i = 0;
 		while ( variable.isBusy() && i++ < 100 )  {
 			try {
-				Thread.sleep(10);
+				Thread.sleep(50);
 			} catch (Exception e) {
 			}
 		}
@@ -136,18 +136,18 @@ public abstract class VariableValueTest extends TestCase {
 		int i = 0;
 		while ( variable.isBusy() && i++ < 100  )  {
 			try {
-				Thread.sleep(10);
+				Thread.sleep(50);
 			} catch (Exception e) {
 			}
 		}
 		if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+variable.getValue()+" state="+variable.getState());
 		if (i==0) log.warn("testVariableValueWrite saw an immediate return from isBusy");
 
-		assert(i<100);
+		Assert.assertTrue("iterations ",i<100);
 		checkValue(variable, "value ","5");
-		assert(variable.getState() == CvValue.STORED);
-		assert(cv.getState() == CvValue.STORED);
-		assert(p.lastWrite() == 5*4);
+		Assert.assertEquals("var state ", CvValue.STORED, variable.getState());
+		Assert.assertEquals("cv state ", CvValue.STORED, cv.getState());
+		Assert.assertEquals("last program write ", 5*4, p.lastWrite());
 	}
 	
 	// check synch during a write operation to the CV
@@ -170,7 +170,7 @@ public abstract class VariableValueTest extends TestCase {
 		int i = 0;
 		while ( cv.isBusy() && i++ < 100  )  {
 			try {
-				Thread.sleep(10);
+				Thread.sleep(50);
 			} catch (Exception e) {
 			}
 		}
@@ -202,8 +202,8 @@ public abstract class VariableValueTest extends TestCase {
 		assert(variable.getState() == VariableValue.EDITTED);
 	}
 
-	// check the state <-> color connection
-	public void testVariableValueStateColorOn() {
+	// check the state <-> color connection for value
+	public void testVariableValueStateColor() {
 		// initialize the system
 		Programmer p = new ProgDebugger();
 		InstanceManager.setProgrammer(p);
@@ -216,6 +216,51 @@ public abstract class VariableValueTest extends TestCase {
 		Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, variable.getValue().getBackground() );
 		setValue(variable, "5");
 		Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, variable.getValue().getBackground() );
+	}
+	
+	// check the state <-> color connection for rep when var changes
+	public void testVariableRepStateColor() {
+		// initialize the system
+		Programmer p = new ProgDebugger();
+		InstanceManager.setProgrammer(p);
+		
+		Vector v = createCvVector();
+		CvValue cv = new CvValue(81);
+		v.setElementAt(cv, 81);
+		// create a variable pointed at CV 81, loaded as 5, manually notified
+		VariableValue variable = makeVar("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null);
+		// get a representation
+		JTextField rep = (JTextField)variable.getRep("");
+		
+		Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, variable.getValue().getBackground() );
+		Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, rep.getBackground() );
+		
+		setValue(variable, "5");
+		Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, variable.getValue().getBackground() );
+		Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, rep.getBackground() );
+	}
+	
+	// check the state <-> color connection for var when rep changes
+	public void testVariableVarChangeColorRep() {
+		// initialize the system
+		Programmer p = new ProgDebugger();
+		InstanceManager.setProgrammer(p);
+		
+		Vector v = createCvVector();
+		CvValue cv = new CvValue(81);
+		v.setElementAt(cv, 81);
+		// create a variable pointed at CV 81, loaded as 5, manually notified
+		VariableValue variable = makeVar("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null);
+		// get a representation
+		JTextField rep = (JTextField)variable.getRep("");
+		
+		Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, variable.getValue().getBackground() );
+		Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, rep.getBackground() );
+		
+		rep.setText("9");
+		rep.postActionEvent();
+		Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, variable.getValue().getBackground() );
+		Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, rep.getBackground() );
 	}
 	
 	// check synchonization of value, representations
@@ -239,25 +284,25 @@ public abstract class VariableValueTest extends TestCase {
 		Assert.assertEquals("initial rep ", "5", rep1.getText());
 		
 		// update via value
-		setValue(variable, "12");
+		setValue(variable, "2");
 		
-		// check again with existing references
-		Assert.assertEquals("1 saved value ", "12", ((JTextField)val1).getText());
-		Assert.assertEquals("1 saved rep ", "12", rep1.getText());
+		// check again with existing reference
+		Assert.assertEquals("same value object ", val1, variable.getValue());
+		Assert.assertEquals("1 saved rep ", "2", rep1.getText());
 		// pick up new references and check
-		checkValue(variable, "1 new value ", "12");
-		Assert.assertEquals("1 new rep ", "12", ((JTextField) variable.getRep("")).getText());
+		checkValue(variable, "1 new value ", "2");
+		Assert.assertEquals("1 new rep ", "2", ((JTextField) variable.getRep("")).getText());
 		
 		// update via rep
-		rep1.setText("201");
+		rep1.setText("9");
 		rep1.postActionEvent();
 		
 		// check again with existing references
-		Assert.assertEquals("2 saved value ", "201", ((JTextField)val1).getText());
-		Assert.assertEquals("2 saved rep ", "201", rep1.getText());
+		Assert.assertEquals("2 saved value ", "9", ((JTextField)val1).getText());
+		Assert.assertEquals("2 saved rep ", "9", rep1.getText());
 		// pick up new references and check
-		checkValue(variable, "2 new value ", "201");
-		Assert.assertEquals("2 new rep ", "201", ((JTextField) variable.getRep("")).getText());
+		checkValue(variable, "2 new value ", "9");
+		Assert.assertEquals("2 new rep ", "9", ((JTextField) variable.getRep("")).getText());
 	}
 
 	// check synchronization of two vars during a write
@@ -280,7 +325,7 @@ public abstract class VariableValueTest extends TestCase {
 		int i = 0;
 		while ( var1.isBusy() && i++ < 100  )  {
 			try {
-				Thread.sleep(10);
+				Thread.sleep(50);
 			} catch (Exception e) {
 			}
 		}

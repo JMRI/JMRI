@@ -13,13 +13,15 @@ import jmri.Programmer;
 import jmri.InstanceManager;
 import jmri.ProgListener;
 
+import java.awt.Color;
 import java.awt.Component;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.util.Vector;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.text.Document;
 
 public class LongAddrVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
 
@@ -30,6 +32,8 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 		_maxVal = maxVal;
 		_minVal = minVal;
 		_value = new JTextField(5);
+		_defaultColor = _value.getBackground();
+		_value.setBackground(COLOR_UNKNOWN);
 		// connect to the JTextField value, cv
 		_value.addActionListener(this);
 		// connect for notification
@@ -72,7 +76,13 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 		_value.setText(""+i);
 	}
 	
-	public Component getValue()  { return _value; }
+	public Component getValue()  { 
+	 	if (getReadOnly())  //
+	 		return new JLabel(_value.getText());
+	 	else
+	 		return _value; 
+	}
+
 	public void setValue(int value) { 
 		int oldVal;
 		try { oldVal = Integer.valueOf(_value.getText()).intValue(); }
@@ -82,8 +92,16 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 		_value.setText(""+value);
 	}
 
+	Color _defaultColor;
+	// implement an abstract member to set colors
+	void setColor(Color c) {
+		if (c != null) _value.setBackground(c);
+		else _value.setBackground(_defaultColor);
+		prop.firePropertyChange("Value", null, null);
+	}
+
 	public Component getRep(String format)  { 
-		return new JTextField(_value.getDocument(),_value.getText(), 5);
+		return new VarTextField(_value.getDocument(),_value.getText(), 5, this);
 	}
 	private int _progState = 0;
 	private static final int IDLE = 0;
@@ -201,6 +219,49 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 		((CvValue)_cvVector.elementAt(getCvNum())).removePropertyChangeListener(this);
 	}
 	
+	/* Internal class extends a JTextField so that its color is consistent with 
+	 * an underlying variable
+	 *
+	 * @author			Bob Jacobsen   Copyright (C) 2001
+	 * @version			
+	 */
+	public class VarTextField extends JTextField {
+
+		VarTextField(Document doc, String text, int col, LongAddrVariableValue var) {
+			super(doc, text, col);
+			_var = var;
+			// get the original color right
+			setBackground(_var._value.getBackground());
+			// listen for changes to ourself
+			addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					thisActionPerformed(e);
+				}
+			});		
+			// listen for changes to original state
+			_var.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+				public void propertyChange(java.beans.PropertyChangeEvent e) {
+					originalPropertyChanged(e);
+				}
+			});		
+		}
+
+		LongAddrVariableValue _var;
+	
+		void thisActionPerformed(java.awt.event.ActionEvent e) {
+			// tell original
+			_var.actionPerformed(e);
+		}
+
+		void originalPropertyChanged(java.beans.PropertyChangeEvent e) {
+			// update this color from original state
+			if (e.getPropertyName().equals("State")) {
+				setBackground(_var._value.getBackground());
+			}	
+		}
+	
+	}
+
 	// initialize logging	
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LongAddrVariableValue.class.getName());
 		

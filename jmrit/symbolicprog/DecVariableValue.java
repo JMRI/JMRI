@@ -21,6 +21,7 @@ import java.util.Vector;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.text.Document;
 
 public class DecVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
 
@@ -80,7 +81,7 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 		if (getReadOnly())  //
 			return new JLabel(_value.getText());
 		else {
-			JTextField value = new JTextField(_value.getDocument(),_value.getText(), 3);
+			JTextField value = new VarTextField(_value.getDocument(),_value.getText(), 3, this);
 			return value; 
 		}
 	}
@@ -149,7 +150,50 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 		((CvValue)_cvVector.elementAt(getCvNum())).removePropertyChangeListener(this);
 	}
 	
+	/* Internal class extends a JTextField so that its color is consistent with 
+	 * an underlying variable
+	 *
+	 * @author			Bob Jacobsen   Copyright (C) 2001
+	 * @version			
+	 */
+	public class VarTextField extends JTextField {
+
+		VarTextField(Document doc, String text, int col, DecVariableValue var) {
+			super(doc, text, col);
+			_var = var;
+			// get the original color right
+			setBackground(_var._value.getBackground());
+			// listen for changes to ourself
+			addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					thisActionPerformed(e);
+				}
+			});		
+			// listen for changes to original state
+			_var.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+				public void propertyChange(java.beans.PropertyChangeEvent e) {
+					originalPropertyChanged(e);
+				}
+			});		
+		}
+
+		DecVariableValue _var;
+	
+		void thisActionPerformed(java.awt.event.ActionEvent e) {
+			// tell original
+			_var.actionPerformed(e);
+		}
+
+		void originalPropertyChanged(java.beans.PropertyChangeEvent e) {
+			// update this color from original state
+			if (e.getPropertyName().equals("State")) {
+				setBackground(_var._value.getBackground());
+			}	
+		}
+	
+	}
+
 	// initialize logging	
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DecVariableValue.class.getName());
-		
+	
 }
