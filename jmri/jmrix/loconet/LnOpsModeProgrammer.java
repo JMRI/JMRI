@@ -11,16 +11,16 @@ import jmri.*;
  * SlotManager object.
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class LnOpsModeProgrammer implements Programmer  {
 
-    SlotManager mSlotMon;
+    SlotManager mSlotMgr;
     int mAddress;
     boolean mLongAddr;
-    public LnOpsModeProgrammer(SlotManager pSlotMon,
+    public LnOpsModeProgrammer(SlotManager pSlotMgr,
                                int pAddress, boolean pLongAddr) {
-        mSlotMon = pSlotMon;
+        mSlotMgr = pSlotMgr;
         mAddress = pAddress;
         mLongAddr = pLongAddr;
     }
@@ -29,27 +29,27 @@ public class LnOpsModeProgrammer implements Programmer  {
      * Forward a write request to an ops-mode write operation
      */
     public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
-        mSlotMon.writeCVOpsMode(CV, val, p, mAddress, mLongAddr);
+        mSlotMgr.writeCVOpsMode(CV, val, p, mAddress, mLongAddr);
     }
 
     public void readCV(int CV, ProgListener p) throws ProgrammerException {
-        mSlotMon.readCVOpsMode(CV, p, mAddress, mLongAddr);
+        mSlotMgr.readCVOpsMode(CV, p, mAddress, mLongAddr);
     }
 
     public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
-        mSlotMon.confirmCVOpsMode(CV, val, p, mAddress, mLongAddr);
+        mSlotMgr.confirmCVOpsMode(CV, val, p, mAddress, mLongAddr);
     }
 
     public void setMode(int mode) {
-        mSlotMon.setMode(mode);
+        mSlotMgr.setMode(mode);
     }
 
     public int  getMode() {
-        return mSlotMon.getMode();
+        return mSlotMgr.getMode();
     }
 
     public boolean hasMode(int mode) {
-        return mSlotMon.hasMode(mode);
+        return mSlotMgr.hasMode(mode);
     }
 
     /**
@@ -62,17 +62,16 @@ public class LnOpsModeProgrammer implements Programmer  {
     }
 
     public void addPropertyChangeListener(PropertyChangeListener p) {
-        mSlotMon.addPropertyChangeListener(p);
+        mSlotMgr.addPropertyChangeListener(p);
     }
     public void removePropertyChangeListener(PropertyChangeListener p) {
-        mSlotMon.removePropertyChangeListener(p);
+        mSlotMgr.removePropertyChangeListener(p);
     }
 
     public String decodeErrorCode(int i) {
-        return mSlotMon.decodeErrorCode(i);
+        return mSlotMgr.decodeErrorCode(i);
     }
 
 }
-
 
 /* @(#)LnOpsModeProgrammer.java */

@@ -15,7 +15,7 @@ import java.beans.PropertyChangeEvent;
  * counter-part of a LocoNet command station.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.9 $
+ * @version         $Revision: 1.10 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 
@@ -163,9 +163,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
             return; // need to cope with that!!
 
         case LnConstants.OPC_LONG_ACK:
-				// handle if reply to slot. There's no slot number in the LACK, unfortunately.
-				// If this is a LACK to a Slot op, and progState is command pending,
-				// assume its for us...
+            // handle if reply to slot. There's no slot number in the LACK, unfortunately.
+            // If this is a LACK to a Slot op, and progState is command pending,
+            // assume its for us...
             if (log.isDebugEnabled())
                 log.debug("LACK in state "+progState+" message: "+m.toString());
             if (m.getElement(1) == 0x6F && progState == 1 ) {
@@ -177,6 +177,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
                     else
                         startShortTimer();
                     progState = 2;
+                    return;
                 }
                 else if (m.getElement(2) == 0) { // task aborted as busy
                     // move to not programming state
@@ -184,6 +185,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
                     // notify user ProgListener
                     stopTimer();
                     notifyProgListenerLack(jmri.ProgListener.ProgrammerBusy);
+                    return;
                 }
                 else if (m.getElement(2) == 0x7F) { // not implemented
                     // move to not programming state
@@ -191,13 +193,15 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
                     // notify user ProgListener
                     stopTimer();
                     notifyProgListenerLack(jmri.ProgListener.NotImplemented);
+                    return;
                 }
                 else if (m.getElement(2) == 0x40) { // task accepted blind
                     // move to not programming state
                     progState = 0;
                     // notify user ProgListener
                     stopTimer();
-                    notifyProgListenerLack(jmri.ProgListener.OK);
+                    notifyProgListenerEnd(-1, 0);  // no value (e.g. -1), no error status (e.g.0)
+                    return;
                 }
                 else { // not sure how to cope, so complain
                     log.warn("unexpected LACK reply code "+m.getElement(2));
@@ -206,6 +210,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
                     // notify user ProgListener
                     stopTimer();
                     notifyProgListenerLack(jmri.ProgListener.UnknownError);
+                    return;
                 }
             }
             else return;
@@ -312,8 +317,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
                                int addr, boolean longAddr) throws jmri.ProgrammerException {
         lopsa = addr&0x7f;
         hopsa = (addr/128)&0x7f;
-        if (!longAddr) hopsa|=0x40;
-        doWrite(CV, val, p, 0x2C);
+        // if (!longAddr) hopsa|=0x40;  // Not clear that's needed?
+        doWrite(CV, val, p, 0x67);  // ops mode byte write, with feedback
     }
     public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         lopsa = 0;
