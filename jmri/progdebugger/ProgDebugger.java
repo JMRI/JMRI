@@ -18,11 +18,15 @@ import java.util.Vector;
 public class ProgDebugger implements Programmer  {
 
 	// write CV
+	private int _lastWrite = -1;
+	public int lastWrite() { return _lastWrite; }
 	public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException
 	{
 		final ProgListener m = p;
 		// log out the request
 		log.info("write CV: "+CV+" to: "+val+" mode: "+getMode());
+		System.out.println("write CV: "+CV+" to: "+val+" mode: "+getMode());
+		_lastWrite = val;
 		// return a notification via the queue to ensure end
 		Runnable r = new Runnable() {
 			ProgListener l = m;
@@ -32,13 +36,16 @@ public class ProgDebugger implements Programmer  {
 	}
 	
 	// read CV
+	private int _nextRead = 123;
+	public void nextRead(int r) { _nextRead = r; }
 	public void readCV(int CV, ProgListener p) throws ProgrammerException {
 		final ProgListener m = p;
 		log.info("read CV: "+CV+" mode: "+getMode());
+		System.out.println("read CV: "+CV+" mode: "+getMode()+" will read "+_nextRead);
 		// return a notification via the queue to ensure end
 		Runnable r = new Runnable() {
 			ProgListener l = m;
-			public void run() { l.programmingOpReply(123, 0); }  // 0 is OK status
+			public void run() { l.programmingOpReply(_nextRead, 0); }  // 0 is OK status
 			};
 		javax.swing.SwingUtilities.invokeLater(r);
 

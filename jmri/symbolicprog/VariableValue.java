@@ -14,6 +14,7 @@ import jmri.InstanceManager;
 import jmri.ProgListener;
 
 import java.util.Vector;
+import java.awt.Component;
 
 public abstract class VariableValue implements java.beans.PropertyChangeListener {
 
@@ -21,7 +22,7 @@ public abstract class VariableValue implements java.beans.PropertyChangeListener
 	// Instead, you can get a (Object) representation for display in 
 	// a table, etc. Modification of the state of that object then
 	// gets reflected back, causing the underlying CV objects to change.
-	abstract public Object getValue();
+	abstract public Component getValue();
 
 	// methods to command a read from / write to the decoder of the underlying CVs
 	abstract public void read();
@@ -47,7 +48,7 @@ public abstract class VariableValue implements java.beans.PropertyChangeListener
 	// common information - none of these are bound
 	public String name() { return _name; }
 	private String _name;
-	private Vector _cvVector;   // Vector of 512 CV objects used to look up CVs
+	protected Vector _cvVector;   // Vector of 512 CV objects used to look up CVs
 		
 	public String getComment() { return _comment; }
 	private String _comment;
@@ -77,7 +78,7 @@ public abstract class VariableValue implements java.beans.PropertyChangeListener
 	
 	// busy during read, write operations
 	public boolean isBusy() { return _busy; }
-	private void setBusy(boolean busy) {
+	protected void setBusy(boolean busy) {
 		if (_busy != busy) prop.firePropertyChange("Busy", new Boolean(_busy), new Boolean(busy));
 		_busy = busy;
 	}
@@ -87,7 +88,37 @@ public abstract class VariableValue implements java.beans.PropertyChangeListener
 	java.beans.PropertyChangeSupport prop = new java.beans.PropertyChangeSupport(this);	
 	public void removePropertyChangeListener(java.beans.PropertyChangeListener p) { prop.removePropertyChangeListener(p); }
 	public void addPropertyChangeListener(java.beans.PropertyChangeListener p) { prop.addPropertyChangeListener(p); }
-		
+	
+	// tool to handle masking, updating
+	protected int maskVal(String maskString) {
+		// convert String mask to int
+		int mask = 0;
+		for (int i=0; i<8; i++) {
+			mask = mask << 1;
+			if (maskString.charAt(i) == 'V') {
+				mask = mask+1;
+			}
+		}
+		return mask;
+	}
+	
+	protected int offsetVal(String maskString) {
+		// convert String mask to int
+		int offset = 0;
+		for (int i=0; i<8; i++) {
+			if (maskString.charAt(i) == 'V') {
+				offset = 7-i;  // number of places to shift left
+			}
+		}
+		return offset;
+	}
+	
+	protected int newValue(int oldCv, int newVal, String maskString) {
+		int mask = maskVal(maskString);
+		int offset = offsetVal(maskString);
+		return (oldCv & ~mask) + ((newVal << offset) & mask);
+	}
+
 	// initialize logging	
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(VariableValue.class.getName());
 		

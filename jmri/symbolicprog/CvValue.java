@@ -20,9 +20,12 @@ public class CvValue implements ProgListener {
 	
 	public int getValue()  { return _value; }
 	public void setValue(int value) { 
-		if (_value != value) prop.firePropertyChange("Value", new Integer(_value), new Integer(value));
-		_value = value; 
-		setState(EDITTED); 
+		if (_value != value) {
+			int old = _value;
+			_value = value;
+			setState(EDITTED);
+			prop.firePropertyChange("Value", new Integer(old), new Integer(value)); 
+		}
 	}
 	private int _value = 0;
 	
@@ -86,11 +89,16 @@ public class CvValue implements ProgListener {
 	
 	public void programmingOpReply(int value, int status) {
 		if (!_busy) log.error("opReply when not busy!");
-		_busy = false;
+		setBusy(false);
 		if (status == OK) {
 			if (_reading) {
-				setValue(value);
 				setState(READ);
+				// set & notify value directly to avoid state going to EDITTED
+				if (_value != value) {
+					int old = _value;
+					_value = value;
+					prop.firePropertyChange("Value", new Integer(old), new Integer(value)); 
+				}
 			} else {
 				setState(STORED);
 			}

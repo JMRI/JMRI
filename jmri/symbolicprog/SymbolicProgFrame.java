@@ -87,6 +87,11 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 		getContentPane().add(modePane);
 			
 		getContentPane().add(variableScroll);
+		
+		// for debugging
+		
+		DecVariableValue v = new DecVariableValue("name", "comment", false, 81, "VVVVVVVV", null);
+		getContentPane().add(v.getValue()); 
 
 		pack();
 	}
