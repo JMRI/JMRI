@@ -3,7 +3,7 @@
  *
  * Description:		<describe the DccThrottle interface here>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			
+ * @version			$Id: DccThrottle.java,v 1.2 2002-02-04 07:36:36 jacobsen Exp $
  */
 
 package jmri;
@@ -15,7 +15,9 @@ public interface DccThrottle extends Throttle {
 	
 	public int dccAddress();
 	
-	public int speedSteps();
+	// to handle quantized speed. Note this can change! Valued returned is
+	// always positive.
+	public float speedIncrement();
 	
 	// information on consisting  (how do we set consisting?)
 	
