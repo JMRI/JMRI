@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <decoderIndex version="51">
+  <decoderIndex version="53">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -417,6 +417,12 @@
           <output name="1" label="Pad 1" />
           <output name="2" label="Pad 2" />
         </model>
+        <model model="N12SR" numOuts="7" numFns="12" />
+        <model model="N12A0" numOuts="7" numFns="12" />
+        <model model="N12A1" numOuts="7" numFns="12" />
+        <model model="N12K0a" numOuts="7" numFns="12" />
+        <model model="N12K1a" numOuts="7" numFns="12" />
+        <model model="N12K2" numOuts="7" numFns="12" />
       </family>
       <family name="Quantum" mfg="QSIndustries" type="locomotive" file="QSI_Quantum.xml">
         <model model="Quantum" />
