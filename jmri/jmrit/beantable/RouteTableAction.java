@@ -29,7 +29,7 @@ import com.sun.java.util.collections.List;
  * Based in part on SignalHeadTableAction.java by Bob Jacobson
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -72,7 +72,7 @@ public class RouteTableAction extends AbstractTableAction {
                 return "Set";
             }
             public JButton configureButton() {
-                return new JButton("Set");
+                return new JButton(" Set ");
             }
         };
     }
