@@ -1,44 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <!--Written by JMRI version 1.5.4 on Tue Oct 05 07:36:02 PDT 2004 $Id: decoderIndex.xml,v 1.71 2004-10-05 14:42:53 jacobsen Exp $-->
-  <decoderIndex version="85">
+  <!--Written by JMRI version 1.5.4 on Tue Oct 05 07:36:02 PDT 2004 $Id: decoderIndex.xml,v 1.72 2004-10-24 02:29:04 jacobsen Exp $-->
+  <decoderIndex version="87">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
       <manufacturer mfg="Arnold" mfgID="173" />
       <manufacturer mfg="Atlas" mfgID="127" />
       <manufacturer mfg="AuroTrains" mfgID="170" />
+      <manufacturer mfg="Bachmann Trains" mfgID="101" />
+      <manufacturer mfg="BRAWA Modellspielwaren GmbH" mfgID="186" />
       <manufacturer mfg="CML Systems" mfgID="1" />
+      <manufacturer mfg="Computer Dialysis France" mfgID="123" />
+      <manufacturer mfg="Con-Com GmbH" mfgID="204" />
       <manufacturer mfg="CT Elektronik" mfgID="117" />
       <manufacturer mfg="CVP Products" mfgID="135" />
-      <manufacturer mfg="Computer Dialysis France" mfgID="123" />
       <manufacturer mfg="Dietz Modellbahntechnik" mfgID="115" />
       <manufacturer mfg="Digitrax" mfgID="129" />
+      <manufacturer mfg="Doehler and Haas" mfgID="97" />
+      <manufacturer mfg="ECCO GmbH" mfgID="121" />
       <manufacturer mfg="Electronic Solutions Ulm GmbH" mfgID="151" />
+      <manufacturer mfg="Electric Railroad Company" mfgID="73" />
       <manufacturer mfg="Gebr. Fleishmann GmbH Co." mfgID="155" />
+      <manufacturer mfg="Haber and Koenig Electronics GmbH" mfgID="111" />
       <manufacturer mfg="Intelligent Command Control" mfgID="133" />
       <manufacturer mfg="Kuehn Ing." mfgID="157" />
-      <manufacturer mfg="LGB" mfgID="159" />
       <manufacturer mfg="Lenz" mfgID="99" />
+      <manufacturer mfg="LGB" mfgID="159" />
+      <manufacturer mfg="Massoth Elektronik, GmbH" mfgID="123" />
+      <manufacturer mfg="MAWE Elektronik" mfgID="68" />
       <manufacturer mfg="MERG" mfgID="165" />
       <manufacturer mfg="MRC" mfgID="143" />
+      <manufacturer mfg="Nagasue System Design Office" mfgID="103" />
+      <manufacturer mfg="New York Byano Limited" mfgID="71" />
       <manufacturer mfg="North Coast Engineering" mfgID="11" />
-      <manufacturer mfg="PSI-Dynatrol" mfgID="14" />
       <manufacturer mfg="ProfiLok Modellbahntechnik GmbH" mfgID="125" />
+      <manufacturer mfg="PSI-Dynatrol" mfgID="14" />
       <manufacturer mfg="Public-domain and DIY" mfgID="13" />
       <manufacturer mfg="QSIndustries" mfgID="113" />
-      <manufacturer mfg="RamFixx Technologies (Wangrow)" mfgID="15" />
+      <manufacturer mfg="Railnet Solutions" mfgID="15" />
+      <manufacturer mfg="RamFixx Technologies (Wangrow)" mfgID="66" />
       <manufacturer mfg="RealRail Effects" mfgID="139" />
       <manufacturer mfg="Rock Junction Controls" mfgID="149" />
       <manufacturer mfg="Roco Modelspielwaren" mfgID="161" />
+      <manufacturer mfg="RR-CirKits" mfgID="87" />
+      <manufacturer mfg="Sanda Kan Industrial" mfgID="95" />
+      <manufacturer mfg="Signalinng Solution" mfgID="119" />
       <manufacturer mfg="Throttle-Up (SoundTraxx)" mfgID="141" />
       <manufacturer mfg="Train Control Systems" mfgID="153" />
       <manufacturer mfg="Trix Modelleisenbahn" mfgID="131" />
       <manufacturer mfg="Uhlenbrock" mfgID="85" />
       <manufacturer mfg="Umelec Ing Buero" mfgID="147" />
+      <manufacturer mfg="Viessmann Modellspielwaren GmbH" mfgID="109" />
       <manufacturer mfg="W.S. Ataras Engineering" mfgID="119" />
       <manufacturer mfg="Wangrow" mfgID="12" />
+      <manufacturer mfg="WP Railshops" mfgID="163" />
       <manufacturer mfg="ZTC" mfgID="132" />
       <manufacturer mfg="Zimo" mfgID="145" />
     </mfgList>
