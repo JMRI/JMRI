@@ -99,10 +99,10 @@ properties -a \
 		jmri/jmrit/powerpanel/PowerPanelBundle_fr.properties \
 		jmri/jmrit/roster/JmritRosterBundle_fr.properties \
 		jmri/NamedBeanBundle_fr.properties \
-        \		
+        \
         apps/AppsBundle_es.properties \
         apps/AppsConfigBundle_es.properties \
-        apps/ActionListBundle_es.properties \
+        apps/ActionListBundle_es.properties
         
 
 # we're still missing a CodeWarrior target
