@@ -1,6 +1,11 @@
 package jmri.jmrit.throttle;
 
 import javax.swing.JButton;
+import javax.swing.JPopupMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JOptionPane;
+
 import java.awt.event.*;
 
 /**
@@ -17,6 +22,11 @@ public class FunctionButton extends JButton implements ActionListener
     private FunctionListener listener;
     private int identity;
     private boolean isOn;
+    private boolean isLockable = true;
+
+    private JPopupMenu popup;
+    private JMenuItem setTextItem;
+    private JCheckBoxMenuItem changeLockStateItem;
 
     /**
      * Construct the FunctionButton.
@@ -29,7 +39,21 @@ public class FunctionButton extends JButton implements ActionListener
     {
         this.identity = id;
         this.isOn = isOn;
-        this.addActionListener(this);
+
+        popup = new JPopupMenu();
+
+        setTextItem = new JMenuItem("Change Text");
+        setTextItem.addActionListener(this);
+        popup.add(setTextItem);
+
+        changeLockStateItem = new JCheckBoxMenuItem("Lockable");
+        changeLockStateItem.addActionListener(this);
+        changeLockStateItem.setSelected(true);
+        popup.add(changeLockStateItem);
+
+        //Add listener to components that can bring up popup menus.
+        MouseListener popupListener = new PopupListener();
+        this.addMouseListener(popupListener);
     }
 
     /**
@@ -47,10 +71,38 @@ public class FunctionButton extends JButton implements ActionListener
      */
     public void actionPerformed(ActionEvent e)
     {
-        isOn = !isOn;
+        if (e.getSource() == setTextItem)
+        {
+            editButtonText();
+        }
+        else if (e.getSource() == changeLockStateItem)
+        {
+            isLockable = !isLockable;
+            if (!isLockable)
+            {
+                isOn = false;
+            }
+        }
+    }
+
+    private void changeState(boolean newState)
+    {
+        isOn = newState;
         if (listener != null)
         {
             listener.notifyFunctionStateChanged(identity, isOn);
+        }
+
+    }
+
+    private void editButtonText()
+    {
+        Object input = JOptionPane.showInputDialog(this, "Enter text for this button",
+                                    "Change button text", JOptionPane.PLAIN_MESSAGE,
+                                    null, null, this.getText());
+        if (input != null)
+        {
+            this.setText(input.toString());
         }
     }
 
@@ -63,4 +115,41 @@ public class FunctionButton extends JButton implements ActionListener
     {
         this.listener = l;
     }
+
+
+    class PopupListener extends MouseAdapter
+    {
+        public void mousePressed(MouseEvent e)
+        {
+            if (e.isPopupTrigger())
+            {
+                popup.show(e.getComponent(),
+                           e.getX(), e.getY());
+            }
+            else if (((e.getModifiers() & e.BUTTON1_MASK) > 0)
+                     && !isLockable)
+            {
+                changeState(true);
+            }
+        }
+
+        public void mouseReleased(MouseEvent e)
+        {
+            if (e.isPopupTrigger())
+            {
+                popup.show(e.getComponent(),
+                           e.getX(), e.getY());
+            }
+            else if (!isLockable)
+            {
+                changeState(false);
+            }
+            else
+            {
+                changeState(!isOn);
+            }
+        }
+
+    }
+
 }
