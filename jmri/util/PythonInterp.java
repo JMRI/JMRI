@@ -16,7 +16,7 @@ import java.io.*;
  * read the code, the "non-reflection" statements are in the comments.
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class PythonInterp {
 
@@ -55,9 +55,16 @@ public class PythonInterp {
 
             exec.invoke(interp, new Object[]{command});
         } catch (java.lang.reflect.InvocationTargetException e2) {
-            log.error("InvocationTargetException while invoking command "+command
+            try {
+                log.error("InvocationTargetException while invoking command "+command
                     +": "+e2.getCause());
-            outputlog.append("Error: "+e2.getCause());
+                outputlog.append("Error: "+e2.getCause());
+            } catch (java.lang.NoSuchMethodError e3) {
+                // most likely, this is 1.1.8 JVM
+                log.error("InvocationTargetException while invoking command "+command
+                    +": "+e2.getTargetException());
+                outputlog.append("Error: "+e2.getTargetException());
+            }
         } catch (NoSuchMethodException e1) {
             log.error("NoSuchMethod error while invoking command "+command);
         } catch (IllegalAccessException e) {
