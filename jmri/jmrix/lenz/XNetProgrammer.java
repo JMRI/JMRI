@@ -26,16 +26,16 @@ import java.beans.PropertyChangeEvent;
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Paul Bender  Copyright (c) 2003,2004
- * @version $Revision: 2.8 $
+ * @version $Revision: 2.9 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
-	static private final int XNetProgrammerTimeout = 20000;
+	static private final int XNetProgrammerTimeout = 90000;
 
 	// keep track of whether or not the command station is in service 
         // mode.  Used for determining if "OK" message is an aproriate 
 	// response to a request to a programming request. 
-	private boolean _service_mode = false;
+	static private boolean _service_mode = false;
 
 	public XNetProgrammer() {
 		// error if more than one constructed?
@@ -121,7 +121,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
 	// members for handling the programmer interface
 
-	int progState = 0;
+	static int progState = 0;
 		static final int NOTPROGRAMMING = 0; // is notProgramming
 		static final int REQUESTSENT    = 1; // waiting reply to command to go into programming mode
 		static final int INQUIRESENT    = 2; // read/write command sent, waiting reply
@@ -333,7 +333,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
          * currently programming before allowing the Traffic Controller 
          * to send a request to exit service mode
 	 */
-	public boolean programmerBusy() {
+	static public boolean programmerBusy() {
 	    return (progState!=NOTPROGRAMMING);
 	} 
 
