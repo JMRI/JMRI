@@ -10,7 +10,7 @@ import jmri.Sensor;
  * System names are "XSnnn", where nnn is the sensor number without padding.
  *
  * @author			Paul Bender Copyright (C) 2003
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class XNetSensorManager extends jmri.AbstractSensorManager implements XNetListener {
 
@@ -60,8 +60,6 @@ public class XNetSensorManager extends jmri.AbstractSensorManager implements XNe
 	   	  String s = "XS" + (firstaddress+i);
 	   	  if(null == getBySystemName(s)) {
 	   	     provideSensor(s);
-		     XNetSensor sensor=(XNetSensor)getBySystemName(s);
-		     sensor.message(l);
 	          }
               }
 	}
