@@ -20,24 +20,16 @@ import javax.swing.JFileChooser;
  * place in the file system each time an action is invoked.
  *
  * @author	Bob Jacobsen   Copyright (C) 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  * @see         jmri.jmrit.XmlFile
  */
-public class LoadStoreBaseAction extends AbstractAction {
+abstract public class LoadStoreBaseAction extends AbstractAction {
 
     public LoadStoreBaseAction(String s) {
         super(s);
         // ensure that an XML config manager exists
         if (InstanceManager.configureManagerInstance()==null)
             InstanceManager.setConfigureManager(new ConfigXmlManager());
-    }
-
-    public void actionPerformed(ActionEvent e) {
-        LoadStoreBase.fileChooser.rescanCurrentDirectory();
-        int retVal = LoadStoreBase.fileChooser.showOpenDialog(null);
-        if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
-        if (log.isDebugEnabled()) log.debug("Open config file: "+LoadStoreBase.fileChooser.getSelectedFile().getPath());
-        InstanceManager.configureManagerInstance().load(LoadStoreBase.fileChooser.getSelectedFile());
     }
 
     static JFileChooser allFileChooser = new JFileChooser(jmri.jmrit.XmlFile.prefsDir());
