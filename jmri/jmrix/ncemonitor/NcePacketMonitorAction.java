@@ -10,11 +10,14 @@ import java.awt.event.ActionEvent;
  *       			NcePacketMonitorFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class NcePacketMonitorAction extends AbstractAction  {
 
-	public NcePacketMonitorAction(String s) { super(s);}
+    public NcePacketMonitorAction(String s) { super(s);}
+    public NcePacketMonitorAction() {
+        this("NCE traffic monitor");
+    }
 
     public void actionPerformed(ActionEvent e) {
 		// create a SerialDriverFrame

@@ -5,7 +5,7 @@
  *       			XpressNet PacketGenFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 package jmri.jmrix.lenz.packetgen;
@@ -17,7 +17,11 @@ import jmri.jmrix.lenz.XNetTrafficController;
 
 public class PacketGenAction 			extends AbstractAction {
 
-	public PacketGenAction(String s) { super(s);}
+    public PacketGenAction(String s) { super(s);}
+
+    public PacketGenAction() {
+        this("Generate XPressNet message");
+    }
 
     public void actionPerformed(ActionEvent e) {
 		// create a PacketGenFrame

@@ -25,13 +25,17 @@ import jmri.jmrit.symbolicprog.*;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 public class PaneProgAction 			extends AbstractAction {
 
     Object o1, o2, o3, o4;
     JLabel statusLabel;
     jmri.ProgModeSelector  modePane    = new jmri.ProgDeferredServiceModePane();
+
+    public PaneProgAction() {
+        this("DecoderPro service programmer");
+    }
 
     public PaneProgAction(String s) {
         super(s);

@@ -1,11 +1,11 @@
-/** 
+/**
  * NceMonAction.java
  *
- * Description:		Swing action to create and register a 
+ * Description:		Swing action to create and register a
  *       			NceMonFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			
+ * @version
  */
 
 package jmri.jmrix.nce.ncemon;
@@ -16,8 +16,9 @@ import java.awt.event.ActionEvent;
 
 public class NceMonAction 			extends AbstractAction {
 
-	public NceMonAction(String s) { super(s);}
-	
+    public NceMonAction(String s) { super(s);}
+    public NceMonAction() { this("NCE message monitor");}
+
     public void actionPerformed(ActionEvent e) {
 		// create a NceMonFrame
 		NceMonFrame f = new NceMonFrame();
@@ -27,7 +28,7 @@ public class NceMonAction 			extends AbstractAction {
 		catch (Exception ex) {
 			log.warn("NceMonAction starting NceMonFrame: Exception: "+ex.toString());
 			}
-		f.show();	
+		f.show();
 	}
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceMonAction.class.getName());

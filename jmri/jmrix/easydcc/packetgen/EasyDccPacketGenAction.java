@@ -5,7 +5,7 @@
  *       			EasyDccPacketGenFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Id: EasyDccPacketGenAction.java,v 1.1 2002-03-23 07:28:30 jacobsen Exp $
+ * @version			$Id: EasyDccPacketGenAction.java,v 1.2 2003-05-11 02:00:35 jacobsen Exp $
  */
 
 package jmri.jmrix.easydcc.packetgen;
@@ -16,6 +16,10 @@ import java.awt.event.ActionEvent;
 public class EasyDccPacketGenAction 			extends AbstractAction {
 
 	public EasyDccPacketGenAction(String s) { super(s);}
+
+    public EasyDccPacketGenAction() {
+        this("Generate EasyDCC message");
+    }
 
     public void actionPerformed(ActionEvent e) {
 		EasyDccPacketGenFrame f = new EasyDccPacketGenFrame();

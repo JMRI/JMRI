@@ -5,32 +5,31 @@ package jmri.jmrix.loconet.locormi;
  * use the LocoNet connection on this machine.
  * Copyright:    Copyright (c) 2002
  * @author      Alex Shepherd
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import java.rmi.RemoteException;
 
-public class LnMessageServerAction extends AbstractAction
-{
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnMessageServerAction.class.getName());
+public class LnMessageServerAction extends AbstractAction {
 
-  public LnMessageServerAction( String s )
-  {
-    super( s ) ;
-  }
+    public LnMessageServerAction( String s ) {
+        super( s ) ;
+    }
 
-  public void actionPerformed( ActionEvent e)
-  {
-    try
-    {
-      LnMessageServer server = LnMessageServer.getInstance() ;
-      server.enable();
+    public LnMessageServerAction() {
+        super( "Start LocoNet server" ) ;
     }
-    catch( RemoteException ex )
-    {
-      log.warn( "LnMessageServerAction Exception: " + ex );
+
+    public void actionPerformed( ActionEvent e) {
+        try {
+            LnMessageServer server = LnMessageServer.getInstance() ;
+            server.enable();
+        } catch( RemoteException ex ) {
+            log.warn( "LnMessageServerAction Exception: " + ex );
+        }
     }
-  }
+
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnMessageServerAction.class.getName());
 }

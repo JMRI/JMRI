@@ -20,6 +20,10 @@ public class LocoMonAction 			extends AbstractAction {
 
 	public LocoMonAction(String s) { super(s);}
 
+    public LocoMonAction() {
+        this("LocoNet monitor");
+    }
+
     public void actionPerformed(ActionEvent e) {
 		// create a LocoMonFrame
                 log.debug("starting LocoMon frame creation");

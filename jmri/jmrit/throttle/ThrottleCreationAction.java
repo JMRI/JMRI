@@ -21,12 +21,16 @@ public class ThrottleCreationAction extends AbstractAction {
         super(s);
     }
 
+    public ThrottleCreationAction() {
+        this("New Throttle...");
+    }
+
     /**
      * The action is performed. Create a new ThrottleFrame.
      * @param e The event causing the action.
      */
     public void actionPerformed(ActionEvent e) {
-		ThrottleFrame tf = 
+		ThrottleFrame tf =
 			ThrottleFrameManager.instance().createThrottleFrame();
 		tf.setVisible(true);
     }

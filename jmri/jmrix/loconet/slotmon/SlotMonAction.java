@@ -1,11 +1,11 @@
-/** 
+/**
  * SlotMonAction.java
  *
- * Description:		Swing action to create and register a 
+ * Description:		Swing action to create and register a
  *       			LocoEchoFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			
+ * @version
  */
 
 package jmri.jmrix.loconet.slotmon;
@@ -17,8 +17,9 @@ import jmri.jmrix.loconet.SlotManager;
 
 public class SlotMonAction 			extends AbstractAction {
 
-	public SlotMonAction(String s) { super(s);}
-	
+    public SlotMonAction(String s) { super(s);}
+    public SlotMonAction() { this("Slot monitor");}
+
     public void actionPerformed(ActionEvent e) {
 
 		// create SlotManager if it doesn't exist
@@ -26,8 +27,8 @@ public class SlotMonAction 			extends AbstractAction {
 
 		// create a SlotMonFrame
 		SlotMonFrame f = new SlotMonFrame();
-		f.show();	
-		
+		f.show();
+
 	}
 }
 
