@@ -3,8 +3,6 @@ package jmri.jmrix;
 import jmri.ThrottleManager;
 import jmri.ThrottleListener;
 import jmri.DccThrottle;
-import jmri.jmrit.throttle.ThrottleFrame;
-import jmri.jmrit.throttle.FunctionButtonPropertyEditor;
 import java.util.*;
 
 /**
@@ -14,35 +12,11 @@ import java.util.*;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 abstract public class AbstractThrottleManager implements ThrottleManager {
     private HashMap throttleListeners;
     private HashMap throttleMap;
-    private ArrayList throttleFrames;
-    private FunctionButtonPropertyEditor functionButtonEditor;
-
-    /**
-     * Tell this manager that a new ThrottleFrame was created.
-     * @param tf The new ThrottleFrame.
-     */
-    public void notifyNewThrottleFrame(ThrottleFrame tf)
-    {
-        if (throttleFrames == null)
-        {
-            throttleFrames = new ArrayList(2);
-        }
-        throttleFrames.add(tf);
-    }
-
-    /**
-     * Retrieve an Iterator over all the ThrottleFrames in existence.
-     * @return The Iterator on the list of ThrottleFrames.
-     */
-    public Iterator getThrottleFrames()
-    {
-        return throttleFrames.iterator();
-    }
 
 
     /**
@@ -138,17 +112,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         }
     }
 
-    /**
-     * Get a reference to the Function
-     */
-    public jmri.jmrit.throttle.FunctionButtonPropertyEditor getFunctionButtonEditor()
-    {
-        if (functionButtonEditor == null)
-        {
-            functionButtonEditor = new FunctionButtonPropertyEditor();
-        }
-        return functionButtonEditor;
-    }
+
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractThrottleManager.class.getName());
 }
