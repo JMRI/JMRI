@@ -22,7 +22,7 @@ import jmri.jmrix.loconet.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class AlmBrowserFrame extends javax.swing.JFrame implements LocoNetListener {
 
@@ -79,13 +79,13 @@ public class AlmBrowserFrame extends javax.swing.JFrame implements LocoNetListen
         {
             JPanel pane = new JPanel();
             pane.setLayout(new FlowLayout());
-            values[0] = new JTextField("    ");
+            values[0] = new JTextField(4);
             pane.add(values[0]);
-            values[1] = new JTextField("    ");
+            values[1] = new JTextField(4);
             pane.add(values[1]);
-            values[2] = new JTextField("    ");
+            values[2] = new JTextField(4);
             pane.add(values[2]);
-            values[3] = new JTextField("    ");
+            values[3] = new JTextField(4);
             pane.add(values[3]);
 
             getContentPane().add(pane);
