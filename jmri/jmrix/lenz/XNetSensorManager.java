@@ -10,7 +10,7 @@ import jmri.Sensor;
  * System names are "XSnnn", where nnn is the sensor number without padding.
  *
  * @author			Paul Bender Copyright (C) 2003
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class XNetSensorManager extends jmri.AbstractSensorManager implements XNetListener {
 
@@ -45,17 +45,24 @@ public class XNetSensorManager extends jmri.AbstractSensorManager implements XNe
                                               .isFeedbackMessage(l) && 
 	     (XNetTrafficController.instance().getCommandStation()
                                               .getFeedbackMessageType(l)==2)) {
-           // This is a feedback encoder message. The address of the 
-	   // Feedback sensor is byte two of the message.
-           int address=XNetTrafficController.instance()
+              // This is a feedback encoder message. The address of the 
+	      // Feedback sensor is byte two of the message.
+              int address=XNetTrafficController.instance()
                                             .getCommandStation()
                                             .getFeedbackEncoderMsgAddr(l); 
-	   String s = "XS" + address;
-           if(log.isDebugEnabled()) log.debug("Message for sensor " + s); 
-	   if(null == getBySystemName(s)) {
-	   	provideSensor(s);
-	      }
-           }
+	      if(log.isDebugEnabled()) 
+			log.debug("Message for feedback encoder " + address); 
+
+	      int firstaddress=((address-1)*8)+1;
+	      // Each Feedback encoder includes 8 addresses, so register 
+	      // a sensor for each address.
+	      for(int i=0;i<8;i++) {
+	   	  String s = "XS" + (firstaddress+i);
+	   	  if(null == getBySystemName(s)) {
+	   	     provideSensor(s);
+	          }
+              }
+	}
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetSensorManager.class.getName());
