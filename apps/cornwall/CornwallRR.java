@@ -16,7 +16,7 @@ import jmri.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class CornwallRR extends JPanel {
     public CornwallRR() {
@@ -127,7 +127,7 @@ public class CornwallRR extends JPanel {
         pane2.add(reload);
         reload.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                showPanel();
+                loadFile("CornwallMain.xml");
             }
         });
         pane1.add(pane2);
@@ -167,17 +167,19 @@ public class CornwallRR extends JPanel {
         frame.pack();
         frame.setVisible(true);
         log.info("main initialization done");
-        // start automation
-        new CrrSection().start();
+
+        // load definitions
+        loadFile("CornwallDefinitions.xml");
+
+        // start automation (whith will work in parallel)
+        new CrrInit().start();
 
         // show panel
-        showPanel();
+        loadFile("CornwallMain.xml");
 
     }
 
-    static void showPanel(){
-        // open the main panel if it can be found
-        String name = "CornwallMain.xml";
+    static void loadFile(String name){
         File pFile = InstanceManager.configureManagerInstance().find(name);
         if (pFile!=null)
             InstanceManager.configureManagerInstance().load(pFile);
