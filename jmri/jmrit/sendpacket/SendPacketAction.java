@@ -2,14 +2,15 @@
 
 package jmri.jmrit.sendpacket;
 
-import javax.swing.AbstractAction;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
+
+import javax.swing.*;
 
 /**
  * Swing action to create and register a SendPacketFrame object
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SendPacketAction extends AbstractAction {
 

@@ -2,17 +2,17 @@
 
 package jmri.jmrit.sendpacket;
 
+import jmri.*;
+import jmri.util.*;
 import java.awt.*;
 
 import javax.swing.*;
-
-import jmri.*;
 
 /**
  * User interface for sending DCC packets
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SendPacketFrame extends javax.swing.JFrame {
 
@@ -108,7 +108,7 @@ public class SendPacketFrame extends javax.swing.JFrame {
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-        cs.sendPacket(createPacket(packetTextField.getText()));
+        cs.sendPacket(createPacket(packetTextField.getText()), 1);
     }
 
     // control sequence operation
@@ -197,7 +197,7 @@ public class SendPacketFrame extends javax.swing.JFrame {
             byte[] m = createPacket(mPacketField[mNextSequenceElement].getText());
             // send it
             mNextEcho = m;
-            cs.sendPacket(m);
+            cs.sendPacket(m, 1);
         } else {
             // ask for the next one
             mNextSequenceElement++;
@@ -212,48 +212,8 @@ public class SendPacketFrame extends javax.swing.JFrame {
      */
     byte[] createPacket(String s) {
         // gather bytes in result
-        byte b[] = parseString(s);
+        byte b[] = StringUtil.bytesFromHexString(s);
         if (b.length == 0) return null;  // no such thing as a zero-length message
-        return b;
-    }
-
-    byte[] parseString(String s) {
-        String ts = s+"  "; // ensure blanks on end to make scan easier
-        int len = 0;
-        // scan for length
-        for (int i= 0; i< s.length(); i++) {
-            if (ts.charAt(i) != ' ')  {
-                // need to process char for number. Is this a single digit?
-                if (ts.charAt(i+1) != ' ') {
-                    // 2 char value
-                    i++;
-                    len++;
-                } else {
-                    // 1 char value
-                    len++;
-                }
-            }
-        }
-        byte[] b = new byte[len];
-        // scan for content
-        int saveAt = 0;
-        for (int i= 0; i< s.length(); i++) {
-            if (ts.charAt(i) != ' ')  {
-                // need to process char for number. Is this a single digit?
-                if (ts.charAt(i+1) != ' ') {
-                    // 2 char value
-                    String v = new String(""+ts.charAt(i))+ts.charAt(i+1);
-                    b[saveAt] = (byte)Integer.valueOf(v,16).intValue();
-                    i++;
-                    saveAt++;
-                } else {
-                    // 1 char value
-                    String v = new String(""+ts.charAt(i));
-                    b[saveAt] = (byte)Integer.valueOf(v,16).intValue();
-                    saveAt++;
-                }
-            }
-        }
         return b;
     }
 
