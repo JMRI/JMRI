@@ -1,10 +1,4 @@
-/**
- * VariableValueTest.java
- *
- * Description:	 base for tests of classes inheriting from VariableValue abstract class
- * @author			Bob Jacobsen
- * @version
- */
+// VariableValueTest.java
 
 package jmri.jmrit.symbolicprog;
 
@@ -21,6 +15,11 @@ import junit.framework.Assert;
 import jmri.*;
 import jmri.progdebugger.*;
 
+/**
+ * Base for tests of classes inheriting from VariableValue abstract class
+ * @author	Bob Jacobsen, Copyright 2002
+ * @version     $Revision: 1.3 $
+ */
 public abstract class VariableValueTest extends TestCase {
 
 	abstract VariableValue makeVar(String label, String comment, boolean readOnly,
@@ -421,6 +420,11 @@ public abstract class VariableValueTest extends TestCase {
 
 	// abstract class has no main entry point, test suite
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(VariableValueTest.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(VariableValueTest.class.getName());
+
+    // The minimal setup for log4J
+    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
+    protected void setUp() { log4jfixtureInst.setUp(); }
+    protected void tearDown() { log4jfixtureInst.tearDown(); }
 
 }

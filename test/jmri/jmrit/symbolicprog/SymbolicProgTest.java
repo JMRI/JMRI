@@ -2,22 +2,17 @@
 
 package jmri.jmrit.symbolicprog;
 
-import java.io.*;
-import java.util.*;
-import javax.swing.*;
+import jmri.InstanceManager;
+import jmri.Programmer;
+import jmri.progdebugger.ProgDebugger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.jdom.*;
-import org.jdom.output.*;
-
-import jmri.*;
-import jmri.progdebugger.*;
 
 /**
  * Test the jmri.jmrix.symbolicprog package.
  * @author			Bob Jacobsen
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class SymbolicProgTest extends TestCase {
 
@@ -51,6 +46,7 @@ public class SymbolicProgTest extends TestCase {
 		suite.addTest(jmri.jmrit.symbolicprog.DecVariableValueTest.suite());
 		suite.addTest(jmri.jmrit.symbolicprog.HexVariableValueTest.suite());
 		suite.addTest(jmri.jmrit.symbolicprog.LongAddrVariableValueTest.suite());
+		suite.addTest(jmri.jmrit.symbolicprog.SplitVariableValueTest.suite());
 		suite.addTest(jmri.jmrit.symbolicprog.CvValueTest.suite());
 		suite.addTest(jmri.jmrit.symbolicprog.CvTableModelTest.suite());
 		suite.addTest(jmri.jmrit.symbolicprog.VariableTableModelTest.suite());
