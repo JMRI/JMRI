@@ -1,14 +1,14 @@
-<!-- Defines XML documenting a layout config, esp. information -->
-<!-- on hardware connections -->
-<!-- $Id: layout-config.dtd,v 1.12 2003-07-10 05:17:21 jacobsen Exp $ -->
+<!-- Defines XML documenting a JMRI config, esp. information -->
+<!-- on program preferences, hardware configuration, and user items -->
+<!-- $Id: layout-config.dtd,v 1.13 2003-07-27 01:04:45 jacobsen Exp $ -->
 
-<!ELEMENT layout-config (turnouts | sensors | blocks | signals | 
+<!ELEMENT layout-config (connection | gui | programmer | perform |
+						preferences | turnouts | sensors | blocks | signals | 
 						securityelements | aspectgenerator | paneleditor |
 						signalheads | application)*>
 
 <!-- Overall application configuration -->
-<!-- Copied from DecoderPro-config -->
-<!ELEMENT application (connection*, gui, programmer)>
+<!ELEMENT application (connection*, gui*, programmer, perform*)>
   <!ATTLIST application class CDATA #REQUIRED>
 
 <!--  Application section identifies serial port info -->
@@ -20,14 +20,20 @@
   <!ATTLIST connection option2 CDATA #IMPLIED> <!-- Meaning is protocol specific -->
 
 <!--  Application section identifies GUI info, e.g. look&feel info-->
+<!ELEMENT gui EMPTY>
   <!ATTLIST gui class CDATA #REQUIRED>
   <!ATTLIST gui LAFclass CDATA #IMPLIED>  <!-- default means use system default -->
 
 <!--  Application section identifies programmer options -->
-  <!ELEMENT programmer EMPTY>
+<!ELEMENT programmer EMPTY>
+  <!ATTLIST programmer class CDATA #REQUIRED>
   <!ATTLIST programmer defaultFile CDATA "Basic.xml">
   <!ATTLIST programmer verifyBeforeWrite (yes | no) "no" >
 
+<!--  Section identifies swing.Actions to invoke -->
+<!ELEMENT perform EMPTY>
+  <!ATTLIST perform class CDATA #REQUIRED>
+  <!ATTLIST perform classname CDATA #REQUIRED>
 
 <!ELEMENT sensors (sensor*) >
 
