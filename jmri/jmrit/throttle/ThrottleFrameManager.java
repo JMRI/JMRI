@@ -11,7 +11,7 @@ import java.util.Iterator;
  *
  * @author     Glen Oberhauser
  * @created    March 25, 2003
- * @version    $Revision: 1.8 $
+ * @version    $Revision: 1.9 $
  */
 public class ThrottleFrameManager
 {
@@ -38,6 +38,9 @@ public class ThrottleFrameManager
 		throttleFrames = new ArrayList(0);
 	}
 
+	/**
+	 * Get the singleton instance of this class.
+	 */
 	public static ThrottleFrameManager instance()
 	{
 		if (instance == null)
