@@ -2,7 +2,7 @@
 
 package jmri.jmrix.loconet;
 
-import jmri.*;
+import jmri.AbstractSignalHead;
 
 /**
  * Extend jmri.SignalHead for signals implemented by an SE8c
@@ -21,7 +21,7 @@ import jmri.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */public class SE8cSignalHead extends AbstractSignalHead implements LocoNetListener {
 
     public SE8cSignalHead(int pNumber, String sys) {
@@ -77,7 +77,10 @@ import jmri.*;
                 address = mNumber+1;
                 closed = false;
                 break;
+            case FLASHGREEN:
             case FLASHYELLOW:
+            case FLASHRED:
+            case DARK:
                 address = mNumber+1;
                 closed = true;
                 break;
@@ -126,6 +129,9 @@ import jmri.*;
              if (myAddressPlusOne(sw1, sw2)) {
                  if ((sw2 & LnConstants.OPC_SW_REQ_DIR)!=0) {
                      // was set CLOSED
+                     // don't change if one of the possibilities already
+                     if ( ! (mAppearance==FLASHYELLOW|| mAppearance==DARK
+                            || mAppearance==FLASHGREEN || mAppearance==FLASHRED))
                      mAppearance = FLASHYELLOW;
                  } else {
                      // was set THROWN
