@@ -8,7 +8,7 @@ import javax.swing.AbstractAction;
  * Create a new throttle.
  *
  * @author			Glen Oberhauser
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class EditThrottlePreferencesAction extends AbstractAction {
 
@@ -18,6 +18,12 @@ public class EditThrottlePreferencesAction extends AbstractAction {
      */
     public EditThrottlePreferencesAction(String s) {
         super(s);
+
+    // disable the ourselves if there is no throttle Manager
+        if (jmri.InstanceManager.throttleManagerInstance()==null) {
+            setEnabled(false);
+        }
+
     }
 
     /**

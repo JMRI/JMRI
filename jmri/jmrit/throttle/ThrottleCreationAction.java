@@ -9,7 +9,7 @@ import jmri.InstanceManager;
  * Create a new throttle.
  *
  * @author			Glen Oberhauser
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class ThrottleCreationAction extends AbstractAction {
 
@@ -19,6 +19,10 @@ public class ThrottleCreationAction extends AbstractAction {
      */
     public ThrottleCreationAction(String s) {
         super(s);
+    // disable the ourselves if there is no throttle Manager
+        if (jmri.InstanceManager.throttleManagerInstance()==null) {
+            setEnabled(false);
+        }         
     }
 
     public ThrottleCreationAction() {

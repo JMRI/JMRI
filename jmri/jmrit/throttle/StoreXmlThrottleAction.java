@@ -14,7 +14,7 @@ import org.jdom.output.*;
  * Save throttles to XML
  *
  * @author			Glen Oberhauser
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class StoreXmlThrottleAction extends AbstractAction {
 
@@ -24,6 +24,10 @@ public class StoreXmlThrottleAction extends AbstractAction {
      */
     public StoreXmlThrottleAction(String s) {
         super(s);
+	// disable the ourselves if there is no throttle Manager
+        if (jmri.InstanceManager.throttleManagerInstance()==null) {
+            setEnabled(false);
+        }
     }
 
     /**

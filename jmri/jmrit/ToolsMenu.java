@@ -11,7 +11,7 @@ import java.util.*;
  * Create a "Tools" menu containing the Jmri system-independent tools
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class ToolsMenu extends JMenu {
     public ToolsMenu(String name) {
@@ -49,6 +49,12 @@ public class ToolsMenu extends JMenu {
         throttleMenu.add(new jmri.jmrit.throttle.LoadXmlThrottleAction(rb.getString("MenuItemLoadThrottleLayout")));
         throttleMenu.add(new jmri.jmrit.throttle.EditThrottlePreferencesAction(rb.getString("MenuItemEditThrottlePreferences")));
         add(throttleMenu);
+
+	// disable the throttle menu if there is no throttle Manager
+        if (jmri.InstanceManager.throttleManagerInstance()==null) {
+            throttleMenu.setEnabled(false);
+        }
+
 
         add(new jmri.jmrit.sendpacket.SendPacketAction( rb.getString("MenuItemSendDCCPacket") ));
 

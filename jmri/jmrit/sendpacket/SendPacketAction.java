@@ -10,11 +10,18 @@ import javax.swing.*;
  * Swing action to create and register a SendPacketFrame object
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SendPacketAction extends AbstractAction {
 
-    public SendPacketAction(String s) { super(s);}
+    public SendPacketAction(String s) { 
+	super(s);
+
+     // disable ourself if there is no command Station object available
+        if (jmri.InstanceManager.commandStationInstance()==null) {
+            setEnabled(false);
+        }
+    }
 
     public SendPacketAction() { this("Send DCC packet");}
 

@@ -15,7 +15,7 @@ import org.jdom.Element;
  *  Load throttles from XML
  *
  * @author     Glen Oberhauser
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class LoadXmlThrottleAction extends AbstractAction
 {
@@ -28,6 +28,10 @@ public class LoadXmlThrottleAction extends AbstractAction
 	public LoadXmlThrottleAction(String s)
 	{
 		super(s);
+	   // disable the ourselves if there is no throttle Manager
+	   if (jmri.InstanceManager.throttleManagerInstance()==null) {
+	         setEnabled(false);
+	   }
 	}
 
 	/**
@@ -103,7 +107,7 @@ public class LoadXmlThrottleAction extends AbstractAction
 	 *  An extension of the abstract XmlFile. No changes made to that class.
 	 *
 	 * @author     glen
-         * @version    $Revision: 1.8 $
+         * @version    $Revision: 1.9 $
 	 */
 	class ThrottlePrefs extends XmlFile
 	{
