@@ -29,7 +29,7 @@ import org.jdom.Attribute;
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: PaneProgPane.java,v 1.11 2001-12-18 07:31:07 jacobsen Exp $
+ * @version			$Id: PaneProgPane.java,v 1.12 2001-12-18 20:35:42 jacobsen Exp $
  */
 public class PaneProgPane extends javax.swing.JPanel 
 							implements java.beans.PropertyChangeListener  {
@@ -321,6 +321,14 @@ public class PaneProgPane extends javax.swing.JPanel
 				g.setConstraints(l, cs);
 				c.add(l);
 				cs.gridwidth = 1;
+				// make sure this will get read/written, even if real vars not on pane
+				int iVar;
+				iVar = _varModel.findVarIndex("Address Format");
+				if (iVar>=0) varList.add(new Integer(iVar));
+				iVar = _varModel.findVarIndex("Primary Address");
+				if (iVar>=0) varList.add(new Integer(iVar));
+				iVar = _varModel.findVarIndex("Extended Address");
+				if (iVar>=0) varList.add(new Integer(iVar));
 			} 
 			else if (name.equals("row")) {
 				// nested "row" elements ...
@@ -421,6 +429,14 @@ public class PaneProgPane extends javax.swing.JPanel
 				g.setConstraints(l, cs);
 				c.add(l);
 				cs.gridheight = 1;
+				// make sure this will get read/written, even if real vars not on pane
+				int iVar;
+				iVar = _varModel.findVarIndex("Address Format");
+				if (iVar>=0) varList.add(new Integer(iVar));
+				iVar = _varModel.findVarIndex("Primary Address");
+				if (iVar>=0) varList.add(new Integer(iVar));
+				iVar = _varModel.findVarIndex("Extended Address");
+				if (iVar>=0) varList.add(new Integer(iVar));
 			} 
 			else if (name.equals("column")) {
 				// nested "column" elements ...

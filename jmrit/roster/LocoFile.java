@@ -20,7 +20,7 @@ import org.jdom.output.*;
  * in memory.  The interal storage is a JDOM tree. See locomotive-config.dtd
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version		 	$Id: LocoFile.java,v 1.6 2001-12-18 07:31:07 jacobsen Exp $
+ * @version		 	$Id: LocoFile.java,v 1.7 2001-12-18 20:35:40 jacobsen Exp $
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
@@ -37,39 +37,46 @@ public class LocoFile extends XmlFile {
 	 * Load a CvTableModel from the locomotive element in the File
 	 */
 	public static void loadCvModel(Element loco, CvTableModel cvModel){
-			// get the CVs and load
-			Element values = loco.getChild("values");
-			if (values != null) {
-			// get the CV values and load
-				List elementList = values.getChildren("CVvalue");
-				if (log.isDebugEnabled()) log.debug("Found "+elementList.size()+" CVvalues");
-				
-				for (int i=0; i<elementList.size(); i++) {
-					// locate the row 
-					if ( ((Element)(elementList.get(i))).getAttribute("name") == null) {
-						  if (log.isDebugEnabled()) log.debug("unexpected null in name "+((Element)(elementList.get(i)))+" "+((Element)(elementList.get(i))).getAttributes());
-						  break;
-					}
-					if ( ((Element)(elementList.get(i))).getAttribute("value") == null) {
-						  if (log.isDebugEnabled()) log.debug("unexpected null in value "+((Element)(elementList.get(i)))+" "+((Element)(elementList.get(i))).getAttributes());
-						  break;
-					}
-
-					String name = ((Element)(elementList.get(i))).getAttribute("name").getValue();
-					String value = ((Element)(elementList.get(i))).getAttribute("value").getValue();
-					if (log.isDebugEnabled()) log.debug("CV: "+i+"th entry, CV number "+name+" has value: "+value);
-
-					int cv = Integer.valueOf(name).intValue();
-					CvValue cvObject = (CvValue)(cvModel.allCvVector().elementAt(cv));
-					if (cvObject == null) {
-						log.warn("CV "+cv+" was in loco file, but not defined by the decoder definition");
-						cvModel.addCV(name);
-						cvObject = (CvValue)(cvModel.allCvVector().elementAt(cv));
-					}
-					cvObject.setValue(Integer.valueOf(value).intValue());
-					cvObject.setState(CvValue.FROMFILE);
+		CvValue cvObject;
+		// get the CVs and load
+		Element values = loco.getChild("values");
+		if (values != null) {
+		// get the CV values and load
+			List elementList = values.getChildren("CVvalue");
+			if (log.isDebugEnabled()) log.debug("Found "+elementList.size()+" CVvalues");
+	
+			for (int i=0; i<elementList.size(); i++) {
+				// locate the row 
+				if ( ((Element)(elementList.get(i))).getAttribute("name") == null) {
+					  if (log.isDebugEnabled()) log.debug("unexpected null in name "+((Element)(elementList.get(i)))+" "+((Element)(elementList.get(i))).getAttributes());
+					  break;
 				}
-			} else log.error("no values element found in config file; CVs not configured");
+				if ( ((Element)(elementList.get(i))).getAttribute("value") == null) {
+					  if (log.isDebugEnabled()) log.debug("unexpected null in value "+((Element)(elementList.get(i)))+" "+((Element)(elementList.get(i))).getAttributes());
+					  break;
+				}
+
+				String name = ((Element)(elementList.get(i))).getAttribute("name").getValue();
+				String value = ((Element)(elementList.get(i))).getAttribute("value").getValue();
+				if (log.isDebugEnabled()) log.debug("CV: "+i+"th entry, CV number "+name+" has value: "+value);
+
+				int cv = Integer.valueOf(name).intValue();
+				cvObject = (CvValue)(cvModel.allCvVector().elementAt(cv));
+				if (cvObject == null) {
+					log.warn("CV "+cv+" was in loco file, but not defined by the decoder definition");
+					cvModel.addCV(name);
+					cvObject = (CvValue)(cvModel.allCvVector().elementAt(cv));
+				}
+				cvObject.setValue(Integer.valueOf(value).intValue());
+				cvObject.setState(CvValue.FROMFILE);
+			}
+		} else log.error("no values element found in config file; CVs not configured");
+		
+		// ugly hack - set CV17 back to fromFile if present
+		// this is here because setting CV17, then CV18 seems to set
+		// CV17 to Editted.  This needs to be understood & fixed.
+		cvObject = (CvValue)(cvModel.allCvVector().elementAt(17));
+		cvObject.setState(CvValue.FROMFILE);
 	}
 	
 	public void writeFile(File file, CvTableModel cvModel, VariableTableModel variableModel, RosterEntry r) {
