@@ -1,5 +1,5 @@
 <!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
-<!-- $Id: Jython.html,v 1.1 2003-09-02 20:11:40 jacobsen Exp $ -->
+<!-- $Id: Jython.html,v 1.2 2003-09-02 20:56:42 jacobsen Exp $ -->
 <html>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -33,12 +33,56 @@ available on many types of computers.  A Java-based varient, called
 has been integrated with JMRI to make it easy to control a model railroad
 from the command line of a computer.
 
-For example:
+For example, you can run the JmriDemo application with a
+Jython command line, which is then available for manipulating
+objects like turnouts and sensors:
 
 <PRE>
+% ./jmrithon
+execFileJython 2.1 on java1.4.1_01 (JIT: null)
+(Type "copyright", "credits" or "license" for more information.
+
+>>> execfile("JmriDemo.py")
+     0 JmriDemo.JMRIdemo                     INFO  - program starts [main]
+ 11109 JmriDemo.JMRIdemo                     INFO  - main initialization done [main]
+
+>>> turnouts.newTurnout("LT1", "")
+jmri.jmrix.loconet.LnTurnout@1a8f49
+
+>>> turnouts.getTurnout("LT1").getCommandedState()
+1
+
+>>> lt1 = turnouts.getTurnout("LT1")
+
+>>> lt1.setCommandedState(CLOSED)
+
+>>> lt1.commandedState
+2
+
+>>> lt1.commandedState = THROWN
+
+>>> lt1.commandedState
+4
+
+>>> 
 </PRE>
 
-
+<BR/>This also shows some of the simplifications that
+Jython and the Python language brings to using JMRI code.  The
+Java member function:
+<PRE>
+	turnout.SetCommandedState(jmri.Turnout.CLOSED);
+</PRE>
+can also be expressed in Jython as:
+<PRE>
+	turnout.commandedState = CLOSED
+</PRE>
+<BR/>
+This results in much easier-to-read code.
+<P>
+For more information on the Jython language and it's 
+relations with Java, the best reference is the
+book published by O"Reilly.
 
 <H2>Setup</H2>
 
