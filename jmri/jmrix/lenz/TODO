@@ -1,6 +1,6 @@
 TODO List for Lenz code (as of 9/28/2003):
 1) Need to add  listeners to all classes that SEND messages so they 
-recieve the apropriate responce messages.  On classes where more than 
+recieve the apropriate response messages.  On classes where more than 
 one instance may exists, need to syncronize the listeners for the messages
 that DO NOT include addresses (The Throttle is one of them).  
 2) Need to write Feedback code

@@ -67,23 +67,23 @@ public final static int CS_DH_ERROR_NONZERO_SPD= 0x86; /* One or both units
 						       has a non-zero 
  						       speed setting */
 
-/* Service mode and Informational responces from the command station */
-public final static int CS_SERVICE_MODE_RESPONCE = 0x63;
+/* Service mode and Informational responses from the command station */
+public final static int CS_SERVICE_MODE_RESPONSE = 0x63;
 
 /* service mode sub commands for byte 2 */
-public final static int CS_SERVICE_DIRECT_RESPONCE = 0x14;  /* direct mode 
-							    responce */
-public final static int CS_SERVICE_REG_PAGE_RESPONCE =0x10; /* Register and
-							  paged mode responce */
+public final static int CS_SERVICE_DIRECT_RESPONSE = 0x14;  /* direct mode 
+							    response */
+public final static int CS_SERVICE_REG_PAGE_RESPONSE =0x10; /* Register and
+							  paged mode response */
 public final static int CS_SOFTWARE_VERSION          =0x21; /*software version 
 							    is included with 
 							    the 0x63 group.*/
 
-/* informational request responce */
-public final static int CS_REQUEST_RESPONCE = 0x62;
-/* information request responce sub messages for byte 2 */
+/* informational request response */
+public final static int CS_REQUEST_RESPONSE = 0x62;
+/* information request response sub messages for byte 2 */
 /* CS_SOFTWARE_VERSION (0x21) is a valid byte 2 command for 0x62 */
-public final static int CS_STATUS_RESPONCE  = 0x22; /* command station status */
+public final static int CS_STATUS_RESPONSE  = 0x22; /* command station status */
 
 
 /* Emergency Stop */
@@ -96,8 +96,8 @@ public final static int BC_EVERYTHING_STOP = 0x02;   /* broadcast of
 how many address byte/data byte pairs follow the command */
 public final static int BC_FEEDBACK        =0x40;
 
-/* Accessory information responce */
-public final static int ACC_INFO_RESPONCE = 0x20;
+/* Accessory information response */
+public final static int ACC_INFO_RESPONSE = 0x42;
 
 /* Locomotive Information for V1 & V2 */
 public final static int LOCO_AVAILABLE_V1 = 0x83; /* for XNet V1 */
@@ -112,15 +112,15 @@ public final static int LOCO_INFO_MU_ADDRESS  = 0xE2;
 public final static int LOCO_INFO_DH_UNIT     = 0xE6;
 public final static int LOCO_INFO_RESPONSE    = 0xE3;
 
-/* responce types for LOCO_INFO_RESPONCE (byte two commands */
+/* response types for LOCO_INFO_RESPONSE (byte two commands */
 public final static int LOCO_NOT_AVAILABLE     = 0x40;
 public final static int LOCO_FUNCTION_STATUS  = 0x50;
 
-/* responces for stack/database searches */
-public final static int LOCO_SEARCH_RESPONCE_N  = 0x40; /*Normal Loco */
-public final static int LOCO_SEARCH_RESPONCE_DH = 0x41; /* in DH */
-public final static int LOCO_SEARCH_RESPONCE_MU_BASE = 0x42; /*MU base address */
-public final static int LOCO_SEARCH_RESPONCE_MU = 0x43; /* MUED Loco */
+/* responses for stack/database searches */
+public final static int LOCO_SEARCH_RESPONSE_N  = 0x40; /*Normal Loco */
+public final static int LOCO_SEARCH_RESPONSE_DH = 0x41; /* in DH */
+public final static int LOCO_SEARCH_RESPONSE_MU_BASE = 0x42; /*MU base address */
+public final static int LOCO_SEARCH_RESPONSE_MU = 0x43; /* MUED Loco */
 public final static int LOCO_SEARCH_NO_RESULT   = 0x44; /* No address found */
 
 /* Double Header Info for XNet V1 and V2 */
@@ -273,26 +273,26 @@ public final static int CS_MULTI_UNIT_REQ_BKWD = 0x04;
 
 /* The following are for information requests from the LI100/LI100F/LI101*/
 
-/* LI10x responces for general messages */
-public final static int LI_MESSAGE_RESPONCE_HEADER = 0x01;
+/* LI10x responses for general messages */
+public final static int LI_MESSAGE_RESPONSE_HEADER = 0x01;
 /* First, we have an error for timeouts between the PC and the LI10x */
-public final static int LI_MESSAGE_RESPONCE_PC_DATA_ERROR = 0x01;
+public final static int LI_MESSAGE_RESPONSE_PC_DATA_ERROR = 0x01;
 /* Second, we have an error for timeouts between the LI10x and the C.S.*/
-public final static int LI_MESSAGE_RESPONCE_CS_DATA_ERROR = 0x02;
+public final static int LI_MESSAGE_RESPONSE_CS_DATA_ERROR = 0x02;
 /* Next is an unknown communications error */
-public final static int LI_MESSAGE_RESPONCE_UNKNOWN_DATA_ERROR = 0x03;
-/* Now, we have a responce indicating what was sent was OK */
-public final static int LI_MESSAGE_RESPONCE_SEND_SUCCESS = 0x04;
+public final static int LI_MESSAGE_RESPONSE_UNKNOWN_DATA_ERROR = 0x03;
+/* Now, we have a response indicating what was sent was OK */
+public final static int LI_MESSAGE_RESPONSE_SEND_SUCCESS = 0x04;
 /* and a message indicating the LI10x doesn't have a timeslot on the 
 Xpressnet (possibly too many devices connected) */
-public final static int LI_MESSAGE_RESPONCE_TIMESLOT_ERROR = 0x05;
+public final static int LI_MESSAGE_RESPONSE_TIMESLOT_ERROR = 0x05;
 /* Last, there is an error for an LI10x buffer overflow */
-public final static int LI_MESSAGE_RESPONCE_BUFFER_OVERFLOW = 0x06;
+public final static int LI_MESSAGE_RESPONSE_BUFFER_OVERFLOW = 0x06;
 
 /* LI100/LI100F/LI101 information (version) request */
 public final static int LI_VERSION_REQUEST = 0xF0;
-/* The responce to the above */
-public final static int LI_VERSION_RESPONCE = 0x02;
+/* The response to the above */
+public final static int LI_VERSION_RESPONSE = 0x02;
 
 /* request to the LI101 */
 public final static int LI101_REQUEST = 0xF2;

@@ -13,7 +13,7 @@ import jmri.*;
  *
  * @see            jmri.Programmer
  * @author         Paul Bender Copyright (C) 2003
- * @version        $Revision: 1.2 $
+ * @version        $Revision: 1.3 $
  */
 
 public class XNetOpsModeProgrammer implements Programmer,XNetListener 
@@ -115,16 +115,16 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
            // request, so just ignore anything that comes in
            return;
         } else if (progState==XNetProgrammer.REQUESTSENT) {
-            if(l.getElement(0)==XNetConstants.LI_MESSAGE_RESPONCE_HEADER &&
-               l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONCE_SEND_SUCCESS) {
+            if(l.getElement(0)==XNetConstants.LI_MESSAGE_RESPONSE_HEADER &&
+               l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_SEND_SUCCESS) {
 	  	  progListener.programmingOpReply(value,jmri.ProgListener.OK);
 	    } else {
               /* this is an error */
-              if(l.getElement(0)==XNetConstants.LI_MESSAGE_RESPONCE_HEADER &&
-		((l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONCE_UNKNOWN_DATA_ERROR ||
-		  l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONCE_CS_DATA_ERROR ||
-		  l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONCE_PC_DATA_ERROR ||
-		  l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONCE_TIMESLOT_ERROR))) {   
+              if(l.getElement(0)==XNetConstants.LI_MESSAGE_RESPONSE_HEADER &&
+		((l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_UNKNOWN_DATA_ERROR ||
+		  l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_CS_DATA_ERROR ||
+		  l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_PC_DATA_ERROR ||
+		  l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_TIMESLOT_ERROR))) {   
                      /* this is a communications error */
                      progListener.programmingOpReply(value,jmri.ProgListener.FailedTimeout);
 	      } else if(l.getElement(0)==XNetConstants.CS_INFO &&

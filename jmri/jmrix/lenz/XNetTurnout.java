@@ -3,7 +3,7 @@
  *
  * Description:		extend jmri.AbstractTurnout for XNet layouts
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 
 package jmri.jmrix.lenz;
@@ -21,7 +21,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
     public int getNumber() { return mNumber; }
 
-    // Handle a request to change state by sending a LocoNet command
+    // Handle a request to change state by sending an XPressNet command
     protected void forwardCommandChangeToLayout(int s) {
         // find the command station
         LenzCommandStation cs = XNetTrafficController.instance().getCommandStation();
@@ -42,11 +42,53 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     // _once_ if anything has changed state (or set the commanded state directly)
     public void message(XNetMessage l) {
         // check validity & addressing
-        if (XNetTrafficController.instance()
+        // if this is an ODD numbered turnout, then we always get the 
+        // right response from .getTurnoutMsgAddr.  If this is an even 
+        // numbered turnout, we need to check the messages for the odd 
+        // numbered turnout in the nibble as well.
+        if ( XNetTrafficController.instance()
             .getCommandStation()
-            .getTurnoutMsgAddr(l) != mNumber) return;
-        // is for this object, parse message type
-        log.error("message function invoked, but not yet prepared");
+            .getTurnoutMsgAddr(l) == mNumber) {
+            // is for this object, parse message type
+            if (log.isDebugEnabled()) log.debug("Message for turnout" + mNumber);
+            int turnout_type=l.getElement(2) & 0x60;
+            if(turnout_type==0x00 || turnout_type==0x20) {
+		/* this is a turnout response */
+                if((l.getElement(2) & 0x03)!=0) {
+                    /* this is for the lower half of the nibble */
+                    int state=l.getElement(2) & 0x03;
+                    XNetMessage msg =  XNetTrafficController.instance()
+                                                .getCommandStation()
+						.getTurnoutCommandMsg(mNumber,
+                                                  (state & CLOSED)!=0,
+                                                  (state & THROWN)!=0,
+                                                  false );                    
+                // XNetTrafficController.instance().sendXNetMessage(msg, this);
+                }
+             }    
+            } else if ( ((mNumber%2)==0) && 
+                        (XNetTrafficController.instance()
+                                   .getCommandStation()
+                                   .getTurnoutMsgAddr(l) == mNumber-1)) {
+            // is for this object, parse message type
+            if (log.isDebugEnabled()) log.debug("Message for turnout" + mNumber);
+            int turnout_type=l.getElement(2) & 0x60;
+            if(turnout_type==0x00 || turnout_type==0x20)
+            {
+		/* this is a turnout response */
+                if((l.getElement(2) & 0x03)!=0) {
+                    /* this is for the upper half of the nibble */
+                int state=l.getElement(2) & 0x0C;
+                XNetMessage msg =  XNetTrafficController.instance()
+                                                .getCommandStation()
+						.getTurnoutCommandMsg(mNumber,
+                                                  (state & CLOSED)!=0,
+                                                  (state & THROWN)!=0,
+                                                  false );
+                //XNetTrafficController.instance().sendXNetMessage(msg, this);
+                }                 
+            }
+	} else { return; }
     }
 
     public void dispose() {

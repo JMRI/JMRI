@@ -6,7 +6,7 @@ import jmri.jmrix.AbstractThrottle;
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
  * @author     Paul Bender (C) 2002,2003
- * @version    $Revision: 1.15 $
+ * @version    $Revision: 1.16 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -569,8 +569,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	    	 if(log.isDebugEnabled()) { log.debug("Current throttle status is THROTTLECMDSENT"); }
 	    // For a Throttle Command, we're just looking for a return 
             // acknowledgment, Either a Success or Failure message.
-	    if(l.getElement(0)==XNetConstants.LI_MESSAGE_RESPONCE_HEADER &&
-	       l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONCE_SEND_SUCCESS) {
+	    if(l.getElement(0)==XNetConstants.LI_MESSAGE_RESPONSE_HEADER &&
+	       l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_SEND_SUCCESS) {
 	    	 if(log.isDebugEnabled()) { log.debug("Last Command processed successfully."); }
                  // Since we recieved an "ok",  we want to make sure "isAvailable reflects we are in control
 	         if(this.isAvailable==false) {
@@ -579,11 +579,11 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                                                  new Boolean(this.isAvailable = true));
                  }
 		requestState=THROTTLEIDLE;
-	    } else if(l.getElement(0)==XNetConstants.LI_MESSAGE_RESPONCE_HEADER &&
-                     ((l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONCE_UNKNOWN_DATA_ERROR ||
-               	       l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONCE_CS_DATA_ERROR ||
-                       l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONCE_PC_DATA_ERROR ||
-                       l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONCE_TIMESLOT_ERROR))) {
+	    } else if(l.getElement(0)==XNetConstants.LI_MESSAGE_RESPONSE_HEADER &&
+                     ((l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_UNKNOWN_DATA_ERROR ||
+               	       l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_CS_DATA_ERROR ||
+                       l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_PC_DATA_ERROR ||
+                       l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_TIMESLOT_ERROR))) {
                      /* this is a communications error */
                      log.error("Communications error occured - message recieved was: " + l);
 		     requestState=THROTTLEIDLE;
@@ -595,7 +595,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
               } else {
                         /* this is an unknown error */
 		     requestState=THROTTLEIDLE;                        
-                     log.warn("Recieved unhandled responce: " + l);
+                     log.warn("Recieved unhandled response: " + l);
               }
 
 	} else if(requestState==THROTTLESTATSENT) {
