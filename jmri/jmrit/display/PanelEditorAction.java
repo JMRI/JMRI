@@ -10,7 +10,7 @@ import javax.swing.JLayeredPane;
  * Start a PanelEditor.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  * @see         jmri.jmrit.display.PanelEditorAction
  */
 public class PanelEditorAction extends AbstractAction {
@@ -25,7 +25,7 @@ public class PanelEditorAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
         PanelEditor panel = new PanelEditor();
-        JFrame targetFrame = panel.makeFrame("Panel", 200, 200);
+        JFrame targetFrame = panel.makeFrame("Panel");
         targetFrame.setLocation(20,20);
 
         panel.setTitle();
