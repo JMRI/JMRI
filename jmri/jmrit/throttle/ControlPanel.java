@@ -35,7 +35,7 @@ import org.jdom.Element;
  *  TODO: fix speed increments (14, 28)
  *
  * @author     glen
- * @version    $Revision: 1.32 $
+ * @version    $Revision: 1.33 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener
 {
@@ -52,6 +52,10 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 
 	public int accelerateKey = 107; // numpad +;
 	public int decelerateKey = 109; // numpad -;
+        public int accelerateKey1 = KeyEvent.VK_LEFT ; // Left Arrow
+        public int decelerateKey1 = KeyEvent.VK_RIGHT ; // Left Arrow
+        public int accelerateKey2 = KeyEvent.VK_PAGE_UP ; // Left Arrow
+        public int decelerateKey2 = KeyEvent.VK_PAGE_DOWN ; // Left Arrow
 	public int reverseKey = KeyEvent.VK_DOWN;
 	public int forwardKey = KeyEvent.VK_UP;
 	public int stopKey = 111; // numpad /
@@ -318,7 +322,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	 *  A KeyAdapter that listens for the keys that work the control pad buttons
 	 *
 	 * @author     glen
-         * @version    $Revision: 1.32 $
+         * @version    $Revision: 1.33 $
 	 */
 	class ControlPadKeyListener extends KeyAdapter
 	{
@@ -329,7 +333,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 		 */
 		public void keyPressed(KeyEvent e)
 		{
-			if (e.getKeyCode() == accelerateKey)
+			if ( (e.getKeyCode() == accelerateKey) | (e.getKeyCode() == accelerateKey1) )
 			{
 				if (speedSlider.isEnabled())
 				{
@@ -339,7 +343,17 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 					}
 				}
 			}
-			else if (e.getKeyCode() == decelerateKey)
+                        if ( e.getKeyCode() == accelerateKey2 )
+                        {
+                                if (speedSlider.isEnabled())
+                                {
+                                        if (speedSlider.getValue() != speedSlider.getMaximum())
+                                        {
+                                                speedSlider.setValue(speedSlider.getValue() + 10);
+                                        }
+                                }
+                        }
+			else if ( (e.getKeyCode() == decelerateKey) | (e.getKeyCode() == decelerateKey1) )
 			{
 				if (speedSlider.isEnabled())
 				{
@@ -349,6 +363,16 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 					}
 				}
 			}
+                        else if ( e.getKeyCode() == decelerateKey2 )
+                        {
+                                if (speedSlider.isEnabled())
+                                {
+                                        if (speedSlider.getValue() != speedSlider.getMinimum())
+                                        {
+                                                speedSlider.setValue(speedSlider.getValue() - 10);
+                                        }
+                                }
+                        }
 			else if (e.getKeyCode() == forwardKey)
 			{
 				if (forwardButton.isEnabled())
