@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 
-/** 
+/**
  * Encapsulate a single CV value and provide programming access to the decoder.
  *
  *<P>There are three relevant parameters:  Busy, Value, State.  Busy == true means
@@ -22,11 +22,11 @@ import javax.swing.JTextField;
  *
  * Description:		Represents a single CV value
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: CvValue.java,v 1.1 2002-02-28 20:30:16 jacobsen Exp $
+ * @version			$Id: CvValue.java,v 1.2 2002-05-06 04:13:59 jacobsen Exp $
  */
 public class CvValue extends AbstractValue implements ProgListener {
 
-	public CvValue(int num) { 
+	public CvValue(int num) {
 		_num = num;
 		_tableEntry = new JTextField("0", 3);
 		_defaultColor = _tableEntry.getBackground();
@@ -34,31 +34,31 @@ public class CvValue extends AbstractValue implements ProgListener {
 	}
 	public int number() { return _num; }
 	private int _num;
-	
+
 	private JLabel _status = null;
-	
+
 	public int getValue()  { return _value; }
-	
+
 	Color getColor() { return _tableEntry.getBackground(); }
-	
+
 	protected void notifyValueChange(int value) {
-		prop.firePropertyChange("Value", null, new Integer(value)); 
+		prop.firePropertyChange("Value", null, new Integer(value));
 	}
 	/**
 	 * Edit a new value into the CV. Only use this for external edits, e.g. set form a GUI,
 	 * not for internal uses, as it sets the state to EDITTED
 	 */
-	public void setValue(int value) { 
+	public void setValue(int value) {
 		setState(EDITTED);
 		if (_value != value) {
 			int old = _value;
 			_value = value;
 			_tableEntry.setText(""+value);
-			notifyValueChange(value); 
+			notifyValueChange(value);
 		}
 	}
 	private int _value = 0;
-	
+
 	public int getState()  { return _state; }
 	/**
 	 * Set state value and send notification.  Also sets GUI color as needed.
@@ -77,14 +77,14 @@ public class CvValue extends AbstractValue implements ProgListener {
 		}
 		if (oldstate != state) prop.firePropertyChange("State", new Integer(oldstate), new Integer(state));
 	}
-			
+
 	private int _state = 0;
-		
+
 	// read, write operations
 	public boolean isBusy() { return _busy; }
-	
+
 	/**
-	 * set the busy state and send notification. Should be used _only_ if 
+	 * set the busy state and send notification. Should be used _only_ if
 	 * this is the only thing changing
 	 */
 	private void setBusy(boolean busy) {
@@ -98,10 +98,10 @@ public class CvValue extends AbstractValue implements ProgListener {
 	 */
 	private void notifyBusyChange(boolean oldBusy, boolean newBusy) {
 		if (log.isDebugEnabled()) log.debug("notifyBusy from "+oldBusy+" to "+newBusy+" current state "+_state);
-		if (oldBusy != newBusy) prop.firePropertyChange("Busy", 
+		if (oldBusy != newBusy) prop.firePropertyChange("Busy",
 			oldBusy ? Boolean.TRUE : Boolean.FALSE,
 			newBusy ? Boolean.TRUE : Boolean.FALSE);
-	}	
+	}
 	private boolean _busy = false;
 
 	// color management
@@ -114,14 +114,14 @@ public class CvValue extends AbstractValue implements ProgListener {
 
 	// object for Table entry
 	JTextField _tableEntry = null;
-	JTextField getTableEntry() { 
+	JTextField getTableEntry() {
 		return _tableEntry;
 	}
-	
+
 	// read, write support
 	private boolean _reading = false;
 	private boolean _confirm = false;
-	
+
 	public void read(JLabel status) {
 		if (log.isDebugEnabled()) log.debug("read call with Cv number "+_num);
 		// get a programmer reference and write
@@ -167,7 +167,7 @@ public class CvValue extends AbstractValue implements ProgListener {
 			log.error("No programmer available!");
 		}
 	}
-	
+
 	public void write(JLabel status) {
 		if (log.isDebugEnabled()) log.debug("write call with Cv number "+_num);
 		// get a programmer reference and write
@@ -179,19 +179,20 @@ public class CvValue extends AbstractValue implements ProgListener {
 			_reading = false;
 			_confirm = false;
 			try {
+		        setState(UNKNOWN);
 				p.writeCV(_num, _value, this);
 			} catch (Exception e) {
+		        setState(UNKNOWN);
 				if (status != null) status.setText("Exception during CV write: "+e);
 				log.warn("Exception during CV write: "+e);
 				setBusy(false);
 			}
-			setState(UNKNOWN);
 		} else {
 			if (status != null) status.setText("No programmer available!");
 			log.error("No programmer available!");
 		}
 	}
-	
+
 	public void programmingOpReply(int value, int retval) {
 		if (log.isDebugEnabled()) log.debug("CV progOpReply for CV "+_num+" with retval "+retval
 											+" during "
@@ -225,7 +226,7 @@ public class CvValue extends AbstractValue implements ProgListener {
 		} else {
 			if (_status != null) _status.setText("Programmer error: "
 											+InstanceManager.programmerInstance().decodeErrorCode(retval));
-			
+
 			// delay to ensure that the message appears!
 			javax.swing.Timer timer = new javax.swing.Timer(1000, new java.awt.event.ActionListener() {
 						public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -245,18 +246,18 @@ public class CvValue extends AbstractValue implements ProgListener {
 		_busy = false;
 		notifyBusyChange(true, _busy);
 	}
-	
+
 	// handle parameter notification
-	java.beans.PropertyChangeSupport prop = new java.beans.PropertyChangeSupport(this);	
+	java.beans.PropertyChangeSupport prop = new java.beans.PropertyChangeSupport(this);
 	public void removePropertyChangeListener(java.beans.PropertyChangeListener p) { prop.removePropertyChangeListener(p); }
 	public void addPropertyChangeListener(java.beans.PropertyChangeListener p) { prop.addPropertyChangeListener(p); }
-		
+
 	// clean up connections when done
 	public void dispose() {
 		if (log.isDebugEnabled()) log.debug("dispose");
 	}
 
-	// initialize logging	
+	// initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CvValue.class.getName());
-		
+
 }

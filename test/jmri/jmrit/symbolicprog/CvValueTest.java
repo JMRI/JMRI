@@ -1,10 +1,4 @@
-/**
- * CvValueTest.java
- *
- * Description:
- * @author			Bob Jacobsen
- * @version
- */
+// CvValueTest.java
 
 package jmri.jmrit.symbolicprog;
 
@@ -19,6 +13,12 @@ import junit.framework.Assert;
 import jmri.*;
 import jmri.progdebugger.*;
 
+/**
+ * Test CvValue class
+ *
+ * @author			Bob Jacobsen
+ * @version         $Revision: 1.3 $
+ */
 public class CvValueTest extends TestCase {
 
 	public void testStart() {
@@ -117,6 +117,7 @@ public class CvValueTest extends TestCase {
 	// check a write operation
 	public void testCvValWrite() {
 		// initialize the system
+        log.debug("start testCvValWrite");
 		ProgDebugger p = new ProgDebugger();
 		InstanceManager.setProgrammer(p);
 
@@ -182,5 +183,9 @@ public class CvValueTest extends TestCase {
 	}
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CvValue.class.getName());
+    // The minimal setup for log4J
+    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
+    protected void setUp() { log4jfixtureInst.setUp(); }
+    protected void tearDown() { log4jfixtureInst.tearDown(); }
 
 }
