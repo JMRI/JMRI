@@ -1,38 +1,34 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_1x2.xml,v 1.18 2002-08-08 06:15:42 jacobsen Exp $ -->
+<!-- $Id: Digitrax_Basic.xml,v 1.1 2002-08-08 06:15:43 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
-					version="6" lastUpdated="20020805"/>
+					version="3" lastUpdated="20020805"/>
 
-		<!-- Version 4 - added wire colors -->
-		<!-- Version 5 - added some specific models, extended CV7 range to 249 -->
-		<!-- Version 6 - renamed family, added models -->
+		<!-- Version 3 - rename family, add decoders, fix bug with FX on output 1 -->
 		
 <decoder>
-	<family name="Premium FX with BEMF" mfg="Digitrax" 
-				lowVersionID="240" highVersionID="249">
-		<model model="DH142" numOuts="4" numFns="2">
-			<output name="4" label="Violet"/> </model>
-		<model model="DN141" numOuts="4" numFns="2">
-			<output name="4" label="Violet"/> </model>
-		<model model="DN142" numOuts="4" numFns="2">
-			<output name="4" label="Violet"/> </model>
-		<model model="DN141K2" numOuts="4" numFns="2">
-			<output name="4" label="Violet"/> </model>
-		<model model="DN141E2" numOuts="4" numFns="2">
-			<output name="4" label="Violet"/> </model>
-		<model model="DN149K2" numOuts="4" numFns="2">
-			<output name="4" label="Violet"/> </model>
+	<family name="Basic FX" mfg="Digitrax" lowVersionID="107">
+		<model model="DH083" numOuts="5" numFns="3"/>
+		<model model="DH150" numOuts="5" numFns="3"/>
+		<model model="DH380" numOuts="8" numFns="12"/>
+		<model model="DH580" numOuts="8" numFns="12"/>
+		<model model="DG380" numOuts="8" numFns="12"/>
+		<model model="DG580" numOuts="8" numFns="12"/>
+		<model model="DN144" numOuts="4" numFns="3"/>
+		<model model="DN145" numOuts="4" numFns="3"/>
+		<model model="DN146" numOuts="4" numFns="3" lowVersionID="106" highVersionID="106" />
+		<model model="DN147" numOuts="4" numFns="3"/>
+		<model model="DN148" numOuts="4" numFns="3"/>
 	</family>
 
 	<programming direct="byteOnly" paged="yes" 
 	                     register="yes" ops="yes"></programming>
 
 	<variables>
-		<variable label="Primary Address" CV="1" item="Short Address" default="03">
-			<decVal min="1" max="127"/>
-			</variable>
+		<variable label="Primary Address" CV="1" comment="Short address"
+						item="Short Address"  default="03">
+			<decVal min="1" max="127"/></variable>
 		<variable label="Start Volts" CV="2" item="Vstart"
 						comment="A value of 255 corresponds to 100%">
 			<decVal></decVal>
@@ -52,7 +48,7 @@
 		<variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
 				<decVal/>
 			</variable>
-		<variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer">
+		<variable label="Manufacturer" CV="8" readOnly="yes">
 				<decVal/>
 			</variable>
 		<variable label="F1 during DC operation" CV="13" mask="XXXXXXXV"
@@ -123,15 +119,14 @@
 				<enumChoice choice="reverse"/>
 				</enumVal>
 			</variable>
-		<variable label="Speed steps" CV="29" mask="XXXXXXVX" 
-				item="Speed Step Mode" default="1">
+		<variable label="Speed steps" CV="29" mask="XXXXXXVX"
+					item="Speed Step Mode">
 			<enumVal>
 				<enumChoice choice="14"/>
 				<enumChoice choice="28/128"/>
 				</enumVal>
 			</variable>
-		<variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1"
-					 item="Analog (DC) Operation">
+		<variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
@@ -151,8 +146,7 @@
 				<enumChoice choice="4 digit addressing"/>
 				</enumVal>
 			</variable>
-		<variable label="Forward light F0F effect generated" CV="49" mask="XXXXVVVV"
-					item="Function F0F effect generated">
+		<variable label="Function F0F effect generated" CV="49" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Normal function of lead"/>
 				<enumChoice choice="Random flicker"/>
@@ -172,8 +166,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Forward light F0F behaviour" CV="49" mask="VVVVXXXX"
-					item="Function F0F behaviour">
+		<variable label="Function F0F behaviour" CV="49" mask="VVVVXXXX">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -193,8 +186,7 @@
 				<enumChoice choice="Reserved (0xF)"/>
 				</enumVal>
 			</variable>
-		<variable label="Reverse light F0R effect generated" CV="50" mask="XXXXVVVV"
-					item="Function F0R effect generated">
+		<variable label="Function F0R effect generated" CV="50" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Normal function of lead"/>
 				<enumChoice choice="Random flicker"/>
@@ -214,8 +206,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Reverse light F0R behaviour" CV="50" mask="VVVVXXXX"
-					item="Function F0R behaviour">
+		<variable label="Function F0R behaviour" CV="50" mask="VVVVXXXX">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -235,7 +226,7 @@
 				<enumChoice choice="Reserved (0xF)"/>
 				</enumVal>
 			</variable>
-		<variable label="Function 1 effect generated" CV="51" mask="XXXXVVVV" minFn="1">
+		<variable label="Function 1 effect generated" CV="51" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Normal function of lead"/>
 				<enumChoice choice="Random flicker"/>
@@ -255,7 +246,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Function 1 behaviour" CV="51" mask="VVVVXXXX" minFn="1">
+		<variable label="Function 1 behaviour" CV="51" mask="VVVVXXXX">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -275,7 +266,7 @@
 				<enumChoice choice="Reserved (0xF)"/>
 				</enumVal>
 			</variable>
-		<variable label="Function 2 effect generated" CV="52" mask="XXXXVVVV" minFn="2">
+		<variable label="Function 2 effect generated" CV="52" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Normal function of lead"/>
 				<enumChoice choice="Random flicker"/>
@@ -295,87 +286,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Function 2 behaviour" CV="52" mask="VVVVXXXX" minFn="2">
-			<enumVal>
-				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
-				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
-				<enumChoice choice="Non directional, ON with function ON, effect phase A"/>
-				<enumChoice choice="Non directional, ON with function ON, effect phase B"/>
-				<enumChoice choice="Forward direction, ON with F0 on &amp; function ON, phase A"/>
-				<enumChoice choice="Reverse direction, ON with F0 on &amp; function ON, phase B"/>
-				<enumChoice choice="Special logic for Fwd Ditch Light or Rule 17 dimming"/>
-				<enumChoice choice="Special logic for Rev Ditch Light or Rule 17 dimming"/>
-				<enumChoice choice="Reserved (0x8)"/>
-				<enumChoice choice="Reserved (0x9)"/>
-				<enumChoice choice="Reserved (0xA)"/>
-				<enumChoice choice="Reserved (0xB)"/>
-				<enumChoice choice="Reserved (0xC)"/>
-				<enumChoice choice="Reserved (0xD)"/>
-				<enumChoice choice="Reserved (0xE)"/>
-				<enumChoice choice="Reserved (0xF)"/>
-				</enumVal>
-			</variable>
-		<variable label="Function 3 effect generated" CV="53" mask="XXXXVVVV" minFn="3">
-			<enumVal>
-				<enumChoice choice="Normal function of lead"/>
-				<enumChoice choice="Random flicker"/>
-				<enumChoice choice="Mars light"/>
-				<enumChoice choice="Flashing head light"/>
-				<enumChoice choice="Single pulse strobe"/>
-				<enumChoice choice="Double pulse strobe"/>
-				<enumChoice choice="Rotary beacon simulation"/>
-				<enumChoice choice="Gyralite"/>
-				<enumChoice choice="Run 17 dimmable headlight"/>
-				<enumChoice choice="FRED end of train light"/>
-				<enumChoice choice="Right ditch light; when F2 on, flashes alternately"/>
-				<enumChoice choice="Left ditch light; when F2 on, flashes alternately"/>
-				<enumChoice choice="Reserved (0x0C)"/>
-				<enumChoice choice="Reserved (0x0D)"/>
-				<enumChoice choice="Reserved (0x0E)"/>
-				<enumChoice choice="Reserved (0x0F)"/>
-				</enumVal>
-			</variable>
-		<variable label="Function 3 behaviour" CV="53" mask="VVVVXXXX" minFn="3">
-			<enumVal>
-				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
-				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
-				<enumChoice choice="Non directional, ON with function ON, effect phase A"/>
-				<enumChoice choice="Non directional, ON with function ON, effect phase B"/>
-				<enumChoice choice="Forward direction, ON with F0 on &amp; function ON, phase A"/>
-				<enumChoice choice="Reverse direction, ON with F0 on &amp; function ON, phase B"/>
-				<enumChoice choice="Special logic for Fwd Ditch Light or Rule 17 dimming"/>
-				<enumChoice choice="Special logic for Rev Ditch Light or Rule 17 dimming"/>
-				<enumChoice choice="Reserved (0x8)"/>
-				<enumChoice choice="Reserved (0x9)"/>
-				<enumChoice choice="Reserved (0xA)"/>
-				<enumChoice choice="Reserved (0xB)"/>
-				<enumChoice choice="Reserved (0xC)"/>
-				<enumChoice choice="Reserved (0xD)"/>
-				<enumChoice choice="Reserved (0xE)"/>
-				<enumChoice choice="Reserved (0xF)"/>
-				</enumVal>
-			</variable>
-		<variable label="Function 4 effect generated" CV="54" mask="XXXXVVVV" minFn="4">
-			<enumVal>
-				<enumChoice choice="Normal function of lead"/>
-				<enumChoice choice="Random flicker"/>
-				<enumChoice choice="Mars light"/>
-				<enumChoice choice="Flashing head light"/>
-				<enumChoice choice="Single pulse strobe"/>
-				<enumChoice choice="Double pulse strobe"/>
-				<enumChoice choice="Rotary beacon simulation"/>
-				<enumChoice choice="Gyralite"/>
-				<enumChoice choice="Run 17 dimmable headlight"/>
-				<enumChoice choice="FRED end of train light"/>
-				<enumChoice choice="Right ditch light; when F2 on, flashes alternately"/>
-				<enumChoice choice="Left ditch light; when F2 on, flashes alternately"/>
-				<enumChoice choice="Reserved (0x0C)"/>
-				<enumChoice choice="Reserved (0x0D)"/>
-				<enumChoice choice="Reserved (0x0E)"/>
-				<enumChoice choice="Reserved (0x0F)"/>
-				</enumVal>
-			</variable>
-		<variable label="Function 4 behaviour" CV="54" mask="VVVVXXXX" minFn="4">
+		<variable label="Function 2 behaviour" CV="52" mask="VVVVXXXX">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -396,56 +307,16 @@
 				</enumVal>
 			</variable>
 
-		<variable label="Static compensation for speed stabilization" CV="55" default="128"
-				item="EMF Static Config"
-				comment="Factory default is 128, no effect until droop (CV57) set">
-			<decVal/>
-			</variable>
-		<variable label="Dynamic compensation for speed stabilization" CV="56" default="48"
-				item="EMF Dynamic Config"
-				comment="Factory default is 48, no effect until droop (CV57) set">
-			<decVal/>
-			</variable>
-		<variable label="Solo operation droop compensation for speed stabilization" 
-						CV="57" mask="XXXXVVVV"
-				item="EMF Droop Config"
-				comment="0 is compenstation off, 15 is full on, typical value is 5">
-			<decVal max="15"/>
-			</variable>
-		<variable label="Advanced consist droop compensation for speed stabilization" 
-						CV="57" mask="VVVVXXXX"
-				comment="0 is compenstation off, 15 is full on, typical value is 5">
-			<decVal max="15"/>
-			</variable>
-		<variable label="Speed Compensation Control" CV="61" mask="XXXVXXXX">
-			<enumVal>
-				<enumChoice choice="F5 has no effect on speed compensation"/>
-				<enumChoice choice="F5 On disables speed compensation"/>
-				</enumVal>
-			</variable>
-		<variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX"
-			item="Advanced Ack">
-			<enumVal>
-				<enumChoice choice="Off"/>
-				<enumChoice choice="On"/>
-				</enumVal></variable>
-				
-		<variable label="Split field motor" CV="61" mask="XXXXXVXX">
-			<enumVal>
-				<enumChoice choice="Normal DC motor"/>
-				<enumChoice choice="Split field/AC motor"/>
-				</enumVal></variable>
-				
 		<variable label="Directional Headlights" CV="61" mask="XXXXXXXV">
 			<enumVal>
 				<enumChoice choice="Normal headlight operation"/>
 				<enumChoice choice="Reverse light lead controlled by F4"/>
-				</enumVal></variable>
-				
+				</enumVal>
+			</variable>
 		<variable label="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXXVXXXX">
 			<enumVal>
-				<enumChoice choice="Enabled"/>
-				<enumChoice choice="Disabled"/>
+				<enumChoice choice="enabled"/>
+				<enumChoice choice="disabled"/>
 				</enumVal>
 			</variable>
 		<variable label="Short-circuit protection" CV="61" mask="XVXXXXXX"
@@ -490,7 +361,7 @@
 		<variable label="Speed Table" CV="67">
 			<speedTableVal/>
 			</variable>
-			
+
 	<!-- Define the fixed Function-Output mapping -->
 	<constant label="FL(f) controls output 1" minOut="1" default="1" /> 
 	<constant label="FL(r) controls output 2" minOut="2" default="1" /> 
@@ -504,15 +375,11 @@
 	<constant label="F8 controls output 10" minOut="10" minFn="8" default="1" /> 
 
 	</variables>
-
+	
 </decoder>
 
 <pane name="Digitrax">
 	<column>
-		<display item="Advanced consist droop compensation for speed stabilization" />
-		<display item="Speed Compensation Control" />
-		<display item="Transponding" />
-		<display item="Split field motor" />		
 		<display item="Vstart/Vmid/Vfull in 128 step mode" />
 		<display item="Short-circuit protection" />
 	</column>
