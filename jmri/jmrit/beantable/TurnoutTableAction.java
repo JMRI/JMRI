@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -26,7 +27,7 @@ import javax.swing.JComboBox;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -63,7 +64,12 @@ public class TurnoutTableAction extends AbstractTableAction {
 		    static public final int MODECOL = 4;
 		    static public final int SENSOR1COL = 5;
 		    static public final int SENSOR2COL = 6;
-    		public int getColumnCount( ){ return NUMCOLUMN+4;}
+    		public int getColumnCount( ){ 
+    		    if (showFeedback)
+    		        return NUMCOLUMN+4;
+    		    else
+    		        return NUMCOLUMN;
+     		}
     		
     		public String getColumnName(int col) {
     			if (col==KNOWNCOL) return "Feedback";
@@ -215,6 +221,28 @@ public class TurnoutTableAction extends AbstractTableAction {
         addFrame.pack();
         addFrame.show();
     }
+
+    boolean showFeedback = false;
+    void showFeedbackChanged() {
+        showFeedback = showFeedbackBox.isSelected();
+        m.fireTableStructureChanged(); // update view
+    }
+    
+    JCheckBox showFeedbackBox = new JCheckBox("Show feedback information");
+    
+    /**
+     * Add the check box
+     */
+    public void addToFrame(BeanTableFrame f) {
+        f.getContentPane().add(showFeedbackBox);
+        showFeedbackBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                showFeedbackChanged();
+            }
+        });
+        showFeedbackBox.setToolTipText("Show extra columns for configuring turnout feedback?");
+    }
+
 
     void okPressed(ActionEvent e) {
         String user = userName.getText();
