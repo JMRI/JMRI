@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE layout-config SYSTEM "layout-config.dtd">
-<!-- $Id: CornwallMain.xml,v 1.14 2003-05-30 19:10:06 jacobsen Exp $ -->
+<!-- $Id: CornwallMain.xml,v 1.15 2003-05-31 04:40:50 jacobsen Exp $ -->
 <!-- Cornwall RR main dispatcher panel -->
 <!-- The layout turnouts, signals, and sensors are defined in CornwallDefinitions.xml -->
 <layout-config>
@@ -138,6 +138,7 @@
 	<!-- occupancy sensors (lower row) -->
 
     <sensoricon sensor="CS20" x="23" y="339" active="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" inactive="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="CS21" x="23" y="364" active="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" inactive="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
 
     <sensoricon sensor="CS8" x="123" y="339" active="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" inactive="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
 
