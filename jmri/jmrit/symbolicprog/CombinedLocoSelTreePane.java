@@ -32,7 +32,7 @@ import java.util.Enumeration;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
 
@@ -109,9 +109,11 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
                     continue;
                 }
             }
-            // insert at the decoder level
-            dModel.insertNodeInto(new DefaultMutableTreeNode(model),
+            // insert at the decoder level, except if family name is the same
+            if (!family.equals(model)){
+                dModel.insertNodeInto(new DefaultMutableTreeNode(model),
                                     familyElement, familyElement.getChildCount());
+            }
         }
 
         // build the tree GUI
