@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Linux.html,v 1.9 2004-12-15 04:06:03 jacobsen Exp $ -->
+<!-- $Id: Linux.html,v 1.10 2005-01-26 06:30:54 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -106,57 +106,21 @@
 		<TT>echo Driver=gnu.io.RXTXCommDriver &gt;
 		/usr/java/j2re1.4.0/lib/javax.comm.properties</TT><BR></li>
 
-		<p>JavaComm on Linux requires a version of the rxtx package.
+		<li>JavaComm on Linux requires a version of the rxtx package.
 		Finding and building an rxtx package that works is a bit of a
-		pain. Here's some help in that respect.</p>
+		pain. </p>
 
-		<P>While the <A HREF="ftp://jarvi.dsl.frii.com/pub/rxtx/rxtx-1.4-16pre2.tar.gz">latest
-		version of rxtx-1.4</A> worked, newer versions has problems,
-		although I didn't try real hard (I'm not a java programmer, so
-		I didn't really want to wander through the mess of what it
-		takes to use a newer rxtx package).</P>
+		<P>The 1.4-16pre2
+		version of rxtx-1.4</A> has worked for some people. It can be downloaded
+		via
+		<A HREF="ftp://jarvi.dsl.frii.com/pub/rxtx/rxtx-1.4-16pre2.tar.gz">this link</a></P>
 
-		<P>Compiling this package isn't that hard, but if you're not
-		into compilation, precompiled binaries are available:</P>
-		<ul>
-		  <li><a href="http://www.stpaulterminal.org/software/jmri/rxtx-1.4.16.pre2-1.i386.rpm">rxtx-1.4.16.pre2-1.i386.rpm</a>
-		    01-Aug-2003 20:58   66K </li>
-		  <li><a href="http://www.stpaulterminal.org/software/jmri/rxtx-1.4.16.pre2-1.src.rpm">rxtx-1.4.16.pre2-1.src.rpm</a>
-		    01-Aug-2003 20:58  398K </li>
-		</ul>
 
-		<BLOCKQUOTE>
-		    <p>This requires a Java SDK to be installed, and requires
-		    that your <TT>$PATH</TT> includes the SDK.  Also, you
-		    should have the javacomm JAR installed already.  </P>
-
-		    <TT>$ tar zxf rxtx-1.4-16pre2.tar.gz</TT><BR>
-		    <TT>$ cd rxtx-1.4-16pre2</TT><BR>
-		    <TT>$ ./configure</TT><BR>
-		    <TT>$ make</TT><BR>
-		    <TT>$ make install</TT><BR>
-		</BLOCKQUOTE>
-
-		<P>The rxtx RPMS above are the binary &amp; source packages.  They're
-		suitable for any machine with the j2sdk 1.4.2-fcs RPM installed.
-		That's what I've got, and I haven't tried to make it any fancier.
-		But installation should be very simple:
-
-		<BLOCKQUOTE>
-		<TT>root# rpm -Uvh rxtx-1.4.16.pre2-1.i386.rpm</TT>
-		</BLOCKQUOTE>
-	
-		<P>If you don't have the right Java SDK installed, you can
-		extract the binaries by running:</P>
-
-		<BLOCKQUOTE>
-		<TT>$ rpm2cpio rxtx-1.4.16.pre2-1.i386.rpm  | cpio -ivd</TT>
-		</BLOCKQUOTE>
-
-		<P>and then copying the files from
-		<TT>./usr/java/j2sdk1.4.2/jre/lib</TT> to the right places for your
-		  installed Java.</P>
-
+        <P>Information on how to build your own version (sometimes needed)
+        can be found on 
+        <a href="http://stpaulterminal.org/software/jmri/">david zuhn's web site</a>.  
+        He has also kindly made pre-built RPMs available there.
+        
 	      <LI>Give user-level application access to serial ports<BR>
 		    <TT>chmod 666 /dev/ttyS0</TT><BR>
 		    <TT>chmod 666 /dev/ttyS1</TT></LI>
