@@ -28,7 +28,7 @@ import java.beans.PropertyChangeEvent;
  * <LI>Wait for Normal Operations Resumed broadcast
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -76,6 +76,20 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		}
 	}
 	public int getMode() { return _mode; }
+    /**
+     * Signifies mode's available
+     * @param mode
+     * @return True if paged or register mode
+     */
+    public boolean hasMode(int mode) {
+        if ( mode == Programmer.PAGEMODE ||
+             mode == Programmer.REGISTERMODE ) {
+            log.debug("hasMode request on mode "+mode+" returns true");
+            return true;
+        }
+        log.debug("hasMode returns false on mode "+mode);
+        return false;
+    }
 
 
 	// notify property listeners - see AbstractProgrammer for more
