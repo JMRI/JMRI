@@ -12,7 +12,7 @@ java1 -d project/java/src &jmri &apps &resources
 java2 -d project/java &test
 java3 -d project/java &lib
 
-runtime -d project xml lib resources defaultlcf
+runtime -d project &xml &lib &resources &defaultlcf
 defaultlcf -d project scripts default.lcf
 
 # ant target - Ant directory in standard form
