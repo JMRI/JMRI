@@ -18,7 +18,7 @@ import javax.swing.JPanel;
  * a .hex file, feeding the information to a LocoMonFrame (monitor) and
  * connecting to a LocoGenFrame (for sending a few commands).
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version                     $Revision: 1.13 $
+ * @version                     $Revision: 1.14 $
  */
 public class HexFileFrame extends javax.swing.JFrame {
 
@@ -188,6 +188,8 @@ public class HexFileFrame extends javax.swing.JFrame {
         packets.startThreads();
         sourceThread = new Thread(port);
         sourceThread.start();
+
+        jmri.jmrix.loconet.ActiveFlag.setActive();
 
     }
 
