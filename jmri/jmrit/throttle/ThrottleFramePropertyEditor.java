@@ -97,6 +97,7 @@ public class ThrottleFramePropertyEditor extends JDialog
     {
         this.frame = f;
         titleField.setText(frame.getTitle());
+		titleField.selectAll();
     }
 
     /**
