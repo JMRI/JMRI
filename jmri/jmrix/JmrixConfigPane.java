@@ -19,7 +19,7 @@ import javax.swing.JSeparator;
  * <P>
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -109,7 +109,9 @@ public class JmrixConfigPane extends JPanel {
         int current = modeBox.getSelectedIndex();
         details.removeAll();
         if (current!=0) classList[current].loadDetails(details);
+        validate();
         if (getTopLevelAncestor()!=null) ((JFrame)getTopLevelAncestor()).pack();
+        repaint();
     }
 
     public String getCurrentProtocolName() {
