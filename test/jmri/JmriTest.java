@@ -12,7 +12,7 @@ import org.jdom.output.*;
 /**
  * Invoke complete set of tests for the Jmri package
  * @author			Bob Jacobsen, Copyright (C) 2001, 2002
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class JmriTest extends TestCase {
 
@@ -33,6 +33,7 @@ public class JmriTest extends TestCase {
 		apps.tests.AllTest.initLogging();
 		TestSuite suite = new TestSuite("jmri.JmriTest");  // no tests in this class itself
 		suite.addTest(jmri.NmraPacketTest.suite());
+		suite.addTest(jmri.configurexml.ConfigXmlTest.suite());
 		suite.addTest(jmri.jmrit.JmritTest.suite());
 		suite.addTest(jmri.jmrix.JmrixTest.suite());
 		return suite;
