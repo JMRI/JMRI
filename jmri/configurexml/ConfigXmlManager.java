@@ -13,7 +13,7 @@ import jmri.*;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -110,6 +110,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             fmt.setNewlines(true);   // pretty printing
             fmt.setIndent(true);
             fmt.output(doc, o);
+            o.close();
         }
         catch (Exception e) {
             log.error("exception during config write "+e);
