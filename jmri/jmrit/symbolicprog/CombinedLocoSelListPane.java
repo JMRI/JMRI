@@ -16,6 +16,7 @@ import javax.swing.event.ListSelectionListener;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import com.sun.java.util.collections.List;
+import com.sun.java.util.collections.ArrayList;
 
 /**
  * Provide GUI controls to select a known loco and/or new decoder.
@@ -31,7 +32,7 @@ import com.sun.java.util.collections.List;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
 
@@ -52,13 +53,8 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
         pane1a.setLayout(new BoxLayout(pane1a, BoxLayout.X_AXIS));
         pane1a.add(new JLabel("Decoder installed: "));
         // create the list of manufacturers
-        List l = DecoderIndexFile.instance().getMfgNameList();
         mMfgList = new JList();
-        String [] tempString = new String[l.size()];
-        for (int i=0; i<l.size(); i++) {
-            tempString[i] = (String)l.get(i);
-        }
-        mMfgList = new JList(tempString);
+        updateMfgListContents(null);
         mMfgList.clearSelection();
         mMfgList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         mMfgListener = new ListSelectionListener() {
@@ -116,6 +112,40 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
     }
 
     /**
+     * Update the contents of the manufacturer list to
+     * make sure it contains a specific value.  Normally
+     * the list does not contain mfgs with no defined decoders;
+     * this allows you to also show a specific mfg that's
+     * of interest, even though there's no definitions for it.
+     * This is protected against invoking any listeners, as the
+     * change is meant to be transparent; the original selection is
+     * set back.
+     */
+    void updateMfgListContents(String specific) {
+        if (mMfgListener!=null) mMfgList.removeListSelectionListener(mMfgListener);
+        String currentValue = (String)mMfgList.getSelectedValue();
+
+        List allMfgList = DecoderIndexFile.instance().getMfgNameList();
+        List theMfgList = new ArrayList();
+
+        for (int i=0; i<allMfgList.size(); i++) {
+            // see if this qualifies; either a non-zero set of decoders, or
+            // matches the specific name
+            if ( (specific != null && ((String)allMfgList.get(i)==specific))
+                || (0!=DecoderIndexFile.instance()
+                            .matchingDecoderList((String)allMfgList.get(i),null,null,null,null)
+                            .size() )
+                )
+                    theMfgList.add((String)allMfgList.get(i));
+        }
+        mMfgList.setListData(theMfgList.toArray());
+
+        mMfgList.setSelectedValue(currentValue, true);
+        if (mMfgListener!=null) mMfgList.addListSelectionListener(mMfgListener);
+
+    }
+
+    /**
      * Force the manufacturer list to select the mfg of the
      * currently selected decoder.  Note that this is
      * complicated by the need to not trigger an update
@@ -163,6 +193,10 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
         String msg = "Found mfg "+pMfgID+" ("+pMfg+") version "+pModelID+"; no such decoder defined";
         log.warn(msg);
         _statusLabel.setText(msg);
+        // ensure manufacturer shows & is selected
+        updateMfgListContents(pMfg);
+        updateMfgListWithoutTrigger(pMfg);
+        // list all other decoders available, without a selection
         listDecodersFromMfg(pMfgID, pMfg);
     }
 
@@ -191,10 +225,28 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
     }
 
     /**
-     *  Set the decoder GUI back to having no selection
+     *  Set the decoder selection to a specific decoder from a selected Loco
      */
-    void resetDecoderSelection() {
-        mDecoderList.clearSelection();
+    void setDecoderSelectionFromLoco(String loco) {
+        // get the decoder type, it has to be there (assumption!),
+        RosterEntry locoEntry = Roster.instance().entryFromTitle(loco);
+        String modelString = locoEntry.getDecoderModel();
+        // find the decoder mfg
+        String mfgString = DecoderIndexFile.instance().fileFromTitle(modelString)
+                                    .getMfg();
+
+        // then select it
+        updateMfgListWithoutTrigger(mfgString);
+
+       // decoder has to be there (assumption!)
+       // so load it into the list directly
+        String[] tempArray = new String[1];
+        tempArray[0] = modelString;
+        mDecoderList.setListData(tempArray);
+        // select the entry you just put in, but don't trigger anything!
+        mDecoderList.removeListSelectionListener(mDecoderListener);
+        mDecoderList.setSelectedIndex(0);
+        mDecoderList.addListSelectionListener(mDecoderListener);
     }
 
     /**
