@@ -37,7 +37,7 @@ import com.sun.java.util.collections.List;   // resolve ambiguity with package-l
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001; D Miller Copyright 2003
- * @version			$Revision: 1.28 $
+ * @version			$Revision: 1.29 $
  */
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
@@ -1034,6 +1034,8 @@ public class PaneProgPane extends javax.swing.JPanel
 
             // index over CVs
             if (cvList.size() > 0){
+//            Check how many Cvs there are to print
+              int cvCount = cvList.size();
               w.setFontStyle(Font.BOLD); //set font to Bold
               // print a simple heading
               s = "         Value               Value               Value               Value";
@@ -1050,9 +1052,12 @@ public class PaneProgPane extends javax.swing.JPanel
               //           }
               /*create an array to hold CV/Value strings to allow reformatting and sorting
                 Same size as the table drawn above (4 columns*tableHeight; heading rows
-                not included)
+                not included). Use the count of how many CVs there are to determine the number
+                of table rows required.  Add one more row if the divison into 4 columns
+                isn't even.
                */
-              int tableHeight = 20;
+              int tableHeight = cvCount/4;
+              if (cvCount%4 > 0) tableHeight++;
               String[] cvStrings = new String[4 * tableHeight];
 
               //blank the array
