@@ -32,7 +32,7 @@ public class NceTrafficControllerTest extends TestCase {
 		NceTrafficController m = new NceTrafficController();
 	}
 
-	public void testSend() throws Exception {
+	public void testSendAscii() throws Exception {
 		NceTrafficController c = new NceTrafficController();
 		
 		// connect to iostream via port controller
@@ -41,6 +41,7 @@ public class NceTrafficControllerTest extends TestCase {
 		
 		// send a message
 		NceMessage m = new NceMessage(3);
+		m.setBinary(false);
 		m.setOpCode('0');
 		m.setElement(1, '1');
 		m.setElement(2, '2');
@@ -53,6 +54,27 @@ public class NceTrafficControllerTest extends TestCase {
 		Assert.assertEquals("remaining ", 0, tostream.available());
 	}
 
+	public void testSendBinary() throws Exception {
+		NceTrafficController c = new NceTrafficController();
+		
+		// connect to iostream via port controller
+		NcePortControllerScaffold p = new NcePortControllerScaffold();
+		c.connectPort(p);
+		
+		// send a message
+		NceMessage m = new NceMessage(3);
+		m.setBinary(true);
+		m.setOpCode(0x81);
+		m.setElement(1, 0x12);
+		m.setElement(2, 0x34);
+		c.sendNceMessage(m, new NceListenerScaffold());
+		Assert.assertEquals("total length ", 3, tostream.available());
+		Assert.assertEquals("Char 0", 0x81, 0xFF & tostream.readByte());
+		Assert.assertEquals("Char 1", 0x12, tostream.readByte());
+		Assert.assertEquals("Char 2", 0x34, tostream.readByte());
+		Assert.assertEquals("remaining ", 0, tostream.available());
+	}
+	
 	public void testMonitor() throws Exception {
 		NceTrafficController c = new NceTrafficController();
 		

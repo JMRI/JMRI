@@ -108,10 +108,14 @@ public class NceTrafficController implements NceInterface, Runnable {
 		
 		// stream to port in single write, as that's needed by serial
 		int len = m.getNumDataElements();
-		byte msg[] = new byte[len+1];
+		int cr = 0;
+		if (! m.isBinary()) cr = 1;  // space for return
+
+		byte msg[] = new byte[len+cr];
+
 		for (int i=0; i< len; i++)
 			msg[i] = (byte) m.getElement(i);
-		msg[len] = 0x0d;
+		if (! m.isBinary()) msg[len] = 0x0d;
 		try {
 			if (ostream != null) {
 				if (log.isDebugEnabled()) log.debug("write message: "+msg);
@@ -195,7 +199,6 @@ public class NceTrafficController implements NceInterface, Runnable {
         for (i = 0; i < NceReply.maxSize; i++) {
         	byte char1 = istream.readByte();
             msg.setElement(i, char1);
-            System.out.println("read char: "+(int)char1);
         	if (char1 == 0x0d) break;
         }
               	

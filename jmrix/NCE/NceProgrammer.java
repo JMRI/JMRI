@@ -128,8 +128,13 @@ public class NceProgrammer implements NceListener, Programmer {
 	// internal method to create the NceMessage for programmer task start
 	protected NceMessage progTaskStart(int mode, int val, int cvnum) throws jmri.ProgrammerException {
 		// val = -1 for read command; mode is direct, etc
-		
-		return null; // NceMessage.getReadCV(cvnum);, but don't yet understand...
+		if (val < 0) {
+			// read
+			return NceMessage.getReadPagedCV(cvnum);
+		} else {
+			// write
+			return NceMessage.getWritePagedCV(cvnum, val);
+		}
 	}
 	
 	public void message(NceMessage m) {}
