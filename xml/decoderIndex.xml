@@ -400,6 +400,24 @@
           <!-- headlight, FX1, FX2 -->
         </model>
       </family>
+      <family name="LC Diesel PNP Cab Unit decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_LC_Diesel_pFXCb.xml">
+        <!--note: this file does not support the FX2 output for the LL100LC-->
+        <model model="LL100LC Diesel" numOuts="1" numFns="8">
+          <!-- note: The LL100LC has a headlight but no backup light -->
+          <!-- note: The LL100LC has an FX2 output but no FX1 output -->
+          <!-- so the FX2 output is not supported at this time -->
+          <versionCV lowVersionID="36" />
+          <output name="Horn" />
+          <output name="Bell" />
+          <!--output name="3" label="none" /-->
+          <!--output name="4" label="FX2/brwn" /-->
+          <output name="DynBrake" />
+          <output name="RPM+" />
+          <output name="RPM-" />
+          <output name="Dim" />
+          <output name="Mute" />
+        </model>
+      </family>
       <family name="LC Diesel PNP decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_LC_Diesel_pnp.xml">
         <model model="AT100LC/KT100LC Diesel" numOuts="2" numFns="8">
           <versionCV lowVersionID="35" />
@@ -446,24 +464,6 @@
           <output name="Mute" />
         </model>
       </family>
-      <family name="LC Diesel PNP Cab Unit decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_LC_Diesel_pnpFXCab.xml">
-        <!--note: this file does not support the FX2 output for the LL100LC-->
-        <model model="LL100LC Diesel" numOuts="1" numFns="8">
-          <!-- note: The LL100LC has a headlight but no backup light -->
-          <!-- note: The LL100LC has an FX2 output but no FX1 output -->
-          <!-- so the FX2 output is not supported at this time -->
-          <versionCV lowVersionID="36" />
-          <output name="Horn" />
-          <output name="Bell" />
-          <!--output name="3" label="none" /-->
-          <!--output name="4" label="FX2/brwn" /-->
-          <output name="DynBrake" />
-          <output name="RPM+" />
-          <output name="RPM-" />
-          <output name="Dim" />
-          <output name="Mute" />
-        </model>
-      </family>
       <family name="LC steam decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_LC_Steam.xml">
         <model model="100LC Steam" numOuts="2" numFns="8">
           <versionCV lowVersionID="32" />
@@ -477,7 +477,7 @@
           <!-- headlight-->
         </model>
       </family>
-      <family name="LC Steam hyperlight decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_LC_Steam_hyperlight.xml">
+      <family name="LC Steam hyperlight decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_LC_Steam_hylt.xml">
         <model model="090LC Steam" numOuts="2" numFns="8">
           <versionCV lowVersionID="39" />
           <output name="Whistle" />
