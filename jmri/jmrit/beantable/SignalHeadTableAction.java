@@ -21,10 +21,10 @@ import javax.swing.JTextField;
 
 /**
  * Swing action to create and register a
- * SignalHeadTable GUI
+ * SignalHeadTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -39,6 +39,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
     public SignalHeadTableAction(String s) {
         super(s);
     }
+    public SignalHeadTableAction() { this("Signal Table");}
 
     /**
      * Create the JTable DataModel, along with the changes

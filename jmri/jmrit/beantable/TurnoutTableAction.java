@@ -19,10 +19,10 @@ import javax.swing.JTextField;
 
 /**
  * Swing action to create and register a
- * TurnoutTable GUI
+ * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -35,6 +35,7 @@ public class TurnoutTableAction extends AbstractTableAction {
      * @param actionName
      */
     public TurnoutTableAction(String actionName) { super(actionName);}
+    public TurnoutTableAction() { this("Turnout Table");}
 
     /**
      * Create the JTable DataModel, along with the changes

@@ -20,10 +20,10 @@ import javax.swing.JTextField;
 
 /**
  * Swing action to create and register a
- * SensorTable GUI
+ * SensorTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 
 public class SensorTableAction extends AbstractTableAction {
@@ -38,6 +38,7 @@ public class SensorTableAction extends AbstractTableAction {
     public SensorTableAction(String actionName) {
         super(actionName);
     }
+    public SensorTableAction() { this("Sensor Table");}
 
     /**
      * Create the JTable DataModel, along with the changes
