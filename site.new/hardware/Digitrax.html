@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Digitrax.html,v 1.8 2004-07-25 00:44:15 jacobsen Exp $ -->
+<!-- $Id: Digitrax.html,v 1.9 2004-08-08 01:17:19 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -178,27 +178,14 @@
 	  adapter don't work at 57,600 baud with the LocoBuffer,  so please
 	  try 19,200 baud if you're having trouble. </p>
 
-	<h2>Measurements on the power circuits of DigiTrax components</h2>
-	<p class=subtitle>
-		Why can't various Digitrax components share a power supply?
-	</p>
-
-	<p>
-	I wanted to understand the reasons behind Digitrax's recommendations
-	about separate power sources for PM4 and DS54 boards. The following
-	describes some measurements on my layout, and what I conclude from
-	them.
-	</p>
-
-	<p><strong> Conclusions </strong></p>
-	<p> The DCS100 and PM4 appear to use full-wave rectifier power
-	supplies, while the DS54 uses a half-wave rectifier supply. These two
-	types require different offsets between system ground and the
-	transformer leads, which explains why these three types of components
-	can't share AC auxillary power supplies.</p>
-
-	<p>See the <a href="./DigitraxPower/">in depth technical details</a></p>
-
+	<P><b>Uhlenbrock Intellibox</B> - The Intellibox has two
+	  LocoNet connections, called LocoNet-T and LocoNet-B.  
+	  The LocoNet-T connection can drive more devices, but does
+	  not provide the Rail-Synch signals that some LocoNet devices
+	  (particularly the BDL-16, -162 and -168) require.  A
+	  LocoBuffer II should be connected to the LocoNet-T connection
+	  if it is configured to take power from the LocoNet.
+	  </p>
 
 
 	<h2>Debugging</h2>
