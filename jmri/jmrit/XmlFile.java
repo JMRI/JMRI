@@ -16,7 +16,7 @@ import org.jdom.input.SAXBuilder;
  * XmlFile contains various member implementations for handling aspects of XML files.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001, 2002
- * @version		$Revision: 1.7 $
+ * @version		$Revision: 1.8 $
  */
 public abstract class XmlFile {
 
@@ -95,13 +95,16 @@ public abstract class XmlFile {
     /**
      * Check if a file of the given name exists. This is here so it can
      * be overridden during tests. Note that it also obeys the
-     * search rules.
+     * search rules listed in the {@link #findFile} method.
+     *
      * @param name subdirectory and file name, not including the leading path
      *                   to either the xml or preferences directory
      * @return true if the file exists in a searched place
      */
     protected boolean checkFile(String name) {
-        File fp = new File(prefsDir()+name);
+        File fp = new File(name);
+        if (fp.exists()) return true;
+        fp = new File(prefsDir()+name);
         if (fp.exists()) {
             return true;
         }
@@ -119,13 +122,20 @@ public abstract class XmlFile {
 
     /**
      * Return a File object for a name. This is here to implement the
-     * search rule: Look first in prefsDir, then xmlDir()
+     * search rule:
+     * <OL>
+     * <LI>Check for absolute name.
+     * <LI>If not found look in prefsDir
+     * <LI>If still not found, look in xmlDir()
+     * </OL>
      * @param name Filename without path information, but perhaps containing
      *               subdirectory information (e.g. "decoders/Mine.xml")
      * @return null if file found, otherwise the located File
      */
     protected File findFile(String name) {
-        File fp = new File(prefsDir()+name);
+        File fp = new File(name);
+        if (fp.exists()) return fp;
+        fp = new File(prefsDir()+name);
         if (fp.exists()) {
             return fp;
         }
