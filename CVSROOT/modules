@@ -1,7 +1,7 @@
-jbuilder -d src &djmri &dapps &dxml
-djmri -a jmri
-dapps -a apps
-dxml -a xml
+jbuilder &djmri &dapps &dxml
+djmri -d src jmri
+dapps -d src apps
+dxml -d src xml
 
 # Three different line formats are valid:
 #	key	-a    aliases...
