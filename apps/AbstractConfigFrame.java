@@ -24,7 +24,7 @@ import org.jdom.Attribute;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 abstract public class AbstractConfigFrame extends JFrame {
 
@@ -552,8 +552,13 @@ abstract public class AbstractConfigFrame extends JFrame {
 
 	public Element getConnection() {
 		Element e = new Element("connection");
-		e.addAttribute("class", getCurrentProtocolName());
-		e.addAttribute("port", getCurrentPortName());
+        // many of the following are required by the DTD; failing to include
+        // them makes the XML file unreadable, but at least the next
+        // invocation of the program can then continue.
+		if (getCurrentProtocolName()!=null)
+            e.addAttribute("class", getCurrentProtocolName());
+		if (getCurrentPortName()!=null)
+            e.addAttribute("port", getCurrentPortName());
 		if (getCurrentBaudRate()!=null)
 			e.addAttribute("speed", getCurrentBaudRate());
 		if (getCurrentOption1Setting()!=null)
@@ -589,7 +594,9 @@ abstract public class AbstractConfigFrame extends JFrame {
 		    if (!e.getAttribute("port").getValue().equals(portBox.getSelectedItem())) {
 			    // can't connect to a non-existant port!
 			    log.error("Configured port \""+portName+"\" doesn't exist, no connection to layout made");
-			    return false;
+                JOptionPane.showMessageDialog(null, "Configured port \""+portName+"\" doesn't exist, no connection to layout made",
+                                                "Error", JOptionPane.ERROR_MESSAGE);
+                return false;
 		    }
 
 		    // configure baud rate - an optional attribute
