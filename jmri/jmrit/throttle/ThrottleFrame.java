@@ -24,7 +24,7 @@ import org.jdom.Element;
  * @created    March 25, 2003
  * @version
  */
-public class ThrottleFrame extends JFrame
+public class ThrottleFrame extends JFrame 
 {
 	private final Integer PANEL_LAYER = new Integer(1);
 
@@ -42,9 +42,6 @@ public class ThrottleFrame extends JFrame
 	public ThrottleFrame()
 	{
 		initGUI();
-		// notify manager of creation
-		ThrottleFrameManager manager = InstanceManager.throttleFrameManagerInstance();
-		manager.notifyCreateThrottleFrame(this);
 	}
 
 	/**
@@ -67,8 +64,6 @@ public class ThrottleFrame extends JFrame
 			{
 				public void windowClosing(WindowEvent e)
 				{
-					//Window w = e.getWindow();
-					//w.setVisible(false);
 					destroyThrottleFrame();
 					e.getWindow().dispose();
 				}
@@ -77,6 +72,7 @@ public class ThrottleFrame extends JFrame
 		initializeMenu();
 			
 		FrameListener frameListener = new FrameListener();
+		FrameCyclingKeyListener frameCycler = new FrameCyclingKeyListener();
 
 		controlPanel = new ControlPanel();
 		controlPanel.setResizable(true);
@@ -98,6 +94,7 @@ public class ThrottleFrame extends JFrame
 		functionPanel.setVisible(true);
 		functionPanel.setEnabled(false);
 		functionPanel.addInternalFrameListener(frameListener);
+		functionPanel.addExternalKeyListener(frameCycler);
 
 		addressPanel = new AddressPanel();
 		addressPanel.setResizable(true);
@@ -123,6 +120,8 @@ public class ThrottleFrame extends JFrame
 		desktop.add(addressPanel, PANEL_LAYER);
 
 		desktop.setPreferredSize(new Dimension(300, 340));
+		
+		this.addKeyListener(frameCycler);
 
 		try
 		{
@@ -135,6 +134,8 @@ public class ThrottleFrame extends JFrame
 
 	}
 
+	
+	
 	private void initializeMenu()
 	{
 		JMenu viewMenu = new JMenu("View");
@@ -193,12 +194,20 @@ public class ThrottleFrame extends JFrame
 		controlPanel.dispose();
 		functionPanel.dispose();
 		addressPanel.dispose();
-		//w.dispose();
 		ThrottleFrameManager manager = InstanceManager.throttleFrameManagerInstance();
 		manager.notifyDestroyThrottleFrame(this);
 	}
 
 
+	class FrameCyclingKeyListener extends KeyAdapter
+	{
+		public void keyTyped(KeyEvent e)
+		{
+			System.out.println("Typed:"+e.getKeyChar());
+		}
+	}
+	
+	
 	/**
 	 *  An extension of InternalFrameAdapter for listening to the closing of
 	 * of this frame's internal frames.

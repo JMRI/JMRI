@@ -22,15 +22,11 @@ public class ThrottleCreationAction extends AbstractAction {
     }
 
     /**
-     * The action is performed. Create a new ThrottleFrame and
-     * position it adequately on the screen.
+     * The action is performed. Create a new ThrottleFrame.
      * @param e The event causing the action.
      */
     public void actionPerformed(ActionEvent e) {
-        ThrottleFrame tf = new ThrottleFrame();
-        tf.pack();
-        tf.setVisible(true);
-
+		jmri.InstanceManager.throttleFrameManagerInstance().createThrottleFrame();		
     }
 
     // initialize logging

@@ -9,7 +9,7 @@ import java.util.Iterator;
  *
  * @author     Glen Oberhauser
  * @created    March 25, 2003
- * @version    $Revision: 1.3 $
+ * @version    $Revision: 1.4 $
  */
 public class ThrottleFrameManager
 {
@@ -21,8 +21,11 @@ public class ThrottleFrameManager
 	 *
 	 * @param  tf  The new ThrottleFrame.
 	 */
-	public void notifyCreateThrottleFrame(ThrottleFrame tf)
+	public void createThrottleFrame()
 	{
+        ThrottleFrame tf = new ThrottleFrame();
+        tf.pack();
+        tf.setVisible(true);
 		if (throttleFrames == null)
 		{
 			throttleFrames = new ArrayList(2);
