@@ -1,0 +1,12 @@
+This is the README file for the jmrix.xpa.serialdriver package.
+
+The jmrix Java package defines implementations for the JMRI interfaces. 
+jmrix.xpa.serialdriver defines classes for interfacing to a Modem 
+Connected to an XPA, Connected to an XPressNet based command station 
+
+
+
+
+
+	
+	
