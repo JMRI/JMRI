@@ -18,7 +18,7 @@ import jmri.Turnout;
  *
  * Description:		Abstract class providing the basic logic of the Turnout interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public abstract class AbstractTurnout implements Turnout, java.io.Serializable {
 
@@ -28,7 +28,7 @@ public abstract class AbstractTurnout implements Turnout, java.io.Serializable {
      * @param s new state value
      * @throws JmriException
      */
-	abstract protected void forwardCommandChangeToLayout(int s) throws jmri.JmriException;
+	abstract protected void forwardCommandChangeToLayout(int s);
 
 	// implementing classes will typically have a function/listener to get
 	// updates from the layout, which will then call
@@ -64,7 +64,7 @@ public abstract class AbstractTurnout implements Turnout, java.io.Serializable {
 
 	public int getKnownState() {return _knownState;}
 
-	public void setCommandedState(int s) throws jmri.JmriException {
+	public void setCommandedState(int s) {
 		forwardCommandChangeToLayout(s);
 		newCommandedState(s);
         newKnownState(s);       // for NONE feedback

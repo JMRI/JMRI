@@ -62,7 +62,7 @@ package jmri;
  * class, which provides a simple GUI for controlling a single turnout.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  * @see             jmri.AbstractTurnout
  * @see             jmri.TurnoutManager
  * @see             jmri.InstanceManager
@@ -127,7 +127,7 @@ public interface Turnout {
 	 * sent to the hardware. The exception is thrown if there are
 	 * problems communicating with the layout hardware.
 	 */
-	public void setCommandedState(int s) throws jmri.JmriException;
+	public void setCommandedState(int s);
 
 	/**
 	 * Query the commanded state.  This is a bound parameter, so
