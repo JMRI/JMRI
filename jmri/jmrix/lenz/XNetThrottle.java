@@ -1,12 +1,13 @@
 package jmri.jmrix.lenz;
 
 import jmri.jmrix.AbstractThrottle;
+import javax.swing.JOptionPane;
 
 /**
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
  * @author     Paul Bender (C) 2002,2003
- * @version    $Revision: 1.18 $
+ * @version    $Revision: 1.19 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -36,7 +37,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     public XNetThrottle(int address)
     {
        super();
-       this.address=address;
+       this.setDccAddress(address);
        this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;
 //       this.isForward=true;
        this.isAvailable=false;
@@ -445,6 +446,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     public void dispose()
     {
+       XNetTrafficController.instance().removeXNetListener(~0, this);
+        super.dispose();
     }
 
     public int setDccAddress(int newaddress)
@@ -527,9 +530,21 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 		   if(getDccAddressHigh()==l.getElement(2) && getDccAddressLow()==l.getElement(3)) {
 			//Set the Is available flag to "False"
 	              log.info("Loco " +getDccAddress() + " In use by another device");
-        	      notifyPropertyChangeListener("IsAvailable",
+	              if(this.isAvailable) {
+        	         notifyPropertyChangeListener("IsAvailable",
                 	                         new Boolean(this.isAvailable),
                         	                 new Boolean(this.isAvailable = false));
+		      }
+                      // popup a message box that will trigger a status request
+		      int select=JOptionPane.showConfirmDialog(null,"Throttle for address " +this.getDccAddress() + " Taken Over, reaquire?","Taken Over",JOptionPane.YES_NO_OPTION);
+		      if(select==JOptionPane.YES_OPTION)
+		      {
+                        // Send a request for status
+  		        sendStatusInformationRequest();
+		      } else {
+                        // Remove the throttle
+                        // TODO
+		      }
 		   }
 	       }
            }
@@ -541,7 +556,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 		{
 	    	 if(log.isDebugEnabled()) { log.debug("Last Command processed successfully."); }
                  // Since we recieved an "ok",  we want to make sure "isAvailable reflects we are in control
-	         if(this.isAvailable==false) {
+	         if(!this.isAvailable) {
                     notifyPropertyChangeListener("IsAvailable",
                                                  new Boolean(this.isAvailable),
                                                  new Boolean(this.isAvailable = true));
@@ -641,9 +656,11 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 		   if(getDccAddressHigh()==l.getElement(2) && getDccAddressLow()==l.getElement(3)) {
 			//Set the Is available flag to "False"
                       log.info("Loco "+ getDccAddress() + " In use by another device");
-        	      notifyPropertyChangeListener("IsAvailable",
+	              if(this.isAvailable) {
+        	          notifyPropertyChangeListener("IsAvailable",
                 	                           new Boolean(this.isAvailable),
                         	                   new Boolean(this.isAvailable = false));
+		      }
 		   }
 		} else if(l.getElement(1)==XNetConstants.LOCO_FUNCTION_STATUS) {
 		    /* Bytes 3 and 4 contain function status information */
@@ -667,13 +684,13 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	/* the first data bite indicates the speed step mode, and
 	   if the locomotive is being controlled by another throttle */
 
-	if((b1 & 0x08)==0x08 && isAvailable==true)
+	if((b1 & 0x08)==0x08 && this.isAvailable)
 	{
 	   log.info("Loco " +getDccAddress() + " In use by another device");
            notifyPropertyChangeListener("IsAvailable",
                                          new Boolean(this.isAvailable),
                                          new Boolean(this.isAvailable = false));
-	} else if ((b1&0x08)==0x00 && isAvailable==false) {
+	} else if ((b1&0x08)==0x00 && !this.isAvailable) {
            if(log.isDebugEnabled()) { log.debug("Loco Is Available"); }
 	   notifyPropertyChangeListener("IsAvailable",
 					new Boolean(this.isAvailable),
@@ -867,8 +884,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 					new Boolean(this.f12 = false));
 	}
     }
-
-    // information on consisting  (how do we set consisting?)
 
     // register for notification
 
