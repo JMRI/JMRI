@@ -29,31 +29,83 @@ public class NceTrafficController implements NceInterface, Runnable {
 
 // The methods to implement the NceInterface
 
-	protected Vector listeners = new Vector();
+	protected Vector cmdListeners = new Vector();
 	
 	public boolean status() { return (ostream != null & istream != null); 
 		}
 
-	public synchronized void addNceListener(int mask, NceListener l) { 
+	public synchronized void addNceListener(NceListener l) { 
 			// add only if not already registered
 			if (l == null) throw new java.lang.NullPointerException();
-			if (!listeners.contains(l)) {
-					listeners.addElement(l);
+			if (!cmdListeners.contains(l)) {
+					cmdListeners.addElement(l);
 				}
 		}
 
-	public synchronized void removeNceListener(int mask, NceListener l) {
-			if (listeners.contains(l)) {
-					listeners.removeElement(l);
+	public synchronized void removeNceListener(NceListener l) {
+			if (cmdListeners.contains(l)) {
+					cmdListeners.removeElement(l);
 				}
 		}
+
+
+	/**
+	 * Forward a NceMessage to all registered NceInterface listeners.
+	 */
+	protected void notifyMessage(NceMessage m, NceListener notMe) {
+		// make a copy of the listener vector to synchronized not needed for transmit
+		Vector v;
+		synchronized(this)
+			{
+				v = (Vector) cmdListeners.clone();
+			}
+		// forward to all listeners
+		int cnt = v.size();
+		for (int i=0; i < cnt; i++) {
+			NceListener client = (NceListener) v.elementAt(i);
+			if (notMe != client) {
+				if (log.isDebugEnabled()) log.debug("notify client: "+client);
+				try {
+					client.message(m);
+					}
+				catch (Exception e)
+					{
+						log.warn("notify: During dispatch to "+client+"\nException "+e);
+					}
+				}
+			}
+	}
+
+	protected void notifyReply(NceReply r) {
+		// make a copy of the listener vector to synchronized not needed for transmit
+		Vector v;
+		synchronized(this)
+			{
+				v = (Vector) cmdListeners.clone();
+			}
+		// forward to all listeners
+		int cnt = v.size();
+		for (int i=0; i < cnt; i++) {
+			NceListener client = (NceListener) v.elementAt(i);
+			if (log.isDebugEnabled()) log.debug("notify client: "+client);
+			try {
+					client.reply(r);
+				}
+			catch (Exception e)
+				{
+					log.warn("notify: During dispatch to "+client+"\nException "+e);
+				}
+			}
+	}
+	
 
 	/**
 	 * Forward a preformatted message to the actual interface.
-	 *
-	 * Checksum is computed and overwritten here.
 	 */
-	public void sendNceMessage(NceMessage m) {
+	public void sendNceMessage(NceMessage m, NceListener reply) {
+		// notify all _other_ listeners
+		notifyMessage(m, reply);
+		
 		// stream to port in single write, as that's needed by serial
 		int len = m.getNumDataElements();
 		byte msg[] = new byte[len+1];
@@ -62,6 +114,7 @@ public class NceTrafficController implements NceInterface, Runnable {
 		msg[len] = 0x0d;
 		try {
 			if (ostream != null) {
+				if (log.isDebugEnabled()) log.debug("write message: "+msg);
 				ostream.write(msg);
 			}
 			else {
@@ -78,7 +131,7 @@ public class NceTrafficController implements NceInterface, Runnable {
 	private NcePortController controller = null;
 	
 	/**
-	 * Make connection to existing LnPortController object.
+	 * Make connection to existing PortController object.
 	 */
 	public void connectPort(NcePortController p) {
 			istream = p.getInputStream();
@@ -116,64 +169,41 @@ public class NceTrafficController implements NceInterface, Runnable {
 	DataInputStream istream = null;
 	OutputStream ostream = null;
 
-	/**
-	 * Forward a NceMessage to all registered listeners.
-	 */
-	protected void notify(NceMessage m) {
-		// make a copy of the listener vector to synchronized not needed for transmit
-		Vector v;
-		synchronized(this)
-			{
-				v = (Vector) listeners.clone();
-			}
-		// forward to all listeners
-		int cnt = v.size();
-		for (int i=0; i < cnt; i++) {
-			NceListener client = (NceListener) listeners.elementAt(i);
-			try {
-				client.message(m);
-				}
-			catch (Exception e)
-				{
-					log.warn("notify: During dispatch to "+client+"\nException "+e);
-				}
-			}
-	}
 	
 	/**
 	 * Handle incoming characters.  This is a permanent loop,
 	 * looking for input messages in character form on the 
-	 * stream connected to the LnPortController via <code>connectPort</code>.
+	 * stream connected to the PortController via <code>connectPort</code>.
 	 * Terminates with the input stream breaking out of the try block.
 	 */
 	public void run() {
-			int opCode;
-			try {
-			 while (true) {   // loop permanently, stream close will exit
-				// read first byte, assumed to start reply
-				char char1 = istream.readChar();
-				// here opCode is OK. Create output message
-				NceMessage msg = new NceMessage(1);
-             	// message exists, now fill it
-             	msg.setOpCode(char1);
-               	int len = msg.getNumDataElements();
-             	for (int i = 2; i < len; i++) msg.setElement(i, istream.readChar());
-             	// confirm you've got the message right...
-             	
-             	// message is complete, dispatch it !!
-             	notify(msg);
-             	
-             	// done with this one
-            	}  // end loop until no data available
-            // at this point, input stream is not available
-            // so we just fall off end to stop running
-            
-			} // end of try
+		try {
+			while (true) {   // loop permanently, stream close will exit via exception
+				handleOneReply();
+			}            
+		} // end of try
 		catch (Exception e) {
 			log.warn("run: Exception: "+e.toString());
-			}
 		}
+	}
 
+	void handleOneReply() throws Exception {
+		// Create output message
+		NceReply msg = new NceReply();
+        // message exists, now fill it
+        int i;
+        for (i = 0; i < NceReply.maxSize; i++) {
+        	byte char1 = istream.readByte();
+            msg.setElement(i, char1);
+            System.out.println("read char: "+(int)char1);
+        	if (char1 == 0x0d) break;
+        }
+              	
+        // message is complete, dispatch it !!
+        if (log.isDebugEnabled()) log.debug("dispatch reply of length "+i);
+        notifyReply(msg);
+   }
+	
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceTrafficController.class.getName());
 }
 

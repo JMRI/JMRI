@@ -18,7 +18,7 @@ public class NcePowerManager implements PowerManager, NceListener {
 	public NcePowerManager() {
 		// connect to the TrafficManager
 		tc = NceTrafficController.instance();
-		tc.addNceListener(~0, this);
+		tc.addNceListener(this);
 	}
 
 	int power = UNKNOWN;
@@ -34,18 +34,16 @@ public class NcePowerManager implements PowerManager, NceListener {
 			waiting = true;
 			onReply = PowerManager.ON;
 			// send "Enable main track"
-			NceMessage l = new NceMessage(1);
-			l.setOpCode('E');
-			tc.sendNceMessage(l);
+			NceMessage l = NceMessage.getEnableMain();
+			tc.sendNceMessage(l, this);
 		} else if (v==OFF) {
 			// configure to wait for reply
 			waiting = true;
 			onReply = PowerManager.OFF;
 			firePropertyChange("Power", null, null);
 			// send "Kill main track"
-			NceMessage l = new NceMessage(1);
-			l.setOpCode('K');
-			tc.sendNceMessage(l);
+			NceMessage l = NceMessage.getKillMain();
+			tc.sendNceMessage(l, this);
 		}
 		firePropertyChange("Power", null, null);
 	}
@@ -54,7 +52,7 @@ public class NcePowerManager implements PowerManager, NceListener {
 
 	// to free resources when no longer used
 	public void dispose() throws JmriException {
-		tc.removeNceListener(~0, this);
+		tc.removeNceListener(this);
 		tc = null;
 	}
 
@@ -75,12 +73,24 @@ public class NcePowerManager implements PowerManager, NceListener {
 	NceTrafficController tc = null;
 
 	// to listen for status changes from NCE system
-	public void message(NceMessage m) {
+	public void reply(NceReply m) {
 		if (waiting) {  
 			power = onReply;
 			firePropertyChange("Power", null, null);
 		}
 		waiting = false;
+	}
+
+	public void message(NceMessage m) {
+		if (m.isKillMain() ) {  
+			// configure to wait for reply
+			waiting = true;
+			onReply = PowerManager.OFF;
+		} else if (m.isEnableMain()) {
+			// configure to wait for reply
+			waiting = true;
+			onReply = PowerManager.ON;
+		}
 	}
 	
 }

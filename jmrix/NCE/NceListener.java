@@ -11,6 +11,7 @@ package jmri.jmrix.nce;
 
 public interface NceListener extends java.util.EventListener{
 	public void message(NceMessage m);
+	public void reply(NceReply m);
 }
 
 

@@ -6,8 +6,7 @@
  * @version			
  */
  
- // This is a collection of LocoNetSlots, plus support for coordinating
- // them with the controller
+ // Convert the jmri.Programmer interface into commands for the NCE powerstation
 
 package jmri.jmrix.nce;
 
@@ -22,7 +21,7 @@ public class NceProgrammer implements NceListener, Programmer {
 	public NceProgrammer() { 
 		// error if more than one constructed?
 		if (self != null) 
-			log.error("Creating too many SlotManager objects");
+			log.error("Creating too many NceProgrammer objects");
 
 		// register this as the default, register as the Programmer
 		self = this; 
@@ -55,31 +54,30 @@ public class NceProgrammer implements NceListener, Programmer {
 	private Vector propListeners = new Vector();
 	
 	public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
-			// add only if not already registered
-			if (!propListeners.contains(l)) {
-					propListeners.addElement(l);
-				}
+		// add only if not already registered
+		if (!propListeners.contains(l)) {
+			propListeners.addElement(l);
 		}
+	}
 
 	public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
-			if (propListeners.contains(l)) {
-					propListeners.removeElement(l);
-				}
+		if (propListeners.contains(l)) {
+			propListeners.removeElement(l);
 		}
+	}
 
 	protected void notifyPropertyChange(String name, int oldval, int newval) {
 		// make a copy of the listener vector to synchronized not needed for transmit
 		Vector v;
-		synchronized(this)
-			{
-				v = (Vector) propListeners.clone();
-			}
+		synchronized(this) {
+			v = (Vector) propListeners.clone();
+		}
 		// forward to all listeners
 		int cnt = v.size();
 		for (int i=0; i < cnt; i++) {
 			PropertyChangeListener client = (PropertyChangeListener) v.elementAt(i);
 			client.propertyChange(new PropertyChangeEvent(this, name, new Integer(oldval), new Integer(newval)));
-						}
+		}
 	}
 	
 	// members for handling the programmer interface
@@ -90,6 +88,8 @@ public class NceProgrammer implements NceListener, Programmer {
 		// 0 is notProgramming
 	boolean  _progRead = false;
 	
+	
+	// programming interface
 	public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
 		useProgrammer(p);
 		_progRead = false;
@@ -97,9 +97,8 @@ public class NceProgrammer implements NceListener, Programmer {
 		progState = 1;
 		
 		// format and send message
-		//LnTrafficController.instance().sendLocoNetMessage(progTaskStart(getMode(), val, CV));
-
-		}
+		NceTrafficController.instance().sendNceMessage(progTaskStart(getMode(), val, CV), this);
+	}
 		
 	public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
 		useProgrammer(p);
@@ -108,8 +107,8 @@ public class NceProgrammer implements NceListener, Programmer {
 		progState = 1;
 		
 		// format and send message
-		//LnTrafficController.instance().sendLocoNetMessage(progTaskStart(getMode(), -1, CV));
-		}
+		NceTrafficController.instance().sendNceMessage(progTaskStart(getMode(), -1, CV), this);
+	}
 
 	private jmri.ProgListener _usingProgrammer = null;
 	
@@ -128,23 +127,17 @@ public class NceProgrammer implements NceListener, Programmer {
 	
 	// internal method to create the NceMessage for programmer task start
 	protected NceMessage progTaskStart(int mode, int val, int cvnum) throws jmri.ProgrammerException {
-	
-		int addr = cvnum-1;    // cvnum is in human readable form; addr is what's sent over loconet
-		return null;
+		// val = -1 for read command; mode is direct, etc
+		
+		return null; // NceMessage.getReadCV(cvnum);, but don't yet understand...
 	}
 	
 	public void message(NceMessage m) {}
+	public void reply(NceReply m) {}
 	
 	// internal method to notify of the final result
 	protected void notifyProgListenerEnd(int value, int status) {
 		_usingProgrammer.programmingOpReply(value, status);
-		_usingProgrammer = null;
-	}
-
-	// internal method to notify of the LACK result
-	// a separate routine from nPLRead in case we need to handle something later
-	protected void notifyProgListenerLack(int status) {
-		_usingProgrammer.programmingOpReply(-1, status);
 		_usingProgrammer = null;
 	}
 
