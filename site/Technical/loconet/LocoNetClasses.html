@@ -80,16 +80,32 @@ changes to the user interface.
 <h2>Implementing the LocoNet connection</h2>
 Implementing communication with a real LocoNet is handled by 
 classes that implement the LocoNetListener interface.
-There are currently two: 
+There are currently four: 
 <A HREF="../doc/jmri/jmrix/loconet/LnTrafficController.html">LnTrafficController</a>
-and its subclass 
-<A HREF="../doc/jmri/jmrix/loconet/LnTrafficPacketizer.html">LnTrafficPacketizer</a>.
+and its subclasses
+<A HREF="../doc/jmri/jmrix/loconet/LnTrafficPacketizer.html">LnTrafficPacketizer</a>,
+<A HREF="../doc/jmri/jmrix/loconet/LnTrafficRouter.html">LnTrafficRouter</a>,
+and
+<A HREF="../doc/jmri/jmrix/loconet/LocoNetInterfaceScaffold.html">LocoNetInterfaceScaffold</a>.
 
 <h3>LnTrafficController</h3>
 The 
 <A HREF="../doc/jmri/jmrix/loconet/LnTrafficController.html">LnTrafficController</a>
-class provides a scatter-gather operation for the LocoNetListener interface.
+abstract class provides some common implementation for it's subclasses, and
+adds a mechanism to find a usable LocoNetInterface implementation.
+<P>
+The routine addLocoNetListener and removeLocoNetListener methods are implemented here,
+along with a notify method to forward LocoNetMessages to the listeners.
+<P>
+The static instance() method is used by a large number of jmrix.loconet classes
+to find a LocoNetInterface for transmitting and receiving messages. It works through
+a "self" static member, which is initialized with a LnTrafficController 
+subclass object is created.  All objects wanting to send or receive over the
+LocoNet will thence use the last-created LnTrafficController implementation.
+See the section on "<a href="#startup">Startup</a>" for more information on this.
 
+<P>
+<img src="LnTrafficControllerUML.png">
 
 <h3>LnTrafficPacketizer</h3>
 The
@@ -100,16 +116,76 @@ packets over a LocoBuffer serial link to a LocoNet.
 It works with an implementation of the 
 <A HREF="../doc/jmri/jmrix/loconet/LnPortController.html">LnPortController</A> - 
 Abstract class, which works at the level of character streams.
-
-
 These communicate through Java streams which carry the LocoNet messages as 
-character sequences.  
+character sequences.  LnPortController implementations are 
+available for the LocoBuffer, MS100 and for reading from a hex log file.
+<P>
+It uses separate threads for transmission and reception of characters from the streams.
+The receive operation is done in a thread so it can easily stall when no messages
+are available.  The transmit operation is done in a thread for a similar reason; 
+sometimes a LocoBuffer will shut off input (output from the program), which causes
+the stream write operations to stall.  By doing those in a separate thread, we can
+detect or at least bypass this without the entire program coming to a stop.
+
+<h3>LnTrafficRouter</h3>
+The 
+<A HREF="../doc/jmri/jmrix/loconet/LnTrafficRouter.html">LnTrafficRouter</a>
+class provides a scatter-gather operation for the LocoNetListener interface.
+Note that this implementation doesn't transform the LocoNetMessages into serial traffic.
+
+<BR><img src="LocoNetConnections.gif" alt="Drawing of how various objects route messages" width="640" height="480">
+<BR>
+
+Note the two LnTrafficRouter object. It provides a LocoNetInterface for all
+the LocoNet-using messages in the remote node, so that only
+one copy of each message has to travel across the remote link.
+<P>
+Note that the "some remote comm class" could also be implemented as a subclass of LnTrafficRouter,
+instead of communicating with one.
+
+<h3>LocoNetInterfaceScaffold</h3>
+The 
+<A HREF="../doc/jmri/jmrix/loconet/LocoNetInterfaceScaffold.html">LocoNetInterfaceScaffold</a>
+class provides a LnTrafficController implementation for use in test programs.
+Rather than communicate with a real LocoNet, it provides scaffolding to 
+make it easy to test the transmission and receipt of messages.
 
 
-<h3>Startup</h3>
+<h2><a id="startup">Startup</a></h2>
 There are "action" classes that connect to an input source.   The main 
 program puts these in a menu, on a button, etc, so that the user can select the
-connection desired.
+connection desired. The current (March 2002) set is:
+<UL>
+<LI>LocoBufferAction - creates a LocoBufferAdapter object and configures for operation
+with a LocoBuffer
+<LI>MS100Action - creates a MS100Adapter object and configures for operation with
+an MS100
+<LI>LnHexFileAction - creates an LnHexFilePort object and configures for operation
+from a hex log file.
+</UL>
+<BR>
+In addition to configuring the adapter for the input source, 
+something has to configure the complete set of Manager objects and the
+LocoNet-handling objects.  These include:
+<UL>
+<LI>Typically a LnPacketizer, which becomes the "instance" for 
+objects that use LnTrafficController.instance() to locate an interface.
+<LI>A ProgrammerInstance
+<LI>A PowerManagerInstance
+<LI>A TurnoutManagerInstance
+</UL>
+These last three provide LocoNet-based services for the higher-level
+JMRI interfaces.
+<P>
+The configure() methods in the various adapter classes do this.
+That's not a very general mechanism.  Although a LnPacketizer
+is the right thing to connect to each of the serial port adapters,
+the rest of the configuration might vary.
+
+<h2>Port adapters</h2>
+<A HREF="../doc/jmri/jmrix/loconet/LnPortController.html">LnPortController</A>
+is an abstract base class to carry common implementations for the Adapter
+classes that connect to serial ports with specific protocols. 
 
 <h4>MS100</h4>
 
@@ -172,7 +248,7 @@ Unlike the
 MS100Frame and LocoBufferFrame objects, the HexFileFrame object stays
 visible so that it can control the flow of messages from the file.
 
-<h3>Slot and Programmer management</h3>
+<h2>Slot and Programmer management</h2>
 
 "Slots" are basic to the operation of a LocoNet command station.  They are represented
 by the LocoNetSlot class.  Like LocoNetMessage, this class does not (yet) provide a lot
