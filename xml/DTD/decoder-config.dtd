@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a DCC decoder as a component, esp. information -->
 <!-- on how to program it. -->
-<!-- $Revision: 1.30 $ -->
+<!-- $Revision: 1.31 $ -->
 
 <!-- This DTD is Copyright 2001, 2003 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -120,6 +120,7 @@
 <!ATTLIST variable minFn		CDATA #IMPLIED>  <!-- min number of fns in decoder for this to be valid -->
 <!ATTLIST variable minOut		CDATA #IMPLIED>  <!-- min number of fns in decoder for this to be valid -->
 <!ATTLIST variable inOptions 	CDATA #IMPLIED>  <!-- variable present if any of the options are present -->
+<!ATTLIST variable tooltip      CDATA #IMPLIED>  <!-- variable-specific tooltip, see also programmer DTD -->
 
 <!-- enumVal, decVal, hexval, speedTableVal, longAddressVal are constraints on possible values -->
 
