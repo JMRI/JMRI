@@ -33,7 +33,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * Reverse engineering of OPC_MULTI_SENSE was provided by Al Silverstein.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  */
 public class Llnmon {
 
@@ -629,7 +629,6 @@ public class Llnmon {
              *************************************************************************/
         case LnConstants.OPC_MULTI_SENSE:     {         // definition courtesy Al Silverstein
             int type = l.getElement(1)&LnConstants.OPC_MULTI_SENSE_MSG;
-            forceHex = true;
             String m;
 
             String zone;
@@ -641,8 +640,7 @@ public class Llnmon {
 
             switch (type) {
             case LnConstants.OPC_MULTI_SENSE_POWER:
-                return "OPC_MULTI_SENSE power message PM4 "
-                    +(l.getElement(2)+1)+" ";
+                return powerMultiSenseMessage(l);
             case LnConstants.OPC_MULTI_SENSE_PRESENT:  // from transponding app note
                 m =  "OPC_MULTI_SENSE transponder present zone "
                     +zone+" decoder address ";
@@ -660,6 +658,7 @@ public class Llnmon {
                     m+=l.getElement(3)*128+l.getElement(4)+" (long) ";
                 return m;
             default:
+                forceHex = true;
                 return "OPC_MULTI_SENSE unknown format ";
             }
         }
@@ -1462,6 +1461,39 @@ public class Llnmon {
             return "Warning - checksum invalid in message:\n";
 	else
             return "";
+    }
+
+    /**
+     * Factor out the PM power messages
+     * @param l
+     * @return human readable string, no \n on end
+     */
+    String powerMultiSenseMessage(LocoNetMessage l) {
+        int pCMD = (l.getElement(3) & 0xF0);
+
+        if ( (pCMD == 0x30)|| (pCMD == 0x10)) {
+            // autoreverse
+            int cm1 = l.getElement(3);
+            int cm2 = l.getElement(4);
+            return "PM4 "+(l.getElement(2)+1)
+                +" ch1 "+((cm1&1)!=0 ? "AR " : "SC ")+((cm2&1)!=0 ? "ACT;" : "OK;")
+                +" ch2 "+((cm1&2)!=0 ? "AR " : "SC ")+((cm2&2)!=0 ? "ACT;" : "OK;")
+                +" ch3 "+((cm1&4)!=0 ? "AR " : "SC ")+((cm2&4)!=0 ? "ACT;" : "OK;")
+                +" ch4 "+((cm1&8)!=0 ? "AR " : "SC ")+((cm2&8)!=0 ? "ACT;" : "OK;");
+        } else if (pCMD == 0x70) {
+            // programming
+            int bit = (l.getElement(4)&0x0E)/2;
+            int val = (l.getElement(4)&0x01);
+            int wrd = (l.getElement(4)&0x70)/16;
+            int opsw = (l.getElement(4)&0x7E)/2+1;
+            return "PM4 "+(l.getElement(2)+1)+
+                ( (l.getElement(2)&0x10)!=0 ? " wr ":" rd ")
+                +wrd+","+bit+" (opsw "+opsw+") val="+val
+                +(val==1 ? " (closed) ":" (thrown) ");
+        } else  // beats me
+            forceHex = true;
+            return "OPC_MULTI_SENSE power message PM4 "
+                    +(l.getElement(2)+1)+" unknown CMD=0x"+Integer.toHexString(pCMD)+" ";
     }
 
 }  // end of class
