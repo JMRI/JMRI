@@ -4,17 +4,14 @@ package jmri.jmrix.xpa;
 
 /**
  * Encodes a message to an XPressNet command station via an XPA and a modem.
- * <P>
- * The {@link XpaReply}
- * class handles the response from the command station.
  *
  * @author	Paul Bender  Copyright (C) 2004
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class XpaMessage {
 
     public static int maxSize = 64;
-    
+
     private int _nDataChars = 0;
     private byte _dataChars[] = null;
 
@@ -75,10 +72,10 @@ public class XpaMessage {
 
 
     /* Get a message which sends an Estop or Everything off command
-       to the layout.  This will toggle the Estop commands.  
-       XPA settings can change the behavior of this command.  It may 
-       only work with a single locomotive, or it may kill the entire 
-       layout. 
+       to the layout.  This will toggle the Estop commands.
+       XPA settings can change the behavior of this command.  It may
+       only work with a single locomotive, or it may kill the entire
+       layout.
     */
     static XpaMessage getEStopMsg(){
 	XpaMessage m=new XpaMessage("ATDT0;");
@@ -87,18 +84,18 @@ public class XpaMessage {
 
     // Locomotive Messages
 
-    /* 
+    /*
        Get a message which sends an "Idle" (zero speed) command
-       to a specific locomotive on the layout.  
+       to a specific locomotive on the layout.
     */
     static XpaMessage getIdleMsg(int Address){
 	XpaMessage m=new XpaMessage("ATDT#" + Address +"*5;");
 	return m;
     }
 
-    /* 
+    /*
        Get a message for an "Increase Speed" command
-       to a specific locomotive on the layout.  To make 
+       to a specific locomotive on the layout.  To make
        calculations easy, this uses a single speed step increase
     */
     static XpaMessage getIncSpeedMsg(int Address,int steps){
@@ -110,9 +107,9 @@ public class XpaMessage {
 	return m;
     }
 
-    /* 
+    /*
        Get a message for a "Decrease Speed" command
-       to a specific locomotive on the layout.  To make 
+       to a specific locomotive on the layout.  To make
        calculations easy, this uses a single speed step increase
     */
     static XpaMessage getDecSpeedMsg(int Address, int steps){
@@ -124,27 +121,27 @@ public class XpaMessage {
 	return m;
     }
 
-    /* 
+    /*
        Get a message for a "Direction Forward" command
-       to a specific locomotive on the layout.  
+       to a specific locomotive on the layout.
     */
     static XpaMessage getDirForwardMsg(int Address){
 	XpaMessage m=new XpaMessage("ATDT#" + Address +"*02;");
 	return m;
     }
 
-    /* 
+    /*
        Get a message for a "Direction Reverse" command
-       to a specific locomotive on the layout.  
+       to a specific locomotive on the layout.
     */
     static XpaMessage getDirReverseMsg(int Address){
 	XpaMessage m=new XpaMessage("ATDT#" + Address +"*08;");
 	return m;
     }
 
-    /* 
+    /*
        Get a message which sends a "Toggle Function" command
-       to a specific locomotive on the layout.  
+       to a specific locomotive on the layout.
     */
     static XpaMessage getFunctionMsg(int Address, int Function){
 	XpaMessage m=new XpaMessage("ATDT#" + Address +"**" +Function + ";");
@@ -153,18 +150,18 @@ public class XpaMessage {
 
     // Switch Commands
 
-    /* 
+    /*
        Get a message for a "Switch Possition Normal" command
-       to a specific accessory decoder on the layout.  
+       to a specific accessory decoder on the layout.
     */
     static XpaMessage getSwitchNormalMsg(int Address){
 	XpaMessage m=new XpaMessage("ATDT#" + Address +"#3;");
 	return m;
     }
 
-    /* 
+    /*
        Get a message for a "Switch Possition Reverse" command
-       to a specific accessory decoder on the layout.  
+       to a specific accessory decoder on the layout.
     */
     static XpaMessage getSwitchReverseMsg(int Address){
 	XpaMessage m=new XpaMessage("ATDT#" + Address +"#1;");

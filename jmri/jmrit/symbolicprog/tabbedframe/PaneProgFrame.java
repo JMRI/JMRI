@@ -27,7 +27,7 @@ import org.jdom.Element;
 /**
  * Frame providing a command station programmer from decoder definition files.
  * @author			Bob Jacobsen   Copyright (C) 2001; D Miller Copyright 2003
- * @version			$Revision: 1.39 $
+ * @version			$Revision: 1.40 $
  */
 abstract public class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
@@ -693,7 +693,7 @@ abstract public class PaneProgFrame extends javax.swing.JFrame
 
     /**
      * Store the locomotives information in the roster (and a RosterEntry file).
-     * @returns false if store failed
+     * @return false if store failed
      */
     public boolean storeFile() {
         log.debug("storeFile starts");
