@@ -19,7 +19,7 @@ import javax.swing.JButton;
  * TurnoutTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -69,8 +69,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     JFrame addFrame = null;
     JTextField sysName = new JTextField(5);
     JTextField userName = new JTextField(5);
-    JLabel sysNameLabel = new JLabel("System name:");
-    JLabel userNameLabel = new JLabel("User name:");
+    JLabel sysNameLabel = new JLabel(rb.getString("LabelSystemName"));
+    JLabel userNameLabel = new JLabel(rb.getString("LabelUserName"));
 
     void addPressed(ActionEvent e) {
         if (addFrame==null) {

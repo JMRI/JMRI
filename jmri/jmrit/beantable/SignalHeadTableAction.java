@@ -25,7 +25,7 @@ import javax.swing.JTextField;
  * SignalHeadTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -81,7 +81,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                ((SignalHead)t).setAppearance(newState);
             }
             public JButton configureButton() {
-                return new JButton("Yellow");
+                return new JButton(rbean.getString("SignalHeadStateYellow"));
             }
         };
     }
@@ -96,13 +96,13 @@ public class SignalHeadTableAction extends AbstractTableAction {
     JTextField to1 = new JTextField(5);
     JTextField to2 = new JTextField(5);
     JTextField to3 = new JTextField(5);
-    JLabel nameLabel = new JLabel("Name:");
-    JLabel v1Label = new JLabel("Value1:");
-    JLabel v2Label = new JLabel("Value2:");
-    JLabel v3Label = new JLabel("Value3:");
+    JLabel nameLabel = new JLabel("");
+    JLabel v1Label = new JLabel("");
+    JLabel v2Label = new JLabel("");
+    JLabel v3Label = new JLabel("");
 
-    String SE8c4Aspect = "SE8c 4 aspect";
-    String TripleTurnout = "Triple Turnout";
+    String SE8c4Aspect = rb.getString("StringSE8c4aspect");
+    String TripleTurnout = rb.getString("StringTripleTurnout");
     void addPressed(ActionEvent e) {
         if (addFrame==null) {
             addFrame = new JFrame(rb.getString("TitleAddSignal"));
@@ -150,16 +150,18 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
     void typeChanged() {
         if (SE8c4Aspect.equals(typeBox.getSelectedItem())) {
-            nameLabel.setText("User name:");
-            v1Label.setText("Turnout number");
+            nameLabel.setText(rb.getString("LabelUserName"));
+            v1Label.setText(rb.getString("LabelTurnoutNumber"));
             v2Label.setText("");to2.setVisible(false);
             v3Label.setText("");to3.setVisible(false);
 
         } else if (TripleTurnout.equals(typeBox.getSelectedItem())) {
-            nameLabel.setText("System name:");
-            v1Label.setText("Green turnout ID:");
-            v2Label.setText("Yellow turnout ID:");to2.setVisible(true);
-            v3Label.setText("Red Turnout ID:");to3.setVisible(true);
+            nameLabel.setText(rb.getString("LabelSystemName"));
+            v1Label.setText(rb.getString("LabelGreenTurnoutNumber"));
+            v2Label.setText(rb.getString("LabelYellowTurnoutNumber"));
+            to2.setVisible(true);
+            v3Label.setText(rb.getString("LabelRedTurnoutNumber"));
+            to3.setVisible(true);
         } else log.error("Unexpected type in typeChanged: "+typeBox.getSelectedItem());
     }
 
