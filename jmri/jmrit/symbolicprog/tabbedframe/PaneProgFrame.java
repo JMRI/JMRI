@@ -29,7 +29,7 @@ import org.jdom.JDOMException;
 /**
  * Frame providing a command station programmer from decoder definition files
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
@@ -275,12 +275,18 @@ public class PaneProgFrame extends javax.swing.JFrame
 		// locate a decoder like that.
 		List l = DecoderIndexFile.instance().matchingDecoderList(null, decoderFamily, null, null, decoderModel);
 		if (log.isDebugEnabled()) log.debug("found "+l.size()+" matches");
+		if (l.size() == 0) {
+			log.warn("Loco uses "+decoderFamily+" "+decoderModel+" decoder, but no such decoder defined");
+            // fall back to use just the decoder name, not family
+		    l = DecoderIndexFile.instance().matchingDecoderList(null, null, null, null, decoderModel);
+		    if (log.isDebugEnabled()) log.debug("found "+l.size()+" matches without family key");
+		}
 		if (l.size() > 0) {
 			DecoderFile d = (DecoderFile)l.get(0);
 			loadDecoderFile(d);
-		} else {
-			log.warn("Loco uses "+decoderFamily+" "+decoderModel+" decoder, but no such decoder defined");
-		}
+        } else {
+            log.warn("no matching \""+decoderModel+"\" decoder found for loco, no decoder info loaded");
+        }
 	}
 
   	protected void loadDecoderFile(DecoderFile df) {
