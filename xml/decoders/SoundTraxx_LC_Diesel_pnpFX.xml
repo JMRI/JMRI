@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_LC_Diesel_pnpFX.xml,v 1.4 2003-10-18 23:51:55 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_LC_Diesel_pnpFX.xml,v 1.5 2004-03-24 02:08:02 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Michael Mosher" version="10.1" lastUpdated="20031008"/>
+		<version author="Michael Mosher" version="10.2" lastUpdated="20040301"/>
 
 		<!-- version 4: updates to minOut usage, function mapping -->
 		<!-- version 5: added LL100LC -->
@@ -12,7 +12,8 @@
 		<!-- version 8: remove Atlas/Kato to other file -->
 		<!-- version 9: remove non-FX units to other file -->
 		<!-- version 10: added CV105&106, set CV9 default to 180 -->
-      <!-- Version 10.1: changed spelling of "behavior" (Jack Shall) -->
+     		<!-- Version 10.1: changed spelling of "behavior" (Jack Shall) -->
+		<!-- Version 10.2: corrected label on CV52 - FX2 effect generated (Michael Greene) -->
 
 <decoder>
 	<family name="LC Diesel PNP + FX decoders" mfg="Throttle-Up (SoundTraxx)">
@@ -576,7 +577,7 @@
 				<enumChoice choice="Grade crossing enable, phase B"/>
 				</enumVal>
 			</variable>
-		<variable label="FX1 effect generated" CV="52" mask="XXXXVVVV"
+		<variable label="FX2 effect generated" CV="52" mask="XXXXVVVV"
 					item="Function 2 effect generated">
 			<enumVal>
 				<enumChoice choice="On/Off"/>
@@ -725,6 +726,7 @@
 </pane>
 
 </decoder-config>
+
 
 
 
