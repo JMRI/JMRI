@@ -29,7 +29,7 @@ import org.jdom.JDOMException;
 /**
  * Frame providing a command station programmer from decoder definition files
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
@@ -64,8 +64,6 @@ public class PaneProgFrame extends javax.swing.JFrame
 		JPanel pane = new JPanel();
 
 		// general GUI config
-		pane.setMaximumSize(getToolkit().getScreenSize());
-
 		pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
 
 		// configure GUI elements
@@ -109,14 +107,15 @@ public class PaneProgFrame extends javax.swing.JFrame
 	}
 
 	public Dimension getPreferredSize() {
-		Dimension screen = getToolkit().getScreenSize();
+		Dimension screen = getMaximumSize();
 		int width = Math.min(super.getPreferredSize().width, screen.width);
 		int height = Math.min(super.getPreferredSize().height, screen.height);
 		return new Dimension(width, height);
 	}
 
 	public Dimension getMaximumSize() {
-		return getToolkit().getScreenSize();
+        Dimension screen = getToolkit().getScreenSize();
+        return new Dimension(screen.width, screen.height-25);
 	}
 
 	// ctors
@@ -133,9 +132,8 @@ public class PaneProgFrame extends javax.swing.JFrame
 
  		pack();
 
-		if (log.isDebugEnabled()) log.debug("PaneProgFrame contructed with no args, size is "+getPreferredSize());
-		if (getPreferredSize().width>800 || getPreferredSize().height>600)
-				log.info("Frame prefers larger than 800x600, is "+getPreferredSize());
+		if (log.isDebugEnabled()) log.debug("PaneProgFrame contructed with no args, unconstrained size is "+super.getPreferredSize()
+                                    +", constrained to "+getPreferredSize());
 	}
 
   	/**
@@ -236,9 +234,8 @@ public class PaneProgFrame extends javax.swing.JFrame
 		pack();
 
 		if (log.isDebugEnabled()) log.debug("PaneProgFrame \""+name+"\" constructed for file "+locoFile
-											+", size is "+getPreferredSize());
-		if (getPreferredSize().width>800 || getPreferredSize().height>600)
-				log.info("Frame larger than 800x600, is "+getPreferredSize());
+											+", unconstrained size is "+super.getPreferredSize()
+                                            +", constrained to "+getPreferredSize());
 	}
 
 	Element lroot = null;
