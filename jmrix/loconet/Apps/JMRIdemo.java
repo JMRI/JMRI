@@ -40,6 +40,7 @@ public class JMRIdemo extends JPanel {
 	        funcMenu.add(new jmri.simpleprog.SimpleProgAction("Simple Programmer"));
 	        funcMenu.add(new jmri.symbolicprog.SymbolicProgAction("Symbolic Programmer"));
 	        funcMenu.add(new jmri.jmrix.loconet.locoecho.LocoEchoAction("Turnout Control"));
+	        funcMenu.add(new jmri.jmrit.powerpanel.PowerPanelAction("Power Control"));
 
         JMenu locoMenu = new JMenu("LocoNet");
         menuBar.add(locoMenu);

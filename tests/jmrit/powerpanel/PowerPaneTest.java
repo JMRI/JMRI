@@ -64,7 +64,15 @@ public class PowerPaneTest extends TestCase {
 	// click on button
 	public void testOnClicked() {
 		PowerPane p = new PowerPane();
-		p.onButton.clickPerformed();
+		p.onButton.doClick();
+		Assert.assertEquals("Testing shown on/off", "On", p.onOffStatus.getText());
+	}
+
+	// click off button
+	public void testOffClicked() {
+		PowerPane p = new PowerPane();
+		p.offButton.doClick();
+		Assert.assertEquals("Testing shown on/off", "Off", p.onOffStatus.getText());
 	}
 	
 	jmri.PowerManager manager;  // holds dummy for testing

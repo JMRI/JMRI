@@ -17,6 +17,7 @@
 
 package jmri;
 
+import java.beans.PropertyChangeListener;
 
 public interface PowerManager {
 
@@ -30,6 +31,10 @@ public interface PowerManager {
 
 	// to free resources when no longer used
 	public void dispose() throws JmriException;
+
+	// to hear of changes
+	public void addPropertyChangeListener(PropertyChangeListener p);
+	public void removePropertyChangeListener(PropertyChangeListener p);
 
 }
 
