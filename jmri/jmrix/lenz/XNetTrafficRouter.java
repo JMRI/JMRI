@@ -18,7 +18,7 @@ import java.util.Vector;
  * without traffic over the connection.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Revision: 2.1 $
+ * @version 		$Revision: 2.2 $
  *
  */
 public class XNetTrafficRouter extends XNetTrafficController implements XNetListener {
@@ -52,7 +52,11 @@ public class XNetTrafficRouter extends XNetTrafficController implements XNetList
     public void message(XNetReply m) {
         notify(m);
     }
-
+   
+     // listen for the messages to the LI100/LI101
+     public void message(XNetMessage l) {
+     }
+ 
     // methods to connect/disconnect to a source of data in another
     // XNetInterface
 	private XNetInterface destination = null;

@@ -26,7 +26,7 @@ import java.beans.PropertyChangeEvent;
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Paul Bender  Copyright (c) 2003,2004
- * @version $Revision: 2.4 $
+ * @version $Revision: 2.5 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -301,7 +301,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 	}
 
  	// listen for the messages to the LI100/LI101
-    	public void message(XNetMessage l) {
+    	synchronized public void message(XNetMessage l) {
     	}
 
 
