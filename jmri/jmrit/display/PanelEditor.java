@@ -38,7 +38,7 @@ import com.sun.java.util.collections.*;
  *
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 
 public class PanelEditor extends JFrame {
@@ -98,8 +98,6 @@ public class PanelEditor extends JFrame {
         common.add(nextY);
         this.getContentPane().add(common);
 
-        this.getContentPane().add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
-
         // add a background image
         {
             JPanel panel = new JPanel();
@@ -129,8 +127,6 @@ public class PanelEditor extends JFrame {
                                         );
             this.getContentPane().add(panel);
         }
-
-        this.getContentPane().add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
 
         // Add icon label
         {
@@ -312,7 +308,8 @@ public class PanelEditor extends JFrame {
     }  // end ctor
 
     /**
-     * Button pushed, add a background image (do this early!)
+     * Button pushed, add a background image. Note that a background image
+     * differs from a regular icon only in the level at which it's presented.
      */
     void addBackground() {
         JFileChooser inputFileChooser = new JFileChooser(" ");
@@ -321,16 +318,10 @@ public class PanelEditor extends JFrame {
         log.debug("Open image file: "+inputFileChooser.getSelectedFile().getPath());
         NamedIcon icon = new NamedIcon(inputFileChooser.getSelectedFile().getPath(),
                                        inputFileChooser.getSelectedFile().getPath());
-        JLabel l = new PositionableLabel(icon);
+        PositionableLabel l = new PositionableLabel(icon);
         l.setSize(icon.getIconWidth(), icon.getIconHeight());
-        putBackground(l);
-    }
-
-    public void putBackground(JLabel l) {
-        target.add(l, BKG);
-        contents.add(l);
-        backgroundAddButton.setEnabled(false);   // theres only one
-        target.revalidate();
+        l.setDisplayLevel(BKG);
+        putLabel(l);
     }
 
     /**
@@ -415,15 +406,15 @@ public class PanelEditor extends JFrame {
      * Add a label to the target
      */
     void addLabel() {
-        JComponent l = new PositionableLabel(nextLabel.getText());
+        PositionableLabel l = new PositionableLabel(nextLabel.getText());
         setNextLocation(l);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
-
+        l.setDisplayLevel(LABELS);
         putLabel(l);
     }
-    public void putLabel(JComponent l) {
+    public void putLabel(PositionableLabel l) {
         l.invalidate();
-        target.add(l, LABELS);
+        target.add(l, l.getDisplayLevel());
         contents.add(l);
         target.validate();
     }
@@ -434,14 +425,8 @@ public class PanelEditor extends JFrame {
     void addIcon() {
         PositionableLabel l = new PositionableLabel(iconEditor.getIcon(0) );
         setNextLocation(l);
-        putIcon(l);
-    }
-    public void putIcon(PositionableLabel l) {
-        l.invalidate();
-        target.add(l, ICONS);
-        contents.add(l);
-        // reshow the panel
-        target.validate();
+        l.setDisplayLevel(ICONS);
+        putLabel(l);
     }
 
     /**
