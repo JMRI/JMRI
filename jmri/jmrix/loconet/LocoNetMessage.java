@@ -19,7 +19,7 @@ import java.io.Serializable;
  * ideas being tested there will eventually be moved back to here.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Id: LocoNetMessage.java,v 1.7 2002-04-13 16:43:42 jacobsen Exp $
+ * @version			$Revision: 1.8 $
  * @see             jmri.jmrix.nce.NceMessage
  *
  */
@@ -183,6 +183,39 @@ public class LocoNetMessage implements Serializable {
         if ((val&(~0xFFFF)) != 0) log.error("highByte called with too large value: "
                                         +Integer.toHexString(val));
         return (val&0xFF00)/256;
+    }
+
+    /**
+     * Sensor-format 0-n address
+     * @return
+     */
+    public int sensorAddr() {
+        int sw1 = getElement(1);
+        int sw2 = getElement(2);
+		int as = sw2&0x40;		// should be a LocoNet constant?
+        int high = sw2&0x0F;
+		int low = sw1&0x7F;
+		return high*256+low*2+(as!=0 ? 1 : 0);
+    }
+
+    /**
+     * If this is an OPC_INPUT_REP, return the 0-n address, else -1
+     * @return
+     */
+    public int inputRepAddr() {
+        if (getOpCode()==LnConstants.OPC_INPUT_REP) {
+            return sensorAddr();
+        } else return -1;
+    }
+
+    /**
+     * Return the 1-N turnout address
+     * @return
+     */
+    public int turnoutAddr() {
+        int a1 = getElement(1);
+        int a2 = getElement(2);
+        return (((a2 & 0x0f) * 128) + (a1 & 0x7f))+1;
     }
 
 	// contents (private)
