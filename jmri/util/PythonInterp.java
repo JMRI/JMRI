@@ -16,7 +16,7 @@ import java.io.*;
  * read the code, the "non-reflection" statements are in the comments.
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class PythonInterp {
 
@@ -105,24 +105,6 @@ public class PythonInterp {
             // interp = new PythonInterpreter();
             interp = Class.forName("org.python.util.PythonInterpreter").newInstance();
 
-            // Add the I/O pipes
-            PipedWriter pw = new PipedWriter();
-
-            // interp.setErr(pw);
-            java.lang.reflect.Method method
-                    = interp.getClass().getMethod("setErr", new Class[]{Writer.class});
-            method.invoke(interp, new Object[]{pw});
-            // interpreter.setOut(pw);
-            method
-                    = interp.getClass().getMethod("setOut", new Class[]{Writer.class});
-            method.invoke(interp, new Object[]{pw});
-
-            // ensure the output pipe is read and stored into a
-            // Swing TextArea data model
-            PipedReader pr = new PipedReader(pw);
-            PipeListener pl = new PipeListener(pr, outputlog);
-            pl.start();
-
             // have jython execute the default setup
             log.debug("load defaults from "+defaultContextFile);
             execFile(defaultContextFile);
@@ -137,9 +119,51 @@ public class PythonInterp {
     }
 
     /**
+     * Provide access to the JTextArea containing the Jython VM 
+     * output.
+     * <P>
+     * The output JTextArea is not created until this is invoked,
+     * so that code that doesn't use this feature can run
+     * on GUI-less machines.
+     */
+    static public javax.swing.JTextArea getOutputArea() {
+        if (outputlog == null) {
+            // convert to stored output
+            
+            try {
+                // create the output area
+                outputlog = new javax.swing.JTextArea();
+
+                // Add the I/O pipes
+                PipedWriter pw = new PipedWriter();
+
+                // interp.setErr(pw);
+                java.lang.reflect.Method method
+                    = interp.getClass().getMethod("setErr", new Class[]{Writer.class});
+                method.invoke(interp, new Object[]{pw});
+                // interpreter.setOut(pw);
+                method
+                    = interp.getClass().getMethod("setOut", new Class[]{Writer.class});
+                method.invoke(interp, new Object[]{pw});
+
+                // ensure the output pipe is read and stored into a
+                // Swing TextArea data model
+                PipedReader pr = new PipedReader(pw);
+                PipeListener pl = new PipeListener(pr, outputlog);
+                pl.start();
+            } catch (Exception e) {
+                log.error("Exception creating jython output area: "+e);
+                e.printStackTrace();
+                return null;
+            }
+        }
+        return outputlog;
+    }
+    
+    /**
      * JTextArea containing the output
      */
-    static public javax.swing.JTextArea outputlog = new javax.swing.JTextArea();
+    static private javax.swing.JTextArea outputlog = null;
 
     /**
      * Name of the file containing the Python code defining JMRI defaults

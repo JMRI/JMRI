@@ -13,7 +13,7 @@ import java.awt.Font;
  * the thread output log from the {@link RunJythonScript} class.
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class JythonWindow extends AbstractAction {
 
@@ -39,7 +39,7 @@ public class JythonWindow extends AbstractAction {
         JFrame f = new JFrame(rb.getString("TitleOutputFrame"));
         f.getContentPane().add(
             new javax.swing.JScrollPane(
-                area = new javax.swing.JTextArea(jmri.util.PythonInterp.outputlog.getDocument(), null, 12, 50)
+                area = new javax.swing.JTextArea(jmri.util.PythonInterp.getOutputArea().getDocument(), null, 12, 50)
             ));
 
         // set a monospaced font
