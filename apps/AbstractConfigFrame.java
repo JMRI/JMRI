@@ -24,7 +24,7 @@ import org.jdom.Attribute;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 abstract public class AbstractConfigFrame extends JFrame {
 
@@ -781,10 +781,13 @@ abstract public class AbstractConfigFrame extends JFrame {
 			if (b.getText().equals(name)) b.setSelected(true);
 		}
 		// set the GUI
-		log.debug("setting GUI");
         if (className != null) {
             try {
-                updateLookAndFeel(name, className);
+                if (!className.equals(UIManager.getLookAndFeel().getClass().getName())) {
+		            log.debug("set GUI to "+name+","+className);
+                    updateLookAndFeel(name, className);
+                } else
+                    log.debug("skip updateLAF as already has className=="+className);
             } catch (Exception ex) {
                 log.error("Exception while setting GUI look & feel: "+ex);
             }
