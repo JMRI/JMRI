@@ -68,7 +68,7 @@ public class SprogHexFile extends JFrame {
     read = false;
     try {
       // Create an output writer based on the file, so we can write.
-      out = new FileOutputStream(file, false);
+      out = new FileOutputStream(file);
       buffOut = new BufferedOutputStream(out);
       return true;
     }
