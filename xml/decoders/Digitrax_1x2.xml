@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_1x2.xml,v 1.24 2003-10-18 23:51:55 jacobsen Exp $ -->
+<!-- $Id: Digitrax_1x2.xml,v 1.25 2005-01-13 16:21:33 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
-					version="9.1" lastUpdated="20031008"/>
+					version="10" lastUpdated="20050112"/>
 
 		<!-- Version 4 - added wire colors -->
 		<!-- Version 5 - added some specific models, extended CV7 range to 249 -->
@@ -12,6 +12,7 @@
 		<!-- version 8 - default BEMF value corrected -->
 		<!-- Version 9 - fix "rule 17" typos -->
       <!-- Version 9.1 - changed spelling of "behavior" (Jack Shall) -->
+      <!-- Version 10 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" - Bob Jacobsen -->
 		
 <decoder>
 	<family name="Premium FX with BEMF" mfg="Digitrax" 
@@ -472,7 +473,7 @@
 				<enumChoice choice="Reverse light lead controlled by F4"/>
 				</enumVal></variable>
 				
-		<variable label="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXXVXXXX">
+		<variable label="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXVXXXXX">
 			<enumVal>
 				<enumChoice choice="Enabled"/>
 				<enumChoice choice="Disabled"/>

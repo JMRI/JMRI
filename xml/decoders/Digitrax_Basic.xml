@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_Basic.xml,v 1.9 2004-02-11 04:59:05 jacobsen Exp $ -->
+<!-- $Id: Digitrax_Basic.xml,v 1.10 2005-01-13 16:21:34 jacobsen Exp $ -->
 <decoder-config>
 		<version author="phil.grainger@ca.com" 
-					version="8" lastUpdated="20031228"/>
+					version="9" lastUpdated="20050112"/>
 
 		<!-- Version 3 - rename family, add decoders, fix bug with FX on output 1 -->
 		<!-- version 4 - add DH140, DN140, update DN146 ID -->
@@ -12,6 +12,7 @@
 		<!-- Version 7 - fix "rule 17" typos -->
       <!-- Version 7.1 - changed spelling of "behavior" (Jack Shall) -->
             <!-- Version 8 - Added fifth function, also added DH83FX) Phil G -->
+      <!-- Version 9 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" - Bob Jacobsen -->
 
 <decoder>
 	<family name="Basic FX" mfg="Digitrax" lowVersionID="91" highVersionID="111">
@@ -371,7 +372,7 @@
 				<enumChoice choice="Reverse light lead controlled by F4"/>
 				</enumVal>
 			</variable>
-		<variable label="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXXVXXXX">
+		<variable label="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXVXXXXX">
 			<enumVal>
 				<enumChoice choice="enabled"/>
 				<enumChoice choice="disabled"/>

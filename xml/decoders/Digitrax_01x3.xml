@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_01x3.xml,v 1.24 2005-01-13 02:57:49 jacobsen Exp $ -->
+<!-- $Id: Digitrax_01x3.xml,v 1.25 2005-01-13 16:21:32 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Michael Mosher mjmx@comcast.net" 
-					version="13" lastUpdated="20050112"/>
+					version="14" lastUpdated="20050113"/>
 
 		<!-- Created from version 5 of the 1x2 file -->
 		<!-- V2: fix default values for CV56, 57 BEMF -->
@@ -19,6 +19,7 @@
       <!-- Version 11 - added DZ123 (Bob Jacobsen) -->
       <!-- Version 12 - added some tooltips (Jack Shall) -->
       <!-- Version 13 - added DN163K1B and DN163I0 (Simon Ginsburg) -->
+      <!-- Version 14 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" - Bob Jacobsen -->
 	
 <decoder>
 	<family name="Series 3 with FX3, silent, readback" 
@@ -730,7 +731,7 @@
 				<enumChoice choice="Reverse light lead controlled by F4"/>
 				</enumVal></variable>
 				
-		<variable label="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXXVXXXX">
+		<variable label="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXVXXXXX">
 			<enumVal>
 				<enumChoice choice="Enabled"/>
 				<enumChoice choice="Disabled"/>

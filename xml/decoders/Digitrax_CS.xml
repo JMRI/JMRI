@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_CS.xml,v 1.11 2003-10-18 23:51:55 jacobsen Exp $ -->
+<!-- $Id: Digitrax_CS.xml,v 1.12 2005-01-13 16:21:34 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Michael Mosher mjmx@comcast.net" 
-					version="7.1" lastUpdated="20031008"/>
+					version="8" lastUpdated="20050112"/>
 					
 		<!-- made from 150 file (Basic FX) -->
 		<!-- version 3 added BEMF, transponding control, short address -->
@@ -13,6 +13,7 @@
 		<!-- version 6 - add consist direction - jake -->
 		<!-- version 7 - fixed numOuts & numFns numbers and add cv29 defaults -->
       <!-- Version 7.1 - changed spelling of "behavior" (Jack Shall) -->
+      <!-- Version 8 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" - Bob Jacobsen -->
 
 <decoder>
 	<family name="Basic CS" mfg="Digitrax" lowVersionID="225" highVersionID="239">
@@ -235,7 +236,7 @@
 				<enumChoice choice="Enable configurable strobes"/>
 				</enumVal>
 			</variable>
-		<variable label="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXXVXXXX">
+		<variable label="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXVXXXXX">
 			<enumVal>
 				<enumChoice choice="enabled"/>
 				<enumChoice choice="disabled"/>
