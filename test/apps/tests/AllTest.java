@@ -7,21 +7,21 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Invoke all the JMRI project JUnit tests via a GUI interface
+ * Invoke all the JMRI project JUnit tests via a GUI interface.
  *
- * @author			Bob Jacobsen
- * @version			$Revision: 1.5 $
+ * @author	Bob Jacobsen
+ * @version	$Revision: 1.6 $
  */
 public class AllTest extends TestCase  {
     public AllTest(String s) {
         super(s);
     }
-    
+
     // note that initLogging has to be invoked _twice_ to get logging to
     // work in both the test routines themselves, and also in the TestSuite
     // code.  And even though it should be protected by a static, it runs
     // twice!  There are probably two sets of classes being created here...
-    
+
     // Main entry point
     static public void main(String[] args) {
         System.out.println("AllTest starts");
@@ -30,7 +30,7 @@ public class AllTest extends TestCase  {
         // initialize junit
 		junit.swingui.TestRunner.main(testCaseName);
     }
-    
+
     // test suite
     public static Test suite() {
         initLogging();
@@ -38,10 +38,10 @@ public class AllTest extends TestCase  {
         TestSuite suite = new TestSuite("AllTest");  // no tests in this class itself
         // all tests from other classes
         suite.addTest(jmri.JmriTest.suite());
-        
+
         return suite;
     }
-    
+
     static boolean log4jinit = true;
     public static void initLogging() {
         if (log4jinit) {
@@ -60,7 +60,7 @@ public class AllTest extends TestCase  {
             }
         }
     }
-    
+
     static org.apache.log4j.Category log = null;
-    
+
 }
