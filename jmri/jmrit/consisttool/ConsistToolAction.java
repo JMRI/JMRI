@@ -1,21 +1,20 @@
-/**
- * SimpleTurnoutCtrlAction.java
- *
- * Description:		Swing action to create and register a
- *       	        ConsistToolFrame object
- *
- * @author              Paul Bender Copyright (C) 2003
- * @version             $ version 1.00 $
- */
+// SimpleTurnoutCtrlAction.java
 
 package jmri.jmrit.consisttool;
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
-public class ConsistToolAction extends AbstractAction {
+/**
+ * Swing action to create and register a
+ * ConsistToolFrame object
+ *
+ * @author              Paul Bender Copyright (C) 2003
+ * @version             $Version:$
+ */
+ public class ConsistToolAction extends AbstractAction {
 
-    public ConsistToolAction(String s) { 
+    public ConsistToolAction(String s) {
 	super(s);
 
 	// disable ourself if there is no primary turnout manager available
