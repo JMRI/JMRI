@@ -1,6 +1,6 @@
 <!-- Defines XML documenting on a locomotive, esp. information -->
 <!-- on how it is programmed. -->
-<!-- $Id: locomotive-config.dtd,v 1.7 2001-11-18 01:44:07 jacobsen Exp $ -->
+<!-- $Id: locomotive-config.dtd,v 1.8 2001-11-18 01:46:42 jacobsen Exp $ -->
 
 <!ELEMENT locomotive:locomotive-config (locomotive:locomotive)>
 <!ATTLIST locomotive:locomotive-config xmlns:locomotive CDATA "">
@@ -12,7 +12,6 @@
 <!-- The identification attributes must be kept the same as the ones in the roster DTD -->
 
 <!ELEMENT locomotive:locomotive (locomotive:decoder, locomotive:values*) >
-<<<<<<< locomotive-config.dtd
 <!ATTLIST locomotive:locomotive id			CDATA #REQUIRED>          
 <!ATTLIST locomotive:locomotive roadName	CDATA #IMPLIED>          
 <!ATTLIST locomotive:locomotive roadNumber	CDATA #IMPLIED>          
@@ -20,15 +19,6 @@
 <!ATTLIST locomotive:locomotive model		CDATA #IMPLIED>
 <!ATTLIST locomotive:locomotive dccAddress	CDATA #IMPLIED>	<!-- long or short address -->
 <!ATTLIST locomotive:locomotive comment		CDATA #IMPLIED>
-=======
-<!ATTLIST locomotive:locomotive roadNumber	CDATA #IMPLIED>          
-<!ATTLIST locomotive:locomotive roadName	CDATA #IMPLIED>          
-<!ATTLIST locomotive:locomotive mfg			CDATA #IMPLIED>
-<!ATTLIST locomotive:locomotive model		CDATA #IMPLIED>
-<!ATTLIST locomotive:locomotive comment		CDATA #IMPLIED>
-<!ATTLIST locomotive:locomotive shortAddress	CDATA #IMPLIED>	<!-- DCC address -->
-<!ATTLIST locomotive:locomotive longAddress	CDATA #IMPLIED>		<!-- DCC address -->
->>>>>>> 1.6
 
 <!-- The decoder optional section defines the type of the installed decoder -->
 <!ELEMENT locomotive:decoder EMPTY >
