@@ -10,7 +10,7 @@ package jmri;
  * Callbacks are guaranteed to be in the Swing execution thread.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Id: ProgListener.java,v 1.6 2002-07-24 05:19:37 jacobsen Exp $
+ * @version			$Id: ProgListener.java,v 1.7 2003-04-06 05:05:40 jacobsen Exp $
  */
 public interface ProgListener extends java.util.EventListener{
 	/** Receive a callback at the end of a programming operation.
@@ -49,13 +49,13 @@ public interface ProgListener extends java.util.EventListener{
 
 	/** Constant denoting there was no acknowledge from the locomotive, so
 	 *  the CV may or may not have been written on a write.  No value was read. */
-	public final int NoAck			= 0x20;
+	public final int NoAck		= 0x20;
 
 	/** Constant denoting that confirm failed, likely due to another value being present */
-	public final int ConfirmFailed    = 0x40;
+	public final int ConfirmFailed  = 0x40;
 
 	/** Constant denoting that the programming operation timed out */
-	public final int FailedTimeout    = 0x80;
+	public final int FailedTimeout  = 0x80;
 
 }
 
