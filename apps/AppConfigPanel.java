@@ -28,7 +28,7 @@ import com.sun.java.util.collections.ArrayList;
 /**
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class AppConfigPanel extends JPanel {
 
@@ -36,6 +36,7 @@ public class AppConfigPanel extends JPanel {
 
     public AppConfigPanel(String filename, int nConnections) {
         super();
+        log.debug("start app");
         mConfigFilename = filename;
 
         rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
@@ -43,21 +44,24 @@ public class AppConfigPanel extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // Communications
-        p1 = JmrixConfigPane.instance(1);
+        log.debug("start comm");
+        if (p1 == null) p1 = JmrixConfigPane.instance(1);
         p1.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutConnection")));
         addAndRemember(p1);
 
         // Swing GUI LAF
-        JPanel p3;
+        log.debug("start laf");
         addAndRemember(p3 = new GuiLafConfigPane());
         p3.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutGUI")));
 
         // default programmer configuration
+        log.debug("start prog");
         JPanel p4;
         addAndRemember(p4 = new jmri.jmrit.symbolicprog.ProgrammerConfigPane());
         p4.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutProgrammer")));
 
         // add button to show advanced section
+        log.debug("start adv but");
         add(new JSeparator(JSeparator.HORIZONTAL));
         showAdvanced = new JCheckBox(rb.getString("ButtonShowAdv"));
         showAdvanced.setAlignmentX(1.f);
@@ -68,6 +72,7 @@ public class AppConfigPanel extends JPanel {
         add(p5);
 
         // add advanced section itself
+        log.debug("start adv");
 	advancedPane = new JPanel();
         advancedPane.setLayout(new BoxLayout(advancedPane, BoxLayout.Y_AXIS));
         advancedPane.setVisible(false);  // have to click first
@@ -75,6 +80,10 @@ public class AppConfigPanel extends JPanel {
         showAdvanced.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (showAdvanced.isSelected()) {
+                    if (!localeAdded) {
+                        localeSpace.add(p3.doLocale());
+                        localeAdded = true;
+                    }
                     advancedPane.setVisible(true);
                     advancedPane.validate();
                     if (getTopLevelAncestor()!=null) ((JFrame)getTopLevelAncestor()).pack();
@@ -89,19 +98,29 @@ public class AppConfigPanel extends JPanel {
             }
         });
 
+        log.debug("start comm 2");
         // fill advanced section
         if (nConnections>1) {
-            p2 = JmrixConfigPane.instance(2);
+            if (p2 == null) p2 = JmrixConfigPane.instance(2);
             p2.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutAuxConnection")));
             advancedPane.add(p2);
             clist.add(p2);
         }
 
+        // reserve space for Locale later
+        log.debug("start res locale");
+        localeSpace  = new JPanel();
+        localeSpace.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutLocale")));
+        localeAdded = false;
+        advancedPane.add(localeSpace);
+
+        log.debug("start act");
         PerformActionPanel action = new PerformActionPanel();
         action.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutStartupActions")));
         advancedPane.add(action);
         clist.add(action);
 
+        log.debug("start file");
         PerformFilePanel files = new PerformFilePanel();
         files.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutStartupFiles")));
         advancedPane.add(files);
@@ -121,8 +140,12 @@ public class AppConfigPanel extends JPanel {
     JCheckBox showAdvanced;
     JPanel advancedPane;
 
-    JmrixConfigPane p1;
-    JmrixConfigPane p2;
+    JPanel localeSpace = null;
+    boolean localeAdded = false;
+
+    static JmrixConfigPane p1 = null;
+    static JmrixConfigPane p2 = null;
+    GuiLafConfigPane p3;
 
     public Component addAndRemember(Component c) {
         clist.add(c);
@@ -130,18 +153,22 @@ public class AppConfigPanel extends JPanel {
         return c;
     }
 
-    public String getConnection1() {
+    public static String getConnection1() {
+        if (p1 == null) p1 = JmrixConfigPane.instance(1);
         return p1.getCurrentProtocolName();
     }
-    public String getPort1() {
+    public static String getPort1() {
+        if (p1 == null) p1 = JmrixConfigPane.instance(1);
         return p1.getCurrentProtocolInfo();
     }
-    public String getConnection2() {
-        if (p2==null) return "(none)";
+    public static String getConnection2() {
+        if (p2 == null) p2 = JmrixConfigPane.instance(2);
+        if (p2 == null) return "(none)";
         return p2.getCurrentProtocolName();
     }
-    public String getPort2() {
-        if (p2==null) return "(none)";
+    public static String getPort2() {
+        if (p2 == null) p2 = JmrixConfigPane.instance(1);
+        if (p2 == null) return "(none)";
         return p2.getCurrentProtocolInfo();
     }
 
