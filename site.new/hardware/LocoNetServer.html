@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LocoNetServer.html,v 1.1 2005-02-01 17:36:01 jacobsen Exp $ -->
+<!-- $Id: LocoNetServer.html,v 1.2 2005-02-09 22:47:57 kiwi64ajs Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -57,14 +57,28 @@
       JMRI Hardware Guide: Connecting Multiple Computers to LocoNet via LocoNet Server
       </h1>
 
-Using the LocoNet Server capability of JMRI, you can connect multiple
-computers to your LocoNet-equipped layout using a single LocoBuffer.
-The computers communicate using standard networking protocols, so
-they can be placed remotely in your home, or even at another location.
+JMRI currently supports two subtally different ways that allow you to connect multiple
+computers over the standard TCP/IP networking protocol, to your LocoNet-equipped layout
+using a single LocoBuffer,
 
-<h2>Setup</h2>
-One machine acts as the Master, which is directly connected to the 
-LocoNet.  
+One method uses the inbuilt LocoNet Client/Server capability of JMRI and the other 
+allows multiple JMRI nodes to connect as Clients to a single 
+<a href="http://loconetovertcp.sourceforge.net/Interface/index.html" >LocoNetOverTCP LbServer</a>, 
+which is External to JMRI.<BR><BR>
+ 
+The difference between these two methods is that JMRI LocoNet Client/Server uses the native Java
+Remote Method Invocation (RMI) protocol, whereas the LocoNetOverTCP uses a separate non-Java 
+server process, LbServer, that communicates using plain ASCII String messages over TCP/IP sockets,
+allowing non-Java nodes to also share the one LocoBufer.<BR><BR>
+
+For most people who simply want to have several computers share a single LocoBuffer connection,
+the JMRI LocoNet Client/Server is probably the best option as it is easy to configure.
+For others wanting to provide remote access the layout over Internet, the LocoNetOverTCP LbServer 
+option may be more suitable as firewall rule changes to allow external access will be simpler. 
+
+<h2>Setup for JMRI LocoNet Client/Server</h2>
+One computer running JMRI acts as the Server, which is directly connected to the 
+LocoNet, the other computers running JMRI connect to the Server computer as Clients.  
 <UL>
 <LI>Configure the LocoNet connection just like for any other use.
 Select the protocol that corresponds to your hardware (e.g. LocoBuffer-II, etc),
@@ -85,17 +99,34 @@ program by
 </UL>
 
 <P>
-The program in the remote computer can then be configured to 
+The program in the Client computer can then be configured to 
 connect to the layout via the LocoNet Server by:
 <UL>
-<LI>Make sure the master computer is running the LocoNet server
-<LI>Open the program on the remote machine
+<LI>Make sure the Server computer is running the LocoNet server
+<LI>Open the program on the Client computer
 <LI>Open the preferences from the Edit menu
 <LI>For layout connection, select "LocoNet Server"
 <LI>In the "Server hostname" box that appears, type the Internet name
 or address of the computer that's running the LocoNet Server.
 An internet address is something like 127.0.1.12; a name is something
 like jmri.sf.net
+<li>Save the preferences and restart the program.
+</UL>
+
+<h2>Setup for JMRI LocoNetOverTCP</h2>
+One computer runs the LbServer program that connects to the LocoBuffer 
+and acts as a Server to all the JMRI Client computers. 
+Configure the JMRI Client computers to connect to the LbServer as follows:
+<UL>
+<LI>Make sure the LbServer is configured and running. See LbServer documentations for details.
+<LI>Open the JMRI program on the Client
+<LI>Open the preferences from the Edit menu
+<LI>For layout connection, select "LocoNetOverTCP LbServer"
+<LI>In the "Server hostname" box that appears, type the Internet name
+or address of the computer that's running the LbServer.
+An internet address is something like 127.0.1.12; a name is something
+like jmri.sf.net
+<li>In the "TCP Port Number" box enter the port number that LbServer is using, which by default is 1234. 
 <li>Save the preferences and restart the program.
 </UL>
 
@@ -113,10 +144,11 @@ connect each of the computers to the LocoNet via their own LocoBuffer or LocoBuf
 in the LocoNet communications.  This doesn't cause any additional communications load.
 It does cost a little more for the extra adapters, and doesn't permit you to
 put a computer remote from the layout.
-<LI>Remote connection to the LocoNet is also possible via the 
-"LocoNetOverTcp LbServer" protocol,
-which can be selected in the program preferences.  This requires running a separate
-connection program on a Linux machine to get access to the LocoNet.
+<LI>The computer running LbServer can also run JMRI software, in this
+case the Client and Server just happen to be on the same node. 
+<LI>Some firewall software will detect LbServer's use of port 1234 as a trojan and will want to block access to the port. 
+To get around this you will either have to enable access in your firewall software or change the port to
+another number like 9999 say. The new port number will also need to be passed into LbServer as a command line option.
 </UL>
 
       <hr class="hide">
