@@ -11,50 +11,81 @@
 
 <IMG SRC="images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
 
-<h2>JMRI: A Java Model Railroad Interface</h2>
-
-<B>Version 1.1 is released!</B>
-The updated production version 1.1 is available for download 
-via the
-<A href="README.html">README page</a>.
-Thanks and congratulations to 
-<A HREF="Acknowledgements.html">all who contributed</a>!
-
+<h1>JMRI: A Java Model Railroad Interface</h1>
 <P>
 The JMRI project is building tools for model railroad computer control.  We 
 want it to be usable to as many people as possible, so we're building it 
 in Java to run anywhere, and we're trying to make it independent of specific
-hardware systems. 
+hardware systems.
+<br>
+<br>
+<h2>News</h2>
+<B>Version 1.1 is released!</B>
+The updated production version 1.1 is available for download 
+via the <A href="README.html">README page</a>.
+Thanks and congratulations to <A HREF="Acknowledgements.html">all who contributed</a>!
+<br>
+<br>
+
+<IMG SRC="images/decoderpro.gif" align=right>
+<h1>DecoderPro</h1>
+is one of first applications built on JMRI.
+<p>
+This program allows you to program DCC decoders from your computer without having to
+remember cryptic CV numbers and hexidecimal arithmetic. DecoderPro provides a
+set of screens on which you can select the various options and values you want.
+Setting up special sound or lighting effects for your locomotive has never been easier!
+<p>
+DecoderPro works with most of the popular DCC systems (Digitrax, EasyDCC, NCE, Wangrow, Lenz, etc.),
+and runs on both Windows, Linux, and Macintosh systems. It works via your DCC programming track,
+or optionally can be used to program locomotives directly on the main track.
+<p>
+One of the more daunting tasks that you'll ever face is setting up a custom speed table for your
+locomotive. Instead of editing individual CV values from your throttle, DecoderPro lets you use
+your mouse to make adjustments in a more intuitive fashion.
+<p>
+If you are trying to set up custom lighting effects on a Digitrax FX decoder, instead of having to
+remember what values to type in, you can choose the proper effect from a popup menu.
+<p>
+DecoderPro is customizable using text files, which means that supporting new decoders in the
+future can be done without modifying the program at all. In fact, most of the screens for new
+decoders now supported have come from folks all over the internet.
+<p>
+Finally, DecoderPro can also keep all your settings in a file on the computer for safe keeping.
+<p>
+
+<h2>Downloading DecoderPro</h2>
+<p>
+In order to download DecoderPro just visit the <A href="README.html">README page</a>, and click
+on the instructions for your particular type of computer or operating systems (Windows,Linux, or Mac).
+Joe Ellis has been working on a manual for DecoderPro, it contains a nice tutorial
+and can be downloaded <A HREF="http://groups.yahoo.com/group/jmriusers/files/DecoderPro_Manual/Index.html">here</a>.
+<p>
+<p>
+<H1>More Technical Info on JMRI</H1>
+<p>
 Like the CMRI system before it, JMRI is intended as a jumping-off point for 
 hobbyists who want to control their layouts from a computer without having to 
-create an entire system from scratch.<P>
-
+create an entire system from scratch.
+<P>
 To do this, we've split the problem into two parts with an interface in-between:
 <UL>
+<LI>"Above" the interface are the cool tools that people want. Our first examples are
+programmers for DCC decoders and layout controls.  The hope is that we can develop
+better and better tools that still will work on lots of type of computers, with lots
+of types of layouts.
 <LI>"Below" the interface lies code that connects to specific layout hardware.  Our initial
 work was with Digitrax&reg; systems, as they provide a lot of functionality already
 and really good support is available.  We also connect to NCE PowerHouse, EasyDCC 
 and Lenz systems, providing
 the full functionality. We are certainly interested in connecting to other systems.
 
-<LI>"Above" the interface are the cool tools that people want. Our first examples are
-programmers for DCC decoders and layout controls.  The hope is that we can develop
-better and better tools that still will work on lots of type of computers, with lots
-of types of layouts.
 </UL>
-
 The long-term strategy is to:<P>
-
 <UL>
-<LI>Create a set of publically available common interfaces for model railroad 
-    control code, suitable
-    for use with any type of layout, from any type of computer.
-
-<LI>Demonstrate the technical feasibility of these interfaces with initial 
-    DCC-based implementations.
-
-<LI>Encourage interoperability of layout hardware and software through the 
-    use of common interfaces.
+<LI>Create a set of publically available common interfaces for model railroad control code, suitable for use with any type of layout, from any type of computer.
+<LI>Demonstrate the technical feasibility of these interfaces with initial DCC-based implementations.
+<LI>Encourage interoperability of layout hardware and software through the use of common interfaces.
 </UL>
 
 <P>
@@ -73,12 +104,12 @@ You're welcome to download the full version of this program and try it; please s
 for additional information on how to install.  We welcome feedback!
 
 <P>
-We've also created a demo program to show the complete set of tools
-as they are developed:
-control and display
-turnout positions, program decoders, 
-display and control layout power
-monitor layout traffic, etc.  
+We've also created a demo program to show the complete set of tools as they are developed:
+<UL>
+<LI> control and display turnout positions
+<LI> program decoders, 
+<LI> display and control layout power monitor layout traffic, etc.  
+</UL>
 
 <BR>
 <IMG SRC="images/SimpleProg.jpg" ALT="Simple programmer frame" WIDTH="217" HEIGHT="181" HSPACE="0" VSPACE="0">
@@ -257,3 +288,4 @@ jake@physics.berkeley.edu
 
 </body>
 </html>
+
