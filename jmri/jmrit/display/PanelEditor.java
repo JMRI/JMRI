@@ -43,7 +43,7 @@ import com.sun.java.util.collections.ArrayList;
  * consistent via the {#setTitle} method.
  *
  * @author Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
- * @version $Revision: 1.35 $
+ * @version $Revision: 1.36 $
  */
 
 public class PanelEditor extends JFrame {
@@ -58,6 +58,10 @@ public class PanelEditor extends JFrame {
 
     JTextField nextX = new JTextField("20",4);
     JTextField nextY = new JTextField("30",4);
+
+    JCheckBox editableBox = new JCheckBox("Panel items popup menus active");
+    JCheckBox positionableBox = new JCheckBox("Panel items can be repositioned");
+    JCheckBox controllingBox = new JCheckBox("Panel items control layout");
 
     JButton labelAdd = new JButton("Add text:");
     JTextField nextLabel = new JTextField(10);
@@ -321,6 +325,39 @@ public class PanelEditor extends JFrame {
 
             this.getContentPane().add(panel);
         }
+        // edit, position, control controls
+        {
+            JPanel p;
+            this.getContentPane().add(p = new JPanel());
+            p.setLayout(new FlowLayout());
+            p.add(editableBox);
+            editableBox.setSelected(true);
+            editableBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setAllEditable(editableBox.isSelected());
+                }
+            });
+
+            this.getContentPane().add(p = new JPanel());
+            p.setLayout(new FlowLayout());
+            p.add(positionableBox);
+            positionableBox.setSelected(true);
+            positionableBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setAllPositionable(positionableBox.isSelected());
+                }
+            });
+
+            this.getContentPane().add(p = new JPanel());
+            p.setLayout(new FlowLayout());
+            p.add(controllingBox);
+            controllingBox.setSelected(true);
+            controllingBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setAllControlling(controllingBox.isSelected());
+                }
+            });
+       }
 
         // register the resulting panel for later configuration
         InstanceManager.configureManagerInstance().registerUser(this);
@@ -536,14 +573,39 @@ public class PanelEditor extends JFrame {
     }
 
     /**
-     *  Control whether target panel items are editable.
+     *  Control whether target panel items are positionable.
      *  Does this by invoke the {@link Positionable#setPositionable} function of
-     * each item on the target panel. This also control the pop-up menu items.
-     * @param state true for editable.
+     *  each item on the target panel.
+     * @param state true for positionable.
      */
     void setAllPositionable(boolean state) {
         for (int i = 0; i<contents.size(); i++) {
             ((Positionable)contents.get(i)).setPositionable(state);
+        }
+    }
+
+    /**
+     *  Control whether target panel items are editable.
+     *  Does this by invoke the {@link Positionable#setEditable} function of
+     *  each item on the target panel. This also controls the relevant pop-up menu items
+     *  (which are the primary way that items are edited).
+     * @param state true for editable.
+     */
+    void setAllEditable(boolean state) {
+        for (int i = 0; i<contents.size(); i++) {
+            ((Positionable)contents.get(i)).setEditable(state);
+        }
+    }
+
+    /**
+     *  Control whether target panel items are controlling layout items.
+     *  Does this by invoke the {@link Positionable#setControlling} function of
+     *  each item on the target panel. This also controls the relevant pop-up menu items.
+     * @param state true for controlling.
+     */
+    void setAllControlling(boolean state) {
+        for (int i = 0; i<contents.size(); i++) {
+            ((Positionable)contents.get(i)).setControlling(state);
         }
     }
 
