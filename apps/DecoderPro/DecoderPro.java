@@ -3,15 +3,15 @@
 package apps.DecoderPro;
 
 import java.awt.*;
-import java.awt.event.*;
+import javax.swing.*;
 
 /**
  * DecoderPro application.
  *
  * @author                      Bob Jacobsen
- * @version                     $Revision: 1.32 $
+ * @version                     $Revision: 1.33 $
  */
-public class DecoderPro extends Frame {
+public class DecoderPro {
 
     // Main entry point
     public static void main(String s[]) {
@@ -21,17 +21,9 @@ public class DecoderPro extends Frame {
 
     DecoderPro() {
         super();
-        // get the splash image
-       MediaTracker mt = new MediaTracker(this);
-       Image splashIm = Toolkit.getDefaultToolkit(
-           ).getImage("resources/logo.gif");
-       mt.addImage(splashIm,0);
-       try {
-          mt.waitForID(0);
-       } catch(InterruptedException ie){}
 
         // show splash screen early
-        SplashWindow sp = new SplashWindow(this, splashIm);
+        SplashWindow sp = new SplashWindow();
 
         // start main program, using reflection to
         // reduce startup delay
@@ -46,13 +38,23 @@ public class DecoderPro extends Frame {
         sp.setVisible(false);
     }
 
-class SplashWindow extends Window {
+class SplashWindow extends JFrame {
     Image splashIm;
 
-    SplashWindow(Frame parent, Image splashIm) {
-        super(parent);
-        this.splashIm = splashIm;
-        setSize(new Dimension(splashIm.getHeight(null),splashIm.getWidth(null)));
+    SplashWindow() {
+        super("JMRI starting");
+
+        // get the splash image
+       MediaTracker mt = new MediaTracker(this);
+       splashIm = Toolkit.getDefaultToolkit(
+           ).getImage("resources/logo.gif");
+       mt.addImage(splashIm,0);
+       try {
+          mt.waitForID(0);
+       } catch(InterruptedException ie){}
+
+        getContentPane().add(new JLabel(new ImageIcon(splashIm, "JMRI splash screen")));
+        pack();
 
         /* Center the window */
         Dimension screenDim =
@@ -60,6 +62,7 @@ class SplashWindow extends Window {
         Rectangle winDim = getBounds();
         setLocation((screenDim.width - winDim.width) / 2,
                 (screenDim.height - winDim.height) / 2);
+
         setVisible(true);
     }
 
