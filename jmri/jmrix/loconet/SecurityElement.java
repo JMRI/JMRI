@@ -36,7 +36,7 @@ import jmri.*;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.12 $
+ * @version         $Revision: 1.13 $
  */
 public class SecurityElement implements LocoNetListener {
 
@@ -182,6 +182,59 @@ public class SecurityElement implements LocoNetListener {
             log.error("Cannot connect to LocoNet, security element won't update");
     }
     public int getNumber() { return mNumber; }
+
+    public String showInputSpeeds() {
+        return "A:"+currentSpeedLimitFromA
+            +" B:"+currentSpeedLimitFromB
+            +" C:"+currentSpeedLimitFromC;
+    }
+
+    public String showReservations() {
+        return "A:"+(currentReservedFromA?"t":"f")
+            +" B:"+(currentReservedFromB?"t":"f")
+            +" C:"+(currentReservedFromC?"t":"f")
+            +" x:"+(currentReservedFromAux?"t":"f");
+    }
+
+    public String showOccupancy() {
+        String s = "";
+        switch (currentDsStateHere) {
+            case Sensor.ACTIVE: s+="o"; break;
+            case Sensor.INACTIVE: s+="u"; break;
+            case Sensor.UNKNOWN: s+="?"; break;
+            case Sensor.INCONSISTENT: s+="i"; break;
+            default: s+="x"; break;
+        }
+
+        s += " A:";
+        switch (currentDsStateOnA) {
+            case Sensor.ACTIVE: s+="o"; break;
+            case Sensor.INACTIVE: s+="u"; break;
+            case Sensor.UNKNOWN: s+="?"; break;
+            case Sensor.INCONSISTENT: s+="i"; break;
+            default: s+="x"; break;
+        }
+
+        s += " B:";
+        switch (currentDsStateOnB) {
+            case Sensor.ACTIVE: s+="o"; break;
+            case Sensor.INACTIVE: s+="u"; break;
+            case Sensor.UNKNOWN: s+="?"; break;
+            case Sensor.INCONSISTENT: s+="i"; break;
+            default: s+="x"; break;
+        }
+
+        s += " C:";
+        switch (currentDsStateOnC) {
+            case Sensor.ACTIVE: s+="o"; break;
+            case Sensor.INACTIVE: s+="u"; break;
+            case Sensor.UNKNOWN: s+="?"; break;
+            case Sensor.INCONSISTENT: s+="i"; break;
+            default: s+="x"; break;
+        }
+
+        return s;
+    }
 
     /**
      * Process incoming messages.
