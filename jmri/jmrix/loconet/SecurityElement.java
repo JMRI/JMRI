@@ -32,11 +32,11 @@ import jmri.*;
  * and Bob Jacobsen.  Some of the message formats are copyright Digitrax, Inc.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.9 $
  */
 public class SecurityElement implements LocoNetListener {
 
-    // constants
+    // constants ===============================================================
 
     // direction codes
     public static final int NONE = 0;  // unknown or undecided
@@ -49,13 +49,9 @@ public class SecurityElement implements LocoNetListener {
     public static final int C = 4;
     // also NONE for no connection
 
-    // configuration information
-    public int mNumber;     // own SE number
+    // configuration information ===============================================
 
-    //public int mLogic = -1;      // logic executed by this element
-    //public static final int ABS = 0;
-    //public static final int APB = 1;
-    //public static final int HEADBLOCK = 2;
+    public int mNumber;     // own SE number
 
     public int onAXReservation;  // for reservation from A leg attachment
     public int onXAReservation;  // for reservation from B/C leg attachment
@@ -90,9 +86,9 @@ public class SecurityElement implements LocoNetListener {
     public int maxBrakingAB = 20;
     public int maxBrakingBA = 20;
 
-    // state information
+    // state information =======================================================
 
-    // existing state information - inputs
+    // previous state information - inputs before processing present event
     int currentDsStateHere       = Sensor.UNKNOWN;
     int currentTurnoutState      = Turnout.UNKNOWN;
 
@@ -108,35 +104,46 @@ public class SecurityElement implements LocoNetListener {
     int currentDsStateOnC        = Sensor.UNKNOWN;
     boolean currentReservedFromC = false;
 
-    // outputs
+    int currentDsStateOnAux          = Sensor.UNKNOWN;
+    boolean currentReservedFromAux   = false;
+
+    // updated state information - inputs from current event -------------------
+
+    int newDsStateHere           = Sensor.INACTIVE; // init in case no connection
+    int newTurnoutState          = Turnout.CLOSED;  // init in case no connection
+
+    int newSpeedLimitFromA       = 0;   // speed limit on SE leg attached to A
+    int newDsStateOnA            = Sensor.UNKNOWN;
+    boolean newReservedFromA     = false;
+
+    int newSpeedLimitFromB       = 0;   // speed limit on SE leg attached to B
+    int newDsStateOnB            = Sensor.UNKNOWN;
+    boolean newReservedFromB     = false;
+
+    int newSpeedLimitFromC       = 0;   // speed limit on SE leg attached to C
+    int newDsStateOnC            = Sensor.UNKNOWN;
+    boolean newReservedFromC     = false;
+
+    int newDsStateOnAux          = Sensor.UNKNOWN;
+    boolean newReservedFromAux   = false;
+
+    // output values from calculation ==========================================
+
+    // output values most recently sent in a message
     public int currentSpeedAX      = 0;
     public int currentSpeedXA      = 0;
     public int currentDirection    = NONE;  //  AX, XA or both
 
-    // updated state information - inputs
-    int newDsStateHere           = Sensor.INACTIVE; // start this way in case there's no connection
-    int newTurnoutState          = Turnout.CLOSED;  // start this way in case there's no connection
-
-    int newSpeedLimitFromA       = 0;   // speed limit on the SE leg attached to A
-    int newDsStateOnA            = Sensor.UNKNOWN;
-    boolean newReservedFromA     = false;
-
-    int newSpeedLimitFromB       = 0;   // speed limit on the SE leg attached to B
-    int newDsStateOnB            = Sensor.UNKNOWN;
-    boolean newReservedFromB     = false;
-
-    int newSpeedLimitFromC       = 0;   // speed limit on the SE leg attached to C
-    int newDsStateOnC            = Sensor.UNKNOWN;
-    boolean newReservedFromC     = false;
-
-    int newReservedFromAux    = NONE;
-
-    // outputs
+    // newly-calculated output values ------------------------------------------
     int newSpeedAX          = 0;
     int newSpeedXA          = 0;
     int newDirection        = NONE;
 
+    // internal variables ======================================================
+
     boolean debug;
+
+    // code ====================================================================
 
     public SecurityElement(int pNumber) {
         debug = log.isDebugEnabled();
@@ -206,13 +213,15 @@ public class SecurityElement implements LocoNetListener {
                 update = true;
             }
             if (element == auxInput) {
-                // if there's a reservation from the aux, it reserves
-                // in _BOTH_ directions
-                if (getReservedFromMsg(l, attachAleg)) newReservedFromAux = AX|XA;
-                else if (getReservedFromMsg(l, attachBleg)) newReservedFromAux = AX|XA;
-                else if (getReservedFromMsg(l, attachCleg)) newReservedFromAux = AX|XA;
-                else newReservedFromAux = NONE;
-                if (debug) log.debug("Update "+mNumber+" aux input: "+newReservedFromAux);
+                newDsStateOnAux = getDsFromMessage(l);
+                // We mark as "reserved from Aux" if there are _any_ reservations
+                // in the auxInput SE.  Since they're co-located, if that SE
+                // is reserved in either direction, we want to know that
+                newReservedFromAux = getReservedFromMsg(l, A)
+                                    || getReservedFromMsg(l, B)
+                                    || getReservedFromMsg(l, C);
+                if (debug) log.debug("Update "+mNumber+" aux occ: "+newDsStateOnAux
+                                        +" aux reserved: "+newReservedFromAux);
                 update = true;
             }
             if (update) doUpdate();
@@ -312,7 +321,10 @@ public class SecurityElement implements LocoNetListener {
     boolean getReservedFromMsg(LocoNetMessage l, int leg) {
         // figure out which leg is interesting
         int m5 = l.getElement(5);
-        log.debug("check reserved in "+getNumber()+" m5="+Integer.toHexString(m5)+" leg="+leg);
+        if (debug) log.debug("check reserved in "+getNumber()+" m5="+Integer.toHexString(m5)+" leg="+leg);
+
+        // compare "leg we're attached to" to "direction of reservation in that SE"
+        // to determine if this is a reservation toward us
         switch (leg) {
         case A:
             return (m5&0x20)==0x20;  // checking XA as toward us
@@ -368,6 +380,8 @@ public class SecurityElement implements LocoNetListener {
         doCalculateBaseSpeed();
         // adjust speed for reservations
         adjustForReservations();
+        // adjust speed for conditions in the Aux SE
+        adjustForAuxState();
 
         // and propagate as needed
         sendUpdate();
@@ -378,7 +392,7 @@ public class SecurityElement implements LocoNetListener {
         // First, calculate any new reservations based on occupancy here.
         // A new reservation requires this block has just become occupied
         if (newDsStateHere==Sensor.ACTIVE && currentDsStateHere==Sensor.INACTIVE) {
-            log.debug("went occupied, new states are A="+(newDsStateOnA==Sensor.ACTIVE)
+            if (debug) log.debug("went occupied, new states are A="+(newDsStateOnA==Sensor.ACTIVE)
                         +" B="+(newDsStateOnB==Sensor.ACTIVE)
                         +" C="+(newDsStateOnC==Sensor.ACTIVE) );
             // check possible input blocks, and add direction setting if needed
@@ -473,6 +487,23 @@ public class SecurityElement implements LocoNetListener {
     }
 
     /**
+     * The Aux SE is used to indicate an overlapping region of
+     * space, though not on the specific route this SE protects.
+     * For example, a crossing or scissors crossover.  If the Aux
+     * SE shows occupied, it's not safe to enter this SE, so the
+     * speeds are set to zero.
+     */
+    void adjustForAuxState() {
+        if (debug) log.debug("SE "+getNumber()+" adjust aux with sensor "
+                            +(newDsStateOnAux==Sensor.ACTIVE)
+                            +" aux reserved "+newReservedFromAux);
+        if ( (newDsStateOnAux==Sensor.ACTIVE)
+            || newReservedFromAux) {
+            newSpeedXA = 0;
+            newSpeedAX = 0;
+        }
+    }
+    /**
      * Format up a message containing the new values and send it.
      * In the process, copy the "new" values to the "current" values.
      */
@@ -510,7 +541,10 @@ public class SecurityElement implements LocoNetListener {
 
             LnTrafficController.instance().sendLocoNetMessage(m1);
         }
-        // copy always
+
+        // Copy always. Note that "current" values are not necessarily
+        // used in the rest of the class, but we copy everything to
+        // make sure they're there if we ever start to use them.
         currentDsStateHere       = newDsStateHere;
         currentTurnoutState      = newTurnoutState;
         currentSpeedLimitFromA   = newSpeedLimitFromA;
@@ -522,6 +556,9 @@ public class SecurityElement implements LocoNetListener {
         currentSpeedLimitFromC   = newSpeedLimitFromC;
         currentDsStateOnC        = newDsStateOnC;
         currentReservedFromC     = newReservedFromC;
+        currentDsStateOnAux      = newDsStateOnAux;
+        currentReservedFromAux   = newReservedFromAux;
+
         currentSpeedAX           = newSpeedAX;
         currentSpeedXA           = newSpeedXA;
         currentDirection         = newDirection;
