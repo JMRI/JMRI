@@ -29,7 +29,7 @@ import org.jdom.Element;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002. AC 11/09/2002 Added SPROG support
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class DefaultCommConfigPane extends JPanel {
 
@@ -54,9 +54,9 @@ public class DefaultCommConfigPane extends JPanel {
      * @throws jmri.JmriException from internal code
      * @return true if successful
      */
-    public boolean configure(AbstractConfigFile file) throws jmri.JmriException {
-        return configureConnection(file.getConnectionElement());
-    }
+    // public boolean configure(AbstractConfigFile file) throws jmri.JmriException {
+    //    return configureConnection(file.getConnectionElement());
+    //}
 
     JComboBox protocolBox;
     JComboBox portBox;
@@ -615,7 +615,7 @@ public class DefaultCommConfigPane extends JPanel {
                     // check that the specified setting exists
                     if (!e.getAttribute("option2").getValue().equals(opt2Box.getSelectedItem())) {
                         // can't set non-existant option value!
-                        log.error("Configured option2 value \""+option1Setting+"\" doesn't exist, no connection to layout made");
+                        log.error("Configured option2 value \""+option2Setting+"\" doesn't exist, no connection to layout made");
                         return false;
                     }
                 }
@@ -724,7 +724,7 @@ public class DefaultCommConfigPane extends JPanel {
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractConfigFrame.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DefaultCommConfigPane.class.getName());
 
 }
 

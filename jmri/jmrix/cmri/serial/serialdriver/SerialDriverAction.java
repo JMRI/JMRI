@@ -2,15 +2,16 @@
 
 package jmri.jmrix.cmri.serial.serialdriver;
 
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
+
+import javax.swing.AbstractAction;
 
 /**
  * Swing action to create and register a
  * cmri.serial.SerialDriverFrame object
  *
  * @author   Bob Jacobsen    Copyright (C) 2002
- * @version  $Revision: 1.2 $
+ * @version  $Revision: 1.3 $
  */
 public class SerialDriverAction 			extends AbstractAction {
 

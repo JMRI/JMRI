@@ -2,24 +2,28 @@
 
 package jmri.jmrix.cmri.serial.serialdriver;
 
-import javax.comm.CommPortIdentifier;
-import javax.comm.PortInUseException;
-import javax.comm.SerialPortEventListener;
-import javax.comm.SerialPortEvent;
-import javax.comm.SerialPort;
+import jmri.jmrix.cmri.serial.SerialMessage;
+import jmri.jmrix.cmri.serial.SerialPortController;
+import jmri.jmrix.cmri.serial.SerialSensorManager;
+import jmri.jmrix.cmri.serial.SerialTrafficController;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Vector;
-import java.io.DataOutputStream;
-import java.io.DataInputStream;
-import java.io.InputStream;
 
-import jmri.jmrix.cmri.serial.*;
+import javax.comm.CommPortIdentifier;
+import javax.comm.PortInUseException;
+import javax.comm.SerialPort;
+import javax.comm.SerialPortEvent;
+import javax.comm.SerialPortEventListener;
 
 /**
  * Provide access to C/MRI via a serial comm port.
  * Normally controlled by the cmri.serial.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -239,6 +243,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     public void configureBaudRate(String rate) {
         log.debug("configureBaudRate: "+rate);
         selectedSpeed = rate;
+        super.configureBaudRate(rate);
     }
 
     String[] stdOption1Values = new String[]{
@@ -273,6 +278,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
      * The first port option isn't used, so just ignore this call.
      */
     public void configureOption1(String value) {
+        super.configureOption1(value);
         opt1CurrentValue = value;
         // check the special cases
         String inputString;
@@ -308,16 +314,15 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
      */
     public String option2Name() { return ""; }
 
-    /**
-     * Set the second port option.  Only to be used after construction, but
-     * before the openPort call
-     */
-    public void configureOption2(String value) throws jmri.jmrix.SerialConfigException {
-    }
-
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
+
+    static public SerialDriverAdapter instance() {
+        if (mInstance == null) mInstance = new SerialDriverAdapter();
+        return mInstance;
+    }
+    static SerialDriverAdapter mInstance = null;
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialDriverAdapter.class.getName());
 

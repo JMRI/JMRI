@@ -2,19 +2,27 @@
 
 package jmri.jmrix.loconet.locobuffer;
 
-import java.io.*;
-import java.util.*;
+import jmri.jmrix.loconet.LnPacketizer;
+import jmri.jmrix.loconet.LnPortController;
 
-import javax.comm.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import java.util.Enumeration;
+import java.util.Vector;
 
-import jmri.jmrix.loconet.*;
+import javax.comm.CommPortIdentifier;
+import javax.comm.PortInUseException;
+import javax.comm.SerialPort;
+import javax.comm.SerialPortEvent;
+import javax.comm.SerialPortEventListener;
 
 /**
  * Provide access to LocoNet via a LocoBuffer attached to a serial comm port.
  * <P>
  * Normally controlled by the LocoBufferFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -215,7 +223,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         // find the baud rate value, configure comm options
         int baud = 19200;  // default, but also defaulted in the initial value of selectedSpeed
         for (int i = 0; i<validSpeeds.length; i++ )
-            if (validSpeeds[i].equals(selectedSpeed))
+            if (validSpeeds[i].equals(mBaudRate))
                 baud = validSpeedValues[i];
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                                              SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
@@ -226,7 +234,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also defaults in selectedOption1
-        if (selectedOption1.equals(validOption1[1]))
+        if (mOpt1.equals(validOption1[1]))
             flow = 0;
         activeSerialPort.setFlowControlMode(flow);
         log.debug("Found flow control "+activeSerialPort.getFlowControlMode()
@@ -240,15 +248,6 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
      */
     public String[] validBaudRates() {
         return validSpeeds;
-    }
-
-    /**
-     * Set the baud rate.  This currently does nothing, as there's
-     * only one possible value
-     */
-    public void configureBaudRate(String rate) {
-        log.debug("configureBaudRate: "+rate);
-        selectedSpeed = rate;
     }
 
     /**
@@ -266,7 +265,8 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
      */
     public void configureOption1(String value) {
     	log.debug("configureOption1: "+value);
-    	selectedOption1 = value;
+        super.configureOption1(value);
+    	mOpt1 = value;
     }
 
     /**
@@ -287,7 +287,9 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
      * Set the second port option.  Only to be used after construction, but
      * before the openPort call
      */
-    public void configureOption2(String value) throws jmri.jmrix.SerialConfigException {
+    public void configureOption2(String value) {
+        super.configureOption2(value);
+
     	log.debug("configureOption2: "+value);
         if (value.equals("DB150 (Empire Builder)")) {
             mCanRead = false;
@@ -304,15 +306,19 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 
     protected String [] validSpeeds = new String[]{"19,200 baud (J1 on 1&2)", "57,600 baud (J1 on 2&3)"};
     protected int [] validSpeedValues = new int[]{19200, 57600};
-    protected String selectedSpeed=validSpeeds[0];
 
     // meanings are assigned to these above, so make sure the order is consistent
     protected String [] validOption1 = new String[]{"hardware flow control (recommended)", "no flow control"};
-    protected String selectedOption1=validOption1[0];
 
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
+
+    static public LocoBufferAdapter instance() {
+        if (mInstance == null) mInstance = new LocoBufferAdapter();
+        return mInstance;
+    }
+    static LocoBufferAdapter mInstance = null;
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoBufferAdapter.class.getName());
 

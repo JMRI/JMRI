@@ -24,7 +24,7 @@ import jmri.jmrix.loconet.*;
  * Neither the baud rate configuration nor the "option 1" option are used.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -312,7 +312,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
      * before the openPort call
      * @throws jmri.jmrix.SerialConfigException
      */
-    public void configureOption2(String value) throws jmri.jmrix.SerialConfigException {
+    public void configureOption2(String value) {
         log.debug("configureOption2: "+value);
         if (value.equals("DB150 (Empire Builder)")) {
             mCanRead = false;

@@ -2,20 +2,29 @@
 
 package jmri.jmrix.serialsensor;
 
-import java.io.*;
-import java.util.*;
+import jmri.InstanceManager;
+import jmri.JmriException;
+import jmri.Sensor;
+import jmri.jmrix.AbstractPortController;
 
-import javax.comm.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import java.util.Enumeration;
+import java.util.Vector;
 
-import jmri.*;
-import jmri.jmrix.*;
+import javax.comm.CommPortIdentifier;
+import javax.comm.PortInUseException;
+import javax.comm.SerialPort;
+import javax.comm.SerialPortEvent;
+import javax.comm.SerialPortEventListener;
 
 /**
  * Implements SerialPortAdapter for connecting to two sensors via the
  * serial port.  Sensor "1" will be via DCD, and sensor "2" via DSR
  *
  * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SerialSensorAdapter extends AbstractPortController
                 implements jmri.jmrix.SerialPortAdapter  {
@@ -210,7 +219,7 @@ public class SerialSensorAdapter extends AbstractPortController
      * Set the second port option.  Only to be used after construction, but
      * before the openPort call
      */
-    public void configureOption2(String value) throws jmri.jmrix.SerialConfigException {}
+    public void configureOption2(String value) {}
 
     // private control members
     private boolean opened = false;

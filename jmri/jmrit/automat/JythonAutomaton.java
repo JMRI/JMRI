@@ -11,7 +11,7 @@ import jmri.InstanceManager;
  * without the jython.jar file in the classpath.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class JythonAutomaton extends AbstractAutomaton {
     Object interp;
@@ -68,6 +68,8 @@ public class JythonAutomaton extends AbstractAutomaton {
             return false;
         }
 
+        wait(20000);
+        System.out.println("ending");
         return false;   // never terminate voluntarily
     }
 

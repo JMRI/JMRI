@@ -1,8 +1,8 @@
 package jmri.jmrix.loconet.configurexml;
 
+import jmri.jmrix.loconet.LnSensorManager;
+
 import org.jdom.Element;
-import jmri.InstanceManager;
-import jmri.jmrix.loconet.*;
 
 /**
  * Provides load and store functionality for
@@ -12,7 +12,7 @@ import jmri.jmrix.loconet.*;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class LnSensorManagerXml extends jmri.configurexml.AbstractSensorManagerConfigXML {
 
@@ -21,7 +21,7 @@ public class LnSensorManagerXml extends jmri.configurexml.AbstractSensorManagerC
     }
 
     public void setStoreElementClass(Element sensors) {
-        sensors.addAttribute("class","jmri.jmrix.loconet.configurexml.SerialSensorManagerXml");
+        sensors.addAttribute("class",this.getClass().getName());
     }
 
     public void load(Element element, Object o) {

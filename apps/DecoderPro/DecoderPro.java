@@ -2,16 +2,23 @@
 
 package apps.DecoderPro;
 
-import java.awt.*;
-import java.io.*;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.MediaTracker;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
+import java.io.File;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 /**
  * DecoderPro application.
  *
  * @author                      Bob Jacobsen
- * @version                     $Revision: 1.34 $
+ * @version                     $Revision: 1.35 $
  */
 public class DecoderPro {
 
@@ -34,6 +41,7 @@ public class DecoderPro {
             c.getMethod("main", new Class[]{String[].class}).invoke(null, new Object[]{null});
         } catch (Exception e) {
             System.err.println("Exception while trying to start up: "+e);
+            e.printStackTrace();
         }
 
         // pull splash screen

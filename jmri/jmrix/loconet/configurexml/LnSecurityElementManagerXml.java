@@ -12,7 +12,7 @@ import com.sun.java.util.collections.List;
  * configuring LnSecurityElementManager.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class LnSecurityElementManagerXml implements XmlAdapter {
 
@@ -95,7 +95,7 @@ public class LnSecurityElementManagerXml implements XmlAdapter {
         LnSecurityElementManager mgr = new LnSecurityElementManager();
 
         // register it for configuration
-        InstanceManager.configureManagerInstance().register(mgr);
+        InstanceManager.configureManagerInstance().registerConfig(mgr);
         // load individual security elements
         loadElements(elements);
     }

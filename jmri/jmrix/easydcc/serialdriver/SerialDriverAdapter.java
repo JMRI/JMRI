@@ -2,16 +2,20 @@
 
 package jmri.jmrix.easydcc.serialdriver;
 
+import jmri.jmrix.easydcc.EasyDccPortController;
+import jmri.jmrix.easydcc.EasyDccProgrammer;
+import jmri.jmrix.easydcc.EasyDccProgrammerManager;
+import jmri.jmrix.easydcc.EasyDccTrafficController;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import java.util.Enumeration;
+import java.util.Vector;
+
 import javax.comm.CommPortIdentifier;
 import javax.comm.PortInUseException;
 import javax.comm.SerialPort;
-import java.util.Enumeration;
-import java.util.Vector;
-import java.io.DataOutputStream;
-import java.io.DataInputStream;
-import java.io.InputStream;
-
-import jmri.jmrix.easydcc.*;
 
 /**
  * Implements SerialPortAdapter for the EasyDcc system.  This connects
@@ -21,8 +25,8 @@ import jmri.jmrix.easydcc.*;
  * The current implementation only handles the 19,200 baud rate, and does
  * not use any other options at configuration time.
  *
- * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Id: SerialDriverAdapter.java,v 1.7 2003-07-21 09:33:57 jacobsen Exp $
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2002
+ * @version	$Revision: 1.8 $
  */
 public class SerialDriverAdapter extends EasyDccPortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -164,48 +168,15 @@ public class SerialDriverAdapter extends EasyDccPortController  implements jmri.
         return new String[]{"9,600 bps"};
     }
 
-    /**
-     * Set the baud rate.  This currently does nothing, as there's
-     * only one possible value
-     */
-    public void configureBaudRate(String rate) {}
-
-    /**
-     * Since option 1 is not used for this, return an array with just a single string
-     */
-    public String[] validOption1() { return new String[]{""}; }
-
-    /**
-     * Option 1 not used, so return a null string.
-     */
-    public String option1Name() { return ""; }
-
-    /**
-     * The first port option isn't used, so just ignore this call.
-     */
-    public void configureOption1(String value) {}
-
-    /**
-     * Get an array of valid values for "option 2"; used to display valid options.
-     * May not be null, but may have zero entries
-     */
-    public String[] validOption2() { return new String[]{""}; }
-
-    /**
-     * Get a String that says what Option 2 represents
-     * May be an empty string, but will not be null
-     */
-    public String option2Name() { return ""; }
-
-    /**
-     * Set the second port option.  Only to be used after construction, but
-     * before the openPort call
-     */
-    public void configureOption2(String value) throws jmri.jmrix.SerialConfigException {}
-
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
+
+    static public SerialDriverAdapter instance() {
+        if (mInstance == null) mInstance = new SerialDriverAdapter();
+        return mInstance;
+    }
+    static SerialDriverAdapter mInstance = null;
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialDriverAdapter.class.getName());
 

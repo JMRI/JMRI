@@ -1,8 +1,8 @@
 package jmri.jmrix.nce.configurexml;
 
+import jmri.jmrix.nce.NceSensorManager;
+
 import org.jdom.Element;
-import jmri.InstanceManager;
-import jmri.jmrix.nce.*;
 
 /**
  * Provides load and store functionality for
@@ -12,7 +12,7 @@ import jmri.jmrix.nce.*;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class NceSensorManagerXml extends jmri.configurexml.AbstractSensorManagerConfigXML {
 
@@ -21,7 +21,7 @@ public class NceSensorManagerXml extends jmri.configurexml.AbstractSensorManager
     }
 
     public void setStoreElementClass(Element sensors) {
-        sensors.addAttribute("class","jmri.jmrix.nce.NceSensorManagerXml");
+        sensors.addAttribute("class",this.getClass().getName());
     }
 
     public void load(Element element, Object o) {

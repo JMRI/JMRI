@@ -2,16 +2,18 @@
 
 package jmri.jmrix.sprog.serialdriver;
 
+import jmri.jmrix.sprog.SprogPortController;
+import jmri.jmrix.sprog.SprogTrafficController;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import java.util.Enumeration;
+import java.util.Vector;
+
 import javax.comm.CommPortIdentifier;
 import javax.comm.PortInUseException;
 import javax.comm.SerialPort;
-import java.util.Enumeration;
-import java.util.Vector;
-import java.io.DataOutputStream;
-import java.io.DataInputStream;
-import java.io.InputStream;
-
-import jmri.jmrix.sprog.*;
 
 /**
  * Implements SerialPortAdapter for the Sprog system.  This connects
@@ -22,7 +24,7 @@ import jmri.jmrix.sprog.*;
  * not use any other options at configuration time.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Id: SerialDriverAdapter.java,v 1.2 2003-07-21 09:33:22 jacobsen Exp $
+ * @version			$Revision: 1.3 $
  */
 public class SerialDriverAdapter extends SprogPortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -199,7 +201,7 @@ public class SerialDriverAdapter extends SprogPortController  implements jmri.jm
 	 * Set the second port option.  Only to be used after construction, but
 	 * before the openPort call
 	 */
-	public void configureOption2(String value) throws jmri.jmrix.SerialConfigException {}
+	public void configureOption2(String value) {}
 
 // private control members
 	private boolean opened = false;

@@ -1,11 +1,14 @@
 package jmri.configurexml;
 
+import jmri.InstanceManager;
 import java.io.File;
-import org.jdom.*;
-import org.jdom.output.*;
+
 import com.sun.java.util.collections.ArrayList;
 import com.sun.java.util.collections.List;
-import jmri.*;
+import org.jdom.DocType;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.output.XMLOutputter;
 
 /**
  * Provides the mechanisms for storing an entire layout configuration
@@ -13,7 +16,7 @@ import jmri.*;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -21,15 +24,47 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     public ConfigXmlManager() {
     }
 
-    /**
-     * Register an object whose state is to be tracked.
-     * It is not an error if the original object was already registered.
-     * @param o The object, which must have an
-     *              associated adapter class.
-     */
-    public void register(Object o) {
+    public void registerPref(Object o) {
         // skip if already present, leaving in original order
-        if (list.contains(o)) return;
+        if (plist.contains(o)) return;
+        // find the class name of the adapter
+        String adapter = adapterName(o);
+        if (log.isDebugEnabled()) log.debug("register "+o+" adapter "+adapter);
+        if (adapter!=null)
+            try {
+                Class.forName(adapter);
+            } catch (java.lang.ClassNotFoundException ex) {
+                locateFailed(ex, adapter, o);
+            }
+        // and add to list
+        plist.add(o);
+    }
+
+    /**
+     * Remove the registered preference items.  This is used
+     * e.g. when a GUI wants to replace the preferences with new
+     * values.
+     */
+    public void removePrefItems(){
+        if (log.isDebugEnabled()) log.debug("removePrefItems dropped "+plist.size());
+        plist.clear();
+    }
+
+    public Object findInstance(Class c, int index) {
+        ArrayList temp = new ArrayList(plist);
+        temp.addAll(clist);
+        temp.addAll(tlist);
+        temp.addAll(ulist);
+        for (int i=0; i<temp.size(); i++) {
+            if (c.isInstance(temp.get(i))) index--;
+            if (index==0) return temp.get(i);
+        }
+        return null;
+    }
+
+    public void registerConfig(Object o) {
+        // skip if already present, leaving in original order
+        if (clist.contains(o)) return;
         // find the class name of the adapter
         String adapter = adapterName(o);
         if (adapter!=null)
@@ -39,21 +74,61 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 locateFailed(ex, adapter, o);
             }
         // and add to list
-        list.add(o);
+        clist.add(o);
+    }
+    public void registerTool(Object o) {
+        // skip if already present, leaving in original order
+        if (tlist.contains(o)) return;
+        // find the class name of the adapter
+        String adapter = adapterName(o);
+        if (adapter!=null)
+            try {
+                Class.forName(adapter);
+            } catch (java.lang.ClassNotFoundException ex) {
+                locateFailed(ex, adapter, o);
+            }
+        // and add to list
+        tlist.add(o);
+    }
+    /**
+     * Register an object whose state is to be tracked.
+     * It is not an error if the original object was already registered.
+     * @param o The object, which must have an
+     *              associated adapter class.
+     */
+    public void registerUser(Object o) {
+        // skip if already present, leaving in original order
+        if (ulist.contains(o)) return;
+        // find the class name of the adapter
+        String adapter = adapterName(o);
+        if (adapter!=null)
+            try {
+                Class.forName(adapter);
+            } catch (java.lang.ClassNotFoundException ex) {
+                locateFailed(ex, adapter, o);
+            }
+        // and add to list
+        ulist.add(o);
     }
 
     public void deregister(Object o) {
-        list.remove(o);
+        plist.remove(o);
+        clist.remove(o);
+        tlist.remove(o);
+        ulist.remove(o);
     }
 
-    ArrayList list = new ArrayList();
+    ArrayList plist = new ArrayList();
+    ArrayList clist = new ArrayList();
+    ArrayList tlist = new ArrayList();
+    ArrayList ulist = new ArrayList();
 
     /**
      * Find the name of the adapter class for an object.
      * @param o object of a configurable type
      * @return class name of adapter
      */
-    static String adapterName(Object o) {
+    public static String adapterName(Object o) {
         String className = o.getClass().getName();
         if (log.isDebugEnabled()) log.debug("handle object of class "+className);
         int lastDot = className.lastIndexOf(".");
@@ -82,28 +157,47 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         log.error("could not load adapter class "+adapterName);
     }
 
-    public void store(File file) {
+    protected Element initStore() {
         // ensure that certain items from the InstanceManager are registered
         // to be stored.  (Others are registered as they are created)
         Object r = InstanceManager.turnoutManagerInstance();
-        if (r!=null) register(r);
+        if (r!=null) registerConfig(r);
 
-        // do the write
+        Element root = new Element("layout-config");
+        return root;
+    }
+    protected void addPrefsStore(Element root) {
+        for (int i=0; i<plist.size(); i++) {
+            Object o = plist.get(i);
+            Element e = elementFromObject(o);
+            if (e!=null) root.addContent(e);
+        }
+    }
+    protected void addConfigStore(Element root) {
+        for (int i=0; i<clist.size(); i++) {
+            Object o = clist.get(i);
+            Element e = elementFromObject(o);
+            if (e!=null) root.addContent(e);
+        }
+    }
+    protected void addToolsStore(Element root) {
+        for (int i=0; i<tlist.size(); i++) {
+            Object o = tlist.get(i);
+            Element e = elementFromObject(o);
+            if (e!=null) root.addContent(e);
+        }
+    }
+    protected void addUserStore(Element root) {
+        for (int i=0; i<ulist.size(); i++) {
+            Object o = ulist.get(i);
+            Element e = elementFromObject(o);
+            if (e!=null) root.addContent(e);
+        }
+    }
+    protected void finalStore(Element root, File file) {
         try {
-            // This is taken in large part from "Java and XML" page 368
-
-            // create root element
-            Element root = new Element("layout-config");
             Document doc = new Document(root);
             doc.setDocType(new DocType("layout-config","layout-config.dtd"));
-
-            // get the registered objects and store as top-level elements
-            for (int i=0; i<list.size(); i++) {
-                Object o = list.get(i);
-                Element e = elementFromObject(o);
-                if (e!=null) root.addContent(e);
-            }
-
             // write the result to selected file
             java.io.FileOutputStream o = new java.io.FileOutputStream(file);
             XMLOutputter fmt = new XMLOutputter();
@@ -111,22 +205,47 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             fmt.setIndent(true);
             fmt.output(doc, o);
             o.close();
-        }
-        catch (Exception e) {
-            log.error("exception during config write "+e);
-            e.printStackTrace();
+        } catch (java.io.FileNotFoundException ex2) {
+            log.error("FileNotFound error writing file: "+ex2.getLocalizedMessage());
+        } catch (java.io.IOException ex1) {
+            log.error("IO exception writing file: "+ex1.getLocalizedMessage());
         }
     }
 
-    static public Element elementFromObject(Object o)
-        throws java.lang.InstantiationException, java.lang.IllegalAccessException {
+    /**
+     * Writes prefs, config, tools and user to a file
+     * @param file
+     */
+    public void store(File file) {
+        Element root = initStore();
+        addPrefsStore(root);
+        addConfigStore(root);
+        addToolsStore(root);
+        addUserStore(root);
+        finalStore(root, file);
+    }
+    /**
+     * Writes prefs to a file
+     * @param file
+     */
+    public void storePrefs(File file) {
+        Element root = initStore();
+        addPrefsStore(root);
+        finalStore(root, file);
+    }
+
+    static public Element elementFromObject(Object o) {
         String aName = adapterName(o);
         log.debug("store using "+aName);
         XmlAdapter adapter = null;
         try {
             adapter = (XmlAdapter)Class.forName(adapterName(o)).newInstance();
-        } catch (java.lang.ClassNotFoundException ex) {
-            log.fatal("Cannot load configuration adapter for "+o.getClass().getName());
+        } catch (java.lang.ClassNotFoundException ex1) {
+            log.fatal("Cannot load configuration adapter for "+o.getClass().getName()+" due to "+ex1);
+        } catch (java.lang.IllegalAccessException ex2) {
+            log.fatal("Cannot load configuration adapter for "+o.getClass().getName()+" due to "+ex2);
+        } catch (java.lang.InstantiationException ex3) {
+            log.fatal("Cannot load configuration adapter for "+o.getClass().getName()+" due to "+ex3);
         }
         if (adapter!=null){
             return adapter.store(o);
@@ -136,7 +255,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         }
     }
 
-    public void load(File fi) {
+    public boolean load(File fi) {
         try {
             Element root = super.rootFromFile(fi);
             // get the objects to load
@@ -156,9 +275,18 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 }
             }
 
+        } catch (java.io.FileNotFoundException e1) {
+                    // this is actually normal...
+        } catch (org.jdom.JDOMException e) {
+            log.error("Exception reading: "+e);
+            e.printStackTrace();
+            return false;
+        } catch (java.io.IOException e) {
+            log.error("Exception reading: "+e);
+            e.printStackTrace();
+            return false;
         }
-        catch (org.jdom.JDOMException e) { log.error("Exception reading: "+e); }
-        catch (java.io.IOException e) { log.error("Exception reading: "+e); }
+        return true;
     }
 
     static public String fileLocation = "layout"+File.separator;

@@ -8,27 +8,34 @@ package jmri.jmrix;
  *
  *<P>
  * To configure for operation, a
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.3 $
- * @see             jmri.jmrix.SerialConfigException
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2003
+ * @version	$Revision: 1.4 $
+ * @see         jmri.jmrix.SerialConfigException
  */
 public interface SerialPortAdapter  {
 
 	/** Provide a vector of valid port names, each a String. */
-	abstract public java.util.Vector getPortNames();
+	public java.util.Vector getPortNames();
 
 	/** Open a specified port.  The appname argument is to be provided to the
 	 * underlying OS during startup so that it can show on status displays, etc
 	 */
-	abstract public String openPort(String portName, String appName) throws jmri.jmrix.SerialConfigException;
+	public String openPort(String portName, String appName);
 
 	/** Configure all of the other jmrix widgets needed to work with this adapter
 	 */
-	 abstract public void configure();
+	public void configure();
 
 	/** Query the status of this connection.  If all OK, at least
 	 * as far as is known, return true */
 	public boolean status();
+
+        /**
+         * Remember the associated port name
+         * @param s
+         */
+        public void setPort(String s);
+        public String getCurrentPortName();
 
 	/**
 	 * Get an array of valid baud rates; used to display valid options.
@@ -39,7 +46,9 @@ public interface SerialPortAdapter  {
 	 * Set the baud rate.  Only to be used after construction, but
 	 * before the openPort call.
 	 */
-	public void configureBaudRate(String rate) throws SerialConfigException;
+	public void configureBaudRate(String rate);
+
+        public String getCurrentBaudRate();
 
 	/**
 	 * Get an array of valid values for "option 1"; used to display valid options.
@@ -57,7 +66,9 @@ public interface SerialPortAdapter  {
 	 * Set the first port option.  Only to be used after construction, but
 	 * before the openPort call
 	 */
-	public void configureOption1(String value) throws SerialConfigException;
+	public void configureOption1(String value);
+
+        public String getCurrentOption1Setting();
 
 	/**
 	 * Get an array of valid values for "option 2"; used to display valid options.
@@ -75,7 +86,12 @@ public interface SerialPortAdapter  {
 	 * Set the second port option.  Only to be used after construction, but
 	 * before the openPort call
 	 */
-	public void configureOption2(String value) throws SerialConfigException;
+	public void configureOption2(String value);
+
+        /**
+         * Get current option 2 value
+         */
+        public String getCurrentOption2Setting();
 
     /**
      * Error handling for busy port at open.
