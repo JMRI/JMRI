@@ -3,7 +3,7 @@
  *
  * Description:		<describe the MakePacket class here>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version  $Revision: 1.5 $
+ * @version  $Revision: 1.6 $
  */
 package jmri.jmrix.direct;
 
@@ -126,7 +126,7 @@ public class MakePacket {
    * Service mode requires longer preambles
    * Thus this public function allowing user to define the lenght of desired
    * preamble
-   * @param PreambleLen int
+   * @param preambleLen int
    * @return boolean - true if preamble is a multiple of 5 otherwise fails and returns alse
    */
 
@@ -147,7 +147,7 @@ public class MakePacket {
    * Function that takes in the packet as a array of Bytes and converts
    * an them into NMRA'1','0' representation, in preparation to be sent over
    * a serial link.
-   * @param Packet byte[] - NRMA packet in a array of bytes
+   * @param packet byte[] - NRMA packet in a array of bytes
    * @return int[] - first byte is length - 0 length indicates failed to do
    */
   public static int[] createStream(byte[] packet) {
