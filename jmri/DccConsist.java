@@ -28,9 +28,9 @@ public class DccConsist implements Consist, ProgListener{
 					// each locomotive in the consist, 
 					// keyed by Loco Address.
 
-        private int ConsistType = ADVANCED_CONSIST;
+        protected int ConsistType = ADVANCED_CONSIST;
 
-	private int ConsistAddress = -1;
+	protected int ConsistAddress = -1;
 
 	// Initialize a consist for the specific address
         // the Default consist type is an advanced consist 
@@ -64,6 +64,26 @@ public class DccConsist implements Consist, ProgListener{
 	public int getConsistAddress(){ 
 		return ConsistAddress;
 	}
+
+	/* is this address allowed?
+         * Since address 00 is an analog locomotive, we can't program CV19 
+	 * to include it in a consist, but all other addresses are ok. 
+         */
+        public boolean isAddressAllowed(int address) {
+                if(address!=0) return(true);
+                else return(false);
+        }
+
+ 	/* is there a size limit for this consist?
+         * For Decoder Assisted Consists, returns -1 (no limit)  
+         * return 0 for any other consist type.
+         */
+        public int sizeLimit(){
+           if(ConsistType==ADVANCED_CONSIST) {
+                return -1;
+           } else return 0;
+        }      
+
 
 	// get a list of the locomotives in the consist
         public ArrayList getConsistList() { return ConsistList; }

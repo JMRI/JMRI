@@ -36,6 +36,19 @@ public interface Consist {
 	// get the Consist Address
 	public int getConsistAddress();
 
+	// is the specific address allowed? (needed for system specific 
+ 	// restrictions)
+	public boolean isAddressAllowed(int address);
+
+	/**
+	 * is there a size limit for this type of consist?
+	 * returns -1 if no limit
+	 * returns 0 if the Consist Type is not supported
+	 * returns the total number of useable spaces if the consist has a 
+         * limit (do not subtract used spaces).
+	 */
+	public int sizeLimit();
+
 	// get a list of the locomotives in the consist
 	public ArrayList getConsistList();
 	
