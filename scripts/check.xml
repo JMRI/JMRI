@@ -1,6 +1,6 @@
 <!-- Special build file for doing Java 1.1.8 compatibility tests -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.2 $ -->
+<!-- Revision $Revision: 1.3 $ -->
 
 <project name="JMRI" default="check" basedir=".">
 
@@ -38,8 +38,8 @@
 
   <!-- special path including Java 1.1.8 libraries -->
   <path id="compile1.1.8.path">
-      <pathelement location="lib/JDKClasses.zip"/>
-      <pathelement location="lib/swingall.jar"/>
+      <pathelement location="lib118/JDKClasses.zip"/>
+      <pathelement location="lib118/swingall.jar"/>
       <path refid="project.class.path"/>
   </path>
 
@@ -54,22 +54,25 @@
     <ant target="clean" antfile="build.xml" />
   </target>
 
-  <target name="compile">
-    <ant target="compile" antfile="build.xml" />
+  <target name="rmic">
+    <ant target="rmic" antfile="build.xml" />
   </target>
 
+
+
+
   <target name="libcheck">
-    <available file="lib/JDKClasses.zip" property="jdk.present"/>
-    <available file="lib/swingall.jar" property="swingall.present"/>
+    <available file="lib118/JDKClasses.zip" property="jdk.present"/>
+    <available file="lib118/swingall.jar" property="swingall.present"/>
     <antcall target="swingcheck" />
     <antcall target="jdkcheck" />
   </target>
   
   <target name="swingcheck" unless="swingall.present">
-  	<fail message="lib/swingall.jar not present" />
+  	<fail message="lib118/swingall.jar not present" />
   </target>
   <target name="jdkcheck" unless="jdk.present">
-  	<fail message="lib/JDKClasses.zip not present" />
+  	<fail message="lib118/JDKClasses.zip not present" />
   </target>
   
   <target name="nativecompile" description="compile files requiring Java 1.3">
@@ -83,11 +86,13 @@
                  jmri/util/JmriJFrame.java,
                  jmri/util/JTreeUtil.java,
                  jmri/util/LocaleUtil.java,
-                 jmri/util/JTabbedPaneUtil.java" />
+                 jmri/util/JTabbedPaneUtil.java,
+                 jmri/util/com/sun/TableSorter.java,
+                 jmri/util/PythonInterp.java" />
     </ant>
   </target>
 
-  <target name="check" description="check for 1.1.8 compatibility">
+  <target name="compile" description="build code for 1.1.8 compatibility">
     <!-- Check and initialize -->
     <antcall target="libcheck"/>
     <antcall target="clean"/>
@@ -106,8 +111,11 @@
     </javac>
 
     <!-- Do the rest of normal compilation -->
-    <antcall target="compile"/>
-
+    <ant target="compile" antfile="build.xml" />
+  </target>
+  
+  <target name="tests" description="compile tests for 1.1.8 compatibility check"
+                depends="init">
     <!-- compile tests -->
     <javac srcdir="${test}" 
            destdir="${target}"
@@ -116,6 +124,10 @@
        <bootclasspath refid="compile1.1.8.path" />
        <classpath refid="project.class.path"    />
     </javac>
+ </target>
+ 
+  <target name="check" description="check for 1.1.8 compatibility"
+                depends="init, compile, tests">
     <!-- run alltest -->
     <java classname="apps.tests.AllTest"
           dir=".." 
@@ -125,5 +137,21 @@
     </java>
 
   </target>
+
+  <target name="jar" depends="compile, rmic"  
+          description="create working jar file with current contents">
+    <jar jarfile="${jartarget}/jmri118.jar" 
+         basedir="${target}"
+         manifest="manifest" 
+         compress="true" />   <!-- compress="true" is default -->
+    <!-- create the index, using the information in the manifest -->
+    <exec executable="jar" dir="${jartarget}">
+    	<arg line="i jmri118.jar"/>
+    </exec>
+  </target>
+
+ <!-- dist target forces the jar file to be built without test classes -->
+ <target name="dist" depends="clean, init, compile, rmic, jar"
+ 		 description="create a distribution jar file"/>
 
 </project>
