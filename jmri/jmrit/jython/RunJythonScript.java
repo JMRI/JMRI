@@ -5,7 +5,7 @@ package jmri.jmrit.jython;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import javax.swing.JFileChooser;
-import java.io.File;
+import java.io.*;
 
 /**
  * This Action runs a script by invoking a Jython interpreter.
@@ -19,7 +19,7 @@ import java.io.File;
  * read the code, the "non-reflection" statements are in the comments.
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class RunJythonScript extends AbstractAction {
 
@@ -76,23 +76,26 @@ public class RunJythonScript extends AbstractAction {
         execFile(filename);
     }
 
-    static protected void execFile(String filename) {
-        // interp.execfile(defaultContentFile);
+     static protected void execFile(String filename) {
+        execCommand("execfile(\""+filename+"\")");
+    }
+
+    static protected void execCommand(String command) {
+        // interp.execfile(command);
         try {
             // set up the method to exec python functions
             java.lang.reflect.Method exec
                 = interp.getClass().getMethod("exec", new Class[]{String.class});
 
-            // have jython execute the default setup
-            // interp.execfile(defaultContentFile);
-            exec.invoke(interp, new Object[]{"execfile(\""+filename+"\")"});
-        } catch (NoSuchMethodException e1) {
-            log.error("NoSuchMethod error while invoking script "+filename);
+            exec.invoke(interp, new Object[]{command});
         } catch (java.lang.reflect.InvocationTargetException e2) {
-            log.error("InvocationTargetException while invoking script "+filename
-                    +": "+e2.getTargetException());
+            log.error("InvocationTargetException while invoking command "+command
+                    +": "+e2.getCause());
+            outputlog.append("Error: "+e2.getCause());
+        } catch (NoSuchMethodException e1) {
+            log.error("NoSuchMethod error while invoking command "+command);
         } catch (IllegalAccessException e) {
-            log.error("IllegalAccessException error while invoking script "+filename);
+            log.error("IllegalAccessException error while invoking command "+command);
         }
     }
 
@@ -129,9 +132,23 @@ public class RunJythonScript extends AbstractAction {
             // interp = new PythonInterpreter();
             interp = Class.forName("org.python.util.PythonInterpreter").newInstance();
 
-            // set up the method to exec python functions
-            java.lang.reflect.Method exec
-                    = interp.getClass().getMethod("exec", new Class[]{String.class});
+            // Add the I/O pipes
+            PipedWriter pw = new PipedWriter();
+
+            // interp.setErr(pw);
+            java.lang.reflect.Method method
+                    = interp.getClass().getMethod("setErr", new Class[]{Writer.class});
+            method.invoke(interp, new Object[]{pw});
+            // interpreter.setOut(pw);
+            method
+                    = interp.getClass().getMethod("setOut", new Class[]{Writer.class});
+            method.invoke(interp, new Object[]{pw});
+
+            // ensure the output pipe is read and stored into a
+            // Swing TextArea data model
+            PipedReader pr = new PipedReader(pw);
+            PipeListener pl = new PipeListener(pr, outputlog);
+            pl.start();
 
             // have jython execute the default setup
             log.debug("load defaults from "+defaultContextFile);
@@ -145,6 +162,11 @@ public class RunJythonScript extends AbstractAction {
             return null;
         }
     }
+
+    /**
+     * JTextArea containing the output
+     */
+    static javax.swing.JTextArea outputlog = new javax.swing.JTextArea();
 
     /**
      * Name of the file containing the Python code defining JMRI defaults
