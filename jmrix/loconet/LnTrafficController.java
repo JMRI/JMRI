@@ -29,7 +29,7 @@ public class LnTrafficController implements LocoNetInterface, Runnable {
 
 // The methods to implement the LocoNetInterface
 
-	private Vector listeners = new Vector();
+	protected Vector listeners = new Vector();
 	
 	public boolean status() { return (ostream != null & istream != null); 
 		}
