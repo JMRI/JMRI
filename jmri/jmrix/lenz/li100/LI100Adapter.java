@@ -24,7 +24,7 @@ import javax.comm.SerialPortEventListener;
  * Provide access to XPressNet via a LI100 on an attached serial comm port.
  *					Normally controlled by the lenz.li100.LI100Frame class.
  * @author			Bob Jacobsen   Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003
- * @version			$Revision: 2.1 $
+ * @version			$Revision: 2.2 $
  */
 
 public class LI100Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -274,7 +274,7 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
 	/**
 	 * Option 1 controls flow control option
 	 */
-	public String option1Name() { return "LI100 connections uses "; }
+	public String option1Name() { return "LI100 connection uses "; }
         public String[] validOption1() { return validOption1; }
 
 	protected String [] validSpeeds = new String[]{"9,600 baud","19,200 baud","38,400 baud","57,600 baud","115,200 baud"};
