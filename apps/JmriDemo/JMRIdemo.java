@@ -4,8 +4,10 @@
 
 package apps.JmriDemo;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+
 import javax.swing.*;
 
 /**
@@ -17,7 +19,7 @@ import javax.swing.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2002
- * @version     $Revision: 1.52 $
+ * @version     $Revision: 1.53 $
  */
 public class JMRIdemo extends JPanel {
     public JMRIdemo(JFrame frame) {
@@ -58,18 +60,7 @@ public class JMRIdemo extends JPanel {
         // if the configuration completed OK, the input menu is made inactive
         log.debug("Find configOK is "+prefs.configOK);
 
-        JMenu funcMenu = new JMenu("Tools");
-        menuBar.add(funcMenu);
-        funcMenu.add(new jmri.jmrit.simpleprog.SimpleProgAction("Simple Programmer"));
-        funcMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction("DecoderPro service programmer"));
-        funcMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction("DecoderPro ops-mode programmer"));
-        funcMenu.add(new jmri.jmrit.dualdecoder.DualDecoderToolAction());
-        funcMenu.add(new jmri.jmrit.powerpanel.PowerPanelAction("Power Control"));
-        funcMenu.add(new jmri.jmrit.speedometer.SpeedometerAction( "Speedometer" ));
-        funcMenu.add(new jmri.jmrit.sendpacket.SendPacketAction( "Send DCC Packet" ));
-        funcMenu.add(new jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlAction("Turnout Control"));
-        funcMenu.add(new jmri.jmrit.beantable.TurnoutTableAction("Turnout Table"));
-        funcMenu.add(new jmri.jmrit.beantable.SensorTableAction("Sensor Table"));
+        menuBar.add(new jmri.jmrit.ToolsMenu("Tools"));
 
         menuBar.add(new jmri.jmrit.roster.RosterMenu("Roster", jmri.jmrit.roster.RosterMenu.MAINMENU, this));
 
@@ -79,64 +70,12 @@ public class JMRIdemo extends JPanel {
         diagMenu.add(new jmri.configurexml.LoadXmlConfigAction("Load panels..."));
         diagMenu.add(new jmri.configurexml.StoreXmlConfigAction("Store panels..."));
 
-        JMenu locoMenu = new JMenu("LocoNet");
-        menuBar.add(locoMenu);
-        locoMenu.add(new jmri.jmrix.loconet.locomon.LocoMonAction("LocoNet Monitor"));
-        locoMenu.add(new jmri.jmrix.loconet.slotmon.SlotMonAction("Slot Monitor"));
-        locoMenu.add(new jmri.jmrix.loconet.locogen.LocoGenAction("Send Packet"));
-        locoMenu.add(new jmri.jmrix.loconet.locoio.LocoIOAction("LocoIO Programmer"));
-        locoMenu.add(new jmri.jmrix.loconet.pm4.PM4Action("PM4 Programmer"));
-        locoMenu.add(new jmri.jmrix.loconet.bdl16.BDL16Action("BDL16 Programmer"));
-        locoMenu.add(new jmri.jmrix.loconet.se8.SE8Action("SE8c Programmer"));
-        locoMenu.add(new jmri.jmrit.messager.MessageFrameAction( "Throttle Messages" ));
-        locoMenu.add(new jmri.jmrix.loconet.locormi.LnMessageServerAction( "Start LocoNet Server" ));
+        menuBar.add(new jmri.jmrix.SystemsMenu());
 
-        JMenu throttleMenu = new JMenu("Throttles");
-        throttleMenu.add(new jmri.jmrit.throttle.ThrottleCreationAction( "Create New Throttle" ));
-        throttleMenu.add(new jmri.jmrit.throttle.StoreXmlThrottleAction( "Save Throttles" ));
-        throttleMenu.add(new jmri.jmrit.throttle.LoadXmlThrottleAction( "Load Throttles" ));
-        throttleMenu.add(new jmri.jmrit.throttle.EditThrottlePreferencesAction( "Edit Throttle Preferences" ));
-        funcMenu.add(throttleMenu);
-
-        JMenu nceMenu = new JMenu("NCE");
-        menuBar.add(nceMenu);
-        nceMenu.add(new jmri.jmrix.nce.ncemon.NceMonAction("Command Monitor"));
-        nceMenu.add(new jmri.jmrix.nce.packetgen.NcePacketGenAction("Send Command"));
-        nceMenu.add(new jmri.jmrix.ncemonitor.NcePacketMonitorAction("Track Packet Monitor"));
-
-        JMenu easydccMenu = new JMenu("EasyDcc");
-        menuBar.add(easydccMenu);
-        easydccMenu.add(new jmri.jmrix.easydcc.easydccmon.EasyDccMonAction("Command Monitor"));
-        easydccMenu.add(new jmri.jmrix.easydcc.packetgen.EasyDccPacketGenAction("Send Command"));
-
-        JMenu lenzMenu = new JMenu("XpressNet");
-        menuBar.add(lenzMenu);
-        lenzMenu.add(new jmri.jmrix.lenz.mon.XNetMonAction("Command Monitor"));
-        lenzMenu.add(new jmri.jmrix.lenz.packetgen.PacketGenAction("Send Command"));
-
-        JMenu cmriMenu = new JMenu("CMRI");
-        menuBar.add(cmriMenu);
-        cmriMenu.add(new jmri.jmrix.cmri.serial.serialmon.SerialMonAction("Command Monitor"));
-        cmriMenu.add(new jmri.jmrix.cmri.serial.packetgen.SerialPacketGenAction("Send Command"));
-
-        JMenu sprogMenu = new JMenu("SPROG");
-        menuBar.add(sprogMenu);
-        sprogMenu.add(new jmri.jmrix.sprog.sprogmon.SprogMonAction("Command Monitor"));
-        sprogMenu.add(new jmri.jmrix.sprog.packetgen.SprogPacketGenAction("Send Command"));
+        menuBar.add(new jmri.jmrit.DebugMenu(this));
 
         JMenu devMenu = new JMenu("Development");
         menuBar.add(devMenu);
-        devMenu.add(new jmri.jmrit.MemoryFrameAction("Memory usage monitor"));
-        devMenu.add(new JSeparator());
-        devMenu.add(new jmri.jmrit.XmlFileCheckAction("Check XML File", this));
-        devMenu.add(new jmri.jmrit.decoderdefn.NameCheckAction("Check decoder names", this));
-        devMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.ProgCheckAction("Check programmer names", this));
-        devMenu.add(new jmri.jmrit.decoderdefn.DecoderIndexCreateAction("Create decoder index"));
-        devMenu.add(new JSeparator());
-        devMenu.add(new jmri.jmrit.roster.RecreateRosterAction("Recreate roster"));
-        devMenu.add(new JSeparator());
-        devMenu.add(new jmri.jmrix.loconet.locormi.LnMessageClientAction( "Start LocoNet Client" ));
-        devMenu.add(new JSeparator());
         devMenu.add(new jmri.jmrit.symbolicprog.autospeed.AutoSpeedAction("Auto-speed tool"));
         devMenu.add(new JSeparator());
         devMenu.add(new jmri.jmrit.automat.SampleAutomatonAction( "Sample automaton 1"));
