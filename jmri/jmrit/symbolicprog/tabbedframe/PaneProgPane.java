@@ -19,7 +19,7 @@ import org.jdom.*;
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
@@ -30,6 +30,7 @@ public class PaneProgPane extends javax.swing.JPanel
     ActionListener l1;
     ActionListener l2;
     ActionListener l3;
+    ActionListener l4;
 
     /**
      * Create a null object.  Normally only used for tests and to pre-load classes.
@@ -90,7 +91,7 @@ public class PaneProgPane extends javax.swing.JPanel
         panelList.add(p);
         bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
 
-        readButton.setToolTipText("Read colored values from decoder.");
+        readButton.setToolTipText("Read highlighted values from decoder.");
         if (cvModel.getProgrammer()!= null
             && !cvModel.getProgrammer().getCanRead()) {
             // can't read, disable the button
@@ -116,16 +117,24 @@ public class PaneProgPane extends javax.swing.JPanel
                 }
             });
 
-        writeButton.setToolTipText("Write current values to decoder");
+        writeButton.setToolTipText("Write highlighted values to decoder");
         writeButton.addActionListener( l3 = new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     if (writeButton.isSelected()) writePane();
                 }
             });
 
+        reWriteButton.setToolTipText("Write all values to decoder");
+        reWriteButton.addActionListener( l4 = new ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    if (reWriteButton.isSelected()) reWritePane();
+                }
+            });
+
         bottom.add(readButton);
         bottom.add(writeButton);
         bottom.add(reReadButton);
+        bottom.add(reWriteButton);
 
         add(bottom);
     }
@@ -145,9 +154,10 @@ public class PaneProgPane extends javax.swing.JPanel
      */
     List cvList = new ArrayList();
 
-    JToggleButton readButton   = new JToggleButton("Read sheet");
-    JToggleButton reReadButton = new JToggleButton("Reread sheet");
-    JToggleButton writeButton  = new JToggleButton("Write sheet");
+    JToggleButton readButton     = new JToggleButton("Read sheet");
+    JToggleButton reReadButton   = new JToggleButton("Reread sheet");
+    JToggleButton writeButton    = new JToggleButton("Write sheet");
+    JToggleButton reWriteButton  = new JToggleButton("Rewrite sheet");
 
     /**
      * invoked by "Read Pane" button, this sets in motion a
@@ -183,7 +193,7 @@ public class PaneProgPane extends javax.swing.JPanel
         reReadButton.setSelected(true);
 
         // flag state of variables and CVs
-        setAllToRead();
+        setAllToFromFile();
 
         // start operation
         return nextRead();
@@ -193,14 +203,14 @@ public class PaneProgPane extends javax.swing.JPanel
      * Set states so that all variables and CVs on this pane will
      * read when a readPane or reReadPane operation comes along.
      */
-    void setAllToRead() {
+    void setAllToFromFile() {
         for (int i=0; i<varList.size(); i++) {
             int varNum = ((Integer)varList.get(i)).intValue();
-            _varModel.setState( varNum, VariableValue.UNKNOWN );
+            _varModel.getVariable( varNum ).setCvState( VariableValue.FROMFILE );
         }
         for (int i=0; i<cvList.size(); i++) {
             int cvNum = ((Integer)cvList.get(i)).intValue();
-            _cvModel.getCvByRow(cvNum).setState(CvValue.UNKNOWN);
+            _cvModel.getCvByRow(cvNum).setState(CvValue.FROMFILE);
         }
     }
 
@@ -280,10 +290,21 @@ public class PaneProgPane extends javax.swing.JPanel
     public boolean writePane() {
         if (log.isDebugEnabled()) log.debug("writePane starts");
         writeButton.setSelected(true);
+        return nextWrite();
+    }
+
+    public boolean reWritePane() {
+        if (log.isDebugEnabled()) log.debug("reWritePane starts");
+        reWriteButton.setSelected(true);
+        setAllToFromFile();
+        return nextWrite();
+    }
+
+    boolean nextWrite() {
         for (int i=0; i<varList.size(); i++) {
             int varNum = ((Integer)varList.get(i)).intValue();
             int vState = _varModel.getState( varNum );
-            if (log.isDebugEnabled()) log.debug("writePane var index "+varNum+" state "+vState);
+            if (log.isDebugEnabled()) log.debug("nextWrite var index "+varNum+" state "+vState);
             if (vState == VariableValue.UNKNOWN ||
                 vState == VariableValue.EDITED ||
                 vState == VariableValue.FROMFILE )  {
@@ -304,7 +325,7 @@ public class PaneProgPane extends javax.swing.JPanel
         for (int i=0; i<cvList.size(); i++) {
             int cvNum = ((Integer)cvList.get(i)).intValue();
             int cState = _cvModel.getCvByRow( cvNum ).getState();
-            if (log.isDebugEnabled()) log.debug("writePane cv index "+cvNum+" state "+cState);
+            if (log.isDebugEnabled()) log.debug("nextWrite cv index "+cvNum+" state "+cState);
             if (cState == CvValue.UNKNOWN ||
                 cState == CvValue.EDITED ||
                 cState == CvValue.FROMFILE )  {
@@ -322,8 +343,9 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         }
         // nothing to program, end politely
-        if (log.isDebugEnabled()) log.debug("writePane found nothing to do");
+        if (log.isDebugEnabled()) log.debug("nextWrite found nothing to do");
         writeButton.setSelected(false);
+        reWriteButton.setSelected(false);
         setBusy(false);
         return false;
     }
@@ -396,6 +418,7 @@ public class PaneProgPane extends javax.swing.JPanel
         if (_read && readButton.isSelected()) nextRead();
         else if (_read && reReadButton.isSelected()) nextRead();
         else if (writeButton.isSelected()) writePane();
+        else if (reWriteButton.isSelected()) writePane();
         else if (log.isDebugEnabled()) log.debug("No operation to restart");
     }
 
@@ -749,7 +772,8 @@ public class PaneProgPane extends javax.swing.JPanel
         readButton.removeActionListener(l1);
         reReadButton.removeActionListener(l2);
         writeButton.removeActionListener(l3);
-        l1 = l2 = l3 = null;
+        reWriteButton.removeActionListener(l4);
+        l1 = l2 = l3 = l4 = null;
 
         if (_programmingVar != null) _programmingVar.removePropertyChangeListener(this);
         if (_programmingCV != null) _programmingCV.removePropertyChangeListener(this);
