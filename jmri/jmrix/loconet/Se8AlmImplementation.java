@@ -20,7 +20,7 @@ package jmri.jmrix.loconet;
  * contact Digitrax Inc for separate permission.
  *
  * @author Bob Jacobsen     Copyright 2002
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class Se8AlmImplementation extends AbstractAlmImplementation {
@@ -35,7 +35,6 @@ public class Se8AlmImplementation extends AbstractAlmImplementation {
     public Se8AlmImplementation(int pNumber, boolean pImage) {
         super(pNumber, pImage);
         initData();
-	LnTrafficController.instance().addLocoNetListener(~0, this);
     }
 
     // offsets in the ALM for various things
@@ -79,7 +78,6 @@ public class Se8AlmImplementation extends AbstractAlmImplementation {
      */
     void store(int block, int item, int value) {
         contents[block*4+item] = value;
-
     }
     
     /**
@@ -118,7 +116,7 @@ public class Se8AlmImplementation extends AbstractAlmImplementation {
     /**
      * Keep a read going if needed
      */
-    public void noteRead(int block) {
+    public void noteReadReply(int block) {
         // check to see if we're doing a read of an entire SE
         int section = block % (ENTRYSIZE/4);
         if (keepReading && (section < (ENTRYSIZE/4-1))) {
@@ -127,30 +125,24 @@ public class Se8AlmImplementation extends AbstractAlmImplementation {
             keepReading = false;
         }
     }
-
-    void sendRead(int block) {
-        LocoNetMessage l = new LocoNetMessage(16);
-        l.setElement( 0, 0xEE);
-        l.setElement( 1, 0x10);
-        l.setElement( 2, mNumber);
-        l.setElement( 3, 2);    // read
-        l.setElement( 4, block&0x7F);    // blockl
-        l.setElement( 5, block/128);    // blockh
-        l.setElement( 6, 0x03);
-        l.setElement( 7, 0x02);
-        l.setElement( 8, 0x08);
-        l.setElement( 9, 0x7F);
-        l.setElement(10, 0x00);
-        l.setElement(11, 0x00);
-        l.setElement(12, 0x00);
-        l.setElement(13, 0x00);
-        l.setElement(14, 0x00);
-        l.setElement(15, 0x00);
-        LnTrafficController.instance().sendLocoNetMessage(l);
+    
+    /**
+     * Keep a write going if needed
+     */
+    public void noteWriteComplete(int block) {
+        // check to see if we're doing a write of an entire SE
+        int section = block % (ENTRYSIZE/4);
+        if (keepWriting && (section < (ENTRYSIZE/4-1))) {
+            sendWrite(block+1);
+        } else {
+            keepWriting = false;
+        }
     }
     
     /**
      * Start the process of reading the values for an SE
+     *<P>
+     * Note that SEs are numbered starting with 1, not zero.
      */
     public void triggerRead(int se) {
         if (!mImage)
@@ -158,12 +150,14 @@ public class Se8AlmImplementation extends AbstractAlmImplementation {
         // mark so reads all blocks
         keepReading = true;
         // format up and send the read command
-        int block = se*(ENTRYSIZE/4);
+        int block = (se-1)*(ENTRYSIZE/4);
         sendRead(block);
     }
     
     /**
      * Start the process of writing the values for an SE
+     *<P>
+     * Note that SEs are numbered starting with 1, not zero.
      */
     public void triggerWrite(int se) {
         if (!mImage)
@@ -171,7 +165,7 @@ public class Se8AlmImplementation extends AbstractAlmImplementation {
         // mark so writes all blocks
         keepWriting = true;
         // format up and send the read command
-        int block = se*(ENTRYSIZE/4);
+        int block = (se-1)*(ENTRYSIZE/4);
         sendWrite(block);
     }
     
