@@ -28,7 +28,7 @@ import jmri.AbstractReporter;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
  
  public class LnReporter extends AbstractReporter implements LocoNetListener {
@@ -58,7 +58,7 @@ import jmri.AbstractReporter;
 		if ( (l.getElement(1) & 0xC0) != 0) return;
 
 		// message type OK, check address
-        int addr = (l.getElement(1)*128&0x1F) + l.getElement(2) + 1;
+        int addr = ((l.getElement(1)&0x1F)*128) + l.getElement(2) + 1;
 		if (addr != getNumber()) return;
 		
 		// this is real, get direction
