@@ -1,0 +1,202 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<!-- $Id: PanelPro.html,v 1.1 2003-08-02 17:44:47 jacobsen Exp $ -->
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Bob Jacobsen, LBL">
+   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>PanelPro</title>
+</head>
+<body>
+
+
+<IMG SRC="images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
+
+<h2>PanelPro</h2>
+
+The 
+<A HREF="index.html">JMRI libraries</a>
+contain the PanelPro application for creating simple control panels.
+This page describes that application, and how to use it.
+
+<h3>Contents of a panel</h3>
+<IMG SRC="images/panel.gif" ALT="Screen shot of panel" WIDTH="292" HEIGHT="107" HSPACE="0" VSPACE="0">
+<A href="Panels/CornwallPanelLit.gif"><IMG src="Panels/SmallCornwallPanel.gif" WIDTH="502" HEIGHT="302" HSPACE="0" VSPACE="0"></A>
+
+<BR>
+You can make the panel look and operate any way you want.
+<P>
+A panel is one or background pictures, on which are drawn
+icons to represent turnouts, sensors and signals on the layout.
+You can build the background from small icons (left above), 
+or provide a detailed drawing that you created in a drawing
+program (right above).
+
+<P>
+You can use these tools to configure quite complicated panels for
+large layouts.  The example above is from 
+<A href="http://kc.pennsyrr.com/layouts/kulp/index.html">Nick Kulp's Cornwall Railroad</a>.
+There's
+<A HREF="Panels/Cornwall.html">another page</a>
+that describes this in detail.
+
+<h3>Panel operation</h3>
+Clicking on a turnout symbol flips it from closed to thrown and vice-versa.
+A turnout also has "unknown" and "inconsistent" states, represented by an
+icon with a question mark and X respectively. These represent a state where
+no information has been received, and where the information is internally inconsistent
+(e.g. both closed and thrown at the same time).
+<P>
+This control can be used in various ways.  For example, you could
+have a turnout icon covering a turnout on a schematic diagram.  When you
+click on it, the turnout on the layout would be commanded to change, and
+the track diagram would show which way a train would be routed.
+Or you could use icons that show a lever to the right or left, and create
+a panel that looks like a traditional US&S panel.
+<P>
+"Sensors" can be used to represent occupancy indicators or other inputs.  The default icon
+is a small circle, with color used to represent the state of the sensor.  
+These respond to changes on the layout automatically.
+Clicking on a sensor causes the sensor to alternate between "active" and "inactive"
+states. With the default icons, active is a green circle and inactive is an empty circle.
+These are meant to represent a lit/dark panel indicator.  A red circle represents the
+"unknown" state, used when no information has yet been received from the layout.
+
+<h3>Creating a panel</h3>
+These are made with a "Panel Editor", which allows you to place images
+to represent turnouts, sensors (on some systems) and trackwork.
+
+<P>
+You start the editor by selecting "New panel..." from the "Panel" menu
+in the PanelPro program.  You'll get a blank control panel, plus the
+editor window:<BR>
+<IMG SRC="images/paneleditor.gif" ALT="Screen shot of panel editor" WIDTH="382" HEIGHT="320" HSPACE="0" VSPACE="0">
+<P>
+From the top, this contains:
+<UL>
+<LI>Two text fields specifying where (in pixels) new components will be inserted on the panel.
+You can generally ignore these, as once the components has been inserted you can drag it around by 
+holding the meta (Apple, command, etc) key down.
+<LI>A button to pick a background image.  The editor's drawing capability is rudimentary
+and likely to stay that way for a long time.  To create CTC panels, complex track diagrams, etc,
+its easier to draw them in some other program and insert them as the background image
+for a JMRI control panel. 
+
+<LI>A button to add a text label.  Put the desired text in the field and click the button. You can 
+slide the label around after inserting it, but you currently can't edit the text later.
+
+<LI>A button to add an icon as a label.  This is a way to add track symbols, etc. To select the
+icon, click the "edit icon..." button to pop an
+icon editor panel.<BR>
+<IMG SRC="images/iconeditor.gif" ALT="Screen shot of icon editor" WIDTH="295" HEIGHT="427" HSPACE="0" VSPACE="0"><BR>
+The current icon is shown at the top.
+To change it, use the tree in the bottom of the window to select a new one, then click on 
+the icon at the top of the icon editor panel
+to load the selected icon.  This is a general mechanism:  Any icon on an icon editor window
+can be replaced by selecting the desired new one and clicking on the icon to be replaced.
+
+<LI>Two sections for adding left- and right-bound turnouts.  These actually work the same
+way, only with different icons to represent the states of the turnouts.  Enter the turnout number
+(e.g. 23) and click "Add turnout:".  If you'd prefer a different graphic for the closed
+and thrown states, you can change their icons as described above.
+
+<LI>A section for adding a sensor.  
+Type the sensor number (e.g. 74) in the field and click "Add sensor:".
+</UL>
+
+<P>
+After getting the panel the way you want, you can use the "Store panel..." 
+entry in the "Panels" menu
+to write it to an XML file.
+
+<h3>Available Icons</h3>
+The JMRI library contains lots of contributed icons
+for representing CTC panels, LEDs, etc.  You can browse through them with the tree
+in the bottom of the editor frame.  Perhaps the best way to see what each looks like
+is to select it in the tree, then click on the icon next to the "Add icon" button.  That
+will load it.
+<P>
+You can also create your own icons and use them by selecting from the "file" section.
+<P>
+For little bits of track, e.g. to connect turnouts, you might want
+<pre>
+ resources -> icons -> small schematics ->tracksegments
+</PRE>
+then block.gif, etc.
+
+<P>
+We do need to do a better job of organizing the available icons!
+
+<h3>Other types of panels</h3>
+
+Because this is icon-based, you can create panels that look any way you 
+want.  For example, instead of using track-schematic icons for turnouts, you
+could use small images of the levels and plates on CTC machine.  This would 
+give you "mechanical" levers you can flip back and forth with a click.
+<P>
+Making a "real"
+CTC panel will require better signal logic to handle the code buttons, etc.  
+If you've got opinions on how this should work, please send comments!
+
+<h2>Manipulating Icons</h2>
+
+To move an icon around on the panel, 
+you "meta-drag" it.  On a Mac, that's "hold the cmd key and 
+drag with the cursor"; on windows, it might be the Windows  or control key.  
+Or it might be a right-drag.  Sorry, I don't have a Windows machine here to 
+figure it out.
+<P>
+There's also a pop-up menu (ctrl-click on a Mac) that will provide
+various ways to manipulate the icon. It will let you rotate the 
+icon so that it points in whatever direction you want. Text labels
+can have their font, size and color changed.  You can also remove
+icons from the panel with the popup menu.
+
+<h2>Communicating with Multiple Systems</h2>
+
+PanelPro can communicate with more than one layout control system.  For
+example, the Cornwall Railroad uses C/MRI hardware for sensing the status
+of blocks and turnouts on the layout, but drives turnout positions through
+a Digitrax DCC system.
+<P>
+To configure the program to talk to multiple systems, just select them in the
+preferences panel:<BR>
+<IMG SRC="images/panelproprefs.gif" ALT="Screen shot of panel editor" WIDTH="331" HEIGHT="164" HSPACE="0" VSPACE="0">
+<BR>
+If you add a turnout, sensor or signal to a panel using just a number, e.g. "23",
+it will be assigned to the first system on the preference panel.  To
+access the 2nd system, you have to use JMRI 
+<A HREF="Technical/Names.html">system names</a>.  For example, if the second attachment is
+to a LocoNet system, you'd refer to a LocoNet Turnout as LT13; a LocoNet sensor
+as LS21, etc.  See the page on 
+<A href="Technical/Names.html">names</a>
+for more information.
+<h2>Acknowledgements</h2>
+
+<A HREF="Acknowledgements.html">Many people</a>
+have contributed, and we thank 
+<A HREF="Acknowledgements.html">all of them</a>.
+
+<HR>
+<BR>Site hosted by: <BR>
+<A href="http://sourceforge.net"> 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A>
+ 
+
+<script language=javascript 
+src="http://ss.webring.com/navbar?f=j;y=bob_jacobsen15;u=100088115910095949">
+</script><noscript><center>
+<table bgcolor=gray cellspacing=0 border=2 bordercolor=red><tr>
+<td><table cellpadding=2 cellspacing=0 border=0><tr><td align=center>
+<font face=arial size=-1>This site is a member of WebRing. 
+<br>To browse visit <a href="http://ss.webring.com/navbar?f=l;y=bob_jacobsen15;u=100088115910095949">
+Here</a>.</font></td></tr></table></td></tr></table>
+</center></noscript>
+
+<hr>
+Bob Jacobsen<BR>
+jake@physics.berkeley.edu
+
+</body>
+</html>
