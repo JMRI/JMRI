@@ -89,11 +89,13 @@ public class ThrottleFrame extends JFrame
         addressPanel.setClosable(true);
         addressPanel.setIconifiable(true);
         addressPanel.setTitle("Address Panel");
+
         addressPanel.setSize(200,120);
         addressPanel.setLocation(100, 200);
         addressPanel.setVisible(true);
 
-
+        /* Make controlPanel and functionPanel listen to addressPanel
+           for address changes. */
         addressPanel.addAddressListener(controlPanel);
         addressPanel.addAddressListener(functionPanel);
 
@@ -113,6 +115,16 @@ public class ThrottleFrame extends JFrame
         }
     }
 
+    /**
+     * Collect the prefs of this object into XML Element
+     * <ul>
+     * <li> Window prefs
+     * <li> ControlPanel
+     * <li> FunctionPanel
+     * <li> AddressPanel
+     * </ul>
+     * @return the XML of this object.
+     */
     public Element getXml()
     {
         Element me = new Element("ThrottleFrame");
@@ -128,6 +140,16 @@ public class ThrottleFrame extends JFrame
         return me;
     }
 
+    /**
+     * Set the preferences based on the XML Element.
+     * <ul>
+     * <li> Window prefs
+     * <li> ControlPanel
+     * <li> FunctionPanel
+     * <li> AddressPanel
+     * </ul>
+     * @param e The Element for this object.
+     */
     public void setXml(Element e)
     {
         Element window = e.getChild("window");
