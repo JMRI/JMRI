@@ -6,8 +6,8 @@ import jmri.DccThrottle;
  * An abstract implementation of DccThrottle.
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
- * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.2 $
+ * @author  Bob Jacobsen  Copyright (C) 2001
+ * @version $Revision: 1.3 $
  */
 abstract public class AbstractThrottle implements DccThrottle {
     protected float speedSetting;
@@ -114,7 +114,6 @@ abstract public class AbstractThrottle implements DccThrottle {
 
     }
 
-
     public int getDccAddress() {
         return address;
     }
@@ -126,5 +125,68 @@ abstract public class AbstractThrottle implements DccThrottle {
     public float getSpeedIncrement() {
         return speedIncrement;
     }
+
+    // functions - note that we use the naming for DCC, though that's not the implication;
+    // see also DccThrottle interface
+    public void setF0(boolean f0) {
+        this.f0 = f0;
+        sendLowerFunctions();
+    }
+
+    public void setF1(boolean f1) {
+        this.f1 = f1;
+        sendLowerFunctions();
+    }
+
+    public void setF2(boolean f2) {
+        this.f2 = f2;
+        sendLowerFunctions();
+    }
+
+    public void setF3(boolean f3) {
+        this.f3 = f3;
+        sendLowerFunctions();
+    }
+
+    public void setF4(boolean f4) {
+        this.f4 = f4;
+        sendLowerFunctions();
+    }
+
+    public void setF5(boolean f5) {
+        this.f5 = f5;
+        sendHigherFunctions();
+    }
+
+    public void setF6(boolean f6) {
+        this.f6 = f6;
+        sendHigherFunctions();
+    }
+
+    public void setF7(boolean f7) {
+        this.f7 = f7;
+        sendHigherFunctions();
+    }
+
+    public void setF8(boolean f8) {
+        this.f8 = f8;
+        sendHigherFunctions();
+    }
+
+    /**
+     * Send the message to set the state of
+     * functions F0, F1, F2, F3, F4.
+     * <P>
+     * This is used in the setFn implementations provided in this class.
+     */
+    abstract protected void sendLowerFunctions();
+
+    /**
+     * Send the message to set the state of
+     * functions F5, F6, F7, F8.
+     * <P>
+     * This is used in the setFn implementations provided in this class.
+     */
+    abstract protected void sendHigherFunctions();
 
 }
