@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE layout-config SYSTEM "layout-config.dtd">
+<layout-config>
+  <memorys class="jmri.configurexml.DefaultMemoryManagerXml">
+    <memory systemName="IM12" userName="Foo" />
+  </memorys>
+  <paneleditor class="jmri.jmrit.display.configurexml.PanelEditorXml" name="Test memory" x="20" y="22" height="282" width="238" editable="yes" positionable="yes" controlling="yes" hide="no">
+    <memoryicon memory="IM12" x="10" y="10" class="jmri.jmrit.display.configurexml.MemoryIconXml">
+      <memorystate value="0" icon="resource:resources/icons/misc/Nixie/M0.gif" />
+      <memorystate value="1" icon="resource:resources/icons/misc/Nixie/M1.gif" />
+      <memorystate value="2" icon="resource:resources/icons/misc/Nixie/M2.gif" />
+      <memorystate value="3" icon="resource:resources/icons/misc/Nixie/M3.gif" />
+      <memorystate value="4" icon="resource:resources/icons/misc/Nixie/M4.gif" />
+      <memorystate value="5" icon="resource:resources/icons/misc/Nixie/M5.gif" />
+      <memorystate value="6" icon="resource:resources/icons/misc/Nixie/M6.gif" />
+      <memorystate value="7" icon="resource:resources/icons/misc/Nixie/M7.gif" />
+      <memorystate value="8" icon="resource:resources/icons/misc/Nixie/M8.gif" />
+      <memorystate value="9" icon="resource:resources/icons/misc/Nixie/M9.gif" />
+      <memorystate value="gray" icon="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" />
+    </memoryicon>
+  </paneleditor>
+</layout-config>
+
