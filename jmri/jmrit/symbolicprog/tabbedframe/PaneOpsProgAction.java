@@ -23,10 +23,10 @@ import jmri.*;
  * The resulting JFrame
  * is constructed on the fly here, and has no specific type.
  *
- * @see  jmri.jmrit.symbolicprog.PaneOpsProgAction
+ * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class PaneOpsProgAction 	extends AbstractAction {
 
