@@ -24,9 +24,9 @@ import jmri.ProgListener;
  * Note that you should call the dispose() method when you're really done, so that
  * a ProgModePane object can disconnect its listeners.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
-public class ProgModePane extends javax.swing.JPanel {
+public class ProgModePane extends ProgModeSelector {
 
     // GUI member declarations
     ProgOpsModePane     mOpsPane;
@@ -46,6 +46,7 @@ public class ProgModePane extends javax.swing.JPanel {
         add(mServicePane);
 
         // ops mode support
+        mOpsPane = null;
         if (InstanceManager.programmerManagerInstance()!=null &&
             InstanceManager.programmerManagerInstance().isOpsModePossible()) {
 
@@ -53,8 +54,13 @@ public class ProgModePane extends javax.swing.JPanel {
             mOpsPane = new ProgOpsModePane(direction, group);
             add(mOpsPane);
         }
-
     }
+
+    /**
+     * Default implementation of "isSelected" just returns true.
+     * @return Always true in this implementation
+     */
+    public boolean isSelected() { return true; }
 
     /**
      * Get the configured programmer
@@ -65,12 +71,16 @@ public class ProgModePane extends javax.swing.JPanel {
             return null;
         } else if (mServicePane.isSelected()) {
             return mServicePane.getProgrammer();
-        } else if (mOpsPane.isSelected()) {
+        } else if (mOpsPane!=null & mOpsPane.isSelected()) {
             return mOpsPane.getProgrammer();
         } else return null;
     }
 
     public void dispose() {
+        mServicePane.dispose();
+        mServicePane = null;
+        mOpsPane.dispose();
+        mOpsPane = null;
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ProgModePane.class.getName());
