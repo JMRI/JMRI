@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.1 $ -->
+<!-- Revision $Revision: 1.2 $ -->
 
 <project name="JMRI" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -125,6 +125,11 @@
     <copy todir="MacOSX/JMRI">
       <fileset dir="${release}" includes="jmri.jar"  /> 
     </copy>
+    <delete dir="MacOSX/JMRI/lib" />
+    <cvs command="export" quiet="true" package="lib" dest="MacOSX/JMRI" tag="${release}"/>
+    <delete file="MacOSX/JMRI/lib/junit.jar" />
+    <delete file="MacOSX/JMRI/lib/jh.1.1.2.jar" />
+    <delete file="MacOSX/JMRI/lib/Serialio.jar" />
     <delete dir="MacOSX/JMRI/xml" />
     <cvs command="export" package="xml" dest="MacOSX/JMRI" tag="${release}"/>
     <delete dir="MacOSX/JMRI/resources" />
@@ -172,6 +177,11 @@
     <copy todir="MacClassic/JMRI">
       <fileset dir="${release}" includes="jmri.jar"  /> 
     </copy>
+    <delete dir="MacClassic/JMRI/lib" />
+    <cvs command="export" quiet="true" package="lib" dest="MacClassic/JMRI" tag="${release}"/>
+    <delete file="MacClassic/JMRI/lib/junit.jar" />
+    <delete file="MacClassic/JMRI/lib/jh.jar" />
+    <delete file="MacClassic/JMRI/lib/Serialio.jar" />
     <delete dir="MacClassic/JMRI/xml" />
     <cvs command="export" package="xml" dest="MacClassic/JMRI" tag="${release}"/>
     <delete dir="MacClassic/JMRI/resources" />
@@ -188,6 +198,10 @@
     <copy todir="OS2/JMRI">
       <fileset dir="${release}" includes="jmri.jar"  /> 
     </copy>
+    <delete dir="OS2/JMRI/lib" />
+    <cvs command="export" quiet="true" package="lib" dest="OS2/JMRI" tag="${release}"/>
+    <delete file="OS2/JMRI/lib/junit.jar" />
+    <delete file="OS2/JMRI/lib/Serialio.jar" />
     <delete dir="OS2/JMRI/xml" />
     <cvs command="export" package="xml" dest="OS2/JMRI" tag="${release}"/>
     <delete dir="OS2/JMRI/resources" />
