@@ -21,9 +21,12 @@ import org.jdom.*;
  * All the data attributes have a content, not null. FileName, however, is special.
  * A null value for it indicates that no physical file is (yet) associated with
  * this entry.
+ * <P>
+ * When the filePath attribute is non-null, the user has decided to
+ * organize the roster into directories.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  * @see jmri.jmrit.roster.LocoFile
  *
  */
@@ -75,6 +78,19 @@ public class RosterEntry {
                                             .replace('\\', '-')
                                             .replace(':', '-');
             String newFilename = nameWithoutSpecialChars+".xml";
+
+            // we don't want to overwrite a file that exists, whether or not
+            // it's in the roster
+            File testFile = new File(XmlFile.prefsDir()+LocoFile.fileLocation+newFilename);
+            int count = 0;
+            String oldFilename = newFilename;
+            while (testFile.exists()) {
+                // oops - change filename and try again
+                newFilename = oldFilename.substring(0, oldFilename.length()-4)+count+".xml";
+                count++;
+                log.debug("try to use "+newFilename+" as filename instead of "+oldFilename);
+                testFile = new File(XmlFile.prefsDir()+LocoFile.fileLocation+newFilename);
+            }
             setFileName(newFilename);
             log.debug("new filename: "+getFileName());
         }
@@ -195,8 +211,7 @@ public class RosterEntry {
 
     /**
      * Write the contents of this RosterEntry to a file.
-     * Information
-     * on the contents is passed through the parameters,
+     * Information on the contents is passed through the parameters,
      * as the actual XML creation is done in the LocoFile class.
      *
      * @param cvModel  CV contents to include in file
