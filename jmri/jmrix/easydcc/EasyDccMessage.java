@@ -10,7 +10,7 @@ package jmri.jmrix.easydcc;
  * class handles the response from the command station.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2004
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -72,25 +72,27 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public EasyDccMessage getReadPagedCV(int cv) { //Rxxx
-        EasyDccMessage m = new EasyDccMessage(4);
+    static public EasyDccMessage getReadPagedCV(int cv) { //R xxx
+        EasyDccMessage m = new EasyDccMessage(5);
         m.setBinary(false);
         m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(LONG_TIMEOUT);
         m.setOpCode('R');
-        m.addIntAsThree(cv, 1);
+        m.setElement(1,' ');
+        m.addIntAsThreeHex(cv, 2);
         return m;
     }
 
-    static public EasyDccMessage getWritePagedCV(int cv, int val) { //Pxxx xxx
+    static public EasyDccMessage getWritePagedCV(int cv, int val) { //P xxx xx
         EasyDccMessage m = new EasyDccMessage(8);
         m.setBinary(false);
         m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(LONG_TIMEOUT);
         m.setOpCode('P');
-        m.addIntAsThree(cv, 1);
-        m.setElement(4,' ');
-        m.addIntAsThree(val, 5);
+        m.setElement(1,' ');
+        m.addIntAsThreeHex(cv, 2);
+        m.setElement(5,' ');
+        m.addIntAsTwoHex(val, 6);
         return m;
     }
 
@@ -106,9 +108,9 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public EasyDccMessage getWriteRegister(int reg, int val) { //Sx xxx
+    static public EasyDccMessage getWriteRegister(int reg, int val) { //Sx xx
         if (reg>8) log.error("register number too large: "+reg);
-        EasyDccMessage m = new EasyDccMessage(6);
+        EasyDccMessage m = new EasyDccMessage(5);
         m.setBinary(false);
         m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(LONG_TIMEOUT);
@@ -116,7 +118,7 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
         String s = ""+reg;
         m.setElement(1, s.charAt(s.length()-1));
         m.setElement(2,' ');
-        m.addIntAsThree(val, 3);
+        m.addIntAsTwoHex(val, 3);
         return m;
     }
 
