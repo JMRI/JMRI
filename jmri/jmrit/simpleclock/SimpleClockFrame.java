@@ -17,16 +17,16 @@ import javax.swing.border.Border;
  * Frame for user configuration of Simple Timebase
  *
  * @author	Dave Duchamp   Copyright (C) 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
-public class SimpleClockFrame extends javax.swing.JFrame {
+public class SimpleClockFrame extends javax.swing.JFrame 
+	implements java.beans.PropertyChangeListener {
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.simpleclock.SimpleClockBundle");
 
     Timebase clock;
     javax.swing.Timer timer = null;
     static int delay = 2*1000;  // update display every two seconds
-    protected boolean running = false;
     protected boolean showTime = false;
     
     protected javax.swing.JComboBox timeSourceBox = null;
@@ -68,7 +68,6 @@ public class SimpleClockFrame extends javax.swing.JFrame {
             dispose();
             return false;
         }
-        running = clock.getRun();
 			
         // Set up time source choice
         JPanel panel11 = new JPanel();
@@ -119,12 +118,7 @@ public class SimpleClockFrame extends javax.swing.JFrame {
         JPanel panel3 = new JPanel();
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
         JPanel panel31 = new JPanel();
-        if (running) {
-            clockStatus.setText(rb.getString("ClockRunning"));
-        }
-        else {
-            clockStatus.setText(rb.getString("ClockStopped"));
-        }
+		
         panel31.add(clockStatus);
         panel3.add(panel31);
         JPanel panel32 = new JPanel();
@@ -154,12 +148,6 @@ public class SimpleClockFrame extends javax.swing.JFrame {
                 }
             });
         panel4.add(stopButton);
-        if (running) {
-            startButton.setVisible(false);
-        }
-        else {
-            stopButton.setVisible(false);
-        }
         contentPane.add(panel4);
 
         // Listen for closing of this window
@@ -169,8 +157,14 @@ public class SimpleClockFrame extends javax.swing.JFrame {
                 }
             });
 
+		// update contents for current status
+		updateRunningButton();
+
         // pack for display
         pack();
+
+        // listen for changes to the timebase parameters
+        clock.addPropertyChangeListener(this);
 
         // start timer to update the time
          if (timer==null) {
@@ -188,6 +182,31 @@ public class SimpleClockFrame extends javax.swing.JFrame {
         return true;
     }
     
+    /**
+     * Method to adjust to rate changes
+     */
+    void updateRate() {
+        factorField.setText(Double.toString(clock.getRate()));
+	}
+
+    /**
+     * Method to adjust to running state changes
+     */
+    void updateRunningButton() {
+    	boolean running = clock.getRun();
+        if (running) {
+            clockStatus.setText(rb.getString("ClockRunning"));
+            startButton.setVisible(false);
+            stopButton.setVisible(true);
+        }
+        else {
+            clockStatus.setText(rb.getString("ClockStopped"));
+            startButton.setVisible(true);
+            stopButton.setVisible(false);
+        }
+        clockStatus.setVisible(true);
+	}
+
     /**
      * Method to handle Set Rate button 
      */        
@@ -278,24 +297,7 @@ public class SimpleClockFrame extends javax.swing.JFrame {
      * Method to update clock state information
      */
     void updateTime() {
-        // Check if clock is running
-        if (clock.getRun() != running) {
-            // run state has changed
-            running = !running;
-            if (running) {
-                clockStatus.setText(rb.getString("ClockRunning"));
-                clockStatus.setVisible(true);
-                startButton.setVisible(false);
-                stopButton.setVisible(true);
-            }
-            else {
-                clockStatus.setText(rb.getString("ClockStopped"));
-                clockStatus.setVisible(true);
-                startButton.setVisible(true);
-                stopButton.setVisible(false);
-            }
-        }
-        if (running || showTime) {
+        if (clock.getRun() || showTime) {
             showTime = false;
             setTimeLabel();
             timeLabel.setVisible(true);
@@ -313,6 +315,14 @@ public class SimpleClockFrame extends javax.swing.JFrame {
         // Format and display the time
         timeLabel.setText(" "+(hours/10)+(hours-(hours/10)*10)+":"+
                                 (minutes/10)+(minutes-(minutes/10)*10));
+    }
+
+    /**
+     * Handle a change to clock properties
+     */
+    public void propertyChange(java.beans.PropertyChangeEvent e) {
+		updateRunningButton();
+		updateRate();
     }
 
     /**
