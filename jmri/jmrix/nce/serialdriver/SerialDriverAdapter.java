@@ -23,7 +23,7 @@ import jmri.jmrix.nce.*;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -144,6 +144,12 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
             jmri.InstanceManager.setSensorManager(s = new jmri.jmrix.nce.NceSensorManager());
             NceTrafficController.instance().setSensorManager(s);
         }
+
+        // If a jmri.ThrottleManager instance doesn't exist, create a
+        // NceThrottleManager to do that
+        if (jmri.InstanceManager.throttleManagerInstance() == null)
+            jmri.InstanceManager.setThrottleManager(new jmri.jmrix.nce.NceThrottleManager());
+
     }
 
     private Thread sinkThread;
