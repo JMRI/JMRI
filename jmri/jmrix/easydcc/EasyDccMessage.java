@@ -3,7 +3,7 @@
  *
  * Description:		<describe the EasyDccMessage class here>
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 
 package jmri.jmrix.easydcc;
@@ -87,14 +87,14 @@ public class EasyDccMessage {
 	static public EasyDccMessage getReadPagedCV(int cv) { //Rxxx
 		EasyDccMessage m = new EasyDccMessage(4);
 		m.setOpCode('R');
-		addIntAsThree(cv, m, 1);
+		addIntAsThreeHex(cv, m, 1);
 		return m;
 	}
 
 	static public EasyDccMessage getWritePagedCV(int cv, int val) { //Pxxx xxx
 		EasyDccMessage m = new EasyDccMessage(6);
 		m.setOpCode('P');
-		addIntAsThree(cv, m, 1);
+		addIntAsThreeHex(cv, m, 1);
 		addIntAsTwoHex(val, m, 4);
 		return m;
 	}
@@ -137,6 +137,16 @@ public class EasyDccMessage {
 		if (s.length() != 2) s = "0"+s;  // handle <10
 		m.setElement(offset,s.charAt(0));
 		m.setElement(offset+1,s.charAt(1));
+		return s;
+	}
+
+    	private static String addIntAsThreeHex(int val, EasyDccMessage m, int offset) {
+		String s = ""+Integer.toHexString(val).toUpperCase();
+		if (s.length() != 3) s = "0"+s;  // handle <10
+		if (s.length() != 3) s = "0"+s;  // handle <10
+		m.setElement(offset,s.charAt(0));
+		m.setElement(offset+1,s.charAt(1));
+		m.setElement(offset+2,s.charAt(2));
 		return s;
 	}
 
