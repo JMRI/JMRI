@@ -32,11 +32,12 @@ jython -d jython scripts/jython
 
 # properties target; all the properties files. Maintained manually!
 properties -a \
+        apps/ActionListBundle.properties \
         apps/AppsBundle.properties \
         apps/AppsConfigBundle.properties \
-        apps/ActionListBundle.properties \
         jmri/jmrit/beantable/BeanTableBundle.properties \
         jmri/jmrit/display/DisplayBundle.properties \
+        jmri/jmrit/jython/JythonBundle.properties \
         jmri/jmrit/JmritDebugBundle.properties \
         jmri/jmrit/JmritToolsBundle.properties \
         jmri/jmrit/powerpanel/PowerPanelBundle.properties \
@@ -101,12 +102,21 @@ properties -a \
 		jmri/jmrit/roster/JmritRosterBundle_fr.properties \
 		jmri/NamedBeanBundle_fr.properties \
         \
+        apps/ActionListBundle_es.properties \
         apps/AppsBundle_es.properties \
         apps/AppsConfigBundle_es.properties \
-        apps/ActionListBundle_es.properties \
         jmri/jmrit/beantable/BeanTableBundle_es.properties \
         jmri/jmrit/display/DisplayBundle_es.properties \
         jmri/jmrit/JmritDebugBundle_es.properties \
+        jmri/jmrit/JmritToolsBundle_es.properties \
+        jmri/jmrit/powerpanel/PowerPanelBundle_es.properties \
+        jmri/jmrit/roster/JmritRosterBundle_es.properties \
+        jmri/jmrit/simpleclock/SimpleClockBundle_es.properties \
+        jmri/jmrix/cmri/CMRIBundle_es.properties \
+        jmri/jmrix/cmri/serial/nodeconfig/NodeConfigBundle_es.properties \
+        jmri/jmrix/JmrixSystemsBundle_es.properties \
+        jmri/jmrix/lenz/XNetBundle_es.properties \
+        jmri/jmrix/loconet/LocoNetBundle_es.properties \
         jmri/NamedBeanBundle_cs.properties
         
 
