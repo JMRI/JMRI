@@ -15,18 +15,18 @@ import jmri.NmraPacket;
  *
  * Description:		extend jmri.AbstractTurnout for C/MRI serial layouts
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SerialTurnout extends AbstractTurnout {
 
     /**
-     * Serial turnouts use the NMRA number (0-511) as their numerical identification.
-     */
-
+     * Create a turnout object.
+     * The number argument is this devices address within the CMRI
+     * output space.
+     **/
     public SerialTurnout(int number) {
         super("CT"+number);
         _number = number;
-        // At construction, register for messages
     }
 
     public int getNumber() { return _number; }
