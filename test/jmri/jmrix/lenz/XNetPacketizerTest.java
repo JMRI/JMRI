@@ -9,7 +9,7 @@ import javax.swing.*;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class XNetPacketizerTest extends TestCase {
 
@@ -26,6 +26,7 @@ public class XNetPacketizerTest extends TestCase {
         c.startThreads();
         XNetMessage m = lcs.getTurnoutCommandMsg(22, true, false, true);
         c.sendXNetMessage(m, null);
+	Thread.sleep(100); // intermittent problem with seeing 4 characters?
         Assert.assertEquals("total length ", 4, p.tostream.available());
         Assert.assertEquals("Char 0", 0x52, p.tostream.readByte()&0xff);
         Assert.assertEquals("Char 1", 0x05, p.tostream.readByte()&0xff);
