@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: Logging.html,v 1.1 2003-08-07 17:23:59 jacobsen Exp $ -->
+<!-- $Id: Logging.html,v 1.2 2004-06-21 03:57:46 jacobsen Exp $ -->
 <html>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -19,7 +19,7 @@
 This page provides a little information on how 
 JMRI logs error, status and debugging information.
 
-<A HREF="index.html">prior page</A>)
+<P>
 For other details on JMRI internals, please see the
 <A HREF="../Technical/index.html" NAME="technical pages">technical pages</A>.
 
@@ -30,21 +30,38 @@ package to handle logging during program operation.
 <P>
 Log4J provides several levels of messages:
 <UL>
-<LI>Error
-<LI>Warning
-<LI>Info - summary information during normal operation
+<LI>Error - Something that really should never happen, and 
+that indicates a severe problem in the code itself
+<LI>Warning - An unexpected situation, that might be due to 
+an unexpected condition, etc.  Warnings are useful for 
+giving the user hints about possible causes if the program 
+misbehaves later.
+<LI>Info - Summary information during normal operation, typically
+indicating normal conditions.
 <LI>Debug - information on the internal operation of the program.  
 There is a lot of this, and turning it all on can slow the 
 program down significantly.
 </UL>
-<P>
+
+<h3>Controlling logging</h3>
 By convention, JMRI applications will attempt to initialize
 Log4J using a "default.lcf" file.  The JMRI distributions
 contain a version of this file with
 extensive comments.
 
 <P>
+The line:
+<PRE>
+ log4j.rootCategory=DEBUG, A1
+</PRE>
+controlls the basic function. As written above, this
+lists all messages of "DEBUG" level and above to 
+the "A!" output.  Later in the file, "A1" is defined as
+output to the console (command line).
+
+<P>
 If you change the line:
+
 <PRE>
  log4j.rootCategory=DEBUG, A1
 </PRE>
@@ -53,8 +70,64 @@ to
  log4j.rootCategory=DEBUG, A1, R
 </PRE>
 log entries will be written to both the "console"
-by "A1", and a file by "R". 
+by "A1", and a file by "R". "R" is defined later in the
+file; you can change the name of the output file, etc there.
 
+<P>
+You can also control the level of logged output for an individual
+class using a line like:
+<PRE>
+  log4j.category.jmri.jmrix.nce=DEBUG
+</PRE>
+The above line will log all "debug" and above messages 
+(e.g. all messages) from classes in the jmri.jmrix.nce package and all
+subpackages, regardless of the previously-set global logging level.  
+This provides a clean method of getting detailed logging
+output from just the classes being debugged.
+There are examples of this (in most cases commented out with # signs)
+near the bottom of the file.
+
+<h3>Adding logging to your code</h3>
+
+To add logging to a class, first put a line like this inside your class
+(by convention, we do this near the bottom of the file):
+<pre>
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MyClass.class.getName());
+</pre>
+Note the "MyClass"l that needs to be changed to the name of the class you're adding this
+too.  This line defines an object called "log", which can then be used for logging like
+this:
+<pre>
+  log.debug("Some useful message!");
+</pre>
+
+<h3>Logging perforamnce</h3>
+Is there a performance impact for messages that don't get logged? 
+Specifically, does it cost performance to have lots of debugging messages
+in the program that are not being printed?  Should you remove them?
+<P>
+In general, the cost of a statement like this:
+<pre>
+  log.debug("Some useful message!");
+</pre>
+is very small; probably at the level of microseconds.  Unless it's in a 
+very tight loop, the performance impact is probably negligable.
+<P>
+But statements like this can be costly:
+<pre>
+  log.debug(someSlowRoutine());
+</pre>
+because someSlowRoutine() needs to run to create the logging message
+before log.debug() is called, so gets run regardless of whether logging
+is happening or not.
+<P>
+To improve this, recode expensive error messages as
+<pre>
+  if (log.isDebugEnabled()) log.debug(someSlowRoutine());
+</pre>
+
+In general it's not wise to remove debugging statements; the odds are 
+that somebody will need them eventually.
 <HR>
 <BR>Site hosted by: <BR>
 <A href="http://sourceforge.net"> 
