@@ -9,9 +9,12 @@ package jmri.util;
  * code, so this class was created. It's more of a library of procedures
  * than a real class, as (so far) all of the operations have needed no state
  * information.
+ * <P>
+ * In some cases, these routines use a Java 1.3 or later method, falling
+ * back to an explicit implementation when running on Java 1.1
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class StringUtil {
@@ -75,6 +78,8 @@ public class StringUtil {
 
     /**
      * This is a lexagraphic sort; lower case goes to the end.
+     * Identical entries are retained, so the output length is the same
+     * as the input length.
      * @param values
      */
     static public void sort(String[] values) {
@@ -98,7 +103,9 @@ public class StringUtil {
     }
 
     /**
-     *
+     * This is a lexagraphic sort; lower case goes to the end.
+     * Identical entries are retained, so the output length is the same
+     * as the input length.
      * @param values
      */
     static public void sort(Object[] values) {
