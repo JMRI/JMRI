@@ -12,7 +12,7 @@ import java.util.HashMap;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 abstract public class AbstractThrottleManager implements ThrottleManager {
     private HashMap throttleListeners;
@@ -23,17 +23,28 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * method.
      * @param address The decoder address desired.
      * @param l The ThrottleListener awaiting notification of a found throttle.
+	 * @return True if the request will continue, false if the request will not
+	 * be made. False may be returned if a the throttle is already in use.
      */
-    public void requestThrottle(int address, ThrottleListener l)
+    public boolean requestThrottle(int address, ThrottleListener l)
     {
+		boolean throttleInUse = false;
         if (throttleListeners == null)
         {
             throttleListeners = new HashMap(5);
         }
 
         Integer addressKey = new Integer(address);
-        throttleListeners.put(addressKey, l);
-        requestThrottleSetup(address);
+		if (throttleListeners.containsKey(addressKey))
+		{
+			throttleInUse = true;
+		}
+		else
+		{
+			throttleListeners.put(addressKey, l);
+			requestThrottleSetup(address);
+		}
+		return throttleInUse;
     }
 
     /**

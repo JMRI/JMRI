@@ -10,9 +10,10 @@ import java.util.Iterator;
  * Different systems will distrinquish between short and long addresses
  * in different ways.
  * @author			Glen Oberhauser
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public interface ThrottleManager
+
 {
 
     /**

@@ -27,18 +27,29 @@ public class LnThrottleManager implements ThrottleManager, SlotListener
      * method.
      * @param address The decoder address desired.
      * @param l The ThrottleListener awaiting notification of a found throttle.
+	 * @return True if the request will continue, false if the request will not
+	 * be made. False may be returned if a the throttle is already in use.
      */
-    public void requestThrottle(int address, ThrottleListener l)
+    public boolean requestThrottle(int address, ThrottleListener l)
     {
+		boolean throttleInUse = false;
         if (throttleListeners == null)
         {
             throttleListeners = new HashMap(5);
         }
 
         Integer addressKey = new Integer(address);
-        throttleListeners.put(addressKey, l);
+		if (throttleListeners.containsKey(addressKey))
+		{
+			throttleInUse = true;
+		}
+		else
+		{
+			throttleListeners.put(addressKey, l);
+			slotManager.slotFromLocoAddress(address, this);
+		}
+		return throttleInUse;
 
-        slotManager.slotFromLocoAddress(address, this);
     }
 
     /**
