@@ -1,9 +1,13 @@
+// LnConstants.java
+
+package jmri.jmrix.loconet;
+
 /**
  * LnConstants.java
  *
  * Description:		Constants to represent values seen in LocoNet traffic
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version
+ * @version $Revision: 1.6 $
 
  * Note that the values in this class have been taken from the llnmom C program of
  * Ron W. Auld, which included some work of John Kabat.  The symbol names
@@ -23,10 +27,6 @@
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  */
-
-package jmri.jmrix.loconet;
-
-
 public final class LnConstants {
 
 /* various bit masks */
