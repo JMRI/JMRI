@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.32 2004-06-17 19:24:30 djduchamp Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.33 2004-07-03 21:23:00 jacobsen Exp $ -->
 
 <!-- This DTD is Copyright 2001, 2003 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -165,7 +165,8 @@
       <!ATTLIST aspectgeneratoraspect limit	CDATA #REQUIRED>
 
 <!ELEMENT paneleditor (positionablelabel|sensoricon|turnouticon|
-						securityelementicon | signalheadicon )* >
+						securityelementicon | signalheadicon |
+						rfidicon )* >
   <!ATTLIST paneleditor class		CDATA #REQUIRED>
   <!ATTLIST paneleditor name		CDATA #IMPLIED>
   <!ATTLIST paneleditor x			CDATA #REQUIRED>
@@ -236,6 +237,13 @@
     <!ATTLIST turnouticon unknown	CDATA #IMPLIED>
     <!ATTLIST turnouticon inconsistent		CDATA #IMPLIED>
     <!ATTLIST turnouticon turnout	CDATA #IMPLIED>
+
+  <!ELEMENT rfidicon EMPTY>
+    <!ATTLIST rfidicon class		CDATA #REQUIRED>
+    <!ATTLIST rfidicon x			CDATA #REQUIRED>
+    <!ATTLIST rfidicon y			CDATA #REQUIRED>
+    <!ATTLIST rfidicon height	CDATA #IMPLIED> <!-- deprecated -->
+    <!ATTLIST rfidicon width		CDATA #IMPLIED> <!-- deprecated -->
 
   <!ELEMENT securityelementicon EMPTY>
     <!ATTLIST securityelementicon class		CDATA #REQUIRED>
