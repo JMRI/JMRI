@@ -1,6 +1,6 @@
 # build a JBuilder project directory in standard form
 # Note that this does not work from JBuilder itself!
-jbuilder -a xml jbuilderjava
+jbuilder -a xml lib jbuilderjava
 
 # build the java/ directory, which contains the actual JBuilder project
 jbuilderjava  -a jbuilderjava jbuilder0 jbuilder1 jbuilder2 jbuilder3
