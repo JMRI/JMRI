@@ -15,7 +15,7 @@ import jmri.ProgListener;
  * Note that you should call the dispose() method when you're really done, so that
  * a ProgModePane object can disconnect its listeners.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class ProgOpsModePane extends javax.swing.JPanel {
 
@@ -70,7 +70,7 @@ public class ProgOpsModePane extends javax.swing.JPanel {
         if (InstanceManager.programmerManagerInstance()!=null) {
             int address = Integer.parseInt(mAddrField.getText());
             boolean longAddr = mLongAddrCheck.isSelected();
-            log.debug("ops programmer for address "+address+" long form is "+longAddr);
+            log.debug("ops programmer for address "+address+" long long address "+longAddr);
             Programmer p = InstanceManager.programmerManagerInstance()
                                 .getOpsModeProgrammer(longAddr, address);
             p.setMode(getMode());

@@ -17,19 +17,19 @@ import javax.swing.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author			Bob Jacobsen   Copyright 2002
- * @version         $Revision: 1.31 $
+ * @version         $Revision: 1.32 $
  */
 public class JMRIdemo extends JPanel {
     public JMRIdemo() {
-        
+
         super(true);
-        
+
 	// create basic GUI
         setLayout(new BorderLayout());
         // Create a menu bar and give it a bevel border
         menuBar = new JMenuBar();
         // menuBar.setBorder(new BevelBorder(BevelBorder.RAISED));
-        
+
         // load preferences
         JmriDemoConfigAction prefs = null;
         if (configFile != null) {
@@ -39,13 +39,13 @@ public class JMRIdemo extends JPanel {
             log.debug("configure from default file");
     	    prefs = new JmriDemoConfigAction("Preferences...");
         }
-        
+
 	// populate GUI
         // create text box for advice
         JLabel helpLabel1 = new JLabel();
         add(helpLabel1, BorderLayout.NORTH);
         helpLabel1.setText("Pick an input source from the input menu first");
-        
+
         // Create menu categories and add to the menu bar, add actions to menus
         JMenu inputMenu = new JMenu("Input");
         menuBar.add(inputMenu);
@@ -63,35 +63,35 @@ public class JMRIdemo extends JPanel {
                     System.exit(0);
                 }
             });
-        
+
         JMenu editMenu = new JMenu("Edit");
         menuBar.add(editMenu);
         editMenu.add(prefs);
-        
+
         // if the configuration completed OK, the input menu is made inactive
         log.debug("Find configOK is "+prefs.configOK);
         if (prefs.configOK) {
             inputMenu.setEnabled(false);
             helpLabel1.setText("Configured by preferences, input menu disabled");
         }
-        
+
         JMenu funcMenu = new JMenu("Tools");
         menuBar.add(funcMenu);
         funcMenu.add(new jmri.jmrit.simpleprog.SimpleProgAction("Simple Programmer"));
-        funcMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction("Decoder Pro service programmer"));
-        funcMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction("Decoder Pro ops-mode programmer"));
+        funcMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction("DecoderPro service programmer"));
+        funcMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction("DecoderPro ops-mode programmer"));
         funcMenu.add(new jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlAction("Turnout Control"));
         funcMenu.add(new jmri.jmrit.powerpanel.PowerPanelAction("Power Control"));
         funcMenu.add(new jmri.jmrit.speedometer.SpeedometerAction( "Speedometer" ));
-        
+
         menuBar.add(new jmri.jmrit.roster.RosterMenu("Roster", jmri.jmrit.roster.RosterMenu.MAINMENU, this));
-        
+
         JMenu diagMenu = new JMenu("Panels");
         menuBar.add(diagMenu);
         diagMenu.add(new jmri.jmrit.display.PanelEditorAction( "New panel..." ));
         diagMenu.add(new jmri.configurexml.LoadXmlConfigAction("Load panels..."));
         diagMenu.add(new jmri.configurexml.StoreXmlConfigAction("Store panels..."));
-        
+
         JMenu locoMenu = new JMenu("LocoNet");
         menuBar.add(locoMenu);
         locoMenu.add(new jmri.jmrix.loconet.locomon.LocoMonAction("LocoNet Monitor"));
@@ -101,27 +101,27 @@ public class JMRIdemo extends JPanel {
         locoMenu.add(new jmri.jmrix.loconet.pm4.PM4Action("PM4 Programmer"));
         locoMenu.add(new jmri.jmrix.loconet.bdl16.BDL16Action("BDL16 Programmer"));
         locoMenu.add(new jmri.jmrix.loconet.locormi.LnMessageServerAction( "Start LocoNet Server" ));
-        
+
         JMenu nceMenu = new JMenu("NCE");
         menuBar.add(nceMenu);
         nceMenu.add(new jmri.jmrix.nce.ncemon.NceMonAction("Command Monitor"));
         nceMenu.add(new jmri.jmrix.nce.packetgen.NcePacketGenAction("Send Command"));
-        
+
         JMenu easydccMenu = new JMenu("EasyDcc");
         menuBar.add(easydccMenu);
         easydccMenu.add(new jmri.jmrix.easydcc.easydccmon.EasyDccMonAction("Command Monitor"));
         easydccMenu.add(new jmri.jmrix.easydcc.packetgen.EasyDccPacketGenAction("Send Command"));
-        
+
         JMenu lenzMenu = new JMenu("XpressNet");
         menuBar.add(lenzMenu);
         lenzMenu.add(new jmri.jmrix.lenz.mon.XNetMonAction("Command Monitor"));
         lenzMenu.add(new jmri.jmrix.lenz.packetgen.PacketGenAction("Send Command"));
-        
+
         JMenu cmriMenu = new JMenu("CMRI");
         menuBar.add(cmriMenu);
         cmriMenu.add(new jmri.jmrix.cmri.serial.serialmon.SerialMonAction("Command Monitor"));
         cmriMenu.add(new jmri.jmrix.cmri.serial.packetgen.SerialPacketGenAction("Send Command"));
-        
+
         JMenu devMenu = new JMenu("Development");
         menuBar.add(devMenu);
         devMenu.add(new jmri.jmrit.MemoryFrameAction("Memory usage monitor"));
@@ -133,7 +133,7 @@ public class JMRIdemo extends JPanel {
         devMenu.add(new JSeparator());
         devMenu.add(new jmri.jmrix.loconet.locormi.LnMessageClientAction( "Start LocoNet Client" ));
         devMenu.add(new jmri.jmrit.symbolicprog.symbolicframe.SymbolicProgAction("Table Programmer"));
-        
+
         // Label & text
         JPanel pane1 = new JPanel();
         pane1.setLayout(new FlowLayout());
@@ -150,10 +150,10 @@ public class JMRIdemo extends JPanel {
         pane1.add(pane2);
         add(pane1);
     }
-    
+
     // Main entry point
     public static void main(String args[]) {
-        
+
         // initialize log4j - from logging control file (lcf) only
         // if can find it!
         String logFile = "default.lcf";
@@ -166,15 +166,15 @@ public class JMRIdemo extends JPanel {
             }
         }
         catch (java.lang.NoSuchMethodError e) { System.out.println("Exception starting logging: "+e); }
-        
+
         log.info("JMRIdemo starts");
-        
+
         // save the configuration filename if present on the command line
         if (args.length>=1 && args[0]!=null) {
             configFile = args[0];
             log.debug("Config file was specified as: "+configFile);
         }
-        
+
     	// create the demo frame and menus
         JMRIdemo containedPane = new JMRIdemo();
         JFrame frame = new JFrame("JMRI demo main panel");
@@ -185,12 +185,12 @@ public class JMRIdemo extends JPanel {
         frame.setVisible(true);
         log.info("JMRIdemo main initialization done");
     }
-    
+
     static String configFile = null;
-    
+
     // GUI members
     private JMenuBar menuBar;
-    
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(JMRIdemo.class.getName());
 }
 

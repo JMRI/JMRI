@@ -16,10 +16,15 @@ import jmri.ProgListener;
  * there's only one service mode programmer, maybe this isn't critical, but
  * it's a good idea for the future.
  * <P>
+ * A ProgModePane may "share" between one of these and a ProgOpsModePane,
+ * which means that there might be _none_ of these buttons selected.  When
+ * that happens, the mode of the underlying programmer is left unchanged
+ * and no message is propagated.
+ * <P>
  * Note that you should call the dispose() method when you're really done, so that
  * a ProgModePane object can disconnect its listeners.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class ProgServiceModePane extends javax.swing.JPanel implements java.beans.PropertyChangeListener {
 
@@ -43,12 +48,19 @@ public class ProgServiceModePane extends javax.swing.JPanel implements java.bean
         return null;
     }
 
+    /**
+     * Are any of the buttons selected?
+     * @return true is any button is selected
+     */
     public boolean isSelected() {
         return (addressButton.isSelected() || pagedButton.isSelected()
                 || directBitButton.isSelected() || directByteButton.isSelected()
                 || registerButton.isSelected() );
     }
 
+    /**
+     * @param direction controls layout, either BoxLayout.X_AXIS or BoxLayout.Y_AXIS
+     */
     public ProgServiceModePane(int direction) {
         this(direction, new javax.swing.ButtonGroup());
     }
@@ -89,35 +101,35 @@ public class ProgServiceModePane extends javax.swing.JPanel implements java.bean
                 public void actionPerformed(java.awt.event.ActionEvent e) {
 				// get mode, and tell programmer
                     connect();
-                    if (connected) setProgrammerMode(getMode());
+                    if (connected) setProgrammerMode(getSelectedMode());
                 }
             });
         directBitButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
 				// get mode, and tell programmer
                     connect();
-                    if (connected) setProgrammerMode(getMode());
+                    if (connected) setProgrammerMode(getSelectedMode());
                 }
             });
         directByteButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
 				// get mode, and tell programmer
                     connect();
-                    if (connected) setProgrammerMode(getMode());
+                    if (connected) setProgrammerMode(getSelectedMode());
                 }
             });
         registerButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
 				// get mode, and tell programmer
                     connect();
-                    if (connected) setProgrammerMode(getMode());
+                    if (connected) setProgrammerMode(getSelectedMode());
                 }
             });
         addressButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
 				// get mode, and tell programmer
                     connect();
-                    if (connected) setProgrammerMode(getMode());
+                    if (connected) setProgrammerMode(getSelectedMode());
                 }
             });
 
@@ -136,7 +148,11 @@ public class ProgServiceModePane extends javax.swing.JPanel implements java.bean
         add(addressButton);
     }
 
-    public int getMode() {
+    /**
+     * Determine the mode selected by these buttons
+     * @return A mode constant or 0 is no button selected
+     */
+    public int getSelectedMode() {
         if (pagedButton.isSelected())
             return jmri.Programmer.PAGEMODE;
         else if (directBitButton.isSelected())
@@ -151,7 +167,7 @@ public class ProgServiceModePane extends javax.swing.JPanel implements java.bean
             return 0;
     }
 
-    protected void setMode(int mode) {
+    protected void setButtonMode(int mode) {
         switch (mode) {
         case jmri.Programmer.REGISTERMODE:
             registerButton.setSelected(true);
@@ -168,6 +184,9 @@ public class ProgServiceModePane extends javax.swing.JPanel implements java.bean
         case jmri.Programmer.ADDRESSMODE:
             addressButton.setSelected(true);
             break;
+        case 0:
+            // don't change anything in this case
+            break;
         default:
             log.warn("propertyChange without valid mode value");
             break;
@@ -175,10 +194,12 @@ public class ProgServiceModePane extends javax.swing.JPanel implements java.bean
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        // mode changed in programmer, change GUI here if needed
         if (e.getPropertyName() == "Mode") {
-            int mode = ((Integer)e.getNewValue()).intValue();
-            setMode(mode);
+            // mode changed in programmer, change GUI here if needed
+            if (isSelected()) {  // if we're not holding a current mode, don't update
+                int mode = ((Integer)e.getNewValue()).intValue();
+                setButtonMode(mode);
+            }
         } else log.warn("propertyChange with unexpected propertyName: "+e.getPropertyName());
     }
 
@@ -215,7 +236,7 @@ public class ProgServiceModePane extends javax.swing.JPanel implements java.bean
         if (connected) {
             int mode = InstanceManager.programmerManagerInstance().getServiceModeProgrammer().getMode();
             if (log.isDebugEnabled()) log.debug("setting mode buttons: "+mode);
-            setMode(mode);
+            setButtonMode(mode);
         }
         else {
             log.debug("Programmer doesn't exist, can't set default mode");

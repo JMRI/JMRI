@@ -16,19 +16,19 @@ import javax.swing.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author			Bob Jacobsen
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.8 $
  */
 public class LocoTools extends JPanel {
     public LocoTools() {
-        
+
         super(true);
-        
+
 	// create basic GUI
         setLayout(new BorderLayout());
         // Create a menu bar and give it a bevel border
         menuBar = new JMenuBar();
         // menuBar.setBorder(new BevelBorder(BevelBorder.RAISED));
-        
+
         // load preferences
         LocoToolsConfigAction prefs = null;
         if (configFile != null) {
@@ -38,9 +38,9 @@ public class LocoTools extends JPanel {
             log.debug("configure from default file");
     	    prefs = new LocoToolsConfigAction("Preferences...");
         }
-        
+
 	// populate GUI
-        
+
         // Create menu categories and add to the menu bar, add actions to menus
         JMenu fileMenu = new JMenu("File");
         menuBar.add(fileMenu);
@@ -49,33 +49,34 @@ public class LocoTools extends JPanel {
                     System.exit(0);
                 }
             });
-        
+
         JMenu editMenu = new JMenu("Edit");
         menuBar.add(editMenu);
         editMenu.add(prefs);
-        
+
         JMenu progMenu = new JMenu("Programming");
         menuBar.add(progMenu);
         progMenu.add(new jmri.jmrit.simpleprog.SimpleProgAction("Simple Programmer"));
-        progMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction("Decoder Pro programmer"));
+        progMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction("DecoderPro service programmer"));
+        progMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction("DecoderPro ops-mode programmer"));
         progMenu.add(new jmri.jmrix.loconet.locoio.LocoIOAction("LocoIO programmer"));
         progMenu.add(new jmri.jmrix.loconet.pm4.PM4Action("PM4 Programmer"));
         progMenu.add(new jmri.jmrix.loconet.bdl16.BDL16Action("BDL16 Programmer"));
-        
+
         menuBar.add(new jmri.jmrit.roster.RosterMenu("Roster", jmri.jmrit.roster.RosterMenu.MAINMENU, this));
-        
+
         JMenu paneMenu = new JMenu("Panel");
         menuBar.add(paneMenu);
         paneMenu.add(new jmri.jmrit.display.PanelEditorAction( "New panel ..." ));
         paneMenu.add(new jmri.configurexml.LoadXmlConfigAction("Load panels..."));
         paneMenu.add(new jmri.configurexml.StoreXmlConfigAction("Save panels..."));
-        
+
         JMenu funcMenu = new JMenu("Controls");
         menuBar.add(funcMenu);
         funcMenu.add(new jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlAction("Turnout Control"));
         funcMenu.add(new jmri.jmrit.powerpanel.PowerPanelAction("Power Control"));
         funcMenu.add(new jmri.jmrit.speedometer.SpeedometerAction( "Speedometer" ));
-        
+
         JMenu locoMenu = new JMenu("LocoNet");
         menuBar.add(locoMenu);
         locoMenu.add(new jmri.jmrix.loconet.locomon.LocoMonAction("LocoNet Monitor"));
@@ -83,7 +84,7 @@ public class LocoTools extends JPanel {
         locoMenu.add(new jmri.jmrix.loconet.locogen.LocoGenAction("Send Packet"));
         locoMenu.add(new JSeparator());
         locoMenu.add(new jmri.jmrix.loconet.locormi.LnMessageServerAction( "Start LocoNet Server" ));
-        
+
         JMenu devMenu = new JMenu("Development");
         menuBar.add(devMenu);
         devMenu.add(new jmri.jmrit.MemoryFrameAction("Memory usage monitor"));
@@ -92,7 +93,7 @@ public class LocoTools extends JPanel {
         devMenu.add(new jmri.jmrit.decoderdefn.NameCheckAction("Check decoder names", this));
         devMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.ProgCheckAction("Check programmer names", this));
         devMenu.add(new jmri.jmrit.decoderdefn.DecoderIndexCreateAction("Create decoder index"));
-        
+
         // Label & text
         JPanel pane1 = new JPanel();
         pane1.setLayout(new FlowLayout());
@@ -109,10 +110,10 @@ public class LocoTools extends JPanel {
         pane1.add(pane2);
         add(pane1);
     }
-    
+
     // Main entry point
     public static void main(String args[]) {
-        
+
     	// initialize log4j - from logging control file (lcf) only
     	// if can find it!
     	String logFile = "default.lcf";
@@ -125,15 +126,15 @@ public class LocoTools extends JPanel {
             }
         }
         catch (java.lang.NoSuchMethodError e) { System.out.println("Exception starting logging: "+e); }
-        
+
         log.info("LocoTools starts");
-        
+
         // save the configuration filename if present on the command line
         if (args.length>=1 && args[0]!=null) {
             configFile = args[0];
             log.debug("Config file was specified as: "+configFile);
         }
-        
+
     	// create the demo frame and menus
         LocoTools containedPane = new LocoTools();
         JFrame frame = new JFrame("LocoTools main panel");
@@ -143,14 +144,14 @@ public class LocoTools extends JPanel {
         frame.pack();
         frame.setVisible(true);
         log.info("LocoTools main initialization done");
-        
+
     }
-    
+
     static String configFile = null;
-    
+
     // GUI members
     private JMenuBar menuBar;
-    
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoTools.class.getName());
 }
 

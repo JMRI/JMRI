@@ -29,21 +29,19 @@ import org.jdom.JDOMException;
 /**
  * Frame providing a command station programmer from decoder definition files
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
-public class PaneProgFrame extends javax.swing.JFrame
+abstract class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
 
     // members to contain working variable, CV values
     JLabel              progStatus     	= new JLabel("idle");
-    CvTableModel        cvModel         = new CvTableModel(progStatus, null);
-    VariableTableModel  variableModel	= new VariableTableModel(progStatus,
-                                                                 new String[]  {"Name", "Value"},
-                                                                 cvModel);
+    CvTableModel        cvModel         = null;
+    VariableTableModel  variableModel;
+    Programmer          mProgrammer;
+
     RosterEntry         _rosterEntry    = null;
     RosterEntryPane     _rPane          = null;
-
-    jmri.ProgModePane   modePane        = new jmri.ProgModePane(BoxLayout.X_AXIS);
 
     List                paneList        = new ArrayList();
 
@@ -58,6 +56,12 @@ public class PaneProgFrame extends javax.swing.JFrame
     ActionListener l1;
     ActionListener l2;
 
+    /**
+     * Abstract method to provide a JPanel setting the programming
+     * mode, if appropriate. A null value is ignored.
+     */
+    abstract JPanel getModePane();
+
     protected void installComponents() {
         // to control size, we need to insert a single
         // JPanel, then have it laid out with BoxLayout
@@ -71,9 +75,9 @@ public class PaneProgFrame extends javax.swing.JFrame
         confirmAllButton.setToolTipText("disabled because not yet implemented");
 
         readAllButton.setToolTipText("Read current values from decoder. Warning: may take a long time!");
-        if (jmri.InstanceManager.programmerManagerInstance()!= null
-            && jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer()!= null
-            && !jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer().getCanRead()) {
+        // check with CVTable programmer to see if read is possible
+        if (cvModel!= null && cvModel.getProgrammer()!= null
+            && !cvModel.getProgrammer().getCanRead()) {
             // can't read, disable the button
             readAllButton.setEnabled(false);
             readAllButton.setToolTipText("Button disabled because configured command station can't read CVs");
@@ -102,8 +106,11 @@ public class PaneProgFrame extends javax.swing.JFrame
         bottom.add(writeAllButton);
         pane.add(bottom);
 
-        pane.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
-        pane.add(modePane);
+        JPanel modePane = getModePane();
+        if (modePane!=null) {
+            pane.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
+            pane.add(modePane);
+        }
 
         pane.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
         progStatus.setAlignmentX(JLabel.CENTER_ALIGNMENT);
@@ -125,24 +132,6 @@ public class PaneProgFrame extends javax.swing.JFrame
         return new Dimension(screen.width, screen.height-25);
     }
 
-    // ctors
-    public PaneProgFrame() {
-        super();
-        installComponents();
-
-        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    thisWindowClosing(e);
-                }
-            });
-
-        pack();
-
-        if (log.isDebugEnabled()) log.debug("PaneProgFrame contructed with no args, unconstrained size is "+super.getPreferredSize()
-                                            +", constrained to "+getPreferredSize());
-    }
-
     /**
      * Initialization sequence:
      * <UL>
@@ -154,16 +143,27 @@ public class PaneProgFrame extends javax.swing.JFrame
      * <LI> Fill CV values from the roster entry
      * <LI> Create the programmer panes
      * </UL>
-     * @param decoderFile XML file defining the decoder contents
-     * @param r RosterEntry for information on this locomotive
-     * @param name
-     * @param file
+     * @param decoderFile       XML file defining the decoder contents
+     * @param pRosterEntry      RosterEntry for information on this locomotive
+     * @param pFrameTitle       Name/title for the frame
+     * @param pProgrammerFile   Name of the programmer file to use
+     * @param pProg             Programmer object to be used to access CVs
      */
-    public PaneProgFrame(DecoderFile decoderFile, RosterEntry r, String name, String file) {
-        super(name);
-        _rosterEntry =  r;
+    public PaneProgFrame(DecoderFile pDecoderFile, RosterEntry pRosterEntry,
+                        String pFrameTitle, String pProgrammerFile, Programmer pProg) {
+        super(pFrameTitle);
+
+        // create the tables
+        mProgrammer     = pProg;
+        cvModel         = new CvTableModel(progStatus, mProgrammer);
+        variableModel	= new VariableTableModel(progStatus,
+                                                                 new String[]  {"Name", "Value"},
+                                                                 cvModel);
+
+        // handle the roster entry
+        _rosterEntry =  pRosterEntry;
         if (_rosterEntry == null) log.error("null RosterEntry pointer");
-        filename = file;
+        filename = pProgrammerFile;
         installComponents();
 
         if (_rosterEntry.getFileName() != null) {
@@ -171,8 +171,8 @@ public class PaneProgFrame extends javax.swing.JFrame
             _rosterEntry.readFile();  // read, but don't yet process
         }
 
-        if (decoderFile != null) loadDecoderFile(decoderFile);
-        else			 loadDecoderFromLoco(r);
+        if (pDecoderFile != null) loadDecoderFile(pDecoderFile);
+        else			 loadDecoderFromLoco(pRosterEntry);
 
         // save default values
         saveDefaults();
@@ -184,40 +184,7 @@ public class PaneProgFrame extends javax.swing.JFrame
         variableModel.setFileDirty(false);
 
         // and build the GUI
-        loadProgrammerFile(r);
-
-        // set the programming mode
-        if (jmri.InstanceManager.programmerManagerInstance() != null) {
-            // go through in preference order, trying to find a mode
-            // that exists in both the programmer and decoder.
-            // First, get attributes. If not present, assume that
-            // all modes are usable
-            Element programming = null;
-            boolean paged = true;
-            boolean direct= true;
-            boolean register= true;
-            if (decoderRoot != null
-                && (programming = decoderRoot.getChild("decoder").getChild("programming"))!= null) {
-                Attribute a;
-                if ( (a = programming.getAttribute("paged")) != null )
-                    if (a.getValue().equals("no")) paged = false;
-                if ( (a = programming.getAttribute("direct")) != null )
-                    if (a.getValue().equals("no")) direct = false;
-                if ( (a = programming.getAttribute("register")) != null )
-                    if (a.getValue().equals("no")) register = false;
-            }
-
-            jmri.Programmer p = jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer();
-            if (p.hasMode(Programmer.PAGEMODE)&&paged)
-                p.setMode(jmri.Programmer.PAGEMODE);
-            else if (p.hasMode(Programmer.DIRECTBYTEMODE)&&direct)
-                p.setMode(jmri.Programmer.DIRECTBYTEMODE);
-            else if (p.hasMode(Programmer.REGISTERMODE)&&register)
-                p.setMode(jmri.Programmer.REGISTERMODE);
-            else log.warn("No acceptable mode found, leave as found");
-        } else {
-            log.error("Can't set programming mode, no programmer instance");
-        }
+        loadProgrammerFile(pRosterEntry);
 
         // optionally, add extra panes from the decoder file
         Attribute a;
@@ -244,7 +211,7 @@ public class PaneProgFrame extends javax.swing.JFrame
 
         pack();
 
-        if (log.isDebugEnabled()) log.debug("PaneProgFrame \""+name
+        if (log.isDebugEnabled()) log.debug("PaneProgFrame \""+pFrameTitle
                                             +"\" constructed for file "+_rosterEntry.getFileName()
                                             +", unconstrained size is "+super.getPreferredSize()
                                             +", constrained to "+getPreferredSize());

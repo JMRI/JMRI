@@ -4,54 +4,57 @@ package apps.DecoderPro;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
-import javax.swing.border.*;
-import jmri.util.oreilly.BasicWindowMonitor;
+
+import jmri.util.oreilly.*;
 
 /**
  * DecoderPro application.
  *
  * @author                      Bob Jacobsen
- * @version                     $Revision: 1.22 $
+ * @version                     $Revision: 1.23 $
  */
 public class DecoderPro extends JPanel {
     public DecoderPro() {
-        
+
         super(true);
-        
+
         // create basic GUI
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // Create a menu bar and give it a bevel border
         menuBar = new JMenuBar();
         // menuBar.setBorder(new BevelBorder(BevelBorder.RAISED));
-        
+
         // load preferences
         DecoderProConfigAction prefs
             = new DecoderProConfigAction("Preferences...");
-        
+
         // populate GUI
-        
+
         // create actions with side-effects if you need to reference them more than once
-        Action paneprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction("New Programmer...");
+        Action serviceprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction("Use programming track ...");
+        Action opsprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction("Program on main track ...");
         Action quit = new AbstractAction("Quit"){
                 public void actionPerformed(ActionEvent e) {
                     System.exit(0);
                 }
             };
-        
+
         // Create menu categories and add to the menu bar, add actions to menus
         JMenu fileMenu = new JMenu("File");
         menuBar.add(fileMenu);
-        fileMenu.add(paneprog);
+        fileMenu.add(serviceprog);
+        fileMenu.add(opsprog);
         fileMenu.add(new JSeparator());
         fileMenu.add(quit);
-        
+
         JMenu editMenu = new JMenu("Edit");
         menuBar.add(editMenu);
         editMenu.add(prefs);
-        
+
         menuBar.add(new jmri.jmrit.roster.RosterMenu("Roster", jmri.jmrit.roster.RosterMenu.MAINMENU, this));
-        
+
         JMenu toolMenu = new JMenu("Tools");
         menuBar.add(toolMenu);
         toolMenu.add(new jmri.jmrit.simpleprog.SimpleProgAction("Single CV Programmer"));
@@ -59,7 +62,7 @@ public class DecoderPro extends JPanel {
         toolMenu.add(new jmri.jmrit.decoderdefn.NameCheckAction("Check decoder names", this));
         toolMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.ProgCheckAction("Check programmer names", this));
         toolMenu.add(new jmri.jmrit.decoderdefn.DecoderIndexCreateAction("Create decoder index"));
-        
+
         JMenu debugMenu = new JMenu("Debug");
         menuBar.add(debugMenu);
         debugMenu.add(new jmri.jmrix.easydcc.easydccmon.EasyDccMonAction("EasyDCC Command Monitor"));
@@ -67,7 +70,7 @@ public class DecoderPro extends JPanel {
         debugMenu.add(new jmri.jmrix.loconet.locomon.LocoMonAction("LocoNet Monitor"));
         debugMenu.add(new jmri.jmrix.nce.ncemon.NceMonAction("Nce Command Monitor"));
         debugMenu.add(new jmri.jmrit.MemoryFrameAction("Memory usage monitor"));
-        
+
         // Label & text
         JPanel pane1 = new JPanel();
         pane1.setLayout(new FlowLayout());
@@ -83,23 +86,34 @@ public class DecoderPro extends JPanel {
         pane2.add(new JLabel(" Java version "+System.getProperty("java.version","<unknown>")));
         pane1.add(pane2);
         add(pane1);
-        
+
         // Buttons
-        JButton b1 = new JButton("Program locomotive ...");
-        b1.addActionListener(paneprog);
+        JButton b1 = new JButton("Use programming track ...");
+        b1.addActionListener(serviceprog);
         b1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         add(b1);
-        
+
+        JButton m1 = new JButton("Program on main track ...");
+        m1.addActionListener(opsprog);
+        m1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        add(m1);
+        if (!jmri.InstanceManager.programmerManagerInstance().isOpsModePossible()) {
+            m1.setEnabled(false);
+            m1.setToolTipText("This button is disabled because your command station can't do "
+                            +"ops mode programming, or we don't yet have code to do "
+                            +"it for that type of system");
+        }
+
         JButton q1 = new JButton("Quit");
         q1.addActionListener(quit);
         q1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         add(q1);
-        
+
     }
-    
+
     // Main entry point
     public static void main(String s[]) {
-        
+
         // initialize log4j - from logging control file (lcf) only
         // if can find it!
         String logFile = "default.lcf";
@@ -112,9 +126,9 @@ public class DecoderPro extends JPanel {
             }
         }
         catch (java.lang.NoSuchMethodError e) { System.out.println("Exception starting logging: "+e); }
-        
+
         log.info("DecoderPro starts");
-        
+
         // create the demo frame and menus
         DecoderPro pane = new DecoderPro();
         JFrame frame = new JFrame("Decoder Pro");
@@ -126,13 +140,13 @@ public class DecoderPro extends JPanel {
         Dimension screen = pane.getToolkit().getScreenSize();
         Dimension size = frame.getSize();
         frame.setLocation((screen.width-size.width)/2,(screen.height-size.height)/2);
-        
+
         frame.setVisible(true);
     }
-    
+
     // GUI members
     private JMenuBar menuBar;
-    
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DecoderPro.class.getName());
 }
 

@@ -36,10 +36,9 @@ import com.sun.java.util.collections.List;
  * </UL>
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
-public class CombinedLocoSelPane extends javax.swing.JPanel
-                                implements PropertyChangeListener  {
+public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeListener {
 
 	public CombinedLocoSelPane(JLabel s) {
 		_statusLabel = s;
@@ -129,7 +128,7 @@ public class CombinedLocoSelPane extends javax.swing.JPanel
 			pane2a.setLayout(new BoxLayout(pane2a, BoxLayout.X_AXIS));
 			pane2a.add(new JLabel("Use locomotive settings for: "));
 			locoBox = Roster.instance().matchingComboBox(null, null, null, null, null, null, null);
-            Roster.instance().addPropertyChangeListener(this);
+                        Roster.instance().addPropertyChangeListener(this);
 			locoBox.insertItemAt("<none - new loco>",0);
 			locoBox.setSelectedIndex(0);
 			pane2a.add(locoBox);
@@ -421,44 +420,6 @@ public class CombinedLocoSelPane extends javax.swing.JPanel
 	protected void startProgrammer(DecoderFile decoderFile, RosterEntry r, String progName) {
 		log.error("startProgrammer method in CombinedLocoSelPane should have been overridden");
 	}
-
-	static public String[] findListOfProgFiles() {
-		// create an array of file names from prefs/programmers, count entries
-		int i;
-		int np = 0;
-		String[] sp = null;
-		XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"programmers");
-		File fp = new File(XmlFile.prefsDir()+"programmers");
-		if (fp.exists()) {
-			sp = fp.list();
-			for (i=0; i<sp.length; i++) {
-				if (sp[i].endsWith(".xml")) np++;
-			}
-		} else {
-			log.warn(XmlFile.prefsDir()+"programmers was missing, though tried to create it");
-		}
-		// create an array of file names from xml/programmers, count entries
-		String[] sx = (new File(XmlFile.xmlDir()+"programmers")).list();
-		int nx = 0;
-		for (i=0; i<sx.length; i++) {
-			if (sx[i].endsWith(".xml")) nx++;
-		}
-		// copy the programmer entries to the final array
-		// note: this results in duplicate entries if the same name is also local.
-		// But for now I can live with that.
-		String sbox[] = new String[np+nx];
-		int n=0;
-		if (sp != null && np> 0)
-			for (i=0; i<sp.length; i++) {
-				if (sp[i].endsWith(".xml")) sbox[n++] = sp[i].substring(0, sp[i].length()-1-3);
-			}
-		for (i=0; i<sx.length; i++) {
-			if (sx[i].endsWith(".xml")) sbox[n++] = sx[i].substring(0, sx[i].length()-1-3);
-		}
-		return sbox;
-	}
-	static protected String defaultProgFile = null;
-	static public void setDefaultProgFile(String s) { defaultProgFile = s; }
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CombinedLocoSelPane.class.getName());
 

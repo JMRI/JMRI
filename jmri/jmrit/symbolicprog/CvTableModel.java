@@ -16,7 +16,7 @@ import jmri.*;
  * Programmer used to access it is a data member.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class CvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -51,6 +51,15 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 
         // define just address CV at start, pending some variables
         addCV("1");
+    }
+
+    /**
+     * Gives access to the programmer used to reach these CVs, so
+     * you can check on mode, capabilities, etc.
+     * @return Programmer object for the CVs
+     */
+    public Programmer getProgrammer() {
+        return mProgrammer;
     }
 
     // basic methods for AbstractTableModel implementation
