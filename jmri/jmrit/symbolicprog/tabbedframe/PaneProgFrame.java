@@ -29,7 +29,7 @@ import org.jdom.JDOMException;
 /**
  * Frame providing a command station programmer from decoder definition files
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 abstract class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
@@ -596,6 +596,9 @@ abstract class PaneProgFrame extends javax.swing.JFrame
         //and store an updated roster file
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
         Roster.writeRosterFile();
+
+        // show OK status
+        progStatus.setText("Roster file "+filename+" saved OK");
 
     }
 
