@@ -9,7 +9,7 @@ package jmri.jmrix.cmri.serial;
  * the header or trailer, nor the padding DLE characters
  * are included. These are added during transmission.
  * @author    Bob Jacobsen  Copyright (C) 2001
- * @version   $Revision: 1.6 $
+ * @version   $Revision: 1.7 $
  */
 
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
@@ -29,9 +29,22 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         super(m);
     }
 
-    // from String
+    /**
+     * This ctor interprets the String as the exact
+     * sequence to send, byte-for-byte.
+     * @param m
+     */
     public  SerialMessage(String m) {
         super(m);
+    }
+
+    /**
+     * This ctor interprets the byte array as
+     * a sequence of characters to send
+     * @param m
+     */
+    public  SerialMessage(byte[] a) {
+        super(String.valueOf(a));
     }
 
     // display format
@@ -39,8 +52,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         String s = "";
         for (int i=0; i<getNumDataElements(); i++) {
             if (i!=0) s+=" ";
-            if (getElement(i) < 16) s+="0";
-            s+=Integer.toHexString(getElement(i)&0xFF);
+            s+=jmri.util.StringUtil.twoHexFromInt(getElement(i));
         }
         return s;
     }
