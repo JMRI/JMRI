@@ -8,7 +8,7 @@
 # the program
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.7 $
+# $Revision: 1.8 $
 
 #define shortcuts to some managers
 import jmri
@@ -29,6 +29,7 @@ import jmri.Sensor.INACTIVE        as INACTIVE
 import jmri.NamedBean.UNKNOWN      as UNKNOWN
 import jmri.NamedBean.INCONSISTENT as INCONSISTENT
 
+import jmri.SignalHead.DARK        as DARK
 import jmri.SignalHead.RED         as RED
 import jmri.SignalHead.YELLOW      as YELLOW
 import jmri.SignalHead.GREEN       as GREEN
