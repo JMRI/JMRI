@@ -2,17 +2,21 @@
 
 package jmri.jmrit.speedometer;
 
-import java.awt.*;
+import jmri.InstanceManager;
+import jmri.Sensor;
+import jmri.jmrit.display.SensorIcon;
+import java.awt.FlowLayout;
 
-import javax.swing.*;
-
-import jmri.*;
-import jmri.jmrit.display.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
- * Frame providing access to a speedometer
+ * Frame providing access to a speedometer.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  *
  * Adapted for metric system - S.K. Bosch
  *
@@ -208,7 +212,7 @@ public class SpeedometerFrame extends javax.swing.JFrame {
     long stopTime2 = 0;
 
     /**
-     * "Distance Is Metric": If true, metric distances are being used
+     * "Distance Is Metric": If true, metric distances are being used.
      */
     boolean dim;
 
