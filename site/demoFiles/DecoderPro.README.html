@@ -64,7 +64,7 @@ The specific download files are:
 <h3>Macintosh MacOS 8 and 9 instructions:</h3>
 
 The Macintosh version of DecoderPro can be downloaded from 
-<A HREF="http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b6.hqx">DecoderPro.0.9b6.hqx</A>.
+<A HREF="http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b6.hqx">http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b6.hqx</A> .
 <P>
 We test on a 90MHz Power Macintosh 7100 with 32MB of memory.  This is about
 the minimum needed; it works, but is quite slow. Both a faster CPU and more
@@ -90,7 +90,7 @@ start the program by double-clicking on the "DecoderPro" application icon.
 <h3>Macintosh MacOS X instructions:</h3>
 
 The Macintosh version of DecoderPro can be downloaded from 
-<A HREF="http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b6.hqx">DecoderPro.0.9b6.hqx</A>.
+<A HREF="http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b6.hqx">http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b6.hqx</A> .
 
 <P>
 MacOS X version 10.1.1 or later is required.
@@ -137,7 +137,7 @@ machine. These can be downloaded from the IBM site.
 A screen size of 800x600 or larger is strongly recommended.
 <P>
 Download the 
-<A HREF="http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b6.zip">DecoderPro.0.9b6.zip</A>
+<A HREF="http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b6.zip">http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b6.zip</A>
 file and expand it with 
 <pre>
    PKZIP -extr -dir DecoderPro.0.9b6.zip
@@ -163,7 +163,7 @@ with additional information at
   <a href="http://www.rxtx.org/">http://www.rxtx.org/</a>.  
  <P>
 Download the 
-<A HREF="http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b6.tar.gz">DecoderPro.0.9b6.tar.gz</A>
+<A HREF="http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b6.tar.gz">http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b6.tar.gz</A>
 file, then unpack it with
 <PRE>
    gunzip DecoderPro.0.9b6.tar.gz
@@ -220,7 +220,7 @@ is included with the DecoderPro distribution, but you have to copy some files
 to their final locations.
 <P>
 Download the 
-<A HREF="http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b6.win.zip">DecoderPro.0.9b6.zip</A>
+<A HREF="http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b6.win.zip">http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b6.zip</A>
 file and expand it with WinZip or similar.
 
 <P>
@@ -260,9 +260,28 @@ The LocoBuffer was created by John Jabour
 More information is also available from the LocoNet_Info group, 
 <a href="http://groups.yahoo.com/group/loconet_hackers">http://groups.yahoo.com/group/loconet_hackers</a>
 The LocoBuffer should be configured with J1, J4 and J5 set on pins 1 and 2, 
-J2 and J3 set to pins 2 and 3. The controller chip should
+J2 and J3 set to pins 2 and 3. This configures it for a 9600 baud
+connection, so select "LocoNet LocoBuffer 9600bps" in the preferences panel.
+
+<P>
+Some computers can successfully communicate at 57600bps with a LocoBuffer.
+To do this, select "LocoNet LocoBuffer 57600bps" in the preferences panel
+and configure your LocoBuffer with J4 and J5 set on pins 1 and 2, 
+J1, J2 and J3 set to pins 2 and 3 (J1 is the one that determines the baud rate).
+
+<P>The LocoBuffer controller chip should
 contain version 1.4.6 or later of the LocoBuffer program. Note that
 version 1.4.5 has a bug that prevents it from working with LocoBuffer.
+
+<P>
+In MS100 mode, the program attempts to open the port at 16600 baud, 
+the LocoNet rate.  If this fails, it attempts to open the port at 16457 baud, 
+which is a standard rate that's close enough to work.  If this also
+fails, the program pops a dialog box to tell you that it can't
+set the port to a usable baud rate.  This will always happen on MacOS X, which
+is why the MS100 can't be used with MacOS X.  A large fraction, but not all,
+windows machines also have this problem.  We don't know how to tell
+which Windows machines will and which won't, except for trying it.  
 
 <P>
 A standard Macintosh RS422 serial port will not work directly 
@@ -273,7 +292,8 @@ be happy to help work out a solution. A LocoBuffer will work fine
 with a standard Macintosh RS422 serial port.
 
 <P> 
-DecoderPro is tested on an MS100 and USB Macintosh using a Keyspan PDA 
+DecoderPro is tested with both a MS100 and a LocoBuffer on 
+a USB Macintosh using a Keyspan PDA 
 Adapter to provide the serial port; for information please see 
 <a href="http://jmri.sourceforge.net/DigiTrax/KeyspanAdapters/KeyspanUSB.html">http://jmri.sourceforge.net/DigiTrax/KeyspanAdapters/KeyspanUSB.html</a>. 
  

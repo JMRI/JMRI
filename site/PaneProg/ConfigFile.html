@@ -49,6 +49,16 @@ most people will want to do.  But you might benefit from reading
 the later sections to get background information, especially
 the XML introduction and the section on what the configuration files contain.
 
+<P><B>
+Although we encourage decoder file development, decoder files may NOT 
+remain functional during the developmental/debug phase of this program.  
+We may have to make
+non-compatible changes as we learn how to handle complex decoder configurations 
+or solve technical issues.  At this time it is expected that changes, if 
+any, will be easily fixed to allow old decoder files to be used again.  
+We will certainly keep any contibuted files up-to-date.
+</B>
+
 
 <a id="createDecoder"><h3>Creating a custom decoder configuration file</h3></a>
 
@@ -68,19 +78,19 @@ if you use the same convention as the provided files.  That's
 For the provided files, we use the same capitalization, etc, that the
 decoder manufacturer uses in their documentation. 
 <P>
-This new file should go in the "xml" subdirectory in the "prefs"
+This new file should go in the "decoders" subdirectory in the "prefs"
 directory where you've installed
 the JMRI package.  The program will find it there.
 
 <LI>
 Open the new file with your favorite editor.  You'll see something like this
 at the top (the examples are from the <A HREF="../xml/Digitrax_1x2.xml">Digitrax_1x2.xml</A> file):
-	<PRE>
+<PRE>
 	&lt;?xml version="1.0"?&gt;
 	&lt;!DOCTYPE decoder-config SYSTEM "decoder-config.dtd"&gt;
-	&lt;!-- $Id: ConfigFile.html,v 1.8 2002-01-13 03:38:31 jacobsen Exp $ --&gt;
+	&lt;!-- $Id: ConfigFile.html,v 1.9 2002-01-16 07:38:15 jacobsen Exp $ --&gt;
 	&lt;decoder-config&gt;
-	</PRE>
+</PRE>
 Don't mess with these lines; they describe the format of the file.
 
 <LI>
@@ -99,22 +109,27 @@ and if you're modifying an existing file, increment the version attribute
 to the next number.			
 
 <LI>
-The next lines describe the decoder:
-	<PRE>
+The next lines identify the "family" of decoders that this file
+describes:
+<PRE>
 	&lt;decoder&gt;
-		&lt;id family="Digitrax 1x2" mfg="Digitrax" mfgID="129" defnVersion="0"
+		 &lt;family name="Digitrax 1x2" mfg="Digitrax"
 				lowVersionID="240" highVersionID="242"
-				comment="Digitrax DH142, etc" /&gt;
-	</PRE>
+				comment="Digitrax DH142, etc" &gt;
+		    &lt;model model="DH142" numOuts="4" numFns="2"/&gt;
+		    &lt;model model="DN142" numOuts="4" numFns="2"/&gt;
+            &lt;model model="DH083" numOuts="5" numFns="2"/&gt;
+		 &lt;/family&gt;
+</PRE>
 The spacing is not important, but its useful to ident the file like this to make it more readable.
 XML uses "elements" and "attributes" to carry information.  The &lt;abc&gt; things are elements; attributes
 are set to specific values within elements.  In the 2nd through 4th lines above
-	<PRE>
-		&lt;id family="Digitrax 1x2" mfg="Digitrax" mfgID="129" defnVersion="0"
+<PRE>
+		 &lt;family name="Digitrax 1x2" mfg="Digitrax"
 				lowVersionID="240" highVersionID="242"
-				comment="Digitrax DH142, etc" /&gt;
-	</PRE>
-the element is 'id', with attributes 'family', 'mfg', 'mfgID', 'defnVersion', and 'comment'.
+				comment="Digitrax DH142, etc" &gt;
+</PRE>
+the element is 'family', with attributes 'name', 'mfg', 'lowVersionID', 'highVersionID', and 'comment'.
 An attribute is given a value with an equals sign and a value in quotes (the quotes are required).
 The order of the attributes is not important, and you can break them across lines if that
 makes the file easier to read. Note that all of the attributes must be inside the angle
@@ -122,18 +137,10 @@ brackets, and after the name of the element.
 <P>
 In this element, change the attributes to match your new decoder:
 	<UL>
-	<LI>model - the model name of the decoder.  Its best if you use the same
-	model name here as you used in the filename.
+	<LI>name - the name of the decoder family.  Its best if you use the same
+	name here as you used in the filename.
 	<LI>mfg - the manufacturer of the decoder.  Its best if you use the same
 	manufacturer name here as you used in the filename.
-	<LI>mfgID - the numeric manufacturer id that the manufacturer loads into CV 8 of their decoders.
-		Each manufacturer has a different code, so the programmer can check if
-		this file is being used with the expected decoder type.
-		The NMRA has standardized these. You can read the 
-		value from a decoder, or perhaps look it up in the
-		decoderIndex.xml file distributed with the program.
-		If you don't know it, just leave it as
-		an empty (zero-length) string "".
 	<LI> lowVersionID, highVersionID - 
 		The manufacturer can load a version number into CV 7 of a
 		decoder.  
@@ -142,20 +149,34 @@ In this element, change the attributes to match your new decoder:
 		this file is being used with the expected decoder type.	
 		If only one value is valid, define the attribute
 		lowVersionID, e.g. 
-		<PRE>
+<PRE>
 	lowVersionID="123"
-		</PRE>
+</PRE>
 		If the decoder type can have any one of a range of numbers,
 		for example because the manufacturer has made some updates,
 		define both attributes.
 		If you don't know the version number, don't define
 		either of these attributes.
-	<LI>defnVersion - a version number for this decoder definition.  This might be
-		a software version number from a manufacturer or similar.  It doesn't 
-		correspond to any standard CV value.
 	<LI>comment - this is optional. You might want to include your name, or other
 		info about the changes in the file.
 	</UL>
+<P>
+The following lines:
+<PRE>
+		    &lt;model model="DH142" numOuts="4" numFns="2"/&gt;
+		    &lt;model model="DN142" numOuts="4" numFns="2"/&gt;
+            &lt;model model="DH083" numOuts="5" numFns="2"/&gt;
+		 &lt;/family&gt;
+</PRE>
+allow you to list a number of different decoder models that can use this
+file.  For a single decoder, remove all but one of the "model" elements, 
+and give it the model name of the decoder.  The numOuts and numFns are
+described later, but for now you can just delete them, leaving something 
+like:
+<PRE>
+		    &lt;model model="DH142" /&gt;
+		 &lt;/family&gt;
+</PRE>
 
 <LI>
 The next element defines what programming modes the decoder can understand:
@@ -169,7 +190,7 @@ The programmer uses this
 information to select the programming mode to use when working with a decoder.
 
 <LI>
-The enxt part of the file consists of a set of 'variable' elements
+The next part of the file consists of a set of 'variable' elements
 defining specific variables, nested inside
 a 'variables' (note the extra "s") element. An example:
 	<PRE>
@@ -256,32 +277,22 @@ in the file, and are also numbered in that order.  If the first is chosen,
 a 0 is entered in the CV bits; choosing the second stores 1; etc.
 </UL>
 At this point, you've created a new configuration file.
+You can check it for syntax by selecting the "Check XML file"
+item from the "Tools" menu.  It opens a file selection dialog;
+select your file and click "open". 
+If all is well, you'll get a 
+dialog box that says "OK".  If not, you'll get a completely
+incomprehensible error message. About the only useful part of
+that message is the line number; open an editor to that line
+and try to see what's wrong with the syntax.
 <LI>
 All that's left is to enter your new file in the index.  This index
 is used to speed the startup of the program, when a list of 
 possible decoder's is constructed.
 <P>
-Open the "decoderIndex.xml" file in the "xml" directory.
-You'll see a number of clauses like:
-<PRE>
-	&lt;family name="Digitrax 1x2" file="Digitrax_1x2.xml" mfg="Digitrax" 
-				lowVersionID="240" highVersionID="242"&gt;
-		&lt;decoder model="DH142" numOuts="4" /&gt;
-		&lt;decoder model="DN142" numOuts="4" /&gt;
-		&lt;decoder model="DH083" numOuts="5" /&gt;
-	&lt;/family&gt;
-</PRE>
-Each of these 'family' elements enters a decoder file into the index.
-Since a file might represent several different specific
-decoder models in a family, the 'decoder' elements define the
-specific decoder models.  We leave the "numOuts" attribute for
-later discussion in the advanced section. The rest of the 
-attributes are pretty self-describing.
-<P>
-Add one more of these clauses for your new file.
-</ol>
+Select the "Create decoder index" item from the "Tools" menu.</ol>
 
-<P>
+</OL>
 Congratulations!  You're done.  Next, open the 
 programmer application and try it.
 
