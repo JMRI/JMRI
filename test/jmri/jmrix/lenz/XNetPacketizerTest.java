@@ -9,7 +9,7 @@ import javax.swing.*;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class XNetPacketizerTest extends TestCase {
 
@@ -25,7 +25,7 @@ public class XNetPacketizerTest extends TestCase {
         c.connectPort(p);
         c.startThreads();
         XNetMessage m = lcs.getTurnoutCommandMsg(22, true, false, true);
-        c.sendXNetMessage(m);
+        c.sendXNetMessage(m, null);
         Assert.assertEquals("total length ", 4, p.tostream.available());
         Assert.assertEquals("Char 0", 0x52, p.tostream.readByte()&0xff);
         Assert.assertEquals("Char 1", 0x05, p.tostream.readByte()&0xff);
