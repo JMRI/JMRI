@@ -28,7 +28,7 @@ import org.jdom.output.*;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -350,6 +350,13 @@ public class DecoderIndexFile extends XmlFile {
 
         List l = family.getChildren("model");
         if (log.isDebugEnabled()) log.debug("readFamily sees "+l.size()+" children");
+        Element modelElement;
+        if (l.size()<=0) {
+            log.error("Did not find at least one model in the "+familyName+" family");
+            modelElement = null;
+        } else {
+            modelElement = (Element)l.get(0);
+        }
 
         // Record the family as a specific model, which allows you to select the
         // family as a possible thing to program
@@ -358,7 +365,8 @@ public class DecoderIndexFile extends XmlFile {
                                parentLowVersID, parentHighVersID,
                                familyName,
                                filename,
-                               -1, -1, null); // numFns, numOuts, XML element unknown
+                               -1, -1, modelElement); // numFns, numOuts, XML element equal
+                                            // to the first decoder
         decoderList.add(vFamilyDecoderFile);
 
         // record each of the decoders
