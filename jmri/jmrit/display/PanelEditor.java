@@ -37,7 +37,7 @@ import jmri.jmrit.catalog.NamedIcon;
  *
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class PanelEditor extends JFrame {
@@ -207,12 +207,12 @@ public class PanelEditor extends JFrame {
             panel.add(turnoutAddL);
             TurnoutIcon to = new TurnoutIcon();
 
-            closedIconL = new NamedIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif"),
+            closedIconL = new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif",
                             "resources/icons/smallschematics/tracksegments/os-upper-right-closed.gif");
             closedIconButtonL = new JButton(closedIconL);
             closedIconButtonL.setToolTipText("Icon for turnout closed. Click to select new icon");
 
-            thrownIconL = new NamedIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif"),
+            thrownIconL = new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif",
                             "resources/icons/smallschematics/tracksegments/os-upper-right-closed.gif");
             thrownIconButtonL = new JButton(thrownIconL);
             thrownIconButtonL.setToolTipText("Icon for turnout thrown. Click to select new icon");
