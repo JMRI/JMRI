@@ -3,23 +3,35 @@ package jmri.jmrit.throttle;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class AddressPanel extends JInternalFrame
         implements ActionListener
 {
 
-    private AddressListener listener;
+    private ArrayList listeners;
     private JTextField addressField;
-    private String previousAddress = "";
+    private int previousAddress;
+    private int currentAddress;
 
+    /**
+     * Constructor
+     */
     public AddressPanel()
     {
         initGUI();
     }
 
-    public void setAddressListener(AddressListener l)
+    public void addAddressListener(AddressListener l)
     {
-        listener = l;
+        if (listeners == null)
+        {
+            listeners = new ArrayList(2);
+        }
+        if (!listeners.contains(l))
+        {
+            listeners.add(l);
+        }
     }
 
     private void initGUI()
@@ -59,16 +71,24 @@ public class AddressPanel extends JInternalFrame
      {
          try
          {
-             Integer input = new Integer(addressField.getText());
-             previousAddress = addressField.getText();
-             if (listener != null)
-             {
-                 listener.notifyAddressChanged(input.intValue());
+             Integer value = new Integer(addressField.getText());
+             previousAddress = currentAddress;
+             currentAddress = value.intValue();
+             if (currentAddress != previousAddress){
+                 // send notification of new address
+                 if (listeners != null)
+                 {
+                     for (int i=0; i<listeners.size(); i++)
+                     {
+                         AddressListener l = (AddressListener)listeners.get(i);
+                         l.notifyAddressChanged(previousAddress, currentAddress);
+                     }
+                 }
              }
          }
          catch (NumberFormatException ex)
          {
-             addressField.setText(previousAddress);
+             addressField.setText(String.valueOf(currentAddress));
          }
 
      }

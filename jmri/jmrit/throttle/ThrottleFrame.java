@@ -21,16 +21,11 @@ import jmri.InstanceManager;
  * @version
  */
 public class ThrottleFrame extends JFrame
-        implements ControlPanelListener, FunctionListener, AddressListener,
-        ThrottleListener
 {
     private final Integer PANEL_LAYER = new Integer(1);
-    private DccThrottle throttle;
-    private ThrottleManager throttleManager;
-    private ControlPanel controlPanel;
-    private AddressPanel addressPanel;
-    private FunctionPanel functionPanel;
 
+    private ControlPanel controlPanel;
+    private FunctionPanel functionPanel;
     /**
      * Default constructor
      */
@@ -39,14 +34,31 @@ public class ThrottleFrame extends JFrame
         initGUI();
     }
 
+    /**
+     * Place and initialize the GUI elements.
+     * <ul>
+     * <li> ControlPanel
+     * <li> FunctionPanel
+     * <li> AddressPanel
+     * </ul>
+     */
     private void initGUI()
     {
         setTitle("Throttle");
         JDesktopPane desktop = new JDesktopPane();
         this.setContentPane(desktop);
+        this.addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent e)
+            {
+                Window w = e.getWindow();
+                w.setVisible(false);
+                controlPanel.shutdown();
+                functionPanel.shutdown();
+                w.dispose();
+            }
+        });
 
         controlPanel = new ControlPanel();
-        controlPanel.setControlPanelListener(this);
         controlPanel.setResizable(true);
         controlPanel.setClosable(true);
         controlPanel.setIconifiable(true);
@@ -56,7 +68,6 @@ public class ThrottleFrame extends JFrame
         controlPanel.setEnabled(false);
 
         functionPanel = new FunctionPanel();
-        functionPanel.setFunctionListener(this);
         functionPanel.setResizable(true);
         functionPanel.setClosable(true);
         functionPanel.setIconifiable(true);
@@ -66,8 +77,7 @@ public class ThrottleFrame extends JFrame
         functionPanel.setVisible(true);
         functionPanel.setEnabled(false);
 
-        addressPanel = new AddressPanel();
-        addressPanel.setAddressListener(this);
+        AddressPanel addressPanel = new AddressPanel();
         addressPanel.setResizable(true);
         addressPanel.setClosable(true);
         addressPanel.setIconifiable(true);
@@ -75,6 +85,10 @@ public class ThrottleFrame extends JFrame
         addressPanel.setSize(200,120);
         addressPanel.setLocation(100, 200);
         addressPanel.setVisible(true);
+
+
+        addressPanel.addAddressListener(controlPanel);
+        addressPanel.addAddressListener(functionPanel);
 
         desktop.add(controlPanel, PANEL_LAYER);
         desktop.add(functionPanel, PANEL_LAYER);
@@ -92,90 +106,9 @@ public class ThrottleFrame extends JFrame
         }
     }
 
-    private void initializeGUIFromThrottle()
-    {
-        controlPanel.setIsForward(throttle.getIsForward());
-        controlPanel.setSpeedValues((int)throttle.getSpeedIncrement(),
-                                    (int)throttle.getSpeedSetting());
-        boolean [] functionStates = new boolean[FunctionPanel.NUM_FUNCTION_BUTTONS];
-        functionStates[0] = throttle.getF0();
-        functionStates[1] = throttle.getF1();
-        functionStates[2] = throttle.getF2();
-        functionStates[3] = throttle.getF3();
-        functionStates[4] = throttle.getF4();
-        functionStates[5] = throttle.getF5();
-        functionStates[6] = throttle.getF6();
-        functionStates[7] = throttle.getF7();
-        functionStates[8] = throttle.getF8();
-        functionStates[9] = false; // No F9?
-        functionPanel.setFunctionStates(functionStates);
 
-        controlPanel.setEnabled(true);
-        functionPanel.setEnabled(true);
-    }
 
-    /**
-     * Get notification that a throttle has been found as we requested.
-     * @param t An instantiation of the DccThrottle with the address requested.
-     */
-    public void notifyThrottleFound(DccThrottle t)
-    {
-        this.throttle = t;
-        initializeGUIFromThrottle();
-    }
 
-    /**
-     * Get notification that the speed control has been adjusted.
-     * @param speed The new speed setting.
-     */
-    public void notifySpeedChanged(int speed)
-    {
-        throttle.setSpeedSetting(speed);
-    }
 
-    /**
-     * Get notification that the direction has changed.
-     * @param isForward True if the setting is now set to forward.
-     */
-    public void notifyDirectionChanged(boolean isForward)
-    {
-        throttle.setIsForward(isForward);
-    }
-
-    /**
-     * Get notification that a function has changed state
-     * @param functionNumber The function that has changed (0-9).
-     * @param isSet True if the function is now active (or set).
-     */
-    public void notifyFunctionStateChanged(int functionNumber, boolean isSet)
-    {
-        switch (functionNumber)
-        {
-            case 0: throttle.setF0(isSet); break;
-            case 1: throttle.setF1(isSet); break;
-            case 2: throttle.setF2(isSet); break;
-            case 3: throttle.setF3(isSet); break;
-            case 4: throttle.setF4(isSet); break;
-            case 5: throttle.setF5(isSet); break;
-            case 6: throttle.setF6(isSet); break;
-            case 7: throttle.setF7(isSet); break;
-            case 8: throttle.setF8(isSet); break;
-        }
-    }
-
-    /**
-     * Get notification that the decoder address value has changed.
-     * @param newAddress The new address.
-     */
-    public void notifyAddressChanged(int newAddress)
-    {
-        if (throttleManager == null)
-        {
-            throttleManager = InstanceManager.throttleManagerInstance();
-        }
-        throttleManager.requestThrottle(newAddress, this);
-        controlPanel.setEnabled(false);
-        functionPanel.setEnabled(false);
-    }
 
 }

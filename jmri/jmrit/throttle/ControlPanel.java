@@ -4,10 +4,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.event.*;
+import jmri.ThrottleManager;
+import jmri.ThrottleListener;
+import jmri.DccThrottle;
+import jmri.InstanceManager;
 
 public class ControlPanel extends JInternalFrame
+        implements AddressListener, ThrottleListener
 {
-    private ControlPanelListener listener;
+    private ThrottleManager throttleManager;
+    private DccThrottle throttle;
+    private int requestedAddress;
+
     private JSlider speedSlider;
     private JRadioButton forwardButton, reverseButton;
     private JButton stopButton;
@@ -24,6 +32,41 @@ public class ControlPanel extends JInternalFrame
 
         initGUI();
     }
+
+    /**
+     * Get notification that the decoder address value has changed.
+     * @param newAddress The new address.
+     */
+    public void notifyAddressChanged(int oldAddress, int newAddress)
+    {
+        if (throttleManager == null)
+        {
+            throttleManager = InstanceManager.throttleManagerInstance();
+        }
+        throttleManager.cancelThrottleRequest(oldAddress, this);
+        throttleManager.requestThrottle(newAddress, this);
+        requestedAddress = newAddress;
+        this.setEnabled(false);
+    }
+
+    public void shutdown()
+    {
+        throttleManager.cancelThrottleRequest(requestedAddress, this);
+    }
+
+    /**
+     * Get notification that a throttle has been found as we requested.
+     * @param t An instantiation of the DccThrottle with the address requested.
+     */
+    public void notifyThrottleFound(DccThrottle t)
+    {
+        this.throttle = t;
+        this.setIsForward(throttle.getIsForward());
+        this.setSpeedValues((int)throttle.getSpeedIncrement(),
+                            (int)throttle.getSpeedSetting());
+        this.setEnabled(true);
+    }
+
 
     public void setEnabled(boolean isEnabled)
     {
@@ -73,10 +116,7 @@ public class ControlPanel extends JInternalFrame
                 {
                    public void stateChanged(ChangeEvent e)
                    {
-                       if (listener != null)
-                       {
-                           listener.notifySpeedChanged(speedSlider.getValue());
-                       }
+                       throttle.setSpeedSetting(speedSlider.getValue());
                    }
                 });
 
@@ -87,26 +127,22 @@ public class ControlPanel extends JInternalFrame
         this.getContentPane().add(forwardButton, constraints);
         constraints.gridy = 2;
         this.getContentPane().add(reverseButton, constraints);
+
         forwardButton.addActionListener(
                 new ActionListener()
                 {
                    public void actionPerformed(ActionEvent e)
                    {
-                       if (listener != null)
-                       {
-                           listener.notifyDirectionChanged(true);
-                       }
+                       throttle.setIsForward(true);
                    }
                 });
+
         reverseButton.addActionListener(
                  new ActionListener()
                  {
                     public void actionPerformed(ActionEvent e)
                     {
-                        if (listener != null)
-                        {
-                            listener.notifyDirectionChanged(false);
-                        }
+                        throttle.setIsForward(false);
                     }
                  });
 
@@ -123,8 +159,5 @@ public class ControlPanel extends JInternalFrame
                  });
      }
 
-    public void setControlPanelListener(ControlPanelListener l)
-    {
-        this.listener = l;
-    }
+
 }
