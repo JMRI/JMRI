@@ -21,7 +21,7 @@ import com.sun.java.util.collections.ArrayList;
  * Extends VariableValue to represent a constant enum-like-thing
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
- * @version   $Revision: 1.5 $
+ * @version   $Revision: 1.6 $
  *
  */
 public class ConstantValue extends VariableValue {
@@ -136,20 +136,17 @@ public class ConstantValue extends VariableValue {
     }
 
     /**
-     * read() sets the state to READ so that you can
-     * have algorithms like "read all variables that aren't in READ state".
-     * This is different from the 'normal' VariableValue objects, which
-     * rely on the associated CV objects to drive state changes at the
-     * end of the read.
+     * We still read the values of read-only variables.
      */
     public void read() {
-        if (log.isDebugEnabled()) log.debug("read invoked");
-        setState(READ);
-        setBusy(true);
-        setBusy(false);
+        setBusy(true);  // will be reset when value changes
+        //super.setState(READ);
+        ((CvValue)_cvVector.elementAt(getCvNum())).read(_status);
     }
     /**
-     * write() sets the state to STORED so that you can
+     * Skip actually writing, but set states and notifications anyway.
+     * <P>
+     * This sets the state to STORED so that you can
      * have algorithms like "write all variables that aren't in STORED state"
      * This is different from the 'normal' VariableValue objects, which
      * rely on the associated CV objects to drive state changes at the
