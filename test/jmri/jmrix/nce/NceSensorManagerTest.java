@@ -14,19 +14,19 @@ import jmri.jmrix.nce.NceReply;
 /**
  * JUnit tests for the NceAIU class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class NceSensorManagerTest extends TestCase {
 
     public void testScan1() {
         NceSensorManager s = new NceSensorManager();
         Assert.assertEquals("none expected", null, s.nextAiuPoll());
-        s.newSensor(null, "3");
+        s.provideSensor("3");
     }
 
     public void testScan2() {
         NceSensorManager s = new NceSensorManager();
-        s.newSensor(null, "3");
+        s.provideSensor("3");
         NceMessage m = s.nextAiuPoll();
         Assert.assertEquals("opcode I ", 'I', m.getElement(0));
         Assert.assertEquals("space ", ' ', m.getElement(1));
@@ -36,7 +36,7 @@ public class NceSensorManagerTest extends TestCase {
 
     public void testScan3() {
         NceSensorManager s = new NceSensorManager();
-        s.newSensor(null, "17");
+        s.provideSensor("17");
         NceMessage m = s.nextAiuPoll();
         Assert.assertEquals("opcode I ", 'I', m.getElement(0));
         Assert.assertEquals("space ", ' ', m.getElement(1));
@@ -46,7 +46,7 @@ public class NceSensorManagerTest extends TestCase {
 
     public void testScan4() {
         NceSensorManager s = new NceSensorManager();
-        s.newSensor(null, "172");
+        s.provideSensor("172");
         NceMessage m = s.nextAiuPoll();
         Assert.assertEquals("opcode I ", 'I', m.getElement(0));
         Assert.assertEquals("space ", ' ', m.getElement(1));
@@ -54,10 +54,10 @@ public class NceSensorManagerTest extends TestCase {
         Assert.assertEquals("0 ", '1', m.getElement(3));
     }
 
-        public void testScan5() {
+    public void testScan5() {
         NceSensorManager s = new NceSensorManager();
-        s.newSensor(null, "17");
-        s.newSensor(null, "172");
+        s.provideSensor("17");
+        s.provideSensor("172");
         NceMessage m = s.nextAiuPoll();
         Assert.assertEquals("opcode I ", 'I', m.getElement(0));
         Assert.assertEquals("space ", ' ', m.getElement(1));

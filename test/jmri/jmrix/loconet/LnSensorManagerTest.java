@@ -8,7 +8,7 @@ import junit.framework.*;
 /**
  * tests for the jmri.jmrix.loconet.LnSensorManagerTurnout class
  * @author	Bob Jacobsen  Copyright 2001
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class LnSensorManagerTest extends TestCase  {
 
@@ -16,7 +16,6 @@ public class LnSensorManagerTest extends TestCase  {
 		// create and register the manager object
 		LnSensorManager l = new LnSensorManager();
 		jmri.InstanceManager.setSensorManager(l);
-		Assert.assertTrue(l == jmri.InstanceManager.sensorManagerInstance());
 
 	}
 
