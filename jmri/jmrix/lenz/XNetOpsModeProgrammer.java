@@ -13,7 +13,7 @@ import jmri.*;
  *
  * @see            jmri.Programmer
  * @author         Paul Bender Copyright (C) 2003
- * @version        $Revision: 2.1 $
+ * @version        $Revision: 2.2 $
  */
 
 public class XNetOpsModeProgrammer implements Programmer,XNetListener 
@@ -103,6 +103,7 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
            return;
         } else if (progState==XNetProgrammer.REQUESTSENT) {
             if(l.isOkMessage()) {
+                  progState=XNetProgrammer.NOTPROGRAMMING;
 	  	  progListener.programmingOpReply(value,jmri.ProgListener.OK);
 	    } else {
               /* this is an error */
@@ -112,16 +113,18 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
 		  l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_PC_DATA_ERROR ||
 		  l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_TIMESLOT_ERROR))) {   
                      /* this is a communications error */
+	             progState=XNetProgrammer.NOTPROGRAMMING;
                      progListener.programmingOpReply(value,jmri.ProgListener.FailedTimeout);
 	      } else if(l.getElement(0)==XNetConstants.CS_INFO &&
 		        l.getElement(2)==XNetConstants.CS_NOT_SUPPORTED) {
+	                   progState=XNetProgrammer.NOTPROGRAMMING;
 		     	   progListener.programmingOpReply(value,jmri.ProgListener.NotImplemented);
               } else { 
                         /* this is an unknown error */
+	                progState=XNetProgrammer.NOTPROGRAMMING;
                    	progListener.programmingOpReply(value,jmri.ProgListener.UnknownError);
-                   }
-            progState=XNetProgrammer.NOTPROGRAMMING;
-          }
+              }
+            }
 	}
     }
 
