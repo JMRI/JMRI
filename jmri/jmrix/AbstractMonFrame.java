@@ -18,7 +18,7 @@ import javax.swing.JTextField;
 /**
  * Abstact base class for Frames displaying communications monitor information
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public abstract class AbstractMonFrame extends JFrame  {
 
@@ -200,7 +200,7 @@ public abstract class AbstractMonFrame extends JFrame  {
         dispose();
     }
 
-    protected void nextLine(String line, String raw) {
+    public void nextLine(String line, String raw) {
         // handle display of traffic
         // line is the traffic in 'normal form', raw is the "raw form"
         // Both should be one or more well-formed lines, e.g. end with \n
