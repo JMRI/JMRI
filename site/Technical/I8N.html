@@ -1,0 +1,82 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<!-- $Id: I8N.html,v 1.1 2003-07-26 18:52:39 jacobsen Exp $ -->
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Bob Jacobsen, LBL">
+   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>JMRI Internationalization</title>
+</head>
+<body>
+
+<A href="../index.html">
+<IMG SRC="../images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
+</a>
+
+This page discusses how the JMRI libraries handle internationalization.
+For more information on JMRI, see the
+<A HREF="../index.html">main JMRI page</a>.
+
+<P>
+The JMRI libraries are intended to be usable world-wide.
+To make this possible, they make use of the "internationalization"
+features built into the Java language and libraries.
+
+<h2>Use of Locales</h2>
+
+JMRI uses the default Locale for locating internationalization
+information.  That means that JMRI will present its user interface
+in the language Java has defined as the default for that computer.
+
+<P>
+Locals are specified by a language, and optionally a country. The
+language is a two letter lower-case code; the country is a two letter
+upper case code.  "en" is English, "fr" is French, "de" is German, 
+and "de_CH" is German as spoken in Switzerland.
+
+<h2>Use of Resource Bundles</h2>
+The text for menus, buttons and similiar controls is contained in
+property files, which are accessed via the Resource Bundle mechanism
+of java.util.
+
+<H2>Adapting to a new language</h2>
+It takes some work to adapt JMRI to a new language.  The steps include:
+<UL>
+<LI>Create new versions of the .properties files to change the language
+of the GUI controls.
+<LI>Create new decoder XML files in the new language.
+<LI>Optionally, create new versions of GIF images used for logos
+and icons.
+<LI>Create a copy of the website and manuals.
+</UL>
+
+<h2>English-only resources</h2>
+Some parts of JMRI remain English only due to our developer population.
+In particular, comments and variable names in the code should remain in
+English, as should messages sent to the logging system.  
+<P>
+As JMRI is open source, it would be OK to take a copy of the source
+and translate it.  Apart from being a lot of work, this would effectively
+isolate that copy from the rapid pace of improvements to the main code.
+<HR>
+<BR>Site hosted by: <BR>
+<A href="http://sourceforge.net"> 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
+
+<script language=javascript 
+src="http://ss.webring.com/navbar?f=j;y=bob_jacobsen15;u=100088115910095949">
+</script><noscript><center>
+<table bgcolor=gray cellspacing=0 border=2 bordercolor=red><tr>
+<td><table cellpadding=2 cellspacing=0 border=0><tr><td align=center>
+<font face=arial size=-1>This site is a member of WebRing. 
+<br>To browse visit <a href="http://ss.webring.com/navbar?f=l;y=bob_jacobsen15;u=100088115910095949">
+Here</a>.</font></td></tr></table></td></tr></table>
+</center></noscript>
+
+<hr>
+Bob Jacobsen<BR>
+jake@physics.berkeley.edu
+
+</body>
+</html>
