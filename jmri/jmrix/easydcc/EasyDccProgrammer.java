@@ -12,21 +12,21 @@ import java.beans.PropertyChangeEvent;
  * Implements the jmri.Programmer interface via commands for the EasyDcc powerstation
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccListener {
-    
+
     public EasyDccProgrammer() {
         // error if more than one constructed?
         if (self != null)
-            log.error("Creating too many EasyDccProgrammer objects");
-        
+            log.debug("Creating too many EasyDccProgrammer objects");
+
         // register this as the default, register as the Programmer
         self = this;
         jmri.InstanceManager.setProgrammerManager(new jmri.DefaultProgrammerManager(this));
-        
+
     }
-    
+
     /*
      * method to find the existing EasyDccProgrammer object, if need be creating one
      */
@@ -35,10 +35,10 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
         return self;
     }
     static private EasyDccProgrammer self = null;
-    
+
     // handle mode
     protected int _mode = Programmer.PAGEMODE;
-    
+
     /**
      * Switch to a new programming mode.  Note that EasyDCC can only
      * do register and page mode. If you attempt to switch to
@@ -74,11 +74,11 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
         return false;
     }
     public int getMode() { return _mode; }
-    
+
     public boolean getCanRead() { return true; }
-    
+
     // notify property listeners - see AbstractProgrammer for more
-    
+
     protected void notifyPropertyChange(String name, int oldval, int newval) {
         // make a copy of the listener vector to synchronized not needed for transmit
         Vector v;
@@ -92,9 +92,9 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
             client.propertyChange(new PropertyChangeEvent(this, name, new Integer(oldval), new Integer(newval)));
         }
     }
-    
+
     // members for handling the programmer interface
-    
+
     int progState = 0;
     static final int NOTPROGRAMMING = 0;// is notProgramming
     static final int MODESENT = 1; 		// waiting reply to command to go into programming mode
@@ -103,7 +103,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
     boolean  _progRead = false;
     int _val;	// remember the value being read/written for confirmative reply
     int _cv;	// remember the cv being read/written
-    
+
     // programming interface
     public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) log.debug("writeCV "+CV+" listens "+p);
@@ -113,18 +113,18 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
         progState = MODESENT;
         _val = val;
         _cv = CV;
-        
+
         // start the error timer
         startShortTimer();
-        
+
         // format and send message to go to program mode
         controller().sendEasyDccMessage(EasyDccMessage.getProgMode(), this);
     }
-    
+
     public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
-    
+
     public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) log.debug("readCV "+CV+" listens "+p);
         useProgrammer(p);
@@ -133,17 +133,17 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
         // set commandPending state
         progState = MODESENT;
         _cv = CV;
-        
+
         // start the error timer
         startShortTimer();
 
         // format and send message to go to program mode
         controller().sendEasyDccMessage(EasyDccMessage.getProgMode(), this);
-        
+
     }
-    
+
     private jmri.ProgListener _usingProgrammer = null;
-    
+
     // internal method to remember who's using the programmer
     protected void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
         // test for only one!
@@ -156,7 +156,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
             return;
         }
     }
-    
+
     // internal method to create the EasyDccMessage for programmer task start
     protected EasyDccMessage progTaskStart(int mode, int val, int cvnum) throws jmri.ProgrammerException {
         // val = -1 for read command; mode is direct, etc
@@ -174,11 +174,11 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
                 return EasyDccMessage.getWriteRegister(registerFromCV(cvnum), val);
         }
     }
-    
+
     public void message(EasyDccMessage m) {
         log.error("message received unexpectedly: "+m.toString());
     }
-    
+
     synchronized public void reply(EasyDccReply m) {
         if (progState == NOTPROGRAMMING) {
             // we get the complete set of replies now, so ignore these
@@ -239,7 +239,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
                     if (log.isDebugEnabled()) log.debug("reply in un-decoded state");
 		}
     }
-    
+
     /**
      * Internal routine to handle a timeout
      */
@@ -253,7 +253,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
             notifyProgListenerEnd(_val, jmri.ProgListener.FailedTimeout);
         }
     }
-    
+
     /**
      * Internal method to send a cleanup message (if needed) on timeout.
      * <P>
@@ -263,7 +263,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
     void cleanup() {
         controller().sendEasyDccMessage(EasyDccMessage.getExitProgMode(), this);
     }
-    
+
     // internal method to notify of the final result
     protected void notifyProgListenerEnd(int value, int status) {
         if (log.isDebugEnabled()) log.debug("notifyProgListenerEnd value "+value+" status "+status);
@@ -273,9 +273,9 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
         _usingProgrammer = null;
         temp.programmingOpReply(value, status);
     }
-    
+
     EasyDccTrafficController _controller = null;
-    
+
     protected EasyDccTrafficController controller() {
         // connect the first time
         if (_controller == null) {
@@ -283,9 +283,9 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
         }
         return _controller;
     }
-    
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccProgrammer.class.getName());
-    
+
 }
 
 

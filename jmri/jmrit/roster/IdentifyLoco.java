@@ -16,7 +16,7 @@ import jmri.*;
  * it works through the identification progress.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
@@ -126,7 +126,7 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
     protected void statusUpdate(String s) {
         message(s);
         if (s.equals("Done")) done(address);
-        else if (log.isInfoEnabled()) log.info("received status: "+s);
+        else if (log.isDebugEnabled()) log.debug("received status: "+s);
     }
 
     abstract protected void done(int address);
