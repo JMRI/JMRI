@@ -88,7 +88,7 @@ at the top (the examples are from the <A HREF="../xml/Digitrax_1x2.xml">Digitrax
 <PRE>
 	&lt;?xml version="1.0"?&gt;
 	&lt;!DOCTYPE decoder-config SYSTEM "decoder-config.dtd"&gt;
-	&lt;!-- $Id: ConfigFile.html,v 1.9 2002-01-16 07:38:15 jacobsen Exp $ --&gt;
+	&lt;!-- $Id: ConfigFile.html,v 1.10 2002-02-02 06:58:56 jacobsen Exp $ --&gt;
 	&lt;decoder-config&gt;
 </PRE>
 Don't mess with these lines; they describe the format of the file.
@@ -137,11 +137,11 @@ brackets, and after the name of the element.
 <P>
 In this element, change the attributes to match your new decoder:
 	<UL>
-	<LI>name - the name of the decoder family.  Its best if you use the same
+	<LI><dfn>name</dfn> - the name of the decoder family.  Its best if you use the same
 	name here as you used in the filename.
-	<LI>mfg - the manufacturer of the decoder.  Its best if you use the same
+	<LI><dfn>mfg</dfn> - the manufacturer of the decoder.  Its best if you use the same
 	manufacturer name here as you used in the filename.
-	<LI> lowVersionID, highVersionID - 
+	<LI><dfn>lowVersionID</dfn>, <dfn>highVersionID</dfn> - 
 		The manufacturer can load a version number into CV 7 of a
 		decoder.  
 		Not all manufacturers do this, but if one is available
@@ -157,7 +157,7 @@ In this element, change the attributes to match your new decoder:
 		define both attributes.
 		If you don't know the version number, don't define
 		either of these attributes.
-	<LI>comment - this is optional. You might want to include your name, or other
+	<LI><dfn>comment</dfn> - this is optional. You might want to include your name, or other
 		info about the changes in the file.
 	</UL>
 <P>
@@ -208,21 +208,21 @@ You can also rearrange them if you'd prefer a different order.
 <P>
 The attributes include:
 	<UL>
-	<LI>label - The name for this variable.
-	<LI>item - An alternative, 'standard' name. See below for
+	<LI><dfn>label</dfn> - The name for this variable.
+	<LI><dfn>item</dfn> - An alternative, 'standard' name. See below for
 		more information on this.
-	<LI>CV - Which CV contains the configuration information
+	<LI><dfn>CV</dfn> - Which CV contains the configuration information
 		for this variable.
-	<LI>mask - A pattern like "XXXVVVXX" which controls which
+	<LI><dfn>mask</dfn> - A pattern like "XXXVVVXX" which controls which
 		bits in the CV make up the variable. Each "V" is a bit
 		that's included, and "X" are bits that are not to be 
 		included.  Its best to have eight characters, as that
 		makes it clearer what's going on.  If the variable
 		is a full byte, this attribute can be omitted.
-	<LI>default - The default value for this variable. This is
+	<LI><dfn>default</dfn> - The default value for this variable. This is
 		used for a new decoder, or when you want to set the
 		decoder back to its defaults.
-	<LI>comment - Use this for whatever you want.
+	<LI><dfn>comment</dfn> - Use this for whatever you want.
 	</UL>
 (There are a few more, which we'll leave for the advanced section below)
 
@@ -379,10 +379,10 @@ The decoder definitions in the decoderIndex.xml file
 contain two attributes that describe each model within
 the family:
 <UL>
-<LI>numOuts - the number of output wires.  This includes
+<LI><dfn>numOuts</dfn> - the number of output wires.  This includes
 the wires that drive the forward and reverse headlights,
 F(f) and F(r), plus any other function outputs.
-<LI>numFns - the number of functions.  This is the
+<LI><dfn>numFns</dfn> - the number of functions.  This is the
 highest numbered function that the decoder responds
 to. For example, if F4 is the highest, set numFns="4".
 </UL>
@@ -391,12 +391,12 @@ Within each decoder definition file, two attributes
 describe whether a variable is associated with a
 specific function or output:
 <UL>
-<LI>minOut - What is the minimum number of
+<LI><dfn>minOut</dfn> - What is the minimum number of
 outputs for this variable to be useful?  For example, 
 a variable with minOut="4" would not be displayed for
 a decoder model with numOuts="3", but would be 
 displayed for one with numOuts="4" or higher.
-<LI>minFn - What function needs to be present for
+<LI><dfn>minFn</dfn> - What function needs to be present for
 this variable to be useful?  For example,
 a variable with minFn="3" would be associated with 
 F3, and would be only useful for a decoder
@@ -535,32 +535,48 @@ the standard variable names for use in programmer definitions.
 
 <a id="programmer"><h3>Defining a new programmer format</h3></a>
 
-<h4>Variables</h4>
+<h4>Specifying the items to display</h4>
+
 The basic element of a programmer pane is a "display". This tells
 the programmer to present a single variable.  The attributes are:
 <UL>
-<LI>name - (Required) This is the "standard name" of the variable
+<LI><dfn>name</dfn> - (Required) This is the "standard name" of the variable
 to be presented.  
-<LI>label - If present, this will be used to label the variable
+<LI><dfn>label</dfn> - If present, this will be used to label the variable
 on the pane instead of the name or standard name of the variable.
-<LI>tooltip - Allows you to specify a tooltip to be presented when
+<LI><dfn>tooltip</dfn> - Allows you to specify a tooltip to be presented when
 the cursor is left over the variable.  If not present, the tooltip
 defined in the decoder file is used. (Note: This is not fully implemented
 in version 0.9b4)
-<LI>layout - Where to locate the label with respect to the
+<LI><dfn>layout</dfn> - Where to locate the label with respect to the
 edittable field, e.g. the text box.  Possible values are
 "left", "above", "below", "right" with a default of "right".
-<LI>format - How the variable should be presented.
-Numeric variables can be presented as an editable text field, 
-which is the default, or a horizontal slider (hslider) or vertical
-slider (vslider).  Enum variables can be presented as a 
-selection box, which is the default, or as "radiobuttons".  An enum
-with only two states can also be presented as a 
-"checkbox", or a single radio button that selected when the variable
-is zero ("offradiobutton") or one ("onradiobutton").  
+<LI><dfn>format</dfn> - How the variable should be presented.
+Numeric variables can be presented as 
+<UL>
+<LI>an editable text field, which is the default if nothing is specified
+<LI><dfn>hslider</dfn> - a horizontal slider
+<LI><dfn>vslider</dfn> - a vertical
+</UL>
+Enum variables can be presented as
+<UL>
+<LI>a selection box, which is the default if nothing is specified
+<LI><dfn>radiobuttons</dfn> - Each possible value is presented as an individual button
+<LI><dfn>checkbox</dfn> - An enum
+with only two states can also be presented as a checkbox
+<LI><dfn>offradiobutton</dfn> - A single button that sets the 0 choice for the 
+variable when selected 
+<LI><dfn>onradiobutton</dfn> - A single button that sets the 1 choice for the 
+variable when selected 
+</UL>
 These last two can be useful for indicating
 which parts of a configuration are active; see the "Speed Table"
 pane of Comprehensive.xml for an example.
+<LI><dfn>tooltip</dfn> - Allows you to specify a tooltip to be presented when
+the cursor is left over the variable.  If not present, the tooltip
+defined in the decoder file is used. (Note: This is not fully implemented
+in version 0.9b4, but you should include them in your programmer definitions
+as they will work soon)
 </UL>
 
 <P>
@@ -593,15 +609,16 @@ uses a row to put some sliders from left to right.
 There are a number of elements you can use to get the programmer
 formatted exactly the way you want:
 <UL>
-<LI>label - Add text to a pane.
-<LI>separator - Add a separator line to a pane.  If included 
+<LI><dfn>label</dfn> - Add text to a pane.
+<LI><dfn>separator</dfn> - Add a separator line to a pane.  If included 
 in a column, this will be a horizontal separator line.  If
 included in a row, it will be a vertical line.
-<LI>cvtable - Insert a table of CV values onto the pane.  
+<LI><dfn>cvtable</dfn> - Insert a table of CV values onto the pane.  
 To get the spacing right, etc, you should probably not combine
 this with other variables on the same pane.
-<LI>fnmapping - Show a function mapping grid.
-<LI>dccaddress - Show a combined variable for the DCC address.  This 
+<LI><dfn>fnmapping</dfn> - Show a function mapping grid. 
+This requires variables with specific names, see below.
+<LI><dfn>dccaddress</dfn> - Show a combined variable for the DCC address.  This 
 consists of a checkbox that selects use of short vs long address, and
 a single text field for entering the address.  Depending on how 
 the checkbox is set, the text field will configure the CV1 short
@@ -702,6 +719,16 @@ subdirectory of the xml directory.
 </form>
 <!-- End Small Box -->
  
+<script language=javascript 
+src="http://ss.webring.com/navbar?f=j;y=bob_jacobsen15;u=100088115910095949">
+</script><noscript><center>
+<table bgcolor=gray cellspacing=0 border=2 bordercolor=red><tr>
+<td><table cellpadding=2 cellspacing=0 border=0><tr><td align=center>
+<font face=arial size=-1>This site is a member of WebRing. 
+<br>To browse visit <a href="http://ss.webring.com/navbar?f=l;y=bob_jacobsen15;u=100088115910095949">
+Here</a>.</font></td></tr></table></td></tr></table>
+</center></noscript>
+
 
 <hr>
 Bob Jacobsen<BR>
