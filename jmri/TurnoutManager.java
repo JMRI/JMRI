@@ -26,7 +26,7 @@ import com.sun.java.util.collections.List;
  * class, which provides a simple GUI for controlling a single turnout.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  * @see             jmri.Turnout
  * @see             jmri.AbstractTurnoutManager
  * @see             jmri.InstanceManager
@@ -34,66 +34,66 @@ import com.sun.java.util.collections.List;
  */
 public interface TurnoutManager {
 
-	/**
-	 * Locate an instance based on a system name.  Returns null if no
-	 * instance already exists.
+    /**
+     * Locate an instance based on a system name.  Returns null if no
+     * instance already exists.
      * @return requested Turnout object or null if none exists
-	 */
-	public Turnout getBySystemName(String systemName);
-
-	/**
-	 * Locate an instance based on a user name.  Returns null if no
-	 * instance already exists.
+     */
+    public Turnout getBySystemName(String systemName);
+    
+    /**
+     * Locate an instance based on a user name.  Returns null if no
+     * instance already exists.
      * @return requested Turnout object or null if none exists
-	 */
-	public Turnout getByUserName(String userName);
-
-	/**
-	 * Return an instance with the specified system and user names.
-	 * Note that two calls with the same arguments will get the same instance;
-	 * there is only one Turnout object representing a given physical turnout
-	 * and therefore only one with a specific system or user name.
-	 *<P>
-	 * This will always return a valid object reference; a new object will be
-	 * created if necessary. In that case:
-	 *<UL>
-	 *<LI>If a null reference is given for user name, no user name will be associated
-	 *    with the Turnout object created.
-	 *<LI>If a null reference is given for the system name, a system name
-	 *    will _somehow_ be inferred from the user name.  How this is done
-	 *    is system specific.  Note: a future extension of this interface
-	 *    will add an exception to signal that this was not possible.
-	 *<LI>If both names are provided, the system name defines the
-	 *    hardware access of the desired turnout, and the user address
-	 *    is assocoated with it.
-	 *</UL>
-	 * Note that it is possible to make an inconsistent request if both
-	 * addresses are provided, but the given values are associated with
-	 * different objects.  This is a problem, and we don't have a
-	 * good solution.  To avoid it, provide only one or the other arugment values
-	 * (with null for the other).
+     */
+    public Turnout getByUserName(String userName);
+    
+    /**
+     * Return an instance with the specified system and user names.
+     * Note that two calls with the same arguments will get the same instance;
+     * there is only one Turnout object representing a given physical turnout
+     * and therefore only one with a specific system or user name.
+     *<P>
+     * This will always return a valid object reference; a new object will be
+     * created if necessary. In that case:
+     *<UL>
+     *<LI>If a null reference is given for user name, no user name will be associated
+     *    with the Turnout object created.
+     *<LI>If a null reference is given for the system name, a system name
+     *    will _somehow_ be inferred from the user name.  How this is done
+     *    is system specific.  Note: a future extension of this interface
+     *    will add an exception to signal that this was not possible.
+     *<LI>If both names are provided, the system name defines the
+     *    hardware access of the desired turnout, and the user address
+     *    is assocoated with it.
+     *</UL>
+     * Note that it is possible to make an inconsistent request if both
+     * addresses are provided, but the given values are associated with
+     * different objects.  This is a problem, and we don't have a
+     * good solution.  To avoid it, provide only one or the other arugment values
+     * (with null for the other).
      * @return requested Turnout object (never null)
-	 */
-	public Turnout newTurnout(String systemName, String userName);
-
+     */
+    public Turnout newTurnout(String systemName, String userName);
+    
     /**
      * Get a list of all Turnouts' system names.
      */
     public List getSystemNameList();
-
-	/**
-	 * Free resources when no longer used. Specifically, remove all references
-	 * to and from this object, so it can be garbage-collected.
-	 */
-	public void dispose() throws JmriException;
-
-	/**
-	 * Deprecated!
-	 * Locate an instance based on a TurnoutAddress object.  Returns null if no
-	 * instance already exists.
-	 */
-	public Turnout getByAddress(TurnoutAddress key);
-
+    
+    /**
+     * Free resources when no longer used. Specifically, remove all references
+     * to and from this object, so it can be garbage-collected.
+     */
+    public void dispose() throws JmriException;
+    
+    /**
+     * Deprecated!
+     * Locate an instance based on a TurnoutAddress object.  Returns null if no
+     * instance already exists.
+     */
+    public Turnout getByAddress(TurnoutAddress key);
+    
 }
 
 
