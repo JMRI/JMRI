@@ -15,7 +15,8 @@ public interface Throttle {
 	
 	// direction
 	
-	// functions - note that we use the naming for DCC, though that's not the implication
+	// functions - note that we use the naming for DCC, though that's not the implication;
+	// see also DccThrottle interface
 	
 	// loco number - read only
 	
