@@ -2,15 +2,21 @@
 
 package jmri.jmrix.loconet.locoio;
 
-import jmri.jmrix.loconet.*;
+import apps.tests.Log4JFixture;
 
-import apps.tests.*;
-import junit.framework.*;
+import jmri.jmrix.loconet.LnConstants;
+import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
+import jmri.jmrix.loconet.LocoNetMessage;
+
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
- * Tests for the jmri.jmrix.loconet.locoio.LocoIOTableModel class
+ * Tests for the jmri.jmrix.loconet.locoio.LocoIOTableModel class.
  * @author	    Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.12 $
+ * @version         $Revision: 1.13 $
  */
 public class LocoIOTableModelTest extends TestCase {
 
@@ -423,7 +429,7 @@ public class LocoIOTableModelTest extends TestCase {
         write3Sequence(channel, 0xC0, 0x00, 0x00,lnis );
 
         // clear the test interface
-        lnis.outbound.setSize(0); //!!
+        lnis.outbound.setSize(0);
 
         // change the mode value to confirm
         m.setValueAt(LocoIOTableModel.TURNOUTTHROW, channel, LocoIOTableModel.ONMODECOLUMN);
