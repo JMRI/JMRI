@@ -14,8 +14,21 @@ import jmri.AbstractTurnout;
  * E.g. if you use a DS54 local input to change the state, resulting in a
  * status message, we still consider that to be a commanded state change.
  * <P>
- * Adds an implementation of MONITORING feedback, which listens
- * to the messages coming back.
+ * Adds several additional feedback modes:
+ *<UL>
+ *<LI>MONITORING - listen to the LocoNet, so that commands
+ * from other LocoNet sources (e.g. throttles) are properly reflected
+ * in the turnout state.  This is the default for LnTurnout objects
+ * as created.
+ *<LI>INDIRECT - listen to the LocoNet for messages back from a
+ *DS54 that has a microswitch attached to its Switch input.
+ *<LI>EXACT - listen to the LocoNet for messages back from a 
+ * DS54 that has two microswitches, one connected to the Switch input
+ * and one to the Aux input.  Note that this implementation does not
+ * pass through the "UNKNOWN" or "INCONSISTENT" states while moving from 
+ * "THROWN" to "CLOSED" or vice versa. To do that, one would have to
+ * add input state tracking information.
+ *</UL>
  * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project.  That permission
@@ -24,7 +37,7 @@ import jmri.AbstractTurnout;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */public class LnTurnout extends AbstractTurnout implements LocoNetListener {
 
     public LnTurnout(int number) {  // a human-readable turnout number must be specified!
@@ -37,7 +50,7 @@ import jmri.AbstractTurnout;
         else
             log.warn("No LocoNet connection, turnout won't update");
         // update feedback modes
-        _validFeedbackTypes |= MONITORING;
+        _validFeedbackTypes |= MONITORING|EXACT|INDIRECT;
         _activeFeedbackType = MONITORING;
         
         // define the static list if needed
@@ -45,14 +58,18 @@ import jmri.AbstractTurnout;
         
             if (_validFeedbackNames.length != _validFeedbackModes.length)
                 log.error("int and string feedback arrays different length");
-            modeNames  = new String[_validFeedbackNames.length+1];
-            modeValues = new int[_validFeedbackNames.length+1];
+            modeNames  = new String[_validFeedbackNames.length+3];
+            modeValues = new int[_validFeedbackNames.length+3];
             for (int i = 0; i<_validFeedbackNames.length; i++) {
                 modeNames[i] = _validFeedbackNames[i];
                 modeValues[i] = _validFeedbackModes[i];
             }
             modeNames[_validFeedbackNames.length] = "MONITORING";
             modeValues[_validFeedbackNames.length] = MONITORING;
+            modeNames[_validFeedbackNames.length+1] = "INDIRECT";
+            modeValues[_validFeedbackNames.length+1] = INDIRECT;
+            modeNames[_validFeedbackNames.length+2] = "EXACT";
+            modeValues[_validFeedbackNames.length+2] = EXACT;
         }
         _validFeedbackNames = modeNames;
         _validFeedbackModes = modeValues;
@@ -122,6 +139,7 @@ import jmri.AbstractTurnout;
                  if (log.isDebugEnabled()) log.debug("SW_REP received with valid address");
                  // see if its a turnout state report
                  if ((sw2 & LnConstants.OPC_SW_REP_INPUTS)==0) {
+                     // LnConstants.OPC_SW_REP_INPUTS not set, these report outputs
     	        		// sort out states
                      switch (sw2 &
                              (LnConstants.OPC_SW_REP_CLOSED|LnConstants.OPC_SW_REP_THROWN)) {
@@ -143,6 +161,46 @@ import jmri.AbstractTurnout;
                          if (getFeedbackMode()==MONITORING || getFeedbackMode()==DIRECT) newKnownState(0);
                          break;
                      }
+                 } else {
+                    // LnConstants.OPC_SW_REP_INPUTS set, these are feedback messages from inputs
+    	        		// sort out states
+                        // see EXACT feedback note at top    	  
+    	        	if ((sw2 & LnConstants.OPC_SW_REP_SW) !=0) {
+    	        	    // Switch input report
+    	        	    if ((sw2 & LnConstants.OPC_SW_REP_HI)!=0) {
+    	        	        // switch input closed (off)
+    	        	        if (getFeedbackMode()==EXACT) {
+    	        	            // reached closed state
+    	        	            newKnownState(CLOSED);
+    	        	        } else if (getFeedbackMode()==INDIRECT) {
+    	        	            // reached closed state
+    	        	            newKnownState(CLOSED);
+    	        	        }
+    	        	    } else {
+    	        	        // switch input thrown (input on)
+    	        	        if (getFeedbackMode()==EXACT) {
+    	        	            // leaving CLOSED on way to THROWN, but ignoring that for now
+    	        	        } else if (getFeedbackMode()==INDIRECT) {
+    	        	            // reached thrown state
+    	        	            newKnownState(THROWN);
+    	        	        }
+    	        	    }
+    	        	} else {
+    	        	    // Aux input report
+    	        	    if ((sw2 & LnConstants.OPC_SW_REP_HI)!=0) {
+    	        	        // aux input closed (off)
+    	        	        if (getFeedbackMode()==EXACT) {
+    	        	            // reached thrown state
+    	        	            newKnownState(THROWN);
+    	        	        }
+    	        	    } else {
+    	        	        // aux input thrown (input on)
+    	        	        if (getFeedbackMode()==EXACT) {
+    	        	            // leaving THROWN on the way to CLOSED, but ignoring that for now
+    	        	        }
+    	        	    }
+    	        	}
+    	        	
                  }
              }
          }
