@@ -1,1 +1,612 @@
-<!-- $Id: Speedometer.html,v 1.2 2003-07-24 21:26:29 jacobsen Exp $ --><html><head><meta name=Title content="Using Speedometer with NCE"><meta name=Keywords content=""><meta http-equiv=Content-Type content="text/html; charset=macintosh"><meta name=ProgId content=Word.Document><meta name=Generator content="Microsoft Word 10"><meta name=Originator content="Microsoft Word 10"><link rel=File-List href="SpeedometerFiles/filelist.xml"><title>Using Speedometer with NCE</title><style><!-- /* Font Definitions */@font-face	{font-family:"Times New Roman";	panose-1:0 2 2 6 3 5 4 5 2 3;}@font-face	{font-family:Arial;	panose-1:0 2 11 6 4 2 2 2 2 2;} /* Style Definitions */p.MsoNormal, li.MsoNormal, div.MsoNormal	{margin:0in;	margin-bottom:.0001pt;	font-size:12.0pt;	font-family:Arial;}h1	{margin-top:0in;	margin-right:0in;	margin-bottom:0in;	margin-left:.3in;	margin-bottom:.0001pt;	text-indent:-.3in;	font-size:12.0pt;	font-family:Arial;}h2	{margin-top:12.0pt;	margin-right:0in;	margin-bottom:3.0pt;	margin-left:.4in;	text-indent:-.4in;	tab-stops:list .5in;	font-size:12.0pt;	font-family:Arial;	font-style:italic;}h3	{margin-top:12.0pt;	margin-right:0in;	margin-bottom:3.0pt;	margin-left:.5in;	text-indent:-.5in;	tab-stops:list .75in;	font-size:12.0pt;	font-family:Arial;	font-weight:normal;}h4	{margin-top:12.0pt;	margin-right:0in;	margin-bottom:3.0pt;	margin-left:.6in;	text-indent:-.6in;	tab-stops:list .75in;	font-size:12.0pt;	font-family:Arial;}h5	{margin-top:12.0pt;	margin-right:0in;	margin-bottom:3.0pt;	margin-left:.7in;	text-indent:-.7in;	tab-stops:list 1.0in;	font-size:11.0pt;	font-family:Arial;	font-weight:normal;}h6	{margin-top:12.0pt;	margin-right:0in;	margin-bottom:3.0pt;	margin-left:.8in;	text-indent:-.8in;	tab-stops:list 1.0in;	font-size:11.0pt;	font-family:Arial;	font-weight:normal;	font-style:italic;}p.MsoHeading7, li.MsoHeading7, div.MsoHeading7	{margin-top:12.0pt;	margin-right:0in;	margin-bottom:3.0pt;	margin-left:.9in;	text-indent:-.9in;	tab-stops:list 1.25in;	font-size:12.0pt;	font-family:Arial;}p.MsoHeading8, li.MsoHeading8, div.MsoHeading8	{margin-top:12.0pt;	margin-right:0in;	margin-bottom:3.0pt;	margin-left:1.0in;	text-indent:-1.0in;	tab-stops:list 1.25in;	font-size:12.0pt;	font-family:Arial;	font-style:italic;}p.MsoHeading9, li.MsoHeading9, div.MsoHeading9	{margin-top:12.0pt;	margin-right:0in;	margin-bottom:3.0pt;	margin-left:1.1in;	text-indent:-1.1in;	tab-stops:list 1.5in;	font-size:9.0pt;	font-family:Arial;	font-weight:bold;	font-style:italic;}p.MsoCaption, li.MsoCaption, div.MsoCaption	{margin-top:6.0pt;	margin-right:0in;	margin-bottom:6.0pt;	margin-left:0in;	font-size:10.0pt;	font-family:Arial;}p.MsoBodyText, li.MsoBodyText, div.MsoBodyText	{margin:0in;	margin-bottom:.0001pt;	text-align:justify;	font-size:12.0pt;	font-family:Arial;}@page Section1	{size:8.5in 11.0in;	margin:.8in .8in .8in .8in;}div.Section1	{page:Section1;} /* List Definitions */@list l0:level1	{margin-left:.25in;	text-indent:-.25in;	tab-stops:list .25in;}@list l1:level1	{margin-left:.25in;	text-indent:-.25in;	tab-stops:list .25in;}@list l2:level1	{margin-left:.25in;	text-indent:-.25in;	tab-stops:list .25in;}@list l3:level1	{margin-left:.25in;	text-indent:-.25in;	tab-stops:list .25in;}@list l4:level1	{margin-left:.25in;	text-indent:-.25in;	tab-stops:list .25in;	font-family:Symbol;}@list l5:level1	{margin-left:.3in;	text-indent:-.3in;	tab-stops:list .5in;}@list l5:level2	{margin-left:.4in;	text-indent:-.4in;	tab-stops:list .5in;}@list l5:level3	{margin-left:.5in;	text-indent:-.5in;	tab-stops:list .75in;}@list l5:level4	{margin-left:.6in;	text-indent:-.6in;	tab-stops:list .75in;}@list l5:level5	{margin-left:.7in;	text-indent:-.7in;	tab-stops:list 1.0in;}@list l5:level6	{margin-left:.8in;	text-indent:-.8in;	tab-stops:list 1.0in;}@list l5:level7	{margin-left:.9in;	text-indent:-.9in;	tab-stops:list 1.25in;}@list l5:level8	{margin-left:1.0in;	text-indent:-1.0in;	tab-stops:list 1.25in;}@list l5:level9	{margin-left:1.1in;	text-indent:-1.1in;	tab-stops:list 1.5in;}@list l6:level1	{margin-left:.25in;	text-indent:-.25in;	tab-stops:list .25in;}@list l7:level1	{margin-left:.25in;	text-indent:-.25in;	tab-stops:list .25in;}@list l8:level1	{margin-left:.25in;	text-indent:-.25in;	tab-stops:list .25in;}ol	{margin-bottom:0in;}ul	{margin-bottom:0in;}--></style></head><body bgcolor=white lang=EN-US style='tab-interval:.5in'><div class=Section1><IMG SRC="../images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0"><h1 align=center style='margin-left:0in;text-align:center;text-indent:0in'>UsingDecoder Pro’s Speedometer with NCE</h1><p class=MsoNormal>&nbsp;</p><h1 style='tab-stops:list 22.5pt'>I<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Installation</h1><p class=MsoNormal>&nbsp;</p><p class=MsoNormal style='text-align:justify'>The Speedometer function withinDecoder Pro is used to measure a train's scale speed.  Once everything issetup, the speed is automatically calculated based the movements of an enginethrough distinct blocks.</p><p class=MsoNormal style='text-align:justify'>&nbsp;</p><p class=MsoNormal style='text-align:justify'>Each block must have a means ofdetecting occupancy.  The BD20 manufactured by NCE is a simple and effectiveblock detector.  Three BD20s are recommended.  As the blocks get longer it isbetter to have another detector in the following section of track to sense whenthe engine has entered that block.  As described at the end of this document itis possible to use less than 3 detectors.</p><p class=MsoNormal style='text-align:justify'>&nbsp;</p><p class=MsoNormal style='text-align:justify'>Connecting each BD20 to the NCECommand Station is accomplished with the AIU (Auxiliary Input Unit)manufactured by NCE as well.  The AIU needs to be connected with the cab bus. Once the AIU is connected into the cab bus, and thus into the Command Station,Decoder Pro does the rest.</p><p class=MsoNormal style='text-align:justify'>&nbsp;</p><p class=MsoNormal style='text-align:justify'>The track used must be connectedto the mainline from the NCE system.  Do NOT connect it to the programmingtracking wiring.</p><p class=MsoNormal style='text-align:justify'>&nbsp;</p><p class=MsoNormal style='text-align:justify'>The choice of track is up to theuser and the space available.  An independent section of track or a long sidingon an existing layout are both acceptable.  The independent section of trackcan be long and straight or it can be a loop.  Each type has their advantagesand disadvantages.</p><p class=MsoNormal style='text-align:justify'>&nbsp;</p><p class=MsoNormal style='text-align:justify'>It is also possible to use thisSpeedometer while the rest of the layout is operating.  If you do, make sureyou are not blocking the mainline or at least have the proper authorizationfrom the dispatcher.</p><p class=MsoNormal style='text-align:justify'>&nbsp;</p><p class=MsoBodyText>Figure 1 shows the ideal setup for connecting the blockdetectors into the NCE system with the BD20s and AIU.</p><p class=MsoBodyText>&nbsp;</p><span style='font-size:12.0pt;font-family:Arial'><br clear=ALLstyle='page-break-before:always'></span><p class=MsoNormal style='text-align:justify'>&nbsp;</p><h1>II<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Wiring</h1><p class=MsoNormal>&nbsp;</p><p class=MsoNormal>Figure 1 shows how to integrate the sections of track, blockdetectors and AIU into the Command Station.</p><p class=MsoNormal style='text-align:justify'>&nbsp;</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'><span style='font-family:Symbol'>·<spanstyle='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>Makesure there is a good solder connection between the wire and the rail and thatthe rails are clean.  It is possible to have false readings on the speedometerif the DCC signal is interrupted.</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'><span style='font-family:Symbol'>·<spanstyle='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>Itis only necessary to put gaps into one of the rails.  It does not matter whichrail is gapped.</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'><span style='font-family:Symbol'>·<spanstyle='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>Youcan use a loop of track or a straight section of track.  For a loop, block 5 inthe diagram is connected to block 1 and the power feed to block 5 can beremoved since it is powered in block 1.</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'><span style='font-family:Symbol'>·<spanstyle='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><imgwidth=496 height=429 src="SpeedometerFiles/image001.gif"><brclear=ALL>It is a good idea to have 3 independent blocks.  Block 2 is used to measurespeeds for slow running engines.  Block 3 should be quite a bit longer thanBlock 2 to allow for faster running engines to reach their running speed.  Thelength of each block is a subjective answer. These values are not cast in stoneand each person's experience and available space may dictate block lengths.</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'><span style='font-family:Symbol'>·<spanstyle='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>TheBD20s should be located within a reasonable distance from the track.</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'><span style='font-family:Symbol'>·<spanstyle='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>Thewire at each block should be soldered as close to the start of the block aspossible.</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'><span style='font-family:Symbol'>·<spanstyle='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>Followinstructions for the BD-20 regarding number of turns.</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'><span style='font-family:Symbol'>·<spanstyle='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>Followthe instructions for the AIU as well.  As the AIU instructions state, it is agood idea to change the default cab address from 4.</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'><span style='font-family:Symbol'>·<spanstyle='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>Allof the wires from each pin 1 of the BD20 must go to GND pin on the AIU.  Thewires from each pin 2 on the BD20 goes to a unique pin on the AIU. </p><p class=MsoNormal style='text-align:justify'>&nbsp;</p><h1 style='tab-stops:list 22.5pt'>III<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Setting Up Decoder Pro</h1><p class=MsoNormal>&nbsp;</p><p class=MsoNormal><table cellpadding=0 cellspacing=0> <tr>  <td width=13 height=0></td> </tr> <tr>  <td></td>  <td><img width=415 height=284  src="SpeedometerFiles/image002.gif"></td> </tr></table><br clear=ALL>Open Decoder Pro.  Under the Tools menu open Speedometer.  See Figure 2.</p><p class=MsoNormal>&nbsp;</p><br clear=all><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;</span>Enter the sensor ID number into to boxes for Sensor #1, #2 and #3.  Thesensor ID number can be found by using the following formula:</p><p class=MsoNormal>&nbsp;</p><p class=MsoNormal align=center style='text-align:center'>Sensor ID = (AIU CabAddress - 1) * 16 -1 + (Pin Number On AIU)</p><p class=MsoNormal>&nbsp;</p><p class=MsoNormal style='margin-left:.25in;text-align:justify'>For example:The AIU cab address is set to 50 and one of the BD20s is connected to pin 2. Therefore the Sensor ID would be:</p><p class=MsoNormal>&nbsp;</p><p class=MsoNormal align=center style='text-align:center'>Sensor ID = (<b>50</b><spanstyle='font-weight:normal'> - 1) * 16 -1 + (</span><b>2</b><spanstyle='font-weight:normal'>)</span></p><p class=MsoNormal align=center style='text-align:center'>&nbsp;</p><p class=MsoNormal align=center style='text-align:center'>Sensor ID = 785</p><p class=MsoNormal align=center style='text-align:center'>&nbsp;</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;</span>Based on Figure 2, all sensors should be set to 'Enter'.  This means theinternal timer either starts or stops when the train enters the given block. If a sensor were set to 'Exit' then the internal timer would start or stop whenthe train exits the block.</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;</span>The light at the end of each sensor row gives the indication ofoccupancy.</p><p class=MsoNormal>&nbsp;</p><p class=MsoNormal style='margin-left:.25in'>Red: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Noreading, status unknown (typically if no value for the sensor ID is entered)</p><p class=MsoNormal style='margin-left:.25in'>Yellow: &nbsp;&nbsp;&nbsp; Blockoccupied</p><p class=MsoNormal style='margin-left:.25in'>Gray: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Blockunoccupied</p><p class=MsoNormal>&nbsp;</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'>4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;</span>Enter the distance in scale feet.  For example a 3 feet long piece of HOflex track would be 261 scale feet.  </p><p class=MsoNormal>&nbsp;</p><p class=MsoNormal style='margin-left:.25in;text-align:justify'>Distances 1 and2 both start at the beginning of block 2 (or the end of block 1).</p><p class=MsoNormal style='margin-left:.25in;text-align:justify'>&nbsp;</p><p class=MsoNormal style='margin-left:.25in;text-align:justify'>For metricunits press the 'To Metric Units' button and enter the information in thecorrect units.</p><p class=MsoNormal>&nbsp;</p><h1>IV<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Operating The Speedometer</h1><p class=MsoNormal>&nbsp;</p><p class=MsoNormal style='text-align:justify'>Now that everything is hooked upand the speedometer form is open and the correct values entered as required weare ready to use the speedometer.</p><p class=MsoNormal style='text-align:justify'>&nbsp;</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;</span>Place an engine in block 1.</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;</span>Press the 'Start' button on the speedometer form to tell it to startgetting input from the AIU.  All of the lights should be gray.</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;</span>Start the train moving towards block 2.  Increase the speed to a givenspeed step.  Keep it at that speed.</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'>4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;</span>As the train moves through the blocks you should notice the colors foreach sensor change colors.</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'>5.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;</span>Once the condition for sensor #2 is met, meaning the timer for distance1 has stopped, you should see values for Time 1 Speed and Time displayed on theSpeedometer form.  Remember this is scale speed!</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'>6.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;</span>Once the condition for sensor #3 is met, meaning the timer for distance2 has stopped, you should see values for Time 2 Speed and Time displayed on theSpeedometer form.  Remember this is scale speed!</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'>7.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;</span>Once the train has reached the end of the track do not immediately throwit back into reverse.  This will cause the timer to think trains are in one ofthe blocks and actually restart or give another reading for the speed and time. Record the values of speed and time.  Now move the train back into block 1.</p><p class=MsoNormal style='text-align:justify'>&nbsp;</p><p class=MsoNormal style='margin-left:.25in;text-align:justify'>If you have aloop, once the train has reached block 5 (actually the beginning of block 1)stop the train as well before it reaches the end of block 1.  If you don't thetimer will restart.</p><p class=MsoNormal style='margin-left:.25in;text-align:justify'>&nbsp;</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'>8.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;</span>To restart the timer, make sure the train is in block 1.  Hit the'Clear' button on the Speedometer.  Continue with step 3.</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'>9.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;</span>Deciding when to switch to the longer block is up to the user based onexperience.</p><p class=MsoNormal>&nbsp;</p><h1>V<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Uses For Speedometer</h1><p class=MsoNormal>&nbsp;</p><p class=MsoNormal style='text-align:justify'>Obviously the primary use for theSpeedometer is to create custom speed tables.  Creating speed tables can beused so different types of engines can run together as a consist.</p><p class=MsoNormal style='text-align:justify'>&nbsp;</p><p class=MsoNormal style='text-align:justify'>Everyone's method forimplementing a speed table may be different.  But as a starting point here issome general guide lines.</p><p class=MsoNormal style='text-align:justify'>&nbsp;</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;</span>Choose an engine that has the performance you want.  Look at low andhigh end speeds, how it accelerates, etc.  As an alternative, manually changethe speed table of an engine until you reach the desired performance.</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;</span>Use the speedometer to capture and document the speed at each speedstep.  You can not just copy the CV value from one engine to another.  This isbecause the voltage one engine requires to achieve the required speed is notnecessarily the same as another engine.  This is why we're creating the speedtable using the speedometer in the first place.</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;</span>Now is the time to match the other engine.  This is where programming onthe mainline is the only way to go.</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'>4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;</span>At each speed step document the speed of the engine.</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'>5.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;</span>Adjust the CV value at that speed step.</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'>6.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;</span>Retest the speed.  Keep adjusting the CV value until the desired speedis achieved.</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'>7.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;</span>Move on to the next speed step.  Repeat steps 5 through 7 until thedesired speed achieved.</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'>8.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;</span>Go through each speed step.</p><p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:-.25in;tab-stops:list .25in'>9.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;</span>The engine should now perform as the template engine.</p><p class=MsoNormal style='text-align:justify'>&nbsp;</p><p class=MsoNormal>&nbsp;</p><h1>VI<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Alternate Setups For Speedometer</h1><h2>VI.I<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Using Less Than 3 Sensors</h2><p class=MsoNormal>&nbsp;</p><p class=MsoNormal style='text-align:justify'>If you have less than 3 sensorsit is still possible to use the Speedometer.  For example, for short blocks asingle sensor can be used.</p><p class=MsoNormal style='text-align:justify'>&nbsp;</p><p class=MsoNormal style='text-align:justify'>In this case the value on theSpeedometer form for Sensor #1 and Sensor #2 would be the same number.  Sensor#1 would be set to 'Enter' and Sensor #2 would be set to 'Exit'.</p><p class=MsoNormal>&nbsp;</p></div></body></html>
+<!-- $Id: Speedometer.html,v 1.3 2004-04-09 07:13:07 jacobsen Exp $ -->
+<html>
+
+<head>
+<meta name=Title content="Using Speedometer with NCE">
+<meta name=Keywords content="">
+<meta http-equiv=Content-Type content="text/html; charset=macintosh">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 10">
+<meta name=Originator content="Microsoft Word 10">
+<link rel=File-List href="SpeedometerFiles/filelist.xml">
+<title>Using Speedometer with NCE</title>
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:"Times New Roman";
+	panose-1:0 2 2 6 3 5 4 5 2 3;}
+@font-face
+	{font-family:Arial;
+	panose-1:0 2 11 6 4 2 2 2 2 2;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:Arial;}
+h1
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	text-indent:-.3in;
+	font-size:12.0pt;
+	font-family:Arial;}
+h2
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:.4in;
+	text-indent:-.4in;
+	tab-stops:list .5in;
+	font-size:12.0pt;
+	font-family:Arial;
+	font-style:italic;}
+h3
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:.5in;
+	text-indent:-.5in;
+	tab-stops:list .75in;
+	font-size:12.0pt;
+	font-family:Arial;
+	font-weight:normal;}
+h4
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:.6in;
+	text-indent:-.6in;
+	tab-stops:list .75in;
+	font-size:12.0pt;
+	font-family:Arial;}
+h5
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:.7in;
+	text-indent:-.7in;
+	tab-stops:list 1.0in;
+	font-size:11.0pt;
+	font-family:Arial;
+	font-weight:normal;}
+h6
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:.8in;
+	text-indent:-.8in;
+	tab-stops:list 1.0in;
+	font-size:11.0pt;
+	font-family:Arial;
+	font-weight:normal;
+	font-style:italic;}
+p.MsoHeading7, li.MsoHeading7, div.MsoHeading7
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:.9in;
+	text-indent:-.9in;
+	tab-stops:list 1.25in;
+	font-size:12.0pt;
+	font-family:Arial;}
+p.MsoHeading8, li.MsoHeading8, div.MsoHeading8
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:1.0in;
+	text-indent:-1.0in;
+	tab-stops:list 1.25in;
+	font-size:12.0pt;
+	font-family:Arial;
+	font-style:italic;}
+p.MsoHeading9, li.MsoHeading9, div.MsoHeading9
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:1.1in;
+	text-indent:-1.1in;
+	tab-stops:list 1.5in;
+	font-size:9.0pt;
+	font-family:Arial;
+	font-weight:bold;
+	font-style:italic;}
+p.MsoCaption, li.MsoCaption, div.MsoCaption
+	{margin-top:6.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	font-size:10.0pt;
+	font-family:Arial;}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	font-size:12.0pt;
+	font-family:Arial;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:.8in .8in .8in .8in;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+@list l0:level1
+	{margin-left:.25in;
+	text-indent:-.25in;
+	tab-stops:list .25in;}
+@list l1:level1
+	{margin-left:.25in;
+	text-indent:-.25in;
+	tab-stops:list .25in;}
+@list l2:level1
+	{margin-left:.25in;
+	text-indent:-.25in;
+	tab-stops:list .25in;}
+@list l3:level1
+	{margin-left:.25in;
+	text-indent:-.25in;
+	tab-stops:list .25in;}
+@list l4:level1
+	{margin-left:.25in;
+	text-indent:-.25in;
+	tab-stops:list .25in;
+	font-family:Symbol;}
+@list l5:level1
+	{margin-left:.3in;
+	text-indent:-.3in;
+	tab-stops:list .5in;}
+@list l5:level2
+	{margin-left:.4in;
+	text-indent:-.4in;
+	tab-stops:list .5in;}
+@list l5:level3
+	{margin-left:.5in;
+	text-indent:-.5in;
+	tab-stops:list .75in;}
+@list l5:level4
+	{margin-left:.6in;
+	text-indent:-.6in;
+	tab-stops:list .75in;}
+@list l5:level5
+	{margin-left:.7in;
+	text-indent:-.7in;
+	tab-stops:list 1.0in;}
+@list l5:level6
+	{margin-left:.8in;
+	text-indent:-.8in;
+	tab-stops:list 1.0in;}
+@list l5:level7
+	{margin-left:.9in;
+	text-indent:-.9in;
+	tab-stops:list 1.25in;}
+@list l5:level8
+	{margin-left:1.0in;
+	text-indent:-1.0in;
+	tab-stops:list 1.25in;}
+@list l5:level9
+	{margin-left:1.1in;
+	text-indent:-1.1in;
+	tab-stops:list 1.5in;}
+@list l6:level1
+	{margin-left:.25in;
+	text-indent:-.25in;
+	tab-stops:list .25in;}
+@list l7:level1
+	{margin-left:.25in;
+	text-indent:-.25in;
+	tab-stops:list .25in;}
+@list l8:level1
+	{margin-left:.25in;
+	text-indent:-.25in;
+	tab-stops:list .25in;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+</head>
+
+<body bgcolor=white lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<IMG SRC="../images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
+
+<h1 align=center style='margin-left:0in;text-align:center;text-indent:0in'>Using
+Decoder Pro’s Speedometer with NCE</h1>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<h1 style='tab-stops:list 22.5pt'>I<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Installation</h1>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal style='text-align:justify'>The Speedometer function within
+Decoder Pro is used to measure a train's scale speed.  Once everything is
+setup, the speed is automatically calculated based the movements of an engine
+through distinct blocks.</p>
+
+<p class=MsoNormal style='text-align:justify'>&nbsp;</p>
+
+<p class=MsoNormal style='text-align:justify'>Each block must have a means of
+detecting occupancy.  The BD20 manufactured by NCE is a simple and effective
+block detector.  Three BD20s are recommended.  As the blocks get longer it is
+better to have another detector in the following section of track to sense when
+the engine has entered that block.  As described at the end of this document it
+is possible to use less than 3 detectors.</p>
+
+<p class=MsoNormal style='text-align:justify'>&nbsp;</p>
+
+<p class=MsoNormal style='text-align:justify'>Connecting each BD20 to the NCE
+Command Station is accomplished with the AIU (Auxiliary Input Unit)
+manufactured by NCE as well.  The AIU needs to be connected with the cab bus. 
+Once the AIU is connected into the cab bus, and thus into the Command Station,
+Decoder Pro does the rest.</p>
+
+<p class=MsoNormal style='text-align:justify'>&nbsp;</p>
+
+<p class=MsoNormal style='text-align:justify'>The track used must be connected
+to the mainline from the NCE system.  Do NOT connect it to the programming
+tracking wiring.</p>
+
+<p class=MsoNormal style='text-align:justify'>&nbsp;</p>
+
+<p class=MsoNormal style='text-align:justify'>The choice of track is up to the
+user and the space available.  An independent section of track or a long siding
+on an existing layout are both acceptable.  The independent section of track
+can be long and straight or it can be a loop.  Each type has their advantages
+and disadvantages.</p>
+
+<p class=MsoNormal style='text-align:justify'>&nbsp;</p>
+
+<p class=MsoNormal style='text-align:justify'>It is also possible to use this
+Speedometer while the rest of the layout is operating.  If you do, make sure
+you are not blocking the mainline or at least have the proper authorization
+from the dispatcher.</p>
+
+<p class=MsoNormal style='text-align:justify'>&nbsp;</p>
+
+<p class=MsoBodyText>Figure 1 shows the ideal setup for connecting the block
+detectors into the NCE system with the BD20s and AIU.</p>
+
+<p class=MsoBodyText>&nbsp;</p>
+
+<span style='font-size:12.0pt;font-family:Arial'><br clear=ALL
+style='page-break-before:always'>
+</span>
+
+<p class=MsoNormal style='text-align:justify'>&nbsp;</p>
+
+<h1>II<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Wiring</h1>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>Figure 1 shows how to integrate the sections of track, block
+detectors and AIU into the Command Station.</p>
+
+<p class=MsoNormal style='text-align:justify'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>Make
+sure there is a good solder connection between the wire and the rail and that
+the rails are clean.  It is possible to have false readings on the speedometer
+if the DCC signal is interrupted.</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>It
+is only necessary to put gaps into one of the rails.  It does not matter which
+rail is gapped.</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>You
+can use a loop of track or a straight section of track.  For a loop, block 5 in
+the diagram is connected to block 1 and the power feed to block 5 can be
+removed since it is powered in block 1.</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><img
+width=496 height=429 src="SpeedometerFiles/image001.gif"><br
+clear=ALL>
+It is a good idea to have 3 independent blocks.  Block 2 is used to measure
+speeds for slow running engines.  Block 3 should be quite a bit longer than
+Block 2 to allow for faster running engines to reach their running speed.  The
+length of each block is a subjective answer. These values are not cast in stone
+and each person's experience and available space may dictate block lengths.</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>The
+BD20s should be located within a reasonable distance from the track.</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>The
+wire at each block should be soldered as close to the start of the block as
+possible.</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>Follow
+instructions for the BD-20 regarding number of turns.</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>Follow
+the instructions for the AIU as well.  As the AIU instructions state, it is a
+good idea to change the default cab address from 4.</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>All
+of the wires from each pin 1 of the BD20 must go to GND pin on the AIU.  The
+wires from each pin 2 on the BD20 goes to a unique pin on the AIU. </p>
+
+<p class=MsoNormal style='text-align:justify'>&nbsp;</p>
+
+<h1 style='tab-stops:list 22.5pt'>III<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Setting Up Decoder Pro</h1>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>
+
+<table cellpadding=0 cellspacing=0>
+ <tr>
+  <td width=13 height=0></td>
+ </tr>
+ <tr>
+  <td></td>
+  <td><img width=415 height=284
+  src="SpeedometerFiles/image002.gif"></td>
+ </tr>
+</table>
+
+<br clear=ALL>
+Open Decoder Pro.  Under the Tools menu open Speedometer.  See Figure 2.</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<br clear=all>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span>Enter the sensor ID number into to boxes for Sensor #1, #2 and #3.  The
+sensor ID number can be found by using the following formula:</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal align=center style='text-align:center'>Sensor ID = (AIU Cab
+Address - 1) * 16 -1 + (Pin Number On AIU)</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify'>For example:
+The AIU cab address is set to 50 and one of the BD20s is connected to pin 2. 
+Therefore the Sensor ID would be:</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal align=center style='text-align:center'>Sensor ID = (<b>50</b><span
+style='font-weight:normal'> - 1) * 16 -1 + (</span><b>2</b><span
+style='font-weight:normal'>)</span></p>
+
+<p class=MsoNormal align=center style='text-align:center'>&nbsp;</p>
+
+<p class=MsoNormal align=center style='text-align:center'>Sensor ID = 785</p>
+
+<p class=MsoNormal align=center style='text-align:center'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span>Based on Figure 2, all sensors should be set to 'Enter'.  This means the
+internal timer either starts or stops when the train enters the given block. 
+If a sensor were set to 'Exit' then the internal timer would start or stop when
+the train exits the block.</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span>The light at the end of each sensor row gives the indication of
+occupancy.</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal style='margin-left:.25in'>Red: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No
+reading, status unknown (typically if no value for the sensor ID is entered)</p>
+
+<p class=MsoNormal style='margin-left:.25in'>Yellow: &nbsp;&nbsp;&nbsp; Block
+occupied</p>
+
+<p class=MsoNormal style='margin-left:.25in'>Gray: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Block
+unoccupied</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'>4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span>Enter the distance in scale feet.  For example a 3 feet long piece of HO
+flex track would be 261 scale feet.  </p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify'>Distances 1 and
+2 both start at the beginning of block 2 (or the end of block 1).</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify'>For metric
+units press the 'To Metric Units' button and enter the information in the
+correct units.</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<h1>IV<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Operating The Speedometer</h1>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal style='text-align:justify'>Now that everything is hooked up
+and the speedometer form is open and the correct values entered as required we
+are ready to use the speedometer.</p>
+
+<p class=MsoNormal style='text-align:justify'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span>Place an engine in block 1.</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span>Press the 'Start' button on the speedometer form to tell it to start
+getting input from the AIU.  All of the lights should be gray.</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span>Start the train moving towards block 2.  Increase the speed to a given
+speed step.  Keep it at that speed.</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'>4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span>As the train moves through the blocks you should notice the colors for
+each sensor change colors.</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'>5.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span>Once the condition for sensor #2 is met, meaning the timer for distance
+1 has stopped, you should see values for Time 1 Speed and Time displayed on the
+Speedometer form.  Remember this is scale speed!</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'>6.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span>Once the condition for sensor #3 is met, meaning the timer for distance
+2 has stopped, you should see values for Time 2 Speed and Time displayed on the
+Speedometer form.  Remember this is scale speed!</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'>7.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span>Once the train has reached the end of the track do not immediately throw
+it back into reverse.  This will cause the timer to think trains are in one of
+the blocks and actually restart or give another reading for the speed and time.
+ Record the values of speed and time.  Now move the train back into block 1.</p>
+
+<p class=MsoNormal style='text-align:justify'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify'>If you have a
+loop, once the train has reached block 5 (actually the beginning of block 1)
+stop the train as well before it reaches the end of block 1.  If you don't the
+timer will restart.</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'>8.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span>To restart the timer, make sure the train is in block 1.  Hit the
+'Clear' button on the Speedometer.  Continue with step 3.</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'>9.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span>Deciding when to switch to the longer block is up to the user based on
+experience.</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<h1>V<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Uses For Speedometer</h1>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal style='text-align:justify'>Obviously the primary use for the
+Speedometer is to create custom speed tables.  Creating speed tables can be
+used so different types of engines can run together as a consist.</p>
+
+<p class=MsoNormal style='text-align:justify'>&nbsp;</p>
+
+<p class=MsoNormal style='text-align:justify'>Everyone's method for
+implementing a speed table may be different.  But as a starting point here is
+some general guide lines.</p>
+
+<p class=MsoNormal style='text-align:justify'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span>Choose an engine that has the performance you want.  Look at low and
+high end speeds, how it accelerates, etc.  As an alternative, manually change
+the speed table of an engine until you reach the desired performance.</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span>Use the speedometer to capture and document the speed at each speed
+step.  You can not just copy the CV value from one engine to another.  This is
+because the voltage one engine requires to achieve the required speed is not
+necessarily the same as another engine.  This is why we're creating the speed
+table using the speedometer in the first place.</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span>Now is the time to match the other engine.  This is where programming on
+the mainline is the only way to go.</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'>4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span>At each speed step document the speed of the engine.</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'>5.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span>Adjust the CV value at that speed step.</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'>6.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span>Retest the speed.  Keep adjusting the CV value until the desired speed
+is achieved.</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'>7.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span>Move on to the next speed step.  Repeat steps 5 through 7 until the
+desired speed achieved.</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'>8.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span>Go through each speed step.</p>
+
+<p class=MsoNormal style='margin-left:.25in;text-align:justify;text-indent:
+-.25in;tab-stops:list .25in'>9.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span>The engine should now perform as the template engine.</p>
+
+<p class=MsoNormal style='text-align:justify'>&nbsp;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<h1>VI<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Alternate Setups For Speedometer</h1>
+
+<h2>VI.I<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>Using Less Than 3 Sensors</h2>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal style='text-align:justify'>If you have less than 3 sensors
+it is still possible to use the Speedometer.  For example, for short blocks a
+single sensor can be used.</p>
+
+<p class=MsoNormal style='text-align:justify'>&nbsp;</p>
+
+<p class=MsoNormal style='text-align:justify'>In this case the value on the
+Speedometer form for Sensor #1 and Sensor #2 would be the same number.  Sensor
+#1 would be set to 'Enter' and Sensor #2 would be set to 'Exit'.</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+</div>
+
+</body>
+
+</html>
