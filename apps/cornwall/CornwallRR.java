@@ -1,14 +1,10 @@
-/**
- * CornwallRR.java
- */
+// CornwallRR.java
 
 package apps.cornwall;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-
-import apps.JmriDemo.JmriDemoConfigAction;
 
 /**
  * The JMRI program for Nick Kulp's Cornwall Railroad.
@@ -18,7 +14,7 @@ import apps.JmriDemo.JmriDemoConfigAction;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class CornwallRR extends JPanel {
     public CornwallRR() {
@@ -32,13 +28,13 @@ public class CornwallRR extends JPanel {
         // menuBar.setBorder(new BevelBorder(BevelBorder.RAISED));
 
         // load preferences
-        JmriDemoConfigAction prefs = null;
+        CornwallConfigAction prefs = null;
         if (configFile != null) {
             log.debug("configure from specified file");
-    	    prefs = new JmriDemoConfigAction("Preferences...", configFile);
+    	    prefs = new CornwallConfigAction("Preferences...", configFile);
         } else {
             log.debug("configure from default file");
-    	    prefs = new JmriDemoConfigAction("Preferences...");
+    	    prefs = new CornwallConfigAction("Preferences...");
         }
 
 	// populate GUI
@@ -112,7 +108,7 @@ public class CornwallRR extends JPanel {
         // Label & text
         JPanel pane1 = new JPanel();
         pane1.setLayout(new FlowLayout());
-        pane1.add(new JLabel(new ImageIcon(ClassLoader.getSystemResource("resources/icons/cornwall/cornwall_logo.gif"),"Decoder Pro label"), JLabel.LEFT));
+        pane1.add(new JLabel(new ImageIcon(ClassLoader.getSystemResource("resources/icons/cornwall/cornwall_logo.gif"),"Cornwall RR logo"), JLabel.LEFT));
         JPanel pane2 = new JPanel();
         pane2.setLayout(new BoxLayout(pane2, BoxLayout.Y_AXIS));
         pane2.add(new JLabel(" Cornwall Railroad "));
@@ -120,7 +116,7 @@ public class CornwallRR extends JPanel {
         pane2.add(new JLabel(" Connected via "+prefs.getCurrentProtocolName()));
         pane2.add(new JLabel(" on port "+prefs.getCurrentPortName()));
         pane2.add(new JLabel(" "));
-        pane2.add(new JLabel(" JRMI version "+jmri.Version.name()));
+        pane2.add(new JLabel(" JMRI version "+jmri.Version.name()));
         pane2.add(new JLabel(" Java version "+System.getProperty("java.version","<unknown>")));
         pane1.add(pane2);
         add(pane1);
