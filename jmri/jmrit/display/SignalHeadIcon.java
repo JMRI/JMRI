@@ -14,7 +14,7 @@ import javax.swing.*;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -39,10 +39,13 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
      */
     public void setSignalHead(String pName) {
         mHead = InstanceManager.signalHeadManagerInstance().getBySystemName(pName);
+        if (mHead == null) mHead = InstanceManager.signalHeadManagerInstance().getByUserName(pName);
         if (mHead == null) log.warn("did not find a SignalHead named "+pName);
-        displayState(headState());
-        mHead.addPropertyChangeListener(this);
-        setProperToolTip();
+        else {
+            displayState(headState());
+            mHead.addPropertyChangeListener(this);
+            setProperToolTip();
+        }
     }
 
     public SignalHead getSignalHead() {
