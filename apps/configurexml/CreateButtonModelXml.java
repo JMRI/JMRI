@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Handle XML persistance of CreateButtonModel objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @see apps.CreateButtonPanel
  */
 public class CreateButtonModelXml implements XmlAdapter {
@@ -58,6 +58,8 @@ public class CreateButtonModelXml implements XmlAdapter {
             log.error("Unexpected access exception: "+ex2);
         } catch (InstantiationException ex3) {
             log.error("Could not instantiate specified class: "+className);
+            ex3.printStackTrace();
+            System.out.println(ex3);
         } catch (Exception ex4) {
             log.error("Error while performing startup action: "+ex4);
             ex4.printStackTrace();
