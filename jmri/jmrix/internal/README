@@ -1,0 +1,5 @@
+The jmrix.internal package contains a jmri implementation
+for use without a layout.  There's nothing connected to these
+classes, which is why we call them "internal".  But they might
+be good for debugging....
+
