@@ -44,6 +44,7 @@ public class JMRIdemo extends JPanel {
 	        funcMenu.add(new jmri.jmrit.powerpanel.PowerPanelAction("Power Control"));
 	        funcMenu.add(new jmri.jmrit.XmlFileCheckAction("Check XML File", this));
 	        funcMenu.add(new jmri.jmrit.NameCheckAction("Check decoder names", this));
+	        funcMenu.add(new jmri.jmrit.tabbedframe.ProgCheckAction("Check programmer names", this));
 
         JMenu locoMenu = new JMenu("LocoNet");
         menuBar.add(locoMenu);

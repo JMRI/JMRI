@@ -127,13 +127,13 @@ public class DecVariableValue extends VariableValue
 		if (getReadOnly())  //
 			return new JLabel(_value.getText());
 		else if (format.equals("vslider")) {
-			DecVarSlider b = new DecVarSlider(this);
+			DecVarSlider b = new DecVarSlider(this, _minVal, _maxVal);
 			b.setOrientation(JSlider.VERTICAL);
 			sliders.add(b);
 			return b;
 		}
 		else if (format.equals("hslider")) {
-			DecVarSlider b = new DecVarSlider(this);
+			DecVarSlider b = new DecVarSlider(this, _minVal, _maxVal);
 			b.setOrientation(JSlider.HORIZONTAL);
 			sliders.add(b);
 			return b;

@@ -29,7 +29,7 @@ import org.jdom.Attribute;
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: PaneProgPane.java,v 1.12 2001-12-18 20:35:42 jacobsen Exp $
+ * @version			$Id: PaneProgPane.java,v 1.13 2002-01-01 01:57:25 jacobsen Exp $
  */
 public class PaneProgPane extends javax.swing.JPanel 
 							implements java.beans.PropertyChangeListener  {
@@ -61,6 +61,13 @@ public class PaneProgPane extends javax.swing.JPanel
 		
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		
+		// find out whether to display "name" (false) or "stdName" (true)
+		boolean showStdName = false;
+		Attribute nameFmt = pane.getAttribute("nameFmt");
+		if (nameFmt!= null && nameFmt.getValue().equals("stdName")) {
+			log.debug("Pane "+name+" will show stdNames");
+			showStdName = true;
+		}
 		// put the columns left to right in a panel
 		JPanel p = new JPanel();
 		p.setLayout(new BoxLayout(p,BoxLayout.X_AXIS));
@@ -70,13 +77,13 @@ public class PaneProgPane extends javax.swing.JPanel
 		List colList = pane.getChildren("column");
 		for (int i=0; i<colList.size(); i++) {
 			// load each column
-			p.add(newColumn( ((Element)(colList.get(i)))));
+			p.add(newColumn( ((Element)(colList.get(i))), showStdName));
 		}
 		// for all "row" elements ...
 		List rowList = pane.getChildren("row");
 		for (int i=0; i<rowList.size(); i++) {
 			// load each row
-			p.add(newRow( ((Element)(rowList.get(i)))));
+			p.add(newRow( ((Element)(rowList.get(i))), showStdName));
 		}
 		
 		// add glue to the right to allow resize - but this isn't working as expected? Alignment?
@@ -244,7 +251,7 @@ public class PaneProgPane extends javax.swing.JPanel
 	/**
 	 * Create a single column from the JDOM column Element
 	 */
-	public JPanel newColumn(Element element) {
+	public JPanel newColumn(Element element, boolean showStdName) {
 
 		// create a panel to add as a new column or row
 		JPanel c = new JPanel();
@@ -268,7 +275,7 @@ public class PaneProgPane extends javax.swing.JPanel
 			// decode the type
 			if (name.equals("display")) { // its a variable
 				// load the variable
-				newVariable( e, c, g, cs);
+				newVariable( e, c, g, cs, showStdName);
 			}
 			else if (name.equals("separator")) { // its a separator
 				JSeparator j = new JSeparator(javax.swing.SwingConstants.HORIZONTAL);
@@ -333,7 +340,7 @@ public class PaneProgPane extends javax.swing.JPanel
 			else if (name.equals("row")) {
 				// nested "row" elements ...
 				cs.gridwidth = GridBagConstraints.REMAINDER;
-				JPanel l = newRow(e);
+				JPanel l = newRow(e, showStdName);
 				g.setConstraints(l, cs);
 				c.add(l);
 				cs.gridwidth = 1;
@@ -351,7 +358,7 @@ public class PaneProgPane extends javax.swing.JPanel
 	/**
 	 * Create a single row from the JDOM column Element
 	 */
-	public JPanel newRow(Element element) {
+	public JPanel newRow(Element element, boolean showStdName) {
 
 		// create a panel to add as a new column or row
 		JPanel c = new JPanel();
@@ -375,7 +382,7 @@ public class PaneProgPane extends javax.swing.JPanel
 			// decode the type
 			if (name.equals("display")) { // its a variable
 				// load the variable
-				newVariable( e, c, g, cs);
+				newVariable( e, c, g, cs, showStdName);
 			}
 			else if (name.equals("separator")) { // its a separator
 				JSeparator j = new JSeparator(javax.swing.SwingConstants.VERTICAL);
@@ -441,7 +448,7 @@ public class PaneProgPane extends javax.swing.JPanel
 			else if (name.equals("column")) {
 				// nested "column" elements ...
 				cs.gridheight = GridBagConstraints.REMAINDER;
-				JPanel l = newColumn(e);
+				JPanel l = newColumn(e, showStdName);
 				g.setConstraints(l, cs);
 				c.add(l);
 				cs.gridheight = 1;
@@ -460,13 +467,14 @@ public class PaneProgPane extends javax.swing.JPanel
 	 * Add the representation of a single variable.  The 
 	 * variable is defined by a JDOM variable Element from the XML file.
 	 */
-	public void newVariable( Element var, JComponent col, GridBagLayout g, GridBagConstraints cs) {
+	public void newVariable( Element var, JComponent col, GridBagLayout g, GridBagConstraints cs, boolean showStdName) {
 
 		// get the name
 		String name = var.getAttribute("name").getValue();
 
 		// if it doesn't exist, do nothing
-		if (_varModel.findVarIndex(name)<0) {
+		int i = _varModel.findVarIndex(name);
+		if (i<0) {
 			if (log.isInfoEnabled()) log.info("Variable \""+name+"\" not found, omitted");
 			return;
 		}
@@ -479,6 +487,10 @@ public class PaneProgPane extends javax.swing.JPanel
 		
 		// load label if specified, else use name
 		String label = name;
+		if (!showStdName) {
+			// get name attribute from variable, as that's the mfg name
+			label = _varModel.getName(i);
+		}
 		String temp ="";
 		if ( (attr = var.getAttribute("label")) != null 
 				&& (temp = attr.getValue()) != null )
@@ -487,14 +499,12 @@ public class PaneProgPane extends javax.swing.JPanel
 
 		// get representation; store into the list to be programmed
 		JComponent rep = getRepresentation(name, var);
-		int i = _varModel.findVarIndex(name);
 		if (i>=0) varList.add(new Integer(i));
 		
 		// now handle the four orientations
 		// assemble v from label, rep
 		
 		if (layout.equals("left")) {
-			cs.gridx = 0;
 			cs.anchor= GridBagConstraints.EAST;
 			g.setConstraints(l, cs);
 			col.add(l);
@@ -505,42 +515,38 @@ public class PaneProgPane extends javax.swing.JPanel
 			col.add(rep);
 			
 		} else if (layout.equals("right")) {
-			cs.gridx = 0;
 			cs.anchor= GridBagConstraints.EAST;
 			g.setConstraints(rep, cs);
 			col.add(rep);
 
 			cs.gridx = GridBagConstraints.RELATIVE;
+			cs.anchor= GridBagConstraints.WEST;
+			g.setConstraints(l, cs);
+			col.add(l);
+			
+		} else if (layout.equals("below")) {
+			// variable in center of upper line
+			cs.anchor=GridBagConstraints.CENTER;
+			g.setConstraints(rep, cs);
+			col.add(rep);
+			
+			// label aligned like others
+			cs.gridy++;
 			cs.anchor= GridBagConstraints.WEST;
 			g.setConstraints(l, cs);
 			col.add(l);
 			
 		} else if (layout.equals("above")) {
 			// label aligned like others
-			cs.gridx = 1;
 			cs.anchor= GridBagConstraints.WEST;
 			g.setConstraints(l, cs);
 			col.add(l);
 			
 			// variable in center of lower line
 			cs.gridy++;
-			cs.gridx = 0;
-			cs.gridwidth = GridBagConstraints.REMAINDER;
 			cs.anchor=GridBagConstraints.CENTER;
 			g.setConstraints(rep, cs);
 			col.add(rep);
-			cs.gridwidth = 1;
-			
-		} else if (layout.equals("below")) {
-			cs.gridx = 0;
-			cs.anchor= GridBagConstraints.EAST;
-			g.setConstraints(rep, cs);
-			col.add(rep);
-
-			cs.gridx = GridBagConstraints.RELATIVE;
-			cs.anchor= GridBagConstraints.WEST;
-			g.setConstraints(l, cs);
-			col.add(l);
 			
 		} else {
 			log.error("layout internally inconsistent: "+layout);

@@ -21,7 +21,7 @@ import com.sun.java.util.collections.*;
  * XmlFile contains various member implementations for handling aspects of XML files.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version		$Id: XmlFile.java,v 1.5 2001-12-18 07:31:06 jacobsen Exp $	
+ * @version		$Id: XmlFile.java,v 1.6 2002-01-01 01:57:25 jacobsen Exp $	
  */
 public abstract class XmlFile {
 	
@@ -146,7 +146,7 @@ public abstract class XmlFile {
 		if (file!=null) {
 			file.renameTo(new File(backupFileName(name)));
 		}
-		else log.warn("No "+name+" file to backup");
+		else log.info("No "+name+" file to backup");
 	}
 
 	/** 

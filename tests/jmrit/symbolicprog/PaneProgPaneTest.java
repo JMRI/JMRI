@@ -40,7 +40,7 @@ public class PaneProgPaneTest extends TestCase {
 		// create test object with special implementation of the newColumn(String) operation
 		colCount = 0;
 		PaneProgPane p = new PaneProgPane("name", pane1, cvModel, varModel) {
-				public JPanel newColumn(Element e) { colCount++; return new JPanel();}
+				public JPanel newColumn(Element e, boolean a) { colCount++; return new JPanel();}
 			};
 	
 		assertEquals("column count", 2, colCount);
@@ -57,7 +57,7 @@ public class PaneProgPaneTest extends TestCase {
 		// create test object with special implementation of the newVariable(String) operation
 		varCount = 0;
 		PaneProgPane p = new PaneProgPane("name", pane1, cvModel, varModel) {
-				public void newVariable(Element e, JComponent p, GridBagLayout g, GridBagConstraints c) 
+				public void newVariable(Element e, JComponent p, GridBagLayout g, GridBagConstraints c, boolean a) 
 					{ varCount++; }
 			};
 
