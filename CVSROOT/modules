@@ -17,10 +17,14 @@ java3 -d java &lib
 runtime -a xml lib resources
 
 # ant target - Ant directory in standard form
-ant -a runtime antjava
+ant -a runtime ant jbuilder
+
 # build the java/ directory for any, including build.xml
 antjava  -a ant0 java
 ant0 -d java scripts build.xml
+
+# build target - both ant and jbuilder
+build -a runtime antjava 
 
 # properties target; all the properties files
 properties -a \
