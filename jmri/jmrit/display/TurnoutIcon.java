@@ -1,9 +1,11 @@
 package jmri.jmrit.display;
 
-import javax.swing.*;
 import java.awt.event.*;
-import jmri.jmrit.catalog.NamedIcon;
+
+import javax.swing.*;
+
 import jmri.*;
+import jmri.jmrit.catalog.*;
 
 /**
  * TurnoutIcon provides a small icon to display a status of a turnout.<P>
@@ -17,7 +19,7 @@ import jmri.*;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -51,9 +53,9 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
             log.error("No turnout manager, can't register for updates. Is there a layout connection?");
         }
     }
-    
+
     public Turnout getTurnout() { return turnout; }
-    
+
     // display icons
     NamedIcon closed = new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif",
                                      "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif");
@@ -63,33 +65,33 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
                                            "resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif");
     NamedIcon unknown = new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif",
                                       "resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif");
-    
+
     public NamedIcon getClosedIcon() { return closed; }
     public void setClosedIcon(NamedIcon i) { closed = i; displayState(turnoutState()); }
-    
+
     public NamedIcon getThrownIcon() { return thrown; }
     public void setThrownIcon(NamedIcon i) { thrown = i; displayState(turnoutState()); }
-    
+
     public NamedIcon getInconsistentIcon() { return inconsistent; }
     public void setInconsistentIcon(NamedIcon i) { inconsistent = i; displayState(turnoutState()); }
-    
+
     public NamedIcon getUnknownIcon() { return unknown; }
     public void setUnknownIcon(NamedIcon i) { unknown = i; displayState(turnoutState()); }
-    
+
     public int getHeight() {
         return Math.max(
                         Math.max(closed.getIconHeight(), thrown.getIconHeight()),
                         Math.max(inconsistent.getIconHeight(), unknown.getIconHeight())
                         );
     }
-    
+
     public int getWidth() {
         return Math.max(
                         Math.max(closed.getIconWidth(), thrown.getIconWidth()),
                         Math.max(inconsistent.getIconWidth(), unknown.getIconWidth())
                         );
     }
-    
+
     /**
      * Get current state of attached turnout
      * @return A state variable from a Turnout, e.g. Turnout.CLOSED
@@ -98,7 +100,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         if (turnout != null) return turnout.getKnownState();
         else return Turnout.UNKNOWN;
     }
-    
+
     // update icon as state of turnout changes
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) log.debug("property change: "
@@ -109,10 +111,10 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
             displayState(now);
         }
     }
-    
+
     JPopupMenu popup = null;
     JLabel ours = this;  // used for rotating icons
-    
+
     /**
      * Pop-up displays the turnout name, allows you to rotate the icons
      */
@@ -138,7 +140,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         }
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
-    
+
     /**
      * Drive the current state of the display from the state of the
      * turnout.
@@ -163,13 +165,17 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
             return;
         }
     }
-    
+
     /**
      * Throw the turnout when the icon is clicked
      * @param e
      */
     public void mouseClicked(java.awt.event.MouseEvent e) {
         if (e.isMetaDown() || e.isAltDown() ) return;
+        if (turnout==null) {
+            log.error("No turnout connection, can't process click");
+            return;
+        }
         try {
             if (turnout.getKnownState()==jmri.Turnout.CLOSED)
                 turnout.setCommandedState(jmri.Turnout.THROWN);
@@ -179,6 +185,6 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
             log.warn("Exception changing turnout: "+reason);
         }
     }
-    
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TurnoutIcon.class.getName());
 }
