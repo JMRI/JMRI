@@ -12,7 +12,7 @@ import javax.swing.JTextField;
  * via LocoNet RMI.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
@@ -56,7 +56,6 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
      */
     public String getInfo() {
         String t = host.getText();
-        if (true) t+=" failed";
         if (t != null && !t.equals("")) return t;
         else return "(none)";
     }
