@@ -20,7 +20,7 @@ import org.jdom.*;
 /**
  * Frame providing a command station programmer from decoder definition files
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.22 $
  */
 abstract public class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
@@ -580,6 +580,9 @@ abstract public class PaneProgFrame extends javax.swing.JFrame
     }
 
     void printInfoSection(HardcopyWriter w) {
+        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("resources/decoderpro.gif"));
+        // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
+        w.write(icon.getImage(), new JLabel(icon));
         _rosterEntry.printEntry(w);
     }
 
