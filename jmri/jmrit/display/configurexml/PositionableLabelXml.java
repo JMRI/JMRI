@@ -10,7 +10,7 @@ import java.awt.Color;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 
@@ -34,6 +34,7 @@ public class PositionableLabelXml implements XmlAdapter {
         // include contents
         element.addAttribute("x", String.valueOf(p.getX()));
         element.addAttribute("y", String.valueOf(p.getY()));
+        element.addAttribute("level", String.valueOf(p.getDisplayLevel()));
         if (p.isText() && p.getText()!=null) {
             element.addAttribute("text", p.getText());
             element.addAttribute("size", ""+p.getFont().getSize());
@@ -105,6 +106,17 @@ public class PositionableLabelXml implements XmlAdapter {
         } catch ( org.jdom.DataConversionException e) {
             log.error("failed to convert PanelEditor's attribute");
         }
+        // find display level
+        int level = PanelEditor.LABELS.intValue();
+        if (element.getAttribute("icon")!=null) level = PanelEditor.ICONS.intValue();
+        try {
+            level = element.getAttribute("level").getIntValue();
+        } catch ( org.jdom.DataConversionException e) {
+            log.warn("Could not parse level attribute!");
+        } catch ( NullPointerException e) {  // considered normal if the attribute not present
+        }
+        l.setDisplayLevel(level);
+
         // set color if needed
         try {
             int red = element.getAttribute("red").getIntValue();
@@ -119,12 +131,7 @@ public class PositionableLabelXml implements XmlAdapter {
         // and activate the result
         l.setLocation(x,y);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
-        if (element.getAttribute("text")!=null) {
-            p.putLabel(l);
-        } else if (element.getAttribute("icon")!=null) {
-            p.putIcon(l);
-        }
-
+        p.putLabel(l);
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PanelEditorXml.class.getName());
