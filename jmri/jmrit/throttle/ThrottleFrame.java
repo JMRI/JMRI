@@ -6,6 +6,9 @@ import javax.swing.*;
 import javax.swing.event.*;
 
 import jmri.DccThrottle;
+import jmri.ThrottleManager;
+import jmri.ThrottleListener;
+import jmri.InstanceManager;
 
 /**
  * A JFrame to contain throttle elements such as speed control, address chooser,
@@ -18,18 +21,18 @@ import jmri.DccThrottle;
  * @version
  */
 public class ThrottleFrame extends JFrame
-        implements ControlPanelListener, FunctionListener, AddressListener
+        implements ControlPanelListener, FunctionListener, AddressListener,
+        ThrottleListener
 {
     private final Integer PANEL_LAYER = new Integer(1);
     private DccThrottle throttle;
+    private ThrottleManager throttleManager;
 
     /**
      * Default constructor
      */
     public ThrottleFrame()
     {
-        //TODO: use ThrottleManager
-        throttle = new jmri.jmrix.loconet.LocoNetThrottle();
         initGUI();
     }
 
@@ -44,7 +47,6 @@ public class ThrottleFrame extends JFrame
         controlPanel.setResizable(true);
         controlPanel.setClosable(true);
         controlPanel.setIconifiable(true);
-
         controlPanel.setTitle("Control Panel");
         controlPanel.setSize(100,320);
         controlPanel.setVisible(true);
@@ -54,7 +56,6 @@ public class ThrottleFrame extends JFrame
         functionPanel.setResizable(true);
         functionPanel.setClosable(true);
         functionPanel.setIconifiable(true);
-
         functionPanel.setTitle("Function Panel");
         functionPanel.setSize(200,200);
         functionPanel.setLocation(100, 0);
@@ -65,7 +66,6 @@ public class ThrottleFrame extends JFrame
         addressPanel.setResizable(true);
         addressPanel.setClosable(true);
         addressPanel.setIconifiable(true);
-
         addressPanel.setTitle("Address Panel");
         addressPanel.setSize(200,120);
         addressPanel.setLocation(100, 200);
@@ -85,6 +85,16 @@ public class ThrottleFrame extends JFrame
         {
             System.out.println(ex.getMessage());
         }
+    }
+
+
+    /**
+     * Get notification that a throttle has been found as we requested.
+     * @param t An instantiation of the DccThrottle with the address requested.
+     */
+    public void notifyThrottleFound(DccThrottle t)
+    {
+        this.throttle = t;
     }
 
     /**
@@ -132,7 +142,11 @@ public class ThrottleFrame extends JFrame
      */
     public void notifyAddressChanged(int newAddress)
     {
-        throttle.setDccAddress(newAddress);
+        if (throttleManager == null)
+        {
+            throttleManager = InstanceManager.throttleManagerInstance();
+        }
+        throttleManager.requestThrottle(newAddress, this);
     }
 
 }

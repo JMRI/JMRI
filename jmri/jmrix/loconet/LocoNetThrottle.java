@@ -5,7 +5,7 @@ import jmri.DccThrottle;
 /**
  * An implementation of DccThrottle with code specific to a LocoNet connection.
  */
-public class LocoNetThrottle implements DccThrottle, SlotListener
+public class LocoNetThrottle implements DccThrottle
 {
     private float speedSetting;
     private float speedIncrement;
@@ -15,23 +15,22 @@ public class LocoNetThrottle implements DccThrottle, SlotListener
     private LocoNetSlot slot;
 
     private LocoNetInterface network;
-    private SlotManager slotManager;
 
-    public LocoNetThrottle()
+    /**
+     * Constructor
+     * @param slot The LocoNetSlot this throttle will talk on.
+     */
+    public LocoNetThrottle(LocoNetSlot slot)
     {
+        this.slot = slot;
         network = LnTrafficController.instance();
-        slotManager = SlotManager.instance();
-    }
-
-    public void notifyChangedSlot(LocoNetSlot s)
-    {
-        this.slot = s;
         LocoNetMessage msg = new LocoNetMessage(4);
         msg.setOpCode(LnConstants.OPC_MOVE_SLOTS);
         msg.setElement(1, slot.getSlot());
         msg.setElement(2, slot.getSlot());
         network.sendLocoNetMessage(msg);
     }
+
 
     private void sendLowerFunctions()
     {
@@ -259,7 +258,6 @@ public class LocoNetThrottle implements DccThrottle, SlotListener
     public void setDccAddress(int address)
     {
         this.address = address;
-        slotManager.slotFromLocoAddress(address, this);
     }
 
     // to handle quantized speed. Note this can change! Valued returned is
