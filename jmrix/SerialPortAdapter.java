@@ -9,7 +9,7 @@ package jmri.jmrix;
  *<P>
  * To configure for operation, a 
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: SerialPortAdapter.java,v 1.2 2001-12-06 16:16:27 jacobsen Exp $
+ * @version			$Id: SerialPortAdapter.java,v 1.3 2002-01-08 04:01:00 jacobsen Exp $
  * @see             jmri.jmrix.SerialConfigException
  */
 public interface SerialPortAdapter  {
@@ -20,7 +20,7 @@ public interface SerialPortAdapter  {
 	/** Open a specified port.  The appname argument is to be provided to the
 	 * underlying OS during startup so that it can show on status displays, etc 
 	 */
-	abstract public void openPort(String portName, String appName) throws jmri.jmrix.SerialConfigException;
+	abstract public String openPort(String portName, String appName) throws jmri.jmrix.SerialConfigException;
 	
 	/** Configure all of the other jmrix widgets needed to work with this adapter
 	 */
