@@ -1,22 +1,22 @@
-/** 
- * PowerPanelTest.java
- *
- * Description:	    tests for the jmrit.PowerPanel package
- * @author			Bob Jacobsen
- * @version			
- */
+// PowerPanelTest.java
 
 package jmri.jmrit.powerpanel;
 
-import java.io.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import java.util.ResourceBundle;
 
+/**
+ * Tests for the jmrit.PowerPanel package
+ * @author			Bob Jacobsen
+ * @version $Revision: 1.2 $
+ */
 public class PowerPanelTest extends TestCase {
+    static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle");
 
 	// from here down is testing infrastructure
-	
+
 	public PowerPanelTest(String s) {
 		super(s);
 	}
@@ -26,12 +26,12 @@ public class PowerPanelTest extends TestCase {
 		String[] testCaseName = {PowerPanelTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
-	
+
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite("jmri.jmrit.powerpanel.PowerPanelTest"); // no tests in class itself
 		suite.addTest(jmri.jmrit.powerpanel.PowerPaneTest.suite());
 		return suite;
 	}
-	
+
 }
