@@ -1,0 +1,11 @@
+This is the README file for the jmrix.cmri.serial.serialdriver package.
+
+The jmrix Java package defines implementations for the JMRI interfaces. The
+jmrix.cmri.serial package defines an implementation for the C/MRI system using
+a serial bus.  This package defines the serial port adapter those use.
+
+
+
+
+	
+	
