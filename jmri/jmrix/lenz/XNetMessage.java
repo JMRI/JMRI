@@ -12,7 +12,7 @@ import java.io.Serializable;
  * actually a variable number of bytes in Unicode.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  *
  */
 public class XNetMessage extends jmri.jmrix.NetMessage implements Serializable {
@@ -27,10 +27,12 @@ public class XNetMessage extends jmri.jmrix.NetMessage implements Serializable {
 
     // note that the opcode is part of the message, so we treat it
     // directly
-    // WARNING: use this only with opcodes that have the number of 
-    // arguments following included. Otherwise, just use setElement 
+    // WARNING: use this only with opcodes that have the number of
+    // arguments following included. Otherwise, just use setElement
 	public void setOpCode(int i) {
-        if (i>0xF || i<0) log.error("Opcode invalid: "+i);
+        if (i>0xF || i<0) {
+            log.error("Opcode invalid: "+i);
+        }
         setElement(0,((i*16)&0xF0)|((getNumDataElements()-2)&0xF));
     }
 
