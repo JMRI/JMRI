@@ -5,7 +5,7 @@
  * Description:		Provide access to XPressNet via a LI100 on an attached serial comm port.
  *					Normally controlled by the lenz.li100.LI100Frame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 
 package jmri.jmrix.lenz.li100;
@@ -197,6 +197,11 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
 			// loconet.XNetTurnoutManager to do that
 			if (jmri.InstanceManager.turnoutManagerInstance() == null)
 				jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager());
+
+			// If a jmri.ThrottleManager instance doesn't exist, create a
+			// lenz.XNetThrottleManager to do that
+			if (jmri.InstanceManager.throttleManagerInstance() == null)
+				jmri.InstanceManager.setThrottleManager(new jmri.jmrix.lenz.XNetThrottleManager());
 
 			// start operation
 			packets.startThreads();
