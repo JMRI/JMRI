@@ -14,7 +14,7 @@ import javax.swing.*;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -193,12 +193,22 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
             if (text) super.setText("<green>");
             if (icon) super.setIcon(green);
             break;
+        case SignalHead.DARK:
+            if (text) super.setText("<dark>");
+            if (icon) super.setIcon(red);       // for now, DARK is red
+            if (!warned)
+                log.warn("DARK signals are shown as RED");
+            warned = true;
+            break;
+
         default:
             log.error("unexpected state during display: "+state);
         }
 
         return;
     }
+
+    private static boolean warned = false;
 
     public void dispose() {
         mHead.removePropertyChangeListener(this);
