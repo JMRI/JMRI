@@ -1,13 +1,16 @@
 package jmri.jmrit.display;
 
-import jmri.*;
-import jmri.jmrit.catalog.*;
-import java.awt.*;
-import java.awt.event.*;
+import jmri.InstanceManager;
+import jmri.Sensor;
+import jmri.Turnout;
+import jmri.jmrit.catalog.NamedIcon;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import com.sun.java.util.collections.*;
+import com.sun.java.util.collections.ArrayList;
 
 /**
  * Provides a simple editor for adding jmri.jmrit.display items
@@ -38,7 +41,7 @@ import com.sun.java.util.collections.*;
  *
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 
 public class PanelEditor extends JFrame {

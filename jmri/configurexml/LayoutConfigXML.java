@@ -1,11 +1,14 @@
 package jmri.configurexml;
 
-import jmri.*;
-import java.io.*;
+import jmri.InstanceManager;
+import jmri.TurnoutManager;
+import java.io.File;
 
-import com.sun.java.util.collections.*;
-import org.jdom.*;
-import org.jdom.output.*;
+import com.sun.java.util.collections.List;
+import org.jdom.DocType;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.output.XMLOutputter;
 
 /**
  * Provides the mechanisms for storing an entire layout configuration
@@ -13,7 +16,7 @@ import org.jdom.output.*;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class LayoutConfigXML extends jmri.jmrit.XmlFile {
 
