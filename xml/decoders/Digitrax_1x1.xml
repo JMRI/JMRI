@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_1x1.xml,v 1.5 2001-12-10 06:10:49 jacobsen Exp $ -->
+<!-- $Id: Digitrax_1x1.xml,v 1.6 2001-12-10 15:29:01 jacobsen Exp $ -->
 <decoder-config xmlns:decoder="http://jmri.sourceforge.net/xml/decoder">
 		<version author="Bob Jacobsen" version="1" lastUpdated="20011207"/>
 
@@ -87,13 +87,13 @@
 				<enumChoice choice="reverse"/>
 				</enumVal>
 			</variable>
-		<variable name="Speed steps" CV="29" mask="XXXXXXVX" stdName="Speed Step Mode">
+		<variable name="Speed steps" CV="29" mask="XXXXXXVX" stdName="Speed Step Mode" default="1">
 			<enumVal>
 				<enumChoice choice="14 speed step format"/>
 				<enumChoice choice="28 speed step format"/>
 				</enumVal>
 			</variable>
-		<variable name="Power Source Conversion" CV="29" mask="XXXXXVXX"
+		<variable name="Power Source Conversion" CV="29" mask="XXXXXVXX" default="1"
 					stdName="Analog (DC) Operation" >
 			<enumVal>
 				<enumChoice choice="NMRA Digital only"/>

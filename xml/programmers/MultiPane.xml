@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
 <programmer-config xmlns:programmer="http://jmri.sourceforge.net/xml/programmer">
-<!-- $Id: MultiPane.xml,v 1.14 2001-12-10 06:10:49 jacobsen Exp $ -->
+<!-- $Id: MultiPane.xml,v 1.15 2001-12-10 15:29:03 jacobsen Exp $ -->
 		<version author="" version="" lastUpdated=""/>
 
 <programmer decoderFilePanes="yes">
@@ -9,7 +9,7 @@
 	<pane name="Basic">
 		<column>
 
-			<dccaddress/>
+<!-- 			<dccaddress/> -->
 
 			<label label=" "/>
 			<label label=" "/>
