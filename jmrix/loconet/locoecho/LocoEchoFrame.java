@@ -19,8 +19,11 @@ import loconet.LocoNetListener;
 import loconet.LnTrafficController;
 import loconet.LocoNetMessage;
 import loconet.LnConstants;
+import loconet.LnTurnout;
+
 import java.io.PrintStream;
 import java.io.FileOutputStream;
+
 import ErrLoggerJ.ErrLog;
 
 public class LocoEchoFrame extends javax.swing.JFrame implements loconet.LocoNetListener {
@@ -101,8 +104,20 @@ public class LocoEchoFrame extends javax.swing.JFrame implements loconet.LocoNet
 		getContentPane().add(closeButton);
 
 		pack();
+		
+		// debugging LnTurnout
+		t  = new LnTurnout(23);
+		// attach a listener
+		t.addPropertyChangeListener( new java.beans.PropertyChangeListener() {
+			public void propertyChange(java.beans.PropertyChangeEvent e) { 
+				System.out.println("Turnout property change: "+e.getPropertyName()
+					+" "+e.getOldValue()+" "+e.getNewValue()
+						);}
+			} );
 	}
   
+  	LnTurnout t;
+  	
   	private boolean mShown = false;
   	
 	public void addNotify() {
@@ -191,63 +206,39 @@ public class LocoEchoFrame extends javax.swing.JFrame implements loconet.LocoNet
 	}
 
 public void closeButtonActionPerformed(java.awt.event.ActionEvent e) {
-	// send SWREQ for close
-	LocoNetMessage l = new LocoNetMessage(4);
-	l.setOpCode(LnConstants.OPC_SW_REQ);
-		
+	// create a new LnTurnout item and ask it to handle this
+
 	// load address from switchAddrTextField
 	int adr;
 	try {
-		adr = Integer.valueOf(adrTextField.getText()).intValue() -1;
+		adr = Integer.valueOf(adrTextField.getText()).intValue();
+		LnTurnout tmp = new LnTurnout(adr);
+		tmp.setCommandedState(LnTurnout.CLOSED);
 		}
 	catch (Exception ex)
 		{
-			ErrLog.msg(ErrLog.error, "LocoEchoFrame", "parsing turnout address", "Exception: "+ex.toString());
+			ErrLog.msg(ErrLog.error, "LocoEchoFrame", "closeButtonActionPerformed", "Exception: "+ex.toString());
 			return;
 		}
-	int hiadr = adr/128;
-	int loadr = adr-hiadr*128;
-		
-	// set closed
-	hiadr |= 0x20;
-			
-	// load On/Off with on
-	hiadr |= 0x10;
-		
-	// store and send
-	l.setElement(1,loadr);
-	l.setElement(2,hiadr);
-	LnTrafficController.instance().sendLocoNetMessage(l);
+	return;
 	}
 
 public void throwButtonActionPerformed(java.awt.event.ActionEvent e) {
-	// send SWREQ for throw
-	LocoNetMessage l = new LocoNetMessage(4);
-	l.setOpCode(LnConstants.OPC_SW_REQ);
-		
+	// create a new LnTurnout item and ask it to handle this
+
 	// load address from switchAddrTextField
 	int adr;
 	try {
-		adr = Integer.valueOf(adrTextField.getText()).intValue() -1;
+		adr = Integer.valueOf(adrTextField.getText()).intValue();
+		LnTurnout tmp = new LnTurnout(adr);
+		tmp.setCommandedState(LnTurnout.THROWN);
 		}
 	catch (Exception ex)
 		{
-			ErrLog.msg(ErrLog.error, "LocoEchoFrame", "parsing turnout address", "Exception: "+ex.toString());
+			ErrLog.msg(ErrLog.error, "LocoEchoFrame", "throwButtonActionPerformed", "Exception: "+ex.toString());
 			return;
 		}
-	int hiadr = adr/128;
-	int loadr = adr-hiadr*128;
-		
-	// set throw
-	hiadr &= 0x20;
-			
-	// load On/Off with on
-	hiadr |= 0x10;
-		
-	// store and send
-	l.setElement(1,loadr);
-	l.setElement(2,hiadr);
-	LnTrafficController.instance().sendLocoNetMessage(l);
+	return;
 	}
 
 private boolean myAddress(int a1, int a2) { 

@@ -2,3 +2,4 @@ The code that handle the text buffer is lame, and needs to be improved.
 
 Use an explicit StringBuffer instead of temporaries in Strings
 
+Move away from explicit frame layout
