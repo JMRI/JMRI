@@ -15,7 +15,7 @@ import jmri.Sensor;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.9 $
  */
 public class LnSensor extends AbstractSensor implements LocoNetListener {
 
@@ -101,17 +101,6 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
                 return;
         }
         // reach here only in error
-    }
-
-    /**
-     * Set out internal state information, and notify bean listeners.
-     */
-    public void setOwnState(int s) {
-        if (_knownState != s) {
-            int oldState = _knownState;
-            _knownState = s;
-            firePropertyChange("KnownState", new Integer(oldState), new Integer(_knownState));
-        }
     }
 
     public void dispose() {}
