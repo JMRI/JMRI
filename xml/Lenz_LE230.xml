@@ -24,10 +24,10 @@
 				<decoder:decVal max="10"/>
 			</decoder:variable>
 		<decoder:variable name="Version Number" CV="7" readOnly="yes">
-				<decoder:decVal max="31"/>
+				<decoder:decVal/>
 			</decoder:variable>
 		<decoder:variable name="Manufacturers ID" CV="8" readOnly="yes">
-				<decoder:decVal max="31"/>
+				<decoder:decVal/>
 			</decoder:variable>
 		<decoder:variable name="EMF frequency" CV="5">
 				<decoder:decVal max="15"/>

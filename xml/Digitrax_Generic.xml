@@ -29,10 +29,10 @@
 			<decoder:decVal/>
 			</decoder:variable>
 		<decoder:variable name="Version ID" CV="7" readOnly="yes">
-				<decoder:decVal max="31"/>
+				<decoder:decVal/>
 			</decoder:variable>
 		<decoder:variable name="Manufacturer ID" CV="8" readOnly="yes">
-				<decoder:decVal max="31"/>
+				<decoder:decVal/>
 			</decoder:variable>
 		<decoder:variable name="Normal direction of motion" CV="29" mask="XXXXXXXV">
 			<decoder:enumVal>
