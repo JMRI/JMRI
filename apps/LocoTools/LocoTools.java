@@ -16,7 +16,7 @@ import javax.swing.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author			Bob Jacobsen
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class LocoTools extends JPanel {
 	public LocoTools() {
@@ -60,6 +60,7 @@ public class LocoTools extends JPanel {
             progMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction("Decoder Pro programmer"));
             progMenu.add(new jmri.jmrix.loconet.locoio.LocoIOAction("LocoIO programmer"));
             progMenu.add(new jmri.jmrix.loconet.pm4.PM4Action("PM4 Programmer"));
+            progMenu.add(new jmri.jmrix.loconet.bdl16.BDL16Action("BDL16 Programmer"));
 
         menuBar.add(new jmri.jmrit.roster.RosterMenu("Roster", jmri.jmrit.roster.RosterMenu.MAINMENU, this));
 
