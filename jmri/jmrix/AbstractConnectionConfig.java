@@ -15,19 +15,19 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 abstract public class AbstractConnectionConfig  implements jmri.jmrix.ConnectionConfig {
 
     /**
-     * Ctor for an object being created during load process;
-     * Swing init is deferred.
+     * Ctor for an object being created during load process
      */
     public AbstractConnectionConfig(jmri.jmrix.SerialPortAdapter p){
         adapter = p;
     }
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional object with no prexisting adapter.
+     * Expect that the subclass ctor will fill the adapter member.
      */
     public AbstractConnectionConfig() {
         adapter = null;
@@ -36,6 +36,7 @@ abstract public class AbstractConnectionConfig  implements jmri.jmrix.Connection
     boolean init = false;
 
     void checkInitDone() {
+    	if (log.isDebugEnabled()) log.debug("init called for "+name());
         if (init) return;
         portBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -78,10 +79,16 @@ abstract public class AbstractConnectionConfig  implements jmri.jmrix.Connection
     }
 
     public void loadDetails(JPanel details) {
+    	
         setInstance();
 
         Vector v = adapter.getPortNames();
-        log.debug("Found "+v.size()+" ports");
+    	if (log.isDebugEnabled()) {
+    		log.debug("loadDetails called in class "+this.getClass().getName());
+    		log.debug("adapter class: "+adapter.getClass().getName());
+    		log.debug("loadDetails called for "+name());
+        	log.debug("Found "+v.size()+" ports");
+        }
         String portName;
         portBox.removeAllItems();
         for (int i=0; i<v.size(); i++) {
@@ -91,7 +98,12 @@ abstract public class AbstractConnectionConfig  implements jmri.jmrix.Connection
 
         String[] baudList = adapter.validBaudRates();
         baudBox.removeAllItems();
+    	if (log.isDebugEnabled()) log.debug("after remove, "+baudBox.getItemCount()+" items, first is "
+    											+baudBox.getItemAt(0));        
         for (int i=0; i<baudList.length; i++) baudBox.addItem(baudList[i]);
+    	if (log.isDebugEnabled()) log.debug("after reload, "+baudBox.getItemCount()+" items, first is "
+    											+baudBox.getItemAt(0));        
+    	
         String[] opt1List = adapter.validOption1();
         opt1Box.removeAllItems();
         for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
