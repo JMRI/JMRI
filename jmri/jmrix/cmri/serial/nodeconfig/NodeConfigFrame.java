@@ -21,7 +21,7 @@ import jmri.jmrix.cmri.serial.SerialSensorManager;
  * Frame for user configuration of CMRI serial nodes
  * @author	Bob Jacobsen   Copyright (C) 2004
  * @author	Dave Duchamp   Copyright (C) 2004
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class NodeConfigFrame extends javax.swing.JFrame {
 
@@ -684,6 +684,8 @@ public class NodeConfigFrame extends javax.swing.JFrame {
                                             Integer.toString(nodeType));
                 break;
         }
+        // Cause reinitialization of this Node to reflect these parameters
+        SerialTrafficController.instance().initializeSerialNode(curNode);
     }
     
     /**

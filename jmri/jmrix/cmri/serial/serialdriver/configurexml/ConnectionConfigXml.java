@@ -19,7 +19,7 @@ import org.jdom.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -104,7 +104,8 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
             	node.setCardTypeLocation(j, (ctl.charAt(j)-'0') );
             }
             
-
+            // Trigger initialization of this Node to reflect these parameters
+            SerialTrafficController.instance().initializeSerialNode(node);
         }
     }
 

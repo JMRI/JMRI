@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.18 $
+ * @version	$Revision: 1.19 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -97,6 +97,22 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
             nodeArray[numNodes] = node;
             mustInit[numNodes] = true;
             numNodes++;
+        }
+    }
+
+    /**
+     *  Public method to set up for initialization of a Serial node
+     */
+     public void initializeSerialNode(SerialNode node) {
+        synchronized (this) {
+            // find the node in the registered node list
+            for (int i=0; i<numNodes; i++) {
+                if (nodeArray[i] == node) {
+                    // found node - set up for initialization
+                    mustInit[i] = true;
+                    return;
+                }
+            }
         }
     }
 
@@ -193,9 +209,9 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         }
         // ensure that each node is initialized        
         if (mustInit[curSerialNodeIndex]) {
+            mustInit[curSerialNodeIndex] = false;
             SerialMessage m = nodeArray[curSerialNodeIndex].createInitPacket();
             log.debug("send init message: "+m);
-            mustInit[curSerialNodeIndex] = false;
             m.setTimeout(2000);  // wait for init to finish (milliseconds)
             return m;
         }
