@@ -15,7 +15,7 @@ import jmri.NmraPacket;
  *
  * Description:		extend jmri.AbstractTurnout for EasyDcc layouts
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class EasyDccTurnout extends AbstractTurnout {
 
@@ -23,12 +23,12 @@ public class EasyDccTurnout extends AbstractTurnout {
 	 * EasyDcc turnouts use the NMRA number (0-511) as their numerical identification.
 	 */
 	public EasyDccTurnout(int number) {
-		_number = number;
-		// At construction, register for messages
+            super("ET"+number);
+            _number = number;
+            // At construction, register for messages
 	}
 
 	public int getNumber() { return _number; }
-	public String getSystemName() { return "ET"+getNumber(); }
 
 	// Handle a request to change state by sending a formatted DCC packet
 	protected void forwardCommandChangeToLayout(int s) {
