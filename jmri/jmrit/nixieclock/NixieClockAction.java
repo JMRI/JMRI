@@ -11,7 +11,7 @@ import java.awt.event.*;
  *  NixieClockFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2004
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
  public class NixieClockAction extends AbstractAction {
@@ -24,10 +24,6 @@ import java.awt.event.*;
 
          NixieClockFrame f = new NixieClockFrame();
          f.show();
-
-     }
-
-     public void ComponentListener (java.awt.event.ComponentEvent e) {
 
      }
 
