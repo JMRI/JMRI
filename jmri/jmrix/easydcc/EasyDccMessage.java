@@ -1,17 +1,13 @@
-/**
- * EasyDccMessage.java
- *
- * Description:		<describe the EasyDccMessage class here>
- * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.5 $
- */
+// EasyDccMessage.java
 
 package jmri.jmrix.easydcc;
 
-
-// Note:  This handles the "binary" form of command in the EasyDcc spec
-
-public class EasyDccMessage {
+/**
+ * Description:		<describe the EasyDccMessage class here>
+ * @author			Bob Jacobsen  Copyright (C) 2001
+ * @version			$Revision: 1.6 $
+ */
+ public class EasyDccMessage {
 	// is this logically an abstract class?
 
 	// create a new one
