@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: MacOSX.html,v 1.5 2004-07-19 01:48:18 jacobsen Exp $ -->
+<!-- $Id: MacOSX.html,v 1.6 2004-07-25 00:44:15 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -63,9 +63,16 @@
       </H2>
 
       <OL>
-        <LI>Determine if your hardware supports Java and JMRI</LI>
+        <LI>Determine if your system software is up to date</LI>
 
-	    <p>MacOS X version 10.1.3 or later is required.</p>
+	    <p>MacOS X version 10.1.3 or later is required for JMRI.
+	    </p>
+
+		<LI>Determine if you have the needed hardware.
+		
+	    <P>
+	    	No Macintosh that runs MacOS X has built-in serial ports,
+	    	so you're likely to have to use a USB to serial adapter.
 
 	    <p>You will need drivers for the serial hardware you're using.
 	      We test using a Keyspan PDA Adapter; those drivers are available at
@@ -75,11 +82,15 @@
 	      "/dev/cu", for example "/dev/tty.KeyUSA19181.1". In that case, you
 	      must select the one that starts with "cu", e.g.
 	      "/dev/cu.KeyUSA19181.1".</p>
+	    <P>Note that because of baud rate limitations in MacOS X itself,
+	    it's not possible to use a Digitrax MS100 currently.
       
-	<LI>Get and Install Java (if needed)</LI>
+	<LI>Install the serial communications libraries</LI>
 
-	 <p>MacOS X comes with Java installed.  However, you also need the
-	 javax.comm package. Download the installer for this from
+	 <p>Although MacOS X comes with an up-to-date Java, it doesn't
+	 include the Java communications libraries.  These are needed to
+	 talk to a command station, so we provide an installer.
+	 Download the installer for these from
 	 <a
 	 href="http://prdownloads.sourceforge.net/jmri/JavaCommInstaller2.hqx?download">
 	 http://prdownloads.sourceforge.net/jmri/JavaCommInstaller2.hqx?download</a>.
@@ -114,7 +125,6 @@
 	want it on your computer.</p>
 
     <LI>Connect your computer system to your command station hardware</LI>
-	<p>See the <a href="FIXME">USB adapter</a> instructions</p>
 
 	<LI>Installation is complete.</LI>
 	<p>
