@@ -21,7 +21,7 @@ import org.jdom.Attribute;
  * stored in local variables.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecoderProConfigFrame.java,v 1.8 2002-01-16 07:39:45 jacobsen Exp $
+ * @version			$Id: DecoderProConfigFrame.java,v 1.9 2002-01-16 17:42:00 jacobsen Exp $
  */
 public class DecoderProConfigFrame extends JFrame {
 		
@@ -105,7 +105,7 @@ public class DecoderProConfigFrame extends JFrame {
 		
 		j.setLayout(new GridLayout(2,2));
 		protocolBox = new JComboBox(new String[] {"(None selected)",  "NCE", "LocoNet LocoBuffer 57600bps", 
-													"LocoNet LocoBuffer 9600bps","LocoNet MS100"});
+													"LocoNet LocoBuffer 19200bps","LocoNet MS100"});
 		protocolBox.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				protocolSelected();
@@ -154,7 +154,7 @@ public class DecoderProConfigFrame extends JFrame {
 				portBox.addItem(v.elementAt(i));
 			}
 			
-		} else if (protocolName.equals("LocoNet LocoBuffer 9600bps")) {
+		} else if (protocolName.equals("LocoNet LocoBuffer 19200bps")) {
 			//
 			jmri.jmrix.loconet.locobuffer.LocoBufferAdapter a 
 					= new jmri.jmrix.loconet.locobuffer.LocoBufferAdapter();
@@ -234,11 +234,11 @@ public class DecoderProConfigFrame extends JFrame {
 		if (protocolName.equals("LocoNet LocoBuffer 57600bps")) {
 			//
 			jmri.jmrix.loconet.locobuffer.LocoBufferAdapter a 
-					= new jmri.jmrix.loconet.locobuffer.LocoBufferAdapter();
+					= new jmri.jmrix.loconet.locobuffer.LocoBufferHSAdapter();
 			a.openPort(portName, "DecoderPro");
 			a.configure();
 			
-		} else if (protocolName.equals("LocoNet LocoBuffer 9600bps")) {
+		} else if (protocolName.equals("LocoNet LocoBuffer 19200bps")) {
 			//
 			jmri.jmrix.loconet.locobuffer.LocoBufferAdapter a 
 					= new jmri.jmrix.loconet.locobuffer.LocoBufferAdapter();

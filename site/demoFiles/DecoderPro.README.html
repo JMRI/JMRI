@@ -260,8 +260,8 @@ The LocoBuffer was created by John Jabour
 More information is also available from the LocoNet_Info group, 
 <a href="http://groups.yahoo.com/group/loconet_hackers">http://groups.yahoo.com/group/loconet_hackers</a>
 The LocoBuffer should be configured with J1, J4 and J5 set on pins 1 and 2, 
-J2 and J3 set to pins 2 and 3. This configures it for a 9600 baud
-connection, so select "LocoNet LocoBuffer 9600bps" in the preferences panel.
+J2 and J3 set to pins 2 and 3. This configures it for a 19200 baud
+connection, so select "LocoNet LocoBuffer 19200bps" in the preferences panel.
 
 <P>
 Some computers can successfully communicate at 57600bps with a LocoBuffer.
@@ -274,6 +274,14 @@ contain version 1.4.6 or later of the LocoBuffer program. Note that
 version 1.4.5 has a bug that prevents it from working with LocoBuffer.
 
 <P>
+A standard Macintosh RS422 serial port will not work directly 
+with an MS100. Since it doesn't have two output status lines (DTR and RTS),
+it can't provide correct power to the MS100.  It may be possible to 
+provide external power; if you're interested in trying this, we'd
+be happy to help work out a solution. A LocoBuffer will work fine
+with a standard Macintosh RS422 serial port.
+
+<P>
 In MS100 mode, the program attempts to open the port at 16600 baud, 
 the LocoNet rate.  If this fails, it attempts to open the port at 16457 baud, 
 which is a standard rate that's close enough to work.  If this also
@@ -282,14 +290,19 @@ set the port to a usable baud rate.  This will always happen on MacOS X, which
 is why the MS100 can't be used with MacOS X.  A large fraction, but not all,
 windows machines also have this problem.  We don't know how to tell
 which Windows machines will and which won't, except for trying it.  
-
-<P>
-A standard Macintosh RS422 serial port will not work directly 
-with an MS100. Since it doesn't have two output status lines (DTR and RTS),
-it can't provide correct power to the MS100.  It may be possible to 
-provide external power; if you're interested in trying this, we'd
-be happy to help work out a solution. A LocoBuffer will work fine
-with a standard Macintosh RS422 serial port.
+Because we can't be sure your computer will be able to talk to a 
+MS100 without trying it, you should test this before spending money
+on the MS100. To do that:
+<UL>
+<LI>Start the program.
+<LI>Set the preferences for MS100 and your serial port. You
+don't need to have anything connected, but do select the port
+you will eventually be using. 
+<LI>Save the preferences.
+<LI>Quit the program and restart it so that the preferences take effect.
+</UL>If you get a dialog box saying "Could not set baud rate...", then 
+you won't be able to use your computer with a MS100.  You should use 
+a LocoBuffer.
 
 <P> 
 DecoderPro is tested with both a MS100 and a LocoBuffer on 
@@ -433,7 +446,7 @@ allow you to display raw data in addition to the interpreted packets, to clear t
 listing, and to write output to a log file.
 
 
-<h3>For more information</H3>
+<h3>For more information:</H3>
 
 More information is available on the Decoder Pro page:
 <A HREF="http://jmri.sourceforge.net/PaneProg">http://jmri.sourceforge.net/PaneProg</A>

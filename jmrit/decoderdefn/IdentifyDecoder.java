@@ -16,7 +16,7 @@ import com.sun.java.util.collections.List;
  * it works through the identification progress.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: IdentifyDecoder.java,v 1.4 2001-12-02 05:46:42 jacobsen Exp $
+ * @version			$Id: IdentifyDecoder.java,v 1.5 2002-01-16 17:42:09 jacobsen Exp $
  * @see             jmri.jmrit.roster.RosterEntry
  */
 abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
@@ -27,14 +27,14 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
 	// steps of the identification state machine
 	public boolean test1() {
 		// read cv8
-		statusUpdate("Read MFG ID - CV 18");
+		statusUpdate("Read MFG ID - CV 8");
 		readCV(8);
 		return false;
 	}
 	
 	public boolean test2(int value) {
 		mfgID = value;
-		statusUpdate("Read MFG version - CV 17");
+		statusUpdate("Read MFG version - CV 7");
 		readCV(7);
 		return false;
 	}
