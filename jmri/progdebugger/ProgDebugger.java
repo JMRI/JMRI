@@ -1,10 +1,4 @@
-/** 
- * ProgDebugger.java
- *
- * Description:		debugging implementation of Programmer
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version			
- */
+// ProgDebugger.java
 
 package jmri.progdebugger;
 
@@ -15,6 +9,11 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.util.Vector;
 
+/**
+ * Debugging implementation of Programmer interface
+ * @author			Bob Jacobsen Copyright (C) 2001
+ * @version         $Revision: 1.10 $
+ */
 public class ProgDebugger implements Programmer  {
 
 	// write CV
@@ -27,7 +26,7 @@ public class ProgDebugger implements Programmer  {
 		log.info("decoderErrorCode "+i);
 		return "error "+i;
 	}
-	
+
 	public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException
 	{
 		final ProgListener m = p;
@@ -38,13 +37,13 @@ public class ProgDebugger implements Programmer  {
 		// return a notification via the queue to ensure end
 		Runnable r = new Runnable() {
 			ProgListener l = m;
-			public void run() { 
+			public void run() {
 				log.debug("write CV reply");
 				l.programmingOpReply(-1, 0); }  // 0 is OK status
 			};
 		javax.swing.SwingUtilities.invokeLater(r);
 	}
-	
+
 	// read CV
 	private int _nextRead = 123;
 	public void nextRead(int r) { _nextRead = r; }
@@ -53,7 +52,7 @@ public class ProgDebugger implements Programmer  {
 	public int lastReadCv() { return _lastReadCv; }
 
 	public boolean _confirmOK = false;
-	
+
 	public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
 		final ProgListener m = p;
 		log.debug("confirm CV: "+CV+" mode: "+getMode()+" will read pass: "+_confirmOK);
@@ -63,14 +62,14 @@ public class ProgDebugger implements Programmer  {
 			ProgListener l = m;
 			public void run() {
 				log.debug("read CV reply");
-				if (_confirmOK) l.programmingOpReply(_nextRead, ProgListener.OK); 
-				else l.programmingOpReply(_nextRead, ProgListener.ConfirmFailed); 
+				if (_confirmOK) l.programmingOpReply(_nextRead, ProgListener.OK);
+				else l.programmingOpReply(_nextRead, ProgListener.ConfirmFailed);
 			}
 		};
 		javax.swing.SwingUtilities.invokeLater(r);
 
 	}
-	
+
 	public void readCV(int CV, ProgListener p) throws ProgrammerException {
 		final ProgListener m = p;
 		log.debug("read CV: "+CV+" mode: "+getMode()+" will read "+_nextRead);
@@ -87,11 +86,11 @@ public class ProgDebugger implements Programmer  {
 		javax.swing.SwingUtilities.invokeLater(r);
 
 	}
-	
+
 
 	// handle mode
 	protected int _mode = 0;
-	
+
 	public void setMode(int mode) {
 		log.info("setMode: old="+_mode+" new="+mode);
 		if (mode != _mode) {
@@ -100,10 +99,14 @@ public class ProgDebugger implements Programmer  {
 		}
 	}
 	public int getMode() { return _mode; }
-	
+    public boolean hasMode(int mode) {
+        log.debug("pretending to have mode "+mode);
+        return true;
+    }
+
 	// data members to hold contact with the property listeners
 	private Vector propListeners = new Vector();
-	
+
 	public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
 			// add only if not already registered
 			if (!propListeners.contains(l)) {
