@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import java.util.*;
 
 /**
  * Provide a GUI for configuring PerformActionModel objects.
@@ -21,21 +22,25 @@ import javax.swing.JPanel;
  *
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @see apps.PerformActionModel
  */
 public class PerformActionPanel extends JPanel {
 
     JPanel self;  // used for synchronization
+    protected ResourceBundle rb;
 
     public PerformActionPanel() {
         self = this;
+
+        rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
+
         // GUi is a series of horizontal entries
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // add existing items
 
-        JButton addButton = new JButton("Add Action");
+        JButton addButton = new JButton(rb.getString("ButtonAdd"));
         JPanel panel = new JPanel();  // button is a horizontal item too; expands to fill BoxLayout
         panel.setLayout(new FlowLayout());
         panel.add(addButton);
@@ -64,7 +69,7 @@ public class PerformActionPanel extends JPanel {
     }
 
     public class Item extends JPanel implements ActionListener {
-        JButton removeButton = new JButton("Remove");
+        JButton removeButton = new JButton(rb.getString("ButtonRemove"));
         Item() {
             setLayout(new FlowLayout());
             add(removeButton);
