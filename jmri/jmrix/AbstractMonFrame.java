@@ -21,7 +21,7 @@ import javax.swing.text.*;
 /**
  * Abstact base class for Frames displaying communications monitor information
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public abstract class AbstractMonFrame extends JFrame  {
 
@@ -316,6 +316,10 @@ public abstract class AbstractMonFrame extends JFrame  {
         }
     }
 
+    public synchronized String getFrameText() {
+        return new String(linesBuffer);
+    }
+    
     PrintStream logStream = null;
 
     // to get a time string
