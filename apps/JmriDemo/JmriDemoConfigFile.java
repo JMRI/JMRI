@@ -16,7 +16,7 @@ import org.jdom.output.*;
  * JmriDemo application. Works with the JmriDemoConfigFrame
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version		 	$Revision: 1.2 $
+ * @version		 	$Revision: 1.3 $
  * @see apps.AbstractConfigFrame
  */
 public class JmriDemoConfigFile extends apps.AbstractConfigFile {
@@ -55,6 +55,7 @@ public class JmriDemoConfigFile extends apps.AbstractConfigFile {
 			}
 		catch (Exception e) {
 			log.error(e);
+            e.printStackTrace();
 		}
 	}
 

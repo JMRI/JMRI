@@ -24,7 +24,7 @@ import org.jdom.Attribute;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 abstract public class AbstractConfigFrame extends JFrame {
 
@@ -59,6 +59,7 @@ abstract public class AbstractConfigFrame extends JFrame {
      * <LI>"LocoNet LocoBuffer"
      * <LI>"LocoNet MS100"
      * <LI>"LocoNet Server"
+     * <LI>"LocoNet HexFile"
      * <LI>"CMRI serial"
      * <LI>"EasyDCC"
      * <LI>"Lenz XPressNet"
@@ -75,7 +76,7 @@ abstract public class AbstractConfigFrame extends JFrame {
                             "EasyDCC",
                             "Lenz XPressNet",
                             "LocoNet LocoBuffer","LocoNet MS100",
-                            "LocoNet Server",
+                            "LocoNet Server", "LocoNet HexFile",
                             "NCE"
                         };
     }
@@ -305,6 +306,19 @@ abstract public class AbstractConfigFrame extends JFrame {
     				opt2Box.setToolTipText("There are no options for this protocol");
     				opt2Box.setEnabled(false);
     			}
+
+    		} else if (protocolName.equals("LocoNet HexFile")) {
+    			//
+    			log.debug("HexFile has no ports to find");
+
+    			baudBox.setToolTipText("The baud rate is fixed for this protocol");
+                baudBox.setEnabled(false);
+
+                opt1Box.setToolTipText("There are no options for this protocol");
+                opt1Box.setEnabled(false);
+
+                opt2Box.setToolTipText("There are no options for this protocol");
+                opt2Box.setEnabled(false);
 
     		} else if (protocolName.equals("LocoNet Server")) {
     			// This is somewhat special, as the option has to
@@ -567,53 +581,57 @@ abstract public class AbstractConfigFrame extends JFrame {
 
 		// configure port name
 		portName = e.getAttribute("port").getValue();
-		portBox.setSelectedItem(e.getAttribute("port").getValue());
-		portName = e.getAttribute("port").getValue();  // may have been changed by prior line
-		// check that the specified port exists
-		if (!e.getAttribute("port").getValue().equals(portBox.getSelectedItem())) {
-			// can't connect to a non-existant port!
-			log.error("Configured port \""+portName+"\" doesn't exist, no connection to layout made");
-			return false;
-		}
+        // ugly special-case hack:
+        if (!protocolName.equals("LocoNet HexFile")) {
+		    portBox.setSelectedItem(e.getAttribute("port").getValue());
+		    portName = e.getAttribute("port").getValue();  // may have been changed by prior line
+		    // check that the specified port exists
+		    if (!e.getAttribute("port").getValue().equals(portBox.getSelectedItem())) {
+			    // can't connect to a non-existant port!
+			    log.error("Configured port \""+portName+"\" doesn't exist, no connection to layout made");
+			    return false;
+		    }
 
-		// configure baud rate - an optional attribute
-		if (e.getAttribute("speed")!=null) {
-			baudRate = e.getAttribute("speed").getValue();
-			baudBox.setSelectedItem(baudRate);
-			baudRate = e.getAttribute("speed").getValue();  // may have been changed by prior line
-			// check that the specified setting exists
-			if (!e.getAttribute("speed").getValue().equals(baudBox.getSelectedItem())) {
-				// can't set non-existant option value!
-				log.error("Configured baud rate\""+baudRate+"\" doesn't exist, no connection to layout made");
-				return false;
-			}
-		}
+		    // configure baud rate - an optional attribute
+		    if (e.getAttribute("speed")!=null) {
+			    baudRate = e.getAttribute("speed").getValue();
+			    baudBox.setSelectedItem(baudRate);
+			    baudRate = e.getAttribute("speed").getValue();  // may have been changed by prior line
+			    // check that the specified setting exists
+			    if (!e.getAttribute("speed").getValue().equals(baudBox.getSelectedItem())) {
+				    // can't set non-existant option value!
+				    log.error("Configured baud rate\""+baudRate+"\" doesn't exist, no connection to layout made");
+				    return false;
+			    }
+		    }
 
-		// configure option1 - an optional attribute
-		if (e.getAttribute("option1")!=null) {
-			option1Setting = e.getAttribute("option1").getValue();
-			opt1Box.setSelectedItem(option1Setting);
-			option1Setting = e.getAttribute("option1").getValue();  // may have been changed by prior line
-			// check that the specified setting exists
-			if (!e.getAttribute("option1").getValue().equals(opt1Box.getSelectedItem())) {
-				// can't set non-existant option value!
-				log.error("Configured option1 value \""+option1Setting+"\" doesn't exist, no connection to layout made");
-				return false;
-			}
-		}
+		    // configure option1 - an optional attribute
+		    if (e.getAttribute("option1")!=null) {
+			    option1Setting = e.getAttribute("option1").getValue();
+			    opt1Box.setSelectedItem(option1Setting);
+			    option1Setting = e.getAttribute("option1").getValue();  // may have been changed by prior line
+			    // check that the specified setting exists
+			    if (!e.getAttribute("option1").getValue().equals(opt1Box.getSelectedItem())) {
+				    // can't set non-existant option value!
+				    log.error("Configured option1 value \""+option1Setting+"\" doesn't exist, no connection to layout made");
+				    return false;
+			    }
+		    }
 
-		// configure option2 - an optional attribute
-		if (e.getAttribute("option2")!=null) {
-			option2Setting = e.getAttribute("option2").getValue();
-			opt2Box.setSelectedItem(option2Setting);
-			option2Setting = e.getAttribute("option2").getValue();  // may have been changed by prior line
-			// check that the specified setting exists
-			if (!e.getAttribute("option2").getValue().equals(opt2Box.getSelectedItem())) {
-				// can't set non-existant option value!
-				log.error("Configured option2 value \""+option1Setting+"\" doesn't exist, no connection to layout made");
-				return false;
-			}
-		}
+		    // configure option2 - an optional attribute
+		    if (e.getAttribute("option2")!=null) {
+			    option2Setting = e.getAttribute("option2").getValue();
+			    opt2Box.setSelectedItem(option2Setting);
+			    option2Setting = e.getAttribute("option2").getValue();  // may have been changed by prior line
+			    // check that the specified setting exists
+			    if (!e.getAttribute("option2").getValue().equals(opt2Box.getSelectedItem())) {
+				    // can't set non-existant option value!
+				    log.error("Configured option2 value \""+option1Setting+"\" doesn't exist, no connection to layout made");
+				    return false;
+			    }
+		    }
+        } // end of HexFile special-case hack
+
 		// handle the specific case (a good use for reflection!)
 		log.info("Configuring connection with "+protocolName+" "+portName);
 		if (protocolName.equals("LocoNet LocoBuffer")) {
@@ -643,6 +661,19 @@ abstract public class AbstractConfigFrame extends JFrame {
 			a.openPort(portName, "JMRI/DecoderPro");
 			a.configure();
 			a.configureOption2(getCurrentOption2Setting());
+
+		} else if (protocolName.equals("LocoNet HexFile")) {
+			// pop the panel
+		    	jmri.jmrix.loconet.hexfile.HexFileFrame f
+                    = new jmri.jmrix.loconet.hexfile.HexFileFrame();
+		    try {
+			    f.initComponents();
+			    }
+		    catch (Exception ex) {
+			    log.error("starting HexFileFrame exception: "+ex.toString());
+			    }
+		    f.pack();
+		    f.show();
 
 		} else if (protocolName.equals("LocoNet Server")) {
 			// slightly different, as not based on a serial port...
