@@ -4,19 +4,22 @@ import jmri.jmrix.AbstractThrottle;
 
 /**
  * An implementation of DccThrottle with code specific to an NCE connection.
+ * <P>
+ * Addresses of 99 and below are considered short addresses, and
+ * over 100 are considered long addresses.  This is not the NCE system
+ * standard, but is used as an expedient here.
+ * <P>
+ * Based on Glen Oberhauser's original LnThrottleManager implementation
+ *
+ * @author			Bob Jacobsen  Copyright (C) 2001
+ * @version         $Revision: 1.2 $
  */
 public class NceThrottle extends AbstractThrottle
 {
-    private float speedSetting;
-    private float speedIncrement;
-    private int address;
-    private boolean isForward;
-    private boolean f0, f1, f2, f3, f4, f5, f6, f7, f8;
-
     /**
      * Constructor
      */
-    public NceThrottle()
+    public NceThrottle(int address)
     {
         // cache settings
         this.speedSetting = 0;
@@ -29,7 +32,7 @@ public class NceThrottle extends AbstractThrottle
         this.f6           = false;
         this.f7           = false;
         this.f8           = false;
-        this.address      = 0;
+        this.address      = address;
         this.isForward    = true;
 
     }
@@ -39,12 +42,24 @@ public class NceThrottle extends AbstractThrottle
      * Send the message to set the state of functions F0, F1, F2, F3, F4
      */
     private void sendLowerFunctions() {
-        int bytes = 0x80 |
-                    (getF0() ? 0x10 : 0) |
-                    (getF1() ? 0x01 : 0) |
-                    (getF2() ? 0x02 : 0) |
-                    (getF3() ? 0x04 : 0) |
-                    (getF4() ? 0x08 : 0);
+        byte[] result = jmri.NmraPacket.function0Through4Packet(address, (address>=100),
+                                         getF0(), getF1(), getF2(), getF3(), getF4());
+
+        NceMessage m = new NceMessage(5+3*result.length);
+        int i = 0;  // message index counter
+        m.setElement(i++, 'S');
+        m.setElement(i++, ' ');
+        m.setElement(i++, 'C');
+        m.setElement(i++, '0');
+        m.setElement(i++, '5');
+
+        for (int j = 0; j<result.length; j++) {
+            m.setElement(i++, ' ');
+            m.addIntAsTwoHex(result[j]&0xFF,i);
+            i = i+2;
+        }
+
+        NceTrafficController.instance().sendNceMessage(m, null);
     }
 
     /**
@@ -52,11 +67,25 @@ public class NceThrottle extends AbstractThrottle
      * functions F5, F6, F7, F8
      */
     private void sendHigherFunctions() {
-        int bytes =  0xB0 |
-                    (getF8() ? 0x08 : 0) |
-                    (getF7() ? 0x04 : 0) |
-                    (getF6() ? 0x02 : 0) |
-                    (getF5() ? 0x01 : 0);
+
+        byte[] result = jmri.NmraPacket.function5Through8Packet(address, (address>=100),
+                                         getF5(), getF6(), getF7(), getF8());
+
+        NceMessage m = new NceMessage(5+3*result.length);
+        int i = 0;  // message index counter
+        m.setElement(i++, 'S');
+        m.setElement(i++, ' ');
+        m.setElement(i++, 'C');
+        m.setElement(i++, '0');
+        m.setElement(i++, '5');
+
+        for (int j = 0; j<result.length; j++) {
+            m.setElement(i++, ' ');
+            m.addIntAsTwoHex(result[j]&0xFF,i);
+            i = i+2;
+        }
+
+        NceTrafficController.instance().sendNceMessage(m, null);
     }
 
     /**
@@ -72,17 +101,18 @@ public class NceThrottle extends AbstractThrottle
         if (value>127) value = 127;    // max possible speed
         if (value<0) value = 1;        // emergency stop
 
-        NceMessage m = new NceMessage();
+        byte[] result = jmri.NmraPacket.speedStep128Packet(address, (address>=100), value, isForward);
+
+        NceMessage m = new NceMessage(1+3*result.length);
         int i = 0;  // message index counter
         m.setElement(i++, 'Q');
-        m.setElement(i++, ' ');
-        m.setElement(i++, 'C');
-        m.setElement(i++, '0');
-        m.setElement(i++, '5');
-        m.setElement(i++, ' ');
 
-        m.addIntAsTwoHex(0,i);
-        i = i+2;
+        for (int j = 0; j<result.length; j++) {
+            m.setElement(i++, ' ');
+            m.addIntAsTwoHex(result[j]&0xFF,i);
+            i = i+2;
+        }
+
         NceTrafficController.instance().sendNceMessage(m, null);
     }
 
