@@ -10,9 +10,15 @@ import jmri.TurnoutManager;
  * Provides the abstract base and store functionality for
  * configuring TurnoutManagers, working with
  * AbstractTurnoutManagers.
+ * <P>
+ * Typically, a subclass will just implement the load(Element turnouts)
+ * class, relying on implementation here to load the individual turnouts.
+ * Note that these are stored explicitly, so the
+ * resolution mechanism doesn't need to see *Xml classes for each
+ * specific Turnout or AbstractTurnout subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
 
@@ -52,6 +58,7 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
     /**
      * Subclass provides implementation to create the correct top
      * element, including the type information.
+     * Default implementation is to use the local class here.
      * @param turnouts The top-level element being created
      */
     abstract public void setStoreElementClass(Element turnouts);
@@ -86,6 +93,23 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
 
             tm.newTurnout(sysName, userName);
         }
+    }
+
+    /**
+     * Replace the current turnout manager, if there is one, with
+     * one newly created during a load operation.
+     * @param pManager
+     */
+    protected void replaceTurnoutManager(TurnoutManager pManager) {
+        // if old manager exists, remove it from configuration process
+        if (InstanceManager.turnoutManagerInstance() != null)
+            InstanceManager.configureManagerInstance().deregister(
+                InstanceManager.turnoutManagerInstance() );
+
+        // register new one with InstanceManager
+        InstanceManager.setTurnoutManager(pManager);
+        // register new one for configuration
+        InstanceManager.configureManagerInstance().register(pManager);
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ConfigXmlManager.class.getName());
