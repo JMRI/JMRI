@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <!--Written by JMRI version 1.5.3 on Mon Aug 23 22:18:04 PDT 2004 $Id: decoderIndex.xml,v 1.68 2004-08-24 05:19:38 jacobsen Exp $-->
+  <!--Written by JMRI version 1.5.3 on Thu Aug 26 10:41:10 PDT 2004 $Id: decoderIndex.xml,v 1.69 2004-08-26 17:43:48 jacobsen Exp $-->
   <decoderIndex version="83">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -113,6 +113,20 @@
       </family>
       <family name="Sound Decoder GE 70/80" mfg="CT Elektronik" type="locomotive" file="CT_Elektronik_Sound_GE_70_80.xml">
         <model model="GE 70/80" numOuts="10" numFns="8" connector="unspecified" nmraWarrant="no">
+          <versionCV lowVersionID="3" />
+          <output name="3" label="Riding Sound" connection="unspecified" />
+          <output name="4" label="Soundslot 1" connection="unspecified" />
+          <output name="5" label="Soundslot 2" connection="unspecified" />
+          <output name="6" label="Soundslot 3" connection="unspecified" />
+          <output name="7" label="Soundslot 4" connection="unspecified" />
+          <output name="8" label="Soundslot 5" connection="unspecified" />
+          <output name="9" label="Soundslot 6" connection="unspecified" />
+          <output name="10" label="Soundslot 7" connection="unspecified" />
+          <output name="11" label="Soundslot 8" connection="unspecified" />
+        </model>
+      </family>
+      <family name="Sound Decoder SL 51" mfg="CT Elektronik" type="locomotive" file="CT_Elektronik_Sound_SL_51.xml">
+        <model model="SL 51" numOuts="10" numFns="8" connector="unspecified" nmraWarrant="no">
           <versionCV lowVersionID="3" />
           <output name="3" label="Riding Sound" connection="unspecified" />
           <output name="4" label="Soundslot 1" connection="unspecified" />
