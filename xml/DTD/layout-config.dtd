@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a layout config, esp. information -->
 <!-- on hardware connections -->
-<!-- $Id: layout-config.dtd,v 1.8 2003-04-09 15:45:59 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.9 2003-05-09 05:46:04 jacobsen Exp $ -->
 
 <!ELEMENT layout-config (turnouts | sensors | blocks | signals | 
 						securityelements | aspectgenerator | paneleditor |
@@ -28,6 +28,14 @@
   <!ATTLIST programmer defaultFile CDATA "Basic.xml">
   <!ATTLIST programmer verifyBeforeWrite (yes | no) "no" >
 
+
+<!ELEMENT sensors (sensor*) >
+
+  <!ATTLIST sensors class		CDATA #REQUIRED>
+
+  <!ELEMENT sensor EMPTY >
+    <!ATTLIST sensor systemName	CDATA #REQUIRED>  <!-- defines system type -->
+    <!ATTLIST sensor userName		CDATA #IMPLIED>
 
 <!ELEMENT turnouts (turnout*)>
   <!ATTLIST turnouts class		CDATA #REQUIRED>
@@ -160,8 +168,6 @@
     <!ATTLIST securityelementicon y			CDATA #REQUIRED>
     <!ATTLIST securityelementicon height	CDATA #IMPLIED> <!-- deprecated -->
     <!ATTLIST securityelementicon width		CDATA #IMPLIED> <!-- deprecated -->
-
-<!ELEMENT sensors EMPTY >
 
 <!ELEMENT blocks EMPTY >
 
