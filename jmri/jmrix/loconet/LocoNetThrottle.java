@@ -53,6 +53,11 @@ public class LocoNetThrottle implements DccThrottle
             case LnConstants.DEC_MODE_28TRI: this.speedIncrement = 4; break;
             case LnConstants.DEC_MODE_14: this.speedIncrement = 8; break;
         }
+
+        // start a periodically sending the speed, to keep this
+        // attached
+        startRefresh();
+
     }
 
 
@@ -81,15 +86,15 @@ public class LocoNetThrottle implements DccThrottle
      */
     private void sendHigherFunctions()
     {
-       LocoNetMessage msg = new LocoNetMessage(4);
-       msg.setOpCode(LnConstants.OPC_LOCO_SND);
-       msg.setElement(1, slot.getSlot());
-       int bytes =  (getF8() ? LnConstants.SND_F8 : 0) |
+        LocoNetMessage msg = new LocoNetMessage(4);
+        msg.setOpCode(LnConstants.OPC_LOCO_SND);
+        msg.setElement(1, slot.getSlot());
+        int bytes =  (getF8() ? LnConstants.SND_F8 : 0) |
                     (getF7() ? LnConstants.SND_F7 : 0) |
                     (getF6() ? LnConstants.SND_F6 : 0) |
                     (getF5() ? LnConstants.SND_F5 : 0);
         msg.setElement(2, bytes);
-       network.sendLocoNetMessage(msg);
+        network.sendLocoNetMessage(msg);
 
     }
 
@@ -101,13 +106,23 @@ public class LocoNetThrottle implements DccThrottle
         return speedSetting;
     }
 
+    /**
+     * Set the speed.
+     * <P>
+     * This intentionally skips the emergency stop value of 1.
+     * @param speed Number from 0 to 1; less than zero is emergency stop
+     */
     public void setSpeedSetting(float speed)
     {
         this.speedSetting = speed;
         LocoNetMessage msg = new LocoNetMessage(4);
         msg.setOpCode(LnConstants.OPC_LOCO_SPD);
         msg.setElement(1, slot.getSlot());
-        msg.setElement(2, (int)(127*speed));
+        int value = (int)((127-1)*speed);     // -1 for rescale to avoid estop
+        if (value>0) value = value+1;  // skip estop
+        if (value>127) value = 127;    // max possible speed
+        if (value<0) value = 1;        // emergency stop
+        msg.setElement(2, value);
         network.sendLocoNetMessage(msg);
     }
 
@@ -276,9 +291,20 @@ public class LocoNetThrottle implements DccThrottle
      * This is quite problematic, because a using object doesn't know when
      * it's the last user.
      */
-    public void dispose()
-    {
-    }
+    public void dispose() {
+        log.debug("dispose");
+        // stop timeout
+        mRefreshTimer.stop();
+
+        // release connections
+        mRefreshTimer = null;
+        slot = null;
+        network = null;
+
+        // if this object has registered any listeners, remove those.
+
+        // is there a dispose method in the superclass?
+     }
 
 
     public int getDccAddress()
@@ -286,15 +312,35 @@ public class LocoNetThrottle implements DccThrottle
         return address;
     }
 
-    // to handle quantized speed. Note this can change! Valued returned is
-    // always positive.
+    /**
+     * to handle quantized speed. Note this can change! Valued returned is
+     * always positive.
+     */
     public float getSpeedIncrement()
     {
         return speedIncrement;
     }
 
-    // information on consisting  (how do we set consisting?)
+    javax.swing.Timer mRefreshTimer = null;
 
-    // register for notification
+    protected void startRefresh() {
+        mRefreshTimer = new javax.swing.Timer(50000, new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                timeout();
+            }
+        });
+        mRefreshTimer.setRepeats(true);     // refresh until stopped by dispose
+        mRefreshTimer.start();
+    }
+
+    /**
+     * Internal routine to resend the speed on a timeout
+     */
+    synchronized protected void timeout() {
+        setSpeedSetting(speedSetting);
+    }
+
+    // initialize logging
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoNetThrottle.class.getName());
 
 }
