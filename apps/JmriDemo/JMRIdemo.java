@@ -9,14 +9,14 @@ import java.text.MessageFormat;
 import javax.swing.JFrame;
 
 /**
- * The JMRI demo program
+ * The JMRI demo program.
  * <P>
  * If an argument is provided at startup, it will be used as the name of
  * the configuration file.  Note that this is just the name, not the path;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.59 $
+ * @version     $Revision: 1.60 $
  */
 public class JMRIdemo extends Apps {
 

@@ -10,14 +10,14 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 
 /**
- * Nick Kulp's Cornwall Railroad
+ * Nick Kulp's Cornwall Railroad.
  * <P>
  * If an argument is provided at startup, it will be used as the name of
  * the configuration file.  Note that this is just the name, not the path;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 public class CornwallRR extends Apps {
 
