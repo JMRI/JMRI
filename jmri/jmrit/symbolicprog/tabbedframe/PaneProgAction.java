@@ -17,10 +17,11 @@ import org.jdom.input.*;
 
 /**
  * Swing action to create and register a
- *       			SymbolicProg object
+ * frame used to eventually open the PaneProgFrame. That JFrame
+ * is constructed on the fly here, and has no specific type.
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class PaneProgAction 			extends AbstractAction {
 
