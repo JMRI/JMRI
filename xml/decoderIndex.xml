@@ -751,12 +751,12 @@
         </model>
       </family>
       <family name="LC Diesel decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_LC_Diesel.xml">
-        <model model="100LC Diesel" numOuts="2" numFns="8" connector="unspecified" nmraWarrant="no">
+        <model model="100LC Diesel" numOuts="4" numFns="8" connector="unspecified" nmraWarrant="no">
           <versionCV lowVersionID="34" />
           <output name="Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
-          <!--output name="3" label="FX1/grn" /-->
-          <!--output name="4" label="FX2/brwn" /-->
+          <output name="3" label="FX1" connection="unspecified" />
+          <output name="4" label="FX2" connection="unspecified" />
           <output name="DynBrake" connection="unspecified" />
           <output name="RPM+" connection="unspecified" />
           <output name="RPM-" connection="unspecified" />
@@ -837,12 +837,12 @@
         </model>
       </family>
       <family name="LC steam decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_LC_Steam.xml">
-        <model model="100LC Steam" numOuts="2" numFns="8" connector="unspecified" nmraWarrant="no">
+        <model model="100LC Steam" numOuts="4" numFns="8" connector="unspecified" nmraWarrant="no">
           <versionCV lowVersionID="32" />
           <output name="Whistle" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
-          <!--output name="3" label="FX1/grn" /-->
-          <!--output name="4" label="FX2/brwn" /-->
+          <output name="3" label="FX1" connection="unspecified" />
+          <output name="4" label="FX2" connection="unspecified" />
           <output name="Dim" connection="unspecified" />
           <output name="Mute" connection="unspecified" />
           <!-- The two electical outputs are front headlight, back -->
