@@ -11,7 +11,7 @@ import com.sun.java.util.collections.List;
  * are separately implemented, instead of being system-specific.
  *
  * @author      Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public interface SignalHeadManager extends Manager {
 
@@ -30,7 +30,7 @@ public interface SignalHeadManager extends Manager {
     public SignalHead getByUserName(String s);
     public SignalHead getBySystemName(String s);
     /**
-     * Get a list of all Turnouts' system names.
+     * Get a list of all SignalHead system names.
      */
     public List getSystemNameList();
 
