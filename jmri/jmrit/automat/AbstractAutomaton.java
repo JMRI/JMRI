@@ -39,7 +39,7 @@ import jmri.*;
  * a warning will be logged if they are used before the thread starts.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 abstract public class AbstractAutomaton implements Runnable {
 
@@ -260,6 +260,51 @@ abstract public class AbstractAutomaton implements Runnable {
             } catch (InterruptedException e) {
                 log.warn("waitSensorChange interrupted; this is unexpected");
             }
+        }
+
+        // remove the listeners
+        for (i=0; i<mSensors.length; i++) {
+            mSensors[i].removePropertyChangeListener(listeners[i]);
+        }
+
+        return;
+    }
+
+    /**
+     * Wait for one of a list of sensors to change.
+     * <P>
+     * This works by registering a listener, which is likely to
+     * run in another thread.  That listener then interrupts the automaton's
+     * thread, who confirms the change.
+     *
+     * @param mSensors Array of sensors to watch
+     */
+    protected synchronized void waitSensorChange(Sensor[] mSensors){
+        if (!inThread) log.warn("waitSensorChange invoked from invalid context");
+        if (log.isDebugEnabled()) log.debug("waitSensorChange[] starts");
+
+        // register listeners
+        int i;
+        java.beans.PropertyChangeListener[] listeners =
+                new java.beans.PropertyChangeListener[mSensors.length];
+        for (i=0; i<mSensors.length; i++) {
+
+            mSensors[i].addPropertyChangeListener(listeners[i] = new java.beans.PropertyChangeListener() {
+                public void propertyChange(java.beans.PropertyChangeEvent e) {
+                    synchronized (self) {
+                        log.debug("notify waitSensorChange[] of property change");
+                        self.notify();
+                    }
+                }
+            });
+
+        }
+
+        // wait for notify
+        try {
+            super.wait();
+        } catch (InterruptedException e) {
+            log.warn("waitSensorChange interrupted; this is unexpected");
         }
 
         // remove the listeners
