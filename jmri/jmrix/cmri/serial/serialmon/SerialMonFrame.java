@@ -2,24 +2,15 @@
 
 package jmri.jmrix.cmri.serial.serialmon;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import java.util.Date;
-import java.text.DateFormat;
-import java.io.File;
-import java.io.PrintStream;
-import java.io.FileOutputStream;
-
 import jmri.jmrix.cmri.serial.SerialListener;
-import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.serial.SerialMessage;
 import jmri.jmrix.cmri.serial.SerialReply;
+import jmri.jmrix.cmri.serial.SerialTrafficController;
 
 /**
  * Frame displaying (and logging) CMRI serial command messages
  * @author	    Bob Jacobsen   Copyright (C) 2001
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
@@ -37,7 +28,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 
     public void dispose() {
         SerialTrafficController.instance().removeSerialListener(this);
-	}
+    }
 
     public synchronized void message(SerialMessage l) {  // receive a message and log it
         // check for valid length
