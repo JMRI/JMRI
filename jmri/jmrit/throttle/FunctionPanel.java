@@ -2,6 +2,7 @@ package jmri.jmrit.throttle;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.event.KeyListener;
 import jmri.DccThrottle;
 
@@ -138,6 +139,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener
         for (int i=0; i<NUM_FUNCTION_BUTTONS; i++)
         {
             functionButton[i] = new FunctionButton();
+			functionButton[i].setActionMap(new ActionMap());			
             functionButton[i].setIdentity(i);
             functionButton[i].setFunctionListener(this);
             functionButton[i].setText("F"+String.valueOf(i));
@@ -147,7 +149,77 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener
             }
         }
         mainPanel.add(functionButton[0]);
+		
+		functionButton[0].setKeyCode(KeyEvent.VK_NUMPAD0);
+		functionButton[1].setKeyCode(KeyEvent.VK_NUMPAD1);
+		functionButton[2].setKeyCode(KeyEvent.VK_NUMPAD2);
+		functionButton[3].setKeyCode(KeyEvent.VK_NUMPAD3);
+		functionButton[4].setKeyCode(KeyEvent.VK_NUMPAD4);
+		functionButton[5].setKeyCode(KeyEvent.VK_NUMPAD5);
+		functionButton[6].setKeyCode(KeyEvent.VK_NUMPAD6);
+		functionButton[7].setKeyCode(KeyEvent.VK_NUMPAD7);
+		functionButton[8].setKeyCode(KeyEvent.VK_NUMPAD8);
+		functionButton[9].setKeyCode(KeyEvent.VK_NUMPAD9);
+		functionButton[10].setKeyCode(110); // numpad decimal (f10 button causes problems)
+		functionButton[11].setKeyCode(KeyEvent.VK_F11);
+		functionButton[12].setKeyCode(KeyEvent.VK_F12);
+		KeyListenerInstaller.installKeyListenerOnAllComponents(
+				new FunctionButtonKeyListener(), this);
     }
+
+
+	/**
+	 *  A KeyAdapter that listens for the keys that work the function buttons
+	 *
+	 * @author     glen
+	 * @created    March 30, 2003
+	 */
+	class FunctionButtonKeyListener extends KeyAdapter
+	{
+		private boolean keyReleased = true;
+		
+		/**
+		 *  Description of the Method
+		 *
+		 * @param  e  Description of the Parameter
+		 */
+		public void keyPressed(KeyEvent e)
+		{
+			if (keyReleased)
+			{
+				System.out.println("Pressed");
+				for (int i=0; i<NUM_FUNCTION_BUTTONS; i++)
+				{
+					if (e.getKeyCode() == functionButton[i].getKeyCode())
+					{
+						functionButton[i].changeState(!functionButton[i].isSelected());
+					}
+				}
+			}
+			keyReleased = false;
+		}
+
+		public void keyTyped(KeyEvent e)
+		{		
+			System.out.println("Typed");
+		}
+		
+		public void keyReleased(KeyEvent e)
+		{
+			System.out.println("Released");
+			for (int i=0; i<NUM_FUNCTION_BUTTONS; i++)
+			{
+				if (e.getKeyCode() == functionButton[i].getKeyCode())
+				{
+					if (!functionButton[i].getIsLockable())
+					{
+						functionButton[i].changeState(!functionButton[i].isSelected());
+					}
+				}
+			}
+			keyReleased = true;
+		}
+	}
 
 
     /**

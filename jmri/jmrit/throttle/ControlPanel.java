@@ -27,12 +27,12 @@ public class ControlPanel extends JInternalFrame
 	private JPanel buttonPanel;
 	private int speedIncrement;
 
-	public char accelerateKey = '+';
-	public char decelerateKey = '-';
+	public int accelerateKey = 107; // numpad +;
+	public int decelerateKey = 109; // numpad -;
 	public int reverseKey = KeyEvent.VK_DOWN;
 	public int forwardKey = KeyEvent.VK_UP;
-	public char stopKey = '/';
-	public char idleKey = '*';
+	public int stopKey = 111; // numpad /
+	public int idleKey = 106; // numpad *
 
 	private static int MAX_SPEED = 128;
 	//TODO: correct always?
@@ -286,7 +286,7 @@ public class ControlPanel extends JInternalFrame
 		 */
 		public void keyPressed(KeyEvent e)
 		{
-			if (e.getKeyChar() == accelerateKey)
+			if (e.getKeyCode() == accelerateKey)
 			{
 				if (speedSlider.isEnabled())
 				{
@@ -296,7 +296,7 @@ public class ControlPanel extends JInternalFrame
 					}
 				}
 			}
-			else if (e.getKeyChar() == decelerateKey)
+			else if (e.getKeyCode() == decelerateKey)
 			{
 				if (speedSlider.isEnabled())
 				{
@@ -320,14 +320,14 @@ public class ControlPanel extends JInternalFrame
 					reverseButton.setSelected(true);
 				}
 			}
-			else if (e.getKeyChar() == stopKey)
+			else if (e.getKeyCode() == stopKey)
 			{
 				if (speedSlider.isEnabled())
 				{
 					stop();
 				}
 			}
-			else if (e.getKeyChar() == idleKey)
+			else if (e.getKeyCode() == idleKey)
 			{
 				if (speedSlider.isEnabled())
 				{
