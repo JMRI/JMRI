@@ -13,7 +13,7 @@ import java.awt.event.*;
  * (Specific location) layout manager, so you have to specify these.
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Id: PanelEditor.java,v 1.3 2002-06-26 03:43:06 jacobsen Exp $
+ * @version $Id: PanelEditor.java,v 1.4 2002-07-11 14:46:52 jacobsen Exp $
  */
 
 public class PanelEditor extends JPanel {
@@ -40,6 +40,8 @@ public class PanelEditor extends JPanel {
     Icon thrownIcon = null;
     JLabel thrownIconLabel = new JLabel();
 
+    JButton backgroundAddButton = new JButton("Pick image");
+
     public PanelEditor() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -57,6 +59,22 @@ public class PanelEditor extends JPanel {
         this.add(common);
 
         this.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
+
+        // add a background image
+        {
+            JPanel panel = new JPanel();
+            panel.setLayout(new FlowLayout());
+            panel.add(new JLabel("add background image: "));
+            panel.add(backgroundAddButton);
+            panel.add(labelAdd);
+            backgroundAddButton.addActionListener( new ActionListener() {
+                    public void actionPerformed(ActionEvent a) {
+                        addBackground();
+                    }
+                }
+            );
+            this.add(panel);
+        }
 
         // add a text label
         {
@@ -172,6 +190,22 @@ public class PanelEditor extends JPanel {
     }
 
     /**
+     * Button pushed, add a background image (do this early!)
+     */
+    void addBackground() {
+        JFileChooser inputFileChooser = new JFileChooser(" ");
+		int retVal = inputFileChooser.showOpenDialog(this);
+		if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
+        log.debug("Open image file: "+inputFileChooser.getSelectedFile().getPath());
+		ImageIcon icon = new ImageIcon(inputFileChooser.getSelectedFile().getPath());
+        JLabel l = new PositionableLabel(icon);
+        l.setSize(icon.getIconWidth(), icon.getIconHeight());
+        target.add(l);
+        backgroundAddButton.setEnabled(false);   // theres only one
+        target.revalidate();
+    }
+
+    /**
      * Add a turnout indicator to the target
      */
     void addTurnout() {
@@ -205,7 +239,7 @@ public class PanelEditor extends JPanel {
      * Add an icon to the target
      */
     void addIcon() {
-        JComponent l = new PositionableLabel(labelIcon);
+        PositionableLabel l = new PositionableLabel(labelIcon);
         setNextLocation(l);
         l.invalidate();
         target.add(l);
