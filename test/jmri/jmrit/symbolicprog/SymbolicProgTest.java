@@ -1,9 +1,9 @@
-/** 
+/**
  * SymbolicProgTest.java
  *
- * Description:	
+ * Description:
  * @author			Bob Jacobsen
- * @version			
+ * @version         $Id: SymbolicProgTest.java,v 1.2 2002-03-09 23:33:24 jacobsen Exp $
  */
 
 package jmri.jmrit.symbolicprog;
@@ -27,11 +27,11 @@ public class SymbolicProgTest extends TestCase {
 		// initialize the system
 		Programmer p = new ProgDebugger();
 		InstanceManager.setProgrammer(p);
-		assert (InstanceManager.programmerInstance() == p);
+		assertTrue(InstanceManager.programmerInstance() == p);
 	}
-		
+
 	// from here down is testing infrastructure
-	
+
 	public SymbolicProgTest(String s) {
 		super(s);
 	}
@@ -41,7 +41,7 @@ public class SymbolicProgTest extends TestCase {
 		String[] testCaseName = {SymbolicProgTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
-	
+
 	// test suite from all defined tests, including others in the package
 	public static Test suite() {
 		TestSuite suite = new TestSuite(SymbolicProgTest.class);
@@ -57,7 +57,7 @@ public class SymbolicProgTest extends TestCase {
 		suite.addTest(jmri.jmrit.symbolicprog.VariableTableModelTest.suite());
 		return suite;
 	}
-	
+
 	// static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SymbolicProgTest.class.getName());
 
 }
