@@ -1,7 +1,7 @@
-/** 
+/**
  * LnHexFilePort.java
  *
- * Description:		LnHexFilePort implements a LnPortController via a 
+ * Description:		LnHexFilePort implements a LnPortController via a
  *					ASCII-hex input file. See below for the file format
  *					There are user-level controls for
  *						send next message
@@ -12,7 +12,7 @@
  *					needed.
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			
+ * @version			$Revision: 1.2 $
  */
 
 /**
@@ -36,71 +36,91 @@ import java.io.File;
 
 public class LnHexFilePort 			extends LnPortController implements Runnable {
 
-/* load(File) fills the contents from a file */
-public void load(File file) {
+    public LnHexFilePort() {
+		try {
+            PipedInputStream tempPipe = new PipedInputStream();
+            pin = new DataInputStream(tempPipe);
+            outpipe = new DataOutputStream(new PipedOutputStream(tempPipe));
+            pout = outpipe;
+        }
+		catch (java.io.IOException e) {
+			log.error("init (pipe): Exception: "+e.toString());
+        }
+    }
+
+    /* load(File) fills the contents from a file */
+    public void load(File file) {
 		if (log.isDebugEnabled()) log.debug("file: "+file);
 
 		// create the pipe stream for output, also store as the input stream if somebody wants to send
 		// (This will emulate the LocoNet echo)
 		try {
 			sFile = new DataInputStream(new FileInputStream(file));
-			PipedInputStream tempPipe = new PipedInputStream();
-			pin = new DataInputStream(tempPipe);
-			outpipe = new DataOutputStream(new PipedOutputStream(tempPipe));
-			pout = outpipe;
-			}
+        }
 		catch (Exception e) {
 			log.error("load (pipe): Exception: "+e.toString());
-			}
+        }
 	}
 
-public void run() { // invoked in a new thread
-		_running = true;
-		// process the input file into the output side of pipe
-		try {
-			String s;
-			byte bval;
-			int ival;
-			int len;
-			while (sFile.available() > 3) {
-				// this loop reads one line per turn
-				s = sFile.readLine();
-				// ErrLog.msg(ErrLog.debugging,"LnHexFilePort","run","string=<"+s+">");
-				len = s.length();
-				for (int i=0; i<len; i+=3) {
-					// parse as hex into integer, then convert to byte
-					ival = Integer.valueOf(s.substring(i,i+2),16).intValue();
-					// send each byte to the output pipe (input to consumer)
-					bval = (byte) ival;
-					outpipe.writeByte(bval);
-					}
-				// finished that line, wait 
-				Thread.sleep(delay);
-				}
-			}
-		catch (Exception e) {
-			log.error("run: Exception: "+e.toString());
-			}		
-		// here we're done processing the file, return to end the thread
-		_running = false;
+    public void run() { // invoked in a new thread
+        while (true) {
+            if (sFile!= null) {
+        		_running = true;
+        		// process the input file into the output side of pipe
+		        try {
+			        String s;
+			        byte bval;
+			        int ival;
+			        int len;
+			        while (sFile.available() > 3) {
+				        // this loop reads one line per turn
+				        s = sFile.readLine();
+				        // ErrLog.msg(ErrLog.debugging,"LnHexFilePort","run","string=<"+s+">");
+				        len = s.length();
+				        for (int i=0; i<len; i+=3) {
+					        // parse as hex into integer, then convert to byte
+					        ival = Integer.valueOf(s.substring(i,i+2),16).intValue();
+					        // send each byte to the output pipe (input to consumer)
+					        bval = (byte) ival;
+					        outpipe.writeByte(bval);
+					    }
+				        // finished that line, wait
+				        Thread.sleep(delay);
+				    }
+			    }
+		        catch (Exception e) {
+			        log.error("run: Exception: "+e.toString());
+			    }
+		        // here we're done processing the file
+                log.info("normal finish to file");
+		        sFile = null;
+                _running = false;
+            }
+            // wait to be told there's more coming
+            try {
+                Thread.sleep(3000);
+            } catch (java.lang.InterruptedException e) {
+                log.debug("woken from sleep");
+            }
+        }
 	}
 
-public void setDelay(int newDelay) {
-	delay = newDelay;
+    public void setDelay(int newDelay) {
+	    delay = newDelay;
 	}
-	
-// base class methods
+
+    // base class methods
 	public DataInputStream getInputStream() {
-		if (pin == null) 
+		if (pin == null)
 			log.error("getInputStream: called before load(), stream not available");
 		return pin;
-		}
-	
+    }
+
 	public DataOutputStream getOutputStream(){
 		if (pout == null) log.error("getOutputStream: called before load(), stream not available");
 		return pout;
-		}
-	
+    }
+
 	public boolean status() {return (pout!=null)&(pin!=null);}
 
 	// to tell if we're currently putting out data

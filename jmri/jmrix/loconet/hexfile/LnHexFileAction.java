@@ -1,11 +1,11 @@
-/** 
+/**
  * LnHexFileAction.java
  *
- * Description:		Swing action to create and register a 
+ * Description:		Swing action to create and register a
  *       			LnHexFileFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			
+ * @version			$Revision: 1.2 $
  */
 
 package jmri.jmrix.loconet.hexfile;
@@ -17,7 +17,7 @@ import jmri.jmrix.loconet.hexfile.HexFileFrame;
 public class LnHexFileAction 			extends AbstractAction {
 
 	public LnHexFileAction(String s) { super(s);}
-	
+
     public void actionPerformed(ActionEvent e) {
 		// create a LnHexFileFrame
 		HexFileFrame f = new HexFileFrame();
@@ -28,10 +28,10 @@ public class LnHexFileAction 			extends AbstractAction {
 			log.error("starting HexFileFrame exception: "+ex.toString());
 			}
 		f.pack();
-		f.show();	
+		f.show();
 		// it connects to the LnTrafficController when the right button is pressed
-		
-		
+
+
 	};
 
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnHexFileAction.class.getName());

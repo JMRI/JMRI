@@ -109,6 +109,9 @@ public class HexFileFrame extends javax.swing.JFrame {
 		port = new LnHexFilePort();
 		port.setDelay(Integer.valueOf(delayField.getText()).intValue());
 
+        // and make the connections
+        configure();
+
 	}
 
   	private boolean mShown = false;
@@ -155,6 +158,15 @@ public class HexFileFrame extends javax.swing.JFrame {
 		// call load to process the file
 		port.load(inputFileChooser.getSelectedFile());
 
+        // wake copy
+		sourceThread.interrupt();
+
+        // reach here while file runs.  Need to return so GUI still acts,
+		// but that normally lets the button go back to default.
+
+    }
+
+    public void configure() {
 		// connect to a packetizing LnTrafficController
         packets = new LnPacketizer();
 		packets.connectPort(port);
@@ -180,13 +192,11 @@ public class HexFileFrame extends javax.swing.JFrame {
 		if (jmri.InstanceManager.sensorManagerInstance() == null)
 			jmri.InstanceManager.setSensorManager(new jmri.jmrix.loconet.LnSensorManager());
 
-		// start operation
-		sourceThread = new Thread(port);
-		sourceThread.start();
+		// start operation of packetizer
 		packets.startThreads();
+        sourceThread = new Thread(port);
+		sourceThread.start();
 
-		// reach here while file runs.  Need to return so GUI still acts,
-		// but that normally lets the button go back to default.
 	}
 
 	public void filePauseButtonActionPerformed(java.awt.event.ActionEvent e) {
