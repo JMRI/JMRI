@@ -20,7 +20,7 @@ import jmri.jmrix.lenz.XNetConstants;
 /**
  * Frame displaying (and logging) XpressNet messages
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version         $Revision: 2.8 $
+ * @version         $Revision: 2.9 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
@@ -371,6 +371,7 @@ import jmri.jmrix.lenz.XNetConstants;
 		// Next, decode the locomotive operation requests
                 } else if(l.getElement(0)==XNetConstants.LOCO_OPER_REQ) {
 		  text = "Mobile Decoder Operations Request: ";
+		  int speed;
 		  switch(l.getElement(1)) {
 		  case XNetConstants.LOCO_SPEED_14: 
 						text = text 
@@ -388,24 +389,26 @@ import jmri.jmrix.lenz.XNetConstants;
 						text = text 
 						+new String("Set Address: "
 						+calcLocoAddress(l.getElement(2),l.getElement(3))
-						+" To Speed Step "
-						+ (((l.getElement(4)&0x1e)>> 1) + ((l.getElement(4)&0x01) << 4))
-						+ " and direction ");	
+						+" To Speed Step ");
+					speed=(((l.getElement(4)&0x10)>> 4) + ((l.getElement(4)&0x0F) << 1));
+					if(speed>=3){ speed -=3; }
+					text += speed;
 					if((l.getElement(4)&0x80)!=0) 
-						text+="Forward"; 
-					else text+="Reverse";
+						text+=" and direction Forward"; 
+					else text+="and direction Reverse";
 						text+= " In 27 speed step mode.";
 						break;
 		  case XNetConstants.LOCO_SPEED_28:
 						text = text 
 						+new String("Set Address: "
 						+calcLocoAddress(l.getElement(2),l.getElement(3))
-						+" To Speed Step "
-						+ (((l.getElement(4)&0x1e)>> 1) + ((l.getElement(4)&0x01) << 4))
-						+ " and direction ");	
+						+" To Speed Step ");
+					speed=(((l.getElement(4)&0x10)>> 4) + ((l.getElement(4)&0x0F) << 1));
+					if(speed>=3){ speed -=3; }
+						text += speed;
 					if((l.getElement(4)&0x80)!=0) 
-						text+="Forward"; 
-					else text+="Reverse";
+						text+=" and direction Forward"; 
+					else text+="and direction Reverse";
 						text+= " In 28 speed step mode.";
 						break;
 		  case XNetConstants.LOCO_SPEED_128:
