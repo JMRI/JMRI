@@ -3,7 +3,7 @@ jbuilder2 &xml
 jbuilder3 -d java &test
 jbuilder4 -d java site/index.html
 
-jbuilder -a jbuilder1 jbuilder2 jbuilder3 jbuilder4
+jbuilder -a xml jbuilder4 jbuilder1 jbuilder3
 
 # the following works directly, but not from JBuilder
 #jbuilder -a src prx
