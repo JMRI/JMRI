@@ -203,6 +203,8 @@ public class AddressPanel extends JInternalFrame
                  changeFontSizes();
              }
          });
+         
+         pack();
     }
 
 	private void rosterItemSelected()
