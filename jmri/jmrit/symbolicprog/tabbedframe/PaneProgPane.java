@@ -36,7 +36,7 @@ import com.sun.java.util.collections.List;   // resolve ambiguity with package-l
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001; D Miller Copyright 2003
- * @version			$Revision: 1.25 $
+ * @version			$Revision: 1.26 $
  */
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
@@ -973,7 +973,7 @@ public class PaneProgPane extends javax.swing.JPanel
                  JWindow speedWindow = new JWindow();
                  // Window size as wide as possible to allow for largest type size
                  speedWindow.setSize(512,165);
-                 speedWindow.getContentPane().setBackground(Color.WHITE);
+                 speedWindow.getContentPane().setBackground(Color.white);
                  speedWindow.getContentPane().setLayout(null);
                  // in preparation for display, extract the speed table values into an array
                  StringTokenizer valueTokens = new StringTokenizer(originalValue,",",false);
@@ -990,9 +990,9 @@ public class PaneProgPane extends javax.swing.JPanel
                    JProgressBar printerBar = new JProgressBar(JProgressBar.VERTICAL,0,127);
                    printerBar.setBounds(52+j*15, 19, 10, 127);
                    printerBar.setValue(speedVals[j]/2);
-                   printerBar.setBackground(Color.WHITE);
-                   printerBar.setForeground(Color.LIGHT_GRAY);
-                   printerBar.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                   printerBar.setBackground(Color.white);
+                   printerBar.setForeground(Color.lightGray);
+                   printerBar.setBorder(BorderFactory.createLineBorder(Color.black));
                    speedWindow.getContentPane().add(printerBar);
                    // create a set of value labels at the top containing the speed table values
                    JLabel barValLabel = new JLabel(Integer.toString(speedVals[j]), SwingConstants.CENTER);
