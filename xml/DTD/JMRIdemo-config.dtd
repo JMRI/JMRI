@@ -1,5 +1,9 @@
 <!-- Defines XML for configuring the JMRIdemo program -->
-<!-- $Id: JMRIdemo-config.dtd,v 1.4 2001-12-18 07:16:37 jacobsen Exp $ -->
+<!-- $Id: JMRIdemo-config.dtd,v 1.5 2003-05-10 14:08:05 jacobsen Exp $ -->
+
+<!-- This file is obsolete!  All program preferences now use preferences-config.dtd -->
+<!-- Its kept in the distribution so that old config files can be read, but -->
+<!-- it should not be changed, nor should new code use it -->
 
 <!ELEMENT JMRIdemo-config (directory decoderList)>
 <!ATTLIST JMRIdemo-config>
