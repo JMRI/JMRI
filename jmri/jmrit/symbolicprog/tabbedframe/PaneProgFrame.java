@@ -27,7 +27,7 @@ import org.jdom.Element;
 /**
  * Frame providing a command station programmer from decoder definition files.
  * @author			Bob Jacobsen   Copyright (C) 2001, 2004; D Miller Copyright 2003
- * @version			$Revision: 1.44 $
+ * @version			$Revision: 1.45 $
  */
 abstract public class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
@@ -336,7 +336,7 @@ abstract public class PaneProgFrame extends javax.swing.JFrame
         catch (Exception e) {
             log.error("exception reading programmer file: "+filename+" exception: "+e);
             // provide traceback too
-            new Exception().printStackTrace();
+            e.printStackTrace();
         }
     }
 
