@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a DCC decoder as a component, esp. information -->
 <!-- on how to program it. -->
-<!-- $Id: decoder-config.dtd,v 1.19 2002-04-08 03:23:34 jacobsen Exp $ -->
+<!-- $Id: decoder-config.dtd,v 1.20 2002-05-09 05:04:33 jacobsen Exp $ -->
 
 <!ELEMENT decoder-config (version, decoder, pane*)>
 
@@ -29,7 +29,7 @@
 <!ATTLIST family lowVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
 <!ATTLIST family highVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
 
-<!ELEMENT model (output*) >
+<!ELEMENT model (versionCV*, output*) >
 <!ATTLIST model model     	CDATA #REQUIRED>  <!-- model name used for identification -->
 <!ATTLIST model options   	CDATA #IMPLIED>   <!-- comma-sep list of included options, but default is all on -->
 <!ATTLIST model comment   	CDATA #IMPLIED>
@@ -44,6 +44,12 @@
 <!-- If only one is specified, only that single value is acceptable -->
 <!ATTLIST model lowVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
 <!ATTLIST model highVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
+
+<!ELEMENT versionCV EMPTY >
+<!-- lowVersionID, highVersionID define an inclusive range, with both endpoints included. -->
+<!-- If only one is specified, only that single value is acceptable -->
+<!ATTLIST versionCV lowVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
+<!ATTLIST versionCV highVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
 
 <!ELEMENT output EMPTY >
 <!ATTLIST output name     	CDATA #REQUIRED>  <!-- output name used for identification -->
