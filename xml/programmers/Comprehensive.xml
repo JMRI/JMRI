@@ -2,11 +2,12 @@
 <!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
 
 <programmer-config>
-<!-- $Id: Comprehensive.xml,v 1.5 2003-01-05 13:40:14 jacobsen Exp $ -->
+<!-- $Id: Comprehensive.xml,v 1.6 2003-10-18 23:51:56 jacobsen Exp $ -->
 		<version author="Mark Gurries, Bob Jacobsen" 
-					version="4" lastUpdated="20030102"/>
+					version="4.1" lastUpdated="20031008"/>
 
     <!-- Version 4 - add consist control for functions (Simon Ginsburg) -->
+    <!-- Version 4.1 - changed spelling of "behavior" (Jack Shall) -->
 
 <programmer decoderFilePanes="yes">
 
@@ -94,92 +95,92 @@
 			<label label=" "/>
 			
 			<display item="Function F0F effect generated"/>
-			<display item="Function F0F behaviour"/>
+			<display item="Function F0F behavior"/>
 			<display item="Function F0F options"/>
 			<label label=" "/>
 			
 			<display item="Function F0R effect generated"/>
-			<display item="Function F0R behaviour"/>
+			<display item="Function F0R behavior"/>
 			<display item="Function F0R options"/>
 			<label label=" "/>
 			
 			<display item="Function 1 effect generated"/>
-			<display item="Function 1 behaviour"/>
+			<display item="Function 1 behavior"/>
 			<display item="Function 1 options"/>
 			<label label=" "/>
 			
 			<display item="Function 2 effect generated"/>
-			<display item="Function 2 behaviour"/>
+			<display item="Function 2 behavior"/>
 			<display item="Function 2 options"/>
 			<label label=" "/>
 			
 			<display item="Function 3 effect generated"/>
-			<display item="Function 3 behaviour"/>
+			<display item="Function 3 behavior"/>
 			<display item="Function 3 options"/>
 			<label label=" "/>
 			
 			<display item="Function 4 effect generated"/>
-			<display item="Function 4 behaviour"/>
+			<display item="Function 4 behavior"/>
 			<display item="Function 4 options"/>
 			<label label=" "/>
 			
 			<display item="Function 5 effect generated"/>
-			<display item="Function 5 behaviour"/>
+			<display item="Function 5 behavior"/>
 			<display item="Function 5 options"/>
 			<label label=" "/>
 			
 			<display item="Function 6 effect generated"/>
-			<display item="Function 6 behaviour"/>
+			<display item="Function 6 behavior"/>
 			<display item="Function 6 options"/>
 			<label label=" "/>
 			
 			<display item="Function 7 effect generated"/>
-			<display item="Function 7 behaviour"/>
+			<display item="Function 7 behavior"/>
 			<display item="Function 7 options"/>
 			<label label=" "/>
 			
 			<display item="Function 8 effect generated"/>
-			<display item="Function 8 behaviour"/>
+			<display item="Function 8 behavior"/>
 			<display item="Function 8 options"/>
 		</column>
 		<column>
 			<display item="Output 1 effect generated"/>
-			<display item="Output 1 behaviour"/>
+			<display item="Output 1 behavior"/>
 			<display item="Output 1 options"/>
 			<label label=" "/>
 			
 			<display item="Output 2 effect generated"/>
-			<display item="Output 2 behaviour"/>
+			<display item="Output 2 behavior"/>
 			<display item="Output 2 options"/>
 			<label label=" "/>
 			
 			<display item="Output 3 effect generated"/>
-			<display item="Output 3 behaviour"/>
+			<display item="Output 3 behavior"/>
 			<display item="Output 3 options"/>
 			<label label=" "/>
 			
 			<display item="Output 4 effect generated"/>
-			<display item="Output 4 behaviour"/>
+			<display item="Output 4 behavior"/>
 			<display item="Output 4 options"/>
 			<label label=" "/>
 			
 			<display item="Output 5 effect generated"/>
-			<display item="Output 5 behaviour"/>
+			<display item="Output 5 behavior"/>
 			<display item="Output 5 options"/>
 			<label label=" "/>
 			
 			<display item="Output 6 effect generated"/>
-			<display item="Output 6 behaviour"/>
+			<display item="Output 6 behavior"/>
 			<display item="Output 6 options"/>
 			<label label=" "/>
 			
 			<display item="Output 7 effect generated"/>
-			<display item="Output 7 behaviour"/>
+			<display item="Output 7 behavior"/>
 			<display item="Output 7 options"/>
 			<label label=" "/>
 			
 			<display item="Output 8 effect generated"/>
-			<display item="Output 8 behaviour"/>
+			<display item="Output 8 behavior"/>
 			<display item="Output 8 options"/>
 		</column>
 		<column>

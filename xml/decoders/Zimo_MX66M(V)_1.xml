@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Zimo_MX66M(V)_1.xml,v 1.1 2003-08-10 21:58:18 jacobsen Exp $ -->
+<!-- $Id: Zimo_MX66M(V)_1.xml,v 1.2 2003-10-18 23:51:56 jacobsen Exp $ -->
 <decoder-config>
 		<version author="sip@euronet.nl"
-			version="1.0" lastUpdated="20030429" />
+			version="1.1" lastUpdated="20031008" />
 			<!-- Based on the contribution of many others -->
-			
+
+         <!-- V 1.1 changed spelling of "behavior" (Jack Shall) -->			
 
 <decoder>
 	<family name="Zimo Silent BEMF decoders, large scales" mfg="Zimo">
@@ -806,8 +807,8 @@
 				<enumChoice choice="Soft-Start"/>
 				</enumVal>
 			</variable>
-		<variable label="Behaviour" CV="125" mask="XXXXXXVV"
-					item="Output 3 behaviour">
+		<variable label="behavior" CV="125" mask="XXXXXXVV"
+					item="Output 3 behavior">
 			<enumVal>
 				<enumChoice choice="Both directions"/>
 				<enumChoice choice="Only in forward"/>
@@ -833,8 +834,8 @@
 				<enumChoice choice="Soft-Start"/>
 				</enumVal>
 			</variable>
-		<variable label="Behaviour" CV="126" mask="XXXXXXVV"
-					item="Output 4 behaviour">
+		<variable label="behavior" CV="126" mask="XXXXXXVV"
+					item="Output 4 behavior">
 			<enumVal>
 				<enumChoice choice="Both directions"/>
 				<enumChoice choice="Only in forward"/>
@@ -860,8 +861,8 @@
 				<enumChoice choice="Soft-Start"/>
 				</enumVal>
 			</variable>
-		<variable label="Behaviour" CV="127" mask="XXXXXXVV"
-					item="Output 5 behaviour">
+		<variable label="behavior" CV="127" mask="XXXXXXVV"
+					item="Output 5 behavior">
 			<enumVal>
 				<enumChoice choice="Both directions"/>
 				<enumChoice choice="Only in forward"/>
@@ -887,8 +888,8 @@
 				<enumChoice choice="Soft-Start"/>
 				</enumVal>
 			</variable>
-		<variable label="Behaviour" CV="128" mask="XXXXXXVV"
-					item="Output 6 behaviour">
+		<variable label="behavior" CV="128" mask="XXXXXXVV"
+					item="Output 6 behavior">
 			<enumVal>
 				<enumChoice choice="Both directions"/>
 				<enumChoice choice="Only in forward"/>

@@ -2,10 +2,13 @@
 <!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
 
 <programmer-config>
-<!-- $Id: CT Elektronik F-Dec.xml,v 1.1 2003-02-28 04:30:46 jacobsen Exp $ -->
+<!-- $Id: CT Elektronik F-Dec.xml,v 1.2 2003-10-18 23:51:56 jacobsen Exp $ -->
 		<version author="peter.brandenburg@tiscalinet.de" 
-			version="1.5 beta" lastUpdated="02172003"/>
+			version="1.6 beta" lastUpdated="20031008"/>
 			<!-- Based on the contribution of "sip@euronet.nl"  -->
+
+         <!-- Version 1.6 - changed spelling of "behavior" (Jack Shall) -->
+
 					<!-- Notes -->
 
 <programmer decoderFilePanes="yes">
@@ -143,16 +146,16 @@
 	<pane name="Lights">
 		<column>
 			<display item="Light Effects Output 1" tooltip="CV 125, bits 2-7"/>
-			<display item="Output 1 behaviour" tooltip="CV 125, bits 0 and 1"/>
+			<display item="Output 1 behavior" tooltip="CV 125, bits 0 and 1"/>
 			<label label=" "/>
 			<display item="Light Effects Output 2" tooltip="CV 126, bits 2-7"/>
-			<display item="Output 2 behaviour" tooltip="CV 126, bits 0 and 1"/>
+			<display item="Output 2 behavior" tooltip="CV 126, bits 0 and 1"/>
 			<label label=" "/>
 			<display item="Light Effects Output 3" tooltip="CV 127, bits 2-7"/>
-			<display item="Output 3 behaviour" tooltip="CV 127, bits 0 and 1"/>
+			<display item="Output 3 behavior" tooltip="CV 127, bits 0 and 1"/>
 			<label label=" "/>
 			<display item="Light Effects Output 4" tooltip="CV 128, bits 2-7"/>
-			<display item="Output 4 behaviour" tooltip="CV 128, bits 0 and 1"/>
+			<display item="Output 4 behavior" tooltip="CV 128, bits 0 and 1"/>
 			</column>
 			<column>
 			<label label="Light Effect Modifications"/>

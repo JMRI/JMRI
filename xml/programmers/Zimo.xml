@@ -2,10 +2,13 @@
 <!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
 
 <programmer-config>
-<!-- $Id: Zimo.xml,v 1.2 2003-08-10 21:54:52 jacobsen Exp $ -->
+<!-- $Id: Zimo.xml,v 1.3 2003-10-18 23:51:56 jacobsen Exp $ -->
 		<version author="sip@euronet.nl" 
-			version="1.3" lastUpdated="20030809"/>
+			version="1.4" lastUpdated="20031008"/>
 			<!-- Based on the contribution of many others -->
+
+         <!-- Version 1.4 - changed spelling of "behavior" (Jack Shall) -->
+
 					<!-- Notes -->
 
 <programmer decoderFilePanes="yes">
@@ -161,22 +164,22 @@
 	<pane name="Lights">
 		<column>
 			<display item="Light Effects Output 1" tooltip="CV 125, bits 2-7"/>
-			<display item="Output 1 behaviour" tooltip="CV 125, bits 0 and 1"/>
+			<display item="Output 1 behavior" tooltip="CV 125, bits 0 and 1"/>
 			<label label=" "/>
 			<display item="Light Effects Output 2" tooltip="CV 126, bits 2-7"/>
-			<display item="Output 2 behaviour" tooltip="CV 126, bits 0 and 1"/>
+			<display item="Output 2 behavior" tooltip="CV 126, bits 0 and 1"/>
 			<label label=" "/>
 			<display item="Light Effects Output 3" tooltip="CV 125 or 127, bits 2-7"/>
-			<display item="Output 3 behaviour" tooltip="CV 125 or 127, bits 0 and 1"/>
+			<display item="Output 3 behavior" tooltip="CV 125 or 127, bits 0 and 1"/>
 			<label label=" "/>
 			<display item="Light Effects Output 4" tooltip="CV 126 or 128, bits 2-7"/>
-			<display item="Output 4 behaviour" tooltip="CV 126 or 128, bits 0 and 1"/>
+			<display item="Output 4 behavior" tooltip="CV 126 or 128, bits 0 and 1"/>
 			<label label=" "/>
 			<display item="Light Effects Output 5" tooltip="CV 127, bits 2-7"/>
-			<display item="Output 5 behaviour" tooltip="CV 127, bits 0 and 1"/>
+			<display item="Output 5 behavior" tooltip="CV 127, bits 0 and 1"/>
 			<label label=" "/>
 			<display item="Light Effects Output 6" tooltip="CV 128, bits 2-7"/>
-			<display item="Output 6 behaviour" tooltip="CV 128, bits 0 and 1"/>
+			<display item="Output 6 behavior" tooltip="CV 128, bits 0 and 1"/>
 			</column>
 			<column>
 			<label label="Light Effect Modifications"/>
@@ -263,7 +266,7 @@
 			<row>
 			<display item="Analog Mode Function Status - F7" format="checkbox" label="F-7" tooltip="CV 13, bit 6"/>			
 			<label label=" " />
-			<label label="         DC Behaviour" />
+			<label label="         DC behavior" />
 			</row>
 			<row>
 			<display item="Analog Mode Function Status - F8" format="checkbox" label="F-8" tooltip="CV 13, bit 7"/>			

@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: TCS_zMx.xml,v 1.2 2003-08-03 20:40:00 jacobsen Exp $ -->
+<!-- $Id: TCS_zMx.xml,v 1.3 2003-10-18 23:51:56 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
-					version="2" lastUpdated="20030803"/>
+					version="2.1" lastUpdated="20031008"/>
 
 		<!-- Version 1 - made from TCS_Tx -->
 		<!-- Version 2 - fix "rule 17" typos -->
+      <!-- Version 2.1 - changed spelling of "behavior" (Jack Shall) -->
 
 <decoder>
 	<family name="TCS Mx series decoders" mfg="Train Control Systems">
@@ -112,8 +113,8 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Forward light F0F behaviour" CV="49" mask="VVVVXXXX"
-					item="Function F0F behaviour" minOut="1">
+		<variable label="Forward light F0F behavior" CV="49" mask="VVVVXXXX"
+					item="Function F0F behavior" minOut="1">
 			<enumVal>
 				<enumChoice choice="Function on when loco going forward only"/>
 				<enumChoice choice="Function on when loco going reverse only"/>
@@ -154,8 +155,8 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Reverse light F0R behaviour" CV="50" mask="VVVVXXXX"
-					item="Function F0R behaviour" default="1" minOut="2">
+		<variable label="Reverse light F0R behavior" CV="50" mask="VVVVXXXX"
+					item="Function F0R behavior" default="1" minOut="2">
 			<enumVal>
 				<enumChoice choice="Function on when loco going forward only"/>
 				<enumChoice choice="Function on when loco going reverse only"/>
@@ -197,7 +198,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Function 1 behaviour" CV="51" mask="VVVVXXXX" 
+		<variable label="Function 1 behavior" CV="51" mask="VVVVXXXX" 
 					minFn="1" minOut="3">
 			<enumVal>
 				<enumChoice choice="Function on when loco going forward only"/>
@@ -239,7 +240,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Function 2 behaviour" CV="52" mask="VVVVXXXX" 
+		<variable label="Function 2 behavior" CV="52" mask="VVVVXXXX" 
 					minFn="2" minOut="4">
 			<enumVal>
 				<enumChoice choice="Function on when loco going forward only"/>
@@ -281,7 +282,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Function 3 behaviour" CV="53" mask="VVVVXXXX" 
+		<variable label="Function 3 behavior" CV="53" mask="VVVVXXXX" 
 					minFn="3" minOut="5">
 			<enumVal>
 				<enumChoice choice="Function on when loco going forward only"/>

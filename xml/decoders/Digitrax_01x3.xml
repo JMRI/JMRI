@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_01x3.xml,v 1.15 2003-08-15 15:29:50 jacobsen Exp $ -->
+<!-- $Id: Digitrax_01x3.xml,v 1.16 2003-10-18 23:51:55 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Michael Mosher mjmx@comcast.net" 
-					version="10" lastUpdated="20030815"/>
+					version="10.1" lastUpdated="20031008"/>
 
 		<!-- Created from version 5 of the 1x2 file -->
 		<!-- V2: fix default values for CV56, 57 BEMF -->
@@ -15,6 +15,7 @@
 		<!-- V8: Function Output Map, CV's 33 to 46, defaults updated by Bob Blackwell, CV9 added -->
 		<!-- Version 9 - fix "rule 17" typos -->
 		<!-- Version 10 - remove DH123 (created new file for it), fixed decoder sizes -->
+      <!-- Version 10.1 - changed spelling of "behavior" (Jack Shall) -->
 	
 <decoder>
 	<family name="Series 3 with FX3, silent, readback" 
@@ -346,8 +347,8 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Forward light F0F behaviour" CV="49" mask="VVVVXXXX"
-					item="Function F0F behaviour">
+		<variable label="Forward light F0F behavior" CV="49" mask="VVVVXXXX"
+					item="Function F0F behavior">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -388,8 +389,8 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Reverse light F0R behaviour" CV="50" mask="VVVVXXXX"
-					item="Function F0R behaviour">
+		<variable label="Reverse light F0R behavior" CV="50" mask="VVVVXXXX"
+					item="Function F0R behavior">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -429,7 +430,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Function 1 behaviour" CV="51" mask="VVVVXXXX" minOut="3">
+		<variable label="Function 1 behavior" CV="51" mask="VVVVXXXX" minOut="3">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -469,7 +470,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Function 2 behaviour" CV="52" mask="VVVVXXXX" minOut="4">
+		<variable label="Function 2 behavior" CV="52" mask="VVVVXXXX" minOut="4">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -509,7 +510,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Function 3 behaviour" CV="113" mask="VVVVXXXX" minOut="5">
+		<variable label="Function 3 behavior" CV="113" mask="VVVVXXXX" minOut="5">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -549,7 +550,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Function 4 behaviour" CV="114" mask="VVVVXXXX" minOut="6">
+		<variable label="Function 4 behavior" CV="114" mask="VVVVXXXX" minOut="6">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -590,7 +591,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Function 5 behaviour" CV="115" mask="VVVVXXXX" minOut="7">
+		<variable label="Function 5 behavior" CV="115" mask="VVVVXXXX" minOut="7">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -631,7 +632,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Function 6 behaviour" CV="116" mask="VVVVXXXX" minOut="8">
+		<variable label="Function 6 behavior" CV="116" mask="VVVVXXXX" minOut="8">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>

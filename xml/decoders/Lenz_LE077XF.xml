@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Lenz_LE077XF.xml,v 1.13 2003-08-01 20:15:40 jacobsen Exp $ -->
+<!-- $Id: Lenz_LE077XF.xml,v 1.14 2003-10-18 23:51:55 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Phil Grainger (phil.grainger@ca.com)"
-			version="7" lastUpdated="20030731" />
+			version="7.1" lastUpdated="20031008" />
 			<!-- Updated to new names by jake@physics.berkeley.edu -->
 			<!-- Added CV 23, 24, and function mapping - Bob J -->
 			<!-- Changed FX to match older LExxxXF decoders, file had SelectDrive FX settings -->
@@ -11,6 +11,7 @@
 		<!-- version 5 - add consist direction - jake -->
 		<!-- version 6 - fix Vstart and leight effects bugs -->
 		<!-- version 7 - made speed table selection more generic -->
+      <!-- Version 7.1 - changed spelling of "behavior" (Jack Shall) -->
 
 <!-- These are the version 4.5 decoders, with "precision glide" and "XF" -->
 
@@ -228,7 +229,7 @@
 		         </enumVal>
 			</variable>
 
-	<variable label="Output D blinks" CV="53" minOut="4"
+	<variable label="Output D blinks" CV="53" minOut="3"
 				item="Function 4 effect generated" mask="XXXXXXVX">
 		     <enumVal>
 		         <enumChoice choice="no"/>
@@ -237,7 +238,7 @@
 			</variable>
 
 	<variable label="Output C, D are ditch lights" CV="53" minOut="3"
-				item="Function 4 behaviour" mask="XXXXXVXX">
+				item="Function 4 behavior" mask="XXXXXVXX">
 		     <enumVal>
 		         <enumChoice choice="no"/>
 		         <enumChoice choice="yes"/>

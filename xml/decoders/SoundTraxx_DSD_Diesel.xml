@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_DSD_Diesel.xml,v 1.16 2003-07-16 06:01:05 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_DSD_Diesel.xml,v 1.17 2003-10-18 23:51:55 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Michael Mosher" version="8" lastUpdated="20030706"/>
+		<version author="Michael Mosher" version="8.1" lastUpdated="20031008"/>
 
 		<!-- version 4: updates to minOut usage, function mapping -->
 		<!-- version 5: correct to CV 56 for some options -->
@@ -10,6 +10,7 @@
 		<!--            corrected versionCVs -->
 		<!-- version 7: renamed to get best tree layout -->
 		<!-- version 8: added CV105&106 & fix Fn mapping bug -->
+      <!-- Version 8.1: changed spelling of "behavior" (Jack Shall) -->
 		
 <decoder>
 	<family name="DSD diesel" mfg="Throttle-Up (SoundTraxx)">
@@ -512,8 +513,8 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Forward light F0F behaviour" CV="49" mask="XXVVXXXX"
-					item="Function F0F behaviour">
+		<variable label="Forward light F0F behavior" CV="49" mask="XXVVXXXX"
+					item="Function F0F behavior">
 			<enumVal>
 				<enumChoice choice="Phase A"/>
 				<enumChoice choice="Phase B"/>
@@ -543,8 +544,8 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="Reverse light F0R behaviour" CV="50" mask="XXVVXXXX"
-					item="Function F0R behaviour">
+		<variable label="Reverse light F0R behavior" CV="50" mask="XXVVXXXX"
+					item="Function F0R behavior">
 			<enumVal>
 				<enumChoice choice="Phase A"/>
 				<enumChoice choice="Phase B"/>
@@ -574,8 +575,8 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="F5 behaviour" CV="51" mask="XXVVXXXX"
-					item="Function 1 behaviour">
+		<variable label="F5 behavior" CV="51" mask="XXVVXXXX"
+					item="Function 1 behavior">
 			<enumVal>
 				<enumChoice choice="Phase A"/>
 				<enumChoice choice="Phase B"/>
@@ -605,8 +606,8 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="F6 behaviour" CV="52" mask="XXVVXXXX"
-					item="Function 2 behaviour">
+		<variable label="F6 behavior" CV="52" mask="XXVVXXXX"
+					item="Function 2 behavior">
 			<enumVal>
 				<enumChoice choice="Phase A"/>
 				<enumChoice choice="Phase B"/>

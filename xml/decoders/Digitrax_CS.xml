@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_CS.xml,v 1.10 2003-08-15 15:26:31 jacobsen Exp $ -->
+<!-- $Id: Digitrax_CS.xml,v 1.11 2003-10-18 23:51:55 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Michael Mosher mjmx@comcast.net" 
-					version="7" lastUpdated="20030815"/>
+					version="7.1" lastUpdated="20031008"/>
 					
 		<!-- made from 150 file (Basic FX) -->
 		<!-- version 3 added BEMF, transponding control, short address -->
@@ -12,6 +12,7 @@
 		<!-- version 5 correct BEMF defaults -->
 		<!-- version 6 - add consist direction - jake -->
 		<!-- version 7 - fixed numOuts & numFns numbers and add cv29 defaults -->
+      <!-- Version 7.1 - changed spelling of "behavior" (Jack Shall) -->
 
 <decoder>
 	<family name="Basic CS" mfg="Digitrax" lowVersionID="225" highVersionID="239">
@@ -167,7 +168,7 @@
 				<enumChoice choice="Reserved (0x07)"/>
 				</enumVal>
 			</variable>
-		<variable label="Function F0F behaviour" CV="49" mask="VVVVXXXX">
+		<variable label="Function F0F behavior" CV="49" mask="VVVVXXXX">
 			<enumVal>
 				<enumChoice choice="Forward direction"/>
 				<enumChoice choice="Reverse direction"/>
@@ -186,7 +187,7 @@
 				<enumChoice choice="Reserved (0x07)"/>
 				</enumVal>
 			</variable>
-		<variable label="Function F0R behaviour" CV="50" mask="VVVVXXXX">
+		<variable label="Function F0R behavior" CV="50" mask="VVVVXXXX">
 			<enumVal>
 				<enumChoice choice="Forward direction"/>
 				<enumChoice choice="Reverse direction"/>
