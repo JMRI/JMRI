@@ -9,24 +9,26 @@ import javax.swing.*;
  * Extend an ImageIcon to remember the name from which it was created,
  * and to provide rotation services
  * @author Bob Jacobsen  Copyright 2002
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class NamedIcon extends ImageIcon {
 
-    public NamedIcon(URL pUrl, String pName) {
-        super(pUrl);
-        mDefaultImage = getImage();
-        if (mDefaultImage == null) log.warn("Could not load image from "+pUrl);
-        mName = pName;
-        mRotation = 0;
+    public NamedIcon(NamedIcon pOld) {
+        this(pOld.mURL, pOld.mName);
     }
 
     public NamedIcon(String pUrl, String pName) {
         super(pUrl);
         mDefaultImage = getImage();
+        if (mDefaultImage == null) log.warn("Could not load image from "+pUrl);
         mName = pName;
+        mURL = pUrl;
         mRotation = 0;
+    }
+
+    public NamedIcon(URL pUrl, String pName) {
+        this(pUrl.toString(), pName);
     }
 
     public String getName() { return mName; }
@@ -40,6 +42,7 @@ public class NamedIcon extends ImageIcon {
     }
 
     private String mName=null;
+    private String mURL=null;
     private Image mDefaultImage;
 
     /**
