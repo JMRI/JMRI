@@ -11,7 +11,7 @@ import apps.tests.*;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Id: LnTrafficRouterTest.java,v 1.1 2002-03-18 02:11:27 jacobsen Exp $
+ * @version $Revision: 1.2 $
  */
 public class LnTrafficRouterTest extends TestCase {
     Log4JFixture log4jfixtureInst = new Log4JFixture(this);

@@ -1,10 +1,4 @@
-/**
- * LnTurnoutTest.java
- *
- * Description:	    tests for the jmri.jmrix.loconet.LnTurnout class
- * @author			Bob Jacobsen
- * @version
- */
+//LnTurnoutTest.java
 
 package jmri.jmrix.loconet;
 
@@ -13,6 +7,11 @@ import junit.framework.*;
 
 import jmri.jmrix.loconet.*;
 
+/**
+ * Tests for the jmri.jmrix.loconet.LnTurnout class
+ * @author			Bob Jacobsen
+ * @version         $Revision: 1.3 $
+ */
 public class LnTurnoutTest extends jmri.AbstractTurnoutTest {
 
 	public void setUp() {
@@ -78,7 +77,6 @@ public class LnTurnoutTest extends jmri.AbstractTurnoutTest {
 		Assert.assertTrue(t.getCommandedState() == jmri.Turnout.CLOSED);
 
 	}
-
 
 	// from here down is testing infrastructure
 

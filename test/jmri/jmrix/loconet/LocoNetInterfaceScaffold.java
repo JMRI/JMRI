@@ -41,6 +41,13 @@ public class LocoNetInterfaceScaffold extends LnTrafficController {
 
 	// test control member functions
 
+    /**
+     * Forward a message that came from unit under test
+     */
+    void forwardMessage(int i) {
+        sendTestMessage((LocoNetMessage)outbound.get(i));
+    }
+
 	/**
 	 * forward a message to the listeners, e.g. test receipt
 	 */
