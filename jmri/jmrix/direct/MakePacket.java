@@ -3,22 +3,74 @@
  *
  * Description:		<describe the MakePacket class here>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version
+ * @version  $Revision: 1.4 $
  */
-
 package jmri.jmrix.direct;
 
 /**
  * Provide utilities for coding/decoding NMRA S&RP DCC packets into
  * sequences to send through a standard serial port.
  *
- * This is strongly based (e.g. copied and translated) on the makepckt.c file
+ * This is strongly based (e.g. copied ) on the makepckt.c file
  * from the PacketScript 1.1. package of Kenneth Rice. The original header
  * comment from that file follows here.
  *
+ *
  */
 
- /* makepckt.c
+/**
+ *
+ * Some Useful Background information
+ *
+ *      startbit: 1
+ *      stopbit : 1
+ *      databits: 8
+ *      baudrate: 19200
+ *
+ *      ==> one serial bit takes 52.08 usec. (at 19200 baud)
+ *
+ *      ==> NMRA-1-Bit: 01         (52 usec low and 52 usec high)
+ *          NMRA-0-Bit: 0011       (at least 100 usec low and high)
+ *           note we are allowed to stretch NMRA-0 e.g. 000111,
+ *           00001111, 000001111
+ *          are all valid NMRA-0 representations
+ *
+ *      serial stream (only start/stop bits):
+ *
+ *      0_______10_______10_______10_______10_______10_______10___ ...
+ *
+ *      problem: how to place the NMRA-0- and NMRA-1-Bits in the
+ *    serial stream
+ *
+ *     examples:
+ *
+ *      0          0xF0     _____-----
+ *      00         0xC6     __--___---
+ *      01         0x78     ____----_-
+ *      10         0xE1     _-____----
+ *      001        0x66     __--__--_-
+ *      010        0x96     __--_-__--
+ *      011        0x5C     ___---_-_-
+ *      100        0x99     _-__--__--
+ *      101        0x71     _-___---_-
+ *      110        0xC5     _-_-___---
+ *      0111       0x56     __--_-_-_-
+ *      1011       0x59     _-__--_-_-
+ *      1101       0x65     _-_-__--_-
+ *      1110       0x95     _-_-_-__--
+ *      11111      0x55     _-_-_-_-_-
+ *                          ^        ^
+ *                          start-   stop-
+ *                          bit      bit
+ *
+ * Limitation
+ * If we ever need to generate a pattern of four '1's followed by a '0' and
+ * land it on a the start of a byte boundary - Sorry - it can't be done !!
+ *
+ */
+
+
+/* makepckt.c
  *
  * Send an nmra packet out the serial port in such a way that the signal can
  * just be amplified and put on the track.
@@ -40,295 +92,359 @@ package jmri.jmrix.direct;
  *			10/23/93	Added backtracking and max length.
  */
 
-
 public class MakePacket {
 
-    static final int PREAMBLE_LENGTH = 15;		/* This should be a multiple of 5. */
-    static final int MAX_PACKET_BYTES = 12;		/* Longest NMRA packet is 10 bytes. */
-    static final int BITSTREAM_BITS_PER_BYTE = 9;	/* counts start bit */
+  private static int preambleLength = 15;
+      /* This should be a multiple of 5. */
+  private static final int BITSTREAM_BITS_PER_BYTE = 9;
+      /* number of bits per byte/
+      /* nmra   s01234567s (hex equiv - note that in signal, 0 bit is left) */
+  private static final int BITS_0 = 0xF0; /* 0      _____----- (0xF0) */
+  private static final int BITS_00 = 0xC6; /* 00     __--___--- (0xC6) */
+  private static final int BITS_01 = 0x78; /* 01     ____----_- (0x78) */
+  private static final int BITS_10 = 0xE1; /* 10     _-____---- (0xE1) */
+  private static final int BITS_001 = 0x66; /* 001    __--__--_- (0x66) */
+  private static final int BITS_010 = 0x96; /* 010    __--_-__-- (0x96) */
+  private static final int BITS_011 = 0x5C; /* 011    ___---_-_- (0x5C) */
+  private static final int BITS_100 = 0x99; /* 100    _-__--__-- (0x99) */
+  private static final int BITS_101 = 0x71; /* 101    _-___---_- (0x71) */
+  private static final int BITS_110 = 0xC5; /* 110    _-_-___--- (0xC5) */
+  private static final int BITS_0111 = 0x56; /* 0111   __--_-_-_- (0x56) */
+  private static final int BITS_1011 = 0x59; /* 1011   _-__--_-_- (0x59) */
+  private static final int BITS_1101 = 0x65; /* 1101   _-_-__--_- (0x65) */
+  private static final int BITS_1110 = 0x95; /* 1110   _-_-_-__-- (0x95) */
+  private static final int BITS_11111 = 0x55; /* 11111  _-_-_-_-_- (0x55) */
+  private static class node {
+    int bitPattern;
+    int patternLength;
+  }
+  /* Node definition for first depth, prune largest tree. */
 
-    static final int MAX_BITS_IN_PACKET = (PREAMBLE_LENGTH
-                                    + MAX_PACKET_BYTES * BITSTREAM_BITS_PER_BYTE
-                                    + 10);		/* 1 stop bit, some spares. */
+  /**
+   * function to set the Preamble Length - Default is 15 NRMA '1's
+   * Every NRMA packet decoded starts with a preamble
+   * Service mode requires longer preambles
+   * Thus this public function allowing user to define the lenght of desired
+   * preamble
+   * @param PreambleLen int
+   * @return boolean - true if preamble is a multiple of 5 otherwise fails and returns alse
+   */
 
+  public static boolean setPreambleLength(int preambleLen) {
+    //Just make sure that no negatives values are passed.
+    if (preambleLen <= 0) {
+      return (false);
+    }
+    // Check that preamble is a multiply of 5
+    if (preambleLen % 5 != 0) {
+      return (false);
+    }
+    preambleLength = preambleLen;
+    return (true);
+  }
 
-    /* nmra   s01234567s (hex equiv - note that in signal, 0 bit is left) */
-    static final int BITS_0	  = 0xF0;	/* 0      _____----- (0xF0) */
-    static final int BITS_00  = 0xC6;	/* 00     __--___--- (0xC6) */
-    static final int BITS_01  = 0x78;	/* 01     ____----_- (0x78) */
-    static final int BITS_10  = 0xE1;	/* 10     _-____---- (0xE1) */
-    static final int BITS_001 = 0x66;	/* 001    __--__--_- (0x66) */
-    static final int BITS_010 = 0x96;	/* 010    __--_-__-- (0x96) */
-    static final int BITS_011 = 0x5C;	/* 011    ___---_-_- (0x5C) */
-    static final int BITS_100 = 0x99;	/* 100    _-__--__-- (0x99) */
-	static final int BITS_101 = 0x71;	/* 101    _-___---_- (0x71) */
-	static final int BITS_110 = 0xC5;	/* 110    _-_-___--- (0xC5) */
-	static final int BITS_0111  = 0x56;	/* 0111   __--_-_-_- (0x56) */
-    static final int BITS_1011  = 0x59;	/* 1011   _-__--_-_- (0x59) */
-    static final int BITS_1101  = 0x65;	/* 1101   _-_-__--_- (0x65) */
-    static final int BITS_1110  = 0x95;	/* 1110   _-_-_-__-- (0x95) */
-    static final int BITS_11111 = 0x55;	/* 11111  _-_-_-_-_- (0x55) */
+  /**
+   * Function that takes in the packet as a array of Bytes and converts
+   * an them into NMRA'1','0' representation, in preparation to be sent over
+   * a serial link.
+   * @param Packet byte[] - NRMA packet in a array of bytes
+   * @return int[] - first byte is length - 0 lenght indicates failed to do
+   */
+  public static int[] createStream(byte[] packet) {
+    int i, j = 0;
+    int mask = 0x80;
+    int[] bitStream = new int[ (packet.length * BITSTREAM_BITS_PER_BYTE) +
+        preambleLength + 1];
+    int bitStreamIndex = 0;
 
+    /* Make into an array of ints for easier processing. */
+    /* do preamble */
+    for (bitStreamIndex = 0; bitStreamIndex < preambleLength; bitStreamIndex++) {
+      bitStream[bitStreamIndex] = 1;
+      /* Add Packet Start Bit - 0 */
+    }
+    bitStream[bitStreamIndex++] = 0;
+    /* Do packet bytes. */
+    for (i = 0; i < packet.length; i++) {
+      mask = 0x80;
+      while (mask > 0) {
+        bitStream[bitStreamIndex++] = (packet[i] & mask) != 0 ? 1 : 0;
+        mask = (mask >> 1);
+      }
+      /* Add byte seperator - 0 */
+      bitStream[bitStreamIndex++] = 0;
+    }
+    /* do end packet indicator */
+    bitStream[--bitStreamIndex] = 1;
 
-	/* BuildPacketVA
-	 *
-	 * This routine generates a string of bytes to be sent out the serial port from
-	 * the bytes that make up an nmra packet.
-	 *
-	 * Arguments:
-	 *	pSerialBuf		- Where to put serial bytes.
-	 *	pSerialBufCnt	- Where to put number of serial bytes put in pSerialBuf.
-	 *  ...				- The bytes that make up the packet, terminated by a -1.
-	 *
-	 * The serial bytes should be sent out a serial port set to somewhere between
-	 * 19.2K baud and 14.7K baud. 19.2K baud us necessary to program Lenz recievers.
-	 * The serial port must be set to 8 data bits, 1 stop bit, and no parity.
-	 *
-	 * Example code fragment to call this function for a baseline packet:
-	 *
-	 * int	serialBuf[1000];
-	 * int	serialBufCnt;
-	 * int	addr = 3;
-	 * int	speed = 0x75;
-	 *
-	 * if (BuildPacket(serialBuf, &serialBufCnt, addr, speed, addr^speed, -1) < 0)
-	 * 		* handle error - should never happen for 3 byte packets. *
-	 * else
-	 *		* send bytes in serialBuf out serial port repeatedly. *
-	 */
-	//int BuildPacketVA(int[] pSerialBuf, int[] pSerialBufCnt,
-        //                  int maxSerialBytes ) {
-	//	int     	bytes[MAX_PACKET_BYTES];
-	//	int				t;
-	//	long			numBytes = 0;
-	//	va_list			ap;
-        //
-	//	va_start(ap, maxSerialBytes);
-	//	while ((t = va_arg(ap, int)) != -1) {
-	//		bytes[numBytes] = t;
-	//		numBytes++;
-	//	}
-	//	va_end(ap);
-        //
-	//	return BuildPacket(pSerialBuf, pSerialBufCnt, maxSerialBytes,bytes,numBytes);
-	//}
+    /** So we now have a int array reflecting required packet
+     * byte structure => bitStream
+     */
+    /**
+     * Now do the hard part - convert this into a serial stream
+     */
+    return (bitStreamToSerialBytes(bitStream));
+  }
 
+  /* BitStreamToSerialBytes
+   *
+   * Generate the serial bytes from the bit stream.
+   *
+   * Bassically this is a depth first, prune largest tree search, always going down the subtree
+   * that uses the most bits for the next byte. If we get an error, backtrack up
+   * the tree until we reach a node that we have not completely traversed all the
+   * subtrees for and try going down the subtree that uses the second most bits.
+   * Keep going until we finish converting the packet or run out of things to try.
+   *
+   *
+   * This is not guaranteed to find the shortest serial stream for a given
+   * packet, but it is guaranteed to find a stream if one exists. Also, it
+   * usually does come up with the shortest packet.
+   */
+  static int[] bitStreamToSerialBytes(int[] inputBitStream) {
+    int currentBufferIndex;
+    boolean result;
+    int treeIndex = -1;
+    int serialStream[] = new int[inputBitStream.length];
+    node tree[] = new node[150];
 
-	/* Same as BuildPacketVA above, except takes an array of numBytes packet bytes
-	 * instead of the variable arguments. Called by BuildPacketVA to actually do
-	 * the work.
-	 *
-	 * This function makes the bit stream from the packet bytes, and then calls
-	 * BitStreamToSerialBytes to actually get the serial bytes.
-	 *
-	 * Returns 0 on success, -1 on failure.
-	 */
-    int BuildPacket(int[] pSerialBuf, int pSerialBufCnt[],  // secretly just one
-										int maxSerialBytes,
-										int[] pBytes, int numBytes) {
-        int		i;
-		int		bitsInStream = 0;
-		int[] bitStream = new int[MAX_BITS_IN_PACKET];
+    for (currentBufferIndex = 0; currentBufferIndex < tree.length;
+         currentBufferIndex++) {
+      tree[currentBufferIndex] = new node();
+      tree[currentBufferIndex].bitPattern = 0;
+      tree[currentBufferIndex].patternLength = 0;
+    }
 
-		/* Make into an array of ints for easier processing. */
-		/* do preamble */
-		for (bitsInStream=0; bitsInStream<PREAMBLE_LENGTH; bitsInStream++)
-			bitStream[bitsInStream] = 1;
-		/* Do packet bytes. */
-		for (i=0; i<numBytes; i++) {
-			MakeBitValuesFromByte(bitStream, bitsInStream, pBytes[i]);
-			bitsInStream += BITSTREAM_BITS_PER_BYTE;
-		}
-		/* do stop bit */
-		bitStream[bitsInStream++] = 1;
+    /* Now generate the actual serial byte stream from the array of bits. */
+    currentBufferIndex = 0;
+    treeIndex = 1;
+    while (currentBufferIndex < inputBitStream.length) {
+      if ( (result = readFirstChild(inputBitStream, currentBufferIndex,
+                                    inputBitStream.length - currentBufferIndex,
+                                    tree[treeIndex]))) {
+        /* Success, there is a Child at this level in the tree to read */
+        /* Move down the tree to next node */
+        serialStream[treeIndex] = tree[treeIndex].bitPattern;
+        currentBufferIndex += tree[treeIndex++].patternLength;
+      }
+      /* Allow outer loop control to take us down next level; */
+      else {
+        /* Need to add some code to cope with stradling '1's to stop
+                       backtrack from failure */
+        if (currentBufferIndex + 4 > inputBitStream.length) {
+          serialStream[treeIndex] = BITS_11111;
+          currentBufferIndex = inputBitStream.length;
+        }
+        else {
+          while (treeIndex > 0) {
+            /* Inner loop to check all childs at this node */
+            /* If no more childs then need to bracktrack */
+            treeIndex--;
+            currentBufferIndex -= tree[treeIndex].patternLength;
+            if (readNextChild(tree[treeIndex])) {
+              serialStream[treeIndex] = tree[treeIndex].bitPattern;
+              currentBufferIndex += tree[treeIndex++].patternLength;
+              break;
+            }
+            if (treeIndex == 0) {
+              serialStream[0] = 0;
+              return (serialStream);
+            }
+          }
+        }
+      }
+    }
+    serialStream[0] = --treeIndex;
+    return (serialStream);
+  }
 
-		pSerialBufCnt[0] = 0;
-		if (BitStreamToSerialBytes(pSerialBuf, pSerialBufCnt, maxSerialBytes,
-												bitStream, bitsInStream) < 0) {
-			return -1;		/* failed. */
-		}
-		return 0;
-	}
+  /* ReadNextChild
+   *
+   * This routine find the next largest (ie longest lenght) child
+   * at this node.
+   * ThisNode	- (INPUT/OUTPUT) determine if there is another child
+   *                if so update node with ie the Bit
+   *                pattern and its associated lenght.
+   *
+   * Return false if one doesnt exist otherwise returns true.
+   */
+  static boolean readNextChild(node thisNode) {
 
+    switch (thisNode.bitPattern) {
+      /* Success - there is another child */
 
-	/* BitStreamToSerialBytes
-	 *
-	 * Generate the serial bytes from the bit stream.
-	 *
-	 * Bassically this is a depth first tree search, always going down the subtree
-	 * that uses the most bits for the next byte. If we get an error, backtrack up
-	 * the tree until we reach a node that we have not completely traversed all the
-	 * subtrees for and try going down the subtree that uses the second most bits.
-	 * Keep going until we finish converting the packet or run out of things to try.
-	 *
-	 * In addition to the above, we also backtrack if we hit maxSerialBytes
-	 * bytes without having finished. This serves two purposes - first it
-	 * guarantees we will not overflow the serial buffer, and second it lets
-	 * you force a search for a packet that fits even if a longer one is
-	 * found first.
-	 *
-	 * This is not guaranteed to find the shortest serial stream for a given
-	 * packet, but it is guaranteed to find a stream if one exists. Also, it
-	 * usually does come up with the shortest packet.
-	 */
-	static int BitStreamToSerialBytes(int[] pSerialBuf,
-										int[] pSerialBufCnt,  // really just one value
-										int maxSerialBytes,
-										int bitStream[], int bitsInStream) {
-		int		i;
-		int		tempByte;
-		int[]   used = new int[1];
-		int 	serCnt = 0;
+      case BITS_00:
+        BITS_01:
+            {
+          thisNode.bitPattern = BITS_0;
+          thisNode.patternLength = 1;
+          break;
+        }
+      case BITS_001: {
+        thisNode.bitPattern = BITS_00;
+        thisNode.patternLength = 2;
+        break;
+      }
+      case BITS_010: {
+        thisNode.bitPattern = BITS_01;
+        thisNode.patternLength = 2;
+        break;
+      }
+      case BITS_011: {
+        thisNode.bitPattern = BITS_01;
+        thisNode.patternLength = 2;
+        break;
+      }
+      case BITS_100: {
+        thisNode.bitPattern = BITS_10;
+        thisNode.patternLength = 2;
+        break;
+      }
+      case BITS_0111: {
+        thisNode.bitPattern = BITS_011;
+        thisNode.patternLength = 3;
+        break;
+      }
+      case BITS_1011: {
+        thisNode.bitPattern = BITS_101;
+        thisNode.patternLength = 3;
+        break;
+      }
+      case BITS_1101: {
+        thisNode.bitPattern = BITS_110;
+        thisNode.patternLength = 3;
+        break;
+      }
+      /* We have exhausted all children on this level */
+      default:
+        return false;
+    }
+    return (true);
+  }
 
-		/* Now generate the actual serial byte stream from the array of bits. */
-		i = 0;
-		while (i < bitsInStream) {
-			if (serCnt >= maxSerialBytes)
-				tempByte = -1;		/* serial buffer full - cause error to back up. */
-			else if ((tempByte = TranslateByte(bitStream, i, bitsInStream-i, used)) > 0)
-				pSerialBuf[serCnt++] = tempByte;
-			else if (i+4 >= bitsInStream) {
-				int		j;
+  /* ReadFirstChild
+   *
+   * This routine find the first largest (ie longest lenght) child
+   * at this node          *
+   * BS		- (INPUT) Bit stream array
+   * offset       - Offset in to buffer
+   * validBits	- (INPUT) number of valid bits in the bit stream.
+   * ThisNode	- (OUTPUT) where to put largest child found ie the Bit
+   *                pattern and its associated lenght.
+   *
+   * Return false if one doesnt exist otherwise returns true.
+   */
+  static boolean readFirstChild(int bs[], int offset, int validBits,
+                                node thisNode) {
+    boolean b0 = false;
+    boolean b1 = false;
+    boolean b2 = false;
+    boolean b3 = false;
+    boolean b4 = false;
+    thisNode.patternLength = 0;
 
-				/* If whats left of bitstream is all 1's then add more
-				 * ones so it converts without having to backtrack and
-				 * possibly fail.
-				 */
-				tempByte = BITS_11111;
-				for (j=i; j<bitsInStream; j++)
-					if (bitStream[j]==0)
-						tempByte = -1;
-				if (tempByte > 0) {
-					pSerialBuf[serCnt++] = tempByte;
-					used[0] = 5;
-				}
-			}
-			if (tempByte <= 0) {
-				used[0] = 0;
-				while (serCnt > 0)	{ /* The backup loop. */
-					/* Back up one byte and see if there are alternatives for it.
-					 * If so, break out of the backup loop and start down the new
-					 * branch of the tree. If there are no alternatives, back up
-					 * some more. For alternatives, strategy is to find something
-					 * one bit shorter with the same leading bits.
-					 */
-					serCnt--;
-					switch ( pSerialBuf[serCnt] ) {
-						/* Success - back up one bit in input and go down another
-					 	* subtree from this level.
-					 	*/
-						case BITS_00:		tempByte = BITS_0;		break;
-						case BITS_01:		tempByte = BITS_0;		break;
-						case BITS_001:		tempByte = BITS_00;		break;
-						case BITS_010:		tempByte = BITS_01;		break;
-						case BITS_011:		tempByte = BITS_01;		break;
-						case BITS_100:		tempByte = BITS_10;		break;
-						case BITS_0111:		tempByte = BITS_011;	break;
-						case BITS_1011:		tempByte = BITS_101;	break;
-						case BITS_1101:		tempByte = BITS_110;	break;
-						/* We have exhausted all subtrees on this level, go up one
-						 * level and try its other subtrees.
-						 */
-						case BITS_0:		used[0] -= 1;		break;
-						case BITS_10:		used[0] -= 2;		break;
-						case BITS_101:		used[0] -= 3;		break;
-						case BITS_110:		used[0] -= 3;		break;
-						case BITS_1110:		used[0] -= 4;		break;
-						case BITS_11111:	used[0] -= 5;		break;
-					}
-					if (tempByte > 0) {
-						used[0] -= 1;		/* We backed up one bit. */
-						pSerialBuf[serCnt++] = tempByte;
-						break;				/* break out of the backup loop. */
-					}
-				}
-				if (serCnt <= 0) {
-					/* We traversed the entire tree with no luck. */
-            		pSerialBufCnt[0] = 0;
-		            return -1;
-                }
-			}
-			i += used[0];
-		}
+    switch (validBits) { /* Note all cases fall through on purpose. */
+      default:
+        thisNode.patternLength = 5;
+        b0 = (bs[0 + offset] != 0);
+        b1 = (bs[1 + offset] != 0);
+        b2 = (bs[2 + offset] != 0);
+        b3 = (bs[3 + offset] != 0);
+        b4 = (bs[4 + offset] != 0);
+        if (b0 && b1 && b2 && b3 && b4) {
+          thisNode.bitPattern = BITS_11111;
+          break;
+        }
+      case 4:
+        thisNode.patternLength = 4;
+        b0 = (bs[0 + offset] != 0);
+        b1 = (bs[1 + offset] != 0);
+        b2 = (bs[2 + offset] != 0);
+        b3 = (bs[3 + offset] != 0);
+        if (!b0 && b1 && b2 && b3) {
+          thisNode.bitPattern = BITS_0111;
+          break;
+        }
+        if (b0 && !b1 && b2 && b3) {
+          thisNode.bitPattern = BITS_1011;
+          break;
+        }
+        if (b0 && b1 && !b2 && b3) {
+          thisNode.bitPattern = BITS_1101;
+          break;
+        }
+        if (b0 && b1 && b2 && !b3) {
+          thisNode.bitPattern = BITS_1110;
+          break;
+        }
+      case 3:
+        b0 = (bs[0 + offset] != 0);
+        b1 = (bs[1 + offset] != 0);
+        b2 = (bs[2 + offset] != 0);
+        thisNode.patternLength = 3;
+        if (!b0 && !b1 && b2) {
+          thisNode.bitPattern = BITS_001;
+          break;
+        }
+        if (!b0 && b1 && !b2) {
+          thisNode.bitPattern = BITS_010;
+          break;
+        }
+        if (!b0 && b1 && b2) {
+          thisNode.bitPattern = BITS_011;
+          break;
+        }
+        if (b0 && !b1 && !b2) {
+          thisNode.bitPattern = BITS_100;
+          break;
+        }
+        if (b0 && !b1 && b2) {
+          thisNode.bitPattern = BITS_101;
+          break;
+        }
+        if (b0 && b1 && !b2) {
+          thisNode.bitPattern = BITS_110;
+          break;
+        }
+      case 2:
+        thisNode.patternLength = 2;
+        b0 = (bs[0 + offset] != 0);
+        b1 = (bs[1 + offset] != 0);
+        if (!b0 && !b1) {
+          thisNode.bitPattern = BITS_00;
+          break;
+        }
+        if (!b0 && b1) {
+          thisNode.bitPattern = BITS_01;
+          break;
+        }
+        if (b0 && !b1) {
+          thisNode.bitPattern = BITS_10;
+          break;
+        }
+      case 1:
+        thisNode.patternLength = 1;
+        b0 = (bs[0 + offset] != 0);
+        if (!b0) {
+          thisNode.bitPattern = BITS_0;
+          break;
+        }
+        else {
+          thisNode.patternLength = 0;
+        }
+    }
 
-		pSerialBufCnt[0] = serCnt;
-		return 0;	/* Success */
-	}
+    if (thisNode.patternLength == 0) {
+      return (false);
+    }
+    else {
+      return (true);
+    }
+  }
 
-
-
-	/* Turn the byte into a stream of bits, preceeded by a zero start bit.
-         * pBitStream[] is the output bit stream
-         * offset is the starting index in the bit stream
-	 */
-	static void MakeBitValuesFromByte(int[] pBitStream, int offset, int inByte) {
-		int		i;
-		int		mask = 0x80;
-
-		pBitStream[0+offset] = 0;
-		for (i=1; i<BITSTREAM_BITS_PER_BYTE; i++) {
-			pBitStream[i+offset] = (inByte & mask)!=0 ? 1 : 0;
-			mask = (mask >> 1);
-		}
-	}
-
-
-	/* TranslateByte
-	 *
-	 * This routine finds the serial byte that corresponds to the most possible
-	 * bits from the head of the bit stream pointed to by pBS.
-	 *
-	 * pBS			- (INPUT) Bit stream array
-     * offset       - (INPUT) index of the first bit to be used in the bit stream array
-	 * validBits	- (INPUT) number of valid bits in the bit stream.
-	 * pBitsUsed	- (OUTPUT) where to put number of bits converted from stream.
-	 *
-	 * Return -1 on error, otherwise serial byte.
-	 */
-	static int TranslateByte(int[] pBS, int offset, int validBits, int[] pBitsUsed) {
-		boolean b0 = (pBS[0+offset]!=0);
-        boolean b1 = (pBS[1+offset]!=0);
-        boolean b2 = (pBS[2+offset]!=0);
-        boolean b3 = (pBS[3+offset]!=0);
-        boolean b4 = (pBS[4+offset]!=0);
-
-		if (validBits <= 0)		/* just in case. */
-			return -1;
-
-		switch (validBits) {	/* Note all cases fall through on purpose. */
-			default:
-				pBitsUsed[0] = 5;
-				if (b0 && b1 && b2 && b3 && b4)	return BITS_11111;
-			case 4:
-				pBitsUsed[0] = 4;
-				if (!b0 && b1 && b2 && b3)		return BITS_0111;
-				if (b0 && !b1 && b2 && b3)		return BITS_1011;
-				if (b0 && b1 && !b2 && b3)		return BITS_1101;
-				if (b0 && b1 && b2 && !b3)		return BITS_1110;
-			case 3:
-				pBitsUsed[0] = 3;
-				if (! b0 && ! b1 && b2)		return BITS_001;
-				if (! b0 && b1 && ! b2)		return BITS_010;
-				if (! b0 && b1 && b2)		return BITS_011;
-				if (b0 && ! b1 && ! b2)		return BITS_100;
-				if (b0 && !b1 && b2)		return BITS_101;
-				if (b0 && b1 && !b2)		return BITS_110;
-			case 2:
-				pBitsUsed[0] = 2;
-				if (!b0 && !b1)	return BITS_00;
-				if (!b0 && b1)		return BITS_01;
-				if (b0 && !b1)		return BITS_10;
-			case 1:
-				pBitsUsed[0] = 1;
-				if (b0)	return BITS_0;
-		}
-
-		return -1;
-	}
-
-
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MakePacket.class.getName());
+  static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(
+      MakePacket.class.getName());
 }
 
+/* @(#)MakePacket.java */
 
-/* @(#)NmraPacket.java */
