@@ -10,7 +10,7 @@ import jmri.*;
  * Based on Crr0024.bas
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
 
@@ -58,11 +58,11 @@ public class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
         si1b.setAppearance(SignalHead.RED);
 
         bo4  = sm.newSensor("CS7", "Reading Relay track 2 bo(04)");
-        bo16 = sm.newSensor("CS27","Cornwall Relay 1 bo(17)");
+        bo16 = sm.newSensor("CS27","PRR/Lebanon entrance bo(16)");
 
-        tu1  = sm.newSensor("CS1", "Q Curve bo(01)");
+        tu1  = sm.newSensor("CS2", "Cornwall Jct 1 tu(01)");
         tu3  = sm.newSensor("CS6", "unused tu(03)");
-        tu12 = sm.newSensor("CS29","Cornwall Mine lead tu(13)");
+        tu12 = sm.newSensor("CS29","East Cornwall Junction switch tu(12)");
 
         // set up the initial correlation
         setOutput();
