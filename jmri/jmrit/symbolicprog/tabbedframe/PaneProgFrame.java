@@ -29,7 +29,7 @@ import org.jdom.JDOMException;
 /**
  * Frame providing a command station programmer from decoder definition files
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 abstract class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
@@ -246,6 +246,8 @@ abstract class PaneProgFrame extends javax.swing.JFrame
             log.warn("loadDecoder file invoked with null object");
             return;
         }
+        if (log.isDebugEnabled()) log.debug("loadDecoderFile from "+df.fileLocation
+                                        +" "+df.getFilename());
 
         try {
             decoderRoot = df.rootFromName(df.fileLocation+df.getFilename());
