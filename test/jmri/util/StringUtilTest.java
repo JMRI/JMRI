@@ -10,9 +10,10 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.util.StringUtil class.
  * @author	Bob Jacobsen  Copyright 2003
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class StringUtilTest extends TestCase {
+
 
     public void testHexFromInt() {
         Assert.assertEquals("00",StringUtil.twoHexFromInt(0));
@@ -20,14 +21,14 @@ public class StringUtilTest extends TestCase {
         Assert.assertEquals("02",StringUtil.twoHexFromInt(2));
         Assert.assertEquals("03",StringUtil.twoHexFromInt(3));
         Assert.assertEquals("09",StringUtil.twoHexFromInt(9));
-        Assert.assertEquals("0a",StringUtil.twoHexFromInt(10));
-        Assert.assertEquals("0b",StringUtil.twoHexFromInt(11));
-        Assert.assertEquals("0e",StringUtil.twoHexFromInt(14));
-        Assert.assertEquals("0f",StringUtil.twoHexFromInt(15));
+        Assert.assertEquals("0A",StringUtil.twoHexFromInt(10));
+        Assert.assertEquals("0B",StringUtil.twoHexFromInt(11));
+        Assert.assertEquals("0E",StringUtil.twoHexFromInt(14));
+        Assert.assertEquals("0F",StringUtil.twoHexFromInt(15));
         Assert.assertEquals("10",StringUtil.twoHexFromInt(16));
         Assert.assertEquals("11",StringUtil.twoHexFromInt(17));
         Assert.assertEquals("80",StringUtil.twoHexFromInt(0x80));
-        Assert.assertEquals("ff",StringUtil.twoHexFromInt(0xFF));
+        Assert.assertEquals("FF",StringUtil.twoHexFromInt(0xFF));
     }
 
     public void testHexFromIntFromByte() {
@@ -36,7 +37,32 @@ public class StringUtilTest extends TestCase {
         Assert.assertEquals("02",StringUtil.twoHexFromInt((byte)2));
         Assert.assertEquals("11",StringUtil.twoHexFromInt((byte)17));
         Assert.assertEquals("80",StringUtil.twoHexFromInt((byte)0x80));
-        Assert.assertEquals("ff",StringUtil.twoHexFromInt((byte)0xFF));
+        Assert.assertEquals("FF",StringUtil.twoHexFromInt((byte)0xFF));
+    }
+
+    public void testAppHexFromInt() {
+        Assert.assertEquals("00",StringUtil.appendTwoHexFromInt(0,""));
+        Assert.assertEquals("01",StringUtil.appendTwoHexFromInt(1,""));
+        Assert.assertEquals("02",StringUtil.appendTwoHexFromInt(2,""));
+        Assert.assertEquals("03",StringUtil.appendTwoHexFromInt(3,""));
+        Assert.assertEquals("09",StringUtil.appendTwoHexFromInt(9,""));
+        Assert.assertEquals("0A",StringUtil.appendTwoHexFromInt(10,""));
+        Assert.assertEquals("0B",StringUtil.appendTwoHexFromInt(11,""));
+        Assert.assertEquals("0E",StringUtil.appendTwoHexFromInt(14,""));
+        Assert.assertEquals("0F",StringUtil.appendTwoHexFromInt(15,""));
+        Assert.assertEquals("10",StringUtil.appendTwoHexFromInt(16,""));
+        Assert.assertEquals("11",StringUtil.appendTwoHexFromInt(17,""));
+        Assert.assertEquals("80",StringUtil.appendTwoHexFromInt(0x80,""));
+        Assert.assertEquals("FF",StringUtil.appendTwoHexFromInt(0xFF,""));
+    }
+
+    public void testAppHexFromIntFromByte() {
+        Assert.assertEquals("00",StringUtil.appendTwoHexFromInt((byte)0,""));
+        Assert.assertEquals("01",StringUtil.appendTwoHexFromInt((byte)1,""));
+        Assert.assertEquals("02",StringUtil.appendTwoHexFromInt((byte)2,""));
+        Assert.assertEquals("11",StringUtil.appendTwoHexFromInt((byte)17,""));
+        Assert.assertEquals("80",StringUtil.appendTwoHexFromInt((byte)0x80,""));
+        Assert.assertEquals("FF",StringUtil.appendTwoHexFromInt((byte)0xFF,""));
     }
 
 	public void testParseStringNull() {
