@@ -13,7 +13,7 @@ set this up, create a loginfo entry that looks something like this:
 
     mymodule /path/to/this/script %%s some-email-addr@your.domain
 
-In this example, whenever a checkin that matches `mymodule' is made, this
+In this example, whenever a checkin that matches 'mymodule' is made, this
 script is invoked, which will generate the diff containing email, and send it
 to some-email-addr@your.domain.
 
