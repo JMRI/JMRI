@@ -28,7 +28,7 @@ import com.sun.java.util.collections.ArrayList;
  *
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class PanelEditor extends JPanel {
@@ -42,37 +42,37 @@ public class PanelEditor extends JPanel {
     JTextField nextX = new JTextField("20",4);
     JTextField nextY = new JTextField("30",4);
 
-    JButton labelAdd = new JButton("add");
+    JButton labelAdd = new JButton("Add text:");
     JTextField nextLabel = new JTextField(10);
 
-    JButton iconAdd = new JButton("add");
+    JButton iconAdd = new JButton("Add icon:");
     JButton pickIcon = new JButton("pick");
-    JLabel nextIconLabel = new JLabel();
     NamedIcon labelIcon = null;
 
-    JButton turnoutAdd = new JButton("add");
-    JTextField nextTurnout = new JTextField(10);
+    JButton turnoutAddR = new JButton("Add turnout:");
+    JTextField nextTurnoutR = new JTextField(5);
+    JButton closedIconButtonR;
+    NamedIcon closedIconR;
+    JButton thrownIconButtonR;
+    NamedIcon thrownIconR;
 
-    JButton closedIconButton = new JButton("Pick closed icon");
-    NamedIcon closedIcon;
-    JLabel closedIconLabel;
+    JButton turnoutAddL = new JButton("Add turnout:");
+    JTextField nextTurnoutL = new JTextField(5);
+    JButton closedIconButtonL;
+    NamedIcon closedIconL;
+    JButton thrownIconButtonL;
+    NamedIcon thrownIconL;
 
-    JButton thrownIconButton = new JButton("Pick thrown icon");
-    NamedIcon thrownIcon;
-    JLabel thrownIconLabel;
+    JButton sensorAdd = new JButton("Add sensor:");
+    JTextField nextSensor = new JTextField(5);
 
-    JButton sensorAdd = new JButton("add");
-    JTextField nextSensor = new JTextField(10);
-
-    JButton activeIconButton = new JButton("Pick active icon");
+    JButton activeIconButton;
     NamedIcon activeIcon;
-    JLabel activeIconLabel;
 
-    JButton inactiveIconButton = new JButton("Pick inactive icon");
+    JButton inactiveIconButton;
     NamedIcon inactiveIcon;
-    JLabel inactiveIconLabel;
 
-    JButton backgroundAddButton = new JButton("Pick image");
+    JButton backgroundAddButton = new JButton("Pick background image...");
 
     public CatalogPane catalog = new CatalogPane();
 
@@ -94,7 +94,6 @@ public class PanelEditor extends JPanel {
         {
             JPanel panel = new JPanel();
             panel.setLayout(new FlowLayout());
-            panel.add(new JLabel("add background image: "));
             panel.add(backgroundAddButton);
             panel.add(labelAdd);
             backgroundAddButton.addActionListener( new ActionListener() {
@@ -110,9 +109,8 @@ public class PanelEditor extends JPanel {
         {
             JPanel panel = new JPanel();
             panel.setLayout(new FlowLayout());
-            panel.add(new JLabel("add label: "));
-            panel.add(nextLabel);
             panel.add(labelAdd);
+            panel.add(nextLabel);
             labelAdd.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         addLabel();
@@ -128,8 +126,7 @@ public class PanelEditor extends JPanel {
         {
             JPanel panel = new JPanel();
             panel.setLayout(new FlowLayout());
-            panel.add(new JLabel("add icon: "));
-            panel.add(nextIconLabel);
+            panel.add(iconAdd);
             panel.add(pickIcon);
             pickIcon.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
@@ -137,7 +134,6 @@ public class PanelEditor extends JPanel {
                     }
                 }
             );
-            panel.add(iconAdd);
             iconAdd.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         addIcon();
@@ -149,39 +145,80 @@ public class PanelEditor extends JPanel {
 
         this.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
 
-        // Add a turnout indicator
+        // Add a turnout indicator for right-bound
         {
             JPanel panel = new JPanel();
             panel.setLayout(new FlowLayout());
-
+            panel.add(turnoutAddR);
             TurnoutIcon to = new TurnoutIcon();
-            closedIcon = to.getClosedIcon();
-            thrownIcon = to.getThrownIcon();
-            closedIconLabel = new JLabel(closedIcon);
-            thrownIconLabel = new JLabel(thrownIcon);
 
-            panel.add(new JLabel("indicate turnout: "));
-            panel.add(nextTurnout);
-            panel.add(closedIconLabel);
-            panel.add(closedIconButton);
-            closedIconButton.addActionListener( new ActionListener() {
+            closedIconR = to.getClosedIcon();
+            closedIconButtonR = new JButton(closedIconR);
+            closedIconButtonR.setToolTipText("Icon for turnout closed. Click to select new icon");
+
+            thrownIconR = to.getThrownIcon();
+            thrownIconButtonR = new JButton(thrownIconR);
+            thrownIconButtonR.setToolTipText("Icon for turnout thrown. Click to select new icon");
+
+            panel.add(nextTurnoutR);
+            panel.add(closedIconButtonR);
+            closedIconButtonR.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
-                        pickClosedIcon();
+                        pickClosedIconR();
                     }
                 }
             );
-            panel.add(thrownIconLabel);
-            panel.add(thrownIconButton);
-            thrownIconButton.addActionListener( new ActionListener() {
+            panel.add(thrownIconButtonR);
+            thrownIconButtonR.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
-                        pickThrownIcon();
+                        pickThrownIconR();
                     }
                 }
             );
-            panel.add(turnoutAdd);
-            turnoutAdd.addActionListener( new ActionListener() {
+            turnoutAddR.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
-                        addTurnout();
+                        addTurnoutR();
+                    }
+                }
+            );
+            this.add(panel);
+        }
+
+        // Add a turnout indicator for left-bound
+        {
+            JPanel panel = new JPanel();
+            panel.setLayout(new FlowLayout());
+            panel.add(turnoutAddL);
+            TurnoutIcon to = new TurnoutIcon();
+
+            closedIconL = new NamedIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/os-upper-left-closed.gif"),
+                            "resources/icons/smallschematics/tracksegments/os-upper-right-closed.gif");
+            closedIconButtonL = new JButton(closedIconL);
+            closedIconButtonL.setToolTipText("Icon for turnout closed. Click to select new icon");
+
+            thrownIconL = new NamedIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/os-upper-left-thrown.gif"),
+                            "resources/icons/smallschematics/tracksegments/os-upper-right-closed.gif");
+            thrownIconButtonL = new JButton(thrownIconL);
+            thrownIconButtonL.setToolTipText("Icon for turnout thrown. Click to select new icon");
+
+            panel.add(nextTurnoutL);
+            panel.add(closedIconButtonL);
+            closedIconButtonL.addActionListener( new ActionListener() {
+                    public void actionPerformed(ActionEvent a) {
+                        pickClosedIconL();
+                    }
+                }
+            );
+            panel.add(thrownIconButtonL);
+            thrownIconButtonL.addActionListener( new ActionListener() {
+                    public void actionPerformed(ActionEvent a) {
+                        pickThrownIconL();
+                    }
+                }
+            );
+            turnoutAddL.addActionListener( new ActionListener() {
+                    public void actionPerformed(ActionEvent a) {
+                        addTurnoutL();
                     }
                 }
             );
@@ -196,13 +233,12 @@ public class PanelEditor extends JPanel {
             SensorIcon to = new SensorIcon();
             activeIcon = to.getActiveIcon();
             inactiveIcon = to.getInactiveIcon();
-            activeIconLabel = new JLabel(activeIcon);
+            activeIconButton = new JButton(activeIcon);
 
-            inactiveIconLabel = new JLabel(inactiveIcon);
+            inactiveIconButton = new JButton(inactiveIcon);
 
-            panel.add(new JLabel("indicate sensor: "));
+            panel.add(sensorAdd);
             panel.add(nextSensor);
-            panel.add(activeIconLabel);
             panel.add(activeIconButton);
             activeIconButton.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
@@ -210,7 +246,6 @@ public class PanelEditor extends JPanel {
                     }
                 }
             );
-            panel.add(inactiveIconLabel);
             panel.add(inactiveIconButton);
             inactiveIconButton.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
@@ -218,7 +253,6 @@ public class PanelEditor extends JPanel {
                     }
                 }
             );
-            panel.add(sensorAdd);
             sensorAdd.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         addSensor();
@@ -238,23 +272,40 @@ public class PanelEditor extends JPanel {
      */
     void pickLabelIcon() {
         labelIcon = pickIcon();
-        nextIconLabel.setIcon(labelIcon);
+        pickIcon.setIcon(labelIcon);
+        pickIcon.setText(null);  // remove original "pick" label
     }
 
     /**
-     * Select the icon for "thrown"
+     * Select the icon for "thrown" right-bound
      */
-    void pickThrownIcon() {
-        thrownIcon = pickIcon();
-        thrownIconLabel.setIcon(thrownIcon);
+    void pickThrownIconR() {
+        thrownIconR = pickIcon();
+        thrownIconButtonR.setIcon(thrownIconR);
     }
 
     /**
-     * Select the image for "closed"
+     * Select the image for "closed" right-bound
      */
-    void pickClosedIcon() {
-        closedIcon = pickIcon();
-        closedIconLabel.setIcon(closedIcon);
+    void pickClosedIconR() {
+        closedIconR = pickIcon();
+        closedIconButtonR.setIcon(closedIconR);
+    }
+
+    /**
+     * Select the icon for "thrown" left-bound
+     */
+    void pickThrownIconL() {
+        thrownIconL = pickIcon();
+        thrownIconButtonL.setIcon(thrownIconL);
+    }
+
+    /**
+     * Select the image for "closed" left-bound
+     */
+    void pickClosedIconL() {
+        closedIconL = pickIcon();
+        closedIconButtonL.setIcon(closedIconL);
     }
 
     /**
@@ -262,7 +313,7 @@ public class PanelEditor extends JPanel {
      */
     void pickActiveIcon() {
         activeIcon = pickIcon();
-        activeIconLabel.setIcon(activeIcon);
+        activeIconButton.setIcon(activeIcon);
     }
 
     /**
@@ -270,11 +321,11 @@ public class PanelEditor extends JPanel {
      */
     void pickInactiveIcon() {
         inactiveIcon = pickIcon();
-        inactiveIconLabel.setIcon(inactiveIcon);
+        inactiveIconButton.setIcon(inactiveIcon);
     }
 
     /**
-     * Select and create and image
+     * Select and create image for use in some icon
      */
     NamedIcon pickIcon() {
         return catalog.getSelectedIcon();
@@ -304,11 +355,21 @@ public class PanelEditor extends JPanel {
     /**
      * Add a turnout indicator to the target
      */
-    void addTurnout() {
+    void addTurnoutR() {
         TurnoutIcon l = new TurnoutIcon();
-        if (closedIcon!=null) l.setClosedIcon(closedIcon);
-        if (thrownIcon!=null) l.setThrownIcon(thrownIcon);
-        l.setTurnout(null, nextTurnout.getText());
+        if (closedIconR!=null) l.setClosedIcon(closedIconR);
+        if (thrownIconR!=null) l.setThrownIcon(thrownIconR);
+        l.setTurnout(null, nextTurnoutR.getText());
+
+        log.debug("turnout height, width: "+l.getHeight()+" "+l.getWidth());
+        setNextLocation(l);
+        putTurnout(l);
+    }
+    void addTurnoutL() {
+        TurnoutIcon l = new TurnoutIcon();
+        if (closedIconL!=null) l.setClosedIcon(closedIconL);
+        if (thrownIconL!=null) l.setThrownIcon(thrownIconL);
+        l.setTurnout(null, nextTurnoutL.getText());
 
         log.debug("turnout height, width: "+l.getHeight()+" "+l.getWidth());
         setNextLocation(l);
