@@ -14,7 +14,7 @@ package jmri.util;
  * back to an explicit implementation when running on Java 1.1
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class StringUtil {
@@ -137,5 +137,29 @@ public class StringUtil {
             bubblesort(values);
         }
     }
+
+    /**
+     * Provide a version of String replaceAll() that also works on Java 1.1.8
+     */
+     static public String replaceAll(String input, String find, String replace) {
+        try {
+            return input.replaceAll(find, replace);
+        } catch (Throwable t) {
+            // not available, do the hard way
+            return localReplaceAll(input, find, replace);
+        }
+     }
+
+     static String localReplaceAll(String input, String find, String replace) {
+        String local = input;
+        String output = "";
+        int loc;
+        while ( (loc = local.indexOf(find)) >= 0) {
+            // found string, so have to do replacement
+            output = output+local.substring(0,loc)+replace;
+            local = local.substring(loc+find.length(), local.length());
+        }
+        return output+local;
+     }
 
 }
