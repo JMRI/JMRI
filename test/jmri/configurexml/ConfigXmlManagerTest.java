@@ -11,7 +11,7 @@ import jmri.jmrit.XmlFile;
  * <P>
  * Uses the local preferences for test files.
  * @author Bob Jacobsen Copyright 2003
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class ConfigXmlManagerTest extends TestCase {
 
@@ -21,7 +21,7 @@ public class ConfigXmlManagerTest extends TestCase {
 
     boolean innerFlag;
 
-    public void testRegister() {
+    public void testRegisterFail() {
         ConfigXmlManager configxmlmanager = new ConfigXmlManager(){
                 void locateFailed(java.lang.ClassNotFoundException ex, String adapterName, Object o) {
                     innerFlag=true;
@@ -29,8 +29,48 @@ public class ConfigXmlManagerTest extends TestCase {
             };
         Object o1=  "";
         innerFlag=false;
-        configxmlmanager.register(o1);
+        configxmlmanager.registerConfig(o1);
         Assert.assertTrue("register didn't find class", innerFlag);
+    }
+
+    public void testRegisterOK() {
+        ConfigXmlManager configxmlmanager = new ConfigXmlManager(){
+                void locateFailed(java.lang.ClassNotFoundException ex, String adapterName, Object o) {
+                    innerFlag=true;
+                }
+            };
+        Object o1=  new jmri.TripleTurnoutSignalHead("","", null, null, null);
+        innerFlag=false;
+        configxmlmanager.registerConfig(o1);
+        Assert.assertTrue("register found class", !innerFlag);
+        Assert.assertTrue("stored in clist", configxmlmanager.clist.size() == 1);
+        configxmlmanager.deregister(o1);
+        Assert.assertTrue("removed from clist", configxmlmanager.clist.size() == 0);
+    }
+    public void testFind() throws ClassNotFoundException {
+        ConfigXmlManager configxmlmanager = new ConfigXmlManager(){
+                void locateFailed(java.lang.ClassNotFoundException ex, String adapterName, Object o) {
+                    innerFlag=true;
+                }
+            };
+        Object o1=  new jmri.TripleTurnoutSignalHead("","", null, null, null);
+        Object o2=  new jmri.TripleTurnoutSignalHead("","", null, null, null);
+        Object o3=  new jmri.TripleTurnoutSignalHead("","", null, null, null);
+        innerFlag=false;
+        configxmlmanager.registerConfig(o1);
+        Assert.assertTrue("find found it", configxmlmanager.findInstance(o1.getClass(),1)==o1);
+        Assert.assertTrue("find only one so far", configxmlmanager.findInstance(o1.getClass(),2)==null);
+        configxmlmanager.deregister(o1);
+        Assert.assertTrue("find none", configxmlmanager.findInstance(o1.getClass(),1)==null);
+        configxmlmanager.registerConfig(o1);
+        configxmlmanager.registerConfig(o2);
+        configxmlmanager.registerConfig(o3);
+        Assert.assertTrue("find found 2nd", configxmlmanager.findInstance(o1.getClass(),2)==o2);
+        Assert.assertTrue("find found subclass", configxmlmanager.findInstance(Class.forName("jmri.SignalHead"),2)==o2);
+
+    }
+
+    public void testDeregister() {
     }
 
     public void testAdapterName() {

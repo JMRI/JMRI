@@ -137,6 +137,11 @@ public class EasyDccTrafficControllerTest extends TestCase {
 
 	// internal class to simulate a EasyDccPortController
 	class EasyDccPortControllerScaffold extends EasyDccPortController {
+            public java.util.Vector getPortNames() { return null; }
+	    public String openPort(String portName, String appName) { return null; }
+	    public void configure() {}
+	    public String[] validBaudRates() { return null; }
+
 		protected EasyDccPortControllerScaffold() throws Exception {
 			PipedInputStream tempPipe;
 			tempPipe = new PipedInputStream();

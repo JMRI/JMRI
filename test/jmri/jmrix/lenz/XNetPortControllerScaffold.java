@@ -3,7 +3,7 @@
  *
  * Description:	    test implementation of XNetPortController
  * @author			Bob Jacobsen
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 
 package jmri.jmrix.lenz;
@@ -16,6 +16,11 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
 class XNetPortControllerScaffold extends XNetPortController {
+
+            public java.util.Vector getPortNames() { return null; }
+	    public String openPort(String portName, String appName) { return null; }
+	    public void configure() {}
+	    public String[] validBaudRates() { return null; }
 
 		protected XNetPortControllerScaffold() throws Exception {
 			PipedInputStream tempPipe;

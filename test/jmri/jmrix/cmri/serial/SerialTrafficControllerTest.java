@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the SerialTrafficController class
  * @author			Bob Jacobsen
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 package jmri.jmrix.cmri.serial;
@@ -55,6 +55,10 @@ public class SerialTrafficControllerTest extends TestCase {
 
     // internal class to simulate a PortController
     class SerialPortControllerScaffold extends SerialPortController {
+            public java.util.Vector getPortNames() { return null; }
+	    public String openPort(String portName, String appName) { return null; }
+	    public void configure() {}
+	    public String[] validBaudRates() { return null; }
         protected SerialPortControllerScaffold() throws Exception {
             PipedInputStream tempPipe;
             tempPipe = new PipedInputStream();
