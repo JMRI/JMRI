@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: TCS_A1.xml,v 1.1 2002-12-20 03:09:14 jacobsen Exp $ -->
+<!-- $Id: TCS_A1.xml,v 1.2 2003-05-27 21:51:54 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
 					version="1" lastUpdated="200201216"/>
@@ -254,12 +254,6 @@
 			</variable>
 		<variable label="Dither amplitude" CV="57" 
 				item="Dither option" >
-			<decVal/>
-			</variable>
-		<variable label="Burst duration" CV="58" default="50">
-			<decVal/>
-			</variable>
-		<variable label="Burst voltage" CV="65" >
 			<decVal/>
 			</variable>
 
@@ -537,6 +531,13 @@
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="F12 controls output 14" CV="46" mask="VXXXXXXX" minOut="14" minFn="12"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+		<variable label="Burst duration" CV="58" default="50">
+			<decVal/>
+			</variable>
+		<variable label="Burst voltage" CV="65" >
+			<decVal/>
+			</variable>
 
 	</variables>
 

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: TCS_Tx.xml,v 1.6 2002-10-17 12:38:05 jacobsen Exp $ -->
+<!-- $Id: TCS_Tx.xml,v 1.7 2003-05-27 21:51:54 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
 					version="3" lastUpdated="200201016"/>
@@ -578,8 +578,21 @@
 		<variable label="F12 controls output 14" CV="46" mask="VXXXXXXX" minOut="14" minFn="12"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 
+		<variable label="Burst duration" CV="58" default="50">
+			<decVal/>
+			</variable>
+		<variable label="Burst voltage" CV="65" >
+			<decVal/>
+			</variable>
+
 	</variables>
 
 </decoder>
+<pane name="TCS">
+	<column>
+		<display item="Burst duration" />
+		<display item="Burst voltage" />
+	</column>
+</pane>
 
 </decoder-config>
