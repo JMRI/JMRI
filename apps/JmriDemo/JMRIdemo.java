@@ -17,7 +17,7 @@ import javax.swing.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author			Bob Jacobsen   Copyright 2002
- * @version         $Revision: 1.39 $
+ * @version         $Revision: 1.40 $
  */
 public class JMRIdemo extends JPanel {
     public JMRIdemo() {
@@ -57,6 +57,10 @@ public class JMRIdemo extends JPanel {
         inputMenu.add(new jmri.jmrix.easydcc.serialdriver.SerialDriverAction("EasyDcc Serial"));
         inputMenu.add(new jmri.jmrix.cmri.serial.serialdriver.SerialDriverAction("CMRI Serial"));
         inputMenu.add(new jmri.jmrix.lenz.li100.LI100Action("XPressNet LI100"));
+
+	  // AC 11/09/2002 Added SPROG support
+        inputMenu.add(new jmri.jmrix.sprog.serialdriver.SerialDriverAction("SPROG Serial"));
+
         inputMenu.add(new JSeparator());
         inputMenu.add(new AbstractAction("Quit"){
                 public void actionPerformed(ActionEvent e) {
@@ -129,6 +133,11 @@ public class JMRIdemo extends JPanel {
         menuBar.add(cmriMenu);
         cmriMenu.add(new jmri.jmrix.cmri.serial.serialmon.SerialMonAction("Command Monitor"));
         cmriMenu.add(new jmri.jmrix.cmri.serial.packetgen.SerialPacketGenAction("Send Command"));
+
+        JMenu sprogMenu = new JMenu("SPROG");
+        menuBar.add(sprogMenu);
+        sprogMenu.add(new jmri.jmrix.sprog.sprogmon.SprogMonAction("Command Monitor"));
+        sprogMenu.add(new jmri.jmrix.sprog.packetgen.SprogPacketGenAction("Send Command"));
 
         JMenu devMenu = new JMenu("Development");
         menuBar.add(devMenu);
@@ -206,4 +215,5 @@ public class JMRIdemo extends JPanel {
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(JMRIdemo.class.getName());
 }
+
 
