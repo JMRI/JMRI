@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractMRListener;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2004
- * @version 		$Revision: 2.3 $
+ * @version 		$Revision: 2.4 $
  *
  */
 public abstract class XNetTrafficController extends AbstractMRTrafficController implements XNetInterface {
@@ -46,6 +46,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
      */
     XNetTrafficController(LenzCommandStation pCommandStation) {
         mCommandStation = pCommandStation;
+	setAllowUnexpectedReply(true);
     }
 
     // Abstract methods for the XNetInterface
@@ -96,7 +97,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
       * enterProgMode(); has to be available, even though it doesn't do 
       * anything on lenz
       */
-    protected AbstractMRMessage enterProgMode() { return ((AbstractMRMessage) (new XNetMessage(0))); }
+    protected AbstractMRMessage enterProgMode() { return null; }
 
     /**
       * enterNormalMode() returns the value of getExitProgModeMsg();

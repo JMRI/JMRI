@@ -30,7 +30,7 @@ import java.util.Vector;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 2.1 $
+ * @version 		$Revision: 2.2 $
  *
  */
 public class XNetPacketizer extends XNetTrafficController {
@@ -59,21 +59,41 @@ public class XNetPacketizer extends XNetTrafficController {
      * @param m Message to send; will be updated with CRC
 	 */
 	public void sendXNetMessage(XNetMessage m, XNetListener reply) {
-		// set the error correcting code byte
-		int len = m.getNumDataElements();
-		int chksum = 0x00;  /* the seed */
-   		int loop;
-
-    		for(loop = 0; loop < len-1; loop++) {  // calculate contents for data part
-        		chksum ^= m.getElement(loop);
-        	}
-		m.setElement(len-1, chksum);  // checksum is last element of message
-		sendMessage(m,reply);
+		if(m.length()!=0)
+			sendMessage(m,reply);
 	}
+
+
+    /**
+     * Add trailer to the outgoing byte stream.
+     * This version adds the checksum to the last byte.
+     * @param msg  The output byte stream
+     * @param offset the first byte not yet used
+     */
+    protected void addTrailerToOutput(byte[] msg, int offset, jmri.jmrix.AbstractMRMessage m) {
+	if(m.getNumDataElements()==0) return;
+	((XNetMessage)m).setParity();
+        msg[m.getNumDataElements()-1] = (byte)m.getElement(m.getNumDataElements()-1);
+    }   
+
+
+    /**
+     * Check to see if PortController object can be sent to.
+     * returns true if ready, false otherwise
+     * May throw an Exception.   
+     */
+    public boolean portReadyToSend(jmri.jmrix.AbstractPortController p) throws Exception {
+        if (((XNetPortController)p).okToSend()) {
+         ((XNetPortController)p).setOutputBufferEmpty(false);
+	 return true;
+        } else {
+             if (log.isDebugEnabled()) log.debug ("XPressNet port not ready to receive");
+		return false;
+	}
+     }
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetPacketizer.class.getName());
 }
-
 
 /* @(#)XNetPacketizer.java */
 
