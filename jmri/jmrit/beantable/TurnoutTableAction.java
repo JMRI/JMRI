@@ -2,24 +2,26 @@
 
 package jmri.jmrit.beantable;
 
-import jmri.*;
-import javax.swing.AbstractAction;
+import jmri.InstanceManager;
+import jmri.Manager;
+import jmri.NamedBean;
+import jmri.Turnout;
 import java.awt.event.ActionEvent;
 
-import jmri.jmrix.loconet.SlotManager;
+import javax.swing.AbstractAction;
 
 /**
  * Swing action to create and register a
  * TurnoutTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class TurnoutTableAction extends AbstractAction {
 
     public TurnoutTableAction(String s) { super(s);}
-    public TurnoutTableAction() { this("TurnoutTable");}
+    public TurnoutTableAction() { this("Turnout Table");}
 
     public void actionPerformed(ActionEvent e) {
 
@@ -45,4 +47,4 @@ public class TurnoutTableAction extends AbstractAction {
 }
 
 
-/* @(#)SlotMonAction.java */
+/* @(#)TurnoutTableAction.java */
