@@ -18,7 +18,7 @@ import com.sun.java.util.collections.NoSuchElementException;
  * is handled in an independent thread.
  *
  * @author			Paul Bender  Copyright (C) 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class XpaTrafficController implements XpaInterface, Runnable {
 
@@ -107,7 +107,10 @@ public class XpaTrafficController implements XpaInterface, Runnable {
             XpaListener client = (XpaListener) v.elementAt(i);
             if (log.isDebugEnabled()) log.debug("notify client: "+client);
             try {
-              client.reply(r);
+	      // Skip forwarding the message to the last sender until 
+	      // later.
+	      if(lastSender!=client)
+                   client.reply(r);
             }
             catch (Exception e)
             {
