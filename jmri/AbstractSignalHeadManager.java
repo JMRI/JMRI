@@ -20,7 +20,7 @@ import com.sun.java.util.collections.Collections;
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class AbstractSignalHeadManager extends AbstractManager
     implements SignalHeadManager, java.beans.PropertyChangeListener {
@@ -32,6 +32,12 @@ public class AbstractSignalHeadManager extends AbstractManager
     public char systemLetter() { return 'I'; }
     public char typeLetter() { return 'H'; }
 
+    public SignalHead getSignalHead(String name) {
+        SignalHead t = getByUserName(name);
+        if (t!=null) return t;
+
+        return getBySystemName(name);
+    }
 
     public SignalHead getBySystemName(String key) {
         return (SignalHead)_tsys.get(key);
