@@ -1,52 +1,52 @@
-/**
- * VariableTableModel.java
- *
- * Description:		Table data model for display of variables in symbolic programmer
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version      $Revision: 1.2 $
- */
+// VariableTableModel.java
 
 package jmri.jmrit.symbolicprog;
 
-import java.awt.event.ActionListener;
+import com.sun.java.util.collections.List;
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeListener;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Vector;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import com.sun.java.util.collections.List;
+import javax.swing.JTextField;
+import javax.swing.table.AbstractTableModel;
 import org.jdom.Attribute;
 import org.jdom.Element;
 
+/**
+ * Table data model for display of variables in symbolic programmer.
+ * Also responsible for loading from the XML file...
+ * @author			Bob Jacobsen   Copyright (C) 2001
+ * @version      $Revision: 1.3 $
+ */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
-	private String headers[] = null;
+    private String headers[] = null;
 
-	private Vector rowVector = new Vector();  // vector of Variable items
-	private CvTableModel _cvModel = null;          // reference to external table model
-	private Vector _writeButtons = new Vector();
-	private Vector _readButtons = new Vector();
-	private JLabel _status = null;
+    private Vector rowVector = new Vector();  // vector of Variable items
+    private CvTableModel _cvModel = null;          // reference to external table model
+    private Vector _writeButtons = new Vector();
+    private Vector _readButtons = new Vector();
+    private JLabel _status = null;
 
 	/** Defines the columns; values understood are:
 	 *  "Name", "Value", "Range", "Read", "Write", "Comment", "CV", "Mask", "State"
 	 */
-	public VariableTableModel(JLabel status, String h[], CvTableModel cvModel) {
-		super();
-		_status = status;
-		_cvModel = cvModel;
-		headers = h;
-		}
+    public VariableTableModel(JLabel status, String h[], CvTableModel cvModel) {
+        super();
+	_status = status;
+        _cvModel = cvModel;
+        headers = h;
+    }
 
-	// basic methods for AbstractTableModel implementation
-	public int getRowCount() {
-		return rowVector.size();
-	}
+    // basic methods for AbstractTableModel implementation
+    public int getRowCount() {
+        return rowVector.size();
+    }
 
-	public int getColumnCount( ){ return headers.length;}
+    public int getColumnCount( ){ return headers.length;}
 
 	public String getColumnName(int col) {
 		if (log.isDebugEnabled()) log.debug("getColumnName "+col);
@@ -247,6 +247,18 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 			_cvModel.addCV(""+(CV+1));  // ensure 2nd CV exists
 			v = new LongAddrVariableValue(name, comment, readOnly,
 								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item);
+		} else if ( (child = e.getChild("splitVal")) != null) {
+			if ( (a = child.getAttribute("min")) != null)
+				minVal = Integer.valueOf(a.getValue()).intValue();
+			if ( (a = child.getAttribute("max")) != null)
+				maxVal = Integer.valueOf(a.getValue()).intValue();
+                        int highCV = CV+1;
+			if ( (a = child.getAttribute("highCV")) != null)
+				highCV = Integer.valueOf(a.getValue()).intValue();
+
+			_cvModel.addCV(""+(highCV));  // ensure 2nd CV exists
+			v = new SplitVariableValue(name, comment, readOnly,
+								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item, highCV);
 		} else {
 			log.error("Did not find a valid variable type");
 			return;
@@ -377,16 +389,16 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		v.write();
 	}
 
-	public void propertyChange(PropertyChangeEvent e) {
-		if (log.isDebugEnabled()) log.debug("prop changed "+e.getPropertyName()
-													+" new value: "+e.getNewValue());
-		setFileDirty(true);
-		fireTableDataChanged();
-	}
+    public void propertyChange(PropertyChangeEvent e) {
+        if (log.isDebugEnabled()) log.debug("prop changed "+e.getPropertyName()
+                                            +" new value: "+e.getNewValue());
+        setFileDirty(true);
+        fireTableDataChanged();
+    }
 
-	public void configDone() {
-		fireTableDataChanged();
-	}
+    public void configDone() {
+        fireTableDataChanged();
+    }
 
 	/**
 	 * Represents any chance to values, etc, hence rewriting the
