@@ -1,11 +1,8 @@
 <!-- Special build file for doing Java 1.1.8 compatibility tests -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.4 $ -->
+<!-- Revision $Revision: 1.5 $ -->
 
 <project name="JMRI" default="check" basedir=".">
-
-<!-- much of this works by setting properties before invoking a target -->
-<!-- in the usual build.xml file.    -->
 
 <!-- basedir="." means all paths are relative to the "java" subdir -->
 <!-- in the project.  We expect that lib et al will be present in -->
@@ -16,7 +13,6 @@
   </description>
 
   <!-- set global properties for this build -->
-  <!-- still needed, as we dont (yet) defer everything to build.xml -->
   <property name="source" value="src"/>
   <property name="test" value="test"/>
   <property name="target" value="classes"/>
@@ -76,11 +72,12 @@
   	<fail message="lib118/JDKClasses.zip not present" />
   </target>
   
-  <target name="nativecompile" description="compile files requiring Java 1.3 libraries">
-    <!-- Compile specific classes with regular path -->
-    <ant target="compilefiles" antfile="build.xml">
-      <property name="files" 
-          value="jmri/util/StringUtil.java, 
+  <target name="nativecompile" depends="init" 
+        description="compile specific files requiring Java 1.3 libraries">
+    <!-- Compile the java code from ${files} -->
+    <javac srcdir="${source}" 
+           destdir="${target}" 
+           includes="jmri/util/StringUtil.java, 
                  jmri/util/FontUtil.java,
                  jmri/util/FileUtil.java,
                  jmri/util/JmriJFrame.java,
@@ -89,9 +86,13 @@
                  jmri/util/JTabbedPaneUtil.java,
                  jmri/util/JTableUtil.java,
                  jmri/util/com/sun/TableSorter.java,
-                 jmri/util/PythonInterp.java" />
-    </ant>
+                 jmri/util/PythonInterp.java"
+           target="1.1" 
+           debug="no" >
+       <classpath refid="project.class.path"    />
+    </javac>
   </target>
+
 
   <target name="compile" description="compile for 1.1.8 JVM, with all its oddities">
     <!-- Check and initialize -->
@@ -116,8 +117,14 @@
        <classpath refid="project.class.path"    />
     </javac>
 
-    <!-- Do the rest of normal compilation -->
-    <ant target="compile" antfile="build.xml" />
+    <!-- Copy top level resources to include in jar file -->
+    <copy todir="${target}/resources/">
+      <fileset dir="src/resources" includes="*.gif"  /> 
+    </copy>
+    <copy todir="${target}">
+      <fileset dir="src/" includes="**/*.properties"  /> 
+    </copy>
+
   </target>
 
   <!-- and now the main "check" target, the reason for this file -->
