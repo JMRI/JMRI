@@ -277,6 +277,13 @@ public class PaneProgFrame extends javax.swing.JFrame
 		    	"Some changes have not been written to a configuration file. Close window?", 
 		    	"choose one", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.CANCEL_OPTION) return;
 		    }
+		// Check for a "<new loco>" roster entry; if found, remove it
+		List l = Roster.instance().matchingList(null, null, null, null, null, null, "<new loco>");
+		if (l.size() > 0 && log.isDebugEnabled()) log.debug("Removing "+l.size()+" <new loco> entries");
+		while (l.size() > 0 ) {
+			Roster.instance().removeEntry((RosterEntry)l.get(0));
+			l = Roster.instance().matchingList(null, null, null, null, null, null, "<new loco>");
+		}
 		//OK, close
 		setVisible(false);
 		dispose();	

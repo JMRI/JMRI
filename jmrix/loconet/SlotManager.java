@@ -284,7 +284,7 @@ public class SlotManager implements LocoNetListener, Programmer {
 		progState = 1;
 		
 		// format and send message
-		LnTrafficController.instance().sendLocoNetMessage(progTaskStart(getMode(), -1, CV, true));
+		LnTrafficController.instance().sendLocoNetMessage(progTaskStart(getMode(), -1, CV, false));
 	}
 
 	public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
@@ -295,7 +295,7 @@ public class SlotManager implements LocoNetListener, Programmer {
 		progState = 1;
 		
 		// format and send message
-		LnTrafficController.instance().sendLocoNetMessage(progTaskStart(getMode(), -1, CV, true));
+		LnTrafficController.instance().sendLocoNetMessage(progTaskStart(getMode(), -1, CV, false));
 	}
 
 	private jmri.ProgListener _usingProgrammer = null;

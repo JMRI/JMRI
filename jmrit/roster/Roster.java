@@ -30,7 +30,7 @@ import org.jdom.output.*;
  * whether it should...
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: Roster.java,v 1.9 2001-12-10 06:30:25 jacobsen Exp $
+ * @version			$Id: Roster.java,v 1.10 2001-12-10 15:32:28 jacobsen Exp $
  * @see             jmri.jmrit.roster.RosterEntry
  */
 public class Roster {
@@ -79,7 +79,7 @@ public class Roster {
 		}
 		return b;
 	}
-	 
+	 	 
 	/** 
 	 * Return RosterEntry from a "title" string, ala selection in matchingComboBox
 	 */
@@ -190,7 +190,7 @@ public class Roster {
 		// find root
 		Element root = doc.getRootElement();
 		
-		XmlFile.dumpElement(root);
+		if (log.isDebugEnabled()) XmlFile.dumpElement(root);
 		
 		// decode type, invoke proper processing routine if a decoder file
 		if (root.getChild("roster") != null) {

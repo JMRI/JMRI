@@ -20,7 +20,7 @@ import com.sun.java.util.collections.List;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: CombinedLocoSelPane.java,v 1.3 2001-12-10 06:30:25 jacobsen Exp $
+ * @version			$Id: CombinedLocoSelPane.java,v 1.4 2001-12-10 15:32:28 jacobsen Exp $
  */
 public class CombinedLocoSelPane extends javax.swing.JPanel  {
 		
@@ -180,7 +180,8 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 		System.out.println((String)temp.getItemAt(1));
 		if (temp.getItemCount() > 0) {
 			decoderBox.setModel(temp.getModel());
-			decoderBox.setSelectedIndex(0);
+			decoderBox.insertItemAt("<from locomotive settings>",0);
+			decoderBox.setSelectedIndex(1);
 		} else {
 			log.warn("Decoder says "+mfgID+" "+modelID+" decoder, but no such decoder defined");
 		}
