@@ -17,7 +17,7 @@ import jmri.progdebugger.*;
 /**
  * Test the jmri.jmrix.symbolicprog package.
  * @author			Bob Jacobsen
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class SymbolicProgTest extends TestCase {
 
@@ -54,6 +54,7 @@ public class SymbolicProgTest extends TestCase {
 		suite.addTest(jmri.jmrit.symbolicprog.CvValueTest.suite());
 		suite.addTest(jmri.jmrit.symbolicprog.CvTableModelTest.suite());
 		suite.addTest(jmri.jmrit.symbolicprog.VariableTableModelTest.suite());
+		suite.addTest(jmri.jmrit.symbolicprog.CombinedLocoSelListPaneTest.suite());
 		return suite;
 	}
 
