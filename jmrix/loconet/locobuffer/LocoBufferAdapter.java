@@ -51,9 +51,8 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 				log.error("Cannot open serial port: "+e);	
 			}
 			
-			// disable flow control; hardware lines used for signalling, XON/XOFF might appear in data
-			activeSerialPort.setFlowControlMode(0);
-			// activeSerialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN | SerialPort.FLOWCONTROL_RTSCTS_OUT);
+			// activeSerialPort.setFlowControlMode(0);
+			activeSerialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN | SerialPort.FLOWCONTROL_RTSCTS_OUT);
 
 			// set RTS high, DTR high
 			activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters

@@ -68,6 +68,7 @@ public class LnTrafficController implements LocoNetInterface, Runnable {
 		byte msg[] = new byte[len];
 		for (int i=0; i< len; i++)
 			msg[i] = (byte) m.getElement(i);
+		if (log.isDebugEnabled()) log.debug("send LocoNet packet: "+m.toString());
 		try {
 			if (ostream != null)
 				ostream.write(msg);
@@ -133,18 +134,13 @@ public class LnTrafficController implements LocoNetInterface, Runnable {
 			{
 				v = (Vector) listeners.clone();
 			}
+		if (log.isDebugEnabled()) log.debug("notify of incoming LocoNet packet: "+m.toString());
 		// forward to all listeners
 		int cnt = v.size();
 		for (int i=0; i < cnt; i++) {
 			LocoNetListener client = (LocoNetListener) listeners.elementAt(i);
-			try {
-				client.message(m);
-				}
-			catch (Exception e)
-				{
-					log.warn("notify: During dispatch to "+client+"\nException "+e);
-				}
-			}
+			client.message(m);
+		}
 	}
 	
 	/**
@@ -190,8 +186,21 @@ public class LnTrafficController implements LocoNetInterface, Runnable {
              	// confirm you've got the message right...
              	
              	// message is complete, dispatch it !!
-             	notify(msg);
-             	
+             	{ 
+             		final LocoNetMessage thisMsg = msg;
+             		final LnTrafficController thisTC = this;
+ 					// return a notification via the queue to ensure end
+					Runnable r = new Runnable() {
+						LocoNetMessage msgForLater = thisMsg;
+						LnTrafficController myTC = thisTC;
+						public void run() { 
+							log.debug("Delayed notify starts");
+           					myTC.notify(msgForLater);
+						}
+					};
+					javax.swing.SwingUtilities.invokeLater(r);
+				}
+              	
              	// done with this one
             	}  // end loop until no data available
             // at this point, input stream is not available

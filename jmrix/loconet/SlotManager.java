@@ -12,13 +12,14 @@
 package jmri.jmrix.loconet;
 
 import jmri.Programmer;
+import jmri.jmrix.AbstractProgrammer;
 import jmri.ProgListener;
 
 import java.util.Vector;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
-public class SlotManager implements LocoNetListener, Programmer {
+public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 
 	private LocoNetSlot _slots[] = new LocoNetSlot[128];
 
@@ -87,6 +88,9 @@ public class SlotManager implements LocoNetListener, Programmer {
 			{
 				v = (Vector) slotListeners.clone();
 			}
+		if (log.isDebugEnabled()) log.debug("notify "+v.size()
+										+" SlotListeners about slot "
+										+s.getSlot());
 		// forward to all listeners
 		int cnt = v.size();
 		for (int i=0; i < cnt; i++) {
@@ -95,23 +99,6 @@ public class SlotManager implements LocoNetListener, Programmer {
 						}
 	}
 	
-
-// data members to hold contact with the property listeners
-	private Vector propListeners = new Vector();
-	
-	public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
-			// add only if not already registered
-			if (!propListeners.contains(l)) {
-					propListeners.addElement(l);
-				}
-		}
-
-	public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
-			if (propListeners.contains(l)) {
-					propListeners.removeElement(l);
-				}
-		}
-
 	protected void notifyPropertyChange(String name, int oldval, int newval) {
 		// make a copy of the listener vector to synchronized not needed for transmit
 		Vector v;
@@ -119,6 +106,9 @@ public class SlotManager implements LocoNetListener, Programmer {
 			{
 				v = (Vector) propListeners.clone();
 			}
+		if (log.isDebugEnabled()) log.debug("notify "+v.size()
+										+"listeners of property change name: "
+										+name+" oldval: "+oldval+" newval: "+newval);
 		// forward to all listeners
 		int cnt = v.size();
 		for (int i=0; i < cnt; i++) {
@@ -131,6 +121,7 @@ public class SlotManager implements LocoNetListener, Programmer {
 	public void message(LocoNetMessage m) {
 		int i = 0;
 
+		// decode the specific message type and hence slot number
 		switch (m.getOpCode()) {
 			case LnConstants.OPC_WR_SL_DATA:
 			case LnConstants.OPC_SL_RD_DATA:
@@ -151,28 +142,34 @@ public class SlotManager implements LocoNetListener, Programmer {
 				// handle if reply to slot. There's no slot number in the LACK, unfortunately.
 				// If this is a LACK to a Slot op, and progState is command pending, 
 				// assume its for us...
+				if (log.isDebugEnabled())
+							log.debug("LACK in state "+progState+" message: "+m.toString());
 				if (m.getElement(1) == 0x6F && progState == 1 ) {
 						// check status byte
 						if (m.getElement(2) == 1) { // task accepted
 							// move to commandExecuting state
+							startLongTimer();
 							progState = 2;
 							}
 						else if (m.getElement(2) == 0) { // task aborted as busy
 							// move to not programming state
 							progState = 0;
 							// notify user ProgListener
+							stopTimer();
 							notifyProgListenerLack(jmri.ProgListener.ProgrammerBusy);
 							}
 						else if (m.getElement(2) == 0x7F) { // not implemented
 							// move to not programming state
 							progState = 0;
 							// notify user ProgListener
+							stopTimer();
 							notifyProgListenerLack(jmri.ProgListener.NotImplemented);
 							}
 						else if (m.getElement(2) == 0x40) { // task accepted blind
 							// move to not programming state
 							progState = 0;
 							// notify user ProgListener
+							stopTimer();
 							notifyProgListenerLack(jmri.ProgListener.OK);
 							}
 						else { // not sure how to cope, so complain
@@ -180,6 +177,7 @@ public class SlotManager implements LocoNetListener, Programmer {
 							// move to not programming state
 							progState = 0;
 							// notify user ProgListener
+							stopTimer();
 							notifyProgListenerLack(jmri.ProgListener.UnknownError);
 							}
 					}
@@ -192,6 +190,9 @@ public class SlotManager implements LocoNetListener, Programmer {
 			
 		// if here, i holds the slot number, and we expect to be able to parse		
 		// and have the slot handle the message
+		if (i>=_slots.length || i<0) log.error("Received slot number "+i+
+				" is greater than array length "+_slots.length+" Message was "
+				+ m.toString());
 		try {
 			_slots[i].setSlot(m);
 			}
@@ -206,6 +207,9 @@ public class SlotManager implements LocoNetListener, Programmer {
 		// start checking for programming operations
 		if (i == 124) {
 			// here its an operation on the programmer slot
+			if (log.isDebugEnabled())
+					log.debug("Message "+m.getOpCodeHex()
+						+" for slot 124 in state "+progState);
 			switch (progState) {
 				case 0:   // notProgramming
 					break;
@@ -217,6 +221,7 @@ public class SlotManager implements LocoNetListener, Programmer {
 					if (m.getOpCode() == LnConstants.OPC_SL_RD_DATA) {	
 						// yes, this is the end
 						// move to not programming state
+						stopTimer();
 						progState = 0;
 						
 						// parse out value returned
@@ -233,13 +238,13 @@ public class SlotManager implements LocoNetListener, Programmer {
 							}
 						// parse out status
 							if ( (_slots[i].pcmd() & LnConstants.PSTAT_NO_DECODER ) != 0 )  
-							status = status + jmri.ProgListener.NoLocoDetected;
+							status = (status | jmri.ProgListener.NoLocoDetected);
 						if ( (_slots[i].pcmd() & LnConstants.PSTAT_WRITE_FAIL ) != 0 )  
-							status = status + jmri.ProgListener.NoAck;
+							status = (status | jmri.ProgListener.NoAck);
 						if ( (_slots[i].pcmd() & LnConstants.PSTAT_READ_FAIL ) != 0 )  
-							status = status + jmri.ProgListener.NoAck;
+							status = (status | jmri.ProgListener.NoAck);
 						if ( (_slots[i].pcmd() & LnConstants.PSTAT_USER_ABORTED ) != 0 )  
-							status = status + jmri.ProgListener.UserAborted;
+							status = (status | jmri.ProgListener.UserAborted);
 						
 						// and send the notification
 						notifyProgListenerEnd(value, status);
@@ -254,6 +259,20 @@ public class SlotManager implements LocoNetListener, Programmer {
 
 	// members for handling the programmer interface
 	
+	/**
+	 * Internal routine to handle a timeout
+	 */
+	synchronized protected void timeout() {
+		if (progState != 0) {
+			// we're programming, time to stop
+			if (log.isDebugEnabled()) log.debug("timeout!");
+			// perhaps no communications present? Fail back to end of programming
+			progState = 0;
+			// and send the notification
+			notifyProgListenerEnd(_slots[124].cvval(), jmri.ProgListener.FailedTimeout);
+		}
+	}
+	
 	int progState = 0;
 		// 1 is commandPending
 		// 2 is commandExecuting
@@ -263,6 +282,7 @@ public class SlotManager implements LocoNetListener, Programmer {
 	int _confirmVal;
 	
 	public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+		if (log.isDebugEnabled()) log.debug("writeCV: "+CV);
 		useProgrammer(p);
 		_progRead = false;
 		_progConfirm = false;
@@ -270,11 +290,13 @@ public class SlotManager implements LocoNetListener, Programmer {
 		progState = 1;
 		
 		// format and send message
+		startShortTimer();
 		LnTrafficController.instance().sendLocoNetMessage(progTaskStart(getMode(), val, CV, true));
 
 		}
 		
 	public void confirmCV(int CV, int val, ProgListener p) throws jmri.ProgrammerException {
+		if (log.isDebugEnabled()) log.debug("confirmCV: "+CV);
 		useProgrammer(p);
 		_progRead = false;
 		_progConfirm = true;
@@ -284,10 +306,12 @@ public class SlotManager implements LocoNetListener, Programmer {
 		progState = 1;
 		
 		// format and send message
+		startShortTimer();
 		LnTrafficController.instance().sendLocoNetMessage(progTaskStart(getMode(), -1, CV, false));
 	}
 
 	public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+		if (log.isDebugEnabled()) log.debug("readCV: "+CV);
 		useProgrammer(p);
 		_progRead = true;
 		_progConfirm = false;
@@ -295,6 +319,7 @@ public class SlotManager implements LocoNetListener, Programmer {
 		progState = 1;
 		
 		// format and send message
+		startShortTimer();
 		LnTrafficController.instance().sendLocoNetMessage(progTaskStart(getMode(), -1, CV, false));
 	}
 

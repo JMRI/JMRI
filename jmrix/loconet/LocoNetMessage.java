@@ -17,7 +17,7 @@ package jmri.jmrix.loconet;
  * ideas being tested there will eventually be moved back to here.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Id: LocoNetMessage.java,v 1.5 2001-11-10 21:33:43 jacobsen Exp $
+ * @version			$Id: LocoNetMessage.java,v 1.6 2002-01-02 23:51:42 jacobsen Exp $
  * @see             jmri.jrmix.nce.NceMessage
  *
  */
@@ -41,8 +41,20 @@ public class LocoNetMessage {
 
 	/** Get length, including op code and error-detection byte */
 	public int getNumDataElements() {return _nDataBytes;}
-	public int getElement(int n) {return _dataBytes[n];}
-	public void setElement(int n, int v) { _dataBytes[n] = v; }
+	public int getElement(int n) {
+		if (n < 0 || n >= _dataBytes.length) 
+					log.error("reference element "+n
+								+" in message of "+_dataBytes.length
+								+" elements: "+this.toString());
+		return _dataBytes[n];
+	}
+	public void setElement(int n, int v) { 
+		if (n < 0 || n >= _dataBytes.length) 
+					log.error("reference element "+n
+								+" in message of "+_dataBytes.length
+								+" elements: "+this.toString());
+		_dataBytes[n] = v; 
+	}
 
 	/** Get a String representation of the entire message in hex */
 	public String toString() {
