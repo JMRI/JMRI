@@ -16,7 +16,7 @@ package jmri;
  * non-system-specific code.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class InstanceManager {
 
@@ -39,7 +39,13 @@ public class InstanceManager {
         return mThrottleFrameManager;
     }
 
-    static public SignalHeadManager signalHeadManagerInstance()  { return mSignalHeadManager; }
+    static public SignalHeadManager signalHeadManagerInstance()  {
+        if (mSignalHeadManager != null) return mSignalHeadManager;
+        // As a convenience, we create a default object if none was provided explicitly.
+        // This must be replaced when we start registering specific implementations
+        mSignalHeadManager = new AbstractSignalHeadManager();
+        return mSignalHeadManager;
+    }
 
     static private PowerManager _powerManager = null;
     static public void setPowerManager(PowerManager p) {
