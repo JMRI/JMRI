@@ -1,127 +1,147 @@
 <?xml version="1.0"?>
-<!DOCTYPE decoder:decoder-config SYSTEM "DTD/decoder-config.dtd">
-<!-- $Id: Atlas_DualMode.xml,v 1.2 2001-11-23 21:59:48 jacobsen Exp $ -->
-<decoder:decoder-config xmlns:decoder="http://jmri.sourceforge.net/xml/decoder">
-<decoder:decoder>
-	<decoder:id model="DualMode" mfg="Atlas" mfgID="127" versionID="45"  defnVersion="0"
-				comment="Item #340"></decoder:id>
+<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<!-- $Id: Atlas_DualMode.xml,v 1.3 2001-12-10 06:10:49 jacobsen Exp $ -->
+<decoder-config xmlns:decoder="http://jmri.sourceforge.net/xml/decoder">
+		<version author="Bob Jacobsen" version="1" lastUpdated="20011209"/>
 
-	<decoder:programming direct="yes" paged="yes" 
-	                     register="yes" ops="yes"></decoder:programming>
+<decoder>
+	<id family="Dual Mode" mfg="Atlas" mfgID="99" defnVersion="0"
+				comment="Non-reserved CVs listed in NMRA Recommended Practice 9.2.2"></id>
 
-	<decoder:variables>
-		<decoder:variable name="Address" CV="1" mask="VVVVVVVV" comment="Short address">
-			<decoder:decVal min="1" max="127"></decoder:decVal>
-			</decoder:variable>
-		<decoder:variable name="Start voltage" CV="2">
-				<decoder:decVal max="31"/>
-			</decoder:variable>
-		<decoder:variable name="Acceleration momentum" CV="3">
-				<decoder:decVal max="31"/>
-			</decoder:variable>
-		<decoder:variable name="Brake momentum" CV="4">
-				<decoder:decVal max="31"/>
-			</decoder:variable>
-		<decoder:variable name="Version Number" CV="7" readOnly="yes">
-				<decoder:decVal/>
-			</decoder:variable>
-		<decoder:variable name="Manufacturers ID" CV="8" readOnly="yes">
-				<decoder:decVal/>
-			</decoder:variable>
-		<decoder:variable name="Extended address" CV="17">
-			<decoder:longAddressVal/>
-			</decoder:variable>
-		<decoder:variable name="Consist address" CV="19">
-			<decoder:decVal/>
-			</decoder:variable>
-		<decoder:variable name="Acceleration trim" CV="23">
-			<decoder:decVal/>
-			</decoder:variable>
-		<decoder:variable name="Deceleration trim" CV="24">
-			<decoder:decVal/>
-			</decoder:variable>
-		<decoder:variable name="Locomotive direction" CV="29" mask="XXXXXXXV">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="normal"/>
-				<decoder:enumChoice choice="inverted"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="Headlight mode" CV="29" mask="XXXXXXVX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="14 or 27 speed step system"/>
-				<decoder:enumChoice choice="28, 55 or 128 speed step system"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="Usage on conventional DC layouts" CV="29" mask="XXXXXVXX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="digital mode only"/>
-				<decoder:enumChoice choice="can operate on DC or DCC"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="Speed curve selection" CV="29" mask="XXXVXXXX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="factory preset curve is used"/>
-				<decoder:enumChoice choice="user defined curve is used"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="Extended addressing" CV="29" mask="XXVXXXXX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="normal addressing"/>
-				<decoder:enumChoice choice="Two Byte extended addressing"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="CV23 and CV24" CV="50" mask="XXXXXXVX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="not active"/>
-				<decoder:enumChoice choice="active, modify CV3 and CV4"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="Brake momentum on DC operation" CV="50" mask="XXXXXVXX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="Off"/>
-				<decoder:enumChoice choice="On"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="Directional headlights" CV="51" mask="XXXXXXXV">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="headlights are directional"/>
-				<decoder:enumChoice choice="headlights independent, F0 controls front, F1 controls rear"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="Functional headlight dimming" CV="51" mask="XXXXXXVX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="Dimming disabled"/>
-				<decoder:enumChoice choice="Dimming enabled. If headlights independent, F1 dims the headlight if on"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="If lights independent, F4 dims F0" CV="51" mask="XXXXXVXX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="No"/>
-				<decoder:enumChoice choice="Yes"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="If lights independent, F4 dims F1" CV="51" mask="XXXXVXXX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="No"/>
-				<decoder:enumChoice choice="Yes"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="Dimming value (CV52)" CV="52">
-			<decoder:decVal/>
-			</decoder:variable>
-		<decoder:variable name="User ID #1" CV="105">
-			<decoder:decVal/>
-			</decoder:variable>
-		<decoder:variable name="User ID #2" CV="106">
-			<decoder:decVal/>
-			</decoder:variable>
-		<decoder:variable name="Decoder software version" CV="128" readOnly="yes">
-				<decoder:decVal/>
-			</decoder:variable>
-		<decoder:variable name="Speed Table" CV="67">
-			<decoder:speedTableVal/>
-			</decoder:variable>
-	</decoder:variables>
+	<programming direct="yes" paged="yes" 
+	                     register="yes" ops="yes"></programming>
+
+	<variables>
+		<variable name="Primary Address" CV="1" comment="Short address"
+						stdName="Short Address"  default="03">
+			<decVal min="1" max="127"/></variable>
+		<variable name="Vstart" CV="2"
+						comment="A value of 255 corresponds to 100%">
+			<decVal/></variable>
+		<variable name="Acceleration momentum" CV="3"
+						stdName="Accel" >
+			<decVal max="31"/></variable>
+		<variable name="Brake momentum" CV="4"
+						stdName="Decel">
+			<decVal max="31"/></variable>
+		<variable name="Manufacturer Version No" CV="7" readOnly="yes"
+						stdName="Decoder Version"><decVal/></variable>
+		<variable name="Manufacturer ID" CV="8" readOnly="yes"
+						stdName="Manufacturer">			<decVal/></variable>
+
+		<variable name="Extended Address" CV="17"
+						stdName="Long Address" >
+			<longAddressVal/></variable>
+			
+		<variable name="Consist Address" CV="19">			<decVal/></variable>
+		
+
+		<variable name="Consist Acceleration Adjustment" CV="23" mask="XVVVVVVV">
+				<decVal max="127"/>
+			</variable>
+		<variable name="Consist Acceleration Adjustment Sign" CV="23" mask="VXXXXXXX">
+			<enumVal>
+				<enumChoice choice="Adjustment Added"/>
+				<enumChoice choice="Adjustment Subtracted"/>
+				</enumVal></variable>
+		<variable name="Consist Deceleration Adjustment" CV="24" mask="XVVVVVVV">
+				<decVal max="127"/>
+			</variable>
+		<variable name="Consist Deceleration Adjustment Sign" CV="24" mask="VXXXXXXX">
+			<enumVal>
+				<enumChoice choice="Adjustment Added"/>
+				<enumChoice choice="Adjustment Subtracted"/>
+				</enumVal></variable>
+
+		<variable name="Locomotive Direction" CV="29" mask="XXXXXXXV">
+			<enumVal>
+				<enumChoice choice="normal"/>
+				<enumChoice choice="reversed"/>
+				</enumVal></variable>
+		<variable name="FL Location" CV="29" mask="XXXXXXVX"
+					stdName="Speed Step Mode">
+			<enumVal>
+				<enumChoice choice="14 speed step format"/>
+				<enumChoice choice="28 speed step format"/>
+				</enumVal></variable>
+		<variable name="Power Source Conversion" CV="29" mask="XXXXXVXX"
+					stdName="Analog (DC) Operation" >
+			<enumVal>
+				<enumChoice choice="NMRA Digital only"/>
+				<enumChoice choice="DC conversion enabled"/>
+				</enumVal></variable>
+		<variable name="Speed Table Definition" CV="29" mask="XXXVXXXX">
+			<enumVal>
+				<enumChoice choice="Use Vstart, Vmid, Vhigh"/>
+				<enumChoice choice="Use Table"/>
+				</enumVal></variable>
+		<variable name="Address Format" CV="29" mask="XXVXXXXX">
+			<enumVal>
+				<enumChoice choice="One byte (short) address"/>
+				<enumChoice choice="Two byte (extended) address"/>
+				</enumVal></variable>
+			
+		<variable name="Speed Table" CV="67">
+			<speedTableVal/></variable>
+
+		<variable name="User Id #1" CV="105">			<decVal/></variable>
+		<variable name="User Id #2" CV="106">			<decVal/></variable>
+		
+		<!-- Atlas-specific variables -->
+
+		<variable name="Consist Accel and Decel Trims" CV="50" mask="XXXXXXVX">
+			<enumVal>
+				<enumChoice choice="Not Active"/>
+				<enumChoice choice="Active"/>
+				</enumVal>
+			</variable>
+		<variable name="Brake Momentum on DC operation" CV="50" mask="XXXXXVXX">
+			<enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+				</enumVal>
+			</variable>
+		<variable name="Directional Headlights" CV="51" mask="XXXXXXXV">
+			<enumVal>
+				<enumChoice choice="Headlights are Directional"/>
+				<enumChoice choice="Headlights Independent, F0 front, F1 rear"/>
+				</enumVal>
+			</variable>
+		<variable name="Functional Headlight Dimming" CV="51" mask="XXXXXXVX">
+			<enumVal>
+				<enumChoice choice="Dimming Disabled"/>
+				<enumChoice choice="Dimming Enabled. If headlights independent, F1 dims headlight"/>
+				</enumVal>
+			</variable>
+		<variable name="If Lights Independent, F4 dims F0" CV="51" mask="XXXXXVXX">
+			<enumVal>
+				<enumChoice choice="No"/>
+				<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+		<variable name="If Lights Independent, F4 dims F1" CV="51" mask="XXXXVXXX">
+			<enumVal>
+				<enumChoice choice="No"/>
+				<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+		<variable name="Dimming Value (CV52)" CV="52">
+			<decVal/>
+			</variable>
 	
-</decoder:decoder>
-</decoder:decoder-config>
+	</variables>
+</decoder>
+
+<pane name="Atlas">
+	<column>
+		<display name="Consist Accel and Decel Trims" />
+		<display name="Brake Momentum on DC operation" />
+		<display name="Directional Headlights" />
+		<display name="Functional Headlight Dimming" />
+		<display name="If Lights Independent, F4 dims F0" />
+		<display name="If Lights Independent, F4 dims F1" />
+		<display name="Dimming Value (CV52)" />
+	</column>
+</pane>
+
+</decoder-config>

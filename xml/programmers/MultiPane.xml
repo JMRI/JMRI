@@ -1,25 +1,29 @@
 <?xml version="1.0"?>
 <!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
 <programmer-config xmlns:programmer="http://jmri.sourceforge.net/xml/programmer">
-<!-- $Id: MultiPane.xml,v 1.13 2001-12-09 18:00:17 jacobsen Exp $ -->
+<!-- $Id: MultiPane.xml,v 1.14 2001-12-10 06:10:49 jacobsen Exp $ -->
 		<version author="" version="" lastUpdated=""/>
 
 <programmer decoderFilePanes="yes">
 
 	<pane name="Basic">
 		<column>
+
+			<dccaddress/>
+
+			<label label=" "/>
+			<label label=" "/>
 			<display name="Short Address"/>
 			<display name="Long Address"/>
 			<display name="Address Format"/>
-
-			<dccaddress/>
-			
-			<display name="Locomotive Direction" format="radiobuttons" layout="left"/>
+			<label label=" "/>
+			<display name="Locomotive Direction" />
+			<display name="Speed Step Mode"/>
+			<display name="Analog (DC) Operation"/>
+		</column>
+		<column>
 			<display name="User Id #1"/>
 			<display name="User Id #2"/>
-			<display name="Speed Step Mode" layout="above"/>
-			<display name="Power Source Conversion" format="radiobuttons" layout="left"/>
-			<display name="Analog (DC) Operation" format="checkbox"/>
 		</column>
 	</pane>
 	
@@ -63,7 +67,7 @@
 		<column>
 			<display name="Speed Table Definition" 
 					format="onradiobutton" layout="above" label=""/>
-			<display name="Speed Table"/>
+			<display name="Speed Table" layout="above"/>
 		</column>
 	</pane>
 
@@ -73,8 +77,11 @@
 		</column>
 	</pane>
 
-	<pane name="Light FX">
+	<pane name="Lights">
 		<column>
+			<display name="Directional Headlights"/>
+			<label label=" "/>
+			
 			<display name="Function F0F effect generated"/>
 			<display name="Function F0F behaviour"/>
 			<label label=" "/>
@@ -115,6 +122,8 @@
 			<display name="Function 8 behaviour"/>
 		</column>
 		<column>
+			<display name="Analog Mode Function Status - FL(f)" format="checkbox"/>			
+			<display name="Analog Mode Function Status - FL(r)" format="checkbox"/>			
 			<display name="Analog Mode Function Status - F1" format="checkbox"/>			
 			<display name="Analog Mode Function Status - F2" format="checkbox"/>			
 			<display name="Analog Mode Function Status - F3" format="checkbox"/>			
@@ -124,34 +133,66 @@
 			<display name="Analog Mode Function Status - F7" format="checkbox"/>			
 			<display name="Analog Mode Function Status - F8" format="checkbox"/>			
 		</column>
+		<column>
+			<display name="Output 1 effect generated"/>
+			<label label=" "/>
+			
+			<display name="Output 2 effect generated"/>
+			<label label=" "/>
+			
+			<display name="Output 3 effect generated"/>
+			<label label=" "/>
+			
+			<display name="Output 4 effect generated"/>
+			<label label=" "/>
+			
+			<display name="Output 5 effect generated"/>
+			<label label=" "/>
+			
+			<display name="Output 6 effect generated"/>
+			<label label=" "/>
+			
+			<display name="Output 7 effect generated"/>
+			<label label=" "/>
+			
+			<display name="Output 8 effect generated"/>
+		</column>
 	</pane>
 
 	<pane name="Consist">
 		<column>
 			<display name="Consist Address" />
+			<display name="Consist Direction" />
 			<display name="Consist Acceleration Adjustment" />
 			<display name="Consist Acceleration Adjustment Sign" />
 			<display name="Consist Deceleration Adjustment" />
 			<display name="Consist Deceleration Adjustment Sign" />
 			<separator/>
 			<label label="Will decoder respond to function requests at consist address?"/>
-			<display name="Consist Address Active For F1"  format="checkbox"/>
-			<display name="Consist Address Active For F2"  format="checkbox"/>
-			<display name="Consist Address Active For F3"  format="checkbox"/>
-			<display name="Consist Address Active For F4"  format="checkbox"/>
-			<display name="Consist Address Active For F5"  format="checkbox"/>
-			<display name="Consist Address Active For F6"  format="checkbox"/>
-			<display name="Consist Address Active For F7"  format="checkbox"/>
-			<display name="Consist Address Active For F8"  format="checkbox"/>
-			<display name="Consist Address Active For FL in Forward"  format="checkbox"/>
-			<display name="Consist Address Active For FL in Reverse"  format="checkbox"/>
+			<display name="Consist Address Active For F1" />
+			<display name="Consist Address Active For F2" />
+			<display name="Consist Address Active For F3" />
+			<display name="Consist Address Active For F4" />
+			<display name="Consist Address Active For F5" />
+			<display name="Consist Address Active For F6" />
+			<display name="Consist Address Active For F7" />
+			<display name="Consist Address Active For F8" />
+			<display name="Consist Address Active For FL in Forward" />
+			<display name="Consist Address Active For FL in Reverse" />
 		</column>
 	</pane>
 	
-	<pane name="Communications">
+	<pane name="Advanced">
 		<column>
 			<display name="Advanced Ack" />
+			<display name="Packet Time-out Value" />
 		</column>
+		<column>
+			<display name="Radio Power Conversion" />
+			<display name="Zero-1 Power Conversion" />
+			<display name="Trix Power Conversion" />
+			<display name="CTC/Railcommand Power Conversion" />
+		</column>		
 	</pane>
 
 	<pane name="Sound">

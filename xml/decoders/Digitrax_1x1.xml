@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_1x1.xml,v 1.4 2001-12-07 07:16:28 jacobsen Exp $ -->
+<!-- $Id: Digitrax_1x1.xml,v 1.5 2001-12-10 06:10:49 jacobsen Exp $ -->
 <decoder-config xmlns:decoder="http://jmri.sourceforge.net/xml/decoder">
-		<version author="" version="" lastUpdated=""/>
+		<version author="Bob Jacobsen" version="1" lastUpdated="20011207"/>
+
+<!-- Represent the 1*1 family of Digitrax decoders, e.g. DH121, e.g. xx121. -->
+<!-- These have STD (not STD*) outputs. -->
 
 <decoder>
 	<id family="Digitrax 1x1" mfg="Digitrax" mfgID="129" defnVersion="33"
@@ -12,70 +15,101 @@
 	                     register="yes" ops="yes"></programming>
 
 	<variables>
-		<variable name="Address" CV="1" mask="VVVVVVVV" stdName="Primary Address">
-			<decVal min="1" max="127"/>
-			</variable>
-		<variable name="Start voltage" CV="2" stdName="Vstart"
+		<variable name="Primary Address" CV="1" comment="Short address"
+						stdName="Short Address"  default="03">
+			<decVal min="1" max="127"/></variable>
+		<variable name="Vstart" CV="2"
 						comment="A value of 255 corresponds to 100%">
-			<decVal></decVal>
-			</variable>
-		<variable name="Acceleration Rate" CV="3">
-			<decVal max="31"/>
-			</variable>
-		<variable name="Deceleration Rate" CV="4">
-			<decVal max="31"/>
-			</variable>
-		<variable name="Maximum Voltage" CV="5" stdName="Vhigh">
-			<decVal/>
-			</variable>
-		<variable name="Midpoint Voltage" CV="6" stdName="Vmid">
-			<decVal/>
-			</variable>
-		<variable name="Version ID" CV="7" readOnly="yes" stdName="Manufacturer Version No">
-				<decVal/>
-			</variable>
-		<variable name="Manufacturer ID" CV="8" readOnly="yes">
-				<decVal/>
-			</variable>
+			<decVal/></variable>
+		<variable name="Acceleration Rate" CV="3"
+						stdName="Accel" >
+			<decVal max="31"/></variable>
+		<variable name="Deceleration Rate" CV="4"
+						stdName="Decel">
+			<decVal max="31"/></variable>
+		<variable name="Vhigh" CV="5">					<decVal/></variable>
+		<variable name="Vmid" CV="6">					<decVal/></variable>
+		<variable name="Manufacturer Version No" CV="7" readOnly="yes"
+						stdName="Decoder Version"><decVal/></variable>
+		<variable name="Manufacturer ID" CV="8" readOnly="yes"
+						stdName="Manufacturer">			<decVal/></variable>
+
+		<variable name="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV">
+			<enumVal>
+				<enumChoice choice="off"/>
+				<enumChoice choice="on"/>
+				</enumVal></variable>
+		<variable name="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX">
+			<enumVal>
+				<enumChoice choice="off"/>
+				<enumChoice choice="on"/>
+				</enumVal></variable>
+		<variable name="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX">
+			<enumVal>
+				<enumChoice choice="off"/>
+				<enumChoice choice="on"/>
+				</enumVal></variable>
+		<variable name="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX">
+			<enumVal>
+				<enumChoice choice="off"/>
+				<enumChoice choice="on"/>
+				</enumVal></variable>
+		<variable name="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX">
+			<enumVal>
+				<enumChoice choice="off"/>
+				<enumChoice choice="on"/>
+				</enumVal></variable>
+		<variable name="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX">
+			<enumVal>
+				<enumChoice choice="off"/>
+				<enumChoice choice="on"/>
+				</enumVal></variable>
+		<variable name="Analog Mode Function Status - FL(f)" CV="13" mask="XVXXXXXX">
+			<enumVal>
+				<enumChoice choice="off"/>
+				<enumChoice choice="on"/>
+				</enumVal></variable>
+		<variable name="Analog Mode Function Status - FL(r)" CV="13" mask="VXXXXXXX">
+			<enumVal>
+				<enumChoice choice="off"/>
+				<enumChoice choice="on"/>
+				</enumVal></variable>
+
 		<variable name="Long Address" CV="17" stdName="Extended Address">
 			<longAddressVal/>
 			</variable>
-		<variable name="Advanced Consist address" CV="19" stdName="Consist Address">
-			<decVal/>
-			</variable>
+
+		<variable name="Consist Address" CV="19">			<decVal/></variable>
+
 		<variable name="Normal direction of motion" CV="29" mask="XXXXXXXV" stdName="Locomotive Direction">
 			<enumVal>
 				<enumChoice choice="forward"/>
 				<enumChoice choice="reverse"/>
 				</enumVal>
 			</variable>
-		<variable name="Speed steps" CV="29" mask="XXXXXXVX" stdName="FL Location">
+		<variable name="Speed steps" CV="29" mask="XXXXXXVX" stdName="Speed Step Mode">
 			<enumVal>
-				<enumChoice choice="14"/>
-				<enumChoice choice="28/128"/>
+				<enumChoice choice="14 speed step format"/>
+				<enumChoice choice="28 speed step format"/>
 				</enumVal>
 			</variable>
-		<variable name="Analog conversion mode" CV="29" mask="XXXXXVXX"
-					 stdName="Power Source Conversion">
+		<variable name="Power Source Conversion" CV="29" mask="XXXXXVXX"
+					stdName="Analog (DC) Operation" >
 			<enumVal>
-				<enumChoice choice="Off"/>
-				<enumChoice choice="On"/>
-				</enumVal>
-			</variable>
-		<variable name="Speed Table" CV="29" mask="XXXVXXXX"
-					stdName="Speed Table Definition">
+				<enumChoice choice="NMRA Digital only"/>
+				<enumChoice choice="DC conversion enabled"/>
+				</enumVal></variable>
+		<variable name="Speed Table Definition" CV="29" mask="XXXVXXXX">
 			<enumVal>
-				<enumChoice choice="Off"/>
-				<enumChoice choice="On"/>
-				</enumVal>
-			</variable>
-		<variable name="Addressing Mode" CV="29" mask="XXVXXXXX"
-					stdName="Address Format">
+				<enumChoice choice="Use Vstart, Vmid, Vhigh"/>
+				<enumChoice choice="Use table in CVs 66 through 95"/>
+				</enumVal></variable>
+		<variable name="Address Format" CV="29" mask="XXVXXXXX">
 			<enumVal>
-				<enumChoice choice="2 digit addressing"/>
-				<enumChoice choice="4 digit addressing"/>
-				</enumVal>
-			</variable>
+				<enumChoice choice="One byte (short) address"/>
+				<enumChoice choice="Two byte (extended) address"/>
+				</enumVal></variable>
+
 		<variable name="Kick Start" CV="65">
 			<decVal/>
 			</variable>
@@ -96,6 +130,19 @@
 		<variable name="Speed Table" CV="67">
 			<speedTableVal/>
 			</variable>
+
+		<variable name="Directional Headlights" CV="61" mask="XXXXXXXV">
+			<enumVal>
+				<enumChoice choice="Normal headlight operation"/>
+				<enumChoice choice="Reverse light lead controlled by F4"/>
+				</enumVal></variable>
+
+	<!-- Define the fixed Function-Output mapping -->
+	<constant name="FL(f) controls output 1" minOut="1" minFn="0" default="1" /> 
+	<constant name="FL(r) controls output 2" minOut="2" minFn="0" default="1" /> 
+	<constant name="F1 controls output 3" minOut="3" minFn="1" default="1" /> 
+	<constant name="F2 controls output 4" minOut="4" minFn="2" default="1" /> 
+
 	</variables>
 	
 </decoder>

@@ -1,298 +1,296 @@
 <?xml version="1.0"?>
-<!DOCTYPE decoder:decoder-config SYSTEM "DTD/decoder-config.dtd">
-<!-- $Id: NCE_D13SR.xml,v 1.2 2001-11-23 21:59:48 jacobsen Exp $ -->
-<decoder:decoder-config xmlns:decoder="http://jmri.sourceforge.net/xml/decoder">
-<decoder:decoder>
-	<decoder:id model="D13SR" mfg="NCE" mfgID="11"  versionID="31" defnVersion="0"
-				comment="From decoder version 3.1 documentation"></decoder:id>
+<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<!-- $Id: NCE_D13SR.xml,v 1.3 2001-12-10 06:10:49 jacobsen Exp $ -->
+<decoder-config xmlns:decoder="http://jmri.sourceforge.net/xml/decoder">
+		<version author="Bob Jacobsen" version="1" lastUpdated="20011209"/>
 
-	<decoder:programming direct="yes" paged="yes" 
-	                     register="yes" ops="yes"></decoder:programming>
+<decoder>
+	<id family="NCE_D13SR" mfg="North Coast Engineering" mfgID="11" defnVersion="0"
+				comment=""></id>
 
-	<decoder:variables>
-		<decoder:variable name="Address" CV="1" mask="VVVVVVVV" comment="Short address">
-			<decoder:decVal min="1" max="127"></decoder:decVal>
-			</decoder:variable>
-		<decoder:variable name="Start voltage" CV="2"
-						comment="Useful range 0-100">
-			<decoder:decVal max="100"/>
-			</decoder:variable>
-		<decoder:variable name="Acceleration rate" CV="3"
-						comment="each unit = 7ms between speed steps">
-			<decoder:decVal></decoder:decVal>
-			</decoder:variable>
-		<decoder:variable name="Deceleration rate" CV="4"
-						comment="each unit = 7ms between speed steps">
-			<decoder:decVal></decoder:decVal>
-			</decoder:variable>
-		<decoder:variable name="Vmax" CV="5"
-						comment="speed at highest speed step">
-			<decoder:decVal></decoder:decVal>
-			</decoder:variable>
-		<decoder:variable name="Vmid" CV="6"
-						comment="speed (on a scaled of 1-255) at speed step 7, 14 or 63. 0 = use default of 128">
-			<decoder:decVal></decoder:decVal>
-			</decoder:variable>
-		<decoder:variable name="Manufacturer ID" CV="7" readOnly="yes"
-							comment="note manual shows CV 7 and 8 swapped from NMRA RP">
-				<decoder:decVal/>
-			</decoder:variable>
-		<decoder:variable name="Decoder version ID" CV="8" readOnly="yes">
-				<decoder:decVal/>
-			</decoder:variable>
-		<decoder:variable name="Motor drive frequency" CV="9"
+	<programming direct="yes" paged="yes" 
+	                     register="yes" ops="yes"></programming>
+
+	<variables>
+		<variable name="Primary Address" CV="1" comment="Short address"
+						stdName="Short Address"  default="03">
+			<decVal min="1" max="127"/></variable>
+		<variable name="Vstart" CV="2"
+						comment="A value of 255 corresponds to 100%">
+			<decVal/></variable>
+		<variable name="Acceleration Rate" CV="3"
+						stdName="Accel" >
+			<decVal max="31"/></variable>
+		<variable name="Deceleration Rate" CV="4"
+						stdName="Decel">
+			<decVal max="31"/></variable>
+		<variable name="Vhigh" CV="5">					<decVal/></variable>
+		<variable name="Vmid" CV="6">					<decVal/></variable>
+		<variable name="Manufacturer Version No" CV="7" readOnly="yes"
+						stdName="Decoder Version"><decVal/></variable>
+		<variable name="Manufacturer ID" CV="8" readOnly="yes"
+						stdName="Manufacturer">			<decVal/></variable>
+		<variable name="Motor drive frequency" CV="9" stdName="Total PWM Period"
 						comment="1-255 PWM drive freq in 128us increments; 0 = frequency is 15,625 Hz">
-			<decoder:decVal></decoder:decVal>
-			</decoder:variable>
-		<decoder:variable name="Long address" CV="17">
-			<decoder:longAddressVal/>
-			</decoder:variable>
-		<decoder:variable name="Consist Address" CV="19" mask="XVVVVVVV" comment="0 means no consist active">
-			<decoder:decVal></decoder:decVal>
-			</decoder:variable>
-		<decoder:variable name="Consist direction" CV="19" mask="VXXXXXXX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="direction is normal"></decoder:enumChoice>
-				<decoder:enumChoice choice="direction is reversed"></decoder:enumChoice>
-				</decoder:enumVal>			
-			</decoder:variable>
-		<decoder:variable name="F1 active in consist mode" CV="21" mask="XXXXXXXV">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="F1 no consist control"></decoder:enumChoice>
-				<decoder:enumChoice choice="F1 can be controlled at consist address"></decoder:enumChoice>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="FLF active in consist mode" CV="22" mask="XXXXXXXV">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="FLF no consist control"/>
-				<decoder:enumChoice choice="FLF can be controlled at consist address"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="FLR active in consist mode" CV="22" mask="XXXXXXVX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="FLR no consist control"/>
-				<decoder:enumChoice choice="FLR can be controlled at consist address"/>
-				</decoder:enumVal>
-			</decoder:variable>			
-		<decoder:variable name="Acceleration rate adjust" CV="23">
-			<decoder:decVal></decoder:decVal>
-			</decoder:variable>
-		<decoder:variable name="Deceleration rate adjust" CV="24" mask="VVVVVVVV">
-			<decoder:decVal></decoder:decVal>
-			</decoder:variable>
-		<decoder:variable name="Locomotive direction" CV="29" mask="XXXXXXXV">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="normal"/>
-				<decoder:enumChoice choice="inverted"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="Analog operation" CV="29" mask="XXXXXVXX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="disabled"/>
-				<decoder:enumChoice choice="enabled"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="Speed curve selection" CV="29" mask="XXXVXXXX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="use Vstart, Vmid, Vmax table"/>
-				<decoder:enumChoice choice="alternate speed table active"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="Addressing" CV="29" mask="XXVXXXXX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="Use short address"/>
-				<decoder:enumChoice choice="Use long address"/>
-				</decoder:enumVal>
-			</decoder:variable>
+			<decVal/></variable>
 			
-		<decoder:variable name="F0 Fwd controls output 1" CV="33" mask="XXXXXXXV">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="No"/>
-				<decoder:enumChoice choice="Yes"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="F0 Fwd controls output 2" CV="33" mask="XXXXXXVX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="No"/>
-				<decoder:enumChoice choice="Yes"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="F0 Fwd controls output 3" CV="33" mask="XXXXXVXX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="No"/>
-				<decoder:enumChoice choice="Yes"/>
-				</decoder:enumVal>
-			</decoder:variable>
-
-		<decoder:variable name="F0 Rev controls output 1" CV="34" mask="XXXXXXXV">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="No"/>
-				<decoder:enumChoice choice="Yes"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="F0 Rev controls output 2" CV="34" mask="XXXXXXVX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="No"/>
-				<decoder:enumChoice choice="Yes"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="F0 Rev controls output 3" CV="34" mask="XXXXXVXX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="No"/>
-				<decoder:enumChoice choice="Yes"/>
-				</decoder:enumVal>
-			</decoder:variable>
-
-		<decoder:variable name="F1 controls output 1" CV="35" mask="XXXXXXXV">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="No"/>
-				<decoder:enumChoice choice="Yes"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="F1 controls output 2" CV="35" mask="XXXXXXVX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="No"/>
-				<decoder:enumChoice choice="Yes"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="F1 controls output 3" CV="35" mask="XXXXXVXX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="No"/>
-				<decoder:enumChoice choice="Yes"/>
-				</decoder:enumVal>
-			</decoder:variable>
-
-		<decoder:variable name="Kick start" CV="65" mask="VVVVVVVV">
-			<decoder:decVal/>
-			</decoder:variable>
-		<decoder:variable name="Ditch light hold time" CV="118" mask="VVVVVVVV">
-			<decoder:decVal/>
-			</decoder:variable>
-		<decoder:variable name="Lighting effects page" CV="119" mask="VVVVVVVV" readOnly="yes">
-				<decoder:decVal min="255" max="255"/>
-			</decoder:variable>
+		<variable name="Extended Address" CV="17"
+						stdName="Long Address" >
+			<longAddressVal/></variable>
 			
-		<decoder:variable name="Output 1 EFX configuration" CV="120" mask="XXVVVVXX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="Standard on/off function output"/>
-				<decoder:enumChoice choice="reserved"/>
-				<decoder:enumChoice choice="Mars light"/>
-				<decoder:enumChoice choice="Rotary beacon"/>
-				<decoder:enumChoice choice="Gyralight"/>
-				<decoder:enumChoice choice="Double strobe"/>
-				<decoder:enumChoice choice="Strobe A"/>
-				<decoder:enumChoice choice="Strobe B (alternates with strobe A)"/>
-				<decoder:enumChoice choice="Dim when F0 and F4 on, otherwise bright"/>
-				<decoder:enumChoice choice="Dim when F0 and F8 on, otherwise bright"/>
-				<decoder:enumChoice choice="Dim in forward, bright in reverse"/>
-				<decoder:enumChoice choice="Dim in reverse, bright in forward"/>
-				<decoder:enumChoice choice="Type 2 right ditch light, effect on if F2 on, output off otherwise"/>
-				<decoder:enumChoice choice="Type 2 left ditch light, effect on if F2 on, output off otherwise"/>
-				<decoder:enumChoice choice="Type 1 right ditch light, effect on if F0 and F2 on, bright if F0 on and F2 off, off if F0 off"/>
-				<decoder:enumChoice choice="Type 1 left ditch light, effect on if F0 and F2 on, bright if F0 on and F2 off, off if F0 off"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="Output 1 active in forward direction only" CV="120" mask="XXXXXXXV">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="No"/>
-				<decoder:enumChoice choice="Yes"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="Output 1 active in reverse direction only" CV="120" mask="XXXXXXVX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="No"/>
-				<decoder:enumChoice choice="Yes"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="Output 1 connected to" CV="120" mask="VXXXXXXX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="30-40mA incandescent bulb"/>
-				<decoder:enumChoice choice="LED and limiting resistor"/>
-				</decoder:enumVal>
-			</decoder:variable>
+		<variable name="Consist Address" CV="19" mask="XVVVVVVV"><decVal/></variable>
 		
-		<decoder:variable name="Output 2 EFX configuration" CV="121" mask="XXVVVVXX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="Standard on/off function output"/>
-				<decoder:enumChoice choice="reserved"/>
-				<decoder:enumChoice choice="Mars light"/>
-				<decoder:enumChoice choice="Rotary beacon"/>
-				<decoder:enumChoice choice="Gyralight"/>
-				<decoder:enumChoice choice="Double strobe"/>
-				<decoder:enumChoice choice="Strobe A"/>
-				<decoder:enumChoice choice="Strobe B (alternates with strobe A)"/>
-				<decoder:enumChoice choice="Dim when F0 and F4 on, otherwise bright"/>
-				<decoder:enumChoice choice="Dim when F0 and F8 on, otherwise bright"/>
-				<decoder:enumChoice choice="Dim in forward, bright in reverse"/>
-				<decoder:enumChoice choice="Dim in reverse, bright in forward"/>
-				<decoder:enumChoice choice="Type 2 right ditch light, effect on if F2 on, output off otherwise"/>
-				<decoder:enumChoice choice="Type 2 left ditch light, effect on if F2 on, output off otherwise"/>
-				<decoder:enumChoice choice="Type 1 right ditch light, effect on if F0 and F2 on, bright if F0 on and F2 off, off if F0 off"/>
-				<decoder:enumChoice choice="Type 1 left ditch light, effect on if F0 and F2 on, bright if F0 on and F2 off, off if F0 off"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="Output 2 active in forward direction only" CV="121" mask="XXXXXXXV">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="No"/>
-				<decoder:enumChoice choice="Yes"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="Output 2 active in reverse direction only" CV="121" mask="XXXXXXVX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="No"/>
-				<decoder:enumChoice choice="Yes"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="Output 2 connected to" CV="121" mask="VXXXXXXX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="30-40mA incandescent bulb"/>
-				<decoder:enumChoice choice="LED and limiting resistor"/>
-				</decoder:enumVal>
-			</decoder:variable>
+		<variable name="Consist Direction" CV="19" mask="VXXXXXXX">
+			<enumVal>
+				<enumChoice choice="Normal"></enumChoice>
+				<enumChoice choice="Reversed"></enumChoice>
+				</enumVal></variable>
+
+		<variable name="Consist Address Active For F1" CV="21" mask="XXXXXXXV">
+			<enumVal>
+				<enumChoice choice="Locomotive Address Only"/>
+				<enumChoice choice="Respond to Consist Address"/>
+				</enumVal></variable>
+		<variable name="Consist Address Active For FL in Forward" CV="22" mask="XXXXXXXV">
+			<enumVal>
+				<enumChoice choice="Locomotive Address Only"/>
+				<enumChoice choice="Respond to Consist Address"/>
+				</enumVal></variable>
+		<variable name="Consist Address Active For FL in Reverse" CV="22" mask="XXXXXXVX">
+			<enumVal>
+				<enumChoice choice="Locomotive Address Only"/>
+				<enumChoice choice="Respond to Consist Address"/>
+				</enumVal></variable>
+		<variable name="Consist Acceleration Adjustment" CV="23" mask="XVVVVVVV">
+				<decVal max="127"/>
+			</variable>
+		<variable name="Consist Acceleration Adjustment Sign" CV="23" mask="VXXXXXXX">
+			<enumVal>
+				<enumChoice choice="Adjustment Added"/>
+				<enumChoice choice="Adjustment Subtracted"/>
+				</enumVal></variable>
+		<variable name="Consist Deceleration Adjustment" CV="24" mask="XVVVVVVV">
+				<decVal max="127"/>
+			</variable>
+		<variable name="Consist Deceleration Adjustment Sign" CV="24" mask="VXXXXXXX">
+			<enumVal>
+				<enumChoice choice="Adjustment Added"/>
+				<enumChoice choice="Adjustment Subtracted"/>
+				</enumVal></variable>
+
+		<variable name="Locomotive Direction" CV="29" mask="XXXXXXXV">
+			<enumVal>
+				<enumChoice choice="normal"/>
+				<enumChoice choice="reversed"/>
+				</enumVal></variable>
+		<variable name="FL Location" CV="29" mask="XXXXXXVX"
+					stdName="Speed Step Mode">
+			<enumVal>
+				<enumChoice choice="14 speed step format"/>
+				<enumChoice choice="28 speed step format"/>
+				</enumVal></variable>
+		<variable name="Power Source Conversion" CV="29" mask="XXXXXVXX"
+					stdName="Analog (DC) Operation" >
+			<enumVal>
+				<enumChoice choice="NMRA Digital only"/>
+				<enumChoice choice="DC conversion enabled"/>
+				</enumVal></variable>
+		<variable name="Advanced Decoder Acknowledgement" CV="29" mask="XXXXVXXX"
+					stdName="Advanced Ack">
+			<enumVal>
+				<enumChoice choice="disabled"/>
+				<enumChoice choice="enabled"/>
+				</enumVal></variable>
+		<variable name="Speed Table Definition" CV="29" mask="XXXVXXXX">
+			<enumVal>
+				<enumChoice choice="Use Vstart, Vmid, Vhigh"/>
+				<enumChoice choice="Use table in CVs 66 through 95"/>
+				</enumVal></variable>
+		<variable name="Address Format" CV="29" mask="XXVXXXXX">
+			<enumVal>
+				<enumChoice choice="One byte (short) address"/>
+				<enumChoice choice="Two byte (extended) address"/>
+				</enumVal></variable>
+
+		<variable name="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable name="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable name="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+		<variable name="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable name="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable name="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+		<variable name="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable name="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="1"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable name="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="1"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+						
+		<variable name="Kick Start" CV="65">			<decVal/></variable>
+
+		<variable name="Speed Table" CV="67">
+			<speedTableVal/></variable>
+
+		<!-- NCE-specific variables -->	
 		
-		<decoder:variable name="Output 3 EFX configuration" CV="122" mask="XXVVVVXX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="Standard on/off function output"/>
-				<decoder:enumChoice choice="reserved"/>
-				<decoder:enumChoice choice="Mars light"/>
-				<decoder:enumChoice choice="Rotary beacon"/>
-				<decoder:enumChoice choice="Gyralight"/>
-				<decoder:enumChoice choice="Double strobe"/>
-				<decoder:enumChoice choice="Strobe A"/>
-				<decoder:enumChoice choice="Strobe B (alternates with strobe A)"/>
-				<decoder:enumChoice choice="Dim when F0 and F4 on, otherwise bright"/>
-				<decoder:enumChoice choice="Dim when F0 and F8 on, otherwise bright"/>
-				<decoder:enumChoice choice="Dim in forward, bright in reverse"/>
-				<decoder:enumChoice choice="Dim in reverse, bright in forward"/>
-				<decoder:enumChoice choice="Type 2 right ditch light, effect on if F2 on, output off otherwise"/>
-				<decoder:enumChoice choice="Type 2 left ditch light, effect on if F2 on, output off otherwise"/>
-				<decoder:enumChoice choice="Type 1 right ditch light, effect on if F0 and F2 on, bright if F0 on and F2 off, off if F0 off"/>
-				<decoder:enumChoice choice="Type 1 left ditch light, effect on if F0 and F2 on, bright if F0 on and F2 off, off if F0 off"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="Output 3 active in forward direction only" CV="122" mask="XXXXXXXV">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="No"/>
-				<decoder:enumChoice choice="Yes"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="Output 3 active in reverse direction only" CV="122" mask="XXXXXXVX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="No"/>
-				<decoder:enumChoice choice="Yes"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="Output 3 connected to" CV="120" mask="VXXXXXXX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="30-40mA incandescent bulb"/>
-				<decoder:enumChoice choice="LED and limiting resistor"/>
-				</decoder:enumVal>
-			</decoder:variable>
+		<variable name="Ditch light hold time" CV="118" mask="VVVVVVVV">
+			<decVal/>
+			</variable>
+		<variable name="Lighting Effects Page" CV="119" mask="VVVVVVVV" >
+				<decVal/>
+			</variable>
+			
+		<variable name="Output 1 effect generated" CV="120" mask="XXVVVVXX" minOut="1">
+			<enumVal>
+				<enumChoice choice="Standard on/off function output"/>
+				<enumChoice choice="reserved"/>
+				<enumChoice choice="Mars light"/>
+				<enumChoice choice="Rotary beacon"/>
+				<enumChoice choice="Gyralight"/>
+				<enumChoice choice="Double strobe"/>
+				<enumChoice choice="Strobe A"/>
+				<enumChoice choice="Strobe B (alternates with strobe A)"/>
+				<enumChoice choice="Dim when F0 and F4 on, otherwise bright"/>
+				<enumChoice choice="Dim when F0 and F8 on, otherwise bright"/>
+				<enumChoice choice="Dim in forward, bright in reverse"/>
+				<enumChoice choice="Dim in reverse, bright in forward"/>
+				<enumChoice choice="Type 2 right ditch light, effect on if F2 on, output off otherwise"/>
+				<enumChoice choice="Type 2 left ditch light, effect on if F2 on, output off otherwise"/>
+				<enumChoice choice="Type 1 right ditch light, effect on if F0 and F2 on, bright if F0 on and F2 off, off if F0 off"/>
+				<enumChoice choice="Type 1 left ditch light, effect on if F0 and F2 on, bright if F0 on and F2 off, off if F0 off"/>
+				</enumVal>
+			</variable>
+		<variable name="Output 1 active in forward direction only" CV="120" mask="XXXXXXXV" minOut="1">
+			<enumVal>
+				<enumChoice choice="No"/>
+				<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+		<variable name="Output 1 active in reverse direction only" CV="120" mask="XXXXXXVX" minOut="1">
+			<enumVal>
+				<enumChoice choice="No"/>
+				<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+		<variable name="Output 1 connected to" CV="120" mask="VXXXXXXX" minOut="1">
+			<enumVal>
+				<enumChoice choice="30-40mA incandescent bulb"/>
+				<enumChoice choice="LED and limiting resistor"/>
+				</enumVal>
+			</variable>
 		
-		<decoder:variable name="Speed Table" CV="67">
-			<decoder:speedTableVal></decoder:speedTableVal>
-			</decoder:variable>
-	</decoder:variables>
+		<variable name="Output 2 effect generated" CV="121" mask="XXVVVVXX" minOut="2">
+			<enumVal>
+				<enumChoice choice="Standard on/off function output"/>
+				<enumChoice choice="reserved"/>
+				<enumChoice choice="Mars light"/>
+				<enumChoice choice="Rotary beacon"/>
+				<enumChoice choice="Gyralight"/>
+				<enumChoice choice="Double strobe"/>
+				<enumChoice choice="Strobe A"/>
+				<enumChoice choice="Strobe B (alternates with strobe A)"/>
+				<enumChoice choice="Dim when F0 and F4 on, otherwise bright"/>
+				<enumChoice choice="Dim when F0 and F8 on, otherwise bright"/>
+				<enumChoice choice="Dim in forward, bright in reverse"/>
+				<enumChoice choice="Dim in reverse, bright in forward"/>
+				<enumChoice choice="Type 2 right ditch light, effect on if F2 on, output off otherwise"/>
+				<enumChoice choice="Type 2 left ditch light, effect on if F2 on, output off otherwise"/>
+				<enumChoice choice="Type 1 right ditch light, effect on if F0 and F2 on, bright if F0 on and F2 off, off if F0 off"/>
+				<enumChoice choice="Type 1 left ditch light, effect on if F0 and F2 on, bright if F0 on and F2 off, off if F0 off"/>
+				</enumVal>
+			</variable>
+		<variable name="Output 2 active in forward direction only" CV="121" mask="XXXXXXXV" minOut="2">
+			<enumVal>
+				<enumChoice choice="No"/>
+				<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+		<variable name="Output 2 active in reverse direction only" CV="121" mask="XXXXXXVX" minOut="2">
+			<enumVal>
+				<enumChoice choice="No"/>
+				<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+		<variable name="Output 2 connected to" CV="121" mask="VXXXXXXX" minOut="2">
+			<enumVal>
+				<enumChoice choice="30-40mA incandescent bulb"/>
+				<enumChoice choice="LED and limiting resistor"/>
+				</enumVal>
+			</variable>
+		
+		<variable name="Output 3 effect generated" CV="122" mask="XXVVVVXX" minOut="3">
+			<enumVal>
+				<enumChoice choice="Standard on/off function output"/>
+				<enumChoice choice="reserved"/>
+				<enumChoice choice="Mars light"/>
+				<enumChoice choice="Rotary beacon"/>
+				<enumChoice choice="Gyralight"/>
+				<enumChoice choice="Double strobe"/>
+				<enumChoice choice="Strobe A"/>
+				<enumChoice choice="Strobe B (alternates with strobe A)"/>
+				<enumChoice choice="Dim when F0 and F4 on, otherwise bright"/>
+				<enumChoice choice="Dim when F0 and F8 on, otherwise bright"/>
+				<enumChoice choice="Dim in forward, bright in reverse"/>
+				<enumChoice choice="Dim in reverse, bright in forward"/>
+				<enumChoice choice="Type 2 right ditch light, effect on if F2 on, output off otherwise"/>
+				<enumChoice choice="Type 2 left ditch light, effect on if F2 on, output off otherwise"/>
+				<enumChoice choice="Type 1 right ditch light, effect on if F0 and F2 on, bright if F0 on and F2 off, off if F0 off"/>
+				<enumChoice choice="Type 1 left ditch light, effect on if F0 and F2 on, bright if F0 on and F2 off, off if F0 off"/>
+				</enumVal>
+			</variable>
+		<variable name="Output 3 active in forward direction only" CV="122" mask="XXXXXXXV" minOut="3">
+			<enumVal>
+				<enumChoice choice="No"/>
+				<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+		<variable name="Output 3 active in reverse direction only" CV="122" mask="XXXXXXVX" minOut="3">
+			<enumVal>
+				<enumChoice choice="No"/>
+				<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+		<variable name="Output 3 connected to" CV="120" mask="VXXXXXXX" minOut="3">
+			<enumVal>
+				<enumChoice choice="30-40mA incandescent bulb"/>
+				<enumChoice choice="LED and limiting resistor"/>
+				</enumVal>
+			</variable>
 	
-</decoder:decoder>
-</decoder:decoder-config>
+	</variables>
+</decoder>
+
+<pane name="NCE">
+	<column>
+		<display name="Ditch light hold time" />
+		<display name="Lighting Effects Page" />
+		
+		<label label=" "/>
+		<display name="Output 1 effect generated" />
+		<display name="Output 1 active in forward direction only" />
+		<display name="Output 1 active in reverse direction only" />
+		<display name="Output 1 connected to" />
+		
+		<label label=" "/>
+		<display name="Output 2 effect generated" />
+		<display name="Output 2 active in forward direction only" />
+		<display name="Output 2 active in reverse direction only" />
+		<display name="Output 2 connected to" />
+		
+		<label label=" "/>
+		<display name="Output 3 effect generated" />
+		<display name="Output 3 active in forward direction only" />
+		<display name="Output 3 active in reverse direction only" />
+		<display name="Output 3 connected to" />
+
+	</column>
+</pane>
+
+</decoder-config>
