@@ -23,7 +23,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 abstract public class AbstractMRTrafficController {
 
@@ -434,7 +434,9 @@ abstract public class AbstractMRTrafficController {
         for (i = 0; i < msg.maxSize; i++) {
             byte char1 = istream.readByte();
             msg.setElement(i, char1);
-            if (endOfMessage(msg)) break;
+            if (endOfMessage(msg)) {
+                break;
+            }
         }
     }
 
@@ -456,7 +458,19 @@ abstract public class AbstractMRTrafficController {
         loadChars(msg, istream);
 
         // message is complete, dispatch it !!
-        if (log.isDebugEnabled()) log.debug("dispatch reply of length "+msg.getNumDataElements());
+        if (log.isDebugEnabled()) log.debug("dispatch reply of length "+msg.getNumDataElements()+
+                                        " contains "+msg.toString()+" state "+mCurrentState);
+
+        // forward the message to the registered recipients,
+        // which includes the communications monitor
+        // return a notification via the Swing event queue to ensure end
+        Runnable r = new RcvNotifier(msg, mLastSender, this);
+        try {
+            javax.swing.SwingUtilities.invokeAndWait(r);
+        } catch (Exception e) { log.error("Unexpected exception in invokeAndWait:" +e);
+        }
+
+        // effect on transmit:
         switch (mCurrentState) {
         case WAITMSGREPLYSTATE: {
             // update state, and notify to continue
@@ -491,11 +505,6 @@ abstract public class AbstractMRTrafficController {
                         +mCurrentState
                         +" was "+msg.toString());
         }
-        // forward the message to the registered recipients,
-        // which includes the communications monitor
-        // return a notification via the Swing event queue to ensure end
-        Runnable r = new RcvNotifier(msg, mLastSender, this);
-        javax.swing.SwingUtilities.invokeLater(r);
     }
 
     /**
