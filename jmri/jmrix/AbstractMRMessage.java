@@ -8,7 +8,7 @@ package jmri.jmrix;
  * Carries a sequence of characters, with accessors.
  *
  * @author	        Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 abstract public class AbstractMRMessage {
 
@@ -16,6 +16,7 @@ abstract public class AbstractMRMessage {
         setBinary(false);
         setNeededMode(AbstractMRTrafficController.NORMALMODE);
         setTimeout(SHORT_TIMEOUT);  // default value is the short timeout
+	setRetries(0);  // Default to no retries
     }
 
     // create a new one
@@ -36,6 +37,7 @@ abstract public class AbstractMRMessage {
         _dataChars = new int[_nDataChars];
         for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
         setTimeout(m.getTimeout());
+        setRetries(m.getRetries());
         setNeededMode(m.getNeededMode());
     }
 
@@ -79,6 +81,12 @@ abstract public class AbstractMRMessage {
     int mTimeout;  // in milliseconds
     public void setTimeout(int t) { mTimeout = t; }
     public int getTimeout() { return mTimeout; }
+ 
+    /* For some systems, we want to retry sending a message if the port
+       isn't ready for them. */
+    private int mRetries=0; // number of retries, default = 0;
+    public void setRetries(int i) { mRetries = i; }
+    public int getRetries() { return mRetries; }
 
     // display format
     public String toString() {
