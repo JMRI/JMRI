@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!DOCTYPE decoder:decoder-config SYSTEM "DTD/decoder-config.dtd">
+<decoder:decoder-config xmlns:decoder="http://jmri.sourceforge.net/xml/decoder">
+<decoder:decoder>
+	<decoder:id model="All" mfg="NMRA" mfgID="" defnVersion="0"
+				comment="Non-reserved CVs listed in NMRA Recommended Practices"></decoder:id>
+
+	<decoder:programming direct="yes" paged="yes" 
+	                     register="yes" ops="yes"></decoder:programming>
+
+	<decoder:variables>
+		<decoder:variable name="Address" CV="1" mask="VVVVVVVV" comment="Short address">
+			<decoder:decVal min="1" max="127"/>
+			</decoder:variable>
+		<decoder:variable name="Start voltage" CV="2"
+						comment="A value of 255 corresponds to 100%">
+			<decoder:decVal></decoder:decVal>
+			</decoder:variable>
+		<decoder:variable name="Acceleration rate" CV="3">
+			<decoder:decVal max="31"/>
+			</decoder:variable>
+		<decoder:variable name="Deceleration rate" CV="4">
+			<decoder:decVal max="31"/>
+			</decoder:variable>
+		<decoder:variable name="Maximum voltage" CV="5">
+			<decoder:decVal/>
+			</decoder:variable>
+		<decoder:variable name="Midpoint voltage" CV="6">
+			<decoder:decVal/>
+			</decoder:variable>
+		<decoder:variable name="Version ID" CV="7" readOnly="yes">
+				<decoder:decVal/>
+			</decoder:variable>
+		<decoder:variable name="Manufacturer ID" CV="8" readOnly="yes">
+				<decoder:decVal/>
+			</decoder:variable>
+		<decoder:variable name="Normal direction of motion" CV="29" mask="XXXXXXXV">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="forward"/>
+				<decoder:enumChoice choice="reverse"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Speed steps" CV="29" mask="XXXXXXVX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="14"/>
+				<decoder:enumChoice choice="28/128"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Analog conversion mode" CV="29" mask="XXXXXVXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Off"/>
+				<decoder:enumChoice choice="On"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Speed table" CV="29" mask="XXXVXXXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Off"/>
+				<decoder:enumChoice choice="On"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Transponding, directional headlight, split field motor et al" CV="61">
+			<decoder:hexVal/>
+			</decoder:variable>
+		<decoder:variable name="Kick start value" CV="65">
+			<decoder:decVal/>
+			</decoder:variable>
+		<decoder:variable name="Forward trim" CV="66">
+			<decoder:decVal/>
+			</decoder:variable>
+		<decoder:variable name="Reverse trim" CV="95">
+			<decoder:decVal/>
+			</decoder:variable>
+		<decoder:variable name="User private ID #1" CV="105">
+			<decoder:decVal/>
+			</decoder:variable>
+		<decoder:variable name="User private ID #2" CV="106">
+			<decoder:decVal/>
+			</decoder:variable>
+		<decoder:variable name="Speed Table" CV="67">
+			<decoder:speedTableVal/>
+			</decoder:variable>
+	</decoder:variables>
+	
+</decoder:decoder>
+</decoder:decoder-config>

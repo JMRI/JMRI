@@ -1,0 +1,30 @@
+<!-- Defines XML documenting a CV programmer format -->
+
+<!ELEMENT programmer:programmer-config (programmer:programmer*)>
+<!ATTLIST programmer:programmer-config xmlns:programmer CDATA "">
+
+<!ELEMENT programmer:programmer (programmer:pane*)>
+
+
+<!-- The pane sections define each tabbed pane of options -->
+
+<!ELEMENT programmer:pane (programmer:column*)>
+<!ATTLIST programmer:pane name CDATA #REQUIRED>  <!-- Name used for identification -->
+
+<!-- The column section describes each column in the pane -->
+
+<!ELEMENT programmer:column ((programmer:variable | programmer:separator)*)>
+
+<!-- Insert a separator line -->
+
+<!ELEMENT programmer:separator EMPTY>
+
+<!-- The variable items define each identified variables -->
+<!-- in the column and how they are displayed -->
+
+<!ELEMENT programmer:variable EMPTY >
+<!ATTLIST programmer:variable name CDATA #REQUIRED>  <!-- Name used for identification -->
+<!ATTLIST programmer:variable label CDATA "">  <!-- optional, default is from variable -->
+<!ATTLIST programmer:variable popup CDATA "">  <!-- optional, default is from variable -->
+<!ATTLIST programmer:variable format  (default | radio ) "default" >
+
