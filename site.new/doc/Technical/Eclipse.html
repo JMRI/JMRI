@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Eclipse.html,v 1.3 2004-07-25 06:15:38 jacobsen Exp $ -->
+<!-- $Id: Eclipse.html,v 1.4 2004-10-05 02:25:45 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -166,6 +166,22 @@ The code will be checked out into your current eclipse Project.
 <li>When the dialog is displayed, change targets if desired (the default
 'compile' target will be selected), then press OK.
 </ul>
+
+<h2>Running the application from your build</h2>
+
+To be able to run from the built version of your copy, you have to 
+add "java/classes" to the classpath variable.
+<P>
+Alternately, there are ant targets to run the various programs, e.g.
+<CODE>
+<PRE>
+   ant decoderpro
+   
+   ant panelpro
+   
+   ant alltest
+</pre>
+</code>
 
 <h2>Updating the code from CVS</h2>
 
