@@ -13,7 +13,7 @@ import jmri.ProgrammerException;
 /**
  * Debugging implementation of Programmer interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.12 $
+ * @version         $Revision: 1.13 $
  */
 public class ProgDebugger implements Programmer  {
 
@@ -80,19 +80,20 @@ public class ProgDebugger implements Programmer  {
 
 	public void readCV(int CV, ProgListener p) throws ProgrammerException {
 		final ProgListener m = p;
-		log.debug("read CV: "+CV+" mode: "+getMode()+" will read "+_nextRead);
 		_lastReadCv = CV;
 
         // try to get something from hash table
         Integer saw = ((Integer)mValues.get(new Integer(CV)));
         if (saw!=null) _nextRead = saw.intValue();
 
+		log.debug("read CV: "+CV+" mode: "+getMode()+" will read "+_nextRead);
+
 		// return a notification via the queue to ensure end
 		Runnable r = new Runnable() {
 			ProgListener l = m;
 			public void run() {
 				log.debug("read CV reply - start sleep");
-				try { Thread.sleep(250); } catch (Exception e) {}
+				try { Thread.sleep(100); } catch (Exception e) {}
 				log.debug("read CV reply");
 				l.programmingOpReply(_nextRead, 0); }  // 0 is OK status
 			};
