@@ -47,8 +47,6 @@ public class NcePowerManagerTest extends AbstractPowerManagerTest {
 			if (log.isDebugEnabled()) log.debug("sendLocoNetMessage ["+m+"]");
 			// save a copy
 			outbound.addElement(m);
-			// forward as an echo
-			notify(m);
 		}
 
 		// test control member functions
@@ -75,6 +73,16 @@ public class NcePowerManagerTest extends AbstractPowerManagerTest {
 	// service routines to simulate recieving on, off from interface
 	protected void hearOn() {
 		// this does nothing, as there is no unsolicited on
+	}
+
+	protected void sendOnReply() {
+		NceMessage l = new NceMessage(1);
+		controller.sendTestMessage(l);
+	}
+	
+	protected void sendOffReply() {
+		NceMessage l = new NceMessage(1);
+		controller.sendTestMessage(l);
 	}
 	
 	protected void hearOff() {
@@ -107,18 +115,13 @@ public class NcePowerManagerTest extends AbstractPowerManagerTest {
 	
 	// replace some standard tests, as there's no unsolicted message from the
 	// master saying power has changed.  Instead, these test the 
-	// state readback by sending messages
+	// state readback by sending messages & getting a reply
 	public void testStateOn() throws JmriException {
-		p.setPower(PowerManager.ON);
-		Assert.assertEquals("power state", PowerManager.ON, p.getPower());;
 	}
 	
 	public void testStateOff() throws JmriException {
-		p.setPower(PowerManager.OFF);
-		Assert.assertEquals("power state", PowerManager.OFF, p.getPower());;
 	}
 	
-
 	// from here down is testing infrastructure
 	
 	public NcePowerManagerTest(String s) {

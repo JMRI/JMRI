@@ -35,8 +35,8 @@ public class LocoNetInterfaceScaffold extends LnTrafficController {
 		if (log.isDebugEnabled()) log.debug("sendLocoNetMessage ["+m+"]");
 		// save a copy
 		outbound.addElement(m);
-		// forward as an echo
-		notify(m);
+		// we don't return an echo so that the processing before the echo can be
+		// separately tested
 	}
 
 	// test control member functions

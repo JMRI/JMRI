@@ -32,13 +32,15 @@ public class LnPowerManagerTest extends AbstractPowerManagerTest {
 		l.setOpCode(LnConstants.OPC_GPON);
 		controller.sendTestMessage(l);
 	}
+	protected void sendOnReply() { hearOn(); }	
 	
 	protected void hearOff() {
 		LocoNetMessage l = new LocoNetMessage(2);
 		l.setOpCode(LnConstants.OPC_GPOFF);
 		controller.sendTestMessage(l);
 	}
-	
+	protected void sendOffReply() { hearOff(); }	
+
 	protected int numListeners() {
 		return controller.numListeners();
 	}

@@ -25,6 +25,8 @@ public abstract class AbstractPowerManagerTest extends TestCase {
 	// service routines to simulate recieving on, off from interface
 	protected abstract void hearOn();	
 	protected abstract void hearOff();
+	protected abstract void sendOnReply();	  // get a reply to On command from layou
+	protected abstract void sendOffReply();   // get a reply to Off command from layout
 	protected abstract int numListeners();
 	protected abstract int outboundSize();
 	protected abstract boolean outboundOnOK(int index);
@@ -32,11 +34,10 @@ public abstract class AbstractPowerManagerTest extends TestCase {
 	
 	protected PowerManager p = null;	// holds objects under test
 
-	static private boolean listenerResult = false;
-	private class Listen implements PropertyChangeListener {
+	static protected boolean listenerResult = false;
+	protected class Listen implements PropertyChangeListener {
 		public void propertyChange(java.beans.PropertyChangeEvent e) {
 			listenerResult = true;
-			System.out.println("event: "+e);
 		}
 	}
 		
@@ -44,13 +45,16 @@ public abstract class AbstractPowerManagerTest extends TestCase {
 	public void testCreate() {
 	}
 
-	// test power
+	// test setting power on, off, then getting reply from system
 	public void testSetPowerOn() throws JmriException {
 		p.setPower(PowerManager.ON);
-		// check one message sent, correct form
+		// check one message sent, correct form, unknown state
 		Assert.assertEquals("messages sent", 1, outboundSize());
 		Assert.assertTrue("message type OK", outboundOnOK(0));
-		
+		Assert.assertEquals("state before reply ", PowerManager.UNKNOWN, p.getPower());
+		// arrange for reply
+		sendOnReply();
+		Assert.assertEquals("state after reply ", PowerManager.ON, p.getPower());
 	}
 
 	public void testSetPowerOff() throws JmriException {
@@ -58,6 +62,10 @@ public abstract class AbstractPowerManagerTest extends TestCase {
 		// check one message sent, correct form
 		Assert.assertEquals("messages sent", 1, outboundSize());
 		Assert.assertTrue("message type OK", outboundOffOK(0));
+		Assert.assertEquals("state before reply ", PowerManager.UNKNOWN, p.getPower());
+		// arrange for reply
+		sendOffReply();
+		Assert.assertEquals("state after reply ", PowerManager.OFF, p.getPower());
 		
 	}
 
@@ -71,13 +79,15 @@ public abstract class AbstractPowerManagerTest extends TestCase {
 		Assert.assertEquals("power state", PowerManager.OFF, p.getPower());;
 	}
 	
-	public void testAddListener() {
+	public void testAddListener() throws JmriException {
 		p.addPropertyChangeListener(new Listen());
 		listenerResult = false;
-		hearOff();
+		p.setPower(PowerManager.ON);
+		sendOnReply();
 		Assert.assertTrue("listener invoked by GPOFF", listenerResult);
 		listenerResult = false;
-		hearOn();
+		p.setPower(PowerManager.OFF);
+		sendOffReply();
 		Assert.assertTrue("listener invoked by GPON", listenerResult);
 	}
 	
@@ -87,7 +97,6 @@ public abstract class AbstractPowerManagerTest extends TestCase {
 		p.removePropertyChangeListener(ln);
 		listenerResult = false;
 		hearOn();		
-		System.out.println("after xmit");
 		Assert.assertTrue("listener should not have heard message after removeListner", 
 				!listenerResult);
 	}
@@ -101,9 +110,11 @@ public abstract class AbstractPowerManagerTest extends TestCase {
 
 	public void testDispose2() throws JmriException {
 		p.addPropertyChangeListener(new Listen());
-		hearOn();
+		p.setPower(PowerManager.ON);
+		sendOnReply();
 		p.dispose();
-		hearOff();
+		p.setPower(PowerManager.OFF);
+		sendOffReply();
 		Assert.assertEquals("Should still be ON", PowerManager.ON, p.getPower());
 	}
 
