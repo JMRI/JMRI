@@ -2,29 +2,46 @@
 
 package jmri.jmrix.loconet.slotmon;
 
-import jmri.jmrix.loconet.LocoNetSlot;
-import jmri.jmrix.loconet.SlotListener;
-import jmri.jmrix.loconet.SlotManager;
-import jmri.jmrix.loconet.LnConstants;
+import jmri.jmrix.loconet.*;
+
+import javax.swing.*;
 
 import java.util.Vector;
 
 /**
  * Table data model for display of slot manager contents
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version		$Revision: 1.2 $
+ * @version		$Revision: 1.3 $
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener  {
 
-    String headers[] = new String[]  {
-        "Slot", "Address", "Speed", "Decoder Type", "status", "consisted", "direction",
-        "f0", "f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "throttle ID" };
+    static public final int SLOTCOLUMN = 0;
+    static public final int ADDRCOLUMN = 1;
+    static public final int SPDCOLUMN  = 2;
+    static public final int TYPECOLUMN = 3;
+    static public final int STATCOLUMN = 4;
+    static public final int CONSCOLUMN = 5;
+    static public final int DIRCOLUMN  = 6;
+    static public final int DISPCOLUMN = 7;
+    static public final int F0COLUMN   = 8;
+    static public final int F1COLUMN   = 9;
+    static public final int F2COLUMN   = 10;
+    static public final int F3COLUMN   = 11;
+    static public final int F4COLUMN   = 12;
+    static public final int F5COLUMN   = 13;
+    static public final int F6COLUMN   = 14;
+    static public final int F7COLUMN   = 15;
+    static public final int F8COLUMN   = 16;
+    static public final int THROTCOLUMN = 17;
 
-    Vector[] table = new Vector[16];   // each vector is a column, will hold the rows
-
+    static public final int NUMCOLUMN = 18;
     SlotMonDataModel(int row, int column) {
+
         // connect to SlotManager for updates
         SlotManager.instance().addSlotListener(this);
+
+        // start update process
+        SlotManager.instance().update();
     }
 
     // basic methods for AbstractTableModel implementation
@@ -37,11 +54,67 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
-    public int getColumnCount( ){ return headers.length;}
+    public int getColumnCount( ){ return NUMCOLUMN;}
 
-    public String getColumnName(int col) { return headers[col];}
+    public String getColumnName(int col) {
+        switch (col) {
+        case SLOTCOLUMN: return "Slot";
+        case ADDRCOLUMN: return "Address";
+        case SPDCOLUMN: return "Speed";
+        case TYPECOLUMN: return "Status";
+        case STATCOLUMN: return "Use";
+        case CONSCOLUMN: return "Consisted";
+        case DIRCOLUMN: return "Direction";
+        case DISPCOLUMN: return "Dispatch";
+        case F0COLUMN: return "F0";
+        case F1COLUMN: return "F1";
+        case F2COLUMN: return "F2";
+        case F3COLUMN: return "F3";
+        case F4COLUMN: return "F4";
+        case F5COLUMN: return "F5";
+        case F6COLUMN: return "F6";
+        case F7COLUMN: return "F7";
+        case F8COLUMN: return "F8";
+        case THROTCOLUMN: return "Throttle ID";
+        default: return "unknown";
+        }
+    }
 
-    public Object getValueAt(int row, int col) {
+        public Class getColumnClass(int col) {
+        switch (col) {
+        case SLOTCOLUMN:
+        case ADDRCOLUMN:
+        case SPDCOLUMN:
+        case TYPECOLUMN:
+        case STATCOLUMN:
+        case CONSCOLUMN:
+        case DIRCOLUMN:
+        case F0COLUMN:
+        case F1COLUMN:
+        case F2COLUMN:
+        case F3COLUMN:
+        case F4COLUMN:
+        case F5COLUMN:
+        case F6COLUMN:
+        case F7COLUMN:
+        case F8COLUMN:
+        case THROTCOLUMN:
+            return String.class;
+        case DISPCOLUMN:
+            return JButton.class;
+        default:
+            return null;
+        }
+    }
+
+        public boolean isCellEditable(int row, int col) {
+        switch (col) {
+        case DISPCOLUMN: return true;
+        default: return false;
+        }
+    }
+
+    protected int slotNum(int row) {
         int slotNum;
         if (_allSlots) {
             // will show the entire set
@@ -50,64 +123,72 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             slotNum = ithActiveSlot(row);
         }
 
-        LocoNetSlot s = SlotManager.instance().slot(slotNum);
+        return slotNum;
+    }
 
+    public Object getValueAt(int row, int col) {
+        LocoNetSlot s = SlotManager.instance().slot(slotNum(row));
         if (s == null) log.error("slot pointer was null for slot row: "+row+" col: "+col);
 
         switch (col) {
-        case 0:  // slot number
-            return new Integer(slotNum);
-        case 1:  //
+        case SLOTCOLUMN:  // slot number
+            return new Integer(slotNum(row));
+        case ADDRCOLUMN:  //
             return new Integer(s.locoAddr());
-        case 2:  //
+        case SPDCOLUMN:  //
             return new Integer(s.speed());
-        case 3:  //
+        case TYPECOLUMN:  //
             switch (s.decoderType()) {
-            case LnConstants.DEC_MODE_128A:		return "128 step advanced";
-            case LnConstants.DEC_MODE_28A:		return "28 step advanced";
-            case LnConstants.DEC_MODE_128:		return "128 step";
-            case LnConstants.DEC_MODE_14:		return "14 step";
+            case LnConstants.DEC_MODE_128A:	return "128 step advanced";
+            case LnConstants.DEC_MODE_28A:	return "28 step advanced";
+            case LnConstants.DEC_MODE_128:	return "128 step";
+            case LnConstants.DEC_MODE_14:	return "14 step";
             case LnConstants.DEC_MODE_28TRI:	return "28 step trinary";
-            case LnConstants.DEC_MODE_28:		return "28 step";
-            default:							return "<unknown>";
+            case LnConstants.DEC_MODE_28:	return "28 step";
+            default:				return "<unknown>";
             }
-        case 4:  //
+        case STATCOLUMN:  //
             switch (s.slotStatus()) {
             case LnConstants.LOCO_IN_USE: 	return "In Use";
             case LnConstants.LOCO_IDLE:		return "Idle";
             case LnConstants.LOCO_COMMON: 	return "Common";
             case LnConstants.LOCO_FREE: 	return "Free";
-            default: 	return "<error>";
+            default: 	                        return "<error>";
             }
-        case 5:  //
+        case CONSCOLUMN:  //
             switch (s.consistStatus()) {
             case LnConstants.CONSIST_MID:	return "mid";
             case LnConstants.CONSIST_TOP:	return "top";
             case LnConstants.CONSIST_SUB:	return "sub";
             case LnConstants.CONSIST_NO:	return "none";
-            default: 	return "<error>";
+            default: 	                        return "<error>";
             }
-        case 6:  //
+        case DISPCOLUMN:  //
+            if (s.slotStatus()==LnConstants.LOCO_IN_USE)
+                return "Dispatch";
+            else
+                return null;
+        case DIRCOLUMN:  //
             return (s.isForward() ? "F" : "R");
-        case 7:  //
+        case F0COLUMN:  //
             return (s.isF0() ? "On" : "Off");
-        case 8:  //
+        case F1COLUMN:  //
             return (s.isF1() ? "On" : "Off");
-        case 9:  //
+        case F2COLUMN:  //
             return (s.isF2() ? "On" : "Off");
-        case 10:  //
+        case F3COLUMN:  //
             return (s.isF3() ? "On" : "Off");
-        case 11:  //
+        case F4COLUMN:  //
             return (s.isF4() ? "On" : "Off");
-        case 12:  //
+        case F5COLUMN:  //
             return (s.isF5() ? "On" : "Off");
-        case 13:  //
+        case F6COLUMN:  //
             return (s.isF6() ? "On" : "Off");
-        case 14:  //
+        case F7COLUMN:  //
             return (s.isF7() ? "On" : "Off");
-        case 15:  //
+        case F8COLUMN:  //
             return (s.isF8() ? "On" : "Off");
-        case 16:
+        case THROTCOLUMN:
             return new Integer(s.id());
 
         default:
@@ -115,6 +196,60 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             return null;
         }
     };
+
+    public int getPreferredWidth(int col) {
+        switch (col) {
+        case SLOTCOLUMN:
+            return new JLabel(" 123 ").getPreferredSize().width;
+        case ADDRCOLUMN:
+            return new JLabel(" 1234 ").getPreferredSize().width;
+        case SPDCOLUMN:
+            return new JLabel(" 100 ").getPreferredSize().width;
+        case TYPECOLUMN:
+            return new JLabel(" 128 step advanced ").getPreferredSize().width;
+        case STATCOLUMN:
+            return new JLabel(" Common ").getPreferredSize().width;
+        case CONSCOLUMN:
+            return new JLabel("<error>").getPreferredSize().width;
+        case DIRCOLUMN:
+            return new JLabel(" R ").getPreferredSize().width;
+        case DISPCOLUMN:
+            return new JButton(" Release ").getPreferredSize().width;
+        case F0COLUMN:
+        case F1COLUMN:
+        case F2COLUMN:
+        case F3COLUMN:
+        case F4COLUMN:
+        case F5COLUMN:
+        case F6COLUMN:
+        case F7COLUMN:
+        case F8COLUMN:
+            return new JLabel(" off ").getPreferredSize().width;
+        case THROTCOLUMN:
+            return new JLabel(" 78187 ").getPreferredSize().width;
+        default:
+            return new JLabel(" <unknown> ").getPreferredSize().width;
+        }
+    }
+
+    public void setValueAt(Object value, int row, int col) {
+        if (col == DISPCOLUMN) {
+            log.debug("Start freeing slot "+row);
+            // check for in use
+            LocoNetSlot s = SlotManager.instance().slot(slotNum(row));
+            if (s == null) log.error("slot pointer was null for slot row: "+row+" col: "+col);
+            if (s.slotStatus()==LnConstants.LOCO_IN_USE) {
+                // send dispatch
+                LnTrafficController.instance().sendLocoNetMessage(
+                        s.writeStatus(LnConstants.LOCO_COMMON
+                    ));
+                // LnTrafficController.instance().sendLocoNetMessage(s.dispatchSlot());
+            } else {
+                log.warn("Slot not in use");
+            }
+            fireTableRowsUpdated(row,row);
+        }
+    }
 
     // methods to communicate with SlotManager
     public synchronized void notifyChangedSlot(LocoNetSlot s) {
@@ -171,6 +306,12 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             if (n == i) break;
         }
         return slotNum;
+    }
+
+    public void dispose() {
+        SlotManager.instance().removeSlotListener(this);
+        // table.removeAllElements();
+        // table = null;
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SlotMonDataModel.class.getName());
