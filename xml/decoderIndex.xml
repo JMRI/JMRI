@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <decoderIndex version="72">
+  <decoderIndex version="73">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -511,7 +511,7 @@
         <model model="D102US" numOuts="2" numFns="1" connector="unspecified" nmraWarrant="no" />
         <model model="DA102US" numOuts="5" numFns="4" connector="unspecified" nmraWarrant="no" />
       </family>
-      <family name="Silent Drive decoders" mfg="North Coast Engineering" lowVersionID="31" highVersionID="33" type="locomotive" file="NCE_D13SR.xml">
+      <family name="Silent Drive decoders" mfg="North Coast Engineering" lowVersionID="30" highVersionID="34" comment="These are the version 3.0-3.4 Silent Running decoders" type="locomotive" file="NCE_D13SR.xml">
         <model model="D15SR" numOuts="5" numFns="6" connector="unspecified" nmraWarrant="no" />
         <model model="D14SRP" numOuts="4" numFns="6" connector="unspecified" nmraWarrant="no" />
         <model model="D13SR" numOuts="3" numFns="6" connector="unspecified" nmraWarrant="no" />
@@ -537,7 +537,7 @@
         <model model="N12K1a" numOuts="7" numFns="12" connector="unspecified" nmraWarrant="no" />
         <model model="N12K2" numOuts="7" numFns="12" connector="unspecified" nmraWarrant="no" />
       </family>
-      <family name="Silent Running w/ Torque Compensation" mfg="North Coast Engineering" lowVersionID="35" highVersionID="35" type="locomotive" file="NCE_D13SR_TC.xml">
+      <family name="Silent Running w/ Torque Compensation" mfg="North Coast Engineering" lowVersionID="35" highVersionID="35" comment="These are the version 3.5 decoders released after September 2003" type="locomotive" file="NCE_D13SR_TC.xml">
         <model model="D13SR" numOuts="3" numFns="3" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
           <output name="1" label="White" connection="wire" maxcurrent="40 mA" />
           <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" />
@@ -575,6 +575,18 @@
           <output name="5" label="Pad" connection="solder" maxcurrent="40 mA" />
           <size length="1.08" width="0.63" height="0.275" units="inches" />
         </model>
+        <model model="D15SRP" numOuts="5" numFns="6" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" nmraWarrant="no">
+          <output name="1" label="White" connection="wire" maxcurrent="40 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="40 mA" />
+          <output name="4" label="Violet" connection="wire" maxcurrent="40 mA" />
+          <output name="5" label="Pad" connection="solder" maxcurrent="40 mA" />
+          <size length="1.08" width="0.63" height="0.275" units="inches" />
+        </model>
+        <model model="ATLS4" numOuts="2" numFns="3" maxMotorCurrent="1A (peak=1.25A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="Pad" connection="solder" maxcurrent="40 mA" />
+          <output name="2" label="Pad" connection="solder" maxcurrent="40 mA" />
+        </model>
         <model model="DA-SR" numOuts="5" numFns="6" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
           <output name="1" label="Tab 1" connection="solder" maxcurrent="40 mA" />
           <output name="2" label="Tab 2" connection="solder" maxcurrent="40 mA" />
@@ -583,6 +595,13 @@
           <output name="5" label="Optional" connection="solder" maxcurrent="40 mA" />
           <size length="2.85" width="0.66" height="0.12" units="inches" />
         </model>
+        <model model="KRS-SR" numOuts="4" numFns="6" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" nmraWarrant="no">
+          <output name="1" label="Pin 6" connection="plug" maxcurrent="40 mA" />
+          <output name="2" label="Pin 2" connection="plug" maxcurrent="40 mA" />
+          <output name="3" label="Pad A" connection="solder" maxcurrent="40 mA" />
+          <output name="4" label="Pad B" connection="solder" maxcurrent="40 mA" />
+          <size length="1.9" width="0.65" height="0.125" units="inches" />
+        </model>
         <model model="P2K-SR" numOuts="5" numFns="6" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" nmraWarrant="no">
           <output name="1" label="Pin 6" connection="plug" maxcurrent="40 mA" />
           <output name="2" label="Pin 2" connection="plug" maxcurrent="40 mA" />
@@ -590,13 +609,6 @@
           <output name="4" label="Pad B" connection="solder" maxcurrent="40 mA" />
           <output name="5" label="Pad" connection="solder" maxcurrent="40 mA" />
           <size length="1.92" width="0.63" height="0.12" units="inches" />
-        </model>
-        <model model="KRS-SR" numOuts="4" numFns="6" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" nmraWarrant="no">
-          <output name="1" label="Pin 6" connection="plug" maxcurrent="40 mA" />
-          <output name="2" label="Pin 2" connection="plug" maxcurrent="40 mA" />
-          <output name="3" label="Pad A" connection="solder" maxcurrent="40 mA" />
-          <output name="4" label="Pad B" connection="solder" maxcurrent="40 mA" />
-          <size length="1.9" width="0.65" height="0.125" units="inches" />
         </model>
         <model model="SW9-SR" numOuts="3" numFns="3" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
           <output name="1" label="Pad" connection="solder" maxcurrent="40 mA" />
@@ -627,24 +639,6 @@
           <output name="8" label="Screw" connection="other" />
           <size length="3.75" width="1.45" height="0.625" units="inches" />
         </model>
-        <model model="NIMFT-A" numOuts="2" numFns="3" maxMotorCurrent="1A (peak=1.25A)" formFactor="N" connector="unspecified" nmraWarrant="no">
-          <output name="1" label="Pad 1" connection="solder" />
-          <output name="2" label="Pad 2" connection="solder" />
-        </model>
-        <model model="NIMFT-B" numOuts="2" numFns="3" maxMotorCurrent="1A (peak=1.25A)" formFactor="N" connector="unspecified" nmraWarrant="no">
-          <output name="1" label="Pad 1" connection="solder" />
-          <output name="2" label="Pad 2" connection="solder" />
-        </model>
-        <model model="N12SR" numOuts="2" numFns="3" maxMotorCurrent="1A (peak=1.25A)" formFactor="N" connector="unspecified" nmraWarrant="no">
-          <output name="1" label="White" connection="wire" maxcurrent="40 mA" />
-          <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" />
-          <size length="0.70" width="0.34" height="0.12" units="inches" />
-        </model>
-        <model model="N12SRP" numOuts="2" numFns="3" connector="NMRAmedium" maxMotorCurrent="1A (peak=1.25A)" formFactor="N" nmraWarrant="no">
-          <output name="1" label="White" connection="wire" maxcurrent="40 mA" />
-          <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" />
-          <size length="0.70" width="0.34" height="0.12" units="inches" />
-        </model>
         <model model="N12A0" numOuts="2" numFns="3" maxMotorCurrent="1.3A (peak=2A)" formFactor="N" connector="unspecified" nmraWarrant="no">
           <output name="1" label="LED 1" connection="solder" />
           <output name="2" label="LED 2" connection="solder" />
@@ -659,9 +653,35 @@
           <output name="1" label="LED 1" connection="solder" />
           <output name="2" label="LED 2" connection="solder" />
         </model>
+        <model model="N12SR" numOuts="2" numFns="3" maxMotorCurrent="1A (peak=1.25A)" formFactor="N" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="White" connection="wire" maxcurrent="40 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" />
+          <size length="0.70" width="0.34" height="0.12" units="inches" />
+        </model>
+        <model model="N12SRP" numOuts="2" numFns="3" connector="NMRAmedium" maxMotorCurrent="1A (peak=1.25A)" formFactor="N" nmraWarrant="no">
+          <output name="1" label="White" connection="wire" maxcurrent="40 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" />
+          <size length="0.70" width="0.34" height="0.12" units="inches" />
+        </model>
+        <model model="NIMFT-A" numOuts="2" numFns="3" maxMotorCurrent="1A (peak=1.25A)" formFactor="N" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="Pad 1" connection="solder" />
+          <output name="2" label="Pad 2" connection="solder" />
+        </model>
+        <model model="NIMFT-B" numOuts="2" numFns="3" maxMotorCurrent="1A (peak=1.25A)" formFactor="N" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="Pad 1" connection="solder" />
+          <output name="2" label="Pad 2" connection="solder" />
+        </model>
       </family>
       <family name="Quantum" mfg="QSIndustries" type="locomotive" file="QSI_Quantum.xml">
         <model model="Quantum" connector="unspecified" nmraWarrant="no" />
+        <model model="Broadway Limited Hudson 4-6-4" lowVersionID="1" connector="unspecified" nmraWarrant="no" />
+        <model model="Broadway Limited Class A" lowVersionID="2" connector="unspecified" nmraWarrant="no" />
+        <model model="Lionel Challenger" lowVersionID="4" connector="unspecified" nmraWarrant="no" />
+        <model model="Lionel Gas Turbine" lowVersionID="4" connector="unspecified" nmraWarrant="no" />
+        <model model="Broadway Limited E7A/B" lowVersionID="5" connector="unspecified" nmraWarrant="no" />
+        <model model="Broadway Limited On30 Consolidation 2-8-0" lowVersionID="5" connector="unspecified" nmraWarrant="no" />
+        <model model="Broadway Limited PRR M1a/b 4-8-2" lowVersionID="5" connector="unspecified" nmraWarrant="no" />
+        <model model="Broadway Limited USRA Heavy Mikado 2-8-2" lowVersionID="5" connector="unspecified" nmraWarrant="no" />
       </family>
       <family name="DSD diesel" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_DSD_Diesel.xml">
         <model model="DSD diesel" numOuts="4" numFns="8" connector="unspecified" nmraWarrant="no">
