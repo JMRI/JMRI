@@ -7,7 +7,7 @@ import com.sun.java.util.collections.LinkedList;
  * Client for the RMI LocoNet server.
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Id: LnMessageClient.java,v 1.4 2002-04-02 10:35:21 kiwi64ajs Exp $
+ * @version $Id: LnMessageClient.java,v 1.5 2002-04-07 06:18:37 jacobsen Exp $
  */
 
 public class LnMessageClient extends LnTrafficRouter {
@@ -45,7 +45,7 @@ public class LnMessageClient extends LnTrafficRouter {
      * Start the connection to the server. This is invoked
      * once.
      */
-    void configureRemoteConnection(String remoteHostName, int timeoutSec) throws LocoNetException {
+    public void configureRemoteConnection(String remoteHostName, int timeoutSec) throws LocoNetException {
         serverName = remoteHostName ;
         pollTimeout = timeoutSec * 1000 ;  // convert to ms
 
