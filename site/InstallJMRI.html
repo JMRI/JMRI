@@ -69,18 +69,36 @@ a JMRI.demo.0.8.sea file.
 
 <h4>Hardware requirements</h4>
 
-JMRI is primarily developed on a PowerBook 400MHz. 
-We test that it
-runs on a PowerMac 7200/90  (90MHz) with 40MB of memory. Performance on that
-machine is poor, but usable: Some windows take several seconds to open, and certain file
-operations take too long.
+There are two hardware adapters available to connect to a LocoNet.  The
+LocoBuffer is the strongly preferred alternative, as it reduces the load 
+on the host computer and has a significantly smaller error rate.  The 
+LocoBuffer was created by John Jabour (jjabour@optonline.net); more
+information is available from the LocoNet_Info group, 
+  http://groups.yahoo.com/group/loconet_hackers
 
-We use a USB Macintosh connected to a Keyspan PDA Adapter to 
-provide the serial port; for information please see 
-http://jmri.sourceforge.net/DigiTrax/KeyspanAdapters/KeyspanUSB.html.  
-Its not known if a standard Macintosh RS422 serial port will work directly 
-with an MS100; if you have a pre-USB Macintosh and want to use this demo, please 
-contact us for more information.
+The Digitrax MS100 interface adapter is also supported. Note that some
+systems, specifically MacOS X, can't handle the LocoNet native baud 
+rate.  An MS100 can't be used on those systems.  A standard 
+Macintosh RS422 serial port will not work directly with an MS100. Since 
+those ports don't have two output status lines (DTR and RTS),
+they can't provide correct power to the MS100.  It may be possible to 
+provide external power; if you're interested in trying this, we'd
+be happy to help work out a solution.
+
+Connect a LocoBuffer or Digitrax MS100 interface to a serial port, using 
+an adapter cable as needed.  For more information on the MS100, please see
+  http://www.digitrax.com/computer.htm
+For more information on the LocoBuffer, please see
+  http://groups.yahoo.com/group/loconet_hackers/files/LocoBuffer/
+  
+JMRI is primarily developed on a PowerBook 400MHz. 
+The demo program is tested on an MS100 and USB Macintosh using a Keyspan PDA 
+Adapter to provide the serial port; for information please see 
+http://jmri.sourceforge.net/DigiTrax/KeyspanAdapters/KeyspanUSB.html. 
+Standard Macintosh RS422 serial ports also work; we  periodically test
+on a Power Macintosh 7200/90 (90MHz) with 40MB of memory. Performance on that
+machine is poor, but usable: Some windows take several seconds to open, 
+and certain file operations take too long.
 
 <h3><A NAME="SimpleMacX"></A>Simple Macintosh MacOS X install</h3>
 In order for JMRI to work reliably, you need to have updated to 
