@@ -2,20 +2,22 @@
 
 package jmri.jmrix.loconet.locoio;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.table.*;
+import jmri.util.table.ButtonEditor;
+import jmri.util.table.ButtonRenderer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
-import jmri.jmrix.loconet.LocoNetListener;
-import jmri.jmrix.loconet.LnTrafficController;
-import jmri.jmrix.loconet.LocoNetMessage;
+import javax.swing.*;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableColumnModel;
 
 /**
  * Frame displaying and programming a LocoIO configuration.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class LocoIOFrame extends JFrame {
 
