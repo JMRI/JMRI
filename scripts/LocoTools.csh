@@ -1,6 +1,6 @@
 #! /bin/csh -f
 #
-#  short csh script to start JMRIdemo in java
+#  short csh script to start LocoTools in java
 #
 #  Assumes that the program is being run from the distribution directory
 #
