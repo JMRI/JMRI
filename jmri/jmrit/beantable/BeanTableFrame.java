@@ -10,14 +10,16 @@ import javax.swing.JMenuBar;
 import java.util.*;
 import javax.swing.JScrollPane;
 import javax.swing.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-import jmri.util.com.sun.TableSorter;
+import jmri.util.JTableUtil;
 
 /**
  * Frame providing a table of NamedBeans.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class BeanTableFrame extends javax.swing.JFrame {
 
@@ -31,10 +33,9 @@ public class BeanTableFrame extends javax.swing.JFrame {
 
         super();
         dataModel 	= model;
-        TableSorter sorter = new TableSorter(dataModel);
-        dataTable	= new JTable(sorter);
+
+        dataTable	= JTableUtil.sortableDataModel(dataModel);
         dataScroll	= new JScrollPane(dataTable);
-        sorter.setTableHeader(dataTable.getTableHeader());
 
         // configure items for GUI
 
@@ -63,8 +64,8 @@ public class BeanTableFrame extends javax.swing.JFrame {
         pack();
     }
 
-    void extras() {}
-
+	void extras() {}
+	
     private boolean mShown = false;
 
     public void addNotify() {
