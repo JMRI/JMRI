@@ -21,7 +21,7 @@ import org.jdom.Attribute;
  * stored in local variables.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecoderProConfigFrame.java,v 1.9 2002-01-16 17:42:00 jacobsen Exp $
+ * @version			$Id: DecoderProConfigFrame.java,v 1.10 2002-02-02 07:06:59 jacobsen Exp $
  */
 public class DecoderProConfigFrame extends JFrame {
 		
@@ -211,6 +211,9 @@ public class DecoderProConfigFrame extends JFrame {
 		e.addAttribute("port", portName);
 		return e;
 	}
+	
+	public String getCurrentProtocolName() { return protocolName; }
+	public String getCurrentPortName() { return portName; }
 	
 	boolean configureConnection(Element e) throws jmri.JmriException {
 		protocolName = e.getAttribute("class").getValue();

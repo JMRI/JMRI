@@ -6,7 +6,7 @@
  * Description:		Swing action to create DecoderProConfigFrame
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Id: DecoderProgConfigAction.java,v 1.4 2002-01-08 04:06:05 jacobsen Exp $
+ * @version			$Id: DecoderProgConfigAction.java,v 1.5 2002-02-02 07:06:59 jacobsen Exp $
  */
 
 package jmri.apps;
@@ -44,6 +44,9 @@ public class DecoderProConfigAction 			extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
 		frame.show();		
 	}
+
+	public String getCurrentProtocolName() { return (frame != null ? frame.getCurrentProtocolName():null); }
+	public String getCurrentPortName() { return (frame != null ? frame.getCurrentPortName():null); }
 
 	DecoderProConfigFrame frame = null;
 	

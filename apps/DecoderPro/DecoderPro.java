@@ -12,7 +12,7 @@ import BasicWindowMonitor;
  * DecoderPro application. 
  *
  * @author			Bob Jacobsen
- * @version			$Id: DecoderPro.java,v 1.6 2002-01-13 20:38:32 jacobsen Exp $
+ * @version			$Id: DecoderPro.java,v 1.7 2002-02-02 07:06:59 jacobsen Exp $
  */
 public class DecoderPro extends JPanel {
 	public DecoderPro() {
@@ -20,7 +20,7 @@ public class DecoderPro extends JPanel {
         super(true);
 	
 	// create basic GUI
-		setLayout(new BorderLayout());
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // Create a menu bar and give it a bevel border
         menuBar = new JMenuBar();
         menuBar.setBorder(new BevelBorder(BevelBorder.RAISED));
@@ -31,16 +31,20 @@ public class DecoderPro extends JPanel {
         
 	// populate GUI
 			
-        // Create menu categories and add to the menu bar, add actions to menus
-        JMenu fileMenu = new JMenu("File");
-        menuBar.add(fileMenu);
-	  		fileMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction("New Programmer..."));
-        	fileMenu.add(new JSeparator());        	
-        	fileMenu.add(new AbstractAction("Quit"){
+		// create actions with side-effects if you need to reference them more than once
+		Action paneprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction("New Programmer...");
+		Action quit = new AbstractAction("Quit"){
     				public void actionPerformed(ActionEvent e) {
     					System.exit(0);
     				}
-        		});
+        		};
+        		
+        // Create menu categories and add to the menu bar, add actions to menus
+        JMenu fileMenu = new JMenu("File");
+        menuBar.add(fileMenu);
+	  		fileMenu.add(paneprog);
+        	fileMenu.add(new JSeparator());        	
+        	fileMenu.add(quit);
 
         JMenu editMenu = new JMenu("Edit");
         menuBar.add(editMenu);
@@ -59,6 +63,30 @@ public class DecoderPro extends JPanel {
 	        debugMenu.add(new jmri.jmrix.nce.ncemon.NceMonAction("Nce Command Monitor"));
 	        debugMenu.add(new jmri.jmrit.MemoryFrameAction("Memory usage monitor"));
 
+		// Label & text
+		JPanel pane1 = new JPanel();
+			pane1.setLayout(new FlowLayout());
+			pane1.add(new JLabel(new ImageIcon(ClassLoader.getSystemResource("decoderpro.gif"),"Decoder Pro label"), JLabel.LEFT));
+			JPanel pane2 = new JPanel();
+				pane2.setLayout(new BoxLayout(pane2, BoxLayout.Y_AXIS));
+				pane2.add(new JLabel(" Decoder Pro 0.9b7 by Bob Jacobsen "));
+				pane2.add(new JLabel("   http://jmri.sf.net/DecoderPro "));
+				pane2.add(new JLabel(" "));
+				pane2.add(new JLabel(" Connected via "+prefs.getCurrentProtocolName()));
+				pane2.add(new JLabel(" on port "+prefs.getCurrentPortName()));
+			pane1.add(pane2);
+		add(pane1);
+		
+		// Buttons
+		JButton b1 = new JButton("Program locomotive ...");
+		b1.addActionListener(paneprog);
+		b1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+		add(b1);
+		
+		JButton q1 = new JButton("Quit");
+		q1.addActionListener(quit);
+		q1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+		add(q1);
 	}
 
 	// Main entry point
