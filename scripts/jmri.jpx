@@ -9,7 +9,7 @@
   <property category="runtime.0" name="ConfigurationName" value="jmri"/>
   <property category="runtime.0" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
   <property category="runtime.0" name="application.class" value="apps.JmriDemo.JMRIdemo"/>
-  <property category="runtime.0" name="application.vmparameters" value="-Dsun.java2d.noddraw"/>
+  <property category="runtime.0" name="application.vmparameters" value="-Dsun.java2d.noddraw -Djava.security.policy=lib/security.policy"/>
   <property category="runtime.0" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.0" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
   <property category="runtime.0" name="appserver.servername" value="standard"/>
@@ -36,30 +36,30 @@
   <property category="runtime.2" name="appserver.vmparameters" value="-Dvbroker.agent.port=14000 -Djava.library.path=/BorlandEnterpriseServer/lib;/BorlandEnterpriseServer/bin -Dborland.enterprise.licenseDir=/BorlandEnterpriseServer/var/servers/tom/adm -Dejb.module_preload=true"/>
   <property category="runtime.2" name="jsprunner.launchuri" value="/"/>
   <property category="runtime.2" name="test.harness" value="junit.textui.TestRunner"/>
-  <property category="runtime.3" name="ConfigurationName" value="AllTest"/>
+  <property category="runtime.3" name="ConfigurationName" value="LocoTools"/>
   <property category="runtime.3" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
-  <property category="runtime.3" name="application.class" value="apps.tests.AllTest"/>
-  <property category="runtime.3" name="application.vmparameters" value="-Dsun.java2d.noddraw"/>
+  <property category="runtime.3" name="application.class" value="apps.LocoTools.LocoTools"/>
+  <property category="runtime.3" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw"/>
   <property category="runtime.3" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.3" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
   <property category="runtime.3" name="appserver.servername" value="standard"/>
-  <property category="runtime.3" name="appserver.vmparameters" value="-Dvbroker.agent.port=14000 -Djava.library.path=/BorlandEnterpriseServer/lib:/BorlandEnterpriseServer/bin -Dborland.enterprise.licenseDir=/BorlandEnterpriseServer/var/servers/adsl-216-102-218-99.dsl.snfc21.pacbell.net/adm -Dejb.module_preload=true"/>
+  <property category="runtime.3" name="appserver.vmparameters" value="-Dvbroker.agent.port=14000 -Djava.library.path=/BorlandEnterpriseServer/lib;/BorlandEnterpriseServer/bin -Dborland.enterprise.licenseDir=/BorlandEnterpriseServer/var/servers/tom/adm -Dejb.module_preload=true"/>
   <property category="runtime.3" name="jsprunner.launchuri" value="/"/>
   <property category="runtime.3" name="test.harness" value="junit.textui.TestRunner"/>
-  <property category="runtime.4" name="ConfigurationName" value="JMRI Demo w client config"/>
+  <property category="runtime.4" name="ConfigurationName" value="AllTest"/>
   <property category="runtime.4" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
-  <property category="runtime.4" name="application.class" value="apps.JmriDemo.JMRIdemo"/>
-  <property category="runtime.4" name="application.parameters" value="JMRIClientConfig.xml"/>
+  <property category="runtime.4" name="application.class" value="apps.tests.AllTest"/>
   <property category="runtime.4" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw"/>
   <property category="runtime.4" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.4" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
   <property category="runtime.4" name="appserver.servername" value="standard"/>
-  <property category="runtime.4" name="appserver.vmparameters" value="-Dvbroker.agent.port=14000 -Djava.library.path=/BorlandEnterpriseServer/lib;/BorlandEnterpriseServer/bin -Dborland.enterprise.licenseDir=/BorlandEnterpriseServer/var/servers/tom/adm -Dejb.module_preload=true"/>
+  <property category="runtime.4" name="appserver.vmparameters" value="-Dvbroker.agent.port=14000 -Djava.library.path=/BorlandEnterpriseServer/lib:/BorlandEnterpriseServer/bin -Dborland.enterprise.licenseDir=/BorlandEnterpriseServer/var/servers/adsl-216-102-218-99.dsl.snfc21.pacbell.net/adm -Dejb.module_preload=true"/>
   <property category="runtime.4" name="jsprunner.launchuri" value="/"/>
   <property category="runtime.4" name="test.harness" value="junit.textui.TestRunner"/>
-  <property category="runtime.5" name="ConfigurationName" value="LocoTools"/>
+  <property category="runtime.5" name="ConfigurationName" value="JMRI Demo w client config"/>
   <property category="runtime.5" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
-  <property category="runtime.5" name="application.class" value="apps.LocoTools.LocoTools"/>
+  <property category="runtime.5" name="application.class" value="apps.JmriDemo.JMRIdemo"/>
+  <property category="runtime.5" name="application.parameters" value="JMRIClientConfig.xml"/>
   <property category="runtime.5" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw"/>
   <property category="runtime.5" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.5" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
@@ -74,6 +74,8 @@
   <property category="sys" name="CheckStable" value="1"/>
   <property category="sys" name="Company" value=""/>
   <property category="sys" name="CompanyLabel" value=""/>
+  <property category="sys" name="CompileOnDebug" value="0"/>
+  <property category="sys" name="CompileOnRun" value="0"/>
   <property category="sys" name="Copyright" value=""/>
   <property category="sys" name="CopyrightLabel" value=""/>
   <property category="sys" name="DefaultPath" value="src"/>
@@ -95,7 +97,7 @@
   <property category="sys" name="TestPath" value="test"/>
   <property category="sys" name="Title" value=""/>
   <property category="sys" name="TitleLabel" value=""/>
-  <property category="sys" name="Version" value="$Revision: 1.20 $"/>
+  <property category="sys" name="Version" value="$Revision: 1.21 $"/>
   <property category="sys" name="VersionLabel" value="@version"/>
   <property category="sys" name="WorkingDirectory" value="../"/>
   <property category="sys" name="max.package.levels" value="2"/>
@@ -150,7 +152,6 @@
   <file path="src/apps/JmriDemo/JMRIdemo.java"/>
   <file path="src/apps/LocoTools/LocoTools.java"/>
   <file path="src/resources/logo.gif"/>
-  <file path="test/jmri/jmrix/cmri/serial/SerialNodeTest.java"/>
   <file path="src/jmri/jmrix/cmri/serial/configurexml/SerialTurnoutManagerXml.java"/>
   <file path="src/jmri/configurexml/TripleTurnoutSignalHeadXml.java"/>
   <file path="src/jmri/Version.java"/>
