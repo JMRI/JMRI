@@ -3,7 +3,7 @@
  *
  * Description:		extend jmri.AbstractTurnout for XNet layouts
  * @author			Bob Jacobsen Copyright (C) 2001, Portions by Paul Bender Copyright (C) 2003 
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 
 package jmri.jmrix.lenz;
@@ -92,8 +92,8 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                                                   getCommandedState()==CLOSED,
                                                   getCommandedState()==THROWN,
                                                   false );
-               // This has to be sent twice for some reason.  If it is not,
-               // The turnout continues to throw after the 
+ 	       // We have to send this message twice for some reason, 
+               // otherwise, the turnout continues to throw.
                XNetTrafficController.instance().sendXNetMessage(msg, this);
                XNetTrafficController.instance().sendXNetMessage(msg, this);
              }       
@@ -110,15 +110,27 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                                                   getCommandedState()==CLOSED,
                                                   getCommandedState()==THROWN,
                                                   false );
-            // This has to be sent twice for some reason.  If it is not,
-            // The turnout continues to throw after the 
+ 	    // We have to send this message twice for some reason, 
+            // otherwise, the turnout continues to throw.
             XNetTrafficController.instance().sendXNetMessage(msg, this);
             XNetTrafficController.instance().sendXNetMessage(msg, this);
             }
 	} else if (XNetTrafficController.instance()
                                         .getCommandStation().isOkMessage(l)) {
-        	// Finally, we may just recieve an OK message.
-		newKnownState(getCommandedState());
+            // Finally, we may just recieve an OK message.
+            // We need to tell the turnout to shut off the output.
+            XNetMessage msg =  XNetTrafficController.instance()
+                                                .getCommandStation()
+	   					.getTurnoutCommandMsg(mNumber,
+                                                  getCommandedState()==CLOSED,
+                                                  getCommandedState()==THROWN,
+                                                  false );
+ 	    // We have to send this message twice for some reason, 
+            // otherwise, the turnout continues to throw.
+            XNetTrafficController.instance().sendXNetMessage(msg, this);
+            XNetTrafficController.instance().sendXNetMessage(msg, this);
+	    // Set the known state to the commanded state.
+	    newKnownState(getCommandedState());
 	} else { return; }
     }
 
