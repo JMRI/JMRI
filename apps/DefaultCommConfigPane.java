@@ -2,13 +2,18 @@
 
 package apps;
 
-import apps.AbstractConfigFile;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-import javax.swing.*;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Vector;
+
+import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 import org.jdom.Element;
-import org.jdom.Attribute;
 
 /**
  * DefaultCommConfigPane provides startup configuration, a GUI for setting
@@ -24,7 +29,7 @@ import org.jdom.Attribute;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002. AC 11/09/2002 Added SPROG support
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class DefaultCommConfigPane extends JPanel {
 
