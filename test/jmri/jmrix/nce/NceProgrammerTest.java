@@ -143,6 +143,52 @@ public class NceProgrammerTest extends TestCase {
 		Assert.assertEquals(" value read", 20, rcvdValue);
 	}
 
+	public void testReadRegisterSequence() throws JmriException {
+		log.error("expect next message: ERROR - Creating too many NceProgrammer objects");
+		// infrastructure objects
+		NceInterfaceScaffold t = new NceInterfaceScaffold();
+		NceListenerScaffold l = new NceListenerScaffold();
+
+		NceProgrammer p = new NceProgrammer();
+
+        // set register mode
+        p.setMode(Programmer.REGISTERMODE);
+
+		// and do the read
+		p.readCV(3, l);
+		// check "prog mode" message sent
+		Assert.assertEquals("mode message sent", 1, t.outbound.size());
+		Assert.assertEquals("mode message contents", "M",
+			((NceMessage)(t.outbound.elementAt(0))).toString());
+		// reply from programmer arrives
+		NceReply r = new NceReply("**** PROGRAMMING MODE - MAIN TRACK NOW DISCONNECTED ****");
+		t.sendTestReply(r);
+		Assert.assertEquals(" programmer listener not invoked", 0, rcvdInvoked);
+
+
+		// check "read command" message sent
+		Assert.assertEquals("read message sent", 2, t.outbound.size());
+		Assert.assertEquals("read message contents", "V3",
+			((NceMessage)(t.outbound.elementAt(1))).toString());
+		// reply from programmer arrives
+		r = new NceReply();
+		r.setElement(0, '0');
+		r.setElement(1, '2');
+		r.setElement(2, '0');
+		t.sendTestReply(r);
+		Assert.assertEquals(" programmer listener not invoked", 0, rcvdInvoked);
+
+		// check "leave prog mode" message sent
+		Assert.assertEquals("normal mode message sent", 3, t.outbound.size());
+		Assert.assertEquals("normal mode message contents", "X",
+			((NceMessage)(t.outbound.elementAt(2))).toString());
+		// reply from programmer arrives
+		r = new NceReply();
+		t.sendTestReply(r);
+		Assert.assertEquals(" programmer listener invoked", 1, rcvdInvoked);
+		Assert.assertEquals(" value read", 20, rcvdValue);
+	}
+
 	// internal class to simulate a NceListener
 	class NceListenerScaffold implements jmri.ProgListener {
 		public NceListenerScaffold() {
