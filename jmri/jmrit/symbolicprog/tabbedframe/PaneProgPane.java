@@ -19,7 +19,7 @@ import org.jdom.*;
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
@@ -419,20 +419,11 @@ public class PaneProgPane extends javax.swing.JPanel
                 cs.gridwidth = 1;
             }
             else if (name.equals("dccaddress")) {
-                JPanel l = new DccAddressPanel(_varModel);
-                panelList.add(l);
+                JPanel l = addDccAddressPanel();
                 cs.gridwidth = GridBagConstraints.REMAINDER;
                 g.setConstraints(l, cs);
                 c.add(l);
                 cs.gridwidth = 1;
-                // make sure this will get read/written, even if real vars not on pane
-                int iVar;
-                iVar = _varModel.findVarIndex("Address Format");
-                if (iVar>=0) varList.add(new Integer(iVar));
-                iVar = _varModel.findVarIndex("Primary Address");
-                if (iVar>=0) varList.add(new Integer(iVar));
-                iVar = _varModel.findVarIndex("Extended Address");
-                if (iVar>=0) varList.add(new Integer(iVar));
             }
             else if (name.equals("row")) {
 				// nested "row" elements ...
@@ -537,20 +528,11 @@ public class PaneProgPane extends javax.swing.JPanel
                 cs.gridheight = 1;
             }
             else if (name.equals("dccaddress")) {
-                JPanel l = new DccAddressPanel(_varModel);
-                panelList.add(l);
+                JPanel l = addDccAddressPanel();
                 cs.gridheight = GridBagConstraints.REMAINDER;
                 g.setConstraints(l, cs);
                 c.add(l);
                 cs.gridheight = 1;
-                // make sure this will get read/written, even if real vars not on pane
-                int iVar;
-                iVar = _varModel.findVarIndex("Address Format");
-                if (iVar>=0) varList.add(new Integer(iVar));
-                iVar = _varModel.findVarIndex("Primary Address");
-                if (iVar>=0) varList.add(new Integer(iVar));
-                iVar = _varModel.findVarIndex("Extended Address");
-                if (iVar>=0) varList.add(new Integer(iVar));
             }
             else if (name.equals("column")) {
                 // nested "column" elements ...
@@ -729,6 +711,20 @@ public class PaneProgPane extends javax.swing.JPanel
         // these two are disposed elsewhere
         _cvModel = null;
         _varModel = null;
+    }
+
+    private JPanel addDccAddressPanel() {
+        JPanel l = new DccAddressPanel(_varModel);
+        panelList.add(l);
+        // make sure this will get read/written, even if real vars not on pane
+        int iVar;
+        iVar = _varModel.findVarIndex("Address Format");
+        if (iVar>=0) varList.add(new Integer(iVar));
+        iVar = _varModel.findVarIndex("Primary Address");
+        if (iVar>=0) varList.add(new Integer(iVar));
+        iVar = _varModel.findVarIndex("Extended Address");
+        if (iVar>=0) varList.add(new Integer(iVar));
+        return l;
     }
 
     // handle outgoing parameter notification for the Busy parameter

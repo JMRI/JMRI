@@ -2,18 +2,15 @@
 
 package jmri.jmrit.symbolicprog;
 
-import javax.swing.*;
-import javax.swing.event.*;
-import java.awt.*;
 import java.awt.event.*;
-import jmri.jmrit.symbolicprog.*;
-import com.sun.java.util.collections.List;
+
+import javax.swing.*;
 
 /**
  * Provide a graphical representation of the DCC address, either long or short
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class DccAddressPanel extends JPanel {
 
