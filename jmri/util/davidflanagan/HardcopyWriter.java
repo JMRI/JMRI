@@ -3,9 +3,12 @@
 package jmri.util.davidflanagan;
 
 import java.awt.*;
-import java.io.*;
-import java.text.*;
-import java.util.*;
+import java.io.Writer;
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.Properties;
+import java.util.TimeZone;
+
 import javax.swing.JWindow;
 
 /**
@@ -13,7 +16,7 @@ import javax.swing.JWindow;
  * David Flanagan with the alligator on the front.
  *
  * @author		David Flanagan
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 public class HardcopyWriter extends Writer {
 
