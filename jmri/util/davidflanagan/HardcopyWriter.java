@@ -12,7 +12,7 @@ import java.util.*;
  * David Flanagan with the alligator on the front.
  *
  * @author		David Flanagan
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 public class HardcopyWriter extends Writer {
 
@@ -213,7 +213,7 @@ public class HardcopyWriter extends Writer {
     /**
      * Write a graphic to the printout.
      * <P>This was not in the
-     * original class, but was added afterwards by Bob Jacobsen.
+     * original class, but was added afterwards by Bob Jacobsen. Modified by D Miller.
      * <P> The image is positioned on the right side of the paper,
      * at the current height.
      */
@@ -221,10 +221,12 @@ public class HardcopyWriter extends Writer {
         // if we haven't begun a new page, do that now
         if (page == null) newpage();
 
-        int x = x0+width-c.getWidth(null);
+        //D Miller: Scale the icon slightly smaller to make page layout easier and
+        //position one character to left of right margin
+        int x = x0+width- ((int) c.getWidth(null)*2/3 + charwidth);
         int y = y0+(linenum*lineheight) + lineascent;
 
-        page.drawImage(c, x, y, null);
+        page.drawImage(c, x, y, (int)c.getWidth(null)*2/3, (int)c.getHeight(null)*2/3, null);
     }
 
     /**

@@ -14,8 +14,8 @@ import javax.swing.*;
  * This uses the older style printing, for compatibility with Java 1.1.8 in
  * Macintosh MRJ
  *
- * @author		Bob Jacobsen   Copyright (C) 2003; DL Miller Copyright 2003
- * @version             $Revision: 1.3 $
+ * @author		Bob Jacobsen   Copyright (C) 2003; D Miller Copyright 2003
+ * @version             $Revision: 1.4 $
  */
 public class PrintCvAction  extends AbstractAction {
 
@@ -48,11 +48,11 @@ public class PrintCvAction  extends AbstractAction {
 
             /*Start drawing the table of CVs. Set up the table with 4 columns of CV/Value
              pairs and Draw the table borders and lines.  Each column width is
-             16 characters, inclucing the starting vertical line, but not the
+             16 characters, including the starting vertical line, but not the
              ending one.  Therefore the total table width is 64+1 characters
              The colummn headings take 2 lines
              4 columns of 20 gives 80 CVs possible. NMRA specs only define about 70 CVs
-             including all the optional ones plus some Manufatcurer ones.  80 should be
+             including all the optional ones plus some Manufacturer ones.  80 should be
              enough, although more can be added by increasing the tableHeight value
             */
 
@@ -95,7 +95,7 @@ public class PrintCvAction  extends AbstractAction {
                 int num = cv.number();
                 int value = cv.getValue();
 
-                //pad and convert numbers as needed
+                //convert and pad numbers as needed
                 String numString = Integer.toString(num);
                 String valueString = Integer.toString(value);
                 String valueStringHex = Integer.toHexString(value).toUpperCase();

@@ -15,7 +15,7 @@ import javax.swing.*;
  * Macintosh MRJ
  *
  * @author		Bob Jacobsen   Copyright (C) 2003
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class PrintAction  extends AbstractAction {
 
@@ -34,7 +34,7 @@ public class PrintAction  extends AbstractAction {
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer = null;
         try {
-            writer = new HardcopyWriter(mFrame, mFrame.getRosterEntry().getId(), 10, .5, .5, .5, .5);
+            writer = new HardcopyWriter(mFrame, mFrame.getRosterEntry().getId(), 10, .8, .5, .5, .5);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;
