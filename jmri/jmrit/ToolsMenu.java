@@ -11,7 +11,7 @@ import java.util.*;
  * Create a "Tools" menu containing the Jmri system-independent tools
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 public class ToolsMenu extends JMenu {
     public ToolsMenu(String name) {
@@ -66,6 +66,7 @@ public class ToolsMenu extends JMenu {
         JMenu clockMenu = new JMenu(rb.getString("MenuClocks"));
         clockMenu.add(new jmri.jmrit.simpleclock.SimpleClockAction(rb.getString("MenuItemSetupClock")));
         clockMenu.add(new jmri.jmrit.nixieclock.NixieClockAction(rb.getString("MenuItemNixieClock")));
+        clockMenu.add(new jmri.jmrit.analogclock.AnalogClockAction(rb.getString("MenuItemAnalogClock")));
 		add(clockMenu);
     }
 
