@@ -18,13 +18,13 @@ import org.jdom.Element;
  * decoder identification info _before_ the actual decoder file is read.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  * @see jmri.jmrit.decoderdefn.DecoderIndexFile
  */
 public class DecoderFile extends XmlFile {
-    
+
     public DecoderFile() {}
-    
+
     public DecoderFile(String mfg, String mfgID, String model, String lowVersionID,
                        String highVersionID, String family, String filename,
                        int numFns, int numOuts, Element decoder) {
@@ -36,11 +36,11 @@ public class DecoderFile extends XmlFile {
         _numFns = numFns;
         _numOuts = numOuts;
         _element = decoder;
-        
+
         // store the default range of version id's
         setVersionRange(lowVersionID, highVersionID);
     }
-    
+
     // store acceptable version numbers
     boolean versions[] = new boolean[256];
     public void setOneVersion(int i) { versions[i] = true; }
@@ -69,9 +69,9 @@ public class DecoderFile extends XmlFile {
             }
         }
     }
-    
+
     public boolean isVersion(int i) { return versions[i]; }
-    
+
     // store indexing information
     String _mfg       = null;
     String _mfgID     = null;
@@ -81,7 +81,7 @@ public class DecoderFile extends XmlFile {
     int _numFns  = -1;
     int _numOuts  = -1;
     Element _element = null;
-    
+
     public String getMfg()       { return _mfg; }
     public String getMfgID()     { return _mfgID; }
     public String getModel()     { return _model; }
@@ -89,20 +89,23 @@ public class DecoderFile extends XmlFile {
     public String getFilename()  { return _filename; }
     public int getNumFunctions()  { return _numFns; }
     public int getNumOutputs()  { return _numOuts; }
-    
+
+    public String getModelComment() { return _element.getAttributeValue("comment"); }
+    public String getFamilyComment() { return _element.getParent().getAttributeValue("comment"); }
+
     public Element getModelElement() { return _element; }
-    
+
     // static service methods - extract info from a given Element
     public static String getMfgName(Element decoderElement) {
         return decoderElement.getChild("family").getAttribute("mfg").getValue();
     }
-    
+
     // use the decoder Element from the file to load a VariableTableModel for programming.
     public void loadVariableModel(Element decoderElement,
                                   VariableTableModel variableModel) {
         // find decoder id, assuming first decoder is fine for now (e.g. one per file)
         Element decoderID = decoderElement.getChild("id");
-        
+
         // load variables to table
         List varList = decoderElement.getChild("variables").getChildren("variable");
         for (int i=0; i<varList.size(); i++) {
@@ -149,7 +152,7 @@ public class DecoderFile extends XmlFile {
         }
         variableModel.configDone();
     }
-    
+
     /**
      * Convert to a cannonical text form for ComboBoxes, etc.
      * Early on, this had been mfg+" "+model, but
@@ -159,10 +162,10 @@ public class DecoderFile extends XmlFile {
     public String titleString() {
         return getModel();
     }
-    
+
     static public String fileLocation = "decoders"+File.separator;
-    
+
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DecoderFile.class.getName());
-    
+
 }
