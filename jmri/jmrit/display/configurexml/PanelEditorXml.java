@@ -16,7 +16,7 @@ import org.jdom.*;
  * Handle configuration for {@link PanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class PanelEditorXml implements XmlAdapter {
 
@@ -32,7 +32,7 @@ public class PanelEditorXml implements XmlAdapter {
         PanelEditor p = (PanelEditor)o;
         Element panel = new Element("paneleditor");
 
-        Dimension size = p.getTarget().getSize();
+        Dimension size = p.getFrame().getSize();
         Point posn = p.getFrame().getLocation();
 
         panel.addAttribute("class", "jmri.jmrit.display.configurexml.PanelEditorXml");
@@ -93,9 +93,10 @@ public class PanelEditorXml implements XmlAdapter {
             name = element.getAttribute("name").getValue();
         // create the objects
         PanelEditor panel = new PanelEditor();
-        panel.makeFrame(name, width, height);
+        panel.makeFrame(name);
         panel.getFrame().setLocation(x,y);
-
+        panel.getFrame().setSize(width,height);
+        
         panel.setTitle();
 
         // load the contents
@@ -139,9 +140,10 @@ public class PanelEditorXml implements XmlAdapter {
         // display the results, with the editor in back
         panel.pack();
 
-        if (!hide) panel.show();
-        panel.getFrame().pack();
-        panel.getFrame().show();
+        if (!hide) panel.show();    // show the editor if wanted
+
+        // we don't pack the target frame here, because size was specified
+        panel.getFrame().show();    // always show the panel
 
         // register the resulting panel for later configuration
         InstanceManager.configureManagerInstance().registerUser(panel);
