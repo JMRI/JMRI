@@ -16,19 +16,44 @@ import jmri.*;
  * cmri.serial.SerialTurnoutManager and loconet.LnTurnoutManager
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class DoubleTurnoutManager extends AbstractTurnoutManager {
 
+    public DoubleTurnoutManager() {
+        if (loconetManager== null)
+            log.error("No LocoNet turnout manager!");
+        else
+            InstanceManager.configureManagerInstance().register(loconetManager);
+
+        if (serialManager== null)
+            log.error("No CMRI serial turnout manager!");
+        else
+            InstanceManager.configureManagerInstance().register(serialManager);
+    }
+
     public Turnout newTurnout(String systemName, String userName) {
-        // if system name is null, supply one from the number in userName
-        if (systemName == null) systemName = "LT"+userName;
+        // if system name is null, supply one from the userName
+        if (systemName == null) {
+            try {
+                // try to make a number into LT31 or similar
+                int addr = Integer.valueOf(userName).intValue();
+                systemName = ""+systemLetter()+"T"+addr;
+            } catch ( java.lang.NumberFormatException ex ) {
+                // Not a number, assume it's already LT31 or similar
+                systemName = userName;
+            }
+        }
+
 
         // return existing if there is one
         Turnout t;
         if ( (userName != null) && ((t = getByUserName(userName)) != null)) return t;
-        if ( (t = getBySystemName(systemName)) != null) return t;
-
+        if ( (t = getBySystemName(systemName)) != null) {
+            if (userName != null) log.warn("Found turnout via system name ("+systemName
+                                    +") with non-null user name ("+userName+")");
+            return t;
+        }
 
         if (loconetManager != null && (loconetManager.systemLetter() == systemName.charAt(0)) )
             t = loconetManager.newTurnout(systemName, userName);
@@ -68,6 +93,8 @@ public class DoubleTurnoutManager extends AbstractTurnoutManager {
     LnTurnoutManager loconetManager = LnTurnoutManager.instance();
     SerialTurnoutManager serialManager = SerialTurnoutManager.instance();
 
+    // initialize logging
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DoubleTurnoutManager.class.getName());
 }
 
 /* @(#)DoubleTurnoutManager.java */
