@@ -9,7 +9,7 @@ package jmri.jmrix.lenz;
  * Defines standard operations for Dcc command stations.
  *
  * @author			Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
     
@@ -177,6 +177,25 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
         m.setElement(3, val);
         return m;
     }
+
+    public XNetMessage getWriteOpsModeCVMsg(int AH,int AL,int cv, int val) {
+        XNetMessage m = new XNetMessage(8);
+        m.setElement(0, XNetConstants.OPS_MODE_PROG_REQ);
+        m.setElement(1, XNetConstants.OPS_MODE_PROG_WRITE_REQ);
+        m.setElement(2, AH);
+        m.setElement(3, AL);
+        /* Element 4 is 0xEC + the upper two  bits of the 10 bit CV address.
+        NOTE: This is the track packet CV, not the human readable CV, so 
+        it's value actually is one less than what we normally think of it as.*/
+        int temp=(cv -1) & 0x0300;
+        temp=temp/0x00FF;
+        m.setElement(4,0xEC+temp);
+        /* Element 5 is the lower 8 bits of the cv */
+        m.setElement(5, (cv-1)-temp);
+        m.setElement(6, val);
+        return m;
+    }
+
     
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LenzCommandStation.class.getName());
     
