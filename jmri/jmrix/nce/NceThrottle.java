@@ -12,7 +12,7 @@ import jmri.jmrix.AbstractThrottle;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class NceThrottle extends AbstractThrottle
 {
@@ -163,6 +163,7 @@ public class NceThrottle extends AbstractThrottle
      */
     public void dispose() {
         log.debug("dispose");
+        super.dispose();
 
         // if this object has registered any listeners, remove those.
         super.dispose();
