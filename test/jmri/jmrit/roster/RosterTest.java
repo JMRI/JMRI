@@ -14,7 +14,7 @@ import jmri.jmrit.XmlFile;
  *
  * Description:	    tests for the jmrit.roster package & jmrit.roster.Roster class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class RosterTest extends TestCase {
 
@@ -152,5 +152,10 @@ public class RosterTest extends TestCase {
 		suite.addTest(jmri.jmrit.roster.RosterEntryTest.suite());
 		return suite;
 	}
+
+    // The minimal setup for log4J
+    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
+    protected void setUp() { log4jfixtureInst.setUp(); }
+    protected void tearDown() { log4jfixtureInst.tearDown(); }
 
 }
