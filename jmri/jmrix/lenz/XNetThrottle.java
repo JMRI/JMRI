@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
  * @author     Paul Bender (C) 2002,2003
- * @version    $Revision: 1.22 $
+ * @version    $Revision: 1.23 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -174,6 +174,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 
     public void setSpeedSetting(float speed)
     {
+	if(requestState!=THROTTLEIDLE) return;
         this.speedSetting = speed;
 	if (speed<0)
 	{
@@ -198,7 +199,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                  int speedVal=java.lang.Math.round(speed*126);
                  // speed step 1 is reserved to indicate emergency stop, 
                  // so we need to step over speed step 1
-                 if(element4value>=1) { element4value+=1; }
+                 if(speedVal>=1) { element4value=speedVal+1; }
 	 } else if(getSpeedIncrement()==XNetConstants.SPEED_STEP_28_INCREMENT) {
 		 // We're in 28 speed step mode
 		 msg.setElement(1,XNetConstants.LOCO_SPEED_28);
@@ -206,11 +207,11 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                  int speedVal=java.lang.Math.round(speed*28);
                  // The first speed step used is actually at 4 for 28 
                  // speed step mode.
-                 if(speedVal>=1) { element4value+=3; }
+                 if(speedVal>=1) { speedVal+=3; }
                  // We have to re-arange the bits, since bit 4 is the LSB,
                  // but other bits are in order from 0-3
                  element4value=((speedVal&0x1e)>>1) + 
-                                   ((speedVal & 0x01) <<16);
+                                   ((speedVal & 0x01) <<4);
 	 } else if(getSpeedIncrement()==XNetConstants.SPEED_STEP_27_INCREMENT) {
 		 // We're in 27 speed step mode
 		 msg.setElement(1,XNetConstants.LOCO_SPEED_27);
@@ -218,11 +219,11 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                  int speedVal=java.lang.Math.round(speed*27);
                  // The first speed step used is actually at 4 for 27 
                  // speed step mode.
-                 if(speedVal>=1) { element4value+=3; }
+                 if(speedVal>=1) { speedVal+=3; }
                  // We have to re-arange the bits, since bit 4 is the LSB,
                  // but other bits are in order from 0-3
                  element4value=((speedVal&0x1e)>>1) + 
-                                   ((speedVal & 0x01) <<16);
+                                   ((speedVal & 0x01) <<4);
 	 } else {
 		 // We're in 14 speed step mode
 		 msg.setElement(1,XNetConstants.LOCO_SPEED_14);
@@ -231,7 +232,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                  int speedVal=java.lang.Math.round(speed*14);
                  // The first speed step used is actually at 2 for 14 
                  // speed step mode.
-                 if(element4value>=1) { element4value+=1; }
+                 if(element4value>=1) { speedVal+=1; }
 	 }
       	 msg.setElement(2,this.getDccAddressHigh());// set to the upper
 						    // byte of the  DCC address
@@ -501,11 +502,11 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                                     .getDCCAddressLow(this.address);
     }
 
-    // getStatusInformation sends a request to get the status
-    // speed and function status from the command station
+    // sendStatusInformation sends a request to get the speed,direction
+    // and function status from the command station
     private void sendStatusInformationRequest()
     {
-       /* First, send the request for status */
+       /* Send the request for status */
        XNetMessage msg=new XNetMessage(5);
        msg.setElement(0,XNetConstants.LOCO_STATUS_REQ);
        msg.setElement(1,XNetConstants.LOCO_INFO_REQ_V3);
@@ -514,12 +515,19 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
        msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
 						    //of the DCC address
        msg.setParity(); // Set the parity bit
+
        // now, we send the message to the command station
        XNetTrafficController.instance().sendXNetMessage(msg,this);
-       requestState=THROTTLESTATSENT;
+       requestState=THROTTLESTATSENT;     
+       return;
+    }
 
-
-       /* next, send the request for function values */
+    // sendFunctionStatusInformation sends a request to get the status
+    // of functions from the command station
+    private void sendFunctionStatusInformationRequest()
+    {
+       /* Send the request for Function status */
+       XNetMessage msg=new XNetMessage(5);
        msg.setElement(0,XNetConstants.LOCO_STATUS_REQ);
        msg.setElement(1,XNetConstants.LOCO_INFO_REQ_FUNC);
        msg.setElement(2,this.getDccAddressHigh());// set to the upper
@@ -567,6 +575,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 		      {
                         // Send a request for status
   		        sendStatusInformationRequest();
+			return;
 		      } else {
                         // Remove the throttle
                         // TODO
@@ -760,20 +769,64 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 		if(log.isDebugEnabled()) { log.debug("Throttle - Changed direction to Reverse Locomotive:" +address);}
 	   }
 	}
-	if(this.speedIncrement==XNetConstants.SPEED_STEP_128_INCREMENT) {
-	   if(this.getSpeedSetting()!=(float)((b2 & 0x7f)-2)/126) {
+
+	if(getSpeedIncrement()==XNetConstants.SPEED_STEP_128_INCREMENT) {
+		 // We're in 128 speed step mode
+		 int speedVal=b2 & 0x7f;
+                 // The first speed step used is actually at 2 for 128 
+                 // speed step mode.
+                 if(speedVal>=1) { speedVal-=1; }
+			else speedVal=0;
+	   if(this.getSpeedSetting()!=((float)speedVal/(float)126)) {
 	      notifyPropertyChangeListener("SpeedSetting",
                       		            new Float(this.speedSetting),
 					    new Float(this.speedSetting = 
-						(float)((b2 & 0x7f)-2)/126));
+						(float)speedVal/(float)126));
 	   }
-	} else {
-	   if(this.getSpeedSetting()!=(float)(((b2 & 0x7f)-4)/(126/this.speedIncrement))) {
-  	      notifyPropertyChangeListener("SpeedSetting",
-                     	                   new Float(this.speedSetting),
-			  	  	   new Float(this.speedSetting = (float)(((b2 & 0x7f)-4)/(126/this.speedIncrement))));
+	 } else if(getSpeedIncrement()==XNetConstants.SPEED_STEP_28_INCREMENT) {
+		 // We're in 28 speed step mode
+                 // We have to re-arange the bits, since bit 4 is the LSB,
+                 // but other bits are in order from 0-3
+                 int speedVal =((b2 & 0x0F)<<1) + 
+                                   ((b2 & 0x10) >>4);
+                 // The first speed step used is actually at 4 for 28 
+                 // speed step mode.
+                 if(speedVal>=3) { speedVal-=3; }
+			else speedVal=0;
+	   if(this.getSpeedSetting()!=((float)speedVal/(float)28)) {
+	      notifyPropertyChangeListener("SpeedSetting",
+                      		            new Float(this.speedSetting),
+					    new Float(this.speedSetting = 
+						(float)speedVal/(float)28));
+           }
+	 } else if(getSpeedIncrement()==XNetConstants.SPEED_STEP_27_INCREMENT) {
+		 // We're in 27 speed step mode
+                 // We have to re-arange the bits, since bit 4 is the LSB,
+                 // but other bits are in order from 0-3
+                 int speedVal =((b2 & 0x0F)<<1) + 
+                                   ((b2 & 0x10) >>4);
+                 // The first speed step used is actually at 4 for 27 
+                 // speed step mode.
+                 if(speedVal>=3) { speedVal-=3; }
+			else speedVal=0;
+	   if(this.getSpeedSetting()!=((float)speedVal/(float)27)) {
+	      notifyPropertyChangeListener("SpeedSetting",
+                      		            new Float(this.speedSetting),
+					    new Float(this.speedSetting = 
+						(float)speedVal/(float)27));
 	   }
-	}
+	 } else {
+	   // Assume we're in 14 speed step mode.
+           int speedVal=(b2 & 0x0F);
+                 if(speedVal>=1) { speedVal-=1; }
+			else speedVal=0;
+	   if(this.getSpeedSetting()!=((float)speedVal/(float)14)) {
+	      notifyPropertyChangeListener("SpeedSetting",
+                      		            new Float(this.speedSetting),
+					    new Float(this.speedSetting = 
+						(float)speedVal/(float)14));
+	   }
+         }
     }
 
     public void parseFunctionInformation(int b3,int b4)
