@@ -12,10 +12,13 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
- * Base class for Actions to copy, export and import RosterEntrys
+ * Base class for Actions to copy, export and import RosterEntrys.
+ * <P>
+ * Note that {@link DeleteRosterItemAction} is sufficiently
+ * different that it doesn't use this base class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  * @see         jmri.jmrit.XmlFile
  */
 abstract public class AbstractRosterItemAction extends AbstractAction {
@@ -45,7 +48,15 @@ abstract public class AbstractRosterItemAction extends AbstractAction {
     abstract boolean selectFrom();
     abstract boolean selectTo();
     abstract boolean doTransfer();
-    abstract void updateRoster();
+
+    /**
+     * Common, but not unique implementation to add the "To" entry
+     * to the Roster and rewrite the roster file.
+     */
+    void updateRoster() {
+        addToEntryToRoster();
+    }
+
 
     // variables to communicate the "from" entry, file, etc
     String mFromID = null;

@@ -2,20 +2,20 @@
 
 package jmri.jmrit.roster;
 
-import jmri.jmrit.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
+import jmri.jmrit.XmlFile;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.io.File;
 
-import javax.swing.*;
+import javax.swing.Action;
 
-import org.jdom.*;
+import org.jdom.Element;
 
 /**
  * Copy a roster element, including the definition file.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  * @see         jmri.jmrit.XmlFile
  */
 public class CopyRosterItemAction extends AbstractRosterItemAction {
@@ -65,10 +65,6 @@ public class CopyRosterItemAction extends AbstractRosterItemAction {
         newLocoFile.writeFile(fout, lroot, mToEntry);
 
         return true;
-    }
-
-    void updateRoster() {
-        addToEntryToRoster();
     }
 
     // initialize logging

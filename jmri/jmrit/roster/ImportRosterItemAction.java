@@ -2,20 +2,20 @@
 
 package jmri.jmrit.roster;
 
-import jmri.jmrit.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
+import jmri.jmrit.XmlFile;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.io.File;
 
-import javax.swing.*;
+import javax.swing.Action;
 
-import org.jdom.*;
+import org.jdom.Element;
 
 /**
- * Import a locomotive XML file as a new RosterEntry
+ * Import a locomotive XML file as a new RosterEntry.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  * @see         jmri.jmrit.roster.AbstractRosterItemAction
  * @see         jmri.jmrit.XmlFile
  */
@@ -68,10 +68,6 @@ public class ImportRosterItemAction extends AbstractRosterItemAction  {
         newLocoFile.writeFile(fout, lroot, mToEntry);
 
         return true;
-    }
-
-    void updateRoster() {
-        addToEntryToRoster();
     }
 
     // initialize logging
