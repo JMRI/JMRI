@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a DCC decoder as a component, esp. information -->
 <!-- on how to program it. -->
-<!-- $Revision: 1.25 $ -->
+<!-- $Revision: 1.26 $ -->
 
 <!ELEMENT decoder-config (version, decoder, pane*)>
 
@@ -79,7 +79,9 @@
 
 <!ELEMENT variable  (enumVal |
                              decVal | hexVal | 
-                             speedTableVal | longAddressVal | splitVal ) >
+                             speedTableVal | 
+                             longAddressVal | shortAddressVal |
+                             splitVal ) >
 <!ATTLIST variable label CDATA #REQUIRED>  <!-- manufacturere name used for identification -->
 <!ATTLIST variable CV CDATA #REQUIRED>    <!-- CV number containing value -->
 <!ATTLIST variable mask CDATA "VVVVVVVV">    <!-- mask of bits within CV -->
@@ -127,6 +129,11 @@
 
 <!ELEMENT longAddressVal EMPTY >
 <!ATTLIST longAddressVal comment CDATA #IMPLIED>
+
+<!ELEMENT shortAddressVal (shortAddressChanges*)>
+<!ATTLIST shortAddressVal comment CDATA #IMPLIED>
+<!ELEMENT shortAddressChanges EMPTY>
+<!ATTLIST shortAddressChanges cv CDATA #REQUIRED>
 
 <!ELEMENT splitVal EMPTY >
 <!ATTLIST splitVal highCV  	CDATA #REQUIRED>	<!-- CV to hold high-order bits -->

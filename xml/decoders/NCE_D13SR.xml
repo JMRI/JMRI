@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: NCE_D13SR.xml,v 1.12 2002-07-11 14:14:33 jacobsen Exp $ -->
+<!-- $Id: NCE_D13SR.xml,v 1.13 2002-10-16 17:33:09 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen" version="5" lastUpdated="20020710"/>
 
@@ -24,7 +24,7 @@
 	<variables>
 		<variable label="Primary Address" CV="1" comment="Short address"
 						item="Short Address"  default="03">
-			<decVal min="1" max="127"/></variable>
+			<shortAddressVal/></variable>
 		<variable label="Vstart" CV="2"
 						comment="A value of 255 corresponds to 100%">
 			<decVal/></variable>

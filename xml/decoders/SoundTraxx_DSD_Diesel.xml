@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_DSD_Diesel.xml,v 1.13 2002-08-08 06:52:35 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_DSD_Diesel.xml,v 1.14 2002-10-16 17:33:09 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Robin Becker" version="7" lastUpdated="20020711"/>
 
@@ -36,7 +36,7 @@
 	<variables>
 		<variable label="Primary Address" CV="1" comment="Short address"
 						item="Short Address"  default="03">
-			<decVal min="1" max="127"/></variable>
+			<shortAddressVal/></variable>
 
 		<variable label="Start voltage" CV="2" item="Vstart"
 						comment="A value of 255 corresponds to 100%">

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Lenz_LE077XF.xml,v 1.10 2002-08-08 06:51:48 jacobsen Exp $ -->
+<!-- $Id: Lenz_LE077XF.xml,v 1.11 2002-10-16 17:33:09 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Joe Ellis filker@mindspring.com"
 			version="4" lastUpdated="20020703" />
@@ -45,10 +45,9 @@
 
 	<variables>
 
-		<variable label="Short Address" CV="1"
-		          default="03" comment="Range 1-127">
-			<decVal min="1" max="127"/>
-			</variable>
+		<variable label="Primary Address" CV="1" comment="Short address"
+						item="Short Address"  default="03">
+			<shortAddressVal/></variable>
 
 		<variable label="Kick Start" CV="2"
 				comment="Range 0-31">

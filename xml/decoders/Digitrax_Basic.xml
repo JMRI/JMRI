@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_Basic.xml,v 1.2 2002-08-13 16:40:14 jacobsen Exp $ -->
+<!-- $Id: Digitrax_Basic.xml,v 1.3 2002-10-16 17:33:09 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
 					version="4" lastUpdated="20020812"/>
@@ -31,7 +31,7 @@
 	<variables>
 		<variable label="Primary Address" CV="1" comment="Short address"
 						item="Short Address"  default="03">
-			<decVal min="1" max="127"/></variable>
+			<shortAddressVal/></variable>
 		<variable label="Start Volts" CV="2" item="Vstart"
 						comment="A value of 255 corresponds to 100%">
 			<decVal></decVal>

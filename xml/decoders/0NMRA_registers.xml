@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: 0NMRA_registers.xml,v 1.1 2002-06-13 16:39:08 jacobsen Exp $ -->
+<!-- $Id: 0NMRA_registers.xml,v 1.2 2002-10-16 17:33:08 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen" version="2" lastUpdated="20020112"/>
 
@@ -16,7 +16,7 @@
 		<!-- Register 1 -->
 		<variable label="Primary Address" CV="1" comment="Short address"
 						item="Short Address"  default="03">
-			<decVal min="1" max="127"/></variable>
+			<shortAddressVal/></variable>
 
 		<!-- Register 2 -->
 		<variable label="Vstart" CV="2"

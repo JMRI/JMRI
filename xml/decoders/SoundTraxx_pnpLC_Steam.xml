@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_pnpLC_Steam.xml,v 1.5 2002-08-08 06:52:36 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_pnpLC_Steam.xml,v 1.6 2002-10-16 17:33:10 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Robin Becker" version="7" lastUpdated="20020808"/>
 
@@ -74,7 +74,7 @@
 	<variables>
 		<variable label="Primary Address" CV="1" comment="Short address"
 						item="Short Address"  default="03">
-			<decVal min="1" max="127"/></variable>
+			<shortAddressVal/></variable>
 
 		<variable label="Start voltage" CV="2" item="Vstart"
 						comment="A value of 255 corresponds to 100%">
