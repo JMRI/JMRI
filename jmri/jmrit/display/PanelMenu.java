@@ -5,11 +5,13 @@ package jmri.jmrit.display;
 import java.util.ResourceBundle;
 
 import javax.swing.JMenu;
+import javax.swing.JSeparator;
 
 /**
+ * Create the default "Panels" menu for use in a menubar.
  *
- * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.2 $
+ * @author	Bob Jacobsen   Copyright 2003, 2004
+ * @version     $Revision: 1.3 $
  */
 public class PanelMenu extends JMenu {
     public PanelMenu() {
@@ -21,6 +23,8 @@ public class PanelMenu extends JMenu {
         add(new jmri.jmrit.display.PanelEditorAction(rb.getString("MenuItemNew")));
         add(new jmri.configurexml.LoadXmlConfigAction(rb.getString("MenuItemLoad")));
         add(new jmri.configurexml.StoreXmlUserAction(rb.getString("MenuItemStore")));
+        add(new JSeparator());
+        add(new jmri.jmrit.jython.RunJythonScript(rb.getString("MenuItemScript")));
 
     }
 }
