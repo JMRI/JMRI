@@ -4,7 +4,6 @@ package apps.DecoderPro;
 
 import apps.AppConfigPanel;
 import apps.Apps;
-import apps.SplashWindow;
 
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
@@ -26,7 +25,7 @@ import javax.swing.JPanel;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.38 $
+ * @version     $Revision: 1.39 $
  */
 public class DecoderPro extends Apps {
 
@@ -43,7 +42,11 @@ public class DecoderPro extends Apps {
         toolsMenu(menuBar, frame);
         rosterMenu(menuBar, frame);
         panelMenu(menuBar, frame);
-        systemsMenu(menuBar, frame);
+
+        // show active systems
+        jmri.jmrix.ActiveSystemsMenu.addItems(menuBar);
+
+        // debug, but not development
         debugMenu(menuBar, frame);
     }
 
@@ -96,7 +99,7 @@ public class DecoderPro extends Apps {
     public static void main(String args[]) {
 
         // show splash screen early
-        SplashWindow sp = new SplashWindow();
+        splash(true);
 
         initLog4J();
         log.info("program starts");
@@ -105,6 +108,7 @@ public class DecoderPro extends Apps {
         createFrame(new DecoderPro(f), f);
 
         log.info("main initialization done");
+        splash(false);
     }
 
 
