@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-<!-- $Id: decoderIndex.xml,v 1.13 2002-03-12 05:36:40 jacobsen Exp $ -->
+<!-- $Id: decoderIndex.xml,v 1.14 2002-04-07 23:43:57 jacobsen Exp $ -->
 <decoderIndex>
 
 <mfgList>
@@ -93,6 +93,14 @@
 		<model model="LE105XF" numOuts="4" />
 		<model model="LE062XF" numOuts="2" />
 		<model model="LE010XF" numOuts="2" />
+	</family>
+
+	<family name="MRC 14 step" file="MRC_14step.xml" mfg="MRC">
+		<model model="AD305" comment="14 step only" />
+	</family>
+
+	<family name="MRC 14/28 step" file="MRC_1428step.xml" mfg="MRC">
+		<model model="AD310" comment="14 step only" />
 	</family>
 
 	<family name="D13SR Family" file="NCE_D13SR.xml" mfg="North Coast Engineering">
