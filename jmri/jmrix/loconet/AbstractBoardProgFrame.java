@@ -32,7 +32,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author  Bob Jacobsen   Copyright (C) 2004
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 abstract public class AbstractBoardProgFrame extends JFrame implements LocoNetListener {
 
@@ -71,13 +71,13 @@ abstract public class AbstractBoardProgFrame extends JFrame implements LocoNetLi
         // install read all, write all button handlers
         readAllButton.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
-                	readAll();
+                	if (readAllButton.isSelected()) readAll();
                 }
             }
         );
         writeAllButton.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
-                	writeAll();
+                	if (writeAllButton.isSelected()) writeAll();
                 }
             }
         );
@@ -116,6 +116,10 @@ abstract public class AbstractBoardProgFrame extends JFrame implements LocoNetLi
             setAddress(256);
         } catch (Exception e) {
             log.debug("readAll aborted due to invalid address");
+            readAllButton.setSelected(false);
+            writeAllButton.setSelected(false);
+            status.setText("");
+            return;
         }
         // Start the first operation
         read = true;
@@ -222,6 +226,10 @@ abstract public class AbstractBoardProgFrame extends JFrame implements LocoNetLi
             setAddress(256);
         } catch (Exception e) {
             log.debug("writeAll aborted due to invalid address"+e);
+            readAllButton.setSelected(false);
+            writeAllButton.setSelected(false);
+            status.setText("");
+            return;
         }
         
         // copy over the display
