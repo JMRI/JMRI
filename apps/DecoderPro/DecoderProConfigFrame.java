@@ -21,7 +21,7 @@ import org.jdom.Attribute;
  * stored in local variables.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecoderProConfigFrame.java,v 1.5 2001-12-18 07:21:33 jacobsen Exp $
+ * @version			$Id: DecoderProConfigFrame.java,v 1.6 2002-01-08 04:06:05 jacobsen Exp $
  */
 public class DecoderProConfigFrame extends JFrame {
 		
@@ -72,6 +72,7 @@ public class DecoderProConfigFrame extends JFrame {
 	 * Handle the Save button:  Backup the file, write a new one, close the frame.
 	 */
 	public void savePressed() {
+		jmri.jmrit.XmlFile.ensurePrefsPresent(jmri.jmrit.XmlFile.prefsDir());
 		DecoderProConfigFile f = new DecoderProConfigFile();
 		f.makeBackupFile(DecoderProConfigFile.defaultConfigFilename());
 		f.writeFile(DecoderProConfigFile.defaultConfigFilename(), this);

@@ -21,7 +21,7 @@ import com.sun.java.util.collections.*;
  * XmlFile contains various member implementations for handling aspects of XML files.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version		$Id: XmlFile.java,v 1.6 2002-01-01 01:57:25 jacobsen Exp $	
+ * @version		$Id: XmlFile.java,v 1.7 2002-01-08 04:06:43 jacobsen Exp $	
  */
 public abstract class XmlFile {
 	
@@ -161,6 +161,17 @@ public abstract class XmlFile {
 		return f;
 	}
 
+	/**
+	 * Ensure that a subdirectory is present; if not, create it
+	 */
+	static public void ensurePrefsPresent(String name) {
+		File f = new File(name);
+		if (! f.exists()) {
+			log.warn("Creating a missing preferences directory: "+name);
+			f.mkdirs();
+		}
+	}
+	
 	static public String xmlDir() {return "xml"+File.separator;}
 	static public String prefsDir() {return "prefs"+File.separator;}
 	

@@ -6,7 +6,7 @@
  * Description:		Swing action to create DecoderProConfigFrame
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Id: DecoderProgConfigAction.java,v 1.3 2001-12-09 17:59:43 jacobsen Exp $
+ * @version			$Id: DecoderProgConfigAction.java,v 1.4 2002-01-08 04:06:05 jacobsen Exp $
  */
 
 package jmri.apps;
@@ -20,6 +20,7 @@ public class DecoderProConfigAction 			extends AbstractAction {
 		super(s);
 		// see if the file can be read
 		try {
+			jmri.jmrit.XmlFile.ensurePrefsPresent(jmri.jmrit.XmlFile.prefsDir());
 			DecoderProConfigFile file = new DecoderProConfigFile();
 			file.readFile(DecoderProConfigFile.defaultConfigFilename());
 			log.debug("configuration file located and read");

@@ -15,7 +15,7 @@ import org.jdom.output.*;
  * DecoderPro application. Works with the DecoderProConfigFrame
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version		 	$Id: DecoderProConfigFile.java,v 1.3 2001-12-18 07:21:33 jacobsen Exp $
+ * @version		 	$Id: DecoderProConfigFile.java,v 1.4 2002-01-08 04:06:05 jacobsen Exp $
  * @see jmri.apps.DecodeProConfigFrame
  */
 public class DecoderProConfigFile extends XmlFile {
@@ -49,6 +49,7 @@ public class DecoderProConfigFile extends XmlFile {
 			// This is taken in large part from "Java and XML" page 368 
 
 			// create file Object
+			XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
 			File file = new File(prefsDir()+name);
 			
 			// create root element
