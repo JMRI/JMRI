@@ -28,7 +28,7 @@ import com.sun.java.util.collections.ArrayList;
 /**
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class AppConfigPanel extends JPanel {
 
@@ -99,6 +99,11 @@ public class AppConfigPanel extends JPanel {
         action.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutStartupActions")));
         advancedPane.add(action);
         clist.add(action);
+
+        PerformFilePanel files = new PerformFilePanel();
+        files.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutStartupFiles")));
+        advancedPane.add(files);
+        clist.add(files);
 
         // put the "Save" button at the bottom
         JButton save = new JButton(rb.getString("ButtonSave"));
