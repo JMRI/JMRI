@@ -19,12 +19,24 @@ import jmri.jmrix.*;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.12 $
+ * @version         $Revision: 1.13 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 
-    private LocoNetSlot _slots[] = new LocoNetSlot[128];
+    /**
+     * Information on slot state is stored in an array of LocoNetSlot objects.
+     * This is declared final because we never need to modify the array itself,
+     * just its contents.
+     */
+    final private LocoNetSlot _slots[] = new LocoNetSlot[128];
 
+    /**
+     * Access the information in a specific slot.  Note that this is a
+     * mutable access, so that the information in the LocoNetSlot object
+     * can be changed.
+     * @param i  Specific slot, counted starting from zero.
+     * @return   The Slot object
+     */
     public LocoNetSlot slot(int i) {return _slots[i];}
 
     public SlotManager() {
@@ -43,9 +55,22 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
         LnTrafficController.instance().addLocoNetListener(~0, this);
     }
 
-    // obtain a slot for a particular loco address
-    // this will actually require a delayed return value - what impact does that have?
-    LocoNetSlot fromLocoAddress(int i) { return null; }
+    /**
+     * Obtain a slot for a particular loco address.
+     * <P>This requires access to the command station, even if the
+     * locomotive address appears in the current contents of the slot
+     * array, to ensure that our local image is up-to-date.
+     * <P>
+     * This method sends an info request.  When the echo of this is
+     * returned from the LocoNet, a status bit is sent so that the
+     * next slot-read-will be recognized as the response.
+     * <P>
+     * The object that's looking for this information must provide
+     * a SlotListener to notify when the slot ID becomes available.
+     * @param i  Specific slot, counted starting from zero.
+     * @param l  The SlotListener to notify of the answer.
+     */
+    public void slotFromLocoAddress(int i, SlotListener l) { return; }
 
     /*
      * method to find the existing SlotManager object, if need be creating one
