@@ -29,20 +29,31 @@ public class SerialDriverFrame extends javax.swing.JFrame {
 		getNamesButton.setText("Get port names");
 		getNamesButton.setToolTipText("Updates the list of available port names");
 		getNamesButton.setVisible(true);
+		getNamesButton.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 		portList.setVisible(true);
 		portList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		portList.setToolTipText("Select the port to use");
 		portList.setListData(adapter.getPortNames());
+		portList.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
 		openPortButton.setText("Open port");
 		openPortButton.setToolTipText("Configure program to use selected port");
 		openPortButton.setVisible(true);
+		openPortButton.setAlignmentX(Component.LEFT_ALIGNMENT);
 
+		// set to same horizontal size
+		int x = openPortButton.getPreferredSize().width;
+		x = Math.max(x, portList.getPreferredSize().width);
+		x = Math.max(x, getNamesButton.getPreferredSize().width);
+		getNamesButton.setPreferredSize(new Dimension(x, getNamesButton.getPreferredSize().height));
+		portList.setPreferredSize(new Dimension(x, portList.getPreferredSize().height));
+		openPortButton.setPreferredSize(new Dimension(x, openPortButton.getPreferredSize().height));
+		
 		setLocation(new java.awt.Point(5, 40));
 		setTitle("SerialDriver connection");
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-		getContentPane().add(new JLabel("set SerialDriver to 19200 baud,"));
+		getContentPane().add(new JLabel("using 19200 baud,"));
 		getContentPane().add(new JLabel("     local echo"));
 		getContentPane().add(getNamesButton);
 		getContentPane().add(portList);
@@ -111,6 +122,11 @@ public class SerialDriverFrame extends javax.swing.JFrame {
 			// nce.NceProgrammer to do that
 			if (jmri.InstanceManager.programmerInstance() == null) 
 				jmri.jmrix.nce.NceProgrammer.instance();
+
+			// If a jmri.PowerManager instance doesn't exist, create a 
+			// nce.NcePowerManager to do that
+			if (jmri.InstanceManager.powerManagerInstance() == null) 
+				jmri.InstanceManager.setPowerManager(new jmri.jmrix.nce.NcePowerManager());
 				
 			// start operation
 			// sourceThread = new Thread(p);
