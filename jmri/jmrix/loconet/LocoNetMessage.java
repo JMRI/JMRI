@@ -17,7 +17,7 @@ package jmri.jmrix.loconet;
  * ideas being tested there will eventually be moved back to here.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Id: LocoNetMessage.java,v 1.2 2002-03-11 00:05:47 jacobsen Exp $
+ * @version			$Id: LocoNetMessage.java,v 1.3 2002-03-11 02:46:39 jacobsen Exp $
  * @see             jmri.jrmix.nce.NceMessage
  *
  */
@@ -77,7 +77,40 @@ public class LocoNetMessage {
 		return (chksum == getElement(len-1));
 	}
 
+    // decode messages of a particular form
+
     // create messages of a particular form
+    /**
+     * Get the 8 data bytes from an OPC_PEER_XFR message
+     * @return int[8] data bytes
+     */
+    public int[] getPeerXfrData() {
+        if (getOpCode()!=LnConstants.OPC_PEER_XFER)
+            log.error("getPeerXfrData called with wrong opcode "+getOpCode());
+        if (getElement(1)!=0x10)
+            log.error("getPeerXfrData called with wrong secondary code "+getElement(1));
+        if (getNumDataElements()!=16)
+            log.error("getPeerXfrData called with wrong length "+getNumDataElements());
+
+        int[] data = new int[]{0,0,0,0,  0,0,0,0};
+
+        int pxct1 = getElement(5);
+        int pxct2 = getElement(10);
+
+        // fill the 8 data items
+        data[0]= (getElement(6)&0x7F)+((pxct1&0x01)!=0?0x80:0);
+        data[1]= (getElement(7)&0x7F)+((pxct1&0x02)!=0?0x80:0);
+        data[2]= (getElement(8)&0x7F)+((pxct1&0x04)!=0?0x80:0);
+        data[3]= (getElement(9)&0x7F)+((pxct1&0x08)!=0?0x80:0);
+
+        data[4]= (getElement(11)&0x7F)+((pxct2&0x01)!=0?0x80:0);
+        data[5]= (getElement(12)&0x7F)+((pxct2&0x02)!=0?0x80:0);
+        data[6]= (getElement(13)&0x7F)+((pxct2&0x04)!=0?0x80:0);
+        data[7]= (getElement(14)&0x7F)+((pxct2&0x08)!=0?0x80:0);
+
+        return data;
+    }
+
     /**
      * Return a newly created OPC_PEER_XFR message.
      * @param src Source address
@@ -86,7 +119,7 @@ public class LocoNetMessage {
      * @param code The instruction code placed in the pcxt1 pcxt2 bytes
      * @return    The formatted message
      */
-    static public LocoNetMessage getPeerXfr(int src, int dst, int[] d, int code) {
+    static public LocoNetMessage makePeerXfr(int src, int dst, int[] d, int code) {
         LocoNetMessage msg = new LocoNetMessage(16);
         msg.setOpCode(0xE5);
         msg.setElement(1, 0x10);  // 2nd part of op code
