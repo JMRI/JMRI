@@ -3,22 +3,19 @@
 package jmri.jmrit.roster;
 
 import jmri.jmrit.XmlFile;
-
-import javax.swing.AbstractAction;
-import java.awt.event.ActionEvent;
-
-import java.io.*;
-import javax.swing.*;
 import java.awt.Component;
-import org.jdom.*;
-import org.jdom.input.*;
-import com.sun.java.util.collections.List;
+import java.awt.event.ActionEvent;
+import java.io.File;
+
+import javax.swing.Action;
+
+import org.jdom.Element;
 
 /**
  * Export a roster element as a new definition file.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  * @see         jmri.jmrit.roster.AbstractRosterItemAction
  * @see             jmri.jmrit.XmlFile
  */
