@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_1x3.xml,v 1.1 2002-07-11 14:14:33 jacobsen Exp $ -->
+<!-- $Id: Digitrax_1x3.xml,v 1.2 2002-07-17 00:56:55 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
-					version="1" lastUpdated="20020702"/>
+					version="2" lastUpdated="20020714"/>
 
 		<!-- Created from version 5 of the 1x2 file -->
+		<!-- V2: fix default values for CV56, 57 BEMF -->
 		
 <decoder>
 	<family name="Digitrax FX3 decoders" mfg="Digitrax" lowVersionID="49" highVersionID="49">
@@ -419,12 +420,12 @@
 				</enumVal>
 			</variable>
 
-		<variable label="Static compensation for speed stabilization" CV="55" default="128"
+		<variable label="Static compensation for speed stabilization" CV="55" default="0"
 				item="EMF Static Config"
 				comment="Factory default is 128, no effect until droop (CV57) set">
 			<decVal/>
 			</variable>
-		<variable label="Dynamic compensation for speed stabilization" CV="56" default="48"
+		<variable label="Dynamic compensation for speed stabilization" CV="56" default="6"
 				item="EMF Dynamic Config"
 				comment="Factory default is 48, no effect until droop (CV57) set">
 			<decVal/>
