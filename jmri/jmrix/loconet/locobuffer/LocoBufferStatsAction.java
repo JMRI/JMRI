@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
  * Create and register a LocoBufferStatsFrame object.
  *
  * @author			Alex Shepherd    Copyright (C) 2003
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class LocoBufferStatsAction extends AbstractAction {
 
@@ -20,7 +20,8 @@ public class LocoBufferStatsAction extends AbstractAction {
         super(s);
 
 	// disable ourself if there is no locobuffer connection present
-        if (!jmri.jmrix.loconet.locobuffer.LocoBufferAdapter.hasInstance()) {
+        if ( (!jmri.jmrix.loconet.locobuffer.LocoBufferAdapter.hasInstance())
+             && (!jmri.jmrix.loconet.locobufferii.LocoBufferIIAdapter.hasInstance())) {
             setEnabled(false);
         }
     }
