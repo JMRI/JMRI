@@ -20,9 +20,9 @@ import jmri.jmrix.lenz.*;
  * Commander or Compact)
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 2.2 $
+ * @version			$Revision: 2.3 $
  */
-public class SystemInfoFrame extends JFrame implements XNetListener {
+public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListener {
 
     public SystemInfoFrame() {
         super("XPressNet System Information");
