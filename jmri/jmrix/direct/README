@@ -1,0 +1,2 @@
+The jmrix.direct package contains a jmri implementation that 
+does direct drive of the DCC signal.  
