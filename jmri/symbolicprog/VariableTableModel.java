@@ -83,6 +83,9 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 	public void setIntValue(int row, int val) {
 		((VariableValue)rowVector.elementAt(row)).setIntValue(val);
 	}
+	public void setState(int row, int val) {
+		((VariableValue)rowVector.elementAt(row)).setState(val);
+	}
 	
 	public Object getValueAt(int row, int col) { 
 		VariableValue v = (VariableValue)rowVector.elementAt(row);
@@ -107,6 +110,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 				case CvValue.READ:  	return "Read";
 				case CvValue.EDITTED:  	return "Editted";
 				case CvValue.STORED:  	return "Stored";
+				case CvValue.FROMFILE:  return "From file";
 				default: return "inconsistent";
 			}
 		}
@@ -212,6 +216,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		}
 
 		// back to general processing
+		// record new variable, hook up listeners
 		rowVector.addElement(v);
 		v.addPropertyChangeListener(this);
 	}

@@ -65,10 +65,11 @@ public abstract class VariableValue implements java.beans.PropertyChangeListener
 	private String _mask;
 
 	// states
-	public static final int UNKNOWN = 0;
-	public static final int EDITTED = 4;
-	public static final int READ    = 16;
-	public static final int STORED  = 64;
+	public static final int UNKNOWN  =   0;
+	public static final int EDITTED  =   4;
+	public static final int READ     =  16;
+	public static final int STORED   =  64;
+	public static final int FROMFILE = 256;
 
 	public int getState()  { return _state; }
 	protected void setState(int state) {

@@ -30,17 +30,18 @@ public class CvValue implements ProgListener {
 	private int _value = 0;
 	
 	public int getState()  { return _state; }
-	private void setState(int state) {
+	void setState(int state) {  // package scope
 		_state = state;
 		if (_state != state) prop.firePropertyChange("State", new Integer(_state), new Integer(state));
 	}
 	private int _state = 0;
 	
 	// states
-	public static final int UNKNOWN = 0;
-	public static final int EDITTED = 4;
-	public static final int READ    = 16;
-	public static final int STORED  = 64;
+	public static final int UNKNOWN  =   0;
+	public static final int EDITTED  =   4;
+	public static final int READ     =  16;
+	public static final int STORED   =  64;
+	public static final int FROMFILE = 256;
 	
 	// read, write operations
 	public boolean isBusy() { return _busy; }

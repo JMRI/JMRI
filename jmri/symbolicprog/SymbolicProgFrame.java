@@ -355,7 +355,9 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 					if (log.isDebugEnabled()) log.debug("CV: "+i+"th entry, CV number "+name+" has value: "+value);
 
 					int cv = Integer.valueOf(name).intValue();
-					((CvValue)(cvModel.allCvVector().elementAt(cv))).setValue(Integer.valueOf(value).intValue());
+					CvValue cvObject = (CvValue)(cvModel.allCvVector().elementAt(cv));
+					cvObject.setValue(Integer.valueOf(value).intValue());
+					cvObject.setState(CvValue.FROMFILE);
 				}
 				variableModel.configDone();
 			} else log.error("no values element found in config file; CVs not configured");
@@ -386,7 +388,10 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 						if (variableModel.getName(row).equals(name)) break;
 					}
 					if (log.isDebugEnabled()) log.debug("Variable "+name+" is row "+row);
-					variableModel.setIntValue(row, Integer.valueOf(value).intValue());
+					if ( ! value.equals("")) { // don't set if no value was stored
+						variableModel.setIntValue(row, Integer.valueOf(value).intValue());
+					}
+					variableModel.setState(row, VariableValue.FROMFILE);
 				}
 				variableModel.configDone();
 			} else log.error("no decoderDef element found in config file");

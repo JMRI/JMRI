@@ -98,10 +98,11 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 			case STATECOLUMN:
 				int state = ((CvValue)_cvDisplayVector.elementAt(row)).getState();
 				switch (state) {
-					case CvValue.UNKNOWN:  	return "Unknown";
-					case CvValue.READ:  	return "Read";
-					case CvValue.EDITTED:  	return "Editted";
-					case CvValue.STORED:  	return "Stored";
+					case CvValue.UNKNOWN:  		return "Unknown";
+					case CvValue.READ:  		return "Read";
+					case CvValue.EDITTED:  		return "Editted";
+					case CvValue.STORED:  		return "Stored";
+					case CvValue.FROMFILE:  	return "From file";
 					default: return "inconsistent";
 				}
 			case READCOLUMN: 
