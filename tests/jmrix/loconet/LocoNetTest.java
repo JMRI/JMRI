@@ -16,6 +16,7 @@ import org.jdom.*;
 import org.jdom.output.*;
 
 import jmri.jmrix.loconet.*;
+import jmri.jmrix.loconet.locogen.*;
 
 public class LocoNetTest extends TestCase {
 
@@ -34,6 +35,7 @@ public class LocoNetTest extends TestCase {
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite("jmri.tests.jmrix.loconet.LocoNetTest");  // no tests in this class itself
+		suite.addTest(LocoGenFrameTest.suite());
 		suite.addTest(LnPowerManagerTest.suite());
 		suite.addTest(LnTurnoutTest.suite());
 		suite.addTest(LnTurnoutManagerTest.suite());
