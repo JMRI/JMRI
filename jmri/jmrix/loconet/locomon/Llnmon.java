@@ -34,7 +34,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * used with permission.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2003
- * @version			$Revision: 1.25 $
+ * @version			$Revision: 1.26 $
  */
 public class Llnmon {
 
@@ -1489,7 +1489,8 @@ public class Llnmon {
                 +" ch1 "+((cm1&1)!=0 ? "AR " : "SC ")+((cm2&1)!=0 ? "ACT;" : "OK;")
                 +" ch2 "+((cm1&2)!=0 ? "AR " : "SC ")+((cm2&2)!=0 ? "ACT;" : "OK;")
                 +" ch3 "+((cm1&4)!=0 ? "AR " : "SC ")+((cm2&4)!=0 ? "ACT;" : "OK;")
-                +" ch4 "+((cm1&8)!=0 ? "AR " : "SC ")+((cm2&8)!=0 ? "ACT;" : "OK;");
+                +" ch4 "+((cm1&8)!=0 ? "AR " : "SC ")+((cm2&8)!=0 ? "ACT;" : "OK;")
+                +"\n";
         } else if (pCMD == 0x70) {
             // programming
             int bit = (l.getElement(4)&0x0E)/2;
@@ -1499,7 +1500,7 @@ public class Llnmon {
             return "PM4 "+(l.getElement(2)+1)+
                 ( (l.getElement(2)&0x10)!=0 ? " wr ":" rd ")
                 +wrd+","+bit+" (opsw "+opsw+") val="+val
-                +(val==1 ? " (closed) ":" (thrown) ");
+                +(val==1 ? " (closed) ":" (thrown) ")+"\n";
         } else  // beats me
             forceHex = true;
             return "OPC_MULTI_SENSE power message PM4 "
