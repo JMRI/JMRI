@@ -28,7 +28,7 @@ import javax.comm.SerialPort;
  * not use any other options at configuration time.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class SerialDriverAdapter extends SprogPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -114,6 +114,16 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
         }
 
         return null; // indicates OK return
+
+    }
+
+    public void setHandshake (int mode) {
+      try {
+        activeSerialPort.setFlowControlMode(mode);
+      } catch (Exception ex) {
+            log.error("Unexpected exception while setting COM port handshake mode trace follows: "+ex);
+            ex.printStackTrace();
+      }
 
     }
 

@@ -7,13 +7,14 @@ package jmri.jmrix.sprog;
  *
  * Description:		Carries the reply to an SprogMessage
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SprogReply {
 	// is this logically an abstract class?
 
 	// create a new one
 	public  SprogReply() {
+          _isBoot = false;
 	}
 
 	// copy one
@@ -21,6 +22,7 @@ public class SprogReply {
 		if (m == null)
 			log.error("copy ctor of null message");
 		_nDataChars = m._nDataChars;
+                _isBoot = m._isBoot;
 		for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
 	}
 
@@ -30,6 +32,14 @@ public class SprogReply {
 		for (int i = 0; i<_nDataChars; i++)
 			_dataChars[i] = s.charAt(i);
 	}
+
+        // from String
+        public SprogReply(String s, boolean b) {
+                _nDataChars = s.length();
+                for (int i = 0; i<_nDataChars; i++)
+                        _dataChars[i] = s.charAt(i);
+                _isBoot = b;
+        }
 
 	public void setOpCode(int i) { _dataChars[0]= (char)i;}
 	public int getOpCode() {return _dataChars[0];}
@@ -42,14 +52,56 @@ public class SprogReply {
 		_nDataChars = Math.max(_nDataChars, n+1);
 	}
 
+        // Check and strip framing characters and DLE from a sprog bootloader reply
+        public boolean strip() {
+            char tmp[] = new char[_nDataChars];
+            int j = 0;
+            _isBoot = true; // definitely a boot message
+            // Check framing characters
+            if (_dataChars[0] != SprogMessage.STX) {return false;}
+            if (_dataChars[1] != SprogMessage.STX) {return false;}
+            if (_dataChars[_nDataChars-1] != SprogMessage.ETX) {return false;}
+
+            // Ignore framing characters and strip DLEs
+            for (int i = 2; i < _nDataChars - 1; i++) {
+                if (_dataChars[i] == SprogMessage.DLE) {i++;}
+                tmp[j++] = _dataChars[i];
+            }
+
+            // Copy back to original SprogReply
+            for (int i = 0; i < j; i++) {
+                _dataChars[i] = tmp[i];
+            }
+            _nDataChars = j;
+            return true;
+        }
+
+        // Check and strip checksum from a sprog bootloader reply
+        // Assumes framing and DLE chars have been stripped
+        public boolean getChecksum() {
+            int checksum = 0;
+            for (int i = 0; i < _nDataChars; i++) {
+                checksum += (int)(_dataChars[i] & 0xff);
+            }
+            _nDataChars--;
+            return ((checksum & 0xff) == 0);
+        }
+
 	// display format
-	public String toString() {
-		String s = "";
-		for (int i=0; i<_nDataChars; i++) {
-				s+=(char)_dataChars[i];
-		}
-		return s;
-	}
+        // display format
+        public String toString() {
+            String s = "";
+            if (_isBoot || (_dataChars[0] == SprogMessage.STX)) {
+              for (int i=0; i<_nDataChars; i++) {
+                  s+="<"+(int)(_dataChars[i] & 0xff)+">";
+              }
+            } else {
+              for (int i=0; i<_nDataChars; i++) {
+                  s+=(char)_dataChars[i];
+              }
+            }
+            return s;
+        }
 
         /**
          * Extracts Read-CV returned value from a message.  Returns
@@ -105,11 +157,13 @@ public class SprogReply {
           return index;
         }
 
-	static public int maxSize = 120;
+        // Longest boot reply is 256bytes each preceded by DLE + 2xSTX + ETX
+	static public int maxSize = 515;
 
 	// contents (private)
 	private int _nDataChars;
 	private char _dataChars[] = new char[maxSize];
+       private boolean _isBoot = false;
 
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogReply.class.getName());
 
