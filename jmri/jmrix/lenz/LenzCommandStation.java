@@ -9,7 +9,7 @@ package jmri.jmrix.lenz;
  * Defines standard operations for Dcc command stations.
  *
  * @author			Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
     
@@ -68,6 +68,27 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
         // store and send
         l.setElement(1,hiadr);
         l.setElement(2,loadr);
+        
+        return l;
+    }
+
+    /**
+     * Generate a message to recieve the feedback information for an upper 
+     * or lower nibble of the feedback address in question
+     */
+    public XNetMessage getFeedbackRequestMsg(int pNumber, 
+                                             boolean pLowerNibble) {
+        XNetMessage l = new XNetMessage(4);
+        l.setElement(0, XNetConstants.ACC_INFO_REQ);
+        
+        // compute address byte field
+        l.setElement(1,(pNumber-1)/4);
+        // The MSB of the upper nibble is required to be set on
+        // The rest of the upper nibble should be zeros.
+        // The LSB of the lower nibble says weather or not the
+        // information request is for the upper or lower nibble.
+        if (pLowerNibble) { l.setElement(1,0x80);
+	} else { l.setElement(2,0x81); }
         
         return l;
     }
@@ -303,8 +324,10 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
         return m;
     }
 
-    // In the interest of code reuse, The following function checks to see 
-    // if an XPressNet Message is the OK message (01 04 05)
+    /* 
+     * In the interest of code reuse, The following function checks to see 
+     * if an XPressNet Message is the OK message (01 04 05)
+     */
     public boolean isOkMessage(XNetMessage m) {
         return (m.getElement(0)==XNetConstants.LI_MESSAGE_RESPONSE_HEADER && 
                 m.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_SEND_SUCCESS);
