@@ -8,16 +8,16 @@
 # the program
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.5 $
+# $Revision: 1.6 $
 
 #define shortcuts to some managers
 import jmri
-turnouts = jmri.InstanceManager.turnoutManagerInstance()
-sensors  = jmri.InstanceManager.sensorManagerInstance()
-signals  = jmri.InstanceManager.signalHeadManagerInstance()
-dcc      = jmri.InstanceManager.commandStationInstance()
+turnouts  = jmri.InstanceManager.turnoutManagerInstance()
+sensors   = jmri.InstanceManager.sensorManagerInstance()
+signals   = jmri.InstanceManager.signalHeadManagerInstance()
+dcc       = jmri.InstanceManager.commandStationInstance()
 reporters = jmri.InstanceManager.reporterManagerInstance()
-memories = jmri.InstanceManager.memoryManagerInstance()
+memories  = jmri.InstanceManager.memoryManagerInstance()
 
 # shortcut some constants
 import jmri.Turnout.CLOSED         as CLOSED
