@@ -20,7 +20,7 @@ import jmri.*;
  * created and invoked by a SampleAutomaton2Action.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  * @see         jmri.jmrit.automat.SampleAutomaton2Action
  */
 public class SampleAutomaton2 extends AbstractAutomaton {
@@ -38,7 +38,7 @@ public class SampleAutomaton2 extends AbstractAutomaton {
      * By default, monitors sensor "32" and controls locomotive 1234(long).
      *
      */
-    public void init() {
+    protected void init() {
         // get references to sample layout objects
 
         sensor = InstanceManager.sensorManagerInstance().
@@ -58,7 +58,7 @@ public class SampleAutomaton2 extends AbstractAutomaton {
      * Watch "sensor", and when it changes the momentum CV to match.
      * @return Always returns true to continue operation
      */
-    public boolean handle() {
+    protected boolean handle() {
         log.debug("Waiting for state change");
 
         // wait until the sensor changes state

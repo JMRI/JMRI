@@ -19,7 +19,7 @@ import jmri.*;
  * created and invoked by a SampleAutomaton3Action.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  * @see         jmri.jmrit.automat.SampleAutomaton3Action
  */
 public class SampleAutomaton3 extends AbstractAutomaton {
@@ -46,7 +46,7 @@ public class SampleAutomaton3 extends AbstractAutomaton {
      * and controls locomotive 77(short).
      *
      */
-    public void init() {
+    protected void init() {
         // get references to sample layout objects
 
         fwdSensor = InstanceManager.sensorManagerInstance().
@@ -66,7 +66,7 @@ public class SampleAutomaton3 extends AbstractAutomaton {
      * Watch the sensors, and change direction to match.
      * @return Always returns true to continue operation
      */
-    public boolean handle() {
+    protected boolean handle() {
 
         // we're supposed to be moving forward here
         // This initialization is only needed the first time through,

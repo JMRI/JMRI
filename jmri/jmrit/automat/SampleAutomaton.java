@@ -19,7 +19,7 @@ import jmri.*;
  * created and invoked by a SampleAutomatonAction.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  * @see         jmri.jmrit.automat.SampleAutomatonAction
  */
 public class SampleAutomaton extends AbstractAutomaton {
@@ -39,7 +39,7 @@ public class SampleAutomaton extends AbstractAutomaton {
      * This also sets the turnout to the current (initial) state
      * to make sure everything is consistent at the start.
      */
-    public void init() {
+    protected void init() {
         // get references to sample layout objects
 
         turnout = InstanceManager.turnoutManagerInstance().
@@ -59,7 +59,7 @@ public class SampleAutomaton extends AbstractAutomaton {
      * Watch "sensor", and when it changes adjust "turnout" to match.
      * @return Always returns true to continue operation
      */
-    public boolean handle() {
+    protected boolean handle() {
         log.debug("Waiting for state change");
 
         // wait until the sensor changes state

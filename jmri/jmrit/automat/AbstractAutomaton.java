@@ -2,8 +2,9 @@
 
 package jmri.jmrit.automat;
 
-import jmri.*;
 import javax.swing.*;
+
+import jmri.*;
 
 /**
  * Abstract base for user automaton classes, which provide
@@ -37,7 +38,7 @@ import javax.swing.*;
  * a warning will be logged if they are used before the thread starts.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 abstract public class AbstractAutomaton implements Runnable {
 
@@ -57,7 +58,7 @@ abstract public class AbstractAutomaton implements Runnable {
     /**
      * User-provided initialization routine
      */
-    abstract public void init();
+    abstract protected void init();
 
     /**
      * User-provided main routine. This is run repeatedly until
@@ -66,7 +67,7 @@ abstract public class AbstractAutomaton implements Runnable {
      *
      * @return false to terminate the automaton, for example due to an error.
      */
-    abstract public boolean handle();
+    abstract protected boolean handle();
 
     /**
      * Control optional debugging prompt.  If this is set true,
@@ -82,7 +83,7 @@ abstract public class AbstractAutomaton implements Runnable {
      * implementation doesn't guarantee the time, either high or low.
      * @param milliseconds
      */
-    public synchronized void wait(int milliseconds){
+    protected synchronized void wait(int milliseconds){
         if (!inThread) log.warn("wait invoked from invalid context");
         try {
             super.wait(milliseconds);
@@ -115,7 +116,7 @@ abstract public class AbstractAutomaton implements Runnable {
      * @param mSensor Sensor to watch
      * @return newly detected Sensor state
      */
-    public synchronized int waitSensorChange(int mState, Sensor mSensor){
+    protected synchronized int waitSensorChange(int mState, Sensor mSensor){
         if (!inThread) log.warn("waitSensorChange invoked from invalid context");
         if (log.isDebugEnabled()) log.debug("waitSensorChange starts: "+mSensor.getID());
         // register a listener
@@ -152,7 +153,7 @@ abstract public class AbstractAutomaton implements Runnable {
      *
      * @param mSensor Sensor to watch
      */
-    public synchronized void waitSensorActive(Sensor mSensor){
+    protected synchronized void waitSensorActive(Sensor mSensor){
         if (!inThread) log.warn("waitSensorActive invoked from invalid context");
         if (mSensor.getKnownState() == Sensor.ACTIVE) return;
         if (log.isDebugEnabled()) log.debug("waitSensorActive starts: "+mSensor.getID());
@@ -189,7 +190,7 @@ abstract public class AbstractAutomaton implements Runnable {
      *
      * @param mSensor Sensor to watch
      */
-    public synchronized void waitSensorInactive(Sensor mSensor){
+    protected synchronized void waitSensorInactive(Sensor mSensor){
         if (!inThread) log.warn("waitSensorInactive invoked from invalid context");
         if (mSensor.getKnownState() == Sensor.INACTIVE) return;
         if (log.isDebugEnabled()) log.debug("waitSensorInactive starts: "+mSensor.getID());
@@ -226,7 +227,7 @@ abstract public class AbstractAutomaton implements Runnable {
      *
      * @param mSensors Array of sensors to watch
      */
-    public synchronized void waitSensorActive(Sensor[] mSensors){
+    protected synchronized void waitSensorActive(Sensor[] mSensors){
         if (!inThread) log.warn("waitSensorActive invoked from invalid context");
         if (log.isDebugEnabled()) log.debug("waitSensorActive[] starts");
 
@@ -287,7 +288,7 @@ abstract public class AbstractAutomaton implements Runnable {
      * @param longAddress true if this is a long address, false for a short address
      * @return A usable throttle, or null if error
      */
-    public DccThrottle getThrottle(int address, boolean longAddress) {
+    protected DccThrottle getThrottle(int address, boolean longAddress) {
         if (!inThread) log.warn("getThrottle invoked from invalid context");
         throttle = null;
         InstanceManager.throttleManagerInstance()
@@ -320,7 +321,7 @@ abstract public class AbstractAutomaton implements Runnable {
      * @param value
      * @return true if completed OK
      */
-    public boolean writeServiceModeCV(int CV, int value) {
+    protected boolean writeServiceModeCV(int CV, int value) {
         // get service mode programmer
         Programmer programmer = InstanceManager.programmerManagerInstance()
                         .getServiceModeProgrammer();
@@ -355,7 +356,7 @@ abstract public class AbstractAutomaton implements Runnable {
      * @param CV Number 1 through 512
      * @return -1 if error, else value
      */
-    public int readServiceModeCV(int CV) {
+    protected int readServiceModeCV(int CV) {
         // get service mode programmer
         Programmer programmer = InstanceManager.programmerManagerInstance()
                         .getServiceModeProgrammer();
@@ -393,7 +394,7 @@ abstract public class AbstractAutomaton implements Runnable {
      * @param longAddress true is the locomotive is using a long address
      * @return true if completed OK
      */
-    public boolean writeOpsModeCV(int CV, int value, boolean longAddress, int loco) {
+    protected boolean writeOpsModeCV(int CV, int value, boolean longAddress, int loco) {
         // get service mode programmer
         Programmer programmer = InstanceManager.programmerManagerInstance()
                         .getOpsModeProgrammer(longAddress, loco);
@@ -460,8 +461,6 @@ abstract public class AbstractAutomaton implements Runnable {
     }
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractAutomaton.class.getName());
-
 }
-
 
 /* @(#)AbstractAutomaton.java */
