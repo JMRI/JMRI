@@ -5,11 +5,6 @@ package jmri;
 /**
  * Abstract base for the Reporter interface.
  * <P>
- * Implements NONE feedback, where
- * the KnownState and CommandedState track each other. If you want to
- * implement some other feedback, override and modify setCommandedState()
- * here.
- * <P>
  * Implements the parameter binding support.
  * <P>
  * Note that we consider it an error for there to be more than one object
@@ -17,7 +12,7 @@ package jmri;
  *
  * Description:		Abstract class providing the basic logic of the Reporter interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public abstract class AbstractReporter extends AbstractNamedBean implements Reporter, java.io.Serializable {
 
