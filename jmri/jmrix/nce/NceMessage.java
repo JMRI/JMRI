@@ -8,9 +8,11 @@ package jmri.jmrix.nce;
  * <P>
  * There's some rudimentary support for binary commands, but it's
  * not to the point of being usable.
+ * <P>The "state" referred to here is the command station
+ * state needed before this message can be sent.
  *
  * @author	        Bob Jacobsen  Copyright (C) 2001
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class NceMessage {
     // is this logically an abstract class?

@@ -9,29 +9,34 @@ import java.util.Vector;
 
 /**
  * Converts Stream-based I/O to/from NCE messages.  The "NceInterface"
- * side sends/receives message objects.  The connection to
+ * side sends/receives message objects.
+ * <P>
+ * The connection to
  * a NcePortController is via a pair of *Streams, which then carry sequences
  * of characters for transmission.     Note that this processing is
  * handled in an independent thread.
+ * <P>
+ * This handles the state transistions, based on the
+ * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class NceTrafficController implements NceInterface, Runnable {
-    
+
     public NceTrafficController() {
         if (log.isDebugEnabled()) log.debug("setting instance: "+this);
         self=this;
     }
-    
-    
+
+
     // The methods to implement the NceInterface
-    
+
     protected Vector cmdListeners = new Vector();
-    
+
     public boolean status() { return (ostream != null & istream != null);
     }
-    
+
     public synchronized void addNceListener(NceListener l) {
         // add only if not already registered
         if (l == null) throw new java.lang.NullPointerException();
@@ -39,14 +44,14 @@ public class NceTrafficController implements NceInterface, Runnable {
             cmdListeners.addElement(l);
         }
     }
-    
+
     public synchronized void removeNceListener(NceListener l) {
         if (cmdListeners.contains(l)) {
             cmdListeners.removeElement(l);
         }
     }
-    
-    
+
+
     /**
      * Forward a NceMessage to all registered NceInterface listeners.
      */
@@ -73,11 +78,11 @@ public class NceTrafficController implements NceInterface, Runnable {
             }
         }
     }
-    
+
     NceListener lastSender = null;
-    
+
     protected void notifyReply(NceReply r) {
-        
+
         // make a copy of the listener vector to synchronized (not needed for transmit?)
         Vector v;
         synchronized(this)
@@ -97,14 +102,14 @@ public class NceTrafficController implements NceInterface, Runnable {
                     log.warn("notify: During dispatch to "+client+"\nException "+e);
                 }
         }
-        
+
         // forward to the last listener who send a message
         // this is done _second_ so monitoring can have already stored the reply
         // before a response is sent
         if (lastSender != null) lastSender.reply(r);
     }
-    
-    
+
+
     /**
      * Forward a preformatted message to the actual interface.
      */
@@ -112,17 +117,17 @@ public class NceTrafficController implements NceInterface, Runnable {
         if (log.isDebugEnabled()) log.debug("sendNceMessage message: ["+m+"]");
         // remember who sent this
         lastSender = reply;
-        
+
         // notify all _other_ listeners
         notifyMessage(m, reply);
-        
+
         // stream to port in single write, as that's needed by serial
         int len = m.getNumDataElements();
         int cr = 0;
         if (! m.isBinary()) cr = 1;  // space for return
-        
+
         byte msg[] = new byte[len+cr];
-        
+
         for (int i=0; i< len; i++)
             msg[i] = (byte) m.getElement(i);
         if (! m.isBinary()) msg[len] = 0x0d;
@@ -140,10 +145,10 @@ public class NceTrafficController implements NceInterface, Runnable {
             log.warn("sendMessage: Exception: "+e.toString());
         }
     }
-    
+
     // methods to connect/disconnect to a source of data in a LnPortController
     private NcePortController controller = null;
-    
+
     /**
      * Make connection to existing PortController object.
      */
@@ -154,7 +159,7 @@ public class NceTrafficController implements NceInterface, Runnable {
             log.warn("connectPort: connect called while connected");
         controller = p;
     }
-    
+
     /**
      * Break connection to existing NcePortController object. Once broken,
      * attempts to send via "message" member will fail.
@@ -166,7 +171,7 @@ public class NceTrafficController implements NceInterface, Runnable {
             log.warn("disconnectPort: disconnect called from non-connected LnPortController");
         controller = null;
     }
-    
+
     /**
      * static function returning the NceTrafficController instance to use.
      * @return The registered NceTrafficController instance for general use,
@@ -179,14 +184,14 @@ public class NceTrafficController implements NceInterface, Runnable {
         }
         return self;
     }
-    
+
     static protected NceTrafficController self = null;
-    
+
     // data members to hold the streams
     DataInputStream istream = null;
     OutputStream ostream = null;
-    
-    
+
+
     /**
      * Handle incoming characters.  This is a permanent loop,
      * looking for input messages in character form on the
@@ -203,11 +208,11 @@ public class NceTrafficController implements NceInterface, Runnable {
             }
         }
     }
-    
+
     void handleOneIncomingReply() throws java.io.IOException {
         // we sit in this until the message is complete, relying on
         // threading to let other stuff happen
-        
+
         // Create output message
         NceReply msg = new NceReply();
         // message exists, now fill it
@@ -217,7 +222,7 @@ public class NceTrafficController implements NceInterface, Runnable {
             msg.setElement(i, char1);
             if (endCOMMAND(msg)) break;
         }
-        
+
         // message is complete, dispatch it !!
         if (log.isDebugEnabled()) log.debug("dispatch reply of length "+i);
         {
@@ -235,7 +240,7 @@ public class NceTrafficController implements NceInterface, Runnable {
             javax.swing.SwingUtilities.invokeLater(r);
         }
     }
-    
+
     boolean endCOMMAND(NceReply msg) {
         // detect that the reply buffer ends with "COMMAND: " (note ending space)
         int num = msg.getNumDataElements();
@@ -249,7 +254,7 @@ public class NceTrafficController implements NceInterface, Runnable {
         }
         else return false;
     }
-    
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceTrafficController.class.getName());
 }
 
