@@ -33,7 +33,7 @@ import java.util.Vector;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.28 $
+ * @version     $Revision: 1.29 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
@@ -856,6 +856,17 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         }
     }
 
+    /**
+     * Provide a snapshot of the slots in use
+     */
+    public int getInUseCount() {
+        int result = 0;
+        for (int i = 0; i<=120; i++) {
+            if (slot(i).slotStatus() == LnConstants.LOCO_IN_USE ) result++;
+        }
+        return result;
+    }
+    
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SlotManager.class.getName());
 }
