@@ -13,7 +13,7 @@ import jmri.*;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
                                 implements jmri.ConfigureManager {
@@ -23,11 +23,12 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     /**
      * Register an object whose state is to be tracked.
+     * It is not an error if the original object was already registered.
      * @param o The object, which must have an
      *              associated adapter class.
      */
     public void register(Object o) {
-        // skip if already present
+        // skip if already present, leaving in original order
         if (list.contains(o)) return;
         // find the class name of the adapter
         String adapter = adapterName(o);
@@ -149,6 +150,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                     adapter.load(item);
                 } catch (Exception e) {
                     log.error("Exception while loading "+item.getName()+":"+e);
+                    e.printStackTrace();
                 }
             }
 
