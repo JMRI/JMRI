@@ -3,7 +3,7 @@
  *
  * Description:		extend jmri.AbstractTurnout for XNet layouts
  * @author			Bob Jacobsen Copyright (C) 2001, Portions by Paul Bender Copyright (C) 2003 
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 
 package jmri.jmrix.lenz;
@@ -11,6 +11,10 @@ package jmri.jmrix.lenz;
 import jmri.AbstractTurnout;
 
 public class XNetTurnout extends AbstractTurnout implements XNetListener {
+
+    static final int OFFSENT = 1;
+    static final int IDLE = 0;
+    private int InternalState = IDLE;
 
     public XNetTurnout(int pNumber) {  // a human-readable turnout number must be specified!
         super("XT"+pNumber);
@@ -27,6 +31,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 	forwardCommandChangeToLayout(s);
 	newCommandedState(s);
 	if( getKnownState()==UNKNOWN) newKnownState(s);
+	   else newKnownState(INCONSISTENT);
     }
 
 
@@ -51,6 +56,24 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     //										Object newValue)
     // _once_ if anything has changed state (or set the commanded state directly)
     public void message(XNetMessage l) {
+      if(InternalState==OFFSENT) {
+	  // If an OFF was sent, we want to check for Communications 
+          // errors before we try to do anything else. 
+	  if(l.getElement(0)==XNetConstants.LI_MESSAGE_RESPONSE_HEADER &&
+            ((l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_UNKNOWN_DATA_ERROR ||
+            l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_CS_DATA_ERROR ||
+            l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_PC_DATA_ERROR ||
+            l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_TIMESLOT_ERROR))) {
+            /* this is a communications error */
+            log.error("Communications error occured - message recieved was: " + l);
+	    sendOffMessage();
+            return;
+	  } else {
+		InternalState=IDLE;
+	        newKnownState(getCommandedState());
+                return;
+          }
+        }
 	// We have three cases to check if CommandedState does 
         // not equal KnownState, otherwise, we only want to check to 
 	// see if the messages we recieve indicate this turnout chagned 
@@ -86,16 +109,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                // turnout without feedback.
 	       parseFeedbackMessage(l);
                // We need to tell the turnout to shut off the output.
-               XNetMessage msg =  XNetTrafficController.instance()
-                                                  .getCommandStation()
-	   					  .getTurnoutCommandMsg(mNumber,
-                                                  getCommandedState()==CLOSED,
-                                                  getCommandedState()==THROWN,
-                                                  false );
- 	       // We have to send this message twice for some reason, 
-               // otherwise, the turnout continues to throw.
-               XNetTrafficController.instance().sendXNetMessage(msg, this);
-               XNetTrafficController.instance().sendXNetMessage(msg, this);
+	       sendOffMessage();
              }       
           } else if (messageType == 0) {
           // The second case is that we recieve a message about this 
@@ -104,20 +118,17 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
           // and act accordingly.
 	    parseFeedbackMessage(l);
             // We need to tell the turnout to shut off the output.
-            XNetMessage msg =  XNetTrafficController.instance()
-                                                .getCommandStation()
-	   					  .getTurnoutCommandMsg(mNumber,
-                                                  getCommandedState()==CLOSED,
-                                                  getCommandedState()==THROWN,
-                                                  false );
- 	    // We have to send this message twice for some reason, 
-            // otherwise, the turnout continues to throw.
-            XNetTrafficController.instance().sendXNetMessage(msg, this);
-            XNetTrafficController.instance().sendXNetMessage(msg, this);
-            }
+	    sendOffMessage();
+          }
 	} else if (XNetTrafficController.instance()
                                         .getCommandStation().isOkMessage(l)) {
             // Finally, we may just recieve an OK message.
+	    sendOffMessage();
+	} else return;
+    }
+
+    /* Send an "Off" message to the decoder for this output  */
+    private void sendOffMessage() {
             // We need to tell the turnout to shut off the output.
             XNetMessage msg =  XNetTrafficController.instance()
                                                 .getCommandStation()
@@ -131,8 +142,11 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
             XNetTrafficController.instance().sendXNetMessage(msg, this);
 	    // Set the known state to the commanded state.
 	    newKnownState(getCommandedState());
-	} else { return; }
+	    InternalState = OFFSENT;
     }
+
+
+
 
      /*
       * parse the feedback message, and set the status of the turnout 
@@ -180,6 +194,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         }    
        return(-1);
     }
+
 
      /*
       * Determine if this feedback message says the turnout has completed 
