@@ -15,15 +15,15 @@ import jmri.*;
  * the current KnownState.
  *
  * @author Bob Jacobsen
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
     public TurnoutIcon() {
         // super ctor call to make sure this is an icon label
-        super(new NamedIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/os-upper-right-closed.gif"),
-                            "resources/icons/smallschematics/tracksegments/os-upper-right-closed.gif"));
+        super(new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif",
+                            "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif"));
         displayState(turnoutState());
     }
 
@@ -49,14 +49,14 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
     public Turnout getTurnout() { return turnout; }
 
     // display icons
-    NamedIcon closed = new NamedIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/os-upper-right-closed.gif"),
-                            "resources/icons/smallschematics/tracksegments/os-upper-right-closed.gif");
-    NamedIcon thrown = new NamedIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/os-upper-right-thrown.gif"),
-                            "resources/icons/smallschematics/tracksegments/os-upper-right-thrown.gif");
-    NamedIcon inconsistent = new NamedIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/os-upper-right-error.gif"),
-                            "resources/icons/smallschematics/tracksegments/os-upper-right-error.gif");
-    NamedIcon unknown = new NamedIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/os-upper-right-unknown.gif"),
-                            "resources/icons/smallschematics/tracksegments/os-upper-right-unknown.gif");
+    NamedIcon closed = new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif",
+                            "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif");
+    NamedIcon thrown = new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif",
+                            "resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif");
+    NamedIcon inconsistent = new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif",
+                            "resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif");
+    NamedIcon unknown = new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif",
+                            "resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif");
 
     public NamedIcon getClosedIcon() { return closed; }
     public void setClosedIcon(NamedIcon i) { closed = i; displayState(turnoutState()); }
