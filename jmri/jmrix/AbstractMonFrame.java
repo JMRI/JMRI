@@ -3,13 +3,11 @@
 package jmri.jmrix;
 
 import java.awt.Dimension;
-import java.awt.Font;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.LinkedList;
 
 import javax.swing.*;
 import javax.swing.JFileChooser;
@@ -21,7 +19,7 @@ import javax.swing.text.*;
 /**
  * Abstact base class for Frames displaying communications monitor information
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public abstract class AbstractMonFrame extends JFrame  {
 
@@ -79,7 +77,6 @@ public abstract class AbstractMonFrame extends JFrame  {
         int y = jScrollPane1.getPreferredSize().height+10*t.getPreferredSize().height;
 
         jScrollPane1.getViewport().add(monTextPane);
-        jScrollPane1.setMinimumSize(new Dimension(x, y));
         jScrollPane1.setPreferredSize(new Dimension(x, y));
         jScrollPane1.setVisible(true);
 
@@ -103,16 +100,6 @@ public abstract class AbstractMonFrame extends JFrame  {
         openFileChooserButton.setVisible(true);
         openFileChooserButton.setToolTipText("Click here to select a new output log file");
 
-        // set sizes to same as largest
-        Dimension big = openFileChooserButton.getMaximumSize();
-        if (timeCheckBox.getMaximumSize().width > big.width) big.width = timeCheckBox.getMaximumSize().width;
-        openFileChooserButton.setMaximumSize(big);
-        clearButton.setMaximumSize(big);
-        timeCheckBox.setMaximumSize(big);
-        rawCheckBox.setMaximumSize(big);
-        startLogButton.setMaximumSize(big);
-        stopLogButton.setMaximumSize(big);
-
         setTitle(title());
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
@@ -120,21 +107,21 @@ public abstract class AbstractMonFrame extends JFrame  {
         getContentPane().add(jScrollPane1);
 
         JPanel paneA = new JPanel();
-        paneA.setLayout(new BoxLayout(paneA, BoxLayout.X_AXIS));
+	paneA.setLayout(new BoxLayout(paneA, BoxLayout.PAGE_AXIS));
         JPanel pane1 = new JPanel();
-        pane1.setLayout(new BoxLayout(pane1, BoxLayout.Y_AXIS));
+	pane1.setLayout(new BoxLayout(pane1, BoxLayout.LINE_AXIS));
         pane1.add(clearButton);
         pane1.add(freezeButton);
         pane1.add(rawCheckBox);
         pane1.add(timeCheckBox);
-        paneA.add(pane1);
+	paneA.add(pane1);
 
         JPanel pane2 = new JPanel();
-        pane2.setLayout(new BoxLayout(pane2, BoxLayout.Y_AXIS));
+	pane2.setLayout(new BoxLayout(pane2, BoxLayout.LINE_AXIS));
         pane2.add(openFileChooserButton);
         pane2.add(startLogButton);
         pane2.add(stopLogButton);
-        paneA.add(pane2);
+	paneA.add(pane2);
         getContentPane().add(paneA);
 
         // connect actions to buttons
@@ -215,7 +202,7 @@ public abstract class AbstractMonFrame extends JFrame  {
 
         // display the raw data if requested
         if ( rawCheckBox.isSelected() ) {
-            sb.append(raw).append( ' ' );
+            sb.append( '[' ).append(raw).append( "]  " );
         }
 
         // display decoded data
@@ -319,7 +306,7 @@ public abstract class AbstractMonFrame extends JFrame  {
     public synchronized String getFrameText() {
         return new String(linesBuffer);
     }
-    
+
     PrintStream logStream = null;
 
     // to get a time string
