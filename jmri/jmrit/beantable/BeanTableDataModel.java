@@ -19,7 +19,7 @@ import com.sun.java.util.collections.List;
 /**
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
- * @version		$Revision: 1.7 $
+ * @version		$Revision: 1.8 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -57,7 +57,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             updateNameList();
             log.debug("Table changed length to "+sysNameList.size());
             fireTableDataChanged();
-        } else if (e.getPropertyName().indexOf("State")>=0 || e.getPropertyName().indexOf("Appearance")>=0) {
+        } else if (matchPropertyName(e)) {
             // a value changed.  Find it, to avoid complete redraw
             String name = ((NamedBean)e.getSource()).getSystemName();
             if (log.isDebugEnabled()) log.debug("Update cell "+sysNameList.indexOf(name)+","
@@ -66,6 +66,15 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         }
     }
 
+	/**
+	 * Is this property event announcing a change this table should display?
+	 * <P>
+	 * Note that events will come both from the NamedBeans and also from the manager
+	 */
+	boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
+		return (e.getPropertyName().indexOf("State")>=0 || e.getPropertyName().indexOf("Appearance")>=0);
+	}
+	
     public int getRowCount() {
         return sysNameList.size();
     }
