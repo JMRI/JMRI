@@ -1,8 +1,8 @@
 /** 
- * SlotMonAction.java
+ * SimpleProgAction.java
  *
  * Description:		Swing action to create and register a 
- *       			LocoEchoFrame object
+ *       			SimpleProgAction object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
  * @version			

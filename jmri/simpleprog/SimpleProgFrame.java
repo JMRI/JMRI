@@ -1,7 +1,7 @@
 /** 
  * SimpleProgFrame.java
  *
- * Description:		Frame provinging a command station programmer
+ * Description:		Frame providing a command station programmer
  * @author			Bob Jacobsen   Copyright (C) 2001
  * @version			
  */
