@@ -19,12 +19,13 @@ package jmri.jmrix.loconet;
  * contact Digitrax Inc for separate permission.
  *
  * @author Bob Jacobsen     Copyright 2002
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class Se8AlmImplementation extends AbstractAlmImplementation {
 
-    final int MAXPAGES = 8;
+    final int MAXPAGES = 8;  // number of accessible pages
+    final int ENTRYSIZE = 64; // number of arguments per entry, must be power of two
 
     public Se8AlmImplementation(int pNumber, boolean pImage) {
         super(pNumber, pImage);
@@ -43,6 +44,10 @@ public class Se8AlmImplementation extends AbstractAlmImplementation {
      */
     void store(int block, int item, int value) {
         contents[page(block, item)][block*4+item] = value;
+
+        // message the throttle if this is a write to the menu number
+        if (item == 0 && (block&(ENTRYSIZE-1))==0)
+            LnMessageManager.instance().sendMessage("ABCDdcba");
     }
 
     /**
@@ -86,9 +91,9 @@ public class Se8AlmImplementation extends AbstractAlmImplementation {
      */
     int page(int block, int item) {
         // if you're accessing the page value, it's on internal page 0
-        if (item==0 && (block&3)==0) return 0;
+        if (item==0 && (block&(ENTRYSIZE-1))==0) return 0;
         // else find the right page
-        int page = contents[0][(block&(~3))*4+0];
+        int page = contents[0][(block&(~(ENTRYSIZE-1)))*4+0];
         if (page < 0) return 0;
         if (page >= MAXPAGES) return 0;   // puts default value as page 1
         return page;
