@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.30 $)
+distribution.  ($Revision: 1.31 $)
 
 Start with a directory, typically called "Distributions", that
 contains:
@@ -70,10 +70,16 @@ To actually create the distribution:
 	Launch Installer Vise from the last build file.
 	"Update archive"; Check changes make sense.
 	Click the "test archive" button (right one of the pair)
+	Name the installer JMRI.1.2.3.exe or so
 	After the installer runs, run DecoderPro from desktop icon and check.
 	In IV, "Save as..." the VCT file as the new name
 	Drag-copy .exe to Mac, copy to final Distributions; name should be OK
 
+    Alternate method:
+    
+    Mount PC.  Copy last .vct and Windows/JMRI to C:\WINDOWS\Desktop
+    Create and test installer as above.  Pick up resulting .exe
+    
 ( ) Once the three StuffIt processes are done
 	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release2
 	
