@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <decoderIndex version="77">
+  <decoderIndex version="79">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -684,6 +684,7 @@
         <model model="Broadway Limited Class A" lowVersionID="2" connector="unspecified" nmraWarrant="no" />
         <model model="Lionel Challenger" lowVersionID="4" connector="unspecified" nmraWarrant="no" />
         <model model="Lionel Gas Turbine" lowVersionID="4" connector="unspecified" nmraWarrant="no" />
+        <model model="Lionel Veranda Turbine" lowVersionID="4" connector="unspecified" nmraWarrant="no" />
         <model model="Broadway Limited E7A/B" lowVersionID="5" connector="unspecified" nmraWarrant="no" />
         <model model="Broadway Limited On30 Consolidation 2-8-0" lowVersionID="5" connector="unspecified" nmraWarrant="no" />
         <model model="Broadway Limited PRR M1a/b 4-8-2" lowVersionID="5" connector="unspecified" nmraWarrant="no" />
