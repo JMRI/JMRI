@@ -27,6 +27,7 @@ public class LnHexFileAction 			extends AbstractAction {
 		catch (Exception ex) {
 			log.error("starting HexFileFrame exception: "+ex.toString());
 			}
+		f.pack();
 		f.show();	
 		// it connects to the LnTrafficController when the right button is pressed
 		

@@ -32,22 +32,18 @@ import java.io.PipedOutputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.File;
 
 public class LnHexFilePort 			extends LnPortController implements Runnable {
 
-/* load("filename") fills the contents from a file */
-public void load(String filename) {
-		//attempt to access the file
-		try {
-			sFile = new DataInputStream(new FileInputStream(filename));
-			}
-		catch (Exception e) {
-			log.error("load (file): Exception: "+e.toString());
-			}
+/* load(File) fills the contents from a file */
+public void load(File file) {
+		if (log.isDebugEnabled()) log.debug("file: "+file);
 
 		// create the pipe stream for output, also store as the input stream if somebody wants to send
 		// (This will emulate the LocoNet echo)
 		try {
+			sFile = new DataInputStream(new FileInputStream(file));
 			PipedInputStream tempPipe = new PipedInputStream();
 			pin = new DataInputStream(tempPipe);
 			outpipe = new DataOutputStream(new PipedOutputStream(tempPipe));
