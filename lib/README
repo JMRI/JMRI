@@ -1,0 +1,2 @@
+This is the JMRI "lib" directory, available as the "lib" package in JMRI CVS.  These are the binary files, typically .jars, needed at build and run time.
+
