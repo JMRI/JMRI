@@ -13,7 +13,10 @@
 
 package jmri;
 
+import jmri.ConsistListener;
+
 import java.util.Enumeration;
+import java.util.Vector;
 
 import com.sun.java.util.collections.Hashtable;
 import com.sun.java.util.collections.ArrayList;
@@ -52,6 +55,7 @@ public class DccConsist implements Consist, ProgListener{
 	      }
 	      else {
 		log.error("Consist Type Not Supported");
+		notifyConsistListeners(0,ConsistListener.NotImplemented);
 	      }
 	}
 
@@ -95,6 +99,7 @@ public class DccConsist implements Consist, ProgListener{
 		return( (boolean) ConsistDir.contains(Address));
 	   } else {
 		log.error("Consist Type Not Supported");
+		notifyConsistListeners(0,ConsistListener.NotImplemented);
 	      }
 	   return false;
 	}
@@ -108,6 +113,7 @@ public class DccConsist implements Consist, ProgListener{
 		return( Direction.booleanValue());
 	   } else {
 		log.error("Consist Type Not Supported");
+		notifyConsistListeners(address,ConsistListener.NotImplemented);
 	      }
 	   return false;
 	}
@@ -128,6 +134,7 @@ public class DccConsist implements Consist, ProgListener{
 	      }
 	      else {
 		log.error("Consist Type Not Supported");
+		notifyConsistListeners(LocoAddress,ConsistListener.NotImplemented);
 	      }
 	}
 
@@ -144,6 +151,7 @@ public class DccConsist implements Consist, ProgListener{
 	      }
 	      else {
 		 log.error("Consist Type Not Supported");
+		 notifyConsistListeners(LocoAddress,ConsistListener.NotImplemented);
 	      }
 	}
 
@@ -201,10 +209,59 @@ public class DccConsist implements Consist, ProgListener{
                                .releaseOpsModeProgrammer(opsProg);
 	}
 
+	// data member to hold the throttle listener objects
+	final private Vector listeners = new Vector();
+	
+	/*
+         * Add a Listener for consist events
+         * @parm Listener is a consistListener object
+         */
+        public void addConsistListener(ConsistListener Listener){
+		if(!listeners.contains(Listener))
+			listeners.addElement(Listener);
+	}
+          
+        /*
+         * Remove a Listener for consist events
+         * @parm Listener is a consistListener object
+         */
+        public void removeConsistListener(ConsistListener Listener){
+		if(listeners.contains(Listener))
+			listeners.removeElement(Listener);
+	}
+
+	/*
+         * Notify all listener objects of a status change.
+         * @parm LocoAddress is the address of any specific locomotive the
+         *       status refers to.
+         * @parm ErrorCode is the status code to send to the 
+         *       consistListener objects
+         */
+        protected void notifyConsistListeners(int  LocoAddress, int ErrorCode){
+ 		// make a copy of the listener vector to  notify.
+        	Vector v;
+        	synchronized(this)
+            	{
+                 	v = (Vector) listeners.clone();
+            	}
+        	if (log.isDebugEnabled()) log.debug("Sending Status code: " +
+						ErrorCode + " to "  + 
+						v.size() + 
+                                            	" listeners for Address "  
+                                            	+ LocoAddress);
+        	// forward to all listeners
+        	int cnt = v.size();
+        	for (int i=0; i < cnt; i++) {
+            		ConsistListener client = (ConsistListener) v.elementAt(i);
+            		client.consistReply(LocoAddress,ErrorCode);
+        	}
+	}
+
 	// This class is to be registerd as a programmer listener, so we 
         // include the programmingOpReply() function
 	public void programmingOpReply(int value, int status) {
 		if(log.isDebugEnabled()) log.debug("Programming Operation reply recieved, value is " + value + " ,status is " +status);
+		notifyConsistListeners(0,ConsistListener.OPERATION_SUCCESS);
 	}
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DccConsist.class.getName());
