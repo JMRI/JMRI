@@ -1,6 +1,7 @@
 package jmri.jmrit.throttle;
 
 import jmri.DccThrottle;
+import jmri.util.SwingUtil;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -34,7 +35,7 @@ import org.jdom.Element;
  *  TODO: fix speed increments (14, 28)
  *
  * @author     glen
- * @version    $Revision: 1.31 $
+ * @version    $Revision: 1.32 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener
 {
@@ -67,7 +68,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	{
 		speedSlider = new JSlider(0, MAX_SPEED);
 		speedSlider.setValue(0);
-		speedSlider.setFocusable(false);
+		SwingUtil.setFocusable(speedSlider,false);
 		forwardButton = new JRadioButton("Forward");
 		reverseButton = new JRadioButton("Reverse");
 		initGUI();
@@ -317,7 +318,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	 *  A KeyAdapter that listens for the keys that work the control pad buttons
 	 *
 	 * @author     glen
-         * @version    $Revision: 1.31 $
+         * @version    $Revision: 1.32 $
 	 */
 	class ControlPadKeyListener extends KeyAdapter
 	{
