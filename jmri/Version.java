@@ -3,9 +3,9 @@ package jmri;
 /**
  * Defines a simple place to get the JMRI version string
  * @author			Bob Jacobsen   Copyright 2002
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class Version {
-    static public String name() { return "1.0.5"; }
+    static public String name() { return "1.0.6"; }
 }
