@@ -28,7 +28,7 @@ import javax.comm.SerialPort;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -180,6 +180,9 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
         return mInstance;
     }
     static SerialDriverAdapter mInstance = null;
+    static public boolean hasInstance() {
+        return (mInstance != null);
+    }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialDriverAdapter.class.getName());
 

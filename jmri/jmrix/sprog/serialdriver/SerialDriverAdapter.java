@@ -24,7 +24,7 @@ import javax.comm.SerialPort;
  * not use any other options at configuration time.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SerialDriverAdapter extends SprogPortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -195,6 +195,9 @@ public class SerialDriverAdapter extends SprogPortController  implements jmri.jm
         return mInstance;
     }
     static SerialDriverAdapter mInstance = null;
+    static public boolean hasInstance() {
+        return (mInstance != null);
+    }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialDriverAdapter.class.getName());
 

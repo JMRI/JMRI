@@ -11,7 +11,7 @@ import java.util.Vector;
  * method for locating the local implementation.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.5 $
+ * @version 		$Revision: 1.6 $
  *
  */
 public abstract class LnTrafficController implements LocoNetInterface {
@@ -23,6 +23,9 @@ public abstract class LnTrafficController implements LocoNetInterface {
      */
     static public LnTrafficController instance() {
         return self;
+    }
+    static public boolean hasInstance() {
+        return (self != null);
     }
 
     static protected LnTrafficController self = null;

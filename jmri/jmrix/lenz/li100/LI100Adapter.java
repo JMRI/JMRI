@@ -1,27 +1,29 @@
-/**
- * LI100Adapter.java
- *
- * Title:			LI100Adapter
- * Description:		Provide access to XPressNet via a LI100 on an attached serial comm port.
- *					Normally controlled by the lenz.li100.LI100Frame class.
- * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.7 $
- */
+// LI100Adapter.java
 
 package jmri.jmrix.lenz.li100;
 
-import javax.comm.CommPortIdentifier;
-import javax.comm.PortInUseException;
-import javax.comm.SerialPortEventListener;
-import javax.comm.SerialPortEvent;
-import javax.comm.SerialPort;
+import jmri.jmrix.lenz.LenzCommandStation;
+import jmri.jmrix.lenz.XNetPacketizer;
+import jmri.jmrix.lenz.XNetPortController;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Vector;
-import java.io.DataOutputStream;
-import java.io.DataInputStream;
-import java.io.InputStream;
 
-import jmri.jmrix.lenz.*;
+import javax.comm.CommPortIdentifier;
+import javax.comm.PortInUseException;
+import javax.comm.SerialPort;
+import javax.comm.SerialPortEvent;
+import javax.comm.SerialPortEventListener;
+
+/**
+ * Provide access to XPressNet via a LI100 on an attached serial comm port.
+ *					Normally controlled by the lenz.li100.LI100Frame class.
+ * @author			Bob Jacobsen   Copyright (C) 2002
+ * @version			$Revision: 1.8 $
+ */
 
 public class LI100Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -309,6 +311,9 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
         return mInstance;
     }
     static LI100Adapter mInstance = null;
+    static public boolean hasInstance() {
+        return (mInstance != null);
+    }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LI100Adapter.class.getName());
 
