@@ -1,16 +1,16 @@
-// LocoMenu.java
+// RosterMenu.java
 
 package jmri.jmrit.roster;
 
-import java.awt.Component;
+import java.awt.*;
 import javax.swing.*;
 
 /**
  * Provides a context-specific menu for handling the Roster.
  * <P>
  *
- * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version		 	$Revision: 1.3 $
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2002
+ * @version	$Revision: 1.4 $
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
@@ -31,7 +31,7 @@ public class RosterMenu extends JMenu {
     static public final int SELECTMENU =2;
 
     /**
-     * Ctor argument defining that the meny object will
+     * Ctor argument defining that the menu object will
      * be used as a menu on a GUI object that is dealing with
      * a single RosterEntry.
      */
@@ -62,10 +62,16 @@ public class RosterMenu extends JMenu {
         AbstractAction deleteAction = new DeleteRosterItemAction("Delete ...", pWho);
         deleteAction.setEnabled(false);
 
+        // Need a frame here, but are not passed one
+        Frame newFrame = new Frame();
+        AbstractAction printAction = new PrintRosterAction("Print ...", newFrame);
+        printAction.setEnabled(false);
+
         add(copyAction);
         add(importAction);
         add(exportAction);
         add(deleteAction);
+        add(printAction);
 
         // activate the right items
         switch (pMenuType) {
@@ -74,10 +80,13 @@ public class RosterMenu extends JMenu {
                 importAction.setEnabled(true);
                 exportAction.setEnabled(true);
                 copyAction.setEnabled(true);
+                printAction.setEnabled(true);
                 break;
             case SELECTMENU:
+                printAction.setEnabled(true);
                 break;
             case ENTRYMENU:
+                printAction.setEnabled(true);
                 break;
             default:
                 log.error("RosterMenu constructed without a valid menuType parameter: "
@@ -86,6 +95,6 @@ public class RosterMenu extends JMenu {
     }
 
 	// initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoFile.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RosterMenu.class.getName());
 
 }
