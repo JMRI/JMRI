@@ -74,6 +74,11 @@ public class AddressPanel extends JInternalFrame
     {
         this.throttle = t;
         releaseButton.setEnabled(true);
+	if(addressField.getText().equals("")) {
+	  String address = Integer.toString(t.getDccAddress());
+	  currentAddress=t.getDccAddress();
+	  addressField.setText(address);
+	}
 	if(jmri.InstanceManager.throttleManagerInstance()
 			       .hasDispatchFunction()) {
         	dispatchButton.setEnabled(true);
@@ -81,6 +86,7 @@ public class AddressPanel extends JInternalFrame
 		setButton.setEnabled(false);
 		addressField.setEditable(false);
 		rosterBox.setEnabled(false);
+
     }
 
 
