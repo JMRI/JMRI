@@ -7,11 +7,11 @@ import jmri.*;
 
 
 public class LnOpsModeProgrammerTest extends TestCase {
-    
+
     public LnOpsModeProgrammerTest(String s) {
 	super(s);
     }
-    
+
     public void testSetMode() {
 	SlotManager val1=  new SlotManager();
 	LnOpsModeProgrammer lops = new LnOpsModeProgrammer(val1, 1, true);
@@ -19,9 +19,7 @@ public class LnOpsModeProgrammerTest extends TestCase {
 	Assert.assertEquals("did not go to page mode", 0, lops.getMode());
 	lops.setMode(Programmer.REGISTERMODE);
 	Assert.assertEquals("did not go to register mode", 0, lops.getMode());
-	//lops.setMode(Programmer.OPSMODE);
-	//Assert.assertEquals("did go to ops mode", 0, lops.getMode());
-	
+
     }
     public void testWriteCV() {
 	SlotManager val1=  null  /** @todo fill in non-null value */;
@@ -54,12 +52,12 @@ public class LnOpsModeProgrammerTest extends TestCase {
 	SlotManager val1=  null  /** @todo fill in non-null value */;
 	LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1, 1, true);
 	int intRet = lnopsmodeprogrammer.getMode();
-	/** @todo:  Insert test code here.  Use assertEquals(), for example. */
+	Assert.assertEquals("OpsByteMode", Programmer.OPSBYTEMODE, intRet);
     }
     public void testGetCanRead() {
 	SlotManager val1=  new SlotManager();
 	LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1,1, true);
-	Assert.assertEquals("ops mode cant yet read", false, 
+	Assert.assertEquals("ops mode cant yet read", false,
 			    lnopsmodeprogrammer.getCanRead());
     }
     public void testConfirmCV() {
@@ -79,11 +77,10 @@ public class LnOpsModeProgrammerTest extends TestCase {
     public void testHasMode() {
 	SlotManager val1=  null  /** @todo fill in non-null value */;
 	LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1,1,true);
-	int mode1=  0;
-	boolean booleanRet = lnopsmodeprogrammer.hasMode(mode1);
-	/** @todo:  Insert test code here.  Use assertEquals(), for example. */
+	Assert.assertEquals("Ops byte mode", true, lnopsmodeprogrammer.hasMode(Programmer.OPSBYTEMODE));
+	Assert.assertEquals("Paged mode", false, lnopsmodeprogrammer.hasMode(Programmer.PAGEMODE));
     }
-    
+
     // The minimal setup for log4J
     apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
     protected void setUp() { log4jfixtureInst.setUp(); }
