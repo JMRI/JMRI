@@ -30,7 +30,7 @@ import java.util.Vector;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 2.2 $
+ * @version 		$Revision: 2.3 $
  *
  */
 public class XNetPacketizer extends XNetTrafficController {
@@ -73,7 +73,7 @@ public class XNetPacketizer extends XNetTrafficController {
     protected void addTrailerToOutput(byte[] msg, int offset, jmri.jmrix.AbstractMRMessage m) {
 	if(m.getNumDataElements()==0) return;
 	((XNetMessage)m).setParity();
-        msg[m.getNumDataElements()-1] = (byte)m.getElement(m.getNumDataElements()-1);
+        msg[offset - 1] = (byte)m.getElement(m.getNumDataElements()-1);
     }   
 
 
