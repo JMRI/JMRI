@@ -1,11 +1,13 @@
 package jmri.jmrit.display;
 
+import com.sun.java.util.collections.ArrayList;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import jmri.InstanceManager;
 import jmri.jmrit.catalog.CatalogPane;
 import jmri.jmrit.catalog.NamedIcon;
-import com.sun.java.util.collections.ArrayList;
 
 /**
  * Provides a simple editor for adding jmri.jmrit.display items
@@ -25,19 +27,28 @@ import com.sun.java.util.collections.ArrayList;
  * <P>
  * The "contents" List keeps track of all the objects added to the target
  * frame for later manipulation.
+ * <P>
+ * If you close the Editor window, the target is left alone and
+ * the editor window is just hidden, not disposed.
+ * If you close the target, the editor and target are removed,
+ * and dispose is run. To make this logic work, the PanelEditor
+ * is descended from a JFrame, not a JPanel.  That way it
+ * can control its own visibility.
  *
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
-public class PanelEditor extends JPanel {
+public class PanelEditor extends JFrame {
 
-    final Integer BKG       = new Integer(1);
-    final Integer ICONS     = new Integer(3);
-    final Integer LABELS    = new Integer(5);
-    final Integer TURNOUTS  = new Integer(7);
-    final Integer SENSORS   = new Integer(9);
+    final public static Integer BKG       = new Integer(1);
+    final public static Integer ICONS     = new Integer(3);
+    final public static Integer LABELS    = new Integer(5);
+    final public static Integer SECURITY  = new Integer(6);
+    final public static Integer TURNOUTS  = new Integer(7);
+    final public static Integer SIGNALS   = new Integer(9);
+    final public static Integer SENSORS   = new Integer(10);
 
     JTextField nextX = new JTextField("20",4);
     JTextField nextY = new JTextField("30",4);
@@ -76,8 +87,11 @@ public class PanelEditor extends JPanel {
 
     public CatalogPane catalog = new CatalogPane();
 
-    public PanelEditor() {
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+    public PanelEditor() { this("Panel Editor");}
+
+    public PanelEditor(String name) {
+        super(name);
+        this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 
         // common items
         JPanel common = new JPanel();
@@ -86,9 +100,9 @@ public class PanelEditor extends JPanel {
         common.add(nextX);
         common.add(new JLabel(" y:"));
         common.add(nextY);
-        this.add(common);
+        this.getContentPane().add(common);
 
-        this.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
+        this.getContentPane().add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
 
         // add a background image
         {
@@ -102,7 +116,7 @@ public class PanelEditor extends JPanel {
                     }
                 }
             );
-            this.add(panel);
+            this.getContentPane().add(panel);
         }
 
         // add a text label
@@ -117,10 +131,10 @@ public class PanelEditor extends JPanel {
                     }
                 }
             );
-            this.add(panel);
+            this.getContentPane().add(panel);
         }
 
-        this.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
+        this.getContentPane().add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
 
         // add an icon label
         {
@@ -141,10 +155,11 @@ public class PanelEditor extends JPanel {
                     }
                 }
             );
-            this.add(panel);
+            this.getContentPane().add(panel);
+
         }
 
-        this.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
+        this.getContentPane().add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
 
         // Add a turnout indicator for right-bound
         {
@@ -182,7 +197,7 @@ public class PanelEditor extends JPanel {
                     }
                 }
             );
-            this.add(panel);
+            this.getContentPane().add(panel);
         }
 
         // Add a turnout indicator for left-bound
@@ -223,7 +238,7 @@ public class PanelEditor extends JPanel {
                     }
                 }
             );
-            this.add(panel);
+            this.getContentPane().add(panel);
         }
 
         // Add a sensor indicator
@@ -261,11 +276,14 @@ public class PanelEditor extends JPanel {
                     }
                 }
             );
-            this.add(panel);
+            this.getContentPane().add(panel);
         }
 
         // allow for selection of icons
-        add(catalog);
+        this.getContentPane().add(catalog);
+
+        // register the result for later configuration
+        InstanceManager.configureManagerInstance().register(this);
 
     }  // end ctor
 
@@ -454,18 +472,55 @@ public class PanelEditor extends JPanel {
         target = f;
     }
     public JLayeredPane getTarget() { return target;}
-    JLayeredPane target;
+    public JLayeredPane target;
 
     /**
-     * Get the frame containing the results
+     * Get the frame containing the results (not the editor)
      */
     public JFrame getFrame() { return frame; }
     public void setFrame(JFrame f) {
         frame = f;
+        if (f.getWidth()<200 || f.getHeight()<200)
+            frame.setSize(200, 200);
+        // handle target window closes
+		frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		frame.addWindowListener(new java.awt.event.WindowAdapter() {
+			public void windowClosing(java.awt.event.WindowEvent e) {
+				targetWindowClosing(e);
+			}
+		});
     }
+
     JFrame frame;
 
     public ArrayList contents = new ArrayList();
+
+    /**
+     * Clean up when its time to make it all go away
+     */
+    public void dispose() {
+        // register the result for later configuration
+        InstanceManager.configureManagerInstance().deregister(this);
+
+        // clean up local links to push GC
+        contents.clear();
+        target = null;
+        frame = null;
+
+        // clean up GUI aspects
+        this.removeAll();
+        super.dispose();
+    }
+
+    /**
+     * The target window has been requested to close, so clean up
+     */
+    void targetWindowClosing(java.awt.event.WindowEvent e) {
+        frame.setVisible(false);  // removes the target window
+        this.setVisible(false);        // doesn't remove the editor!
+
+        dispose();
+    }
 
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PanelEditor.class.getName());
