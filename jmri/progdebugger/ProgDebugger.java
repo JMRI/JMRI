@@ -13,7 +13,7 @@ import jmri.ProgrammerException;
 /**
  * Debugging implementation of Programmer interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.15 $
+ * @version         $Revision: 1.16 $
  */
 public class ProgDebugger implements Programmer  {
 
@@ -46,7 +46,7 @@ public class ProgDebugger implements Programmer  {
                 ProgListener l = m;
                 public void run() {
                     log.debug("write CV reply");
-                    l.programmingOpReply(-1, 0); }  // 0 is OK status
+                    if (l!=null) l.programmingOpReply(-1, 0); }  // 0 is OK status
             };
         javax.swing.SwingUtilities.invokeLater(r);
     }
