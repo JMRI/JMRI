@@ -6,14 +6,19 @@ import javax.swing.JOptionPane;
 /**
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
- * @author     Paul Bender (C) 2002,2003
- * @version    $Revision: 1.24 $
+ * @author     Paul Bender (C) 2002,2003,2004
+ * @version    $Revision: 1.25 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
 {
     private boolean isAvailable;  // Flag  stating if the throttle is in 
                                   // use or not.
+    private javax.swing.Timer statTimer; // Timer used to periodically get 
+                                         // current status of the throttle 
+                                         // when throttle not available.
+    static final int statTimeoutValue = 100; // Interval to check the 
+                                             // status of the throttle
 
     static final int THROTTLEIDLE=0;  // Idle Throttle
     static final int THROTTLESTATSENT=1;  // Sent Status request
@@ -52,6 +57,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     protected void sendFunctionGroup1()
     {
+       if(requestState!=THROTTLEIDLE) return;
        XNetMessage msg=new XNetMessage(6);
        msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
        msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP1);
@@ -94,6 +100,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     protected void sendFunctionGroup2()
     {
+       if(requestState!=THROTTLEIDLE) return;
        XNetMessage msg=new XNetMessage(6);
         msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
         msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP2);
@@ -132,6 +139,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     protected void sendFunctionGroup3()
     {
+       if(requestState!=THROTTLEIDLE) return;
        XNetMessage msg=new XNetMessage(6);
        msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
        msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP3);
@@ -566,16 +574,16 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	              log.info("Loco " +getDccAddress() + " In use by another device");
 		      setIsAvailable(false);
                       // popup a message box that will trigger a status request
-		      int select=JOptionPane.showConfirmDialog(null,"Throttle for address " +this.getDccAddress() + " Taken Over, reaquire?","Taken Over",JOptionPane.YES_NO_OPTION);
-		      if(select==JOptionPane.YES_OPTION)
-		      {
+		      //int select=JOptionPane.showConfirmDialog(null,"Throttle for address " +this.getDccAddress() + " Taken Over, reaquire?","Taken Over",JOptionPane.YES_NO_OPTION);
+		      //if(select==JOptionPane.YES_OPTION)
+		      //{
                         // Send a request for status
-  		        sendStatusInformationRequest();
-			return;
-		      } else {
+  		        //sendStatusInformationRequest();
+			//return;
+		      //} else {
                         // Remove the throttle
                         // TODO
-		      }
+		      //}
 		   }
 	       }
            }
@@ -959,7 +967,39 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                 	                     new Boolean(this.isAvailable),
                         	             new Boolean(this.isAvailable = Available));
 		      }
+             /* if we're setting this to true, stop the timer,
+                otherwise start the timer. */
+	     if(Available==true) {
+		stopStatusTimer();
+	     } else startStatusTimer();
      }
+
+    /*
+     * Set up the status timer, and start it.
+     */
+    private void startStatusTimer() {
+       if(statTimer==null) {
+           statTimer = new javax.swing.Timer(statTimeoutValue,new java.awt.event.ActionListener() { 
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+                             /* If the timer times out, just send a status 
+                                request message */
+                             sendStatusInformationRequest();
+                        }
+                        });                           
+        }
+        statTimer.stop();
+        statTimer.setInitialDelay(statTimeoutValue);
+        statTimer.setRepeats(true);
+        statTimer.start();   
+    }
+
+    /*
+     * Stop the Status Timer 
+     */
+    private void stopStatusTimer() {
+           if(statTimer!=null) statTimer.stop();
+    }
+
     // register for notification
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetThrottle.class.getName());
