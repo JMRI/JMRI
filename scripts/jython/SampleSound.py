@@ -1,7 +1,10 @@
 # This is an example script for playing a sound in a JMRI script
 #
+# Author: Bob Jacobsen, copyright 2004
+# Part of the JMRI distribution
+#
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 
 import jmri
 

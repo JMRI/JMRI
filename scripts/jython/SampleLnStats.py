@@ -1,8 +1,11 @@
 # This is script for samples the LocoNet statistics
 # once per minute and prints them out
 #
+# Author: Bob Jacobsen, copyright 2004
+# Part of the JMRI distribution
+#
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 
 # make the jmri libraries easily availble
 import jmri

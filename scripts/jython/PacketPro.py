@@ -1,7 +1,10 @@
 # start the PacketPro Java application, including main menu
 #
+# Author: Bob Jacobsen, copyright 2004
+# Part of the JMRI distribution
+#
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 
 # Start the program
 import apps

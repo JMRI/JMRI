@@ -2,8 +2,11 @@
 #
 # It listens to a Memory object, and prints the new state to stdout
 #
+# Author: Bob Jacobsen, copyright 2004
+# Part of the JMRI distribution
+#
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 
 import jarray
 import jmri

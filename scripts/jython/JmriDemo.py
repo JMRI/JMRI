@@ -1,7 +1,10 @@
 # Python code to start a JmriDemo app, complete with menu bar
 #
+# Author: Bob Jacobsen, copyright 2004
+# Part of the JMRI distribution
+#
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 
 
 # start the program

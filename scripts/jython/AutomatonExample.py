@@ -4,8 +4,11 @@
 # forth between them by changing its direction when a sensor
 # detects the engine
 #
+# Author: Bob Jacobsen, copyright 2004
+# Part of the JMRI distribution
+#
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.6 $
+# $Revision: 1.7 $
 
 import jarray
 import jmri

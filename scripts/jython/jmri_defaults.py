@@ -7,8 +7,11 @@
 # a script, so changes will not take effect until after restarting
 # the program
 #
+# Author: Bob Jacobsen, copyright 2003, 2004
+# Part of the JMRI distribution
+#
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.8 $
+# $Revision: 1.9 $
 
 #define shortcuts to some managers
 import jmri

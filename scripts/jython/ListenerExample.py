@@ -1,8 +1,11 @@
 # example of an event listener for a JMRI class, in this case
 # a Turnout.
 #
+# Author: Bob Jacobsen, copyright 2004
+# Part of the JMRI distribution
+#
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 
 # First, define the listener.  This one just prints some
 # information on the change, but more complicated code is

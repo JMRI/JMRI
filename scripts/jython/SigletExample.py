@@ -3,8 +3,11 @@
 # It listens for changes to two sensors and a turnout,
 # and then recalculates a signal aspect based on the values
 #
+# Author: Bob Jacobsen, copyright 2004
+# Part of the JMRI distribution
+#
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.4 $
+# $Revision: 1.5 $
 
 import jarray
 import jmri

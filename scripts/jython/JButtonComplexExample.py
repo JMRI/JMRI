@@ -6,8 +6,11 @@
 # changed to include whatever desired, e.g. throw a turnout,
 # program a CV, etc.
 #
+# Author: Bob Jacobsen, copyright 2004
+# Part of the JMRI distribution
+#
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 
 import java
 import javax.swing
