@@ -19,7 +19,7 @@ import org.jdom.Element;
  * Table data model for display of variables in symbolic programmer.
  * Also responsible for loading from the XML file...
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version      $Revision: 1.8 $
+ * @version      $Revision: 1.9 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -136,7 +136,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             switch (state) {
             case CvValue.UNKNOWN:  	return "Unknown";
             case CvValue.READ:  	return "Read";
-            case CvValue.EDITTED:  	return "Editted";
+            case CvValue.EDITED:  	return "Edited";
             case CvValue.STORED:  	return "Stored";
             case CvValue.FROMFILE:  return "From file";
             default: return "inconsistent";
@@ -253,6 +253,10 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             _cvModel.addCV(""+(CV+1));  // ensure 2nd CV exists
             v = new LongAddrVariableValue(name, comment, readOnly,
                                           CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item);
+        } else if ( (child = e.getChild("shortAddressVal")) != null) {
+            v = new ShortAddrVariableValue(name, comment, readOnly,
+                                     CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item);
+
         } else if ( (child = e.getChild("splitVal")) != null) {
             if ( (a = child.getAttribute("min")) != null)
                 minVal = Integer.valueOf(a.getValue()).intValue();
@@ -290,7 +294,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             String val = a.getValue();
             if (log.isDebugEnabled()) log.debug("Found default value: "+val+" for "+name);
             v.setIntValue(Integer.valueOf(val).intValue());
-            _cvModel.getCvByNumber(CV).setState(VariableValue.FROMFILE);  // correct for transition to "editted"
+            _cvModel.getCvByNumber(CV).setState(VariableValue.FROMFILE);  // correct for transition to "edited"
         }
 
     }
@@ -436,7 +440,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     public boolean decoderDirty() {
         int len = rowVector.size();
         for (int i=0; i< len; i++) {
-            if (((VariableValue)(rowVector.elementAt(i))).getState() == CvValue.EDITTED ) return true;
+            if (((VariableValue)(rowVector.elementAt(i))).getState() == CvValue.EDITED ) return true;
         }
         return false;
     }
