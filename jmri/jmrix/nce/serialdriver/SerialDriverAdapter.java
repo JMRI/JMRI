@@ -22,7 +22,7 @@ import jmri.jmrix.nce.*;
  * not use any other options at configuration time.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Id: SerialDriverAdapter.java,v 1.2 2002-03-25 03:44:31 jacobsen Exp $
+ * @version			$Revision: 1.3 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
