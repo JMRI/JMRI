@@ -163,7 +163,8 @@ public final static String DEC_MODE(int s) { // encode decoder type as a string
 /* values for track status encoding for this slot */
 public final static int GTRK_PROG_BUSY    = 0x08;      /* 1 = programming track in this master is Busy         */
 public final static int GTRK_MLOK1        = 0x04;      /* 0 = Master is DT200, 1=Master implements LocoNet 1.1 */
-public final static int GTRK_IDLE         = 0x02;      /* 0 = Track paused, B'cast EMERG STOP, 1 = Power On    */
+public final static int GTRK_IDLE         = 0x02;      /* 0=TRACK is PAUSED, B'cast EMERG STOP.                */
+public final static int GTRK_POWER        = 0x02;      /* 1=DCC packets are ON in MASTER, Global POWER up      */
 
 public final static int FC_SLOT           = 0x7b;      /* Fast clock is in this slot                           */
 public final static int PRG_SLOT          = 0x7c;      /* This slot communicates with the programming track    */
