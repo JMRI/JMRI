@@ -11,29 +11,45 @@ import jmri.Timebase;
  * This clock cannot be stopped, so setRun doesnt do anything.
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SimpleTimebase implements Timebase {
 
 	public SimpleTimebase() {
 		// set to start counting from now
 		setTime(new Date());
+		pauseTime = null;
 	}
 	
     // methods for getting the current time
     public Date getTime() {
+    	// is clock stopped?
+    	if (pauseTime!=null) return new Date(pauseTime.getTime()); // to ensure not modified outside
+    	// clock running
     	long elapsedMSec = (new Date()).getTime() - startAtTime.getTime();
-    	long nowMSec = startAtTime.getTime()+(long)(mFactor*(double)elapsedMSec);
+    	long nowMSec = setTimeValue.getTime()+(long)(mFactor*(double)elapsedMSec);
     	return new Date(nowMSec);
     }
     	
     public void setTime(Date d) {
     	startAtTime = new Date();	// set now
-    	setTimeValue = d;
+    	setTimeValue = new Date(d.getTime());   // to ensure not modified from outside
     }
 
-    public void setRun(boolean y) {}
-    public boolean getRun() { return true; }
+    public void setRun(boolean run) {
+    	if (run && pauseTime!=null) {
+    		// starting of stopped clock
+    		setTime(pauseTime);
+    		pauseTime = null;
+    		
+    	} else if (!run && pauseTime == null) {
+    		// stopping of running clock:
+    		// Store time it was stopped, and stop it
+    		pauseTime = getTime();
+    	}
+    }
+    
+    public boolean getRun() { return pauseTime == null; }
 
     public void setRate(double factor) {
     	mFactor = factor;
@@ -64,6 +80,7 @@ public class SimpleTimebase implements Timebase {
 	double mFactor = 1.0;
 	Date startAtTime;
 	Date setTimeValue;
+	Date pauseTime;   // null value indicates clock is running
 	
 }
 
