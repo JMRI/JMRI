@@ -37,7 +37,7 @@ import jmri.*;
  * and Bob Jacobsen.  Some of the message formats are copyright Digitrax, Inc.
  *
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class AspectGenerator implements java.beans.PropertyChangeListener{
 
@@ -50,8 +50,16 @@ public class AspectGenerator implements java.beans.PropertyChangeListener{
 
         // load default values
         int headAddr = 257+(mSE.getNumber()-1)*8;
-        heads = new SignalHead[]{new SE8cSignalHead(headAddr), new SE8cSignalHead(headAddr+4),
-                                    new SE8cSignalHead(headAddr+6), new SE8cSignalHead(headAddr+2)};
+        heads = new SignalHead[]{new SE8cSignalHead(headAddr, ""+mSE.getNumber()+"-A"),
+                                new SE8cSignalHead(headAddr+4, ""+mSE.getNumber()+"-B"),
+                                new SE8cSignalHead(headAddr+6, ""+mSE.getNumber()+"-C"),
+                                new SE8cSignalHead(headAddr+2, ""+mSE.getNumber()+"-D")};
+
+        // register with SignalHeadManager
+        InstanceManager.signalHeadManagerInstance().register(heads[0]);
+        InstanceManager.signalHeadManagerInstance().register(heads[1]);
+        InstanceManager.signalHeadManagerInstance().register(heads[2]);
+        InstanceManager.signalHeadManagerInstance().register(heads[3]);
     }
 
     public AspectGenerator(int se) {
@@ -111,6 +119,7 @@ public class AspectGenerator implements java.beans.PropertyChangeListener{
      * Set a specific head to represent a specific speed.
      */
     void updateSpeed(SignalHead h, int speed) {
+        if (log.isDebugEnabled()) log.debug("Update head "+h.getSystemName()+":"+h.getUserName()+" to speed "+speed);
         if (speed>=55) h.setAppearance(SignalHead.GREEN);
         else if (speed>=35) h.setAppearance(SignalHead.FLASHYELLOW);
         else if (speed>=15) h.setAppearance(SignalHead.YELLOW);
