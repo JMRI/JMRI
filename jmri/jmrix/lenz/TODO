@@ -1,9 +1,10 @@
-TODO List for Lenz code (as of 9/28/2003):
+TODO List for Lenz code (as of 12/05/2003):
 1) Need to add  listeners to all classes that SEND messages so they 
 recieve the apropriate response messages.  On classes where more than 
 one instance may exists, need to syncronize the listeners for the messages
 that DO NOT include addresses (The Throttle is one of them).  
-2) Need to write Feedback code
+2) Need to make  Feedback code actually do something with sensors that are 
+created.
 3) Need to seperate constants for Xpressnet V1 from those for X-Bus V1 
 and V2.
 4) Implement a browser for the Command Station Locomotive database 
@@ -13,3 +14,4 @@ each class, instead of listen for ALL messages (i.e. need to make the mask
 parameter to "addXpressnetListener" work properly)
 6) Revise utility programs so they use a properties file for button 
 names/menu titles.
+
