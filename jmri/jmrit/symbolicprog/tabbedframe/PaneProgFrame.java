@@ -27,7 +27,7 @@ import org.jdom.Element;
 /**
  * Frame providing a command station programmer from decoder definition files.
  * @author			Bob Jacobsen   Copyright (C) 2001; D Miller Copyright 2003
- * @version			$Revision: 1.36 $
+ * @version			$Revision: 1.37 $
  */
 abstract public class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
@@ -550,7 +550,8 @@ abstract public class PaneProgFrame extends javax.swing.JFrame
             tabPane.addTab(name, p);
             int index = tabPane.indexOfTab(name);
             tabPane.setEnabledAt(index, false);
-            tabPane.setToolTipTextAt(index, "Tab disabled because there are no options in this category");
+            jmri.util.JTabbedPaneUtil.setToolTipTextAt(tabPane, index,
+                    "Tab disabled because there are no options in this category");
         } else {
             // here not showing tab at all
         }
