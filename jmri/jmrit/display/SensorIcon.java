@@ -8,7 +8,7 @@ import jmri.*;
 /**
  * SensorIcon provides a small icon to display a status of a Sensor.</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -36,24 +36,38 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             newSensor(null,name);
         sensor.addPropertyChangeListener(this);
     }
+    public Sensor getSensor() {
+        return sensor;
+    }
 
     // display icons
-    Icon active = new ImageIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/circuit-occupied.gif"));
-    Icon inactive = new ImageIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/circuit-empty.gif"));
-    Icon inconsistent = new ImageIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/circuit-error.gif"));
-    Icon unknown = new ImageIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/circuit-error.gif"));
+    String activeName = "resources/icons/smallschematics/tracksegments/circuit-occupied.gif";
+    Icon active = new ImageIcon(ClassLoader.getSystemResource(activeName));
+
+    String inactiveName = "resources/icons/smallschematics/tracksegments/circuit-empty.gif";
+    Icon inactive = new ImageIcon(ClassLoader.getSystemResource(inactiveName));
+
+    String inconsistentName = "resources/icons/smallschematics/tracksegments/circuit-error.gif";
+    Icon inconsistent = new ImageIcon(ClassLoader.getSystemResource(inconsistentName));
+
+    String unknownName = "resources/icons/smallschematics/tracksegments/circuit-error.gif";
+    Icon unknown = new ImageIcon(ClassLoader.getSystemResource(unknownName));
 
     public Icon getActiveIcon() { return active; }
-    public void setActiveIcon(Icon i) { active = i; displayState(sensorState()); }
+    public String getActiveIconName() { return activeName; }
+    public void setActiveIcon(Icon i, String n) { active = i; activeName = n; displayState(sensorState()); }
 
     public Icon getInactiveIcon() { return inactive; }
-    public void setInactiveIcon(Icon i) { inactive = i; displayState(sensorState()); }
+    public String getInactiveIconName() { return inactiveName; }
+    public void setInactiveIcon(Icon i, String n) { inactive = i; inactiveName = n; displayState(sensorState()); }
 
     public Icon getInconsistentIcon() { return inconsistent; }
-    public void setInconsistentIcon(Icon i) { inconsistent = i; displayState(sensorState()); }
+    public String getInconsistentIconName() { return inconsistentName; }
+    public void setInconsistentIcon(Icon i, String n) { inconsistent = i; inconsistentName = n; displayState(sensorState()); }
 
     public Icon getUnknownIcon() { return unknown; }
-    public void setUnknownIcon(Icon i) { unknown = i; displayState(sensorState()); }
+    public String getUnknownIconName() { return unknownName; }
+    public void setUnknownIcon(Icon i, String n) { unknown = i; unknownName = n; displayState(sensorState()); }
 
     public int getHeight() {
         return Math.max(

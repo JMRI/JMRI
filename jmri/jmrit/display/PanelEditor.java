@@ -23,7 +23,7 @@ import com.sun.java.util.collections.ArrayList;
  *
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class PanelEditor extends JPanel {
@@ -189,8 +189,11 @@ public class PanelEditor extends JPanel {
 
             SensorIcon to = new SensorIcon();
             activeIcon = to.getActiveIcon();
+            activeIconName = to.getActiveIconName();
             inactiveIcon = to.getInactiveIcon();
+            inactiveIconName = to.getInactiveIconName();
             activeIconLabel = new JLabel(activeIcon);
+
             inactiveIconLabel = new JLabel(inactiveIcon);
 
             panel.add(new JLabel("indicate sensor: "));
@@ -325,8 +328,8 @@ public class PanelEditor extends JPanel {
      */
     void addSensor() {
         SensorIcon l = new SensorIcon();
-        if (activeIcon!=null) l.setActiveIcon(activeIcon);
-        if (inactiveIcon!=null) l.setInactiveIcon(inactiveIcon);
+        if (activeIcon!=null) l.setActiveIcon(activeIcon, activeIconName);
+        if (inactiveIcon!=null) l.setInactiveIcon(inactiveIcon, inactiveIconName);
         l.setSensor(nextSensor.getText());
 
         log.debug("sensor height, width: "+l.getHeight()+" "+l.getWidth());

@@ -12,7 +12,7 @@ import javax.swing.*;
  * Handle configuration for display.PanelEditor panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class PanelEditorXml implements XmlAdapter {
 
@@ -45,6 +45,7 @@ public class PanelEditorXml implements XmlAdapter {
                 if (e!=null) panel.addContent(e);
             } catch (Exception e) {
                 log.error("Error storing panel element: "+e);
+                e.printStackTrace();
             }
         }
 
