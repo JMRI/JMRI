@@ -14,10 +14,11 @@ import java.util.Date;
  * <P>
  * The Rate and Run parameters are bound, so you can listen for them
  * changing.  The Time parameters is not bound, because it changes
- * continuously.  Ask for its value when needed.
+ * continuously.  Ask for its value when needed, or add a 
+ * a listener for the changes in the "minute" value using {@link #addMinuteChangeListener}
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public interface Timebase {
 
@@ -40,6 +41,16 @@ public interface Timebase {
      * Remove a request for a call-back when a bound property changes.
      */
     public void removePropertyChangeListener(java.beans.PropertyChangeListener l);
+
+    /**
+     * Request a call-back when the minutes place of the time changes.
+     */
+    public void addMinuteChangeListener(java.beans.PropertyChangeListener l);
+
+    /**
+     * Remove a request for call-back when the minutes place of the time changes.
+     */
+    public void removeMinuteChangeListener(java.beans.PropertyChangeListener l);
 
     /**
      * Remove references to and from this object, so that it can
