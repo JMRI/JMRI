@@ -12,6 +12,9 @@
  * PROG_ is for programing related messages
  * LOCO_ is for locomotive related commands
  * OPS_MODE_ is for operations mode programing commands
+ * LI_ is for commands that are for messages to and from the computer 
+ * interface
+ * LI101_ is for commands specific to the LI101
  *
  * A few variables don't have a prefix.  The name should be self 
  * explanitory, but a prefix may be added later.
@@ -140,7 +143,7 @@ public final static int CS_REQUEST = 0x21;
 the message */
 public final static int EMERGENCY_OFF = 0x80;
 public final static int RESUME_OPS    = 0x81;
-public final static int SERVICE_MODE_RESULT = 0x10;
+public final static int SERVICE_MODE_CSRESULT = 0x10;
 public final static int CS_VERSION = 0x21;
 public final static int CS_STATUS  = 0x24;
 
@@ -268,6 +271,14 @@ public final static int CS_MULTI_UNIT_REQ_FWD = 0x03;
 public final static int CS_MULTI_UNIT_REQ_BKWD = 0x04;
 
 /* The following are for information requests from the LI100/LI100F/LI101*/
+
+/* LI100/LI100F/LI101 information (version) request */
+public final static int LI_VERSION_REQUEST = 0xF0;
+/* The responce to the above */
+public final static int LI_VERSION_RESPONCE = 0x02;
+
+
+/* request to the LI101 */
 public final static int LI101_REQUEST = 0xF2;
 /* The following are the two possible values for the second byte of a 
 request to the LI101 */
