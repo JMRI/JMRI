@@ -34,7 +34,6 @@ properties -a \
         jmri/jmrix/loconet/LocoNetBundle.properties \
         \
         apps/AppsBundle_de.properties \
-        #        apps/AppsConfigBundle_de.properties \
         jmri/jmrit/display/DisplayBundle_de.properties \
         jmri/jmrit/JmritDebugBundle_de.properties \
         jmri/jmrit/JmritToolsBundle_de.properties \
@@ -43,6 +42,7 @@ properties -a \
         jmri/jmrix/loconet/LocoNetBundle_de.properties \
         \
         jmri/jmrit/roster/JmritRosterBundle_en_GB.properties 
+# missing above:   apps/AppsConfigBundle_de.properties
 
 # we're still missing a CodeWarrior target
 # and due to repository mismatches (cant checkout two files from different
