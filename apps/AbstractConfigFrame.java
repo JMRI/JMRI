@@ -24,7 +24,7 @@ import org.jdom.Attribute;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002. AC 11/09/2002 Added SPROG support
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 abstract public class AbstractConfigFrame extends JFrame {
 
@@ -773,6 +773,9 @@ abstract public class AbstractConfigFrame extends JFrame {
             //
             jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter a
                 = new jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter();
+            a.configureBaudRate(getCurrentBaudRate());
+            a.configureOption1(getCurrentOption1Setting());
+            a.configureOption2(getCurrentOption2Setting());
             a.openPort(portName, "JMRI/DecoderPro");
             a.configure();
 
