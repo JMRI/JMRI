@@ -7,3 +7,28 @@ by the JMRI project.  build.xml is the ant build control file for
 performing these transformations. In general, these transformations put 
 their results in "pages" subdirectory that is not present in CVS.
 
+
+Ant targets:
+
+ xslt       run the whole sequence of processing
+
+ init       create needed directories
+ clean      remove compilation results to force rebuild
+ copyDTD    ensure local DTD file copies present where needed for processing
+ copyXML    ensure local XML file copies present where needed for processing
+ 
+ index      create a decoder index page
+ 			uses DecoderModelIndex.xsl
+ 			
+ models     tranform definitions into web pages
+ 			uses DecoderModelList.xsl
+ 			
+ selection  create HTML decoder selection guide listing various properties
+ 			uses SelectionGuide.xsl
+ 			
+ csv        create CSV file listing CVs available on all decoders
+ 			uses CSVsummary.xsl, interestingCVs.xml
+ 			
+ cvsummary  create HTML page listing CVs available on all decoders
+  			uses CVsummary.xsl, interestingCVs.xml
+ 
