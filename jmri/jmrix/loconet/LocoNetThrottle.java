@@ -11,7 +11,7 @@ public class LocoNetThrottle implements DccThrottle
     private float speedIncrement;
     private int address;
     private boolean isForward;
-    private boolean f0, f1, f2, f3, f4, f5, f6, f7, f8;
+    private boolean f0, f1, f2, f3, f4, f5, f6, f7, f8, f9;
 
     private LocoNetSlot slot;
     private LocoNetInterface network;
@@ -246,7 +246,18 @@ public class LocoNetThrottle implements DccThrottle
         sendHigherFunctions();
     }
 
+    public boolean getF9()
+    {
+        return f8;
+    }
 
+    public void setF9(boolean f9)
+    {
+        this.f8 = f8;
+		// No f9 in loconet
+    }
+
+	
     /**
      * Locomotive identification.  The exact format is defined by the
      * specific implementation, but its intended that this is a user-specified
