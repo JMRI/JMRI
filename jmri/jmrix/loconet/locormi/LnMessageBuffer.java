@@ -5,7 +5,7 @@ package jmri.jmrix.loconet.locormi;
  * Description:
  * Copyright:    Copyright (c) 2002
  * @author   Alex Shepherd
- * @version $Id: LnMessageBuffer.java,v 1.4 2002-03-30 00:38:06 kiwi64ajs Exp $
+ * @version $Revision: 1.5 $
  */
 
 import com.sun.java.util.collections.LinkedList;
@@ -15,6 +15,8 @@ import jmri.jmrix.loconet.*;
 
 public class LnMessageBuffer extends UnicastRemoteObject implements LnMessageBufferInterface, LocoNetListener
 {
+    // versioned Jul 17, 2003 - was CVS revision 1.5
+    static final long serialVersionUID = -8483947910723134277L;
   LinkedList  messageList = null ;
 
   public LnMessageBuffer() throws RemoteException

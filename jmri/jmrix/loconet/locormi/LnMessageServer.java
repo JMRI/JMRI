@@ -6,7 +6,7 @@ package jmri.jmrix.loconet.locormi;
  * Copyright:    Copyright (c) 2002
  * Company:
  * @author
- * @version $Id: LnMessageServer.java,v 1.5 2002-04-12 09:37:57 kiwi64ajs Exp $
+ * @version $Revision: 1.6 $
  */
 
  // -Djava.security.policy=lib/security.policy
@@ -23,6 +23,9 @@ import jmri.jmrix.loconet.*;
 
 public class LnMessageServer extends UnicastRemoteObject implements LnMessageServerInterface
 {
+    // versioned Jul 17, 2003 - was CVS revision 1.5
+    static final long serialVersionUID = 8934498417916438203L;
+
   private static LnMessageServer self = null ;
   static final String serviceName = "LocoNetServer" ;
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnMessageServer.class.getName());
