@@ -1,11 +1,14 @@
 // LnSensorTest.java
 package jmri.jmrix.loconet;
-import junit.framework.*;
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
- * Tests for the jmri.jmrix.loconet.LnSensor class
+ * Tests for the jmri.jmrix.loconet.LnSensor class.
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class LnSensorTest extends TestCase {
 
@@ -24,7 +27,7 @@ public class LnSensorTest extends TestCase {
         // prepare an interface
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
-        LnSensor t = new LnSensor("LS043");
+        LnSensor t = new LnSensor("LS044");
         LocoNetMessage m;
 
         // notify the Ln that somebody else changed it...

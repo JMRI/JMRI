@@ -12,30 +12,36 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.LnSensorManagerTurnout class.
  * @author	Bob Jacobsen  Copyright 2001
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class LnSensorManagerTest extends TestCase  {
 
-	public void testLnSensorCreate() {
-		// create and register the manager object
-		LnSensorManager l = new LnSensorManager();
-		jmri.InstanceManager.setSensorManager(l);
+    public void testLnSensorCreate() {
+        // prepare an interface
+        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
+        // create and register the manager object
+        LnSensorManager l = new LnSensorManager();
+        jmri.InstanceManager.setSensorManager(l);
 
-	}
+    }
 
-	public void testByAddress() {
-		// create and register the manager object
-		LnSensorManager l = new LnSensorManager();
+    public void testByAddress() {
+        // prepare an interface
+        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
+        // create and register the manager object
+        LnSensorManager l = new LnSensorManager();
 
-		// sample turnout object
-		Sensor t = l.newSensor("LS22", "test");
+        // sample turnout object
+        Sensor t = l.newSensor("LS22", "test");
 
-		// test get
-		Assert.assertTrue(t == l.getByUserName("test"));
-		Assert.assertTrue(t == l.getBySystemName("LS22"));
-	}
+        // test get
+        Assert.assertTrue(t == l.getByUserName("test"));
+        Assert.assertTrue(t == l.getBySystemName("LS22"));
+    }
 
-	public void testMisses() {
+    public void testMisses() {
+        // prepare an interface
+        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 		// create and register the manager object
 		LnSensorManager l = new LnSensorManager();
 
@@ -64,7 +70,7 @@ public class LnSensorManagerTest extends TestCase  {
 		lnis.sendTestMessage(m1);
 
 		// see if sensor exists
-		Assert.assertTrue(null != l.getBySystemName("LS43"));
+		Assert.assertTrue(null != l.getBySystemName("LS44"));
 	}
 
 	public void testAsAbstractFactory () {
@@ -110,5 +116,10 @@ public class LnSensorManagerTest extends TestCase  {
 	}
 
 	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnSensorManagerTest.class.getName());
+
+    // The minimal setup for log4J
+    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
+    protected void setUp() { log4jfixtureInst.setUp(); }
+    protected void tearDown() { log4jfixtureInst.tearDown(); }
 
 }

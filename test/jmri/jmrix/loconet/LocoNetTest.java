@@ -1,18 +1,13 @@
 package jmri.jmrix.loconet;
 
-import java.io.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.jdom.*;
-import org.jdom.output.*;
-
-import jmri.jmrix.loconet.locogen.*;
 
 /**
- * Tests for the jmri.jmrix.loconet package
+ * Tests for the jmri.jmrix.loconet package.
  * @author	Bob Jacobsen Copyright 2001, 2003
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class LocoNetTest extends TestCase {
 
