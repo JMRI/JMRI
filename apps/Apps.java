@@ -19,7 +19,7 @@ import javax.swing.*;
  * Base class for Jmri Apps
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class Apps extends JPanel {
 
@@ -160,7 +160,8 @@ public class Apps extends JPanel {
         menuBar.add(devMenu);
         devMenu.add(new AbstractAction("Minimize"){
             public void actionPerformed(ActionEvent e) {
-                frame.setState(Frame.ICONIFIED);
+                // the next line works on Java 2, but not 1.1.8
+                // frame.setState(Frame.ICONIFIED);
             }
         });
     }
