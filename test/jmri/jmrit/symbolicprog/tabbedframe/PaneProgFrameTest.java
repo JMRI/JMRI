@@ -24,7 +24,7 @@ import jmri.jmrit.roster.*;
  * Test PaneProgFrame
  *
  * @author			Bob Jacobsen
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class PaneProgFrameTest extends TestCase {
 
@@ -39,7 +39,7 @@ public class PaneProgFrameTest extends TestCase {
                                             "test frame", "programmers/Basic.xml",
                                             new jmri.progdebugger.ProgDebugger()) {
                 // dummy implementations
-                JPanel getModePane() { return null; }
+                JPanel getModePane() { return new JPanel(); }
             };
 
         // invoke
