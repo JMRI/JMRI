@@ -11,28 +11,70 @@ public class SlotManagerTest extends TestCase {
 	super(s);
     }
 
+    /**
+     * Local member to recall when a SlotListener has been invoked.
+     */
+    private LocoNetSlot testSlot;
+
     public void testGetSlotSend()  {
         SlotManager slotmanager = new SlotManager();
-        SlotListener p2=  null;
-        slotmanager.slotFromLocoAddress(21, p2);
+        testSlot = null;
+        SlotListener p2=  new SlotListener(){
+            public void notifyChangedSlot(LocoNetSlot l) {
+                testSlot = l;
+            }
+        };
+        slotmanager.slotFromLocoAddress(0x2134, p2);
         Assert.assertEquals("slot request message",
-			    "ef e 7c 20 0 0 0 0 2 b 7f 0 0 0 ",
+			    "bf 42 34 0 ",
 			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
+        Assert.assertEquals("hash length", 1, slotmanager.mLocoAddrHash.size());
+        Assert.assertEquals("key present", true,
+            slotmanager.mLocoAddrHash.containsKey(new Integer(0x2134)));
+        Assert.assertEquals("value present", true,
+            slotmanager.mLocoAddrHash.containsValue(p2));
     }
 
     public void testGetSlotRcv() {
         SlotManager slotmanager = new SlotManager();
-        SlotListener p2=  null;
+        testSlot = null;
+        SlotListener p2=  new SlotListener(){
+            public void notifyChangedSlot(LocoNetSlot l) {
+                testSlot = l;
+            }
+        };
+        slotmanager.slotFromLocoAddress(0x2134, p2);
+        // echo of the original message
         LocoNetMessage m1 = new LocoNetMessage(4);
-        m1.setOpCode(0x00);
-        LocoNetMessage m2 = new LocoNetMessage(4);
-        m2.setOpCode(0x00);
+        m1.setOpCode(0xBF);
+        m1.setElement(1, 0x42);
+        m1.setElement(2, 0x34);
+        slotmanager.message(m1);
+        // reply says its in slot 4
+        LocoNetMessage m2 = new LocoNetMessage(14);
+        m2.setElement(0, 0xE7);
+        m2.setElement(1, 0xE );
+        m2.setElement(2, 0xB );
+        m2.setElement(3, 3 );
+        m2.setElement(4, 0x34 );
+        m2.setElement(5, 0 );
+        m2.setElement(6, 0 );
+        m2.setElement(7, 4 );
+        m2.setElement(8, 0 );
+        m2.setElement(9, 0x42 );
+        m2.setElement(10, 0 );
+        m2.setElement(11, 0 );
+        m2.setElement(12, 0 );
+        m2.setElement(13, 0x6c );
+        slotmanager.message(m2);
+        Assert.assertEquals("returned slot", slotmanager.slot(11), testSlot);
+        // and make sure it forgets
+        testSlot = null;
         slotmanager.message(m1);
         slotmanager.message(m2);
-        Assert.assertEquals("slot request message",
-			    "ef e 7c 20 0 0 0 0 2 b 7f 0 0 0 ",
-			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
-    }
+        Assert.assertEquals("returned slot", null, testSlot);
+     }
+
     public void testReadCVPaged() throws jmri.ProgrammerException {
         SlotManager slotmanager = new SlotManager();
         int CV1=  12;
