@@ -21,6 +21,7 @@ import jmri.Programmer;
 import jmri.ProgListener;
 import jmri.ProgModePane;
 import jmri.jmrit.symbolicprog.*;
+import jmri.jmrit.decoderdefn.*;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -57,6 +58,14 @@ public class PaneProgFrame extends javax.swing.JFrame  {
 		// install items in GUI
 		// most of this is done from XML in readConfig() function
 		getContentPane().add(tabPane);
+		
+		// add buttons
+		JPanel bottom = new JPanel();
+		bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
+		bottom.add(new JButton("Read all"));
+		bottom.add(new JButton("Confirm all"));
+		bottom.add(new JButton("Write all"));
+		getContentPane().add(bottom);
 		
 		// pack  - this should be done again later after config
 		pack();
@@ -105,7 +114,7 @@ public class PaneProgFrame extends javax.swing.JFrame  {
 	
 	public void newPane(String name, Element pane, Namespace ns) {
 	
-		// create a panel to add as a new tab
+		// create a panel to hold columns
 		JPanel p = new JPanel();
 		p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
 		
@@ -123,6 +132,23 @@ public class PaneProgFrame extends javax.swing.JFrame  {
 		}
 		// add glue to the right to allow resize - but this isn't working as expected? Alignment?
 		p.add(Box.createHorizontalGlue());
+
+		// create the final body pane
+		JPanel body = new JPanel();
+		body.setLayout(new BoxLayout(body, BoxLayout.Y_AXIS));
+		
+		// add the tab to the frame
+		tabPane.addTab(name, body);
+
+		// add column pane
+		body.add(p);
+		// add buttons
+		JPanel bottom = new JPanel();
+		bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
+		bottom.add(new JButton("Read sheet"));
+		bottom.add(new JButton("Confirm sheet"));
+		bottom.add(new JButton("Write sheet"));
+		body.add(bottom);
 	}
 	
 	public void newColumn(Element column, Namespace ns, JComponent pane) {
@@ -149,7 +175,24 @@ public class PaneProgFrame extends javax.swing.JFrame  {
 				c.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
 			}
 			else if (name.equals("label")) { // its  a label
-				c.add(new JLabel(e.getAttribute("label").getValue()));
+				JLabel l = new JLabel(e.getAttribute("label").getValue());
+				l.setAlignmentX(1.0f);
+				c.add(l);
+			}
+			else if (name.equals("cvtable")) {
+				// this is copied from SymbolicProgFrame
+				JTable			cvTable		= new JTable(cvModel);
+				JScrollPane 	cvScroll	= new JScrollPane(cvTable);
+				cvTable.setDefaultRenderer(JTextField.class, new ValueRenderer());
+				cvTable.setDefaultRenderer(JButton.class, new ValueRenderer());
+				cvTable.setDefaultEditor(JTextField.class, new ValueEditor());
+				cvTable.setDefaultEditor(JButton.class, new ValueEditor());
+				cvScroll.setColumnHeaderView(cvTable.getTableHeader());
+				// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
+				// instead of forcing the columns to fill the frame (and only fill)
+				cvTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+				c.add(cvScroll);
+				
 			} else { // its a mistake
 				log.error("No code to handle element of type "+e.getName());
 			}
@@ -159,70 +202,85 @@ public class PaneProgFrame extends javax.swing.JFrame  {
 	}
 	
 	public void newVariable( Element var, Namespace ns, JComponent col) {
+
+		// get the name
+		String name = var.getAttribute("name").getValue();
+
+		// if it doesn't exist, do nothing
+		if (findVarIndex(name)<0) {
+			if (log.isInfoEnabled()) log.info("Variable \""+name+"\" not found, omitted");
+			return;
+		}
+		
 		// create a panel to add as a new variable
 		JPanel v = new JPanel();
 		
 		// check label orientation
-		int orient = BoxLayout.X_AXIS;
 		Attribute attr;
 		String layout ="left";
-		if ( (attr = var.getAttribute("layout")) != null 
-				&& (layout = attr.getValue()) != null
-				&& (layout.equals("above") || layout.equals("below"))) 
-			orient = BoxLayout.Y_AXIS;		
+		if ( (attr = var.getAttribute("layout")) != null && attr.getValue() != null)
+				layout = attr.getValue(); 
 		
-		v.setLayout(new BoxLayout(v, orient));
-		//if (orient == BoxLayout.Y_AXIS)
-		//	v.setLayout(new BoxLayout(v, orient));
-		//else 
-		//	v.setLayout(new FlowLayout());
-		
-		// get the name, load it up
-		String name = var.getAttribute("name").getValue();
-		
-		// if label right or below, include the represenation first
-		if (layout.equals("right") || layout.equals("below")) {
-			addRepresentation(name, v, var, ns);
-		} else {
-			v.add(Box.createHorizontalGlue());  // meant to justify, but isn't working?
-		}
-
 		// load label if specified, else use name
 		String label = name;
 		String temp ="";
 		if ( (attr = var.getAttribute("label")) != null 
-				&& (temp = attr.getValue()) != null
-				&& !(temp.equals("")))   // "" is the default
+				&& (temp = attr.getValue()) != null )
 			label = temp;
-		v.add(new JLabel(label));
+		JLabel l = new JLabel(label);
 
-		// otherwise, include the representation here
-		if (! (layout.equals("right") || layout.equals("below")) ) {
-			addRepresentation(name, v, var, ns);
-		} else {
-			v.add(Box.createHorizontalGlue());  // meant to justify, but isn't working?
-		}
+		JComponent rep = getRepresentation(name, var, ns);
 		
+		// now handle the four orientations
+		// assemble v from label, rep
+		
+		if (layout.equals("left")) {
+			v.setLayout(new BoxLayout(v, BoxLayout.X_AXIS));
+			v.add(Box.createHorizontalGlue());
+			v.add(l);
+			v.add(rep);
+			v.setAlignmentX(1.0f);
+		} else if (layout.equals("right")) {
+			v.setLayout(new BoxLayout(v, BoxLayout.X_AXIS));
+			v.add(rep);
+			v.add(l);
+			v.add(Box.createHorizontalGlue());
+			v.setAlignmentX(0.0f);
+		} else if (layout.equals("above")) {
+			v.setLayout(new BoxLayout(v, BoxLayout.Y_AXIS));
+			v.add(l);
+			v.add(rep);
+			v.setAlignmentX(1.0f);
+		} else if (layout.equals("below")) {
+			v.setLayout(new BoxLayout(v, BoxLayout.Y_AXIS));
+			v.add(rep);
+			v.add(l);
+			v.setAlignmentX(1.0f);
+		} else {
+			log.error("layout internally inconsistent: "+layout);
+			return;
+		}
+
 		// add to column
 		col.add(v);
 		
 	}
 
-	public void addRepresentation(String name, JComponent v, Element var, Namespace ns) {
+	public JComponent getRepresentation(String name, Element var, Namespace ns) {
 		int i = findVarIndex(name);
-
+		JComponent rep = null;
 		String format = "default";
 		Attribute attr;
 		if ( (attr = var.getAttribute("format")) != null && attr.getValue() != null) format = attr.getValue();
 
 		if (i>= 0) {
-			JComponent rep = getRep(i, format);
+			rep = getRep(i, format);
 			rep.setMaximumSize(rep.getPreferredSize());
-			v.add(rep);
 			// set tooltip if specified
 			if ( (attr = var.getAttribute("tooltip")) != null && attr.getValue() != null) 
 				rep.setToolTipText(attr.getValue());
 		}
+		return rep;
 	}
 
 	public void loadVariables(Element decoder, Namespace ns) {

@@ -18,7 +18,7 @@ import java.awt.Component;
 import javax.swing.JLabel;
 import java.awt.Color;
 
-public abstract class VariableValue implements java.beans.PropertyChangeListener {
+public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
 
 	// The actual stored value is internal, not showing in the interface.
 	// Instead, you can get a (Object) representation for display in 
@@ -42,7 +42,7 @@ public abstract class VariableValue implements java.beans.PropertyChangeListener
 	abstract public Object rangeVal();
 	
 	// method to handle color changes for states
-	// make abstract!
+	// make abstract & move to AbstractValue!
 	void setColor(Color c) {}
 
 	// methods implemented here:
@@ -75,13 +75,6 @@ public abstract class VariableValue implements java.beans.PropertyChangeListener
 	public String getMask() { return _mask; }
 	private String _mask;
 
-	// states
-	public static final int UNKNOWN  =   0;
-	public static final int EDITTED  =   4;
-	public static final int READ     =  16;
-	public static final int STORED   =  64;
-	public static final int FROMFILE = 256;
-
 	public int getState()  { return _state; }
 	public void setState(int state) {
 		switch (state) {
@@ -96,14 +89,7 @@ public abstract class VariableValue implements java.beans.PropertyChangeListener
 		_state = state;
 	}
 	private int _state = UNKNOWN;
-	
-	// color management - null means to use default for the component; where do we store that?
-	static final Color COLOR_UNKNOWN  = Color.red;
-	static final Color COLOR_EDITTED  = Color.yellow;
-	static final Color COLOR_READ     = null;
-	static final Color COLOR_STORED   = null;
-	static final Color COLOR_FROMFILE = Color.yellow;
-	
+		
 	// busy during read, write operations
 	public boolean isBusy() { return _busy; }
 	protected void setBusy(boolean busy) {

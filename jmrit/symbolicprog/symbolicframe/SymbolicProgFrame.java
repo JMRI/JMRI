@@ -21,6 +21,7 @@ import jmri.Programmer;
 import jmri.ProgListener;
 import jmri.ProgModePane;
 import jmri.jmrit.symbolicprog.*;
+import jmri.jmrit.decoderdefn.*;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -98,7 +99,9 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 		// instead of forcing the columns to fill the frame (and only fill)
 		variableTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		
+		cvTable.setDefaultRenderer(JTextField.class, new ValueRenderer());
 		cvTable.setDefaultRenderer(JButton.class, new ValueRenderer());
+		cvTable.setDefaultEditor(JTextField.class, new ValueEditor());
 		cvTable.setDefaultEditor(JButton.class, new ValueEditor());
 		cvScroll.setColumnHeaderView(cvTable.getTableHeader());
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
@@ -465,7 +468,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 			fmt.setIndent(true);
 			fmt.output(doc, o);
 			
-			// make file as OK
+			// mark file as OK
 			variableModel.setFileDirty(false);
 			}
 		catch (Exception e) {

@@ -10,10 +10,17 @@
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
+import jmri.jmrit.symbolicprog.KnownLocoSelPane;
+import jmri.jmrit.symbolicprog.NewLocoSelPane;
+
 import java.awt.event.ActionEvent;
 
-import javax.swing.*;
 import java.awt.*;
+import java.io.*;
+import javax.swing.*;
+import javax.swing.border.*;
+import org.jdom.*;
+import org.jdom.input.*;
 
 public class PaneProgAction 			extends AbstractAction {
 
@@ -21,113 +28,111 @@ public class PaneProgAction 			extends AbstractAction {
 	
     public void actionPerformed(ActionEvent e) {
 
-		// create a dummy paned frame
+		// create the initial frame that steers
 		JFrame f = new JFrame();
 		f.getContentPane().setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
-				
-		System.out.println("red           "+Color.red);
-		System.out.println("bright red    "+Color.red.brighter());
-		System.out.println("dark red      "+Color.red.darker());
 
-		System.out.println("green         "+Color.green);
-		System.out.println("bright green  "+Color.green.brighter());
-		System.out.println("dark green    "+Color.green.darker());
+		String[] decoderLabels = {"<none>", "Lenz LE230", "Digitrax DH142", "Digitrax DH121"};
+		String[] locoLabels = {"<none>", "UP 775", "UP 777", "SP 4738"};
+
+		// new Loco on programming track
+		JLabel last;
+		JPanel pane1 = new NewLocoSelPane();
 		
-		System.out.println("yellow        "+Color.yellow);
-		System.out.println("bright yellow "+Color.yellow.brighter());
-		System.out.println("dark yellow   "+Color.yellow.darker());
-
-		System.out.println("black         "+Color.black);
-		System.out.println("gray          "+Color.gray);
-		System.out.println("white         "+Color.white);
+		// Known loco on programming track
+		JPanel pane2 = new KnownLocoSelPane();
+			
+		// Known loco on main
+		JPanel pane3 = new JPanel();
+			pane3.setLayout(new BoxLayout(pane3, BoxLayout.Y_AXIS));
+			pane3.add(last = new JLabel("Known locomotive on main track"));
+			last.setBorder(new EmptyBorder(6,0,6,0));
+				JPanel pane3a = new JPanel();
+				pane3a.setLayout(new BoxLayout(pane3a, BoxLayout.X_AXIS));
+				pane3a.add(new JLabel("Locomotive address"));
+				JTextField j = new JTextField(6);
+				j.setMaximumSize(j.getPreferredSize());
+				pane3a.add(j);
+				pane3a.add(new JLabel("Select from roster:"));
+				pane3a.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+			pane3.add(pane3a);
+			pane3.add(new JComboBox(locoLabels));
+			JButton go3 = new JButton("Open programmer");
+			pane3.add(go3);
+			pane3.setBorder(new EmptyBorder(6,6,6,6));
+			
+		JPanel pane4 = new JPanel();
+			pane4.add(new JButton("Update Roster"));
+			pane4.setBorder(new EmptyBorder(6,6,6,6));
+			pane4.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+			
+		// load primary frame
+		f.getContentPane().add(pane1);
+		f.getContentPane().add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
+		f.getContentPane().add(pane2);
+		f.getContentPane().add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
+		f.getContentPane().add(pane3);
+		f.getContentPane().add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
+		f.getContentPane().add(pane4);
 		
-		Color myred = new Color(1.0f, 0.5f, 0.5f);
-		Color mygreen = new Color(0.5f, 1.0f, 0.5f);
-		Color myyellow = new Color(1.0f, 1.0f, 0.5f);
-		
-		Color c1 = Color.white;
-		Color c2 = Color.red;
-		
-		Color mixred = new Color((c1.getRed()+c2.getRed())/2.f, (c1.getGreen()+c2.getGreen())/2.f,(c1.getBlue()+c2.getBlue())/2.f );
-		
-		JTabbedPane t = new JTabbedPane();
-		
-				JPanel p1 = new JPanel();
-				JComponent temp;
-				p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
-					JPanel p11 = new JPanel();
-						p11.setLayout(new GridLayout(6,2));
-						p11.add(new JLabel("Address:"));
-						p11.add(temp = new JTextField("mixed red"));
-						temp.setBackground(myred);
-						
-						p11.add(new JLabel("Acceleration:"));
-						p11.add(temp = new JTextField("mixed yellow"));
-						temp.setBackground(myyellow);
-						
-						p11.add(new JLabel("Deceleration:"));
-						p11.add(temp = new JTextField("mixed green"));
-						temp.setBackground(mygreen);
-
-						p11.add(new JLabel("Max Voltage:"));
-						p11.add(temp = new JTextField("green"));
-						temp.setBackground(Color.green);
-
-						p11.add(new JLabel("Mid Voltage:"));
-						p11.add(temp = new JTextField("yellow"));
-						temp.setBackground(Color.yellow);
-
-						p11.add(new JLabel("Start Voltage:"));
-						p11.add(temp = new JTextField("red"));
-						temp.setBackground(Color.red);
-
-					p1.add(p11);
-					p1.add(new JSeparator(javax.swing.SwingConstants.VERTICAL));
-					JPanel p12 = new JPanel();
-						p12.setLayout(new GridLayout(6,1));
-						p12.add(temp = new JCheckBox("Reverse direction"));
-						temp.setBackground(Color.red);
-
-						p12.add(temp = new JCheckBox("28/128 speed steps"));
-						temp.setBackground(Color.red.darker());
-
-						p12.add(temp = new JCheckBox("Analog mode"));
-						temp.setBackground(Color.green);
-
-						p12.add(temp = new JCheckBox("Use speed table"));
-						temp.setBackground(Color.green.darker());
-
-						p12.add(temp = new JCheckBox("Long Address"));
-						temp.setBackground(Color.yellow);
-
-						p12.add(temp = new JCheckBox("Long Address"));
-						temp.setBackground(Color.yellow.darker());
-					p1.add(p12);				
-				t.addTab("Basics", p1);
-				
-				JPanel p2 = new JPanel();
-					p2.setLayout(new GridLayout(3,2));
-				t.addTab("CVs", p2);
-				
-				JPanel p3 = new JPanel();
-					p3.setLayout(new GridLayout(3,2));
-				t.addTab("variables", p3);
-				
-		f.getContentPane().add(t);
-		
-		f.getContentPane().add(new JSeparator());
-		
-		// f.getContentPane().add(new jmri.ProgModePane(BoxLayout.X_AXIS));
-		JPanel r1 = new JPanel();
-			r1.setLayout(new FlowLayout());
-			r1.add(new JRadioButton("Paged Mode"));
-			r1.add(new JRadioButton("Direct Mode"));
-		f.getContentPane().add(r1);
-					
 		f.pack();	
 		f.show();	
 		
+		// now pop a the pane frame for show
+		testFrame();	
 	}
+
+	public void testFrame() {
+		// Open and parse decoder file
+		log.info("start decoder file");
+		File dfile = new File("xml"+File.separator+"decoders"+File.separator+"NMRA_All.xml");
+		Namespace dns = Namespace.getNamespace("decoder",
+										"http://jmri.sourceforge.net/xml/decoder");
+		SAXBuilder dbuilder = new SAXBuilder(true);  // argument controls validation, on for now
+		Document ddoc = null;
+		log.info("ctors done, do build");
+		try {
+			ddoc = dbuilder.build(new BufferedInputStream(new FileInputStream(dfile), 40000),"xml"+File.separator);
+		}
+		catch (Exception e) {
+			log.error("Exception in SAXBuilder "+e);
+		}
+		// find root
+		log.info("get root");
+		Element droot = ddoc.getRootElement();
+
+		// Open and parse programmer file
+		log.info("start programmer file");
+		File pfile = new File("xml"+File.separator+"programmers"+File.separator+"MultiPane.xml");
+		Namespace pns = Namespace.getNamespace("programmer",
+										"http://jmri.sourceforge.net/xml/programmer");
+		SAXBuilder pbuilder = new SAXBuilder(true);  // argument controls validation, on for now
+		Document pdoc = null;
+		try {
+			pdoc = pbuilder.build(new FileInputStream(pfile),"xml"+File.separator);
+		}
+		catch (Exception e) {
+			log.error("Exception in programmer SAXBuilder "+e);
+		}
+		// find root
+		Element proot = pdoc.getRootElement();
+
+		// create the pane programmer
+		PaneProgFrame p = new PaneProgFrame();
+			
+		// load its variables from decoder tree
+		p.loadVariables(droot.getChild("decoder", dns), dns);
+		
+		// load its programmer config from programmer tree
+		p.readConfig(proot, pns);
+		
+		p.pack();
+		p.show();
+		
+	}	
+
+	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PaneProgAction.class.getName());
+
 }
 
 

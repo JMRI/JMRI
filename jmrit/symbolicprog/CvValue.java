@@ -12,11 +12,18 @@ import jmri.Programmer;
 import jmri.InstanceManager;
 import jmri.ProgListener;
 
+import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 
-public class CvValue implements ProgListener {
+public class CvValue extends AbstractValue implements ProgListener {
 
-	public CvValue(int num) { _num = num; }
+	public CvValue(int num) { 
+		_num = num;
+		_tableEntry = new JTextField(3);
+		_defaultColor = _tableEntry.getBackground();
+		_tableEntry.setBackground(COLOR_UNKNOWN);
+	}
 	public int number() { return _num; }
 	private int _num;
 	
@@ -28,6 +35,7 @@ public class CvValue implements ProgListener {
 		if (_value != value) {
 			int old = _value;
 			_value = value;
+			_tableEntry.setText(""+value);
 			prop.firePropertyChange("Value", null, new Integer(value)); 
 		}
 	}
@@ -38,17 +46,18 @@ public class CvValue implements ProgListener {
 		if (log.isDebugEnabled()) log.debug("set state from "+_state+" to "+state);
 		int oldstate = _state;
 		_state = state;
+		switch (state) {
+			case UNKNOWN : setColor(COLOR_UNKNOWN ); break;
+			case EDITTED : setColor(COLOR_EDITTED ); break;
+			case READ    : setColor(COLOR_READ    ); break;
+			case STORED  : setColor(COLOR_STORED  ); break;
+			case FROMFILE: setColor(COLOR_FROMFILE); break;
+			default:      log.error("Inconsistent state: "+_state);
+		}
 		if (oldstate != state) prop.firePropertyChange("State", new Integer(oldstate), new Integer(state));
 	}
 	private int _state = 0;
-	
-	// states
-	public static final int UNKNOWN  =   0;
-	public static final int EDITTED  =   4;
-	public static final int READ     =  16;
-	public static final int STORED   =  64;
-	public static final int FROMFILE = 256;
-	
+		
 	// read, write operations
 	public boolean isBusy() { return _busy; }
 	private void setBusy(boolean busy) {
@@ -58,6 +67,21 @@ public class CvValue implements ProgListener {
 	}
 	private boolean _busy = false;
 
+	// color management
+	Color _defaultColor;
+	void setColor(Color c) {
+		if (c != null) _tableEntry.setBackground(c);
+		else _tableEntry.setBackground(_defaultColor);
+		//prop.firePropertyChange("Value", null, null);
+	}
+
+	// object for Table entry
+	JTextField _tableEntry = null;
+	JTextField getTableEntry() { 
+		return _tableEntry;
+	}
+	
+	// read, write support
 	private boolean _reading = false;
 	
 	public void read(JLabel status) {

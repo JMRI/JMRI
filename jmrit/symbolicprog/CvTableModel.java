@@ -66,7 +66,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 	public Class getColumnClass(int col) { 
 		switch (col) {
 			case NUMCOLUMN: return String.class;
-			case VALCOLUMN: return String.class;
+			case VALCOLUMN: return JTextField.class;
 			case STATECOLUMN: return String.class;
 			case READCOLUMN: return JButton.class;
 			case WRITECOLUMN: return JButton.class;
@@ -98,7 +98,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 			case NUMCOLUMN: 
 				return ""+((CvValue)_cvDisplayVector.elementAt(row)).number();
 			case VALCOLUMN:
-				return ""+((CvValue)_cvDisplayVector.elementAt(row)).getValue();
+				return ((CvValue)_cvDisplayVector.elementAt(row)).getTableEntry();
 			case STATECOLUMN:
 				int state = ((CvValue)_cvDisplayVector.elementAt(row)).getState();
 				switch (state) {
@@ -119,8 +119,8 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 
 	public void setValueAt(Object value, int row, int col) { 
 		switch (col) {
-			case VALCOLUMN:
-				((CvValue)_cvDisplayVector.elementAt(row)).setValue( Integer.valueOf((String)value).intValue() );
+			case VALCOLUMN: // Object is actually an Integer
+				((CvValue)_cvDisplayVector.elementAt(row)).setValue(((Integer)value).intValue() );
 				break;
 			default:
 				break;

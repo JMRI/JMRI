@@ -23,6 +23,10 @@ public class ValueRenderer implements TableCellRenderer {
 	public Component getTableCellRendererComponent(JTable table, Object value, 
 													boolean isSelected, boolean hasFocus, 
 													int row, int column) {
+		// if (log.isDebugEnabled()) log.debug("getTableCellRendererComponent "
+		// 						+" "+row+" "+column
+		// 						+" "+isSelected+" "+hasFocus
+		// 						+" "+value);
 		if (value instanceof Component)
 			return (Component) value;
 		else if (value instanceof String)
@@ -30,4 +34,6 @@ public class ValueRenderer implements TableCellRenderer {
 		else
 			return new JLabel("Unknown value type!");
 	}
+
+	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ValueEditor.class.getName());
 }

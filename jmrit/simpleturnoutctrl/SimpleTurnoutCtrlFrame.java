@@ -106,8 +106,6 @@ public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.b
 	
 
 	public void closeButtonActionPerformed(java.awt.event.ActionEvent e) {
-		// find the right Turnout object and ask it to handle this
-
 		// load address from switchAddrTextField
 		try {
 			if (turnout != null) turnout.removePropertyChangeListener(this);
@@ -115,6 +113,7 @@ public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.b
 						newTurnout(null,adrTextField.getText());
 			turnout.addPropertyChangeListener(this);
 			if (log.isDebugEnabled()) log.debug("about to command CLOSED");
+			// and set commanded state to CLOSED
 			turnout.setCommandedState(Turnout.CLOSED);
 		}
 		catch (Exception ex) {
@@ -125,8 +124,6 @@ public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.b
 	}
 
 	public void throwButtonActionPerformed(java.awt.event.ActionEvent e) {
-		// find the right Turnout object and ask it to handle this
-
 		// load address from switchAddrTextField
 		try {
 			if (turnout != null) turnout.removePropertyChangeListener(this);
@@ -134,6 +131,7 @@ public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.b
 						newTurnout(null,adrTextField.getText());
 			turnout.addPropertyChangeListener(this);
 			if (log.isDebugEnabled()) log.debug("about to command THROWN");
+			// and set commanded state to THROWN
 			turnout.setCommandedState(Turnout.THROWN);
 			}
 		catch (Exception ex)
@@ -144,7 +142,7 @@ public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.b
 		return;
 	}
 
-	// keep track of Turnout user name changes
+	// update state field in GUI as state of turnout changes
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (e.getPropertyName().equals("CommandedState")) {
 			int now = ((Integer) e.getNewValue()).intValue();

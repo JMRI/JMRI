@@ -49,9 +49,13 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 	
 	public int getColumnCount( ){ return headers.length;}
 
-	public String getColumnName(int col) { return headers[col];}
+	public String getColumnName(int col) { 
+		if (log.isDebugEnabled()) log.debug("getColumnName "+col);
+		return headers[col];
+	}
 	
 	public Class getColumnClass(int col) { 
+		// if (log.isDebugEnabled()) log.debug("getColumnClass "+col);
 		if (headers[col].equals("Value"))
 			return JTextField.class;
 		else if (headers[col].equals("Read"))
@@ -63,6 +67,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 	}
 
 	public boolean isCellEditable(int row, int col) {
+		if (log.isDebugEnabled()) log.debug("isCellEditable "+col);
 		if (headers[col].equals("Value"))
 			return true;
 		else if (headers[col].equals("Read"))
@@ -86,6 +91,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		((VariableValue)rowVector.elementAt(row)).setIntValue(val);
 	}
 	public void setState(int row, int val) {
+		if (log.isDebugEnabled()) log.debug("setState row: "+row+" val: "+val);
 		((VariableValue)rowVector.elementAt(row)).setState(val);
 	}
 	
@@ -99,6 +105,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 	}
 	
 	public Object getValueAt(int row, int col) { 
+		// if (log.isDebugEnabled()) log.debug("getValueAt "+row+" "+col);
 		VariableValue v = (VariableValue)rowVector.elementAt(row);
 		if (headers[col].equals("Value"))
 			return v.getValue();
@@ -132,6 +139,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 	}
 		
 	public void setValueAt(Object value, int row, int col) { 
+		if (log.isDebugEnabled()) log.debug("setvalueAt "+row+" "+col+" "+value);
 		setFileDirty(true);
 	}
 	
@@ -261,7 +269,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		if (log.isDebugEnabled()) log.debug("action command: "+e.getActionCommand());
+		if (log.isDebugEnabled()) log.debug("action performed,  command: "+e.getActionCommand());
 		setFileDirty(true);
 		char b = e.getActionCommand().charAt(0);
 		int row = Integer.valueOf(e.getActionCommand().substring(1)).intValue();
@@ -277,6 +285,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 	}
 	
 	public void propertyChange(PropertyChangeEvent e) {
+		if (log.isDebugEnabled()) log.debug("prop changed "+e);
 		setFileDirty(true);
 		fireTableDataChanged();	
 	}
