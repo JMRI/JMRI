@@ -18,6 +18,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
+import java.beans.PropertyChangeListener;
 
 import com.sun.java.util.collections.List;
 
@@ -25,7 +26,7 @@ import com.sun.java.util.collections.List;
  * Display and edit a RosterEntry.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001; Dennis Miller Copyright 2004
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class RosterEntryPane extends javax.swing.JPanel  {
 
@@ -225,6 +226,24 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         add(filename);
 
 
+    }
+
+    /**
+     * Does the GUI contents agree with a RosterEntry?
+     */
+    public boolean guiChanged(RosterEntry r) {
+        if (!r.getRoadName().equals(roadName.getText()) ) return true;
+        if (!r.getRoadNumber().equals(roadNumber.getText()) ) return true;
+        if (!r.getMfg().equals(mfg.getText()) ) return true;
+        if (!r.getOwner().equals(owner.getText()) ) return true;
+        if (!r.getModel().equals(model.getText()) ) return true;
+        if (!r.getDccAddress().equals(dccAddress.getText()) ) return true;
+        if (!r.getComment().equals(comment.getText()) ) return true;
+        if (!r.getDecoderFamily().equals(decoderFamily.getText()) ) return true;
+        if (!r.getDecoderModel().equals(decoderModel.getText()) ) return true;
+        if (!r.getDecoderComment().equals(decoderComment.getText()) ) return true;
+        if (!r.getId().equals(id.getText()) ) return true;
+        return false;
     }
 
     /**
