@@ -7,6 +7,7 @@ import apps.Apps;
 import java.text.MessageFormat;
 
 import javax.swing.*;
+import jmri.util.JmriJFrame;
 
 /**
  * The JMRI demo program.
@@ -16,7 +17,7 @@ import javax.swing.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.62 $
+ * @version     $Revision: 1.63 $
  */
 public class JMRIdemo extends Apps {
 
@@ -57,7 +58,7 @@ public class JMRIdemo extends Apps {
         log.info(apps.Apps.startupInfo("JMRIdemo"));
 
         setConfigFilename("JmriDemoConfig2.xml", args);
-        JFrame f = new JFrame("JmriDemo");
+        JmriJFrame f = new JmriJFrame("JmriDemo");
         createFrame(new JMRIdemo(f), f);
 
         log.info("main initialization done");
