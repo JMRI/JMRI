@@ -21,31 +21,31 @@ import org.jdom.Attribute;
  * stored in local variables.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 public class DecoderProConfigFrame extends apps.AbstractConfigFrame {
 
-	public DecoderProConfigFrame(String name) {
-		super(name);
-	}
-
+    public DecoderProConfigFrame(String name) {
+        super(name);
+    }
+    
     /**
      * DecoderPro only supports the DCC protocols, so the parent member is overloaded
      */
     public String[] availableProtocols() {
         return  new String[] {"(None selected)",
-                                "EasyDCC", "Lenz XPressNet",
-                                "LocoNet LocoBuffer","LocoNet MS100",
-                                "NCE", "SPROG"
-                                };
+                              "EasyDCC", "Lenz XPressNet",
+                              "LocoNet LocoBuffer","LocoNet MS100",
+                              "NCE", "SPROG"
+        };
     }
-	/**
-	 * Abstract method to save the data
-	 */
-	public void saveContents() {
-		DecoderProConfigFile f = new DecoderProConfigFile();
-		f.makeBackupFile(f.defaultConfigFilename());
-		f.writeFile(f.defaultConfigFilename(), this);
-	}
-
+    /**
+     * Abstract method to save the data
+     */
+    public void saveContents() {
+        DecoderProConfigFile f = new DecoderProConfigFile();
+        f.makeBackupFile(f.defaultConfigFilename());
+        f.writeFile(f.defaultConfigFilename(), this);
+    }
+    
 }
