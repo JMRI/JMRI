@@ -24,7 +24,7 @@ import javax.swing.JSeparator;
  * <P>
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -59,7 +59,8 @@ public class JmrixConfigPane extends JPanel {
                               "jmri.jmrix.wangrow.serialdriver.ConnectionConfig",
                               "jmri.jmrix.xpa.serialdriver.ConnectionConfig",
                               "jmri.jmrix.zimo.mx1.ConnectionConfig",
-                              "jmri.jmrix.easydcc.networkdriver.ConnectionConfig"  // last, as experimental
+                              "jmri.jmrix.easydcc.networkdriver.ConnectionConfig",  // last, as experimental
+                              "jmri.jmrix.direct.serial.ConnectionConfig"  // last, as experimental
         };
     }
 
