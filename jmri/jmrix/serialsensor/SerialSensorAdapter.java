@@ -15,7 +15,7 @@ import jmri.jmrix.*;
  * serial port.  Sensor "1" will be via DCD, and sensor "2" via DSR
  *
  * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialSensorAdapter extends AbstractPortController
                 implements jmri.jmrix.SerialPortAdapter  {
@@ -62,7 +62,7 @@ public class SerialSensorAdapter extends AbstractPortController
 
             // set RTS high, DTR high
             activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-            activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+            activeSerialPort.setDTR(false);		// pin 1 in DIN8; on main connector, this is DTR
 
             // disable flow control; hardware lines used for signalling, XON/XOFF might appear in data
             activeSerialPort.setFlowControlMode(0);
