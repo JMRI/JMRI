@@ -1,11 +1,4 @@
-/**
- * PacketGenFrame.java
- *
- * Description:		Frame for user input of XpressNet messages
- * @author			Bob Jacobsen   Copyright (C) 2001,2002
- * @version			$Revision: 1.2 $
- */
-
+// PacketGenFrame.java
 
 package jmri.jmrix.lenz.packetgen;
 
@@ -13,9 +6,16 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import jmri.util.StringUtil;
+
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetTrafficController;
 
+/**
+ * Frame for user input of XpressNet messages
+ * @author			Bob Jacobsen   Copyright (C) 2001,2002
+ * @version			$Revision: 1.3 $
+ */
 public class PacketGenFrame extends javax.swing.JFrame {
 
 	// member declarations
@@ -68,51 +68,11 @@ public class PacketGenFrame extends javax.swing.JFrame {
 
   	XNetMessage createPacket(String s) {
 		// gather bytes in result
-		int b[] = parseString(s);
+		byte b[] = StringUtil.bytesFromHexString(s);
 		if (b.length == 0) return null;  // no such thing as a zero-length message
   		XNetMessage m = new XNetMessage(b.length);
 		for (int i=0; i<b.length; i++) m.setElement(i, b[i]);
   		return m;
-  	}
-
-  	int[] parseString(String s) {
-		String ts = s+"  "; // ensure blanks on end to make scan easier
-		int len = 0;
-		// scan for length
-  		for (int i= 0; i< s.length(); i++) {
-  			if (ts.charAt(i) != ' ')  {
-  				// need to process char for number. Is this a single digit?
-  				if (ts.charAt(i+1) != ' ') {
-  					// 2 char value
-  					i++;
-  					len++;
-  				} else {
-  					// 1 char value
-  					len++;
-  				}
-  			}
-  		}
-  		int[] b = new int[len];
-  		// scan for content
-  		int saveAt = 0;
-  		for (int i= 0; i< s.length(); i++) {
-  			if (ts.charAt(i) != ' ')  {
-  				// need to process char for number. Is this a single digit?
-  				if (ts.charAt(i+1) != ' ') {
-  					// 2 char value
- 					String v = new String(""+ts.charAt(i))+ts.charAt(i+1);
-					b[saveAt] = Integer.valueOf(v,16).intValue();
-					i++;
-					saveAt++;
-   				} else {
-  					// 1 char value
-					String v = new String(""+ts.charAt(i));
-					b[saveAt] = Integer.valueOf(v,16).intValue();
-					saveAt++;
-  				}
-  			}
-  		}
-  		return b;
   	}
 
   	private boolean mShown = false;
