@@ -29,11 +29,15 @@ import jmri.*;
  *  Yellow is 15 and up
  *  Red is less than 15
  *
+ * <P>The SignalHead are created here if they don't already exist, because instantiating the AspectGenerator
+ * is actually creating the connection to the device on the layout.
+ * We assume the SE8cSignalHead implementation.
+ *
  * <P>The algorithms in this class are a collaborative effort of Digitrax, Inc
  * and Bob Jacobsen.  Some of the message formats are copyright Digitrax, Inc.
  *
- * @author			Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.9 $
+ * @author	Bob Jacobsen Copyright (C) 2002
+ * @version     $Revision: 1.10 $
  */
 public class AspectGenerator implements java.beans.PropertyChangeListener{
 
@@ -70,6 +74,10 @@ public class AspectGenerator implements java.beans.PropertyChangeListener{
     String mSEName;
     public String getSEName() { return mSEName; }
 
+    /**
+     * References to the signal heads in use.  These are
+     * located during the constructor.
+     */
     SignalHead[] heads;
 
     public int getNumHeads() {return heads.length;}
