@@ -2,16 +2,12 @@
 
 package jmri.jmrix.loconet.loconetovertcp;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-
-import jmri.jmrix.loconet.*;
+import javax.swing.JOptionPane;
 
 /**
  * Frame to control and connect to a LocoNet via LocoNetOverTcp protocol.
  * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class LnTcpDriverFrame extends jmri.jmrix.SerialPortFrame {
 

@@ -2,10 +2,13 @@ package jmri.jmrix.loconet.loconetovertcp.configurexml;
 
 import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
-import jmri.jmrix.loconet.loconetovertcp.*;
+import jmri.jmrix.loconet.loconetovertcp.ConnectionConfig;
+import jmri.jmrix.loconet.loconetovertcp.LnTcpDriverAdapter;
 
-import org.jdom.*;
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+import org.jdom.Element;
 
 /**
  * Handle XML persistance of layout connections by persistening
@@ -20,7 +23,7 @@ import javax.swing.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 

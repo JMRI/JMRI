@@ -2,17 +2,13 @@
 
 package jmri.jmrix.loconet.loconetovertcp;
 
-import jmri.jmrix.loconet.*;
+import jmri.jmrix.loconet.LnPacketizer;
+import jmri.jmrix.loconet.LnPortController;
 
-import java.io.*;
-import java.net.*;
-import java.io.InputStream;
-import java.util.Enumeration;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.Socket;
 import java.util.Vector;
-
-import javax.comm.CommPortIdentifier;
-import javax.comm.PortInUseException;
-import javax.comm.SerialPort;
 
 /**
  * Implements SerialPortAdapter for the LocoNetOverTcp system network connection.
@@ -21,7 +17,7 @@ import javax.comm.SerialPort;
  * Normally controlled by the LnTcpDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class LnTcpDriverAdapter extends LnPortController {
 

@@ -2,15 +2,16 @@
 
 package jmri.jmrix.loconet.loconetovertcp;
 
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
+
+import javax.swing.AbstractAction;
 
 /**
  * Swing action to create and register a
  * LnTcpDriverFrame object.
  *
  * @author			Bob Jacobsen    Copyright (C) 2003
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class LnTcpDriverAction extends AbstractAction  {
 
