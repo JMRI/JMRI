@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Atlas_DualMode.xml,v 1.7 2002-01-13 03:36:57 jacobsen Exp $ -->
+<!-- $Id: Atlas_DualMode.xml,v 1.8 2002-01-13 20:33:33 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen" version="2" lastUpdated="20020111"/>
 
 <decoder>
-	<id family="Dual Mode" mfg="Atlas" mfgID="127" defnVersion="0"
-				comment="Non-reserved CVs listed in NMRA Recommended Practice 9.2.2"></id>
+	<family name="Atlas" mfg="Atlas">
+		<model model="Dual Mode" numOuts="2" numFns="0" />
+	</family>
 
 	<programming direct="yes" paged="yes" 
 	                     register="yes" ops="yes"></programming>

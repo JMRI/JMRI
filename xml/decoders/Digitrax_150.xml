@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_150.xml,v 1.10 2002-01-13 03:36:57 jacobsen Exp $ -->
+<!-- $Id: Digitrax_150.xml,v 1.11 2002-01-13 20:33:33 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
 					version="2" lastUpdated="20020112"/>
 
 <decoder>
-	<id family="Digitrax 150" mfg="Digitrax" mfgID="129" defnVersion="0"
-				lowVersionID="107"
-				comment="DH150  FX"></id>
+	<family name="Digitrax 150" mfg="Digitrax" lowVersionID="107">
+		<model model="DH150" numOuts="5" numFns="3"/>
+	</family>
 
 	<programming direct="byteOnly" paged="yes" 
 	                     register="yes" ops="yes"></programming>

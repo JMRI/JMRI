@@ -1,12 +1,14 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_LC_Steam.xml,v 1.3 2002-01-13 03:36:57 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_LC_Steam.xml,v 1.4 2002-01-13 20:33:34 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Robin Becker" version="3" lastUpdated="20020112"/>
 
 <decoder>
-	<id family="LC Steam" mfg="Soundtraxx" mfgID="141" defnVersion="1"
-			lowVersionID="32" highVersionID="33"></id>
+	<family name="LC Steam" mfg="Throttle-Up"
+				lowVersionID="32" highVersionID="33">
+		<model model="LC Steam" numOuts="1" />
+	</family>
 
 	<programming direct="yes" paged="yes" 
 	                     register="yes" ops="yes"></programming>
@@ -130,8 +132,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="Speed Table Selection" CV="25" mask="XXXVVVVV"
-					item="Speed Table Selection">
+		<variable label="Speed Table Selection" CV="25" mask="XXXVVVVV">
 			<enumVal>
 				<enumChoice choice="no table"/>
 				<enumChoice choice="no table"/>
@@ -527,5 +528,20 @@
 	
 	</variables>
 </decoder>
+
+<pane name="Soundtraxx">
+	<column>
+		<display item="Speed Table Selection" />
+		<display item="CV Address Extension" />
+		<display item="EEROM Data Corrupted" />
+		<display item="Function Group 3 Disable" />
+		<display item="Alternate Function Map" />
+		<display item="Watchdog Timer Reset" />
+		<display item="Program Checksum Failure" />
+		<display item="I2C Bus Acknowledge Failure" />
+	</column>
+</pane>
+
 </decoder-config>
+
 

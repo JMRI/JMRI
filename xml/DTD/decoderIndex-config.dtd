@@ -1,5 +1,5 @@
 <!-- Defines XML documenting the list of available decoder definitions -->
-<!-- $Id: decoderIndex-config.dtd,v 1.7 2001-12-18 07:16:37 jacobsen Exp $ -->
+<!-- $Id: decoderIndex-config.dtd,v 1.8 2002-01-13 20:33:33 jacobsen Exp $ -->
 
 <!ELEMENT decoderIndex-config (decoderIndex)>
 <!ATTLIST decoderIndex-config>
@@ -17,32 +17,31 @@
 <!-- familyList is actually a list of families and hence decoder definitions -->
 <!ELEMENT familyList (family*) >
 
-<!ELEMENT family (decoder*) >
+<!ELEMENT family (model*) >
 <!ATTLIST family file      		CDATA #REQUIRED>  <!-- file name for details -->
 <!ATTLIST family name      		CDATA #REQUIRED>  <!-- family name used for identification -->
 <!ATTLIST family mfg       		CDATA #REQUIRED>  <!-- mfg name used for identification   -->
-<!ATTLIST id type      	( stationary | locomotive ) "locomotive">
+<!ATTLIST family type      	( stationary | locomotive ) "locomotive">
 <!ATTLIST family comment   		CDATA #IMPLIED>
+<!ATTLIST family defnVersion 	CDATA #IMPLIED> <!-- version of the XML defining the decoder -->
 <!-- lowVersionID, highVersionID define an inclusive range, with both endpoints included. -->
 <!-- If only one is specified, only that single value is acceptable -->
 <!-- Note that these are defaults for the 'decoder' attributes of same name, not an override -->
 <!ATTLIST family lowVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
 <!ATTLIST family highVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
 
-<!ELEMENT decoder EMPTY >
-<!ATTLIST decoder model     	CDATA #REQUIRED>  <!-- model name used for identification -->
-<!ATTLIST decoder options   	CDATA #IMPLIED>   <!-- comma-sep list of included options, but default is all on -->
-<!ATTLIST decoder comment   	CDATA #IMPLIED>
-
+<!ELEMENT model EMPTY >
+<!ATTLIST model model     	CDATA #REQUIRED>  <!-- model name used for identification -->
+<!ATTLIST model options   	CDATA #IMPLIED>   <!-- comma-sep list of included options, but default is all on -->
+<!ATTLIST model comment   	CDATA #IMPLIED>
 <!-- numFns and numOuts interact with the minFn and minOut attributes in a decoder file -->
 <!-- to customize the decoder file to a specific decoder package within the family. Note -->
 <!-- that output leads, e.g. hardware, is the usual thing to vary; that's represented by -->
 <!-- numOut.  The number of cab functions is more of a software thing, and varies more -->
 <!-- rarely; its represented by numFns -->
-<!ATTLIST decoder numFns    	CDATA #IMPLIED>   <!-- number of cab functions, default is all -->
-<!ATTLIST decoder numOuts    	CDATA #IMPLIED>   <!-- number of output leads, default is all -->
-
+<!ATTLIST model numFns    	CDATA #IMPLIED>   <!-- number of cab functions, default is all -->
+<!ATTLIST model numOuts    	CDATA #IMPLIED>   <!-- number of output leads, default is all -->
 <!-- lowVersionID, highVersionID define an inclusive range, with both endpoints included. -->
 <!-- If only one is specified, only that single value is acceptable -->
-<!ATTLIST decoder lowVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
-<!ATTLIST decoder highVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
+<!ATTLIST model lowVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
+<!ATTLIST model highVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->

@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: NCE_D13SR.xml,v 1.8 2002-01-13 03:36:57 jacobsen Exp $ -->
+<!-- $Id: NCE_D13SR.xml,v 1.9 2002-01-13 20:33:34 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen" version="3" lastUpdated="20020111"/>
 
 <decoder>
-	<id family="NCE_D13SR" mfg="North Coast Engineering" mfgID="11" defnVersion="0"
-				comment="From paper, not yet confirmed"></id>
+	<family name="D13SR Family" mfg="North Coast Engineering">
+		<model model="D13SR" numOuts="3" numFns="3"/>
+	</family>
 
 	<programming direct="yes" paged="yes" 
 	                     register="yes" ops="yes"></programming>

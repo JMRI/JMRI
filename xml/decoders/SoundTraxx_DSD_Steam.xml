@@ -1,12 +1,15 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_DSD_Steam.xml,v 1.3 2002-01-13 03:36:57 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_DSD_Steam.xml,v 1.4 2002-01-13 20:33:34 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen" version="2" lastUpdated="20020110"/>
 
 <decoder>
-	<id family="DSD/DSX Steam" mfg="Throttle-Up" mfgID="141" defnVersion="1"
-			lowVersionID="6" highVersionID="7"></id>
+	<family name="DSD/DSX Steam" mfg="Throttle-Up"
+			lowVersionID="6" highVersionID="7">
+		<model model="DSD Steam" numOuts="1" />
+		<model model="DSX Steam" numOuts="1" />
+	</family>
 
 	<programming direct="yes" paged="yes" 
 	                     register="yes" ops="yes"></programming>

@@ -5,11 +5,13 @@
 <!-- definition to ease standard programming of decoders      -->
 
 <programmer-config>
-<!-- $Id: Sample Club.xml,v 1.1 2002-01-13 03:36:57 jacobsen Exp $ -->
+<!-- $Id: Sample Club.xml,v 1.2 2002-01-13 20:33:34 jacobsen Exp $ -->
 		<version author="Bob Jacobsen" 
-					version="1" lastUpdated="20020112"/>
+					version="2" lastUpdated="20020112"/>
 
-<programmer decoderFilePanes="yes">
+<programmer decoderFilePanes="no">
+		<!-- want this to always look the same, so -->
+		<!-- don't include panes from the decoder file -->
 
 	<pane name="Controls">
 		<column>
@@ -47,9 +49,13 @@
 	
 	<pane name="Speed Table">
 		<column>
-			<display item="Speed Table Definition" 
-					format="checkbox" layout="above" label=""/>
+			<row>
+				<display item="Speed Table Definition" 
+					format="checkbox"/>
+			</row>   <!-- two rows to allow the items to center themselves -->
+			<row>
 			<display item="Speed Table" layout="above"/>
+			</row>
 		</column>
 	</pane>
 	

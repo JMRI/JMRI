@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-<!-- $Id: decoderIndex.xml,v 1.9 2002-01-02 20:37:16 jacobsen Exp $ -->
+<!-- $Id: decoderIndex.xml,v 1.10 2002-01-13 20:33:30 jacobsen Exp $ -->
 <decoderIndex>
 
 <mfgList>
@@ -48,60 +48,60 @@
 
 <familyList>
 	<family name="NMRA All CVs" file="NMRA.xml" mfg="NMRA">
-		<decoder model="All CVs" comment="List is from RP 9.2.2" />
+		<model model="All CVs" comment="List is from RP 9.2.2" />
 	</family>
 
 	<family name="NMRA Registers" file="NMRA_registers.xml" mfg="NMRA">
-		<decoder model="Registers" comment="List is from RP 9.2.2" />
+		<model model="Registers" comment="List is from RP 9.2.2" />
 	</family>
 
 	<family name="Atlas" file="Atlas_DualMode.xml" mfg="Atlas">
-		<decoder model="Dual Mode" numOuts="2" numFns="0" />
+		<model model="Dual Mode" numOuts="2" numFns="0" />
 	</family>
 
 	<family name="Digitrax 1x2" file="Digitrax_1x2.xml" mfg="Digitrax" lowVersionID="240" highVersionID="242">
-		<decoder model="DH142" numOuts="4" numFns="2"/>
-		<decoder model="DN142" numOuts="4" numFns="2"/>
-		<decoder model="DH083" numOuts="5" numFns="2"/>
+		<model model="DH142" numOuts="4" numFns="2"/>
+		<model model="DN142" numOuts="4" numFns="2"/>
+		<model model="DH083" numOuts="5" numFns="2"/>
 	</family>
 
 	<family name="Digitrax 1x1" file="Digitrax_1x1.xml" mfg="Digitrax" lowVersionID="33" highVersionID="45">
-		<decoder model="DH121" numOuts="2" numFns="2"/>
-		<decoder model="DN140" numOuts="4" numFns="2"/>
+		<model model="DH121" numOuts="2" numFns="2"/>
+		<model model="DN140" numOuts="4" numFns="2"/>
 	</family>
 			
 	<family name="Digitrax 150" file="Digitrax_150.xml" mfg="Digitrax" lowVersionID="107">
-		<decoder model="DH150" numOuts="5" numFns="3"/>
+		<model model="DH150" numOuts="5" numFns="3"/>
 	</family>
 
 	<family name="Lenz LE077XF" file="Lenz_LE077XF.xml" mfg="Lenz">
-		<decoder model="LE077XF" numOuts="3" />
+		<model model="LE077XF" numOuts="3" />
 	</family>
 
 	<family name="D13SR Family" file="NCE_D13SR.xml" mfg="North Coast Engineering">
-		<decoder model="D13SR" numOuts="3" numFns="3"/>
+		<model model="D13SR" numOuts="3" numFns="3"/>
 	</family>
 
 	<family name="DSD/DSX Steam" file="SoundTraxx_DSD_Steam.xml" mfg="Throttle-Up"
 			lowVersionID="6" highVersionID="7">
-		<decoder model="DSD Steam" numOuts="1" />
-		<decoder model="DSX Steam" numOuts="1" />
+		<model model="DSD Steam" numOuts="1" />
+		<model model="DSX Steam" numOuts="1" />
 	</family>
 
 	<family name="DSD/DSX Diesel" file="SoundTraxx_DSD_Diesel.xml" mfg="Throttle-Up"
 			lowVersionID="9" highVersionID="14">
-		<decoder model="DSD Diesel" numOuts="1" />
-		<decoder model="DSX Diesel" numOuts="1" />
+		<model model="DSD Diesel" numOuts="1" />
+		<model model="DSX Diesel" numOuts="1" />
 	</family>
 
 	<family name="LC Steam" file="SoundTraxx_LC_Steam.xml" mfg="Throttle-Up"
 				lowVersionID="32" highVersionID="33">
-		<decoder model="LC Steam" numOuts="1" />
+		<model model="LC Steam" numOuts="1" />
 	</family>
 
 	<family name="LC Diesel" file="SoundTraxx_LC_Diesel.xml" mfg="Throttle-Up"
 			lowVersionID="34" highVersionID="37">
-		<decoder model="LC Diesel" numOuts="1" />
+		<model model="LC Diesel" numOuts="1" />
 	</family>
 
 </familyList>

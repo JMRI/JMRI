@@ -1,12 +1,14 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_LC_Diesel.xml,v 1.3 2002-01-13 03:36:57 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_LC_Diesel.xml,v 1.4 2002-01-13 20:33:34 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen" version="2" lastUpdated="20020112"/>
 
 <decoder>
-	<id family="LC Diesel" mfg="Throttle-Up" mfgID="141" defnVersion="1"
-			lowVersionID="34" highVersionID="37"></id>
+	<family name="LC Diesel" mfg="Throttle-Up"
+			lowVersionID="34" highVersionID="37">
+		<model model="LC Diesel" numOuts="1" />
+	</family>
 
 	<programming direct="yes" paged="yes" 
 	                     register="yes" ops="yes"></programming>
@@ -34,21 +36,24 @@
 	
 	<!-- Sound section -->
 	
-		<variable label="Startup Mode" CV="113" mask="XXXXXXXV">
+		<variable label="Startup Mode" CV="113" mask="XXXXXXXV"
+					item="Sound Option 1">
 			<enumVal>
 				<enumChoice choice="On at power up"/>
 				<enumChoice choice="On when locomotive selected"/>
 				</enumVal>
 			</variable>
 
-		<variable label="Dynamic Digital Exhaust" CV="113" mask="XXXXXXVX">
+		<variable label="Dynamic Digital Exhaust" CV="113" mask="XXXXXXVX" 
+					item="Sound Option 2">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
 				</enumVal>
 			</variable>
 	
-		<variable label="Horn Select" CV="115" mask="XXXXXXVV">
+		<variable label="Horn Select" CV="115" mask="XXXXXXVV"
+					item="Sound Option 3">
 			<enumVal>
 				<enumChoice choice="1 chime"/>
 				<enumChoice choice="3 chime"/>
@@ -56,7 +61,8 @@
 				</enumVal>
 			</variable>
 
-		<variable label="RPM Interlock" CV="116" mask="XXXVXXXX">
+		<variable label="RPM Interlock" CV="116" mask="XXXVXXXX"
+					item="Sound Option 4">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
@@ -100,4 +106,6 @@
 
 	</variables>
 </decoder>
+
 </decoder-config>
+ 
