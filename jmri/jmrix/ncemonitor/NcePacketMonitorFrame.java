@@ -20,7 +20,7 @@ import java.io.InputStream;
  * The rest of the GUI then appears.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
 
@@ -284,10 +284,10 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
 
     public void dispose() {
         // stop operations here. This is a deprecated method, but OK for us.
-        readerThread.stop();
+        if (readerThread!=null) readerThread.stop();
 
         // release port
-        activeSerialPort.close();
+        if (activeSerialPort != null) activeSerialPort.close();
         serialStream = null;
         ostream = null;
         activeSerialPort = null;
