@@ -34,15 +34,8 @@
  * the command station simply returns an "OK" message, and the behavior 
  * defaults to the basic "DIRECT" mode.
  * <P> 
- * The feedback messages which make the "MONITORING" mode work are also 
- * generated in response to commands sent by the XNetSensorManager class.  
- * The XNetSensorManager class sends out a feedback response request any time 
- * the command station brodcasts a message which says: "feedback status change 
- * for device XYZ", but does not identify the device as an accessory 
- * decoder or a sensor.
- * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, Portions by Paul Bender Copyright (C) 2003 
- * @version			$Revision: 2.3 $
+ * @version			$Revision: 2.4 $
  */
 
 package jmri.jmrix.lenz;
