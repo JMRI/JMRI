@@ -5,7 +5,7 @@
  * Description:		Provide access to LocoNet via a LocoBuffer attached to a serial comm port.
  *					Normally controlled by the LocoBufferFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: LocoBufferAdapter.java,v 1.4 2002-07-05 03:14:29 jacobsen Exp $
+ * @version			$Id: LocoBufferAdapter.java,v 1.5 2002-07-11 14:40:05 jacobsen Exp $
  */
 
 package jmri.jmrix.loconet.locobuffer;
@@ -238,17 +238,21 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 		for (int i = 0; i<validSpeeds.length; i++ )
 			if (validSpeeds[i].equals(selectedSpeed))
 				baud = validSpeedValues[i];
-		activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+		activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
+                                            SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
 		// set RTS high, DTR high - done early, so flow control can be configured after
 		activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-		activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+		activeSerialPort.setDTR(true);		// pin 1 in Mac DIN8; on main connector, this is DTR
 
 		// find and configure flow control
-		int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftauls in selectedOption1
+		int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also defaults in selectedOption1
 		if (selectedOption1.equals(validOption1[1]))
 			flow = 0;
 		activeSerialPort.setFlowControlMode(flow);
+        log.debug("Found flow control "+activeSerialPort.getFlowControlMode()
+                    +" RTSCTS_OUT="+SerialPort.FLOWCONTROL_RTSCTS_OUT
+                    +" RTSCTS_IN= "+SerialPort.FLOWCONTROL_RTSCTS_IN);
 	}
 
 	/**
