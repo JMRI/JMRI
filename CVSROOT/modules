@@ -1,4 +1,4 @@
-jbuilder -d src &jmri &apps &xml
+jbuilder -d java/src &jmri &apps &xml
 djmri jmri
 dapps apps
 dxml xml
