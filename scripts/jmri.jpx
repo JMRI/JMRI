@@ -2,8 +2,6 @@
 <!--JBuilder XML Project-->
 <project>
   <property category="debug.0" name="SmartStepRedefineClasses" value="0"/>
-  <property category="debug.0" name="SmartStepSkipStaticInitializers" value="0"/>
-  <property category="debug.0" name="SmartStepSkipSynthetics" value="0"/>
   <property category="editor.general" name="line_ending.style" value="3"/>
   <property category="idl" name="ProcessIDL" value="false"/>
   <property category="runtime" name="ConfigurationCount" value="5"/>
@@ -11,6 +9,7 @@
   <property category="runtime.0" name="ConfigurationName" value="jmri"/>
   <property category="runtime.0" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
   <property category="runtime.0" name="application.class" value="apps.JmriDemo.JMRIdemo"/>
+  <property category="runtime.0" name="application.vmparameters" value="-Dsun.java2d.noddraw"/>
   <property category="runtime.0" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.0" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
   <property category="runtime.0" name="appserver.servername" value="standard"/>
@@ -20,7 +19,7 @@
   <property category="runtime.1" name="ConfigurationName" value="JMRI Demo"/>
   <property category="runtime.1" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
   <property category="runtime.1" name="application.class" value="apps.JmriDemo.JMRIdemo"/>
-  <property category="runtime.1" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/"/>
+  <property category="runtime.1" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw"/>
   <property category="runtime.1" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.1" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
   <property category="runtime.1" name="appserver.servername" value="standard"/>
@@ -30,7 +29,7 @@
   <property category="runtime.2" name="ConfigurationName" value="Decoder Pro"/>
   <property category="runtime.2" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
   <property category="runtime.2" name="application.class" value="apps.DecoderPro.DecoderPro"/>
-  <property category="runtime.2" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/"/>
+  <property category="runtime.2" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw"/>
   <property category="runtime.2" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.2" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
   <property category="runtime.2" name="appserver.servername" value="standard"/>
@@ -40,6 +39,7 @@
   <property category="runtime.3" name="ConfigurationName" value="AllTest"/>
   <property category="runtime.3" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
   <property category="runtime.3" name="application.class" value="apps.tests.AllTest"/>
+  <property category="runtime.3" name="application.vmparameters" value="-Dsun.java2d.noddraw"/>
   <property category="runtime.3" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.3" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
   <property category="runtime.3" name="appserver.servername" value="standard"/>
@@ -50,7 +50,7 @@
   <property category="runtime.4" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
   <property category="runtime.4" name="application.class" value="apps.JmriDemo.JMRIdemo"/>
   <property category="runtime.4" name="application.parameters" value="JMRIClientConfig.xml"/>
-  <property category="runtime.4" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/"/>
+  <property category="runtime.4" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw"/>
   <property category="runtime.4" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.4" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
   <property category="runtime.4" name="appserver.servername" value="standard"/>
@@ -60,7 +60,7 @@
   <property category="runtime.5" name="ConfigurationName" value="LocoTools"/>
   <property category="runtime.5" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
   <property category="runtime.5" name="application.class" value="apps.LocoTools.LocoTools"/>
-  <property category="runtime.5" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/"/>
+  <property category="runtime.5" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw"/>
   <property category="runtime.5" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.5" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
   <property category="runtime.5" name="appserver.servername" value="standard"/>
@@ -96,7 +96,7 @@
   <property category="sys" name="TestPath" value="test"/>
   <property category="sys" name="Title" value=""/>
   <property category="sys" name="TitleLabel" value=""/>
-  <property category="sys" name="Version" value="$Revision: 1.18 $"/>
+  <property category="sys" name="Version" value="$Revision: 1.19 $"/>
   <property category="sys" name="VersionLabel" value="@version"/>
   <property category="sys" name="WorkingDirectory" value="../"/>
   <property category="sys" name="max.package.levels" value="2"/>
@@ -131,7 +131,7 @@
     <property category="archiving" name="extraDeployRoots.2" value="C:apps.JmriDemo.*"/>
     <property category="archiving" name="manifestMainClass" value="apps.JmriDemo.JMRIdemo"/>
     <property category="archiving" name="targetCompressed" value="1"/>
-    <property category="archiving" name="targetPath" value="/Volumes/Users/jake/Documents/Trains/JMRI/project/jmri.jar"/>
+    <property category="archiving" name="targetPath" value="../jmri.jar"/>
   </node>
   <node name="Standard JavaDoc Doclet" type="Javadoc">
     <property category="docletJavadoc" name="author" value="1"/>
@@ -145,9 +145,9 @@
   </node>
   <file path="test/apps/tests/AllTest.java"/>
   <file path="src/resources/decoderpro.gif"/>
-  <file path="src/resources/logo.gif"/>
   <file path="src/apps/DecoderPro/DecoderPro.java"/>
   <file path="src/apps/JmriDemo/JMRIdemo.java"/>
   <file path="src/apps/LocoTools/LocoTools.java"/>
+  <file path="src/resources/logo.gif"/>
   <file path="src/jmri/Version.java"/>
 </project>
