@@ -12,7 +12,7 @@ import jmri.jmrit.display.*;
 /**
  * Frame providing access to a speedometer
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class SpeedometerFrame extends javax.swing.JFrame {
 
@@ -108,6 +108,11 @@ public class SpeedometerFrame extends javax.swing.JFrame {
         getContentPane().add(pane5);
 
         getContentPane().add(startButton);
+        // see if there's a sensor manager, if not disable
+        if (null == InstanceManager.sensorManagerInstance()) {
+            startButton.setEnabled(false);
+            startButton.setToolTipText("Sensors are not supported with this DCC connection");
+        }
 
         JPanel pane6 = new JPanel();
         pane6.setLayout(new FlowLayout());
