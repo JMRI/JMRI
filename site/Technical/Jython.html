@@ -1,0 +1,107 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- $Id: Jython.html,v 1.1 2003-09-02 20:11:40 jacobsen Exp $ -->
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Bob Jacobsen, LBL">
+   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>Jython access to JMRI tools</title>
+</head>
+<body>
+
+<A href="../index.html">
+<IMG SRC="../images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
+</a>
+
+<h1>Jython access to JMRI tools</h1>
+
+This is a "technical" page of the JMRI website.  Eventually we have to organize it better!
+<P>
+This page discusses access to the JMRI libraries from Jython, a Java version
+of Python.  This capability is being actively developed, and this 
+page will not always be up-to-date.
+<P>
+See also the 
+<A HREF="index.html">base page for technical documentation</a>.
+
+<h2>Introduction</h2>
+
+<A HREF="http://www.python.org">Python<a/> is a widely used scripting language that's
+available on many types of computers.  A Java-based varient, called
+<A HREF="http://www.python.org">Jython</a>,
+has been integrated with JMRI to make it easy to control a model railroad
+from the command line of a computer.
+
+For example:
+
+<PRE>
+</PRE>
+
+
+
+<H2>Setup</H2>
+
+Jython support is not (yet) standard in JMRI.  To use this:
+<OL>
+<LI>You must first have a working JMRI installation.  In particular, 
+start the JmriDemo application and configure it to connect to your DCC
+hardware, then save, quit and restart the program.  Make sure that the
+connection is working for the menu-based tools before trying to use Jython.
+<LI>Download and install Jython from
+<A HREF="http://www.jython.org">http://www.jython.org</a>.  
+Development is using the 2.1 version, so you
+might want to start with that.  On MacOS X, the installer does not run, so you
+have to manually invoke the jython_21.class file; the the MacOS X note
+on the jython web site.  Make sure the installation is complete
+by invoking jython from the command line:
+<PRE>
+   % jython
+   Jython 2.1 on java1.4.1_01 (JIT: null)
+   Type "copyright", "credits" or "license" for more information.
+   >>> ^D
+</PRE>
+<LI>
+Now you just have to have the required classes in the CLASSPATH
+used when jython starts up.  The required list in Unix syntax is:
+<PRE>
+  setenv CLASSPATH .:jmri.jar:lib/log4j.jar:lib/collections.jar:lib/crimson.jar:lib/jdom-jdk11.jar
+</PRE>
+<BR/>
+To save typing, the "jmrithon" script is available for use on Linux
+and MacOS X systems:
+<PRE>
+  % ./jmrithon
+  Jython 2.1 on java1.4.1_01 (JIT: null)
+  Type "copyright", "credits" or "license" for more information.
+  >>> ^D
+</PRE>
+<BR/>The first time you run this, you'll get a number of messages
+about "processing modified jar"; these can be ignored, as they are normal.
+</OL>
+
+<H2>Using Python for signal logic and automation</h2>
+
+The existing JMRI 
+"<A HREF="../Automat.html">Automat</a>"
+classes provide hooks for user layout automation, including signalling.
+But they require that you write Java code and compile it into .class files.
+<P>
+The 
+<A HREF="doc/jmri/jmrit/automat/JythonAutomaton.html">JythonAutomaton</a>
+class is intended to make it easier to code custom layout automation, as
+it will allow you to invoke a Jython script.  Once it's integrated into
+the configuration process, you'll be able to code your automation in one
+or more .py files, and have the program start running them at startup.
+
+<HR>
+<BR>Site hosted by: <BR>
+<A href="http://sourceforge.net"> 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
+
+<hr>
+Bob Jacobsen<BR>
+jake@physics.berkeley.edu
+
+</body>
+</html>
