@@ -3,7 +3,7 @@
  *
  * Description:	    tests for the jmri.jmrix.nce.NceTurnoutManager class
  * @author			Bob Jacobsen
- * @version
+ * @version  $Revision: 1.2 $
  */
 
 package jmri.jmrix.nce;

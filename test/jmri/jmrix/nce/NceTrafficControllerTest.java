@@ -1,9 +1,9 @@
-/** 
+/**
  * NceTrafficControllerTest.java
  *
  * Description:	    JUnit tests for the NceTrafficController class
  * @author			Bob Jacobsen
- * @version			
+ * @version $Revision: 1.2 $
  */
 
 package jmri.jmrix.nce;
@@ -34,11 +34,11 @@ public class NceTrafficControllerTest extends TestCase {
 
 	public void testSendAscii() throws Exception {
 		NceTrafficController c = new NceTrafficController();
-		
+
 		// connect to iostream via port controller
 		NcePortControllerScaffold p = new NcePortControllerScaffold();
 		c.connectPort(p);
-		
+
 		// send a message
 		NceMessage m = new NceMessage(3);
 		m.setBinary(false);
@@ -56,11 +56,11 @@ public class NceTrafficControllerTest extends TestCase {
 
 	public void testSendBinary() throws Exception {
 		NceTrafficController c = new NceTrafficController();
-		
+
 		// connect to iostream via port controller
 		NcePortControllerScaffold p = new NcePortControllerScaffold();
 		c.connectPort(p);
-		
+
 		// send a message
 		NceMessage m = new NceMessage(3);
 		m.setBinary(true);
@@ -74,26 +74,26 @@ public class NceTrafficControllerTest extends TestCase {
 		Assert.assertEquals("Char 2", 0x34, tostream.readByte());
 		Assert.assertEquals("remaining ", 0, tostream.available());
 	}
-	
+
 	public void testMonitor() throws Exception {
 		NceTrafficController c = new NceTrafficController();
-		
+
 		// connect to iostream via port controller
 		NcePortControllerScaffold p = new NcePortControllerScaffold();
 		c.connectPort(p);
-		
+
 		// start monitor
 		rcvdMsg = null;
 		NceListenerScaffold s = new NceListenerScaffold();
 		c.addNceListener(s);
-		
+
 		// send a message
 		NceMessage m = new NceMessage(3);
 		m.setOpCode('0');
 		m.setElement(1, '1');
 		m.setElement(2, '2');
 		c.sendNceMessage(m, new NceListenerScaffold());
-		
+
 		// check it arrived at monitor
 		Assert.assertTrue("message not null", rcvdMsg != null);
 		Assert.assertEquals("total length ", 4, tostream.available());
@@ -103,18 +103,18 @@ public class NceTrafficControllerTest extends TestCase {
 		Assert.assertEquals("EOM", 0x0d, tostream.readByte());
 		Assert.assertEquals("remaining ", 0, tostream.available());
 	}
-	
+
 	public void testRcvReply() throws Exception {
 		NceTrafficController c = new NceTrafficController();
-		
+
 		// connect to iostream via port controller
 		NcePortControllerScaffold p = new NcePortControllerScaffold();
 		c.connectPort(p);
-		
+
 		// object to receive reply
 		NceListener l = new NceListenerScaffold();
 		c.addNceListener(l);
-		
+
 		// send a message
 		NceMessage m = new NceMessage(3);
 		m.setOpCode('0');
@@ -135,14 +135,14 @@ public class NceTrafficControllerTest extends TestCase {
 		tistream.write('D');
 		tistream.write(':');
 		tistream.write(' ');
-		
+
 		// drive the mechanism
 		c.handleOneIncomingReply();
 		Assert.assertTrue("reply received ", waitForReply());
 		Assert.assertEquals("first char of reply ", 'R', rcvdReply.getOpCode());
 	}
 
-	
+
 	private boolean waitForReply() {
 		// wait for reply (normally, done by callback; will check that later)
 		int i = 0;
@@ -157,7 +157,7 @@ public class NceTrafficControllerTest extends TestCase {
 		if (i==0) log.warn("waitForReply saw an immediate return; is threading right?");
 		return i<100;
 	}
-	
+
 	// internal class to simulate a NceListener
 	class NceListenerScaffold implements jmri.jmrix.nce.NceListener {
 		public NceListenerScaffold() {
@@ -169,7 +169,7 @@ public class NceTrafficControllerTest extends TestCase {
 	}
 	NceReply rcvdReply;
 	NceMessage rcvdMsg;
-	
+
 	// internal class to simulate a NcePortController
 	class NcePortControllerScaffold extends NcePortController {
 		protected NcePortControllerScaffold() throws Exception {
@@ -181,24 +181,24 @@ public class NceTrafficControllerTest extends TestCase {
 			istream = new DataInputStream(tempPipe);
 			tistream = new DataOutputStream(new PipedOutputStream(tempPipe));
 		}
-		
+
 		// returns the InputStream from the port
 		public DataInputStream getInputStream() { return istream; }
-	
+
 		// returns the outputStream to the port
 		public DataOutputStream getOutputStream() { return ostream; }
-	
+
 		// check that this object is ready to operate
 		public boolean status() { return true; }
 	}
 	static DataOutputStream ostream;  // Traffic controller writes to this
 	static DataInputStream  tostream; // so we can read it from this
-	
+
 	static DataOutputStream tistream; // tests write to this
 	static DataInputStream  istream;  // so the traffic controller can read from this
-	
+
 	// from here down is testing infrastructure
-	
+
 	public NceTrafficControllerTest(String s) {
 		super(s);
 	}
@@ -208,14 +208,13 @@ public class NceTrafficControllerTest extends TestCase {
 		String[] testCaseName = {NceTrafficControllerTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
-	
+
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite(NceTrafficControllerTest.class);
 		return suite;
 	}
-	
+
 	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceTrafficControllerTest.class.getName());
 
-	
 }

@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the NceProgrammer class
  * @author			Bob Jacobsen
- * @version
+ * @version          $Revision: 1.4 $
  */
 
 package jmri.jmrix.nce;

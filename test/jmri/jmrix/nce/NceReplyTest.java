@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the NceReplyclass
  * @author			Bob Jacobsen
- * @version			
+ * @version			$Revision: 1.2 $
  */
 
 package jmri.jmrix.nce;

@@ -3,7 +3,7 @@
  *
  * Description:	    Stands in for the NceTrafficController class
  * @author			Bob Jacobsen
- * @version			
+ * @version			$Revision: 1.2 $
  */
 
 package jmri.jmrix.nce;
