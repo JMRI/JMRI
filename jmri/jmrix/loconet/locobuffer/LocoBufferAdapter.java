@@ -22,9 +22,14 @@ import javax.comm.SerialPortEventListener;
  * <P>
  * Normally controlled by the LocoBufferFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  */
 public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
+
+    public LocoBufferAdapter() {
+        super();
+        mInstance = this;
+    }
 
     Vector portNameVector = null;
     SerialPort activeSerialPort = null;
@@ -301,6 +306,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     private boolean opened = false;
     InputStream serialStream = null;
 
+    static public boolean hasInstance() { return (null!=mInstance); }
     static public LocoBufferAdapter instance() {
         if (mInstance == null) mInstance = new LocoBufferAdapter();
         return mInstance;
