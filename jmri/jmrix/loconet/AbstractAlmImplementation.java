@@ -18,7 +18,7 @@ package jmri.jmrix.loconet;
  * contact Digitrax Inc for separate permission.
  *
  * @author Bob Jacobsen     Copyright 2002
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public abstract class AbstractAlmImplementation implements LocoNetListener {
@@ -35,6 +35,7 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
     /**
      * Does this ALM reply on the LocoNet, or just
      * form an image of an implementation elsewhere?
+     * <P>True for image, false for primary implementation on LocoNet
      */
     private boolean mImage;
 
