@@ -1,21 +1,24 @@
-/** 
+/**
  * LnConstants.java
  *
  * Description:		Constants to represent values seen in LocoNet traffic
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			
+ * @version
 
  * Note that the values in this class have been taken from the llnmom C program of
  * Ron W. Auld, which included some work of John Kabat.  The symbol names
- * are copied from the loconet.h file, CVS revision 1.1.1.1, program release 0.3.0  Those 
+ * are copied from the loconet.h file, CVS revision 1.1.1.1, program release 0.3.0  Those
  * parts are (C) Copyright 2001 Ron W. Auld.  Those parts are licensed
  * under Version 2 of the GNU General Public License, as published by
  * the Free Software Foundation.
- *
+ * <P>
  * Most major comment blocks here are quotes from the Digitrax Loconet(r)
  * OPCODE SUMMARY: found in the Loconet(r) Personal Edition 1.
+ * <P>
+ * Al Silverstein provided the reverse-engineering effort for the
+ * OPC_MULTI_SENSE message.
  */
- 
+
 package jmri.jmrix.loconet;
 
 
@@ -50,6 +53,11 @@ public final static int OPC_SW_REQ_DIR    = 0x20;  /* switch direction - closed/
 public final static int OPC_SW_REQ_OUT    = 0x10;  /* output On/Off                        */
 
 public final static int OPC_LOCO_SPD_ESTOP = 0x01; /* emergency stop command               */
+
+public final static int OPC_MULTI_SENSE_MSG     = 0x30; // byte 1
+public final static int OPC_MULTI_SENSE_PRESENT = 0x00; // MSG field: transponder seen
+public final static int OPC_MULTI_SENSE_ABSENT  = 0x20; // MSG field: transponder lost
+public final static int OPC_MULTI_SENSE_POWER   = 0x30; // MSG field: Power message
 
 /* Slot Status byte definitions and macros */
 /***********************************************************************************
@@ -109,8 +117,8 @@ public final static int CONSIST_TOP       = STAT1_SL_CONDN;
 public final static int CONSIST_SUB       = STAT1_SL_CONUP;
 public final static int CONSIST_NO        = 0;
 public final static String CONSIST_STAT(int s) {   // encode consisting status as a string
-	   return ((s & CONSIST_MASK) == CONSIST_MID) ? "Mid Consist" : 
-      		( ((s & CONSIST_MASK) == CONSIST_TOP) ? "Consist TOP" : 
+	   return ((s & CONSIST_MASK) == CONSIST_MID) ? "Mid Consist" :
+      		( ((s & CONSIST_MASK) == CONSIST_TOP) ? "Consist TOP" :
       		( ((s & CONSIST_MASK) == CONSIST_SUB) ? "Sub Consist" :
 						"Not Consisted"));
 	   }
@@ -138,12 +146,12 @@ public final static int DEC_MODE_128      = STAT1_SL_SPD14 | STAT1_SL_SPD28;
 public final static int DEC_MODE_14       = STAT1_SL_SPD14;
 public final static int DEC_MODE_28TRI    = STAT1_SL_SPD28;
 public final static int DEC_MODE_28       = 0;
-public final static String DEC_MODE(int s) { // encode decoder type as a string   
+public final static String DEC_MODE(int s) { // encode decoder type as a string
        return ((s & DEC_MODE_MASK) == DEC_MODE_128A)  ? "128 (Allow Adv. consisting)" :
             ( ((s & DEC_MODE_MASK) == DEC_MODE_28A)   ? "28 (Allow Adv. consisting)" :
             ( ((s & DEC_MODE_MASK) == DEC_MODE_128)   ? "128" :
             ( ((s & DEC_MODE_MASK) == DEC_MODE_14)    ? "14" :
-            ( ((s & DEC_MODE_MASK) == DEC_MODE_28TRI) ? "28 (Motorola)" : 
+            ( ((s & DEC_MODE_MASK) == DEC_MODE_28TRI) ? "28 (Motorola)" :
                            "28"))));
        }
 
@@ -263,6 +271,7 @@ public final static int OPC_RQ_SL_DATA    = 0xbb;
 public final static int OPC_SW_STATE      = 0xbc;
 public final static int OPC_SW_ACK        = 0xbd;
 public final static int OPC_LOCO_ADR      = 0xbf;
+public final static int OPC_MULTI_SENSE   = 0xd0;
 public final static int OPC_PEER_XFER     = 0xe5;
 public final static int OPC_SL_RD_DATA    = 0xe7;
 public final static int OPC_IMM_PACKET    = 0xed;
@@ -283,7 +292,7 @@ public final static int KEY_IDLE  			= 1<<  3;
 public final static int KEY_LOCO_SPD		= 1<<  4;
 public final static int KEY_LOCO_DIRF		= 1<<  5;
 public final static int KEY_LOCO_SND		= 1<<  6;
-public final static int KEY_SW_REQ			= 1<<  7; 
+public final static int KEY_SW_REQ			= 1<<  7;
 
 public final static int KEY_SW_REP			= 1<<  8;
 public final static int KEY_INPUT_REP		= 1<<  9;
