@@ -1,10 +1,4 @@
-/**
- * JmriTest.java
- *
- * Description:	    tests for the Jmri package
- * @author			Bob Jacobsen
- * @version
- */
+// JmriTest.java
 
 package jmri;
 
@@ -15,6 +9,11 @@ import junit.framework.TestSuite;
 import org.jdom.*;
 import org.jdom.output.*;
 
+/**
+ * Invoke complete set of tests for the Jmri package
+ * @author			Bob Jacobsen, Copyright (C) 2001, 2002
+ * @version         $Revision: 1.3 $
+ */
 public class JmriTest extends TestCase {
 
 	// from here down is testing infrastructure
