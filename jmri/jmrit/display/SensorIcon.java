@@ -9,7 +9,7 @@ import jmri.jmrit.catalog.*;
 /**
  * SensorIcon provides a small icon to display a status of a Sensor.</p>
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -36,10 +36,14 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         if (InstanceManager.sensorManagerInstance()!=null) {
             sensor = InstanceManager.sensorManagerInstance().
                 newSensor(pUserName,pSystemName);
-            displayState(sensorState());
-            sensor.addPropertyChangeListener(this);
+            if (sensor != null) {
+                displayState(sensorState());
+                sensor.addPropertyChangeListener(this);
+            } else {
+                log.error("Sensor '"+pSystemName+"' not available, icon won't see changes");
+            }
         } else {
-            log.error("No SensorManager for this protocol, sensor won't see changes");
+            log.error("No SensorManager for this protocol, icon won't see changes");
         }
     }
     public Sensor getSensor() {
