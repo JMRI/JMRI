@@ -52,7 +52,7 @@ import javax.swing.JTextArea;
  * so that Jython code can easily use some of the methods.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 public class AbstractAutomaton implements Runnable {
 
@@ -417,7 +417,8 @@ public class AbstractAutomaton implements Runnable {
     public DccThrottle getThrottle(int address, boolean longAddress) {
         if (!inThread) log.warn("getThrottle invoked from invalid context");
         throttle = null;
-        InstanceManager.throttleManagerInstance()
+        boolean ok = true;
+        ok = InstanceManager.throttleManagerInstance()
                 .requestThrottle(address,new ThrottleListener() {
                     public void notifyThrottleFound(DccThrottle t) {
                         throttle = t;
@@ -426,6 +427,13 @@ public class AbstractAutomaton implements Runnable {
                         }
                     }
                 });
+                
+        // check if reply is coming
+        if (!ok) {
+        	log.info("Throttle for loco "+address+" not available");
+        	return null;
+        }
+        
         // now wait for reply from identified throttle
         while (throttle == null) {
             log.debug("waiting for throttle");
