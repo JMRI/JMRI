@@ -12,7 +12,6 @@ package jmri.symbolicprog;
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
-import ErrLoggerJ.ErrLog;
 
 public class SymbolicProgAction 			extends AbstractAction {
 

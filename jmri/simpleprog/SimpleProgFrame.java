@@ -14,8 +14,7 @@ import javax.swing.*;
 
 import jmri.Programmer;
 import jmri.ProgListener;
-
-import ErrLoggerJ.ErrLog;
+import jmri.ProgModePane;
 
 public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgListener {
 
@@ -25,11 +24,7 @@ public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgList
 	javax.swing.JTextField  addrField       = new javax.swing.JTextField();
 	javax.swing.JTextField  valField        = new javax.swing.JTextField();
 	
-	javax.swing.ButtonGroup modeGroup 		= new javax.swing.ButtonGroup();
-	javax.swing.JRadioButton pagedButton    = new javax.swing.JRadioButton();
-	javax.swing.JRadioButton directBitButton   = new javax.swing.JRadioButton();
-	javax.swing.JRadioButton directByteButton   = new javax.swing.JRadioButton();
-	javax.swing.JRadioButton registerButton = new javax.swing.JRadioButton();
+	jmri.ProgModePane       modePane        = new jmri.ProgModePane();
 	
 	javax.swing.ButtonGroup radixGroup 		= new javax.swing.ButtonGroup();
 	javax.swing.JRadioButton hexButton    	= new javax.swing.JRadioButton();
@@ -46,16 +41,6 @@ public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgList
 		writeButton.setText("Write CV");
 		writeButton.setToolTipText("Write the value to the selected CV");
 		
-		pagedButton.setText("Paged Mode");
-		pagedButton.setSelected(true);
-		directBitButton.setText("Direct Byte Mode");
-		directByteButton.setText("Direct Bit Mode");
-		registerButton.setText("Register Mode");
-		modeGroup.add(pagedButton);
-		modeGroup.add(directByteButton);
-		modeGroup.add(directBitButton);
-		modeGroup.add(registerButton);
-
 		hexButton.setText("Hexadecimal");
 		decButton.setText("Decimal");
 		decButton.setSelected(true);
@@ -102,17 +87,7 @@ public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgList
 		tPane = new JPanel();
 			tPane.setLayout(new BoxLayout(tPane, BoxLayout.X_AXIS));
 		
-		tPane2 = new JPanel();
-			tPane2.setLayout(new BoxLayout(tPane2, BoxLayout.Y_AXIS));
-			modeGroup.add(pagedButton);
-			modeGroup.add(directBitButton);
-			modeGroup.add(directByteButton);
-			modeGroup.add(registerButton);
-			tPane2.add(pagedButton);
-			tPane2.add(directBitButton);
-			tPane2.add(directByteButton);
-			tPane2.add(registerButton);
-		tPane.add(tPane2);
+		tPane.add(modePane);
 
 		tPane.add(new JSeparator(javax.swing.SwingConstants.VERTICAL));
 		
@@ -155,16 +130,7 @@ public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgList
   		}
   	}
   	private int getNewMode() {
-  		if (pagedButton.isSelected())
-	  		return jmri.Programmer.PAGEMODE;
-	  	else if (directBitButton.isSelected())
-	  		return jmri.Programmer.DIRECTMODE;
-	  	else if (directByteButton.isSelected())
-	  		return jmri.Programmer.DIRECTMODE;
-	  	else if (registerButton.isSelected())
-	  		return jmri.Programmer.REGISTERMODE;
-	  	else
-	  		return 0;
+  		return modePane.getMode();
   	}
   	
   	public String statusCode(int status) {
@@ -205,7 +171,7 @@ public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgList
 		} else {
 			try {
 				resultsField.setText("programming...");
-				p.readCV(getNewAddr(),getNewMode(),this);
+				p.readCV(getNewAddr(), this);
 			} catch (jmri.ProgrammerException ex) {
 				resultsField.setText(""+ex);
 				readButton.setSelected(false);
@@ -220,7 +186,7 @@ public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgList
 		} else {
 			try {
 				resultsField.setText("programming...");
-			p.writeCV(getNewAddr(),getNewVal(),getNewMode(),this);
+			p.writeCV(getNewAddr(),getNewVal(), this);
 			} catch (jmri.ProgrammerException ex) {
 				resultsField.setText(""+ex);
 				writeButton.setSelected(false);
@@ -248,6 +214,7 @@ public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgList
 	// Close the window when the close box is clicked
 	void thisWindowClosing(java.awt.event.WindowEvent e) {
 		setVisible(false);
+		modePane.done();
 		dispose();
 	// and disconnect from the SlotManager
 	

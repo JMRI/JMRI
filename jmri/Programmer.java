@@ -9,21 +9,33 @@
 package jmri;
 
 import jmri.ProgListener;
+import java.beans.PropertyChangeListener;
 
 public interface Programmer  {
 
 	// mode e.g. register, direct, paged
-	public static final int REGISTERMODE = 11;
-	public static final int PAGEMODE     = 12;
-	public static final int DIRECTMODE   = 13;
-	public static final int ADDRESSMODE  = 14;
+	public static final int REGISTERMODE    = 11;
+	public static final int PAGEMODE        = 21;
+	public static final int DIRECTBITMODE   = 31;
+	public static final int DIRECTBYTEMODE  = 32;
+	public static final int ADDRESSMODE     = 41;
 	
 	// write CV
-	public void writeCV(int CV, int val, int mode, ProgListener p) throws ProgrammerException;
+	public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException;
 	
 	// read CV
-	public void readCV(int CV, int mode, ProgListener p) throws ProgrammerException;
+	public void readCV(int CV, ProgListener p) throws ProgrammerException;
 	
+	/* 
+	 * Mode is a property that can be set and queried for the
+	 * programmer.  Notification is also possible...
+	 */
+	public void setMode(int mode);
+	public int  getMode();
+	 
+	public void addPropertyChangeListener(PropertyChangeListener p);
+	public void removePropertyChangeListener(PropertyChangeListener p);
+	 
 	// error handling on request is via exceptions
 	// results are returned via the ProgListener callback
 	

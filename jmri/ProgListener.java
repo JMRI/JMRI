@@ -28,4 +28,4 @@ public interface ProgListener extends java.util.EventListener{
 }
 
 
-/* @(#)LocoNetListener.java */
+/* @(#)ProgListener.java */

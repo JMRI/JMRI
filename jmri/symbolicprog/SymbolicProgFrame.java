@@ -17,8 +17,7 @@ import com.sun.java.util.collections.List;
 
 import jmri.Programmer;
 import jmri.ProgListener;
-
-import ErrLoggerJ.ErrLog;
+import jmri.ProgModePane;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -40,12 +39,8 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 	JTable					variableTable	= new JTable(variableModel);
 	JScrollPane 			variableScroll	= new JScrollPane(variableTable);
 
-	ButtonGroup modeGroup 			= new ButtonGroup();
-	JRadioButton pagedButton    	= new JRadioButton();
-	JRadioButton directByteButton   = new JRadioButton();
-	JRadioButton directBitButton    = new JRadioButton();
-	JRadioButton registerButton 	= new JRadioButton();
-		
+	ProgModePane   modePane = new ProgModePane();
+			
 	JLabel vendor  = new JLabel("         ");
 	JLabel model   = new JLabel("         ");
 	
@@ -63,11 +58,6 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 		variableTable.setDefaultRenderer(JComboBox.class, new ValueRenderer());
 		variableTable.setDefaultEditor(JComboBox.class, new ValueEditor());
 		variableScroll.setColumnHeaderView(variableTable.getTableHeader());
-
-		pagedButton.setText("Paged Mode");
-		directByteButton.setText("Direct Byte Mode");
-		directBitButton.setText("Direct Bit Mode");
-		registerButton.setText("Register Mode");
 
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
 		// instead of forcing the columns to fill the frame (and only fill)
@@ -94,18 +84,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 			tPane3.add(model);
 		getContentPane().add(tPane3);
 
-		JPanel tPane2 = new JPanel();
-			tPane2.setLayout(new BoxLayout(tPane2, BoxLayout.Y_AXIS));
-			modeGroup.add(pagedButton);
-			modeGroup.add(directBitButton);
-			modeGroup.add(directByteButton);
-			modeGroup.add(registerButton);
-			tPane2.add(pagedButton);
-			tPane2.add(directBitButton);
-			tPane2.add(directByteButton);
-			tPane2.add(registerButton);
-		getContentPane().add(tPane2);
-
+		getContentPane().add(modePane);
 			
 		getContentPane().add(variableScroll);
 
@@ -119,11 +98,10 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 		// handle selection or cancel
 		if (retVal == JFileChooser.APPROVE_OPTION) {
 			File file = fc.getSelectedFile();
-			ErrLog.msg(ErrLog.routine, "SymbolicProgFrame", "selectFileButtonActionPerformed", "located file "+file+" for XML processing");
+			if (log.isInfoEnabled()) log.info("selectFileButtonActionPerformed: located file "+file+" for XML processing");
 			// handle the file (later should be outside this thread?)
 			readAndParseDecoderConfig(file);
-			ErrLog.msg(ErrLog.routine, "SymbolicProgFrame", "selectFileButtonActionPerformed", 
-					"parsing complete");
+			if (log.isInfoEnabled()) log.info("selectFileButtonActionPerformed: parsing complete");
 
 		}
   	}	
@@ -148,6 +126,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 	// Close the window when the close box is clicked
 	void thisWindowClosing(java.awt.event.WindowEvent e) {
 		setVisible(false);
+		modePane.done();
 		dispose();
 	// and disconnect from the SlotManager
 	
@@ -191,8 +170,11 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 			variableModel.configDone();
 			
 		} catch (Exception e) {
-			ErrLog.msg(ErrLog.error, "SymbolicProgFrame", "readAndParseDecoderConfig", "readAndParseDecoderConfig exception: "+e);
+			if (log.isInfoEnabled()) log.info("readAndParseDecoderConfig: readAndParseDecoderConfig exception: "+e);
 		}
 
 	}
+	
+	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SymbolicProgFrame.class.getName());
+
 }

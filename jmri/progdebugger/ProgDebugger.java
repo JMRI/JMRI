@@ -8,19 +8,21 @@
 
 package jmri.progdebugger;
 
-import ErrLoggerJ.ErrLog;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+import java.util.Vector;
 
 public class ProgDebugger implements Programmer  {
 
 	// write CV
-	public void writeCV(int CV, int val, int mode, ProgListener p) throws ProgrammerException
+	public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException
 	{
 		final ProgListener m = p;
 		// log out the request
-		ErrLog.msg(ErrLog.routine,"ProgDebugger", "writeCV", "write CV: "+CV+" to: "+val+" mode: "+mode);
+		log.info("write CV: "+CV+" to: "+val+" mode: "+getMode());
 		// return a notification via the queue to ensure end
 		Runnable r = new Runnable() {
 			ProgListener l = m;
@@ -30,9 +32,9 @@ public class ProgDebugger implements Programmer  {
 	}
 	
 	// read CV
-	public void readCV(int CV, int mode, ProgListener p) throws ProgrammerException {
+	public void readCV(int CV, ProgListener p) throws ProgrammerException {
 		final ProgListener m = p;
-		ErrLog.msg(ErrLog.routine,"ProgDebugger", "readCV", "read CV: "+CV+" mode: "+mode);
+		log.info("read CV: "+CV+" mode: "+getMode());
 		// return a notification via the queue to ensure end
 		Runnable r = new Runnable() {
 			ProgListener l = m;
@@ -41,6 +43,52 @@ public class ProgDebugger implements Programmer  {
 		javax.swing.SwingUtilities.invokeLater(r);
 
 	}
+	
+
+	// handle mode
+	protected int _mode = 0;
+	
+	public void setMode(int mode) {
+		log.info("setMode: old="+_mode+" new="+mode);
+		if (mode != _mode) {
+			notifyPropertyChange("Mode", _mode, mode);
+			_mode = mode;
+		}
+	}
+	public int getMode() { return _mode; }
+	
+	// data members to hold contact with the property listeners
+	private Vector propListeners = new Vector();
+	
+	public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
+			// add only if not already registered
+			if (!propListeners.contains(l)) {
+					propListeners.addElement(l);
+				}
+		}
+
+	public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
+			if (propListeners.contains(l)) {
+					propListeners.removeElement(l);
+				}
+		}
+
+	protected void notifyPropertyChange(String name, int oldval, int newval) {
+		// make a copy of the listener vector to synchronized not needed for transmit
+		Vector v;
+		synchronized(this)
+			{
+				v = (Vector) propListeners.clone();
+			}
+		// forward to all listeners
+		int cnt = v.size();
+		for (int i=0; i < cnt; i++) {
+			PropertyChangeListener client = (PropertyChangeListener) v.elementAt(i);
+			client.propertyChange(new PropertyChangeEvent(this, name, new Integer(oldval), new Integer(newval)));
+						}
+	}
+
+	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ProgDebugger.class.getName());
 }
 
 
