@@ -1,6 +1,6 @@
 <!-- Special build file for doing Java 1.1.8 compatibility tests -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.13 $ -->
+<!-- Revision $Revision: 1.14 $ -->
 
 <project name="JMRI" default="check" basedir=".">
 
@@ -126,19 +126,9 @@
     <echo message="and run the resulting Ant task" />
     <ant target="ClassicCompile" antfile="ClassicCompile.xml"/>	
 
-    <!-- Compile a 1.3-path file that needs to be after the Classic  -->
+    <!-- Compile any 1.3-path file that needs to be after the Classic  -->
     <!-- compile to avoid triggering a compiler fault -->
-    <javac srcdir="${source}" 
-           destdir="${target}" 
-           includes="
-                 jmri/jmrit/analogclock/AnalogClockFrame.java
-           "          
-           target="1.1"
-           fork="yes"
-           executable="${Env.JDK}"
-           debug="yes" >
-       <classpath refid="project.class.path"    />
-    </javac>
+    <!-- (Not currently in use -->
 
     <!-- Compile using 1.3 compiler classes that should compile with 1.1.8 path -->
     <javac srcdir="${source}" 
