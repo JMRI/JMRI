@@ -9,9 +9,10 @@
 </head>
 <body>
 
-<IMG SRC="images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
-
-<h2>JMRI: A Java Model Railroad Interface</h2>
+&lt;If we had a logo, we'd put it here&gt; <BR>
+ 
+This page is _really_ still under construction! If you can help us make it a better page, please
+join the effort.<P>
 
 The JMRI project is building tools for model railroad computer control.  We 
 want it to be usable to as many people as possible, so we're building it 
@@ -24,10 +25,8 @@ create an entire system from scratch.<P>
 To do this, we've split the problem into two parts with an interface in-between:
 <UL>
 <LI>"Below" the interface lies code that connects to specific layout hardware.  Our initial
-work was with Digitrax&reg; systems, as they provide a lot of functionality already
-and really good support is available.  We also connect to NCE PowerHouse systems, providing
-the full functionality. We are certainly interested in connecting to other systems.
-
+work has been with Digitrax&tm; systems, as they provide a lot of functionality already
+and really good support is available.  But we're working on connections to other systems.
 <LI>"Above" the interface are the cool tools that people want. Our first examples are
 programmers for DCC decoders and simple layout controls.  The hope is that we can develop
 better and better tools that still will work on lots of type of computers, with lots
@@ -54,11 +53,8 @@ turnout positions, and program decoders.  Its rough, but its a start.
 <IMG SRC="images/MainPanel.jpg" ALT="Simple programmer frame" WIDTH="217" HEIGHT="181" HSPACE="0" VSPACE="0">
 <IMG SRC="images/TurnoutControl.jpg" ALT="Turnout control frame" WIDTH="223" HEIGHT="136" HSPACE="0" VSPACE="0">
 <IMG SRC="images/LocoMonFrame.jpg" ALT="LocoNet monitor sample image"  WIDTH="580" HEIGHT="396" HSPACE="0" VSPACE="0">
-<P>
-The current demo version also includes a  
-<A href="SymbProg/index.html">better tool for programming decoders</a>, which we 
-we're trying to adapt to many types of decoders.
-<P>
+<BR>
+
 If you're interested in using it with other model railroad equipment, with or without DCC, please
 join in the effort.
 
@@ -70,13 +66,12 @@ to comply with the Sun licensing policy JMRI is not an acronym. <P>
 
 JMRI is an open-source project, so you can get the entire source code at any time
 via the <A HREF="http://sourceforge.net/projects/jmri/">Project page</A>. If you'd
-like a running demo, we have the most recent one (demo 0.8) available packaged in several forms:
+like a running demo, we have the most recent one (demo 0.6) available packaged in several forms:
 
 <UL>
-<LI><A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.demo.0.8.hqx">JMRI.demo.0.8.hqx</A>  A binhex'd self-extracting archive for the Macintosh
-<LI><A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.demo.0.8.tar.gz" >JMRI.demo.0.8.tar.gz</A>   A .tar.gz file for Linux
-<LI><A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.demo.OS2.0.8.zip">JMRI.demo.0.8.zip</A>  A .zip file for OS/2
-<LI><A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.demo.win.0.8.zip">JMRI.demo.0.8.zip</A>  A .zip file for Windows 95, 98 and perhaps others
+<LI><A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.demo.0.6.hqx">JMRI.demo.0.6.hqx</A>  A binhex'd self-extracting archive for the Macintosh
+<LI><A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.demo.0.6.tar.gz" >JMRI.demo.0.6.tar.gz</A>   A .tar.gz file for Linux
+<LI><A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.demo.0.6.zip">JMRI.demo.0.6.zip</A>  A .zip file for OS/2
 </UL>
 Note that the people working on this project are really short of expertise
 in Windows and Linux; project development has so far been on the Macintosh.
@@ -88,26 +83,6 @@ advice.<P>
 The 
 <A HREF="demoFiles/README.html">README file</A>
 from the latest demo is also available separately.
-
-<h2>How can you use this?</h2>
-
-There are several different ways to use JMRI:
-<OL>
-<LI>You can just run the demo and use the tools it provides.  As we
-add more and more, the demo becomes more useful.  But you shouldn't expect
-it to be as powerful as a commercial layout management program; JMRI
-isn't meant to compete directly with them.
-<LI>You can use the JRMI interfaces to write programs for your own layouts.
-Making this easy is an important goal.
-<LI>You can write new general-purpose tools.  Although this is a little
-harder than writing automation for your own layout, writing tools that other
-people use can be very satisfying.
-<LI>You can implement the JMRI interfaces for a new system.  We've done 
-LocoNet and NCE, but having JMRI work with other systems is an important goal.  
-Once an implementation for another system works, the general tools (e.g.
-symbolic programmer, automations tools, signalling, etc) can be immediately
-used.
-</ol>
 
 <h2>Further information</h2>
 
@@ -170,24 +145,6 @@ If you have problems accessing that, please check for scheduled outages on the
 This is still an early stage, and we're critically short of documentation.  But if you're interested
 in working with the code, we'd love to help you get started via email, etc.
 
-<h2>Acknowledgements</h2>
-JMRI is a volunteer project, and we welcome people to contribute in any way.
-Contributors include:
-<UL>
-<LI>Patrick Beard, who allows us to distribute his javax.comm.MRJ package for the Macintosh
-<LI>Ron W. Auld, who's llnmon program formed the basis for the LocoNet monitoring
-<LI>Rob Hamerling, who got the demo to run on OS/2, contributed his scripts and
-has been patiently testing
-<LI>Ronald Angel, who figured out how to run the demo on Linux
-<LI>Jim Wells, who created our logo
-<LI>Freek Heite, who located some important XpressNet info
-<LI>Joseph Goldstone, who put together the javax.comm implementation for Mac OS X
-<LI>Mark Gurries, who provided loaner equipment and great ideas
-<LI>Jim Scorse, who gave generously of his time to answer questions about NCE details
-<LI>Bill Brown, whose layout was used for the first NCE tests
-
-</ul>
-
 <HR>
 <BR>Site hosted by: <BR>
 <A href="http://sourceforge.net"> 
@@ -207,7 +164,6 @@ has been patiently testing
 </form>
 <!-- End Small Box -->
  
-<script language=javascript src="http://ss.webring.yahoo.com/navbar?f=j&y=bob_jacobsen15&u=100088115910095949"></script>
 
 <hr>
 Bob Jacobsen<BR>
