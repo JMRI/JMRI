@@ -25,7 +25,7 @@ import jmri.jmrit.symbolicprog.*;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 public class PaneProgAction 			extends AbstractAction {
 
@@ -67,6 +67,9 @@ public class PaneProgAction 			extends AbstractAction {
         // add the Roster menu
         JMenuBar menuBar = new JMenuBar();
         // menuBar.setBorder(new BevelBorder(BevelBorder.RAISED));
+        JMenu j = new JMenu("File");
+        j.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(f));
+        menuBar.add(j);
         menuBar.add(new jmri.jmrit.roster.RosterMenu("Roster", jmri.jmrit.roster.RosterMenu.MAINMENU, f));
         f.setJMenuBar(menuBar);
 
