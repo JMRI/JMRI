@@ -19,7 +19,7 @@ package jmri.jmrix.loconet;
  * contact Digitrax Inc for separate permission.
  *
  * @author Bob Jacobsen     Copyright 2002
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class Se8AlmImplementation extends AbstractAlmImplementation {
@@ -27,6 +27,11 @@ public class Se8AlmImplementation extends AbstractAlmImplementation {
     final int MAXPAGES = 8;  // number of accessible pages
     final int ENTRYSIZE = 64; // number of arguments per entry, must be power of two
 
+    /**
+     * Create an object representing the ALM entries for a single SE8 unit
+     * @param pNumber Number of this ALM
+     * @param pImage Does this appear on LocoNet?
+     */
     public Se8AlmImplementation(int pNumber, boolean pImage) {
         super(pNumber, pImage);
         initData();
