@@ -77,7 +77,7 @@ and the application name for App):
     	# now above the distribution directory
     
     	zip -rl App.zip App.M.N
-		zip App.zip App.M.N/*.jar App.M.N/lib/*.jar
+		zip App.zip App.M.N/*.jar App.M.N/win32com.dll App.M.N/lib/*.jar
 	
 		# the first line adds CR's, and the second replaces the .jar files so they
 		# don't have CR inserted
