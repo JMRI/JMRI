@@ -15,7 +15,7 @@ import java.util.Vector;
  * without traffic over the connection.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Revision: 1.3 $
+ * @version 		$Revision: 1.4 $
  *
  */
 public class LnTrafficRouter extends LnTrafficController implements LocoNetListener {
@@ -38,6 +38,10 @@ public class LnTrafficRouter extends LnTrafficController implements LocoNetListe
      * @param m Message to send; will be updated with CRC
 	 */
 	public void sendLocoNetMessage(LocoNetMessage m) {
+        // update statistics
+        transmittedMsgCount++;
+        
+        // forward message
         destination.sendLocoNetMessage(m);
 	}
 
@@ -75,25 +79,6 @@ public class LnTrafficRouter extends LnTrafficController implements LocoNetListe
 			destination = null;
             connected = false;
 		}
-
-	/**
-	 * Forward a LocoNetMessage to all registered listeners.
-     * @param m Message to forward. Listeners should not modify it!
-	 */
-	protected void notify(LocoNetMessage m) {
-		// make a copy of the listener vector to synchronized not needed for transmit
-		Vector v;
-		synchronized(this) {
-			v = (Vector) listeners.clone();
-		}
-		if (log.isDebugEnabled()) log.debug("notify of incoming LocoNet packet: "+m.toString());
-		// forward to all listeners
-		int cnt = v.size();
-		for (int i=0; i < cnt; i++) {
-			LocoNetListener client = (LocoNetListener) listeners.elementAt(i);
-			client.message(m);
-		}
-	}
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnTrafficRouter.class.getName());
 }

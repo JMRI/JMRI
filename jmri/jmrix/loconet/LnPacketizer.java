@@ -31,7 +31,7 @@ import com.sun.java.util.collections.NoSuchElementException;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.9 $
+ * @version 		$Revision: 1.10 $
  *
  */
 public class LnPacketizer extends LnTrafficController {
@@ -41,24 +41,10 @@ public class LnPacketizer extends LnTrafficController {
 
     // The methods to implement the LocoNetInterface
 
-    protected Vector listeners = new Vector();
 
     public boolean status() { return (ostream != null & istream != null);
     }
 
-    public synchronized void addLocoNetListener(int mask, LocoNetListener l) {
-        // add only if not already registered
-        if (l == null) throw new java.lang.NullPointerException();
-        if (!listeners.contains(l)) {
-            listeners.addElement(l);
-        }
-    }
-
-    public synchronized void removeLocoNetListener(int mask, LocoNetListener l) {
-        if (listeners.contains(l)) {
-            listeners.removeElement(l);
-        }
-    }
 
     /**
      * Synchronized list used as a transmit queue.
@@ -85,6 +71,9 @@ public class LnPacketizer extends LnTrafficController {
      * @param m Message to send; will be updated with CRC
      */
     public void sendLocoNetMessage(LocoNetMessage m) {
+        // update statistics
+        transmittedMsgCount++;
+        
         // set the error correcting code byte
         int len = m.getNumDataElements();
         int chksum = 0xff;  /* the seed */
@@ -143,24 +132,6 @@ public class LnPacketizer extends LnTrafficController {
     public DataInputStream istream = null;
     public OutputStream ostream = null;
 
-    /**
-     * Forward a LocoNetMessage to all registered listeners.
-     * @param m Message to forward. Listeners should not modify it!
-     */
-    public void notify(LocoNetMessage m) {
-        // make a copy of the listener vector to synchronized not needed for transmit
-        Vector v;
-        synchronized(this) {
-            v = (Vector) listeners.clone();
-        }
-        if (log.isDebugEnabled()) log.debug("notify of incoming LocoNet packet: "+m.toString());
-        // forward to all listeners
-        int cnt = v.size();
-        for (int i=0; i < cnt; i++) {
-            LocoNetListener client = (LocoNetListener) listeners.elementAt(i);
-            client.message(m);
-        }
-    }
 
     /**
      * Handle incoming characters.  This is a permanent loop,
