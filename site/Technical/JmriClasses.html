@@ -1,0 +1,63 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Bob Jacobsen, LBL">
+   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>JMRI Classes</title>
+</head>
+<body>
+
+<h2>JMRI Classes</h3>
+
+This is a "technical" page of the JMRI website.  Eventually we have to organize it!
+
+<P>
+See also the 
+<A HREF="index.html">base page</a> for technical documentation.
+
+<h3>Turnout</h3>
+Turnouts are represented by:
+<UL>
+<LI>Turnout - the basic interface. This is what you should expect to deal with
+ 				when writing your layout automation code; its what you get 
+ 				when you make a request from the TurnoutManager, etc.
+<LI>AbstractTurnout - provided for convenience when implementing the Turnout interface
+				for specific hardware, this provides the basic implementation.
+<LI>LnTurnout - a specific implementation for LocoNet-connected turnouts.
+</UL>
+
+This basic pattern is taken from the Java Swing GUI. 
+<P>
+To get a specific Turnout instance that represents something on the layout, you
+make a request of a TurnoutManager.  This is also an interface, with a similar
+implementation pattern.
+
+
+
+<HR>
+<BR>Site hosted by: <BR>
+<A href="http://sourceforge.net"> 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
+
+<!-- Begin Small Box -->
+<form method="POST" action="http://mindit.netmind.com/mindit.shtml">
+<input type="hidden" name="FORM" value="C">
+<table border="0" cellpadding="5" cellspacing="0" bgcolor="#666666"><tr><td align="center">
+<font face="arial,helvetica" size="-1" color="#ffffff"><b>Click to receive email <br>when this page changes</b></font></td>
+</tr><tr><td align="center">
+<input type="image" src="http://mindit.netmind.com/images/mindit.gif" border="0"></td>
+</tr><tr bgcolor="#FFFFCC"><td align="center">
+<font face="arial,helvetica" size="-2">&#149;<b> Powered by <a href="http://www.netmind.com"><font color="#000000">NetMind</font></a> </b>&#149;</font>
+</td></tr></table>
+<input type=hidden value="http://jmri.sourceforge.net/Technical/JmriClasses.html" name="REDIRECT"> 
+</form>
+<!-- End Small Box -->
+
+<hr>
+Bob Jacobsen<BR>
+jake@physics.berkeley.edu
+
+</body>
+</html>
