@@ -11,8 +11,8 @@ package jmri;
  * implementations, and provides a unique mapping to the layout control system
  * (e.g. LocoNet, NCE, etc) and address within that system.
  *
- * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.4 $
+ * @author	Bob Jacobsen  Copyright (C) 2001, 2002, 2003, 2004
+ * @version	$Revision: 1.5 $
  * @see         jmri.AbstractManager
  * @see         jmri.AbstractNamedBean
  */
@@ -58,6 +58,28 @@ public interface NamedBean {
      * eventually be garbage-collected.
      */
     public void dispose();  // remove _all_ connections!
+   
+    /**
+     * Provide generic access to internal state.
+     *<P>
+     * This generally shouldn't be used by Java code; use 
+     * the class-specific form instead. (E.g. setCommandedState in Turnout)
+     * This provided to make Jython
+     * script access easier to read.  
+     * @throws JmriException general error when cant do the needed operation
+     */
+    public void setState(int s) throws JmriException;
+    
+    /**
+     * Provide generic access to internal state.
+     *<P>
+     * This generally shouldn't be used by Java code; use 
+     * the class-specific form instead. (E.g. getCommandedState in Turnout)
+     * This provided to make Jython
+     * script access easier to read.  
+     */
+    public int getState();
+
 
 }
 
