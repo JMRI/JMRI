@@ -12,7 +12,7 @@ import org.jdom.output.*;
 /**
  * tests for the jmri.jmrix.nce package
  * @author			Bob Jacobsen
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 public class NceTest extends TestCase {
 
@@ -39,6 +39,8 @@ public class NceTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.nce.NceTest");
         suite.addTest(jmri.jmrix.nce.NceTurnoutTest.suite());
         suite.addTest(jmri.jmrix.nce.NceTurnoutManagerTest.suite());
+        suite.addTest(jmri.jmrix.nce.NceSensorManagerTest.suite());
+        suite.addTest(jmri.jmrix.nce.NceAIUTest.suite());
         suite.addTest(jmri.jmrix.nce.ncemon.NceMonFrameTest.suite());
         suite.addTest(jmri.jmrix.nce.NceProgrammerTest.suite());
         suite.addTest(jmri.jmrix.nce.packetgen.NcePacketGenFrameTest.suite());

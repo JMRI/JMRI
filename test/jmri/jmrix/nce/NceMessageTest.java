@@ -1,9 +1,9 @@
-/** 
+/**
  * NceMessageTest.java
  *
  * Description:	    JUnit tests for the NceMessage class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 package jmri.jmrix.nce;
@@ -41,7 +41,7 @@ public class NceMessageTest extends TestCase {
 		m.setBinary(false);
 		Assert.assertEquals("string compare ", "P 261", m.toString());
 	}
-	
+
 	public void testGetEnable() {
 		NceMessage m = NceMessage.getEnableMain();
 		Assert.assertEquals("length", 1, m.getNumDataElements());
@@ -53,7 +53,7 @@ public class NceMessageTest extends TestCase {
 		Assert.assertEquals("isEnableMain", true, m.isEnableMain());
 		Assert.assertEquals("isKillMain", false, m.isKillMain());
 	}
-	
+
 	public void testReadPagedCV() {
 		NceMessage m = NceMessage.getReadPagedCV(12);
 		Assert.assertEquals("string compare ", "R012", m.toString());
@@ -63,7 +63,7 @@ public class NceMessageTest extends TestCase {
 		NceMessage m = NceMessage.getWritePagedCV(12, 251);
 		Assert.assertEquals("string compare ", "P012 251", m.toString());
 	}
-	
+
 	public void testReadRegister() {
 		NceMessage m = NceMessage.getReadRegister(2);
 		Assert.assertEquals("string compare ", "V2", m.toString());
@@ -73,9 +73,9 @@ public class NceMessageTest extends TestCase {
 		NceMessage m = NceMessage.getWriteRegister(2, 251);
 		Assert.assertEquals("string compare ", "S2 251", m.toString());
 	}
-	
+
 	// from here down is testing infrastructure
-	
+
 	public NceMessageTest(String s) {
 		super(s);
 	}
@@ -85,11 +85,11 @@ public class NceMessageTest extends TestCase {
 		String[] testCaseName = {NceMessageTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
-	
+
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite(NceMessageTest.class);
 		return suite;
 	}
-	
+
 }
