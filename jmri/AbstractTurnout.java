@@ -17,9 +17,10 @@ package jmri;
  *
  * Description:		Abstract class providing the basic logic of the Turnout interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
-public abstract class AbstractTurnout extends AbstractNamedBean implements Turnout, java.io.Serializable {
+public abstract class AbstractTurnout extends AbstractNamedBean 
+        implements Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
 
     public AbstractTurnout(String systemName) {
         super(systemName);
@@ -62,12 +63,11 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements Turno
     public void setCommandedState(int s) {
         forwardCommandChangeToLayout(s);
         newCommandedState(s);
-        newKnownState(s);       // for NONE feedback
+        // optionally handle feedback
+        if (_activeFeedbackType == DIRECT) newKnownState(s); 
     }
 
     public int getCommandedState() {return _commandedState;}
-
-    public int getFeedbackType() {return _feedbackType;}
 
     /**
      * Add a protected newKnownState() for use by implementations. Not intended for
@@ -100,11 +100,131 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements Turno
      */
     public int getState() { return getCommandedState(); }
     
-    // internal data members
-    private int _feedbackType   = NONE;
+    protected String[] _validFeedbackNames = {"DIRECT", "ONESENSOR", "TWOSENSOR"};
+    protected int[] _validFeedbackModes = {DIRECT, ONESENSOR, TWOSENSOR};
+    protected int _validFeedbackTypes = DIRECT | ONESENSOR | TWOSENSOR;
+    
     private int _knownState     = UNKNOWN;
     private int _commandedState = UNKNOWN;
 
+    public int getValidFeedbackTypes() {return _validFeedbackTypes;}
+
+    public String[] getValidFeedbackNames() {
+        return _validFeedbackNames;
+    }
+    
+    public void setFeedbackMode(String mode) {
+        for (int i = 0; i<_validFeedbackNames.length; i++) {
+            if (mode.equals(_validFeedbackNames[i])) {
+                setFeedbackMode(_validFeedbackModes[i]);
+                return;
+            }
+        }
+        throw new IllegalArgumentException("Unexpected mode: "+mode);
+    }
+    
+    private int _activeFeedbackType   = DIRECT;
+    public void setFeedbackMode(int mode) {
+        // check for error - following removed the low bit from mode
+        int test = mode & (mode-1);
+        if (test!=0) throw new IllegalArgumentException("More than one bit set: "+mode);
+        // set the value
+        _activeFeedbackType = mode;
+    }
+
+    public int getFeedbackMode() { return _activeFeedbackType; }
+
+    public String getFeedbackModeName() {
+        for (int i = 0; i<_validFeedbackNames.length; i++) {
+            if (_activeFeedbackType==_validFeedbackModes[i]) {
+                return _validFeedbackNames[i];
+            }
+        }
+        throw new IllegalArgumentException("Unexpected internal mode: "+_activeFeedbackType);
+    }
+
+    Sensor _firstSensor = null;
+    Sensor _secondSensor = null;
+    public void provideFirstFeedbackSensor(Sensor s) {
+        // if need be, clean listener
+        if (_firstSensor!=null) {
+            _firstSensor.removePropertyChangeListener(this);
+        }
+
+        _firstSensor = s;
+        
+        // if need be, set listener
+        if (_firstSensor!=null) {
+            _firstSensor.addPropertyChangeListener(this);
+        }
+    }
+
+    public void provideSecondFeedbackSensor(Sensor s) {
+        // if need be, clean listener
+        if (_secondSensor!=null) {
+            _secondSensor.removePropertyChangeListener(this);
+        }
+
+        _secondSensor = s;
+
+        // if need be, set listener
+        if (_secondSensor!=null) {
+            _secondSensor.addPropertyChangeListener(this);
+        }
+    }
+
+    public Sensor getFirstSensor() { return _firstSensor; }
+    public Sensor getSecondSensor()  { return _secondSensor; }
+
+    /**
+     * React to sensor changes by changing the KnownState
+     * if using an appropriate sensor mode
+     */
+    public void propertyChange(java.beans.PropertyChangeEvent evt) {
+        // top level, find the mode
+        if (_activeFeedbackType == ONESENSOR) {
+            // check for match
+            if (evt.getSource()==_firstSensor) {
+                // check change type
+                if (!evt.getPropertyName().equals("KnownState")) return;
+                // OK, now have to handle it
+                int mode = ((Integer)evt.getNewValue()).intValue();
+                if (mode==Sensor.ACTIVE)
+                    newKnownState(THROWN);
+                else if (mode==Sensor.INACTIVE)
+                    newKnownState(CLOSED);
+            } else {
+                // unexected mismatch
+                log.warn("expected sensor "+_firstSensor.getSystemName()
+                        +" was "+((Sensor)evt.getSource()).getSystemName());
+            }
+            // end ONESENSOR block
+        } else if (_activeFeedbackType == TWOSENSOR) {
+            // check change type
+            if (!evt.getPropertyName().equals("KnownState")) return;
+            // OK, now have to handle it
+            int mode = ((Integer)evt.getNewValue()).intValue();
+            Sensor s = (Sensor)evt.getSource();
+            if ( (mode==Sensor.ACTIVE) && (s==_secondSensor))
+                newKnownState(CLOSED);
+            else if ( (mode==Sensor.ACTIVE) && (s==_firstSensor))
+                newKnownState(THROWN);
+            // end TWOSENSOR block
+        } else
+            // don't need to do anything
+            return;
+    }
+    
+    public void dispose() {
+        if (_firstSensor!=null) {
+            _firstSensor.removePropertyChangeListener(this);
+        }
+        _firstSensor = null;
+        if (_secondSensor!=null) {
+            _secondSensor.removePropertyChangeListener(this);
+        }
+        _secondSensor = null;
+    }
  }
 
 /* @(#)AbstractTurnout.java */
