@@ -3,7 +3,8 @@ Making a distribution (substitute the release-name for 0.6 throughout):
 ( ) Copy and rename the last distribution
 
 ( ) update the README to include any changes, esp. including updating
-	the release name and URLs
+	the release name and URLs. Compare to the version in scripts/ to 
+	ensure both are up-to-date
 
 ( ) Any new jar files that need to be put in the lib area?
 
