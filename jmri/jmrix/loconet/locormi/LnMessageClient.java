@@ -6,9 +6,11 @@ import jmri.jmrix.loconet.LocoNetMessage;
 
 /**
  * Client for the RMI LocoNet server.
+ * <P>
+ * The main() in this class is for test purposes only.
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Alex Shepherd, Bob Jacobsen
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class LnMessageClient extends LnTrafficRouter {
@@ -66,14 +68,14 @@ public class LnMessageClient extends LnTrafficRouter {
             pollThread = new LnMessageClientPollThread( this ) ;
         }
         catch( Exception ex ){
-            log.error( "Exception: " + ex );
+            log.error( "Exception while trying to connect: " + ex );
             throw new LocoNetException( "Failed to Connect to Server: " + serverName ) ;
         }
     }
 
     /**
-     * set up all of the other objects to operate with a server
-     * connected to this application
+     * Set up all of the other objects to operate with a server
+     * connected to this application.
      */
     public void configureLocalServices() {
         // This is invoked on the LnMessageClient after it is
