@@ -24,7 +24,7 @@ import org.jdom.Attribute;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002. AC 11/09/2002 Added SPROG support
- * @version			$Revision: 1.24 $
+ * @version			$Revision: 1.25 $
  */
 abstract public class AbstractConfigFrame extends JFrame {
 
@@ -264,6 +264,7 @@ abstract public class AbstractConfigFrame extends JFrame {
     }
 
     protected void invokeAction(Element e) {
+        if (e==null) return;    // no element, do nothing
         String className = "<unknown>";
         try {
             className = e.getAttribute("classname").getValue();
