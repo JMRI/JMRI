@@ -15,7 +15,7 @@ import java.util.Vector;
  * handled in an independent thread.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SprogTrafficController implements SprogInterface, Runnable {
 
@@ -246,7 +246,7 @@ public class SprogTrafficController implements SprogInterface, Runnable {
             int ptr = num-1;
             if (msg.getElement(ptr)   != ' ') return false;
             if (msg.getElement(ptr-1) != '>') return false;
-            if ((msg.getElement(ptr-2) != 'P')||(msg.getElement(ptr-2) != 'R')) return false;
+            if ((msg.getElement(ptr-2) != 'P')&&(msg.getElement(ptr-2) != 'R')) return false;
             return true;
           }
           else return false;
