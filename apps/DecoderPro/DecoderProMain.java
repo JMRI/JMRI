@@ -13,7 +13,7 @@ import jmri.util.oreilly.*;
  * DecoderPro application main class.
  *
  * @author                      Bob Jacobsen
- * @version                     $Revision: 1.1 $
+ * @version                     $Revision: 1.2 $
  */
 public class DecoderProMain extends JPanel {
     public DecoderProMain() {
@@ -58,8 +58,9 @@ public class DecoderProMain extends JPanel {
         JMenu toolMenu = new JMenu("Tools");
         menuBar.add(toolMenu);
         toolMenu.add(new jmri.jmrit.powerpanel.PowerPanelAction("Power Control"));
-        toolMenu.add(new jmri.jmrit.simpleprog.SimpleProgAction("Single CV Programmer"));
         toolMenu.add(new jmri.jmrit.speedometer.SpeedometerAction( "Speedometer" ));
+        toolMenu.add(new jmri.jmrit.simpleprog.SimpleProgAction("Single CV Programmer"));
+        toolMenu.add(new jmri.jmrit.dualdecoder.DualDecoderToolAction());
         toolMenu.add(new JSeparator());
 
         JMenu throttleMenu = new JMenu("Throttles");
