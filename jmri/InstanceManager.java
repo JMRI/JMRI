@@ -12,7 +12,7 @@ package jmri;
  * non-system-specific code.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.23 $
+ * @version			$Revision: 1.24 $
  */
 public class InstanceManager {
 
@@ -59,6 +59,11 @@ public class InstanceManager {
     static public CommandStation commandStationInstance()  { return instance().commandStation; }
 
     static public ReporterManager reporterManagerInstance()  { return instance().reporterManager; }
+
+    static public MemoryManager memoryManagerInstance()  { 
+    	if (instance().memoryManager == null) instance().memoryManager = DefaultMemoryManager.instance();
+    	return instance().memoryManager; 
+    }
 
     static private InstanceManager instance() {
         if (root==null) root = new InstanceManager();
@@ -201,6 +206,7 @@ public class InstanceManager {
     }
 
 
+	private MemoryManager memoryManager = null;
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(InstanceManager.class.getName());
 }
 
