@@ -14,7 +14,7 @@ import jmri.Turnout;
  * more than one Turnout object pointing to a single device is not allowed.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class NceTurnout extends AbstractTurnout {
 
@@ -85,40 +85,7 @@ public class NceTurnout extends AbstractTurnout {
                                             +" "+Integer.toHexString(0xFF & bl[1])
                                             +" "+Integer.toHexString(0xFF & bl[2]));
 
-        NceMessage m = new NceMessage(14);
-        int i = 0; // counter to make it easier to format the message
-        m.setElement(i++, 'S');  // "S C02 " means sent it twice
-        m.setElement(i++, ' ');
-        m.setElement(i++, 'C');
-        m.setElement(i++, '0');
-        m.setElement(i++, '2');
-        m.setElement(i++, ' ');
-        String s = Integer.toHexString((int)bl[0]&0xFF);
-        if (s.length() == 1) {
-            m.setElement(i++, '0');
-            m.setElement(i++, s.charAt(0));
-        } else {
-            m.setElement(i++, s.charAt(0));
-            m.setElement(i++, s.charAt(1));
-        }
-        m.setElement(i++, ' ');
-        s = Integer.toHexString((int)bl[1]&0xFF);
-        if (s.length() == 1) {
-            m.setElement(i++, '0');
-            m.setElement(i++, s.charAt(0));
-        } else {
-            m.setElement(i++, s.charAt(0));
-            m.setElement(i++, s.charAt(1));
-        }
-        m.setElement(i++, ' ');
-        s = Integer.toHexString((int)bl[2]&0xFF);
-        if (s.length() == 1) {
-            m.setElement(i++, '0');
-            m.setElement(i++, s.charAt(0));
-        } else {
-            m.setElement(i++, s.charAt(0));
-            m.setElement(i++, s.charAt(1));
-        }
+        NceMessage m = NceMessage.sendPacketMessage(bl);
 
         NceTrafficController.instance().sendNceMessage(m, null);
 

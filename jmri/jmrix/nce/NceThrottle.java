@@ -12,7 +12,7 @@ import jmri.jmrix.AbstractThrottle;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class NceThrottle extends AbstractThrottle
 {
@@ -78,20 +78,8 @@ public class NceThrottle extends AbstractThrottle
         byte[] result = jmri.NmraPacket.function5Through8Packet(address, (address>=100),
                                          getF5(), getF6(), getF7(), getF8());
 
-        NceMessage m = new NceMessage(5+3*result.length);
-        int i = 0;  // message index counter
-        m.setElement(i++, 'S');
-        m.setElement(i++, ' ');
-        m.setElement(i++, 'C');
-        m.setElement(i++, '0');
-        m.setElement(i++, '5');
-
-        for (int j = 0; j<result.length; j++) {
-            m.setElement(i++, ' ');
-            m.addIntAsTwoHex(result[j]&0xFF,i);
-            i = i+2;
-        }
-
+        NceMessage m = NceMessage.sendPacketMessage(result);
+        
         NceTrafficController.instance().sendNceMessage(m, null);
     }
 
@@ -104,20 +92,8 @@ public class NceThrottle extends AbstractThrottle
         byte[] result = jmri.NmraPacket.function9Through12Packet(address, (address>=100),
                                          getF9(), getF10(), getF11(), getF12());
 
-        NceMessage m = new NceMessage(5+3*result.length);
-        int i = 0;  // message index counter
-        m.setElement(i++, 'S');
-        m.setElement(i++, ' ');
-        m.setElement(i++, 'C');
-        m.setElement(i++, '0');
-        m.setElement(i++, '5');
-
-        for (int j = 0; j<result.length; j++) {
-            m.setElement(i++, ' ');
-            m.addIntAsTwoHex(result[j]&0xFF,i);
-            i = i+2;
-        }
-
+        NceMessage m = NceMessage.sendPacketMessage(result);
+        
         NceTrafficController.instance().sendNceMessage(m, null);
     }
 
@@ -136,15 +112,7 @@ public class NceThrottle extends AbstractThrottle
 
         byte[] result = jmri.NmraPacket.speedStep128Packet(address, (address>=100), value, isForward);
 
-        NceMessage m = new NceMessage(1+3*result.length);
-        int i = 0;  // message index counter
-        m.setElement(i++, 'Q');
-
-        for (int j = 0; j<result.length; j++) {
-            m.setElement(i++, ' ');
-            m.addIntAsTwoHex(result[j]&0xFF,i);
-            i = i+2;
-        }
+        NceMessage m = NceMessage.queuePacketMessage(result);
 
         NceTrafficController.instance().sendNceMessage(m, null);
     }
