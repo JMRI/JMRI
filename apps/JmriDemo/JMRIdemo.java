@@ -16,8 +16,8 @@ import javax.swing.*;
  * the configuration file.  Note that this is just the name, not the path;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
- * @author			Bob Jacobsen   Copyright 2002
- * @version         $Revision: 1.45 $
+ * @author	Bob Jacobsen   Copyright 2002
+ * @version     $Revision: 1.46 $
  */
 public class JMRIdemo extends JPanel {
     public JMRIdemo() {
@@ -113,7 +113,6 @@ public class JMRIdemo extends JPanel {
         throttleMenu.add(new jmri.jmrit.throttle.StoreXmlThrottleAction( "Save Throttles" ));
         throttleMenu.add(new jmri.jmrit.throttle.LoadXmlThrottleAction( "Load Throttles" ));
         throttleMenu.add(new jmri.jmrit.throttle.EditThrottlePreferencesAction( "Edit Throttle Preferences" ));
-        locoMenu.add(throttleMenu);
         funcMenu.add(throttleMenu);
 
         JMenu nceMenu = new JMenu("NCE");
