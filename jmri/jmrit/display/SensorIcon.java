@@ -14,7 +14,7 @@ import javax.swing.JPopupMenu;
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -34,19 +34,17 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
 
     /**
      * Attached a named sensor to this display item
-     * @param pUserName User name to lookup the sensor object
-     * @param pSystemName System name to lookup the sensor object
+     * @param pName System/user name to lookup the sensor object
      */
-    public void setSensor(String pSystemName, String pUserName) {
+    public void setSensor(String pName) {
         if (InstanceManager.sensorManagerInstance()!=null) {
-            sensor = InstanceManager.sensorManagerInstance().
-                newSensor(pSystemName,pUserName);
+            sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
             if (sensor != null) {
                 displayState(sensorState());
                 sensor.addPropertyChangeListener(this);
                 setProperToolTip();
             } else {
-                log.error("Sensor '"+pSystemName+"' not available, icon won't see changes");
+                log.error("Sensor '"+pName+"' not available, icon won't see changes");
             }
         } else {
             log.error("No SensorManager for this protocol, icon won't see changes");
