@@ -143,9 +143,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener
         for (int i=0; i<NUM_FUNCTION_BUTTONS; i++)
         {
             functionButton[i] = new FunctionButton();
-            try {   // not present in old JVMs
-                functionButton[i].setActionMap(new ActionMap());
-            } catch (NoClassDefFoundError ec) {}
             functionButton[i].setIdentity(i);
             functionButton[i].setFunctionListener(this);
             functionButton[i].setText("F"+String.valueOf(i));
@@ -178,7 +175,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener
 	 *  A KeyAdapter that listens for the keys that work the function buttons
 	 *
 	 * @author     glen
-          * @version    $Revision: 1.18 $
+          * @version    $Revision: 1.19 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter
 	{

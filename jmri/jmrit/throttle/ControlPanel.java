@@ -24,7 +24,7 @@ import org.jdom.Element;
  *  for forward, reverse and STOP. TODO: fix speed increments (14, 28)
  *
  * @author     glen
- * @version    $Revision: 1.22 $
+ * @version    $Revision: 1.23 $
  */
 public class ControlPanel extends JInternalFrame
 {
@@ -167,9 +167,6 @@ public class ControlPanel extends JInternalFrame
 		speedSlider.setLabelTable(labelTable);
 		speedSlider.setPaintTicks(true);
 		speedSlider.setPaintLabels(true);
-                try { // not present in original Swing
-		    speedSlider.setActionMap(new ActionMap());
-                } catch (NoClassDefFoundError ec) {}
 		// remove old actions
 		speedSlider.addChangeListener(
 			new ChangeListener()
@@ -301,7 +298,7 @@ public class ControlPanel extends JInternalFrame
 	 *  A KeyAdapter that listens for the keys that work the control pad buttons
 	 *
 	 * @author     glen
-         * @version    $Revision: 1.22 $
+         * @version    $Revision: 1.23 $
 	 */
 	class ControlPadKeyListener extends KeyAdapter
 	{
