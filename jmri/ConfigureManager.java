@@ -15,12 +15,13 @@ import java.io.File;
  * <LI>Give access to the configuration objects for independent GUIs
  * </UL>
  *<P>
- *The managed items are divided into three types:
+ *The managed items are divided into four types:
  *<OL>
  *<LI>"Prefs" - handled first on read, these are the general preferences
  *controlling how the program starts up
  *<LI>"Config" - layout configuration information, e.g. turnout, signal, etc
- *<LI>"User" - typically information about tools and window, these are handled
+ *<LI>"Tool" - (Not really clear yet, but present)
+ *<LI>"User" - typically information about panels and windows, these are handled
  *last during startup
  *</OL>
  *<P>
@@ -28,7 +29,7 @@ import java.io.File;
  *<P>
  *The original implementation was via the {@link jmri.configurexml} package.
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  * @see jmri.InstanceManager
  * @see jmri.configurexml.ConfigXmlManager
  */
@@ -46,15 +47,28 @@ public interface ConfigureManager {
     public Object findInstance(Class c, int index);
 
     /**
-     * Writes prefs, config, tools and user to a file
+     * Stores prefs, config, tools and user information.
      * @param file
      */
-    public void store(File f);
+    public void storeAll(File f);
+
     /**
-     * Writes prefs to a file
+     * Stores just preferences information.
      * @param file
      */
     public void storePrefs(File f);
+
+    /**
+     * Stores just configuration information.
+     * @param file
+     */
+    public void storeConfig(File f);
+
+    /**
+     * Stores just user information.
+     * @param file
+     */
+    public void storeUser(File f);
 
     /**
      * Create the objects defined in a particular configuration
