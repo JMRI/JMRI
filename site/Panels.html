@@ -1,0 +1,114 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Bob Jacobsen, LBL">
+   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>Control Panels</title>
+</head>
+<body>
+
+
+<IMG SRC="images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
+
+<h2>Control Panels</h2>
+
+The 
+<A HREF="index.html">JMRI libraries</a>
+contain a rudimentary system for creating control panels.
+
+<h3>Contents of a panel</h3>
+<IMG SRC="images/panel.gif" ALT="Screen shot of panel" WIDTH="292" HEIGHT="107" HSPACE="0" VSPACE="0">
+
+<P>
+Clicking on a turnout symbol flips it from closed to thrown and vice-versa.
+A turnout also has "unknown" and "inconsistent" states, represented by an
+icon with a question mark and X respectively. These represent a state where
+no information has been received, and where the information is internally inconsistent
+(e.g. both closed and thrown at the same time).
+<P>
+"Sensors" can be used to represent occupancy indicators or other inputs.  The default icon
+is a small circle, with color used to represent the state of the sensor.  In the example
+above there are seven sensors being driven by occupancy indicators.
+Clicking on a sensor causes the sensor to alternate between "active" and "inactive"
+states. With the default icons, active is a green circle and inactive is an empty circle.
+These are meant to represent a lit/dark panel indicator.  A red circle represents the
+"unknown" state, used when no information has yet been received from the layout.
+
+<h3>Creating a panel</h3>
+These are made with a "Panel Editor", which allows you to place images
+to represent turnouts, sensors (on some systems) and trackwork.
+
+<P>
+You start the editor by selecting "New panel..." from the "Panel" menu
+in the JmriDemo program.  You'll get a blank control panel, plus the
+editor window:
+<IMG SRC="images/paneleditor.gif" ALT="Screen shot of slot monitor" WIDTH="274" HEIGHT="565" HSPACE="0" VSPACE="0">
+<P>
+From the top, this contains:
+<UL>
+<LI>Two text fields specifying where (in pixels) new components will be inserted on the panel.
+You can generally ignore these, as once the components has been inserted you can drag it around by 
+holding the meta (Apple, command, etc) key down.
+<LI>A button to pick a background image.  The editor's drawing capability is rudimentary
+and likely to stay that way for a long time.  To create CTC panels, complex track diagrams, etc,
+its easier to draw them in some other program and insert them as the background image
+for a JMRI control panel.  When you click this button, you'll be prompted for the file to
+use.  GIF and JPG formats (and perhaps others) will work.
+<LI>A button to add a text label.  Put the desired text in the field and click the button. You can 
+slide the label around after inserting it, but you currently can't edit the text later.
+<LI>A button to add an icon as a label.  This is a way to add track symbols, etc. To select the
+icon, use the tree in the bottom of the window (see below for details), then click the "pick" button
+to load the selected icon.  This is a general mechanism:  Any icon on the editor window
+can be replaced by selecting the desired new one and clicking on the icon to replace.
+<LI>Two sections for adding left- and right-bound turnouts.  These actually work the same
+way, only with different icons to represent the states of the turnouts.  Enter the turnout number
+(e.g. 23) and click "Add turnout:".  If you'd prefer a different graphic for the closed
+and thrown states, you can change their icons as described above.
+<LI>A section for adding a sensor.  Note that only LocoNet currently has sensors implemented.
+Type the sensor number (e.g. 74) in the field and click "Add sensor:".
+<LI>The tree of available icons, see below.
+</UL>
+
+<P>
+After getting the panel the way you want, you can use the "Store panel..." entry in the "Panels" menu
+to write it to an XML file.
+
+<h3>Icons</h3>
+The panel editor is icon based.  The JMRI library contains lots of contributed icons
+for representing CTC panels, LEDs, etc.  You can browse through them with the tree
+in the bottom of the editor frame.  Perhaps the best way to see what each looks like
+is to select it in the tree, then click on the icon next to the "Add icon" button.  That
+will load it.
+<P>
+We do need to do a better job of organizing those...
+
+<h2>Acknowledgements</h2>
+
+<A HREF="Acknowledgements.html">Many people</a>
+have contributed, and we thank 
+<A HREF="Acknowledgements.html">all of them</a>.
+
+<HR>
+<BR>Site hosted by: <BR>
+<A href="http://sourceforge.net"> 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A>
+ 
+
+<script language=javascript 
+src="http://ss.webring.com/navbar?f=j;y=bob_jacobsen15;u=100088115910095949">
+</script><noscript><center>
+<table bgcolor=gray cellspacing=0 border=2 bordercolor=red><tr>
+<td><table cellpadding=2 cellspacing=0 border=0><tr><td align=center>
+<font face=arial size=-1>This site is a member of WebRing. 
+<br>To browse visit <a href="http://ss.webring.com/navbar?f=l;y=bob_jacobsen15;u=100088115910095949">
+Here</a>.</font></td></tr></table></td></tr></table>
+</center></noscript>
+
+<hr>
+Bob Jacobsen<BR>
+jake@physics.berkeley.edu
+
+</body>
+</html>
