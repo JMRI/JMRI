@@ -19,7 +19,7 @@ package jmri;
  * Based in concept on AbstractSignalHead.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public abstract class AbstractLight extends AbstractNamedBean
     implements Light, java.io.Serializable {
@@ -51,6 +51,8 @@ public abstract class AbstractLight extends AbstractNamedBean
      *  System independent operational instance variables (not saved between runs)
      */
     protected boolean mActive = false;
+    protected java.beans.PropertyChangeListener mSensorListener = null;
+    protected java.beans.PropertyChangeListener mTurnoutListener = null;
     
     /**
      *  Return the control type of this Light
@@ -197,7 +199,38 @@ public abstract class AbstractLight extends AbstractNamedBean
             // activate according to control type
             switch (mControlType) {
                 case SENSOR_CONTROL:
+                    if (mControlSensor!=null) {
+                        mControlSensor.addPropertyChangeListener(mSensorListener =
+                                                new java.beans.PropertyChangeListener() {
+                                public void propertyChange(java.beans.PropertyChangeEvent e) {
+                                    if (e.getPropertyName().equals("KnownState")) {
+                                        int now = mControlSensor.getKnownState();
+                                        if (now==Sensor.ACTIVE) { 
+                                            if (mControlSensorSense==Sensor.ACTIVE) {
+                                                // Turn light on
+                                                setState(ON);
+                                            }
+                                            else {
+                                                // Turn light off
+                                                setState(OFF);
+                                            }
+                                        }
+                                        else if (now==Sensor.INACTIVE) { 
+                                            if (mControlSensorSense==Sensor.INACTIVE) {
+                                                // Turn light on
+                                                setState(ON);
+                                            }
+                                            else {
+                                                // Turn light off
+                                                setState(OFF);
+                                            }
+                                        }
+                                    }
+                                }
+                        });
+                    }
                     break;
+                    
                 case FAST_CLOCK_CONTROL:
                     break;
                 case PANEL_SWITCH_CONTROL:
@@ -207,6 +240,36 @@ public abstract class AbstractLight extends AbstractNamedBean
                     //     Signal Head logic.
                     break;
                 case TURNOUT_STATUS_CONTROL:
+                    if (mControlTurnout!=null) {
+                        mControlTurnout.addPropertyChangeListener(mTurnoutListener =
+                                                new java.beans.PropertyChangeListener() {
+                                public void propertyChange(java.beans.PropertyChangeEvent e) {
+                                    if (e.getPropertyName().equals("KnownState")) {
+                                        int now = mControlTurnout.getKnownState();
+                                        if (now==Turnout.CLOSED) { 
+                                            if (mTurnoutState==Turnout.CLOSED) {
+                                                // Turn light on
+                                                setState(ON);
+                                            }
+                                            else {
+                                                // Turn light off
+                                                setState(OFF);
+                                            }
+                                        }
+                                        else if (now==Turnout.THROWN) { 
+                                            if (mTurnoutState==Turnout.THROWN) {
+                                                // Turn light on
+                                                setState(ON);
+                                            }
+                                            else {
+                                                // Turn light off
+                                                setState(OFF);
+                                            }
+                                        }
+                                    }
+                                }
+                        });
+                    }
                     break;
                 case NO_CONTROL:
                     // No control mechanism specified
@@ -217,7 +280,48 @@ public abstract class AbstractLight extends AbstractNamedBean
             mActive = true;
         }    
     }
-
+    
+    /**
+     * Deactivates a light by control type.  This method tests the 
+     *   control type, and deactivates the control mechanism, appropriate 
+     *   for the control type.  Some lights, e.g. signal head lights,
+     *   are controlled by the signal head, so no deactivation is needed
+     *   here.
+     */
+    public void deactivateLight() {
+        // skip if Light is not active
+        if (mActive) {
+            // deactivate according to control type
+            switch (mControlType) {
+                case SENSOR_CONTROL:
+                    if (mSensorListener!=null) {
+                        mControlSensor.removePropertyChangeListener(mSensorListener);
+                        mSensorListener = null;
+                    }
+                    break;
+                case FAST_CLOCK_CONTROL:
+                    break;
+                case PANEL_SWITCH_CONTROL:
+                    break;
+                case SIGNAL_HEAD_CONTROL:
+                    // No activation required.  Light is controlled by the 
+                    //     Signal Head logic.
+                    break;
+                case TURNOUT_STATUS_CONTROL:
+                    if (mTurnoutListener!=null) {
+                        mControlTurnout.removePropertyChangeListener(mTurnoutListener);
+                        mTurnoutListener = null;
+                    }
+                    break;
+                case NO_CONTROL:
+                    // No control mechanism specified
+                    break;
+                default:
+                    log.warn("Unexpected control type when activating Light: "+getSystemName());
+            }
+            mActive = false;
+        }    
+    }
 }
 
 /* @(#)AbstractLight.java */

@@ -31,7 +31,7 @@ import javax.swing.JTextField;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -410,11 +410,13 @@ public class LightTableAction extends AbstractTableAction {
             log.error("Unknown failure to create Light with System Name: "+sName);
             return;
         }
-        // Get control information
+        // Get control information 
         if (setControlInformation(g)) {
+            // sucessful, change messages and activate Light
             status1.setText( rb.getString("LightCreateInst") );
             status2.setText( rb.getString("LightEditInst") );
             status2.setVisible(true);
+            g.activateLight();
         }
     }
     
@@ -455,6 +457,8 @@ public class LightTableAction extends AbstractTableAction {
         fixedSystemName.setText(sName);
         fixedSystemName.setVisible(true);
         systemName.setVisible(false);
+        // deactivate this light
+        curLight.deactivateLight();
         // get information for this Light
         userName.setText(g.getUserName());
         int ctType = g.getControlType();
@@ -558,6 +562,7 @@ public class LightTableAction extends AbstractTableAction {
         create.setVisible(true);
         fixedSystemName.setVisible(false);
         systemName.setVisible(true);
+        g.activateLight();
     }
 
     /**
@@ -659,6 +664,8 @@ public class LightTableAction extends AbstractTableAction {
         create.setVisible(true);
         fixedSystemName.setVisible(false);
         systemName.setVisible(true);
+        // reactivate the light
+        curLight.activateLight();
     }
     static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LightTableAction.class.getName());
 }

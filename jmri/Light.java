@@ -3,19 +3,22 @@
 package jmri;
 
 /**
- * Represent a single Light or digital output bit on the layout. 
+ * Represent a single Light or digital output bit on the physical
+ *     layout. 
  * <P>
  * Light objects require a number of instance variables.  Since 
  *     Light objects are created using the standard JMRI 
  *     systemName/userName concept, accessor routines are provided
  *     for setting and editting these instance variables.
  * <P>
- * Initially, this allows access to explicit information. 
+ * Light objects are implemented in a hardware system independent
+ *     manner.  The initial system implementation is SerialLight in
+ *     the C/MRI system.
  * <P>
- * Based on SignalHead.java
+ * Based in part on SignalHead.java
  *
  * @author			Dave Duchamp Copyright (C) 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public interface Light extends NamedBean {
 
@@ -23,7 +26,7 @@ public interface Light extends NamedBean {
     public static final int ON          = 0x01;
     public static final int OFF         = 0x00;
     
-    // control types
+    // control types - initially 5 types defined
     public static final int SENSOR_CONTROL          = 0x01;
     public static final int FAST_CLOCK_CONTROL      = 0x02;
     public static final int PANEL_SWITCH_CONTROL    = 0x03;
@@ -73,6 +76,15 @@ public interface Light extends NamedBean {
      *   here.
      */
     public void activateLight();
+    
+    /**
+     * Deactivates a light by control type.  This method tests the 
+     *   control type, and deactivates the control mechanism, appropriate 
+     *   for the control type.  Some lights, e.g. signal head lights,
+     *   are controlled by the signal head, so no deactivation is needed
+     *   here.
+     */
+    public void deactivateLight();
 }
 
 /* @(#)Light.java */
