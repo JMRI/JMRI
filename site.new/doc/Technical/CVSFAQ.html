@@ -1,0 +1,99 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<!-- $Id: CVSFAQ.html,v 1.1 2004-07-03 21:02:00 jacobsen Exp $ -->
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Bob Jacobsen, LBL">
+   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>CVS FAQ</title>
+</head>
+<body>
+
+<A href="../index.html">
+<IMG SRC="../images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
+</a>
+
+This is a list of Frequently Asked Questions for CVS, particularly regarding how
+we use it with JMRI.
+
+<P>
+See also the 
+<A HREF="index.html">Technical index</a>
+for more information on maintaining JMRI code.
+
+
+<h3>How do I get a copy of CVS?</h3>
+<A id="cvstool"/>
+Many computers come with CVS installed, including Linux and MacOS X.
+If you're using Windows, you will need to install a CVS "client" program like
+<A HREF="http://sourceforge.net/project/showfiles.php?group_id=10072&release_id=24467">WinCVS</a>.
+A recent version can be downloaded from: 
+<a href="http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip">http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip</a>.
+
+<h3>How can I get my own copy of the JMRI code?</h3>
+<A id="jmrisource"/>
+To get a copy of the source for your own use, you can use "anonymous checkout".
+For a command line cvs client, make a new directory for the project,
+change to it, and tell CVS you exist with
+<PRE>
+cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/jmri login
+</PRE>
+This "login" line
+is only needed once; after that, it is remembered on your local machine.  You may
+be asked for a password. If so, just hit return, as the empty password will be accepted.
+You can then get a copy of the code with
+<PRE>
+cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/jmri co all
+</PRE>
+<P>
+If you're using a GUI-based client like WinCVS, pull down the "admin"
+menu and select "command line" to get a place to type these commands.
+On other computers, you can type them directly on the command line.
+
+
+<h3>How do I update an existing copy of the source to the current version?</h3>
+<A id="update"/>
+As the common code changes, you might want to update your copy to contain the 
+lastest version.  To do that, use:
+<PRE>
+cvs -q update
+</PRE>
+Any changes will be merged into the files on your disk, and you should then be up-to-date
+with your own changes still present.  
+
+<P>
+The "-q" option removes a lot of
+informational messages as CVS enters the various directories in the 
+project; the command still works if you omit it, but it will be harder to
+see any real error messages.
+
+<h3>What are these messages about .DS_Store files?</h3>
+<A id="ds_store"/>
+If you're using MacOS X, CVS may give you messages about ".DS_Store" files. These
+are used to keep track of window layouts, etc.  To suppress these messages,
+just create a file in your home directory called ".cvsignore" and add a line 
+of ".DS_Store" to it (no quotes). CVS will then ignore all .DS_Store files in 
+all of your checked-out directory trees.
+
+<HR>
+<BR>Site hosted by: <BR>
+<A href="http://sourceforge.net"> 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
+
+<script language=javascript 
+src="http://ss.webring.com/navbar?f=j;y=bob_jacobsen15;u=100088115910095949">
+</script><noscript><center>
+<table bgcolor=gray cellspacing=0 border=2 bordercolor=red><tr>
+<td><table cellpadding=2 cellspacing=0 border=0><tr><td align=center>
+<font face=arial size=-1>This site is a member of WebRing. 
+<br>To browse visit <a href="http://ss.webring.com/navbar?f=l;y=bob_jacobsen15;u=100088115910095949">
+Here</a>.</font></td></tr></table></td></tr></table>
+</center></noscript>
+
+<hr>
+Bob Jacobsen<BR>
+jake@physics.berkeley.edu
+
+</body>
+</html>
