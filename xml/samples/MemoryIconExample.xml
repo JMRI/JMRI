@@ -8,7 +8,7 @@
     <memory systemName="IM12" userName="Foo" />
   </memories>
   <paneleditor class="jmri.jmrit.display.configurexml.PanelEditorXml" name="Test memory" x="20" y="22" height="282" width="238" editable="yes" positionable="yes" controlling="yes" hide="no">
-    <memoryicon memory="IM12" x="10" y="10" class="jmri.jmrit.display.configurexml.MemoryIconXml">
+    <memoryicon memory="IM12" x="10" y="10" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="resources/icons/misc/Question-black.gif">
       <memorystate value="0" icon="resource:resources/icons/misc/Nixie/M0.gif" />
       <memorystate value="1" icon="resource:resources/icons/misc/Nixie/M1.gif" />
       <memorystate value="2" icon="resource:resources/icons/misc/Nixie/M2.gif" />
