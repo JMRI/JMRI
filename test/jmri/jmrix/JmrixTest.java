@@ -35,6 +35,7 @@ public class JmrixTest extends TestCase {
 		TestSuite suite = new TestSuite("jmri.jmrix");
 		suite.addTest(jmri.jmrix.loconet.LocoNetTest.suite());
 		suite.addTest(jmri.jmrix.nce.NceTest.suite());
+		suite.addTest(jmri.jmrix.easydcc.EasyDccTest.suite());
 		return suite;
 	}
 
