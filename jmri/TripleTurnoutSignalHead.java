@@ -15,7 +15,7 @@ package jmri;
  * been changed via some other mechanism.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class TripleTurnoutSignalHead extends AbstractSignalHead {
 
@@ -34,6 +34,7 @@ public class TripleTurnoutSignalHead extends AbstractSignalHead {
     }
 
     public void setAppearance(int newAppearance) {
+        int oldAppearance = mAppearance;
         mAppearance = newAppearance;
         switch (mAppearance) {
         case RED:
@@ -41,19 +42,19 @@ public class TripleTurnoutSignalHead extends AbstractSignalHead {
             mRed.setCommandedState(Turnout.THROWN);
             mYellow.setCommandedState(Turnout.CLOSED);
             mGreen.setCommandedState(Turnout.CLOSED);
-            return;
+            break;
         case YELLOW:
         case FLASHYELLOW:
             mRed.setCommandedState(Turnout.CLOSED);
             mYellow.setCommandedState(Turnout.THROWN);
             mGreen.setCommandedState(Turnout.CLOSED);
-            return;
+            break;
         case GREEN:
         case FLASHGREEN:
             mRed.setCommandedState(Turnout.CLOSED);
             mYellow.setCommandedState(Turnout.CLOSED);
             mGreen.setCommandedState(Turnout.THROWN);
-            return;
+            break;
         default:
             log.warn("Unexpected new appearance: "+mAppearance);
             // go dark
@@ -61,8 +62,11 @@ public class TripleTurnoutSignalHead extends AbstractSignalHead {
             mRed.setCommandedState(Turnout.CLOSED);
             mYellow.setCommandedState(Turnout.CLOSED);
             mGreen.setCommandedState(Turnout.CLOSED);
-            return;
+            break;
         }
+
+        // notify listeners, if any
+        firePropertyChange("Appearance", new Integer(oldAppearance), new Integer(newAppearance));
     }
 
     /**
