@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--JBuilder XML Project-->
 <project>
-  <property category="editor.general" name="line_ending.style" value="1"/>
+  <property category="editor.general" name="line_ending.style" value="3"/>
   <property category="idl" name="ProcessIDL" value="false"/>
   <property category="runtime" name="ConfigurationCount" value="3"/>
   <property category="runtime.0" name="RunnableType" value="com.borland.jbuilder.runtime.TestRunner"/>
@@ -53,7 +53,6 @@
   <property category="sys" name="DebugLineInfo" value="0"/>
   <property category="sys" name="DebugSourceInfo" value="0"/>
   <property category="sys" name="DefaultPath" value="src"/>
-  <property category="sys" name="Deprecations" value="0"/>
   <property category="sys" name="Description" value=""/>
   <property category="sys" name="DescriptionLabel" value="Description:"/>
   <property category="sys" name="DocPath" value="doc"/>
@@ -112,4 +111,5 @@
   <file path="src/jmri/jmrix/loconet/locormi/LnMessageClientAction.java"/>
   <file path="src/jmri/configurexml/LoadLayoutAction.java"/>
   <file path="test/jmri/jmrix/loconet/LocoNetMessageTest.java"/>
+  <file path="src/jmri/jmrit/display/PanelEditorAction.java"/>
 </project>
