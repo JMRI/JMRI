@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE layout-config SYSTEM "layout-config.dtd">
-<!-- $Id: CornwallMain.xml,v 1.16 2003-06-04 16:20:05 jacobsen Exp $ -->
+<!-- $Id: CornwallMain.xml,v 1.17 2003-06-04 16:27:47 jacobsen Exp $ -->
 <!-- Cornwall RR main dispatcher panel -->
 <!-- The layout turnouts, signals, and sensors are defined in CornwallDefinitions.xml -->
 <layout-config>
@@ -168,7 +168,7 @@
 
     <sensoricon sensor="CS16" x="171" y="341" active="resource:resources/icons/cornwall/TurnoutThrownR.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedR.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherR.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothR.gif" rotate="2" class="jmri.jmrit.display.configurexml.SensorIconXml" />
 
-    <sensoricon sensor="CS37" x="244" y="458" active="resource:resources/icons/cornwall/TurnoutThrownL.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedL.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothL.gif" rotate="2" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="CS37" x="244" y="458" active="resource:resources/icons/cornwall/TurnoutClosedL.gif" inactive="resource:resources/icons/cornwall/TurnoutThrownL.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothL.gif" rotate="2" class="jmri.jmrit.display.configurexml.SensorIconXml" />
 
     <sensoricon sensor="CS19" x="296" y="341" active="resource:resources/icons/cornwall/TurnoutThrownL.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedL.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothL.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
 
