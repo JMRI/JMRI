@@ -1,10 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Uhlenbrock.html,v 1.6 2004-07-19 01:48:17 jacobsen Exp $ -->
+<!-- $Id: Uhlenbrock.html,v 1.7 2004-08-08 01:18:51 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
- JMRI: Uhlenbrock Intellibox and LocoNet
- 
+ JMRI Install Guide: Uhlenbrock Intellibox via Serial Port
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Michael Beck" name=Author>
@@ -59,51 +58,42 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <H2> 
-      JMRI Install Guide: Uhlenbrock Intellibox and LocoNet
-      </H2>
+      <H1> 
+      JMRI Install Guide: Uhlenbrock Intellibox via Serial Port
+      </H1>
 
-	<dl>
-	<dt class=left>Introduction</dt>
-	<dd class=top>
-	<p>This paper deals with interfacing an Uhlenbrock Intellibox to
-	Digitrax Loconet devices</p>
-	</dd>
 
-	<dt class=left>Background</dt>
-	<dd>
-	<p>The Uhlenbrock Intellibox is a multi-protocol digital train control
-	CPU that controls most popular train control protocols including
-	Marklin Digital and the NMRA&#8217;s DCC Protocol.
-	It is also implements a compatible version of Loconet developed by
-	Digitrax (<a href="http://www.digitrax.com/">www.digitrax.com</a>).
-	I wanted to use a BDL 162 to extend track occupancy detection on my
-	current layout and I encountered some problems with interfacing the BDL
-	162 to the Intellibox notably, the BDL 162 would not indicate any track
-	occupancy.  The BDL 162 acted if there were no power to the layout.
-	No matter what setting was given to the BDL 162, the unit continued
-	indicate that there was no power to the track when in fact there was
-	power to the track.</p>
-	</dd>
+<P>DecoderPro can communicate with an Uhlenbrock Intellibox via
+the built-in serial port and the LocoNet protocol. 
+<p>
+Note that this capability was added to JMRI in test version 1.5.2, 
+and is not present in the previous 1.4 production release.  
+If you are using a JMRI version before version 1.5.2, 
+please go to the 
+<A HREF="../download/">download page</a>
+to download the latest version.
 
-	<dt class=left>Solution</dt>
-	<dd>
-	<p>After extensive testing, I did not realize that the Intellibox has
-	two different loconet outputs. One for Uhlenbrock throttle devices
-	(IB-Control, FRED) designated Loconet-T.  There is another Loconet
-	output designated Loconet-B.  I had been using the Loconet-T output to
-	power my Loconet network.  I did not realize this.  Once I powered the
-	network with the Loconet-B output, the BDL 162 worked properly.</p>
+<P>
+Configure the options of your Uhlenbrock Intellibox to be:
+<UL>
+<LI>SO 2 value 4
+<LI>SO 5 value 1
+<LI>SO 6 value 255
 
-	<p>The Loconet-T output can drive more current, so you should probably
-	still use it for Throttles and other LocoNet accessories.  Just the
-	BDL162 needs to be connected to the Loconet-B connector.</p>
-	</dd>
-	</dl>
+<LI>Baudrate 19200
+</UL>
+
+Then start the JMRI program and configure it to:
+
+<UL>
+<LI>"LocoNet Intellibox Serial Port" protocol
+<LI>19200 baud
+<LI>Select hardware handshaking
+<LI>Select DCS100 command station
+</UL>
 
 
 
-      <hr class="hide">
 <!-- Footer -->
     <hr class="hide">
     <div id="footer">
