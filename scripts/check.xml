@@ -1,6 +1,6 @@
 <!-- Special build file for doing Java 1.1.8 compatibility tests -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.7 $ -->
+<!-- Revision $Revision: 1.8 $ -->
 
 <project name="JMRI" default="check" basedir=".">
 
@@ -86,6 +86,7 @@
                  jmri/util/LocaleUtil.java,
                  jmri/util/JTabbedPaneUtil.java,
                  jmri/util/JTableUtil.java,
+                 jmri/util/SwingUtil.java,
                  jmri/util/com/sun/TableSorter.java,
                  jmri/util/PythonInterp.java"
            target="1.1" 
