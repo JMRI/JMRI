@@ -79,7 +79,7 @@
   <property category="sys" name="TestPath" value="test"/>
   <property category="sys" name="Title" value=""/>
   <property category="sys" name="TitleLabel" value="Title:"/>
-  <property category="sys" name="Version" value="$Revision: 1.10 $"/>
+  <property category="sys" name="Version" value="$Revision: 1.11 $"/>
   <property category="sys" name="VersionLabel" value="@version"/>
   <property category="sys" name="WorkingDirectory" value="../"/>
   <node name="Additional Settings" type="Folder">
