@@ -2,16 +2,23 @@
 
 package jmri.configurexml;
 
-import junit.framework.*;
-import java.io.*;
 import jmri.jmrit.XmlFile;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Tests for ConfigXmlManager.
  * <P>
  * Uses the local preferences for test files.
  * @author Bob Jacobsen Copyright 2003
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class ConfigXmlManagerTest extends TestCase {
 
