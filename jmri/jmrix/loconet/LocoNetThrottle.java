@@ -255,14 +255,9 @@ public class LocoNetThrottle implements DccThrottle
         return address;
     }
 
-    public void setDccAddress(int address)
-    {
-        this.address = address;
-    }
-
     // to handle quantized speed. Note this can change! Valued returned is
     // always positive.
-    public float speedIncrement()
+    public float getSpeedIncrement()
     {
         return speedIncrement;
     }
