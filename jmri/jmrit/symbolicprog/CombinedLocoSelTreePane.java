@@ -32,7 +32,7 @@ import java.util.Enumeration;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
 
@@ -120,7 +120,11 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
         dTree.setRootVisible(false);
         dTree.setShowsRootHandles(true);
         dTree.setScrollsOnExpand(true);
-        dTree.setExpandsSelectedPaths(true);
+        try {   // following might not be present on Mac Classic, but
+                //doesn't have a big effect
+            dTree.setExpandsSelectedPaths(true);
+        } catch (java.lang.NoSuchMethodError e) {}
+
         dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
         // tree listener
         dTree.addTreeSelectionListener(dListener = new TreeSelectionListener() {
