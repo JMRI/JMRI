@@ -16,7 +16,7 @@ import javax.swing.JWindow;
  * David Flanagan with the alligator on the front.
  *
  * @author		David Flanagan
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 public class HardcopyWriter extends Writer {
 
@@ -237,7 +237,10 @@ public class HardcopyWriter extends Writer {
     * <P>This was not in the
     * original class, but was added afterwards by Dennis Miller.
     * <P>Intended to allow for a graphic printout of the speed table, but can be
-    * used to print any window
+    * used to print any window.  The JWindow is passed to the method and prints itself at the current
+    * line and aligned at the left margin.  It also checks for sufficient
+    * space left on the page and moves it to the top of the next page if there
+    * isn't enough space.
     */
 
     public void write(JWindow jW) {
@@ -281,7 +284,7 @@ public class HardcopyWriter extends Writer {
     }
 
     /**
-     * get the current linenumber.
+     * Get the current linenumber.
      * <P>This was not in the
      * original class, but was added afterwards by Dennis Miller.
      */
@@ -289,8 +292,22 @@ public class HardcopyWriter extends Writer {
         return this.linenum;
     }
 
+    /**
+     * Print vertical borders on the current line at the left and right sides
+     * of the page at character positions 1 and chars_per_line + 1.
+     * Border lines are one text line in height
+     * <P>This was not in the
+     * original class, but was added afterwards by Dennis Miller.
+     */
+    public void writeBorders() {
+      write(this.linenum, 0, this.linenum + 1, 0);
+      write(this.linenum, this.chars_per_line + 1, this.linenum + 1, this.chars_per_line + 1);
+}
+
+
     public static class PrintCanceledException extends Exception {
         public PrintCanceledException(String msg) { super(msg); }
     }
 
 }
+
