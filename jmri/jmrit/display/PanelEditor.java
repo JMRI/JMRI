@@ -38,7 +38,7 @@ import com.sun.java.util.collections.*;
  *
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 
 public class PanelEditor extends JFrame {
@@ -200,7 +200,7 @@ public class PanelEditor extends JFrame {
             panel.setLayout(new FlowLayout());
             panel.add(turnoutAddL);
             panel.add(nextTurnoutL);
-            turnoutAddR.addActionListener( new ActionListener() {
+            turnoutAddL.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         addTurnoutL();
                     }
@@ -346,6 +346,7 @@ public class PanelEditor extends JFrame {
         l.setThrownIcon(turnoutLIconEditor.getIcon(1));
         l.setInconsistentIcon(turnoutLIconEditor.getIcon(2));
         l.setUnknownIcon(turnoutLIconEditor.getIcon(3));
+
         l.setTurnout(null, nextTurnoutL.getText());
 
         setNextLocation(l);
