@@ -36,7 +36,8 @@ public class NceTest extends TestCase {
 	
 	// test suite from all defined tests
 	public static Test suite() {
-		TestSuite suite = new TestSuite(NceTest.class);
+		TestSuite suite = new TestSuite("jmri.tests.jmrix.nce.NceTest");
+		suite.addTest(jmri.tests.jmrix.nce.NcePowerManagerTest.suite());
 		return suite;
 	}
 	

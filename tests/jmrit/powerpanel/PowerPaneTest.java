@@ -1,5 +1,5 @@
 /** 
- * JmriTest.java
+ * PowerPaneTest.java
  *
  * Description:	    tests for the Jmri package
  * @author			Bob Jacobsen
@@ -23,16 +23,11 @@ public class PowerPaneTest extends TestCase {
 	// setup a default PowerManager interface
 	public void setUp() {
 		manager = new jmri.PowerManager() {
-				boolean on = false;
-				boolean start = false;
+				int state = PowerManager.UNKNOWN;
 				PropertyChangeListener prop = null;
 				
-				public void 	setPowerOff() 	throws JmriException { on = false; tell();}
-				public void 	setPowerOn()  	throws JmriException { on = true; tell();}
-				public boolean 	isPowerOn()  	throws JmriException { return on;}
-				public void		setTrackStopped()  throws JmriException { start = false; tell();}
-				public void		setTrackStarted()  throws JmriException {start = true; tell();}
-				public boolean	isTrackStarted()   throws JmriException { return start;}
+				public void setPower(int v) 	throws JmriException { state = v; tell();}
+				public int	getPower()  	throws JmriException { return state;}
 				public void dispose() throws JmriException {}
 				public void addPropertyChangeListener(PropertyChangeListener p) { prop = p; }
 				public void removePropertyChangeListener(PropertyChangeListener p) {}

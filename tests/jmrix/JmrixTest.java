@@ -23,11 +23,6 @@ public class JmrixTest extends TestCase {
 		super(s);
 	}
 
-	// a dummy test to avoid JUnit warning
-	public void testDemo() {
-		assert(true);
-	}
-
 	// Main entry point
 	static public void main(String[] args) {
 		String[] testCaseName = {JmrixTest.class.getName()};
@@ -36,7 +31,7 @@ public class JmrixTest extends TestCase {
 	
 	// test suite from all defined tests
 	public static Test suite() {
-		TestSuite suite = new TestSuite(JmrixTest.class);
+		TestSuite suite = new TestSuite("jmri.tests.jmrix");
 		suite.addTest(jmri.tests.jmrix.loconet.LocoNetTest.suite());
 		suite.addTest(jmri.tests.jmrix.nce.NceTest.suite());
 		return suite;

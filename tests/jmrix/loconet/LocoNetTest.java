@@ -34,6 +34,7 @@ public class LocoNetTest extends TestCase {
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite("jmri.tests.jmrix.loconet.LocoNetTest");  // no tests in this class itself
+		suite.addTest(LnPowerManagerTest.suite());
 		suite.addTest(LnTurnoutTest.suite());
 		suite.addTest(LnTurnoutManagerTest.suite());
 		suite.addTest(LnSensorTest.suite());

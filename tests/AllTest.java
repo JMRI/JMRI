@@ -49,9 +49,8 @@ public class AllTest extends TestCase  {
 		TestSuite suite = new TestSuite("AllTest");  // no tests in this class itself
 		// all tests from other classes
 		suite.addTest(JmriTest.suite());
+		suite.addTest(jmri.tests.jmrix.JmrixTest.suite());
 		suite.addTest(jmri.tests.jmrit.JmritTest.suite());
-		suite.addTest(jmri.tests.jmrix.loconet.LocoNetTest.suite());
-		suite.addTest(jmri.tests.jmrix.nce.NceTest.suite());
 		
 		return suite;
 	}

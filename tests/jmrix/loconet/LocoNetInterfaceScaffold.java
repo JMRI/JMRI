@@ -4,6 +4,8 @@
  * Description:	 	Test scaffold implementation of LocoNetInterface
  * @author			Bob Jacobsen Copyright (C) 2001
  * @version			
+ *
+ * Use an object of this type as a LnTrafficController in tests
  */
 
 package jmri.tests.jmrix.loconet;
@@ -47,6 +49,14 @@ public class LocoNetInterfaceScaffold extends LnTrafficController {
 		if (log.isDebugEnabled()) log.debug("sendTestMessage    ["+m+"]");
 		notify(m);
 		return;
+	}
+	
+	/*
+	* Check number of listeners, used for testing dispose()
+	*/
+	
+	public int numListeners() {
+		return listeners.size();
 	}
 	
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoNetInterfaceScaffold.class.getName());
