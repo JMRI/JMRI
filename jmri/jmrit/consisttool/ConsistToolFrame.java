@@ -4,7 +4,7 @@
  * Description:          Frame object for manipulating consists.
  *
  * @author               Paul Bender Copyright (C) 2003
- * @version              $ version 1.00 $
+ * @version              $Revision: 1.4 $
  */
 
 
@@ -50,6 +50,8 @@ public class ConsistToolFrame extends javax.swing.JFrame {
 
     ConsistManager ConsistMan = null;
 
+    private int _Consist_Type = Consist.ADVANCED_CONSIST;
+
     public ConsistToolFrame() {
 
   	ConsistMan = InstanceManager.consistManagerInstance();
@@ -78,9 +80,23 @@ public class ConsistToolFrame extends javax.swing.JFrame {
         isAdvancedConsist.setSelected(true); 
 	isAdvancedConsist.setVisible(true);
 	isAdvancedConsist.setEnabled(false);
+        isAdvancedConsist.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    isAdvancedConsist.setSelected(true);
+		    isCSConsist.setSelected(false);
+		    _Consist_Type = Consist.ADVANCED_CONSIST; 
+                }
+            });
         isCSConsist.setSelected(false);
 	isCSConsist.setVisible(true);
 	isCSConsist.setEnabled(false);
+        isCSConsist.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    isAdvancedConsist.setSelected(false);
+		    isCSConsist.setSelected(true);
+		    _Consist_Type = Consist.CS_CONSIST; 
+                }
+            });
 
 	if(ConsistMan.isCommandStationConsistPossible())
 	{
@@ -333,11 +349,13 @@ public class ConsistToolFrame extends javax.swing.JFrame {
 	        log.debug("Consist type is Advanced Consist ");
 	        isAdvancedConsist.setSelected(true); 
         	isCSConsist.setSelected(false);
+		_Consist_Type=Consist.ADVANCED_CONSIST;
 	} else {
 	  // This must be a CS Consist.
 	        log.debug("Consist type is Command Station Consist ");
 	        isAdvancedConsist.setSelected(false); 
         	isCSConsist.setSelected(true);	  
+		_Consist_Type=Consist.CS_CONSIST;
 	}
     }
 
@@ -360,6 +378,17 @@ public class ConsistToolFrame extends javax.swing.JFrame {
 		return; 
 	}
 	int address=Integer.parseInt(adrTextField.getText());
+	/* Make sure the marked consist type matches the consist type 
+	   stored for this consist */
+	if(_Consist_Type != ConsistMan.getConsist(address).getConsistType()){
+		if (log.isDebugEnabled()) {
+			if(_Consist_Type==Consist.ADVANCED_CONSIST)
+				log.debug("Setting Consist Type to Advanced Consist");
+			else if(_Consist_Type==Consist.CS_CONSIST)
+				log.debug("Setting Consist Type to Command Station Assisted Consist");
+		}
+		ConsistMan.getConsist(address).setConsistType(_Consist_Type);
+	}
 	int locoaddress=Integer.parseInt(locoTextField.getText());
 	ConsistMan.getConsist(address).add(locoaddress,
 					   locoDirectionNormal.isSelected());
