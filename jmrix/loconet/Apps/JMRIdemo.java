@@ -11,16 +11,6 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
-import jmri.jmrix.loconet.hexfile.LnHexFileAction;
-import jmri.jmrix.loconet.ms100.MS100Action;
-import jmri.jmrix.loconet.locomon.LocoMonAction;
-import jmri.jmrix.loconet.locogen.LocoGenAction;
-import jmri.jmrix.loconet.locoecho.LocoEchoAction;
-import jmri.jmrix.loconet.slotmon.SlotMonAction;
-
-import jmri.simpleprog.SimpleProgAction;
-import jmri.symbolicprog.SymbolicProgAction;
-
 public class JMRIdemo extends JPanel {
 	public JMRIdemo() {
 
@@ -32,42 +22,30 @@ public class JMRIdemo extends JPanel {
         menuBar = new JMenuBar();
         menuBar.setBorder(new BevelBorder(BevelBorder.RAISED));
         
-        // create text box for advice
-        helpLabel1 = new JLabel();
-		add(helpLabel1, BorderLayout.NORTH);     
-		helpLabel1.setText("Pick an input source from the left menu,");
-		
-        helpLabel2 = new JLabel();
-		add(helpLabel2, BorderLayout.SOUTH);     
-		helpLabel2.setText("then one or more things from the right.");
-	
-	// create actions for user control
-		hexfileAction  = new LnHexFileAction("Hex File");
-		ms100Action    = new MS100Action("MS100");
-		locomonAction  = new LocoMonAction("LocoNet Monitor");
-		locogenAction  = new LocoGenAction("LocoNet Commands");
-		locoechoAction = new LocoEchoAction("Turnout Control");
-		slotmonAction  = new SlotMonAction("Slot Monitor");
-		simpleprogAction  = new SimpleProgAction("Simple Programmer");
-		symbolicprogAction  = new SymbolicProgAction("Symbolic Programmer");
-		
 	// populate GUI
-        // Create menu categories and add to the menu bar
+        // create text box for advice
+        JLabel helpLabel1 = new JLabel();
+		add(helpLabel1, BorderLayout.NORTH);     
+		helpLabel1.setText("Pick an input source from the left menu first");
+			
+        // Create menu categories and add to the menu bar, add actions to menus
         JMenu inputMenu = new JMenu("Input");
         menuBar.add(inputMenu);
+        	inputMenu.add(new jmri.jmrix.loconet.hexfile.LnHexFileAction("Hex File"));
+        	inputMenu.add(new jmri.jmrix.loconet.ms100.MS100Action("MS100"));
+        	inputMenu.add(new jmri.jmrix.loconet.locobuffer.LocoBufferAction("LocoBuffer"));
+
         JMenu funcMenu = new JMenu("Tools");
         menuBar.add(funcMenu);
+	        funcMenu.add(new jmri.simpleprog.SimpleProgAction("Simple Programmer"));
+	        funcMenu.add(new jmri.symbolicprog.SymbolicProgAction("Symbolic Programmer"));
+	        funcMenu.add(new jmri.jmrix.loconet.locoecho.LocoEchoAction("Turnout Control"));
+
         JMenu locoMenu = new JMenu("LocoNet");
         menuBar.add(locoMenu);
-		// add actions to menus
-        inputMenu.add(hexfileAction);
-        inputMenu.add(ms100Action);
-        funcMenu.add(simpleprogAction);
-        funcMenu.add(symbolicprogAction);
-        funcMenu.add(locoechoAction);
-        locoMenu.add(locomonAction);
-        locoMenu.add(slotmonAction);
-        locoMenu.add(locogenAction);
+	        locoMenu.add(new jmri.jmrix.loconet.locomon.LocoMonAction("LocoNet Monitor"));
+    	    locoMenu.add(new jmri.jmrix.loconet.slotmon.SlotMonAction("Slot Monitor"));
+        	locoMenu.add(new jmri.jmrix.loconet.locogen.LocoGenAction("LocoNet Commands"));
 	}
 
 	// Main entry point
@@ -86,23 +64,8 @@ public class JMRIdemo extends JPanel {
         frame.setVisible(true);
     }
 	
-	// data members
-	
-	private LnHexFileAction hexfileAction;
-	private MS100Action ms100Action;
-
-	private LocoMonAction locomonAction;
-	private LocoGenAction locogenAction;
-	private LocoEchoAction locoechoAction;
-	private SlotMonAction slotmonAction;
-	private SimpleProgAction simpleprogAction;
-	private SymbolicProgAction symbolicprogAction;
-	
 	// GUI members
-    private JMenuBar menuBar;
-	private JLabel helpLabel1;	
-	private JLabel helpLabel2;	
-	
+    private JMenuBar menuBar;	
 	
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(JMRIdemo.class.getName());
 }

@@ -1,12 +1,12 @@
 /** 
- * MS100Frame.java
+ * LocoBufferFrame.java
  *
- * Description:		Frame to control and connect LocoNet via MS100 interface and comm port
+ * Description:		Frame to control and connect LocoNet via LocoBuffer interface and comm port
  * @author			Bob Jacobsen   Copyright (C) 2001
  * @version			
  */
 
-package jmri.jmrix.loconet.ms100;
+package jmri.jmrix.loconet.locobuffer;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -17,13 +17,13 @@ import jmri.jmrix.loconet.LnTrafficController;
 import ErrLoggerJ.ErrLog;
 
 
-public class MS100Frame extends javax.swing.JFrame {
+public class LocoBufferFrame extends javax.swing.JFrame {
 
 	javax.swing.JButton getNamesButton = new javax.swing.JButton();
 	javax.swing.JList portList = new javax.swing.JList();
 	javax.swing.JButton openPortButton = new javax.swing.JButton();
 
-	public MS100Frame() {
+	public LocoBufferFrame() {
 	}
 
 	public void initComponents() throws Exception {
@@ -43,8 +43,10 @@ public class MS100Frame extends javax.swing.JFrame {
 		openPortButton.setVisible(true);
 
 		setLocation(new java.awt.Point(5, 40));
-		setTitle("MS100 connection");
+		setTitle("LocoBuffer connection");
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+		getContentPane().add(new JLabel("set LocoBuffer to 19200 baud,"));
+		getContentPane().add(new JLabel("     local echo"));
 		getContentPane().add(getNamesButton);
 		getContentPane().add(portList);
 		getContentPane().add(openPortButton);
@@ -103,7 +105,7 @@ public class MS100Frame extends javax.swing.JFrame {
 	public void openPortButtonActionPerformed(java.awt.event.ActionEvent e) {
 		if ((String) portList.getSelectedValue() != null) {
 			// connect to the port
-			adapter.openPort((String) portList.getSelectedValue(),"MS100Frame");
+			adapter.openPort((String) portList.getSelectedValue(),"LocoBufferFrame");
 				
 			// connect to the traffic controller
 			LnTrafficController.instance().connectPort(adapter);
@@ -128,7 +130,7 @@ public class MS100Frame extends javax.swing.JFrame {
 	}
 	
 // Data members
-	private MS100Adapter adapter = new MS100Adapter();
+	private LocoBufferAdapter adapter = new LocoBufferAdapter();
 	// private Thread sourceThread;
 	private Thread sinkThread;
 }
