@@ -5,9 +5,13 @@ package jmri;
  /**
  * Abstract class providing the basic logic of the SignalHead interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
-public abstract class AbstractSignalHead implements SignalHead, java.io.Serializable {
+public abstract class AbstractSignalHead
+    implements SignalHead, java.io.Serializable {
+
+    protected int mAppearance = NONE;
+    public int getAppearance() { return mAppearance; }
 
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call
@@ -26,6 +30,12 @@ public abstract class AbstractSignalHead implements SignalHead, java.io.Serializ
     public void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
+    }
+
+    public void dispose() {
+        // this doesn't remove the listeners themselves, but should still allow garbage collection
+        // of the PropertyChangeSupport object
+        pcs = null;
     }
 
 }
