@@ -4,19 +4,13 @@ package jmri.jmrix.loconet.slotmon;
 
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.table.*;
 
-import jmri.jmrix.loconet.SlotListener;
-import jmri.jmrix.loconet.LocoNetSlot;
-import jmri.jmrix.loconet.LnConstants;
-import jmri.jmrix.loconet.locoio.ButtonRenderer;
-import jmri.jmrix.loconet.locoio.ButtonEditor;
+import javax.swing.*;
 
 /**
  * Frame provinging a command station slot manager
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SlotMonFrame extends javax.swing.JFrame {
 
@@ -34,19 +28,8 @@ public class SlotMonFrame extends javax.swing.JFrame {
         showAllCheckBox.setSelected(true);
         showAllCheckBox.setToolTipText("if checked, even empty/idle slots will appear");
 
-        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        slotTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        TableColumnModel tcm = slotTable.getColumnModel();
-        // install a button renderer & editor in the Read column
-        ButtonRenderer buttonRenderer = new ButtonRenderer();
-        tcm.getColumn(SlotMonDataModel.DISPCOLUMN).setCellRenderer(buttonRenderer);
-        TableCellEditor buttonEditor = new ButtonEditor(new JButton());
-        tcm.getColumn(SlotMonDataModel.DISPCOLUMN).setCellEditor(buttonEditor);
-        // ensure the table rows, columns have enough room for buttons
-        slotTable.setRowHeight(new JButton(" Dispatch ").getPreferredSize().height);
-        slotTable.getColumnModel().getColumn(SlotMonDataModel.DISPCOLUMN)
-			.setPreferredWidth(new JButton(" Dispatch ").getPreferredSize().width);
+        slotModel.configureTable(slotTable);
 
         // add listener object so checkbox functions
         showAllCheckBox.addActionListener(new CheckNotify(slotModel, showAllCheckBox));

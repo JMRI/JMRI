@@ -2,16 +2,16 @@
 
 package jmri.jmrix.loconet.slotmon;
 
-import jmri.jmrix.loconet.*;
-
 import javax.swing.*;
+import javax.swing.table.*;
 
-import java.util.Vector;
+import jmri.jmrix.loconet.*;
+import jmri.jmrix.loconet.locoio.*;
 
 /**
  * Table data model for display of slot manager contents
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version		$Revision: 1.4 $
+ * @version		$Revision: 1.5 $
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener  {
 
@@ -19,10 +19,10 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     static public final int ADDRCOLUMN = 1;
     static public final int SPDCOLUMN  = 2;
     static public final int TYPECOLUMN = 3;
-    static public final int STATCOLUMN = 4;
-    static public final int CONSCOLUMN = 5;
-    static public final int DIRCOLUMN  = 6;
-    static public final int DISPCOLUMN = 7;
+    static public final int STATCOLUMN = 4;  // status: free, common, etc
+    static public final int DISPCOLUMN = 5;  // originally "dispatch" button, now "free"
+    static public final int CONSCOLUMN = 6;  // consist state
+    static public final int DIRCOLUMN  = 7;
     static public final int F0COLUMN   = 8;
     static public final int F1COLUMN   = 9;
     static public final int F2COLUMN   = 10;
@@ -65,7 +65,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         case STATCOLUMN: return "Use";
         case CONSCOLUMN: return "Consisted";
         case DIRCOLUMN: return "Direction";
-        case DISPCOLUMN: return "Release";
+        case DISPCOLUMN: return "";     // no heading, as button is clear
         case F0COLUMN: return "F0";
         case F1COLUMN: return "F1";
         case F2COLUMN: return "F2";
@@ -165,7 +165,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             }
         case DISPCOLUMN:  //
             if (s.slotStatus()==LnConstants.LOCO_IN_USE)
-                return "Release";
+                return "Free";          // will be name of button
             else
                 return null;
         case DIRCOLUMN:  //
@@ -214,7 +214,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         case DIRCOLUMN:
             return new JLabel(" R ").getPreferredSize().width;
         case DISPCOLUMN:
-            return new JButton(" Release ").getPreferredSize().width;
+            return new JButton(" Free ").getPreferredSize().width;
         case F0COLUMN:
         case F1COLUMN:
         case F2COLUMN:
@@ -238,10 +238,10 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             // check for in use
             LocoNetSlot s = SlotManager.instance().slot(slotNum(row));
             if (s == null) log.error("slot pointer was null for slot row: "+row+" col: "+col);
-            if (s.slotStatus()==LnConstants.LOCO_IN_USE) {
+            if (s.slotStatus()!=LnConstants.LOCO_FREE) {
                 // send status to common
                 LnTrafficController.instance().sendLocoNetMessage(
-                        s.writeStatus(LnConstants.LOCO_COMMON
+                        s.writeStatus(LnConstants.LOCO_FREE
                     ));
                 // LnTrafficController.instance().sendLocoNetMessage(s.dispatchSlot());
             } else {
@@ -249,6 +249,28 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             }
             fireTableRowsUpdated(row,row);
         }
+    }
+
+    /**
+     * Configure a table to have our standard rows and columns.
+     * This is optional, in that other table formats can use this table model.
+     * But we put it here to help keep it consistent.
+     * @param s
+     */
+    public void configureTable(JTable slotTable) {
+        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
+        slotTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+        TableColumnModel tcm = slotTable.getColumnModel();
+        // install a button renderer & editor in the Read column
+        ButtonRenderer buttonRenderer = new ButtonRenderer();
+        tcm.getColumn(SlotMonDataModel.DISPCOLUMN).setCellRenderer(buttonRenderer);
+        TableCellEditor buttonEditor = new ButtonEditor(new JButton());
+        tcm.getColumn(SlotMonDataModel.DISPCOLUMN).setCellEditor(buttonEditor);
+        // ensure the table rows, columns have enough room for buttons
+        slotTable.setRowHeight(new JButton(" Dispatch ").getPreferredSize().height);
+        slotTable.getColumnModel().getColumn(SlotMonDataModel.DISPCOLUMN)
+			.setPreferredWidth(new JButton(" Dispatch ").getPreferredSize().width);
     }
 
     // methods to communicate with SlotManager
