@@ -9,7 +9,7 @@ import jmri.jmrit.XmlFile;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
 import java.io.File;
 import java.net.URL;
 import java.text.MessageFormat;
@@ -21,13 +21,17 @@ import javax.help.HelpBroker;
 import javax.help.HelpSet;
 import javax.swing.*;
 
+import net.roydesign.mac.MRJAdapter;
+
 /**
  * Base class for Jmri applications.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.23 $
+ * @version     $Revision: 1.24 $
  */
 public class Apps extends JPanel {
+
+    boolean onMac = (System.getProperty("mrj.version") != null);
 
     public Apps(JFrame frame) {
 
@@ -55,6 +59,10 @@ public class Apps extends JPanel {
 
         // Create menu categories and add to the menu bar, add actions to menus
         createMenus(menuBar, frame);
+
+        // if the configuration didn't complete OK, pop the prefs frame
+        log.debug("Config go OK? "+configOK);
+        if (!configOK) doPreferences();
 
         add(statusPanel());
         add(buttonSpace());
@@ -89,6 +97,14 @@ public class Apps extends JPanel {
         // the debugging statements in the following are
         // for testing startup time
         log.debug("start building menus");
+
+        if (onMac) {
+        // Let MRJAdapter do all of the dirty work in hooking up the Macintosh application menu
+//          MRJAdapter.addAboutListener(new ActionListener() { public void actionPerformed(ActionEvent e) { about(); } });
+            MRJAdapter.addPreferencesListener(new ActionListener() { public void actionPerformed(ActionEvent e) { doPreferences(); } });
+//          MRJAdapter.addQuitApplicationListener(new ActionListener() { public void actionPerformed(ActionEvent e) { quit(); } });
+        }
+        
         fileMenu(menuBar, frame);
         editMenu(menuBar, frame);
         toolsMenu(menuBar, frame);
@@ -106,38 +122,40 @@ public class Apps extends JPanel {
         JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
         menuBar.add(fileMenu);
         fileMenu.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(frame));
-        fileMenu.add(new AbstractAction(rb.getString("MenuItemQuit")){
+
+        // On a Mac, MRJAdapter already takes care of Quit
+        if (!onMac) {
+            fileMenu.add(new JSeparator());
+            fileMenu.add(new AbstractAction(rb.getString("MenuItemQuit")){
                 public void actionPerformed(ActionEvent e) {
                     System.exit(0);
                 }
             });
+        }
     }
 
-    protected AppConfigPanel newPrefs() {
-        return new AppConfigPanel(configFilename, 2);
+
+    protected void doPreferences() {
+        if (prefsFrame == null) {
+            prefsFrame = new JmriJFrame(rb.getString("MenuItemPreferences"));
+            prefsFrame.getContentPane().setLayout(new BoxLayout(prefsFrame.getContentPane(), BoxLayout.X_AXIS));
+            prefs = new AppConfigPanel(configFilename, 2);
+            prefsFrame.getContentPane().add(prefs);
+            prefsFrame.pack();
+        }
+        prefsFrame.show();
     }
 
     protected void editMenu(JMenuBar menuBar, JFrame frame) {
         AbstractAction prefsAction = new AbstractAction(rb.getString("MenuItemPreferences")) {
             public void actionPerformed(ActionEvent e) {
-                if (prefsFrame == null) {
-                    prefsFrame = new JmriJFrame(rb.getString("MenuItemPreferences"));
-                    prefsFrame.getContentPane().setLayout(new BoxLayout(prefsFrame.getContentPane(), BoxLayout.X_AXIS));
-                    prefs = newPrefs();
-                    prefsFrame.getContentPane().add(prefs);
-                    prefsFrame.pack();
-                }
-                prefsFrame.show();
+                doPreferences();
             }
         };
 
         JMenu editMenu = new JMenu(rb.getString("MenuEdit"));
         menuBar.add(editMenu);
         editMenu.add(prefsAction); // argument is filename, not action name
-
-        // if the configuration didn't complete OK, pop the prefs frame
-        log.debug("Config go OK? "+configOK);
-        if (!configOK) prefsAction.actionPerformed(null);
     }
 
     protected void toolsMenu(JMenuBar menuBar, JFrame frame) {
