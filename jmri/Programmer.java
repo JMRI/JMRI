@@ -21,10 +21,12 @@ public interface Programmer  {
 	public static final int DIRECTBYTEMODE  = 32;
 	public static final int ADDRESSMODE     = 41;
 	
-	// write CV
+	// read/write CV methods.  Note that these return before the read/write
+	// is complete; you have to provide a ProgListener to hear about
+	// completion. The exceptions will only be thrown at the start, not
+	// during the actual programming sequence. A typical exception would be
+	// due to an invalid mode (though that should be prevented earlier)
 	public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException;
-	
-	// read CV
 	public void readCV(int CV, ProgListener p) throws ProgrammerException;
 	
 	/* 

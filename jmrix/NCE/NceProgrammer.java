@@ -198,14 +198,9 @@ public class NceProgrammer implements NceListener, Programmer {
 		} else if (progState == RETURNSENT) {
 			// all done, notify listeners of completion
 			progState = NOTPROGRAMMING;
-			// see why waiting
-			if (_progRead) {
-				// read was in progress - get return value
-				notifyProgListenerEnd(_val, jmri.ProgListener.OK);
-			} else {
-				// write was in progress
-				notifyProgListenerEnd(_val, jmri.ProgListener.OK);
-			}
+			// if this was a read, we cached the value earlier.  If its a 
+			// write, we're to return the original write value
+			notifyProgListenerEnd(_val, jmri.ProgListener.OK);
 		}
 	}
 	
