@@ -8,7 +8,7 @@ package jmri;
  * Note that this does not enforce any particular system naming convention
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class DefaultRouteManager extends AbstractManager
     implements RouteManager, java.beans.PropertyChangeListener {
@@ -27,8 +27,11 @@ public class DefaultRouteManager extends AbstractManager
      */
     public Route createNewRoute(String systemName, String userName) {
         // Check that Route does not already exist
-        Route r = getByUserName(userName);
-        if (r!=null) return null;
+        Route r;
+        if (userName!= null && !userName.equals("")) {
+            r = getByUserName(userName);
+            if (r!=null) return null;
+        }
         r = getBySystemName(systemName);
         if (r!=null) return null;
         // Route does not exist, create a new route
