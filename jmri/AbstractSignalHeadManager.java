@@ -20,7 +20,7 @@ import com.sun.java.util.collections.Collections;
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class AbstractSignalHeadManager
     implements SignalHeadManager, java.beans.PropertyChangeListener {
@@ -61,6 +61,7 @@ public class AbstractSignalHeadManager
         else
             _tsys.put(systemName, s);
         String userName = s.getUserName();
+        if (log.isDebugEnabled()) log.debug("Register "+systemName+" "+userName);
         if (userName != null) {
             if (getByUserName(userName)!=null)
                 log.debug("SignalHead username="+userName+" already registered");
