@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -115,25 +115,38 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     }
 
     /**
-     *  Public method to return the first Serial node
+     *  Public method to delete a Serial node by node address
      */
-     public SerialNode getFirstSerialNode() {
-        aNodeIndex = 0;
-        return nodeArray[aNodeIndex];
+     public synchronized void deleteSerialNode(int nodeAddress) {
+        // find the serial node
+        int index = 0;
+        for (int i=0; i<numNodes; i++) {
+            if (nodeArray[i].getNodeAddress() == nodeAddress) {
+                index = i;
+            }
+        }
+        if (index==curSerialNodeIndex) {
+            log.error("Deleting the serial node active in the polling loop");
+        }
+        // Delete the node from the node list
+        numNodes --;
+        for (int j=index; j<numNodes; j++) {
+            nodeArray[j] = nodeArray[j+1];
+        }
     }
 
-    int aNodeIndex = 128;   // used by getFirstSerialNode and getNextSerialNode to
-                            //    cycle through the serial nodes
     /**
-     *  Public method to return the next Serial node
-     *     Note:  returns null if there is no 'next Serial node'
+     *  Public method to return the Serial node with a given index
+     *  Note:   To cycle through all nodes, begin with index=0, 
+     *              and increment your index at each call.  
+     *          When index exceeds the number of defined nodes,
+     *              this routine returns 'null'.
      */
-     public SerialNode getNextSerialNode() {
-        aNodeIndex ++;
-        if (aNodeIndex >= numNodes) {
+     public SerialNode getSerialNode(int index) {
+        if (index >= numNodes) {
             return null;
         }
-        return nodeArray[aNodeIndex];
+        return nodeArray[index];
     }
 
     protected AbstractMRMessage enterProgMode() {
