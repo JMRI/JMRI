@@ -2,21 +2,26 @@
 
 package jmri.jmrit.roster;
 
-import jmri.jmrit.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
+import jmri.jmrit.XmlFile;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.io.File;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 
 /**
- * Remove a locomotive from the roster.  In case of error, this
+ * Remove a locomotive from the roster.
+ *
+ * <P>In case of error, this
  * moves the definition file to a backup.  This action posts
  * a dialog box to select the loco to be deleted, and then posts
  * an "are you sure" dialog box before acting.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  * @see         jmri.jmrit.XmlFile
  */
 public class DeleteRosterItemAction extends AbstractAction {
