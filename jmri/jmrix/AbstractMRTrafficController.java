@@ -23,7 +23,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 abstract public class AbstractMRTrafficController {
 
@@ -31,6 +31,7 @@ abstract public class AbstractMRTrafficController {
         if (log.isDebugEnabled()) log.debug("setting instance: "+this);
         mCurrentMode = NORMALMODE;
         mCurrentState = IDLESTATE;
+	allowUnexpectedReply=false;
         setInstance();
         self = this;
     }
@@ -115,6 +116,15 @@ abstract public class AbstractMRTrafficController {
     public static final int WAITREPLYINPROGMODESTATE = 30;  // xmt has done mode change, await reply
     public static final int WAITREPLYINNORMMODESTATE = 35;  // xmt has done mode change, await reply
     public static final int OKSENDMSGSTATE = 40;        // mode change reply here, send original msg
+
+    private boolean allowUnexpectedReply;
+
+    // Use this function to identify If the command station may send 
+    // messages without a request sent to it
+    protected void setAllowUnexpectedReply(boolean expected) {	    
+		allowUnexpectedReply=expected; 
+    }
+
 
     protected void notifyReply(AbstractMRReply r, AbstractMRListener dest) {
         // make a copy of the listener vector to synchronized (not needed for transmit?)
@@ -203,14 +213,16 @@ abstract public class AbstractMRTrafficController {
                         modeMsg = enterNormalMode();
                         mCurrentState = WAITREPLYINNORMMODESTATE;
                     }
-                    forwardToPort(modeMsg, null);
-                    // wait for reply
-                    try {
-                        synchronized(xmtRunnable) {
-                            xmtRunnable.wait(m.getTimeout());
-                        }
-                    } catch (InterruptedException e) { log.error("transmitLoop interrupted"); }
-                    mCurrentState = WAITMSGREPLYSTATE;
+		    if(modeMsg!=null) {
+                       forwardToPort(modeMsg, null);
+                       // wait for reply
+                       try {
+                           synchronized(xmtRunnable) {
+                               xmtRunnable.wait(m.getTimeout());
+                           }
+                       } catch (InterruptedException e) { log.error("transmitLoop interrupted"); }
+                       mCurrentState = WAITMSGREPLYSTATE;
+		    }
                 }
                 forwardToPort(m, l);
                 // wait for a reply, or eventually timeout
@@ -341,7 +353,14 @@ abstract public class AbstractMRTrafficController {
                     for (int i = 0; i<msg.length; i++) f=f+Integer.toHexString(0xFF&msg[i])+" ";
                     log.debug(f);
                 }
-                ostream.write(msg);
+		if(portReadyToSend(controller)) {                
+			ostream.write(msg);
+		} else if(m.getRetries()!=0) {
+                   if (log.isDebugEnabled()) log.debug("Retry message: "+m.toString() +" attempts remaining: " + m.getRetries());
+		  m.setRetries(m.getRetries() - 1);
+	          msgQueue.addLast(m);
+                  listenerQueue.addLast(reply);
+		} else log.warn("sendMessage: port not ready for data sending: " +msg.toString());
             }
             else {
                 // no stream connected
@@ -398,6 +417,16 @@ abstract public class AbstractMRTrafficController {
         if (controller != p)
             log.warn("disconnectPort: disconnect called from non-connected AbstractPortController");
         controller = null;
+    }
+
+    /**
+     * Check to see if PortController object can be sent to.
+     * returns true if ready, false otherwise
+     * May throw an Exception.
+     */
+    public boolean portReadyToSend(AbstractPortController p) throws Exception {
+	if(p!=null) return true;
+	else return false;
     }
 
     // data members to hold the streams
@@ -519,10 +548,18 @@ abstract public class AbstractMRTrafficController {
             }
             break;
         }
-        default:
+        default: {
+	    if(allowUnexpectedReply==true) {
+            if(log.isDebugEnabled()) log.debug("Error suppressed: reply complete in unexpected state: "
+                        +mCurrentState
+                        +" was "+msg.toString());
+		 }
+            } else {
             log.error("reply complete in unexpected state: "
                         +mCurrentState
                         +" was "+msg.toString());
+	    }
+	  }
         }
     }
 
