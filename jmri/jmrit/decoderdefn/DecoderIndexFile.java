@@ -31,7 +31,7 @@ import org.jdom.output.XMLOutputter;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -103,10 +103,12 @@ public class DecoderIndexFile extends XmlFile {
     }
 
 	/**
-	 * Return DecoderFile from a "title" string, ala selection in matchingComboBox
+	 * Return DecoderFile from a "title" string, ala selection in matchingComboBox.
+     * Search backwards, so that if there is a decoder-entry and family-entry
+     * with the same title, we get the decoder.
 	 */
 	public DecoderFile fileFromTitle(String title ) {
-		for (int i = 0; i < numDecoders(); i++) {
+		for (int i = numDecoders()-1; i >= 0; i--) {
 			DecoderFile r = (DecoderFile)decoderList.get(i);
 			if (r.titleString().equals(title)) return r;
 		}
@@ -334,16 +336,15 @@ public class DecoderIndexFile extends XmlFile {
 		List l = family.getChildren("model");
 		if (log.isDebugEnabled()) log.debug("readFamily sees "+l.size()+" children");
 
-        // if there are multiple models in this family, record the family as a type
-        //if (l.size()>1){
-            DecoderFile vFamilyDecoderFile
+        // Record the family as a specific model, which allows you to select the
+        // family as a possible thing to program
+        DecoderFile vFamilyDecoderFile
                 = new DecoderFile( mfg, mfgID, familyName,
                                     parentLowVersID, parentHighVersID,
                                     familyName,
                                     filename,
                                     -1, -1, null); // numFns, numOuts, XML element unknown
-            decoderList.add(vFamilyDecoderFile);
-        //}
+        decoderList.add(vFamilyDecoderFile);
 
 		// record each of the decoders
 		for (int i=0; i<l.size(); i++) {
