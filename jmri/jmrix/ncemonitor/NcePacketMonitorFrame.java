@@ -20,7 +20,7 @@ import java.io.InputStream;
  * The rest of the GUI then appears.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
 
@@ -63,8 +63,8 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
         p2.add(checkButton);
         checkButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sendBytes(new byte[]{'?'});
-                sendBytes(new byte[]{'L','-'});
+                sendBytes(new byte[]{(byte)'?'});
+                sendBytes(new byte[]{(byte)'L',(byte)'-'});
             }
         });
 
@@ -79,7 +79,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             b.setSelected(true);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{'V'});
+                    sendBytes(new byte[]{(byte)'V'});
                 }
             });
             b= new JRadioButton("Hex with preamble symbol");
@@ -87,7 +87,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{'H','0'});
+                    sendBytes(new byte[]{(byte)'H',(byte)'0'});
                 }
             });
             p2.add(p);
@@ -96,7 +96,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{'H','2'});
+                    sendBytes(new byte[]{(byte)'H',(byte)'2'});
                 }
             });
             p2.add(p);
@@ -105,7 +105,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{'H','4'});
+                    sendBytes(new byte[]{(byte)'H',(byte)'4'});
                 }
             });
             p2.add(p);
@@ -122,7 +122,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             b.setSelected(true);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{'L','-'});
+                    sendBytes(new byte[]{(byte)'L',(byte)'-'});
                 }
             });
             b= new JRadioButton("Show speed packets");
@@ -131,7 +131,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             b.setToolTipText("This setting overloads the display with data");
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{'L','+'});
+                    sendBytes(new byte[]{(byte)'L',(byte)'+'});
                 }
             });
             p2.add(p);
@@ -147,7 +147,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{'A','-'});
+                    sendBytes(new byte[]{(byte)'A',(byte)'-'});
                 }
             });
             b= new JRadioButton("Show acc packets");
@@ -155,7 +155,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{'A','+'});
+                    sendBytes(new byte[]{(byte)'A',(byte)'+'});
                 }
             });
             b.setSelected(true);
@@ -172,7 +172,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{'A','S'});
+                    sendBytes(new byte[]{(byte)'A',(byte)'S'});
                 }
             });
             b= new JRadioButton("Acc addresses paired");
@@ -180,7 +180,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{'A','P'});
+                    sendBytes(new byte[]{(byte)'A',(byte)'P'});
                 }
             });
             b.setSelected(true);
@@ -197,7 +197,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{'R','-'});
+                    sendBytes(new byte[]{(byte)'R',(byte)'-'});
                 }
             });
             b= new JRadioButton("Show reset packets");
@@ -205,7 +205,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{'R','+'});
+                    sendBytes(new byte[]{(byte)'R',(byte)'+'});
                 }
             });
             b.setSelected(true);
@@ -222,7 +222,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{'I','-'});
+                    sendBytes(new byte[]{(byte)'I',(byte)'-'});
                 }
             });
             b= new JRadioButton("Show idle packets");
@@ -230,7 +230,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             p.add(b);
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{'I','+'});
+                    sendBytes(new byte[]{(byte)'I',(byte)'+'});
                 }
             });
             b.setSelected(true);
@@ -349,7 +349,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             ostream = activeSerialPort.getOutputStream();
 
             // make less verbose
-            sendBytes(new byte[]{'L','-',10,13});
+            sendBytes(new byte[]{(byte)'L',(byte)'-',10,13});
             // purge contents, if any
             int count = serialStream.available();
             log.debug("input stream shows "+count+" bytes available");
