@@ -74,6 +74,8 @@ public class ProgDebugger implements Programmer  {
 		Runnable r = new Runnable() {
 			ProgListener l = m;
 			public void run() {
+				log.debug("read CV reply - start sleep");
+				try { Thread.sleep(250); } catch (Exception e) {}
 				log.debug("read CV reply");
 				l.programmingOpReply(_nextRead, 0); }  // 0 is OK status
 			};
