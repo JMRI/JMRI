@@ -1,9 +1,9 @@
-/** 
+/**
  * SymbolicProgFrame.java
  *
  * Description:		Frame providing a command station programmer from decoder definition files
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			
+ * @author			Bob Jacobsen   Copyright (C) 2001, 2002
+ * @version			$Revision: 1.2 $
  */
 
 package jmri.jmrit.symbolicprog.symbolicframe;
@@ -38,9 +38,9 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 	JTextField locoRoadNumber 	= new JTextField(5);
 	JTextField locoMfg 			= new JTextField(12);
 	JTextField locoModel 		= new JTextField(12);
-	
+
 	JLabel progStatus       	= new JLabel(" OK ");
-	
+
 	JButton selectFileButton 	= new JButton();
 	JButton storeFileButton 	= new JButton();
 
@@ -53,7 +53,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 					cvModel);
 	JTable		variableTable	= new JTable(variableModel);
 	JScrollPane variableScroll	= new JScrollPane(variableTable);
-	
+
 	JButton  newCvButton 		= new JButton();
 	JLabel   newCvLabel  		= new JLabel();
 	JTextField newCvNum  		= new JTextField(4);
@@ -67,10 +67,10 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 	JTextField 	newVarMask  	= new JTextField(9);
 
 	ProgModePane   modePane 	= new ProgModePane(BoxLayout.X_AXIS);
-			
+
 	JLabel decoderMfg  			= new JLabel("         ");
 	JLabel decoderModel   		= new JLabel("         ");
-	
+
 	// member to find and remember the configuration file in and out
 	final JFileChooser fci 		= new JFileChooser("xml"+File.separator+"decoders"+File.separator);
 	final JFileChooser fco 		= new JFileChooser("xml"+File.separator+"decoders"+File.separator);
@@ -82,11 +82,11 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 		selectFileButton.setText("Read File");
 		selectFileButton.setVisible(true);
 		selectFileButton.setToolTipText("Press to select & read a configuration file");
-		
+
 		storeFileButton.setText("Store File");
 		storeFileButton.setVisible(true);
 		storeFileButton.setToolTipText("Press to store the configuration file");
-		
+
 		variableTable.setDefaultRenderer(JTextField.class, new ValueRenderer());
 		variableTable.setDefaultRenderer(JButton.class, new ValueRenderer());
 		variableTable.setDefaultEditor(JTextField.class, new ValueEditor());
@@ -96,7 +96,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
 		// instead of forcing the columns to fill the frame (and only fill)
 		variableTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		
+
 		cvTable.setDefaultRenderer(JTextField.class, new ValueRenderer());
 		cvTable.setDefaultRenderer(JButton.class, new ValueRenderer());
 		cvTable.setDefaultEditor(JTextField.class, new ValueEditor());
@@ -106,11 +106,11 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
 		// instead of forcing the columns to fill the frame (and only fill)
 		cvTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		
+
 		newCvButton.setText("Create new CV");
 		newCvLabel.setText("CV number:");
 		newCvNum.setText("");
-		
+
 		newVarButton.setText("Create new variable");
 		newVarNameLabel.setText("Name:");
 		newVarName.setText("");
@@ -118,7 +118,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 		newVarCv.setText("");
 		newVarMaskLabel.setText("Bit mask:");
 		newVarMask.setText("VVVVVVVV");
-		
+
 		// add actions to buttons
 		selectFileButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -140,7 +140,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 				newVarButtonPerformed();
 			}
 		});
-			
+
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new java.awt.event.WindowAdapter() {
 			public void windowClosing(java.awt.event.WindowEvent e) {
@@ -155,26 +155,26 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 		// install items in GUI
 		JPanel tPane1 = new JPanel();
 			tPane1.setLayout(new BoxLayout(tPane1, BoxLayout.X_AXIS));
-			tPane1.add(new JLabel("Road Name: "));  
+			tPane1.add(new JLabel("Road Name: "));
 			tPane1.add(locoRoadName);
-			tPane1.add(new JLabel("Number: "));  
+			tPane1.add(new JLabel("Number: "));
 			tPane1.add(locoRoadNumber);
-			tPane1.add(new JLabel("Manufacturer: "));  
+			tPane1.add(new JLabel("Manufacturer: "));
 			tPane1.add(locoMfg);
-			tPane1.add(new JLabel("Model: "));  
+			tPane1.add(new JLabel("Model: "));
 			tPane1.add(locoModel);
 		getContentPane().add(tPane1);
-		
+
 		JPanel tPane3 = new JPanel();
 			tPane3.setLayout(new BoxLayout(tPane3, BoxLayout.X_AXIS));
-			tPane3.add(selectFileButton);  
+			tPane3.add(selectFileButton);
 			tPane3.add(Box.createHorizontalGlue());
 			tPane3.add(new JLabel("Decoder Manufacturer: "));
 			tPane3.add(decoderMfg);
 			tPane3.add(new JLabel(" Model: "));
 			tPane3.add(decoderModel);
 			tPane3.add(Box.createHorizontalGlue());
-			tPane3.add(storeFileButton);  
+			tPane3.add(storeFileButton);
 			tPane3.add(Box.createHorizontalGlue());
 		getContentPane().add(tPane3);
 
@@ -183,13 +183,13 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 			tPane2.add(modePane);
 			tPane2.add(Box.createHorizontalGlue());
 		getContentPane().add(tPane2);
-		
+
 		getContentPane().add(new JSeparator());
 
 		getContentPane().add(progStatus);
-		
+
 		getContentPane().add(variableScroll);
-		
+
 		getContentPane().add(cvScroll);
 
 		JPanel tPane4 = new JPanel();
@@ -211,12 +211,12 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 			tPane4.add(newVarMask);
 			tPane4.add(Box.createHorizontalGlue());
 		getContentPane().add(tPane4);
-		
+
 		// for debugging
-		
+
 		pack();
 	}
-  	
+
   	protected void selectFileButtonActionPerformed(java.awt.event.ActionEvent e) {
 		// show dialog
 		int retVal = fci.showOpenDialog(this);
@@ -232,24 +232,24 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 			if (log.isInfoEnabled()) log.info("selectFileButtonActionPerformed: parsing complete");
 
 		}
-  	}	
+  	}
 
 	protected void newVarButtonPerformed()  {
 		String name = newVarName.getText();
 		int CV = Integer.valueOf(newVarCv.getText()).intValue();
 		String mask = newVarMask.getText();
-		
+
 		// ask Table model to do the actuall add
 		variableModel.newDecVariableValue(name, CV, mask);
 		variableModel.configDone();
 	}
-	
+
 	// handle resizing when first shown
   	private boolean mShown = false;
 	public void addNotify() {
 		super.addNotify();
 		if (mShown)
-			return;			
+			return;
 		// resize frame to account for menubar
 		JMenuBar jMenuBar = getJMenuBar();
 		if (jMenuBar != null) {
@@ -265,30 +265,34 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 	void thisWindowClosing(java.awt.event.WindowEvent e) {
 		// check for various types of dirty - first table data not written back
 		if (cvModel.decoderDirty() || variableModel.decoderDirty() ) {
-			if (JOptionPane.showConfirmDialog(null, 
-		   		"Some changes have not been written to the decoder. They will be lost. Close window?", 
+			if (JOptionPane.showConfirmDialog(null,
+		   		"Some changes have not been written to the decoder. They will be lost. Close window?",
 		    	"choose one", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.CANCEL_OPTION) return;
 		    }
 		if (variableModel.fileDirty() ) {
-			if (JOptionPane.showConfirmDialog(null, 
-		    	"Some changes have not been written to a configuration file. Close window?", 
+			if (JOptionPane.showConfirmDialog(null,
+		    	"Some changes have not been written to a configuration file. Close window?",
 		    	"choose one", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.CANCEL_OPTION) return;
 		    }
 
 		//OK, close
 		setVisible(false);
 		modePane.dispose();
-		dispose();	
+		dispose();
 	}
-	
+
 	void readAndParseConfigFile(File file) {
 		try {
-			XmlFile xf = new XmlFile(){};  // XmlFile is abstract
+			DecoderFile xf = new DecoderFile(){};  // XmlFile is abstract
 			Element root = xf.rootFromFile(file);
-			
+
 			// decode type, invoke proper processing routine if a decoder file
-			if (root.getChild("decoder") != null) processDecoderFile(root.getChild("decoder"));
-			else { // try again as a loco file
+			if (root.getChild("decoder") != null) {
+                log.debug("Attempt to open as decoder file");
+                processDecoderFile(root.getChild("decoder"), xf);
+                log.debug("succeeded");
+			} else { // try again as a loco file
+                log.debug("Attempt to open as loco file");
 				if (root.getChild("locomotive") != null) processLocoFile(root.getChild("locomotive"));
 				else log.error("Unrecognized config file contents");
 			}
@@ -296,13 +300,13 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 			log.warn("readAndParseDecoderConfig: readAndParseDecoderConfig exception: "+e);
 		}
 	}
-		
-	void processDecoderFile(Element decoderElem) {
+
+	void processDecoderFile(Element decoderElem, DecoderFile xf) {
 			// store name, type
 			decoderMfg.setText(DecoderFile.getMfgName(decoderElem));
-			
+
 			// load variables to table
-			//DecoderFile.loadVariableModel(decoderElem, ns, variableModel);
+			xf.loadVariableModel(decoderElem, variableModel);
 	}
 
 	void processLocoFile(Element loco) {
@@ -322,16 +326,16 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 				readAndParseConfigFile(new File(filename));
 				if (log.isDebugEnabled()) log.debug("finished processing decoder file for loco file");
 			} else log.error("No decoder element found in config file");
-			
+
 			// get the CVs and load
 			Element values = loco.getChild("values");
 			if (values != null) {
 			// get the CV values and load
 				List varList = values.getChildren("CVvalue");
 				if (log.isDebugEnabled()) log.debug("Found "+varList.size()+" CVvalues");
-				
+
 				for (int i=0; i<varList.size(); i++) {
-					// locate the row 
+					// locate the row
 					if ( ((Element)(varList.get(i))).getAttribute("name") == null) {
 						  if (log.isDebugEnabled()) log.debug("unexpected null in name "+((Element)(varList.get(i)))+" "+((Element)(varList.get(i))).getAttributes());
 						  break;
@@ -352,15 +356,15 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 				}
 				variableModel.configDone();
 			} else log.error("no values element found in config file; CVs not configured");
-			
+
 			// get the variable values and load
 			Element decoderDef = values.getChild("decoderDef");
 			if (decoderDef != null) {
 				List varList = decoderDef.getChildren("varValue");
 				if (log.isDebugEnabled()) log.debug("Found "+varList.size()+" varValues");
-				
+
 				for (int i=0; i<varList.size(); i++) {
-					// locate the row 
+					// locate the row
 					Attribute itemAttr = null;
 					if ( (itemAttr = ((Element)(varList.get(i))).getAttribute("item")) == null) {
 						  if (log.isDebugEnabled()) log.debug("unexpected null in name "+((Element)(varList.get(i))));
@@ -377,7 +381,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 						  break;
 					}
 					String value = ((Element)(varList.get(i))).getAttribute("value").getValue();
-					
+
 					if (log.isDebugEnabled()) log.debug("Variable "+i+" is "+item+" value: "+value);
 
 					int row;
@@ -392,7 +396,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 				}
 				variableModel.configDone();
 			} else log.error("no decoderDef element found in config file");
-		
+
 			// the act of loading values marks as dirty, but we're actually in synch
 			variableModel.setFileDirty(false);
 	}
@@ -405,16 +409,16 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 			int retVal = fco.showSaveDialog(this);
 			// handle selection or cancel
 			if (retVal != JFileChooser.APPROVE_OPTION) return; // leave early
-				
+
 			File file = fco.getSelectedFile();
 
-			// This is taken in large part from "Java and XML" page 368 
+			// This is taken in large part from "Java and XML" page 368
 
 			// create root element
 			Element root = new Element("locomotive-config");
 			Document doc = new Document(root);
 			doc.setDocType(new DocType("locomotive:locomotive-config","locomotive-config.dtd"));
-		
+
 			// add top-level elements
 			Element values;
 			root.addContent(new Element("locomotive")		// locomotive values are first item
@@ -431,7 +435,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 						  .addContent(values = new Element("values"))
 					)
 				;
-					
+
 			// Append a decoderDef element to values
 			Element decoderDef;
 			values.addContent(decoderDef = new Element("decoderDef"));
@@ -449,14 +453,14 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 									.addAttribute("value", cvModel.getValString(i))
 						);
 			}
-			
+
 			// write the result to selected file
 			java.io.FileOutputStream o = new java.io.FileOutputStream(file);
 			XMLOutputter fmt = new XMLOutputter();
 			fmt.setNewlines(true);   // pretty printing
 			fmt.setIndent(true);
 			fmt.output(doc, o);
-			
+
 			// mark file as OK
 			variableModel.setFileDirty(false);
 			}
@@ -464,7 +468,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 			log.error(e);
 		}
 	}
-	
+
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SymbolicProgFrame.class.getName());
 
 }
