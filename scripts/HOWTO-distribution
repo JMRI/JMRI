@@ -11,16 +11,7 @@ and the application name for App):
 ( ) Make sure that the "make manifest" button is pushed, then
 	make the App.jar file with the App release target.
 
-( ) Make sure that the following .jar files (and only these) have the
-	merge button pushed, then
-	make the AppWin95.jar file with the JMRI demo release target.
-		collections.jar
-		log4j.jar
-		crimson.jar
-		comm.jar
-		jdom-jdk11.jar
-
-( ) Move the App.jar and AppWin95.jar files to the distribution folder
+( ) Move the App.jar file to the distribution folder
 
 ( ) Update the various text files from the CVS scripts module. 
 
@@ -59,8 +50,6 @@ and the application name for App):
 ( ) Create the Macintosh distribution
 	( ) Create a clean copy of the folder on the desktop, with the same name
 	
-	( ) Remove the win32com.dll, AppWin95.jar files
-
 	( ) Drag folder onto DropStuff, which will create a file App.M.N.hqx
 		(Preferences should be set for Macintosh, include linefeeds, remote .sit
 		suffix)
@@ -69,7 +58,7 @@ and the application name for App):
 
 ( ) Upload original distribution folder to jmri.sourceforge.net via NiftyTelnet/SSH
 
-( ) Make the OS/2 distribution:
+( ) Make the windows & OS/2 distribution:
 
 	( ) Start with a new copy of the distribution directory
 	
@@ -78,11 +67,6 @@ and the application name for App):
     	cd App.M.N
     	rm App
     	rm -rf App\ MacOSX.app
-	
-	( ) Remove the Windows-specific files
-
-    	rm AppWin95.jar
-    	rm win32com.dll
  
    	At this point, lib should contain only:
      	collections.jar  crimson.jar  jdom-jdk11.jar  log4j.jar
@@ -92,48 +76,23 @@ and the application name for App):
     	cd ..
     	# now above the distribution directory
     
-    	zip -rl App.OS2.zip App.M.N
-		zip App.OS2.zip App.M.N/*.jar App.M.N/lib/*.jar
+    	zip -rl App.zip App.M.N
+		zip App.zip App.M.N/*.jar App.M.N/lib/*.jar
 	
 		# the first line adds CR's, and the second replaces the .jar files so they
 		# don't have CR inserted
 	
-( ) Make the Linux distribution from the OS/2 distribution directory above:
+( ) Make the Linux distribution from the distribution directory above:
 
 	( ) Update permissions
 
-    	chmod 755 JmriDemo.csh
+    	chmod 755 App.csh
     
 	( ) Make a .tar.gz
 
 		tar cf App.M.N.tar App.M.N
 		gzip App.M.N.tar
 	
-( ) Make the Windows distribution
-
-	( ) Start with a new copy of the uploaded folder
-	
-	( ) Remove the Macintosh Apps and un-merged jar files:
-
-    	cd App.M.N
-    	rm App
-    	rm -rf App\ MacOSX.app
-   		rm -rf lib
- 		rm App.jar
- 			
-		At this point, only the AppWin95.jar file should exist
-		   
-	( ) Make a zip file
-
-    	cd ..
-    	# now above the distribution directory
-    
-    	zip -rl App.M.N.win.zip App.M.N
-		zip App.M.N.win.zip App.M.N/*.jar App.M.N/win32com.dll
-	
-		# the first line adds CR's, and the second replaces the binary files so they
-		# don't have CR inserted
-
 ( ) Move to distribution site via SourceForge release:
 
 	ftp upload.sourceforge.net 
@@ -141,8 +100,7 @@ and the application name for App):
 		password: me@myself.org 
 		cd incoming 
 		bin 
-		put App.M.N.OS2.zip
-		put App.M.N.win.zip
+		put App.M.N.zip
 		put App.M.N.tar.gz
 		put App.M.N.hqx
 		
@@ -151,9 +109,8 @@ and the application name for App):
 	Click on Edit/Release Files  & release each of the four files
 	in the order:
 	
-		OS/2
 		linux
-		windows
+		windows & OS/2
 		macintosh
 		
 	Be sure to update the top of the release note paragraph.
