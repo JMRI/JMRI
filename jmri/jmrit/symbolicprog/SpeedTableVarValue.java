@@ -39,7 +39,7 @@ import com.sun.java.util.collections.ArrayList;
  *<P>
  * Description:		Extends VariableValue to represent a NMRA long address
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -193,7 +193,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             g.setConstraints(v, cs);
 
             if (i==0) log.info("Font size "+v.getFont().getSize());
-            float newSize = (v.getFont().getSize()+0.5f)/2.f;
+            float newSize = v.getFont().getSize() * 0.8f;
             v.setFont(v.getFont().deriveFont(newSize));
 
 			j.add ( v );

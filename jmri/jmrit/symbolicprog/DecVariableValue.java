@@ -1,9 +1,9 @@
-/** 
+/**
  * DecVariableValue.java
  *
  * Description:		Extends VariableValue to represent a decimal variable
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			
+ * @version
  *
  */
 
@@ -23,7 +23,7 @@ import javax.swing.event.*;
 import javax.swing.text.*;
 import com.sun.java.util.collections.ArrayList;
 
-public class DecVariableValue extends VariableValue 
+public class DecVariableValue extends VariableValue
 		implements ActionListener, PropertyChangeListener, FocusListener {
 
 	public DecVariableValue(String name, String comment, boolean readOnly,
@@ -32,7 +32,7 @@ public class DecVariableValue extends VariableValue
 		super(name, comment, readOnly, cvNum, mask, v, status, stdname);
 		_maxVal = maxVal;
 		_minVal = minVal;
-		_value = new JTextField("0",4);
+		_value = new JTextField("0",3);
 		_defaultColor = _value.getBackground();
 		_value.setBackground(COLOR_UNKNOWN);
 		// connect to the JTextField value, cv
@@ -42,30 +42,30 @@ public class DecVariableValue extends VariableValue
 		cv.addPropertyChangeListener(this);
 		cv.setState(CvValue.FROMFILE);
 	}
-	
+
 	int _maxVal;
 	int _minVal;
-	
+
 	public Object rangeVal() {
 		return new String("Decimal: "+_minVal+" - "+_maxVal);
 	}
-	
+
 	String oldContents = "";
-	
+
 	void enterField() {
 		oldContents = _value.getText();
 	}
 	void exitField() {
-		if (!oldContents.equals(_value.getText())) { 
+		if (!oldContents.equals(_value.getText())) {
 			int newVal = Integer.valueOf(_value.getText()).intValue();
 			int oldVal = Integer.valueOf(oldContents).intValue();
 			updatedTextField();
 			prop.firePropertyChange("Value", new Integer(oldVal), new Integer(newVal));
 		}
 	}
-	
+
 	/**
-	 * Invoked when a permanent change to the JTextField has been 
+	 * Invoked when a permanent change to the JTextField has been
 	 * made.  Note that this does _not_ notify property listeners;
 	 * that should be done by the invoker, who may or may not
 	 * know what the old value was. Can be overwridden in subclasses
@@ -78,15 +78,15 @@ public class DecVariableValue extends VariableValue
 		// compute new cv value by combining old and request
 		int oldCv = cv.getValue();
 		int newVal;
-		try { 
-			newVal = Integer.valueOf(_value.getText()).intValue(); 
+		try {
+			newVal = Integer.valueOf(_value.getText()).intValue();
 			}
 			catch (java.lang.NumberFormatException ex) { newVal = 0; }
 		int newCv = newValue(oldCv, newVal, getMask());
 		if (oldCv != newCv)
 			cv.setValue(newCv);
 	}
-	
+
 	/** ActionListener implementations */
 	public void actionPerformed(ActionEvent e) {
 		if (log.isDebugEnabled()) log.debug("actionPerformed");
@@ -94,36 +94,36 @@ public class DecVariableValue extends VariableValue
 		updatedTextField();
 		prop.firePropertyChange("Value", null, new Integer(newVal));
 	}
-	
+
 	/** FocusListener implementations */
 	public void focusGained(FocusEvent e) {
 		if (log.isDebugEnabled()) log.debug("focusGained");
 		enterField();
 	}
-	
+
 	public void focusLost(FocusEvent e) {
 		if (log.isDebugEnabled()) log.debug("focusLost");
 		exitField();
 	}
 
 	// to complete this class, fill in the routines to handle "Value" parameter
-	// and to read/write/hear parameter changes. 
+	// and to read/write/hear parameter changes.
 	public String getValueString() {
 		return _value.getText();
 	}
-	
+
 	public void setIntValue(int i) {
 		setValue(i);
 	}
-	
-	public Component getValue()  { 
+
+	public Component getValue()  {
 	 	if (getReadOnly())  //
 	 		return new JLabel(_value.getText());
 	 	else
-	 		return _value; 
+	 		return _value;
 	}
 
-	public Component getRep(String format)  { 
+	public Component getRep(String format)  {
 		if (getReadOnly())  //
 			return new JLabel(_value.getText());
 		else if (format.equals("vslider")) {
@@ -140,26 +140,26 @@ public class DecVariableValue extends VariableValue
 		}
 		else {
 			JTextField value = new VarTextField(_value.getDocument(),_value.getText(), 3, this);
-			return value; 
+			return value;
 		}
 	}
 
 	ArrayList sliders = new ArrayList();
-	
+
 	/**
 	 * Set a new value, including notification as needed.  This does the
 	 * conversion from string to int, so if the place where formatting
 	 * needs to be applied
 	 */
-	public void setValue(int value) { 
+	public void setValue(int value) {
 		int oldVal;
-		try { 
+		try {
 			oldVal = Integer.valueOf(_value.getText()).intValue();
 			}
-			catch (java.lang.NumberFormatException ex) { oldVal = -999; }	
+			catch (java.lang.NumberFormatException ex) { oldVal = -999; }
 		if (log.isDebugEnabled()) log.debug("setValue with new value "+value+" old value "+oldVal);
 		_value.setText(""+value);
-		if (oldVal != value || getState() == VariableValue.UNKNOWN) 
+		if (oldVal != value || getState() == VariableValue.UNKNOWN)
 			updatedTextField();
 			prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value));
 	}
@@ -178,7 +178,7 @@ public class DecVariableValue extends VariableValue
 		//super.setState(READ);
 		((CvValue)_cvVector.elementAt(getCvNum())).read(_status);
 	}
-	
+
  	public void write() {
  		if (getReadOnly()) log.error("unexpected write operation when readOnly is set");
  		setBusy(true);  // will be reset when value changes
@@ -209,13 +209,13 @@ public class DecVariableValue extends VariableValue
 	// stored value, read-only Value
 	JTextField _value = null;
 
-	
 
-	/* Internal class extends a JTextField so that its color is consistent with 
+
+	/* Internal class extends a JTextField so that its color is consistent with
 	 * an underlying variable
 	 *
 	 * @author			Bob Jacobsen   Copyright (C) 2001
-	 * @version			
+	 * @version
 	 */
 	public class VarTextField extends JTextField {
 
@@ -229,28 +229,28 @@ public class DecVariableValue extends VariableValue
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					thisActionPerformed(e);
 				}
-			});		
+			});
 			addFocusListener(new java.awt.event.FocusListener() {
 				public void focusGained(FocusEvent e) {
 					if (log.isDebugEnabled()) log.debug("focusGained");
 					enterField();
 				}
-	
+
 				public void focusLost(FocusEvent e) {
 					if (log.isDebugEnabled()) log.debug("focusLost");
 					exitField();
 				}
-			});		
+			});
 			// listen for changes to original state
 			_var.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
 				public void propertyChange(java.beans.PropertyChangeEvent e) {
 					originalPropertyChanged(e);
 				}
-			});		
+			});
 		}
 
 		DecVariableValue _var;
-	
+
 		void thisActionPerformed(java.awt.event.ActionEvent e) {
 			// tell original
 			_var.actionPerformed(e);
@@ -260,22 +260,22 @@ public class DecVariableValue extends VariableValue
 			// update this color from original state
 			if (e.getPropertyName().equals("State")) {
 				setBackground(_var._value.getBackground());
-			}	
+			}
 		}
-	
+
 	}
-	
+
 	// clean up connections when done
 	public void dispose() {
 		if (log.isDebugEnabled()) log.debug("dispose");
 		if (_value != null) _value.removeActionListener(this);
 		((CvValue)_cvVector.elementAt(getCvNum())).removePropertyChangeListener(this);
-		
+
 		_value = null;
 		// do something about the VarTextField
 	}
 
-	// initialize logging	
+	// initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DecVariableValue.class.getName());
-	
+
 }
