@@ -115,7 +115,7 @@ public class SlotManagerTest extends TestCase {
         ProgListener p2=  null;
         slotmanager.readCVOpsMode(CV1, p2, 4*128+0x23, true);
         Assert.assertEquals("read message",
-			    "EF 0E 7C 2C 00 04 23 00 02 0B 7F 00 00 00", lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
+			    "EF 0E 7C 2F 00 04 23 00 02 0B 7F 00 00 00", lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
     }
 
     public void testReadCVOpsModeShort() throws jmri.ProgrammerException {
@@ -124,7 +124,7 @@ public class SlotManagerTest extends TestCase {
         ProgListener p2=  null;
         slotmanager.readCVOpsMode(CV1, p2, 22, false);
         Assert.assertEquals("read message",
-			    "EF 0E 7C 2C 00 40 16 00 02 0B 7F 00 00 00", lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
+			    "EF 0E 7C 2F 00 00 16 00 02 0B 7F 00 00 00", lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
     }
 
     public void testWriteCVPaged() throws jmri.ProgrammerException {
