@@ -13,7 +13,7 @@ import jmri.*;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
                                 implements jmri.ConfigureManager {
@@ -76,7 +76,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     /**
      * Handle failure to load adapter class. Although only a
-     * one-liner in this class, it's a separate member to facilitate testing.
+     * one-liner in this class, it is a separate member to facilitate testing.
      */
     void locateFailed(java.lang.ClassNotFoundException ex, String adapterName, Object o) {
         log.error("could not load adapter class "+adapterName);

@@ -15,7 +15,7 @@ import javax.swing.table.*;
  * thing in several ways:
  * <UL>
  * <LI>The returned value is not the String edited into the cell, but an
- * Integer value.  It's not clear how that arose, and it should probably be
+ * Integer value.  It is not clear how that arose, and it should probably be
  * changed at some point.
  * <LI>This is also a focus listener.  People are not used to having to
  * hit return/enter to "set" their value in place, and are rather expecting
@@ -24,7 +24,7 @@ import javax.swing.table.*;
  * </UL>
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 public class ValueEditor extends JComboBox implements TableCellEditor, FocusListener {
 

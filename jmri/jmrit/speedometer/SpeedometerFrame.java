@@ -16,7 +16,7 @@ import jmri.jmrit.display.*;
  * and presentation; that should be improved.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class SpeedometerFrame extends javax.swing.JFrame {
 
@@ -246,7 +246,7 @@ public class SpeedometerFrame extends javax.swing.JFrame {
         }
         catch (Exception e) {
             // couldn't locate the sensor, that's an error, but for the second
-            // one it's no big deal
+            // one that is no big deal
             log.error("Stop 2 sensor NFG: "+stopSensor2.getText());
             return;
         }

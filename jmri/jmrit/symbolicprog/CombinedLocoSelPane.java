@@ -36,7 +36,7 @@ import com.sun.java.util.collections.List;
  * </UL>
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeListener {
 
@@ -75,7 +75,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         });
         pane1a.add(decoderBox);
         iddecoder= new JToggleButton("Ident");
-        iddecoder.setToolTipText("Read the decoders mfg and version, then attempt to select it's type");
+        iddecoder.setToolTipText("Read the decoders mfg and version, then attempt to select its type");
         if (!jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer().getCanRead()) {
             // can't read, disable the button
             iddecoder.setEnabled(false);

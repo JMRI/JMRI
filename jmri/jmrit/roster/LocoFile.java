@@ -18,10 +18,10 @@ import org.jdom.output.*;
  * in memory.  The interal storage is a JDOM tree. See locomotive-config.dtd
  * <P>
  * This class is intended for use by RosterEntry only; you should not use it
- * directly. That's why it's not a public class.
+ * directly. That's why this is not a public class.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version		 	$Revision: 1.7 $
+ * @version		 	$Revision: 1.8 $
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */

@@ -17,8 +17,8 @@ import javax.swing.*;
  * Subclasses provide a "handle()" function, which does the needed
  * work, and optionally a "init()" function.
  * These can use any JMRI resources for input and output.  It should
- * not spin on a condition without explicit wait requests; it's more efficient
- * to use the explicit wait services if it's waiting for some specific
+ * not spin on a condition without explicit wait requests; it is more efficient
+ * to use the explicit wait services when waiting for some specific
  * condition.
  * <P>
  * handle() is executed repeatedly until either the Automate object is
@@ -26,7 +26,7 @@ import javax.swing.*;
  * handle() to be invoked again, so you can cleanly restart the Automaton
  * by returning from multiple points in the function.
  * <P>
- * Since handle() executes outside the GUI thread, it's important that
+ * Since handle() executes outside the GUI thread, it is important that
  * access to GUI (AWT, Swing) objects be scheduled through the
  * various service routines.
  * <P>
@@ -37,7 +37,7 @@ import javax.swing.*;
  * a warning will be logged if they are used before the thread starts.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 abstract public class AbstractAutomaton implements Runnable {
 

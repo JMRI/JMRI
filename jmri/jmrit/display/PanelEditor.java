@@ -37,7 +37,7 @@ import jmri.jmrit.catalog.NamedIcon;
  *
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 
 public class PanelEditor extends JFrame {
@@ -511,7 +511,7 @@ public class PanelEditor extends JFrame {
     }
 
     /**
-     * Set an objects location and size as it's created.
+     * Set an objects location and size as it is created.
      * Size comes from the preferredSize; location comes
      * from the fields where the user can spec it.
      */

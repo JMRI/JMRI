@@ -227,7 +227,7 @@ public class MakePacket {
 						case BITS_1011:		tempByte = BITS_101;	break;
 						case BITS_1101:		tempByte = BITS_110;	break;
 						/* We have exhausted all subtrees on this level, go up one
-						 * level and try it's other subtrees.
+						 * level and try its other subtrees.
 						 */
 						case BITS_0:		used[0] -= 1;		break;
 						case BITS_10:		used[0] -= 2;		break;

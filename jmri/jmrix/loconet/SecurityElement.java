@@ -23,7 +23,8 @@ import jmri.*;
  * <P>
  * Internally, our "Direction" variables encode the direction of travel within
  * this SE.  Note that this combination results in an extra complement; if looking
- * at a remote SE's A leg and it's reserved AX, that it NOT coming toward us.
+ * at a remote SE's A leg and it is reserved in the AX direction,
+ * that it NOT coming toward us.
  *
  * <P>The algorithms in this class are a collaborative effort of Digitrax, Inc
  * and Bob Jacobsen.
@@ -35,7 +36,7 @@ import jmri.*;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.11 $
+ * @version         $Revision: 1.12 $
  */
 public class SecurityElement implements LocoNetListener {
 

@@ -8,7 +8,7 @@ import jmri.*;
  * Extend jmri.SignalHead for signals implemented by an SE8c
  * <P>
  * This implementation writes out to the physical signal when
- * it's commanded to change appearance, and updates it's internal state
+ * it's commanded to change appearance, and updates its internal state
  * when it hears commands from other places.
  *
  * <P>The algorithms in this class are a collaborative effort of Digitrax, Inc
@@ -21,7 +21,7 @@ import jmri.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */public class SE8cSignalHead extends AbstractSignalHead implements LocoNetListener {
 
 

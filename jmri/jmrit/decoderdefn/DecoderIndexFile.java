@@ -28,7 +28,7 @@ import org.jdom.output.*;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -206,7 +206,7 @@ public class DecoderIndexFile extends XmlFile {
         instance().fileVersion = Integer.parseInt(masterVersion);
 
         forceCreationOfNewIndex();
-        // and force it's use
+        // and force it to be used
         return true;
 
     }
