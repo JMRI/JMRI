@@ -24,6 +24,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
+import jmri.util.JmriJFrame;
 
 import org.jdom.Element;
 
@@ -35,9 +36,9 @@ import org.jdom.Element;
  *  directed by the interface.
  *
  * @author     Glen Oberhauser
- * @version    $Revision: 1.23 $
+ * @version    $Revision: 1.24 $
  */
-public class ThrottleFrame extends JFrame implements AddressListener, ThrottleListener
+public class ThrottleFrame extends JmriJFrame implements AddressListener, ThrottleListener
 {
 	private final Integer PANEL_LAYER = new Integer(1);
 	private static int NEXT_FRAME_KEY = KeyEvent.VK_RIGHT;
@@ -170,7 +171,7 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 		addressPanel.setIconifiable(true);
 		addressPanel.setTitle("Address Panel");
                 addressPanel.pack();
-                if (addressPanel.getWidth()<functionPanel.getWidth()) {addressPanel.setSize(functionPanel.getWidth(),addressPanel.getHeight());}
+//                if (addressPanel.getWidth()<functionPanel.getWidth()) {addressPanel.setSize(functionPanel.getWidth(),addressPanel.getHeight());}
 		addressPanel.setLocation(controlPanel.getWidth(), functionPanel.getHeight());
 		addressPanel.setVisible(true);
 		addressPanel.addInternalFrameListener(frameListener);
