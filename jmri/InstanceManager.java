@@ -21,7 +21,7 @@ import jmri.TurnoutManager;
  * non-system-specific code.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Id: InstanceManager.java,v 1.5 2001-11-10 21:32:11 jacobsen Exp $
+ * @version			$Id: InstanceManager.java,v 1.6 2002-01-08 04:03:04 jacobsen Exp $
  */
 public class InstanceManager {
 
@@ -36,25 +36,25 @@ public class InstanceManager {
 	
 	static private PowerManager _powerManager = null;
 	static public void setPowerManager(PowerManager p) { 
-		if (p!=_powerManager && p!=null && log.isInfoEnabled()) log.info("PowerManager instance is being replaced: "+p);
+		if (p!=_powerManager && p!=null && log.isDebugEnabled()) log.debug("PowerManager instance is being replaced: "+p);
 		_powerManager = p; 
 	}
 
 	static private Programmer _programmer = null;
 	static public void setProgrammer(Programmer p) {
-		if (p!=_programmer && p!=null && log.isInfoEnabled()) log.info("Programmer instance is being replaced: "+p);
+		if (p!=_programmer && p!=null && log.isDebugEnabled()) log.debug("Programmer instance is being replaced: "+p);
 		_programmer = p; 
 	}
 
 	static private SensorManager _sensorManager = null;
 	static public void setSensorManager(SensorManager p) {
-		if (p!=_sensorManager && p!=null && log.isInfoEnabled()) log.info("SensorManager instance is being replaced: "+p);
+		if (p!=_sensorManager && p!=null && log.isDebugEnabled()) log.debug("SensorManager instance is being replaced: "+p);
 		_sensorManager = p; 
 	}
 
 	static private TurnoutManager _turnoutManager = null;
 	static public void setTurnoutManager(TurnoutManager p) {
-		if (p!=_turnoutManager && p!=null && log.isInfoEnabled()) log.info("TurnoutManager instance is being replaced: "+p);
+		if (p!=_turnoutManager && p!=null && log.isDebugEnabled()) log.debug("TurnoutManager instance is being replaced: "+p);
 		_turnoutManager = p; 
 	}
 
