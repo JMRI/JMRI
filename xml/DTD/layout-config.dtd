@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.28 2004-05-22 04:45:57 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.29 2004-06-03 22:19:33 djduchamp Exp $ -->
 
 <!-- This DTD is Copyright 2001, 2003 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -10,7 +10,7 @@
 <!-- see http://jmri.sf.net                                        -->
 
 <!ELEMENT layout-config (connection | gui | programmer | roster | perform |
-						preferences | turnouts | sensors | blocks | signals | 
+				preferences | turnouts | sensors | lights | blocks | signals | 
 						securityelements | aspectgenerator | paneleditor |
 						signalheads | application | blocks)*>
 
@@ -74,6 +74,20 @@
   <!ELEMENT turnout EMPTY >
     <!ATTLIST turnout systemName	CDATA #REQUIRED>  <!-- defines system type -->
     <!ATTLIST turnout userName		CDATA #IMPLIED>
+
+<!ELEMENT lights (light*)>
+  <!ATTLIST lights class		CDATA #REQUIRED>
+
+  <!ELEMENT light EMPTY >
+    <!ATTLIST light systemName		CDATA #REQUIRED>  <!-- defines system type -->
+    <!ATTLIST light userName		CDATA #IMPLIED>
+    <!ATTLIST light controlType		CDATA #REQUIRED>
+    <!ATTLIST light controlSensor	CDATA #IMPLIED>
+    <!ATTLIST light sensorSense		CDATA #IMPLIED>
+    <!ATTLIST light controlSignalHead	CDATA #IMPLIED>
+    <!ATTLIST light signalHeadAspect	CDATA #IMPLIED>
+    <!ATTLIST light controlTurnout	CDATA #IMPLIED>
+    <!ATTLIST light turnoutState	CDATA #IMPLIED>
 
 <!ELEMENT signalheads (signalhead*)>
   <!ATTLIST signalheads class		CDATA #REQUIRED>
