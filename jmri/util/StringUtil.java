@@ -14,7 +14,7 @@ package jmri.util;
  * back to an explicit implementation when running on Java 1.1
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class StringUtil {
@@ -86,6 +86,8 @@ public class StringUtil {
         try {
             java.util.Arrays.sort(values);
         } catch (Exception e1) {  // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
+            bubblesort(values);
+        } catch (java.lang.NoClassDefFoundError e2) {
             bubblesort(values);
         }
     }
