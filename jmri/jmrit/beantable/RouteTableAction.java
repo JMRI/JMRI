@@ -29,7 +29,7 @@ import com.sun.java.util.collections.List;
  * Based in part on SignalHeadTableAction.java by Bob Jacobson
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -584,7 +584,7 @@ public class RouteTableAction extends AbstractTableAction {
         public static final int STATE_COLUMN = 3;
     }
     private int numTurnouts = 0;
-    private static final int MAX_TURNOUTS = 200;
+    private static final int MAX_TURNOUTS = 1000;
     private String[] routeTurnoutColumnNames = {"Include","System Name","User Name",
                                         "Set State"};
     private List turnoutSysNameList = null;
