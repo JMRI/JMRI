@@ -2,7 +2,7 @@
 <!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
 
 <programmer-config>
-<!-- $Id: Comprehensive.xml,v 1.2 2002-03-12 05:36:40 jacobsen Exp $ -->
+<!-- $Id: Comprehensive.xml,v 1.3 2002-10-20 22:48:44 jacobsen Exp $ -->
 		<version author="Mark Gurries, Bob Jacobsen" 
 					version="3" lastUpdated="20020112"/>
 
@@ -52,31 +52,28 @@
 	</pane>
 	
 	<pane name="Speed Control">
-		<column>
+		<column><row><column>
 			<display item="Speed Table Definition" 
-					format="offradiobutton" layout="above" label=""/>
-			<row>
-				<column>
-					<display item="Vstart" layout="below" format="vslider" label=""/>
-					<display item="Vstart" layout="below"/>
-				</column>
-				<column>
-					<display item="Vmid" layout="below" format="vslider" label=""/>
-					<display item="Vmid" layout="below"/>
-				</column>
-				<column>
-					<display item="Vhigh" layout="below" format="vslider" label=""/>
-					<display item="Vhigh" layout="below"/>
-				</column>
-			</row>
+					format="offradiobutton" label=""/>
+
+			<display item="Vstart" format="hslider" label=""/>
+			<display item="Vstart" />
+
+			<display item="Vmid" format="hslider" label=""/>
+			<display item="Vmid" />
+
+			<display item="Vhigh" format="hslider" label=""/>
+			<display item="Vhigh" />
+
+
 			<display item="Forward Trim"/>
 			<display item="Reverse Trim"/>
-		</column>
-		<column>
+			
+		</column></row><separator/><row><column>
 			<display item="Speed Table Definition" 
 					format="onradiobutton" layout="above" label=""/>
 			<display item="Speed Table" layout="above"/>
-		</column>
+		</column></row></column>
 	</pane>
 
 	<pane name="Function Map">
