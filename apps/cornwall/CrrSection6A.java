@@ -10,7 +10,7 @@ import jmri.*;
  * Based on Crr0029.bas
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class CrrSection6A extends CrrSection {
 
@@ -39,7 +39,7 @@ public class CrrSection6A extends CrrSection {
         boolean si114 = ( si[114].getCommandedState() == THROWN);
         boolean si117 = ( si[117].getCommandedState() == THROWN);
 
-        int value = RED;
+        int value = GREEN;
         if (
                ( !tu11 && bo9 )
             || ( !tu11 && !tu24 && bo28  )   // is the bo28/bo29 selection backwards here?
@@ -47,12 +47,9 @@ public class CrrSection6A extends CrrSection {
             || ( tu11 && bo10 )
             || ( tu11 && !tu26 && bo31  )
             || ( tu11 && tu26 && bo32  )
-            || (! (gate.getKnownState() == ACTIVE))
-           ){
+            || ( gate.getKnownState() != ACTIVE )
+           )
             value = RED;
-        } else {
-            value = GREEN;
-        }
 
         if (value == GREEN && !tu26 && si114)
             value = YELLOW;

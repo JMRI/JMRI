@@ -10,7 +10,7 @@ import jmri.*;
  * Based on Crr0029.bas
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class CrrSection8B extends CrrSection {
 
@@ -33,16 +33,13 @@ public class CrrSection8B extends CrrSection {
         boolean si75 = ( si[75].getCommandedState() == THROWN);
         boolean si78 = ( si[78].getCommandedState() == THROWN);
 
-        int value = RED;
-        if ( tu2 || bo5 ) {
+        int value = GREEN;
+        if ( tu2 || bo5 )
             value = RED;
-        } else if ( !tu6 && bo11 ) {
+        else if ( !tu6 && bo11 )
             value = RED;
-        } else if ( tu6 && bo12 ) {
+        else if ( tu6 && bo12 )
             value = RED;
-        } else {
-            value = GREEN;
-        }
 
         if (value == GREEN && !tu6 && si75)
             value = YELLOW;
