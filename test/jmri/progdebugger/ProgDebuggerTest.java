@@ -2,11 +2,12 @@
 
 package jmri.progdebugger;
 
-import java.io.*;
-import junit.framework.*;
-import jmri.*;
-import org.jdom.*;
-import org.jdom.output.*;
+import jmri.ProgListener;
+import jmri.Programmer;
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Invoke complete set of tests for the Jmri.progdebugger package.
@@ -14,14 +15,14 @@ import org.jdom.output.*;
  * Due to existing package and class names, this is both the test
  * suite for the package, but also contains some tests for the ProgDebugger class.
  *
- * @author			Bob Jacobsen, Copyright (C) 2001, 2002
- * @version         $Revision: 1.1 $
+ * @author		Bob Jacobsen, Copyright (C) 2001, 2002
+ * @version         $Revision: 1.2 $
  */
 public class ProgDebuggerTest extends TestCase {
 
         int readValue = -1;
 
-        public void testWriteRead() throws jmri.ProgrammerException, InterruptedException {
+        synchronized public void testWriteRead() throws jmri.ProgrammerException, InterruptedException {
             Programmer p = new ProgDebugger();
             ProgListener l = new ProgListener(){
                 public void programmingOpReply(int value, int status) {
@@ -30,9 +31,9 @@ public class ProgDebuggerTest extends TestCase {
                 }
             };
             p.writeCV(4, 12, l);
-            Thread.sleep(100);
+            wait(200);
             p.readCV(4, l);
-            Thread.sleep(300);
+            wait(200);
             Assert.assertEquals("read back", 12, readValue);
         }
 
