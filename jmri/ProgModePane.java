@@ -1,9 +1,9 @@
-/** 
+/**
  * ProgModePane.java
  *
  * Description:		Pane to select programming mode
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			
+ * @version			$Revision: 1.4 $
  */
 
 package jmri;
@@ -22,7 +22,7 @@ import jmri.ProgListener;
 public class ProgModePane extends javax.swing.JPanel implements java.beans.PropertyChangeListener {
 
 	// GUI member declarations
-	
+
 	javax.swing.ButtonGroup modeGroup 			= new javax.swing.ButtonGroup();
 	javax.swing.JRadioButton addressButton  	= new javax.swing.JRadioButton();
 	javax.swing.JRadioButton pagedButton    	= new javax.swing.JRadioButton();
@@ -35,17 +35,29 @@ public class ProgModePane extends javax.swing.JPanel implements java.beans.Prope
 	 */
 	public ProgModePane(int direction) {
 
-		// configure items for GUI				
+		// configure items for GUI
 		pagedButton.setText("Paged Mode");
-		directBitButton.setText("Direct Bit Mode");
-		directByteButton.setText("Direct Byte Mode");
+		directBitButton.setText("Direct Bit");
+		directByteButton.setText("Direct Byte");
 		registerButton.setText("Register Mode");
 		addressButton.setText("Address Mode");
 		modeGroup.add(pagedButton);
+		modeGroup.add(registerButton);
 		modeGroup.add(directByteButton);
 		modeGroup.add(directBitButton);
-		modeGroup.add(registerButton);
 		modeGroup.add(addressButton);
+
+        // if a programmer is available, disable buttons for unavailable modes
+        if (InstanceManager.programmerInstance()!=null) {
+            Programmer p = InstanceManager.programmerInstance();
+            if (!p.hasMode(Programmer.PAGEMODE)) pagedButton.setEnabled(false);
+            if (!p.hasMode(Programmer.DIRECTBYTEMODE)) directByteButton.setEnabled(false);
+            if (!p.hasMode(Programmer.DIRECTBITMODE)) directBitButton.setEnabled(false);
+            if (!p.hasMode(Programmer.REGISTERMODE)) registerButton.setEnabled(false);
+            if (!p.hasMode(Programmer.ADDRESSMODE)) addressButton.setEnabled(false);
+        } else {
+            log.warn("No programmer available, so modes not set");
+        }
 
 		// add listeners to buttons
 		pagedButton.addActionListener(new java.awt.event.ActionListener() {
@@ -83,9 +95,9 @@ public class ProgModePane extends javax.swing.JPanel implements java.beans.Prope
 				if (connected) setProgrammerMode(getMode());
 			}
 		});
-		
+
 		// load the state if a programmer exists
-		connect();	
+		connect();
 		if (connected) {
 			int mode = InstanceManager.programmerInstance().getMode();
 			if (log.isDebugEnabled()) log.debug("setting mode at startup: "+mode);
@@ -93,9 +105,9 @@ public class ProgModePane extends javax.swing.JPanel implements java.beans.Prope
 			setMode(mode);
 		}
 		else {
-			log.warn("Programmer doesn't exist, can't set default mode");
+			log.debug("Programmer doesn't exist, can't set default mode");
 		}
-		
+
 		// general GUI config
 		setLayout(new BoxLayout(this, direction));
 
@@ -106,7 +118,7 @@ public class ProgModePane extends javax.swing.JPanel implements java.beans.Prope
 		add(registerButton);
 		add(addressButton);
 	}
-  		
+
   	public int getMode() {
   		if (pagedButton.isSelected())
 	  		return jmri.Programmer.PAGEMODE;
@@ -121,7 +133,7 @@ public class ProgModePane extends javax.swing.JPanel implements java.beans.Prope
 	  	else
 	  		return 0;
   	}
-  	  		
+
 	protected void setMode(int mode) {
 		switch (mode) {
 			case jmri.Programmer.REGISTERMODE:
@@ -144,7 +156,7 @@ public class ProgModePane extends javax.swing.JPanel implements java.beans.Prope
 				break;
 		}
 	}
-	
+
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		// mode changed in programmer, change GUI here if needed
 		if (e.getPropertyName() == "Mode") {
@@ -155,34 +167,34 @@ public class ProgModePane extends javax.swing.JPanel implements java.beans.Prope
 
 	// connect to the Programmer interface
 	boolean connected = false;
-	
+
 	private void connect() {
 		if (!connected) {
 			if (InstanceManager.programmerInstance() != null) {
 				InstanceManager.programmerInstance().addPropertyChangeListener(this);
 				connected = true;
-				log.info("Connecting to programmer");
+				log.debug("Connecting to programmer");
 			} else {
-				log.info("No programmer present to connect");
+				log.debug("No programmer present to connect");
 			}
 		}
 	}
-	
+
 	// set the programmer to the current mode
 	private void setProgrammerMode(int mode) {
-			log.info("Setting programmer to mode "+mode);
+			log.debug("Setting programmer to mode "+mode);
 			if (InstanceManager.programmerInstance() != null) InstanceManager.programmerInstance().setMode(mode);
 	}
-	
+
 	// no longer needed, disconnect if still connected
 	public void dispose() {
 		if (connected) {
-			if (InstanceManager.programmerInstance() != null) 
+			if (InstanceManager.programmerInstance() != null)
 				InstanceManager.programmerInstance().removePropertyChangeListener(this);
 			connected = false;
 		}
 	}
-	
+
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ProgModePane.class.getName());
 
 }
