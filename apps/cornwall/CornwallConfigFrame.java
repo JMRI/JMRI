@@ -23,7 +23,7 @@ import jmri.configurexml.*;
  * stored in local variables.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class CornwallConfigFrame extends AbstractConfigFrame {
 
@@ -70,10 +70,11 @@ public class CornwallConfigFrame extends AbstractConfigFrame {
         boolean gui = configureGUI(file.getGuiElement());
         boolean programmer = configureProgrammer(file.getProgrammerElement());
 
-        // ensure that an XML config manager exists
-        if (InstanceManager.configureManagerInstance()==null)
+        // ensure that an XML config manager exists, and load the sensors
+        if (InstanceManager.configureManagerInstance()==null) {
             InstanceManager.setConfigureManager(new ConfigXmlManager());
-
+            InstanceManager.configureManagerInstance().register(InstanceManager.sensorManagerInstance());
+        }
         // install custom TurnoutManager
         InstanceManager.setTurnoutManager(new DoubleTurnoutManager());
 
