@@ -11,7 +11,7 @@ import jmri.Turnout;
  * System names are "CTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
@@ -28,11 +28,6 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             // system name is not valid
             return null;
         }
-        // does system name correspond to configured hardware
-        if ( !SerialAddress.validSystemNameConfig(sName,'T') ) {
-            // system name does not correspond to configured hardware
-            return null;
-        }
         // does this turnout already exist
         Turnout t = getBySystemName(sName);
         if (t!=null) {
@@ -46,6 +41,12 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         }
         // create the turnout
         t = new SerialTurnout(sName,userName);
+        
+        // does system name correspond to configured hardware
+        if ( !SerialAddress.validSystemNameConfig(sName,'T') ) {
+            // system name does not correspond to configured hardware
+            log.warn("Turnout '"+sName+"' refers to an undefined Serial Node.");
+        }
         return t;
     }
 

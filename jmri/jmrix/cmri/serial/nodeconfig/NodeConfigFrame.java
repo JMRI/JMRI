@@ -15,12 +15,13 @@ import javax.swing.border.Border;
 
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.serial.SerialNode;
+import jmri.jmrix.cmri.serial.SerialSensorManager;
 
 /**
  * Frame for user configuration of CMRI serial nodes
  * @author	Bob Jacobsen   Copyright (C) 2004
  * @author	Dave Duchamp   Copyright (C) 2004
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class NodeConfigFrame extends javax.swing.JFrame {
 
@@ -363,6 +364,8 @@ public class NodeConfigFrame extends javax.swing.JFrame {
         }
         // configure the new node
         setNodeParameters();
+        // register any orphan sensors that this node may have
+        SerialSensorManager.instance().registerSensorsForNode(curNode);
         // reset after succefully adding node
         resetNotes();
         changedNode = true;

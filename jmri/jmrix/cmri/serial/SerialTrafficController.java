@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -95,6 +95,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         synchronized (this) {
             // no validity checking because at this point the node may not be fully defined
             nodeArray[numNodes] = node;
+            mustInit[numNodes] = true;
             numNodes++;
         }
     }
@@ -126,13 +127,17 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
             }
         }
         if (index==curSerialNodeIndex) {
-            log.error("Deleting the serial node active in the polling loop");
+            log.warn("Deleting the serial node active in the polling loop");
         }
         // Delete the node from the node list
         numNodes --;
-        for (int j=index; j<numNodes; j++) {
-            nodeArray[j] = nodeArray[j+1];
+        if (index<numNodes) {
+            // did not delete the last node, shift 
+            for (int j=index; j<numNodes; j++) {
+                nodeArray[j] = nodeArray[j+1];
+            }
         }
+        nodeArray[numNodes] = null;
     }
 
     /**
@@ -180,9 +185,13 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
      *  Handles initialization, output and polling for C/MRI Serial Nodes
      *      from within the running thread
      */
-    protected AbstractMRMessage pollMessage() {
+    protected synchronized AbstractMRMessage pollMessage() {
+        // ensure validity of call
         if (numNodes<=0) return null;
-        // ensure that each node is initialized
+        if (curSerialNodeIndex>=numNodes) {
+            curSerialNodeIndex = 0;
+        }
+        // ensure that each node is initialized        
         if (mustInit[curSerialNodeIndex]) {
             SerialMessage m = nodeArray[curSerialNodeIndex].createInitPacket();
             log.debug("send init message: "+m);
@@ -191,23 +200,20 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
             return m;
         }
         // send Output packet if needed
-        synchronized (this) {
-            // if need to send, do so
-            if (nodeArray[curSerialNodeIndex].mustSend()) {
-                log.debug("request write command to send");
-                nodeArray[curSerialNodeIndex].resetMustSend();
-                SerialMessage m = nodeArray[curSerialNodeIndex].createOutPacket();
-                m.setTimeout(50);  // no need to wait for output to answer
-                return m;
-            }
+        if (nodeArray[curSerialNodeIndex].mustSend()) {
+            log.debug("request write command to send");
+            nodeArray[curSerialNodeIndex].resetMustSend();
+            SerialMessage m = nodeArray[curSerialNodeIndex].createOutPacket();
+            m.setTimeout(50);  // no need to wait for output to answer
+            return m;
         }
-        // poll for Sensor input if needed
+        // poll for Sensor input
         if ( nodeArray[curSerialNodeIndex].sensorsActive() ) {
             // Some sensors are active for this node, issue poll
             SerialMessage m = SerialMessage.getPoll(
                                 nodeArray[curSerialNodeIndex].getNodeAddress());
             curSerialNodeIndex ++;
-            if (curSerialNodeIndex==numNodes) curSerialNodeIndex = 0;
+            if (curSerialNodeIndex>=numNodes) curSerialNodeIndex = 0;
             return m;
         }
         else {

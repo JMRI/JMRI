@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialSensorManager class.
  * @author	Bob Jacobsen  Copyright 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SerialSensorManagerTest extends TestCase {
 
@@ -36,7 +36,7 @@ public class SerialSensorManagerTest extends TestCase {
         s.provideSensor("8");
         s.provideSensor("19");
         s.provideSensor("23");
-        s.provideSensor("2048");
+        s.provideSensor("CS2048");
         Assert.assertTrue("2nd UA 0", n0.sensorsActive() );
         Assert.assertTrue("3rd none expected UA 1", !(n1.sensorsActive()) );
         Assert.assertTrue("UA 2", n2.sensorsActive() );

@@ -15,7 +15,7 @@ import jmri.NmraPacket;
  *
  * Description:		extend jmri.AbstractTurnout for C/MRI serial layouts
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SerialTurnout extends AbstractTurnout {
 
@@ -26,8 +26,8 @@ public class SerialTurnout extends AbstractTurnout {
      */
     public SerialTurnout(String systemName, String userName) {
         super(systemName, userName);
-        // Extract the Node from the name
-        tNode = SerialAddress.getNodeFromSystemName(systemName);
+        // Save system Name
+        tSystemName = systemName;
         // Extract the Bit from the name
         tBit = SerialAddress.getBitFromSystemName(systemName);
     }
@@ -63,10 +63,15 @@ public class SerialTurnout extends AbstractTurnout {
     public void dispose() {}  // no connections need to be broken
 
     // data members
-    SerialNode tNode;  // Serial Node used to control turnout
+    String tSystemName; // System Name of this turnout
     int tBit;          // bit number of turnout control in Serial node
 
     protected void sendMessage(boolean closed) {
+        SerialNode tNode = SerialAddress.getNodeFromSystemName(tSystemName);
+        if (tNode == null) {
+            // node does not exist, ignore call
+            return;
+        }
         tNode.setOutputBit(tBit, closed);
     }
 

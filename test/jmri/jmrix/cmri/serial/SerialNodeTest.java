@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the SerialNode class
  * @author		Bob Jacobsen  Copyright 2003
  * @author		Dave Duchamp  multi-node extensions 2003
- * @version		$Revision: 1.8 $
+ * @version		$Revision: 1.9 $
  */
 public class SerialNodeTest extends TestCase {
 		
@@ -109,12 +109,16 @@ public class SerialNodeTest extends TestCase {
         e.set2LeadSearchLight(2);
         e.set2LeadSearchLight(4);
         e.set2LeadSearchLight(6);
+        e.set2LeadSearchLight(10);
         e.set2LeadSearchLight(16);
         e.set2LeadSearchLight(19);
         e.set2LeadSearchLight(22);
+        e.set2LeadSearchLight(46);
         e.set2LeadSearchLight(33);
         e.set2LeadSearchLight(37);
         e.set2LeadSearchLight(44);
+        e.clear2LeadSearchLight(10);
+        e.clear2LeadSearchLight(46);
         Assert.assertTrue("check searchlight bit", e.isSearchLightBit(7));
         Assert.assertTrue("check not searchlight bit", !(e.isSearchLightBit(35)) );
         SerialMessage m = e.createInitPacket();
@@ -186,9 +190,10 @@ public class SerialNodeTest extends TestCase {
     }
 	
     public void testMarkChanges() {
-        SerialSensor s1 = new SerialSensor("1");
-        SerialSensor s2 = new SerialSensor("2");
-        SerialSensor s3 = new SerialSensor("3");
+        SerialSensor s1 = new SerialSensor("CS1","a");
+        Assert.assertEquals("check bit number",1,SerialAddress.getBitFromSystemName("CS1"));
+        SerialSensor s2 = new SerialSensor("CS2","ab");
+        SerialSensor s3 = new SerialSensor("CS3","abc");
         b.registerSensor(s1, 0);
         b.registerSensor(s2, 1);
         b.registerSensor(s3, 2);

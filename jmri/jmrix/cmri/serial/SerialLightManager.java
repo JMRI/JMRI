@@ -13,7 +13,7 @@ import jmri.Light;
  * Based in part on SerialTurnoutManager.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialLightManager extends AbstractLightManager {
 
@@ -38,16 +38,14 @@ public class SerialLightManager extends AbstractLightManager {
         Light lgt = null;
         // Validate the systemName
         if ( SerialAddress.validSystemNameFormat(systemName,'L') ) {
-            if (SerialAddress.validSystemNameConfig(systemName,'L')) {
-                lgt = new SerialLight(systemName,userName); 
-            }
-            else {
-                log.warn("Light system Name not compatible with hardware: "
+            lgt = new SerialLight(systemName,userName); 
+            if (!SerialAddress.validSystemNameConfig(systemName,'L')) {
+                log.warn("Light system Name does not refer to configured hardware: "
                                                             +systemName);
             }
         }
         else {
-            log.warn("Invalid Light system Name format: "+systemName);
+            log.error("Invalid Light system Name format: "+systemName);
         }
         return lgt;
     }    

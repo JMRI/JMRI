@@ -24,7 +24,7 @@ import jmri.Sensor;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 public class SerialNode {
 
@@ -659,7 +659,8 @@ public class SerialNode {
                 if ( value == 1) {
                     // bit set, considered ACTIVE
                     if ( sensorArray[i]!=null &&
-                            ( sensorTempSetting[i] == Sensor.ACTIVE) &&
+                            ( (sensorTempSetting[i] == Sensor.ACTIVE) || 
+                                (sensorTempSetting[i] == Sensor.UNKNOWN) ) &&
                             ( sensorLastSetting[i] != Sensor.ACTIVE) ) {
                         sensorLastSetting[i] = Sensor.ACTIVE;
                         sensorArray[i].setKnownState(Sensor.ACTIVE);
@@ -669,7 +670,8 @@ public class SerialNode {
                 } else {
                     // bit reset, considered INACTIVE
                     if ( sensorArray[i]!=null &&
-                            ( sensorTempSetting[i] == Sensor.INACTIVE) &&
+                            ( (sensorTempSetting[i] == Sensor.INACTIVE)  || 
+                                (sensorTempSetting[i] == Sensor.UNKNOWN) ) &&
                             ( sensorLastSetting[i] != Sensor.INACTIVE) ) {
                         sensorLastSetting[i] = Sensor.INACTIVE;
                         sensorArray[i].setKnownState(Sensor.INACTIVE);
@@ -689,12 +691,12 @@ public class SerialNode {
     public void registerSensor(Sensor s, int i) {
         // validate the sensor ordinal
         if ( (i<0) || (i> ((numInputCards()*bitsPerCard) - 1)) || (i>MAXSENSORS) ) {
-            log.warn("Unexpected sensor ordinal: "+Integer.toString(i+1));
+            log.error("Unexpected sensor ordinal in registerSensor: "+Integer.toString(i+1));
             return;
         }
+        hasActiveSensors = true;
         if (sensorArray[i] == null) {
             sensorArray[i] = s;
-            hasActiveSensors = true;
             if (lastUsedSensor<i) {
                 lastUsedSensor = i;
             }
