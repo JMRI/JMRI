@@ -8,14 +8,20 @@
 
 package jmri.symbolicprog;
 
-import javax.swing.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 import java.util.Vector;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
 import com.sun.java.util.collections.List;
 import org.jdom.Element;
 import org.jdom.Namespace;
 
 
-public class VariableTableModel extends javax.swing.table.AbstractTableModel {
+public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
 	String headers[] = null;
 
@@ -68,12 +74,12 @@ public class VariableTableModel extends javax.swing.table.AbstractTableModel {
 		else if (headers[col].equals("Read")) {
 			JButton br = new JButton("Read");
 			br.setActionCommand("R"+row);
-			// br.addActionListener(this);
+			br.addActionListener(this);
 			return br;
 		} else if (headers[col].equals("Write")) {
 			JButton bw = new JButton("Write");
 			bw.setActionCommand("W"+row);
-			// bw.addActionListener(this);
+			bw.addActionListener(this);
 			return bw;
 		} else if (headers[col].equals("CV"))
 			return ""+v.getCvNum();
@@ -92,7 +98,10 @@ public class VariableTableModel extends javax.swing.table.AbstractTableModel {
 				case CvValue.STORED:  	return "Stored";
 				default: return "inconsistent";
 			}
-		} else
+		}
+		else if (headers[col].equals("Range")) 
+			return v.rangeVal();
+		else
 			return "Later, dude";
 	}
 		
@@ -116,6 +125,8 @@ public class VariableTableModel extends javax.swing.table.AbstractTableModel {
 			log.warn("Element missing mask attribute: "+name);
 			mask ="VVVVVVVV";
 		}
+		int minVal = Integer.valueOf(e.getChild("decVal", ns).getAttribute("min").getValue()).intValue();
+		int maxVal = Integer.valueOf(e.getChild("decVal", ns).getAttribute("max").getValue()).intValue();
 
 		boolean readOnly = false;
 		
@@ -126,10 +137,30 @@ public class VariableTableModel extends javax.swing.table.AbstractTableModel {
 
 		// assume decimal type for now, and continue
 		VariableValue v = new DecVariableValue(name, comment, readOnly, 
-								CV, mask, _cvModel.allCvVector());
+								CV, mask, minVal, maxVal, _cvModel.allCvVector());
 		rowVector.addElement(v);
+		v.addPropertyChangeListener(this);
 	}
 	
+	public void actionPerformed(ActionEvent e) {
+		System.out.println("action command: "+e.getActionCommand());
+		char b = e.getActionCommand().charAt(0);
+		int row = Integer.valueOf(e.getActionCommand().substring(1)).intValue();
+		System.out.println("event "+b+" row "+row);
+		VariableValue v = (VariableValue)rowVector.elementAt(row);
+		if (b=='R') {
+			// read command
+			v.read();
+		} else {
+			// write command
+			v.write();
+		}
+	}
+	
+	public void propertyChange(PropertyChangeEvent e) {
+		fireTableDataChanged();	
+	}
+
 	public void configDone() {
 		fireTableDataChanged();	
 	}

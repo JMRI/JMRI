@@ -23,12 +23,22 @@ import javax.swing.JTextField;
 public class DecVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
 
 	public DecVariableValue(String name, String comment, boolean readOnly,
-							int cvNum, String mask, Vector v) {
+							int cvNum, String mask, int minVal, int maxVal,
+							Vector v) {
 		super(name, comment, readOnly, cvNum, mask, v);
+		_maxVal = maxVal;
+		_minVal = minVal;
 		_value = new JTextField();
 		// connect to the JTextField value, cv
 		_value.addActionListener(this);
 		((CvValue)_cvVector.elementAt(getCvNum())).addPropertyChangeListener(this);
+	}
+	
+	int _maxVal;
+	int _minVal;
+	
+	public Object rangeVal() {
+		return new String(""+_minVal+" - "+_maxVal);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -36,7 +46,9 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 		CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
 		// need eventual mask & shift, etc, but for now we store
 		int oldCv = cv.getValue();
-		int newVal = Integer.valueOf(_value.getText()).intValue();
+		int newVal;
+		try { newVal = Integer.valueOf(_value.getText()).intValue(); }
+			catch (java.lang.NumberFormatException ex) { newVal = 0; }
 		int newCv = newValue(oldCv, newVal, getMask());
 		((CvValue)_cvVector.elementAt(getCvNum())).setValue(newCv);
 	}
@@ -45,8 +57,11 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 	// and to read/write/hear parameter changes. 
 	public Component getValue()  { return _value; }
 	public void setValue(int value) { 
-		if (Integer.valueOf(_value.getText()).intValue() != value) 
-			prop.firePropertyChange("Value", new Integer(Integer.valueOf(_value.getText()).intValue()), new Integer(value));
+		int oldVal;
+		try { oldVal = Integer.valueOf(_value.getText()).intValue(); }
+			catch (java.lang.NumberFormatException ex) { oldVal = 0; }	
+		if (oldVal != value) 
+			prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value));
 		_value.setText(""+value);
 	}
 
@@ -68,7 +83,11 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 		if (e.getPropertyName().equals("Busy")) {
 			setBusy(false);
 		}
-		if (e.getPropertyName().equals("Value")) {
+		else if (e.getPropertyName().equals("State")) {
+			CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
+			setState(cv.getState());
+		}
+		else if (e.getPropertyName().equals("Value")) {
 			setBusy(false);
 			// update value of Variable
 			CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
@@ -82,6 +101,12 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 	// stored value
 	JTextField _value = null;
 
+	// clean up connections when done
+	public void dispose() {
+		_value.removeActionListener(this);
+		((CvValue)_cvVector.elementAt(getCvNum())).removePropertyChangeListener(this);
+	}
+	
 	// initialize logging	
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DecVariableValue.class.getName());
 		

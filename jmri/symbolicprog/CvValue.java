@@ -31,8 +31,8 @@ public class CvValue implements ProgListener {
 	
 	public int getState()  { return _state; }
 	private void setState(int state) {
-		if (_state != state) prop.firePropertyChange("State", new Integer(_state), new Integer(state));
 		_state = state;
+		if (_state != state) prop.firePropertyChange("State", new Integer(_state), new Integer(state));
 	}
 	private int _state = 0;
 	
@@ -99,7 +99,7 @@ public class CvValue implements ProgListener {
 					_value = value;
 					prop.firePropertyChange("Value", new Integer(old), new Integer(value)); 
 				}
-			} else {
+			} else {  // writing
 				setState(STORED);
 			}
 		} else {

@@ -32,7 +32,7 @@ public abstract class VariableValue implements java.beans.PropertyChangeListener
 	// handle incoming parameter notification
 	abstract public void propertyChange(java.beans.PropertyChangeEvent e);
 
-
+	abstract Object rangeVal();
 
 	// methods implemented here:
 	public VariableValue(String name, String comment, boolean readOnly,

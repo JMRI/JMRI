@@ -115,7 +115,7 @@ public class SymbolicProgTest extends TestCase {
 		cv.setValue(3);
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, check name
-		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "XXVVVVXX", v);
+		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v);
 		assert(var.name() == "name");
 		// pretend you've editted the value, check its in same object
 		((JTextField)var.getValue()).setText("5");
@@ -133,7 +133,7 @@ public class SymbolicProgTest extends TestCase {
 		cv.setValue(3);
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, loaded as 5
-		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "XXVVVVXX", v);
+		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v);
 		((JTextField)var.getValue()).setText("5");
 
 		// change the CV, expect to see a change in the variable value
@@ -152,7 +152,7 @@ public class SymbolicProgTest extends TestCase {
 		CvValue cv = new CvValue(81);
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, loaded as 5, manually notified
-		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "XXVVVVXX", v);
+		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v);
 		((JTextField)var.getValue()).setText("5");
 		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 
@@ -183,7 +183,7 @@ public class SymbolicProgTest extends TestCase {
 		CvValue cv = new CvValue(81);
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, loaded as 5, manually notified
-		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "XXVVVVXX", v);
+		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v);
 		((JTextField)var.getValue()).setText("5");
 		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 
@@ -215,7 +215,7 @@ public class SymbolicProgTest extends TestCase {
 		CvValue cv = new CvValue(81);
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, loaded as 5, manually notified
-		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "XXVVVVXX", v);
+		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v);
 		assert(var.getState() == VariableValue.UNKNOWN);
 		((JTextField)var.getValue()).setText("5");
 		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
@@ -256,24 +256,32 @@ public class SymbolicProgTest extends TestCase {
 									.addContent(el0 = new Element("variable", ns)
 												.addAttribute("CV","1")
 												.addAttribute("name","one")
+												.addContent( new Element("decVal", ns)
+														.addAttribute("max","31")
+														.addAttribute("min","1")
+													)
 												)
 									.addContent(el1 = new Element("variable", ns)
 												.addAttribute("CV","4")
 												.addAttribute("mask","XXXVVVVX")
 												.addAttribute("name","two")
+												.addContent( new Element("decVal", ns)
+														.addAttribute("max","31")
+														.addAttribute("min","1")
+													)
 												)
 										)	// variables element									
 						) // decoder element
 			; // end of adding contents
 
 		// print JDOM tree, to check
-		// OutputStream o = System.out;
-		// XMLOutputter fmt = new XMLOutputter();
-		// fmt.setNewlines(true);   // pretty printing
-		// fmt.setIndent(true);
-		// try {
-			// fmt.output(doc, o);
-		// } catch (Exception e) { System.out.println("error writing XML: "+e);}	
+		//OutputStream o = System.out;
+		//XMLOutputter fmt = new XMLOutputter();
+		//fmt.setNewlines(true);   // pretty printing
+		//fmt.setIndent(true);
+		//try {
+		//	 fmt.output(doc, o);
+		//} catch (Exception e) { System.out.println("error writing XML: "+e);}	
 
 		// and test reading this
 		t.setRow(0, el0, ns);
