@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_01x3.xml,v 1.11 2003-06-01 16:25:24 jacobsen Exp $ -->
+<!-- $Id: Digitrax_01x3.xml,v 1.12 2003-07-09 18:48:05 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Simon.Ginsburg@freesurf.ch" 
 					version="8" lastUpdated="20030601"/>
@@ -92,6 +92,8 @@
 		<model model="DZ143PS" numOuts="4" numFns="12" lowVersionID="64" highVersionID="65">
 			<output name="4" label="Violet"/> 
 			<output name="5" label="Pad"/> </model>
+		<model model="DH123" numOuts="2" numFns="12" lowVersionID="35" highVersionID="35">
+			</model>
 	</family>
 
 	<programming direct="byteOnly" paged="yes" 
