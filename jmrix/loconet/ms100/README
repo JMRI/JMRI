@@ -1,0 +1,8 @@
+This is the README file for the jmrix.ms100 package.
+
+The jmrix Java package defines implementations for the JMRI interfaces. jmrix.ms100
+defines classes for interfacing to a Digitrax MS100 PC interface.
+
+
+	
+	
