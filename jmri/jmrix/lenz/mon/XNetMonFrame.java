@@ -20,7 +20,7 @@ import jmri.jmrix.lenz.XNetConstants;
 /**
  * Frame displaying (and logging) XpressNet messages
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version         $Revision: 2.1 $
+ * @version         $Revision: 2.2 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
@@ -78,6 +78,21 @@ import jmri.jmrix.lenz.XNetConstants;
 		  default:
 			text = l.toString();
 		  }
+		} else if(l.getElement(0)==XNetConstants.LI_VERSION_REQUEST) {
+			text = l.toString();
+		} else if(l.getElement(0)==XNetConstants.LI_VERSION_RESPONSE) {
+			text = l.toString();
+		} else if(l.getElement(0)==XNetConstants.LI101_REQUEST) {
+		  switch(l.getElement(1)) {
+		  case XNetConstants.LI101_REQUEST_ADDRESS:
+				text= new String("REQUEST LI101 Address " +l.getElement(2));
+				break;
+		  case XNetConstants.LI101_REQUEST_BAUD:
+				text= new String("REQUEST LI101 Baud Rate " +l.getElement(2));
+				break;
+		  default:
+			text = l.toString();
+		}
 		/* Next, check the "CS Info" messages */
 		} else if(l.getElement(0)==XNetConstants.CS_INFO) {
 		  switch(l.getElement(1)) {
@@ -159,6 +174,35 @@ import jmri.jmrix.lenz.XNetConstants;
 				break;
 		  case XNetConstants.CS_STATUS: 
 				text = new String("REQUEST: Command Station Status");
+				break;
+		  default:
+			text = l.toString();
+		  }
+		/* Next, we have Programming Requests */
+		} else if(l.getElement(0)==XNetConstants.PROG_READ_REQUEST) {
+		  switch(l.getElement(1)) {
+		  case XNetConstants.PROG_READ_MODE_REGISTER: 
+				text = new String("Service Mode Request: Read Register " + l.getElement(2));
+				break;
+		  case XNetConstants.PROG_READ_MODE_CV: 
+				text = new String("Service Mode Request: Read CV " + l.getElement(2) + " in Direct Mode");
+				break;
+		  case XNetConstants.PROG_READ_MODE_PAGED: 
+				text = new String("Service Mode Request: Read CV " + l.getElement(2) + " in Paged Mode");
+				break;
+		  default:
+			text = l.toString();
+		  }
+		} else if(l.getElement(0)==XNetConstants.PROG_WRITE_REQUEST) {
+		  switch(l.getElement(1)) {
+		  case XNetConstants.PROG_WRITE_MODE_REGISTER: 
+				text = new String("Service Mode Request: Write " + l.getElement(3) +" to Register " + l.getElement(2));
+				break;
+		  case XNetConstants.PROG_WRITE_MODE_CV: 
+				text = new String("Service Mode Request: Write " + l.getElement(3) +" to CV " + l.getElement(2) + " in Direct Mode");
+				break;
+		  case XNetConstants.PROG_WRITE_MODE_PAGED: 
+				text = new String("Service Mode Request: Write " + l.getElement(3) +" to CV " + l.getElement(2) + " in Paged Mode");
 				break;
 		  default:
 			text = l.toString();
