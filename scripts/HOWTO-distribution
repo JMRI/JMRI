@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.21 $)
+distribution.  ($Revision: 1.22 $)
 
 Start with a directory, typically called "Distributions", that
 contains:
@@ -22,15 +22,16 @@ contains:
 This probably already exists....
 
 ( ) Go to your working directory and
-	cvs tag Release-1-2-3 src test manifest jmri.jpx build.xml 
+	cvs tag Release-1-2-3 src test manifest default.lcf jmri.jpx build.xml 
 	cd ..
-	cvs tag Release-1-2-3 xml resources lib default.lcf
+	cvs tag Release-1-2-3 xml resources lib 
 	
 	(be sure that's the default.lcf you want!)
 
 ( ) Come back to Distributions and 
     cd scripts
     cvs update
+    cd ..
     
 	ant -Drelease=Release-1-2-3 -Dnumber=1.2.3 release1
 	
@@ -39,7 +40,7 @@ This probably already exists....
 	Check DecoderPro for no startup errors, right version
 
 	Ant will launch three StuffIt processes; click
-	each to proceed, and wait for them to complete.
+	each to proceed, and wait for them to be running.
 	
 ( ) Once they launch, you can start building the Windows installer.
 	Launch Installer Vise from the last build file.
@@ -54,13 +55,15 @@ This probably already exists....
 	This will launch one more StuffIt process (for MacClassic)
 	Wait for it to complete.
 	
-( ) Once the StuffIt process is done
+( ) Once the 4th StuffIt process is done, start uploading via
 	ant -Drelease=Release-1-2-3 -Dnumber=1.2.3 release3
 
 	The Windows .exe must be present before the next step
 	
 ( ) When ready to upload the Windows version:
 	ant -Drelease=Release-1-2-3 -Dnumber=1.2.3 release4
+	
+	This also creates and uploads the JavaDocs
 		
 ( ) Format the email announcement; you'll cut and paste parts
 	to the release form.
@@ -78,11 +81,9 @@ This probably already exists....
 		
 	Be sure to update the top of the release note paragraph.
 	
-	The test release name convention is "Test version 1.2.4 for Linux"
+	The test release name convention is "Test version 1.2.3 for Linux"
 	
 	Be sure to select "preserve preformatted text"
-
-( ) If this is a production release, create & upload a source .zip
 
 ( ) mail announcement to jmriusers@yahoogroups.com
 
