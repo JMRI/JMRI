@@ -68,7 +68,6 @@
   <property category="runtime.5" name="jsprunner.launchuri" value="/"/>
   <property category="runtime.5" name="test.harness" value="junit.textui.TestRunner"/>
   <property category="sys" name="AuthorLabel" value="@author"/>
-  <property category="sys" name="Autocancel" value="1"/>
   <property category="sys" name="BackupPath" value="bak"/>
   <property category="sys" name="BeansInstantiate" value="false"/>
   <property category="sys" name="BraceStyle" value="0"/>
@@ -96,10 +95,11 @@
   <property category="sys" name="TestPath" value="test"/>
   <property category="sys" name="Title" value=""/>
   <property category="sys" name="TitleLabel" value=""/>
-  <property category="sys" name="Version" value="$Revision: 1.19 $"/>
+  <property category="sys" name="Version" value="$Revision: 1.20 $"/>
   <property category="sys" name="VersionLabel" value="@version"/>
   <property category="sys" name="WorkingDirectory" value="../"/>
   <property category="sys" name="max.package.levels" value="2"/>
+  <property category="sys" name="warn.auto.packages" value="false"/>
   <node name="Additional Settings" type="Folder">
     <property category="sys" name="SettingsFolder" value="1"/>
     <file path="src/jmri/jmrix/loconet/locormi/LnMessageBuffer.java">
@@ -143,11 +143,15 @@
     <property category="nodeJavadoc" name="directory" value="doc"/>
     <property category="nodeJavadoc" name="displayAllOutput" value="1"/>
   </node>
+  <file path="src/jmri/configurexml/AbstractSignalHeadManagerXml.java"/>
   <file path="test/apps/tests/AllTest.java"/>
   <file path="src/resources/decoderpro.gif"/>
   <file path="src/apps/DecoderPro/DecoderPro.java"/>
   <file path="src/apps/JmriDemo/JMRIdemo.java"/>
   <file path="src/apps/LocoTools/LocoTools.java"/>
   <file path="src/resources/logo.gif"/>
+  <file path="test/jmri/jmrix/cmri/serial/SerialNodeTest.java"/>
+  <file path="src/jmri/jmrix/cmri/serial/configurexml/SerialTurnoutManagerXml.java"/>
+  <file path="src/jmri/configurexml/TripleTurnoutSignalHeadXml.java"/>
   <file path="src/jmri/Version.java"/>
 </project>
