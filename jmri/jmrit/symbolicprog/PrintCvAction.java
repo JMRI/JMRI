@@ -15,7 +15,7 @@ import javax.swing.*;
  * Macintosh MRJ
  *
  * @author			Bob Jacobsen   Copyright (C) 2003
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class PrintCvAction  extends AbstractAction {
 
@@ -38,8 +38,11 @@ public class PrintCvAction  extends AbstractAction {
         try {
             writer = new HardcopyWriter(mFrame, mFrame.getRosterEntry().getId(), 10, .5, .5, .5, .5);
 
+            // print the decoder info section, etc
+            mFrame.printInfoSection(writer);
+
             // print a simple heading
-            String s = "CV\t value\n";
+            String s = "\nCV\t value\n";
             writer.write(s, 0, s.length());
             s = "\n";
             writer.write(s, 0, s.length());
