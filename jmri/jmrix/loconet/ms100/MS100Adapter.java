@@ -24,7 +24,7 @@ import jmri.jmrix.loconet.*;
  * Neither the baud rate configuration nor the "option 1" option are used.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -242,6 +242,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
             jmri.jmrix.loconet.SlotManager.instance();
         // set slot manager's read capability
         jmri.jmrix.loconet.SlotManager.instance().setCanRead(mCanRead);
+        jmri.jmrix.loconet.SlotManager.instance().setProgPowersOff(mProgPowersOff);
 
         // do the common manager config
         configureManagers();
@@ -320,11 +321,18 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
      */
     public void configureOption2(String value) throws jmri.jmrix.SerialConfigException {
         log.debug("configureOption2: "+value);
-        if (value.equals("DB150 (Empire Builder)")) mCanRead = false;
-        else mCanRead = true;
+        if (value.equals("DB150 (Empire Builder)")) {
+            mCanRead = false;
+            mProgPowersOff = true;
+        }
+        else {
+            mCanRead = true;
+            mProgPowersOff = false;
+        }
     }
 
     boolean mCanRead = true;
+    boolean mProgPowersOff = false;
 
     // private control members
     private boolean opened = false;

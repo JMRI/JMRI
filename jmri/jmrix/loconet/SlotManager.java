@@ -23,8 +23,13 @@ import jmri.jmrix.*;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * <P>
+ * This Programmer implementation is single-user only. It's not clear whether
+ * the command stations can have multiple programming requests outstanding
+ * (e.g. service mode and ops mode, or two ops mode) at the same time, but this
+ * code definitely can't.
+ * <P>
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.14 $
+ * @version         $Revision: 1.15 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 
@@ -371,16 +376,6 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
     protected int _mode = Programmer.PAGEMODE;
 
     /**
-     * Determine whether this Programmer implementation is capable of
-     * reading decoder contents. This is entirely determined by
-     * the attached command station, not the code here, so it
-     * refers to the mCanRead member variable which is recording
-     * the known state of that.
-     * @return True if reads are possible
-     */
-    public boolean getCanRead() { return mCanRead; }
-
-    /**
      * Trigger notification of PropertyChangeListeners. The only bound
      * property is Mode from the Programmer interface. It is not clear
      * why this is not in AbstractProgrammer...
@@ -407,10 +402,50 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
     }
 
     /**
+     * Remember whether the attached command station has powered
+     * off the main track after programming
+     */
+    private boolean mProgPowersOff = false;
+
+    /**
+     * Determine whether this Programmer implementation powers off the
+     * main track after a service track programming operation.
+     * This is entirely determined by
+     * the attached command station, not the code here, so it
+     * refers to the mProgPowersOff member variable which is recording
+     * the known state of that.
+     * @return True if main track off after service operation
+     */
+    public boolean getProgPowersOff() { return mProgPowersOff; }
+
+    /**
+     * Configure whether this Programmer implementation is capable of
+     * reading decoder contents. <P>
+     * This is not part of the Programmer interface, but is used
+     * as part of the startup sequence for the LocoNet objects.
+     *
+     * @param pCanRead True if reads are possible
+     */
+    public void setProgPowersOff(boolean pProgPowersOff) {
+        log.debug("set progPowersOff to "+pProgPowersOff);
+        mProgPowersOff = pProgPowersOff;
+    }
+
+    /**
      * Remember whether the attached command station can read from
      * Decoders.
      */
     private boolean mCanRead = true;
+
+    /**
+     * Determine whether this Programmer implementation is capable of
+     * reading decoder contents. This is entirely determined by
+     * the attached command station, not the code here, so it
+     * refers to the mCanRead member variable which is recording
+     * the known state of that.
+     * @return True if reads are possible
+     */
+    public boolean getCanRead() { return mCanRead; }
 
     /**
      * Configure whether this Programmer implementation is capable of
@@ -463,17 +498,20 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
     boolean _progRead = false;
     boolean _progConfirm = false;
     int _confirmVal;
+    boolean mServiceMode = true;
 
     public void writeCVOpsMode(int CV, int val, jmri.ProgListener p,
                                int addr, boolean longAddr) throws jmri.ProgrammerException {
         lopsa = addr&0x7f;
         hopsa = (addr/128)&0x7f;
+        mServiceMode = false;
         // if (!longAddr) hopsa|=0x40;  // Not clear that's needed?
         doWrite(CV, val, p, 0x67);  // ops mode byte write, with feedback
     }
     public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         lopsa = 0;
         hopsa = 0;
+        mServiceMode = true;
         // parse the programming command
         int pcmd = 0x40;  // write command
         if (getMode() == jmri.Programmer.PAGEMODE) pcmd = pcmd | 0x20;
@@ -486,6 +524,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
     }
     public void doWrite(int CV, int val, jmri.ProgListener p, int pcmd) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) log.debug("writeCV: "+CV);
+        stopPowerTimer();  // still programming, so no longer waiting for power off
+
         useProgrammer(p);
         _progRead = false;
         _progConfirm = false;
@@ -501,12 +541,14 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
                                int addr, boolean longAddr) throws jmri.ProgrammerException {
         lopsa = addr&0x7f;
         hopsa = (addr/128)&0x7f;
+        mServiceMode = false;
         if (!longAddr) hopsa|=0x40;
         doConfirm(CV, val, p, 0x2C);
     }
     public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         lopsa = 0;
         hopsa = 0;
+        mServiceMode = true;
         // parse the programming command
         int pcmd = 0x40;  // write command
         if (getMode() == jmri.Programmer.PAGEMODE) pcmd = pcmd | 0x20;
@@ -521,6 +563,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
     public void doConfirm(int CV, int val, ProgListener p,
                           int pcmd) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) log.debug("confirmCV: "+CV);
+        stopPowerTimer();  // still programming, so no longer waiting for power off
+
         useProgrammer(p);
         _progRead = false;
         _progConfirm = true;
@@ -548,12 +592,14 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
     public void readCVOpsMode(int CV, jmri.ProgListener p, int addr, boolean longAddr) throws jmri.ProgrammerException {
         lopsa = addr&0x7f;
         hopsa = (addr/128)&0x7f;
+        mServiceMode = false;
         if (!longAddr) hopsa|=0x40;
         doRead(CV, p, 0x2C);
     }
     public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         lopsa = 0;
         hopsa = 0;
+        mServiceMode = true;
         // parse the programming command
         int pcmd = 0;
         //if (write) pcmd = pcmd | 0x40;  // write command
@@ -567,6 +613,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
     }
     void doRead(int CV, jmri.ProgListener p, int progByte) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) log.debug("readCV: "+CV);
+        stopPowerTimer();  // still programming, so no longer waiting for power off
+
         useProgrammer(p);
         _progRead = true;
         _progConfirm = false;
@@ -593,7 +641,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
         }
     }
 
-    // internal method to create the LocoNetMessage for programmer task start
+    /**
+     * Internal method to create the LocoNetMessage for programmer task start
+     */
     protected LocoNetMessage progTaskStart(int pcmd, int val, int cvnum, boolean write) throws jmri.ProgrammerException {
 
         int addr = cvnum-1;    // cvnum is in human readable form; addr is what's sent over loconet
@@ -622,20 +672,77 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
         return m;
     }
 
-
-    // internal method to notify of the final result
+    /**
+     * internal method to notify of the final result
+     * @param value The cv value to be returned
+     * @param status The error code, if any
+     */
     protected void notifyProgListenerEnd(int value, int status) {
+        // (re)start power timer
+        restartPowerTimer();
+        // and send the reply
         ProgListener p = _usingProgrammer;
         _usingProgrammer = null;
         if (p!=null) p.programmingOpReply(value, status);
     }
 
-    // internal method to notify of the LACK result
-    // a separate routine from nPLRead in case we need to handle something later
+    /**
+     * Internal method to notify of the LACK result.
+     * This is a separate routine from nPLRead in case we need to handle something later
+     * @param status The error code, if any
+     */
     protected void notifyProgListenerLack(int status) {
+        // (re)start power timer
+        restartPowerTimer();
+        // and send the reply
         _usingProgrammer.programmingOpReply(-1, status);
         _usingProgrammer = null;
     }
+
+    /**
+     * Internal routine to stop power timer, as another programming
+     * operation has happened
+     */
+    protected void stopPowerTimer() {
+        if (mPowerTimer!=null) mPowerTimer.stop();
+    }
+
+    /**
+     * Internal routine to handle timer restart if needed to restore
+     * power.  This is only needed in service mode.
+     */
+    protected void restartPowerTimer() {
+        if (mProgPowersOff && mServiceMode) {
+            if (mPowerTimer==null) {
+                mPowerTimer = new javax.swing.Timer(2000, new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent e) {
+                            doPowerOn();
+                        }
+                    });
+            }
+            mPowerTimer.stop();
+            mPowerTimer.setInitialDelay(2000);
+            mPowerTimer.setRepeats(false);
+            mPowerTimer.start();
+        }
+    }
+
+    /**
+     * Internal routine to handle a timeout & turn power off
+     */
+    synchronized protected void doPowerOn() {
+        if (progState == 0) {
+            // we're not programming, time to power on
+            if (log.isDebugEnabled()) log.debug("timeout: turn power on");
+            try {
+                jmri.InstanceManager.powerManagerInstance().setPower(jmri.PowerManager.ON);
+            } catch (jmri.JmriException e) {
+                log.error("exception during power on at end of programming: "+e);
+            }
+        }
+    }
+
+    javax.swing.Timer mPowerTimer = null;
 
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SlotManager.class.getName());

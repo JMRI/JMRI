@@ -5,7 +5,7 @@
  * Description:		Provide access to LocoNet via a LocoBuffer attached to a serial comm port.
  *					Normally controlled by the LocoBufferFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 
 package jmri.jmrix.loconet.locobuffer;
@@ -189,6 +189,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
             jmri.jmrix.loconet.SlotManager.instance();
         // set slot manager's read capability
         jmri.jmrix.loconet.SlotManager.instance().setCanRead(mCanRead);
+        jmri.jmrix.loconet.SlotManager.instance().setProgPowersOff(mProgPowersOff);
 
         // do the common manager config
         configureManagers();
@@ -302,11 +303,18 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
      */
     public void configureOption2(String value) throws jmri.jmrix.SerialConfigException {
     	log.debug("configureOption2: "+value);
-        if (value.equals("DB150 (Empire Builder)")) mCanRead = false;
-        else mCanRead = true;
+        if (value.equals("DB150 (Empire Builder)")) {
+            mCanRead = false;
+            mProgPowersOff = true;
+        }
+        else {
+            mCanRead = true;
+            mProgPowersOff = false;
+        }
     }
 
     boolean mCanRead = true;
+    boolean mProgPowersOff = false;
 
     protected String [] validSpeeds = new String[]{"19,200 baud (J1 on 1&2)", "57,600 baud (J1 on 2&3)"};
     protected int [] validSpeedValues = new int[]{19200, 57600};
