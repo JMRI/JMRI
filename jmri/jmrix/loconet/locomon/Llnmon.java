@@ -34,7 +34,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * used with permission.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2003
- * @version			$Revision: 1.22 $
+ * @version			$Revision: 1.23 $
  */
 public class Llnmon {
 
@@ -934,7 +934,7 @@ public class Llnmon {
                     //  "   "  = zero shows not set has happened
 
                     /* recover hours and minutes values */
-                    minutes = ((256 - mins_60) & 0x7f) % 60;
+                    minutes = ((255 - mins_60) & 0x7f) % 60;
                     hours   = ((256 - hours_24)& 0x7f) % 24;
                     hours   = (24 - hours) % 24;
                     minutes = (60 - minutes) % 60;
