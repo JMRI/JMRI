@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: FAQ.html,v 1.1 2005-03-19 03:01:57 jacobsen Exp $ -->
+<!-- $Id: FAQ.html,v 1.2 2005-03-29 03:58:12 jacobsen Exp $ -->
 <html lang="en">
 
 <head>
@@ -128,6 +128,66 @@ preferences pane to make sure this is stored.
 </UL>
 
 
+<A id="location"/>
+<h3>Where should I put my custom icons and other files?</h3>
+
+The best place to put your own files is in the program's
+preferences directory. (DecoderPro uses
+<A HREF="../DecoderPro/Files.html#location">the same directory<a/>)
+You should put any locally-modified
+versions of files here so they don't get overwritten by a new version
+of the program. Any files that the program writes to contain local
+information, e.g. roster entries, are also written here.
+<p>The location of this varies by computer type.
+<ul>
+<li>On a Linux machine, look for a .jmri directory in your home
+directory.
+
+<li>On a Macintosh, look in the Preferences folder of the
+current System Folder if running MacOS 8 or 9, or the
+Library/Preferences folder in your user directory on MacOS X.
+
+<li>On Windows, this can be in a number of places depending on
+which Windows version you're running and whether you have
+multiple users configured; Search for a "JMRI" directory to
+find it.
+</ul>
+Make sure you find the preferences, and <em>not</em> the original
+application package. They are kept separate to simplify updating the
+program version.
+
+You'll know you've found the right place if you see the
+preferences files that store your applications settings:
+<tt>PanelProConfig2.xml</tt>.  You can also search for this
+file to find this directory
+
+<P>
+<IMG SRC="images/FileTree.gif" ALT="Screen shot of file tree" ALIGN="RIGHT" WIDTH="288" HEIGHT="327" HSPACE="5" VSPACE="0"/>
+
+If you have created icons that you want to be able from the panel editor,
+put them in a directory called "resources" in the preferences directory.
+They'll then show up in the "files" part of the selection box when you press
+a "Change icon..." button on the panel editor.
+
+<P>For example, if the preferences directory contains the files shown below,
+you'll get the file display shown at the right.
+<CODE>
+<PRE>
+jake% ls resources/
+decoderpro.gif  green.gif  icons  red.gif  tester.gif
+jake% ls resources/icons/
+something  tester.gif
+jake% ls resources/icons/something/
+tester.gif
+</PRE>
+</CODE>
+
+<P>
+It's also possible to put your files in the <code>resources</code> directory
+within the JMRI distribution directory that you get when you install the program.
+This is <em>not</em> recommended, because files there will likely be overwritten 
+when you install a future version.  (A newer version of a file, perhaps to fix a problem, 
+will overwrite your copy; the replacement is based on the file's date)
 
 
 	    </div> <!-- closes .list -->
