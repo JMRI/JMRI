@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_Basic.xml,v 1.11 2005-01-23 07:37:56 jacobsen Exp $ -->
+<!-- $Id: Digitrax_Basic.xml,v 1.12 2005-01-23 20:49:28 jacobsen Exp $ -->
 <decoder-config>
 		<version author="phil.grainger@ca.com" 
 					version="9" lastUpdated="20050112"/>
@@ -13,10 +13,9 @@
       <!-- Version 7.1 - changed spelling of "behavior" (Jack Shall) -->
             <!-- Version 8 - Added fifth function, also added DH83FX) Phil G -->
       <!-- Version 9 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" - Bob Jacobsen -->
-      <!-- Version 10 - extended highVersionID to 129 - Bob Jacobsen -->
 
 <decoder>
-	<family name="Basic FX" mfg="Digitrax" lowVersionID="91" highVersionID="129">
+	<family name="Basic FX" mfg="Digitrax" lowVersionID="91" highVersionID="111">
 		<model model="DH083" numOuts="5" numFns="3"/>
 		<model model="DH83FX" numOuts="5" numFns="3"/>
 		<model model="DH84FX" numOuts="5" numFns="6"/>
