@@ -3,13 +3,13 @@
   <!--JBuilder Library Definition File-->
   <fullname>JMRILibraries</fullname>
   <class>
-    <path>[../lib/collections.jar]</path>
-    <path>[../lib/crimson.jar]</path>
-    <path>[../lib/jdom-jdk11.jar]</path>
-    <path>[../lib/log4j.jar]</path>
+    <path>[lib/collections.jar]</path>
+    <path>[lib/crimson.jar]</path>
+    <path>[lib/jdom-jdk11.jar]</path>
+    <path>[lib/log4j.jar]</path>
+    <path>[lib/junit.jar]</path>
+    <path>[lib/Serialio.jar]</path>
+    <path>[lib/comm.jar]</path>
     <path>src/resources</path>
-    <path>[../lib/junit.jar]</path>
-    <path>[../lib/Serialio.jar]</path>
-    <path>[../lib/comm.jar]</path>
   </class>
 </library>
