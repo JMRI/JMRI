@@ -20,7 +20,7 @@ import jmri.InstanceManager;
  * it works through the identification progress.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  * @see             jmri.jmrit.roster.RosterEntry
  */
 abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
@@ -38,11 +38,6 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
         // if long address, we have to use some mode other
         // than register, so remember where we are now
         originalMode = p.getMode();
-		// if possible, switch to register mode
-        if (p!=null) {
-            if (p.hasMode(Programmer.REGISTERMODE))
-                p.setMode(Programmer.REGISTERMODE);
-        }
 		// request contents of CV 29
 		statusUpdate("Read CV 29");
 		readCV(29);
@@ -54,13 +49,13 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
 		if ( (value&0x20) != 0 ) {
 			// long address needed
 			shortAddr = false;
-            // now in register mode, which is no good.
+            // might now be in register mode, which is no good.
             // can we use original mode?
             Programmer p = InstanceManager.programmerInstance();
-            if (originalMode==Programmer.REGISTERMODE ||
+            if (originalMode==Programmer.PAGEMODE ||
                     originalMode==Programmer.DIRECTBITMODE ||
                     originalMode==Programmer.DIRECTBYTEMODE) {
-                // yes, set to that
+                // yes, set to that original mode
                 p.setMode(originalMode);
             } else if (p.hasMode(Programmer.PAGEMODE)) {
                 p.setMode(Programmer.PAGEMODE);
