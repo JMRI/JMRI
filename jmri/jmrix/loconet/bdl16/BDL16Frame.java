@@ -16,7 +16,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * we handle with a state variable.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class BDL16Frame extends JFrame implements LocoNetListener {
 
@@ -223,8 +223,8 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
 
     JLabel status = new JLabel("             ");
 
-    JToggleButton readAllButton = new JToggleButton("Read from PM4");
-    JToggleButton writeAllButton = new JToggleButton("Write to PM4");
+    JToggleButton readAllButton = new JToggleButton("Read from BDL16");
+    JToggleButton writeAllButton = new JToggleButton("Write to BDL16");
 
     // Close the window when the close box is clicked
     void thisWindowClosing(java.awt.event.WindowEvent e) {
