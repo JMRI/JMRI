@@ -17,7 +17,7 @@ import jmri.jmrit.XmlFile;
  * Store the layout hardware config
  *
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Id: StoreLayoutAction.java,v 1.1 2002-03-28 02:42:35 jacobsen Exp $
+ * @version			$Revision: 1.2 $
  * @see             jmri.jmrit.XmlFile
  */
 public class StoreLayoutAction extends AbstractAction {

@@ -7,18 +7,18 @@ import junit.framework.TestSuite;
 
 import java.io.*;
 
-/** 
+/**
  * DecoderDefnTest.java
  *
  * Description:	    tests for the jmrit.decoderdefn package
  * @author			Bob Jacobsen
- * @version			
+ * @version			$Revision: 1.2 $
  */
 public class DecoderDefnTest extends TestCase {
 
-	
+
 	// from here down is testing infrastructure
-	
+
 	public DecoderDefnTest(String s) {
 		super(s);
 	}
@@ -28,7 +28,7 @@ public class DecoderDefnTest extends TestCase {
 		String[] testCaseName = {DecoderDefnTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
-	
+
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite("jmri.jmrit.decoderdefn");
@@ -37,5 +37,5 @@ public class DecoderDefnTest extends TestCase {
 		suite.addTest(jmri.jmrit.decoderdefn.DecoderFileTest.suite());
 		return suite;
 	}
-	
+
 }

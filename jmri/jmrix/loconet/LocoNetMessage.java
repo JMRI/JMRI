@@ -19,8 +19,8 @@ import java.io.Serializable;
  * ideas being tested there will eventually be moved back to here.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Id: LocoNetMessage.java,v 1.6 2002-03-28 02:40:15 jacobsen Exp $
- * @see             jmri.jrmix.nce.NceMessage
+ * @version			$Id: LocoNetMessage.java,v 1.7 2002-04-13 16:43:42 jacobsen Exp $
+ * @see             jmri.jmrix.nce.NceMessage
  *
  */
 public class LocoNetMessage implements Serializable {

@@ -14,7 +14,7 @@ import jmri.jmrit.XmlFile;
  *
  * Description:	    tests for the jmrit.roster package & jmrit.roster.Roster class
  * @author			Bob Jacobsen
- * @version
+ * @version         $Revision: 1.3 $
  */
 public class RosterTest extends TestCase {
 

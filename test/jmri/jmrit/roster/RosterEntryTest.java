@@ -5,12 +5,12 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-/** 
+/**
  * RosterEntryTest.java
  *
  * Description:	    tests for the jmrit.roster.RosterEntry class
  * @author			Bob Jacobsen
- * @version			
+ * @version			$Revision: 1.2 $
  */
 public class RosterEntryTest extends TestCase {
 
@@ -35,7 +35,7 @@ public class RosterEntryTest extends TestCase {
 									.addAttribute("mfg","Athearn")
 									.addAttribute("dccAddress","1234")
 				; // end create element
-				
+
 		RosterEntry r = new RosterEntry(e);
 		// check
 		Assert.assertEquals("file name ", "file here", r.getFileName());
@@ -53,7 +53,7 @@ public class RosterEntryTest extends TestCase {
 									.addAttribute("id","our id")
 									.addAttribute("fileName","file here")
 				; // end create element
-				
+
 		RosterEntry r = new RosterEntry(e);
 		// check
 		Assert.assertEquals("file name ", "file here", r.getFileName());
@@ -64,7 +64,7 @@ public class RosterEntryTest extends TestCase {
 		Assert.assertEquals("model ", "", r.getDecoderModel());
 		Assert.assertEquals("family ", "", r.getDecoderFamily());
 	}
-	
+
 	public void testFullLoad() {
 		// create Element
 		org.jdom.Element e = new org.jdom.Element("locomotive")
@@ -79,7 +79,7 @@ public class RosterEntryTest extends TestCase {
 										.addAttribute("model","33")
 												)
 				; // end create element
-				
+
 		RosterEntry r = new RosterEntry(e);
 		// check
 		Assert.assertEquals("file name ", "file here", r.getFileName());
@@ -105,7 +105,7 @@ public class RosterEntryTest extends TestCase {
 										.addAttribute("model","33")
 												)
 				; // end create element
-				
+
 		RosterEntry r = new RosterEntry(e);
 		org.jdom.Element o = r.store();
 		// check
@@ -115,7 +115,7 @@ public class RosterEntryTest extends TestCase {
 	}
 
 	// from here down is testing infrastructure
-	
+
 	public RosterEntryTest(String s) {
 		super(s);
 	}
@@ -125,11 +125,11 @@ public class RosterEntryTest extends TestCase {
 		String[] testCaseName = {RosterEntry.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
-	
+
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite(RosterEntryTest.class);
 		return suite;
 	}
-	
+
 }

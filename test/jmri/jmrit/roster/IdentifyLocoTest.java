@@ -7,17 +7,17 @@ import junit.framework.TestSuite;
 
 import java.io.*;
 
-/** 
+/**
  * IdentifyLocoTest.java
  *
  * Description:	    tests for the jmrit.roster.IdentifyLoco class
  * @author			Bob Jacobsen
- * @version			
+ * @version			$Revision: 1.2 $
  */
 public class IdentifyLocoTest extends TestCase {
 
 	static int cvRead = -1;
-	
+
 	public void testShort() {
 		// initialize the system
 		jmri.progdebugger.ProgDebugger p = new jmri.progdebugger.ProgDebugger() {
@@ -33,11 +33,11 @@ public class IdentifyLocoTest extends TestCase {
 			public void done(int i) {}
 			public void error() {}
 		};
-		
+
 		i.start();
 		Assert.assertEquals("step 1 reads CV ", 29, cvRead);
 		Assert.assertEquals("running after 1 ", true, i.isRunning());
-		
+
 		// simulate CV read complete, with long read bit off
 		i.programmingOpReply(0x00, 0);
 		Assert.assertEquals("step 2 reads CV ", 1, cvRead);
@@ -47,7 +47,7 @@ public class IdentifyLocoTest extends TestCase {
 		i.programmingOpReply(123, 0);
 		Assert.assertEquals("running after 2 ", false, i.isRunning());
 		Assert.assertEquals("found address ", 123, i.address);
-		
+
 	}
 
 	public void testLong() {
@@ -65,11 +65,11 @@ public class IdentifyLocoTest extends TestCase {
 			public void done(int i) {}
 			public void error() {}
 		};
-		
+
 		i.start();
 		Assert.assertEquals("step 1 reads CV ", 29, cvRead);
 		Assert.assertEquals("running after 1 ", true, i.isRunning());
-		
+
 		// simulate CV read complete, with long read bit on
 		i.programmingOpReply(0x20, 0);
 		Assert.assertEquals("step 2 reads CV ", 17, cvRead);
@@ -84,10 +84,10 @@ public class IdentifyLocoTest extends TestCase {
 		i.programmingOpReply(189, 0);
 		Assert.assertEquals("running after 4 ", false, i.isRunning());
 		Assert.assertEquals("found address ", 4797, i.address);
-		
+
 	}
 	// from here down is testing infrastructure
-	
+
 	public IdentifyLocoTest(String s) {
 		super(s);
 	}
@@ -97,11 +97,11 @@ public class IdentifyLocoTest extends TestCase {
 		String[] testCaseName = {IdentifyLocoTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
-	
+
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite(IdentifyLocoTest.class);
 		return suite;
 	}
-	
+
 }

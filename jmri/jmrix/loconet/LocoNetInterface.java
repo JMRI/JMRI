@@ -2,7 +2,7 @@
 
 package jmri.jmrix.loconet;
 
-/** 
+/**
  * LocoNetInterface defines the general connection to a LocoNet layout.
  * <P>
  * Use this interface to send messages to a LocoNet layout.
@@ -10,7 +10,7 @@ package jmri.jmrix.loconet;
  * here to receive incoming LocoNet messages as events.
  *<P>
  * The jmri.jrmix.loconet.LnTrafficManager provides the first implementation
- * of this interface. 
+ * of this interface.
  *<P>
  * How do you locate an implemenation of this interface?  That's an interesting
  * question.  This is inherently LocoNet specific, so it would be inappropriate
@@ -25,8 +25,8 @@ package jmri.jmrix.loconet;
  * for more background.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @see jmri.jrmix.loconet.LocoNetListener
- * @see jmri.jrmix.loconet.LnTrafficManager
+ * @see jmri.jmrix.loconet.LocoNetListener
+ * @see jmri.jmrix.loconet.LnTrafficController
  *
  */
 public interface LocoNetInterface {
@@ -40,7 +40,7 @@ public interface LocoNetInterface {
 	public void sendLocoNetMessage(LocoNetMessage msg);
 
 	/**
-	 * Request notification of things happening on the LocoNet. 
+	 * Request notification of things happening on the LocoNet.
 	 *<P>
 	 * The same listener
 	 * can register multiple times with different masks.  (Multiple registrations with

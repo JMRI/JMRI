@@ -24,7 +24,7 @@ import org.jdom.Attribute;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 abstract public class AbstractConfigFrame extends JFrame {
 
@@ -64,8 +64,8 @@ abstract public class AbstractConfigFrame extends JFrame {
      * </UL>
      * DecoderPro and JmriDemo are known to overload, hence may have to
      * be editted when this is changed.
-     * @see jmri.apps.DecoderPro.DecoderProConfigFrame
-     * @see jmri.apps.JmriDemo.JmriDemoConfigFrame
+     * @see apps.DecoderPro.DecoderProConfigFrame
+     * @see apps.JmriDemo.JmriDemoConfigFrame
      * @return List of available protocols.
      */
     public String[] availableProtocols() {

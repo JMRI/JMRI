@@ -5,69 +5,69 @@ package jmri.jmrit;
 import com.sun.java.util.collections.ArrayList;
 import com.sun.java.util.collections.List;
 
-/** 
- * Abstract base for common code of IdentifyLoco and IdentifyDecoder, the 
+/**
+ * Abstract base for common code of IdentifyLoco and IdentifyDecoder, the
  * two classes that use a programmer to match Roster entries to what's on the
  * programming track.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: AbstractIdentify.java,v 1.1 2002-02-28 21:48:27 jacobsen Exp $
- * @see             jmri.jmrit.roster.IdentifyDecoder
+ * @version			$Id: AbstractIdentify.java,v 1.2 2002-04-13 16:43:42 jacobsen Exp $
+ * @see             jmri.jmrit.decoderdefn.IdentifyDecoder
  * @see             jmri.jmrit.roster.IdentifyLoco
  */
 public abstract class AbstractIdentify implements jmri.ProgListener {
 
 	abstract public boolean test1();  // no argument to start
-	
+
 	abstract public boolean test2(int value);
-	
+
 	abstract public boolean test3(int value);
-	
+
 	abstract public boolean test4(int value);
-	
+
 	abstract public boolean test5(int value);
-	
+
 	abstract public boolean test6(int value);
-	
+
 	abstract public boolean test7(int value);
-	
+
 	abstract public boolean test8(int value);
-		
+
 	/**
 	 * Update the status field (if any). Invoked with "Done" when
 	 * the results are in.
 	 */
 	 abstract protected void statusUpdate(String status);
-	 
-	 
-	/** 
+
+
+	/**
 	 * Start the identification state machine.
 	 */
 	public void start() {
 		if (log.isDebugEnabled()) log.debug("identify begins");
 		// must be idle, or something quite bad has happened
 		if (state !=0) log.error("start with state "+state+", should have been zero");
-		
+
 		// The first test is invoked here; the rest are handled in the programmingOpReply callback
 		state = 1;
 		test1();
 	}
-	
-	/** 
-	 * Stop the identification state machine. This also stops the 
+
+	/**
+	 * Stop the identification state machine. This also stops the
 	 * identification process.  Its invoked when a testN returns true; that
 	 * routine should _not_ have invoked a read or write that will result in a callback.
 	 */
-	
+
 	protected void identifyDone() {
 		if (log.isDebugEnabled()) log.debug("identifyDone ends in state "+state);
 		statusUpdate("Done");
 		state = 0;
 	}
-	
-	/** 
-	 * Internal method to handle the programmer callbacks, e.g. when 
-	 * a CV read request terminates.  Each will reduce (if possible) the 
+
+	/**
+	 * Internal method to handle the programmer callbacks, e.g. when
+	 * a CV read request terminates.  Each will reduce (if possible) the
 	 * list of consistent decoders, and starts the next step.
 	 */
 	public void programmingOpReply(int value, int status) {
@@ -121,19 +121,19 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
 				return;
 			}
 	}
-	
+
 	/**
 	 * Abstract routine to notify of errors
 	 */
 	abstract protected void error();
-	
+
 	/** To check if running now */
 	public boolean isRunning() { return state != 0; }
-	
+
 	/** State of the internal sequence */
 	int state = 0;
-	
-	/** 
+
+	/**
 	 * Access a single CV for the next step
 	 */
 	protected void readCV(int cv) {
@@ -148,8 +148,8 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
 			}
 		}
 	}
-	
-	// initialize logging	
+
+	// initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractIdentify.class.getName());
-		
+
 }

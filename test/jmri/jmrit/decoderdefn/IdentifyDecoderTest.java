@@ -7,17 +7,17 @@ import junit.framework.TestSuite;
 
 import java.io.*;
 
-/** 
+/**
  * IdentifyDecoderTest.java
  *
  * Description:	    tests for the jmrit.roster.IdentifyDecoder class
  * @author			Bob Jacobsen
- * @version			
+ * @version			$Revision: 1.2 $
  */
 public class IdentifyDecoderTest extends TestCase {
 
 	static int cvRead = -1;
-	
+
 	public void testIdentify() {
 		// initialize the system
 		jmri.progdebugger.ProgDebugger p = new jmri.progdebugger.ProgDebugger() {
@@ -33,11 +33,11 @@ public class IdentifyDecoderTest extends TestCase {
 			public void message(String m) {}
 			public void error() {}
 		};
-		
+
 		i.start();
 		Assert.assertEquals("step 1 reads CV ", 8, cvRead);
 		Assert.assertEquals("running after 1 ", true, i.isRunning());
-		
+
 		// simulate CV read complete
 		i.programmingOpReply(0x12, 0);
 		Assert.assertEquals("step 2 reads CV ", 7, cvRead);
@@ -48,11 +48,11 @@ public class IdentifyDecoderTest extends TestCase {
 		Assert.assertEquals("running after 2 ", false, i.isRunning());
 		Assert.assertEquals("found mfg ID ", 0x12, i.mfgID);
 		Assert.assertEquals("found model ID ", 123, i.modelID);
-		
+
 	}
 
 	// from here down is testing infrastructure
-	
+
 	public IdentifyDecoderTest(String s) {
 		super(s);
 	}
@@ -62,11 +62,11 @@ public class IdentifyDecoderTest extends TestCase {
 		String[] testCaseName = {IdentifyDecoderTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
-	
+
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite(IdentifyDecoderTest.class);
 		return suite;
 	}
-	
+
 }

@@ -16,8 +16,8 @@ import org.jdom.output.*;
  * DecoderPro application. Works with the DecoderProConfigFrame
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version		 	$Revision: 1.7 $
- * @see apps.DecodeProConfigFrame
+ * @version		 	$Revision: 1.8 $
+ * @see apps.DecoderPro.DecoderProConfigFrame
  */
 public class DecoderProConfigFile extends apps.AbstractConfigFile {
 

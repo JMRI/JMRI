@@ -12,7 +12,7 @@ import jmri.*;
  * systems, etc.
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Id: LayoutConfigXML.java,v 1.1 2002-03-28 02:42:35 jacobsen Exp $
+ * @version $Revision: 1.2 $
  */
 
 public class LayoutConfigXML extends jmri.jmrit.XmlFile {
@@ -48,6 +48,7 @@ public class LayoutConfigXML extends jmri.jmrit.XmlFile {
                     Element elem = new Element("turnout")
                             .addAttribute("systemName", sname);
                     if (uname!=null) elem.addAttribute("userName", uname);
+                    log.debug("store turnout "+sname+":"+uname);
                     turnouts.addContent(elem);
 
                 }

@@ -19,7 +19,7 @@ import apps.tests.Log4JFixture;
  * LocoIOTableModelTest.java
  * Description:	    tests for the Jmri package
  * @author			Bob Jacobsen
- * @version
+ * @version         $Revision: 1.10 $
  */
 public class LocoIOTableModelTest extends TestCase {
 

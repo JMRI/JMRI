@@ -15,8 +15,8 @@ import org.jdom.output.*;
  * application. Works with the AbstractConfigFrame
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version		 	$Revision: 1.3 $
- * @see jmri.apps.AbstractConfigFrame
+ * @version		 	$Revision: 1.4 $
+ * @see apps.AbstractConfigFrame
  */
 abstract public class AbstractConfigFile extends XmlFile {
 

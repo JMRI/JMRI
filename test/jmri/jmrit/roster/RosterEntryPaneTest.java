@@ -5,19 +5,19 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-/** 
+/**
  * RosterEntryPaneTest.java
  *
  * Description:	    tests for the jmrit.roster.RosterEntryPane class
  * @author			Bob Jacobsen
- * @version			
+ * @version			$Revision: 1.2 $
  */
 public class RosterEntryPaneTest extends TestCase {
 
 	// statics for test objects
 	org.jdom.Element e = null;
 	RosterEntry r = null;
-	
+
 	public void setUp() {
 		// create Element
 		e = new org.jdom.Element("locomotive")
@@ -32,7 +32,7 @@ public class RosterEntryPaneTest extends TestCase {
 										.addAttribute("model","33")
 												)
 				; // end create element
-				
+
 		r = new RosterEntry(e);
 	}
 
@@ -50,7 +50,7 @@ public class RosterEntryPaneTest extends TestCase {
 	}
 
 	// from here down is testing infrastructure
-	
+
 	public RosterEntryPaneTest(String s) {
 		super(s);
 	}
@@ -60,11 +60,11 @@ public class RosterEntryPaneTest extends TestCase {
 		String[] testCaseName = {RosterEntryPane.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
-	
+
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite(RosterEntryPaneTest.class);
 		return suite;
 	}
-	
+
 }
