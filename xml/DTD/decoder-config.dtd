@@ -1,0 +1,69 @@
+<!-- Defines XML documenting a DCC decoder as a component, esp. information -->
+<!-- on how to program it. -->
+
+<!ELEMENT decoder:decoder-config (decoder:decoder*)>
+<!ATTLIST decoder:decoder-config xmlns:decoder CDATA "">
+
+<!ELEMENT decoder:decoder (decoder:id, decoder:programming, decoder:variables)>
+
+
+<!-- The id section identifies the decoder -->
+
+<!ELEMENT decoder:id EMPTY>
+<!ATTLIST decoder:id model     CDATA #REQUIRED>  <!-- model name used for identification -->
+<!ATTLIST decoder:id mfg       CDATA #REQUIRED>  <!-- mfg name used for identification   -->
+<!ATTLIST decoder:id type      ( stationary | locomotive ) "locomotive">
+<!ATTLIST decoder:id versionID CDATA "XX" >      <!-- CV07 value, default XX means any   -->
+<!ATTLIST decoder:id mfgID     CDATA #REQUIRED>  <!-- CV08 value, XX means any           -->
+<!ATTLIST decoder:id comment   CDATA #IMPLIED>
+
+
+<!-- The programming section describes the decoders programming capabilities -->
+
+<!ELEMENT decoder:programming EMPTY>
+<!ATTLIST decoder:programming direct   ( no | bit | byte | both) "no" >  <!-- direct mode support -->
+<!ATTLIST decoder:programming paged    ( no | yes ) "no" >               <!-- paged mode support -->
+<!ATTLIST decoder:programming register ( no | yes ) "no" >               <!-- register mode support -->
+<!ATTLIST decoder:programming ops      ( no | yes ) "no" >               <!-- operation mode support -->
+<!ATTLIST decoder:programming comment   CDATA #IMPLIED>
+
+
+<!-- The variables section defines the list of identified variables -->
+<!-- and how they are encoded into CVs -->
+
+<!ELEMENT decoder:variables (decoder:variable*)>
+
+<!ELEMENT decoder:variable  (decoder:enumVal | decoder:binaryVal | decoder:decVal | decoder:hexVal) >
+<!ATTLIST decoder:variable name CDATA #REQUIRED>  <!-- Name used for identification -->
+<!ATTLIST decoder:variable CV CDATA #REQUIRED>    <!-- CV number containing value -->
+<!ATTLIST decoder:variable mask CDATA #REQUIRED>    <!-- mask of bits within CV -->
+                                           <!-- mask is up to 16 characters long, each -->
+                                           <!-- representing one bit in the result -->
+                                           <!-- valid chars: -->
+                                           <!--     X   not used     -->
+                                           <!--     V   used bits    -->
+<!ATTLIST decoder:variable comment   CDATA #IMPLIED>
+
+<!-- enumVal, binaryVal, decVal, hexVal are constraints on possible values -->
+
+<!ELEMENT decoder:binaryVal EMPTY>
+<!ATTLIST decoder:binaryVal phrasing (NoYes|YesNo|OffOn|OnOff) "OffOn" >  <!-- 0/1 labels -->
+<!ATTLIST decoder:binaryVal default CDATA #IMPLIED>
+
+<!ELEMENT decoder:decVal EMPTY>
+<!ATTLIST decoder:decVal max CDATA "0" >    <!-- if decimal/hex, smallest acceptable value -->
+<!ATTLIST decoder:decVal min CDATA #REQUIRED >  <!-- if decimal/hex, largest acceptable value -->
+<!ATTLIST decoder:decVal default CDATA #IMPLIED>
+
+<!ELEMENT decoder:hexVal EMPTY>
+<!ATTLIST decoder:hexVal max CDATA "0" >  <!-- if decimal/hex, smallest acceptable value -->
+<!ATTLIST decoder:hexVal min CDATA #REQUIRED>  <!-- if decimal/hex, largest acceptable value -->
+<!ATTLIST decoder:hexVal default CDATA #IMPLIED>
+
+<!ELEMENT decoder:enumVal (enumChoice*) >
+<!ATTLIST decoder:enumVal default CDATA #IMPLIED>
+<!ATTLIST decoder:enumVal comment CDATA #IMPLIED>
+
+<!ELEMENT decoder:enumChoice EMPTY>
+<!ATTLIST decoder:enumChoice choice CDATA #REQUIRED >
+<!ATTLIST decoder:enumChoice comment CDATA #IMPLIED >
