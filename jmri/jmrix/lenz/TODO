@@ -1,4 +1,4 @@
-TODO List for Lenz code (as of 12/05/2003):
+TODO List for Lenz code (as of 12/31/2003):
 1) Need to add  listeners to all classes that SEND messages so they 
 recieve the apropriate response messages.  On classes where more than 
 one instance may exists, need to syncronize the listeners for the messages
@@ -14,4 +14,9 @@ each class, instead of listen for ALL messages (i.e. need to make the mask
 parameter to "addXpressnetListener" work properly)
 6) Revise utility programs so they use a properties file for button 
 names/menu titles.
-
+7) When the throttle is taken over by another XPressNet device, we need to 
+request the current status of the throttle (should this be done on a popup 
+window trigger, or as part of a status loop?).
+8) Add a message box indicating another device has put the command station 
+in service mode.  This should automatically appear and disappear as 
+appropriate.
