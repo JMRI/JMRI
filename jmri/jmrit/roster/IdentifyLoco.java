@@ -5,11 +5,14 @@ package jmri.jmrit.roster;
 import com.sun.java.util.collections.ArrayList;
 import com.sun.java.util.collections.List;
 
-/** 
+import jmri.Programmer;
+import jmri.InstanceManager;
+
+/**
  * Interact with a programmer to identify the RosterEntry for a loco
  * on the programming track.
  *
- * This is a class (instead of a Roster member function) to simplify use of 
+ * This is a class (instead of a Roster member function) to simplify use of
  * ProgListener callbacks. It is abstract as we expect that local classes
  * will define the message and done members.
  *
@@ -17,7 +20,7 @@ import com.sun.java.util.collections.List;
  * it works through the identification progress.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: IdentifyLoco.java,v 1.1 2002-02-28 21:47:12 jacobsen Exp $
+ * @version			$Revision: 1.2 $
  * @see             jmri.jmrit.roster.RosterEntry
  */
 abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
@@ -26,22 +29,55 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
 	private int cv17val;
 	private int cv18val;
 	int address = -1;
-	
+
+    int originalMode = Programmer.NONE;
+
 	// steps of the identification state machine
 	public boolean test1() {
+        Programmer p = InstanceManager.programmerInstance();
+        // if long address, we have to use some mode other
+        // than register, so remember where we are now
+        originalMode = p.getMode();
+		// if possible, switch to register mode
+        if (p!=null) {
+            if (p.hasMode(Programmer.REGISTERMODE))
+                p.setMode(Programmer.REGISTERMODE);
+        }
 		// request contents of CV 29
 		statusUpdate("Read CV 29");
 		readCV(29);
 		return false;
 	}
-	
+
 	public boolean test2(int value) {
 		// check for long address vs short address
 		if ( (value&0x20) != 0 ) {
-			// long
+			// long address needed
 			shortAddr = false;
+            // now in register mode, which is no good.
+            // can we use original mode?
+            Programmer p = InstanceManager.programmerInstance();
+            if (originalMode==Programmer.REGISTERMODE ||
+                    originalMode==Programmer.DIRECTBITMODE ||
+                    originalMode==Programmer.DIRECTBYTEMODE) {
+                // yes, set to that
+                p.setMode(originalMode);
+            } else if (p.hasMode(Programmer.PAGEMODE)) {
+                p.setMode(Programmer.PAGEMODE);
+            } else if (p.hasMode(Programmer.DIRECTBITMODE)) {
+                p.setMode(Programmer.DIRECTBITMODE);
+            } else if (p.hasMode(Programmer.DIRECTBYTEMODE)) {
+                p.setMode(Programmer.DIRECTBYTEMODE);
+            } else {
+                // failed, as couldn't set a useful mode!
+                log.error("can't set programming mode, long address fails");
+                address = -1;
+                statusUpdate("Long address - read CV 17");
+                return true;  // Indicates done
+            }
+            // mode OK, continue operation
 			statusUpdate("Long address - read CV 17");
-			readCV(17);			
+			readCV(17);
 		} else {
 			// short - read address
 			shortAddr = true;
@@ -85,17 +121,17 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
 		log.error("unexpected step 6 reached with value: "+value);
 		return true;
 	}
-	
+
 	public boolean test7(int value) {
 		log.error("unexpected step 7 reached with value: "+value);
 		return true;
 	}
-	
+
 	public boolean test8(int value) {
 		log.error("unexpected step 8 reached with value: "+value);
 		return true;
 	}
-	
+
 	protected void statusUpdate(String s) {
 		message(s);
 		if (s.equals("Done")) done(address);
@@ -103,10 +139,10 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
 	}
 
 	abstract protected void done(int address);
-	
+
 	abstract protected void message(String m);
-	
-	// initialize logging	
+
+	// initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(IdentifyLoco.class.getName());
-		
+
 }
