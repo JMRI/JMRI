@@ -31,7 +31,7 @@ import org.jdom.output.XMLOutputter;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -106,27 +106,7 @@ public class DecoderIndexFile extends XmlFile {
 		// check version ID - no match if a range specified and out of range
 		if (decoderVersionID != null) {
 			int versionID = Integer.valueOf(decoderVersionID).intValue();
-
-			// no match if both ends of range specified and out of range
-			if (r.getLowVersionID()!=null && r.getHighVersionID()!=null) {
-				int lowVersionID = Integer.valueOf(r.getLowVersionID()).intValue();
-				int highVersionID = Integer.valueOf(r.getHighVersionID()).intValue();
-				if ( versionID < lowVersionID || highVersionID < versionID ) return false;
-			}
-
-			// else no match if only one specified and not equal
-			if (r.getLowVersionID()!=null && r.getHighVersionID()==null) {
-				int lowVersionID = Integer.valueOf(r.getLowVersionID()).intValue();
-				if ( versionID != lowVersionID ) return false;
-			}
-
-			if (r.getLowVersionID()==null && r.getHighVersionID()!=null) {
-				int highVersionID = Integer.valueOf(r.getHighVersionID()).intValue();
-				if ( highVersionID != versionID ) return false;
-			}
-
-			// no match if this decoder defines neither high nor low, and we're looking for a specific version
-			if (r.getLowVersionID()==null && r.getHighVersionID()==null) return false;
+            if (!r.isVersion(versionID)) return false;
 		}
 		return true;
 	}
@@ -224,6 +204,15 @@ public class DecoderIndexFile extends XmlFile {
 									loVersID, hiVersID, familyName, filename, numFns, numOuts, decoder);
 			// and store it
 			decoderList.add(df);
+            // if there are additional version numbers defined, handle them too
+            List vcodes = decoder.getChildren("versionCV");
+		    for (int j=0; j<vcodes.size(); j++) {
+                // for each versionCV element
+    			Element vcv = (Element)vcodes.get(j);
+    			String vLoVersID = ( (attr = vcv.getAttribute("lowVersionID")) != null ? attr.getValue() : loVersID);
+	    		String vHiVersID = ( (attr = vcv.getAttribute("highVersionID"))!= null ? attr.getValue() : hiVersID);
+                df.setVersionRange(vLoVersID, vHiVersID);
+            }
 		}
 	}
 

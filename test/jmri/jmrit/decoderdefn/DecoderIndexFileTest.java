@@ -1,10 +1,4 @@
-/** 
- * DecoderIndexFileTest.java
- *
- * Description:	
- * @author			Bob Jacobsen
- * @version			
- */
+// DecoderIndexFileTest.java
 
 package jmri.jmrit.decoderdefn;
 
@@ -19,6 +13,12 @@ import org.jdom.*;
 import org.jdom.output.*;
 import com.sun.java.util.collections.List;
 
+/**
+ * DecoderIndexFileTest.java
+ *
+ * @author			Bob Jacobsen, Copyright (c) 2001, 2002
+ * @version			$Revision: 1.2 $
+ */
 public class DecoderIndexFileTest extends TestCase {
 
 	public void testLoading() {
@@ -30,7 +30,7 @@ public class DecoderIndexFileTest extends TestCase {
 		di.readFamilySection(decoderIndexElement);
 		// success here is getting to the end
 	}
-	
+
 	public void testMfgSection() {
 		// setup the test object with guts
 		DecoderIndexFile di = new DecoderIndexFile();
@@ -54,10 +54,9 @@ public class DecoderIndexFileTest extends TestCase {
 		Assert.assertEquals("1st decoder model ", "DH142", ((DecoderFile)di.decoderList.get(2)).getModel());
 		Assert.assertEquals("1st decoder mfg ", "Digitrax", ((DecoderFile)di.decoderList.get(2)).getMfg());
 		Assert.assertEquals("1st decoder mfgID ", "129", ((DecoderFile)di.decoderList.get(2)).getMfgID());
-		Assert.assertEquals("1st decoder low versionID ", "21", ((DecoderFile)di.decoderList.get(2)).getLowVersionID());
 		Assert.assertEquals("1st decoder family ", "**2 family", ((DecoderFile)di.decoderList.get(2)).getFamily());
 	}
-		
+
 	public void testReadFamily1() {
 		// setup the test object with guts
 		DecoderIndexFile di = new DecoderIndexFile();
@@ -71,7 +70,6 @@ public class DecoderIndexFileTest extends TestCase {
 		Assert.assertEquals("2nd decoder model ", "required set", ((DecoderFile)di.decoderList.get(1)).getModel());
 		Assert.assertEquals("2nd decoder mfg ", "NMRA", ((DecoderFile)di.decoderList.get(1)).getMfg());
 		Assert.assertEquals("2nd decoder mfgID ", null, ((DecoderFile)di.decoderList.get(1)).getMfgID());
-		Assert.assertEquals("2nd decoder low versionID ", null, ((DecoderFile)di.decoderList.get(1)).getLowVersionID());
 		Assert.assertEquals("2nd decoder family ", "NMRA S&RP definitions", ((DecoderFile)di.decoderList.get(1)).getFamily());
 	}
 
@@ -88,7 +86,6 @@ public class DecoderIndexFileTest extends TestCase {
 		Assert.assertEquals("1st decoder model ", "DH142", ((DecoderFile)di.decoderList.get(0)).getModel());
 		Assert.assertEquals("1st decoder mfg ", "Digitrax", ((DecoderFile)di.decoderList.get(0)).getMfg());
 		Assert.assertEquals("1st decoder mfgID ", "129", ((DecoderFile)di.decoderList.get(0)).getMfgID());
-		Assert.assertEquals("1st decoder low versionID ", "21", ((DecoderFile)di.decoderList.get(0)).getLowVersionID());
 		Assert.assertEquals("1st decoder family ", "**2 family", ((DecoderFile)di.decoderList.get(0)).getFamily());
 		Assert.assertEquals("1st decoder numFns ", 4, ((DecoderFile)di.decoderList.get(0)).getNumFunctions());
 		Assert.assertEquals("1st decoder numOuts ", 2, ((DecoderFile)di.decoderList.get(0)).getNumOutputs());
@@ -96,12 +93,11 @@ public class DecoderIndexFileTest extends TestCase {
 		Assert.assertEquals("2nd decoder model ", "DN142", ((DecoderFile)di.decoderList.get(1)).getModel());
 		Assert.assertEquals("2nd decoder mfg ", "Digitrax", ((DecoderFile)di.decoderList.get(1)).getMfg());
 		Assert.assertEquals("2nd decoder mfgID ", "129", ((DecoderFile)di.decoderList.get(1)).getMfgID());
-		Assert.assertEquals("2nd decoder low versionID ", "22", ((DecoderFile)di.decoderList.get(1)).getLowVersionID());
 		Assert.assertEquals("2nd decoder family ", "**2 family", ((DecoderFile)di.decoderList.get(1)).getFamily());
 		Assert.assertEquals("2nd decoder numFns ", 5, ((DecoderFile)di.decoderList.get(1)).getNumFunctions());
 		Assert.assertEquals("2nd decoder numOuts ", 1, ((DecoderFile)di.decoderList.get(1)).getNumOutputs());
 	}
-		
+
 	public void testMatchingDecoderList() {
 		// setup the test object with guts
 		DecoderIndexFile di = new DecoderIndexFile();
@@ -177,14 +173,14 @@ public class DecoderIndexFileTest extends TestCase {
 	Element decoderIndexElement = null;
 	Element family1 = null;
 	Element family2 = null;
-	
+
 	// provide a test document in the above static variables
 	void setupDoc() {
 		// create a JDOM tree with just some elements
 		root = new Element("decoderIndex-config");
 		doc = new Document(root);
 		doc.setDocType(new DocType("decoderIndex-config","decoderIndex-config.dtd"));
-		
+
 		// add some elements
 		root.addContent(decoderIndexElement = new Element("decoderIndex")
 					.addContent(new Element("mfgList")
@@ -214,30 +210,31 @@ public class DecoderIndexFileTest extends TestCase {
 										.addAttribute("mfg", "Digitrax")
 										.addAttribute("name", "**2 family")
 										.addAttribute("file", "DH142.xml")
-										.addAttribute("lowVersionID", "21")
 										.addContent(new Element("model")
 												.addAttribute("model", "DH142")
 												.addAttribute("numFns", "4")
 												.addAttribute("numOuts", "2")
-												// no versionID here, so use 21 from parent
+										        .addAttribute("lowVersionID", "21")
 												   )
 										.addContent(new Element("model")
 												.addAttribute("model", "DN142")
 												.addAttribute("numFns", "5")
 												.addAttribute("numOuts", "1")
-												.addAttribute("lowVersionID", "22")
-												.addAttribute("highVersionID", "24")
+                                                .addContent(new Element("versionCV")
+												    .addAttribute("lowVersionID", "22")
+												    .addAttribute("highVersionID", "24")
+                                                     )
 												   )
 												)
 								)
 				)
 			; // end of adding contents
-		
+
 		return;
 	}
 
 	// from here down is testing infrastructure
-	
+
 	public DecoderIndexFileTest(String s) {
 		super(s);
 	}
@@ -247,13 +244,17 @@ public class DecoderIndexFileTest extends TestCase {
 		String[] testCaseName = {DecoderIndexFileTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
-	
+
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite(DecoderIndexFileTest.class);
 		return suite;
 	}
-	
+
+    // The minimal setup for log4J
+    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
+    protected void setUp() { log4jfixtureInst.setUp(); }
+    protected void tearDown() { log4jfixtureInst.tearDown(); }
 	// static private org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DecoderIndexFileTest.class.getName());
 
 }

@@ -10,60 +10,88 @@ import org.jdom.Element;
 
 // try to limit the JDOM to this class, so that others can manipulate...
 
-/** 
+/**
  * Represents and manipulates a decoder definition, both as a file and
  * in memory.  The interal storage is a JDOM tree.
  *<P>
- * This object is created by DecoderIndexFile to represent the 
+ * This object is created by DecoderIndexFile to represent the
  * decoder identification info _before_ the actual decoder file is read.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecoderFile.java,v 1.1 2002-02-28 21:47:08 jacobsen Exp $
- * @see jmri.jmrit.decoderdefn.DecoderIndexFile	
+ * @version			$Id: DecoderFile.java,v 1.2 2002-05-09 16:37:11 jacobsen Exp $
+ * @see jmri.jmrit.decoderdefn.DecoderIndexFile
  */
 public class DecoderFile extends XmlFile {
 
 	public DecoderFile() {}
-	
+
 	public DecoderFile(String mfg, String mfgID, String model, String lowVersionID,
-						String highVersionID, String family, String filename, 
+						String highVersionID, String family, String filename,
 						int numFns, int numOuts, Element decoder) {
 		_mfg = mfg;
 		_mfgID = mfgID;
 		_model = model;
-		_lowVersionID = lowVersionID;
-		_highVersionID = highVersionID;
 		_family = family;
 		_filename = filename;
 		_numFns = numFns;
 		_numOuts = numOuts;
 		_element = decoder;
+
+        // store the default range of version id's
+        setVersionRange(lowVersionID, highVersionID);
 	}
-	
+
+    // store acceptable version numbers
+    boolean versions[] = new boolean[256];
+    public void setOneVersion(int i) { versions[i] = true; }
+    public void setVersionRange(int low, int high) {
+        for (int i=low; i<=high; i++) versions[i] = true;
+    }
+    public void setVersionRange(String lowVersionID,String highVersionID) {
+        if (lowVersionID!=null) {
+            // lowVersionID is not null; check high version ID
+            if (highVersionID!=null) {
+                // low version and high version are not null
+                setVersionRange(Integer.valueOf(lowVersionID).intValue(),
+                            Integer.valueOf(highVersionID).intValue());
+            } else {
+                // low version not null, but high is null. This is
+                // a single value to match
+                setOneVersion(Integer.valueOf(lowVersionID).intValue());
+            }
+        } else {
+            // lowVersionID is null; check high version ID
+            if (highVersionID!=null) {
+                // low version null, but high is not null
+                setOneVersion(Integer.valueOf(highVersionID).intValue());
+            } else {
+                // both low and high version are null; do nothing
+            }
+        }
+    }
+
+    public boolean isVersion(int i) { return versions[i]; }
+
 	// store indexing information
 	String _mfg       = null;
 	String _mfgID     = null;
 	String _model     = null;
-	String _lowVersionID = null;
-	String _highVersionID = null;
 	String _family    = null;
 	String _filename  = null;
 	int _numFns  = -1;
 	int _numOuts  = -1;
 	Element _element = null;
 
-	public String getMfg()       { return _mfg; }	
-	public String getMfgID()     { return _mfgID; }	
-	public String getModel()     { return _model; }	
-	public String getLowVersionID() { return _lowVersionID; }	
-	public String getHighVersionID() { return _highVersionID; }	
-	public String getFamily()    { return _family; }	
-	public String getFilename()  { return _filename; }	
-	public int getNumFunctions()  { return _numFns; }	
-	public int getNumOutputs()  { return _numOuts; }	
-	
+	public String getMfg()       { return _mfg; }
+	public String getMfgID()     { return _mfgID; }
+	public String getModel()     { return _model; }
+	public String getFamily()    { return _family; }
+	public String getFilename()  { return _filename; }
+	public int getNumFunctions()  { return _numFns; }
+	public int getNumOutputs()  { return _numOuts; }
+
 	public Element getModelElement() { return _element; }
-	
+
 	// static service methods - extract info from a given Element
 	public static String getMfgName(Element decoderElement) {
 		return decoderElement.getChild("id").getAttribute("mfg").getValue();
@@ -72,17 +100,17 @@ public class DecoderFile extends XmlFile {
 	public static String getMfgID(Element decoderElement) {
 		return decoderElement.getChild("id").getAttribute("mfgID").getValue();
 	}
-		
+
 	public static String getFamilyName(Element decoderElement) {
 		return decoderElement.getChild("id").getAttribute("family").getValue();
 	}
-					
+
 	// use the decoder Element from the file to load a VariableTableModel for programming.
-	public void loadVariableModel(Element decoderElement, 
+	public void loadVariableModel(Element decoderElement,
 											VariableTableModel variableModel) {
 		// find decoder id, assuming first decoder is fine for now (e.g. one per file)
 		Element decoderID = decoderElement.getChild("id");
-			
+
 		// load variables to table
 		List varList = decoderElement.getChild("variables").getChildren("variable");
 		for (int i=0; i<varList.size(); i++) {
@@ -133,13 +161,13 @@ public class DecoderFile extends XmlFile {
 	/**
 	 * Convert to a cannonical text form for ComboBoxes, etc
 	 */
-	public String titleString() { 
+	public String titleString() {
 		return getMfg()+" "+getModel();
 	}
 
 	static public String fileLocation = "decoders"+File.separator;
 
-	// initialize logging	
+	// initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DecoderFile.class.getName());
-		
+
 }
