@@ -32,7 +32,7 @@ import jmri.jmrix.loconet.*;
  * Reverse engineering of OPC_MULTI_SENSE was provided by Al Silverstein.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 public class Llnmon {
 
@@ -1408,14 +1408,14 @@ public class Llnmon {
              **************************************************************************/
         case LnConstants.OPC_IMM_PACKET:            /* page 11 of Loconet PE */
             //sendPkt = (sendPktMsg *) msgBuf;
-            int val7f 	= l.getElement(3);         /* fixed value of 0x7f                                  */
-            int reps 	= l.getElement(4);         /* repeat count                                         */
-            int dhi 	= l.getElement(5);         /* high bits of data bytes                              */
-            int im1 	= l.getElement(6);
-            int im2 	= l.getElement(7);
-            int im3 	= l.getElement(8);
-            int im4 	= l.getElement(9);
-            int im5 	= l.getElement(10);
+            int val7f 	= l.getElement(2);         /* fixed value of 0x7f                                  */
+            int reps 	= l.getElement(3);         /* repeat count                                         */
+            int dhi 	= l.getElement(4);         /* high bits of data bytes                              */
+            int im1 	= l.getElement(5);
+            int im2 	= l.getElement(6);
+            int im3 	= l.getElement(7);
+            int im4 	= l.getElement(8);
+            int im5 	= l.getElement(9);
 
             /* see if it really is a 'Send Packet' as defined in Loconet PE */
             if (val7f == 0x7f) {
