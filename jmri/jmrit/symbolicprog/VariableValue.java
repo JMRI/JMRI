@@ -14,7 +14,7 @@ import java.awt.Color;
 /**
  * Represents a single Variable value; abstract base class
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  *
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
@@ -28,7 +28,15 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     abstract public Component getRep(String format); // this one is returning a new object
     // and thus should be called a limited number of times
 
+    /**
+     * @return String that can be interpreted as an integer
+     */
     abstract public String getValueString();
+    /**
+     * @return User-desired value, which may or may not be an integer
+     */
+    public String getTextValue() { return getValueString(); }
+
     abstract public void setIntValue(int i);
 
     // methods to command a read from / write to the decoder of the underlying CVs

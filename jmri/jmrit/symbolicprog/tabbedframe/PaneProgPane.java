@@ -2,12 +2,16 @@
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import com.sun.java.util.collections.*;
-import com.sun.java.util.collections.List;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.*;
+
 import javax.swing.*;
+
+import com.sun.java.util.collections.*;
+import com.sun.java.util.collections.List;   // resolve ambiguity with package-level import
 import jmri.jmrit.symbolicprog.*;
+import jmri.util.davidflanagan.*;
 import org.jdom.*;
 
 /**
@@ -19,7 +23,7 @@ import org.jdom.*;
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
@@ -32,6 +36,7 @@ public class PaneProgPane extends javax.swing.JPanel
     ActionListener l3;
     ActionListener l4;
 
+    String mName = "";
     /**
      * Create a null object.  Normally only used for tests and to pre-load classes.
      */
@@ -48,6 +53,7 @@ public class PaneProgPane extends javax.swing.JPanel
      */
     public PaneProgPane(String name, Element pane, CvTableModel cvModel, VariableTableModel varModel, Element modelElem) {
 
+        mName = name;
         _cvModel = cvModel;
         _varModel = varModel;
 
@@ -805,6 +811,47 @@ public class PaneProgPane extends javax.swing.JPanel
         // these two are disposed elsewhere
         _cvModel = null;
         _varModel = null;
+    }
+
+    public void printPane(HardcopyWriter w) {
+        // if pane is empty, don't print anything
+        if (varList.size() == 0) return;
+
+        try {
+            // start with pane name in bold
+            String s = "\n\n"+mName+"\n\n";
+            w.setFontStyle(Font.BOLD);
+            w.write(s, 0, s.length());
+            w.setFontStyle(Font.PLAIN);
+            String spaces = "                                                   ";
+            // index over variables
+            for (int i=0; i<varList.size(); i++) {
+                int varNum = ((Integer)varList.get(i)).intValue();
+                VariableValue var = _varModel.getVariable(varNum);
+                String name = "   "+var.label();
+                if (name == null) name = var.item();
+                String value = " "+var.getTextValue() + "\n";
+                int space = spaces.length()-name.length();
+                if (space >= 0)
+                    s = name+spaces.substring(0, space)+value;
+                else
+                    s = name+"\n"+spaces+value;
+                w.write(s, 0, s.length());
+            }
+            // index over CVs
+            for (int i=0; i<cvList.size(); i++) {
+                int cvNum = ((Integer)cvList.get(i)).intValue();
+                CvValue cv = _cvModel.getCvByRow(cvNum);
+                String name = "   CV"+cv.number();
+                String value = " "+cv.getValue()+"\n";
+                s = name+spaces.substring(0, 15-name.length())+value;
+                w.write(s, 0, s.length());
+            }
+            // handle special cases
+
+        } catch (IOException e) { log.warn("error during printing: "+e);
+        }
+
     }
 
     private JPanel addDccAddressPanel(Element e) {

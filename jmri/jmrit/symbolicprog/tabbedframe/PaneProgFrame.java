@@ -4,34 +4,25 @@ package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
-import javax.swing.table.*;
 
-import java.io.*;
+import com.sun.java.util.collections.*;
 import com.sun.java.util.collections.List;
-import com.sun.java.util.collections.ArrayList;
-
-import jmri.Programmer;
-import jmri.ProgListener;
-import jmri.ProgModePane;
-import jmri.jmrit.symbolicprog.*;
+import jmri.*;
+import jmri.jmrit.*;
 import jmri.jmrit.decoderdefn.*;
 import jmri.jmrit.roster.*;
-import jmri.jmrit.XmlFile;
-
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.Attribute;
-import org.jdom.DocType;
-import org.jdom.output.XMLOutputter;
-import org.jdom.JDOMException;
+import jmri.jmrit.symbolicprog.*;
+import jmri.util.davidflanagan.*;
+import org.jdom.*;
 
 /**
  * Frame providing a command station programmer from decoder definition files
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  */
-abstract class PaneProgFrame extends javax.swing.JFrame
+abstract public class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
 
     // members to contain working variable, CV values
@@ -66,6 +57,16 @@ abstract class PaneProgFrame extends javax.swing.JFrame
     abstract JPanel getModePane();
 
     protected void installComponents() {
+
+        // Create a menu bar
+        JMenuBar menuBar = new JMenuBar();
+        setJMenuBar(menuBar);
+
+        // add a "File" menu
+        JMenu fileMenu = new JMenu("File");
+        menuBar.add(fileMenu);
+        fileMenu.add(new PrintAction("Print ...", this));
+
         // to control size, we need to insert a single
         // JPanel, then have it laid out with BoxLayout
         JPanel pane = new JPanel();
@@ -569,6 +570,19 @@ abstract class PaneProgFrame extends javax.swing.JFrame
         return false;
     }
 
+    public void printPanes(HardcopyWriter w) {
+        printInfoSection(w);
+        for (int i=0; i<paneList.size(); i++) {
+            if (log.isDebugEnabled()) log.debug("start printing page "+i);
+            PaneProgPane pane = (PaneProgPane)paneList.get(i);
+            pane.printPane(w);
+        }
+    }
+
+    void printInfoSection(HardcopyWriter w) {
+        _rosterEntry.printEntry(w);
+    }
+
     boolean _read = true;
     PaneProgPane _programmingPane = null;
 
@@ -692,6 +706,8 @@ abstract class PaneProgFrame extends javax.swing.JFrame
         super.dispose();
 
     }
+
+    public RosterEntry getRosterEntry() { return _rosterEntry; }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PaneProgFrame.class.getName());
 
