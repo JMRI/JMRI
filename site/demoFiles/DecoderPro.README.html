@@ -18,9 +18,9 @@ DCC decoders and managing a locomotive roster.
 It works with Digitrax LocoNet and NCE-equipped layouts. It provides
 tools for layout control and monitoring, and for programming decoders.
 <P>
-This is an early release. It is not yet ready for 
+<B>This is an early release. It is not yet ready for 
 serious use. It is being provided so that people can 
-get an early look and make comments.
+get an early look and make comments.</B>
 
 <P>
 For more information, visit the 
@@ -66,7 +66,8 @@ The Macintosh version of DecoderPro can be downloaded from
 <A HREF="http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b4.hqx">DecoderPro.0.9b4.hqx</A>.
 <P>
 We test on a 90MHz Power Macintosh 7100 with 32MB of memory.  This is about
-the minimum needed; it works, but is quite slow.  
+the minimum needed; it works, but is quite slow. Both a faster CPU and more
+memory are recommended. 
 <P>
 This application should run with any recent release of the Macintosh Runtime for Java (MRJ).  
 MRJ requires Mac OS 8.1 or later.  Development is currently using MRJ 2.2.5, 
@@ -99,13 +100,19 @@ using a Keyspan PDA Adapter; those drivers are available at
 
 <P>  
 You also need the javax.comm package.  An installer can be downloaded from
-  <a href="http://prdownloads.sourceforge.net/jmri/JavaCommInstaller04.hqx">http://prdownloads.sourceforge.net/jmri/JavaCommInstaller04.hqx</a>.
+<a href="http://prdownloads.sourceforge.net/jmri/JavaCommInstaller04.hqx">http://prdownloads.sourceforge.net/jmri/JavaCommInstaller04.hqx</a>.
 You will need the MacOS X administrator password to run it.
 
 <P>  
 Some device drivers will list each port under several names, e.g. starting
 with "/dev/tty" or "/dev/cu", for example "/dev/tty.KeyUSA19181.1". In that case, 
-select the one that starts with "tty" for best performance.
+you <b>must</b>
+select the one that starts with "cu", e.g. "/dev/cu.KeyUSA19181.1". 
+
+<P><b>Don't</b> select the one with no "/dev" prefix, e.g. "KeyUSA19181.1"
+If you do select that one, the program will hang on startup; you have to
+delete the prefs/DecoderProConfig.xml file to fix it. This appears to
+be due to a bug in the Keyspan drivers.
 
 <P>
 Double-click the "DecoderPro" icon
@@ -144,14 +151,13 @@ You can get this from Sun at
   <a href="http://java.sun.com/j2se/">http://java.sun.com/j2se/</a>.
 For information on installing Java, please see 
   <a href="http://jmri.sourceforge.net/Java/InstallJava.html">http://jmri.sourceforge.net/Java/InstallJava.html</a>.
-
+<P>
 To communicate with a LocoNet, you need to have a version of the javax.comm 
 package installed on your computer.  One is available at 
   <a href="http://www.interstice.com/kevinh/linuxcomm.html">http://www.interstice.com/kevinh/linuxcomm.html</a>
 with additional information at
   <a href="http://www.rxtx.org/">http://www.rxtx.org/</a>.  
- 
-
+ <P>
 Download the 
 <A HREF="http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b4.tar.gz">DecoderPro.0.9b4.tar.gz</A>
 file, then unpack it with
@@ -253,7 +259,9 @@ The LocoBuffer was created by John Jabour
 More information is also available from the LocoNet_Info group, 
 <a href="http://groups.yahoo.com/group/loconet_hackers">http://groups.yahoo.com/group/loconet_hackers</a>
 The LocoBuffer should be configured with J1, J4 and J5 set on pins 1 and 2, 
-J2 and J3 set to pins 2 and 3.
+J2 and J3 set to pins 2 and 3. The controller chip should
+contain version 1.4.6 or later of the LocoBuffer program. Note that
+version 1.4.5 has a bug that prevents it from working with LocoBuffer.
 
 <P>
 A standard Macintosh RS422 serial port will not work directly 
@@ -413,6 +421,14 @@ or use the web forms to
 
 <DT>Suggest improvements:   <DD><a href="http://sourceforge.net/tracker/?atid=388316&amp;group_id=26788&amp;func=add">http://sourceforge.net/tracker/?atid=388316&group_id=26788&func=add</a>
 </DL>
+<P>
+The <A href="http://lists.sourceforge.net/lists/listinfo/jmri-announce">jmri-announce</a> 
+mailing list carries announcements of new versions, major changes, etc. 
+This list is intended to be very low traffic; discussions, etc, should take place elsewhere.
+You can subscribe
+(or unsubscribe)
+using the 
+<A HREF="http://lists.sourceforge.net/lists/listinfo/jmri-announce">web interface</A>. <P>
 
 <h3>Notes: </h3>
  
