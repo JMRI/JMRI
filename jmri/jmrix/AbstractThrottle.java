@@ -7,15 +7,24 @@ import jmri.DccThrottle;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author  Bob Jacobsen  Copyright (C) 2001
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 abstract public class AbstractThrottle implements DccThrottle {
     protected float speedSetting;
     protected float speedIncrement;
     protected int address;
     protected boolean isForward;
-    protected boolean f0, f1, f2, f3, f4, f5, f6, f7, f8;
+    protected boolean f0, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12;
 
+    /**
+     * Is this object still usable?  Set false after dispose, this
+     * variable is used to check for incorrect usage.
+     */
+    private boolean active;
+
+    public AbstractThrottle() {
+        active = true;
+    }
 
     /** speed - expressed as a value 0.0 -> 1.0. Negative means emergency stop.
      * This is an bound parameter.
@@ -69,6 +78,22 @@ abstract public class AbstractThrottle implements DccThrottle {
         return f8;
     }
 
+    public boolean getF9() {
+        return f9;
+    }
+
+    public boolean getF10() {
+        return f10;
+    }
+
+    public boolean getF11() {
+        return f11;
+    }
+
+    public boolean getF12() {
+        return f12;
+    }
+
     /**
      * Locomotive identification.  The exact format is defined by the
      * specific implementation, but its intended that this is a user-specified
@@ -110,8 +135,11 @@ abstract public class AbstractThrottle implements DccThrottle {
      * it's the last user.
      */
     public void dispose() {
+        if (!active) log.error("Dispose called when not active");
         // if this object has registered any listeners, remove those.
 
+        // and mark as unusable
+        active = false;
     }
 
     public int getDccAddress() {
@@ -130,47 +158,67 @@ abstract public class AbstractThrottle implements DccThrottle {
     // see also DccThrottle interface
     public void setF0(boolean f0) {
         this.f0 = f0;
-        sendLowerFunctions();
+        sendFunctionGroup1();
     }
 
     public void setF1(boolean f1) {
         this.f1 = f1;
-        sendLowerFunctions();
+        sendFunctionGroup1();
     }
 
     public void setF2(boolean f2) {
         this.f2 = f2;
-        sendLowerFunctions();
+        sendFunctionGroup1();
     }
 
     public void setF3(boolean f3) {
         this.f3 = f3;
-        sendLowerFunctions();
+        sendFunctionGroup1();
     }
 
     public void setF4(boolean f4) {
         this.f4 = f4;
-        sendLowerFunctions();
+        sendFunctionGroup1();
     }
 
     public void setF5(boolean f5) {
         this.f5 = f5;
-        sendHigherFunctions();
+        sendFunctionGroup2();
     }
 
     public void setF6(boolean f6) {
         this.f6 = f6;
-        sendHigherFunctions();
+        sendFunctionGroup2();
     }
 
     public void setF7(boolean f7) {
         this.f7 = f7;
-        sendHigherFunctions();
+        sendFunctionGroup2();
     }
 
     public void setF8(boolean f8) {
         this.f8 = f8;
-        sendHigherFunctions();
+        sendFunctionGroup2();
+    }
+
+    public void setF9(boolean f9) {
+        this.f9 = f9;
+        sendFunctionGroup3();
+    }
+
+    public void setF10(boolean f10) {
+        this.f10 = f10;
+        sendFunctionGroup3();
+    }
+
+    public void setF11(boolean f11) {
+        this.f11 = f11;
+        sendFunctionGroup3();
+    }
+
+    public void setF12(boolean f12) {
+        this.f12 = f12;
+        sendFunctionGroup3();
     }
 
     /**
@@ -179,7 +227,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      * <P>
      * This is used in the setFn implementations provided in this class.
      */
-    abstract protected void sendLowerFunctions();
+    abstract protected void sendFunctionGroup1();
 
     /**
      * Send the message to set the state of
@@ -187,6 +235,17 @@ abstract public class AbstractThrottle implements DccThrottle {
      * <P>
      * This is used in the setFn implementations provided in this class.
      */
-    abstract protected void sendHigherFunctions();
+    abstract protected void sendFunctionGroup2();
+
+    /**
+     * Send the message to set the state of
+     * functions F9, F10, F11, F12
+     * <P>
+     * This is used in the setFn implementations provided in this class.
+     */
+    abstract protected void sendFunctionGroup3();
+
+    // initialize logging
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractThrottle.class.getName());
 
 }
