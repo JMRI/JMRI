@@ -17,9 +17,16 @@ import java.io.Serializable;
  * this class was created early in the project.  For a more recent
  * implementation of a similar idea, see the NceMessage class.  Many of the
  * ideas being tested there will eventually be moved back to here.
+ * <P>
+ * Some of the message formats used in this class are Copyright Digitrax, Inc.
+ * and used with permission as part of the JMRI project.  That permission
+ * does not extend to uses in other software products.  If you wish to
+ * use this code, algorithm or these message formats outside of JMRI, please
+ * contact Digitrax Inc for separate permission.
+ * <P>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  * @see             jmri.jmrix.nce.NceMessage
  *
  */

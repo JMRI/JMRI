@@ -7,8 +7,15 @@ import jmri.Sensor;
 
 /**
  * Extend jmri.AbstractSensor for LocoNet layouts
+ * <P>
+ * Some of the message formats used in this class are Copyright Digitrax, Inc.
+ * and used with permission as part of the JMRI project.  That permission
+ * does not extend to uses in other software products.  If you wish to
+ * use this code, algorithm or these message formats outside of JMRI, please
+ * contact Digitrax Inc for separate permission.
+ * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.8 $
  */
 public class LnSensor extends AbstractSensor implements LocoNetListener {
 

@@ -13,9 +13,15 @@ import jmri.AbstractTurnout;
  * reflect how the turnout should be, even if its a readback status message.
  * E.g. if you use a DS54 local input to change the state, resulting in a
  * status message, we still consider that to be a commanded state change.
- *
+ * <P>
+ * Some of the message formats used in this class are Copyright Digitrax, Inc.
+ * and used with permission as part of the JMRI project.  That permission
+ * does not extend to uses in other software products.  If you wish to
+ * use this code, algorithm or these message formats outside of JMRI, please
+ * contact Digitrax Inc for separate permission.
+ * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */public class LnTurnout extends AbstractTurnout implements LocoNetListener {
 
      public LnTurnout(int number) {  // a human-readable turnout number must be specified!

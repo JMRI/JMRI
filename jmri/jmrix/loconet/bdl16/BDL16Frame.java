@@ -14,9 +14,19 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * Frame displaying and programming a BDL16 configuration.
  * <P>The read and write require a sequence of operations, which
  * we handle with a state variable.
+ * <P>
+ * Programming of the BDL16 is done via configuration messages, so
+ * the BDL16 should not be put into programming mode via the
+ * built-in pushbutton while this tool is in use.
+ * <P>
+ * Some of the message formats used in this class are Copyright Digitrax, Inc.
+ * and used with permission as part of the JMRI project.  That permission
+ * does not extend to uses in other software products.  If you wish to
+ * use this code, algorithm or these message formats outside of JMRI, please
+ * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class BDL16Frame extends JFrame implements LocoNetListener {
 

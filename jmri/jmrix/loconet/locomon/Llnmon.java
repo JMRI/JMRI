@@ -1,21 +1,27 @@
-/**
- * Llnmon.java
- *
- * Description:	A utility class for formatting LocoNet packets
+// Llnmon.java
+
+package jmri.jmrix.loconet.locomon;
+
+import jmri.jmrix.loconet.*;
+
+ /**
+ * A utility class for formatting LocoNet packets
  *              into human-readable text.
- *
- * (C) Copyright 2001, 2002 B. Jacobsen.
- *
+ * <P>
  * Much of this file is a Java-recoding of the display.c file from the
  * llnmon package of John Jabour.  Some of the conversions involve explicit
  * decoding of structs defined in loconet.h in that same package.  Those
- * parts are (C) Copyright 2001 Ron W. Auld.  Those parts are licensed
- * under Version 2 of the GNU General Public License, as published by
- * the Free Software Foundation.
- *
+ * parts are (C) Copyright 2001 Ron W. Auld.  Use of these parts is by
+ * direct permission of the author.
+ * <P>
  * Most major comment blocks here are quotes from the Digitrax Loconet(r)
  * OPCODE SUMMARY: found in the Loconet(r) Personal Edition 1.
- *
+ * <P>
+ * Some of the message formats used in this class are Copyright Digitrax, Inc.
+ * and used with permission as part of the JMRI project.  That permission
+ * does not extend to uses in other software products.  If you wish to
+ * use this code, algorithm or these message formats outside of JMRI, please
+ * contact Digitrax Inc for separate permission.
  * <P>
  * Note that the formatted strings end in a \n, and may contain more than
  * one line separated by \n.  Someday this should be converted to
@@ -25,15 +31,9 @@
  * <P>
  * Reverse engineering of OPC_MULTI_SENSE was provided by Al Silverstein.
  *
- * @author			Bob Jacobsen
- * @version			$Revision: 1.11 $
+ * @author			Bob Jacobsen  Copyright 2001, 2002
+ * @version			$Revision: 1.12 $
  */
-
-package jmri.jmrix.loconet.locomon;
-
-import jmri.jmrix.loconet.LnConstants;
-import jmri.jmrix.loconet.LocoNetMessage;
-
 public class Llnmon {
 
     static private int LOCO_ADR(int a1, int a2)   { return (((a1 & 0x7f) * 128) + (a2 & 0x7f)); }
@@ -50,19 +50,10 @@ public class Llnmon {
     private int   	trackStatus      = -1;     /* most recent track status value                   */
 
 
-    /****************************************************************************
-     *
-     *  convertToMixed
-     *
-     *  REMARKS
-     *
-     *     This function creates a string representation of the loco address in
+    /**
+     * This function creates a string representation of the loco address in
      *     addressLow & addressHigh in a form appropriate for the type of address
      *     (2 or 4 digit) using the Digitrax 'mixed mode' if necessary.
-     *
-     *  RETURN VALUE
-     *
-     *     Nothing.
      */
 
     public static String convertToMixed(
@@ -93,17 +84,10 @@ public class Llnmon {
     protected boolean forceHex = false;
 
     /****************************************************************************
-     *
-     *  display
-     *
-     *  REMARKS
-     *
-     *     This function creates a string representation of a LocoNet buffer.
+     * This function creates a string representation of a LocoNet buffer.
      *     The string may be more than one line, and is terminated with a newline.
      *
-     *  RETURN VALUE
-     *
-     *    The created string representation.
+     *  @return The created string representation.
      */
 
     public String displayMessage(LocoNetMessage l) {

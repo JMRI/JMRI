@@ -30,9 +30,14 @@ import java.util.Vector;
  *<LI>  XmtHandler - down one, which is assumed to be above the GUI
  *<LI>  (everything else)
  *</UL>
- *
+ * <P>
+ * Some of the message formats used in this class are Copyright Digitrax, Inc.
+ * and used with permission as part of the JMRI project.  That permission
+ * does not extend to uses in other software products.  If you wish to
+ * use this code, algorithm or these message formats outside of JMRI, please
+ * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.3 $
+ * @version 		$Revision: 1.4 $
  *
  */
 public class LnPacketizer extends LnTrafficController {
