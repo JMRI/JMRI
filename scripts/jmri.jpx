@@ -3,7 +3,7 @@
 <project>
   <property category="editor.general" name="line_ending.style" value="3"/>
   <property category="idl" name="ProcessIDL" value="false"/>
-  <property category="runtime" name="ConfigurationCount" value="3"/>
+  <property category="runtime" name="ConfigurationCount" value="4"/>
   <property category="runtime.0" name="RunnableType" value="com.borland.jbuilder.runtime.TestRunner"/>
   <property category="runtime.0" name="application.class" value="apps.JmriDemo.JMRIdemo"/>
   <property category="runtime.0" name="appserver.ejbJarsSaved" value="1"/>
@@ -40,6 +40,17 @@
   <property category="runtime.3" name="appserver.vmparameters" value="-Dvbroker.agent.port=14000 -Djava.library.path=/BorlandEnterpriseServer/lib:/BorlandEnterpriseServer/bin -Dborland.enterprise.licenseDir=/BorlandEnterpriseServer/var/servers/adsl-216-102-218-99.dsl.snfc21.pacbell.net/adm -Dejb.module_preload=true"/>
   <property category="runtime.3" name="jsprunner.launchuri" value="/"/>
   <property category="runtime.3" name="test.harness" value="junit.textui.TestRunner"/>
+  <property category="runtime.4" name="ConfigurationName" value="JMRI Demo w client config"/>
+  <property category="runtime.4" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
+  <property category="runtime.4" name="application.class" value="apps.JmriDemo.JMRIdemo"/>
+  <property category="runtime.4" name="application.parameters" value="JMRIClientConfig.xml"/>
+  <property category="runtime.4" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/"/>
+  <property category="runtime.4" name="appserver.ejbJarsSaved" value="1"/>
+  <property category="runtime.4" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
+  <property category="runtime.4" name="appserver.servername" value="standard"/>
+  <property category="runtime.4" name="appserver.vmparameters" value="-Dvbroker.agent.port=14000 -Djava.library.path=/BorlandEnterpriseServer/lib;/BorlandEnterpriseServer/bin -Dborland.enterprise.licenseDir=/BorlandEnterpriseServer/var/servers/tom/adm -Dejb.module_preload=true"/>
+  <property category="runtime.4" name="jsprunner.launchuri" value="/"/>
+  <property category="runtime.4" name="test.harness" value="junit.textui.TestRunner"/>
   <property category="sys" name="AuthorLabel" value="@author"/>
   <property category="sys" name="BackupPath" value="bak"/>
   <property category="sys" name="BeansInstantiate" value="false"/>
@@ -49,10 +60,8 @@
   <property category="sys" name="CompanyLabel" value="Company:"/>
   <property category="sys" name="Copyright" value="Copyright (c) 2002"/>
   <property category="sys" name="CopyrightLabel" value="Copyright:"/>
-  <property category="sys" name="DebugInfo" value="0"/>
-  <property category="sys" name="DebugLineInfo" value="0"/>
-  <property category="sys" name="DebugSourceInfo" value="0"/>
   <property category="sys" name="DefaultPath" value="src"/>
+  <property category="sys" name="Deprecations" value="0"/>
   <property category="sys" name="Description" value=""/>
   <property category="sys" name="DescriptionLabel" value="Description:"/>
   <property category="sys" name="DocPath" value="doc"/>
@@ -70,7 +79,7 @@
   <property category="sys" name="TestPath" value="test"/>
   <property category="sys" name="Title" value=""/>
   <property category="sys" name="TitleLabel" value="Title:"/>
-  <property category="sys" name="Version" value="$Revision: 1.8 $"/>
+  <property category="sys" name="Version" value="$Revision: 1.9 $"/>
   <property category="sys" name="VersionLabel" value="@version"/>
   <property category="sys" name="WorkingDirectory" value="../"/>
   <node name="Additional Settings" type="Folder">
@@ -98,12 +107,15 @@
     <property category="archiving" name="targetPath" value="/Volumes/Users/jake/Documents/Trains/JMRI/project/jmri.jar"/>
   </node>
   <node name="Standard JavaDoc Doclet" type="Javadoc">
+    <property category="docletJavadoc" name="additionalOptions" value="-overview myoverview.html"/>
     <property category="docletJavadoc" name="author" value="1"/>
+    <property category="docletJavadoc" name="deprecated" value="0"/>
     <property category="docletJavadoc" name="use" value="1"/>
+    <property category="docletJavadoc" name="version" value="1"/>
     <property category="javadoc" name="scope" value="private"/>
     <property category="nodeJavadoc" name="buildWithProject" value="0"/>
     <property category="nodeJavadoc" name="directory" value="doc"/>
-    <property category="nodeJavadoc" name="displayAllOutput" value="1"/>
+    <property category="nodeJavadoc" name="displayAllOutput" value="0"/>
   </node>
   <file path="src/jmri/configureXML/AbstractTurnoutManagerConfigXML.java"/>
   <file path="../resources/decoderpro.gif"/>
