@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.31 $)
+distribution.  ($Revision: 1.32 $)
 
 Start with a directory, typically called "Distributions", that
 contains:
@@ -78,7 +78,8 @@ To actually create the distribution:
     Alternate method:
     
     Mount PC.  Copy last .vct and Windows/JMRI to C:\WINDOWS\Desktop
-    Create and test installer as above.  Pick up resulting .exe
+    Create and test installer as above.  Copy the .exe back
+    to the Distributions directory
     
 ( ) Once the three StuffIt processes are done
 	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release2
@@ -89,12 +90,13 @@ To actually create the distribution:
 ( ) Once the 4th StuffIt process is done, start uploading via
 	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release3
 
-( ) Create and upload the XSLT pages. This can be done at any time,
-    but doing it now works well in parallel
+( ) Create and upload the XSLT pages. This can be done at any time after now,
+    but doing it now works well in parallel with the rest of the Windows build.
     
-    cd ../xml/XLST
+    cd Release-1-2-3/xml/XLST
     ant xslt
     ant upload
+    cd ../../..
 
 ( ) The Windows .exe must be present before the next step
 	
@@ -119,11 +121,13 @@ To actually create the distribution:
 		
 	Be sure to update the top of the release note paragraph.
 	
-	The test release name convention is "Test version 1.2.3 for Linux"
+	The test release name convention is "JMRI 1.2.3 test version for Linux"
 	
 	Be sure to select "preserve preformatted text"
 
-( ) mail announcement to jmriusers@yahoogroups.com
+( ) Mail announcement to jmriusers@yahoogroups.com
+
+( ) Commit announcement file to the web site CVS directory
 
 ( ) For a production version, update web page source:
     	Linux install.html         
@@ -135,13 +139,13 @@ To actually create the distribution:
 		DecoderPro/index.html
 		README.html
 		
-( ) commit site and update on server
+( ) Commit site and update on server
 	
 ( ) News item from JMRI sourceforge page
 
 	Title is of the form "JMRI M.N is available"
 
-( ) mail announcement to jmri-announce@lists.sourceforge.net
+( ) Mail announcement to jmri-announce@lists.sourceforge.net
 
 ( ) Decide if worth announcing elsewhere:
 		MAC_DCC@yahoogroups.com
