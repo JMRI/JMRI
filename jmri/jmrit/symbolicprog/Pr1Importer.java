@@ -2,17 +2,18 @@
 
 package jmri.jmrit.symbolicprog;
 
-import java.io.*;
-import java.util.*;
-import java.lang.ArrayIndexOutOfBoundsException;
-
 import jmri.JmriException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Enumeration;
+import java.util.Properties;
 
 /**
- * Import CV values from a "PR1" file written by PR1DOS or PR1WIN
+ * Import CV values from a "PR1" file written by PR1DOS or PR1WIN.
  *
  * @author			Alex Shepherd   Copyright (C) 2003
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class Pr1Importer {
   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Pr1Importer.class.getName());
@@ -41,15 +42,13 @@ public class Pr1Importer {
     // Have a look at the values and see if there are any entries with values
     // greater out of the range 0..255. If they are found then also assume PR1WIN
     else {
-      Set cvSet = m_CVs.entrySet();
-      Iterator cvIterator = cvSet.iterator() ;
+      Enumeration cvKeys = m_CVs.keys();
 
-      while( cvIterator.hasNext() ) {
-        Map.Entry cvEntry = (Map.Entry) cvIterator.next() ;
-        String cvKey = (String)cvEntry.getKey() ;
+      while( cvKeys.hasMoreElements() ) {
+        String cvKey = (String)cvKeys.nextElement() ;
         if( cvKey.startsWith( CV_PREFIX ) )
         {
-          String cvValue = (String)cvEntry.getValue() ;
+          String cvValue = (String)m_CVs.get(cvKey) ;
           int cvIntValue = Integer.parseInt( cvValue ) ;
           if( ( cvIntValue < 0 ) || ( cvIntValue > 255 ) )
           {
