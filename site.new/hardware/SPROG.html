@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SPROG.html,v 1.6 2004-07-19 01:48:17 jacobsen Exp $ -->
+<!-- $Id: SPROG.html,v 1.7 2004-08-08 01:16:17 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -69,7 +69,11 @@
 
 	<H3>Limitations</H3>
 
-	<p>TBD</p>
+	<p>Note that there are several different versions
+	of the SPROG hardware, and even more versions of the 
+	SPROG software. If you're trying to attach an SPROG
+	that has been sitting in a drawer for a while, you 
+	should probably update it's software to a current version.</P>
 
 	<H3>Setup</H3>
 
@@ -581,7 +585,50 @@
 	of the specified 100 nF (C 11, 12, 13, 14).</p>
 
       <hr class="hide">
-<!-- Footer -->
+      
+   <h3>Additional capabilities</h3>
+   The SPROG can be very useful as a DCC signal
+   generator for testing DCC equipment you're developing.
+   
+   <P>The following description of how SPROG generates the
+   output bitstream was kindly provided by Andrew Crosland.
+   
+   <P>The DCC bitstream is generated is by using the PIC timer TMR0 to
+generate a regular interrupt every 58us. The timer is reloaded on every
+interrupt. This gives the nominal timimg for a 1 half bit. SPROG uses two
+intervals for a 0 half bit.
+
+<P>In version 3.2 and above, the "T n" command can be used to set a new value,
+n, to be reloaded into the timer. At the moment it makes no check on the
+value given so use with care. If you use "T" with no argument then the
+current value is shown. By default this is 0x97. Here's an extract from the
+source with comments on how it's calculated. note the PIC uses four clocks
+per instruction so the cycle time Tcyc is 250ns at 16MHz, not 62.5ns.
+<P>
+	<UL>
+	<LI>; Reload TMR0 for interrupt every 58us
+	<LI>; Tcyc = 250ns @ 16MHz
+	<LI>; Interrupt every 58/(.25) = 232 Tcyc
+	<LI>; Value loaded into TMR0 needs to be adjusted for:
+	<LI>; - TMR0 interrupt latency (3 Tcyc)
+	<LI>; - Number of instructions from interrupt to reload
+	<LI>; - TMR0 inhibit after reload (2 Tcyc with 2:1 prescaler)
+	<LI>; Prescaler = 2:1
+	<LI>; So value is 0 - (232 - 3 - 17 - 2)/2 = -105 = 0x97
+	</UL>
+<P>
+You can see how to calculate the TMR0 reload value for other intervals.
+Convert the negative result to two's complement and take the 8 LSBs. The
+granularity is 0.5us. On each interupt, I turn both outputs off, wait 2us
+and then turn one output on, actually more like 3us by the time the code
+decides which output to turn on. This is to prevent shoot-through in the
+MOSFETs.
+<P>
+The JMRI "Send command" menu item under the SPROG menu can be
+used to send the T command to the SPROG.
+   
+   
+   <!-- Footer -->
     <hr class="hide">
     <div id="footer">
 	<ul id="bn">
