@@ -22,7 +22,7 @@ import jmri.NamedBean;
  * lists; this will cause a recursive invocation when the output changes.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class Siglet extends AbstractAutomaton {
 
@@ -62,6 +62,10 @@ public class Siglet extends AbstractAutomaton {
         waitChange(inputs);
         // and repeat
         return true;
+    }
+
+    public void setInputs(NamedBean[] in) {
+        inputs = in;
     }
 
     // initialize logging

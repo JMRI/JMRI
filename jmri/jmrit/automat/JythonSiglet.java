@@ -16,10 +16,10 @@ import jmri.*;
  * <P>
  * Access is via Java reflection so that both users and developers can work
  * without the jython.jar file in the classpath. To make it easier to
- * read the code, the "non-reflection" statements are in the comments
+ * read the code, the "non-reflection" statements are in the comments.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class JythonSiglet extends Siglet {
     Object interp;
@@ -91,10 +91,6 @@ public class JythonSiglet extends Siglet {
             log.error("Exception creating jython system objects: "+e);
             e.printStackTrace();
         }
-    }
-
-    public void setInputs(NamedBean[] in) {
-        inputs = in;
     }
 
     /**
