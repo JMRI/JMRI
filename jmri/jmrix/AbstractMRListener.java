@@ -7,7 +7,7 @@ package jmri.jmrix;
  * protocol Listeners
  *
  * @author		Bob Jacobsen  Copyright (C) 2003
- * @version
+ * @version             $Revision: 1.2 $
  */
 public interface AbstractMRListener extends java.util.EventListener{
 }
