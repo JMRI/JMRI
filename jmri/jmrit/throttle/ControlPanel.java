@@ -10,6 +10,8 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -22,7 +24,7 @@ import org.jdom.Element;
  *  for forward, reverse and STOP. TODO: fix speed increments (14, 28)
  *
  * @author     glen
- * @version    $Revision: 1.21 $
+ * @version    $Revision: 1.22 $
  */
 public class ControlPanel extends JInternalFrame
 {
@@ -225,6 +227,19 @@ public class ControlPanel extends JInternalFrame
 				}
 			});
 
+		stopButton.addMouseListener(
+			new MouseListener()
+			{
+				public void mousePressed(MouseEvent e)
+				{
+					stop();
+				}
+                                public void mouseExited(MouseEvent e) {}
+                                public void mouseEntered(MouseEvent e) {}
+                                public void mouseReleased(MouseEvent e) {}
+                                public void mouseClicked(MouseEvent e) {}
+			});
+
 		idleButton = new JButton("Idle");
 		constraints.gridy = 4;
 		buttonPanel.add(idleButton, constraints);
@@ -286,7 +301,7 @@ public class ControlPanel extends JInternalFrame
 	 *  A KeyAdapter that listens for the keys that work the control pad buttons
 	 *
 	 * @author     glen
-         * @version    $Revision: 1.21 $
+         * @version    $Revision: 1.22 $
 	 */
 	class ControlPadKeyListener extends KeyAdapter
 	{
