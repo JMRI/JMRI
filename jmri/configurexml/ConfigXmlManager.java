@@ -16,7 +16,7 @@ import org.jdom.output.XMLOutputter;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -276,12 +276,19 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             }
 
         } catch (java.io.FileNotFoundException e1) {
-                    // this is actually normal...
+            // this returns false to indicate un-success, but not enough
+            // of an error to require a message
+            log.debug("file not found: "+fi.getName());
+            return false;
         } catch (org.jdom.JDOMException e) {
             log.error("Exception reading: "+e);
             e.printStackTrace();
             return false;
         } catch (java.io.IOException e) {
+            log.error("Exception reading: "+e);
+            e.printStackTrace();
+            return false;
+        } catch (java.lang.Exception e) {
             log.error("Exception reading: "+e);
             e.printStackTrace();
             return false;
