@@ -15,8 +15,9 @@ import javax.swing.event.*;
  */
 public class ComboRadioButtons extends JPanel {
 
-	ComboRadioButtons(JComboBox box) {
+	ComboRadioButtons(JComboBox box, EnumVariableValue var) {
 		super();
+		_var = var;
 		_box = box;
 		// create the buttons, include in group, listen for changes by name
 		ButtonGroup g = new ButtonGroup();
@@ -33,6 +34,7 @@ public class ComboRadioButtons extends JPanel {
 			add(b);
 			g.add(b);
 		}
+		setColor();
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		// listen for changes to original
 		_box.addActionListener(new java.awt.event.ActionListener() {
@@ -40,6 +42,13 @@ public class ComboRadioButtons extends JPanel {
 				originalActionPerformed(e);
 			}
 		});
+		// listen for changes to original state
+		_var.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+			public void propertyChange(java.beans.PropertyChangeEvent e) {
+				originalPropertyChanged(e);
+			}
+		});		
+
 		// set initial state
 		((JRadioButton)(v.elementAt(_box.getSelectedIndex()))).setSelected(true);
 	}
@@ -54,6 +63,26 @@ public class ComboRadioButtons extends JPanel {
 		((JRadioButton)(v.elementAt(_box.getSelectedIndex()))).setSelected(true);
 	}
 	
+	void originalPropertyChanged(java.beans.PropertyChangeEvent e) {
+		// update this color from original state
+		if (e.getPropertyName().equals("State")) {
+			if (log.isDebugEnabled()) log.debug("State change seen");
+			setColor();
+		}	
+	}
+
+	protected void setColor() {
+		//setBackground(_var._value.getBackground());
+		for (int i = 0; i<v.size(); i++) {
+			((JRadioButton)(v.elementAt(i))).setBackground(_var._value.getBackground());
+		}
+	}
+	
+	EnumVariableValue _var = null;
 	JComboBox _box = null;
 	Vector v = new Vector();
+
+	// initialize logging	
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ComboCheckBox.class.getName());
+
 }

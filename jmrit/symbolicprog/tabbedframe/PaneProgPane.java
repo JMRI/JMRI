@@ -227,26 +227,40 @@ public class PaneProgPane extends javax.swing.JPanel
 
 		// create a panel to add as a new column
 		JPanel c = new JPanel();
-		c.setLayout(new BoxLayout(c, BoxLayout.Y_AXIS));
+		GridBagLayout g = new GridBagLayout();
+		GridBagConstraints cs = new GridBagConstraints();
+		c.setLayout(g);
 		
 		// handle the xml definition
 		// for all elements in the column
-		List varList = column.getChildren();
-		for (int i=0; i<varList.size(); i++) {
-			Element e = (Element)(varList.get(i));
+		List elemList = column.getChildren();
+		for (int i=0; i<elemList.size(); i++) {
+			cs.gridy++;
+			cs.gridx = 0;
+			
+			Element e = (Element)(elemList.get(i));
 			String name = e.getName();
 			// decode the type
 			if (name.equals("variable")) { // its a variable
 				// load the variable
-				newVariable( e, ns, c );
+				newVariable( e, ns, c, g, cs);
 			}
 			else if (name.equals("separator")) { // its a separator
-				c.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
+				JSeparator j = new JSeparator(javax.swing.SwingConstants.HORIZONTAL);
+				cs.fill = GridBagConstraints.BOTH;
+				cs.gridwidth = GridBagConstraints.REMAINDER;
+				g.setConstraints(j, cs);
+				c.add(j);
+				cs.fill = GridBagConstraints.NONE;
+				cs.gridwidth = 1;
 			}
 			else if (name.equals("label")) { // its  a label
 				JLabel l = new JLabel(e.getAttribute("label").getValue());
 				l.setAlignmentX(1.0f);
+				cs.gridwidth = GridBagConstraints.REMAINDER;
+				g.setConstraints(l, cs);
 				c.add(l);
+				cs.gridwidth = 1;
 			}
 			else if (name.equals("cvtable")) {
 				// this is copied from SymbolicProgFrame
@@ -260,11 +274,18 @@ public class PaneProgPane extends javax.swing.JPanel
 				// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
 				// instead of forcing the columns to fill the frame (and only fill)
 				cvTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+				cs.gridwidth = GridBagConstraints.REMAINDER;
+				g.setConstraints(cvScroll, cs);
 				c.add(cvScroll);
+				cs.gridwidth = 1;
 				
 			}
 			else if (name.equals("fnmapping")) {
-				c.add(new JLabel("Function mapping is not yet implemented"));
+				FnMapPanel l = new FnMapPanel(_varModel, varList);
+				cs.gridwidth = GridBagConstraints.REMAINDER;
+				g.setConstraints(l, cs);
+				c.add(l);
+				cs.gridwidth = 1;
 			} 
 			else { // its a mistake
 				log.error("No code to handle element of type "+e.getName());
@@ -280,23 +301,20 @@ public class PaneProgPane extends javax.swing.JPanel
 	 * Add the representation of a single variable to a column.  The 
 	 * variable is defined by a JDOM variable Element from the XML file.
 	 */
-	public void newVariable( Element var, Namespace ns, JComponent col) {
+	public void newVariable( Element var, Namespace ns, JComponent col, GridBagLayout g, GridBagConstraints cs) {
 
 		// get the name
 		String name = var.getAttribute("name").getValue();
 
 		// if it doesn't exist, do nothing
-		if (findVarIndex(name)<0) {
+		if (_varModel.findVarIndex(name)<0) {
 			if (log.isInfoEnabled()) log.info("Variable \""+name+"\" not found, omitted");
 			return;
 		}
 		
-		// create a panel to add as a new variable
-		JPanel v = new JPanel();
-		
 		// check label orientation
 		Attribute attr;
-		String layout ="left";
+		String layout ="right";  // this default is also set in the DTD
 		if ( (attr = var.getAttribute("layout")) != null && attr.getValue() != null)
 				layout = attr.getValue(); 
 		
@@ -306,50 +324,73 @@ public class PaneProgPane extends javax.swing.JPanel
 		if ( (attr = var.getAttribute("label")) != null 
 				&& (temp = attr.getValue()) != null )
 			label = temp;
-		JLabel l = new JLabel(label);
+		JLabel l = new JLabel(" "+label+" ");
 
 		// get representation; store into the list to be programmed
 		JComponent rep = getRepresentation(name, var, ns);
-		int i = findVarIndex(name);
+		int i = _varModel.findVarIndex(name);
 		if (i>=0) varList.add(new Integer(i));
 		
 		// now handle the four orientations
 		// assemble v from label, rep
 		
 		if (layout.equals("left")) {
-			v.setLayout(new BoxLayout(v, BoxLayout.X_AXIS));
-			v.add(Box.createHorizontalGlue());
-			v.add(l);
-			v.add(rep);
-			v.setAlignmentX(1.0f);
+			cs.gridx = 0;
+			cs.anchor= GridBagConstraints.EAST;
+			g.setConstraints(l, cs);
+			col.add(l);
+
+			cs.gridx = GridBagConstraints.RELATIVE;
+			cs.anchor= GridBagConstraints.WEST;
+			g.setConstraints(rep, cs);
+			col.add(rep);
+			
 		} else if (layout.equals("right")) {
-			v.setLayout(new BoxLayout(v, BoxLayout.X_AXIS));
-			v.add(rep);
-			v.add(l);
-			v.add(Box.createHorizontalGlue());
-			v.setAlignmentX(0.0f);
+			cs.gridx = 0;
+			cs.anchor= GridBagConstraints.EAST;
+			g.setConstraints(rep, cs);
+			col.add(rep);
+
+			cs.gridx = GridBagConstraints.RELATIVE;
+			cs.anchor= GridBagConstraints.WEST;
+			g.setConstraints(l, cs);
+			col.add(l);
+			
 		} else if (layout.equals("above")) {
-			v.setLayout(new BoxLayout(v, BoxLayout.Y_AXIS));
-			v.add(l);
-			v.add(rep);
-			v.setAlignmentX(1.0f);
+			// label aligned like others
+			cs.gridx = 1;
+			cs.anchor= GridBagConstraints.WEST;
+			g.setConstraints(l, cs);
+			col.add(l);
+			
+			// variable in center of lower line
+			cs.gridy++;
+			cs.gridx = 0;
+			cs.gridwidth = GridBagConstraints.REMAINDER;
+			cs.anchor=GridBagConstraints.CENTER;
+			g.setConstraints(rep, cs);
+			col.add(rep);
+			cs.gridwidth = 1;
+			
 		} else if (layout.equals("below")) {
-			v.setLayout(new BoxLayout(v, BoxLayout.Y_AXIS));
-			v.add(rep);
-			v.add(l);
-			v.setAlignmentX(1.0f);
+			cs.gridx = 0;
+			cs.anchor= GridBagConstraints.EAST;
+			g.setConstraints(rep, cs);
+			col.add(rep);
+
+			cs.gridx = GridBagConstraints.RELATIVE;
+			cs.anchor= GridBagConstraints.WEST;
+			g.setConstraints(l, cs);
+			col.add(l);
+			
 		} else {
 			log.error("layout internally inconsistent: "+layout);
 			return;
 		}
-
-		// add to column
-		col.add(v);
-		
 	}
 
 	public JComponent getRepresentation(String name, Element var, Namespace ns) {
-		int i = findVarIndex(name);
+		int i = _varModel.findVarIndex(name);
 		JComponent rep = null;
 		String format = "default";
 		Attribute attr;
@@ -369,14 +410,6 @@ public class PaneProgPane extends javax.swing.JPanel
 		return (JComponent)(_varModel.getRep(i, format));
 	}
 	
-	int findVarIndex(String name) {
-		for (int i=0; i<_varModel.getRowCount(); i++) 
-			if (name.equals(_varModel.getStdName(i))) return i;
-		for (int i=0; i<_varModel.getRowCount(); i++) 
-			if (name.equals(_varModel.getName(i))) return i;
-		return -1;
-	}
-
 	// handle outgoing parameter notification for the Busy parameter
 	java.beans.PropertyChangeSupport prop = new java.beans.PropertyChangeSupport(this);	
 	public void removePropertyChangeListener(java.beans.PropertyChangeListener p) { prop.removePropertyChangeListener(p); }

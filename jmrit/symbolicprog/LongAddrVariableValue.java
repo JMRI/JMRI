@@ -210,6 +210,7 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 	public void dispose() {
 		if (_value != null) _value.removeActionListener(this);
 		((CvValue)_cvVector.elementAt(getCvNum())).removePropertyChangeListener(this);
+		((CvValue)_cvVector.elementAt(getCvNum()+1)).removePropertyChangeListener(this);
 	}
 	
 	/* Internal class extends a JTextField so that its color is consistent with 

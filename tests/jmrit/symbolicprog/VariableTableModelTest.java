@@ -112,6 +112,10 @@ public class VariableTableModelTest extends TestCase {
 
 		assert(t.getRowCount() == 2);
 		
+		// check finding
+		Assert.assertEquals("find variable two ",1, t.findVarIndex("two")); 
+		Assert.assertEquals("find nonexistant variable ",-1, t.findVarIndex("not there, eh?")); 
+		
 	}
 
 	// Check creating a longaddr type, walk through its programming
@@ -156,6 +160,42 @@ public class VariableTableModelTest extends TestCase {
 		assert(t.getValueAt(0,1).equals("long"));
 
 		assert(t.getRowCount() == 1);
+		
+	}
+	
+	// Check creating a speed table, then finding it by name
+	public void testVarSpeedTable() {
+		String[] args = {"CV", "Name"};
+		VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null));
+		
+		// create a JDOM tree with just some elements
+		Namespace ns = Namespace.getNamespace("decoder", "http://www.slac.stanford.edu/BFROOT/java/streamcalc");
+		Element root = new Element("decoder-config", ns);
+		Document doc = new Document(root);
+		doc.setDocType(new DocType("decoder:decoder-config","DTD/decoder-config.dtd"));
+		
+		// add some elements
+		Element el0, el1;
+		root.addContent(new Element("decoder",ns)		// the sites information here lists all relevant
+					.addContent(new Element("variables", ns)
+									.addContent(el0 = new Element("variable", ns)
+												.addAttribute("CV","67")
+												.addAttribute("name","Speed Table")
+												.addContent( new Element("speedTableVal", ns)
+													)
+												)
+										)	// variables element									
+						) // decoder element
+			; // end of adding contents
+
+		// and test reading this
+		t.setRow(0, el0, ns);
+
+		// check finding
+		Assert.assertEquals("length of variable list ", 1, t.getRowCount());
+		Assert.assertEquals("name of 1st variable ", "Speed Table", t.getName(0));
+		Assert.assertEquals("find Speed Table ",0, t.findVarIndex("Speed Table")); 
+		Assert.assertEquals("find nonexistant variable ",-1, t.findVarIndex("not there, eh?")); 
 		
 	}
 	

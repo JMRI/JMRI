@@ -15,6 +15,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.framework.Assert;
+import com.sun.java.util.collections.List;
+import com.sun.java.util.collections.ArrayList;
 
 import jmri.*;
 import jmri.progdebugger.*;
@@ -33,7 +35,7 @@ public class ComboCheckBoxTest extends TestCase {
 		JComboBox combo = (JComboBox)(var.getValue());
 		
 		// create object under test
-		ComboCheckBox b = new ComboCheckBox(combo);
+		ComboCheckBox b = new ComboCheckBox(combo,var);
 		
 		// set it to "checked" & test state
 		b.doClick();
@@ -64,7 +66,7 @@ public class ComboCheckBoxTest extends TestCase {
 		JComboBox combo = (JComboBox)(var.getValue());
 		
 		// create object under test
-		ComboCheckBox b = new ComboCheckBox(combo);
+		ComboCheckBox b = new ComboCheckBox(combo,var);
 		
 		// set combo box to 1 and check state
 		combo.setSelectedIndex(1);

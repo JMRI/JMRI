@@ -41,10 +41,6 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
 
 	abstract public Object rangeVal();
 	
-	// method to handle color changes for states
-	// make abstract & move to AbstractValue!
-	void setColor(Color c) {}
-
 	// methods implemented here:
 	public VariableValue(String name, String comment, boolean readOnly,
 							int cvNum, String mask, Vector v, JLabel status, String stdname) { 

@@ -34,7 +34,7 @@ public class ComboRadioButtonsTest extends TestCase {
 		JComboBox combo = (JComboBox)(var.getValue());
 		
 		// create object under test
-		ComboRadioButtons b = new ComboRadioButtons(combo);
+		ComboRadioButtons b = new ComboRadioButtons(combo, var);
 		
 		// check length
 		Assert.assertEquals("expected item count ", 3, b.v.size());
@@ -53,7 +53,7 @@ public class ComboRadioButtonsTest extends TestCase {
 		JComboBox combo = (JComboBox)(var.getValue());
 		
 		// create object under test
-		ComboRadioButtons b = new ComboRadioButtons(combo);
+		ComboRadioButtons b = new ComboRadioButtons(combo, var);
 		
 		// click middle button & test state
 		((JRadioButton)(b.v.elementAt(1))).doClick();
@@ -91,7 +91,7 @@ public class ComboRadioButtonsTest extends TestCase {
 		JComboBox combo = (JComboBox)(var.getValue());
 		
 		// create object under test
-		ComboRadioButtons b = new ComboRadioButtons(combo);
+		ComboRadioButtons b = new ComboRadioButtons(combo, var);
 		
 		// set combo box to 1 and check state
 		combo.setSelectedIndex(1);

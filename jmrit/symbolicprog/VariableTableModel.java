@@ -237,8 +237,13 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 				v1.addItem(((Element)l.get(k)).getAttribute("choice").getValue());
 
 		} else if ( (child = e.getChild("speedTableVal", ns)) != null) {
-			log.warn("Not yet able to handle speedTableVal");
-			return;
+			log.warn("Speed tables are still experimental!");
+			// ensure all 28 CVs exist
+			for (int i=0; i<28; i++) { _cvModel.addCV(""+(CV+i)); }
+	
+			v = new SpeedTableVarValue(name, comment, readOnly, 
+								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, stdname);
+
 		} else if ( (child = e.getChild("longAddressVal", ns)) != null) {
 			_cvModel.addCV(""+(CV+1));  // ensure 2nd CV exists
 			v = new LongAddrVariableValue(name, comment, readOnly, 
@@ -334,6 +339,22 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 			if (((VariableValue)(rowVector.elementAt(i))).getState() == CvValue.EDITTED ) return true;
 		}
 		return false;
+	}
+
+	public VariableValue findVar(String name) {
+		for (int i=0; i<getRowCount(); i++) 
+			if (name.equals(getStdName(i))) return getVariable(i);
+		for (int i=0; i<getRowCount(); i++) 
+			if (name.equals(getName(i))) return  getVariable(i);
+		return null;
+	}
+
+	public int findVarIndex(String name) {
+		for (int i=0; i<getRowCount(); i++) 
+			if (name.equals(getStdName(i))) return i;
+		for (int i=0; i<getRowCount(); i++) 
+			if (name.equals(getName(i))) return i;
+		return -1;
 	}
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(VariableTableModel.class.getName());

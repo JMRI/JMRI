@@ -251,13 +251,13 @@ public class PaneProgFrame extends javax.swing.JFrame
 		java.beans.PropertyChangeListener dccNews = new java.beans.PropertyChangeListener() {
 			public void propertyChange(java.beans.PropertyChangeEvent e) { updateDccAddress(); }
 		};
-		primaryAddr = findVar("Primary Address");
+		primaryAddr = variableModel.findVar("Primary Address");
 		if (primaryAddr==null) log.warn("DCC Address monitor didnt find a Primary Address variable");
 		else primaryAddr.addPropertyChangeListener(dccNews);
-		extendAddr = findVar("Extended Address");
+		extendAddr = variableModel.findVar("Extended Address");
 		if (extendAddr==null) log.warn("DCC Address monitor didnt find an Extended Address variable");
 		else extendAddr.addPropertyChangeListener(dccNews);
-		addMode = findVar("Address Format");
+		addMode = variableModel.findVar("Address Format");
 		if (addMode==null) log.warn("DCC Address monitor didnt find an Address Format variable");
 		else addMode.addPropertyChangeListener(dccNews);
 		
@@ -289,14 +289,6 @@ public class PaneProgFrame extends javax.swing.JFrame
 		if (newAddr!=null) _rPane.setDccAddress(newAddr);
 	}
 		
-	VariableValue findVar(String name) {
-		for (int i=0; i<variableModel.getRowCount(); i++) 
-			if (name.equals(variableModel.getStdName(i))) return variableModel.getVariable(i);
-		for (int i=0; i<variableModel.getRowCount(); i++) 
-			if (name.equals(variableModel.getName(i))) return  variableModel.getVariable(i);
-		return null;
-	}
-
 	public void newPane(String name, Element pane, Namespace ns) {
 	
 		// create a panel to hold columns

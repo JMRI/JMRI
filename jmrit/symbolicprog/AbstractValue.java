@@ -23,6 +23,9 @@ import javax.swing.JTextField;
  */
 public abstract class AbstractValue {
 	
+	// method to handle color changes for states
+	abstract void setColor(Color c);
+
 	/** Defines state when nothing is known about the real value */
 	public static final int UNKNOWN  =   0;
 	

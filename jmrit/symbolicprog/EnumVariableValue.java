@@ -1,11 +1,4 @@
-/** 
- * EnumVariableValue.java
- *
- * Description:		Extends VariableValue to represent a enumerated variable
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			
- *
- */
+// EnumVariableValue.java
 
 package jmri.jmrit.symbolicprog;
 
@@ -19,7 +12,15 @@ import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Vector;
 import javax.swing.*;
+import java.awt.Color;
 
+/** 
+ * Extends VariableValue to represent a enumerated variable.
+ *
+ * @author			Bob Jacobsen   Copyright (C) 2001
+ * @version			$Id: EnumVariableValue.java,v 1.6 2001-11-22 09:11:06 jacobsen Exp $
+ *
+ */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
 
 	public EnumVariableValue(String name, String comment, boolean readOnly,
@@ -30,6 +31,8 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 		_minVal = minVal;
 		_value = new JComboBox();
 		_value.setActionCommand("");
+		_defaultColor = _value.getBackground();
+		_value.setBackground(COLOR_UNKNOWN);
 		// connect to the JTextField value, cv
 		_value.addActionListener(this);
 		((CvValue)_cvVector.elementAt(getCvNum())).addPropertyChangeListener(this);
@@ -41,6 +44,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 	
 	private int _maxVal;
 	private int _minVal;
+	Color _defaultColor;
 	
 	public Object rangeVal() {
 		return new String("enum: "+_minVal+" - "+_maxVal);
@@ -87,20 +91,26 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 		if (format.equals("checkbox")) {
 			// this only makes sense if there are exactly two options
 
-			return new ComboCheckBox(_value);
+			return new ComboCheckBox(_value, this);
 			//box.setActionCommand( ((String)(_value.getItemAt(1))) ); // set to name of "1" item
 			//box.addActionListener(this);
 		}
 		else if (format.equals("radiobuttons")) {
-			return new ComboRadioButtons(_value);
+			return new ComboRadioButtons(_value, this);
 		}
 		else 
 		// return a new JComboBox representing the same model
-		return new JComboBox(_value.getModel());
+		return new VarComboBox(_value.getModel(), this);
 	}
 	
-	// data members, member functions and inner classes to handle alternate representations
 	
+	// implement an abstract member to set colors
+	void setColor(Color c) {
+		if (c != null) _value.setBackground(c);
+		else _value.setBackground(_defaultColor);
+		prop.firePropertyChange("Value", null, null);
+	}
+
 	// member functions to control reading/writing the variables
 	public void read() {
  		setBusy(true);  // will be reset when value changes
@@ -142,6 +152,43 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 		((CvValue)_cvVector.elementAt(getCvNum())).removePropertyChangeListener(this);
 	}
 	
+	/* Internal class extends a JComboBox so that its color is consistent with 
+	 * an underlying variable; we return one of these in getRep.
+	 *<P>
+	 * Unlike similar cases elsewhere, this doesn't have to listen to
+	 * value changes.  Those are handled automagically since we're sharing the same
+	 * model between this object and the real JComboBox value.
+	 *
+	 * @author			Bob Jacobsen   Copyright (C) 2001
+	 * @version			
+	 */
+	public class VarComboBox extends JComboBox {
+
+		VarComboBox(ComboBoxModel m, EnumVariableValue var) {
+			super(m);
+			_var = var;
+			// get the original color right
+			setBackground(_var._value.getBackground());
+			// listen for changes to original state
+			_var.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+				public void propertyChange(java.beans.PropertyChangeEvent e) {
+					if (log.isDebugEnabled()) log.debug("VarComboBox saw property change: "+e);
+					originalPropertyChanged(e);
+				}
+			});		
+		}
+
+		EnumVariableValue _var;
+	
+		void originalPropertyChanged(java.beans.PropertyChangeEvent e) {
+			// update this color from original state
+			if (e.getPropertyName().equals("State")) {
+				setBackground(_var._value.getBackground());
+			}	
+		}
+	
+	}
+
 	// initialize logging	
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EnumVariableValue.class.getName());
 		

@@ -54,7 +54,8 @@ public class PaneProgPaneTest extends TestCase {
 		// create test object with special implementation of the newVariable(String) operation
 		varCount = 0;
 		PaneProgPane p = new PaneProgPane("name", pane1, ns, cvModel, varModel) {
-				public void newVariable(Element e, Namespace ns, JComponent p) { varCount++; }
+				public void newVariable(Element e, Namespace ns, JComponent p, GridBagLayout g, GridBagConstraints c) 
+					{ varCount++; }
 			};
 
 		assertEquals("variable defn count", 7, varCount);

@@ -15,9 +15,11 @@ import javax.swing.event.*;
  */
 public class ComboCheckBox extends JCheckBox {
 
-	ComboCheckBox(JComboBox box) {
+	ComboCheckBox(JComboBox box, EnumVariableValue var) {
 		super();
+		_var = var;
 		_box = box;
+		setBackground(_var._value.getBackground());
 		// listen for changes to ourself
 		addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -28,6 +30,12 @@ public class ComboCheckBox extends JCheckBox {
 		_box.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				originalActionPerformed(e);
+			}
+		});		
+		// listen for changes to original state
+		_var.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+			public void propertyChange(java.beans.PropertyChangeEvent e) {
+				originalPropertyChanged(e);
 			}
 		});		
 	}
@@ -44,5 +52,18 @@ public class ComboCheckBox extends JCheckBox {
 		else  setSelected(false);
 	}
 	
+	void originalPropertyChanged(java.beans.PropertyChangeEvent e) {
+		// update this color from original state
+		if (e.getPropertyName().equals("State")) {
+			if (log.isDebugEnabled()) log.debug("State change seen");
+			setBackground(_var._value.getBackground());
+		}	
+	}
+	
+	EnumVariableValue _var = null;
 	JComboBox _box = null;
+
+	// initialize logging	
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ComboCheckBox.class.getName());
+
 }

@@ -39,6 +39,8 @@ public class CvValue extends AbstractValue implements ProgListener {
 	
 	public int getValue()  { return _value; }
 	
+	Color getColor() { return _tableEntry.getBackground(); }
+	
 	protected void notifyValueChange(int value) {
 		prop.firePropertyChange("Value", null, new Integer(value)); 
 	}
