@@ -25,6 +25,9 @@ public class XmlFileTest extends TestCase {
 		XmlFile x = new XmlFile() {
 		};
 
+        // this test uses explicit filenames intentionally, to ensure that
+        // the resulting files go into the test tree area.  This is not
+        // a test of prefsDir, and shouldn't use that.
         XmlFile.ensurePrefsPresent("prefs");
         XmlFile.ensurePrefsPresent("prefs/temp");
 		Assert.assertTrue("existing file ", x.checkFile("temp"));

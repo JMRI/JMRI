@@ -14,7 +14,7 @@ import jmri.jmrit.XmlFile;
  *
  * Description:	    tests for the jmrit.roster package & jmrit.roster.Roster class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class RosterTest extends TestCase {
 
@@ -64,6 +64,10 @@ public class RosterTest extends TestCase {
 	}
 
 	public void testBackupFile() throws Exception {
+        // this test uses explicit filenames intentionally, to ensure that
+        // the resulting files go into the test tree area.  This is not
+        // a test of prefsDir, and shouldn't use that.
+
 		// create a file in "temp"
         XmlFile.ensurePrefsPresent("prefs");
         XmlFile.ensurePrefsPresent("prefs/temp");
@@ -92,6 +96,10 @@ public class RosterTest extends TestCase {
 	}
 
 	public void testReadWrite() throws Exception {
+        // this test uses explicit filenames intentionally, to ensure that
+        // the resulting files go into the test tree area.  This is not
+        // a test of prefsDir, and shouldn't use that.
+
 		// store files in "temp"
         XmlFile.ensurePrefsPresent("prefs");
         XmlFile.ensurePrefsPresent("prefs/temp");

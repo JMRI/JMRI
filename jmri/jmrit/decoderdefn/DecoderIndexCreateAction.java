@@ -17,7 +17,7 @@ import jmri.jmrit.XmlFile;
  * Check the names in an XML decoder file against the names.xml definitions
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  * @see             jmri.jmrit.XmlFile
  */
 public class DecoderIndexCreateAction extends AbstractAction {
@@ -27,7 +27,7 @@ public class DecoderIndexCreateAction extends AbstractAction {
 	}
 
     public void actionPerformed(ActionEvent e) {
-		// create an array of file names from prefs/decoders, count entries
+		// create an array of file names from decoders dir in preferences, count entries
 		int i;
 		int np = 0;
 		String[] sp = null;

@@ -18,7 +18,7 @@ import com.sun.java.util.collections.List;
  * Base class for Actions to copy, export and import RosterEntrys
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  * @see             jmri.jmrit.XmlFile
  */
 abstract public class AbstractRosterItemAction extends AbstractAction {
@@ -55,14 +55,14 @@ abstract public class AbstractRosterItemAction extends AbstractAction {
         RosterEntry mFromEntry = null;
         File mFromFile = null;
         String mFromFilename = null;
-        String mFullFromFilename = null;  // includes "prefs" part
+        String mFullFromFilename = null;  // includes path to preferences
 
     // variables to communicate the "to" entry, file, etc.
         String mToID = null;
         RosterEntry mToEntry = null;
         File mToFile = null;
         String mToFilename = null;
-        String mFullToFilename = null;  // includes "prefs" part
+        String mFullToFilename = null;  // includes path to preferences
 
     boolean selectExistingFromEntry() {
 		// create a dialog to select the roster entry to copy

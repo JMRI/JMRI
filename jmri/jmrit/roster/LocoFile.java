@@ -21,7 +21,7 @@ import org.jdom.output.*;
  * directly. That's why it's not a public class.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version		 	$Revision: 1.4 $
+ * @version		 	$Revision: 1.5 $
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
@@ -193,7 +193,7 @@ class LocoFile extends XmlFile {
 	}
 
     /**
-     * Defines the prefs subdirectory in which LocoFiles are kept
+     * Defines the preferences subdirectory in which LocoFiles are kept
      * by default.
      */
 	static public String fileLocation = "roster"+File.separator;

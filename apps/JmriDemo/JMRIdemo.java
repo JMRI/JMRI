@@ -15,10 +15,10 @@ import javax.swing.border.*;
  * <P>
  * If an argument is provided at startup, it will be used as the name of
  * the configuration file.  Note that this is just the name, not the path;
- * the file is searched for in the usual way, first in prefs/ and then in
+ * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author			Bob Jacobsen
- * @version         $Revision: 1.20 $
+ * @version         $Revision: 1.21 $
  */
 public class JMRIdemo extends JPanel {
 	public JMRIdemo() {
