@@ -25,7 +25,7 @@ import javax.swing.*;
  * Base class for Jmri applications.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 public class Apps extends JPanel {
 
@@ -160,10 +160,12 @@ public class Apps extends JPanel {
     }
 
     protected void scriptMenu(JMenuBar menuBar, JFrame frame) {
-        JMenu menu = new JMenu("Scripts");
-        menuBar.add(menu);
-        menu.add(new jmri.jmrit.automat.JythonAutomatonAction("Jython script", this));
-        menu.add(new jmri.jmrit.automat.JythonSigletAction("Jython siglet", this));
+        // temporarily remove Scripts menu; note that "Run Script"
+        // has been added to the Panels menu
+        // JMenu menu = new JMenu("Scripts");
+        // menuBar.add(menu);
+        // menu.add(new jmri.jmrit.automat.JythonAutomatonAction("Jython script", this));
+        // menu.add(new jmri.jmrit.automat.JythonSigletAction("Jython siglet", this));
     }
 
     protected void developmentMenu(JMenuBar menuBar, JFrame frame) {
