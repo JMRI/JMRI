@@ -7,7 +7,7 @@ package jmri.jmrix.nce;
  * class handles the response from the command station.
  *
  * @author	        Bob Jacobsen  Copyright (C) 2001
- * @version             $Revision: 1.8 $
+ * @version             $Revision: 1.9 $
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -22,6 +22,11 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
     // copy one
     public  NceMessage(NceMessage m) {
+        super(m);
+    }
+
+    // from String
+    public  NceMessage(String m) {
         super(m);
     }
 
