@@ -14,13 +14,16 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import jmri.util.JmriJFrame;
 
+import javax.help.*;
 import javax.swing.*;
+import java.net.*;
+import java.io.*;
 
 /**
  * Base class for Jmri applications.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 public class Apps extends JPanel {
 
@@ -64,25 +67,18 @@ public class Apps extends JPanel {
     protected void createMenus(JMenuBar menuBar, JFrame frame) {
         // the debugging statements in the following are
         // for testing startup time
-        log.debug("start file menu");
+        log.debug("start building menus");
         fileMenu(menuBar, frame);
-        log.debug("start edit menu");
         editMenu(menuBar, frame);
-        log.debug("start tools menu");
         toolsMenu(menuBar, frame);
-        log.debug("start roster menu");
         rosterMenu(menuBar, frame);
-        log.debug("start panel menu");
         panelMenu(menuBar, frame);
-        log.debug("start sys menu");
         systemsMenu(menuBar, frame);
-        log.debug("start deb menu");
         debugMenu(menuBar, frame);
-        log.debug("start dev menu");
         developmentMenu(menuBar, frame);
-        log.debug("start dev menu");
+        helpMenu(menuBar, frame);
         windowMenu(menuBar, frame);
-        log.debug("end menus");
+        log.debug("end building menus");
     }
 
     protected void fileMenu(JMenuBar menuBar, JFrame frame) {
@@ -165,6 +161,33 @@ public class Apps extends JPanel {
                 // frame.setState(Frame.ICONIFIED);
             }
         });
+    }
+
+    static HelpSet globalHelpSet;
+    static HelpBroker globalHelpBroker;
+
+    protected void helpMenu(JMenuBar menuBar, final JFrame frame) {
+        try {
+            String helpsetName = "help/JmriHelp_en.hs";
+            try {
+                URL hsURL;
+                // HelpSet.findHelpSet doesn't seem to be working, so is temporarily bypassed
+                // hsURL = HelpSet.findHelpSet(ClassLoader.getSystemClassLoader(), helpsetName);
+                hsURL = new URL("file:"+helpsetName);
+                globalHelpSet = new HelpSet(null, hsURL);
+            } catch (Exception ee) {
+                log.error("HelpSet "+helpsetName+" not found, help system omitted");
+                return;
+            }
+            globalHelpBroker = globalHelpSet.createHelpBroker();
+            JMenu helpMenu = new JMenu("Help");
+            menuBar.add(helpMenu);
+            JMenuItem menuItem = new JMenuItem("Help");
+            helpMenu.add(menuItem);
+            menuItem.addActionListener(new CSH.DisplayHelpFromSource(globalHelpBroker));
+        } catch (java.lang.NoSuchMethodError e2) {
+            log.error("Is jh.jar available? Error loading help system: "+e2);
+        }
     }
 
     protected String line1() {

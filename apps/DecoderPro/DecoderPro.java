@@ -25,7 +25,7 @@ import javax.swing.JPanel;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.42 $
+ * @version     $Revision: 1.43 $
  */
 public class DecoderPro extends Apps {
 
@@ -48,6 +48,9 @@ public class DecoderPro extends Apps {
 
         // debug, but not development
         debugMenu(menuBar, frame);
+
+        helpMenu(menuBar, frame);
+        windowMenu(menuBar, frame);
     }
 
     protected String logo() {
