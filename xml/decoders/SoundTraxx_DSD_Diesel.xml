@@ -1,14 +1,15 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_DSD_Diesel.xml,v 1.14 2002-10-16 17:33:09 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_DSD_Diesel.xml,v 1.15 2003-07-06 16:59:13 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Robin Becker" version="7" lastUpdated="20020711"/>
+		<version author="Michael Mosher" version="8" lastUpdated="20030703"/>
 
 		<!-- version 4: updates to minOut usage, function mapping -->
 		<!-- version 5: correct to CV 56 for some options -->
 		<!-- version 6: removed erroneous CV19 definition -->
 		<!--            corrected versionCVs -->
 		<!-- version 7: renamed to get best tree layout -->
+		<!-- version 8: added CV105&106  -->
 		
 <decoder>
 	<family name="DSD diesel" mfg="Throttle-Up (SoundTraxx)">
@@ -691,6 +692,16 @@
 				item="Sound Setting 6" default="7">
 				<decVal max="15"/>
 			</variable>
+
+		<variable label="User Private ID #1" CV="105"
+					item="User Id #1">
+			<decVal/>
+			</variable>
+		<variable label="User Private ID #2" CV="106"
+					item="User Id #2">
+			<decVal/>
+			</variable>
+	
 	</variables>
 </decoder>
 
@@ -705,6 +716,7 @@
 </pane>
 
 </decoder-config>
+
 
 
 

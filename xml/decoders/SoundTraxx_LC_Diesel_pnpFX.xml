@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_LC_Diesel_pnpFX.xml,v 1.2 2003-01-05 12:48:37 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_LC_Diesel_pnpFX.xml,v 1.3 2003-07-06 16:59:13 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Robin Becker" version="9" lastUpdated="20021208"/>
+		<version author="Michael Mosher" version="10" lastUpdated="20030703"/>
 
 		<!-- version 4: updates to minOut usage, function mapping -->
 		<!-- version 5: added LL100LC -->
@@ -11,6 +11,7 @@
 		<!-- version 7: additional models -->
 		<!-- version 8: remove Atlas/Kato to other file -->
 		<!-- version 9: remove non-FX units to other file -->
+		<!-- version 10: added CV105&106, set CV9 default to 180 -->
 
 <decoder>
 	<family name="LC Diesel PNP + FX decoders" mfg="Throttle-Up (SoundTraxx)">
@@ -53,7 +54,7 @@
 						item="Manufacturer">			<decVal/></variable>
 
 		<variable label="Motor PWM Period" CV="9" item="Total PWM Period"
-					comment="52.2mS to 5.12 ms">
+					comment="52.2mS to 5.12 ms" default="180">
 			<decVal max="230"/></variable>
 
 		<variable label="Packet Timeout Value" CV="11" item="Packet Time-out Value">
@@ -565,17 +566,13 @@
 				</enumVal>
 			</variable>
 
-		<variable label="FX1 behaviour" CV="51" mask="XVVVXXXX"
+		<variable label="FX1 behaviour" CV="51" mask="XXVVXXXX"
 					item="Function 1 behaviour">
 			<enumVal>
 				<enumChoice choice="Phase A"/>
 				<enumChoice choice="Phase B"/>
 				<enumChoice choice="Grade crossing enable, phase A"/>
 				<enumChoice choice="Grade crossing enable, phase B"/>
-				<enumChoice choice="Rule 17 enable, phase A"/>
-				<enumChoice choice="Rule 17 enable, phase B"/>
-				<enumChoice choice="Rule 17 enable, Grade crossing enable, Phase A"/>
-				<enumChoice choice="Rule 17 enable, Grade crossing enable, Phase B"/>
 				</enumVal>
 			</variable>
 		<variable label="FX1 effect generated" CV="52" mask="XXXXVVVV"
@@ -599,17 +596,13 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable label="FX2 behaviour" CV="52" mask="XVVVXXXX"
+		<variable label="FX2 behaviour" CV="52" mask="XXVVXXXX"
 					item="Function 2 behaviour">
 			<enumVal>
 				<enumChoice choice="Phase A"/>
 				<enumChoice choice="Phase B"/>
 				<enumChoice choice="Grade crossing enable, phase A"/>
 				<enumChoice choice="Grade crossing enable, phase B"/>
-				<enumChoice choice="Rule 17 enable, phase A"/>
-				<enumChoice choice="Rule 17 enable, phase B"/>
-				<enumChoice choice="Rule 17 enable, Grade crossing enable, Phase A"/>
-				<enumChoice choice="Rule 17 enable, Grade crossing enable, Phase B"/>
 				</enumVal>
 			</variable>
 
@@ -705,6 +698,14 @@
 				<decVal max="255"/>
 			</variable>
 
+		<variable label="User Private ID #1" CV="105"
+					item="User Id #1">
+			<decVal/>
+			</variable>
+		<variable label="User Private ID #2" CV="106"
+					item="User Id #2">
+			<decVal/>
+			</variable>
 	
 	</variables>
 </decoder>
@@ -723,6 +724,7 @@
 </pane>
 
 </decoder-config>
+
 
 
 

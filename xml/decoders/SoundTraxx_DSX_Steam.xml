@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_DSX_Steam.xml,v 1.7 2002-10-16 17:33:10 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_DSX_Steam.xml,v 1.8 2003-07-06 16:59:13 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Robin Becker" version="6" lastUpdated="20020711"/>
+		<version author="Michael Mosher" version="7" lastUpdated="20030703"/>
 
 		<!-- version 4: updates to minOut usage, function mapping -->
 		<!-- version 5: removed erroneous CV19 definition, corrected VersionID -->
 		<!-- version 6: rename family for better tree shape -->
+		<!-- version 7: added CV105&106  -->
 
 <decoder>
 	<family name="DSX Steam" mfg="Throttle-Up (SoundTraxx)">
@@ -532,6 +533,14 @@
 				comment="">
 				<decVal max="15"/>
 			</variable>
+		<variable label="User Private ID #1" CV="105"
+					item="User Id #1">
+			<decVal/>
+			</variable>
+		<variable label="User Private ID #2" CV="106"
+					item="User Id #2">
+			<decVal/>
+			</variable>
 	</variables>
 </decoder>
 
@@ -545,5 +554,6 @@
 </pane>
 
 </decoder-config>
+
 
 
