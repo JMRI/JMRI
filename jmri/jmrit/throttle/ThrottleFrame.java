@@ -27,6 +27,9 @@ public class ThrottleFrame extends JFrame
     private final Integer PANEL_LAYER = new Integer(1);
     private DccThrottle throttle;
     private ThrottleManager throttleManager;
+    private ControlPanel controlPanel;
+    private AddressPanel addressPanel;
+    private FunctionPanel functionPanel;
 
     /**
      * Default constructor
@@ -42,7 +45,7 @@ public class ThrottleFrame extends JFrame
         JDesktopPane desktop = new JDesktopPane();
         this.setContentPane(desktop);
 
-        ControlPanel controlPanel = new ControlPanel(0, 1, 128, true);
+        controlPanel = new ControlPanel(0, 1, 128, true);
         controlPanel.setControlPanelListener(this);
         controlPanel.setResizable(true);
         controlPanel.setClosable(true);
@@ -50,8 +53,9 @@ public class ThrottleFrame extends JFrame
         controlPanel.setTitle("Control Panel");
         controlPanel.setSize(100,320);
         controlPanel.setVisible(true);
+        controlPanel.setEnabled(false);
 
-        FunctionPanel functionPanel = new FunctionPanel();
+        functionPanel = new FunctionPanel();
         functionPanel.setFunctionListener(this);
         functionPanel.setResizable(true);
         functionPanel.setClosable(true);
@@ -60,8 +64,9 @@ public class ThrottleFrame extends JFrame
         functionPanel.setSize(200,200);
         functionPanel.setLocation(100, 0);
         functionPanel.setVisible(true);
+        functionPanel.setEnabled(false);
 
-        AddressPanel addressPanel = new AddressPanel();
+        addressPanel = new AddressPanel();
         addressPanel.setAddressListener(this);
         addressPanel.setResizable(true);
         addressPanel.setClosable(true);
@@ -79,7 +84,7 @@ public class ThrottleFrame extends JFrame
 
         try
         {
-            controlPanel.setSelected(true);
+            addressPanel.setSelected(true);
         }
         catch (java.beans.PropertyVetoException ex)
         {
@@ -95,6 +100,8 @@ public class ThrottleFrame extends JFrame
     public void notifyThrottleFound(DccThrottle t)
     {
         this.throttle = t;
+        controlPanel.setEnabled(true);
+        functionPanel.setEnabled(true);
     }
 
     /**
@@ -147,6 +154,8 @@ public class ThrottleFrame extends JFrame
             throttleManager = InstanceManager.throttleManagerInstance();
         }
         throttleManager.requestThrottle(newAddress, this);
+        controlPanel.setEnabled(false);
+        functionPanel.setEnabled(false);
     }
 
 }
