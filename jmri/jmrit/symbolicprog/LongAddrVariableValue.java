@@ -1,11 +1,4 @@
-/** 
- * LongAddrVariableValue.java
- *
- * Description:		Extends VariableValue to represent a NMRA long address
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			
- *
- */
+// LongAddrVariableValue.java
 
 package jmri.jmrit.symbolicprog;
 
@@ -22,7 +15,13 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.text.Document;
 
-public class LongAddrVariableValue extends VariableValue 
+/**
+ * Extends VariableValue to represent a NMRA long address
+ * @author			Bob Jacobsen   Copyright (C) 2001, 2002
+ * @version			$Revision: 1.2 $
+ *
+ */
+public class LongAddrVariableValue extends VariableValue
 								implements ActionListener, PropertyChangeListener, FocusListener {
 
 	public LongAddrVariableValue(String name, String comment, boolean readOnly,
@@ -45,30 +44,30 @@ public class LongAddrVariableValue extends VariableValue
 		cv1.addPropertyChangeListener(this);
 		cv1.setState(CvValue.FROMFILE);
 	}
-	
+
 	// the connection is to cvNum and cvNum+1
-	
+
 	int _maxVal;
 	int _minVal;
-	
+
 	public Object rangeVal() {
 		return new String("Long address");
 	}
-	
+
 	String oldContents = "";
-	
+
 	void enterField() {
 		oldContents = _value.getText();
 	}
 	void exitField() {
-		if (!oldContents.equals(_value.getText())) { 
+		if (!oldContents.equals(_value.getText())) {
 			int newVal = Integer.valueOf(_value.getText()).intValue();
 			int oldVal = Integer.valueOf(oldContents).intValue();
 			updatedTextField();
 			prop.firePropertyChange("Value", new Integer(oldVal), new Integer(newVal));
 		}
 	}
-	
+
 	void updatedTextField() {
 		if (log.isDebugEnabled()) log.debug("actionPerformed");
 		// called for new values - set the CV as needed
@@ -78,7 +77,7 @@ public class LongAddrVariableValue extends VariableValue
 		int newVal;
 		try { newVal = Integer.valueOf(_value.getText()).intValue(); }
 			catch (java.lang.NumberFormatException ex) { newVal = 0; }
-			
+
 		// no masked combining of old value required, as this fills the two CVs
 		int newCv17 = ((newVal/256)&0x3F) | 0xc0;
 		int newCv18 = newVal & 0xFF;
@@ -86,7 +85,7 @@ public class LongAddrVariableValue extends VariableValue
 		cv18.setValue(newCv18);
 		if (log.isDebugEnabled()) log.debug("new value "+newVal+" gives CV17="+newCv17+" CV18="+newCv18);
 	}
-	
+
 	/** ActionListener implementations */
 	public void actionPerformed(ActionEvent e) {
 		if (log.isDebugEnabled()) log.debug("actionPerformed");
@@ -94,41 +93,41 @@ public class LongAddrVariableValue extends VariableValue
 		updatedTextField();
 		prop.firePropertyChange("Value", null, new Integer(newVal));
 	}
-	
+
 	/** FocusListener implementations */
 	public void focusGained(FocusEvent e) {
 		if (log.isDebugEnabled()) log.debug("focusGained");
 		enterField();
 	}
-	
+
 	public void focusLost(FocusEvent e) {
 		if (log.isDebugEnabled()) log.debug("focusLost");
 		exitField();
 	}
-	
+
 	// to complete this class, fill in the routines to handle "Value" parameter
-	// and to read/write/hear parameter changes. 
+	// and to read/write/hear parameter changes.
 	public String getValueString() {
 		return _value.getText();
 	}
 	public void setIntValue(int i) {
 		setValue(i);
 	}
-	
-	public Component getValue()  { 
+
+	public Component getValue()  {
 	 	if (getReadOnly())  //
 	 		return new JLabel(_value.getText());
 	 	else
-	 		return _value; 
+	 		return _value;
 	}
 
-	public void setValue(int value) { 
+	public void setValue(int value) {
 		int oldVal;
 		try { oldVal = Integer.valueOf(_value.getText()).intValue(); }
-			catch (java.lang.NumberFormatException ex) { oldVal = -999; }	
+			catch (java.lang.NumberFormatException ex) { oldVal = -999; }
 		if (log.isDebugEnabled()) log.debug("setValue with new value "+value+" old value "+oldVal);
 		_value.setText(""+value);
-		if (oldVal != value || getState() == VariableValue.UNKNOWN) 
+		if (oldVal != value || getState() == VariableValue.UNKNOWN)
 			actionPerformed(null);
 			prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value));
 	}
@@ -141,7 +140,7 @@ public class LongAddrVariableValue extends VariableValue
 		prop.firePropertyChange("Value", null, null);
 	}
 
-	public Component getRep(String format)  { 
+	public Component getRep(String format)  {
 		return new VarTextField(_value.getDocument(),_value.getText(), 5, this);
 	}
 	private int _progState = 0;
@@ -150,18 +149,18 @@ public class LongAddrVariableValue extends VariableValue
 	private static final int READING_SECOND = 2;
 	private static final int WRITING_FIRST = 3;
 	private static final int WRITING_SECOND = 4;
-	
-	// 
+
+	//
 	public void read() {
 		if (log.isDebugEnabled()) log.debug("longAddr read() invoked");
  		setBusy(true);  // will be reset when value changes
 		//super.setState(READ);
 		if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in read()");
 		_progState = READING_FIRST;
-		if (log.isDebugEnabled()) log.debug("invoke CV read");		
+		if (log.isDebugEnabled()) log.debug("invoke CV read");
 		((CvValue)_cvVector.elementAt(getCvNum())).read(_status);
 	}
-	
+
  	public void write() {
 		if (log.isDebugEnabled()) log.debug("write() invoked");
  		if (getReadOnly()) log.error("unexpected write operation when readOnly is set");
@@ -169,7 +168,7 @@ public class LongAddrVariableValue extends VariableValue
  		//super.setState(STORED);
 		if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in write()");
 		_progState = WRITING_FIRST;
-		if (log.isDebugEnabled()) log.debug("invoke CV write");		
+		if (log.isDebugEnabled()) log.debug("invoke CV write");
  		((CvValue)_cvVector.elementAt(getCvNum())).write(_status);
  	}
 
@@ -249,11 +248,11 @@ public class LongAddrVariableValue extends VariableValue
 	// stored value
 	JTextField _value = null;
 
-	/* Internal class extends a JTextField so that its color is consistent with 
+	/* Internal class extends a JTextField so that its color is consistent with
 	 * an underlying variable
 	 *
 	 * @author			Bob Jacobsen   Copyright (C) 2001
-	 * @version			
+	 * @version
 	 */
 	public class VarTextField extends JTextField {
 
@@ -267,28 +266,28 @@ public class LongAddrVariableValue extends VariableValue
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					thisActionPerformed(e);
 				}
-			});		
+			});
 			addFocusListener(new java.awt.event.FocusListener() {
 				public void focusGained(FocusEvent e) {
 					if (log.isDebugEnabled()) log.debug("focusGained");
 					enterField();
 				}
-	
+
 				public void focusLost(FocusEvent e) {
 					if (log.isDebugEnabled()) log.debug("focusLost");
 					exitField();
 				}
-			});		
+			});
 			// listen for changes to original state
 			_var.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
 				public void propertyChange(java.beans.PropertyChangeEvent e) {
 					originalPropertyChanged(e);
 				}
-			});		
+			});
 		}
 
 		LongAddrVariableValue _var;
-	
+
 		void thisActionPerformed(java.awt.event.ActionEvent e) {
 			// tell original
 			_var.actionPerformed(e);
@@ -298,9 +297,9 @@ public class LongAddrVariableValue extends VariableValue
 			// update this color from original state
 			if (e.getPropertyName().equals("State")) {
 				setBackground(_var._value.getBackground());
-			}	
+			}
 		}
-	
+
 	}
 
 	// clean up connections when done
@@ -309,12 +308,12 @@ public class LongAddrVariableValue extends VariableValue
 		if (_value != null) _value.removeActionListener(this);
 		((CvValue)_cvVector.elementAt(getCvNum())).removePropertyChangeListener(this);
 		((CvValue)_cvVector.elementAt(getCvNum()+1)).removePropertyChangeListener(this);
-		
+
 		_value = null;
 		// do something about the VarTextField
 	}
-	
-	// initialize logging	
+
+	// initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LongAddrVariableValue.class.getName());
-		
+
 }
