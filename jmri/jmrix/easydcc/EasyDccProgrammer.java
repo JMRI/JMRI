@@ -12,7 +12,7 @@ import java.beans.PropertyChangeEvent;
  * Implements the jmri.Programmer interface via commands for the EasyDcc powerstation
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccListener {
 
@@ -75,6 +75,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
     }
 	public int getMode() { return _mode; }
 
+    public boolean getCanRead() { return true; }
 
 	// notify property listeners - see AbstractProgrammer for more
 

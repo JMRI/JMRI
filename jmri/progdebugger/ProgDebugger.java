@@ -12,7 +12,7 @@ import java.util.Vector;
 /**
  * Debugging implementation of Programmer interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.10 $
+ * @version         $Revision: 1.11 $
  */
 public class ProgDebugger implements Programmer  {
 
@@ -103,6 +103,8 @@ public class ProgDebugger implements Programmer  {
         log.debug("pretending to have mode "+mode);
         return true;
     }
+
+    public boolean getCanRead() { return true; }
 
 	// data members to hold contact with the property listeners
 	private Vector propListeners = new Vector();

@@ -26,7 +26,7 @@ import java.beans.PropertyChangeEvent;
  * <LI>Wait for Normal Operations Resumed broadcast
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -92,6 +92,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         return false;
     }
 
+    public boolean getCanRead() { return true; }
 
 	// notify property listeners - see AbstractProgrammer for more
 
