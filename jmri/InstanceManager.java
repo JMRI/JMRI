@@ -16,7 +16,7 @@ package jmri;
  * non-system-specific code.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class InstanceManager {
 
@@ -42,43 +42,50 @@ public class InstanceManager {
 
     static private PowerManager _powerManager = null;
     static public void setPowerManager(PowerManager p) {
-        if (p!=_powerManager && p!=null && log.isDebugEnabled()) log.debug("PowerManager instance is being replaced: "+p);
+        if (p!=_powerManager && _powerManager!=null && log.isDebugEnabled()) log.debug("PowerManager instance is being replaced: "+p);
+        if (p!=_powerManager && _powerManager==null && log.isDebugEnabled()) log.debug("PowerManager instance is being installed: "+p);
         _powerManager = p;
     }
 
     static private ProgrammerManager _programmerManager = null;
     static public void setProgrammerManager(ProgrammerManager p) {
-        if (p!=_programmerManager && p!=null && log.isDebugEnabled()) log.debug("ProgrammerManager instance is being replaced: "+p);
+        if (p!=_programmerManager && _programmerManager!=null && log.isDebugEnabled()) log.debug("ProgrammerManager instance is being replaced: "+p);
+        if (p!=_programmerManager && _programmerManager==null && log.isDebugEnabled()) log.debug("ProgrammerManager instance is being installed: "+p);
         _programmerManager = p;
     }
 
     static private SensorManager _sensorManager = null;
     static public void setSensorManager(SensorManager p) {
-        if (p!=_sensorManager && p!=null && log.isDebugEnabled()) log.debug("SensorManager instance is being replaced: "+p);
+        if (p!=_sensorManager && _sensorManager!=null && log.isDebugEnabled()) log.debug("SensorManager instance is being replaced: "+p);
+        if (p!=_sensorManager && _sensorManager==null && log.isDebugEnabled()) log.debug("SensorManager instance is being installed: "+p);
         _sensorManager = p;
     }
 
     static private TurnoutManager _turnoutManager = null;
     static public void setTurnoutManager(TurnoutManager p) {
-        if (p!=_turnoutManager && p!=null && log.isDebugEnabled()) log.debug("TurnoutManager instance is being replaced: "+p);
+        if (p!=_turnoutManager && _turnoutManager!=null && log.isDebugEnabled()) log.debug("TurnoutManager instance is being replaced: "+p);
+        if (p!=_turnoutManager && _turnoutManager==null && log.isDebugEnabled()) log.debug("TurnoutManager instance is being installed: "+p);
         _turnoutManager = p;
     }
 
     static private ConfigureManager mConfigureManager = null;
     static public void setConfigureManager(ConfigureManager p) {
-        if (p!=mConfigureManager && p!=null && log.isDebugEnabled()) log.debug("ConfigureManager instance is being replaced: "+p);
+        if (p!=mConfigureManager && mConfigureManager!=null && log.isDebugEnabled()) log.debug("ConfigureManager instance is being replaced: "+p);
+        if (p!=mConfigureManager && mConfigureManager==null && log.isDebugEnabled()) log.debug("ConfigureManager instance is being installed: "+p);
         mConfigureManager = p;
     }
 
     static private ThrottleManager mThrottleManager = null;
     static public void setThrottleManager(ThrottleManager p) {
-        if (p!=mThrottleManager && p!=null && log.isDebugEnabled()) log.debug("ThrottleManager instance is being replaced: "+p);
+        if (p!=mThrottleManager && mThrottleManager!=null && log.isDebugEnabled()) log.debug("ThrottleManager instance is being replaced: "+p);
+        if (p!=mThrottleManager && mThrottleManager==null && log.isDebugEnabled()) log.debug("ThrottleManager instance is being installed: "+p);
         mThrottleManager = p;
     }
 
     static private SignalHeadManager mSignalHeadManager = null;
     static public void setSignalHeadManager(SignalHeadManager p) {
-        if (p!=mSignalHeadManager && p!=null && log.isDebugEnabled()) log.debug("SignalHeadManager instance is being replaced: "+p);
+        if (p!=mSignalHeadManager && mSignalHeadManager!=null && log.isDebugEnabled()) log.debug("SignalHeadManager instance is being replaced: "+p);
+        if (p!=mSignalHeadManager && mSignalHeadManager==null && log.isDebugEnabled()) log.debug("SignalHeadManager instance is being installed: "+p);
         mSignalHeadManager = p;
     }
 
