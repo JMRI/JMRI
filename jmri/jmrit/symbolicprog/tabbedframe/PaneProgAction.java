@@ -1,12 +1,4 @@
-/**
- * PaneProgAction.java
- *
- * Description:		Swing action to create and register a
- *       			SymbolicProg object
- *
- * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.2 $
- */
+// PaneProgAction.java
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
@@ -23,6 +15,13 @@ import javax.swing.border.*;
 import org.jdom.*;
 import org.jdom.input.*;
 
+/**
+ * Swing action to create and register a
+ *       			SymbolicProg object
+ *
+ * @author			Bob Jacobsen    Copyright (C) 2001
+ * @version			$Revision: 1.3 $
+ */
 public class PaneProgAction 			extends AbstractAction {
 
 	Object o1, o2, o3, o4;
