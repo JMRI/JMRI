@@ -14,7 +14,7 @@ import org.jdom.Element;
  * form created when this is read back.  Instead, this interacts directly with Swing.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class GuiLafConfigPaneXml implements XmlAdapter {
 
@@ -23,7 +23,7 @@ public class GuiLafConfigPaneXml implements XmlAdapter {
 
     /**
      * Default implementation for storing the static contents of the Swing LAF
-     * @param o Object to store, of type PositionableLabel
+     * @param o Object to store, of type GuiLafConfigPane
      * @return Element containing the complete info
      */
     public Element store(Object o) {
@@ -94,7 +94,8 @@ public class GuiLafConfigPaneXml implements XmlAdapter {
      * @param o  ignored
      */
     public void load(Element element, Object o) {
-        jmri.jmrit.symbolicprog.CombinedLocoSelPane.setDefaultProgFile(element.getAttribute("defaultFile").getValue());
+        // jmri.jmrit.symbolicprog.CombinedLocoSelPane.setDefaultProgFile(element.getAttribute("defaultFile").getValue());
+        log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(GuiLafConfigPaneXml.class.getName());
