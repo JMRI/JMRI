@@ -15,7 +15,7 @@ import jmri.NmraPacket;
  *
  * Description:		extend jmri.AbstractTurnout for C/MRI serial layouts
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialTurnout extends AbstractTurnout {
 
@@ -24,12 +24,12 @@ public class SerialTurnout extends AbstractTurnout {
      */
 
     public SerialTurnout(int number) {
+        super("CT"+number);
         _number = number;
         // At construction, register for messages
     }
 
     public int getNumber() { return _number; }
-    public String getSystemName() { return "CT"+getNumber(); }
 
     // Handle a request to change state by sending a turnout command
     protected void forwardCommandChangeToLayout(int s) {
