@@ -3,6 +3,7 @@
 package jmri.jmrit.beantable;
 
 import java.awt.Dimension;
+import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
 import javax.swing.JMenuBar;
@@ -14,13 +15,15 @@ import javax.swing.JTable;
  * Frame providing a table of NamedBeans
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class BeanTableFrame extends javax.swing.JFrame {
 
     BeanTableDataModel		dataModel;
     JTable			dataTable;
     JScrollPane 		dataScroll;
+
+    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
 
     public BeanTableFrame(BeanTableDataModel model) {
 
@@ -34,7 +37,6 @@ public class BeanTableFrame extends javax.swing.JFrame {
         dataModel.configureTable(dataTable);
 
         // general GUI config
-        setTitle("Bean Table");
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         // install items in GUI
@@ -42,8 +44,14 @@ public class BeanTableFrame extends javax.swing.JFrame {
         getContentPane().add(dataScroll);
         pack();
         pane1.setMaximumSize(pane1.getSize());
+
+        // add extras, if desired by subclass
+        extras();
+
         pack();
     }
+
+    void extras() {}
 
     private boolean mShown = false;
 

@@ -7,7 +7,7 @@ import jmri.Manager;
 import jmri.NamedBean;
 import jmri.Turnout;
 import java.awt.event.ActionEvent;
-
+import java.util.*;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 
@@ -16,7 +16,7 @@ import javax.swing.JButton;
  * TurnoutTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 public class TurnoutTableAction extends AbstractAction {
@@ -25,16 +25,17 @@ public class TurnoutTableAction extends AbstractAction {
     public TurnoutTableAction() { this("Turnout Table");}
 
     public void actionPerformed(ActionEvent e) {
+        final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
         // create the model, with modifications for Turnouts
         BeanTableDataModel m = new BeanTableDataModel() {
             public String getValue(String name) {
                 int val = InstanceManager.turnoutManagerInstance().getBySystemName(name).getKnownState();
                 switch (val) {
-                case Turnout.CLOSED: return "Closed";
-                case Turnout.THROWN: return "Thrown";
-                case Turnout.UNKNOWN: return "Unknown";
-                case Turnout.INCONSISTENT: return "Inconsistent";
+                case Turnout.CLOSED: return rbean.getString("TurnoutStateClosed");
+                case Turnout.THROWN: return rbean.getString("TurnoutStateThrown");
+                case Turnout.UNKNOWN: return rbean.getString("BeanStateUnknown");
+                case Turnout.INCONSISTENT: return rbean.getString("BeanStateInconsistent");
                 default: return "Unexpected value: "+val;
                 }
             }
@@ -51,7 +52,7 @@ public class TurnoutTableAction extends AbstractAction {
         };
         // create the frame
         BeanTableFrame f = new BeanTableFrame(m);
-        f.setTitle("Turnout Table");
+        f.setTitle(f.rb.getString("TitleTurnoutTable"));
         f.show();
     }
 }

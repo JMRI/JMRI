@@ -7,6 +7,7 @@ import jmri.Manager;
 import jmri.NamedBean;
 import jmri.SignalHead;
 import java.awt.event.ActionEvent;
+import java.util.*;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -16,7 +17,7 @@ import javax.swing.JButton;
  * SignalHeadTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class SignalHeadTableAction extends AbstractAction {
@@ -25,19 +26,20 @@ public class SignalHeadTableAction extends AbstractAction {
     public SignalHeadTableAction() { this("SignalHead Table");}
 
     public void actionPerformed(ActionEvent e) {
+        final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
         // create the model, with modifications for SignalHeads
         BeanTableDataModel m = new BeanTableDataModel() {
             public String getValue(String name) {
                 int val = InstanceManager.signalHeadManagerInstance().getBySystemName(name).getAppearance();
                 switch (val) {
-                case SignalHead.RED: return "Red";
-                case SignalHead.YELLOW: return "Yellow";
-                case SignalHead.GREEN: return "Green";
-                case SignalHead.FLASHRED: return "Flashing Red";
-                case SignalHead.FLASHYELLOW: return "Flashing Yellow";
-                case SignalHead.FLASHGREEN: return "Flashing Green";
-                case SignalHead.DARK: return "Dark";
+                case SignalHead.RED: return rbean.getString("SignalStateRed");
+                case SignalHead.YELLOW: return rbean.getString("SignalStateYellow");
+                case SignalHead.GREEN: return rbean.getString("SignalStateGreen");
+                case SignalHead.FLASHRED: return rbean.getString("SignalStateFlashing Red");
+                case SignalHead.FLASHYELLOW: return rbean.getString("SignalStateFlashing Yellow");
+                case SignalHead.FLASHGREEN: return rbean.getString("SignalStateFlashing Green");
+                case SignalHead.DARK: return rbean.getString("SignalStateDark");
                 default: return "Unexpected value: "+val;
                 }
             }
@@ -63,10 +65,19 @@ public class SignalHeadTableAction extends AbstractAction {
             }
         };
         // create the frame
-        BeanTableFrame f = new BeanTableFrame(m);
-        f.setTitle("SignalHead Table");
+        BeanTableFrame f = new BeanTableFrame(m){
+            /**
+             * Include an "add" button
+             */
+            void extras() {
+                JButton addButton = new JButton("Add...");
+                this.getContentPane().add(addButton);
+            }
+        };
+        f.setTitle(f.rb.getString("TitleSignalTable"));
         f.show();
     }
+
 }
 
 
