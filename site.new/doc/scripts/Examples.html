@@ -1,12 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: FAQ.html,v 1.6 2004-07-24 04:35:42 jacobsen Exp $ -->
+<!-- $Id: Examples.html,v 1.1 2004-07-24 04:35:42 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
- 	JMRI: Scripting FAQ
+ 	JMRI: Scripting Examples
     </TITLE>
     <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI decoderpro dcc script scripts scripting FAQ Jython">
+    <meta name="keywords" content="JMRI decoderpro dcc script scripts scripting examples Jython">
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
     <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -56,63 +56,17 @@
 
     <div class="nomenu" id="mBody">
 	<div id="mainContent">
-
 	    <!-- ------------- -->
 	    <!-- Page Contents --> <!-- Required -->
 	    <!-- ------------- -->
 
-	    <H1>JMRI: Scripting FAQ</H1>
+	    <H1>JMRI: Scripting Examples</H1>
 		<p class=subtitle>
-		    Frequently asked questions about scripting JMRI
-		    with Jython
+		    Examples of JMRI scripting using Jython.
 		</p>
 
 
 		<div class=section>
-		    <h2>Where can I learn more about the Jython language?</h2>
-
-		    <div class=para>
-		    
-		    <p>The 
-		    <A HREF="http://www.jython.org">jython.org site</a>
-		    has some introductory information, though their
-		    tutorial spends too much time on the engineering details
-		    at the beginning.  You might want to skip to the 
-		    <a href="http://www.python.org/doc/tut/node5.html">part about the language itself</a>.
-
-		    <p>IBM Developerworks has two good articles
-		    <A HREF="http://www-106.ibm.com/developerworks/java/library/j-jython.html">here</a>
-		    and
-		    <A HREF="http://www-106.ibm.com/developerworks/java/library/j-alj07064/">here</a>.
-		    They also have a nice tutorial
-		   	<A HREF="http://www-106.ibm.com/developerworks/java/edu/j-dw-java-jython1-i.html?S_TACT=104AHW02">here</a>, although they require you
-		   	to register with your email address to access it.
-			</p>
-		    </div>
-
-		</div>
-
-		<div class=section>
-		    <h2>How do Jython and Python differ?</h2>
-
-		    <div class=para>
-		    
-		    <p>For the purposes of writing JMRI scripts, they
-		    don't differ very much.  Most of the differences involve
-		    what happens in somewhat contrived error cases.
-		    There are also some restrictions
-		    on what you can do with the computer's configuration
-		    information, etc, in Jython, but these are not things
-		    a JMRI script is likely to need.</p>
-		    <P>Some additional information on the differences
-		    is 
-		    <A HREF="http://jython.sourceforge.net/docs/differences.html">available here</a>.
-		    </div>
-
-		</div>
-
-		<div class=section>
-		    <h2>Where can I find some examples of JMRI scripts?</h2>
 
 		    <div class=para>
 		    
@@ -129,9 +83,52 @@
 		    <dt>ListenerExample.py<dd>Example of listing to a Turnout so that
 		    the script can do something every time the Turnout's state changes.
 		    </dl>
-		    <P>
-		    See also the 
-		    <a href="Examples.html">examples page</a>.
+		    </div>
+
+			<p>The rest of this page contains examples of specific techniques.
+		</div>
+
+		<div class=section>
+		    <h2>Listening to more than one Turnout</h2>
+
+		    <div class=para>
+		    
+			A single routine can listen to more than one
+			Turnout, Sensor, etc.
+			<P>
+			If you retain a reference to your listener object, you
+			can attach it to more than one object:
+			<pre>
+m = MyListener()
+turnouts.provideTurnout("12").addPropertyChangeListener(m)
+turnouts.provideTurnout("13").addPropertyChangeListener(m)
+turnouts.provideTurnout("14").addPropertyChangeListener(m)
+			</pre>
+			<p>
+			But how does the listener know what changed?
+			<P>
+			A listener routine looks like this:
+			<pre>
+class MyListener(java.beans.PropertyChangeListener):
+  def propertyChange(self, event):
+    print "change",event.propertyName
+    print "from", event.oldValue, "to", event.newValue
+    print "source systemName", event.source.systemName
+    print "source userName", event.source.userName
+			</pre>
+			<P>
+			When the listener is called, it's given an object
+			(called event above) that contains the name of the
+			property that changed, plus the old and
+			new values of that property. 
+			<P>
+			You can also get a 
+			reference to the original object that
+			changed via "name", and then do whatever you'd like
+			through that.  In the example above, you can
+			retrieve the systemName, userName (or even other types
+			of status).
+			
 		    </div>
 
 		</div>
