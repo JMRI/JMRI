@@ -32,7 +32,7 @@ import javax.swing.event.*;
  *<P>
  * Description:		Extends VariableValue to represent a NMRA long address
  * @author			Bob Jacobsen, Alex Shepherd   Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -192,10 +192,11 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 
             g.setConstraints(v, cs);
 
-            if (i==0) log.debug("Font size "+v.getFont().getSize());
-            float newSize = v.getFont().getSize() * 0.8f;
-            v.setFont(v.getFont().deriveFont(newSize));
-
+            try {
+                if (i==0) log.debug("Font size "+v.getFont().getSize());
+                float newSize = v.getFont().getSize() * 0.8f;
+                v.setFont(v.getFont().deriveFont(newSize));
+            } catch (NoSuchMethodError e) {}  // just carry on with larger fonts
 			j.add ( v );
 
 			cs.gridy++;

@@ -15,7 +15,7 @@ import jmri.jmrix.loconet.SecurityElement;
  * explicitly add the code for Positionable
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class SecurityElementIcon extends JPanel
@@ -50,10 +50,12 @@ public class SecurityElementIcon extends JPanel
         add(lrspeed = new JLabel("????"));
 
         // set the labels to a smaller font
-        float newsize = lrspeed.getFont().getSize() * 0.8f;
-        rlspeed.setFont(lrspeed.getFont().deriveFont(newsize));
-        lrspeed.setFont(lrspeed.getFont().deriveFont(newsize));
-        dir.setFont(lrspeed.getFont().deriveFont(newsize));
+        try {
+            float newsize = lrspeed.getFont().getSize() * 0.8f;
+            rlspeed.setFont(lrspeed.getFont().deriveFont(newsize));
+            lrspeed.setFont(lrspeed.getFont().deriveFont(newsize));
+            dir.setFont(lrspeed.getFont().deriveFont(newsize));
+        } catch (NoSuchMethodError e) {}  // just carry on with larger fonts
 
         // and make movable
         connect();
