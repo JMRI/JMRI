@@ -26,7 +26,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 abstract public class AbstractMRTrafficController {
 
@@ -37,7 +37,7 @@ abstract public class AbstractMRTrafficController {
 	allowUnexpectedReply=false;
         setInstance();
         self = this;
-	java.lang.Runtime.getRuntime().addShutdownHook(new Thread(new cleanupHook(this)));
+	jmri.util.RuntimeUtil.addShutdownHook(new Thread(new cleanupHook(this)));
     }
 
     AbstractMRTrafficController self;  // this is needed for synchronization
@@ -616,6 +616,14 @@ abstract public class AbstractMRTrafficController {
             mTC.notifyReply(mMsg, mDest);
         }
     }
+   
+    // Override the finalize method for this class
+    protected void finalize() {
+            if(log.isDebugEnabled()) log.debug("Cleanup Starts");
+            AbstractMRMessage modeMsg=enterNormalMode();
+	    if(modeMsg!=null)
+                   forwardToPort(modeMsg, null);	
+    }
 
     /**
      * Internal class to remember the Message object and destination
@@ -649,10 +657,7 @@ abstract public class AbstractMRTrafficController {
             mTC = pTC;
         }
         public void run() {
-            log.debug("Cleanup Starts");
-        	AbstractMRMessage modeMsg=mTC.enterNormalMode();
-		if(modeMsg!=null)
-                   mTC.forwardToPort(modeMsg, null);	
+	    mTC.finalize();
         }
     }
 
