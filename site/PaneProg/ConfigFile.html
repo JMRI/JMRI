@@ -16,9 +16,9 @@
 This page is _really_ still under construction! If you can help us make it a better page, please
 join the effort.<P>
 
-<b>Note that this page has not been updated to be consistent with 
-the 0.9 version of JMRI.  Some details are different. It will be
-updated soon (Novemeber 2001).</b>
+<b>This page is very incomplete.  It's contents have been updated to 
+describe the 0.9b4 version of JMRI and DecoderPro, which was 
+distributed in December 2001.</b>
 
 <H2>Configuration files for the DecoderPro Symbolic Programmer</h2>
 
@@ -34,12 +34,12 @@ Contents:
 <UL>
 <LI><A HREF="#createDecoder">Creating a custom decoder configuration file</A>
 <LI><A HREF="#introXML">A very short introduction to XML files</A>
-<LI><A HREF="#">More details of decoder configuration</A>
-<LI><A HREF="#">What the configuration files contain and where they are located</A>
-<LI><A HREF="#">Defining a new programmer format</A>
-<LI><A HREF="#">How the roster is stored; updating it by hand</A>
-<LI><A HREF="#">What's in a locomotive file?</A>
-<LI><A HREF="#"></A>
+<LI><A HREF="#decoderDetails">More details of decoder configuration</A>
+<LI><A HREF="#files">What the configuration files contain and where they are located</A>
+<LI><A HREF="#programmer">Defining a new programmer format</A>
+<LI><A HREF="#roster">How the roster is stored; updating it by hand</A>
+<LI><A HREF="#loco">What's in a locomotive file?</A>
+<LI><A HREF="#debug">Debugging</A>
 </UL>
 In the first section, we walk you through the process of creating a file to
 describe a new file.
@@ -77,7 +77,7 @@ at the top (the examples are from the <A HREF="../xml/Digitrax_1x2.xml">Digitrax
 	<PRE>
 	&lt;?xml version="1.0"?&gt;
 	&lt;!DOCTYPE decoder-config SYSTEM "decoder-config.dtd"&gt;
-	&lt;!-- $Id: ConfigFile.html,v 1.3 2001-12-27 16:31:18 jacobsen Exp $ --&gt;
+	&lt;!-- $Id: ConfigFile.html,v 1.4 2001-12-28 16:28:14 jacobsen Exp $ --&gt;
 	&lt;decoder-config&gt;
 	</PRE>
 Don't mess with these lines; they describe the format of the file.
@@ -337,6 +337,46 @@ makes it easier to read:
 	&lt;tagWithLotsOfAttributes  firstAttribute="foo" secondAttribute="bar"
 			thirdAttribute="biff" fourthAttribute="bing" /&gt;
 </PRE>
+
+<a id="decoderDetails"><h3>More details of decoder configuration</h3></a>
+
+<a id="files"><h3>What the configuration files contain and where they are located</h3></a>
+
+<a id="programmer"><h3>Defining a new programmer format</h3></a>
+
+<a id="roster"><h3>How the roster is stored; updating it by hand</h3></a>
+
+<a id="loco"><h3>What's in a locomotive file?</h3></a>
+
+<a id="debug"><h3>Debugging</h3></a>
+
+Debugging information is printed to "standard output", which is in different
+places depending on what operating system you're using and how you started the
+program.  On a Macintosh classic, it appears in a window that's created with the
+first error message.  With MacOS X, it may appear in a new window, or you may
+have to launch the "Console" application to see it.  On Windows, you probably have
+to run the application from a DOS prompt to see the error messages.
+Error logging is controlled by the "default.lcf" file.  It has lots of comments
+on what the various terms mean.  If you'd like messages to be logged to a file, 
+change the line
+<PRE>
+	log4j.rootCategory= WARN, A1
+</PRE>
+to include the additional logging destination "R":
+<PRE>
+	log4j.rootCategory= WARN, A1,R
+</PRE>
+R is defined later in default.lcf as logging to the "example.log" file.
+You can also get a lot of additional information on what the program is 
+doing by setting the log level to either INFO or DEBUG, e.g.
+<PRE>
+	log4j.rootCategory= INFO, A1
+</PRE>
+Note that the DEBUG level will output a lot of information, and will slow
+down operation significantly.  Its also possible to request more information
+on just parts of the program, but in order for that to be useful you 
+have to have spent some time learning about the internals.
+
 
 <HR>
 <BR>Site hosted by: <BR>
