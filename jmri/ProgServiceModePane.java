@@ -24,9 +24,9 @@ import jmri.ProgListener;
  * Note that you should call the dispose() method when you're really done, so that
  * a ProgModePane object can disconnect its listeners.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
-public class ProgServiceModePane extends javax.swing.JPanel implements java.beans.PropertyChangeListener {
+public class ProgServiceModePane extends ProgModeSelector implements java.beans.PropertyChangeListener {
 
     // GUI member declarations
 
@@ -152,7 +152,7 @@ public class ProgServiceModePane extends javax.swing.JPanel implements java.bean
      * Determine the mode selected by these buttons
      * @return A mode constant or 0 is no button selected
      */
-    public int getSelectedMode() {
+    private int getSelectedMode() {
         if (pagedButton.isSelected())
             return jmri.Programmer.PAGEMODE;
         else if (directBitButton.isSelected())
@@ -243,35 +243,6 @@ public class ProgServiceModePane extends javax.swing.JPanel implements java.bean
         }
     }
 
-    /**
-     * Disable this panel (e.g. if ops mode selected)
-     */
-    public void disable() {
-        addressButton.setEnabled(false);
-        pagedButton.setEnabled(false);
-        directBitButton.setEnabled(false);
-        directByteButton.setEnabled(false);
-        registerButton.setEnabled(false);
-        addressButton.setSelected(false);
-        pagedButton.setSelected(false);
-        directBitButton.setSelected(false);
-        directByteButton.setSelected(false);
-        registerButton.setSelected(false);
-    }
-
-    /**
-     * Enable this panel
-     */
-    public void enable() {
-        addressButton.setEnabled(true);
-        pagedButton.setEnabled(true);
-        directBitButton.setEnabled(true);
-        directByteButton.setEnabled(true);
-        registerButton.setEnabled(true);
-        updateMode();
-    }
-
-
     // no longer needed, disconnect if still connected
     public void dispose() {
         if (connected) {
@@ -283,5 +254,4 @@ public class ProgServiceModePane extends javax.swing.JPanel implements java.bean
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ProgServiceModePane.class.getName());
-
 }
