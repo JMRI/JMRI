@@ -16,39 +16,19 @@ import jmri.util.PythonInterp;
  * global jython interpreter
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
-public class InputWindow extends AbstractAction {
-
-    /**
-     * Constructor just initializes parent class.
-     * @param name Action name
-     */
-    public InputWindow(String name) {
-        super(name);
-    }
+public class InputWindow extends JPanel {
 
     JTextArea area;
     JButton button;
 
-    /**
-     * Invoking this action via an event triggers
-     * display of a file dialog. If a file is selected,
-     * it's then invoked as a script.
-     * @param e
-     */
-    public void actionPerformed(ActionEvent e) {
-        PythonInterp.getPythonInterpreter();
-
+    public InputWindow() {
         java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.jython.JythonBundle");
-
-        JFrame f = new JFrame(rb.getString("TitleInputFrame"));
-        f.getContentPane().setLayout(new javax.swing.BoxLayout(f.getContentPane(), javax.swing.BoxLayout.Y_AXIS));
-        f.getContentPane().add(area = new JTextArea(12, 50));
-
-        JPanel p = new JPanel();
-        p.add(button = new JButton(rb.getString("ButtonExecute")));
-        f.getContentPane().add(p);
+        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
+        
+        add(area = new JTextArea(12, 50));
+        add(button = new JButton(rb.getString("ButtonExecute")));
 
         button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -60,12 +40,12 @@ public class InputWindow extends AbstractAction {
         int size = area.getFont().getSize();
         area.setFont(new Font("Monospaced", Font.PLAIN, size));
 
-        f.pack();
-        f.show();
-
     }
+    
 
     void buttonPressed() {
+        PythonInterp.getPythonInterpreter();
+
         String cmd = area.getText()+"\n";
 
         // The command must end with exactly one \n
