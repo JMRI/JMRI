@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.24 2003-10-17 03:25:31 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.25 2003-11-13 02:10:13 jacobsen Exp $ -->
 
 <!-- This DTD is Copyright 2001, 2003 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -38,6 +38,7 @@
 <!ELEMENT programmer EMPTY>
   <!ATTLIST programmer class CDATA #REQUIRED>
   <!ATTLIST programmer defaultFile CDATA "Basic.xml">
+  <!ATTLIST programmer showEmptyPanes ( yes | no ) "yes" >
   <!ATTLIST programmer verifyBeforeWrite (yes | no) "no" >
 
 <!--  Application section identifies roster options -->
