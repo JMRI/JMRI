@@ -6,7 +6,7 @@ import apps.Apps;
 
 import java.text.MessageFormat;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 /**
  * The JMRI demo program.
@@ -16,7 +16,7 @@ import javax.swing.JFrame;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.61 $
+ * @version     $Revision: 1.62 $
  */
 public class JMRIdemo extends Apps {
 
@@ -27,6 +27,24 @@ public class JMRIdemo extends Apps {
     protected String line1() {
         return MessageFormat.format(rb.getString("JmriDemoVersionCredit"),
                                 new String[]{jmri.Version.name()});
+    }
+
+    /**
+     * Adds the development menu to the default main menu bar.
+     *
+     * @param menuBar
+     * @param frame
+     */
+    protected void createMenus(JMenuBar menuBar, JFrame frame) {
+        super.createMenus(menuBar, frame);
+        developmentMenu(menuBar, frame);
+    }
+
+    /**
+     * Show all systems in the menu bar.
+     */
+    protected void systemsMenu(JMenuBar menuBar, JFrame frame) {
+        menuBar.add(new jmri.jmrix.SystemsMenu());
     }
 
     // Main entry point
