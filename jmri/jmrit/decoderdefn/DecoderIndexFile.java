@@ -2,19 +2,14 @@
 
 package jmri.jmrit.decoderdefn;
 
-import jmri.jmrit.XmlFile;
-import java.io.File;
-import java.util.Enumeration;
-
-import javax.swing.JComboBox;
-import com.sun.java.util.collections.List;
 import com.sun.java.util.collections.ArrayList;
 import com.sun.java.util.collections.Hashtable;
-
-import org.jdom.Attribute;
-import org.jdom.Element;
-import org.jdom.Document;
-import org.jdom.DocType;
+import com.sun.java.util.collections.List;
+import java.io.File;
+import java.util.Enumeration;
+import javax.swing.JComboBox;
+import jmri.jmrit.XmlFile;
+import org.jdom.*;
 import org.jdom.output.XMLOutputter;
 
 // try to limit the JDOM to this class, so that others can manipulate...
@@ -31,7 +26,7 @@ import org.jdom.output.XMLOutputter;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -254,7 +249,7 @@ public class DecoderIndexFile extends XmlFile {
 
 		// create a new decoderIndex
 		DecoderIndexFile index = new DecoderIndexFile();
-        index.fileVersion = _instance.fileVersion;
+                index.fileVersion = _instance.fileVersion;
 
 		// write it out
 		try {
