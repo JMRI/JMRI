@@ -15,21 +15,27 @@ import jmri.Consist;
 import jmri.ConsistManager;
 import jmri.jmrit.roster.*;
 
+import jmri.jmrit.throttle.ThrottleFrameManager;
+
 import java.awt.*;
 
 import javax.swing.*;
+
+import com.sun.java.util.collections.ArrayList;
 
 public class ConsistToolFrame extends javax.swing.JFrame {
 
     // GUI member declarations
     javax.swing.JLabel textAdrLabel = new javax.swing.JLabel();
     javax.swing.JTextField adrTextField = new javax.swing.JTextField(2);
+    javax.swing.JComboBox consistAdrBox = new javax.swing.JComboBox();
 
     javax.swing.JRadioButton isAdvancedConsist = new javax.swing.JRadioButton("Advanced Consist");
     javax.swing.JRadioButton isCSConsist = new javax.swing.JRadioButton("Command Station Consist");
 
     javax.swing.JButton createButton = new javax.swing.JButton();
     javax.swing.JButton deleteButton = new javax.swing.JButton();
+    javax.swing.JButton throttleButton = new javax.swing.JButton();
 
     javax.swing.JLabel textLoco1Label = new javax.swing.JLabel();
     javax.swing.JTextField loco1TextField = new javax.swing.JTextField(4);
@@ -83,6 +89,18 @@ public class ConsistToolFrame extends javax.swing.JFrame {
         adrTextField.setVisible(true);
         adrTextField.setToolTipText("consist being created or deleted");
 
+	initializeConsistBox();
+	
+	consistAdrBox.addActionListener(new java.awt.event.ActionListener() {
+		public void actionPerformed(java.awt.event.ActionEvent e)
+		{
+			consistSelected();
+		}
+	});	    
+
+	consistAdrBox.setVisible(false);
+	consistAdrBox.setToolTipText("Select an existing Consist");
+
         isAdvancedConsist.setSelected(true); 
 	isAdvancedConsist.setVisible(true);
 	isAdvancedConsist.setEnabled(false);
@@ -112,6 +130,15 @@ public class ConsistToolFrame extends javax.swing.JFrame {
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     deleteButtonActionPerformed(e);
+                }
+            });
+
+        throttleButton.setText("Throttle");
+        throttleButton.setVisible(true);
+        throttleButton.setToolTipText("Create the consist AND Start a Throttle for it");
+        throttleButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    throttleButtonActionPerformed(e);
                 }
             });
 
@@ -305,6 +332,7 @@ public class ConsistToolFrame extends javax.swing.JFrame {
 
         addressPanel.add(textAdrLabel);
         addressPanel.add(adrTextField);
+	addressPanel.add(consistAdrBox);
 	addressPanel.add(isAdvancedConsist);
 	addressPanel.add(isCSConsist);
 
@@ -375,6 +403,7 @@ public class ConsistToolFrame extends javax.swing.JFrame {
 
         controlPanel.add(createButton);
         controlPanel.add(deleteButton);
+        controlPanel.add(throttleButton);
 
 	getContentPane().add(controlPanel);
 
@@ -408,6 +437,16 @@ public class ConsistToolFrame extends javax.swing.JFrame {
     }
 
 
+    private void initializeConsistBox() {
+        consistAdrBox.insertItemAt("",0);
+	//consistAdrBox.setSelectedIndex(0);
+	//ArrayList existingConsists = ConsistMan.getConsistList();
+
+	//for(int i=0; i<existingConsists.getLength(); i++) {
+	//	consistAdrBox.setSelectedIndex(i) = existingConsists[i];
+	//}
+     }
+
     public void deleteButtonActionPerformed(java.awt.event.ActionEvent e) {
 	if(adrTextField.getText().equals("")) { 
            	javax.swing.JOptionPane.showMessageDialog(this, 
@@ -423,6 +462,7 @@ public class ConsistToolFrame extends javax.swing.JFrame {
 		ConsistMan.delConsist(address);
 	    }  catch (Exception ex) { }
 	adrTextField.setText("");
+        initializeConsistBox();
     	}
 
     public void createButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -437,6 +477,27 @@ public class ConsistToolFrame extends javax.swing.JFrame {
 	addLoco2ButtonActionPerformed(e);
 	addLoco3ButtonActionPerformed(e);
 	addLoco4ButtonActionPerformed(e);
+	initializeConsistBox();
+    }
+
+    public void throttleButtonActionPerformed(java.awt.event.ActionEvent e) {
+	if(adrTextField.getText().equals("")) { 
+           	javax.swing.JOptionPane.showMessageDialog(this, 
+						"No Consist Address Selected");
+		return; 
+		}
+	  // make sure the consist was created as specified
+	  createButtonActionPerformed(e);
+	  // Create a throttle object with the selected consist address
+	  jmri.jmrit.throttle.ThrottleFrame tf=
+		jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
+		int address=Integer.parseInt(adrTextField.getText());
+		tf.notifyAddressChosen(address);		
+		tf.setVisible(true);
+    	}
+
+    public void consistSelected() {
+	adrTextField.setText("" + consistAdrBox.getSelectedItem());
     }
 
     public void removeLoco1ButtonActionPerformed(java.awt.event.ActionEvent e) {

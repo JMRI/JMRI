@@ -10,6 +10,8 @@
 
 package jmri;
 
+import com.sun.java.util.collections.ArrayList;
+
 public interface  ConsistManager {
 	
 	/**
@@ -27,4 +29,11 @@ public interface  ConsistManager {
 	 *    Does this implementation support Command Station Consists?
 	 **/
 	public boolean isCommandStationConsistPossible();
+
+	/**
+	 *    Get an ArrayList object containning the string representation 
+	 *    of the consist addresses we know about.
+         **/
+	public ArrayList getConsistList();
+
 }

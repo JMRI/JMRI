@@ -14,15 +14,19 @@ package jmri;
 import java.util.Enumeration;
 
 import com.sun.java.util.collections.Hashtable;
+import com.sun.java.util.collections.ArrayList;
 
 import jmri.DccConsist;
 
 public class DccConsistManager implements ConsistManager{
 
-	Hashtable ConsistTable = null;
+	private Hashtable ConsistTable = null;
+
+	private ArrayList ConsistList = null;
 
 	public DccConsistManager(){
 	      ConsistTable = new Hashtable();
+	      ConsistList = new ArrayList();
 	}
 
 	// Clean up Local Storage
@@ -40,6 +44,7 @@ public class DccConsistManager implements ConsistManager{
 			DccConsist consist;
 			consist = new DccConsist(address);
 			ConsistTable.put(Address,consist);
+		 	ConsistList.add(Address);
 			return(consist);
 		}
 	   }
@@ -49,6 +54,7 @@ public class DccConsistManager implements ConsistManager{
 		String Address=Integer.toString(address);
 		((DccConsist)ConsistTable.get(Address)).dispose();
 		ConsistTable.remove(Address);
+		ConsistList.remove(Address);
 	}
 
 	/**
@@ -57,4 +63,9 @@ public class DccConsistManager implements ConsistManager{
          **/
         public boolean isCommandStationConsistPossible() { return false; }
 
+
+	/**
+  	 *  Return the list of consists we know about.
+	 **/
+	public ArrayList getConsistList() { return ConsistList; }
 }
