@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.lenz.XNetSensorManager class.
  * @author	Paul Bender Copyright (c) 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class XNetSensorManagerTest extends TestCase  {
 
@@ -64,11 +64,11 @@ public class XNetSensorManagerTest extends TestCase  {
 		// notify the XPressNet that somebody else changed it...
 		XNetMessage m1 = new XNetMessage(4);
 		m1.setElement(0, 0x42);     // Opcode for feedback response
-		m1.setElement(1, 0x16);     // The feedback encoder address
-		m1.setElement(2, 0x40);     // A bit pattern telling which 
-                                            // bits of the lower nibble 
+		m1.setElement(1, 0x03);     // The feedback encoder address
+		m1.setElement(2, 0x51);     // A bit pattern telling which 
+                                            // bits of the upper nibble 
                                             // are on in the message.
-		m1.setElement(3, 0x14);     // The XOR of everything above
+		m1.setElement(3, 0x10);     // The XOR of everything above
 		xnis.sendTestMessage(m1);
 
 		// see if sensor exists
