@@ -26,7 +26,7 @@ import com.sun.java.util.collections.List;
  * class, which provides a simple GUI for controlling a single turnout.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Id: TurnoutManager.java,v 1.5 2002-04-15 03:16:37 jacobsen Exp $
+ * @version			$Revision: 1.6 $
  * @see             jmri.Turnout
  * @see             jmri.AbstractTurnoutManager
  * @see             jmri.InstanceManager

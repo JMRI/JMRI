@@ -1,21 +1,20 @@
-/** 
- * AbstractSensorManager.java
- *
- * Description:		Abstract base implementation of the SensorManager interface
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version			
- */
+// AbstractSensorManager.java
 
 package jmri;
 
 import java.util.Hashtable;
 
 
+/**
+ * Abstract base implementation of the SensorManager interface
+ * @author			Bob Jacobsen Copyright (C) 2001
+ * @version			$Revision: 1.3 $
+ */
 public abstract class AbstractSensorManager implements SensorManager{
 
 	// abstract methods to be provided by subclasses
 	public abstract Sensor newSensor(String systemName, String userName);
-	
+
 	// abstract methods to be extended by subclasses
 	// to free resources when no longer used
 	public void dispose() throws JmriException {

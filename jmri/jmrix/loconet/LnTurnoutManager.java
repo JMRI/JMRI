@@ -1,17 +1,19 @@
-/**
- * LnTurnoutManager.java
- *
- * Description:		Implement turnout manager for loconet
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version
- */
-
-// System names are "LTnnn", where nnn is the turnout number without padding.
+// LnTurnoutManager.java
 
 package jmri.jmrix.loconet;
 
 import jmri.JmriException;
 import jmri.Turnout;
+
+/**
+ * LnTurnoutManager implements the TurnoutManager.
+ * <P>
+ * System names are "LTnnn", where nnn is the turnout number without padding.
+ *
+ * Description:		Implement turnout manager for loconet
+ * @author			Bob Jacobsen Copyright (C) 2001
+ * @version         $Revision: 1.3 $
+ */
 
 public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements LocoNetListener {
 
