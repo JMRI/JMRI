@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Extend the PaneProgFrame to handle service mode operations
  *
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class PaneServiceProgFrame extends PaneProgFrame
 							implements java.beans.PropertyChangeListener  {
@@ -84,12 +84,10 @@ public class PaneServiceProgFrame extends PaneProgFrame
                 // if not, find a mode to set it to
                 if (mProgrammer.hasMode(Programmer.DIRECTBITMODE)&&directbit)
                     mProgrammer.setMode(jmri.Programmer.DIRECTBITMODE);
-                else if (mProgrammer.hasMode(Programmer.PAGEMODE)&&paged)
-                    mProgrammer.setMode(jmri.Programmer.PAGEMODE);
                 else if (mProgrammer.hasMode(Programmer.DIRECTBYTEMODE)&&directbyte)
                     mProgrammer.setMode(jmri.Programmer.DIRECTBYTEMODE);
-                else if (mProgrammer.hasMode(Programmer.DIRECTBITMODE)&&directbit)
-                    mProgrammer.setMode(jmri.Programmer.DIRECTBITMODE);
+                else if (mProgrammer.hasMode(Programmer.PAGEMODE)&&paged)
+                    mProgrammer.setMode(jmri.Programmer.PAGEMODE);
                 else if (mProgrammer.hasMode(Programmer.REGISTERMODE)&&register)
                     mProgrammer.setMode(jmri.Programmer.REGISTERMODE);
                 else log.warn("No acceptable mode found, leave as found");
