@@ -6,7 +6,7 @@ Currently, these are defined via DTDs. We intend to move to schema quite soon,
 particularly to pick up validity checking.
 
 Subdirectories:
-	samples - 
+	programmers - 
 	decoders -
 	
 The JMRI web page is located at http://jmri.sourceforge.net/
