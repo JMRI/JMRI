@@ -2,9 +2,11 @@
 <!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
 
 <programmer-config>
-<!-- $Id: Comprehensive.xml,v 1.4 2002-10-25 15:07:05 jacobsen Exp $ -->
+<!-- $Id: Comprehensive.xml,v 1.5 2003-01-05 13:40:14 jacobsen Exp $ -->
 		<version author="Mark Gurries, Bob Jacobsen" 
-					version="3" lastUpdated="20020112"/>
+					version="4" lastUpdated="20030102"/>
+
+    <!-- Version 4 - add consist control for functions (Simon Ginsburg) -->
 
 <programmer decoderFilePanes="yes">
 
@@ -210,6 +212,7 @@
 			<label label="Will decoder respond to function requests at consist address?"/>
 			<display item="Consist Address Active For FL in Forward" />
 			<display item="Consist Address Active For FL in Reverse" />
+			<display item="Consist Address Active For F0" />
 			<display item="Consist Address Active For F1" />
 			<display item="Consist Address Active For F2" />
 			<display item="Consist Address Active For F3" />
@@ -218,6 +221,10 @@
 			<display item="Consist Address Active For F6" />
 			<display item="Consist Address Active For F7" />
 			<display item="Consist Address Active For F8" />
+			<display item="Consist Address Active For F9" />
+			<display item="Consist Address Active For F10" />
+			<display item="Consist Address Active For F11" />
+			<display item="Consist Address Active For F12" />
 		</column>
 	</pane>
 	
