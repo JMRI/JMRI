@@ -21,7 +21,7 @@ import org.jdom.Attribute;
  * stored in local variables.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecoderProConfigFrame.java,v 1.3 2001-12-06 16:16:24 jacobsen Exp $
+ * @version			$Id: DecoderProConfigFrame.java,v 1.4 2001-12-09 17:59:43 jacobsen Exp $
  */
 public class DecoderProConfigFrame extends JFrame {
 		
@@ -53,10 +53,10 @@ public class DecoderProConfigFrame extends JFrame {
 	 * a configuration file was found and loaded OK.
 	 */
 	public boolean configure(DecoderProConfigFile file) throws jmri.JmriException {
-		configureConnection(file.getConnectionElement());
-		configureGUI(file.getGuiElement());
-		configureProgrammer(file.getProgrammerElement());
-		return true;
+		boolean connected = configureConnection(file.getConnectionElement());
+		boolean gui = configureGUI(file.getGuiElement());
+		boolean programmer = configureProgrammer(file.getProgrammerElement());
+		return connected&&gui&&programmer;
 	}
 	
 	/**
@@ -132,7 +132,7 @@ public class DecoderProConfigFrame extends JFrame {
 			jmri.jmrix.loconet.locobuffer.LocoBufferAdapter a 
 					= new jmri.jmrix.loconet.locobuffer.LocoBufferAdapter();
 			Vector v = a.getPortNames();
-			log.debug("Found "+v.size()+"LocoBuffer ports");
+			log.debug("Found "+v.size()+" LocoBuffer ports");
 			for (int i=0; i<v.size(); i++) {
 				if (i==0) portName = (String) v.elementAt(i);
 				portBox.addItem(v.elementAt(i));
@@ -187,13 +187,23 @@ public class DecoderProConfigFrame extends JFrame {
 	
 	boolean configureConnection(Element e) throws jmri.JmriException {
 		protocolName = e.getAttribute("class").getValue();
+		protocolBox.setSelectedItem(protocolName);
+		// note that the line above will _change_ the value of portName, as it 
+		// selects a default
+
+		portName = e.getAttribute("port").getValue();
+		portBox.setSelectedItem(e.getAttribute("port").getValue());
 		portName = e.getAttribute("port").getValue();
 		
-		protocolBox.setSelectedItem(protocolName);
-		portBox.setSelectedItem(portName);
+		// check that the specified port exists		
+		if (!e.getAttribute("port").getValue().equals(portBox.getSelectedItem())) {
+			// can't connect to a non-existant port!
+			log.error("Configured port \""+portName+"\" doesn't exist, no connection to layout made");
+			return false;
+		}
 		
 		// handle the specific case (a good use for reflection!)
-		log.debug("Configuring connection with "+protocolName+" "+portName);
+		log.info("Configuring connection with "+protocolName+" "+portName);
 		if (protocolName.equals("LocoNet LocoBuffer")) {
 			//
 			jmri.jmrix.loconet.locobuffer.LocoBufferAdapter a 

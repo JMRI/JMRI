@@ -26,7 +26,7 @@ import org.jdom.Element;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecoderIndexFile.java,v 1.5 2001-12-04 19:41:07 jacobsen Exp $
+ * @version			$Id: DecoderIndexFile.java,v 1.6 2001-12-09 17:59:44 jacobsen Exp $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -54,8 +54,9 @@ public class DecoderIndexFile extends XmlFile {
 	public List matchingDecoderList(String mfg, String family, String decoderMfgID, String decoderVersionID, String model ) {
 		List l = new ArrayList();
 		for (int i = 0; i < numDecoders(); i++) {
-			if ( checkEntry(i, mfg, family, decoderMfgID, decoderVersionID, model ))
+			if ( checkEntry(i, mfg, family, decoderMfgID, decoderVersionID, model )) {
 				l.add(decoderList.get(i));
+			}
 		}
 		return l;
 	}
@@ -68,7 +69,7 @@ public class DecoderIndexFile extends XmlFile {
 		List l = matchingDecoderList(mfg, family, decoderMfgID, decoderVersionID, model );
 		JComboBox b = new JComboBox();
 		for (int i = 0; i < l.size(); i++) {
-			DecoderFile r = (DecoderFile)decoderList.get(i);
+			DecoderFile r = (DecoderFile)l.get(i);
 			b.addItem(r.titleString());
 		}
 		return b;
@@ -146,7 +147,7 @@ public class DecoderIndexFile extends XmlFile {
 	 * clear any existing entries.
 	 */
 	void readFile(String name) throws org.jdom.JDOMException, java.io.FileNotFoundException {
-		if (log.isInfoEnabled()) log.info("readFile "+name);
+		if (log.isDebugEnabled()) log.debug("readFile "+name);
 
 		// read file, find root
 		Element root = rootFromFile(name);

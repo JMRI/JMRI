@@ -23,57 +23,39 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.text.Document;
 
-public class HexVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
+/**
+ * LIke DecVariableValue, except that the string representation is in hexadecimal
+ */
+public class HexVariableValue extends DecVariableValue {
 
 	public HexVariableValue(String name, String comment, boolean readOnly,
 							int cvNum, String mask, int minVal, int maxVal,
 							Vector v, JLabel status, String stdname) {
-		super(name, comment, readOnly, cvNum, mask, v, status, stdname);
-		_maxVal = maxVal;
-		_minVal = minVal;
-		_value = new JTextField("0",4);
-		_defaultColor = _value.getBackground();
-		_value.setBackground(COLOR_UNKNOWN);
-		// connect to the JTextField value, cv
-		_value.addActionListener(this);
-		CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()));
-		cv.addPropertyChangeListener(this);
-		cv.setState(CvValue.FROMFILE);
+		super(name, comment, readOnly, cvNum, mask, minVal, maxVal, v, status, stdname);
 	}
 	
-	int _maxVal;
-	int _minVal;
-	
-	public Object rangeVal() {
-		return new String("Hex: "+_minVal+" - "+_maxVal);
-	}
-	
-	public void actionPerformed(ActionEvent e) {
+	void updatedTextField() {
+		if (log.isDebugEnabled()) log.debug("updatedTextField");
 		// called for new values - set the CV as needed
 		CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
 		// compute new cv value by combining old and request
 		int oldCv = cv.getValue();
 		int newVal;
-		try { newVal = Integer.valueOf(_value.getText(), 16).intValue(); }
+		try { 
+			newVal = Integer.valueOf(_value.getText(), 16).intValue();
+			}
 			catch (java.lang.NumberFormatException ex) { newVal = 0; }
 		int newCv = newValue(oldCv, newVal, getMask());
-		cv.setValue(newCv);
+		if (oldCv != newCv)
+			cv.setValue(newCv);
 	}
-	
-	// to complete this class, fill in the routines to handle "Value" parameter
-	// and to read/write/hear parameter changes. 
-	public String getValueString() {
-		return _value.getText();
-	}
-	public void setIntValue(int i) {
-		setValue(i);
-	}
-	
-	public Component getValue()  { 
-	 	if (getReadOnly())  //
-	 		return new JLabel(_value.getText());
-	 	else
-	 		return _value; 
+
+	/** ActionListener implementations */
+	public void actionPerformed(ActionEvent e) {
+		if (log.isDebugEnabled()) log.debug("actionPerformed");
+		int newVal = Integer.valueOf(_value.getText(),16).intValue();
+		updatedTextField();
+		prop.firePropertyChange("Value", null, new Integer(newVal));
 	}
 
 	public void setValue(int value) { 
@@ -85,110 +67,6 @@ public class HexVariableValue extends VariableValue implements ActionListener, P
 		if (oldVal != value || getState() == VariableValue.UNKNOWN) 
 			actionPerformed(null);
 			prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value));
-	}
-
-	public Component getRep(String format)  { 
-		if (getReadOnly())  //
-			return new JLabel(_value.getText());
-		else {
-			JTextField value = new VarTextField(_value.getDocument(),_value.getText(), 3, this);
-			return value; 
-		}
-	}
-
-	Color _defaultColor;
-	// implement an abstract member to set colors
-	void setColor(Color c) {
-		if (c != null) _value.setBackground(c);
-		else _value.setBackground(_defaultColor);
-		prop.firePropertyChange("Value", null, null);
-	}
-
-	public void read() {
- 		setBusy(true);  // will be reset when value changes
-		super.setState(READ);
-		((CvValue)_cvVector.elementAt(getCvNum())).read(_status);
-	}
-	
- 	public void write() {
- 		if (getReadOnly()) log.error("unexpected write operation when readOnly is set");
- 		setBusy(true);  // will be reset when value changes
- 		super.setState(STORED);
- 		((CvValue)_cvVector.elementAt(getCvNum())).write(_status);
- 	}
-
-	// handle incoming parameter notification
-	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		// notification from CV; check for Value being changed
-		if (e.getPropertyName().equals("Busy")) {
-			if (((Boolean)e.getNewValue()).equals(Boolean.FALSE)) setBusy(false);
-		}
-		else if (e.getPropertyName().equals("State")) {
-			CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
-			setState(cv.getState());
-		}
-		else if (e.getPropertyName().equals("Value")) {
-			// update value of Variable
-			CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
-			int newVal = (cv.getValue() & maskVal(getMask())) >>> offsetVal(getMask());
-			setValue(newVal);  // check for duplicate done inside setVal
-		}
-	}
-
-	// stored value
-	JTextField _value = null;
-
-	/* Internal class extends a JTextField so that its color is consistent with 
-	 * an underlying variable
-	 *
-	 * @author			Bob Jacobsen   Copyright (C) 2001
-	 * @version			
-	 */
-	public class VarTextField extends JTextField {
-
-		VarTextField(Document doc, String text, int col, HexVariableValue var) {
-			super(doc, text, col);
-			_var = var;
-			// get the original color right
-			setBackground(_var._value.getBackground());
-			// listen for changes to ourself
-			addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
-					thisActionPerformed(e);
-				}
-			});		
-			// listen for changes to original state
-			_var.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-				public void propertyChange(java.beans.PropertyChangeEvent e) {
-					originalPropertyChanged(e);
-				}
-			});		
-		}
-
-		HexVariableValue _var;
-	
-		void thisActionPerformed(java.awt.event.ActionEvent e) {
-			// tell original
-			_var.actionPerformed(e);
-		}
-
-		void originalPropertyChanged(java.beans.PropertyChangeEvent e) {
-			// update this color from original state
-			if (e.getPropertyName().equals("State")) {
-				setBackground(_var._value.getBackground());
-			}	
-		}
-	
-	}
-
-	// clean up connections when done
-	public void dispose() {
-		if (log.isDebugEnabled()) log.debug("dispose");
-		if (_value != null) _value.removeActionListener(this);
-		((CvValue)_cvVector.elementAt(getCvNum())).removePropertyChangeListener(this);
-		
-		_value = null;
-		// do something about the VarTextField
 	}
 
 	// initialize logging	

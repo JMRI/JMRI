@@ -47,6 +47,25 @@ public class ProgDebugger implements Programmer  {
 	private int _lastReadCv = -1;
 	public int lastReadCv() { return _lastReadCv; }
 
+	public boolean _confirmOK = false;
+	
+	public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
+		final ProgListener m = p;
+		log.debug("confirm CV: "+CV+" mode: "+getMode()+" will read pass: "+_confirmOK);
+		_lastReadCv = CV;
+		// return a notification via the queue to ensure end
+		Runnable r = new Runnable() {
+			ProgListener l = m;
+			public void run() {
+				log.debug("read CV reply");
+				if (_confirmOK) l.programmingOpReply(_nextRead, ProgListener.OK); 
+				else l.programmingOpReply(_nextRead, ProgListener.ConfirmFailed); 
+			}
+		};
+		javax.swing.SwingUtilities.invokeLater(r);
+
+	}
+	
 	public void readCV(int CV, ProgListener p) throws ProgrammerException {
 		final ProgListener m = p;
 		log.debug("read CV: "+CV+" mode: "+getMode()+" will read "+_nextRead);

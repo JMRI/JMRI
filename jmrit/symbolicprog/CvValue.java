@@ -22,7 +22,7 @@ import javax.swing.JTextField;
  *
  * Description:		Represents a single CV value
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: CvValue.java,v 1.8 2001-12-06 16:16:26 jacobsen Exp $
+ * @version			$Id: CvValue.java,v 1.9 2001-12-09 17:59:44 jacobsen Exp $
  */
 public class CvValue extends AbstractValue implements ProgListener {
 
@@ -120,6 +120,7 @@ public class CvValue extends AbstractValue implements ProgListener {
 	
 	// read, write support
 	private boolean _reading = false;
+	private boolean _confirm = false;
 	
 	public void read(JLabel status) {
 		if (log.isDebugEnabled()) log.debug("read call with Cv number "+_num);
@@ -130,10 +131,34 @@ public class CvValue extends AbstractValue implements ProgListener {
 		if (p != null) {
 			setBusy(true);
 			_reading = true;
+			_confirm = false;
 			try {
 				p.readCV(_num, this);
 			} catch (Exception e) {
 				if (status != null) status.setText("Exception during CV read: "+e);
+				log.warn("Exception during CV read: "+e);
+				setBusy(false);
+			}
+		} else {
+			if (status != null) status.setText("No programmer available!");
+			log.error("No programmer available!");
+		}
+	}
+
+	public void confirm(JLabel status) {
+		if (log.isDebugEnabled()) log.debug("confirm call with Cv number "+_num);
+		// get a programmer reference and write
+		_status = status;
+		if (status != null) status.setText("Reading...");
+		Programmer p = InstanceManager.programmerInstance();
+		if (p != null) {
+			setBusy(true);
+			_reading = false;
+			_confirm = true;
+			try {
+				p.confirmCV(_num, _value, this);
+			} catch (Exception e) {
+				if (status != null) status.setText("Exception during CV confirm: "+e);
 				log.warn("Exception during CV read: "+e);
 				setBusy(false);
 			}
@@ -150,9 +175,9 @@ public class CvValue extends AbstractValue implements ProgListener {
 		if (status != null) status.setText("Writing...");
 		Programmer p = InstanceManager.programmerInstance();
 		if (p != null) {
-			boolean oldBusy = _busy;
 			setBusy(true);
 			_reading = false;
+			_confirm = false;
 			try {
 				p.writeCV(_num, _value, this);
 			} catch (Exception e) {
@@ -169,7 +194,9 @@ public class CvValue extends AbstractValue implements ProgListener {
 	
 	public void programmingOpReply(int value, int retval) {
 		if (log.isDebugEnabled()) log.debug("CV progOpReply for CV "+_num+" with retval "+retval
-											+" during "+(_reading?"read sequence":"write sequence"));
+											+" during "
+											+(_reading?"read sequence":
+												(_confirm?"confirm sequence":"write sequence")));
 		if (!_busy) log.error("opReply when not busy!");
 		boolean oldBusy = _busy;
 		if (retval == OK) {
@@ -181,6 +208,12 @@ public class CvValue extends AbstractValue implements ProgListener {
 				notifyValueChange(value);
 				setState(READ);
 				if (log.isDebugEnabled()) log.debug("CV setting not busy on end read");
+				_busy = false;
+				notifyBusyChange(oldBusy, _busy);
+			}
+			else if (_confirm) {
+				// value doesn't change, just the state
+				setState(READ);
 				_busy = false;
 				notifyBusyChange(oldBusy, _busy);
 			} else {  // writing

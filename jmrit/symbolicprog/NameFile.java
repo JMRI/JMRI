@@ -24,7 +24,7 @@ import org.jdom.Element;
  * locate the one associated with the "xml/names.xml" file.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: NameFile.java,v 1.1 2001-12-04 19:41:12 jacobsen Exp $
+ * @version			$Id: NameFile.java,v 1.2 2001-12-09 17:59:44 jacobsen Exp $
  */
 public class NameFile extends XmlFile {
 	
@@ -66,7 +66,7 @@ public class NameFile extends XmlFile {
 	 * clear any existing entries.
 	 */
 	void readFile(String name) throws org.jdom.JDOMException, java.io.FileNotFoundException {
-		if (log.isInfoEnabled()) log.info("readFile "+name);
+		if (log.isDebugEnabled()) log.debug("readFile "+name);
 
 		// read file, find root
 		Element root = rootFromFile(name);

@@ -29,7 +29,7 @@ import org.jdom.Attribute;
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: PaneProgPane.java,v 1.8 2001-12-07 07:12:15 jacobsen Exp $
+ * @version			$Id: PaneProgPane.java,v 1.9 2001-12-09 17:59:44 jacobsen Exp $
  */
 public class PaneProgPane extends javax.swing.JPanel 
 							implements java.beans.PropertyChangeListener  {
@@ -74,6 +74,15 @@ public class PaneProgPane extends javax.swing.JPanel
 			// load each column
 			p.add(newColumn( ((Element)(colList.get(i)))));
 		}
+		// for all "row" elements ...
+		List rowList = pane.getChildren("row");
+		for (int i=0; i<rowList.size(); i++) {
+			// add separators except at beginning
+			if (i != 0) p.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
+			// load each row
+			p.add(newRow( ((Element)(rowList.get(i)))));
+		}
+		
 		// add glue to the right to allow resize - but this isn't working as expected? Alignment?
 		add(Box.createHorizontalGlue());
 
@@ -227,27 +236,31 @@ public class PaneProgPane extends javax.swing.JPanel
 		if (_read) readPane();
 		else writePane();
 	}
-	
+		
 	/**
 	 * Create a single column from the JDOM column Element
 	 */
-	public JPanel newColumn(Element column) {
+	public JPanel newColumn(Element element) {
 
-		// create a panel to add as a new column
+		// create a panel to add as a new column or row
 		JPanel c = new JPanel();
 		GridBagLayout g = new GridBagLayout();
 		GridBagConstraints cs = new GridBagConstraints();
 		c.setLayout(g);
 		
 		// handle the xml definition
-		// for all elements in the column
-		List elemList = column.getChildren();
+		// for all elements in the column or row
+		List elemList = element.getChildren();
+		if (log.isDebugEnabled()) log.debug("newColumn starting with "+elemList.size()+" elements");
 		for (int i=0; i<elemList.size(); i++) {
+			
+			// update the grid position
 			cs.gridy++;
 			cs.gridx = 0;
-			
+				
 			Element e = (Element)(elemList.get(i));
 			String name = e.getName();
+			if (log.isDebugEnabled()) log.debug("newColumn processing "+name+" element");
 			// decode the type
 			if (name.equals("display")) { // its a variable
 				// load the variable
@@ -305,8 +318,16 @@ public class PaneProgPane extends javax.swing.JPanel
 				c.add(l);
 				cs.gridwidth = 1;
 			} 
+			else if (name.equals("row")) {
+				// nested "row" elements ...
+				cs.gridwidth = GridBagConstraints.REMAINDER;
+				JPanel l = newRow(e);
+				g.setConstraints(l, cs);
+				c.add(l);
+				cs.gridwidth = 1;
+			}
 			else { // its a mistake
-				log.error("No code to handle element of type "+e.getName());
+				log.error("No code to handle element of type "+e.getName()+" in newColumn");
 			}
 		}
 		// add glue to the bottom to allow resize
@@ -316,7 +337,107 @@ public class PaneProgPane extends javax.swing.JPanel
 	}
 	
 	/**
-	 * Add the representation of a single variable to a column.  The 
+	 * Create a single row from the JDOM column Element
+	 */
+	public JPanel newRow(Element element) {
+
+		// create a panel to add as a new column or row
+		JPanel c = new JPanel();
+		GridBagLayout g = new GridBagLayout();
+		GridBagConstraints cs = new GridBagConstraints();
+		c.setLayout(g);
+		
+		// handle the xml definition
+		// for all elements in the column or row
+		List elemList = element.getChildren();
+		if (log.isDebugEnabled()) log.debug("newRow starting with "+elemList.size()+" elements");
+		for (int i=0; i<elemList.size(); i++) {
+
+			// update the grid position
+			cs.gridy = 0;
+			cs.gridx++;
+				
+			Element e = (Element)(elemList.get(i));
+			String name = e.getName();
+			if (log.isDebugEnabled()) log.debug("newRow processing "+name+" element");
+			// decode the type
+			if (name.equals("display")) { // its a variable
+				// load the variable
+				newVariable( e, c, g, cs);
+			}
+			else if (name.equals("separator")) { // its a separator
+				JSeparator j = new JSeparator(javax.swing.SwingConstants.VERTICAL);
+				cs.fill = GridBagConstraints.BOTH;
+				cs.gridheight = GridBagConstraints.REMAINDER;
+				g.setConstraints(j, cs);
+				c.add(j);
+				cs.fill = GridBagConstraints.NONE;
+				cs.gridheight = 1;
+			}
+			else if (name.equals("label")) { // its  a label
+				JLabel l = new JLabel(e.getAttribute("label").getValue());
+				l.setAlignmentX(1.0f);
+				cs.gridheight = GridBagConstraints.REMAINDER;
+				g.setConstraints(l, cs);
+				c.add(l);
+				cs.gridheight = 1;
+			}
+			else if (name.equals("cvtable")) {
+				log.debug("starting to build CvTable pane");
+				// this is copied from SymbolicProgFrame
+				JTable			cvTable		= new JTable(_cvModel);
+				JScrollPane 	cvScroll	= new JScrollPane(cvTable);
+				cvTable.setDefaultRenderer(JTextField.class, new ValueRenderer());
+				cvTable.setDefaultRenderer(JButton.class, new ValueRenderer());
+				cvTable.setDefaultEditor(JTextField.class, new ValueEditor());
+				cvTable.setDefaultEditor(JButton.class, new ValueEditor());
+				cvTable.setRowHeight(new JButton("X").getPreferredSize().height);
+				cvScroll.setColumnHeaderView(cvTable.getTableHeader());
+				// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
+				// instead of forcing the columns to fill the frame (and only fill)
+				cvTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+				cs.gridheight = GridBagConstraints.REMAINDER;
+				g.setConstraints(cvScroll, cs);
+				c.add(cvScroll);
+				cs.gridheight = 1;
+				log.debug("end of building CvTable pane");
+				
+			}
+			else if (name.equals("fnmapping")) {
+				FnMapPanel l = new FnMapPanel(_varModel, varList);
+				cs.gridheight = GridBagConstraints.REMAINDER;
+				g.setConstraints(l, cs);
+				c.add(l);
+				cs.gridheight = 1;
+			} 
+			else if (name.equals("dccaddress")) {
+				JPanel l = new DccAddressPanel(_varModel);			
+				cs.gridheight = GridBagConstraints.REMAINDER;
+				g.setConstraints(l, cs);
+				c.add(l);
+				cs.gridheight = 1;
+			} 
+			else if (name.equals("column")) {
+				// nested "column" elements ...
+				cs.gridheight = GridBagConstraints.REMAINDER;
+				JPanel l = newColumn(e);
+				g.setConstraints(l, cs);
+				c.add(l);
+				cs.gridheight = 1;
+			}
+			else { // its a mistake
+				log.error("No code to handle element of type "+e.getName()+" in newRow");
+			}
+		}
+		// add glue to the bottom to allow resize
+		c.add(Box.createVerticalGlue());
+		
+		return c;
+	}
+	
+	/**
+	 * Add the representation of a single variable.  The 
 	 * variable is defined by a JDOM variable Element from the XML file.
 	 */
 	public void newVariable( Element var, JComponent col, GridBagLayout g, GridBagConstraints cs) {

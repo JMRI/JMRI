@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a CV programmer format -->
-<!-- $Id: programmer-config.dtd,v 1.9 2001-12-07 07:16:28 jacobsen Exp $ -->
+<!-- $Id: programmer-config.dtd,v 1.10 2001-12-09 18:00:16 jacobsen Exp $ -->
 
 <!ELEMENT programmer-config (version, programmer)>
 <!ATTLIST programmer-config xmlns:programmer CDATA "">
@@ -22,11 +22,12 @@
 
 
 <!-- The pane sections define each tabbed pane of options -->
-<!ELEMENT pane (column*)>
+<!ELEMENT pane (column | row)*>
 <!ATTLIST pane name CDATA #REQUIRED>  <!-- Name used for identification -->
 
-<!-- The column section describes each column in the pane -->
-<!ELEMENT column ((display | label | separator | cvtable | fnmapping | dccaddress )*)>
+<!-- The column and row sections describe the layout of a pane -->
+<!ELEMENT column ((row | display | label | separator | cvtable | fnmapping | dccaddress )*)>
+<!ELEMENT row ((column | display | label | separator | cvtable | fnmapping | dccaddress )*)>
 
 <!-- Insert a separator line -->
 <!ELEMENT separator EMPTY>
@@ -52,6 +53,6 @@
 <!ATTLIST display label CDATA  #IMPLIED>  <!-- optional, default is from name -->
 <!ATTLIST display tooltip CDATA #IMPLIED>  <!-- optional, default is from variable tooltip -->
 <!ATTLIST display layout ( left | above | below | right ) "right" > <!-- label position -->
-<!ATTLIST display format  (default | slider | radiobuttons | checkbox 
+<!ATTLIST display format  (default | vslider | hslider | radiobuttons | checkbox 
 							onradiobutton | offradiobutton) "default" >
 

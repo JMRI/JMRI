@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
 <programmer-config xmlns:programmer="http://jmri.sourceforge.net/xml/programmer">
-<!-- $Id: MultiPane.xml,v 1.12 2001-12-07 07:16:28 jacobsen Exp $ -->
+<!-- $Id: MultiPane.xml,v 1.13 2001-12-09 18:00:17 jacobsen Exp $ -->
 		<version author="" version="" lastUpdated=""/>
 
-<programmer>
+<programmer decoderFilePanes="yes">
 
 	<pane name="Basic">
 		<column>
@@ -43,9 +43,20 @@
 		<column>
 			<display name="Speed Table Definition" 
 					format="offradiobutton" layout="above" label=""/>
-			<display name="Vstart"/>
-			<display name="Vmid"/>
-			<display name="Vhigh"/>
+			<row>
+				<column>
+					<display name="Vstart" layout="below" format="vslider"/>
+					<display name="Vstart" layout="below"/>
+				</column>
+				<column>
+					<display name="Vmid" layout="below" format="vslider"/>
+					<display name="Vmid" layout="below"/>
+				</column>
+				<column>
+					<display name="Vhigh" layout="below" format="vslider"/>
+					<display name="Vhigh" layout="below"/>
+				</column>
+			</row>
 			<display name="Forward Trim"/>
 			<display name="Reverse Trim"/>
 		</column>

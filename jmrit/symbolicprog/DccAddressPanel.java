@@ -3,6 +3,7 @@
 package jmri.jmrit.symbolicprog;
 
 import javax.swing.*;
+import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
 import jmri.jmrit.symbolicprog.*;
@@ -12,7 +13,7 @@ import com.sun.java.util.collections.List;
  * Provide a graphical representation of the DCC address, either long or short
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DccAddressPanel.java,v 1.3 2001-12-07 07:12:15 jacobsen Exp $
+ * @version			$Id: DccAddressPanel.java,v 1.4 2001-12-09 17:59:44 jacobsen Exp $
  */
 public class DccAddressPanel extends JPanel {
 
@@ -40,21 +41,14 @@ public class DccAddressPanel extends JPanel {
 		// connect to variables
 		primaryAddr = variableModel.findVar("Primary Address");
 		if (primaryAddr==null) log.error("DCC Address monitor did not find a Primary Address variable");
-		else primaryAddr.addPropertyChangeListener(dccNews);
+
 		extendAddr = variableModel.findVar("Extended Address");
 		if (extendAddr==null) log.warn("DCC Address monitor did not find an Extended Address variable");
-		else extendAddr.addPropertyChangeListener(dccNews);
+
 		addMode = (EnumVariableValue)variableModel.findVar("Address Format");
 		if (addMode==null) log.warn("DCC Address monitor didnt find an Address Format variable");
 		else addMode.addPropertyChangeListener(dccNews);
-		
-		// connect this text field to the variables
-		val.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				updatedTextField();
-			}
-		});
-		
+				
 		// show the selection
 		add(new JLabel("  Extended Addressing: "));
 		add(addMode.getRep("checkbox"));
@@ -63,30 +57,15 @@ public class DccAddressPanel extends JPanel {
 		if (addMode == null || extendAddr == null || addMode.getIntValue()==0) {
 			// short address
 			val.setBackground(primaryAddr.getValue().getBackground());
-			val.setText(primaryAddr.getValueString());
+			val.setDocument( ((JTextField)primaryAddr.getValue()).getDocument());
 		} else {
 			// long address
 			val.setBackground(extendAddr.getValue().getBackground());
-			val.setText(extendAddr.getValueString());
+			val.setDocument( ((JTextField)extendAddr.getValue()).getDocument());
 		}
 		
 	}
 
-	void updatedTextField() {
-		// check whether this is long or short address
-		if (addMode == null || extendAddr == null || addMode.getIntValue()==0) {
-			// short address
-			primaryAddr.setIntValue(Integer.valueOf(val.getText()).intValue());
-			// now that value is set, get color
-			val.setBackground(primaryAddr.getValue().getBackground());
-		} else {
-			// long address
-			extendAddr.setIntValue(Integer.valueOf(val.getText()).intValue());
-			// now that value is set, get color
-			val.setBackground(extendAddr.getValue().getBackground());
-		}
-	}
-	
 	void updateDccAddress() {
 		if (log.isDebugEnabled()) 
 			log.debug("updateDccAddress: primary "+(primaryAddr==null?"<null>":primaryAddr.getValueString())+
@@ -95,13 +74,11 @@ public class DccAddressPanel extends JPanel {
 		String newAddr = null;
 		if (addMode == null || extendAddr == null || !addMode.getValueString().equals("1")) {
 			// short address mode
-			if (primaryAddr != null && !primaryAddr.getValueString().equals(""))
-				newAddr = primaryAddr.getValueString();
+			val.setDocument( ((JTextField)primaryAddr.getValue()).getDocument());
 		}
 		else {
 			// long address
-			if (extendAddr != null && !extendAddr.getValueString().equals(""))
-				newAddr = extendAddr.getValueString();
+			val.setDocument( ((JTextField)extendAddr.getValue()).getDocument());
 		}
 		// update if needed
 		if (newAddr!=null) val.setText(newAddr);

@@ -20,7 +20,7 @@ import com.sun.java.util.collections.List;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: CombinedLocoSelPane.java,v 1.1 2001-12-07 07:15:51 jacobsen Exp $
+ * @version			$Id: CombinedLocoSelPane.java,v 1.2 2001-12-09 17:59:44 jacobsen Exp $
  */
 public class CombinedLocoSelPane extends javax.swing.JPanel  {
 		
@@ -95,7 +95,7 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 			iddecoder.addActionListener( new ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					if (log.isInfoEnabled()) log.info("identify decoder pressed");
-					startIdentifyLoco();
+					startIdentifyDecoder();
 				}
 			});
 			pane1a.add(iddecoder);
@@ -172,6 +172,8 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 		JComboBox temp = DecoderIndexFile.instance().matchingComboBox(null, null, Integer.toString(mfgID), Integer.toString(modelID), null);
 		if (log.isDebugEnabled()) log.debug("selectDecoder found "+temp.getItemCount()+" matches");
 		// install all those in the JComboBox in place of the longer, original list
+		System.out.println((String)temp.getItemAt(0));
+		System.out.println((String)temp.getItemAt(1));
 		if (temp.getItemCount() > 0) {
 			decoderBox.setModel(temp.getModel());
 			decoderBox.setSelectedIndex(0);

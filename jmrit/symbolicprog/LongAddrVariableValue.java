@@ -15,15 +15,15 @@ import jmri.ProgListener;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.beans.PropertyChangeListener;
 import java.util.Vector;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.text.Document;
 
-public class LongAddrVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
+public class LongAddrVariableValue extends VariableValue 
+								implements ActionListener, PropertyChangeListener, FocusListener {
 
 	public LongAddrVariableValue(String name, String comment, boolean readOnly,
 							int cvNum, String mask, int minVal, int maxVal,
@@ -36,6 +36,7 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 		_value.setBackground(COLOR_UNKNOWN);
 		// connect to the JTextField value, cv
 		_value.addActionListener(this);
+		_value.addFocusListener(this);
 		// connect for notification
 		CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()));
 		cv.addPropertyChangeListener(this);
@@ -54,7 +55,22 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 		return new String("Long address");
 	}
 	
-	public void actionPerformed(ActionEvent e) {
+	String oldContents = "";
+	
+	void enterField() {
+		oldContents = _value.getText();
+	}
+	void exitField() {
+		if (!oldContents.equals(_value.getText())) { 
+			int newVal = Integer.valueOf(_value.getText()).intValue();
+			int oldVal = Integer.valueOf(oldContents).intValue();
+			updatedTextField();
+			prop.firePropertyChange("Value", new Integer(oldVal), new Integer(newVal));
+		}
+	}
+	
+	void updatedTextField() {
+		if (log.isDebugEnabled()) log.debug("actionPerformed");
 		// called for new values - set the CV as needed
 		CvValue cv17 = (CvValue)_cvVector.elementAt(getCvNum());
 		CvValue cv18 = (CvValue)_cvVector.elementAt(getCvNum()+1);
@@ -69,6 +85,25 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 		cv17.setValue(newCv17);
 		cv18.setValue(newCv18);
 		if (log.isDebugEnabled()) log.debug("new value "+newVal+" gives CV17="+newCv17+" CV18="+newCv18);
+	}
+	
+	/** ActionListener implementations */
+	public void actionPerformed(ActionEvent e) {
+		if (log.isDebugEnabled()) log.debug("actionPerformed");
+		int newVal = Integer.valueOf(_value.getText()).intValue();
+		updatedTextField();
+		prop.firePropertyChange("Value", null, new Integer(newVal));
+	}
+	
+	/** FocusListener implementations */
+	public void focusGained(FocusEvent e) {
+		if (log.isDebugEnabled()) log.debug("focusGained");
+		enterField();
+	}
+	
+	public void focusLost(FocusEvent e) {
+		if (log.isDebugEnabled()) log.debug("focusLost");
+		exitField();
 	}
 	
 	// to complete this class, fill in the routines to handle "Value" parameter
@@ -229,6 +264,17 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 			addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					thisActionPerformed(e);
+				}
+			});		
+			addFocusListener(new java.awt.event.FocusListener() {
+				public void focusGained(FocusEvent e) {
+					if (log.isDebugEnabled()) log.debug("focusGained");
+					enterField();
+				}
+	
+				public void focusLost(FocusEvent e) {
+					if (log.isDebugEnabled()) log.debug("focusLost");
+					exitField();
 				}
 			});		
 			// listen for changes to original state

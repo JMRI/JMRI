@@ -10,7 +10,7 @@ package jmri;
  * Callbacks are guaranteed to be in the Swing execution thread.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Id: ProgListener.java,v 1.3 2001-11-10 21:32:11 jacobsen Exp $
+ * @version			$Id: ProgListener.java,v 1.4 2001-12-09 17:59:44 jacobsen Exp $
  */
 public interface ProgListener extends java.util.EventListener{
 	/** Receive a callback at the end of a programming operation.
@@ -48,6 +48,9 @@ public interface ProgListener extends java.util.EventListener{
 	/** Constant denoting that the user (human or software) aborted the request
 	 * before completion */
 	public final int UserAborted    = 0x20;
+
+	/** Constant denoting that confirm failed, likely due to another value being present */
+	public final int ConfirmFailed    = 0x40;
 		
 }
 

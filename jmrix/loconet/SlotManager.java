@@ -221,13 +221,18 @@ public class SlotManager implements LocoNetListener, Programmer {
 						
 						// parse out value returned
 						int value = -1;
+						int status = 0;
+						if (_progConfirm ) {
+							// read command, get value; check if OK
+							value = _slots[i].cvval();
+							if (value != _confirmVal) status = status | jmri.ProgListener.ConfirmFailed;
+							}
 						if (_progRead ) {
 							// read command, get value
 							value = _slots[i].cvval();
 							}
 						// parse out status
-						int status = 0;
-						if ( (_slots[i].pcmd() & LnConstants.PSTAT_NO_DECODER ) != 0 )  
+							if ( (_slots[i].pcmd() & LnConstants.PSTAT_NO_DECODER ) != 0 )  
 							status = status + jmri.ProgListener.NoLocoDetected;
 						if ( (_slots[i].pcmd() & LnConstants.PSTAT_WRITE_FAIL ) != 0 )  
 							status = status + jmri.ProgListener.NoAck;
@@ -253,28 +258,45 @@ public class SlotManager implements LocoNetListener, Programmer {
 		// 1 is commandPending
 		// 2 is commandExecuting
 		// 0 is notProgramming
-	boolean  _progRead = false;
+	boolean _progRead = false;
+	boolean _progConfirm = false;
+	int _confirmVal;
 	
 	public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
 		useProgrammer(p);
 		_progRead = false;
+		_progConfirm = false;
 		// set commandPending state
 		progState = 1;
 		
 		// format and send message
-		LnTrafficController.instance().sendLocoNetMessage(progTaskStart(getMode(), val, CV));
+		LnTrafficController.instance().sendLocoNetMessage(progTaskStart(getMode(), val, CV, true));
 
 		}
 		
-	public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+	public void confirmCV(int CV, int val, ProgListener p) throws jmri.ProgrammerException {
 		useProgrammer(p);
-		_progRead = true;
+		_progRead = false;
+		_progConfirm = true;
+		_confirmVal = val;
+		
 		// set commandPending state
 		progState = 1;
 		
 		// format and send message
-		LnTrafficController.instance().sendLocoNetMessage(progTaskStart(getMode(), -1, CV));
-		}
+		LnTrafficController.instance().sendLocoNetMessage(progTaskStart(getMode(), -1, CV, true));
+	}
+
+	public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+		useProgrammer(p);
+		_progRead = true;
+		_progConfirm = false;
+		// set commandPending state
+		progState = 1;
+		
+		// format and send message
+		LnTrafficController.instance().sendLocoNetMessage(progTaskStart(getMode(), -1, CV, true));
+	}
 
 	private jmri.ProgListener _usingProgrammer = null;
 	
@@ -292,7 +314,7 @@ public class SlotManager implements LocoNetListener, Programmer {
 	}
 	
 	// internal method to create the LocoNetMessage for programmer task start
-	protected LocoNetMessage progTaskStart(int mode, int val, int cvnum) throws jmri.ProgrammerException {
+	protected LocoNetMessage progTaskStart(int mode, int val, int cvnum, boolean write) throws jmri.ProgrammerException {
 	
 		int addr = cvnum-1;    // cvnum is in human readable form; addr is what's sent over loconet
 		
@@ -304,7 +326,7 @@ public class SlotManager implements LocoNetListener, Programmer {
 		
 		// parse the programming command
 		int pcmd = 0;
-		if (val != -1) pcmd = pcmd | 0x40;  // write command
+		if (write) pcmd = pcmd | 0x40;  // write command
 		if (mode == jmri.Programmer.PAGEMODE) pcmd = pcmd | 0x20;
 		else if (mode == jmri.Programmer.DIRECTBYTEMODE) pcmd = pcmd | 0x28;
 		else if (mode == jmri.Programmer.REGISTERMODE) pcmd = pcmd | 0x10;

@@ -131,17 +131,21 @@ public class PaneProgFrame extends javax.swing.JFrame
 		// and build the GUI
 		loadProgrammerFile(r);
 
-		// add extra panes from the decoder file
-		if (decoderRoot != null) {
-			List paneList = decoderRoot.getChildren("pane");
-			if (log.isDebugEnabled()) log.debug("will process "+paneList.size()+" pane definitions from decoder file");
-			for (int i=0; i<paneList.size(); i++) {
-				// load each pane
-				String pname = ((Element)(paneList.get(i))).getAttribute("name").getValue();
-				newPane( pname, ((Element)(paneList.get(i))));
+		// optionally, add extra panes from the decoder file
+		Attribute a;	
+		if ( (a = programmerRoot.getChild("programmer").getAttribute("decoderFilePanes")) != null
+				&& a.getValue().equals("yes")) {
+			if (decoderRoot != null) {
+				List paneList = decoderRoot.getChildren("pane");
+				if (log.isDebugEnabled()) log.debug("will process "+paneList.size()+" pane definitions from decoder file");
+				for (int i=0; i<paneList.size(); i++) {
+					// load each pane
+					String pname = ((Element)(paneList.get(i))).getAttribute("name").getValue();
+					newPane( pname, ((Element)(paneList.get(i))));
+				}
 			}
 		}
-			
+		
 		// ensure cleanup at end
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new java.awt.event.WindowAdapter() {
@@ -227,11 +231,13 @@ public class PaneProgFrame extends javax.swing.JFrame
 			log.error("Exception in programmer SAXBuilder "+e);
 		}
 		// find root
-		Element proot = pdoc.getRootElement();
+		programmerRoot = pdoc.getRootElement();
 					
 		// load programmer config from programmer tree
-		readConfig(proot, r);
+		readConfig(programmerRoot, r);
   	}
+  	
+  	Element programmerRoot = null;
   	
 	// handle resizing when first shown
   	private boolean mShown = false;

@@ -14,16 +14,17 @@ import jmri.InstanceManager;
 import jmri.ProgListener;
 
 import java.awt.Component;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
 import java.beans.PropertyChangeListener;
 import java.util.Vector;
-import java.awt.Color;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.text.Document;
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.event.*;
+import javax.swing.text.*;
+import com.sun.java.util.collections.ArrayList;
 
-public class DecVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
+public class DecVariableValue extends VariableValue 
+		implements ActionListener, PropertyChangeListener, FocusListener {
 
 	public DecVariableValue(String name, String comment, boolean readOnly,
 							int cvNum, String mask, int minVal, int maxVal,
@@ -36,6 +37,7 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 		_value.setBackground(COLOR_UNKNOWN);
 		// connect to the JTextField value, cv
 		_value.addActionListener(this);
+		_value.addFocusListener(this);
 		CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()));
 		cv.addPropertyChangeListener(this);
 		cv.setState(CvValue.FROMFILE);
@@ -48,7 +50,29 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 		return new String("Decimal: "+_minVal+" - "+_maxVal);
 	}
 	
-	public void actionPerformed(ActionEvent e) {
+	String oldContents = "";
+	
+	void enterField() {
+		oldContents = _value.getText();
+	}
+	void exitField() {
+		if (!oldContents.equals(_value.getText())) { 
+			int newVal = Integer.valueOf(_value.getText()).intValue();
+			int oldVal = Integer.valueOf(oldContents).intValue();
+			updatedTextField();
+			prop.firePropertyChange("Value", new Integer(oldVal), new Integer(newVal));
+		}
+	}
+	
+	/**
+	 * Invoked when a permanent change to the JTextField has been 
+	 * made.  Note that this does _not_ notify property listeners;
+	 * that should be done by the invoker, who may or may not
+	 * know what the old value was. Can be overwridden in subclasses
+	 * that want to display the value differently.
+	 */
+	void updatedTextField() {
+		if (log.isDebugEnabled()) log.debug("updatedTextField");
 		// called for new values - set the CV as needed
 		CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
 		// compute new cv value by combining old and request
@@ -59,9 +83,29 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 			}
 			catch (java.lang.NumberFormatException ex) { newVal = 0; }
 		int newCv = newValue(oldCv, newVal, getMask());
-		cv.setValue(newCv);
+		if (oldCv != newCv)
+			cv.setValue(newCv);
 	}
 	
+	/** ActionListener implementations */
+	public void actionPerformed(ActionEvent e) {
+		if (log.isDebugEnabled()) log.debug("actionPerformed");
+		int newVal = Integer.valueOf(_value.getText()).intValue();
+		updatedTextField();
+		prop.firePropertyChange("Value", null, new Integer(newVal));
+	}
+	
+	/** FocusListener implementations */
+	public void focusGained(FocusEvent e) {
+		if (log.isDebugEnabled()) log.debug("focusGained");
+		enterField();
+	}
+	
+	public void focusLost(FocusEvent e) {
+		if (log.isDebugEnabled()) log.debug("focusLost");
+		exitField();
+	}
+
 	// to complete this class, fill in the routines to handle "Value" parameter
 	// and to read/write/hear parameter changes. 
 	public String getValueString() {
@@ -82,12 +126,31 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 	public Component getRep(String format)  { 
 		if (getReadOnly())  //
 			return new JLabel(_value.getText());
+		else if (format.equals("vslider")) {
+			DecVarSlider b = new DecVarSlider(this);
+			b.setOrientation(JSlider.VERTICAL);
+			sliders.add(b);
+			return b;
+		}
+		else if (format.equals("hslider")) {
+			DecVarSlider b = new DecVarSlider(this);
+			b.setOrientation(JSlider.HORIZONTAL);
+			sliders.add(b);
+			return b;
+		}
 		else {
 			JTextField value = new VarTextField(_value.getDocument(),_value.getText(), 3, this);
 			return value; 
 		}
 	}
 
+	ArrayList sliders = new ArrayList();
+	
+	/**
+	 * Set a new value, including notification as needed.  This does the
+	 * conversion from string to int, so if the place where formatting
+	 * needs to be applied
+	 */
 	public void setValue(int value) { 
 		int oldVal;
 		try { 
@@ -97,12 +160,13 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 		if (log.isDebugEnabled()) log.debug("setValue with new value "+value+" old value "+oldVal);
 		_value.setText(""+value);
 		if (oldVal != value || getState() == VariableValue.UNKNOWN) 
-			actionPerformed(null);
+			updatedTextField();
 			prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value));
 	}
 
 	Color _defaultColor;
 	// implement an abstract member to set colors
+	Color getColor() { return _value.getBackground(); }
 	void setColor(Color c) {
 		if (c != null) _value.setBackground(c);
 		else _value.setBackground(_defaultColor);
@@ -146,6 +210,7 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 	JTextField _value = null;
 
 	
+
 	/* Internal class extends a JTextField so that its color is consistent with 
 	 * an underlying variable
 	 *
@@ -163,6 +228,17 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 			addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					thisActionPerformed(e);
+				}
+			});		
+			addFocusListener(new java.awt.event.FocusListener() {
+				public void focusGained(FocusEvent e) {
+					if (log.isDebugEnabled()) log.debug("focusGained");
+					enterField();
+				}
+	
+				public void focusLost(FocusEvent e) {
+					if (log.isDebugEnabled()) log.debug("focusLost");
+					exitField();
 				}
 			});		
 			// listen for changes to original state

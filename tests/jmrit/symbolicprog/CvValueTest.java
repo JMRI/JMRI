@@ -58,6 +58,62 @@ public class CvValueTest extends TestCase {
 		assert(cv.getState() == CvValue.READ);
 	}
 	
+	// check a confirm operation
+	public void testCvValConfirmFail() {
+		// initialize the system
+		ProgDebugger p = new ProgDebugger();
+		InstanceManager.setProgrammer(p);
+		p._confirmOK = false;
+		
+		// create the CV value
+		CvValue cv = new CvValue(66);
+		cv.setValue(91);
+
+		cv.confirm(null);
+		// wait for reply (normally, done by callback; will check that later)
+		int i = 0;
+		while ( cv.isBusy() && i++ < 100 )  {
+			try {
+				Thread.sleep(10);
+			} catch (Exception e) {
+			}
+		}
+		if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+cv.getValue()+" state="+cv.getState());
+		if (i==0) log.warn("textCvValRead saw an immediate return from isBusy");
+
+		Assert.assertTrue("loop passes before 100", i<100);
+		Assert.assertEquals("CV value ", 91, cv.getValue());
+		Assert.assertEquals("CV state ", CvValue.UNKNOWN, cv.getState());
+	}
+	
+	// check a confirm operation
+	public void testCvValConfirmPass() {
+		// initialize the system
+		ProgDebugger p = new ProgDebugger();
+		p._confirmOK = true;
+		InstanceManager.setProgrammer(p);
+		
+		// create the CV value
+		CvValue cv = new CvValue(66);
+		cv.setValue(123);
+
+		cv.confirm(null);
+		// wait for reply (normally, done by callback; will check that later)
+		int i = 0;
+		while ( cv.isBusy() && i++ < 100 )  {
+			try {
+				Thread.sleep(10);
+			} catch (Exception e) {
+			}
+		}
+		if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+cv.getValue()+" state="+cv.getState());
+		if (i==0) log.warn("textCvValRead saw an immediate return from isBusy");
+
+		Assert.assertTrue("loop passes before 100", i<100);
+		Assert.assertEquals("CV value ", 123, cv.getValue());
+		Assert.assertEquals("CV state ", CvValue.READ, cv.getState());
+	}
+	
 	// check a write operation
 	public void testCvValWrite() {
 		// initialize the system

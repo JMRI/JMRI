@@ -11,7 +11,7 @@ import com.sun.java.util.collections.List;
  * Display and edit a RosterEntry.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: RosterEntryPane.java,v 1.5 2001-11-27 03:27:15 jacobsen Exp $
+ * @version			$Id: RosterEntryPane.java,v 1.6 2001-12-09 17:59:44 jacobsen Exp $
  */
 public class RosterEntryPane extends javax.swing.JPanel  {
 
@@ -56,13 +56,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
 		
 		id.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// check its not a duplicate
-				List l = Roster.instance().matchingList(null, null, null, null, null, null, id.getText());
-				boolean oops = false;
-				for (int i=0; i<l.size(); i++) {
-					if (re != (RosterEntry)l.get(i)) oops = true;
-				}
-				if (oops) JOptionPane.showMessageDialog(pane, "This ID is a duplicate, please change it");
+				if (checkDuplicate()) JOptionPane.showMessageDialog(pane, "This ID is a duplicate, please change it");
 
 			}
 		});
@@ -104,7 +98,17 @@ public class RosterEntryPane extends javax.swing.JPanel  {
 		add(filename);
 		
 	}
-		
+	
+	boolean checkDuplicate() {
+		// check its not a duplicate
+		List l = Roster.instance().matchingList(null, null, null, null, null, null, id.getText());
+		boolean oops = false;
+		for (int i=0; i<l.size(); i++) {
+			if (re != (RosterEntry)l.get(i)) oops = true;
+		}
+		return oops;
+	}
+	
 	public void update(RosterEntry r) {
 		r.setId(id.getText());
 		r.setRoadName(roadName.getText());

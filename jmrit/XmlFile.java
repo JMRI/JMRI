@@ -20,7 +20,7 @@ import com.sun.java.util.collections.*;
  * XmlFile contains various member implementations for handling aspects of XML files.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version		$Id: XmlFile.java,v 1.3 2001-11-27 03:27:15 jacobsen Exp $	
+ * @version		$Id: XmlFile.java,v 1.4 2001-12-09 17:59:44 jacobsen Exp $	
  */
 public abstract class XmlFile {
 	
@@ -38,7 +38,7 @@ public abstract class XmlFile {
         }
 		String path = "file::"+apath;
 
-		if (log.isInfoEnabled()) log.info("readFile: "+name+" path: "+rawpath); 
+		if (log.isDebugEnabled()) log.debug("readFile: "+name+" path: "+rawpath); 
 		// This is taken in large part from "Java and XML" page 354
 			
 		// Open and parse file

@@ -112,6 +112,8 @@ public class DecoderIndexFileTest extends TestCase {
 		// search for the two Digitrax decoders
 		List l1 = di.matchingDecoderList("Digitrax", null, null, null, null);
 		Assert.assertEquals("Found with name Digitrax ", 2, l1.size());
+		Assert.assertEquals("Found with name Digitrax ", "DH142", ((DecoderFile)l1.get(0)).getModel());
+		Assert.assertEquals("Found with name Digitrax ", "DN142", ((DecoderFile)l1.get(1)).getModel());
 		// search for the two decoders from mfgID 129
 		List l2 = di.matchingDecoderList(null, null, "129", null, null);
 		Assert.assertEquals("Found with id 129 ", 2, l2.size());
@@ -121,6 +123,29 @@ public class DecoderIndexFileTest extends TestCase {
 		// search for the one with version ID 21
 		List l3 = di.matchingDecoderList(null, null, null, "21", null);
 		Assert.assertEquals("Found with version 21 ", 1, l3.size());
+	}
+
+	public void testMatchingComboBox() {
+		// setup the test object with guts
+		DecoderIndexFile di = new DecoderIndexFile();
+		setupDoc();
+		// invoke parsing
+		di.readMfgSection(decoderIndexElement);
+		di.readFamilySection(decoderIndexElement);
+		// search for the two Digitrax decoders
+		JComboBox l1 = di.matchingComboBox("Digitrax", null, null, null, null);
+		Assert.assertEquals("Found with name Digitrax ", 2, l1.getItemCount());
+		Assert.assertEquals("Found with name Digitrax ", "Digitrax DH142", (String)l1.getItemAt(0));
+		Assert.assertEquals("Found with name Digitrax ", "Digitrax DN142", (String)l1.getItemAt(1));
+		// search for the two decoders from mfgID 129
+		JComboBox l2 = di.matchingComboBox(null, null, "129", null, null);
+		Assert.assertEquals("Found with id 129 ", 2, l2.getItemCount());
+		// search for the two from the NMRA family
+		JComboBox l4 = di.matchingComboBox(null, "NMRA S&RP definitions", null, null, null);
+		Assert.assertEquals("Found from NMRA family ", 2, l4.getItemCount());
+		// search for the one with version ID 21
+		JComboBox l3 = di.matchingComboBox(null, null, null, "21", null);
+		Assert.assertEquals("Found with version 21 ", 1, l3.getItemCount());
 	}
 
 	public void testMatchingVersionRange() {

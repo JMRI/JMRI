@@ -6,7 +6,7 @@
  * Description:		Swing action to create DecoderProConfigFrame
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Id: DecoderProgConfigAction.java,v 1.2 2001-12-05 23:31:15 jacobsen Exp $
+ * @version			$Id: DecoderProgConfigAction.java,v 1.3 2001-12-09 17:59:43 jacobsen Exp $
  */
 
 package jmri.apps;
@@ -24,11 +24,15 @@ public class DecoderProConfigAction 			extends AbstractAction {
 			file.readFile(DecoderProConfigFile.defaultConfigFilename());
 			log.debug("configuration file located and read");
 			frame = new DecoderProConfigFrame("Preferences");
-			frame.configure(file);
+			log.debug("start configuration from file: "+DecoderProConfigFile.defaultConfigFilename());
+			if ( !frame.configure(file)) {
+				// show the config frame if it didn't work
+				frame.show();
+			}
 			log.debug("configuration complete");
 		} catch (Exception e) {
 			// did not succeed, have to pop now
-			log.debug("configuration file could not be located and read");
+			log.info("configuration file could not be located and read");
 			log.debug("error was "+e);
 			// create an unconfigured Frame
 			frame = new DecoderProConfigFrame("Preferences");

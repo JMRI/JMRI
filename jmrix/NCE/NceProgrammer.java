@@ -108,6 +108,10 @@ public class NceProgrammer implements NceListener, Programmer {
 		controller().sendNceMessage(NceMessage.getProgMode(), this);
 	}
 		
+	public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+		readCV(CV, p);
+	}
+
 	public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
 		if (log.isDebugEnabled()) log.debug("readCV "+CV+" listens "+p);
 		useProgrammer(p);
