@@ -21,7 +21,7 @@ import javax.swing.table.TableColumnModel;
 /**
  * Table data model for display of consist information
  * @author		Paul Bender Copyright (c) 2004
- * @version		$Revision: 1.1 $
+ * @version		$Revision: 1.2 $
  */
 
 public class ConsistDataModel extends javax.swing.table.AbstractTableModel {
@@ -51,6 +51,7 @@ public class ConsistDataModel extends javax.swing.table.AbstractTableModel {
 		tcm.getColumn(DELCOLUMN).setCellEditor(buttonEditor);
 	}
 
+
 	public void setConsist(Consist consist) {
 		log.debug("Setting Consist");
 		_consist=consist;
@@ -62,6 +63,10 @@ public class ConsistDataModel extends javax.swing.table.AbstractTableModel {
 		ConsistAddress = Address;
 		_consist = ConsistMan.getConsist(Address);
 		fireTableDataChanged();
+	}
+
+	public Consist getConsist(){
+		return _consist;
 	}
 
         public int getRowCount() {

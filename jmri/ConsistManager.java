@@ -31,9 +31,20 @@ public interface  ConsistManager {
 	public boolean isCommandStationConsistPossible();
 
 	/**
+	 *    Does a CS consist require a seperate consist address?
+	 **/
+	public boolean csConsistNeedsSeperateAddress();
+
+	/**
 	 *    Get an ArrayList object containning the string representation 
 	 *    of the consist addresses we know about.
          **/
 	public ArrayList getConsistList();
+
+	/**
+	 *   Translate Error Codes recieved by a consistListener into
+	 *   Strings
+	 **/
+	public String decodeErrorCode(int ErrorCode);
 
 }

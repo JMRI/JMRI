@@ -25,7 +25,8 @@ public interface Consist {
         // or Lenz Double Header,or NCE "old Style Consist",etc
         public final static int CS_CONSIST = 1;  
 
-
+	// A method for cleaning up the consist
+	public void dispose();
 
 	// Set the Consist Type
 	public void setConsistType(int consist_type);
@@ -72,5 +73,17 @@ public interface Consist {
 	 *  @parm address is the Locomotive address to add to the locomotive
          */
 	public void remove(int LocoAddress);
+
+	/* 
+	 * Add a Listener for consist events
+	 * @parm Listener is a consistListener object
+         */
+	public void addConsistListener(jmri.ConsistListener Listener);
+
+	/* 
+	 * Remove a Listener for consist events
+	 * @parm Listener is a consistListener object
+         */
+	public void removeConsistListener(jmri.ConsistListener Listener);
 
 }
