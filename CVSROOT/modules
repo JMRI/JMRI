@@ -1,6 +1,9 @@
-jbuilder1 -d java/src &jmri &apps &xml
-jbuilder2 -d java &xml
+jbuilder1 -d java/src &jmri &apps
+jbuilder2 &xml
 jbuilder3 -d java &test
+jbuilder4 -d java site/index.html
+
+jbuilder -a jbuilder1 jbuilder2 jbuilder3 jbuilder4
 
 # the following works directly, but not from JBuilder
 #jbuilder -a src prx
