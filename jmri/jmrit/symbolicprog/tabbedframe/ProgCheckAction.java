@@ -17,7 +17,7 @@ import com.sun.java.util.collections.ArrayList;
  * Check the names in an XML programmer file against the names.xml definitions
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: ProgCheckAction.java,v 1.1 2002-02-28 20:28:51 jacobsen Exp $
+ * @version			$Revision: 1.2 $
  * @see             jmri.jmrit.XmlFile
  */
 public class ProgCheckAction extends AbstractAction {
