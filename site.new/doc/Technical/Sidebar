@@ -16,6 +16,7 @@
 			<LI><a href="Ant.html">Building with Ant</a>
 			<LI><a href="JBuilder.html">Building with JBuilder</a>
 			<LI><a href="Eclipse.html">Building with Eclipse</a>
+			<LI><a href="XCode.html">Building with XCode</a>
 			</ul>
 		</dd>
 
