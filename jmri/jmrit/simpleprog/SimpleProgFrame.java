@@ -13,7 +13,7 @@ import jmri.ProgModePane;
 /**
  * Frame providing a simple command station programmer
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgListener {
 
@@ -133,6 +133,7 @@ public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgList
 
     private String statusCode(int status) {
         Programmer p = modePane.getProgrammer();
+        if (status == ProgListener.OK) return "OK";
         if (p == null) {
             return "No programmer connected";
         } else {
