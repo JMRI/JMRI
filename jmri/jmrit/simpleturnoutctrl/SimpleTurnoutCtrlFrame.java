@@ -2,17 +2,17 @@
 
 package jmri.jmrit.simpleturnoutctrl;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-
-import jmri.Turnout;
 import jmri.InstanceManager;
+import jmri.Turnout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+
+import javax.swing.JMenuBar;
 
 /**
  * Frame controlling a single turnout
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.beans.PropertyChangeListener {
 
