@@ -4,6 +4,7 @@ import jmri.DccThrottle;
 import jmri.ThrottleListener;
 import jmri.ThrottleManager;
 import com.sun.java.util.collections.HashMap;
+import com.sun.java.util.collections.ArrayList;
 
 /**
  * Abstract implementation of a ThrottleManager.
@@ -11,10 +12,23 @@ import com.sun.java.util.collections.HashMap;
  * Based on Glen Oberhauser's original LnThrottleManager implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 abstract public class AbstractThrottleManager implements ThrottleManager {
+	
+	/**
+	 * throttleListeners is indexed by the address, and
+	 * contains as elements an ArrayList of ThrottleListener
+	 * objects.  This allows more than one to request a throttle
+	 * at a time, but @see{singleUse}.
+	 */
     private HashMap throttleListeners;
+
+	/**
+	 * Does this DCC system allow a Throttle (e.g. an address) to be used
+	 * by only one user at a time?
+	 */
+	boolean singleUse() { return true; }
 
     /**
      * Request a throttle, given a decoder address. When the decoder address
@@ -26,19 +40,29 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * be made. False may be returned if a the throttle is already in use.
      */
     public boolean requestThrottle(int address, ThrottleListener l) {
-        boolean throttleInUse = false;
+        boolean throttleFree = true;
         if (throttleListeners == null) {
             throttleListeners = new HashMap(5);
         }
 
+		// put the list in if not present
         Integer addressKey = new Integer(address);
-        if (throttleListeners.containsKey(addressKey)) {
-            throttleInUse = true;
-        } else {
-            throttleListeners.put(addressKey, l);
+		if (!throttleListeners.containsKey(addressKey))
+			throttleListeners.put(addressKey, new ArrayList());
+
+		// get the corresponding list to check length
+		ArrayList a = (ArrayList)throttleListeners.get(addressKey);
+		
+		// check length
+        if (singleUse() && (a.size()>0)) {
+            throttleFree= false;
+        } else if (a.size() == 0) {
+        	a.add(l);
             requestThrottleSetup(address);
+        } else {
+        	a.add(l);
         }
-        return throttleInUse;
+        return throttleFree;
     }
 
     /**
@@ -55,7 +79,12 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     public void cancelThrottleRequest(int address, ThrottleListener l) {
         if (throttleListeners != null) {
             Integer addressKey = new Integer(address);
-            throttleListeners.remove(addressKey);
+			ArrayList a = (ArrayList)throttleListeners.get(addressKey);
+			if (a==null) return;
+			for (int i = 0; i<a.size(); i++) {
+				if (l == a.get(i))
+					a.remove(i);
+			}
         }
     }
 
@@ -68,12 +97,14 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      */
     public void notifyThrottleKnown(DccThrottle throttle, int addr) {
         log.debug("notifyThrottleKnown for "+addr);
-        Integer address = new Integer(addr);
-        ThrottleListener l = (ThrottleListener)throttleListeners.get(address);
-        if (l != null) {
+        Integer addressKey = new Integer(addr);
+		ArrayList a = (ArrayList)throttleListeners.get(addressKey);
+		for (int i = 0; i<a.size(); i++) {
+      	 	ThrottleListener l = (ThrottleListener)a.get(i);
             log.debug("Notify listener");
             l.notifyThrottleFound(throttle);
         }
+        throttleListeners.remove(addressKey);
     }
   
     /**
