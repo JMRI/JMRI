@@ -2,11 +2,10 @@
 
 package jmri.jmrix.nce;
 
-import jmri.jmrix.*;
-import java.io.InputStream;
-import java.io.DataInputStream;
-import java.io.OutputStream;
-import java.util.Vector;
+import jmri.jmrix.AbstractMRListener;
+import jmri.jmrix.AbstractMRMessage;
+import jmri.jmrix.AbstractMRReply;
+import jmri.jmrix.AbstractMRTrafficController;
 
 /**
  * Converts Stream-based I/O to/from NCE messages.  The "NceInterface"
@@ -21,7 +20,7 @@ import java.util.Vector;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface {
 

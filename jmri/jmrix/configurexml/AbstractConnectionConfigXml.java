@@ -4,13 +4,14 @@ import jmri.configurexml.XmlAdapter;
 import jmri.jmrix.SerialPortAdapter;
 
 import org.jdom.Element;
+import javax.swing.*;
 
 /**
  * Abstract base (and partial implementation) for
  * classes persisting the status of serial port adapters.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 abstract public class AbstractConnectionConfigXml implements XmlAdapter {
 
