@@ -1,15 +1,17 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: ESU_LokPilotDCC.xml,v 1.2 2003-06-05 17:45:02 jacobsen Exp $ -->
+<!-- $Id: ESU_LokPilotDCC.xml,v 1.3 2004-02-11 05:00:50 jacobsen Exp $ -->
 <decoder-config>
 		<version author="sip@euronet.nl"
-			version="2" lastUpdated="20030606"/>
+			version="3" lastUpdated="20040206"/>
 			<!-- Based on the contribution of many others -->
 
 		<!-- version 2 - add consist direction - jake -->
+		<!-- version 3 - fix mfg name - jake -->
 
 <decoder>
-	<family name="ESU LokPilot Silent BEMF decoders" mfg="ESU" lowVersionID="21">
+	<family name="ESU LokPilot Silent BEMF decoders" 
+		mfg="Electronic Solutions Ulm GmbH" lowVersionID="21">
 		<model model="ESU_LokPilotDCC" numOuts="6" numFns="6">
 	    	<output name="1" label="Front Lights" />
 	    	<output name="2" label="Back Lights" />
