@@ -17,7 +17,7 @@ import org.jdom.Element;
  * specific Memory or AbstractMemory subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public abstract class AbstractMemoryManagerConfigXML implements XmlAdapter {
 
@@ -77,7 +77,7 @@ public abstract class AbstractMemoryManagerConfigXML implements XmlAdapter {
      * Utility method to load the individual Memory objects.
      * If there's no additional info needed for a specific Memory type,
      * invoke this with the parent of the set of Memory elements.
-     * @param Memorys Element containing the Memory elements to load.
+     * @param memorys Element containing the Memory elements to load.
      */
     public void loadMemorys(Element memorys) {
         List memoryList = memorys.getChildren("memory");

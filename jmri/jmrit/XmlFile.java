@@ -18,7 +18,7 @@ import org.jdom.input.SAXBuilder;
  * Handle common aspects of XML files.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public abstract class XmlFile {
 
@@ -196,7 +196,7 @@ public abstract class XmlFile {
      *
      * @param root Root element of the final document
      * @param dtd name of an external DTD
-     * @return
+     * @return new Document, with root installed
      */
     static public Document newDocument(Element root, String dtd) {
         Document doc = new Document(root);
@@ -222,7 +222,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.15 2004-07-24 04:30:08 jacobsen Exp $";
+                        +" $Id: XmlFile.java,v 1.16 2004-07-25 01:21:16 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
