@@ -17,7 +17,7 @@ import javax.swing.*;
  * immediately.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SendPacketFrame extends javax.swing.JFrame {
 
@@ -164,7 +164,11 @@ public class SendPacketFrame extends javax.swing.JFrame {
     void startSequenceDelay() {
         // at the start, mNextSequenceElement contains index we're
         // working on
-        int delay = Integer.parseInt(mDelayField[mNextSequenceElement].getText());
+        int delay = 10;   // default delay if non specified, or format bad
+        try {
+        	delay = Integer.parseInt(mDelayField[mNextSequenceElement].getText());
+        } catch (NumberFormatException e) {}
+        
         // increment to next line at completion
         mNextSequenceElement++;
         // start timer
