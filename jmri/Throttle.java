@@ -22,7 +22,7 @@ package jmri;
  * and deassign locos from this throttle, but that doesn't seem right.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Id: Throttle.java,v 1.7 2003-03-29 17:27:08 jacobsen Exp $
+ * @version			$Id: Throttle.java,v 1.8 2003-04-03 03:28:46 glenobie Exp $
  */
 public interface Throttle {
 
@@ -31,7 +31,7 @@ public interface Throttle {
      */
     public float getSpeedSetting();
     public void setSpeedSetting(float speed);
-
+	
     /** direction
      * This is an bound parameter.
      */
@@ -101,6 +101,7 @@ public interface Throttle {
     // register for notification if any of the properties change
     public void removePropertyChangeListener(java.beans.PropertyChangeListener p);
     public void addPropertyChangeListener(java.beans.PropertyChangeListener p);
+
 
     /**
      * Dispose when finished with this object.  This does not
