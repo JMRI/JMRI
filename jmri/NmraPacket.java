@@ -3,7 +3,7 @@
 package jmri;
 
 /**
- * Provide utilities for coding/decoding NMRA S&RP DCC packets
+ * Utilities for coding/decoding NMRA S&RP DCC packets.
  *<P>
  * Packets are (now) represented by an array of bytes. Preamble/postamble
  * not included. Note that this is a data representation, _not_ a representation
@@ -28,7 +28,7 @@ package jmri;
  *            short vs long address type
  *
  * @author      Bob Jacobsen Copyright (C) 2001, 2003
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class NmraPacket {
 
