@@ -15,7 +15,7 @@ import jmri.Sensor;
  * see nextAiuPoll()
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SerialSensorManager extends jmri.AbstractSensorManager
                             implements SerialListener {
@@ -27,10 +27,10 @@ public class SerialSensorManager extends jmri.AbstractSensorManager
         _instance = this;
     }
 
-    // ABC implementations
+    public char systemLetter() { return 'N'; }
 
     // to free resources when no longer used
-    public void dispose() throws JmriException {
+    public void dispose() {
     }
 
     /**
