@@ -25,7 +25,7 @@ import javax.swing.*;
  * Base class for Jmri applications.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
 public class Apps extends JPanel {
 
@@ -195,6 +195,8 @@ public class Apps extends JPanel {
     static HelpBroker globalHelpBroker;
 
     protected void helpMenu(JMenuBar menuBar, final JFrame frame) {
+        JMenu helpMenu = new JMenu("Help");
+        menuBar.add(helpMenu);
         try {
             String helpsetName = "help/JmriHelp_en.hs";
             URL hsURL;
@@ -216,8 +218,6 @@ public class Apps extends JPanel {
             }
             globalHelpBroker = globalHelpSet.createHelpBroker();
 
-            JMenu helpMenu = new JMenu("Help");
-            menuBar.add(helpMenu);
             JMenuItem menuItem = new JMenuItem("Help");
             helpMenu.add(menuItem);
             menuItem.addActionListener(new CSH.DisplayHelpFromSource(globalHelpBroker));
@@ -229,6 +229,9 @@ public class Apps extends JPanel {
         } catch (java.lang.NoSuchMethodError e2) {
             log.error("Is jh.jar available? Error starting help system: "+e2);
         }
+        JMenuItem license = new JMenuItem("License");
+        helpMenu.add(license);
+        license.addActionListener(new LicenseAction());
     }
 
     protected String line1() {
