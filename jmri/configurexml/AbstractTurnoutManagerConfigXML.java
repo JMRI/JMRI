@@ -2,8 +2,12 @@ package jmri.configurexml;
 
 import jmri.InstanceManager;
 import jmri.TurnoutManager;
+import jmri.Turnout;
+import jmri.Sensor;
+
 import com.sun.java.util.collections.List;
 import org.jdom.Element;
+import org.jdom.Attribute;
 
 /**
  * Provides the abstract base and store functionality for
@@ -17,7 +21,7 @@ import org.jdom.Element;
  * specific Turnout or AbstractTurnout subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
 
@@ -42,11 +46,22 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
                 String sname = (String)iter.next();
                 if (sname==null) log.error("System name null during store");
                 log.debug("system name is "+sname);
-                String uname = tm.getBySystemName(sname).getUserName();
+                Turnout t = tm.getBySystemName(sname);
+                String uname = t.getUserName();
                 Element elem = new Element("turnout")
                             .addAttribute("systemName", sname);
                 if (uname!=null) elem.addAttribute("userName", uname);
                 log.debug("store turnout "+sname+":"+uname);
+                
+                // include feedback info
+                elem.addAttribute("feedback", t.getFeedbackModeName());
+                Sensor s;
+                s = t.getFirstSensor();
+                if (s!=null) elem.addAttribute("sensor1", s.getSystemName());
+                s = t.getSecondSensor();
+                if (s!=null) elem.addAttribute("sensor2", s.getSystemName());
+                
+                // add element
                 turnouts.addContent(elem);
 
             }
@@ -90,7 +105,22 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
             if ( ((Element)(turnoutList.get(i))).getAttribute("userName") != null)
             userName = ((Element)(turnoutList.get(i))).getAttribute("userName").getValue();
             if (log.isDebugEnabled()) log.debug("create turnout: ("+sysName+")("+(userName==null?"<null>":userName)+")");
-            tm.newTurnout(sysName, userName);
+            Turnout t = tm.newTurnout(sysName, userName);
+            
+            // now add feedback if needed
+            Attribute a;
+            a = ((Element)(turnoutList.get(i))).getAttribute("feedback");
+            if (a!=null) t.setFeedbackMode(a.getValue());
+            a = ((Element)(turnoutList.get(i))).getAttribute("sensor1");
+            if (a!=null) { 
+                Sensor s = InstanceManager.sensorManagerInstance().provideSensor(a.getValue());
+                t.provideFirstFeedbackSensor(s);
+            }
+            a = ((Element)(turnoutList.get(i))).getAttribute("sensor2");
+            if (a!=null) { 
+                Sensor s = InstanceManager.sensorManagerInstance().provideSensor(a.getValue());
+                t.provideSecondFeedbackSensor(s);
+            }
         }
     }
 
