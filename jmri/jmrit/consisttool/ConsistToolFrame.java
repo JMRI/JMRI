@@ -4,7 +4,7 @@
  * Description:          Frame object for manipulating consists.
  *
  * @author               Paul Bender Copyright (C) 2003
- * @version              $Revision: 1.4 $
+ * @version              $Revision: 1.5 $
  */
 
 
@@ -23,7 +23,7 @@ import javax.swing.*;
 
 import com.sun.java.util.collections.ArrayList;
 
-public class ConsistToolFrame extends javax.swing.JFrame {
+public class ConsistToolFrame extends javax.swing.JFrame implements jmri.ConsistListener{
 
     // GUI member declarations
     javax.swing.JLabel textAdrLabel = new javax.swing.JLabel();
@@ -260,13 +260,18 @@ public class ConsistToolFrame extends javax.swing.JFrame {
            consistAdrBox.setSelectedItem(adrTextField.getText());
            if(!adrTextField.getText().equals("")) {
  		consistModel.setConsist(Integer.parseInt(adrTextField.getText()));
-	   } else consistModel.setConsist(null);
+		adrTextField.setEnabled(false);
+	   } else {
+		consistModel.setConsist(null);
+		adrTextField.setEnabled(true);
+	   }
         } else {
 	   consistAdrBox.setEnabled(false);
            consistAdrBox.removeAllItems();
            consistAdrBox.insertItemAt("",0);
            consistAdrBox.setSelectedIndex(0);
 	   consistModel.setConsist(null);
+	   adrTextField.setEnabled(true);
         }   
      }
 
@@ -282,15 +287,25 @@ public class ConsistToolFrame extends javax.swing.JFrame {
 	/* get the list of locomotives to delete */
 	ArrayList addressList = tempConsist.getConsistList();
 
-	for(int i=0; i< addressList.size();i++) {
-		int locoaddress=Integer.parseInt((String)(addressList.get(i)));
+	while(!addressList.isEmpty()) {
+		log.debug("Deleting Locomotive: " + (String)addressList.get(0));
+		int locoaddress=Integer.parseInt((String)(addressList.get(0)));
 		try {
 			tempConsist.remove(locoaddress);
-	    	}  catch (Exception ex) { }
+	    	}  catch (Exception ex) {
+					log.error("Error removing address " 
+						    + locoaddress 
+						    + " from consist " 
+						    + address); 
+		}
+		addressList = tempConsist.getConsistList();
 	}
 	try {
 		ConsistMan.delConsist(address);
-	    }  catch (Exception ex) { }
+	    }  catch (Exception ex) {
+					log.error("Error delting consist "
+						    + address); 
+	    }
 	adrTextField.setText("");
 	adrTextField.setEnabled(true);
         initializeConsistBox();
@@ -314,15 +329,14 @@ public class ConsistToolFrame extends javax.swing.JFrame {
     	}
 
     public void consistSelected() {
-	log.debug("Consist Selected");
+	if(log.isDebugEnabled()) log.debug("Consist Selected");
 	if(consistAdrBox.getSelectedItem().equals("")) {
-	   log.debug("Null Consist Selected");
+	   if(log.isDebugEnabled()) log.debug("Null Consist Selected");
 	   adrTextField.setText("");
 	   adrTextField.setEnabled(true);
 	   recallConsist();
 	} else if(!consistAdrBox.getSelectedItem().equals(adrTextField.getText())) {
-	   log.debug("past else");
-    	   log.debug("Consist " + consistAdrBox.getSelectedItem().toString() +" Selected");
+    	   if(log.isDebugEnabled()) log.debug("Consist " + consistAdrBox.getSelectedItem().toString() +" Selected");
 	   adrTextField.setEnabled(false);
 	   adrTextField.setText("" + consistAdrBox.getSelectedItem().toString());
 	   recallConsist();
@@ -336,11 +350,25 @@ public class ConsistToolFrame extends javax.swing.JFrame {
 	   locoTextField.setText("");
 	   locoRosterBox.setSelectedIndex(0);
 	   consistModel.setConsist(null);	
+           locoDirectionNormal.setSelected(true);
+	   locoDirectionNormal.setEnabled(false);
 	   return;
 	}
 	int address=Integer.parseInt(adrTextField.getText());
 	Consist selectedConsist = ConsistMan.getConsist(address);
 	consistModel.setConsist(selectedConsist);	
+
+	// reset the editable locomotive information.
+	locoTextField.setText("");
+	locoRosterBox.setSelectedIndex(0);
+        locoDirectionNormal.setSelected(true);
+
+	// if there aren't any locomotives in the consist, don't let 
+	// the user change the direction
+	if(consistModel.getRowCount()==0)
+		locoDirectionNormal.setEnabled(false);
+	else 
+		locoDirectionNormal.setEnabled(true);
 
 	log.debug("Recall Consist " + address);
 
@@ -357,17 +385,61 @@ public class ConsistToolFrame extends javax.swing.JFrame {
         	isCSConsist.setSelected(true);	  
 		_Consist_Type=Consist.CS_CONSIST;
 	}
+
     }
 
     public void resetLocoButtonActionPerformed(java.awt.event.ActionEvent e) {
-	   if(locoTextField.getText().equals("")) { return; }
 	   locoTextField.setText("");
 	   locoRosterBox.setSelectedIndex(0);
            locoDirectionNormal.setSelected(true);	
+	   // if there aren't any locomotives in the consist, don't let 
+	   // the user change the direction
 	   if(consistModel.getRowCount()==0)
 	        locoDirectionNormal.setEnabled(false);
 	   else 
 		locoDirectionNormal.setEnabled(true);
+	}
+
+     // Check to see if a consist address is selected, and if it 
+     //	is, dissable the "add button" if the maximum consist size is reached
+     public void canAdd(){
+	   // If a consist address is selected, dissable the "add button" 
+	   // if the maximum size is reached
+	   if(!adrTextField.getText().equals("")){
+		int address=Integer.parseInt(adrTextField.getText());
+		if(consistModel.getRowCount()==	ConsistMan.getConsist(address)
+							   .sizeLimit()){
+			locoTextField.setEnabled(false);
+    			locoRosterBox.setEnabled(false);
+			addLocoButton.setEnabled(false);
+			resetLocoButton.setEnabled(false);
+			locoDirectionNormal.setEnabled(false);
+		} else {
+			locoTextField.setEnabled(true);
+    			locoRosterBox.setEnabled(true);
+			addLocoButton.setEnabled(true);
+			resetLocoButton.setEnabled(true);
+			locoDirectionNormal.setEnabled(false);
+	   		// if there aren't any locomotives in the consist, 
+			// don't let the user change the direction
+	   		if(consistModel.getRowCount()==0)
+	   		     locoDirectionNormal.setEnabled(false);
+	   		else 
+			     locoDirectionNormal.setEnabled(true);
+		 } 
+	   } else {
+		locoTextField.setEnabled(true);
+    		locoRosterBox.setEnabled(true);
+		addLocoButton.setEnabled(true);
+		resetLocoButton.setEnabled(true);
+		locoDirectionNormal.setEnabled(false);
+	   	// if there aren't any locomotives in the consist, don't let 
+	   	// the user change the direction
+	   	if(consistModel.getRowCount()==0)
+	        	locoDirectionNormal.setEnabled(false);
+	   	else 
+			locoDirectionNormal.setEnabled(true);
+	   }
 	}
 
     public void addLocoButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -390,12 +462,20 @@ public class ConsistToolFrame extends javax.swing.JFrame {
 		ConsistMan.getConsist(address).setConsistType(_Consist_Type);
 	}
 	int locoaddress=Integer.parseInt(locoTextField.getText());
-	ConsistMan.getConsist(address).add(locoaddress,
+	// Make sure the Address in question is allowed for this type of 
+	// consist, and add it to the consist if it is
+	if(!ConsistMan.getConsist(address).isAddressAllowed(locoaddress)){
+           	javax.swing.JOptionPane.showMessageDialog(this, 
+						"Selected Address not allowed in this consist");
+		return; 
+	} else { 
+	    ConsistMan.getConsist(address).add(locoaddress,
 					   locoDirectionNormal.isSelected());
-	if(!consistAdrBox.getSelectedItem().equals(adrTextField.getText()))
+	    if(!consistAdrBox.getSelectedItem().equals(adrTextField.getText()))
 		initializeConsistBox();
-	consistModel.fireTableDataChanged();
-        resetLocoButtonActionPerformed(e);
+	    consistModel.fireTableDataChanged();
+            resetLocoButtonActionPerformed(e);
+	}
     }
 
     public void locoSelected() {
@@ -405,7 +485,14 @@ public class ConsistToolFrame extends javax.swing.JFrame {
 		locoTextField.setText(entry.getDccAddress());
         }
     }
-    
+
+    /* 
+     * we're registering as a listener for Consist events, so we need to 
+     * implement the interface
+     */
+    public void consistReply(int locoaddress,int status){
+	if(log.isDebugEnabled()) log.debug("Consist Reply recieved for Locomotive "  +locoaddress + " with status " + status);
+    }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ConsistToolFrame.class.getName());
 

@@ -1,4 +1,4 @@
-Todo as of 8/22/2004
+Todo as of 11/03/2004
 
    Should we ask if the consist should be cleared when the consist is 
      deleted or the window is closed?
@@ -10,12 +10,17 @@ Todo as of 8/22/2004
    To go along with above, we need to find a way to insert a consist into 
      the roster for the throttle commands.
 
-   The selection buttons for Advanced/CS Consist is present, but does not
-     do anything yet
-
    Need to add a  method to restrict the number of locomotives in a consist
    if the consisting method limits the number of units in a consist on a 
    particular system.
 
    Table in tool has a slot for roster entry, this needs to be filled in 
    or removed.
+
+   Per request from widebayburnett, add button to "Reverse Consist" (change 
+   normal direction of consist to the reverse of what it currently is, 
+   including decoder specific reversals where required.
+
+   Per request from widebayburnett, add an "uncouple" button, that 
+   deletes locomotive consist information so consist can be reordered, but 
+   does not delete locomotive from consist list.
