@@ -1,9 +1,9 @@
-/** 
+/**
  * DisplayTest.java
  *
  * Description:	    tests for the jmrit.display package
  * @author			Bob Jacobsen
- * @version			
+ * @version         $Revision: 1.2 $
  */
 
 package jmri.jmrit.display;
@@ -17,7 +17,7 @@ import org.jdom.output.*;
 
 public class DisplayTest extends TestCase {
 
-	// from here down is testing infrastructure	
+	// from here down is testing infrastructure
 	public DisplayTest(String s) {
 		super(s);
 	}
@@ -27,12 +27,13 @@ public class DisplayTest extends TestCase {
 		String[] testCaseName = {DisplayTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
-	
+
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite("jmri.jmrit.display");   // no tests in this class itself
+		suite.addTest(jmri.jmrit.display.PositionableLabelTest.suite());
 		suite.addTest(jmri.jmrit.display.TurnoutIconTest.suite());
 		return suite;
 	}
-	
+
 }

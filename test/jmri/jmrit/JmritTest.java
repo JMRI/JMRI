@@ -3,7 +3,7 @@
  *
  * Description:	    tests for the Jmrit package
  * @author			Bob Jacobsen
- * @version
+ * @version         $Revision: 1.3 $
  */
 
 package jmri.jmrit;
@@ -12,10 +12,13 @@ import java.io.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.jdom.*;
-import org.jdom.output.*;
 
 public class JmritTest extends TestCase {
+
+    // The minimal setup is for log4J
+    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
+    protected void setUp() { log4jfixtureInst.setUp(); }
+    protected void tearDown() { log4jfixtureInst.tearDown(); }
 
 	// from here down is testing infrastructure
 	public JmritTest(String s) {

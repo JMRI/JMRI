@@ -7,9 +7,6 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.framework.Assert;
-import org.jdom.*;
-import org.jdom.output.*;
-import com.sun.java.util.collections.List;
 import java.beans.PropertyChangeEvent;
 
 /**
@@ -17,11 +14,16 @@ import java.beans.PropertyChangeEvent;
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Id: TurnoutIconTest.java,v 1.1 2002-03-28 04:17:09 jacobsen Exp $
+ * @version			$Revision: 1.2 $
  */
 public class TurnoutIconTest extends TestCase {
 
     TurnoutIcon to = null;
+
+    // The minimal setup is for log4J
+    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
+    protected void setUp() { log4jfixtureInst.setUp(); }
+    protected void tearDown() { log4jfixtureInst.tearDown(); }
 
 	public void testShow() {
         JFrame jf = new JFrame();
