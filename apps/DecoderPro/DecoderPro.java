@@ -12,7 +12,7 @@ import jmri.util.oreilly.BasicWindowMonitor;
  * DecoderPro application.
  *
  * @author			Bob Jacobsen
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  */
 public class DecoderPro extends JPanel {
 	public DecoderPro() {
@@ -108,6 +108,7 @@ public class DecoderPro extends JPanel {
 	   	 		org.apache.log4j.PropertyConfigurator.configure("default.lcf");
 	    	} else {
 		    	org.apache.log4j.BasicConfigurator.configure();
+                        org.apache.log4j.Category.getRoot().setPriority(org.apache.log4j.Priority.ERROR);
 	    	}
 	    }
 		catch (java.lang.NoSuchMethodError e) { System.out.println("Exception starting logging: "+e); }

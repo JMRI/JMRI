@@ -17,7 +17,7 @@ import javax.swing.border.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author			Bob Jacobsen
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class LocoTools extends JPanel {
 	public LocoTools() {
@@ -124,6 +124,7 @@ public class LocoTools extends JPanel {
 	   	 		org.apache.log4j.PropertyConfigurator.configure("default.lcf");
 	    	} else {
 		    	org.apache.log4j.BasicConfigurator.configure();
+                        org.apache.log4j.Category.getRoot().setPriority(org.apache.log4j.Priority.ERROR);
 	    	}
 	    }
 		catch (java.lang.NoSuchMethodError e) { System.out.println("Exception starting logging: "+e); }

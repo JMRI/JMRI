@@ -18,7 +18,7 @@ import javax.swing.border.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author			Bob Jacobsen   Copyright 2002
- * @version         $Revision: 1.26 $
+ * @version         $Revision: 1.27 $
  */
 public class JMRIdemo extends JPanel {
 	public JMRIdemo() {
@@ -160,6 +160,7 @@ public class JMRIdemo extends JPanel {
 	   	 		org.apache.log4j.PropertyConfigurator.configure("default.lcf");
 	    	} else {
 		    	org.apache.log4j.BasicConfigurator.configure();
+                        org.apache.log4j.Category.getRoot().setPriority(org.apache.log4j.Priority.ERROR);
 	    	}
 	    }
 		catch (java.lang.NoSuchMethodError e) { System.out.println("Exception starting logging: "+e); }
