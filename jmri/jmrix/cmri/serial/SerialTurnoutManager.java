@@ -11,11 +11,16 @@ import jmri.Turnout;
  * System names are "CTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialTurnoutManager extends jmri.AbstractTurnoutManager {
 
-    // ABC implementations
+    final String prefix = "CT";
+
+    /**
+     * @return The system-specific prefix letter for a specific implementation
+     */
+    public char systemLetter() { return prefix.charAt(0); }
 
     // to free resources when no longer used
     public void dispose() throws JmriException {
@@ -25,13 +30,13 @@ public class SerialTurnoutManager extends jmri.AbstractTurnoutManager {
     // CMRI-serial-specific methods
 
     public void putBySystemName(SerialTurnout t) {
-        String system = "CT"+t.getNumber();
+        String system = prefix+t.getNumber();
         _tsys.put(system, t);
     }
 
     public Turnout newTurnout(String systemName, String userName) {
         // if system name is null, supply one from the number in userName
-        if (systemName == null) systemName = "CT"+userName;
+        if (systemName == null) systemName = prefix+userName;
 
         // return existing if there is one
         Turnout t;
@@ -39,7 +44,7 @@ public class SerialTurnoutManager extends jmri.AbstractTurnoutManager {
         if ( (t = getBySystemName(systemName)) != null) return t;
 
         // get number from name
-        if (!systemName.startsWith("CT")) {
+        if (!systemName.startsWith(prefix)) {
             log.error("Invalid system name for C/MRI serial turnout: "+systemName);
             return null;
         }

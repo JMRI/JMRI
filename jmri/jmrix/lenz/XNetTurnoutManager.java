@@ -3,7 +3,7 @@
  *
  * Description:		Implement turnout manager
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 // System names are "XTnnn", where nnn is the turnout number without padding.
@@ -15,7 +15,12 @@ import jmri.Turnout;
 
 public class XNetTurnoutManager extends jmri.AbstractTurnoutManager implements XNetListener {
 
-	// ABC implementations
+    final String prefix = "XT";
+
+    /**
+     * @return The system-specific prefix letter for a specific implementation
+     */
+    public char systemLetter() { return prefix.charAt(0); }
 
 	// to free resources when no longer used
 	public void dispose() throws JmriException {
@@ -24,13 +29,13 @@ public class XNetTurnoutManager extends jmri.AbstractTurnoutManager implements X
 	// XNet-specific methods
 
 	public void putBySystemName(XNetTurnout t) {
-		String system = "XT"+t.getNumber();
+		String system = prefix+t.getNumber();
 		_tsys.put(system, t);
 	}
 
 	public Turnout newTurnout(String systemName, String userName) {
 		// if system name is null, supply one from the number in userName
-		if (systemName == null) systemName = "XT"+userName;
+		if (systemName == null) systemName = prefix+userName;
 
 		// return existing if there is one
 		Turnout t;
@@ -38,7 +43,7 @@ public class XNetTurnoutManager extends jmri.AbstractTurnoutManager implements X
 		if ( (t = getBySystemName(systemName)) != null) return t;
 
 		// get number from name
-		if (!systemName.startsWith("XT")) {
+		if (!systemName.startsWith(prefix)) {
 			log.error("Invalid system name for XPressNet turnout: "+systemName);
 			return null;
 		}
@@ -66,7 +71,7 @@ public class XNetTurnoutManager extends jmri.AbstractTurnoutManager implements X
         if (log.isDebugEnabled()) log.debug("message had address: "+addr);
         if (addr<=0)  return; // indicates no message
 		// reach here for switch command; make sure we know about this one
-		String s = "XT"+addr;
+		String s = prefix+addr;
 		if (null == getBySystemName(s)) {
 			// need to store a new one
 			XNetTurnout t = new XNetTurnout(addr);

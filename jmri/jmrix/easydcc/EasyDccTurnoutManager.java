@@ -3,7 +3,7 @@
  *
  * Description:		Implement turnout manager for EasyDcc systems
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Id: EasyDccTurnoutManager.java,v 1.4 2002-06-26 03:52:20 jacobsen Exp $
+ * @version			$Id: EasyDccTurnoutManager.java,v 1.5 2003-04-08 22:08:06 jacobsen Exp $
  */
 
 // System names are "ETnnn", where nnn is the turnout number without padding.
@@ -15,7 +15,12 @@ import jmri.Turnout;
 
 public class EasyDccTurnoutManager extends jmri.AbstractTurnoutManager {
 
-	// ABC implementations
+    final String prefix = "ET";
+
+    /**
+     * @return The system-specific prefix letter for a specific implementation
+     */
+    public char systemLetter() { return prefix.charAt(0); }
 
 	// to free resources when no longer used
 	public void dispose() throws JmriException {
@@ -25,13 +30,13 @@ public class EasyDccTurnoutManager extends jmri.AbstractTurnoutManager {
 	// EasyDcc-specific methods
 
 	public void putBySystemName(EasyDccTurnout t) {
-		String system = "ET"+t.getNumber();
+		String system = prefix+t.getNumber();
 		_tsys.put(system, t);
 	}
 
 	public Turnout newTurnout(String systemName, String userName) {
 		// if system name is null, supply one from the number in userName
-		if (systemName == null) systemName = "ET"+userName;
+		if (systemName == null) systemName = prefix+userName;
 
 		// return existing if there is one
 		Turnout t;
@@ -39,7 +44,7 @@ public class EasyDccTurnoutManager extends jmri.AbstractTurnoutManager {
 		if ( (t = getBySystemName(systemName)) != null) return t;
 
 		// get number from name
-		if (!systemName.startsWith("ET")) {
+		if (!systemName.startsWith(prefix)) {
 			log.error("Invalid system name for EasyDcc turnout: "+systemName);
 			return null;
 		}
