@@ -3,23 +3,26 @@
 package jmri.jmrit.beantable;
 
 import jmri.InstanceManager;
-import jmri.*;
-import java.awt.*;
-import java.awt.event.*;
+import jmri.Manager;
 import jmri.NamedBean;
 import jmri.Turnout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import java.util.*;
+import java.awt.event.ActionListener;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  * Swing action to create and register a
  * TurnoutTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {

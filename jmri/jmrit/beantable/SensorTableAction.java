@@ -23,7 +23,7 @@ import javax.swing.JTextField;
  * SensorTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 
 public class SensorTableAction extends AbstractTableAction {
