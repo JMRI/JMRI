@@ -16,7 +16,7 @@ import javax.swing.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author			Bob Jacobsen
- * @version         $Revision: 1.15 $
+ * @version         $Revision: 1.16 $
  */
 public class LocoTools extends JPanel {
     public LocoTools(JFrame frame) {
@@ -87,6 +87,7 @@ public class LocoTools extends JPanel {
         funcMenu.add(new jmri.jmrit.powerpanel.PowerPanelAction("Power Control"));
         funcMenu.add(new jmri.jmrit.speedometer.SpeedometerAction( "Speedometer" ));
         funcMenu.add(new jmri.jmrit.messager.MessageFrameAction( "Throttle Messages" ));
+        funcMenu.add(new jmri.jmrit.sendpacket.SendPacketAction( "Send DCC Packet" ));
 
         JMenu locoMenu = new JMenu("LocoNet");
         menuBar.add(locoMenu);
