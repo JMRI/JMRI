@@ -17,7 +17,7 @@ import javax.swing.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author			Bob Jacobsen   Copyright 2002
- * @version         $Revision: 1.40 $
+ * @version         $Revision: 1.41 $
  */
 public class JMRIdemo extends JPanel {
     public JMRIdemo() {
@@ -155,6 +155,8 @@ public class JMRIdemo extends JPanel {
         devMenu.add(new jmri.jmrit.automat.SampleAutomatonAction( "Sample automaton 1"));
         devMenu.add(new jmri.jmrit.automat.SampleAutomaton2Action("Sample automaton 2"));
         devMenu.add(new jmri.jmrit.automat.SampleAutomaton3Action("Sample automaton 3"));
+        devMenu.add(new JSeparator());
+        devMenu.add(new jmri.jmrix.serialsensor.SerialSensorAction("Serial port sensors"));
 
         // Label & text
         JPanel pane1 = new JPanel();

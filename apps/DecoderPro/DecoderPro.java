@@ -13,7 +13,7 @@ import jmri.util.oreilly.*;
  * DecoderPro application.
  *
  * @author                      Bob Jacobsen
- * @version                     $Revision: 1.28 $
+ * @version                     $Revision: 1.29 $
  */
 public class DecoderPro extends JPanel {
     public DecoderPro() {
@@ -74,6 +74,8 @@ public class DecoderPro extends JPanel {
         debugMenu.add(new jmri.jmrix.nce.ncemon.NceMonAction("NCE Command Monitor"));
         debugMenu.add(new jmri.jmrix.sprog.sprogmon.SprogMonAction("SPROG Command Monitor"));
         debugMenu.add(new jmri.jmrit.MemoryFrameAction("Memory usage monitor"));
+        debugMenu.add(new JSeparator());
+        debugMenu.add(new jmri.jmrix.serialsensor.SerialSensorAction("Serial port sensors"));
 
         // Label & text
         JPanel pane1 = new JPanel();
