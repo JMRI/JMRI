@@ -1,13 +1,15 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_120.xml,v 1.1 2002-02-04 07:39:03 jacobsen Exp $ -->
+<!-- $Id: Digitrax_120.xml,v 1.2 2002-02-20 16:05:36 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
-					version="2" lastUpdated="20020118"/>
+					version="3" lastUpdated="20020215"/>
 
 <!-- Represent DH120 decoder, which is identical to -->
 <!-- the DH121 _except_ for consisting -->
 <!-- These have STD (not STD*) outputs. -->
+
+<!-- Version 3 - set ops mode programming to no -->
 
 <decoder>
 	<family name="Digitrax 120" mfg="Digitrax" lowVersionID="33" highVersionID="45">
@@ -15,7 +17,7 @@
 	</family>
 
 	<programming direct="byteOnly" paged="yes" 
-	                     register="yes" ops="yes"></programming>
+	                     register="yes" ops="no"></programming>
 
 	<variables>
 		<variable label="Short Address" CV="1" default="03">

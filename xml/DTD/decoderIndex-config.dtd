@@ -1,5 +1,5 @@
 <!-- Defines XML documenting the list of available decoder definitions -->
-<!-- $Id: decoderIndex-config.dtd,v 1.9 2002-02-04 07:37:27 jacobsen Exp $ -->
+<!-- $Id: decoderIndex-config.dtd,v 1.10 2002-02-20 16:05:36 jacobsen Exp $ -->
 
 <!ELEMENT decoderIndex-config (decoderIndex)>
 <!ATTLIST decoderIndex-config>
@@ -48,3 +48,4 @@
 
 <!ELEMENT output EMPTY >
 <!ATTLIST output name     	CDATA #REQUIRED>  <!-- output name used for identification -->
+<!ATTLIST output label     	CDATA #IMPLIED>  <!-- optional label, e.g. wire color -->

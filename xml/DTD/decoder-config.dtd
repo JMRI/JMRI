@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a DCC decoder as a component, esp. information -->
 <!-- on how to program it. -->
-<!-- $Id: decoder-config.dtd,v 1.17 2002-02-04 07:37:27 jacobsen Exp $ -->
+<!-- $Id: decoder-config.dtd,v 1.18 2002-02-20 16:05:36 jacobsen Exp $ -->
 
 <!ELEMENT decoder-config (version, decoder, pane*)>
 
@@ -47,6 +47,7 @@
 
 <!ELEMENT output EMPTY >
 <!ATTLIST output name     	CDATA #REQUIRED>  <!-- output name used for identification -->
+<!ATTLIST output label     	CDATA #IMPLIED>  <!-- optional label, e.g. wire color -->
 
 <!-- The programming section describes the decoders programming capabilities -->
 
