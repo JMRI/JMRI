@@ -34,7 +34,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * used with permission.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2003
- * @version			$Revision: 1.23 $
+ * @version			$Revision: 1.24 $
  */
 public class Llnmon {
 
@@ -1237,7 +1237,7 @@ public class Llnmon {
                             +",\n\tTrack Status is "+((trk  & LnConstants.GTRK_IDLE) != 0  ? "On" : "Off")
                             +",\n\tProgramming Track is "+((trk  & LnConstants.GTRK_PROG_BUSY) != 0 ? "Busy" : "Available")
                             +"\n\tSS2=0x"+Integer.toHexString(ss2)
-                            +", ID =0x"+Integer.toHexString(id2)+Integer.toHexString(id1)+"\n";
+                            +", ID=0x"+Integer.toHexString( (id2&0x7F)*128+(id1&0x7F))+"\n";
                     } else {
                         logString = mode
                             +" slot "+slot
