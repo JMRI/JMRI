@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the EasyDccProgrammer class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 
 package jmri.jmrix.easydcc;
@@ -41,7 +41,7 @@ public class EasyDccProgrammerTest extends TestCase {
 
 		// check write message sent
 		Assert.assertEquals("write message sent", 2, t.outbound.size());
-		Assert.assertEquals("write message contents", "P01014",
+		Assert.assertEquals("write message contents", "P00A14",
 			((EasyDccMessage)(t.outbound.elementAt(1))).toString());
 		// reply from programmer arrives
 		r = new EasyDccReply();
@@ -81,7 +81,7 @@ public class EasyDccProgrammerTest extends TestCase {
 
 		// check "read command" message sent
 		Assert.assertEquals("read message sent", 2, t.outbound.size());
-		Assert.assertEquals("read message contents", "R010",
+		Assert.assertEquals("read message contents", "R00A",
 			((EasyDccMessage)(t.outbound.elementAt(1))).toString());
 		// reply from programmer arrives
 		r = new EasyDccReply();
@@ -133,7 +133,7 @@ public class EasyDccProgrammerTest extends TestCase {
 
 		// check "read command" message sent
 		Assert.assertEquals("read message sent", 2, t.outbound.size());
-		Assert.assertEquals("read message contents", "R010",
+		Assert.assertEquals("read message contents", "R00A",
 			((EasyDccMessage)(t.outbound.elementAt(1))).toString());
 		// reply from programmer arrives
 		r = new EasyDccReply();
