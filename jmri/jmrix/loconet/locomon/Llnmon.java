@@ -32,7 +32,7 @@ import jmri.jmrix.loconet.*;
  * Reverse engineering of OPC_MULTI_SENSE was provided by Al Silverstein.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class Llnmon {
 
@@ -641,7 +641,7 @@ public class Llnmon {
             switch (type) {
             case LnConstants.OPC_MULTI_SENSE_POWER:
                 return "OPC_MULTI_SENSE power message PM4 "
-                    +l.getElement(2)+" ";
+                    +(l.getElement(2)+1)+" ";
             case LnConstants.OPC_MULTI_SENSE_PRESENT:  // from transponding app note
                 m =  "OPC_MULTI_SENSE transponder present zone "
                     +zone+" decoder address ";
