@@ -6,9 +6,19 @@ package jmri.jmrix.loconet;
  * long.  These are typically in the SW1, SW2 format, but don't have
  * to be.
  * <P>
+ * This ALM can operate in one of two modes:
+ *<UL>
+ *<LI>"image" - This ALM shadows one that really exists
+ * somewhere else.  This implementation keeps values
+ * that are being written, but doesn't reply to read
+ * or write commands on the LocoNet.
+ *<LI>"not image" - This is the only existing implementation
+ * of this particular ALM, so it replies to read and 
+ * write commands.
+ *</UL>
  * LocoNet ALM messages showing a argument value N will show in the throttle
  * editor as N+1.  Here, we refer to these as "arguments" and "throttle values".
- * Similarly, the addresses are "addresses" in the ALM, based on zero, and
+ * Similarly, device addresses are "addresses" in the ALM, based on zero, and
  * "entries" in the throttle, based on 1.
  * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
@@ -18,7 +28,7 @@ package jmri.jmrix.loconet;
  * contact Digitrax Inc for separate permission.
  *
  * @author Bob Jacobsen     Copyright 2002
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public abstract class AbstractAlmImplementation implements LocoNetListener {
@@ -56,11 +66,37 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
         if (msg.getOpCode()==0xEE && msg.getElement(2)==mNumber)
             writeMsg(msg);
         else if (msg.getOpCode()==0xE6 && msg.getElement(2)==mNumber)
-            readMsg(msg);
+            readMsg(msg); 
+        else if (msg.getOpCode()==0xB4 && msg.getElement(1)==0x6E)
+            lackMsg(msg);
+    }
+
+    boolean handleNextLACK = false;
+    boolean waitWriteMessage = false;
+    int lastWriteBlock;
+    
+    /**
+     * Handle LACK message.
+     * <P>
+     * If we're waiting for this, it indicates successful
+     * end of a write ALM sequence.
+     *
+     * @param msg
+     */
+    void lackMsg(LocoNetMessage msg) {
+        if (handleNextLACK) {
+            handleNextLACK = false;
+            noteWriteComplete(lastWriteBlock);
+        }
     }
 
     /**
-     * Handle ALM_WR_ACCESS message
+     * Handle ALM_WR_ACCESS message.
+     * <P>
+     * If we're an image, just record information from a WRITE.
+     * <P>
+     * If we're not an image, reply to all commands
+     *
      * @param msg
      */
     void writeMsg(LocoNetMessage msg) {
@@ -123,7 +159,7 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
                 LnTrafficController.instance().sendLocoNetMessage(l);
             }
             
-            noteRead(block);
+            noteReadCmd(block);
             
             return;
         }
@@ -142,12 +178,18 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
             
             noteChanged(block);
             
+            // is this a message we sent?
+            if (waitWriteMessage) {
+                waitWriteMessage = false;
+                handleNextLACK = true;
+            }
+            
             // if primary implementation
             if (!mImage) {
                 // send LACK
                 LocoNetMessage l = new LocoNetMessage(4);
                 l.setElement( 0, 0xB4);
-                l.setElement( 1, 0x66);  // E6 without high bit
+                l.setElement( 1, 0x6E);  // EE without high bit
                 l.setElement( 2, 0x7F);
                 LnTrafficController.instance().sendLocoNetMessage(l);
             }
@@ -164,19 +206,57 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
     public void noteChanged(int block) {}
 
     /**
-     * Notify possible subclass that a read is being handled
+     * Notify possible subclass that a read cmd is being handled
      */
-    public void noteRead(int block) {}
+    public void noteReadCmd(int block) {}
+    
+    /**
+     * Notify possible subclass that a read reply is being handled
+     */
+    public void noteReadReply(int block) {}
+    
+    /**
+     * Notify possible subclass that a write operation is complete
+     */
+    public void noteWriteComplete(int block) {}
     
     /**
      * Handle ALM_RD_ACCESS message.
      * <P>
-     * This is somewhat odd, as only we should be sending this; it's really
-     * a reply to an ALM_WR_ACCESS message.  It could be the echo of our
-     * own message, however, so it's not treated as an error now.
+     * If we're an image, this came from
+     * the real implementation and reflects the
+     * correct values; capture them.
+     * <P>
+     * If we're not an image, we just sent this, so 
+     * we'll ignore it.
      * @param msg
      */
     void readMsg(LocoNetMessage msg) {
+        // sort out the ATASK
+        switch (msg.getElement(3)) {
+        case READ: 
+            if (!mImage) return;
+            
+            // image, so capture the data
+            
+            // find address
+            int block = msg.getElement(5)*128+msg.getElement(4);
+            // get and save data
+            int arg1 = msg.getElement(8)*128+msg.getElement(7);
+            store(block, 0, arg1);
+            int arg2 = msg.getElement(10)*128+msg.getElement(9);
+            store(block, 1, arg2);
+            int arg3 = msg.getElement(12)*128+msg.getElement(11);
+            store(block, 2, arg3);
+            int arg4 = msg.getElement(14)*128+msg.getElement(13);
+            store(block, 3, arg4);
+            
+            noteReadReply(block);
+            return;
+
+        default:
+            return;
+        }
     }
 
     /**
@@ -210,7 +290,20 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
      * Create and send the LocoNet message to read a 
      * particular block.
      * <P>
-     * The results will return later.
+     * The waitWriteMessage and handleNextLACK boolean
+     * variables are used to control processong of the LACK
+     * message that will come from this.
+     * <P>
+     * For a single write, that's not needed, but if you
+     * want to know when it is complete you need to:
+     * <OL>
+     * <LI>Recognize when your write command has come back
+     * from the LocoNet
+     * <LI>Wait for the next LACK
+     * </OL>
+     * Hopefully this ALM writer is unique, so there won't
+     * be two writes to the same ALM going on at the same
+     * time; the LocoNet is not well synchronized against that.
      */
     void sendWrite(int block) {
         int arg1 = retrieve(block, 0);
@@ -236,6 +329,10 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
         l.setElement(13, arg4&0x7F);
         l.setElement(14, arg4/128);
         l.setElement(15, 0x00);
+        
+        lastWriteBlock = block;
+        waitWriteMessage = true;
+
         LnTrafficController.instance().sendLocoNetMessage(l);
         return;
     }
