@@ -17,8 +17,7 @@ import org.jdom.output.*;
 
 public class JmritTest extends TestCase {
 
-	// from here down is testing infrastructure
-	
+	// from here down is testing infrastructure	
 	public JmritTest(String s) {
 		super(s);
 	}
@@ -32,7 +31,9 @@ public class JmritTest extends TestCase {
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite("jmri.jmrit.JmritTest");   // no tests in this class itself
+		suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrameTest.suite());
 		suite.addTest(jmri.jmrit.powerpanel.PowerPanelTest.suite());
+		suite.addTest(jmri.jmrit.symbolicprog.DecoderFileTest.suite());
 		suite.addTest(jmri.jmrit.symbolicprog.SymbolicProgTest.suite());
 		return suite;
 	}

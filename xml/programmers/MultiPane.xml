@@ -8,12 +8,12 @@
 			<programmer:label>Address:</programmer:label>
 			<programmer:variable name="Address">
 			<programmer:label>Address:</programmer:label>
-			<programmer:variable name="Address">
+			<programmer:variable name="Acceleration rate">
 
 			<programmer:separator/>
 			
 			<programmer:label>Address:</programmer:label>
-			<programmer:variable name="Address">
+			<programmer:variable name="Start voltage">
 		</programmer:column>
 
 		<programmer:column>
