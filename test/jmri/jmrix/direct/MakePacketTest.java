@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the MakePacketTest class
  * @author		Bob Jacobsen  Copyright 2004
- * @version		$Revision: 1.2 $
+ * @version		$Revision: 1.3 $
  */
 public class MakePacketTest extends TestCase {
 
@@ -90,7 +90,7 @@ public class MakePacketTest extends TestCase {
                Assert.assertEquals("test all -  invalid lenght",10,result[0]);
          }
       }
-      public void testAllSpeed128Packets() {
+      public void skipTestAllSpeed128Packets() {
         int [] result = new int[100];
         int addressRange,speedRange;
        byte buffer[] = new byte [6];
@@ -127,7 +127,7 @@ public class MakePacketTest extends TestCase {
                   }
 
 
-              public void testAllopsCvWrite() {
+              public void skipTestAllopsCvWrite() {
                     int [] result = new int[100];
                     int addressRange,cvNum,data;
                    byte buffer[] = new byte [6];
@@ -177,4 +177,4 @@ public class MakePacketTest extends TestCase {
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MakePacketTest.class.getName());
 
 }
-
+
