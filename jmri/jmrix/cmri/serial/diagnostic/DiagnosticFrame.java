@@ -20,7 +20,7 @@ import java.lang.Integer;
 /**
  * Frame for running CMRI diagnostics
  * @author	 Dave Duchamp   Copyright (C) 2004
- * @version	 $Revision: 1.3 $
+ * @version	 $Revision: 1.4 $
  */
 public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cmri.serial.SerialListener {
 
@@ -33,7 +33,7 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
     protected int numOutputCards = 2;
     protected int numInputCards = 1;
     protected int numCards = 3;
-    protected int ua = 0;
+    protected int ua = 0;               // node address
     protected SerialNode node;
     protected int outCardNum = 0;
     protected int obsDelay = 2000;     
@@ -45,10 +45,12 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
     protected byte[] outBytes = new byte[256];
     protected int curOutByte = 0;   // current output byte in output test
     protected int curOutBit = 0;    // current on bit in current output byte in output test
+    protected short curOutValue = 0;  // current ofoutput byte in wraparound test
     protected int nOutBytes = 6;    // number of output bytes for all cards of this node
     protected int begOutByte = 0;   // numbering from zero, subscript in outBytes
     protected int endOutByte = 2;
     protected byte[] inBytes = new byte[256];
+    protected byte[] wrapBytes = new byte[4];
     protected int nInBytes = 3;    // number of input bytes for all cards of this node
     protected int begInByte = 0;   // numbering from zero, subscript in inBytes
     protected int endInByte = 2;
@@ -57,7 +59,8 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
     protected javax.swing.Timer outTimer;  
     protected javax.swing.Timer wrapTimer;
     protected boolean waitingOnInput = false;  
-    protected boolean inputHere = false;
+    protected boolean needInputTest = false;
+    protected int count = 20;
     int debugCount = 0;
     javax.swing.ButtonGroup testGroup = new javax.swing.ButtonGroup();
     javax.swing.JRadioButton outputButton = new javax.swing.JRadioButton("Output Test   ",true);
@@ -405,7 +408,11 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
     public void continueButtonActionPerformed(java.awt.event.ActionEvent e) {
         if (testRunning && testSuspended) {
             testSuspended = false;
-        }statusText1.setText("Continue button");
+            if (wrapTest) {
+                statusText1.setText("Running Wraparound Test");
+                statusText1.setVisible(true);
+            }
+        }
     }
 
     /**
@@ -535,14 +542,33 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
      *      the status panel of the Diagnostic Frame
      */
     protected boolean initializeWraparoundTest() {
-        // Set up beginning
+        // clear all output bytes for this node
+        for (int i=0;i<nOutBytes;i++) {
+            outBytes[i] = 0;
+        }
+        // Set up beginning output values
+        curOutByte = begOutByte;
+        curOutValue = 0;
+        
+        // Send initialization message                
+        SerialTrafficController.instance().sendSerialMessage(node.createInitPacket(),curFrame);
+        try {
+            // Wait for initialization to complete
+            wait (1000);    
+        }
+        catch (Exception e) {
+            // Ignore exception and continue
+        }
         
         // Clear error count
         numErrors = 0;
-        // Send initialization message                
-//        SerialTrafficController.instance().sendSerialMessage(createPacket(packetTextField.getText()), this);
-        // Initialization was successful
+        numIterations = 0;
+        // Initialize running flags 
         testRunning = true;
+        testSuspended = false;
+        waitingOnInput = false;
+        needInputTest = false;
+        count = 50;
         return (true);
     }
     
@@ -555,43 +581,126 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
         statusText1.setVisible(true);
         
         // Set up timer to update output pattern periodically
-        wrapTimer = new Timer(2000,new ActionListener() {
+        wrapTimer = new Timer(100,new ActionListener() {
             public void actionPerformed(ActionEvent evnt) 
             {
                 if (testRunning && !testSuspended) {
                     if (waitingOnInput) {
-                        // poll for next input
-                        
-                        if (inputHere) {
-                            waitingOnInput = false;
-                            inputHere = false;
-                            // Compare actual and expected
-                            
-                            // Send message and suspend if error
+                        count --;
+                        if (count==0) {
+                            statusText2.setText("Time Out Error - no response after 5 seconds.");
+                            statusText2.setVisible(true);
                         }
                     }
-                    
-                    if (!waitingOnInput) {
-                        // ready to send next test pattern
-                        
-                        // increment pattern
-// debugging
-                        debugCount ++;
-                        // fake an error every 200 counts
-                        if ( (debugCount%200) == 0) {
-                            testSuspended = true;
-                            numErrors ++;                            
+                    else {
+                        // compare input with previous output if needed
+                        if (needInputTest) {
+                            needInputTest = false;
+                            boolean comparisonError = false;
+                            // compare input and output bytes
+                            int j = 0;
+                            for (int i = begInByte;i<=endInByte;i++,j++) {
+                                if (inBytes[i] != wrapBytes[j]) {
+                                    comparisonError = true;
+                                }
+                            }
+                            if (comparisonError) {
+                                // report error and suspend test
+                                statusText1.setText
+                                    ("Test Suspended for Error - Stop or Continue?");
+                                statusText1.setVisible(true);
+                                String st = "Compare Error - Out Bytes (hex):";
+                                for (int i = begOutByte;i<=endOutByte;i++) {
+                                    st += " " + Integer.toHexString(((int)outBytes[i])&0x000000ff);
+                                }
+                                st += "    In Bytes (hex):";
+                                for (int i = begInByte;i<=endInByte;i++) {
+                                    st += " " + Integer.toHexString(((int)inBytes[i])&0x000000ff);
+                                }
+                                statusText2.setText(st);
+                                statusText2.setVisible(true);
+                                numErrors ++;
+                                testSuspended = true;
+                                return;
+                            }
                         }
-// end debugging
+
+                        // send next output pattern
+                        outBytes[curOutByte] = (byte) curOutValue;
+                        if (isSMINI) {
+                            // If SMINI, send same pattern to both output cards
+                            if (curOutByte > 2) {
+                                outBytes[curOutByte-3] = (byte) curOutValue;
+                            }
+                            else {
+                                outBytes[curOutByte+3] = (byte) curOutValue;
+                            }
+                        }
+                        SerialTrafficController.instance().sendSerialMessage(
+                                                        createOutPacket(),curFrame);
+
+                        // update Status area
+                        short[] outBitPattern = {0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80};
+                        String[] portID = {"A","B","C","D"};
+                        String st = "Port: "+portID[curOutByte-begOutByte]+",  Pattern: ";
+                        for (int j = 0;j < 8;j++) {
+                            if ( (curOutValue&outBitPattern[j]) != 0 ) {
+                                st = st + "X ";
+                            }
+                            else {
+                                st = st + "O ";
+                            }
+                        }    
+                        statusText2.setText(st);
+                        statusText2.setVisible(true);
+
+                        // wait for signal to settle down if filter delay
+                        if (filterDelay > 0) {
+                            try {
+                                wait (filterDelay);    
+                            }
+                            catch (Exception e) {
+                                // Ignore exception and continue
+                            }
+                        }
+
+                        // set up for testing input returned
+                        int k = 0;
+                        for (int i = begOutByte;i<=endOutByte;i++, k++) {
+                            wrapBytes[k] = outBytes[i];
+                        }
+                        waitingOnInput = true;
+                        needInputTest = true;
+                        count = 50;
+// temporary for debugging - eliminate when polling is ready
+                        // send poll
+                        SerialTrafficController.instance().sendSerialMessage(
+                                        SerialMessage.getPoll(ua),curFrame);
+// end debugging                      
+
+                        // update output pattern for next entry
+                        curOutValue ++;
+                        if (curOutValue>255) {
+                            // Move to the next byte
+                            curOutValue = 0;
+                            outBytes[curOutByte] = 0;
+                            if (isSMINI) {
+                                // If SMINI, clear ports of both output cards
+                                if (curOutByte>2) {
+                                    outBytes[curOutByte-3] = 0;
+                                }
+                                else {
+                                    outBytes[curOutByte+3] = 0;
+                                }
+                            }
+                            curOutByte ++;
+                            if (curOutByte>endOutByte) {
+                                // Pattern complete, recycle to first port (byte)
+                                curOutByte = begOutByte;
+                                numIterations ++;
+                            }
+                        }
                     }
-                        
-                    // send new output pattern
-                    
-// debugging
-                    // update status panel
-                    statusText2.setText(Integer.toString(debugCount));
-                    statusText2.setVisible(true); 
-// end debugging
                 }
             }
         });
@@ -611,7 +720,7 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
             statusText1.setText("Wraparound Test Stopped, "+Integer.toString(numErrors)+
                                                                 " Errors Found");
             statusText1.setVisible(true);
-            statusText2.setText("  ");
+            statusText2.setText(Integer.toString(numIterations)+" Cycles Completed");
             statusText2.setVisible(true);
         }
     }
@@ -653,15 +762,15 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
     /**
      * Reply notification method to implement SerialListener interface
      */
-    public void  reply(SerialReply r) {
-        if (r.isRcv()) {
-            // This is a receive message
-            if (ua == r.getUA()) {
-                // This is for the node being tested, get input
-                
-                // Set waiting over
-                waitingOnInput = false;
+    public synchronized void reply(SerialReply l) {  
+        // Test if waiting on this input
+        if ( waitingOnInput && (l.isRcv()) && (ua == l.getUA()) ) {
+            // This is a receive message for the node being tested
+            for (int i = begInByte;i<=endInByte;i++) {
+                // get data bytes, skipping over node address and 'R'
+                inBytes[i] = (byte) l.getElement(i+2);
             }
+            waitingOnInput = false;
         }
     }
 
