@@ -15,94 +15,84 @@ import jmri.ProgListener;
  * Note that you should call the dispose() method when you're really done, so that
  * a ProgModePane object can disconnect its listeners.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
-public class ProgOpsModePane extends javax.swing.JPanel implements java.beans.PropertyChangeListener {
+public class ProgOpsModePane extends javax.swing.JPanel {
 
     // GUI member declarations
-    
-    javax.swing.ButtonGroup modeGroup 		= new javax.swing.ButtonGroup();
-    javax.swing.JRadioButton opsByteButton  	= new javax.swing.JRadioButton();
-    
-    /*
-     * direction is BoxLayout.X_AXIS or BoxLayout.Y_AXIS
-     */
+
+    javax.swing.ButtonGroup mModeGroup;
+    javax.swing.JRadioButton mOpsByteButton  	= new javax.swing.JRadioButton();
+    javax.swing.JTextField mAddrField           = new javax.swing.JTextField(4);
+    javax.swing.JCheckBox mLongAddrCheck        = new javax.swing.JCheckBox("Long address");
+
+
     public ProgOpsModePane(int direction) {
-        
+        this(direction, new javax.swing.ButtonGroup());
+    }
+
+    /**
+     * @param direction
+     * @param group allows grouping of buttons across panes
+     */
+    public ProgOpsModePane(int direction, javax.swing.ButtonGroup group) {
+
+        // save the group to use
+        mModeGroup = group;
+
         // configure items for GUI
-        opsByteButton.setText("Ops Byte Mode");
-        modeGroup.add(opsByteButton);
-        
+        mOpsByteButton.setText("Ops Byte Mode");
+        mModeGroup.add(mOpsByteButton);
+        mAddrField.setToolTipText("Enter the decoder numeric address");
+        mLongAddrCheck.setToolTipText("If checked, use a long address, otherwise use a short address");
+
         // if a programmer is available, disable buttons for unavailable modes
         if (InstanceManager.programmerManagerInstance()!=null) {
             ProgrammerManager p = InstanceManager.programmerManagerInstance();
-            if (!p.isOpsModePossible()) opsByteButton.setEnabled(false);
+            if (!p.isOpsModePossible()) mOpsByteButton.setEnabled(false);
         } else {
             log.warn("No programmer available, so modes not set");
         }
-        
-        // add listeners to buttons
-        opsByteButton.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-				// get mode, and tell programmer
-                    connect();
-                    if (connected) setProgrammerMode(getMode());
-                }
-            });
-        
-        // connect for updates
-        connect();
-        
+
         // general GUI config
         setLayout(new BoxLayout(this, direction));
-        
+
         // install items in GUI
-        add(opsByteButton);
+        add(mOpsByteButton);
+        add(mAddrField);
+        add(mLongAddrCheck);
     }
-    
+
+    /**
+     * Get a configured programmer
+     */
+    public Programmer getProgrammer() {
+        if (InstanceManager.programmerManagerInstance()!=null) {
+            int address = Integer.parseInt(mAddrField.getText());
+            boolean longAddr = mLongAddrCheck.isSelected();
+            log.debug("ops programmer for address "+address+" long form is "+longAddr);
+            Programmer p = InstanceManager.programmerManagerInstance()
+                                .getOpsModeProgrammer(longAddr, address);
+            p.setMode(getMode());
+            return p;
+        }
+        else {
+            log.warn("request for ops mode programmer with no ProgrammerManager configured");
+            return null;
+        }
+    }
+
+    public boolean isSelected() {
+        return mOpsByteButton.isSelected();
+    }
+
     public int getMode() {
-        if (opsByteButton.isSelected())
+        if (mOpsByteButton.isSelected())
             return jmri.Programmer.OPSBYTEMODE;
         else
             return 0;
     }
-    
-    protected void setMode(int mode) {
-        switch (mode) {
-        case jmri.Programmer.OPSBYTEMODE:
-            opsByteButton.setSelected(true);
-            break;
-        default:
-            log.warn("propertyChange without valid mode value");
-            break;
-        }
-    }
-    
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
-        // mode changed in programmer, change GUI here if needed
-        if (e.getPropertyName() == "Mode") {
-            int mode = ((Integer)e.getNewValue()).intValue();
-            setMode(mode);
-        } else log.warn("propertyChange with unexpected propertyName: "+e.getPropertyName());
-    }
-    
-    // connect to the Programmer interface
-    boolean connected = false;
-    
-    private void connect() {
-        if (!connected) {
-            if (InstanceManager.programmerManagerInstance() != null
-                && InstanceManager.programmerManagerInstance().getServiceModeProgrammer() != null) {
-                InstanceManager.programmerManagerInstance()
-                    .getServiceModeProgrammer().addPropertyChangeListener(this);
-                connected = true;
-                log.debug("Connecting to programmer");
-            } else {
-                log.debug("No programmer present to connect");
-            }
-        }
-    }
-    
+
     // set the programmer to the current mode
     private void setProgrammerMode(int mode) {
         log.debug("Setting programmer to mode "+mode);
@@ -111,14 +101,10 @@ public class ProgOpsModePane extends javax.swing.JPanel implements java.beans.Pr
             InstanceManager.programmerManagerInstance().getServiceModeProgrammer().setMode(mode);
     }
 
-    // no longer needed, disconnect if still connected
+    /**
+     * Done with this pane
+     */
     public void dispose() {
-        if (connected) {
-            if (InstanceManager.programmerManagerInstance() != null
-                && InstanceManager.programmerManagerInstance().getServiceModeProgrammer() != null)
-                InstanceManager.programmerManagerInstance().getServiceModeProgrammer().removePropertyChangeListener(this);
-            connected = false;
-        }
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ProgOpsModePane.class.getName());

@@ -11,29 +11,54 @@ import jmri.ProgListener;
 
 /**
  * Provide a JPanel to configure the service mode programmer.
- *
+ * <P>
+ * The using code should get a configured programmer with getProgrammer. Since
+ * there's only one service mode programmer, maybe this isn't critical, but
+ * it's a good idea for the future.
  * <P>
  * Note that you should call the dispose() method when you're really done, so that
  * a ProgModePane object can disconnect its listeners.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class ProgServiceModePane extends javax.swing.JPanel implements java.beans.PropertyChangeListener {
-    
+
     // GUI member declarations
-    
-    javax.swing.ButtonGroup modeGroup 			= new javax.swing.ButtonGroup();
+
+    javax.swing.ButtonGroup modeGroup 		= new javax.swing.ButtonGroup();
     javax.swing.JRadioButton addressButton  	= new javax.swing.JRadioButton();
     javax.swing.JRadioButton pagedButton    	= new javax.swing.JRadioButton();
     javax.swing.JRadioButton directBitButton   	= new javax.swing.JRadioButton();
     javax.swing.JRadioButton directByteButton   = new javax.swing.JRadioButton();
     javax.swing.JRadioButton registerButton 	= new javax.swing.JRadioButton();
-    
-    /*
-     * direction is BoxLayout.X_AXIS or BoxLayout.Y_AXIS
+
+    /**
+     * Get the configured programmer
      */
+    public Programmer getProgrammer() {
+        if (InstanceManager.programmerManagerInstance()!=null)
+            return InstanceManager.programmerManagerInstance().getServiceModeProgrammer();
+        else
+            log.warn("request for service mode programmer with no ProgrammerManager configured");
+        return null;
+    }
+
+    public boolean isSelected() {
+        return (addressButton.isSelected() || pagedButton.isSelected()
+                || directBitButton.isSelected() || directByteButton.isSelected()
+                || registerButton.isSelected() );
+    }
+
     public ProgServiceModePane(int direction) {
-        
+        this(direction, new javax.swing.ButtonGroup());
+    }
+
+    /**
+     * @param direction controls layout, either BoxLayout.X_AXIS or BoxLayout.Y_AXIS
+     */
+    public ProgServiceModePane(int direction, javax.swing.ButtonGroup group) {
+        modeGroup = group;
+
         // configure items for GUI
         pagedButton.setText("Paged Mode");
         directBitButton.setText("Direct Bit");
@@ -45,7 +70,7 @@ public class ProgServiceModePane extends javax.swing.JPanel implements java.bean
         modeGroup.add(directByteButton);
         modeGroup.add(directBitButton);
         modeGroup.add(addressButton);
-        
+
         // if a programmer is available, disable buttons for unavailable modes
         if (InstanceManager.programmerManagerInstance()!=null
             && InstanceManager.programmerManagerInstance().getServiceModeProgrammer()!=null) {
@@ -58,7 +83,7 @@ public class ProgServiceModePane extends javax.swing.JPanel implements java.bean
         } else {
             log.warn("No programmer available, so modes not set");
         }
-        
+
         // add listeners to buttons
         pagedButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -95,14 +120,14 @@ public class ProgServiceModePane extends javax.swing.JPanel implements java.bean
                     if (connected) setProgrammerMode(getMode());
                 }
             });
-        
+
         // load the state if a programmer exists
         connect();
         updateMode();
-        
+
         // general GUI config
         setLayout(new BoxLayout(this, direction));
-        
+
         // install items in GUI
         add(pagedButton);
         add(directBitButton);
@@ -110,7 +135,7 @@ public class ProgServiceModePane extends javax.swing.JPanel implements java.bean
         add(registerButton);
         add(addressButton);
     }
-    
+
     public int getMode() {
         if (pagedButton.isSelected())
             return jmri.Programmer.PAGEMODE;
@@ -125,7 +150,7 @@ public class ProgServiceModePane extends javax.swing.JPanel implements java.bean
         else
             return 0;
     }
-    
+
     protected void setMode(int mode) {
         switch (mode) {
         case jmri.Programmer.REGISTERMODE:
@@ -148,7 +173,7 @@ public class ProgServiceModePane extends javax.swing.JPanel implements java.bean
             break;
         }
     }
-    
+
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         // mode changed in programmer, change GUI here if needed
         if (e.getPropertyName() == "Mode") {
@@ -156,10 +181,10 @@ public class ProgServiceModePane extends javax.swing.JPanel implements java.bean
             setMode(mode);
         } else log.warn("propertyChange with unexpected propertyName: "+e.getPropertyName());
     }
-    
+
     // connect to the Programmer interface
     boolean connected = false;
-    
+
     private void connect() {
         if (!connected) {
             if (InstanceManager.programmerManagerInstance() != null
@@ -173,7 +198,7 @@ public class ProgServiceModePane extends javax.swing.JPanel implements java.bean
             }
         }
     }
-    
+
     // set the programmer to the current mode
     private void setProgrammerMode(int mode) {
         log.debug("Setting programmer to mode "+mode);
@@ -181,7 +206,7 @@ public class ProgServiceModePane extends javax.swing.JPanel implements java.bean
             && InstanceManager.programmerManagerInstance().getServiceModeProgrammer() != null)
             InstanceManager.programmerManagerInstance().getServiceModeProgrammer().setMode(mode);
     }
-    
+
     /**
      * Internal routine to update the mode buttons to the
      * current state
@@ -196,7 +221,7 @@ public class ProgServiceModePane extends javax.swing.JPanel implements java.bean
             log.debug("Programmer doesn't exist, can't set default mode");
         }
     }
-    
+
     /**
      * Disable this panel (e.g. if ops mode selected)
      */
@@ -212,7 +237,7 @@ public class ProgServiceModePane extends javax.swing.JPanel implements java.bean
         directByteButton.setSelected(false);
         registerButton.setSelected(false);
     }
-    
+
     /**
      * Enable this panel
      */
@@ -224,8 +249,8 @@ public class ProgServiceModePane extends javax.swing.JPanel implements java.bean
         registerButton.setEnabled(true);
         updateMode();
     }
-    
-    
+
+
     // no longer needed, disconnect if still connected
     public void dispose() {
         if (connected) {
@@ -235,7 +260,7 @@ public class ProgServiceModePane extends javax.swing.JPanel implements java.bean
             connected = false;
         }
     }
-    
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ProgServiceModePane.class.getName());
-    
+
 }

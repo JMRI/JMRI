@@ -13,7 +13,7 @@ import jmri.ProgModePane;
 /**
  * Frame providing a simple command station programmer
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgListener {
 
@@ -90,7 +90,7 @@ public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgList
         tPane.add(new JSeparator(javax.swing.SwingConstants.VERTICAL));
 
         tPane2 = new JPanel();
-        tPane2.setLayout(new GridLayout(3,1));
+        tPane2.setLayout(new BoxLayout(tPane2, BoxLayout.Y_AXIS));
         radixGroup.add(decButton);
         radixGroup.add(hexButton);
         tPane2.add(new JLabel("Value is:"));
@@ -127,9 +127,6 @@ public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgList
             return 0;
         }
     }
-    private int getNewMode() {
-        return modePane.getMode();
-    }
 
     public String statusCode(int status) {
         String temp;
@@ -162,7 +159,7 @@ public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgList
 
     // handle the buttons being pushed
     public void readPushed(java.awt.event.ActionEvent e) {
-        Programmer p = jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer();
+        Programmer p = modePane.getProgrammer();
         if (p == null) {
             resultsField.setText("No programmer connected");
             readButton.setSelected(false);
@@ -178,7 +175,7 @@ public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgList
     }
 
     public void writePushed(java.awt.event.ActionEvent e) {
-        Programmer p = jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer();
+        Programmer p = modePane.getProgrammer();
         if (p == null) {
             resultsField.setText("No programmer connected");
             writeButton.setSelected(false);
