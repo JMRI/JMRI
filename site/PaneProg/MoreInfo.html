@@ -1,0 +1,133 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Bob Jacobsen, LBL">
+   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>More info on the Symbolic Programmer</title>
+</head>
+<body>
+
+<A href="../index.html">
+<IMG SRC="../images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
+</a>
+ 
+This page is _really_ still under construction! If you can help us make it a better page, please
+join the effort.<P>
+
+<H2>More info on the DecoderPro Symbolic Programmer</h2>
+
+This page provides a little information on how the DecoderPro Symbolic Programmer works.
+(Introductory information is available on the 
+<A HREF="index.html">prior page</A>)
+For details on JMRI internals, please see the
+<A HREF="../Technical/index.html" NAME="technical pages">technical pages</A>, which are unfortunately still
+being written.
+<P>
+<h3>Configuration files</h3>
+There are two types of configuration files:
+
+<UL>
+<LI>Decoder configuration files - These carry the description of a specific type 
+of decoder, and control how the programmer displays the variable information.
+<LI>Locomotive configuration files - These carry the specific information on a 
+single locomotive.
+</UL>
+<P>
+The programmer can read either type of file. If you select a decoder file after 
+clicking Read File, the programmer will be set up with the variables, options, etc 
+for that type.  The values will be blank, as the programmer doesn't know anything
+about what's been programmed into a specific decoder unit.
+<P>
+If you select a locomotive file after clicking Read File, information on both
+the decoder configuration and the specific settings in this locomotive will be
+displayed.  This shows you how the locomotive is already configured, allowing you
+to make small changes with less chance of confusion.
+<P>
+You can also write locomotive files with the Write File button.  This will store
+the known contents of the decoder, allowing you to come back to it later.
+<P>
+The configuration files are stored in XML format.  This is a standard form
+for structured data. XML is being widely used to standardize the exchange of
+data between different manufacturers in many fields; perhaps someday DCC decoder
+manufacturers will provide an XML description of each decoder they make.
+In the meantime, the configuration files are being created by volunteers.  
+If one
+doesn't exist for a specific decoder you've got, you can 
+<A HREF="ConfigFile.html">create your own</A>.
+You can also modify a file if you'd prefer different names, a different grouping
+of options, or you just never want to see that certain options that you don't use.
+A simple text editor can create these files easily,
+as the format doesn't have fixed length fields, special characters, etc.
+There are also powerful public-domain XML tools that make it really easy
+to manage a large number of decoder files.
+<P>
+More information on how to create a new configuration file is
+available on a <A HREF="ConfigFile.html">separate page</A>.
+
+<h3>Variables</h3>
+A "variable" defines the value that will be loaded into 
+all or part of a CV.  For example, a variable can be 
+defined that sets the value of the three most-significant 
+bits of CV 47.  If there are several options configured
+in a single CV, these would normally be handled by separate variables.
+Currently, there are several types of variables:
+<UL>
+<LI>Decimal - numbers entered in the usual decimal notation.  These 
+are useful for short address, starting voltages, etc.
+<LI>Enum (enumerated) - choose from a set of options.  These can be used
+for simple on/off, yes/no choices, or more complicated sets like the
+FX lighting example above.  The configuration contains a name for each 
+possibility.
+<LI>Long address - like a decimal value, except the constraints on a valid
+long address are taken into account.
+<LI>Hex - This is not so much needed, since the multiple options in a 
+single CV can be handled by multiple variables.  But if its needed for some
+reason, the capability is present.
+<LI>Speed table - not yet really working well, this type of variable is
+intended to provide a graphic speed table chart that you can drag around to
+configure as you wish.
+</UL>
+
+<h3>Programmer communication; states</h3>
+Communication with the command station / programmer, hence reading and writing
+of the decoder, are only done when the "Read" or "Write" buttons are pressed.
+The program keeps track of whether a value has been sent to the decoder using 
+four states for variables or CVs:
+<UL>
+<LI>Read - The value shown was read from the decoder.
+<LI>Stored - The value shown has been written to the decoder.
+<LI>Editted - The value shown has been changed in the computer, but not yet written 
+		to the decoder.  Push the Write button when you're happy with the value.
+<LI>Unknown - A default value, or a read has failed, or for some other reason
+        the program has no confidence that the value is what you really want.
+        Edit the value or press the Write button.
+</UL>
+
+<HR>
+<BR>Site hosted by: <BR>
+<A href="http://sourceforge.net"> 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A>
+
+<!-- Begin Small Box -->
+<form method="POST" action="http://mindit.netmind.com/mindit.shtml">
+<input type="hidden" name="FORM" value="C">
+<table border="0" cellpadding="5" cellspacing="0" bgcolor="#666666"><tr><td align="center">
+<font face="arial,helvetica" size="-1" color="#ffffff"><b>Click to receive email <br>when this page changes</b></font></td>
+</tr><tr><td align="center">
+<input type="image" src="http://mindit.netmind.com/images/mindit.gif" border="0"></td>
+</tr><tr bgcolor="#FFFFCC"><td align="center">
+<font face="arial,helvetica" size="-2">&#149;<b> Powered by <a href="http://www.netmind.com"><font color="#000000">NetMind</font></a> </b>&#149;</font>
+</td></tr></table>
+<input type=hidden value="http://jmri.sourceforge.net/SymbProg/MoreInfo.html" name="REDIRECT"> 
+</form>
+<!-- End Small Box -->
+ 
+
+<hr>
+Bob Jacobsen<BR>
+jake@physics.berkeley.edu
+
+</body>
+</html>
