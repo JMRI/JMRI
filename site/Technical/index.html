@@ -13,7 +13,7 @@
 <IMG SRC="../images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
 </a>
 
-This is the "technical" page of the JMRI website.  Right now, its just a 
+This is the "technical" page of the JMRI website.  Right now, it's just a 
 pile of various information.  Eventually we have to organize it!
 
 <P>
@@ -41,7 +41,7 @@ actual code!
 
 <H3>Intro to demo program structure</h3>
 
-The demo program is just an example, but its meant to be a good one.
+The demo program is just an example, but it's meant to be a good one.
 <P>
 The source for the main class currently lives in apps/JmriDemo/JMRIdemo.java,
 which defines the main class as apps.JmriDemo.JMRIdemo.  
@@ -85,7 +85,7 @@ like Ant.  That would then work on any machine that people are interested in.
 
 <h3>Recommended Tools</h3>
 <UL>
-<LI>We use Java Swing for our GUI development.  Its a lot more powerful
+<LI>We use Java Swing for our GUI development.  It's a lot more powerful
 than the original AWT, and the price is right. In particular, we
 try to use the "Bean format" of setting and getting members, call-backs to
 notify of changes, etc, to make it easier to build applications from JRMI components.
@@ -95,7 +95,7 @@ Macintosh, OS/2 and Linux for serial I/O. We hope it works fine on other platfor
 If more complicated I/O is needed, then perhaps a JNI interface can be 
 constructed, but we'd certainly like to avoid that!
 <LI>Originally, we used ErrLoggerJ for logging of messages, etc.  We're now
-switching to log4j as its both easier and more powerful.  To log messages
+switching to log4j as it's both easier and more powerful.  To log messages
 from a class named MyClass, add this to the bottom of the class file:
 <code>
 <PRE>
@@ -118,7 +118,7 @@ make it better.
 <LI>The Java collections (List, etc) are available in JMRI, because
 we need them for various other packages.  Use them if you'd like; there 
 are often better approaches than to make everything a Vector.
-<LI>Its really helpful to have tests for code, especially code that's
+<LI>It's really helpful to have tests for code, especially code that's
 being built by several people.  We use JUnit for that; see the section
 below.
 </UL>
