@@ -14,9 +14,19 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * Frame displaying and programming a PM4 configuration.
  * <P>The read and write require a sequence of operations, which
  * we handle with a state variable.
+ * <P>
+ * Programming of the PM4 is done via configuration messages, so
+ * the PM4 should not be put into programming mode via the
+ * built-in pushbutton while this tool is in use.
+ * <P>
+ * Some of the message formats used in this class are Copyright Digitrax, Inc.
+ * and used with permission as part of the JMRI project.  That permission
+ * does not extend to uses in other software products.  If you wish to
+ * use this code, algorithm or these message formats outside of JMRI, please
+ * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.3 $
  */
 public class PM4Frame extends JFrame implements LocoNetListener {
 
@@ -71,6 +81,7 @@ public class PM4Frame extends JFrame implements LocoNetListener {
             pane4.add(rev4);
         getContentPane().add(pane4);
 
+        status.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
         getContentPane().add(status);
 
         // install read all, write all button handlers
@@ -117,6 +128,7 @@ public class PM4Frame extends JFrame implements LocoNetListener {
     void nextRequest() {
         if (read) {
             // read op
+            status.setText("Reading opsw "+state);
             LocoNetMessage l = new LocoNetMessage(6);
             l.setOpCode(0xD0);
             l.setElement(1, 0x62);
@@ -128,6 +140,7 @@ public class PM4Frame extends JFrame implements LocoNetListener {
             LnTrafficController.instance().sendLocoNetMessage(l);
         } else {
             //write op
+            status.setText("Writing opsw "+state);
             LocoNetMessage l = new LocoNetMessage(6);
             l.setOpCode(0xD0);
             l.setElement(1, 0x72);
@@ -193,6 +206,7 @@ public class PM4Frame extends JFrame implements LocoNetListener {
             // done
             readAllButton.setSelected(false);
             writeAllButton.setSelected(false);
+            status.setText("Done");
             return;
         } else {
             // create next
@@ -254,7 +268,7 @@ public class PM4Frame extends JFrame implements LocoNetListener {
     JCheckBox slow4 = new JCheckBox();
     JCheckBox rev4  = new JCheckBox();
 
-    JLabel status = new JLabel("             ");
+    JLabel status = new JLabel("The PM4 should be on and in normal mode. (Don't push the buttons on the PM4)");
 
     JToggleButton readAllButton = new JToggleButton("Read from PM4");
     JToggleButton writeAllButton = new JToggleButton("Write to PM4");

@@ -12,10 +12,16 @@ import jmri.*;
  * when it hears commands from other places.
  *
  * <P>The algorithms in this class are a collaborative effort of Digitrax, Inc
- * and Bob Jacobsen.  Some of the message formats are copyright Digitrax, Inc.
+ * and Bob Jacobsen.
+ * <P>
+ * Some of the message formats used in this class are Copyright Digitrax, Inc.
+ * and used with permission as part of the JMRI project.  That permission
+ * does not extend to uses in other software products.  If you wish to
+ * use this code, algorithm or these message formats outside of JMRI, please
+ * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */public class SE8cSignalHead extends AbstractSignalHead implements LocoNetListener {
 
 

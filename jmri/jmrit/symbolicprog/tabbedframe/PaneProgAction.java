@@ -25,7 +25,7 @@ import jmri.jmrit.symbolicprog.*;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public class PaneProgAction 			extends AbstractAction {
 
@@ -84,7 +84,7 @@ public class PaneProgAction 			extends AbstractAction {
             };
 
         // load primary frame
-        modePane.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+        // modePane.setAlignmentX(JLabel.LEFT_ALIGNMENT);
         f.getContentPane().add(modePane);
         f.getContentPane().add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
 

@@ -20,7 +20,7 @@ import jmri.jmrit.roster.*;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class KnownLocoSelPane extends LocoSelPane  {
 
@@ -63,6 +63,23 @@ public class KnownLocoSelPane extends LocoSelPane  {
         locoBox = Roster.instance().matchingComboBox(null, null, null, null, null, null, null);
         add(locoBox);
 
+        addProgrammerBox();
+
+        JButton go2 = new JButton("Open programmer");
+        go2.addActionListener( new ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    if (log.isInfoEnabled()) log.info("Open programmer pressed");
+                    openButton();
+                }
+            });
+        add(go2);
+        setBorder(new EmptyBorder(6,6,6,6));
+    }
+
+    /**
+     * Add the GUI for selecting a specific programmer
+     */
+    private void addProgrammerBox() {
         JPanel pane3a = new JPanel();
         pane3a.setLayout(new BoxLayout(pane3a, BoxLayout.X_AXIS));
         pane3a.add(new JLabel("Programmer format: "));
@@ -74,16 +91,6 @@ public class KnownLocoSelPane extends LocoSelPane  {
         pane3a.add(programmerBox);
         // pane3a.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
         add(pane3a);
-
-        JButton go2 = new JButton("Open programmer");
-        go2.addActionListener( new ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (log.isInfoEnabled()) log.info("Open programmer pressed");
-                    openButton();
-                }
-            });
-        add(go2);
-        setBorder(new EmptyBorder(6,6,6,6));
     }
 
     JLabel mStatusLabel = null;

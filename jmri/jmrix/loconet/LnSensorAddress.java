@@ -17,8 +17,15 @@ package jmri.jmrix.loconet;
  * on through LScccD4.  ccc is the BDL16 card number.
  * <LI>A straight-forward numeric space, represented by LSmmm.
  * </UL>
+ * <P>
+ * Some of the message formats used in this class are Copyright Digitrax, Inc.
+ * and used with permission as part of the JMRI project.  That permission
+ * does not extend to uses in other software products.  If you wish to
+ * use this code, algorithm or these message formats outside of JMRI, please
+ * contact Digitrax Inc for separate permission.
+ * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2002
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class LnSensorAddress {
 

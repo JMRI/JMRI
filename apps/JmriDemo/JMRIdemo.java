@@ -17,7 +17,7 @@ import javax.swing.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author			Bob Jacobsen   Copyright 2002
- * @version         $Revision: 1.32 $
+ * @version         $Revision: 1.34 $
  */
 public class JMRIdemo extends JPanel {
     public JMRIdemo() {
@@ -132,7 +132,8 @@ public class JMRIdemo extends JPanel {
         devMenu.add(new jmri.jmrit.decoderdefn.DecoderIndexCreateAction("Create decoder index"));
         devMenu.add(new JSeparator());
         devMenu.add(new jmri.jmrix.loconet.locormi.LnMessageClientAction( "Start LocoNet Client" ));
-        devMenu.add(new jmri.jmrit.symbolicprog.symbolicframe.SymbolicProgAction("Table Programmer"));
+        devMenu.add(new JSeparator());
+        devMenu.add(new jmri.jmrit.symbolicprog.autospeed.AutoSpeedAction("Auto-speed tool"));
 
         // Label & text
         JPanel pane1 = new JPanel();
@@ -140,7 +141,7 @@ public class JMRIdemo extends JPanel {
         pane1.add(new JLabel(new ImageIcon(ClassLoader.getSystemResource("resources/logo.gif"),"Decoder Pro label"), JLabel.LEFT));
         JPanel pane2 = new JPanel();
         pane2.setLayout(new BoxLayout(pane2, BoxLayout.Y_AXIS));
-        pane2.add(new JLabel(" JMRI Demo "+jmri.Version.name()+", part of the JRMI project "));
+        pane2.add(new JLabel(" JMRI Demo "+jmri.Version.name()+", part of the JMRI project "));
         pane2.add(new JLabel("   http://jmri.sf.net/ "));
         pane2.add(new JLabel(" "));
         pane2.add(new JLabel(" Connected via "+prefs.getCurrentProtocolName()));

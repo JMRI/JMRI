@@ -8,15 +8,20 @@
  * Note that the values in this class have been taken from the llnmom C program of
  * Ron W. Auld, which included some work of John Kabat.  The symbol names
  * are copied from the loconet.h file, CVS revision 1.1.1.1, program release 0.3.0  Those
- * parts are (C) Copyright 2001 Ron W. Auld.  Those parts are licensed
- * under Version 2 of the GNU General Public License, as published by
- * the Free Software Foundation.
+ * parts are (C) Copyright 2001 Ron W. Auld, and are used with direct
+ * permission of the copyright holder.
  * <P>
  * Most major comment blocks here are quotes from the Digitrax Loconet(r)
  * OPCODE SUMMARY: found in the Loconet(r) Personal Edition 1.
  * <P>
  * Al Silverstein provided the reverse-engineering effort for the
  * OPC_MULTI_SENSE message.
+ * <P>
+ * Some of the message formats used in this class are Copyright Digitrax, Inc.
+ * and used with permission as part of the JMRI project.  That permission
+ * does not extend to uses in other software products.  If you wish to
+ * use this code, algorithm or these message formats outside of JMRI, please
+ * contact Digitrax Inc for separate permission.
  */
 
 package jmri.jmrix.loconet;

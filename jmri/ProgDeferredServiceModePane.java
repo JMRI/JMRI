@@ -30,7 +30,7 @@ import jmri.ProgListener;
  * "set" operations by changing the actual service mode programmer state.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class ProgDeferredServiceModePane extends ProgModeSelector implements java.beans.PropertyChangeListener {
 
@@ -107,16 +107,17 @@ public class ProgDeferredServiceModePane extends ProgModeSelector implements jav
      */
     private void updateStatus(int mode) {
         currentMode.setText(decodeMode(mode));
+        invalidate();
     }
 
     private String decodeMode(int mode) {
         switch (mode) {
-        case Programmer.ADDRESSMODE:    return "Address mode programming    ";
-        case Programmer.DIRECTBITMODE:  return "Direct bit mode programming ";
-        case Programmer.DIRECTBYTEMODE: return "Direct byte mode programming";
-        case Programmer.PAGEMODE:       return "Page mode programming       ";
-        case Programmer.REGISTERMODE:   return "Register mode programming   ";
-        default:                        return "Unknown programming mode    ";
+        case Programmer.ADDRESSMODE:    return "Address mode programming      ";
+        case Programmer.DIRECTBITMODE:  return "Direct bit mode programming   ";
+        case Programmer.DIRECTBYTEMODE: return "Direct byte mode programming  ";
+        case Programmer.PAGEMODE:       return "Page mode programming         ";
+        case Programmer.REGISTERMODE:   return "Register mode programming     ";
+        default:                        return "Unknown programming mode      ";
         }
     }
 

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_01x3.xml,v 1.2 2002-10-16 17:33:08 jacobsen Exp $ -->
+<!-- $Id: Digitrax_01x3.xml,v 1.3 2002-10-28 03:14:11 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
 					version="4" lastUpdated="20020808"/>
@@ -13,6 +13,34 @@
 <decoder>
 	<family name="Series 3 with FX3, silent, readback" 
 			mfg="Digitrax" lowVersionID="49" highVersionID="49">
+		<model model="DH163" numOuts="6" numFns="12">
+			<output name="4" label="Violet"/> 
+			<output name="5" label="Pad"/> 
+			<output name="6" label="Pad"/> </model>
+		<model model="DH163AT" numOuts="6" numFns="12">
+			<output name="4" label="Violet"/> 
+			<output name="5" label="Pad"/> 
+			<output name="6" label="Pad"/> </model>
+		<model model="DH163A0" numOuts="6" numFns="12">
+			<output name="4" label="Violet"/> 
+			<output name="5" label="Pad"/> 
+			<output name="6" label="Pad"/> </model>
+		<model model="DH163D" numOuts="6" numFns="12">
+			<output name="4" label="Violet"/> 
+			<output name="5" label="Pad"/> 
+			<output name="6" label="Pad"/> </model>
+		<model model="DH163IP" numOuts="6" numFns="12">
+			<output name="4" label="Violet"/> 
+			<output name="5" label="Pad"/> 
+			<output name="6" label="Pad"/> </model>
+		<model model="DH163K0" numOuts="6" numFns="12">
+			<output name="4" label="Violet"/> 
+			<output name="5" label="Pad"/> 
+			<output name="6" label="Pad"/> </model>
+		<model model="DH163L0" numOuts="6" numFns="12">
+			<output name="4" label="Violet"/> 
+			<output name="5" label="Pad"/> 
+			<output name="6" label="Pad"/> </model>
 		<model model="DH163P" numOuts="6" numFns="12">
 			<output name="4" label="Violet"/> 
 			<output name="5" label="Pad"/> 
@@ -29,7 +57,22 @@
 		<model model="DN163" numOuts="4" numFns="12">
 			<output name="4" label="Violet"/> 
 			<output name="5" label="Pad"/> </model>
+		<model model="DN163K0A" numOuts="4" numFns="12">
+			<output name="4" label="Violet"/> 
+			<output name="5" label="Pad"/> </model>
+		<model model="DN163M0" numOuts="4" numFns="12">
+			<output name="4" label="Violet"/> 
+			<output name="5" label="Pad"/> </model>
+		<model model="DN163A0" numOuts="4" numFns="12">
+			<output name="4" label="Violet"/> 
+			<output name="5" label="Pad"/> </model>
+		<model model="DN163A1" numOuts="4" numFns="12">
+			<output name="4" label="Violet"/> 
+			<output name="5" label="Pad"/> </model>
 		<model model="DZ143" numOuts="4" numFns="12">
+			<output name="4" label="Violet"/> 
+			<output name="5" label="Pad"/> </model>
+		<model model="DZ143PS" numOuts="4" numFns="12">
 			<output name="4" label="Violet"/> 
 			<output name="5" label="Pad"/> </model>
 	</family>

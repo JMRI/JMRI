@@ -2,20 +2,24 @@
 
 package jmri.jmrix.loconet;
 
-import jmri.Programmer;
-import jmri.jmrix.AbstractProgrammer;
-import jmri.ProgListener;
+import java.beans.*;
+import java.util.*;
 
-import java.util.Vector;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
+import jmri.*;
+import jmri.jmrix.*;
 
 /**
  * Controls a collection of slots, acting as the
  * counter-part of a LocoNet command station.
- *
+ * <P>
+ * Some of the message formats used in this class are Copyright Digitrax, Inc.
+ * and used with permission as part of the JMRI project.  That permission
+ * does not extend to uses in other software products.  If you wish to
+ * use this code, algorithm or these message formats outside of JMRI, please
+ * contact Digitrax Inc for separate permission.
+ * <P>
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.11 $
+ * @version         $Revision: 1.12 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 

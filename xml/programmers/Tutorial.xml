@@ -2,7 +2,7 @@
 <!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
 
 <programmer-config>
-<!-- $Id: Tutorial.xml,v 1.1 2002-01-13 03:36:57 jacobsen Exp $ -->
+<!-- $Id: Tutorial.xml,v 1.2 2002-10-25 15:06:29 jacobsen Exp $ -->
 		<version author="Bob Jacobsen" version="2" lastUpdated="20020112"/>
 
 <!-- A very basic programmer, containing only the most important few CVs -->
@@ -29,12 +29,12 @@
 
 			<label label="As two numbers and radiobuttons"/>
 			<row>
-				<display item="Short Address"/>
-				<display item="Address Format" format="offradiobutton" label=""/>
+				<column><display item="Short Address"/></column>
+				<column><display item="Address Format" format="offradiobutton" label=""/></column>
 			</row>
 			<row>
-				<display item="Long Address"/>
-				<display item="Address Format" format="onradiobutton" label=""/>
+				<column><display item="Long Address"/></column>
+				<column><display item="Address Format" format="onradiobutton" label=""/></column>
 			</row>
 			<separator/>
 

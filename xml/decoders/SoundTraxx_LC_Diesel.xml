@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_LC_Diesel.xml,v 1.9 2002-10-16 17:33:10 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_LC_Diesel.xml,v 1.10 2002-10-28 03:13:48 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Robin Becker" version="6" lastUpdated="20020710"/>
+		<version author="Robin Becker" version="7" lastUpdated="20021027"/>
 
 		<!-- version 4: updates to minOut usage, function mapping -->
 		<!-- version 5: removed erroneous CV19 definition, corrected VersionID -->
 		<!-- version 6: rename for tree structure -->
+		<!-- version 7: add Atlas/Kato -->
 
 <decoder>
 	<family name="LC diesel decoders" mfg="Throttle-Up (SoundTraxx)">
@@ -23,6 +24,18 @@
 			<output name="Mute"/> 
 			<!-- The four electrical outputs are front headlight, back -->
 			<!-- headlight, FX1, FX2 -->
+			</model>
+		<model model="AT100LC/KT100LC Diesel" numOuts="2" numFns="8">
+			<versionCV lowVersionID="35"/>
+			<output name="Horn"/> 
+			<output name="Bell"/> 
+			<!--output name="3" label="FX1/grn" /-->
+			<!--output name="4" label="FX2/brwn" /-->
+			<output name="DynBrake"/> 
+			<output name="RPM+"/> 
+			<output name="RPM-"/> 
+			<output name="Dim"/>
+			<output name="Mute"/> 
 			</model>
 	</family>
 
