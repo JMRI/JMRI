@@ -20,7 +20,7 @@ import javax.swing.*;
  * Base class for Jmri applications.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 public class Apps extends JPanel {
 
@@ -278,6 +278,9 @@ public class Apps extends JPanel {
     static protected void createFrame(Apps containedPane, JFrame frame) {
     	// create the main frame and menus
         frame.addWindowListener(new jmri.util.oreilly.BasicWindowMonitor());
+
+        // invoke plugin, if any
+        jmri.JmriPlugin.start(frame, containedPane.menuBar);
 
         frame.setJMenuBar(containedPane.menuBar);
         frame.getContentPane().add(containedPane);
