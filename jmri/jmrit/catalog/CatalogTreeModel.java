@@ -2,14 +2,10 @@
 
 package jmri.jmrit.catalog;
 
-import java.awt.*;
-import java.io.File;
-import java.awt.event.*;
-import javax.swing.*;
+import jmri.jmrit.*;
+import java.io.*;
+
 import javax.swing.tree.*;
-import javax.swing.border.*;
-import javax.swing.event.*;
-import jmri.jmrit.XmlFile;
 
 /**
  * TreeModel used by CatalogPane to create a tree of resources.
@@ -22,9 +18,12 @@ import jmri.jmrit.XmlFile;
  * file.  The other, "files", is all files found in the "resources"
  * filetree in the preferences directory.  Note that this means that
  * files in the distribution directory are _not_ included.
+ * <P>
+ * As a special case "simplification", the catalog tree will not contain
+ * CVS directories, or files whose name starts with a "."
  *
  * @author			Bob Jacobsen  Copyright 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class CatalogTreeModel extends DefaultTreeModel {
     public CatalogTreeModel() {
@@ -57,6 +56,10 @@ public class CatalogTreeModel extends DefaultTreeModel {
         File fp = new File(pPath);
         if (!fp.exists()) return;
 
+        // suppress overhead files
+        if (fp.getName().startsWith(".")) return;
+        if (fp.getName().equals("CVS")) return;
+
         // first, represent this one
         DefaultMutableTreeNode newElement = new DefaultMutableTreeNode(pName);
         insertNodeInto(newElement, pParent, pParent.getChildCount());
@@ -80,6 +83,11 @@ public class CatalogTreeModel extends DefaultTreeModel {
     void insertFileNodes(String name, String path, DefaultMutableTreeNode parent) {
         File fp = new File(path);
         if (!fp.exists()) return;
+
+        // suppress overhead files
+        if (fp.getName().startsWith(".")) return;
+        if (fp.getName().equals("CVS")) return;
+
         // represent this one
         DefaultMutableTreeNode newElement = new DefaultMutableTreeNode(name);
         insertNodeInto(newElement, parent, parent.getChildCount());
