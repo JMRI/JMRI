@@ -58,9 +58,10 @@ public class ControlPanel extends JInternalFrame
             throttleManager = InstanceManager.throttleManagerInstance();
         }
         throttleManager.cancelThrottleRequest(oldAddress, this);
-        throttleManager.requestThrottle(newAddress, this);
         requestedAddress = newAddress;
         this.setEnabled(false);
+        // this has to be done last, as it might come back immediately
+        throttleManager.requestThrottle(newAddress, this);
     }
 
     /**
