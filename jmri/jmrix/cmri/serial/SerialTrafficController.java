@@ -21,7 +21,7 @@ import java.util.Vector;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -131,7 +131,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     /**
      * Create the write message with the current states
      */
-    protected SerialMessage nextWrite() {
+    SerialMessage nextWrite() {
         SerialMessage m = new SerialMessage(highByte+3);  // UA, 'T', plus 1 OB even if highByte == 0
         m.setElement(0,(byte)0x41);
         m.setElement(1,(byte)0x54);
