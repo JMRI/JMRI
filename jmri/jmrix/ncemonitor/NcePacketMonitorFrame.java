@@ -20,7 +20,7 @@ import java.io.InputStream;
  * The rest of the GUI then appears.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
 
@@ -186,6 +186,56 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             b.setSelected(true);
             p2.add(p);
         }  // acc single/double
+
+        {
+            JPanel p = new JPanel();
+            p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+            ButtonGroup g = new ButtonGroup();
+            JRadioButton b;
+            b= new JRadioButton("Hide reset packets");
+            g.add(b);
+            p.add(b);
+            b.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    sendBytes(new byte[]{'R','-'});
+                }
+            });
+            b= new JRadioButton("Show reset packets");
+            g.add(b);
+            p.add(b);
+            b.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    sendBytes(new byte[]{'R','+'});
+                }
+            });
+            b.setSelected(true);
+            p2.add(p);
+        }  // reset off/on
+
+        {
+            JPanel p = new JPanel();
+            p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+            ButtonGroup g = new ButtonGroup();
+            JRadioButton b;
+            b= new JRadioButton("Hide idle packets");
+            g.add(b);
+            p.add(b);
+            b.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    sendBytes(new byte[]{'I','-'});
+                }
+            });
+            b= new JRadioButton("Show idle packets");
+            g.add(b);
+            p.add(b);
+            b.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    sendBytes(new byte[]{'I','+'});
+                }
+            });
+            b.setSelected(true);
+            p2.add(p);
+        }  // idle off/on
 
         getContentPane().add(p2);
     }
