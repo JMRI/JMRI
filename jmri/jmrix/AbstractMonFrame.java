@@ -2,19 +2,25 @@
 
 package jmri.jmrix;
 
-import java.awt.*;
-import java.io.*;
-import java.text.*;
-import java.util.*;
+import java.awt.Dimension;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+import java.text.DateFormat;
+import java.util.Date;
 
 import javax.swing.*;
+import javax.swing.JFileChooser;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  * Abstact base class for Frames displaying communications monitor information
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2003
+ * @version	$Revision: 1.4 $
  */
-public abstract class AbstractMonFrame extends javax.swing.JFrame  {
+public abstract class AbstractMonFrame extends JFrame  {
 
     // template functions to fill in
     protected abstract String title();    // provide the title for the frame
@@ -33,14 +39,15 @@ public abstract class AbstractMonFrame extends javax.swing.JFrame  {
     // these should call nextLine(String line, String raw) with their updates
 
     // member declarations
-    protected javax.swing.JButton clearButton = new javax.swing.JButton();
-    protected javax.swing.JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
-    protected javax.swing.JTextPane monTextPane = new javax.swing.JTextPane();
-    protected javax.swing.JButton startLogButton = new javax.swing.JButton();
-    protected javax.swing.JButton stopLogButton = new javax.swing.JButton();
-    protected javax.swing.JCheckBox rawCheckBox = new javax.swing.JCheckBox();
-    protected javax.swing.JCheckBox timeCheckBox = new javax.swing.JCheckBox();
-    protected javax.swing.JButton openFileChooserButton = new javax.swing.JButton();
+    protected JButton clearButton = new JButton();
+    protected JToggleButton freezeButton = new JToggleButton();
+    protected JScrollPane jScrollPane1 = new JScrollPane();
+    protected JTextPane monTextPane = new JTextPane();
+    protected JButton startLogButton = new JButton();
+    protected JButton stopLogButton = new JButton();
+    protected JCheckBox rawCheckBox = new JCheckBox();
+    protected JCheckBox timeCheckBox = new JCheckBox();
+    protected JButton openFileChooserButton = new JButton();
 
     // to find and remember the log file
     final javax.swing.JFileChooser logFileChooser = new JFileChooser(" ");
@@ -54,6 +61,10 @@ public abstract class AbstractMonFrame extends javax.swing.JFrame  {
         clearButton.setText("Clear screen");
         clearButton.setVisible(true);
         clearButton.setToolTipText("Clear monitoring history");
+
+        freezeButton.setText("Freeze screen");
+        freezeButton.setVisible(true);
+        freezeButton.setToolTipText("Stop display scrolling");
 
         monTextPane.setVisible(true);
         monTextPane.setToolTipText("Command and reply monitoring information appears here");
@@ -111,6 +122,7 @@ public abstract class AbstractMonFrame extends javax.swing.JFrame  {
         JPanel pane1 = new JPanel();
         pane1.setLayout(new BoxLayout(pane1, BoxLayout.Y_AXIS));
         pane1.add(clearButton);
+        pane1.add(freezeButton);
         pane1.add(rawCheckBox);
         pane1.add(timeCheckBox);
         paneA.add(pane1);
@@ -237,8 +249,8 @@ public abstract class AbstractMonFrame extends javax.swing.JFrame  {
         sb.append(line);
         s1 = sb.toString();
 
-        // if no update pending, display it in the Swing thread
-        if (!pending) {
+        // if no update pending & not frozen, display it in the Swing thread
+        if (!pending && !freezeButton.isSelected()) {
             pending = true;
             Runnable r = new Runnable() {
                 public void run() {
