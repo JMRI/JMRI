@@ -17,7 +17,7 @@ import java.util.*;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.8 $
  */
 public class LocoNetSlot {
 
@@ -131,6 +131,27 @@ public class LocoNetSlot {
             return;
         }
         }
+    }
+
+    /**
+     * Update the status bits in STAT1 (D5, D4)
+     * @param status
+     * @return
+     */
+    public LocoNetMessage writeStatus(int status) {
+        LocoNetMessage l = new LocoNetMessage(4);
+        l.setOpCode( LnConstants.OPC_SLOT_STAT1 );
+        l.setElement(1, slot);
+        l.setElement(2, (stat&~LnConstants.LOCOSTAT_MASK)|status);
+        return l;
+    }
+
+    public LocoNetMessage dispatchSlot() {
+        LocoNetMessage l = new LocoNetMessage(4);
+        l.setOpCode( LnConstants.OPC_MOVE_SLOTS );
+        l.setElement(1, slot);
+        l.setElement(2, 0);
+        return l;
     }
 
     public LocoNetMessage writeSlot() {
