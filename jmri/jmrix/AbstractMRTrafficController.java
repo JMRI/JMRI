@@ -22,7 +22,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 abstract public class AbstractMRTrafficController {
 
@@ -413,7 +413,8 @@ abstract public class AbstractMRTrafficController {
                 handleOneIncomingReply();
             }
             catch (java.io.IOException e) {
-                log.warn("run: Exception: "+e.toString());
+                log.error("run: Exception: "+e.toString());
+                break;
             }
         }
     }
