@@ -22,7 +22,7 @@ import com.sun.java.util.collections.ArrayList;
  * Basic configuration GUI infrastructure.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class AppConfigPanel extends JPanel {
 
@@ -137,6 +137,12 @@ public class AppConfigPanel extends JPanel {
         files.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutStartupFiles")));
         advancedPane.add(files);
         clist.add(files);
+
+        log.debug("start scripts");
+        PerformScriptPanel scripts = new PerformScriptPanel();
+        scripts.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutStartupScripts")));
+        advancedPane.add(scripts);
+        clist.add(scripts);
 
         // default roster location configuration
         log.debug("start roster");
