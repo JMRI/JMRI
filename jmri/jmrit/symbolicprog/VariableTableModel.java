@@ -19,7 +19,7 @@ import org.jdom.Element;
  * Table data model for display of variables in symbolic programmer.
  * Also responsible for loading from the XML file...
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version      $Revision: 1.11 $
+ * @version      $Revision: 1.12 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -358,7 +358,8 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         // create the specific object
 
         ConstantValue v = new ConstantValue(name, comment, true,
-                                            0, mask, defaultVal, defaultVal, null, _status, stdname);
+                                            0, mask, defaultVal, defaultVal,
+                                            _cvModel.allCvVector(), _status, stdname);
 
         // record new variable, update state, hook up listeners
         rowVector.addElement(v);
