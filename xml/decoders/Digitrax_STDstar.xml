@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_STDstar.xml,v 1.5 2002-10-17 12:38:05 jacobsen Exp $ -->
+<!-- $Id: Digitrax_STDstar.xml,v 1.6 2002-11-25 00:54:35 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
-					version="2" lastUpdated="20021016"/>
+					version="3" lastUpdated="20021122"/>
 
 <!-- Represent the family of Digitrax decoders with STD* outputs. -->
 <!-- STD* means that the lights are reversing only, so -->
@@ -11,6 +11,7 @@
 
 <!-- Version 1 made from old 1x1 file -->
 <!-- Version 2 with versionID range -->
+<!-- Version 3 remove speed tables, not present -->
 
 <decoder>
 	<family name="Basic STD*" mfg="Digitrax" lowVersionID="1" highVersionID="1">
@@ -107,11 +108,6 @@
 				<enumChoice choice="NMRA Digital only"/>
 				<enumChoice choice="DC conversion enabled"/>
 				</enumVal></variable>
-		<variable label="Speed Table Definition" CV="29" mask="XXXVXXXX">
-			<enumVal>
-				<enumChoice choice="Use Vstart, Vmid, Vhigh"/>
-				<enumChoice choice="Use table in CVs 66 through 95"/>
-				</enumVal></variable>
 		<variable label="Address Format" CV="29" mask="XXVXXXXX">
 			<enumVal>
 				<enumChoice choice="One byte (short) address"/>
@@ -134,9 +130,6 @@
 		<variable label="User Private ID #2" CV="106"
 					item="User Id #2">
 			<decVal/>
-			</variable>
-		<variable label="Speed Table" CV="67">
-			<speedTableVal/>
 			</variable>
 
 
