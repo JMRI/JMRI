@@ -1,6 +1,6 @@
 <!-- ugly first attempt at an ANT build.xml file for JMRI development -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.43 $ -->
+<!-- Revision $Revision: 1.44 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -51,6 +51,9 @@
   </target>
 
   <target name="compile" depends="init" description="compile source, omitting tests">
+    <!-- Force use of 1.1/1.2 compiler to avoid hang in synchronized(this){} on MRJ 2.2 -->
+    <property name="build.compiler" value="javac1.2" />
+
     <!-- Compile the java code from ${source} into ${target} -->
     <javac srcdir="${source}" 
            destdir="${target}" 
@@ -181,7 +184,7 @@
          basedir="${target}"
          manifest="manifest" 
          compress="true" />   <!-- compress="true" is default -->
-    <!-- create the index -->
+    <!-- create the index, using the information in the manifest -->
     <exec executable="jar" dir="${jartarget}">
     	<arg line="i jmri.jar"/>
     </exec>
