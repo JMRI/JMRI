@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.locoio.LocoIOFrame class
  * @author	    Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 public class LocoIOFrameTest extends TestCase {
 
@@ -82,7 +82,7 @@ public class LocoIOFrameTest extends TestCase {
             protected int cautionAddrSet() { return 1;}
         };
 
-        f.addrField.setText("1234");
+        f.addrField.setText("0134");
 
         // click button
         f.addrSetButton.doClick();
@@ -117,5 +117,9 @@ public class LocoIOFrameTest extends TestCase {
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoIOFrameTest.class.getName());
+    // The minimal setup for log4J
+    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
+    protected void setUp() { log4jfixtureInst.setUp(); }
+    protected void tearDown() { log4jfixtureInst.tearDown(); }
 
 }
