@@ -8,6 +8,8 @@ import java.util.*;
 
 import javax.swing.*;
 
+import java.util.Vector;
+
 import jmri.*;
 
 /**
@@ -16,7 +18,7 @@ import jmri.*;
  * Programmer used to access it is a data member.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class CvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
