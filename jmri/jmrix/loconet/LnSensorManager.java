@@ -2,7 +2,6 @@
 
 package jmri.jmrix.loconet;
 
-import jmri.JmriException;
 import jmri.Sensor;
 
 /**
@@ -11,7 +10,7 @@ import jmri.Sensor;
  * System names are "LSnnn", where nnn is the sensor number without padding.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class LnSensorManager extends jmri.AbstractSensorManager implements LocoNetListener {
 
