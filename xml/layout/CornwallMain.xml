@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE layout-config SYSTEM "layout-config.dtd">
-<!-- $Id: CornwallMain.xml,v 1.13 2003-05-26 16:07:08 jacobsen Exp $ -->
+<!-- $Id: CornwallMain.xml,v 1.14 2003-05-30 19:10:06 jacobsen Exp $ -->
 <!-- Cornwall RR main dispatcher panel -->
 <!-- The layout turnouts, signals, and sensors are defined in CornwallDefinitions.xml -->
 <layout-config>
@@ -57,7 +57,7 @@
 	<!-- Next one commented out, as there is no associated input sensor -->
     <!-- <sensoricon sensor="" x="94" y="168" active="resource:resources/icons/cornwall/TurnoutThrownL.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedL.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothR.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" /> -->
 
-    <sensoricon sensor="CS53" x="136" y="111" active="resource:resources/icons/cornwall/TurnoutThrownR.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedR.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherR.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothR.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="CS53" x="136" y="111" active="resource:resources/icons/cornwall/TurnoutClosedR.gif" inactive="resource:resources/icons/cornwall/TurnoutThrownR.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherR.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothR.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
     <sensoricon sensor="CS58" x="137" y="143" active="resource:resources/icons/cornwall/TurnoutThrownL.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedL.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothL.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
 
     <sensoricon sensor="CS26" x="196" y="118" active="resource:resources/icons/cornwall/TurnoutThrownR.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedR.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherR.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothR.gif" rotate="2" class="jmri.jmrit.display.configurexml.SensorIconXml" />
@@ -108,6 +108,8 @@
 
     <signalheadicon signalhead="si3a" x="664" y="152" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="0" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
     <signalheadicon signalhead="si3b" x="710" y="127" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="0" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+
+    <signalheadicon signalhead="si22a" x="703" y="135" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="2" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
 
     <signalheadicon signalhead="si2a" x="802" y="52" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="0" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
 
@@ -161,7 +163,7 @@
 	<!-- turnouts on the lower schematic (left to right); the C/MRI ones are inputs only, so are coded with sensors -->
     <sensoricon sensor="CS5" x="71" y="341" active="resource:resources/icons/cornwall/TurnoutThrownL.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedL.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothL.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
 
-    <sensoricon sensor="CS35" x="117" y="458" active="resource:resources/icons/cornwall/TurnoutThrownR.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedR.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherR.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothR.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="CS35" x="117" y="458" active="resource:resources/icons/cornwall/TurnoutClosedR.gif" inactive="resource:resources/icons/cornwall/TurnoutThrownR.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherR.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothR.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
 
     <sensoricon sensor="CS16" x="171" y="341" active="resource:resources/icons/cornwall/TurnoutThrownR.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedR.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherR.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothR.gif" rotate="2" class="jmri.jmrit.display.configurexml.SensorIconXml" />
 
