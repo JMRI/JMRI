@@ -16,7 +16,7 @@ import com.sun.java.util.collections.Collections;
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 abstract public class AbstractManager
     implements Manager, java.beans.PropertyChangeListener {
@@ -78,6 +78,8 @@ abstract public class AbstractManager
         String userName = s.getUserName();
         if (userName != null) _tuser.put(userName, s);
         firePropertyChange("length", null, new Integer(_tsys.size()));
+        // listen for name changes
+        s.addPropertyChangeListener(this);
     }
 
     /**
