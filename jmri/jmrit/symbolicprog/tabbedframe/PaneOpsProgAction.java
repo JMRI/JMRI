@@ -26,7 +26,7 @@ import jmri.*;
  * @see  jmri.jmrit.symbolicprog.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class PaneOpsProgAction 	extends AbstractAction {
 
@@ -39,7 +39,8 @@ public class PaneOpsProgAction 	extends AbstractAction {
         statusLabel = new JLabel("idle");
 
         // disable ourself if ops programming is not possible
-        if (!jmri.InstanceManager.programmerManagerInstance().isOpsModePossible()) {
+        if (jmri.InstanceManager.programmerManagerInstance()==null ||
+            !jmri.InstanceManager.programmerManagerInstance().isOpsModePossible()) {
             setEnabled(false);
         }
 
