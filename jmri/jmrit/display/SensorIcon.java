@@ -10,14 +10,14 @@ import jmri.jmrit.catalog.NamedIcon;
 /**
  * SensorIcon provides a small icon to display a status of a Sensor.</p>
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
     public SensorIcon() {
         // super ctor call to make sure this is an icon label
-        super(new NamedIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/circuit-error.gif"),
+        super(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
                     "resources/icons/smallschematics/tracksegments/circuit-error.gif"));
         displayState(sensorState());
     }
@@ -50,16 +50,16 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
 
     // display icons
     String activeName = "resources/icons/smallschematics/tracksegments/circuit-occupied.gif";
-    NamedIcon active = new NamedIcon(ClassLoader.getSystemResource(activeName), activeName);
+    NamedIcon active = new NamedIcon(activeName, activeName);
 
     String inactiveName = "resources/icons/smallschematics/tracksegments/circuit-empty.gif";
-    NamedIcon inactive = new NamedIcon(ClassLoader.getSystemResource(inactiveName), inactiveName);
+    NamedIcon inactive = new NamedIcon(inactiveName, inactiveName);
 
     String inconsistentName = "resources/icons/smallschematics/tracksegments/circuit-error.gif";
-    NamedIcon inconsistent = new NamedIcon(ClassLoader.getSystemResource(inconsistentName), inconsistentName);
+    NamedIcon inconsistent = new NamedIcon(inconsistentName, inconsistentName);
 
     String unknownName = "resources/icons/smallschematics/tracksegments/circuit-error.gif";
-    NamedIcon unknown = new NamedIcon(ClassLoader.getSystemResource(unknownName), unknownName);
+    NamedIcon unknown = new NamedIcon(unknownName, unknownName);
 
     public NamedIcon getActiveIcon() { return active; }
     public void setActiveIcon(NamedIcon i) { active = i; displayState(sensorState()); }
