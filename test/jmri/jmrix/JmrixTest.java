@@ -12,7 +12,7 @@ import org.jdom.output.*;
 /**
  * Set of tests for the jmri.jmrix package
  * @author			Bob Jacobsen
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class JmrixTest extends TestCase {
 
@@ -37,6 +37,7 @@ public class JmrixTest extends TestCase {
 		suite.addTest(jmri.jmrix.loconet.LocoNetTest.suite());
 		suite.addTest(jmri.jmrix.nce.NceTest.suite());
 		suite.addTest(jmri.jmrix.easydcc.EasyDccTest.suite());
+		suite.addTest(jmri.jmrix.cmri.serial.SerialTest.suite());
 		return suite;
 	}
 
