@@ -62,14 +62,14 @@ public abstract class AbstractProgrammer implements Programmer {
 	 * Internal routine to start timer to protect the mode-change.
 	 */
 	protected void startShortTimer() {
-		restartTimer(1000);
+		restartTimer(SHORT_TIMEOUT);
 	}
 	
 	/**
 	 * Internal routine to restart timer with a long delay
 	 */
 	protected void startLongTimer() {
-		restartTimer(40000);
+		restartTimer(LONG_TIMEOUT);
 	}
 	
 	/**
@@ -100,6 +100,9 @@ public abstract class AbstractProgrammer implements Programmer {
 	 * Internal routine to handle a timeout, should be synchronized!
 	 */
 	abstract protected void timeout();
+	
+	static private int SHORT_TIMEOUT=2000;
+	static private int LONG_TIMEOUT=60000;
 	
 	javax.swing.Timer timer = null;
 	
