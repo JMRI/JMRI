@@ -19,7 +19,7 @@ import org.jdom.*;
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
@@ -101,9 +101,6 @@ public class PaneProgPane extends javax.swing.JPanel
                     if (readButton.isSelected()) readPane();
                 }
             });
-        confButton.setEnabled(false);
-        confButton.setToolTipText("Not implemented yet");
-
         writeButton.setToolTipText("Write current values to decoder");
         writeButton.addActionListener( l3 = new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -111,7 +108,6 @@ public class PaneProgPane extends javax.swing.JPanel
                 }
             });
         bottom.add(readButton);
-        bottom.add(confButton);
         bottom.add(writeButton);
         add(bottom);
     }
@@ -132,7 +128,6 @@ public class PaneProgPane extends javax.swing.JPanel
     List cvList = new ArrayList();
 
     JToggleButton readButton = new JToggleButton("Read sheet");
-    JToggleButton confButton = new JToggleButton("Confirm sheet");
     JToggleButton writeButton = new JToggleButton("Write sheet");
 
     /**
@@ -706,7 +701,6 @@ public class PaneProgPane extends javax.swing.JPanel
         fnMapList = null;
 
         readButton = null;
-        confButton = null;
         writeButton = null;
         // these two are disposed elsewhere
         _cvModel = null;

@@ -29,7 +29,7 @@ import org.jdom.JDOMException;
 /**
  * Frame providing a command station programmer from decoder definition files
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 abstract class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
@@ -51,7 +51,6 @@ abstract class PaneProgFrame extends javax.swing.JFrame
     JTabbedPane tabPane = new JTabbedPane();
     JToggleButton readAllButton = new JToggleButton("Read all");
     JToggleButton writeAllButton = new JToggleButton("Write all");
-    JToggleButton confirmAllButton = new JToggleButton("Confirm all");
 
     ActionListener l1;
     ActionListener l2;
@@ -71,9 +70,6 @@ abstract class PaneProgFrame extends javax.swing.JFrame
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
 
         // configure GUI elements
-        confirmAllButton.setEnabled(false);
-        confirmAllButton.setToolTipText("disabled because not yet implemented");
-
         readAllButton.setToolTipText("Read current values from decoder. Warning: may take a long time!");
         // check with CVTable programmer to see if read is possible
         if (cvModel!= null && cvModel.getProgrammer()!= null
@@ -102,7 +98,6 @@ abstract class PaneProgFrame extends javax.swing.JFrame
         JPanel bottom = new JPanel();
         bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
         bottom.add(readAllButton);
-        bottom.add(confirmAllButton);
         bottom.add(writeAllButton);
         pane.add(bottom);
 
@@ -642,7 +637,6 @@ abstract class PaneProgFrame extends javax.swing.JFrame
         tabPane = null;
         readAllButton = null;
         writeAllButton = null;
-        confirmAllButton = null;
 
         if (log.isDebugEnabled()) log.debug("dispose superclass");
         removeAll();
