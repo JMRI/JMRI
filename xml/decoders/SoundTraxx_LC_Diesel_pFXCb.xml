@@ -1,23 +1,24 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_LC_Diesel_pFXCb.xml,v 1.2 2003-07-06 17:07:08 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_LC_Diesel_pFXCb.xml,v 1.3 2003-07-16 06:01:05 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Robin Becker" version="9" lastUpdated="20030104"/>
+		<version author="Michael Mosher" version="10" lastUpdated="20030706"/>
 		<!-- version 9: moved LL100LC here from LC_Diesel_pnp file -->
+		<!-- version 10: added FX1 & FX2 to fun map & CV105&106 set CV9 default to 180   -->
 
 <decoder>
 	<family name="LC Diesel PNP Cab Unit decoders" mfg="Throttle-Up (SoundTraxx)">
 	<!--note: this file does not support the FX2 output for the LL100LC-->
 
-		<model model="LL100LC Diesel" numOuts="1" numFns="8">
+		<model model="LL100LC Diesel" numOuts="4" numFns="8">
 		<!-- note: The LL100LC has a headlight but no backup light -->
 		<!-- note: The LL100LC has an FX2 output but no FX1 output -->
-		<!-- so the FX2 output is not supported at this time -->
+		<!-- but the headlight can be set to respond to FX1 mapping -->
 			<versionCV lowVersionID="36"/>
 			<output name="Horn"/> 
 			<output name="Bell"/> 
-			<!--output name="3" label="none" /-->
-			<!--output name="4" label="FX2/brwn" /-->
+			<output name="3" label="FX1"/>
+			<output name="4" label="FX2"/>
 			<output name="DynBrake"/> 
 			<output name="RPM+"/> 
 			<output name="RPM-"/> 
@@ -50,7 +51,7 @@
 						item="Manufacturer">			<decVal/></variable>
 
 		<variable label="Motor PWM Period" CV="9" item="Total PWM Period"
-					comment="52.2mS to 5.12 ms">
+					comment="52.2mS to 5.12 ms" default="180">
 			<decVal max="230"/></variable>
 
 		<variable label="Packet Timeout Value" CV="11" item="Packet Time-out Value">
@@ -632,7 +633,15 @@
 				<decVal max="255"/>
 			</variable>
 
-	
+		<variable label="User Private ID #1" CV="105"
+					item="User Id #1">
+			<decVal/>
+			</variable>
+		<variable label="User Private ID #2" CV="106"
+					item="User Id #2">
+			<decVal/>
+			</variable>
+
 	</variables>
 </decoder>
 
@@ -650,6 +659,7 @@
 </pane>
 
 </decoder-config>
+
 
 
 

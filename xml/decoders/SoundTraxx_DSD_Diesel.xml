@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_DSD_Diesel.xml,v 1.15 2003-07-06 16:59:13 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_DSD_Diesel.xml,v 1.16 2003-07-16 06:01:05 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Michael Mosher" version="8" lastUpdated="20030703"/>
+		<version author="Michael Mosher" version="8" lastUpdated="20030706"/>
 
 		<!-- version 4: updates to minOut usage, function mapping -->
 		<!-- version 5: correct to CV 56 for some options -->
 		<!-- version 6: removed erroneous CV19 definition -->
 		<!--            corrected versionCVs -->
 		<!-- version 7: renamed to get best tree layout -->
-		<!-- version 8: added CV105&106  -->
+		<!-- version 8: added CV105&106 & fix Fn mapping bug -->
 		
 <decoder>
 	<family name="DSD diesel" mfg="Throttle-Up (SoundTraxx)">
@@ -268,10 +268,10 @@
 		<variable label="FL(r) controls output Bell" CV="34" mask="XXXXVXXX" 
 				default="0" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="FL(f) controls output RPM+" CV="34" mask="XXXVXXXX" 
+		<variable label="FL(r) controls output RPM+" CV="34" mask="XXXVXXXX" 
 				default="0" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="FL(f) controls output RPM-" CV="34" mask="XXVXXXXX" 
+		<variable label="FL(r) controls output RPM-" CV="34" mask="XXVXXXXX" 
 				default="0" > <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="FL(r) controls F5 output" CV="34" mask="XVXXXXXX" 
