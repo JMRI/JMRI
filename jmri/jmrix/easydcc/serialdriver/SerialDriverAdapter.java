@@ -26,7 +26,7 @@ import javax.comm.SerialPort;
  * not use any other options at configuration time.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class SerialDriverAdapter extends EasyDccPortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -103,8 +103,9 @@ public class SerialDriverAdapter extends EasyDccPortController  implements jmri.
 
             opened = true;
 
-        }
-        catch (Exception ex) {
+        } catch (javax.comm.NoSuchPortException p) {
+            return handlePortNotFound(p, portName, log);
+        } catch (Exception ex) {
             log.error("Unexpected exception while opening port "+portName+" trace follows: "+ex);
             ex.printStackTrace();
             return "Unexpected error while opening port "+portName+": "+ex;
