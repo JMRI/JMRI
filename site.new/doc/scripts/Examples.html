@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Examples.html,v 1.1 2004-07-24 04:35:42 jacobsen Exp $ -->
+<!-- $Id: Examples.html,v 1.2 2004-08-24 05:13:18 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -129,6 +129,30 @@ class MyListener(java.beans.PropertyChangeListener):
 			retrieve the systemName, userName (or even other types
 			of status).
 			
+		    </div>
+
+		</div>
+
+		<div class=section>
+		    <h2>Invoking another script file from a script</h2>
+
+		    <div class=para>
+		    
+		    <pre>
+jmri.jmrit.jython.RunJythonScript.runScript("filename.py");
+		    </pre>
+		    </div>
+
+		</div>
+
+		<div class=section>
+		    <h2>Loading a panel file from within a script</h2>
+
+		    <div class=para>
+		    
+		    <pre>
+InstanceManager.configureManagerInstance().load(new File("filename.xml"));
+		    </pre>
 		    </div>
 
 		</div>
