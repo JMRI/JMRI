@@ -12,7 +12,7 @@ import javax.swing.JFileChooser;
  * Store the JMRI config as XML
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  * @see             jmri.jmrit.XmlFile
  */
 public class StoreXmlConfigAction extends AbstractAction {
@@ -25,6 +25,7 @@ public class StoreXmlConfigAction extends AbstractAction {
 	}
 
     public void actionPerformed(ActionEvent e) {
+        LoadStoreBase.fileChooser.rescanCurrentDirectory();
         int retVal = LoadStoreBase.fileChooser.showSaveDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
         log.debug("Save config file: "+LoadStoreBase.fileChooser.getSelectedFile().getPath());

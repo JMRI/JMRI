@@ -12,7 +12,7 @@ import javax.swing.JFileChooser;
  * Load the JMRI config from an XML file.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2002
- * @version	    $Revision: 1.4 $
+ * @version	    $Revision: 1.5 $
  * @see             jmri.jmrit.XmlFile
  */
 public class LoadXmlConfigAction extends AbstractAction {
@@ -25,6 +25,7 @@ public class LoadXmlConfigAction extends AbstractAction {
     }
 
     public void actionPerformed(ActionEvent e) {
+        LoadStoreBase.fileChooser.rescanCurrentDirectory();
         int retVal = LoadStoreBase.fileChooser.showOpenDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
         log.debug("Open config file: "+LoadStoreBase.fileChooser.getSelectedFile().getPath());
