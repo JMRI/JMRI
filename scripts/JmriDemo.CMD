@@ -34,7 +34,7 @@
   
    ================================================================ */
 
-DefaultApplication = "JMRIdemo"         /* default application */
+DefaultApplication = "apps.JmriDemo.JMRIdemo"         /* default application */
 
 j1 = "jmri.jar;"                        /* JMRI files */
 j2 = "lib\log4j.jar;lib\collections.jar;"

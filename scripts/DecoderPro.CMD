@@ -33,7 +33,7 @@
   
    ================================================================ */
 
-DefaultApplication = "DecoderPro"         /* default application */
+DefaultApplication = "apps.DecoderPro.DecoderPro"         /* default application */
 
 j1 = "DecoderPro.jar;"                        /* JMRI files */
 j2 = "lib\log4j.jar;lib\collections.jar;"
