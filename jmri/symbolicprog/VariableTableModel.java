@@ -8,7 +8,7 @@
 
 package jmri.symbolicprog;
 
-import javax.swing.JButton;
+import javax.swing.*;
 import java.util.Vector;
 import com.sun.java.util.collections.List;
 import org.jdom.Element;
@@ -19,12 +19,13 @@ public class VariableTableModel extends javax.swing.table.AbstractTableModel {
 
 	String headers[] = null;
 
-	// values understood are: 	
-	//  "Name", "Value", "Read", "Write", "Comment", "CV", "Mask"
 	
 	int numRows = 0;                // must be zero until Vectors are initialized
 	Vector rowVector = new Vector();  // vector of row vectors
 	
+	/** Defines the columns; values understood are: 	
+	 *  "Name", "Value", "Range", "Read", "Write", "Comment", "CV", "Mask"
+	 */
 	public VariableTableModel(String h[]) {  
 		headers = h;
 		}
@@ -37,7 +38,21 @@ public class VariableTableModel extends javax.swing.table.AbstractTableModel {
 	public int getColumnCount( ){ return headers.length;}
 
 	public String getColumnName(int col) { return headers[col];}
-		
+	
+	public Class getColumnClass(int col) { 
+		if (headers[col] == "Value")
+			return JComboBox.class;
+		else
+			return String.class;
+	}
+
+	public boolean isCellEditable(int row, int col) {
+		if (headers[col] == "Value")
+			return true;
+		else
+			return false;
+	}
+			
 	public Object getValueAt(int row, int col) { 
 		return ((Vector)(rowVector.elementAt(row))).elementAt(col);	
 	}
@@ -63,26 +78,54 @@ public class VariableTableModel extends javax.swing.table.AbstractTableModel {
 			if (var == "Name") {
 				row.setElementAt(e.getAttribute("name").getValue(), j);
 			} else if (var == "Value") {
-				// handle value (temporary, until know how to add objects)
+				// handle value entry
+				if (e.getChild("binaryVal", ns) != null )  {
+					String phrasing = e.getChild("binaryVal", ns).getAttribute("phrasing").getValue();
+					if (phrasing.equals("OffOn"))
+						row.setElementAt(new JCheckBox("On"), j);
+					else if (phrasing.equals("OnOff"))
+						row.setElementAt(new JCheckBox("Off"), j);
+					else if (phrasing.equals("NoYes"))
+						row.setElementAt(new JCheckBox("Yes"), j);
+					else if (phrasing.equals("YesNo"))
+						row.setElementAt(new JCheckBox("No"), j);
+					else row.setElementAt(new JCheckBox("Unknown phrasing "+phrasing), j);
+				} else if (e.getChild("decVal", ns) != null )  {
+					row.setElementAt(new JTextField(""), j);
+				} else if (e.getChild("hexVal", ns) != null )  {
+					row.setElementAt(new JTextField(""), j);
+				} else if (e.getChild("enumVal", ns) != null )  {
+					List l = e.getChild("enumVal", ns).getChildren("enumChoice", ns);
+					JComboBox c = new JComboBox();
+					System.out.println("length "+l.size());
+					for (int k=0; k< l.size(); k++)
+						c.addItem(((Element)l.get(k)).getAttribute("choice").getValue());
+					row.setElementAt(c, j);
+				} else if (e.getChild("speedTableVal", ns) != null )  {
+					row.setElementAt(new JLabel("speed table"), j);
+				} else if (e.getChild("longAddressVal", ns) != null )  {
+					row.setElementAt(new JLabel("long address"), j);
+				} else if (e.getChild("readOnlyVal", ns) != null )  {
+					row.setElementAt(new JLabel("read only value"), j);
+				} else
+				row.setElementAt("unrecognized data type!!!", j);
+			} else if (var == "Range") {
+				// list range for value
 				if (e.getChild("binaryVal", ns) != null )  {
 					row.setElementAt("binary: "+e.getChild("binaryVal", ns).getAttribute("phrasing").getValue(), j);
 				} else if (e.getChild("decVal", ns) != null )  {
 					row.setElementAt("decimal: "+e.getChild("decVal", ns).getAttribute("min").getValue()
 									 +"-"+e.getChild("decVal", ns).getAttribute("max").getValue(), j);
 				} else if (e.getChild("hexVal", ns) != null )  {
-					row.setElementAt("hex", j);
+					row.setElementAt("hex:", j);
 				} else if (e.getChild("enumVal", ns) != null )  {
-					String temp = "enum: ";
-					List l = e.getChild("enumVal", ns).getChildren("enumEntry", ns);
-					for (int k=0; k< l.size(); k++)
-						temp += ((Element)l.get(k)).getAttribute("name");
-					row.setElementAt(temp, j);
+					row.setElementAt("pick one", j);
 				} else if (e.getChild("speedTableVal", ns) != null )  {
-					row.setElementAt("speed table", j);
+					row.setElementAt("Speed table", j);
 				} else if (e.getChild("longAddressVal", ns) != null )  {
-					row.setElementAt("long address", j);
+					row.setElementAt("Long address", j);
 				} else if (e.getChild("readOnlyVal", ns) != null )  {
-					row.setElementAt("read only value", j);
+					row.setElementAt("Read only value", j);
 				} else
 				row.setElementAt("unrecognized data type!!!", j);
 			} else if (var == "Read") {

@@ -33,19 +33,22 @@ import org.xml.sax.InputSource;
 public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgListener {
 
 	// GUI member declarations
-	javax.swing.JButton selectFileButton = new javax.swing.JButton();
+	JButton selectFileButton = new javax.swing.JButton();
 
 	VariableTableModel		variableModel	= new VariableTableModel(
-					new String[]  {"Name", "Value", "Read", "Write", "CV", "Mask", "Comment" });
+					new String[]  {"Name", "Value", "Range", "Read", "Write", "CV", "Mask", "Comment" });
 	JTable					variableTable	= new JTable(variableModel);
 	JScrollPane 			variableScroll	= new JScrollPane(variableTable);
 
-	javax.swing.ButtonGroup modeGroup 			= new javax.swing.ButtonGroup();
-	javax.swing.JRadioButton pagedButton    	= new javax.swing.JRadioButton();
-	javax.swing.JRadioButton directByteButton   = new javax.swing.JRadioButton();
-	javax.swing.JRadioButton directBitButton    = new javax.swing.JRadioButton();
-	javax.swing.JRadioButton registerButton 	= new javax.swing.JRadioButton();
+	ButtonGroup modeGroup 			= new ButtonGroup();
+	JRadioButton pagedButton    	= new JRadioButton();
+	JRadioButton directByteButton   = new JRadioButton();
+	JRadioButton directBitButton    = new JRadioButton();
+	JRadioButton registerButton 	= new JRadioButton();
 		
+	JLabel vendor  = new JLabel("         ");
+	JLabel model   = new JLabel("         ");
+	
 	// member to find and remember the configuration file
 	final JFileChooser fc = new JFileChooser("xml");
 
@@ -56,6 +59,10 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 		selectFileButton.setText("Select File");
 		selectFileButton.setVisible(true);
 		selectFileButton.setToolTipText("Press to select configuration file");
+		
+		variableTable.setDefaultRenderer(JComboBox.class, new ValueRenderer());
+		variableTable.setDefaultEditor(JComboBox.class, new ValueEditor());
+		variableScroll.setColumnHeaderView(variableTable.getTableHeader());
 
 		pagedButton.setText("Paged Mode");
 		directByteButton.setText("Direct Byte Mode");
@@ -63,6 +70,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 		registerButton.setText("Register Mode");
 
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
+		// instead of forcing the columns to fill the frame (and only fill)
 		variableTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		
 		// add actions to buttons
@@ -77,7 +85,14 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
 		// install items in GUI
-		getContentPane().add(selectFileButton);  
+		JPanel tPane3 = new JPanel();
+			tPane3.add(selectFileButton);  
+			tPane3.setLayout(new BoxLayout(tPane3, BoxLayout.X_AXIS));
+			tPane3.add(new JLabel(" Vendor: "));
+			tPane3.add(vendor);
+			tPane3.add(new JLabel(" Model: "));
+			tPane3.add(model);
+		getContentPane().add(tPane3);
 
 		JPanel tPane2 = new JPanel();
 			tPane2.setLayout(new BoxLayout(tPane2, BoxLayout.Y_AXIS));
@@ -91,6 +106,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 			tPane2.add(registerButton);
 		getContentPane().add(tPane2);
 
+			
 		getContentPane().add(variableScroll);
 
 		pack();
@@ -160,6 +176,10 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 		
 			// find decoder id, assuming first decoder is fine for now (e.g. one per file)
 			Element decoderID = root.getChild("decoder",ns).getChild("id",ns);
+			
+			// store name, type
+			vendor.setText(root.getChild("decoder", ns).getChild("id",ns).getAttribute("mfg").getValue());
+			model.setText(root.getChild("decoder", ns).getChild("id",ns).getAttribute("model").getValue());
 			
 			// start loading variables to table
 			List varList = root.getChild("decoder", ns).getChild("variables",ns).getChildren("variable",ns);
