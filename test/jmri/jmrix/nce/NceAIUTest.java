@@ -14,7 +14,7 @@ import jmri.jmrix.nce.NceReply;
 /**
  * JUnit tests for the NceAIU class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class NceAIUTest extends TestCase {
 
@@ -26,7 +26,7 @@ public class NceAIUTest extends TestCase {
         a.registerSensor(s1, 0);
         a.registerSensor(s2, 1);
         a.registerSensor(s3, 2);
-        a.markChanges(5);
+        a.markChanges(2);
         Assert.assertEquals("check s1", Sensor.ACTIVE, s1.getKnownState());
         Assert.assertEquals("check s2", Sensor.INACTIVE, s2.getKnownState());
         Assert.assertEquals("check s3", Sensor.ACTIVE, s3.getKnownState());
