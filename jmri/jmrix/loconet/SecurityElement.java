@@ -15,7 +15,7 @@ import jmri.*;
  * <UL>
  * <LI>Turnout commands, feedback
  * <LI>Sensor status
- * <LI>SE status
+ * <LI>SE status (short form only)
  * </UL>
  * <P>
  * Note that the SE message turnout bit is set for CLOSED  or no
@@ -28,8 +28,11 @@ import jmri.*;
  * this SE.  Note that this combination results in an extra complement; if looking
  * at a remote SE's A leg and it's reserved AX, that it NOT coming toward us.
  *
+ * <P>The algorithms in this class are a collaborative effort of Digitrax, Inc
+ * and Bob Jacobsen.  Some of the message formats are copyright Digitrax, Inc.
+ *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 public class SecurityElement implements LocoNetListener {
 
@@ -61,8 +64,8 @@ public class SecurityElement implements LocoNetListener {
     public static final int STOPUNRESERVED = 2;
 
     public boolean makeAReservation; // make reservation when entered from A leg
-    public boolean makeBReservation; // make reservation when entered from A leg
-    public boolean makeCReservation; // make reservation when entered from A leg
+    public boolean makeBReservation; // make reservation when entered from B leg
+    public boolean makeCReservation; // make reservation when entered from C leg
 
     public int attachAnum;  // SE number that A is attached to
     public int attachAleg;  // leg of SE attachAnum that A is attached to
@@ -108,7 +111,7 @@ public class SecurityElement implements LocoNetListener {
     // outputs
     public int currentSpeedAX      = 0;
     public int currentSpeedXA      = 0;
-    public int currentDirection    = NONE;
+    public int currentDirection    = NONE;  //  AX, XA or both
 
     // updated state information - inputs
     int newDsStateHere           = Sensor.INACTIVE; // start this way in case there's no connection
@@ -125,6 +128,8 @@ public class SecurityElement implements LocoNetListener {
     int newSpeedLimitFromC       = 0;   // speed limit on the SE leg attached to C
     int newDsStateOnC            = Sensor.UNKNOWN;
     boolean newReservedFromC     = false;
+
+    int newReservedFromAux    = NONE;
 
     // outputs
     int newSpeedAX          = 0;
@@ -174,6 +179,7 @@ public class SecurityElement implements LocoNetListener {
     public void message(LocoNetMessage l) {
         switch (l.getOpCode()) {
         case 0xE4: {
+            // SE report
             if (l.getElement(1)!=0x09) break;
             int element = l.getElement(2)*128+l.getElement(3);
             boolean update = false;
@@ -197,6 +203,16 @@ public class SecurityElement implements LocoNetListener {
                 newDsStateOnC = getDsFromMessage(l);
                 newReservedFromC = getReservedFromMsg(l, attachCleg);
                 if (debug) log.debug("Update "+mNumber+" C leg: "+newSpeedLimitFromC+" "+newDsStateOnC);
+                update = true;
+            }
+            if (element == auxInput) {
+                // if there's a reservation from the aux, it reserves
+                // in _BOTH_ directions
+                if (getReservedFromMsg(l, attachAleg)) newReservedFromAux = AX|XA;
+                else if (getReservedFromMsg(l, attachBleg)) newReservedFromAux = AX|XA;
+                else if (getReservedFromMsg(l, attachCleg)) newReservedFromAux = AX|XA;
+                else newReservedFromAux = NONE;
+                if (debug) log.debug("Update "+mNumber+" aux input: "+newReservedFromAux);
                 update = true;
             }
             if (update) doUpdate();
@@ -289,7 +305,9 @@ public class SecurityElement implements LocoNetListener {
     /**
      * This OPC_SE message is from the SE attached to
      * a leg, find whether its asserting a reservation toward us
-     * @param l
+     * @param l Se message
+     * @param leg Leg on this SE which the message-sending SE is
+     * attached to.
      */
     boolean getReservedFromMsg(LocoNetMessage l, int leg) {
         // figure out which leg is interesting
@@ -354,6 +372,24 @@ public class SecurityElement implements LocoNetListener {
             log.error("Cannot update for mode "+mLogic);
             return;
         }
+    }
+
+    void makeReservationsFromOcc() {
+        // reservation requires this block has just become occupied
+        if (newDsStateHere==Sensor.ACTIVE && currentDsStateHere==Sensor.INACTIVE) {
+            // check possible input blocks, and mark direction
+            newDirection = NONE;
+            if (makeAReservation && newDsStateOnA==Sensor.ACTIVE)
+                newDirection = AX;
+            if (makeBReservation && newDsStateOnB==Sensor.ACTIVE && newTurnoutState==Turnout.CLOSED)
+                newDirection |= XA;
+            if (makeCReservation && newDsStateOnC==Sensor.ACTIVE && newTurnoutState==Turnout.THROWN)
+                newDirection |= XA;
+        }
+        // if we're not occupied, we're only propagating direction
+        // reservations.  But if we are occupied, we hold our existing
+        // reservations until the train is gone.
+        else if (newDsStateHere==Sensor.INACTIVE) newDirection = NONE;
     }
 
     void doUpdateAPB() {
