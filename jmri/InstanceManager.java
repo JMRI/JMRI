@@ -12,7 +12,7 @@ package jmri;
  * non-system-specific code.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.22 $
+ * @version			$Revision: 1.23 $
  */
 public class InstanceManager {
 
@@ -58,6 +58,8 @@ public class InstanceManager {
 
     static public CommandStation commandStationInstance()  { return instance().commandStation; }
 
+    static public ReporterManager reporterManagerInstance()  { return instance().reporterManager; }
+
     static private InstanceManager instance() {
         if (root==null) root = new InstanceManager();
         return root;
@@ -67,6 +69,7 @@ public class InstanceManager {
         turnoutManager = new jmri.managers.ProxyTurnoutManager();
         sensorManager = new jmri.managers.ProxySensorManager();
         lightManager = new jmri.managers.ProxyLightManager();
+        reporterManager = new jmri.managers.ProxyReporterManager();
     }
 
     /**
@@ -188,6 +191,15 @@ public class InstanceManager {
         if (p!=commandStation && commandStation==null && log.isDebugEnabled()) log.debug("CommandStation instance is being installed: "+p);
         commandStation = p;
     }
+
+    private ReporterManager reporterManager = null;
+    static public void setReporterManager(ReporterManager p) {
+        instance().addReporterManager(p);
+    }
+    protected void addReporterManager(ReporterManager p) {
+        ((jmri.managers.AbstractProxyManager)instance().reporterManager).addManager(p);
+    }
+
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(InstanceManager.class.getName());
 }
