@@ -1,11 +1,11 @@
-/** 
+/**
  * NceProgrammer.java
  *
  * Description:		<describe the NceProgrammer class here>
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			
+ * @version
  */
- 
+
  // Convert the jmri.Programmer interface into commands for the NCE powerstation
 
 package jmri.jmrix.nce;
@@ -17,22 +17,22 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
 public class NceProgrammer extends AbstractProgrammer implements NceListener {
-	
-	public NceProgrammer() { 
+
+	public NceProgrammer() {
 		// error if more than one constructed?
-		if (self != null) 
+		if (self != null)
 			log.error("Creating too many NceProgrammer objects");
 
 		// register this as the default, register as the Programmer
-		self = this; 
+		self = this;
 		jmri.InstanceManager.setProgrammer(this);
-			
+
 		}
 
-	/* 
+	/*
 	 * method to find the existing NceProgrammer object, if need be creating one
 	 */
-	static public final NceProgrammer instance() { 
+	static public final NceProgrammer instance() {
 		if (self == null) self = new NceProgrammer();
 		return self;
 		}
@@ -40,19 +40,29 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
 
 	// handle mode
 	protected int _mode = Programmer.PAGEMODE;
-	
+
+    /**
+     * Switch to a new programming mode.  Note that NCE can only
+     * do register and page mode. If you attempt to switch to
+     * any others, the new mode will set & notify, then
+     * set back to the original.  This lets the listeners
+     * know that a change happened, and then was undone.
+     * @param mode The new mode, use values from the jmri.Programmer interface
+     */
 	public void setMode(int mode) {
+        int oldMode = _mode;  // preserve this in case we need to go back
 		if (mode != _mode) {
 			notifyPropertyChange("Mode", _mode, mode);
 			_mode = mode;
 		}
-		if (_mode != Programmer.PAGEMODE) {
-			_mode = Programmer.PAGEMODE;
+		if (_mode != Programmer.PAGEMODE && _mode != Programmer.REGISTERMODE) {
+            // attempt to switch to unsupported mode, switch back to previous
+			_mode = oldMode;
 			notifyPropertyChange("Mode", mode, _mode);
 		}
 	}
 	public int getMode() { return _mode; }
-	
+
 
 	// notify property listeners - see AbstractProgrammer for more
 
@@ -69,9 +79,9 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
 			client.propertyChange(new PropertyChangeEvent(this, name, new Integer(oldval), new Integer(newval)));
 		}
 	}
-	
+
 	// members for handling the programmer interface
-	
+
 	int progState = 0;
 		static final int NOTPROGRAMMING = 0;// is notProgramming
 		static final int MODESENT = 1; 		// waiting reply to command to go into programming mode
@@ -80,7 +90,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
 	boolean  _progRead = false;
 	int _val;	// remember the value being read/written for confirmative reply
 	int _cv;	// remember the cv being read/written
-		
+
 	// programming interface
 	public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
 		if (log.isDebugEnabled()) log.debug("writeCV "+CV+" listens "+p);
@@ -89,15 +99,15 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
 		// set commandPending state
 		progState = MODESENT;
 		_val = val;
-		_cv = CV;	
+		_cv = CV;
 
 		// start the error timer
 		startShortTimer();
-		
+
 		// format and send message to go to program mode
 		controller().sendNceMessage(NceMessage.getProgMode(), this);
 	}
-		
+
 	public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
 		readCV(CV, p);
 	}
@@ -110,17 +120,17 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
 		// set commandPending state
 		progState = MODESENT;
 		_cv = CV;
-		
+
 		// start the error timer
 		startShortTimer();
-		
+
 		// format and send message to go to program mode
 		controller().sendNceMessage(NceMessage.getProgMode(), this);
-		
+
 	}
 
 	private jmri.ProgListener _usingProgrammer = null;
-	
+
 	// internal method to remember who's using the programmer
 	protected void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
 		// test for only one!
@@ -133,23 +143,29 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
 			return;
 		}
 	}
-	
+
 	// internal method to create the NceMessage for programmer task start
 	protected NceMessage progTaskStart(int mode, int val, int cvnum) throws jmri.ProgrammerException {
 		// val = -1 for read command; mode is direct, etc
 		if (val < 0) {
 			// read
-			return NceMessage.getReadPagedCV(cvnum);
+            if (_mode == Programmer.PAGEMODE)
+    			return NceMessage.getReadPagedCV(cvnum);
+            else
+    			return NceMessage.getReadRegister(registerFromCV(cvnum));
 		} else {
 			// write
-			return NceMessage.getWritePagedCV(cvnum, val);
+            if (_mode == Programmer.PAGEMODE)
+                return NceMessage.getWritePagedCV(cvnum, val);
+            else
+			    return NceMessage.getWriteRegister(registerFromCV(cvnum), val);
 		}
 	}
-	
+
 	public void message(NceMessage m) {
 		log.error("message received unexpectedly: "+m.toString());
 	}
-	
+
 	synchronized public void reply(NceReply m) {
 		if (progState == NOTPROGRAMMING) {
 			// we get the complete set of replies now, so ignore these
@@ -158,7 +174,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
 		} else if (progState == MODESENT) {
 			if (log.isDebugEnabled()) log.debug("reply in MODESENT state");
 			// see if reply is the acknowledge of program mode; if not, wait
-			if ( (m.match("PROGRAMMING MODE") == -1) && 
+			if ( (m.match("PROGRAMMING MODE") == -1) &&
 				 (m.match("COMMAND NOT UNDERSTOOD") == -1)  // indicates already in program mode
 					) return;
 			// here ready to send the read/write command
@@ -205,14 +221,14 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
 			// all done, notify listeners of completion
 			progState = NOTPROGRAMMING;
 			stopTimer();
-			// if this was a read, we cached the value earlier.  If its a 
+			// if this was a read, we cached the value earlier.  If its a
 			// write, we're to return the original write value
 			notifyProgListenerEnd(_val, jmri.ProgListener.OK);
 		} else {
 			if (log.isDebugEnabled()) log.debug("reply in un-decoded state");
 		}
 	}
-	
+
 	/**
 	 * Internal routine to handle a timeout
 	 */
@@ -226,7 +242,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
 			notifyProgListenerEnd(_val, jmri.ProgListener.FailedTimeout);
 		}
 	}
-	
+
 	// internal method to notify of the final result
 	protected void notifyProgListenerEnd(int value, int status) {
 		if (log.isDebugEnabled()) log.debug("notifyProgListenerEnd value "+value+" status "+status);
