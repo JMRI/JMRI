@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: USBtoSerial.html,v 1.3 2004-12-26 03:50:15 jacobsen Exp $ -->
+<!-- $Id: USBtoSerial.html,v 1.4 2004-12-29 16:18:34 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -108,15 +108,15 @@ gotten reports of success from Windows 98, Windows XP, and MacOS 9 users.
 USB adapter issue)  You'll have to get a special cable to connect the 9-pin
 connector on the Keyspan adapter to the 25-pin connector on the MS100.
 
+<P>
+Note that using a LocoBuffer is highly recommended instead of trying to get
+a MS100 to work!
+
 <P>There are other Keyspan USB adapters who are known to not
 work with the MS100.  In particular, the Macintosh Dual Serial adapter
 which provides two Macintosh DIN-8 serial ports does not provide 
 the power needed by the MS100.
 <A HREF="KeyspanUSB.html">(More details)</a>
-
-<P>
-Note that using a LocoBuffer is highly recommended instead of trying to get
-a MS100 to work!
 
 <P>
 Users have reported that a Belkin adapter wouldn't work 
@@ -125,19 +125,21 @@ because it could not
 provide the special baud rate needed.
 
 <A ID="LocoBuffer"/>
-<h2>LocoNet via LocoButter, LocoBuffer-II</h2>
+<h2>LocoNet via LocoBuffer, LocoBuffer-II</h2>
 
 For reliable operation, the various LocoBuffer interfaces 
 require that the RS232 control leads provide flow control.
+
 <P>
 If you're ordering a 
 <A HREF="http://www.rr-cirkits.com/LocoBuffer-II/locobuffer-II.html">LocoBuffer-II</a> 
 from
 <A HREF="http://www.rr-cirkits.com">RR-Cirkits</a>, 
-you should probably order the 
+you should probably order their 
 <A HREF="http://www.rr-cirkits.com/description.html">package that comes with a USB to serial adapter</a>.
 This package is known to work well,
 and has great support.
+They will also sell you just the USB adapter if you already have a LocoBuffer.
 
 <P>
 The Keyspan adapters are also known to work with the LocoBuffer.  We've
@@ -151,6 +153,14 @@ original LocoBuffer; later models have a 9-pin serial connector.
 <P>
 We have also had a report that the "IConcepts" adapter, purchased
 at CompUSA, works with Windows ME and Windows XP.
+
+<P>
+All adapters based on the "FTDI FT232BM chip" should work fine.  This includes
+the UN8E adapter provided by RR-Cirkits, and
+many do-it-yourself adapters.  If you're using this adapter, be sure
+to download the most recent drivers from the 
+<A HREF="http://www.ftdichip.com/FTDrivers.htm">FTDI</a>
+website, as early versions had bugs.
 
 <A ID="LI100"/>
 <h2>XpressNet via LI100</h2>
