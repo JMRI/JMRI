@@ -21,28 +21,19 @@ import jmri.jmrit.XmlFile;
  * files in the distribution directory are _not_ included.
  *
  * @author			Bob Jacobsen  Copyright 2002
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class CatalogPane extends JPanel {
     public CatalogPane() {
-        
+
         super(true);
-        
+
         // create basic GUI
-        dRoot = new DefaultMutableTreeNode("Root");
-        dModel = new DefaultTreeModel(dRoot);
-        dTree = new JTree(dModel);
+        dTree = new JTree(CatalogTreeModel.instance());
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        
-        // we manually create the first node, rather than use
-        // the routine, so we can name it.
-        insertResourceNodes("resources", resourceRoot, dRoot);
-        XmlFile.ensurePrefsPresent("resources");
-        insertFileNodes("files", fileRoot, dRoot);
-        
+
         // build the tree GUI
         add(new JScrollPane(dTree));
-        dTree.expandPath(new TreePath(dRoot));
         dTree.setRootVisible(false);
         dTree.setShowsRootHandles(true);
         dTree.setScrollsOnExpand(true);
@@ -50,9 +41,9 @@ public class CatalogPane extends JPanel {
                 //doesn't have a big effect
             dTree.setExpandsSelectedPaths(true);
         } catch (java.lang.NoSuchMethodError e) {}
-        
+
         dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
-        
+
         // add a listener for debugging
         if (log.isDebugEnabled()) dTree.addTreeSelectionListener(new TreeSelectionListener() {
                 public void valueChanged(TreeSelectionEvent e) {
@@ -63,64 +54,9 @@ public class CatalogPane extends JPanel {
                     }
                 }
             });
-        
+
     }
-    
-    /**
-     * Recursively add a representation of the resources
-     * below a particular resource
-     * @param pName Name of the resource to be scanned; this
-     *              is only used for the human-readable tree
-     * @param pPath Path to this resource, including the pName part
-     * @param pParent Node for the parent of the resource to be scanned, e.g.
-     *              where in the tree to insert it.
-     */
-    void insertResourceNodes(String pName, String pPath, DefaultMutableTreeNode pParent) {
-        // the following (commented) line only worked in JBuilder (July 27 2002)
-        // so we switched to storing this info in the resource/ filetree in
-        // the application directory, using the 2nd two lines (uncommented)
-        // File fp = new File(ClassLoader.getSystemResource(pPath).getFile());
-        File fp = new File(pPath);
-        if (!fp.exists()) return;
-        
-        // first, represent this one
-        DefaultMutableTreeNode newElement = new DefaultMutableTreeNode(pName);
-        dModel.insertNodeInto(newElement, pParent, pParent.getChildCount());
-        // then look for childrent and recurse
-        if (fp.isDirectory()) {
-            // work on the kids
-            String[] sp = fp.list();
-            for (int i=0; i<sp.length; i++) {
-                if (log.isDebugEnabled()) log.debug("Descend into resource: "+sp[i]);
-                insertResourceNodes(sp[i],pPath+"/"+sp[i],newElement);
-            }
-        }
-    }
-    
-    /**
-     * Recursively add a representation of the files
-     * below a particular file
-     * @param name Name of the file to be scanned
-     * @param parent Node for the parent of the file to be scanned
-     */
-    void insertFileNodes(String name, String path, DefaultMutableTreeNode parent) {
-        File fp = new File(path);
-        if (!fp.exists()) return;
-        // represent this one
-        DefaultMutableTreeNode newElement = new DefaultMutableTreeNode(name);
-        dModel.insertNodeInto(newElement, parent, parent.getChildCount());
-        // then look for childrent and recurse
-        // getSystemResource is a URL, getFile is the filename string
-        if (fp.isDirectory()) {
-            // work on the kids
-            String[] sp = fp.list();
-            for (int i=0; i<sp.length; i++) {
-                if (log.isDebugEnabled()) log.debug("Descend into file: "+sp[i]);
-                insertFileNodes(sp[i],path+"/"+sp[i],newElement);
-            }
-        }
-    }
-    
+
     public NamedIcon getSelectedIcon() {
         if (!dTree.isSelectionEmpty() && dTree.getSelectionPath()!=null ) {
             // somebody has been selected
@@ -130,7 +66,7 @@ public class CatalogPane extends JPanel {
             if (level < 3) return null;
             if (((DefaultMutableTreeNode)path.getPathComponent(1)).getUserObject().equals("resources")) {
                 // process a .jar icon
-                String name = resourceRoot;
+                String name = CatalogTreeModel.resourceRoot;
                 for (int i=2; i<level; i++) {
                     name = name+"/"
                         +(String)((DefaultMutableTreeNode)path.getPathComponent(i)).getUserObject();
@@ -140,7 +76,7 @@ public class CatalogPane extends JPanel {
                 return new NamedIcon(name, "resource:"+name);
             } else if (((DefaultMutableTreeNode)path.getPathComponent(1)).getUserObject().equals("files")) {
                 // process a file
-                String name = fileRoot;
+                String name = CatalogTreeModel.fileRoot;
                 for (int i=2; i<level; i++) {
                     name = name+File.separator
                         +(String)((DefaultMutableTreeNode)path.getPathComponent(i)).getUserObject();
@@ -151,7 +87,7 @@ public class CatalogPane extends JPanel {
         }
         return null;
     }
-    
+
     /**
      * Find the icon corresponding to a name. There are three cases:
      * <UL>
@@ -175,20 +111,12 @@ public class CatalogPane extends JPanel {
         // else return new NamedIcon(ClassLoader.getSystemResource(pName), pName);
         else return new NamedIcon(pName, pName);
     }
-    
+
     JTree dTree;
-    DefaultTreeModel dModel;
-    DefaultMutableTreeNode dRoot;
-    
-    /**
-     * Starting point in the .jar file for the "icons" part of the tree
-     */
-    private final String resourceRoot = "resources";
-    private final String fileRoot = jmri.jmrit.XmlFile.prefsDir()+"resources";
-    
+
     // Main entry point
     public static void main(String s[]) {
-        
+
     	// initialize log4j - from logging control file (lcf) only
     	// if can find it!
     	String logFile = "default.lcf";
@@ -200,19 +128,19 @@ public class CatalogPane extends JPanel {
             }
         }
         catch (java.lang.NoSuchMethodError e) { System.out.println("Exception starting logging: "+e); }
-        
+
         log.info("CatalogPane starts");
-        
+
     	// create the demo frame and menus
         CatalogPane pane = new CatalogPane();
         JFrame frame = new JFrame("CatalogPane");
         frame.getContentPane().add(pane);
         // pack and center this frame
       	frame.pack();
-        
+
         frame.setVisible(true);
     }
-    
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CatalogPane.class.getName());
 }
 
