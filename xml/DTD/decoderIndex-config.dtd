@@ -1,0 +1,33 @@
+<!-- Defines XML documenting the list of available decoder definitions -->
+
+<!ELEMENT decoderIndex:decoderIndex-config (decoderIndex:mfgList decoderIndex:familyList)>
+<!ATTLIST decoderIndex:decoderIndex-config xmlns:decoderIndex CDATA "">
+
+<!-- Match NMRA codes to manufacturer names & vice versa -->
+<!ELEMENT decoderIndex:mfgList (decoderIndex:manufacturer*) >
+
+<!ELEMENT decoderIndex:manufacturer EMPTY >
+<!ATTLIST decoderIndex:manufacturer mfg       CDATA #REQUIRED>  <!-- mfg name used for identification   -->
+<!ATTLIST decoderIndex:manufacturer mfgID     CDATA #IMPLIED>  <!-- CV08 value, missing means any           -->
+<!ATTLIST decoderIndex:manufacturer comment   CDATA #IMPLIED>
+
+<!-- familyList is actually a list of families and hence decoder definitions -->
+<!ELEMENT decoderIndex:familyList (decoderIndex:family*) >
+
+<!ELEMENT decoderIndex:family (decoderIndex:decoder*) >
+<!ATTLIST decoderIndex:definition file      CDATA #REQUIRED>  <!-- file name for details -->
+<!ATTLIST decoderIndex:definition name      CDATA #REQUIRED>  <!-- family name used for identification -->
+<!ATTLIST decoderIndex:definition mfg       CDATA #REQUIRED>  <!-- mfg name used for identification   -->
+<!ATTLIST decoderIndex:definition versionID CDATA #IMPLIED >  <!-- CV07 value, default default blank means any   -->
+<!ATTLIST decoderIndex:definition comment   CDATA #IMPLIED>
+
+<!ELEMENT decoderIndex:decoder EMPTY >
+<!ATTLIST decoderIndex:definition numFns    CDATA #IMPLIED>   <!-- number of functions, default is all -->
+<!ATTLIST decoderIndex:definition model     CDATA #REQUIRED>  <!-- model name used for identification -->
+<!ATTLIST decoderIndex:definition versionID CDATA #IMPLIED >  <!-- CV07 value, default default blank means any   -->
+<!ATTLIST decoderIndex:definition comment   CDATA #IMPLIED>
+
+<!-- Problem: the manufacturer name string is in
+two places here, plus in the decoder config, and perhaps in the
+Loco config.  That needs to be simplified. -->
+

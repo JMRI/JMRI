@@ -1,0 +1,27 @@
+<!-- Defines XML documenting a locomotive roster -->
+
+<!ELEMENT roster:roster-config (roster:roster*)>
+<!ATTLIST roster:roster-config xmlns:roster CDATA "">
+
+<!ELEMENT roster:roster (roster:locomotive*)>
+
+
+<!-- The locomotive entries each define a specific locomotive -->
+
+<!ELEMENT roster:locomotive (roster:decoder) >
+
+<!-- The whole point of this is to identify a definition file, based at "xml/roster/" -->
+<!ATTLIST roster:locomotive fileName	CDATA #REQUIRED>          
+
+<!-- The identification attributes must be kept the same as the ones in the locomotive DTD -->
+
+<!-- Manual identification -->
+<!ATTLIST roster:locomotive roadNumber	CDATA #IMPLIED>          
+<!ATTLIST roster:locomotive roadName	CDATA #IMPLIED>          
+<!ATTLIST roster:locomotive mfg			CDATA #IMPLIED>
+<!ATTLIST roster:locomotive address		CDATA #IMPLIED>	<!-- DCC address -->
+
+<!-- The decoder optional section identifies the installed decoder -->
+<!ELEMENT roster:decoder EMPTY >
+<!ATTLIST roster:decoder versionID		CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
+<!ATTLIST roster:decoder mfgID			CDATA #IMPLIED>   <!-- CV08 value, default blank means any   -->
