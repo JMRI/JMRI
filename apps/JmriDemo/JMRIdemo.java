@@ -17,7 +17,7 @@ import javax.swing.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author			Bob Jacobsen   Copyright 2002
- * @version         $Revision: 1.43 $
+ * @version         $Revision: 1.44 $
  */
 public class JMRIdemo extends JPanel {
     public JMRIdemo() {
@@ -92,7 +92,7 @@ public class JMRIdemo extends JPanel {
 
         JMenu diagMenu = new JMenu("Panels");
         menuBar.add(diagMenu);
-        diagMenu.add(new jmri.jmrit.display.PanelEditorAction( "New panel..." ));
+        diagMenu.add(new jmri.jmrit.display.PanelEditorAction( "New panel" ));
         diagMenu.add(new jmri.configurexml.LoadXmlConfigAction("Load panels..."));
         diagMenu.add(new jmri.configurexml.StoreXmlConfigAction("Store panels..."));
 
@@ -104,6 +104,7 @@ public class JMRIdemo extends JPanel {
         locoMenu.add(new jmri.jmrix.loconet.locoio.LocoIOAction("LocoIO Programmer"));
         locoMenu.add(new jmri.jmrix.loconet.pm4.PM4Action("PM4 Programmer"));
         locoMenu.add(new jmri.jmrix.loconet.bdl16.BDL16Action("BDL16 Programmer"));
+        locoMenu.add(new jmri.jmrix.loconet.se8.SE8Action("SE8c Programmer"));
         locoMenu.add(new jmri.jmrit.messager.MessageFrameAction( "Throttle Messages" ));
         locoMenu.add(new jmri.jmrix.loconet.locormi.LnMessageServerAction( "Start LocoNet Server" ));
 
@@ -113,6 +114,7 @@ public class JMRIdemo extends JPanel {
         throttleMenu.add(new jmri.jmrit.throttle.LoadXmlThrottleAction( "Load Throttle Layout" ));
         throttleMenu.add(new jmri.jmrit.throttle.EditThrottlePreferencesAction( "Edit Throttle Preferences" ));
         locoMenu.add(throttleMenu);
+        funcMenu.add(throttleMenu);
 
         JMenu nceMenu = new JMenu("NCE");
         menuBar.add(nceMenu);
