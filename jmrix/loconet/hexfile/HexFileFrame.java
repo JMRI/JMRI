@@ -73,7 +73,7 @@ public class HexFileFrame extends javax.swing.JFrame {
 		jLabel1.setSize(new java.awt.Dimension(40, 30));
 
 		setLocation(new java.awt.Point(5, 40));
-		setTitle("LocoMon controls");
+		setTitle("Hexfile LocoNet simulator");
 		getContentPane().setLayout(null);
 		setSize(new java.awt.Dimension(387, 229));
 		getContentPane().add(filenameTextField);
@@ -159,7 +159,7 @@ public class HexFileFrame extends javax.swing.JFrame {
 		// If a jmri.Programmer instance doesn't exist, create a 
 		// loconet.SlotManager to do that
 		if (jmri.InstanceManager.programmerInstance() == null) 
-			jmri.jmrix.loconet.SlotManager.instance();
+			jmri.InstanceManager.setProgrammer(new jmri.progdebugger.ProgDebugger());
 
 		// start operation
 		sourceThread = new Thread(p);

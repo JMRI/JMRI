@@ -11,6 +11,7 @@ package jmri.symbolicprog;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.table.*;
 
 import java.io.File;
 import com.sun.java.util.collections.List;
@@ -39,6 +40,13 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 	JTable					variableTable	= new JTable(variableModel);
 	JScrollPane 			variableScroll	= new JScrollPane(variableTable);
 
+	CvTableModel		cvModel	= new CvTableModel();
+	JTable					cvTable	= new JTable(cvModel);
+	JScrollPane 			cvScroll	= new JScrollPane(cvTable);
+	
+	JButton  newCvButton = new JButton();
+	JTextField newCvNum  = new JTextField();
+
 	ProgModePane   modePane = new ProgModePane();
 			
 	JLabel vendor  = new JLabel("         ");
@@ -58,10 +66,19 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 		variableTable.setDefaultRenderer(JComboBox.class, new ValueRenderer());
 		variableTable.setDefaultEditor(JComboBox.class, new ValueEditor());
 		variableScroll.setColumnHeaderView(variableTable.getTableHeader());
-
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
 		// instead of forcing the columns to fill the frame (and only fill)
 		variableTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		
+		cvTable.setDefaultRenderer(JButton.class, new ValueRenderer());
+		cvTable.setDefaultEditor(JButton.class, new ValueEditor());
+		cvScroll.setColumnHeaderView(cvTable.getTableHeader());
+		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
+		// instead of forcing the columns to fill the frame (and only fill)
+		cvTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		
+		newCvButton.setText("new CV:");
+		newCvNum.setText("");
 		
 		// add actions to buttons
 		selectFileButton.addActionListener(new java.awt.event.ActionListener() {
@@ -69,15 +86,20 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 				selectFileButtonActionPerformed(e);
 			}
 		});
-		
+		newCvButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				cvModel.addCV(newCvNum.getText());
+			}
+		});
+			
 		// general GUI config
 		setTitle("Symbolic Programmer");
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
 		// install items in GUI
 		JPanel tPane3 = new JPanel();
-			tPane3.add(selectFileButton);  
 			tPane3.setLayout(new BoxLayout(tPane3, BoxLayout.X_AXIS));
+			tPane3.add(selectFileButton);  
 			tPane3.add(new JLabel(" Vendor: "));
 			tPane3.add(vendor);
 			tPane3.add(new JLabel(" Model: "));
@@ -87,12 +109,16 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 		getContentPane().add(modePane);
 			
 		getContentPane().add(variableScroll);
+		JPanel tPane4 = new JPanel();
+			tPane4.setLayout(new BoxLayout(tPane4, BoxLayout.X_AXIS));
+			tPane4.add(newCvButton);
+			tPane4.add(newCvNum);
+		getContentPane().add(tPane4);
+		
+		getContentPane().add(cvScroll);
 		
 		// for debugging
 		
-		DecVariableValue v = new DecVariableValue("name", "comment", false, 81, "VVVVVVVV", null);
-		getContentPane().add(v.getValue()); 
-
 		pack();
 	}
   	

@@ -140,8 +140,7 @@ public class VariableTableModel extends javax.swing.table.AbstractTableModel {
 			} else { // no match is an error
 				row.setElementAt("Unrecognized column name", j);
 			}
-			
-		}
+		}  // end of loop over all columns
 	}
 	
 	public void configDone() {
