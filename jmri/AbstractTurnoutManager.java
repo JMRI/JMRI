@@ -13,7 +13,7 @@ import com.sun.java.util.collections.Collections;
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public abstract class AbstractTurnoutManager
     implements TurnoutManager, java.beans.PropertyChangeListener {
@@ -29,6 +29,27 @@ public abstract class AbstractTurnoutManager
     }
 
     // implemented methods
+
+    /**
+     * Locate via user name, then system name if needed.
+     * If that fails, create a new turnout using this as a
+     * default name.
+     *
+     * @param name
+     * @return Never null under normal circumstances
+     */
+    public Turnout getTurnout(String name) {
+        Turnout t = getByUserName(name);
+        if (t!=null) return t;
+
+        t = getBySystemName(name);
+        if (t!=null) return t;
+
+        // did not exist under either name; create via a default
+        // of either a valid system name, or a number that can create one
+        return newTurnout(null, name);
+    }
+
     protected Hashtable _tsys = new Hashtable();   // stores known Turnout instances by system name
     protected Hashtable _tuser = new Hashtable();   // stores known Turnout instances by user name
 
