@@ -19,7 +19,7 @@ import org.jdom.Element;
  * Table data model for display of variables in symbolic programmer.
  * Also responsible for loading from the XML file...
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version      $Revision: 1.4 $
+ * @version      $Revision: 1.5 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -398,8 +398,14 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 	}
 
     public void propertyChange(PropertyChangeEvent e) {
-        if (log.isDebugEnabled()) log.debug("prop changed "+e.getPropertyName()
+        if (log.isDebugEnabled()) {
+            log.debug("prop changed "+e.getPropertyName()
                                             +" new value: "+e.getNewValue());
+        }
+        if (e.getNewValue() == null) {
+            log.error("new value of "+e.getPropertyName()+" should not be null!");
+            (new Exception()).printStackTrace();
+        }
         setFileDirty(true);
         fireTableDataChanged();
     }
