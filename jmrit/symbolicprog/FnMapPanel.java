@@ -30,7 +30,7 @@ import org.jdom.Attribute;
  * Although support for the "CV label column" is still here, its turned off now.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: FnMapPanel.java,v 1.7 2002-02-04 07:32:07 jacobsen Exp $
+ * @version			$Id: FnMapPanel.java,v 1.8 2002-02-20 15:54:53 jacobsen Exp $
  */
 public class FnMapPanel extends JPanel {
 	// columns
@@ -181,10 +181,25 @@ public class FnMapPanel extends JPanel {
 		for (int i=0; i<elemList.size(); i++) {
 			Element e = (Element)(elemList.get(i));
 			String name = e.getAttribute("name").getValue();
-			if (numOut<maxOut) {
-				outLabel[numOut] = "";
-				outName[numOut] = name;
-				numOut++;
+			// if this a number, or a character name?
+			try { 
+				int outputNum = Integer.valueOf(name).intValue();
+				// yes, since it was converted.  All we do with
+				// these are store the label index (if it exists)
+				Attribute at;
+				if ((at=e.getAttribute("label"))!=null && outputNum<=numOut)
+					outLabel[outputNum-1]=at.getValue();
+			} catch (java.lang.NumberFormatException ex) {
+				// not a number, must be a name
+				if (numOut<maxOut) {
+					outName[numOut] = name;
+					Attribute at;
+					if ((at=e.getAttribute("label"))!=null)					
+						outLabel[numOut] = at.getValue();
+					else
+						outLabel[numOut] ="";
+					numOut++;
+				}
 			}
 		}
 	}

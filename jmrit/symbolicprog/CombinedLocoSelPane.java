@@ -22,7 +22,7 @@ import com.sun.java.util.collections.List;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: CombinedLocoSelPane.java,v 1.8 2002-01-16 07:39:45 jacobsen Exp $
+ * @version			$Id: CombinedLocoSelPane.java,v 1.9 2002-02-20 15:54:53 jacobsen Exp $
  */
 public class CombinedLocoSelPane extends javax.swing.JPanel  {
 		
@@ -108,43 +108,10 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 			pane3a.setLayout(new BoxLayout(pane3a, BoxLayout.X_AXIS));
 			pane3a.add(new JLabel("Programmer format: "));
 			
-			// create an array of file names from prefs/programmers, count entries
-			int i;
-			int np = 0;
-			String[] sp = null;
-			XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"programmers");
-			File fp = new File(XmlFile.prefsDir()+"programmers");
-			if (fp.exists()) {
-				sp = fp.list();
-				for (i=0; i<sp.length; i++) {
-					if (sp[i].endsWith(".xml")) np++;
-				}
-			} else {
-				log.warn(XmlFile.prefsDir()+"programmers was missing, though tried to create it");
-			}
-			// create an array of file names from xml/programmers, count entries
-			String[] sx = (new File(XmlFile.xmlDir()+"programmers")).list();
-			int nx = 0;
-			for (i=0; i<sx.length; i++) {
-				if (sx[i].endsWith(".xml")) nx++;
-			}
-
-			// copy the programmer entries to the final array
-			// note: this results in duplicate entries if the same name is also local.
-			// But for now I can live with that.
-			String sbox[] = new String[np+nx];
-			int n=0;
-			if (sp != null && np> 0)
-				for (i=0; i<sp.length; i++) {
-					if (sp[i].endsWith(".xml")) sbox[n++] = sp[i].substring(0, sp[i].length()-1-3);
-				}
-			for (i=0; i<sx.length; i++) {
-				if (sx[i].endsWith(".xml")) sbox[n++] = sx[i].substring(0, sx[i].length()-1-3);
-			}
-
 			// create the programmer box
-			programmerBox = new JComboBox(sbox);			
+			programmerBox = new JComboBox(findListOfProgFiles());			
 			programmerBox.setSelectedIndex(0);
+			if (defaultProgFile!=null) programmerBox.setSelectedItem(defaultProgFile);
 			pane3a.add(programmerBox);
 			pane3a.setAlignmentX(JLabel.RIGHT_ALIGNMENT);				
 		add(pane3a);
@@ -307,6 +274,44 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 	protected void startProgrammer(DecoderFile decoderFile, String locoFile, RosterEntry r, String progName) {
 		log.error("startProgrammer method in CombinedLocoSelPane should have been overridden");
 	}
+	
+	static public String[] findListOfProgFiles() {
+		// create an array of file names from prefs/programmers, count entries
+		int i;
+		int np = 0;
+		String[] sp = null;
+		XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"programmers");
+		File fp = new File(XmlFile.prefsDir()+"programmers");
+		if (fp.exists()) {
+			sp = fp.list();
+			for (i=0; i<sp.length; i++) {
+				if (sp[i].endsWith(".xml")) np++;
+			}
+		} else {
+			log.warn(XmlFile.prefsDir()+"programmers was missing, though tried to create it");
+		}
+		// create an array of file names from xml/programmers, count entries
+		String[] sx = (new File(XmlFile.xmlDir()+"programmers")).list();
+		int nx = 0;
+		for (i=0; i<sx.length; i++) {
+			if (sx[i].endsWith(".xml")) nx++;
+		}
+		// copy the programmer entries to the final array
+		// note: this results in duplicate entries if the same name is also local.
+		// But for now I can live with that.
+		String sbox[] = new String[np+nx];
+		int n=0;
+		if (sp != null && np> 0)
+			for (i=0; i<sp.length; i++) {
+				if (sp[i].endsWith(".xml")) sbox[n++] = sp[i].substring(0, sp[i].length()-1-3);
+			}
+		for (i=0; i<sx.length; i++) {
+			if (sx[i].endsWith(".xml")) sbox[n++] = sx[i].substring(0, sx[i].length()-1-3);
+		}
+		return sbox;
+	}
+	static private String defaultProgFile = null;
+	static public void setDefaultProgFile(String s) { defaultProgFile = s; }
 	
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CombinedLocoSelPane.class.getName());
 

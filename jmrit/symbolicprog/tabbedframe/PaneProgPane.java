@@ -29,7 +29,7 @@ import org.jdom.Attribute;
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: PaneProgPane.java,v 1.17 2002-02-04 07:32:07 jacobsen Exp $
+ * @version			$Id: PaneProgPane.java,v 1.18 2002-02-20 15:54:57 jacobsen Exp $
  */
 public class PaneProgPane extends javax.swing.JPanel 
 							implements java.beans.PropertyChangeListener  {
@@ -480,7 +480,8 @@ public class PaneProgPane extends javax.swing.JPanel
 	 * Add the representation of a single variable.  The 
 	 * variable is defined by a JDOM variable Element from the XML file.
 	 */
-	public void newVariable( Element var, JComponent col, GridBagLayout g, GridBagConstraints cs, boolean showStdName) {
+	public void newVariable( Element var, JComponent col, 
+							GridBagLayout g, GridBagConstraints cs, boolean showStdName) {
 
 		// get the name
 		String name = var.getAttribute("item").getValue();
