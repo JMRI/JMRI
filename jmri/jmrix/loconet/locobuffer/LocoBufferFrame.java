@@ -1,20 +1,14 @@
-/**
- * LocoBufferFrame.java
- *
- * Description:		Frame to control and connect LocoNet via LocoBuffer interface and comm port
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.2 $
- */
+// LocoBufferFrame.java
 
 package jmri.jmrix.loconet.locobuffer;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import java.util.Vector;
+import javax.swing.JOptionPane;
 
-import jmri.jmrix.loconet.LnTrafficController;
-
+/**
+ * Frame to control and connect LocoNet via LocoBuffer interface and comm port
+ * @author      Bob Jacobsen   Copyright (C) 2001
+ * @version	$Revision: 1.3 $
+ */
 public class LocoBufferFrame extends jmri.jmrix.SerialPortFrame {
 
 	public LocoBufferFrame() {
