@@ -74,6 +74,12 @@ public class PaneProgFrameTest extends TestCase {
 	public void testFrame() {
 		setupDoc();
 		PaneProgFrame p = new PaneProgFrame();
+		
+		// ugly, temporary way to load the decoder info
+		DecoderFileTest t = new DecoderFileTest("");
+		t.setupDecoder();
+		p.loadVariables(t.decoder, t.ns);
+		
 		p.readConfig(root, ns);
 		p.pack();
 		p.show();
@@ -111,7 +117,7 @@ public class PaneProgFrameTest extends TestCase {
 												)
 									.addContent(new Element("column", ns)
 										.addContent(new Element("variable", ns)
-													.addAttribute("name", "Acceleration rate")
+													.addAttribute("name", "Address")
 													)
 												)
 								)
@@ -142,6 +148,6 @@ public class PaneProgFrameTest extends TestCase {
 		return suite;
 	}
 	
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PaneProgFrameTest.class.getName());
+	// static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PaneProgFrameTest.class.getName());
 
 }

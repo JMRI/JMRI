@@ -25,17 +25,17 @@ public class DecoderFileTest extends TestCase {
 	}
 	
 	public void testMfgName() {
-		setupDoc();
+		setupDecoder();
 		Assert.assertEquals("mfg name ", "Digitrax", DecoderFile.getMfgName(decoder, ns));
 	}
 	
 	public void testModelName() {
-		setupDoc();
+		setupDecoder();
 		Assert.assertEquals("model name ", "DH142", DecoderFile.getModelName(decoder, ns));
 	}
 	
 	public void testLoadTable() {
-		setupDoc();
+		setupDecoder();
 
 		// this test should probably be done in terms of a test class instead of the real one...
 		JLabel progStatus       	= new JLabel(" OK ");
@@ -50,13 +50,13 @@ public class DecoderFileTest extends TestCase {
 	}
 	
 	// static variables for the test XML structures
-	Namespace ns = null;
+	public Namespace ns = null;
 	Element root = null;
-	Element decoder = null;
+	public Element decoder = null;
 	Document doc = null;
 	
 	// provide a test document in the above static variables
-	void setupDoc() {
+	public void setupDecoder() {
 		// create a JDOM tree with just some elements
 		ns = Namespace.getNamespace("decoder", "");
 		root = new Element("decoder-config", ns);
@@ -114,6 +114,6 @@ public class DecoderFileTest extends TestCase {
 		return suite;
 	}
 	
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DecoderFileTest.class.getName());
+	// static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DecoderFileTest.class.getName());
 
 }
