@@ -30,7 +30,7 @@ import java.util.Vector;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.4 $
+ * @version 		$Revision: 1.5 $
  *
  */
 public class XNetPacketizer extends XNetTrafficController {
@@ -293,7 +293,14 @@ public class XNetPacketizer extends XNetTrafficController {
 					// input - now send
 					try {
 						if (ostream != null) {
-							if (!controller.okToSend()) log.warn("XPressNet port not ready to receive");
+							if (!controller.okToSend()) {
+                                                           log.debug ("XPressNet port not ready to receive");
+                                                           while(!controller.okToSend()) { 
+                                                           log.debug ("Waiting for XPressNet port to become ready");
+                                                                 /* this is a busy loop to handle waiting until we can send */
+                                                           }
+                                                        log.debug("Ready to send to XPressNet port");
+                                                        }
 							if (debug) log.debug("start write to stream");
 							ostream.write(msg);
 							if (debug) log.debug("end write to stream");
