@@ -39,7 +39,7 @@ import com.sun.java.util.collections.ArrayList;
  *<P>
  * Description:		Extends VariableValue to represent a NMRA long address
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -170,8 +170,6 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 		GridBagConstraints cs = new GridBagConstraints();
 		j.setLayout(g);
 
-		// j.setLayout(new GridLayout(nValues,2));
-
 		for (int i=0; i<nValues; i++) {
 			cs.gridy = 0;
 			cs.gridx = i;
@@ -205,8 +203,88 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 
 			j.add(s);
 		}
+
+        // add control buttons
+        JPanel k = new JPanel();
+        JButton b;
+        k.add(b = new JButton("Force Straight"));
+        k.setToolTipText("Insert straight line between min and max");
+		b.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				doForceStraight(e);
+			}
+		});
+        k.add(b = new JButton("Match ends"));
+        k.setToolTipText("Insert a straight line between existing endpoints");
+		b.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				doMatchEnds(e);
+			}
+		});
+        k.add(b = new JButton("Constant ratio curve"));
+        k.setToolTipText("Insert a constant ratio curve between existing endpoints");
+		b.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				doLogCurve(e);
+			}
+		});
+
+        cs.gridy=2;
+        cs.gridx = 0;
+        cs.gridwidth = GridBagConstraints.RELATIVE;
+        g.setConstraints(k, cs);
+        j.add(k);
+
 		return j;
+
 	}
+
+    /**
+     * Set the values to a straight line from 0 to 255
+     */
+    void doForceStraight(java.awt.event.ActionEvent e) {
+        ((CvValue)_cvVector.elementAt(getCvNum()+0)).setValue(0);
+        ((CvValue)_cvVector.elementAt(getCvNum()+nValues-1)).setValue(255);
+        doMatchEnds(e);
+    }
+    /**
+     * Set the values to a straight line from existing ends
+     */
+    void doMatchEnds(java.awt.event.ActionEvent e) {
+        int first = ((CvValue)_cvVector.elementAt(getCvNum()+0)).getValue();
+        int last = ((CvValue)_cvVector.elementAt(getCvNum()+nValues-1)).getValue();
+        log.debug(" first="+first+" last="+last);
+        // to avoid repeatedly bumping up later values, push the first one
+        // all the way up now
+        ((CvValue)_cvVector.elementAt(getCvNum()+0)).setValue(last);
+        // and push each one down
+        for (int i = 0; i<nValues; i++) {
+            int value = first+i*(last-first)/(nValues-1);
+            System.out.println("f, l, v "+first+" "+last+" "+value);
+            ((CvValue)_cvVector.elementAt(getCvNum()+i)).setValue(value);
+        }
+    }
+
+    /**
+     * Bump up the existing values by a logarithmic value
+     */
+    void doLogCurve(java.awt.event.ActionEvent e) {
+        double first = ((CvValue)_cvVector.elementAt(getCvNum()+0)).getValue();
+        if (first<1) first=1;
+        double last = ((CvValue)_cvVector.elementAt(getCvNum()+nValues-1)).getValue();
+        if (last<first+1) last = first+1.;
+        double step = Math.log(last/first)/(nValues-1);
+        log.debug("log step is "+step);
+        // to avoid repeatedly bumping up later values, push the first one
+        // all the way up now
+        ((CvValue)_cvVector.elementAt(getCvNum()+0)).setValue((int)Math.round(last));
+        // and push each one down
+        for (int i = 0; i<nValues; i++) {
+            int value = (int)(Math.floor(first*Math.exp(step*i)));
+            System.out.println("f, l, v "+first+" "+last+" "+value);
+            ((CvValue)_cvVector.elementAt(getCvNum()+i)).setValue(value);
+        }
+    }
 
 	/**
 	 * IDLE if a read/write operation is not in progress.  During an operation, it
