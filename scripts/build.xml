@@ -1,11 +1,15 @@
 <!-- ugly first attempt at an ANT build.xml file for JMRI development -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.16 $ -->
+<!-- Revision $Revision: 1.17 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
 <!-- in the project.  We expect that lib et al will be present in -->
 <!-- .. from there -->
+
+  <description>
+  Provides build services for JMRI libraries and applications
+  </description>
 
   <!-- set global properties for this build -->
   <property name="source" value="src"/>
@@ -15,20 +19,6 @@
 
   <property name="dist" value="NODISTNAME" />
   <property name="distdir" value="../${dist}" />
-
-  <target name="clean">
-    <delete includeEmptyDirs="true">
-      <fileset dir="classes"/>
-    </delete>
-  </target>
-
-  <target name="init">
-    <!-- Create the time stamp -->
-    <tstamp/>
-    <!-- Create the build directory structure used by compile -->
-    <mkdir dir="${target}"/>
-    <mkdir dir="${target}/resources" />
-  </target>
 
   <path id="project.class.path">
     <pathelement location="../lib/collections.jar" />
@@ -42,11 +32,26 @@
     <pathelement location="classes/" />
   </path>
 
-  <target name="compile" depends="init">
+  <target name="init" description="create needed directories">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${target}"/>
+    <mkdir dir="${target}/resources" />
+  </target>
+
+  <target name="clean" description="remove compilation results to force rebuild">
+    <delete includeEmptyDirs="true">
+      <fileset dir="classes"/>
+    </delete>
+  </target>
+
+  <target name="compile" depends="init" description="compile source, omitting tests">
     <!-- Compile the java code from ${source} into ${target} -->
     <javac srcdir="${source}" 
            destdir="${target}" 
-           target="1.1" >
+           target="1.1" 
+           debug="no" >
        <classpath refid="project.class.path"    />
     </javac>
     <!-- Copy top level resources to include in jar file -->
@@ -58,7 +63,7 @@
     </copy>
   </target>
 
-  <target name="rmic" depends="compile">
+  <target name="rmic" depends="compile" description="build RMI stubs and compile">
     <!-- Run rmic on specified classes -->
     <rmic includes="**/LnMessageBuffer.class, **/LnMessageServer.class"
            base="${target}" stubversion="1.1">
@@ -66,7 +71,7 @@
     </rmic>
   </target>
 
-  <target name="tests" depends="compile">
+  <target name="tests" depends="compile" description="compile test classes">
     <!-- Compile the test java code from ${source} into ${target} -->
     <javac srcdir="${test}" 
            destdir="${target}" >
@@ -74,7 +79,7 @@
     </javac>
   </target>
 
-  <target name="decoderpro" depends="compile">
+  <target name="decoderpro" depends="compile" description="build and run DecoderPro app">
     <java classname="apps.DecoderPro.DecoderPro"
           dir=".." 
 	  fork="yes" >
@@ -83,7 +88,7 @@
     </java>
  </target>
 
-  <target name="panelpro" depends="compile">
+  <target name="panelpro" depends="compile" description="build and run PanelPro app">
     <java classname="apps.PanelPro.PanelPro"
           dir=".." 
 	  fork="yes" >
@@ -92,7 +97,7 @@
     </java>
  </target>
 
-  <target name="jmridemo" depends="compile">
+  <target name="jmridemo" depends="compile" description="build and run JmriDemo app">
     <java classname="apps.JmriDemo.JMRIdemo"
           dir=".."
 	  fork="yes" >
@@ -101,7 +106,7 @@
     </java>
   </target>
 
-  <target name="locotools" depends="compile">
+  <target name="locotools" depends="compile" description="build and run LocoTools app">
     <java classname="apps.LocoTools.LocoTools"
           dir=".." 
 	  fork="yes" >
@@ -110,7 +115,7 @@
     </java>
  </target>
 
-  <target name="cornwall" depends="compile">
+  <target name="cornwall" depends="compile" description="build and run CornwallRR app">
     <java classname="apps.cornwall.CornwallRR"
           dir=".." 
 	  fork="yes" >
@@ -119,7 +124,7 @@
     </java>
  </target>
 
-  <target name="alltest" depends="compile, tests">
+  <target name="alltest" depends="compile, tests" description="build and run test suite">
     <java classname="apps.tests.AllTest"
           dir=".." 
 	  fork="yes" >
@@ -128,11 +133,11 @@
     </java>
   </target>
 
-  <target name="jar" depends="compile, rmic">
+  <target name="jar" depends="compile, rmic"  description="create jar file with current contents">
     <jar jarfile="${jartarget}/jmri.jar" basedir="${target}" />
   </target>
 
-  <target name="javadoc" depends="init">
+  <target name="javadoc" depends="init" description="create JavaDocs">
     <javadoc packagenames="jmri.*, apps.*"
            sourcepath="src"
            defaultexcludes="yes"
@@ -149,7 +154,7 @@
     </javadoc>
   </target>
 
-  <target name="uploadjavadoc" depends="init">
+  <target name="uploadjavadoc" depends="init" description="create and upload JavaDocs">
     <exec executable="scp">
       <arg value="-r"/>
       <arg value="doc"/>
@@ -157,7 +162,9 @@
     </exec>
   </target>
 
- <target name="dist" depends="clean, init, compile, rmic, jar"/>
+ <!-- dist target forces the jar file to be built without test classes -->
+ <target name="dist" depends="clean, init, compile, rmic, jar"
+ 					 description="create a distribution jar file"/>
 
  <!-- items below here are obsolete, kept only as examples -->
 
