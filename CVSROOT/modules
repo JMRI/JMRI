@@ -1,7 +1,11 @@
-jbuilder -d java/src &jmri &apps &xml
-djmri jmri
-dapps apps
-dxml xml
+#jbuilder -d java/src &jmri &apps &xml
+
+jbuilder -a src site/index.html
+src -d java/src &jmri &apps &xml
+
+#djmri -d java/src jmri
+#dapps -d java/src apps
+#dxml -d java/src xml
 
 # Three different line formats are valid:
 #	key	-a    aliases...
