@@ -6,6 +6,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.text.MessageFormat;
@@ -18,7 +19,7 @@ import javax.swing.*;
  * Base class for Jmri Apps
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class Apps extends JPanel {
 
@@ -78,6 +79,8 @@ public class Apps extends JPanel {
         debugMenu(menuBar, frame);
         log.debug("start dev menu");
         developmentMenu(menuBar, frame);
+        log.debug("start dev menu");
+        windowMenu(menuBar, frame);
         log.debug("end menus");
     }
 
@@ -150,6 +153,16 @@ public class Apps extends JPanel {
         devMenu.add(new jmri.jmrit.automat.JythonAutomatonAction("Jython automaton"));
         devMenu.add(new JSeparator());
         devMenu.add(new jmri.jmrix.serialsensor.SerialSensorAction("Serial port sensors"));
+    }
+
+    protected void windowMenu(JMenuBar menuBar, final JFrame frame) {
+        JMenu devMenu = new JMenu("Window");
+        menuBar.add(devMenu);
+        devMenu.add(new AbstractAction("Minimize"){
+            public void actionPerformed(ActionEvent e) {
+                frame.setState(Frame.ICONIFIED);
+            }
+        });
     }
 
     protected String line1() {
