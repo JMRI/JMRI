@@ -12,7 +12,7 @@ import jmri.util.oreilly.BasicWindowMonitor;
  * DecoderPro application.
  *
  * @author			Bob Jacobsen
- * @version			$Id: DecoderPro.java,v 1.11 2002-03-12 05:37:25 jacobsen Exp $
+ * @version			$Id: DecoderPro.java,v 1.12 2002-04-07 02:55:28 jacobsen Exp $
  */
 public class DecoderPro extends JPanel {
 	public DecoderPro() {
@@ -62,6 +62,7 @@ public class DecoderPro extends JPanel {
         menuBar.add(debugMenu);
 	        debugMenu.add(new jmri.jmrix.loconet.locomon.LocoMonAction("LocoNet Monitor"));
 	        debugMenu.add(new jmri.jmrix.nce.ncemon.NceMonAction("Nce Command Monitor"));
+	        debugMenu.add(new jmri.jmrix.easydcc.easydccmon.EasyDccMonAction("EasyDCC Command Monitor"));
 	        debugMenu.add(new jmri.jmrit.MemoryFrameAction("Memory usage monitor"));
 
 		// Label & text
