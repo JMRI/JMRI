@@ -11,8 +11,8 @@ import jmri.jmrix.loconet.AspectGenerator;
  * <P>In this implementation, it takes its information straight from an
  * AspectGenerator, so is tied very closely to that class.  This needs to
  * be fixed in the longer term.
- * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.4 $
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
+ * @version $Revision: 1.5 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -23,15 +23,15 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
                             "resources/icons/smallschematics/searchlights/left-red-marker.gif"));
         displayState(SignalHead.RED);
     }
-    
+
     // what to display - at least one should be true!
     boolean showText = false;
     boolean showIcon = true;
-    
+
     // the associated AspectGenerator object
     AspectGenerator mGenerator;
     int mHead;
-    
+
     /**
      * Attached a numbered element to this display item
      * @param name Used as a number to lookup the AspectGenerator object
@@ -43,50 +43,50 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         mHead = pNumber;
         mGenerator.addPropertyChangeListener(this);
     }
-    
+
     public AspectGenerator getAspectGenerator() { return mGenerator; }
-    
+
     public int getHeadNumber() { return mHead; }
-    
+
     // display icons
     String redName = "resources/icons/smallschematics/searchlights/left-red-marker.gif";
     NamedIcon red = new NamedIcon(redName, redName);
-    
+
     String yellowName = "resources/icons/smallschematics/searchlights/left-yellow-marker.gif";
     NamedIcon yellow = new NamedIcon(yellowName, yellowName);
-    
+
     String flashYellowName = "resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif";
     NamedIcon flashYellow = new NamedIcon(flashYellowName, flashYellowName);
-    
+
     String greenName = "resources/icons/smallschematics/searchlights/left-green-marker.gif";
     NamedIcon green = new NamedIcon(greenName, greenName);
-    
+
     public NamedIcon getRedIcon() { return red; }
     public void setRedIcon(NamedIcon i) { red = i; displayState(headState()); }
-    
+
     public NamedIcon getYellowIcon() { return yellow; }
     public void setYellowIcon(NamedIcon i) { yellow = i; displayState(headState()); }
-    
+
     public NamedIcon getFlashYellowIcon() { return flashYellow; }
     public void setFlashYellowIcon(NamedIcon i) { flashYellow = i; displayState(headState()); }
-    
+
     public NamedIcon getGreenIcon() { return green; }
     public void setGreenIcon(NamedIcon i) { green = i; displayState(headState()); }
-    
+
     public int getHeight() {
         return Math.max(
                         Math.max(red.getIconHeight(), yellow.getIconHeight()),
                         Math.max(flashYellow.getIconHeight(), green.getIconHeight())
                         );
     }
-    
+
     public int getWidth() {
         return Math.max(
                         Math.max(red.getIconWidth(), yellow.getIconWidth()),
                         Math.max(flashYellow.getIconWidth(), green.getIconWidth())
                         );
     }
-    
+
     /**
      * Get current appearance of the head
      * @return An appearance variable from a SignalHead, e.g. SignalHead.RED
@@ -95,13 +95,14 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         if (mGenerator==null) return 0;
         else return mGenerator.getHeadState(mHead);
     }
-    
+
     // update icon as state of turnout changes
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (log.isDebugEnabled()) log.debug("property change: "+e);
+        if (log.isDebugEnabled()) log.debug("property change: "+e.getPropertyName()
+                                            +" current state: "+headState());
         displayState(headState());
     }
-    
+
     JPopupMenu popup = null;
     SignalHeadIcon ours = this;
     /**
@@ -126,7 +127,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         }
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
-    
+
     /**
      * Drive the current state of the display from the state of the
      * turnout.
@@ -153,6 +154,6 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
             log.error("unexpected state during display: "+state);
         }
     }
-    
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SignalHeadIcon.class.getName());
 }
