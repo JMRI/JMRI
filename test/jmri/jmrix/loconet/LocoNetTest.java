@@ -12,7 +12,7 @@ import jmri.jmrix.loconet.locogen.*;
 /**
  * Tests for the jmri.jmrix.loconet package
  * @author			Bob Jacobsen Copyright 2001
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.9 $
  */
 public class LocoNetTest extends TestCase {
 
@@ -32,6 +32,7 @@ public class LocoNetTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.loconet.LocoNetTest");  // no tests in this class itself
         suite.addTest(jmri.jmrix.loconet.locoio.LocoIOTest.suite());
+        suite.addTest(new TestSuite(Se8AlmImplementationTest.class));
         suite.addTest(new TestSuite(SecurityElementTest.class));
         suite.addTest(new TestSuite(SlotManagerTest.class));
         suite.addTest(new TestSuite(LocoNetSlotTest.class));
