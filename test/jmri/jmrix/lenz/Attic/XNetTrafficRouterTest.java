@@ -10,7 +10,7 @@ import apps.tests.*;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 2.1 $
+ * @version $Revision: 2.2 $
  */
 public class XNetTrafficRouterTest extends TestCase {
 
@@ -54,6 +54,8 @@ public class XNetTrafficRouterTest extends TestCase {
         XNetListener l = new XNetListener(){
             public void message(XNetReply m) {
                 count++;
+            }
+            public void message(XNetMessage m) {
             }
         };
         router.addXNetListener(~0, l);
