@@ -13,8 +13,6 @@ package jmri.jmrix.loconet.locobuffer;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
-import ErrLoggerJ.ErrLog;
-
 public class LocoBufferAction 			extends AbstractAction {
 
 	public LocoBufferAction(String s) { super(s);}
@@ -26,10 +24,12 @@ public class LocoBufferAction 			extends AbstractAction {
 			f.initComponents();
 			}
 		catch (Exception ex) {
-			ErrLog.msg(ErrLog.error, "LocoBufferAction","starting LocoBufferFrame:", "Exception: "+ex.toString());
+			log.error("starting LocoBufferFrame caught exception: "+ex.toString());
 			}
 		f.show();			
 	};
+ 
+   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoBufferAction.class.getName());
 
 }
 

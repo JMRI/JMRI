@@ -26,10 +26,12 @@ public class MS100Action 			extends AbstractAction {
 			f.initComponents();
 			}
 		catch (Exception ex) {
-			ErrLog.msg(ErrLog.error, "MS100Action","starting MS100Frame:", "Exception: "+ex.toString());
+			log.error("starting MS100Frame caught exception: "+ex.toString());
 			}
 		f.show();			
 	};
+
+   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MS100Action.class.getName());
 
 }
 

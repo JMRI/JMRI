@@ -23,7 +23,7 @@ public interface Throttle {
 	// disconnect when finished.  After this, further usage of
 	// this throttle will result in a JmriException.
 	
-	public void disconnect() throws JmriException;
+	public void dispose();
 	
 	// register for notification if any of the properties change
 }
