@@ -13,11 +13,17 @@ import org.jdom.Element;
 
 /**
  * Export a roster element as a new definition file.
+ * <P>
+ * This creates the new file containing the entry,
+ * but does <b>not</b> add it to the local
+ * {@link Roster} of locomotives.  This is intended for
+ * making a transportable copy of entry, which can be
+ * imported via {@link ImportRosterItemAction} on another system.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.3 $
- * @see         jmri.jmrit.roster.AbstractRosterItemAction
- * @see             jmri.jmrit.XmlFile
+ * @version	$Revision: 1.4 $
+ * @see         jmri.jmrit.roster.ImportRosterItemAction
+ * @see         jmri.jmrit.XmlFile
  */
 public class ExportRosterItemAction extends AbstractRosterItemAction  {
 
