@@ -29,17 +29,27 @@ import org.jdom.Element;
  * organize the roster into directories.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  * @see jmri.jmrit.roster.LocoFile
  *
  */
 public class RosterEntry {
 
+    /**
+     * Construct a blank object.
+     *
+     */
+    public RosterEntry() {
+        _owner = _defaultOwner;
+    }
+
     public RosterEntry(String fileName) {
+        this();
         _fileName = fileName;
     }
 
     public RosterEntry(RosterEntry pEntry, String pID) {
+        this();
         // The ID is different for this element
         _id = pID;
 
@@ -129,13 +139,6 @@ public class RosterEntry {
     public void   setDecoderComment(String s) { _decoderComment = s; }
     public String getDecoderComment() { return _decoderComment; }
 
-
-    /**
-     * Construct a blank object.
-     *
-     */
-    public RosterEntry() {
-    }
 
     /**
      * Construct this Entry from XML. This member has to remain synchronized with the
@@ -304,13 +307,17 @@ public class RosterEntry {
     protected String _roadName = "";
     protected String _roadNumber = "";
     protected String _mfg = "";
-    protected String _owner ="";
+    protected String _owner;
     protected String _model = "";
     protected String _dccAddress = "";
     protected String _comment = "";
     protected String _decoderModel = "";
     protected String _decoderFamily = "";
     protected String _decoderComment = "";
+
+    public static String getDefaultOwner() { return _defaultOwner; }
+    public static void setDefaultOwner(String n) { _defaultOwner = n; }
+    static private String _defaultOwner = "";
 
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RosterEntry.class.getName());

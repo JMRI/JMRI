@@ -1,9 +1,10 @@
 package jmri.jmrit.roster.configurexml;
 
 import jmri.configurexml.XmlAdapter;
+import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterConfigPane;
+import jmri.jmrit.roster.RosterEntry;
 import org.jdom.Element;
-import jmri.jmrit.roster.*;
 
 /**
  * Handle XML persistance of Roster default values.
@@ -14,7 +15,7 @@ import jmri.jmrit.roster.*;
  * roster.Roster class.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class RosterConfigPaneXml implements XmlAdapter {
 
@@ -32,6 +33,7 @@ public class RosterConfigPaneXml implements XmlAdapter {
         Element roster = new Element("roster");
         roster.addAttribute("directory", p.getSelectedItem());
         roster.addAttribute("class", this.getClass().getName());
+        roster.addAttribute("ownerDefault", p.getDefaultOwner());
         return roster;
     }
 
@@ -42,6 +44,7 @@ public class RosterConfigPaneXml implements XmlAdapter {
     public void load(Element element) {
         if (log.isDebugEnabled()) log.debug("set roster location: "+element.getAttribute("directory").getValue());
         Roster.setFileLocation(element.getAttribute("directory").getValue());
+        if (element.getAttribute("ownerDefault")!=null) RosterEntry.setDefaultOwner(element.getAttribute("ownerDefault").getValue());
     }
 
     /**
