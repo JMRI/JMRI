@@ -12,7 +12,7 @@ package jmri;
  * non-system-specific code.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.22 $
  */
 public class InstanceManager {
 
@@ -44,6 +44,14 @@ public class InstanceManager {
         // This must be replaced when we start registering specific implementations
         instance().routeManager = new DefaultRouteManager();
         return instance().routeManager;
+    }
+
+    static public Timebase timebaseInstance()  {
+        if (instance().timebase != null) return instance().timebase;
+        // As a convenience, we create a default object if none was provided explicitly.
+        // This must be replaced when we start registering specific implementations
+        instance().timebase = new jmri.jmrit.simpleclock.SimpleTimebase();
+        return instance().timebase;
     }
 
     static public ConsistManager consistManagerInstance() { return instance().consistManager; }
@@ -85,11 +93,11 @@ public class InstanceManager {
         if (p!=programmerManager && programmerManager!=null && log.isDebugEnabled()) log.debug("ProgrammerManager instance is being replaced: "+p);
         if (p!=programmerManager && programmerManager==null && log.isDebugEnabled()) log.debug("ProgrammerManager instance is being installed: "+p);
         programmerManager = p;
-	// Now that we have a programmer manager, install the default 
-        // Consist manager if Ops mode is possible, and there isn't a 
+	// Now that we have a programmer manager, install the default
+        // Consist manager if Ops mode is possible, and there isn't a
         // consist manager already.
 	if(programmerManager.isOpsModePossible() && consistManager == null) {
-   		 setConsistManager(new DccConsistManager());	
+   		 setConsistManager(new DccConsistManager());
 	}
     }
 
@@ -156,6 +164,8 @@ public class InstanceManager {
         if (p!=routeManager && routeManager==null && log.isDebugEnabled()) log.debug("RouteManager instance is being installed: "+p);
         routeManager = p;
     }
+
+    private Timebase timebase = null;
 
     private ConsistManager consistManager = null;
 
