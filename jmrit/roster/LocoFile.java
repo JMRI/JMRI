@@ -20,7 +20,7 @@ import org.jdom.output.*;
  * in memory.  The interal storage is a JDOM tree. See locomotive-config.dtd
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version		 	$Id: LocoFile.java,v 1.7 2001-12-18 20:35:40 jacobsen Exp $
+ * @version		 	$Id: LocoFile.java,v 1.8 2002-01-13 03:38:31 jacobsen Exp $
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
@@ -76,7 +76,7 @@ public class LocoFile extends XmlFile {
 		// this is here because setting CV17, then CV18 seems to set
 		// CV17 to Editted.  This needs to be understood & fixed.
 		cvObject = (CvValue)(cvModel.allCvVector().elementAt(17));
-		cvObject.setState(CvValue.FROMFILE);
+		if (cvObject!=null) cvObject.setState(CvValue.FROMFILE);
 	}
 	
 	public void writeFile(File file, CvTableModel cvModel, VariableTableModel variableModel, RosterEntry r) {
@@ -113,7 +113,7 @@ public class LocoFile extends XmlFile {
 			// add the variable values to the decoderDef Element
 			for (int i = 0; i < variableModel.getRowCount(); i++) {
 				decoderDef.addContent(new Element("varValue")
-									.addAttribute("name", variableModel.getName(i))
+									.addAttribute("item", variableModel.getLabel(i))
 									.addAttribute("value", variableModel.getValString(i))
 						);
 			}

@@ -104,7 +104,9 @@ public class PaneProgFrame extends javax.swing.JFrame
 			}
 		});
 		pack();
-		if (log.isDebugEnabled()) log.debug("PaneProgFrame contructed with no args");
+		if (log.isDebugEnabled()) log.debug("PaneProgFrame contructed with no args, size is "+getPreferredSize());
+		if (getPreferredSize().width>800 || getPreferredSize().height>600) 
+				log.info("Frame larger than 800x600, is "+getPreferredSize());
 	}
   	
   	/**
@@ -165,7 +167,10 @@ public class PaneProgFrame extends javax.swing.JFrame
 		});
 
 		pack();
-		if (log.isDebugEnabled()) log.debug("PaneProgFrame \""+name+"\" constructed for file "+locoFile);
+		if (log.isDebugEnabled()) log.debug("PaneProgFrame \""+name+"\" constructed for file "+locoFile
+											+", size is "+getPreferredSize());
+		if (getPreferredSize().width>800 || getPreferredSize().height>600) 
+				log.info("Frame larger than 800x600, is "+getPreferredSize());
 	}
   	
 	Element lroot = null;

@@ -45,8 +45,8 @@ public class DecoderFileTest extends TestCase {
 		
 		d.loadVariableModel(decoder, variableModel);
 		Assert.assertEquals("read rows ", 3, variableModel.getRowCount());
-		Assert.assertEquals("first row name ", "Address", variableModel.getName(0));
-		Assert.assertEquals("third row name ", "Normal direction of motion", variableModel.getName(2));
+		Assert.assertEquals("first row name ", "Address", variableModel.getLabel(0));
+		Assert.assertEquals("third row name ", "Normal direction of motion", variableModel.getLabel(2));
 	}
 	
 	public void testMinOut() {
@@ -110,7 +110,7 @@ public class DecoderFileTest extends TestCase {
 								)
 					.addContent(new Element("variables")
 									.addContent(new Element("variable")
-										.addAttribute("name", "Address")
+										.addAttribute("label", "Address")
 										.addAttribute("CV", "1")
 										.addAttribute("minFn", "4")
 										.addAttribute("mask", "VVVVVVVV")
@@ -120,7 +120,7 @@ public class DecoderFileTest extends TestCase {
 													)
 												)
 									.addContent(new Element("variable")
-										.addAttribute("name", "Acceleration rate")
+										.addAttribute("label", "Acceleration rate")
 										.addAttribute("CV", "3")
 										.addAttribute("minOut", "2")
 										.addAttribute("mask", "VVVVVVVV")
@@ -130,7 +130,7 @@ public class DecoderFileTest extends TestCase {
 													)
 												)
 									.addContent(new Element("variable")
-										.addAttribute("name", "Normal direction of motion")
+										.addAttribute("label", "Normal direction of motion")
 										.addAttribute("CV", "29")
 										.addAttribute("minFn", "2")
 										.addAttribute("minOut", "5")

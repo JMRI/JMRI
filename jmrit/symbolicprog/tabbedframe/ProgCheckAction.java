@@ -17,7 +17,7 @@ import com.sun.java.util.collections.ArrayList;
  * Check the names in an XML programmer file against the names.xml definitions
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: ProgCheckAction.java,v 1.1 2002-01-01 01:57:25 jacobsen Exp $
+ * @version			$Id: ProgCheckAction.java,v 1.2 2002-01-13 03:38:31 jacobsen Exp $
  * @see             jmri.jmrit.XmlFile
  */
 public class ProgCheckAction extends AbstractAction {
@@ -61,7 +61,7 @@ public class ProgCheckAction extends AbstractAction {
 				for (int i=0; i<varList.size(); i++) {
 					Element varElement = (Element)(varList.get(i));
 					// for each variable, see if can find in names file
-					Attribute nameAttr = varElement.getAttribute("name");
+					Attribute nameAttr = varElement.getAttribute("item");
 					String name = null;
 					if (nameAttr!=null) name = nameAttr.getValue();
 					if (log.isDebugEnabled()) log.debug("Variable called \""

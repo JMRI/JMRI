@@ -63,8 +63,8 @@ public class VariableTableModelTest extends TestCase {
 					.addContent(new Element("variables")
 									.addContent(el0 = new Element("variable")
 												.addAttribute("CV","1")
-												.addAttribute("name","one")
-												.addAttribute("stdName", "really two")
+												.addAttribute("label","one")
+												.addAttribute("item", "really two")
 												.addAttribute("readOnly","no")
 												.addContent( new Element("decVal")
 														.addAttribute("max","31")
@@ -75,7 +75,7 @@ public class VariableTableModelTest extends TestCase {
 												.addAttribute("CV","4")
 												.addAttribute("readOnly","no")
 												.addAttribute("mask","XXXVVVVX")
-												.addAttribute("name","two")
+												.addAttribute("label","two")
 												.addContent( new Element("decVal")
 														.addAttribute("max","31")
 														.addAttribute("min","1")
@@ -101,8 +101,8 @@ public class VariableTableModelTest extends TestCase {
 		assert(t.getValueAt(0,1).equals("one"));
 		
 		// check that the variable names were set right
-		Assert.assertEquals("check loaded name ", "one", t.getName(0));
-		Assert.assertEquals("check loaded stdName ", "really two", t.getStdName(0));
+		Assert.assertEquals("check loaded label ", "one", t.getLabel(0));
+		Assert.assertEquals("check loaded item ", "really two", t.getItem(0));
 
 		t.setRow(1, el1);
 		assert(t.getValueAt(1,0).equals("4"));
@@ -134,7 +134,7 @@ public class VariableTableModelTest extends TestCase {
 												.addAttribute("CV","17")
 												.addAttribute("readOnly","no")
 												.addAttribute("mask","VVVVVVVV")
-												.addAttribute("name","long")
+												.addAttribute("label","long")
 												.addContent( new Element("longAddressVal")
 													)
 												)
@@ -171,12 +171,12 @@ public class VariableTableModelTest extends TestCase {
 		doc.setDocType(new DocType("decoder-config","decoder-config.dtd"));
 		
 		// add some elements
-		Element el0, el1;
+		Element el0;
 		root.addContent(new Element("decoder")		// the sites information here lists all relevant
 					.addContent(new Element("variables")
 									.addContent(el0 = new Element("variable")
 												.addAttribute("CV","67")
-												.addAttribute("name","Speed Table")
+												.addAttribute("label","Speed Table")
 												.addContent( new Element("speedTableVal")
 													)
 												)
@@ -189,7 +189,7 @@ public class VariableTableModelTest extends TestCase {
 
 		// check finding
 		Assert.assertEquals("length of variable list ", 1, t.getRowCount());
-		Assert.assertEquals("name of 1st variable ", "Speed Table", t.getName(0));
+		Assert.assertEquals("name of 1st variable ", "Speed Table", t.getLabel(0));
 		Assert.assertEquals("find Speed Table ",0, t.findVarIndex("Speed Table")); 
 		Assert.assertEquals("find nonexistant variable ",-1, t.findVarIndex("not there, eh?")); 
 		
@@ -213,7 +213,7 @@ public class VariableTableModelTest extends TestCase {
 												.addAttribute("CV","17")
 												.addAttribute("mask","VVVVVVVV")
 												.addAttribute("readOnly","no")
-												.addAttribute("name","long")
+												.addAttribute("label","long")
 												.addContent( new Element("bogusVal")
 													)
 												)

@@ -18,7 +18,7 @@ import org.jdom.Element;
  * decoder identification info _before_ the actual decoder file is read.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecoderFile.java,v 1.9 2001-12-18 07:31:07 jacobsen Exp $
+ * @version			$Id: DecoderFile.java,v 1.10 2002-01-13 03:38:31 jacobsen Exp $
  * @see jmri.jmrit.decoderdefn.DecoderIndexFile	
  */
 public class DecoderFile extends XmlFile {
@@ -95,8 +95,8 @@ public class DecoderFile extends XmlFile {
 					&& getNumOutputs() < Integer.valueOf(e.getAttribute("minOut").getValue()).intValue() )
 						continue;
 			} catch (Exception ex) {
-				log.warn("Problem parsing minFn or minOut in decoder file, variable "+e.getAttribute("name")+
-							" exception: "+ex);
+				log.warn("Problem parsing minFn or minOut in decoder file, variable "
+							+e.getAttribute("item")+" exception: "+ex);
 			}
 			// load each row
 			variableModel.setRow(i, e);
@@ -117,8 +117,8 @@ public class DecoderFile extends XmlFile {
 					&& getNumOutputs() < Integer.valueOf(e.getAttribute("minOut").getValue()).intValue() )
 						continue;
 			} catch (Exception ex) {
-				log.warn("Problem parsing minFn or minOut in decoder file, variable "+e.getAttribute("name")+
-							" exception: "+ex);
+				log.warn("Problem parsing minFn or minOut in decoder file, variable "
+							+e.getAttribute("item")+" exception: "+ex);
 			}
 			// load each row
 			variableModel.setConstant(e);

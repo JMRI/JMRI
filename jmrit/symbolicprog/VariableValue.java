@@ -43,16 +43,16 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
 	abstract public Object rangeVal();
 	
 	// methods implemented here:
-	public VariableValue(String name, String comment, boolean readOnly,
-							int cvNum, String mask, Vector v, JLabel status, String stdname) { 
-		_name = name;
+	public VariableValue(String label, String comment, boolean readOnly,
+							int cvNum, String mask, Vector v, JLabel status, String item) { 
+		_label = label;
 		_comment = comment;
 		_readOnly = readOnly;
 		_cvNum = cvNum;
 		_mask = mask;
 		_cvVector = v;
 		_status = status;
-		_stdName = stdname;
+		_item = item;
 	}
 
   	/** 
@@ -61,10 +61,10 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
    	protected VariableValue() {}
 
 	// common information - none of these are bound
-	public String name() { return _name; }
-	public String stdName() { return _stdName; }
-	private String _name;
-	private String _stdName;
+	public String label() { return _label; }
+	public String item() { return _item; }
+	private String _label;
+	private String _item;
 	protected Vector _cvVector;   // Vector of 512 CV objects used to look up CVs
 	protected JLabel _status = null;
 	

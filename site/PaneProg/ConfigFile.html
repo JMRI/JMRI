@@ -17,8 +17,9 @@ This page is _really_ still under construction! If you can help us make it a bet
 join the effort.<P>
 
 <b>This page is very incomplete.  It's contents have been updated to 
-describe the 0.9b4 version of JMRI and DecoderPro, which was 
-distributed in December 2001.</b>
+describe the 0.9b6 version of JMRI and DecoderPro, which was 
+distributed in December 2001. Note that 0.9b6 contains significant
+changes in terminology of decoder and programmer definitions!</b>
 
 <H2>Configuration files for the DecoderPro Symbolic Programmer</h2>
 
@@ -77,7 +78,7 @@ at the top (the examples are from the <A HREF="../xml/Digitrax_1x2.xml">Digitrax
 	<PRE>
 	&lt;?xml version="1.0"?&gt;
 	&lt;!DOCTYPE decoder-config SYSTEM "decoder-config.dtd"&gt;
-	&lt;!-- $Id: ConfigFile.html,v 1.7 2002-01-02 23:46:03 jacobsen Exp $ --&gt;
+	&lt;!-- $Id: ConfigFile.html,v 1.8 2002-01-13 03:38:31 jacobsen Exp $ --&gt;
 	&lt;decoder-config&gt;
 	</PRE>
 Don't mess with these lines; they describe the format of the file.
@@ -172,7 +173,7 @@ The enxt part of the file consists of a set of 'variable' elements
 defining specific variables, nested inside
 a 'variables' (note the extra "s") element. An example:
 	<PRE>
-	&lt;variable name="Short Address" CV="1" stdName="Primary Address" default="03"&gt;
+	&lt;variable label="Short Address" CV="1" item="Primary Address" default="03"&gt;
 		&lt;decVal min="1" max="127"/&gt;
 		&lt;/variable&gt;
 	</PRE>
@@ -186,8 +187,8 @@ You can also rearrange them if you'd prefer a different order.
 <P>
 The attributes include:
 	<UL>
-	<LI>name - The name for this variable.
-	<LI>stdName - An alternative, 'standard' name. See below for
+	<LI>label - The name for this variable.
+	<LI>item - An alternative, 'standard' name. See below for
 		more information on this.
 	<LI>CV - Which CV contains the configuration information
 		for this variable.
@@ -421,7 +422,7 @@ If everybody could agree on the same names and the same decoder features,
 this would be sufficient. But they can't, for good reasons.
 To handle differing terminology, its possible for the decoder definition
 to carry two names for a variable.  These are the "manufacturer's name", 
-given by the "name" attribute, and the "standard name", in the "stdName"
+given by the "label" attribute, and the "standard name", in the "item"
 attribute.  The programmer looks at both when trying to find a variable
 to display.
 
@@ -432,10 +433,10 @@ how do you do it?
 <UL>
 <LI>You always want the pane to look the same, regardless of
 what the manufacturer calls the variables.  To do this,
-set the pane's "nameFmt" attribute to "stdName".
+set the pane's "nameFmt" attribute to "item".
 <LI>You want the pane to show the manufacturers terminology. This
 is the default, so you don't have to do anything. To force it,
-you can set the "nameFmt" attribute to "mfg".
+you can set the "nameFmt" attribute to "label".
 </UL>
 
 <P>
@@ -457,8 +458,8 @@ variations.  We handle this by having generic "standard names" like:
 etc.  The lighting pane is defined in terms of these.  The decoder
 definition files then include definitions like:
 <PRE>
-	&lt;variable name="FX mode for function 1" CV="51" mask="XXXXVVVV"
-				stdName="Function 1 effect generated" &gt;
+	&lt;variable label="FX mode for function 1" CV="51" mask="XXXXVVVV"
+				item="Function 1 effect generated" &gt;
 		&lt;enumVal&gt;
 			&lt;enumChoice choice="Normal function of lead"/&gt;
 			&lt;enumChoice choice="Random flicker"/&gt;
@@ -548,7 +549,7 @@ with only two states can also be presented as a
 is zero ("offradiobutton") or one ("onradiobutton").  
 These last two can be useful for indicating
 which parts of a configuration are active; see the "Speed Table"
-pane of MultiPane.xml for an example.
+pane of Comprehensive.xml for an example.
 </UL>
 
 <P>
@@ -559,7 +560,7 @@ The choices are:
 <LI>If a label is specified, it will be used.  Use a label if you
 want absolute control over what a variable should be called, regardless
 of what the decoder file calls it, and you don't like the standard name.
-<LI>The pane's nameFmt attribute is "stdName", in which case the standard
+<LI>The pane's nameFmt attribute is "item", in which case the item
 name will be used regardless of what the decoder file calls the variable.
 Use this is you want a uniform appearance for the pane for all decoders.
 But be aware that some standard names are really so generic as to be useless.
@@ -574,7 +575,7 @@ Each pane of the programmer consists of (nested) rows and/or columns.
 Columns lay out variables from top to bottom.  Rows lay out
 variables from left to right.  You can nest these to achieve
 various effects; for an example of this, see the "Speed Table"
-pane of the MultiPane.xml file.  It has two columns, the left of each 
+pane of the Comprehensive.xml file.  It has two columns, the left of each 
 uses a row to put some sliders from left to right.
 
 <h4>Special elements</h4>

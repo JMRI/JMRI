@@ -82,12 +82,12 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		return ((VariableValue)rowVector.elementAt(row));
 	}
 			
-	public String getName(int row) {
-		return ((VariableValue)rowVector.elementAt(row)).name();
+	public String getLabel(int row) {
+		return ((VariableValue)rowVector.elementAt(row)).label();
 	}
 	
-	public String getStdName(int row) {
-		return ((VariableValue)rowVector.elementAt(row)).stdName();
+	public String getItem(int row) {
+		return ((VariableValue)rowVector.elementAt(row)).item();
 	}
 	
 	public String getValString(int row) {
@@ -126,7 +126,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		} else if (headers[col].equals("CV"))
 			return ""+v.getCvNum();
 		else if (headers[col].equals("Name"))
-			return ""+v.name();
+			return ""+v.label();
 		else if (headers[col].equals("Comment"))
 			return v.getComment();
 		else if (headers[col].equals("Mask"))
@@ -157,10 +157,10 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 	// Read from an Element to configure the row
 	public void setRow(int row, Element e) {
 		// get the values for the VariableValue ctor
-		String name = e.getAttribute("name").getValue();
+		String name = e.getAttribute("label").getValue(); 	// Note the name variable is actually the label attribute
 		if (log.isDebugEnabled()) log.debug("Starting to setRow \""+name+"\"");
-		String stdname = ( e.getAttribute("stdName")!=null ?
-						 e.getAttribute("stdName").getValue() :
+		String item = ( e.getAttribute("item")!=null ?
+						 e.getAttribute("item").getValue() :
 						 null);
 		String comment = null;
 		if (e.getAttribute("comment") != null)
@@ -216,7 +216,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 			if ( (a = child.getAttribute("max")) != null)
 				maxVal = Integer.valueOf(a.getValue()).intValue();
 			v = new DecVariableValue(name, comment, readOnly, 
-								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, stdname);
+								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item);
 								
 		} else if ( (child = e.getChild("hexVal")) != null) {
 			if ( (a = child.getAttribute("min")) != null)
@@ -224,12 +224,12 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 			if ( (a = child.getAttribute("max")) != null)
 				maxVal = Integer.valueOf(a.getValue(),16).intValue();
 			v = new HexVariableValue(name, comment, readOnly, 
-								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, stdname);
+								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item);
 								
 		} else if ( (child = e.getChild("enumVal")) != null) {
 			List l = child.getChildren("enumChoice");
 			EnumVariableValue v1 = new EnumVariableValue(name, comment, readOnly, 
-								CV, mask, 0, l.size()-1, _cvModel.allCvVector(), _status, stdname);
+								CV, mask, 0, l.size()-1, _cvModel.allCvVector(), _status, item);
 			v = v1;
 			v1.nItems(l.size());
 			for (int k=0; k< l.size(); k++)
@@ -241,12 +241,12 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 			for (int i=0; i<28; i++) { _cvModel.addCV(""+(CV+i)); }
 	
 			v = new SpeedTableVarValue(name, comment, readOnly, 
-								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, stdname);
+								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item);
 
 		} else if ( (child = e.getChild("longAddressVal")) != null) {
 			_cvModel.addCV(""+(CV+1));  // ensure 2nd CV exists
 			v = new LongAddrVariableValue(name, comment, readOnly, 
-								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, stdname);
+								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item);
 		} else {
 			log.error("Did not find a valid variable type");
 			return;
@@ -274,10 +274,10 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 	 */
 	public void setConstant(Element e) {
 		// get the values for the VariableValue ctor
-		String name = e.getAttribute("name").getValue();
+		String name = e.getAttribute("label").getValue();
 		if (log.isDebugEnabled()) log.debug("Starting to setConstant \""+name+"\"");
-		String stdname = ( e.getAttribute("stdName")!=null ?
-						 e.getAttribute("stdName").getValue() :
+		String stdname = ( e.getAttribute("item")!=null ?
+						 e.getAttribute("item").getValue() :
 						 null);
 		String comment = null;
 		if (e.getAttribute("comment") != null)
@@ -410,17 +410,17 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
 	public VariableValue findVar(String name) {
 		for (int i=0; i<getRowCount(); i++) 
-			if (name.equals(getStdName(i))) return getVariable(i);
+			if (name.equals(getItem(i))) return getVariable(i);
 		for (int i=0; i<getRowCount(); i++) 
-			if (name.equals(getName(i))) return  getVariable(i);
+			if (name.equals(getLabel(i))) return  getVariable(i);
 		return null;
 	}
 
 	public int findVarIndex(String name) {
 		for (int i=0; i<getRowCount(); i++) 
-			if (name.equals(getStdName(i))) return i;
+			if (name.equals(getItem(i))) return i;
 		for (int i=0; i<getRowCount(); i++) 
-			if (name.equals(getName(i))) return i;
+			if (name.equals(getLabel(i))) return i;
 		return -1;
 	}
 

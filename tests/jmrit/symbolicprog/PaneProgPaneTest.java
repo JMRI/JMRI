@@ -76,7 +76,7 @@ public class PaneProgPaneTest extends TestCase {
 												.addAttribute("CV","17")
 												.addAttribute("readOnly","no")
 												.addAttribute("mask","VVVVVVVV")
-												.addAttribute("name","Start voltage")
+												.addAttribute("label","Start voltage")
 												.addContent( new Element("longAddressVal"));
 		if (log.isInfoEnabled()) log.info("First element created");
 		varModel.setRow(0, el0);
@@ -85,7 +85,7 @@ public class PaneProgPaneTest extends TestCase {
 												.addAttribute("CV","17")
 												.addAttribute("readOnly","no")
 												.addAttribute("mask","VVVVVVVV")
-												.addAttribute("name","Primary Address")
+												.addAttribute("label","Primary Address")
 												.addContent( new Element("decVal"));
 		if (log.isInfoEnabled()) log.info("Second element created");
 		varModel.setRow(1, el1);
@@ -115,14 +115,14 @@ public class PaneProgPaneTest extends TestCase {
 												.addAttribute("CV","2")
 												.addAttribute("readOnly","no")
 												.addAttribute("mask","VVVVVVVV")
-												.addAttribute("name","Start voltage")
+												.addAttribute("label","Start voltage")
 												.addContent( new Element("decVal"));
 		varModel.setRow(0, el0);
 		Element el1 = new Element("variable")
 												.addAttribute("CV","1")
 												.addAttribute("readOnly","no")
 												.addAttribute("mask","VVVVVVVV")
-												.addAttribute("name","Primary Address")
+												.addAttribute("label","Primary Address")
 												.addContent( new Element("decVal"));
 		varModel.setRow(1, el1);
 		
@@ -165,14 +165,14 @@ public class PaneProgPaneTest extends TestCase {
 												.addAttribute("CV","2")
 												.addAttribute("readOnly","no")
 												.addAttribute("mask","VVVVVVVV")
-												.addAttribute("name","Start voltage")
+												.addAttribute("label","Start voltage")
 												.addContent( new Element("decVal"));
 		varModel.setRow(0, el0);
 		Element el1 = new Element("variable")
 												.addAttribute("CV","1")
 												.addAttribute("readOnly","no")
 												.addAttribute("mask","VVVVVVVV")
-												.addAttribute("name","Primary Address")
+												.addAttribute("label","Primary Address")
 												.addContent( new Element("decVal"));
 		varModel.setRow(1, el1);
 		if (log.isInfoEnabled()) log.info("Two elements loaded");
@@ -225,28 +225,28 @@ public class PaneProgPaneTest extends TestCase {
 									.addAttribute("name","Basic")
 									.addContent(new Element("column")
 										.addContent(new Element("display")
-													.addAttribute("name", "Primary Address")
+													.addAttribute("item", "Primary Address")
 													)
 										.addContent(new Element("display")
-													.addAttribute("name", "Start voltage")
+													.addAttribute("item", "Start voltage")
 													)
 										.addContent(new Element("display")
-													.addAttribute("name", "Normal direction of motion")
+													.addAttribute("item", "Normal direction of motion")
 													)
 												)
 									.addContent(new Element("column")
 										.addContent(new Element("display")
-													.addAttribute("name", "Address")
+													.addAttribute("item", "Address")
 													)
 										.addContent(new Element("display")
-													.addAttribute("name", "Normal direction of motion")
+													.addAttribute("item", "Normal direction of motion")
 													)
 										.addContent(new Element("display")
-													.addAttribute("name", "Normal direction of motion")
+													.addAttribute("item", "Normal direction of motion")
 													.addAttribute("format","checkbox")
 													)
 										.addContent(new Element("display")
-													.addAttribute("name", "Normal direction of motion")
+													.addAttribute("item", "Normal direction of motion")
 													.addAttribute("format","radiobuttons")
 													)
 												)
@@ -261,10 +261,10 @@ public class PaneProgPaneTest extends TestCase {
 									.addAttribute("name", "Other")
 									.addContent(new Element("column")
 										.addContent(new Element("display")
-													.addAttribute("name", "Address")
+													.addAttribute("item", "Address")
 													)
 										.addContent(new Element("display")
-													.addAttribute("name", "Normal direction of motion")
+													.addAttribute("item", "Normal direction of motion")
 													)
 												)
 								)

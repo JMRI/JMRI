@@ -15,7 +15,7 @@ import com.sun.java.util.collections.List;
  * Check the names in an XML decoder file against the names.xml definitions
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: NameCheckAction.java,v 1.1 2001-12-30 09:45:29 jacobsen Exp $
+ * @version			$Id: NameCheckAction.java,v 1.2 2002-01-13 03:38:31 jacobsen Exp $
  * @see             jmri.jmrit.XmlFile
  */
 public class NameCheckAction extends AbstractAction {
@@ -55,30 +55,30 @@ public class NameCheckAction extends AbstractAction {
 				for (int i=0; i<varList.size(); i++) {
 					Element varElement = (Element)(varList.get(i));
 					// for each variable, see if can find in names file
-					Attribute nameAttr = varElement.getAttribute("name");
-					String name = null;
-					if (nameAttr!=null) name = nameAttr.getValue();
-					Attribute stdNameAttr = varElement.getAttribute("stdName");
-					String stdName = null;
-					if (stdNameAttr!=null) stdName = stdNameAttr.getValue();
+					Attribute labelAttr = varElement.getAttribute("label");
+					String label = null;
+					if (labelAttr!=null) label = labelAttr.getValue();
+					Attribute itemAttr = varElement.getAttribute("item");
+					String item = null;
+					if (itemAttr!=null) item = itemAttr.getValue();
 					if (log.isDebugEnabled()) log.debug("Variable called \""
-						+((name!=null)?name:"<none>")+"\" \""
-						+((stdName!=null)?stdName:"<none>"));
-					if (!(name==null ? false : nfile.checkName(name))
-						 && !(stdName==null ? false : nfile.checkName(stdName))) {
-						log.warn("Variable not found: name=\""
-							+((name!=null)?name:"<none>")+"\" stdName=\""
-							+((stdName!=null)?stdName:"<none>")+"\"");
-						warnings += "Variable not found: name=\""
-							+((name!=null)?name:"<none>")+"\" stdName=\""
-							+((stdName!=null)?stdName:"<none>")+"\"\n";
+						+((label!=null)?label:"<none>")+"\" \""
+						+((item!=null)?item:"<none>"));
+					if (!(label==null ? false : nfile.checkName(label))
+						 && !(item==null ? false : nfile.checkName(item))) {
+						log.warn("Variable not found: label=\""
+							+((label!=null)?label:"<none>")+"\" item=\""
+							+((item!=null)?label:"<none>")+"\"");
+						warnings += "Variable not found: label=\""
+							+((label!=null)?label:"<none>")+"\" item=\""
+							+((item!=null)?item:"<none>")+"\"\n";
 					}
 				}
 
 				if (!warnings.equals(""))
 					JOptionPane.showMessageDialog(_who,warnings);
 				else
-					JOptionPane.showMessageDialog(_who,"No mismatched names found");
+					JOptionPane.showMessageDialog(_who,"No mismatched items found");
 
 			} catch (Exception ex) {
 				JOptionPane.showMessageDialog(_who,"Error parsing decoder file: "+ex);

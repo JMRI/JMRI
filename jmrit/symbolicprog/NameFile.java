@@ -24,7 +24,7 @@ import org.jdom.Element;
  * locate the one associated with the "xml/names.xml" file.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: NameFile.java,v 1.4 2001-12-30 09:43:25 jacobsen Exp $
+ * @version			$Id: NameFile.java,v 1.5 2002-01-13 03:38:31 jacobsen Exp $
  */
 public class NameFile extends XmlFile {
 	
@@ -89,7 +89,7 @@ public class NameFile extends XmlFile {
 	}
 	
 	void storeDefinition(Element el) {
-		String name = el.getAttribute("name").getValue();
+		String name = el.getAttribute("item").getValue();
 		_nameHash.put(name, el);
 	}
 

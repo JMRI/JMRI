@@ -26,14 +26,14 @@ import jmri.progdebugger.*;
 public class LongAddrVariableValueTest extends VariableValueTest {
 
 	// abstract members invoked by tests in parent VariableValueTest class
-	VariableValue makeVar(String name, String comment, boolean readOnly,
+	VariableValue makeVar(String label, String comment, boolean readOnly,
 							int cvNum, String mask, int minVal, int maxVal,
-							Vector v, JLabel status, String stdName) {
+							Vector v, JLabel status, String item) {
 		// make sure next CV exists
 		CvValue cvNext = new CvValue(cvNum+1);
 		cvNext.setValue(0);
 		v.setElementAt(cvNext, cvNum+1);
-		return new LongAddrVariableValue(name, comment, readOnly, cvNum, mask, minVal, maxVal, v, status, stdName);
+		return new LongAddrVariableValue(label, comment, readOnly, cvNum, mask, minVal, maxVal, v, status, item);
 	}
 
 
@@ -74,8 +74,8 @@ public class LongAddrVariableValueTest extends VariableValueTest {
 		v.setElementAt(cv17, 17);
 		v.setElementAt(cv18, 18);
 		// create a variable pointed at CV 17&18, check name
-		LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "VVVVVVVV", 0, 255, v, null, null);
-		assert(var.name() == "name");
+		LongAddrVariableValue var = new LongAddrVariableValue("label", "comment", false, 17, "VVVVVVVV", 0, 255, v, null, null);
+		assert(var.label() == "label");
 		// pretend you've editted the value, check its in same object
 		((JTextField)var.getValue()).setText("4797");
 		assert( ((JTextField)var.getValue()).getText().equals("4797") );

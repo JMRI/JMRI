@@ -25,6 +25,7 @@ import jmri.jmrit.XmlFile;
 
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.Attribute;
 import org.jdom.DocType;
 import org.jdom.output.XMLOutputter;
 import org.jdom.JDOMException;
@@ -360,24 +361,30 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 				
 				for (int i=0; i<varList.size(); i++) {
 					// locate the row 
-					if ( ((Element)(varList.get(i))).getAttribute("name") == null) {
+					Attribute itemAttr = null;
+					if ( (itemAttr = ((Element)(varList.get(i))).getAttribute("item")) == null) {
 						  if (log.isDebugEnabled()) log.debug("unexpected null in name "+((Element)(varList.get(i))));
 						  break;
 					}
+					if ( itemAttr == null &&  (itemAttr = ((Element)(varList.get(i))).getAttribute("name")) == null) {
+						  if (log.isDebugEnabled()) log.debug("unexpected null in name "+((Element)(varList.get(i))));
+						  break;
+					}
+					String item = itemAttr.getValue();
+
 					if ( ((Element)(varList.get(i))).getAttribute("value") == null) {
 						  if (log.isDebugEnabled()) log.debug("unexpected null in value "+((Element)(varList.get(i))));
 						  break;
 					}
-
-					String name = ((Element)(varList.get(i))).getAttribute("name").getValue();
 					String value = ((Element)(varList.get(i))).getAttribute("value").getValue();
-					if (log.isDebugEnabled()) log.debug("Variable "+i+" is "+name+" value: "+value);
+					
+					if (log.isDebugEnabled()) log.debug("Variable "+i+" is "+item+" value: "+value);
 
 					int row;
 					for (row=0; row<variableModel.getRowCount(); row++) {
-						if (variableModel.getName(row).equals(name)) break;
+						if (variableModel.getLabel(row).equals(item)) break;
 					}
-					if (log.isDebugEnabled()) log.debug("Variable "+name+" is row "+row);
+					if (log.isDebugEnabled()) log.debug("Variable "+item+" is row "+row);
 					if ( ! value.equals("")) { // don't set if no value was stored
 						variableModel.setIntValue(row, Integer.valueOf(value).intValue());
 					}
@@ -431,7 +438,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 			// add the variable values to the decoderDef Element
 			for (int i = 0; i < variableModel.getRowCount(); i++) {
 				decoderDef.addContent(new Element("varValue")
-									.addAttribute("name", variableModel.getName(i))
+									.addAttribute("item", variableModel.getLabel(i))
 									.addAttribute("value", variableModel.getValString(i))
 						);
 			}

@@ -29,7 +29,7 @@ import org.jdom.Attribute;
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: PaneProgPane.java,v 1.14 2002-01-08 04:09:27 jacobsen Exp $
+ * @version			$Id: PaneProgPane.java,v 1.15 2002-01-13 03:38:31 jacobsen Exp $
  */
 public class PaneProgPane extends javax.swing.JPanel 
 							implements java.beans.PropertyChangeListener  {
@@ -61,12 +61,12 @@ public class PaneProgPane extends javax.swing.JPanel
 		
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		
-		// find out whether to display "name" (false) or "stdName" (true)
-		boolean showStdName = false;
+		// find out whether to display "label" (false) or "item" (true)
+		boolean showItem = false;
 		Attribute nameFmt = pane.getAttribute("nameFmt");
-		if (nameFmt!= null && nameFmt.getValue().equals("stdName")) {
-			log.debug("Pane "+name+" will show stdNames");
-			showStdName = true;
+		if (nameFmt!= null && nameFmt.getValue().equals("item")) {
+			log.debug("Pane "+name+" will show items, not labels, from decoder file");
+			showItem = true;
 		}
 		// put the columns left to right in a panel
 		JPanel p = new JPanel();
@@ -77,13 +77,13 @@ public class PaneProgPane extends javax.swing.JPanel
 		List colList = pane.getChildren("column");
 		for (int i=0; i<colList.size(); i++) {
 			// load each column
-			p.add(newColumn( ((Element)(colList.get(i))), showStdName));
+			p.add(newColumn( ((Element)(colList.get(i))), showItem));
 		}
 		// for all "row" elements ...
 		List rowList = pane.getChildren("row");
 		for (int i=0; i<rowList.size(); i++) {
 			// load each row
-			p.add(newRow( ((Element)(rowList.get(i))), showStdName));
+			p.add(newRow( ((Element)(rowList.get(i))), showItem));
 		}
 		
 		// add glue to the right to allow resize - but this isn't working as expected? Alignment?
@@ -142,7 +142,7 @@ public class PaneProgPane extends javax.swing.JPanel
 			if (vState == VariableValue.UNKNOWN ||
 			    vState == VariableValue.EDITTED ||
 			    vState == VariableValue.FROMFILE )  {
-										if (log.isDebugEnabled()) log.debug("start read of variable "+_varModel.getName(varNum));
+										if (log.isDebugEnabled()) log.debug("start read of variable "+_varModel.getLabel(varNum));
 										setBusy(true);
 										if (_programmingVar != null) log.error("listener already set at read start");
 			    						_programmingVar = _varModel.getVariable(varNum);
@@ -184,7 +184,7 @@ public class PaneProgPane extends javax.swing.JPanel
 			if (vState == VariableValue.UNKNOWN ||
 			    vState == VariableValue.EDITTED ||
 			    vState == VariableValue.FROMFILE )  {
-										if (log.isDebugEnabled()) log.debug("start write of variable "+_varModel.getName(varNum));
+										if (log.isDebugEnabled()) log.debug("start write of variable "+_varModel.getLabel(varNum));
 										setBusy(true);
 										if (_programmingVar != null) log.error("listener already set at write start");
 			    						_programmingVar = _varModel.getVariable(varNum);
@@ -470,7 +470,7 @@ public class PaneProgPane extends javax.swing.JPanel
 	public void newVariable( Element var, JComponent col, GridBagLayout g, GridBagConstraints cs, boolean showStdName) {
 
 		// get the name
-		String name = var.getAttribute("name").getValue();
+		String name = var.getAttribute("item").getValue();
 
 		// if it doesn't exist, do nothing
 		int i = _varModel.findVarIndex(name);
@@ -489,7 +489,7 @@ public class PaneProgPane extends javax.swing.JPanel
 		String label = name;
 		if (!showStdName) {
 			// get name attribute from variable, as that's the mfg name
-			label = _varModel.getName(i);
+			label = _varModel.getLabel(i);
 		}
 		String temp ="";
 		if ( (attr = var.getAttribute("label")) != null 
