@@ -10,7 +10,7 @@ jbuilder2 -d java/src &jmri &apps &resources
 jbuilder3 -d java &test
 jbuilder4 -d java &lib
 
-defaultlcf -d . scripts default.lcf
+defaultlcf &scripts/default.lcf
 
 # ant target - Ant directory in standard form
 # Note that this does not work from JBuilder itself!
@@ -52,3 +52,4 @@ ant4 -d java &lib
 # character to interpose another module into the current module.  This
 # can be useful for creating a module that consists of many directories
 # spread out over the entire source repository.
+
