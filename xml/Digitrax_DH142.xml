@@ -1,0 +1,531 @@
+<?xml version="1.0"?>
+<!DOCTYPE decoder:decoder-config SYSTEM "DTD/decoder-config.dtd">
+<decoder:decoder-config xmlns:decoder="http://jmri.sourceforge.net/xml/decoder">
+<decoder:decoder>
+	<decoder:id model="All" mfg="Digitrax" mfgID="129" defnVersion="0"
+				comment="DH142 decoder: FX, transponding"></decoder:id>
+
+	<decoder:programming direct="byteOnly" paged="yes" 
+	                     register="yes" ops="yes"></decoder:programming>
+
+	<decoder:variables>
+		<decoder:variable name="Address" CV="1" mask="VVVVVVVV" comment="Short address">
+			<decoder:decVal min="1" max="127"/>
+			</decoder:variable>
+		<decoder:variable name="Start voltage" CV="2"
+						comment="A value of 255 corresponds to 100%">
+			<decoder:decVal></decoder:decVal>
+			</decoder:variable>
+		<decoder:variable name="Acceleration rate" CV="3">
+			<decoder:decVal max="31"/>
+			</decoder:variable>
+		<decoder:variable name="Deceleration rate" CV="4">
+			<decoder:decVal max="31"/>
+			</decoder:variable>
+		<decoder:variable name="Maximum voltage" CV="5">
+			<decoder:decVal/>
+			</decoder:variable>
+		<decoder:variable name="Midpoint voltage" CV="6">
+			<decoder:decVal/>
+			</decoder:variable>
+		<decoder:variable name="Version ID" CV="7" readOnly="yes">
+				<decoder:decVal max="31"/>
+			</decoder:variable>
+		<decoder:variable name="Manufacturer ID" CV="8" readOnly="yes">
+				<decoder:decVal max="31"/>
+			</decoder:variable>
+		<decoder:variable name="F0 Forward during DC operation" CV="13" mask="XVXXXXXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Off"/>
+				<decoder:enumChoice choice="On"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="F0 Reverse during DC operation" CV="13" mask="VXXXXXXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Off"/>
+				<decoder:enumChoice choice="On"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="F1 during DC operation" CV="13" mask="XXXXXXXV">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Off"/>
+				<decoder:enumChoice choice="On"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="F2 during DC operation" CV="13" mask="XXXXXXVX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Off"/>
+				<decoder:enumChoice choice="On"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="F3 during DC operation" CV="13" mask="XXXXXVXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Off"/>
+				<decoder:enumChoice choice="On"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="F4 during DC operation" CV="13" mask="XXXXVXXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Off"/>
+				<decoder:enumChoice choice="On"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="F5 during DC operation" CV="13" mask="XXXVXXXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Off"/>
+				<decoder:enumChoice choice="On"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="F6 during DC operation" CV="13" mask="XXVXXXXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Off"/>
+				<decoder:enumChoice choice="On"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Long Address" CV="17">
+			<decoder:longAddressVal/>
+			</decoder:variable>
+		<decoder:variable name="Advanced Consist address" CV="19">
+			<decoder:decVal/>
+			</decoder:variable>
+		<decoder:variable name="Normal direction of motion" CV="29" mask="XXXXXXXV">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="forward"/>
+				<decoder:enumChoice choice="reverse"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Speed steps" CV="29" mask="XXXXXXVX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="14"/>
+				<decoder:enumChoice choice="28/128"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Analog conversion mode" CV="29" mask="XXXXXVXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Off"/>
+				<decoder:enumChoice choice="On"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Speed table" CV="29" mask="XXXVXXXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Off"/>
+				<decoder:enumChoice choice="On"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Addressing mode" CV="29" mask="XXVXXXXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="2 digit addressing"/>
+				<decoder:enumChoice choice="4 digit addressing"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Forward light F0F effect generated" CV="49" mask="XXXXVVVV">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Normal function of lead"/>
+				<decoder:enumChoice choice="Random flicker"/>
+				<decoder:enumChoice choice="Mars light"/>
+				<decoder:enumChoice choice="Flashing head light"/>
+				<decoder:enumChoice choice="Single pulse strobe"/>
+				<decoder:enumChoice choice="Double pulse strobe"/>
+				<decoder:enumChoice choice="Rotary beacon simulation"/>
+				<decoder:enumChoice choice="Gyralite"/>
+				<decoder:enumChoice choice="Run 17 dimmable headlight"/>
+				<decoder:enumChoice choice="FRED end of train light"/>
+				<decoder:enumChoice choice="Right ditch light; when F2 on, flashes alternately"/>
+				<decoder:enumChoice choice="Left ditch light; when F2 on, flashes alternately"/>
+				<decoder:enumChoice choice="Reserved (0x0C)"/>
+				<decoder:enumChoice choice="Reserved (0x0D)"/>
+				<decoder:enumChoice choice="Reserved (0x0E)"/>
+				<decoder:enumChoice choice="Reserved (0x0F)"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Forward light F0F behaviour" CV="49" mask="VVVVXXXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Forward direction, ON with function ON, phase A"/>
+				<decoder:enumChoice choice="Reverse direction, ON with function ON, phase B"/>
+				<decoder:enumChoice choice="Non directional, ON with function ON, effect phase A"/>
+				<decoder:enumChoice choice="Non directional, ON with function ON, effect phase B"/>
+				<decoder:enumChoice choice="Forward direction, ON with F0 on &amp; function ON, phase A"/>
+				<decoder:enumChoice choice="Reverse direction, ON with F0 on &amp; function ON, phase B"/>
+				<decoder:enumChoice choice="Special logic for Fwd Ditch Light or Rule 17 dimming"/>
+				<decoder:enumChoice choice="Special logic for Rev Ditch Light or Rule 17 dimming"/>
+				<decoder:enumChoice choice="Reserved (0x8)"/>
+				<decoder:enumChoice choice="Reserved (0x9)"/>
+				<decoder:enumChoice choice="Reserved (0xA)"/>
+				<decoder:enumChoice choice="Reserved (0xB)"/>
+				<decoder:enumChoice choice="Reserved (0xC)"/>
+				<decoder:enumChoice choice="Reserved (0xD)"/>
+				<decoder:enumChoice choice="Reserved (0xE)"/>
+				<decoder:enumChoice choice="Reserved (0xF)"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Reverse light F0R effect generated" CV="50" mask="XXXXVVVV">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Normal function of lead"/>
+				<decoder:enumChoice choice="Random flicker"/>
+				<decoder:enumChoice choice="Mars light"/>
+				<decoder:enumChoice choice="Flashing head light"/>
+				<decoder:enumChoice choice="Single pulse strobe"/>
+				<decoder:enumChoice choice="Double pulse strobe"/>
+				<decoder:enumChoice choice="Rotary beacon simulation"/>
+				<decoder:enumChoice choice="Gyralite"/>
+				<decoder:enumChoice choice="Run 17 dimmable headlight"/>
+				<decoder:enumChoice choice="FRED end of train light"/>
+				<decoder:enumChoice choice="Right ditch light; when F2 on, flashes alternately"/>
+				<decoder:enumChoice choice="Left ditch light; when F2 on, flashes alternately"/>
+				<decoder:enumChoice choice="Reserved (0x0C)"/>
+				<decoder:enumChoice choice="Reserved (0x0D)"/>
+				<decoder:enumChoice choice="Reserved (0x0E)"/>
+				<decoder:enumChoice choice="Reserved (0x0F)"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Reverse light F0R behaviour" CV="50" mask="VVVVXXXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Forward direction, ON with function ON, phase A"/>
+				<decoder:enumChoice choice="Reverse direction, ON with function ON, phase B"/>
+				<decoder:enumChoice choice="Non directional, ON with function ON, effect phase A"/>
+				<decoder:enumChoice choice="Non directional, ON with function ON, effect phase B"/>
+				<decoder:enumChoice choice="Forward direction, ON with F0 on &amp; function ON, phase A"/>
+				<decoder:enumChoice choice="Reverse direction, ON with F0 on &amp; function ON, phase B"/>
+				<decoder:enumChoice choice="Special logic for Fwd Ditch Light or Rule 17 dimming"/>
+				<decoder:enumChoice choice="Special logic for Rev Ditch Light or Rule 17 dimming"/>
+				<decoder:enumChoice choice="Reserved (0x8)"/>
+				<decoder:enumChoice choice="Reserved (0x9)"/>
+				<decoder:enumChoice choice="Reserved (0xA)"/>
+				<decoder:enumChoice choice="Reserved (0xB)"/>
+				<decoder:enumChoice choice="Reserved (0xC)"/>
+				<decoder:enumChoice choice="Reserved (0xD)"/>
+				<decoder:enumChoice choice="Reserved (0xE)"/>
+				<decoder:enumChoice choice="Reserved (0xF)"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Function 1 effect generated" CV="50" mask="XXXXVVVV">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Normal function of lead"/>
+				<decoder:enumChoice choice="Random flicker"/>
+				<decoder:enumChoice choice="Mars light"/>
+				<decoder:enumChoice choice="Flashing head light"/>
+				<decoder:enumChoice choice="Single pulse strobe"/>
+				<decoder:enumChoice choice="Double pulse strobe"/>
+				<decoder:enumChoice choice="Rotary beacon simulation"/>
+				<decoder:enumChoice choice="Gyralite"/>
+				<decoder:enumChoice choice="Run 17 dimmable headlight"/>
+				<decoder:enumChoice choice="FRED end of train light"/>
+				<decoder:enumChoice choice="Right ditch light; when F2 on, flashes alternately"/>
+				<decoder:enumChoice choice="Left ditch light; when F2 on, flashes alternately"/>
+				<decoder:enumChoice choice="Reserved (0x0C)"/>
+				<decoder:enumChoice choice="Reserved (0x0D)"/>
+				<decoder:enumChoice choice="Reserved (0x0E)"/>
+				<decoder:enumChoice choice="Reserved (0x0F)"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Function 1 behaviour" CV="50" mask="VVVVXXXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Forward direction, ON with function ON, phase A"/>
+				<decoder:enumChoice choice="Reverse direction, ON with function ON, phase B"/>
+				<decoder:enumChoice choice="Non directional, ON with function ON, effect phase A"/>
+				<decoder:enumChoice choice="Non directional, ON with function ON, effect phase B"/>
+				<decoder:enumChoice choice="Forward direction, ON with F0 on &amp; function ON, phase A"/>
+				<decoder:enumChoice choice="Reverse direction, ON with F0 on &amp; function ON, phase B"/>
+				<decoder:enumChoice choice="Special logic for Fwd Ditch Light or Rule 17 dimming"/>
+				<decoder:enumChoice choice="Special logic for Rev Ditch Light or Rule 17 dimming"/>
+				<decoder:enumChoice choice="Reserved (0x8)"/>
+				<decoder:enumChoice choice="Reserved (0x9)"/>
+				<decoder:enumChoice choice="Reserved (0xA)"/>
+				<decoder:enumChoice choice="Reserved (0xB)"/>
+				<decoder:enumChoice choice="Reserved (0xC)"/>
+				<decoder:enumChoice choice="Reserved (0xD)"/>
+				<decoder:enumChoice choice="Reserved (0xE)"/>
+				<decoder:enumChoice choice="Reserved (0xF)"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Function 2 effect generated" CV="52" mask="XXXXVVVV">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Normal function of lead"/>
+				<decoder:enumChoice choice="Random flicker"/>
+				<decoder:enumChoice choice="Mars light"/>
+				<decoder:enumChoice choice="Flashing head light"/>
+				<decoder:enumChoice choice="Single pulse strobe"/>
+				<decoder:enumChoice choice="Double pulse strobe"/>
+				<decoder:enumChoice choice="Rotary beacon simulation"/>
+				<decoder:enumChoice choice="Gyralite"/>
+				<decoder:enumChoice choice="Run 17 dimmable headlight"/>
+				<decoder:enumChoice choice="FRED end of train light"/>
+				<decoder:enumChoice choice="Right ditch light; when F2 on, flashes alternately"/>
+				<decoder:enumChoice choice="Left ditch light; when F2 on, flashes alternately"/>
+				<decoder:enumChoice choice="Reserved (0x0C)"/>
+				<decoder:enumChoice choice="Reserved (0x0D)"/>
+				<decoder:enumChoice choice="Reserved (0x0E)"/>
+				<decoder:enumChoice choice="Reserved (0x0F)"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Function 2 behaviour" CV="52" mask="VVVVXXXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Forward direction, ON with function ON, phase A"/>
+				<decoder:enumChoice choice="Reverse direction, ON with function ON, phase B"/>
+				<decoder:enumChoice choice="Non directional, ON with function ON, effect phase A"/>
+				<decoder:enumChoice choice="Non directional, ON with function ON, effect phase B"/>
+				<decoder:enumChoice choice="Forward direction, ON with F0 on &amp; function ON, phase A"/>
+				<decoder:enumChoice choice="Reverse direction, ON with F0 on &amp; function ON, phase B"/>
+				<decoder:enumChoice choice="Special logic for Fwd Ditch Light or Rule 17 dimming"/>
+				<decoder:enumChoice choice="Special logic for Rev Ditch Light or Rule 17 dimming"/>
+				<decoder:enumChoice choice="Reserved (0x8)"/>
+				<decoder:enumChoice choice="Reserved (0x9)"/>
+				<decoder:enumChoice choice="Reserved (0xA)"/>
+				<decoder:enumChoice choice="Reserved (0xB)"/>
+				<decoder:enumChoice choice="Reserved (0xC)"/>
+				<decoder:enumChoice choice="Reserved (0xD)"/>
+				<decoder:enumChoice choice="Reserved (0xE)"/>
+				<decoder:enumChoice choice="Reserved (0xF)"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Function 3 effect generated" CV="53" mask="XXXXVVVV">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Normal function of lead"/>
+				<decoder:enumChoice choice="Random flicker"/>
+				<decoder:enumChoice choice="Mars light"/>
+				<decoder:enumChoice choice="Flashing head light"/>
+				<decoder:enumChoice choice="Single pulse strobe"/>
+				<decoder:enumChoice choice="Double pulse strobe"/>
+				<decoder:enumChoice choice="Rotary beacon simulation"/>
+				<decoder:enumChoice choice="Gyralite"/>
+				<decoder:enumChoice choice="Run 17 dimmable headlight"/>
+				<decoder:enumChoice choice="FRED end of train light"/>
+				<decoder:enumChoice choice="Right ditch light; when F2 on, flashes alternately"/>
+				<decoder:enumChoice choice="Left ditch light; when F2 on, flashes alternately"/>
+				<decoder:enumChoice choice="Reserved (0x0C)"/>
+				<decoder:enumChoice choice="Reserved (0x0D)"/>
+				<decoder:enumChoice choice="Reserved (0x0E)"/>
+				<decoder:enumChoice choice="Reserved (0x0F)"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Function 3 behaviour" CV="53" mask="VVVVXXXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Forward direction, ON with function ON, phase A"/>
+				<decoder:enumChoice choice="Reverse direction, ON with function ON, phase B"/>
+				<decoder:enumChoice choice="Non directional, ON with function ON, effect phase A"/>
+				<decoder:enumChoice choice="Non directional, ON with function ON, effect phase B"/>
+				<decoder:enumChoice choice="Forward direction, ON with F0 on &amp; function ON, phase A"/>
+				<decoder:enumChoice choice="Reverse direction, ON with F0 on &amp; function ON, phase B"/>
+				<decoder:enumChoice choice="Special logic for Fwd Ditch Light or Rule 17 dimming"/>
+				<decoder:enumChoice choice="Special logic for Rev Ditch Light or Rule 17 dimming"/>
+				<decoder:enumChoice choice="Reserved (0x8)"/>
+				<decoder:enumChoice choice="Reserved (0x9)"/>
+				<decoder:enumChoice choice="Reserved (0xA)"/>
+				<decoder:enumChoice choice="Reserved (0xB)"/>
+				<decoder:enumChoice choice="Reserved (0xC)"/>
+				<decoder:enumChoice choice="Reserved (0xD)"/>
+				<decoder:enumChoice choice="Reserved (0xE)"/>
+				<decoder:enumChoice choice="Reserved (0xF)"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Function 4 effect generated" CV="54" mask="XXXXVVVV">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Normal function of lead"/>
+				<decoder:enumChoice choice="Random flicker"/>
+				<decoder:enumChoice choice="Mars light"/>
+				<decoder:enumChoice choice="Flashing head light"/>
+				<decoder:enumChoice choice="Single pulse strobe"/>
+				<decoder:enumChoice choice="Double pulse strobe"/>
+				<decoder:enumChoice choice="Rotary beacon simulation"/>
+				<decoder:enumChoice choice="Gyralite"/>
+				<decoder:enumChoice choice="Run 17 dimmable headlight"/>
+				<decoder:enumChoice choice="FRED end of train light"/>
+				<decoder:enumChoice choice="Right ditch light; when F2 on, flashes alternately"/>
+				<decoder:enumChoice choice="Left ditch light; when F2 on, flashes alternately"/>
+				<decoder:enumChoice choice="Reserved (0x0C)"/>
+				<decoder:enumChoice choice="Reserved (0x0D)"/>
+				<decoder:enumChoice choice="Reserved (0x0E)"/>
+				<decoder:enumChoice choice="Reserved (0x0F)"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Function 4 behaviour" CV="54" mask="VVVVXXXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Forward direction, ON with function ON, phase A"/>
+				<decoder:enumChoice choice="Reverse direction, ON with function ON, phase B"/>
+				<decoder:enumChoice choice="Non directional, ON with function ON, effect phase A"/>
+				<decoder:enumChoice choice="Non directional, ON with function ON, effect phase B"/>
+				<decoder:enumChoice choice="Forward direction, ON with F0 on &amp; function ON, phase A"/>
+				<decoder:enumChoice choice="Reverse direction, ON with F0 on &amp; function ON, phase B"/>
+				<decoder:enumChoice choice="Special logic for Fwd Ditch Light or Rule 17 dimming"/>
+				<decoder:enumChoice choice="Special logic for Rev Ditch Light or Rule 17 dimming"/>
+				<decoder:enumChoice choice="Reserved (0x8)"/>
+				<decoder:enumChoice choice="Reserved (0x9)"/>
+				<decoder:enumChoice choice="Reserved (0xA)"/>
+				<decoder:enumChoice choice="Reserved (0xB)"/>
+				<decoder:enumChoice choice="Reserved (0xC)"/>
+				<decoder:enumChoice choice="Reserved (0xD)"/>
+				<decoder:enumChoice choice="Reserved (0xE)"/>
+				<decoder:enumChoice choice="Reserved (0xF)"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="F0 Forward Configurable strobe effect" CV="49" mask="XXXXVVVV"
+				comment="Not present on all decoders, replaces FX for F0Forward">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Normal function of lead"/>
+				<decoder:enumChoice choice="Random flicker"/>
+				<decoder:enumChoice choice="Mars light"/>
+				<decoder:enumChoice choice="Blinking head light"/>
+				<decoder:enumChoice choice="Single pulse strobe"/>
+				<decoder:enumChoice choice="Double pulse strobe"/>
+				<decoder:enumChoice choice="Rotary beacon simulation"/>
+				<decoder:enumChoice choice="Reserved (0x07)"/>
+				<decoder:enumChoice choice="Reserved (0x08)"/>
+				<decoder:enumChoice choice="Reserved (0x09)"/>
+				<decoder:enumChoice choice="Reserved (0x0A)"/>
+				<decoder:enumChoice choice="Reserved (0x0B)"/>
+				<decoder:enumChoice choice="Reserved (0x0C)"/>
+				<decoder:enumChoice choice="Reserved (0x0D)"/>
+				<decoder:enumChoice choice="Reserved (0x0E)"/>
+				<decoder:enumChoice choice="Reserved (0x0F)"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="F0 Forward Configurable Strobes control" CV="49" mask="VVVVXXXX"
+				comment="Not present on all decoders, replaces FX for F0Forward">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Reserved (0x0)"/>
+				<decoder:enumChoice choice="On when loco is in reverse"/>
+				<decoder:enumChoice choice="On when F0 on, off when F0 off"/>
+				<decoder:enumChoice choice="Reserved (0x3)"/>
+				<decoder:enumChoice choice="Non-directional, on in either direction"/>
+				<decoder:enumChoice choice="Reserved (0x5)"/>
+				<decoder:enumChoice choice="Reserved (0x6)"/>
+				<decoder:enumChoice choice="Reserved (0x7)"/>
+				<decoder:enumChoice choice="Reserved (0x8)"/>
+				<decoder:enumChoice choice="Reserved (0x9)"/>
+				<decoder:enumChoice choice="Reserved (0xA)"/>
+				<decoder:enumChoice choice="Reserved (0xB)"/>
+				<decoder:enumChoice choice="Reserved (0xC)"/>
+				<decoder:enumChoice choice="Reserved (0xD)"/>
+				<decoder:enumChoice choice="Reserved (0xE)"/>
+				<decoder:enumChoice choice="Reserved (0xF)"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="F0 Reverse Configurable strobe effect" CV="50" mask="XXXXVVVV"
+				comment="Not present on all decoders, replaces FX for F0Reverse">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Normal function of lead"/>
+				<decoder:enumChoice choice="Random flicker"/>
+				<decoder:enumChoice choice="Mars light"/>
+				<decoder:enumChoice choice="Blinking head light"/>
+				<decoder:enumChoice choice="Single pulse strobe"/>
+				<decoder:enumChoice choice="Double pulse strobe"/>
+				<decoder:enumChoice choice="Rotary beacon simulation"/>
+				<decoder:enumChoice choice="Reserved (0x07)"/>
+				<decoder:enumChoice choice="Reserved (0x08)"/>
+				<decoder:enumChoice choice="Reserved (0x09)"/>
+				<decoder:enumChoice choice="Reserved (0x0A)"/>
+				<decoder:enumChoice choice="Reserved (0x0B)"/>
+				<decoder:enumChoice choice="Reserved (0x0C)"/>
+				<decoder:enumChoice choice="Reserved (0x0D)"/>
+				<decoder:enumChoice choice="Reserved (0x0E)"/>
+				<decoder:enumChoice choice="Reserved (0x0F)"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="F0 Reverse Configurable Strobes control" CV="50" mask="VVVVXXXX"
+				comment="Not present on all decoders, replaces FX for F0Reverse">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Reserved (0x0)"/>
+				<decoder:enumChoice choice="On when loco is in reverse"/>
+				<decoder:enumChoice choice="On when F0 on, off when F0 off"/>
+				<decoder:enumChoice choice="Reserved (0x3)"/>
+				<decoder:enumChoice choice="Non-directional, on in either direction"/>
+				<decoder:enumChoice choice="Reserved (0x5)"/>
+				<decoder:enumChoice choice="Reserved (0x6)"/>
+				<decoder:enumChoice choice="Reserved (0x7)"/>
+				<decoder:enumChoice choice="Reserved (0x8)"/>
+				<decoder:enumChoice choice="Reserved (0x9)"/>
+				<decoder:enumChoice choice="Reserved (0xA)"/>
+				<decoder:enumChoice choice="Reserved (0xB)"/>
+				<decoder:enumChoice choice="Reserved (0xC)"/>
+				<decoder:enumChoice choice="Reserved (0xD)"/>
+				<decoder:enumChoice choice="Reserved (0xE)"/>
+				<decoder:enumChoice choice="Reserved (0xF)"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Static compensation for speed stabilization" CV="55"
+				comment="Factory default is 128, no effect until droop (CV57) set">
+			<decoder:decVal/>
+			</decoder:variable>
+		<decoder:variable name="Dynamic compensation for speed stabilization" CV="56"
+				comment="Factory default is 48, no effect until droop (CV57) set">
+			<decoder:decVal/>
+			</decoder:variable>
+		<decoder:variable name="Solo operation droop compensation for speed stabilization" CV="57" mask="VVVVXXXX"
+				comment="0 is compenstation off, 15 is full on, typical value is 5">
+			<decoder:decVal max="15"/>
+			</decoder:variable>
+		<decoder:variable name="Advanced consist droop compensation for speed stabilization" CV="57" mask="XXXXVVVV"
+				comment="0 is compenstation off, 15 is full on, typical value is 5">
+			<decoder:decVal max="15"/>
+			</decoder:variable>
+		<decoder:variable name="Speed compensation" CV="61" mask="XXXVXXXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="F5 has no effect on speed compensation"/>
+				<decoder:enumChoice choice="F5 On disables speed compensation"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Transponding" CV="61" mask="XXXXXXVX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Off"/>
+				<decoder:enumChoice choice="On"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Split field motor" CV="61" mask="XXXXXVXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Normal DC motor"/>
+				<decoder:enumChoice choice="Split field/AC motor"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Directional headlight" CV="61" mask="XXXXXXXV">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Normal headlight operation"/>
+				<decoder:enumChoice choice="Reverse light lead controlled by F4"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXXVXXXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="enabled"/>
+				<decoder:enumChoice choice="disabled"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Short-circuit protection" CV="61" mask="XVXXXXXX"
+				comment="Undocumented feature, occasionally requested by Digitrax tech support">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Enabled"/>
+				<decoder:enumChoice choice="Disabled"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Lamp keep-alive voltage" CV="62" mask="VVVVXXXX"
+				comment="0 is no keep-alive, use with LEDs">
+				<decoder:decVal max="15"/>
+			</decoder:variable>
+		<decoder:variable name="FX rate and keep alive adjust" CV="62" mask="XXXXVVVV"
+				comment="0 is fast, 15 is slow, 4 is recommended for start">
+				<decoder:decVal max="15"/>
+			</decoder:variable>
+		<decoder:variable name="Ditch light hold-over time" CV="63"
+				comment="0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds">
+				<decoder:decVal/>
+			</decoder:variable>
+		<decoder:variable name="Kick start value" CV="65">
+			<decoder:decVal/>
+			</decoder:variable>
+		<decoder:variable name="Forward trim" CV="66">
+			<decoder:decVal/>
+			</decoder:variable>
+		<decoder:variable name="Reverse trim" CV="95">
+			<decoder:decVal/>
+			</decoder:variable>
+		<decoder:variable name="User private ID #1" CV="105">
+			<decoder:decVal/>
+			</decoder:variable>
+		<decoder:variable name="User private ID #2" CV="106">
+			<decoder:decVal/>
+			</decoder:variable>
+		<decoder:variable name="Speed Table" CV="67">
+			<decoder:speedTableVal/>
+			</decoder:variable>
+	</decoder:variables>
+	
+</decoder:decoder>
+</decoder:decoder-config>
