@@ -1,5 +1,5 @@
 The xml directory contains DTDs defining various model railroad constructs, and
-some sample XML files.
+some sample XML files. Vendor-specific XML files are in vendor-specific subdirectories.
 
 The JMRI web page is located at http://jmri.sourceforge.net/
 
