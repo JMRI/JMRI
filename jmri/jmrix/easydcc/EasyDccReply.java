@@ -1,16 +1,14 @@
+// EasyDccReply.java
+
+package jmri.jmrix.easydcc;
+
 /**
  * EasyDccReply.java
  *
  * Description:		Carries the reply to an EasyDccMessage
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
-
-package jmri.jmrix.easydcc;
-
-
-// Note:  This handles the "binary" form of command in the EasyDcc spec
-
 public class EasyDccReply {
 	// is this logically an abstract class?
 
@@ -56,10 +54,20 @@ public class EasyDccReply {
     /**
      * Extracts Read-CV returned value from a message.  Returns
      * -1 if message can't be parsed. Expects a message of the
-     * formnat "CVnnnvv" where vv is the hexadecimal value.
+     * formnat "CVnnnvv" where vv is the hexadecimal value
+     * or "Vnvv" where vv is the hexadecimal value.
      */
-	public int value() {  // integer value of 6th, 7th digits in hex
-		int index = 5;  // 5th position is index 5
+	public int value() {
+        int index = 0;
+        if ( (char)getElement(index) == 'C') {
+            // integer value of 6th, 7th digits in hex
+		    index = 5;  // 5th position is index 5
+        } else if ( (char)getElement(index) == 'V') {
+            // integer value of 3rd, 4th digits in hex
+		    index = 2;  // 2nd position is index 2
+        } else {
+            log.warn("Did not find recognizable format: "+this.toString());
+        }
 		String s1 = ""+(char)getElement(index);
         String s2 = ""+(char)getElement(index+1);
 		int val = -1;

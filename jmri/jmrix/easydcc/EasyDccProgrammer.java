@@ -1,11 +1,4 @@
-/**
- * EasyDccProgrammer.java
- *
- * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.3 $
- */
-
- // Convert the jmri.Programmer interface into commands for the EasyDcc powerstation
+//EasyDccProgrammer.java
 
 package jmri.jmrix.easydcc;
 
@@ -16,7 +9,10 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
 /**
- * Implements the Programmer interface for the EasyDCC system.
+ * Implements the jmri.Programmer interface via commands for the EasyDcc powerstation
+ *
+ * @author			Bob Jacobsen  Copyright (C) 2001
+ * @version			$Revision: 1.4 $
  */
 public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccListener {
 
@@ -43,16 +39,40 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
 	// handle mode
 	protected int _mode = Programmer.PAGEMODE;
 
+    /**
+     * Switch to a new programming mode.  Note that EasyDCC can only
+     * do register and page mode. If you attempt to switch to
+     * any others, the new mode will set & notify, then
+     * set back to the original.  This lets the listeners
+     * know that a change happened, and then was undone.
+     * @param mode The new mode, use values from the jmri.Programmer interface
+     */
 	public void setMode(int mode) {
+        int oldMode = _mode;  // preserve this in case we need to go back
 		if (mode != _mode) {
 			notifyPropertyChange("Mode", _mode, mode);
 			_mode = mode;
 		}
-		if (_mode != Programmer.PAGEMODE) {
-			_mode = Programmer.PAGEMODE;
+		if (_mode != Programmer.PAGEMODE && _mode != Programmer.REGISTERMODE) {
+            // attempt to switch to unsupported mode, switch back to previous
+			_mode = oldMode;
 			notifyPropertyChange("Mode", mode, _mode);
 		}
 	}
+    /**
+     * Signifies mode's available
+     * @param mode
+     * @return True if paged or register mode
+     */
+    public boolean hasMode(int mode) {
+        if ( mode == Programmer.PAGEMODE ||
+             mode == Programmer.REGISTERMODE ) {
+            log.debug("hasMode request on mode "+mode+" returns true");
+            return true;
+        }
+        log.debug("hasMode returns false on mode "+mode);
+        return false;
+    }
 	public int getMode() { return _mode; }
 
 
@@ -141,10 +161,16 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
 		// val = -1 for read command; mode is direct, etc
 		if (val < 0) {
 			// read
-			return EasyDccMessage.getReadPagedCV(cvnum);
+            if (_mode == Programmer.PAGEMODE)
+    			return EasyDccMessage.getReadPagedCV(cvnum);
+            else
+    			return EasyDccMessage.getReadRegister(registerFromCV(cvnum));
 		} else {
 			// write
-			return EasyDccMessage.getWritePagedCV(cvnum, val);
+            if (_mode == Programmer.PAGEMODE)
+                return EasyDccMessage.getWritePagedCV(cvnum, val);
+            else
+			    return EasyDccMessage.getWriteRegister(registerFromCV(cvnum), val);
 		}
 	}
 
