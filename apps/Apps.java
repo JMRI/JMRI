@@ -18,7 +18,7 @@ import javax.swing.*;
  * Base class for Jmri Apps
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class Apps extends JPanel {
 
@@ -138,7 +138,7 @@ public class Apps extends JPanel {
                                 new String[]{jmri.Version.name()});
     }
     protected String line2() {
-        return "http://jmri.sf.net/PanelPro ";
+        return "http://jmri.sf.net/ ";
     }
     protected String line3() {
         return " ";
