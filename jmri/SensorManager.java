@@ -5,9 +5,9 @@ package jmri;
 import com.sun.java.util.collections.List;
 
 /**
- * Interface for controlling sensors
+ * Interface for controlling sensors.
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public interface SensorManager extends Manager {
 
@@ -17,7 +17,6 @@ public interface SensorManager extends Manager {
      * is a valid system name, it will be used for the new
      * sensor.  Otherwise, the makeSystemName method
      * will attempt to turn it into a valid system name.
-     *
      *
      * @param name
      * @return Never null under normal circumstances
