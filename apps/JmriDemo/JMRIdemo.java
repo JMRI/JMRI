@@ -3,7 +3,6 @@
 package apps.JmriDemo;
 
 import apps.Apps;
-import apps.SplashWindow;
 
 import java.text.MessageFormat;
 
@@ -17,7 +16,7 @@ import javax.swing.JFrame;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.57 $
+ * @version     $Revision: 1.58 $
  */
 public class JMRIdemo extends Apps {
 
@@ -34,7 +33,7 @@ public class JMRIdemo extends Apps {
     public static void main(String args[]) {
 
         // show splash screen early
-        SplashWindow sp = new SplashWindow();
+        splash(true);
 
         initLog4J();
         log.info("program starts");
@@ -43,6 +42,7 @@ public class JMRIdemo extends Apps {
         createFrame(new JMRIdemo(f), f);
 
         log.info("main initialization done");
+        splash(false);
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(JMRIdemo.class.getName());
