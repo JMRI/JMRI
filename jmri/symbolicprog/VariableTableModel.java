@@ -29,6 +29,8 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
 	private Vector rowVector = new Vector();  // vector of Variable items
 	private CvTableModel _cvModel = null;          // reference to external table model
+	private Vector _writeButtons = new Vector();
+	private Vector _readButtons = new Vector();
 	
 	/** Defines the columns; values understood are: 	
 	 *  "Name", "Value", "Range", "Read", "Write", "Comment", "CV", "Mask", "State"
@@ -87,19 +89,9 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		if (headers[col].equals("Value"))
 			return v.getValue();
 		else if (headers[col].equals("Read")) {
-			JButton br = new JButton("Read");
-			br.setActionCommand("R"+row);
-			br.addActionListener(this);
-			return br;
+			return _readButtons.elementAt(row);
 		} else if (headers[col].equals("Write")) {
-			if (((VariableValue)(rowVector.elementAt(row))).getReadOnly() ) {
-				return new JButton();
-			} else {
-				JButton bw = new JButton("Write");
-				bw.setActionCommand("W"+row);
-				bw.addActionListener(this);
-				return bw;
-			}
+			return _writeButtons.elementAt(row);
 		} else if (headers[col].equals("CV"))
 			return ""+v.getCvNum();
 		else if (headers[col].equals("Name"))
@@ -130,9 +122,9 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 	
 	// for loading config:	
 	// Read from an Element to configure the row
-	public void setRow(int i, Element e, Namespace ns) {
+	public void setRow(int row, Element e, Namespace ns) {
 		// get the values for the VariableValue ctor
-		if (log.isDebugEnabled()) log.debug("Starting to setRow("+i+")");
+		if (log.isDebugEnabled()) log.debug("Starting to setRow");
 		String name = e.getAttribute("name").getValue();
 		String comment = null;
 		if (e.getAttribute("comment") != null)
@@ -153,10 +145,25 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		if (e.getAttribute("readOnly") != null) {
 			readOnly = e.getAttribute("readOnly").getValue().equals("yes") ? true : false;
 			if (log.isDebugEnabled()) log.debug("found readOnly "+e.getAttribute("readOnly").getValue());
+			if (readOnly) { // readOnly, config write, read buttons
+				JButton bw = new JButton();
+				_writeButtons.addElement(bw);
+			} else { // not readOnly, config write, read buttons
+				JButton bw = new JButton("Write");
+				bw.setActionCommand("W"+row);
+				bw.addActionListener(this);
+				_writeButtons.addElement(bw);
+			}
 		} else {
 			log.warn("Element missing readOnly attribute: "+name);
 		}
 		
+		// config read button
+		JButton br = new JButton("Read");
+		br.setActionCommand("R"+row);
+		br.addActionListener(this);
+		_readButtons.addElement(br);
+
 		if (_cvModel == null) {
 			log.error("CvModel reference is null; cannot add variables");
 			return;

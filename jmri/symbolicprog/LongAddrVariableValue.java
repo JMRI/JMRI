@@ -77,7 +77,7 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 		int oldVal;
 		try { oldVal = Integer.valueOf(_value.getText()).intValue(); }
 			catch (java.lang.NumberFormatException ex) { oldVal = 0; }	
-		if (oldVal != value) 
+		if (oldVal != value || getState() == VariableValue.UNKNOWN) 
 			prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value));
 		_value.setText(""+value);
 	}

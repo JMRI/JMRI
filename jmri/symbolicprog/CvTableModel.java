@@ -23,6 +23,8 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 	private Vector _cvDisplayVector = new Vector();  // vector of CvValue objects, in display order
 	private Vector _cvAllVector = new Vector(512);  // vector of all 512 possible CV objects
 	public Vector allCvVector() { return _cvAllVector; }
+	private Vector _writeButtons = new Vector();
+	private Vector _readButtons = new Vector();
 	
 	// Defines the columns
 	private static final int NUMCOLUMN   = 0;
@@ -103,15 +105,9 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 					default: return "inconsistent";
 				}
 			case READCOLUMN: 
-				JButton br = new JButton("Read");
-				br.setActionCommand("R"+row);
-				br.addActionListener(this);
-				return br;
+				return _readButtons.elementAt(row);
 			case WRITECOLUMN:
-				JButton bw = new JButton("Write");
-				bw.setActionCommand("W"+row);
-				bw.addActionListener(this);
-				return bw;
+				return _writeButtons.elementAt(row);
 			default: return "unknown";
 		}
 	}	
@@ -127,10 +123,10 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 	}	
 	
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("action command: "+e.getActionCommand());
+		if (log.isDebugEnabled()) log.debug("action command: "+e.getActionCommand());
 		char b = e.getActionCommand().charAt(0);
 		int row = Integer.valueOf(e.getActionCommand().substring(1)).intValue();
-		System.out.println("event "+b+" col "+row);
+		if (log.isDebugEnabled()) log.debug("event on "+b+" row "+row);
 		if (b=='R') {
 			// read command
 			((CvValue)_cvDisplayVector.elementAt(row)).read();
@@ -147,6 +143,14 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 	public void addCV(String s) {
 		int num = Integer.valueOf(s).intValue();
 		if (_cvAllVector.elementAt(num) == null) {
+			JButton bw = new JButton("Write");
+			bw.setActionCommand("W"+_numRows);
+			bw.addActionListener(this);
+			_writeButtons.addElement(bw);
+			JButton br = new JButton("Read");
+			br.setActionCommand("R"+_numRows);
+			br.addActionListener(this);
+			_readButtons.addElement(br);
 			_numRows++;
 			CvValue cv = new CvValue(num);
 			_cvAllVector.setElementAt(cv, num);
@@ -164,4 +168,6 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 		}
 		return false;
 	}
+
+	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CvTableModel.class.getName());
 }

@@ -71,7 +71,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 		int oldVal;
 		try { oldVal = _value.getSelectedIndex(); }
 			catch (java.lang.NumberFormatException ex) { oldVal = 0; }	
-		if (oldVal != value) 
+		if (oldVal != value || getState() == VariableValue.UNKNOWN) 
 			prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value));
 		_value.setSelectedIndex(value);
 	}

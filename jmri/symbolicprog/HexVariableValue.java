@@ -67,7 +67,7 @@ public class HexVariableValue extends VariableValue implements ActionListener, P
 		int oldVal;
 		try { oldVal = Integer.valueOf(_value.getText(), 16).intValue(); }
 			catch (java.lang.NumberFormatException ex) { oldVal = 0; }	
-		if (oldVal != value) 
+		if (oldVal != value || getState() == VariableValue.UNKNOWN) 
 			prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value));
 		_value.setText(Integer.toHexString(value));
 	}

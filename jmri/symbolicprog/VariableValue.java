@@ -72,7 +72,7 @@ public abstract class VariableValue implements java.beans.PropertyChangeListener
 
 	public int getState()  { return _state; }
 	protected void setState(int state) {
-		if (_state != state) prop.firePropertyChange("State", new Integer(_state), new Integer(state));
+		if (_state != state || _state == UNKNOWN) prop.firePropertyChange("State", new Integer(_state), new Integer(state));
 		_state = state;
 	}
 	private int _state = 0;
