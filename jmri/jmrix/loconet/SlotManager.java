@@ -29,14 +29,14 @@ import java.util.*;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.21 $
+ * @version     $Revision: 1.22 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
     public SlotManager() {
         // error if more than one constructed?
         if (self != null)
-            log.warn("Creating too many SlotManager objects");
+            log.debug("Creating too many SlotManager objects");
 
         // initialize slot array
         for (int i=0; i<=127; i++) _slots[i] = new LocoNetSlot(i);
