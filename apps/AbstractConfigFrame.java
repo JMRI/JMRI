@@ -24,7 +24,7 @@ import org.jdom.Attribute;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 abstract public class AbstractConfigFrame extends JFrame {
 
@@ -711,6 +711,8 @@ abstract public class AbstractConfigFrame extends JFrame {
 			//
 			jmri.jmrix.lenz.li100.LI100Adapter a
 					= new jmri.jmrix.lenz.li100.LI100Adapter();
+			a.configureBaudRate(getCurrentBaudRate());
+			a.configureOption1(getCurrentOption1Setting());
 			a.openPort(portName, "JMRI/DecoderPro");
 			a.configure();
 
