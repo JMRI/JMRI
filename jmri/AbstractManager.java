@@ -16,7 +16,7 @@ import com.sun.java.util.collections.Collections;
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 abstract public class AbstractManager
     implements Manager, java.beans.PropertyChangeListener {
@@ -63,9 +63,9 @@ abstract public class AbstractManager
     }
 
     /**
-     * Remember a Managed Object created outside the manager.
+     * Remember a NamedBean Object created outside the manager.
      */
-    public void register(Managed s) {
+    public void register(NamedBean s) {
         String systemName = s.getSystemName();
         _tsys.put(systemName, s);
         String userName = s.getUserName();
