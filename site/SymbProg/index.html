@@ -28,7 +28,95 @@ using text files, so that it can be adapted to additional decoder types easily.
 It talks to the decoders using the JMRI programming interface, so that it can
 run on any computer and layout hardware that JMRI has been ported to.  And since
 the code is available via open source, if you want to improve on it you can.
-<h3>What does it look like?</h3>
+
+<h3>A quick tour</h3>
+
+When you first open the symbolic programmer, you see a window like this:
+<p>
+<IMG SRC="images/Initial.gif" WIDTH="509" HEIGHT="390" HSPACE="0" VSPACE="0">
+<p>
+It has four sections:
+<UL>
+<LI>At the top are places to enter information about this specific
+locomotive, buttons to let you read and write configuration files, and
+to select what programming mode you want to use.
+<LI>Just below that is an empty table, which will eventually
+contain rows of variables used to configure the decoder.
+<LI>Next is a table of CV values.  Initially it only contains
+the short address CV, as different decoders provide different ones.
+<LI>Finally, the bottom of the frame provides a way to change
+the configuration using the "Create new CV" and "Create new variable" buttons.
+</ul>
+<P>
+When you click "Read File", you're prompted to select a configuration file.
+Selecting one for a Digitrax DH142 decoder, for example, changes the window to 
+look like:<P>
+<IMG SRC="images/readDecoder.gif" WIDTH="509" HEIGHT="390" HSPACE="0" VSPACE="0">
+<P>
+Note that the two tables have now been filled in. There are a lot of
+options for a Digitrax DH142 decoder, so there are a lot of rows. The
+scrollbars let you see more than fit on the screen.
+<P>
+You can now use the two tables to directly program a decoder in a locomotive on the
+programming track.  For example, to set the short address (CV1) to 23, all you 
+have to do is:
+<OL>
+<LI>Type "23" in the box next to CV1.
+<LI>Click "Write" on that line.
+<LI>If your command station permits it, you can read the CV back by clicking
+"Read" on the CV1 line.
+</ol>
+At this point, the lower table would look like:
+<P>
+<IMG SRC="images/CV1stored.gif" WIDTH="492" HEIGHT="109" HSPACE="0" VSPACE="0">
+<P>
+Notice that CV 1 shows "Stored" under status to indicate you've updated that CV.
+You can continue to program the rest of the CVs like this, but the upper table 
+provides a better way.
+<P>
+Reading the configuration file has loaded a number of "variables" into the
+upper table.  These are individual features of the decoder, basically anything
+that can be separately configured.  The simplest types are complete CVs like the
+address and momentum settings:
+<P>
+<IMG SRC="images/simpleVar.gif" WIDTH="715" HEIGHT="101" HSPACE="0" VSPACE="0">
+<P>
+The name and value columns are the most useful, along with the Read and Write
+buttons. The range and state columns are reminders for you, and are described
+later.
+The "CV" and "Mask" columns show where the value for this variable will be stored.
+You generally don't have to worry about those, as the configuration file
+is supposed to have set them up right, and normally the window is small enough
+that they've scrolled off the right.
+<P>
+The values of the variables are kept consistent with the CV values in the lower
+table. Since we set CV1 to 23, the address variable is also showing a value of
+23.
+<P>Although having a name for a CV is nice, where this really helps is with
+complicated bit-mapped options.  Digitrax FX lighting options, for example,
+require configuring two sets of bits into one CV.  In the upper table of this
+programmer, that looks like (the columns have been slide wider so the entire
+names fit):
+<P>
+<IMG SRC="images/FX1.gif" WIDTH="510" HEIGHT="52" HSPACE="0" VSPACE="0">
+<P>
+Instead of bits, you're working with the name or description from the 
+decoder manual. Pressing "Read" will then store the right bits into the
+CV without you having to do any combinations, etc.
+<P>If you want to change the selection, click on the value column to 
+get a pop-down list of possibilities:
+<P>
+<IMG SRC="images/FXchoices.gif" WIDTH="338" HEIGHT="155" HSPACE="0" VSPACE="0">
+<P>
+"Mars light" is currently showing at the top because its selected. Click on
+another option to select it instead, then click "Write" to store it in the
+decoder.
+<P>
+Once you have your locomotive programmed as you'd like, you can click
+"Write File" to store that configuration into a text file. That can then
+be read later as a starting point for changing the locomotives decoder
+settings.
+
 
 <h3>How to use it</h3>
 Currently (August 16, 2001) the programmer is still being developed.  In part, this page
