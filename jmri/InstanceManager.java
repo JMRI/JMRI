@@ -12,7 +12,7 @@ package jmri;
  * non-system-specific code.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  */
 public class InstanceManager {
 
@@ -36,6 +36,14 @@ public class InstanceManager {
         // This must be replaced when we start registering specific implementations
         instance().signalHeadManager = new AbstractSignalHeadManager();
         return instance().signalHeadManager;
+    }
+
+    static public RouteManager routeManagerInstance()  {
+        if (instance().routeManager != null) return instance().routeManager;
+        // As a convenience, we create a default object if none was provided explicitly.
+        // This must be replaced when we start registering specific implementations
+        instance().routeManager = new DefaultRouteManager();
+        return instance().routeManager;
     }
 
     static public ConsistManager consistManagerInstance() { return instance().consistManager; }
@@ -137,6 +145,16 @@ public class InstanceManager {
         if (p!=signalHeadManager && signalHeadManager!=null && log.isDebugEnabled()) log.debug("SignalHeadManager instance is being replaced: "+p);
         if (p!=signalHeadManager && signalHeadManager==null && log.isDebugEnabled()) log.debug("SignalHeadManager instance is being installed: "+p);
         signalHeadManager = p;
+    }
+
+    private RouteManager routeManager = null;
+    static public void setRouteManager(RouteManager p) {
+        instance().addRouteManager(p);
+    }
+    protected void addRouteManager(RouteManager p) {
+        if (p!=routeManager && routeManager!=null && log.isDebugEnabled()) log.debug("RouteManager instance is being replaced: "+p);
+        if (p!=routeManager && routeManager==null && log.isDebugEnabled()) log.debug("RouteManager instance is being installed: "+p);
+        routeManager = p;
     }
 
     private ConsistManager consistManager = null;
