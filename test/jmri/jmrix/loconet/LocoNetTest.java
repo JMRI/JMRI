@@ -11,8 +11,8 @@ import jmri.jmrix.loconet.locogen.*;
 
 /**
  * Tests for the jmri.jmrix.loconet package
- * @author			Bob Jacobsen Copyright 2001
- * @version         $Revision: 1.9 $
+ * @author	Bob Jacobsen Copyright 2001, 2003
+ * @version     $Revision: 1.10 $
  */
 public class LocoNetTest extends TestCase {
 
