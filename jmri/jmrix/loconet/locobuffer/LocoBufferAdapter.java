@@ -5,7 +5,7 @@
  * Description:		Provide access to LocoNet via a LocoBuffer attached to a serial comm port.
  *					Normally controlled by the LocoBufferFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: LocoBufferAdapter.java,v 1.3 2002-06-26 03:53:09 jacobsen Exp $
+ * @version			$Id: LocoBufferAdapter.java,v 1.4 2002-07-05 03:14:29 jacobsen Exp $
  */
 
 package jmri.jmrix.loconet.locobuffer;
@@ -188,6 +188,8 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 			// loconet.SlotManager to do that
 			if (jmri.InstanceManager.programmerInstance() == null)
 				jmri.jmrix.loconet.SlotManager.instance();
+            // set slot manager's read capability
+            jmri.jmrix.loconet.SlotManager.instance().setCanRead(mCanRead);
 
 			// If a jmri.PowerManager instance doesn't exist, create a
 			// loconet.LnPowerManager to do that
@@ -288,8 +290,9 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 	 * Get an array of valid values for "option 2"; used to display valid options.
 	 * May not be null, but may have zero entries
 	 */
-	public String[] validOption2() { return new String[]{"DB150 (Empire Builder)",
-                                            "DCS100 (Chief)", "DB50 (Zephyr)"}; }
+	public String[] validOption2() { return new String[]{"DCS100 (Chief)",
+                                                    "DB150 (Empire Builder)",
+                                                    "DB50 (Zephyr)"}; }
 
 	/**
 	 * Get a String that says what Option 2 represents
@@ -302,7 +305,12 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 	 * before the openPort call
 	 */
 	public void configureOption2(String value) throws jmri.jmrix.SerialConfigException {
+		log.debug("configureOption2: "+value);
+        if (value.equals("DB150 (Empire Builder)")) mCanRead = false;
+        else mCanRead = true;
     }
+
+    boolean mCanRead = true;
 
 	protected String [] validSpeeds = new String[]{"19,200 baud (J1 on 1&2)", "57,600 baud (J1 on 2&3)"};
 	protected int [] validSpeedValues = new int[]{19200, 57600};
