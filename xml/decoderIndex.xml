@@ -272,8 +272,8 @@
         <model model="DN148" numOuts="4" numFns="3" connector="unspecified" nmraWarrant="no" />
       </family>
       <family name="Basic CS" mfg="Digitrax" lowVersionID="225" highVersionID="239" type="locomotive" file="Digitrax_CS.xml">
-        <model model="DZ121" numOuts="5" numFns="3" connector="unspecified" nmraWarrant="no" />
-        <model model="DN122K2" numOuts="5" numFns="3" connector="unspecified" nmraWarrant="no" />
+        <model model="DZ121" numOuts="2" numFns="0" connector="unspecified" nmraWarrant="no" />
+        <model model="DN122K2" numOuts="2" numFns="0" connector="unspecified" nmraWarrant="no" />
       </family>
       <family name="Basic STD" mfg="Digitrax" lowVersionID="33" highVersionID="45" type="locomotive" file="Digitrax_STD.xml">
         <model model="DH121" numOuts="2" numFns="2" connector="unspecified" nmraWarrant="no" />
