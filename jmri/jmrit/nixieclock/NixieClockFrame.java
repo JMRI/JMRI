@@ -21,7 +21,7 @@ import jmri.jmrit.catalog.*;
  * Modified by Dennis Miller for resizing Nov, 2004
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class NixieClockFrame extends javax.swing.JFrame implements java.beans.PropertyChangeListener {
 
@@ -126,8 +126,8 @@ public class NixieClockFrame extends javax.swing.JFrame implements java.beans.Pr
     public void scaleImage() {
       int iconHeight;
       int iconWidth;
-      int frameHeight = this.getContentPane().getHeight();
-      int frameWidth = this.getContentPane().getWidth();
+      int frameHeight = this.getContentPane().getSize().height;
+      int frameWidth = this.getContentPane().getSize().width;
       if (frameWidth/frameHeight > aspect) {
         iconHeight = frameHeight;
         iconWidth = (int) (iconAspect * (float) iconHeight);
