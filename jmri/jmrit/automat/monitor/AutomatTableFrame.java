@@ -11,15 +11,18 @@ import java.util.*;
 import javax.swing.JScrollPane;
 import javax.swing.*;
 
+import jmri.util.com.sun.TableSorter;
+
 /**
  * Frame providing a table of Automat instances
  *
  * @author	Bob Jacobsen   Copyright (C) 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class AutomatTableFrame extends javax.swing.JFrame {
 
-    AutomatTableDataModel		dataModel;
+    AutomatTableDataModel	dataModel;
+    TableSorter                 sorter;
     JTable			dataTable;
     JScrollPane 		dataScroll;
 
@@ -29,8 +32,10 @@ public class AutomatTableFrame extends javax.swing.JFrame {
 
         super();
         dataModel 	= model;
-        dataTable	= new JTable(dataModel);
+        sorter          = new TableSorter(dataModel);
+        dataTable	= new JTable(sorter);
         dataScroll	= new JScrollPane(dataTable);
+        sorter.setTableHeader(dataTable.getTableHeader());
 
         // configure items for GUI
 
@@ -46,7 +51,7 @@ public class AutomatTableFrame extends javax.swing.JFrame {
         pane1.setMaximumSize(pane1.getSize());
 
 		setTitle(rb.getString("TitleAutomatTable"));
-		
+
         pack();
     }
 
