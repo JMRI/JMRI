@@ -37,15 +37,30 @@ We're providing occasional development distributions so that people
 can see how it works, comment on how they'd prefer it to work, and
 help us debug it.  But we don't expect anything complete, robust or reliable
 until Summer 2002. Thank you for your patience!</B>
+
+<P>
+You can skip directly to information on 
+<A HREF="#avail">availability of the development version</a>
+or the 
+<A HREF="../demoFiles/DecoderPro.README.html">README file</A>
+with instructions for installing and operating Decoder Pro.
+
 <h3>A quick tour</h3>
 
 When you first open the programmer, you see a window like this:
 <p>
+<IMG SRC="../images/DPStart.gif" WIDTH="514" HEIGHT="289"><BR>
+(new
+format for version 0.9b7; before that, you'd use the File menu to open the
+next screen)
+<p>
+Click the "Program locomotive" button to start.  You'll get a new window to
+configure the programmer with information about a specific
+type of decoder, or an existing locomotive:
+<P>
 <IMG SRC="images/BlankSetup.gif" WIDTH="436" HEIGHT="234" HSPACE="0" VSPACE="0">
 <p>
-
-You use this to configure the programmer with information about a specific
-type of decoder, or an existing locomotive.  For example, to 
+For example, to 
 start working with a newly-installed decoder, you need to tell
 the programmer the decoder type so it can load information
 about the available settings.
@@ -69,7 +84,7 @@ Some people prefer a very simple programmer, and some want to
 have access to every feature. To handle this, DecoderPro
 provides several displays.  
 <p>
-<IMG SRC="images/SelProg.gif" WIDTH="436" HEIGHT="234" HSPACE="0" VSPACE="0">
+<IMG SRC="../images/SelProg.gif" WIDTH="441" HEIGHT="234" HSPACE="0" VSPACE="0">
 <p>
 As shipped, it comes with:
 <DL>
@@ -77,6 +92,8 @@ As shipped, it comes with:
 <DT>Comprehensive<DD>The most complete display, with multiple panes 
 of detailed information.
 <DT>Registers<DD>Complete configuration for a register-only decoder
+<DT>Sample Club<DD>A sample of how a club might define their own
+programmer format to make it easy to set options needed to run at the club
 <DT>Tutorial<DD>Not useful for actually programming decoders, 
 this contains examples of how various special effects can
 be obtained when you're constructing your own programmer.
@@ -133,6 +150,13 @@ value to the value in the decoder, and reset it to white.
 Although having a name for an entire CV is nice, where this really helps is with
 complicated bit-mapped options.  Digitrax FX lighting options, for example,
 require configuring two sets of bits into one CV. 
+Another example is configuring a Soundtraxx decoder's mapping
+between functions and sounds.  This involves bits and values spread
+across a dozen different CVs, but Decoder Pro turns that configuration
+job into simple checking of boxes:
+<P>
+<IMG SRC="../images/FnMap.gif" WIDTH="677" HEIGHT="563">
+<P>
 Each selection box, checkbox or radiobutton is mapped to specific
 bit(s) in the decoder's CVs.  The programmer handles the 
 reading and writing of the CVs when the individual settings are changed.
@@ -146,8 +170,8 @@ change their layout, and
 even redo the entire appearance.
 To do that,
 DecoderPro is driven by human-readable files in XML format.  
-<A HREF="ConfigFile.html">Incomplete documentation</a> exists, and we hope to
-update it soon (December 2001).
+<A HREF="ConfigFile.html">Incomplete documentation</a> exists, and we're
+working to continuously update it.
 <P>
 These files make it convenient to update DecoderPro to work
 with a new decoder.  For example, the unique capabilities of a
@@ -199,7 +223,7 @@ programmer opens each sheet with the current values already present.
 <A HREF="MoreInfo.html">More information on how this works</a> is available, as is
 <A HREF="../index.html">more information on other JMRI tools</A>.
 
-<h3>Availability</h3>
+<a id="avail"><h3>Availability</h3></a>
 The programmer is available in the current distributions of the JMRI libraries,
 and separately packaged as the "DecoderPro" application. 
 It works with Digitrax and NCE command stations.

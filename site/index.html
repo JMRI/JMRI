@@ -46,17 +46,20 @@ The long-term strategy is to:<P>
 </UL>
 
 <P>
-In the short term, we've created a demo version that can monitor a Digitrax LocoNet, control and display
-turnout positions, and program decoders.  Its rough, but its a start.  
+In the short term, we've created a demo version that can 
+communicate with either a Digitrax LocoNet or an NCE command station
+to control and display
+turnout positions, and to program decoders.  Its rough, but its a start.  
 
 <BR>
-<IMG SRC="images/MainPanel.jpg" ALT="Main JMRI menus" WIDTH="217" HEIGHT="181" HSPACE="0" VSPACE="0">
+<IMG SRC="images/MainPanel.gif" ALT="Main JMRI menus" WIDTH="293" HEIGHT="173" HSPACE="0" VSPACE="0">
 <IMG SRC="images/SimpleProg.jpg" ALT="Simple programmer frame" WIDTH="217" HEIGHT="181" HSPACE="0" VSPACE="0">
 <IMG SRC="images/TurnoutControl.jpg" ALT="Turnout control frame" WIDTH="223" HEIGHT="136" HSPACE="0" VSPACE="0">
-<IMG SRC="images/LocoMonFrame.jpg" ALT="LocoNet monitor sample image"  WIDTH="580" HEIGHT="396" HSPACE="0" VSPACE="0">
 <P>
 JMRI also provides 
-<A HREF="Digitrax/locotools.html">LocoNet-specific tools</a>.
+<A HREF="Digitrax/locotools.html">LocoNet-specific tools</a>
+for monitoring of the LocoNet and the command station slots, and also for sending user-defined
+packets.
 
 <P>
 The JMRI libraries also form the basis of 
@@ -85,6 +88,11 @@ like a running demo, we have the most recent one (demo 0.8) available packaged i
 <LI><A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.demo.OS2.0.8.zip">JMRI.demo.0.8.zip</A>  A .zip file for OS/2
 <LI><A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.demo.win.0.8.zip">JMRI.demo.0.8.zip</A>  A .zip file for Windows 95, 98 and perhaps others
 </UL>
+There are also free versions available for the Decoder Pro program, see the
+Decoder Pro 
+<A HREF="http://jmri.sourceforge.net/demoFiles/DecoderPro.README.html">README page</a>
+for more links to download, instructions, etc.
+<P>
 Note that the people working on this project are really short of expertise
 in Windows and Linux; project development has so far been on the Macintosh.
 Only the Macintosh version is packaged so you can just click on the icon to start it; see
@@ -149,9 +157,12 @@ or the
 <A HREF="demoFiles/README.html">JMRI demo</A>.
 <P>
 The demo is developed on a USB Macintosh, which is interfaced to a layout and LocoNet via
-a Keyspan PDA Adapter, DB9 to DB25 cable, and a Digitrax MS100.  
+a Keyspan PDA Adapter, DB9 to DB25 cable, and a Digitrax MS100 and/or LocoBuffer.  The
+Keyspan PDA adapter also works for connecting to the NCE command station.
+
 <P>
-PCs with a RS232 port should be able to connect directly to the MS100 with an appropriate cable.
+PCs with a RS232 port should be able to connect directly to the MS100 with an appropriate cable,
+but some are not able to run at the LocoNet's non-standard baud rate.
 
 <h3>Java-specific information</h3>
 JMRI is written entirely in Java.  Some day, that means it will be "run anywhere",
