@@ -15,7 +15,7 @@ import org.jdom.Element;
  * roster.Roster class.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class RosterConfigPaneXml implements XmlAdapter {
 
@@ -42,7 +42,7 @@ public class RosterConfigPaneXml implements XmlAdapter {
      * @param element Top level Element to unpack.
       */
     public void load(Element element) {
-        if (log.isDebugEnabled()) log.debug("set roster location: "+element.getAttribute("directory").getValue());
+        if (log.isDebugEnabled()) log.debug("set roster location (1): "+element.getAttribute("directory").getValue());
         Roster.setFileLocation(element.getAttribute("directory").getValue());
         if (element.getAttribute("ownerDefault")!=null) RosterEntry.setDefaultOwner(element.getAttribute("ownerDefault").getValue());
     }
@@ -53,6 +53,7 @@ public class RosterConfigPaneXml implements XmlAdapter {
      * @param o  ignored
      */
     public void load(Element element, Object o) {
+        if (log.isDebugEnabled()) log.debug("set roster location (2): "+element.getAttribute("directory").getValue());
         Roster.setFileLocation(element.getAttribute("directory").getValue());
     }
     // initialize logging
