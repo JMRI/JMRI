@@ -4,16 +4,16 @@
 jbuilder -a runtime jbuilderjava
 # build the java/ directory, which contains the actual JBuilder project
 jbuilderjava  -a jbuilder0 jbuilder1 java
-jbuilder0 -d java scripts jmri.jpx
-jbuilder1 -d java scripts JMRILibraries.library
+jbuilder0 -d project/java scripts jmri.jpx
+jbuilder1 -d project/java scripts JMRILibraries.library
 
 java -a java1 java2 java3
-java1 -d java/src &jmri &apps &resources
-java2 -d java &test
-java3 -d java &lib
+java1 -d project/java/src &jmri &apps &resources
+java2 -d project/java &test
+java3 -d project/java &lib
 
-runtime -a xml lib resources defaultlcf
-defaultlcf -d . scripts default.lcf
+runtime -d project xml lib resources defaultlcf
+defaultlcf -d project scripts default.lcf
 
 # ant target - Ant directory in standard form
 ant -a xml lib resources defaultlcf antjava
