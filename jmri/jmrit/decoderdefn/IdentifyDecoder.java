@@ -19,8 +19,10 @@ import com.sun.java.util.collections.List;
  * it works through the identification progress.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  * @see             jmri.jmrit.roster.RosterEntry
+ * @see             jmri.jmrit.symbolicprog.CombinedLocoSelPane
+ * @see             jmri.jmrit.symbolicprog.NewLocoSelPane
  */
 abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
 
@@ -29,12 +31,6 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
 
 	// steps of the identification state machine
 	public boolean test1() {
-		// if possible, switch to register mode
-        Programmer p = InstanceManager.programmerInstance();
-        if (p!=null) {
-            if (p.hasMode(Programmer.REGISTERMODE))
-                p.setMode(Programmer.REGISTERMODE);
-        }
         // read cv8
 		statusUpdate("Read MFG ID - CV 8");
 		readCV(8);
