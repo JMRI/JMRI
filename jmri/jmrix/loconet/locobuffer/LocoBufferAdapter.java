@@ -22,7 +22,7 @@ import javax.comm.SerialPortEventListener;
  * <P>
  * Normally controlled by the LocoBufferFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -265,7 +265,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
      */
     public String[] validOption2() { return new String[]{"DCS100 (Chief)",
                                                          "DB150 (Empire Builder)",
-                                                         "DB50 (Zephyr)"}; }
+                                                         "DCS50 (Zephyr)"}; }
 
     /**
      * Get a String that says what Option 2 represents

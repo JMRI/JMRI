@@ -29,7 +29,7 @@ import Serialio.SerialPortLocal;
  * Neither the baud rate configuration nor the "option 1" option are used.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -296,7 +296,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
      * May not be null, but may have zero entries
      */
     public String[] validOption2() { return new String[]{"DB150 (Empire Builder)",
-                                                         "DCS100 (Chief)", "DB50 (Zephyr)"}; }
+                                                         "DCS100 (Chief)", "DCS50 (Zephyr)"}; }
 
     /**
      * Get a String that says what Option 2 represents
