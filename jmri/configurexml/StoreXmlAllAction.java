@@ -15,28 +15,25 @@ import javax.swing.JFileChooser;
  * types of information stored in configuration files.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  * @see         jmri.jmrit.XmlFile
  */
-public class StoreXmlAllAction extends AbstractAction {
+public class StoreXmlAllAction extends StoreXmlConfigAction {
 
     public StoreXmlAllAction() {
-        super("Store all ...");
+        this("Store all ...");
     }
 
     public StoreXmlAllAction(String s) {
         super(s);
-        // ensure that an XML config manager exists
-        if (InstanceManager.configureManagerInstance()==null)
-            InstanceManager.setConfigureManager(new ConfigXmlManager());
     }
 
     public void actionPerformed(ActionEvent e) {
-        LoadStoreBase.fileChooser.rescanCurrentDirectory();
-        int retVal = LoadStoreBase.fileChooser.showSaveDialog(null);
-        if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
-        if (log.isDebugEnabled()) log.debug("Save file: "+LoadStoreBase.fileChooser.getSelectedFile().getPath());
-        InstanceManager.configureManagerInstance().storeAll(LoadStoreBase.fileChooser.getSelectedFile());
+        java.io.File file = getFileName();
+        if (file==null) return;
+        
+        // and finally store
+        InstanceManager.configureManagerInstance().storeAll(file);
     }
 
     // initialize logging

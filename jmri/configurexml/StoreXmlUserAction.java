@@ -17,13 +17,13 @@ import javax.swing.JFileChooser;
  * types of information stored in configuration files.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  * @see         jmri.jmrit.XmlFile
  */
-public class StoreXmlUserAction extends AbstractAction {
+public class StoreXmlUserAction extends StoreXmlConfigAction {
 
     public StoreXmlUserAction() {
-        super("Store panels ...");
+        this("Store panels ...");
     }
 
     public StoreXmlUserAction(String s) {
@@ -34,13 +34,13 @@ public class StoreXmlUserAction extends AbstractAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        LoadStoreBase.fileChooser.rescanCurrentDirectory();
-        int retVal = LoadStoreBase.fileChooser.showSaveDialog(null);
-        if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
-        if (log.isDebugEnabled()) log.debug("Save file: "+LoadStoreBase.fileChooser.getSelectedFile().getPath());
-        InstanceManager.configureManagerInstance().storeUser(LoadStoreBase.fileChooser.getSelectedFile());
+        java.io.File file = getFileName();
+        if (file==null) return;
+        
+        // and finally store
+        InstanceManager.configureManagerInstance().storeUser(file);
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(StoreXmlConfigAction.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(StoreXmlUserAction.class.getName());
 }
