@@ -15,7 +15,7 @@ import java.util.Hashtable;
  *
  * @see             jmri.ProgrammerManager
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class DebugProgrammerManager extends DefaultProgrammerManager {
 
@@ -50,6 +50,12 @@ public class DebugProgrammerManager extends DefaultProgrammerManager {
         return null;
     };
     public void releaseOopsModeProgrammer(Programmer p) {}
+
+    /**
+     * Debug programmer does provide Ops Mode
+     * @returns true
+     */
+    public boolean isOpsModePossible() {return true;}
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DebugProgrammerManager.class.getName());
 }
