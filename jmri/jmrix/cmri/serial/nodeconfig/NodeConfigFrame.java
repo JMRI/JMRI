@@ -21,7 +21,7 @@ import jmri.jmrix.cmri.serial.SerialSensorManager;
  * Frame for user configuration of CMRI serial nodes
  * @author	Bob Jacobsen   Copyright (C) 2004
  * @author	Dave Duchamp   Copyright (C) 2004
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class NodeConfigFrame extends javax.swing.JFrame {
 
@@ -987,6 +987,8 @@ public class NodeConfigFrame extends javax.swing.JFrame {
                         }
                     }
                 }
+                panel2a.setVisible(false);
+                panel2a.setVisible(true);
             }
         }
         public boolean isCellEditable(int r,int c) {return (c!=0);}
