@@ -17,7 +17,7 @@ import javax.swing.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author			Bob Jacobsen   Copyright 2002
- * @version         $Revision: 1.34 $
+ * @version         $Revision: 1.35 $
  */
 public class JMRIdemo extends JPanel {
     public JMRIdemo() {
@@ -101,6 +101,7 @@ public class JMRIdemo extends JPanel {
         locoMenu.add(new jmri.jmrix.loconet.pm4.PM4Action("PM4 Programmer"));
         locoMenu.add(new jmri.jmrix.loconet.bdl16.BDL16Action("BDL16 Programmer"));
         locoMenu.add(new jmri.jmrix.loconet.locormi.LnMessageServerAction( "Start LocoNet Server" ));
+        locoMenu.add(new jmri.jmrit.display.ThrottleCreationAction( "New Throttle..." ));
 
         JMenu nceMenu = new JMenu("NCE");
         menuBar.add(nceMenu);
