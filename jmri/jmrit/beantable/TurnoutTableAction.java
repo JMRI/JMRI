@@ -9,13 +9,14 @@ import jmri.Turnout;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.JButton;
 
 /**
  * Swing action to create and register a
  * TurnoutTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 public class TurnoutTableAction extends AbstractAction {
@@ -44,9 +45,13 @@ public class TurnoutTableAction extends AbstractAction {
                 if (state==Turnout.CLOSED) ((Turnout)t).setCommandedState(Turnout.THROWN);
                 else ((Turnout)t).setCommandedState(Turnout.CLOSED);
             }
+            public JButton configureButton() {
+                return new JButton("Thrown");
+            }
         };
         // create the frame
         BeanTableFrame f = new BeanTableFrame(m);
+        f.setTitle("Turnout Table");
         f.show();
     }
 }

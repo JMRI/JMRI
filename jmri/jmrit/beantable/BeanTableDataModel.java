@@ -19,7 +19,7 @@ import com.sun.java.util.collections.List;
 /**
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
- * @version		$Revision: 1.3 $
+ * @version		$Revision: 1.4 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -161,16 +161,19 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         // have the value column hold a button
-        setColumnToHoldButton(table, VALUECOL);
+        setColumnToHoldButton(table, VALUECOL, configureButton());
     }
+
+    abstract public JButton configureButton();
 
     /**
      * Service method to setup a column so that it will hold a
      * button for it's values
      * @param table
      * @param column
+     * @param sample Typical button, used for size
      */
-    void setColumnToHoldButton(JTable table, int column) {
+    void setColumnToHoldButton(JTable table, int column, JButton sample) {
         TableColumnModel tcm = table.getColumnModel();
         // install a button renderer & editor
         ButtonRenderer buttonRenderer = new ButtonRenderer();
@@ -178,9 +181,9 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         TableCellEditor buttonEditor = new ButtonEditor(new JButton());
         tcm.getColumn(column).setCellEditor(buttonEditor);
         // ensure the table rows, columns have enough room for buttons
-        table.setRowHeight(new JButton("  "+getValueAt(1, column)).getPreferredSize().height);
+        table.setRowHeight(sample.getPreferredSize().height);
         table.getColumnModel().getColumn(column)
-			.setPreferredWidth(new JButton("  "+getValueAt(1, column)).getPreferredSize().width);
+			.setPreferredWidth(sample.getPreferredSize().width);
     }
 
     synchronized public void dispose() {

@@ -10,13 +10,14 @@ import jmri.Sensor;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.JButton;
 
 /**
  * Swing action to create and register a
  * SensorTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class SensorTableAction extends AbstractAction {
@@ -47,9 +48,14 @@ public class SensorTableAction extends AbstractAction {
                     else ((Sensor)t).setKnownState(Sensor.INACTIVE);
                 } catch (JmriException e) { log.warn("Error setting state: "+e); }
             }
+            public JButton configureButton() {
+                return new JButton("Inactive");
+            }
+
         };
         // create the frame
         BeanTableFrame f = new BeanTableFrame(m);
+        f.setTitle("Sensor Table");
         f.show();
     }
 }
