@@ -10,10 +10,9 @@ package jmri;
 
 
 public interface Sensor {
-
+	
 	// user identification, unbound parameter
 	public String getID();
-	public void   setID(String s);
 	
 	// states are parameters; both closed and thrown is possible!
 	public static final int UNKNOWN      = 0x01;
@@ -24,6 +23,10 @@ public interface Sensor {
 	// known state on layout is a bound parameter -
 	// always returns a answer, if need be the commanded state
 	public int getKnownState();
+	
+	// request an update from the layout soft/hardware.  May not even
+	// happen, and if it does it will happen later; listen for the result.
+	public void requestUpdateFromLayout();
 	
 	// implementing classes will generally provide PropertyChangeListener
 	// calls for KnownState

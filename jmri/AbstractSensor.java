@@ -11,6 +11,9 @@ import jmri.Sensor;
 
 public abstract class AbstractSensor implements Sensor, java.io.Serializable {
 	
+	// ctor takes a system-name string for initialization
+	public AbstractSensor(String s) { _id = s; }
+
 	// implementing classes will typically have a function/listener to get
 	// updates from the layout, which will then call 
 	//		public void firePropertyChange(String propertyName,
@@ -21,7 +24,6 @@ public abstract class AbstractSensor implements Sensor, java.io.Serializable {
 	// interface function implementations
 
 	public String getID() {return _id;}
-	public void   setID(String s) {_id = s;}
 
 	public int getKnownState() {return _knownState;}
 	

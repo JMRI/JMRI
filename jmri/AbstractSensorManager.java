@@ -14,7 +14,7 @@ import java.util.Hashtable;
 public abstract class AbstractSensorManager implements SensorManager{
 
 	// abstract methods to be provided by subclasses
-	public abstract Turnout newTurnout(String systemName, String userName);
+	public abstract Sensor newSensor(String systemName, String userName);
 	
 	// abstract methods to be extended by subclasses
 	// to free resources when no longer used
@@ -24,19 +24,15 @@ public abstract class AbstractSensorManager implements SensorManager{
 	}
 
 	// implemented methods
-	protected Hashtable _tsys = new Hashtable();   // stores known Turnout instances by system name
-	protected Hashtable _tuser = new Hashtable();   // stores known Turnout instances by user name
+	protected Hashtable _tsys = new Hashtable();   // stores known Sensor instances by system name
+	protected Hashtable _tuser = new Hashtable();   // stores known Sensor instances by user name
 
-	public Turnout getBySystemName(String key) {
-		return (Turnout)_tsys.get(key);
+	public Sensor getBySystemName(String key) {
+		return (Sensor)_tsys.get(key);
 	}
-	public Turnout getByAddress(TurnoutAddress key) {
-		Turnout t = (Turnout)_tuser.get(key.getUserName());
-		if (t != null) return t;
-		return (Turnout)_tsys.get(key.getSystemName());
-	}
-	public Turnout getByUserName(String key) {
-		return (Turnout)_tuser.get(key);
+
+	public Sensor getByUserName(String key) {
+		return (Sensor)_tuser.get(key);
 	}
 
 }

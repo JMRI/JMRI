@@ -14,6 +14,11 @@ public interface SensorManager {
 	// to free resources when no longer used
 	public void dispose() throws JmriException;
 
+	public Sensor newSensor(String systemName, String userName);
+	
+	public Sensor getByUserName(String s);
+	public Sensor getBySystemName(String s);
+
 }
 
 

@@ -9,34 +9,31 @@
 package jmri.jmrix.loconet;
 
 import jmri.AbstractSensor;
+import jmri.Sensor;
 
 public class LnSensor extends AbstractSensor implements LocoNetListener {
 
-	public LnSensor(int number) {  // a human-readable sensor number must be specified!
-		_number = number;
+	private LnSensorAddress a;
+	
+	public LnSensor(String id) {  // a human-readable sensor number must be specified!
+		super(id);
+
+		// store address forms
+		a = new LnSensorAddress(id);
+
 		// At construction, register for messages
 		LnTrafficController.instance().addLocoNetListener(~0, this);	
 	}
 
 	public int getNumber() { return _number; }
 	
-	// Handle a request to change state by sending a LocoNet command
-	protected void forwardCommandChangeToLayout(int s) throws jmri.JmriException {
-		// send SWREQ for close
-		LocoNetMessage l = new LocoNetMessage(4);
-		l.setOpCode(LnConstants.OPC_SW_REQ);
-		
-		// compute address fields
-		int hiadr = (_number-1)/128;
-		int loadr = (_number-1)-hiadr*128;
-					
-		// load On/Off with on
-		hiadr |= 0x10;
-		
-		// store and send
-		l.setElement(1,loadr);
-		l.setElement(2,hiadr);
-		LnTrafficController.instance().sendLocoNetMessage(l);
+	// request an update on status by sending a loconet message
+	public void requestUpdateFromLayout() {
+		// the only known way to do this from LocoNet is to request the
+		// status of _all_ devices, which is here considered too 
+		// heavyweight.  Perhaps this is telling us we need
+		// a "update all" in the SensorManager (and/or TurnoutManager)
+		// interface?
 	}
 	
 	// implementing classes will typically have a function/listener to get
@@ -48,33 +45,20 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
 	public void message(LocoNetMessage l) {
 		// parse message type
 		switch (l.getOpCode()) {
-	        case LnConstants.OPC_SW_REP: {               /* page 9 of Loconet PE */
+	        case LnConstants.OPC_INPUT_REP: {               /* page 9 of Loconet PE */
             	int sw1 = l.getElement(1);
             	int sw2 = l.getElement(2);
-				if (myAddress(sw1, sw2)) {
-					if (log.isDebugEnabled()) log.debug("SW_REP received with valid address");
-					// see if its a sensor state report
-    	        	if ((sw2 & LnConstants.OPC_SW_REP_INPUTS)==0) {
-    	        		// sort out states
-    	        		switch (sw2 & 
-    	        			(LnConstants.OPC_SW_REP_CLOSED|LnConstants.OPC_SW_REP_THROWN)) {
-    	        			
-    	        			case LnConstants.OPC_SW_REP_CLOSED:	
-    	        				setKnownState(ACTIVE);
-    	        				break;
-    	        			case LnConstants.OPC_SW_REP_THROWN:	
-    	        				setKnownState(INACTIVE);
-    	        				break;
-    	        			case LnConstants.OPC_SW_REP_CLOSED|LnConstants.OPC_SW_REP_THROWN:	
-    	        				setKnownState(ACTIVE+INACTIVE);
-    	        				break;
-    	        			default:	
-    	        				setKnownState(0);
-    	        				break;
-							}
-    	        		}
+				if (a.matchAddress(sw1, sw2)) {
+					if (log.isDebugEnabled()) log.debug("INPUT_REP received with valid address");
+					// save the state
+					int state = sw2 & 0x20;
+					if ( state !=0 && getKnownState() != Sensor.ACTIVE) {
+						setKnownState(Sensor.ACTIVE);
+					} else if ( state ==0 && getKnownState() != Sensor.INACTIVE) {
+						setKnownState(Sensor.INACTIVE);
 					}
 				}
+			}
 			default:
 				return;
 			}
@@ -83,11 +67,7 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
 		
 	// data members
 	int _number;   // loconet sensor number
-	
-	private boolean myAddress(int a1, int a2) { 
-		// the "+ 1" in the following converts to throttle-visible numbering
-		return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1) == _number; 
-		}
+			
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnSensor.class.getName());
 
 }
