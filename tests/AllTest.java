@@ -16,10 +16,16 @@ public class AllTest extends TestCase  {
 	public AllTest(String s) {
 		super(s);
 	}
+	
+	// note that initLogging has to be invoked _twice_ to get logging to
+	// work in both the test routines themselves, and also in the TestSuite
+	// code.  And even though it should be protected by a static, it runs
+	// twice!  There are probably two sets of classes being created here...
 
 	// Main entry point
 	static public void main(String[] args) { 
 		String[] testCaseName = {AllTest.class.getName()};
+		//initLogging();
 		// initialize junit
 		junit.swingui.TestRunner.main(testCaseName);
 	}

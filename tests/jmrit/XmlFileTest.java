@@ -23,7 +23,6 @@ public class XmlFileTest extends TestCase {
 	public void testCheckFile() {
 		// XmlFile is abstract, so can't check ctor directly; use local class
 		XmlFile x = new XmlFile() {
-			public Namespace getNamespace() { return null; }
 		};
 		
 		Assert.assertTrue("existing file ", x.checkFile("xml/"));

@@ -15,27 +15,25 @@ import junit.framework.TestSuite;
 public class RosterEntryPaneTest extends TestCase {
 
 	// statics for test objects
-	static org.jdom.Namespace ns = null;
 	org.jdom.Element e = null;
 	RosterEntry r = null;
 	
 	public void setUp() {
 		// create Element
-		ns = org.jdom.Namespace.getNamespace("roster", "");
-		e = new org.jdom.Element("locomotive", ns)
+		e = new org.jdom.Element("locomotive")
 									.addAttribute("id","id info")
 									.addAttribute("fileName","file here")
 									.addAttribute("roadNumber","431")
 									.addAttribute("roadName","SP")
 									.addAttribute("mfg","Athearn")
 									.addAttribute("dccAddress","1234")
-									.addContent(new org.jdom.Element("decoder", ns)
+									.addContent(new org.jdom.Element("decoder")
 										.addAttribute("family","91")
 										.addAttribute("model","33")
 												)
 				; // end create element
 				
-		r = new RosterEntry(e, ns);
+		r = new RosterEntry(e);
 	}
 
 	public void testCreate() {

@@ -9,7 +9,7 @@ package jmri.jmrit.roster;
  * All the attributes have a content, not null.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: RosterEntry.java,v 1.5 2001-11-23 22:23:54 jacobsen Exp $
+ * @version			$Id: RosterEntry.java,v 1.6 2001-11-27 03:27:15 jacobsen Exp $
  */
 public class RosterEntry {
 
@@ -64,8 +64,8 @@ public class RosterEntry {
 	 *
 	 * @parameter e  Locomotive XML element
 	 */
-	public RosterEntry(org.jdom.Element e, org.jdom.Namespace ns) {
-		if (log.isDebugEnabled()) log.debug("ctor from element "+e+" ns "+ns);
+	public RosterEntry(org.jdom.Element e) {
+		if (log.isDebugEnabled()) log.debug("ctor from element "+e);
 		org.jdom.Attribute a;
 		if ((a = e.getAttribute("id")) != null )  _id = a.getValue();
 		else log.warn("no id attribute in locomotive element when reading roster");
@@ -77,7 +77,7 @@ public class RosterEntry {
 		if ((a = e.getAttribute("model")) != null )  _model = a.getValue();
 		if ((a = e.getAttribute("dccAddress")) != null )  _dccAddress = a.getValue();		
 		if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();		
-		org.jdom.Element d = e.getChild("decoder", ns);
+		org.jdom.Element d = e.getChild("decoder");
 		if (d != null) {
 			if ((a = d.getAttribute("model")) != null )  _decoderModel = a.getValue();
 			if ((a = d.getAttribute("family")) != null )  _decoderFamily = a.getValue();
@@ -89,8 +89,8 @@ public class RosterEntry {
 	 * Create an XML element to represent this Entry. This member has to remain synchronized with the
 	 * detailed DTD in roster-config.xml
 	 */
-	org.jdom.Element store(org.jdom.Namespace ns) {
-		org.jdom.Element e = new org.jdom.Element("locomotive", ns);
+	org.jdom.Element store() {
+		org.jdom.Element e = new org.jdom.Element("locomotive");
 		e.addAttribute("id", getId());
 		e.addAttribute("fileName", getFileName());
 		e.addAttribute("roadNumber",getRoadNumber());
@@ -100,7 +100,7 @@ public class RosterEntry {
 		e.addAttribute("dccAddress",getDccAddress());
 		e.addAttribute("comment",getComment());
 
-		org.jdom.Element d = new org.jdom.Element("decoder", ns);
+		org.jdom.Element d = new org.jdom.Element("decoder");
 		d.addAttribute("model",getDecoderModel());
 		d.addAttribute("family",getDecoderFamily());
 		d.addAttribute("comment",getDecoderComment());
@@ -129,23 +129,6 @@ public class RosterEntry {
 		return out;
 	}
 		
-	public void dispose() {
-		if (log.isDebugEnabled()) log.debug("dispose");
-		// null everything out
-		_fileName 	= null;
-		_id 		= null;
-		_roadName 	= null;
-		_roadNumber = null;
-		_mfg 		= null;
-		_model 		= null;
-		_dccAddress = null;
-		_comment 	= null;
-		_decoderModel = null;
-		_decoderFamily = null;
-		_decoderComment = null;
-		
-	}
-	
 	// members to remember all the info
 	protected String _fileName = "";
 

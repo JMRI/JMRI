@@ -27,8 +27,7 @@ public class RosterEntryTest extends TestCase {
 
 	public void testPartialLoad() {
 		// create Element
-		org.jdom.Namespace ns = org.jdom.Namespace.getNamespace("roster", "");
-		org.jdom.Element e = new org.jdom.Element("locomotive", ns)
+		org.jdom.Element e = new org.jdom.Element("locomotive")
 									.addAttribute("id","our id")
 									.addAttribute("fileName","file here")
 									.addAttribute("roadNumber","431")
@@ -37,7 +36,7 @@ public class RosterEntryTest extends TestCase {
 									.addAttribute("dccAddress","1234")
 				; // end create element
 				
-		RosterEntry r = new RosterEntry(e, ns);
+		RosterEntry r = new RosterEntry(e);
 		// check
 		Assert.assertEquals("file name ", "file here", r.getFileName());
 		Assert.assertEquals("DCC Address ", "1234", r.getDccAddress());
@@ -50,13 +49,12 @@ public class RosterEntryTest extends TestCase {
 
 	public void testEmptyLoad() {
 		// create Element
-		org.jdom.Namespace ns = org.jdom.Namespace.getNamespace("roster", "");
-		org.jdom.Element e = new org.jdom.Element("locomotive", ns)
+		org.jdom.Element e = new org.jdom.Element("locomotive")
 									.addAttribute("id","our id")
 									.addAttribute("fileName","file here")
 				; // end create element
 				
-		RosterEntry r = new RosterEntry(e, ns);
+		RosterEntry r = new RosterEntry(e);
 		// check
 		Assert.assertEquals("file name ", "file here", r.getFileName());
 		Assert.assertEquals("DCC Address ", "", r.getDccAddress());
@@ -69,21 +67,20 @@ public class RosterEntryTest extends TestCase {
 	
 	public void testFullLoad() {
 		// create Element
-		org.jdom.Namespace ns = org.jdom.Namespace.getNamespace("roster", "");
-		org.jdom.Element e = new org.jdom.Element("locomotive", ns)
+		org.jdom.Element e = new org.jdom.Element("locomotive")
 									.addAttribute("id","our id")
 									.addAttribute("fileName","file here")
 									.addAttribute("roadNumber","431")
 									.addAttribute("roadName","SP")
 									.addAttribute("mfg","Athearn")
 									.addAttribute("dccAddress","1234")
-									.addContent(new org.jdom.Element("decoder", ns)
+									.addContent(new org.jdom.Element("decoder")
 										.addAttribute("family","91")
 										.addAttribute("model","33")
 												)
 				; // end create element
 				
-		RosterEntry r = new RosterEntry(e, ns);
+		RosterEntry r = new RosterEntry(e);
 		// check
 		Assert.assertEquals("file name ", "file here", r.getFileName());
 		Assert.assertEquals("DCC Address ", "1234", r.getDccAddress());
@@ -96,26 +93,25 @@ public class RosterEntryTest extends TestCase {
 
 	public void testStore() {
 		// create Element
-		org.jdom.Namespace ns = org.jdom.Namespace.getNamespace("roster", "");
-		org.jdom.Element e = new org.jdom.Element("locomotive", ns)
+		org.jdom.Element e = new org.jdom.Element("locomotive")
 									.addAttribute("id","our id")
 									.addAttribute("fileName","file here")
 									.addAttribute("roadNumber","431")
 									.addAttribute("roadName","SP")
 									.addAttribute("mfg","Athearn")
 									.addAttribute("dccAddress","1234")
-									.addContent(new org.jdom.Element("decoder", ns)
+									.addContent(new org.jdom.Element("decoder")
 										.addAttribute("family","91")
 										.addAttribute("model","33")
 												)
 				; // end create element
 				
-		RosterEntry r = new RosterEntry(e, ns);
-		org.jdom.Element o = r.store(ns);
+		RosterEntry r = new RosterEntry(e);
+		org.jdom.Element o = r.store();
 		// check
 		Assert.assertEquals("XML Element ", e.toString(), o.toString());
-		Assert.assertEquals("family ","91", o.getChild("decoder",ns).getAttribute("family").getValue());
-		Assert.assertEquals("model ","33", o.getChild("decoder",ns).getAttribute("model").getValue());
+		Assert.assertEquals("family ","91", o.getChild("decoder").getAttribute("family").getValue());
+		Assert.assertEquals("model ","33", o.getChild("decoder").getAttribute("model").getValue());
 	}
 
 	// from here down is testing infrastructure

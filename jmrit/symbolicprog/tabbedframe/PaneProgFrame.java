@@ -26,7 +26,6 @@ import jmri.jmrit.roster.*;
 
 import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.Namespace;
 import org.jdom.Attribute;
 import org.jdom.DocType;
 import org.jdom.output.XMLOutputter;
@@ -88,8 +87,6 @@ public class PaneProgFrame extends javax.swing.JFrame
 		getContentPane().add(bottom);
 		
 		getContentPane().add(progStatus);
-		// pack  - this should be done again later after config
-		pack();
 	}
 	
 	// ctors
@@ -103,7 +100,8 @@ public class PaneProgFrame extends javax.swing.JFrame
 				thisWindowClosing(e);
 			}
 		});
-
+		pack();
+		if (log.isInfoEnabled()) log.info("PaneProgFrame contructed with no args");
 	}
   		
 	public PaneProgFrame(DecoderFile decoderFile, String locoFile, RosterEntry r, String name) {
@@ -128,9 +126,10 @@ public class PaneProgFrame extends javax.swing.JFrame
 				thisWindowClosing(e);
 			}
 		});
+		pack();
+		if (log.isInfoEnabled()) log.info("PaneProgFrame \""+name+"\" constructed for file "+locoFile);
 	}
   	
-	Namespace lns = null;
 	Element lroot = null;
 	
   	protected void readLocoFile(String locoFile) {
@@ -139,16 +138,15 @@ public class PaneProgFrame extends javax.swing.JFrame
   			return;
   		}
 		LocoFile lf = new LocoFile();  // used as a temporary
-		lns = lf.getNamespace();
 		lroot = null;
 		try {
-			lroot = lf.rootFromFile(lf.fileLocation+File.separator+locoFile, true);
+			lroot = lf.rootFromFile(lf.fileLocation+File.separator+locoFile);
 		} catch (Exception e) { log.error("Exception while loading loco XML file: "+e); }
   	}
   	
   	protected void loadLocoFile() {
 		// load CVs from the loco file tree
-		LocoFile.loadCvModel(lroot.getChild("locomotive", lns), lns, cvModel);
+		LocoFile.loadCvModel(lroot.getChild("locomotive"), cvModel);
   	}
   	
   	protected void loadDecoderFromLoco(RosterEntry r) {
@@ -173,25 +171,32 @@ public class PaneProgFrame extends javax.swing.JFrame
   			return;
   		}
 		
-		Namespace dns = df.getNamespace();
 		Element droot = null;
 		try {
-			droot = df.rootFromFile(df.fileLocation+File.separator+df.getFilename(), true);
+			droot = df.rootFromFile(df.fileLocation+File.separator+df.getFilename());
 		} catch (Exception e) { log.error("Exception while loading decoder XML file: "+e); }
 		// load variables from decoder tree
-		df.loadVariableModel(droot.getChild("decoder", dns), dns, variableModel);
+		df.loadVariableModel(droot.getChild("decoder"), variableModel);
   	}
   	
   	protected void loadProgrammerFile(RosterEntry r) {
 		// Open and parse programmer file
-		if (log.isInfoEnabled()) log.info("read programmer file "+"MultiPane.xml");
+		String rawpath = new File("xml"+File.separator+"DTD"+File.separator).getAbsolutePath();
+		String apath = rawpath;
+        if (File.separatorChar != '/') {
+            apath = apath.replace(File.separatorChar, '/');
+        }
+        if (!apath.startsWith("/")) {
+            apath = "/" + apath;
+        }
+		String path = "file::"+apath;
+
+		if (log.isInfoEnabled()) log.info("readFile: "+"MultiPane.xml"+" path: "); 
 		File pfile = new File("xml"+File.separator+"programmers"+File.separator+"MultiPane.xml");
-		Namespace pns = Namespace.getNamespace("programmer",
-										"http://jmri.sourceforge.net/xml/programmer");
 		SAXBuilder pbuilder = new SAXBuilder(true);  // argument controls validation, on for now
 		Document pdoc = null;
 		try {
-			pdoc = pbuilder.build(new FileInputStream(pfile),"xml"+File.separator);
+			pdoc = pbuilder.build(new BufferedInputStream(new FileInputStream(pfile)),rawpath+File.separator);
 		}
 		catch (Exception e) {
 			log.error("Exception in programmer SAXBuilder "+e);
@@ -200,7 +205,7 @@ public class PaneProgFrame extends javax.swing.JFrame
 		Element proot = pdoc.getRootElement();
 					
 		// load programmer config from programmer tree
-		readConfig(proot, pns, r);
+		readConfig(proot, r);
   	}
   	
 	// handle resizing when first shown
@@ -227,10 +232,10 @@ public class PaneProgFrame extends javax.swing.JFrame
 		dispose();	
 	}
 	
-	void readConfig(Element root, Namespace ns, RosterEntry r) {
+	void readConfig(Element root, RosterEntry r) {
 		// check for "programmer" element at start
 		Element base;	
-		if ( (base = root.getChild("programmer", ns)) == null) {
+		if ( (base = root.getChild("programmer")) == null) {
 			log.error("xml file top element is not programmer");
 			return;
 		}
@@ -239,12 +244,12 @@ public class PaneProgFrame extends javax.swing.JFrame
 		tabPane.addTab("Info", makeInfoPane(r));
 		
 		// for all "pane" elements ...
-		List paneList = base.getChildren("pane",ns);
+		List paneList = base.getChildren("pane");
 		if (log.isDebugEnabled()) log.debug("will process "+paneList.size()+" pane definitions");
 		for (int i=0; i<paneList.size(); i++) {
 			// load each pane
 			String name = ((Element)(paneList.get(i))).getAttribute("name").getValue();
-			newPane( name, ((Element)(paneList.get(i))), ns);
+			newPane( name, ((Element)(paneList.get(i))));
 		}
 
 	}
@@ -311,10 +316,10 @@ public class PaneProgFrame extends javax.swing.JFrame
 		if (newAddr!=null) _rPane.setDccAddress(newAddr);
 	}
 		
-	public void newPane(String name, Element pane, Namespace ns) {
+	public void newPane(String name, Element pane) {
 	
 		// create a panel to hold columns
-		JPanel p = new PaneProgPane(name, pane, ns, cvModel, variableModel);
+		JPanel p = new PaneProgPane(name, pane, cvModel, variableModel);
 		
 		// add the tab to the frame
 		tabPane.addTab(name, p);
@@ -433,7 +438,8 @@ public class PaneProgFrame extends javax.swing.JFrame
 		}
 		// if there isn't a filename, store using the id
 		if (_rosterEntry.getFileName().equals("")) {
-			_rosterEntry.setFileName(_rosterEntry.getId()+".xml");
+			String newFilename = _rosterEntry.getId().replace(' ','_')+".xml";
+			_rosterEntry.setFileName(newFilename);
 			log.debug("new filename: "+_rosterEntry.getFileName());
 		}
 		String filename = _rosterEntry.getFileName();
@@ -455,13 +461,13 @@ public class PaneProgFrame extends javax.swing.JFrame
 
 			// and finally write the file
 			df.writeFile(f, cvModel, variableModel, _rosterEntry);
-			
-			//and store an updated roster file
-			Roster.writeRosterFile();
-			
+						
 		} catch (Exception e) {
 			log.error("error during locomotive file output: "+e);
 		}
+
+		//and store an updated roster file
+		Roster.writeRosterFile();
 		
 	}
 	
@@ -488,7 +494,6 @@ public class PaneProgFrame extends javax.swing.JFrame
 		// dispose of things we owned
 		cvModel.dispose();
 		variableModel.dispose();
-		_rosterEntry.dispose();
 		_rPane.dispose();
 		
 		// remove references to everything we remember
@@ -499,7 +504,6 @@ public class PaneProgFrame extends javax.swing.JFrame
 		_rPane = null;
 		paneList = null;
 		_programmingPane = null;
-		lns = null;
 		lroot = null;
 		tabPane = null;
 		readAll = null;

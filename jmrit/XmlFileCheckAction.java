@@ -14,7 +14,7 @@ import org.jdom.input.*;
  * Make sure an XML file is readable, and validates OK
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: XmlFileCheckAction.java,v 1.1 2001-11-19 04:51:38 jacobsen Exp $
+ * @version			$Id: XmlFileCheckAction.java,v 1.2 2001-11-27 03:27:15 jacobsen Exp $
  * @see             jmri.jmrit.XmlFile
  */
 public class XmlFileCheckAction extends AbstractAction {
@@ -59,7 +59,7 @@ public class XmlFileCheckAction extends AbstractAction {
 			
 		// Open and parse file
 		SAXBuilder builder = new SAXBuilder(true);  // argument controls validation, on for now
-		Document doc = builder.build(new FileInputStream(name),"xml"+File.separator);
+		Document doc = builder.build(new BufferedInputStream(new FileInputStream(name)),"xml"+File.separator);
 		// find root
 		Element root = doc.getRootElement();
 	}

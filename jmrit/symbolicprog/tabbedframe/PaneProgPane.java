@@ -18,7 +18,6 @@ import jmri.jmrit.symbolicprog.*;
 import jmri.jmrit.decoderdefn.*;
 
 import org.jdom.Element;
-import org.jdom.Namespace;
 import org.jdom.Attribute;
 
 /** 
@@ -30,7 +29,7 @@ import org.jdom.Attribute;
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: PaneProgPane.java,v 1.4 2001-11-23 22:23:55 jacobsen Exp $
+ * @version			$Id: PaneProgPane.java,v 1.5 2001-11-27 03:27:15 jacobsen Exp $
  */
 public class PaneProgPane extends javax.swing.JPanel 
 							implements java.beans.PropertyChangeListener  {
@@ -42,16 +41,20 @@ public class PaneProgPane extends javax.swing.JPanel
   	ActionListener l2;
   	ActionListener l3;
   	
+  	/** 
+  	 * Create a null object.  Normally only used for tests and to pre-load classes.
+  	 */   	
+  	public PaneProgPane() {}
+  	
   	/**
   	 * Construct the Pane from the XML definition element.
   	 *
   	 * @parameter name  Name to appear on tab of pane
   	 * @parameter pane  The JDOM Element for the pane definition
-  	 * @parameter ns    The XML namespace used for the pane definition
-  	 * @parameter cvModel Already existing TableModel containing the CV definitions
+   	 * @parameter cvModel Already existing TableModel containing the CV definitions
   	 * @parameter varModel Already existing TableModel containing the variable definitions
   	 */
-	public PaneProgPane(String name, Element pane, Namespace ns, CvTableModel cvModel, VariableTableModel varModel) {
+	public PaneProgPane(String name, Element pane, CvTableModel cvModel, VariableTableModel varModel) {
 	
 		_cvModel = cvModel;
 		_varModel = varModel;
@@ -64,12 +67,12 @@ public class PaneProgPane extends javax.swing.JPanel
 				
 		// handle the xml definition
 		// for all "column" elements ...
-		List colList = pane.getChildren("column",ns);
+		List colList = pane.getChildren("column");
 		for (int i=0; i<colList.size(); i++) {
 			// add separators except at beginning
 			if (i != 0) p.add(new JSeparator(javax.swing.SwingConstants.VERTICAL));
 			// load each column
-			p.add(newColumn( ((Element)(colList.get(i))), ns));
+			p.add(newColumn( ((Element)(colList.get(i)))));
 		}
 		// add glue to the right to allow resize - but this isn't working as expected? Alignment?
 		add(Box.createHorizontalGlue());
@@ -228,7 +231,7 @@ public class PaneProgPane extends javax.swing.JPanel
 	/**
 	 * Create a single column from the JDOM column Element
 	 */
-	public JPanel newColumn(Element column, Namespace ns) {
+	public JPanel newColumn(Element column) {
 
 		// create a panel to add as a new column
 		JPanel c = new JPanel();
@@ -248,7 +251,7 @@ public class PaneProgPane extends javax.swing.JPanel
 			// decode the type
 			if (name.equals("variable")) { // its a variable
 				// load the variable
-				newVariable( e, ns, c, g, cs);
+				newVariable( e, c, g, cs);
 			}
 			else if (name.equals("separator")) { // its a separator
 				JSeparator j = new JSeparator(javax.swing.SwingConstants.HORIZONTAL);
@@ -292,6 +295,13 @@ public class PaneProgPane extends javax.swing.JPanel
 				c.add(l);
 				cs.gridwidth = 1;
 			} 
+			else if (name.equals("dccaddress")) {
+				JPanel l = new DccAddressPanel(_varModel);			
+				cs.gridwidth = GridBagConstraints.REMAINDER;
+				g.setConstraints(l, cs);
+				c.add(l);
+				cs.gridwidth = 1;
+			} 
 			else { // its a mistake
 				log.error("No code to handle element of type "+e.getName());
 			}
@@ -306,7 +316,7 @@ public class PaneProgPane extends javax.swing.JPanel
 	 * Add the representation of a single variable to a column.  The 
 	 * variable is defined by a JDOM variable Element from the XML file.
 	 */
-	public void newVariable( Element var, Namespace ns, JComponent col, GridBagLayout g, GridBagConstraints cs) {
+	public void newVariable( Element var, JComponent col, GridBagLayout g, GridBagConstraints cs) {
 
 		// get the name
 		String name = var.getAttribute("name").getValue();
@@ -332,7 +342,7 @@ public class PaneProgPane extends javax.swing.JPanel
 		JLabel l = new JLabel(" "+label+" ");
 
 		// get representation; store into the list to be programmed
-		JComponent rep = getRepresentation(name, var, ns);
+		JComponent rep = getRepresentation(name, var);
 		int i = _varModel.findVarIndex(name);
 		if (i>=0) varList.add(new Integer(i));
 		
@@ -394,7 +404,7 @@ public class PaneProgPane extends javax.swing.JPanel
 		}
 	}
 
-	public JComponent getRepresentation(String name, Element var, Namespace ns) {
+	public JComponent getRepresentation(String name, Element var) {
 		int i = _varModel.findVarIndex(name);
 		JComponent rep = null;
 		String format = "default";

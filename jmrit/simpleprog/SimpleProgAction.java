@@ -15,7 +15,9 @@ import java.awt.event.ActionEvent;
 
 public class SimpleProgAction 			extends AbstractAction {
 
-	public SimpleProgAction(String s) { super(s);}
+	public SimpleProgAction(String s) { 
+		super(s);
+	}
 	
     public void actionPerformed(ActionEvent e) {
 
@@ -24,7 +26,7 @@ public class SimpleProgAction 			extends AbstractAction {
 		f.show();	
 		
 	}
+		
 }
-
 
 /* @(#)SimpleProgAction.java */

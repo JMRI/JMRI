@@ -2,6 +2,7 @@
 
 package jmri.jmrit.roster;
 
+import jmri.jmrit.XmlFile;
 import java.io.*;
 import javax.swing.*;
 import com.sun.java.util.collections.ArrayList;
@@ -30,14 +31,15 @@ import org.jdom.output.*;
  * whether it should...
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: Roster.java,v 1.5 2001-11-19 04:51:39 jacobsen Exp $
+ * @version			$Id: Roster.java,v 1.6 2001-11-27 03:27:15 jacobsen Exp $
  * @see             jmri.jmrit.roster.RosterEntry
  */
 public class Roster {
 	
 	private static Roster _instance = null;
-	public static Roster instance() {
+	public static synchronized Roster instance() {
 		if (_instance == null) {
+			if (log.isDebugEnabled()) log.debug("Roster creating instance");
 			// create and load
 			_instance = new Roster();
 			try {
@@ -46,6 +48,7 @@ public class Roster {
 				log.error("Exception during roster reading: "+e);
 			}
 		}
+		if (log.isDebugEnabled()) log.debug("Roster returns instance "+_instance);
 		return _instance;
 	}
 	
@@ -122,7 +125,7 @@ public class Roster {
 									String mfg, String decoderModel, String decoderFamily,
 									String id ) {
 		RosterEntry r = (RosterEntry)_list.get(i);
-		if (id != null && id.equals(r.getId())) return false;
+		if (id != null && !id.equals(r.getId())) return false;
 		if (roadName != null && !roadName.equals(r.getRoadName())) return false;
 		if (roadNumber != null && !roadNumber.equals(r.getRoadNumber())) return false;
 		if (dccAddress != null && !dccAddress.equals(r.getDccAddress())) return false;
@@ -136,20 +139,18 @@ public class Roster {
 		if (log.isInfoEnabled()) log.info("writeFile "+name);
 		// This is taken in large part from "Java and XML" page 368 
 		File file = new File(name);
-		Namespace ns = Namespace.getNamespace("roster",
-										"http://jmri.sourceforge.net/xml/roster");
 
 		// create root element
-		Element root = new Element("roster-config", ns);
+		Element root = new Element("roster-config");
 		Document doc = new Document(root);
-		doc.setDocType(new DocType("roster:roster-config","DTD/roster-config.dtd"));
+		doc.setDocType(new DocType("roster-config","roster-config.dtd"));
 		
 		// add top-level elements
 		Element values;
-		root.addContent(values = new Element("roster",ns));
+		root.addContent(values = new Element("roster"));
 		// add entries
 		for (int i=0; i<numEntries(); i++) {
-			values.addContent(((RosterEntry)_list.get(i)).store(ns));
+			values.addContent(((RosterEntry)_list.get(i)).store());
 		}
 		// write the result to selected file
 		java.io.FileOutputStream o = new java.io.FileOutputStream(file);
@@ -167,23 +168,37 @@ public class Roster {
 	 * clear any existing entries.
 	 */
 	void readFile(String name) throws org.jdom.JDOMException, java.io.FileNotFoundException {
-		if (log.isInfoEnabled()) log.info("readFile "+name);
+		String rawpath = new File("xml"+File.separator+"DTD"+File.separator).getAbsolutePath();
+		String apath = rawpath;
+        if (File.separatorChar != '/') {
+            apath = apath.replace(File.separatorChar, '/');
+        }
+        if (!apath.startsWith("/")) {
+            apath = "/" + apath;
+        }
+		String path = "file::"+apath;
+
+		if (log.isInfoEnabled()) log.info("readFile: "+name+" path: "+rawpath); 
 		// This is taken in large part from "Java and XML" page 354
-			
+				
 		// Open and parse file
-		Namespace ns = Namespace.getNamespace("roster",
-										"http://jmri.sourceforge.net/xml/roster");
+		// Namespace ns = Namespace.getNamespace("roster",
+		// 								"http://jmri.sourceforge.net/xml/roster");
 		SAXBuilder builder = new SAXBuilder(true);  // argument controls validation, on for now
-		Document doc = builder.build(new FileInputStream(new File(name)),"xml"+File.separator);
+		Document doc = builder.build(new BufferedInputStream(new FileInputStream(new File(name))),rawpath+File.separator);
+		//Document doc = builder.build(new BufferedInputStream(new FileInputStream(new File(name))),path);
+		
 		// find root
 		Element root = doc.getRootElement();
-			
+		
+		XmlFile.dumpElement(root);
+		
 		// decode type, invoke proper processing routine if a decoder file
-		if (root.getChild("roster", ns) != null) {
-			List l = root.getChild("roster", ns).getChildren("locomotive",ns);
+		if (root.getChild("roster") != null) {
+			List l = root.getChild("roster").getChildren("locomotive");
 			if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" children");
 			for (int i=0; i<l.size(); i++) {
-				addEntry(new RosterEntry((Element)l.get(i), ns));
+				addEntry(new RosterEntry((Element)l.get(i)));
 			}
 		}
 		else {
@@ -211,7 +226,23 @@ public class Roster {
 			log.error("Exception while writing the new roster file, may not be complete: "+e);
 		}
 	}
-	
+
+	/**
+	 * update the in-memory Roster to be consistent with 
+	 * the current roster file.  This removes the existing roster entries!
+	 */
+	 
+	public void reloadRosterFile() {
+		// clear existing
+		_list.clear();
+		// and read new
+		try {
+			_instance.readFile(defaultRosterFilename());
+		} catch (Exception e) {
+			log.error("Exception during roster reading: "+e);
+		}
+	}
+		
 	/** 
 	* Move original file to a backup. Use this before writing out a new version of the file
 	*/

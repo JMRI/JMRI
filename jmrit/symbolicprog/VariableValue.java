@@ -55,6 +55,11 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
 		_stdName = stdname;
 	}
 
+  	/** 
+  	 * Create a null object.  Normally only used for tests and to pre-load classes.
+  	 */ 
+   	protected VariableValue() {}
+
 	// common information - none of these are bound
 	public String name() { return _name; }
 	public String stdName() { return _stdName; }

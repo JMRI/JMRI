@@ -1,44 +1,44 @@
 <!-- Defines XML documenting on a locomotive, esp. information -->
 <!-- on how it is programmed. -->
-<!-- $Id: locomotive-config.dtd,v 1.8 2001-11-18 01:46:42 jacobsen Exp $ -->
+<!-- $Id: locomotive-config.dtd,v 1.9 2001-11-27 03:26:33 jacobsen Exp $ -->
 
-<!ELEMENT locomotive:locomotive-config (locomotive:locomotive)>
-<!ATTLIST locomotive:locomotive-config xmlns:locomotive CDATA "">
+<!ELEMENT locomotive-config (locomotive)>
+<!ATTLIST locomotive-config xmlns:locomotive CDATA "">
 
-<!-- The identification attributes in locomotive:locomotive and -->
-<!-- locomotive:decoder must be kept the same as the ones in the roster DTD -->
+<!-- The identification attributes in locomotive and -->
+<!-- decoder must be kept the same as the ones in the roster DTD -->
 <!-- This copy is used if we have to import an existing file into a roster -->
 
 <!-- The identification attributes must be kept the same as the ones in the roster DTD -->
 
-<!ELEMENT locomotive:locomotive (locomotive:decoder, locomotive:values*) >
-<!ATTLIST locomotive:locomotive id			CDATA #REQUIRED>          
-<!ATTLIST locomotive:locomotive roadName	CDATA #IMPLIED>          
-<!ATTLIST locomotive:locomotive roadNumber	CDATA #IMPLIED>          
-<!ATTLIST locomotive:locomotive mfg			CDATA #IMPLIED>
-<!ATTLIST locomotive:locomotive model		CDATA #IMPLIED>
-<!ATTLIST locomotive:locomotive dccAddress	CDATA #IMPLIED>	<!-- long or short address -->
-<!ATTLIST locomotive:locomotive comment		CDATA #IMPLIED>
+<!ELEMENT locomotive (decoder, values*) >
+<!ATTLIST locomotive id			CDATA #REQUIRED>          
+<!ATTLIST locomotive roadName	CDATA #IMPLIED>          
+<!ATTLIST locomotive roadNumber	CDATA #IMPLIED>          
+<!ATTLIST locomotive mfg			CDATA #IMPLIED>
+<!ATTLIST locomotive model		CDATA #IMPLIED>
+<!ATTLIST locomotive dccAddress	CDATA #IMPLIED>	<!-- long or short address -->
+<!ATTLIST locomotive comment		CDATA #IMPLIED>
 
 <!-- The decoder optional section defines the type of the installed decoder -->
-<!ELEMENT locomotive:decoder EMPTY >
-<!ATTLIST locomotive:decoder model     CDATA #REQUIRED>  <!-- used for identification -->
-<!ATTLIST locomotive:decoder family    CDATA #REQUIRED>  <!-- used for identification   -->
-<!ATTLIST locomotive:decoder comment   CDATA #IMPLIED>
+<!ELEMENT decoder EMPTY >
+<!ATTLIST decoder model     CDATA #REQUIRED>  <!-- used for identification -->
+<!ATTLIST decoder family    CDATA #REQUIRED>  <!-- used for identification   -->
+<!ATTLIST decoder comment   CDATA #IMPLIED>
 
 <!-- The values section defines values for CVs and/or variables -->
-<!ELEMENT locomotive:values (locomotive:decoderDef, locomotive:CVvalue*)>
+<!ELEMENT values (decoderDef, CVvalue*)>
 
-<!ELEMENT locomotive:decoderDef (locomotive:varValue*) >   <!-- Where the variable definitions came from -->
+<!ELEMENT decoderDef (varValue*) >   <!-- Where the variable definitions came from -->
 		  						
-<!ELEMENT locomotive:CVvalue EMPTY>
-<!ATTLIST locomotive:CVvalue name CDATA #REQUIRED>            <!-- Name used for identification -->
-<!ATTLIST locomotive:CVvalue value CDATA #REQUIRED>           <!-- Value of specified CV -->
-<!ATTLIST locomotive:CVvalue comment   CDATA #IMPLIED>
+<!ELEMENT CVvalue EMPTY>
+<!ATTLIST CVvalue name CDATA #REQUIRED>            <!-- Name used for identification -->
+<!ATTLIST CVvalue value CDATA #REQUIRED>           <!-- Value of specified CV -->
+<!ATTLIST CVvalue comment   CDATA #IMPLIED>
 
-<!ELEMENT locomotive:varValue EMPTY>
-<!ATTLIST locomotive:varValue name CDATA #REQUIRED>            <!-- Name used for identification -->
-<!ATTLIST locomotive:varValue value CDATA #REQUIRED>           <!-- Value of specified variable -->
-<!ATTLIST locomotive:varValue comment   CDATA #IMPLIED>
+<!ELEMENT varValue EMPTY>
+<!ATTLIST varValue name CDATA #REQUIRED>            <!-- Name used for identification -->
+<!ATTLIST varValue value CDATA #REQUIRED>           <!-- Value of specified variable -->
+<!ATTLIST varValue comment   CDATA #IMPLIED>
 
 

@@ -7,7 +7,6 @@ import com.sun.java.util.collections.List;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import org.jdom.Element;
-import org.jdom.Namespace;
 
 // try to limit the JDOM to this class, so that others can manipulate...
 
@@ -19,7 +18,7 @@ import org.jdom.Namespace;
  * decoder identification info _before_ the actual decoder file is read.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecoderFile.java,v 1.5 2001-11-23 22:23:54 jacobsen Exp $
+ * @version			$Id: DecoderFile.java,v 1.6 2001-11-27 03:27:15 jacobsen Exp $
  * @see jmri.jmrit.decoderdefn.DecoderIndexFile	
  */
 public class DecoderFile extends XmlFile {
@@ -55,38 +54,30 @@ public class DecoderFile extends XmlFile {
 	public int getNumFunctions()  { return _numFns; }	
 	
 	// static service methods - extract info from a given Element
-	public static String getMfgName(Element decoderElement, Namespace ns) {
-		return decoderElement.getChild("id",ns).getAttribute("mfg").getValue();
+	public static String getMfgName(Element decoderElement) {
+		return decoderElement.getChild("id").getAttribute("mfg").getValue();
 	}
 
-	public static String getMfgID(Element decoderElement, Namespace ns) {
-		return decoderElement.getChild("id",ns).getAttribute("mfgID").getValue();
+	public static String getMfgID(Element decoderElement) {
+		return decoderElement.getChild("id").getAttribute("mfgID").getValue();
 	}
 		
-	public static String getFamilyName(Element decoderElement, Namespace ns) {
-		return decoderElement.getChild("id",ns).getAttribute("family").getValue();
+	public static String getFamilyName(Element decoderElement) {
+		return decoderElement.getChild("id").getAttribute("family").getValue();
 	}
 		
-	public static String getVersionID(Element decoderElement, Namespace ns) {
-		return decoderElement.getChild("id",ns).getAttribute("versionID").getValue();
+	public static String getVersionID(Element decoderElement) {
+		return decoderElement.getChild("id").getAttribute("versionID").getValue();
 	}
-		
-	/**
-	 * Define the namespace for reading/writing this to XML
-	 */
-	public Namespace getNamespace() {
-		return Namespace.getNamespace("decoder",
-										"http://jmri.sourceforge.net/xml/decoder");
-	}
-	
+			
 	// use the decoder Element from the file to load a VariableTableModel for programming.
-	public void loadVariableModel(Element decoderElement, Namespace ns, 
+	public void loadVariableModel(Element decoderElement, 
 											VariableTableModel variableModel) {
 		// find decoder id, assuming first decoder is fine for now (e.g. one per file)
-		Element decoderID = decoderElement.getChild("id",ns);
+		Element decoderID = decoderElement.getChild("id");
 			
 		// start loading variables to table
-		List varList = decoderElement.getChild("variables",ns).getChildren("variable",ns);
+		List varList = decoderElement.getChild("variables").getChildren("variable");
 		for (int i=0; i<varList.size(); i++) {
 			Element e = (Element)(varList.get(i));
 			// if its associated with an inconsistent number of functions,
@@ -95,7 +86,7 @@ public class DecoderFile extends XmlFile {
 				&& getNumFunctions() < Integer.valueOf(e.getAttribute("minFn").getValue()).intValue() )
 					continue;
 			// load each row
-			variableModel.setRow(i, e, ns);
+			variableModel.setRow(i, e);
 		}
 		variableModel.configDone();
 	}

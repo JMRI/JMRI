@@ -10,8 +10,7 @@
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import jmri.jmrit.symbolicprog.KnownLocoSelPane;
-import jmri.jmrit.symbolicprog.NewLocoSelPane;
+import jmri.jmrit.symbolicprog.*;
 import jmri.jmrit.decoderdefn.*;
 import jmri.jmrit.roster.*;
 
@@ -26,7 +25,39 @@ import org.jdom.input.*;
 
 public class PaneProgAction 			extends AbstractAction {
 
-	public PaneProgAction(String s) { super(s);}
+	Object o1, o2, o3, o4;
+	
+	public PaneProgAction(String s) { 
+		super(s);
+
+		// start a low priority request for the Roster & DecoderInstance
+		Thread xmlThread = new Thread( new Runnable() {
+			public void run() { 
+				Roster.instance();
+				DecoderIndexFile.instance(); 
+				if (log.isInfoEnabled()) log.info("xml loading thread finishes reading Roster, DecoderIndexFIle");
+			}
+		}, "read roster & decoderIndex");
+		xmlThread.setPriority(Thread.NORM_PRIORITY-2);	
+		xmlThread.start();
+
+		// start a read low priority request to load some classes
+		final ClassLoader loader = this.getClass().getClassLoader();
+		Thread classLoadingThread = new Thread( new Runnable() {
+				public void run() { 
+					// load classes by requesting objects
+					new PaneProgFrame();
+					new PaneProgPane();
+					new EnumVariableValue();
+					new SpeedTableVarValue();
+					
+					if (log.isInfoEnabled()) log.info("class loading thread finishes");
+				}
+			}, "loading classes");	
+		classLoadingThread.setPriority(Thread.MIN_PRIORITY);	
+		classLoadingThread.start();
+		
+	}
 	
     public void actionPerformed(ActionEvent e) {
 
@@ -71,7 +102,8 @@ public class PaneProgAction 			extends AbstractAction {
 		f.getContentPane().add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
 		f.getContentPane().add(pane4);
 		
-		f.pack();	
+		f.pack();
+		if (log.isInfoEnabled()) log.info("Tab-Programmer setup created");
 		f.show();	
 	}
 

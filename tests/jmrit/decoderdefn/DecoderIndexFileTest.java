@@ -26,8 +26,8 @@ public class DecoderIndexFileTest extends TestCase {
 		DecoderIndexFile di = new DecoderIndexFile();
 		setupDoc();
 		// invoke parsing
-		di.readMfgSection(decoderIndexElement, ns);
-		di.readFamilySection(decoderIndexElement, ns);
+		di.readMfgSection(decoderIndexElement);
+		di.readFamilySection(decoderIndexElement);
 		// success here is getting to the end
 	}
 	
@@ -36,7 +36,7 @@ public class DecoderIndexFileTest extends TestCase {
 		DecoderIndexFile di = new DecoderIndexFile();
 		setupDoc();
 		// invoke parsing
-		di.readMfgSection(decoderIndexElement, ns);
+		di.readMfgSection(decoderIndexElement);
 		// check results
 		Assert.assertEquals("Digitrax ID from name ", "129", di.mfgIdFromName("Digitrax"));
 		Assert.assertEquals("NMRA ID from name ", null, di.mfgIdFromName("NMRA"));
@@ -48,8 +48,8 @@ public class DecoderIndexFileTest extends TestCase {
 		DecoderIndexFile di = new DecoderIndexFile();
 		setupDoc();
 		// invoke parsing
-		di.readMfgSection(decoderIndexElement, ns);
-		di.readFamilySection(decoderIndexElement, ns);
+		di.readMfgSection(decoderIndexElement);
+		di.readFamilySection(decoderIndexElement);
 		// check first Digitrax decoder in test tree; actually the 3rd decoder
 		Assert.assertEquals("1st decoder model ", "DH142", ((DecoderFile)di.decoderList.get(2)).getModel());
 		Assert.assertEquals("1st decoder mfg ", "Digitrax", ((DecoderFile)di.decoderList.get(2)).getMfg());
@@ -62,9 +62,9 @@ public class DecoderIndexFileTest extends TestCase {
 		// setup the test object with guts
 		DecoderIndexFile di = new DecoderIndexFile();
 		setupDoc();
-		di.readMfgSection(decoderIndexElement, ns);
+		di.readMfgSection(decoderIndexElement);
 		// parse a single Family
-		di.readFamily(family1, ns);
+		di.readFamily(family1);
 		// expect to find two decoders in a single family
 		Assert.assertEquals("number of decoders ", 2, di.numDecoders());
 		// check second one
@@ -79,9 +79,9 @@ public class DecoderIndexFileTest extends TestCase {
 		// setup the test object with guts
 		DecoderIndexFile di = new DecoderIndexFile();
 		setupDoc();
-		di.readMfgSection(decoderIndexElement, ns);
+		di.readMfgSection(decoderIndexElement);
 		// parse a single Family
-		di.readFamily(family2, ns);
+		di.readFamily(family2);
 		// expect to find two decoders in a single family
 		Assert.assertEquals("number of decoders ", 2, di.numDecoders());
 		// check first one
@@ -105,8 +105,8 @@ public class DecoderIndexFileTest extends TestCase {
 		DecoderIndexFile di = new DecoderIndexFile();
 		setupDoc();
 		// invoke parsing
-		di.readMfgSection(decoderIndexElement, ns);
-		di.readFamilySection(decoderIndexElement, ns);
+		di.readMfgSection(decoderIndexElement);
+		di.readFamilySection(decoderIndexElement);
 		// search for the two Digitrax decoders
 		List l1 = di.matchingDecoderList("Digitrax", null, null, null, null);
 		Assert.assertEquals("Found with name Digitrax ", 2, l1.size());
@@ -122,7 +122,6 @@ public class DecoderIndexFileTest extends TestCase {
 	}
 
 	// static variables for the test XML structures
-	Namespace ns = null;
 	Element root = null;
 	Document doc = null;
 	Element decoderIndexElement = null;
@@ -132,47 +131,46 @@ public class DecoderIndexFileTest extends TestCase {
 	// provide a test document in the above static variables
 	void setupDoc() {
 		// create a JDOM tree with just some elements
-		ns = Namespace.getNamespace("decoderIndex", "");
-		root = new Element("decoderIndex-config", ns);
+		root = new Element("decoderIndex-config");
 		doc = new Document(root);
-		doc.setDocType(new DocType("decoderIndex:decoderIndex-config","DTD/decoderIndex-config.dtd"));
+		doc.setDocType(new DocType("decoderIndex-config","decoderIndex-config.dtd"));
 		
 		// add some elements
-		root.addContent(decoderIndexElement = new Element("decoderIndex",ns)
-					.addContent(new Element("mfgList", ns)
-									.addContent(new Element("manufacturer", ns)
+		root.addContent(decoderIndexElement = new Element("decoderIndex")
+					.addContent(new Element("mfgList")
+									.addContent(new Element("manufacturer")
 										.addAttribute("mfg", "NMRA")
 												)
-									.addContent(new Element("manufacturer", ns)
+									.addContent(new Element("manufacturer")
 										.addAttribute("mfg", "Digitrax")
 										.addAttribute("mfgID", "129")
 												)
 								)
-					.addContent(new Element("familyList",ns)
-									.addContent(family1 = new Element("family", ns)
+					.addContent(new Element("familyList")
+									.addContent(family1 = new Element("family")
 										.addAttribute("mfg", "NMRA")
 										.addAttribute("name", "NMRA S&RP definitions")
 										.addAttribute("file", "NMRA.xml")
-										.addContent(new Element("decoder", ns)
+										.addContent(new Element("decoder")
 												.addAttribute("model", "full set")
 												.addAttribute("comment", "all CVs in RP 9.2.1")
 												   )
-										.addContent(new Element("decoder", ns)
+										.addContent(new Element("decoder")
 												.addAttribute("model", "required set")
 												.addAttribute("comment", "required CVs in RP 9.2.1")
 												   )
 												)
-									.addContent(family2 = new Element("family", ns)
+									.addContent(family2 = new Element("family")
 										.addAttribute("mfg", "Digitrax")
 										.addAttribute("name", "**2 family")
 										.addAttribute("file", "DH142.xml")
 										.addAttribute("versionID", "21")
-										.addContent(new Element("decoder", ns)
+										.addContent(new Element("decoder")
 												.addAttribute("model", "DH142")
 												.addAttribute("numFns", "2")
 												// no versionID here, so use 21 from parent
 												   )
-										.addContent(new Element("decoder", ns)
+										.addContent(new Element("decoder")
 												.addAttribute("model", "DN142")
 												.addAttribute("numFns", "4")
 												.addAttribute("versionID", "22")

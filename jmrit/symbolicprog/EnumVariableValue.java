@@ -21,7 +21,7 @@ import com.sun.java.util.collections.ArrayList;
  * Extends VariableValue to represent a enumerated variable.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: EnumVariableValue.java,v 1.7 2001-11-23 22:23:54 jacobsen Exp $
+ * @version			$Id: EnumVariableValue.java,v 1.8 2001-11-27 03:27:15 jacobsen Exp $
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
@@ -32,7 +32,6 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 		super(name, comment, readOnly, cvNum, mask, v, status, stdname);
 		_maxVal = maxVal;
 		_minVal = minVal;
-		_value = new JComboBox();
 		_value.setActionCommand("");
 		_defaultColor = _value.getBackground();
 		_value.setBackground(COLOR_UNKNOWN);
@@ -41,6 +40,11 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 		((CvValue)_cvVector.elementAt(getCvNum())).addPropertyChangeListener(this);
 	}
 	
+  	/** 
+  	 * Create a null object.  Normally only used for tests and to pre-load classes.
+  	 */ 
+   	public EnumVariableValue() {}
+  	
 	public void addItem(String s) {
 		_value.addItem(s);
 	}
@@ -154,7 +158,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 	}
 
 	// stored value
-	JComboBox _value = null;
+	JComboBox _value = new JComboBox();
 
 	/* Internal class extends a JComboBox so that its color is consistent with 
 	 * an underlying variable; we return one of these in getRep.

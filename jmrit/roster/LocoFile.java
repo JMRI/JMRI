@@ -20,19 +20,11 @@ import org.jdom.output.*;
  * in memory.  The interal storage is a JDOM tree. See locomotive-config.dtd
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version		 	$Id: LocoFile.java,v 1.3 2001-11-19 04:51:39 jacobsen Exp $
+ * @version		 	$Id: LocoFile.java,v 1.4 2001-11-27 03:27:15 jacobsen Exp $
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
 public class LocoFile extends XmlFile {
-	
-	/**
-	 * Define the namespace for reading/writing this to XML
-	 */
-	public Namespace getNamespace() {
-		return Namespace.getNamespace("locomotive",
-										"http://jmri.sourceforge.net/xml/locomotive");
-	}
 	
 	/**
 	 * Convert to a cannonical text form for ComboBoxes, etc
@@ -44,12 +36,12 @@ public class LocoFile extends XmlFile {
 	/**
 	 * Load a CvTableModel from the locomotive element in the File
 	 */
-	public static void loadCvModel(Element loco, Namespace ns, CvTableModel cvModel){
+	public static void loadCvModel(Element loco, CvTableModel cvModel){
 			// get the CVs and load
-			Element values = loco.getChild("values", ns);
+			Element values = loco.getChild("values");
 			if (values != null) {
 			// get the CV values and load
-				List elementList = values.getChildren("CVvalue",ns);
+				List elementList = values.getChildren("CVvalue");
 				if (log.isDebugEnabled()) log.debug("Found "+elementList.size()+" CVvalues");
 				
 				for (int i=0; i<elementList.size(); i++) {
@@ -83,17 +75,15 @@ public class LocoFile extends XmlFile {
 	public void writeFile(File file, CvTableModel cvModel, VariableTableModel variableModel, RosterEntry r) {
 		try {
 			// This is taken in large part from "Java and XML" page 368 
-			Namespace ns = Namespace.getNamespace("locomotive",
-										"http://jmri.sourceforge.net/xml/locomotive");
 
 			// create root element
-			Element root = new Element("locomotive-config", ns);
+			Element root = new Element("locomotive-config");
 			Document doc = new Document(root);
-			doc.setDocType(new DocType("locomotive:locomotive-config","DTD/locomotive-config.dtd"));
+			doc.setDocType(new DocType("locomotive-config","locomotive-config.dtd"));
 		
 			// add top-level elements
 			Element values;
-			root.addContent(new Element("locomotive",ns)		// locomotive values are first item
+			root.addContent(new Element("locomotive")		// locomotive values are first item
 					.addAttribute("id", r.getId())
 					.addAttribute("roadNumber",r.getRoadNumber())
 					.addAttribute("roadName",r.getRoadName())
@@ -101,28 +91,28 @@ public class LocoFile extends XmlFile {
 					.addAttribute("model",r.getModel())
 					.addAttribute("dccAddress",r.getDccAddress())
 					.addAttribute("comment",r.getComment())
-					.addContent(new Element("decoder", ns)
+					.addContent(new Element("decoder")
 									.addAttribute("model",r.getDecoderModel())
 									.addAttribute("family",r.getDecoderFamily())
 									.addAttribute("comment",r.getDecoderComment())
 								)
-						  .addContent(values = new Element("values", ns))
+						  .addContent(values = new Element("values"))
 					)
 				;
 					
 			// Append a decoderDef element to values
 			Element decoderDef;
-			values.addContent(decoderDef = new Element("decoderDef", ns));
+			values.addContent(decoderDef = new Element("decoderDef"));
 			// add the variable values to the decoderDef Element
 			for (int i = 0; i < variableModel.getRowCount(); i++) {
-				decoderDef.addContent(new Element("varValue", ns)
+				decoderDef.addContent(new Element("varValue")
 									.addAttribute("name", variableModel.getName(i))
 									.addAttribute("value", variableModel.getValString(i))
 						);
 			}
 			// add the CV values to the values Element
 			for (int i = 0; i < cvModel.getRowCount(); i++) {
-				values.addContent(new Element("CVvalue", ns)
+				values.addContent(new Element("CVvalue")
 									.addAttribute("name", cvModel.getName(i))
 									.addAttribute("value", cvModel.getValString(i))
 						);
@@ -155,7 +145,7 @@ public class LocoFile extends XmlFile {
 		return f;
 	}
 	
-	static public String fileLocation = "prefs";
+	static public String fileLocation = "prefs"+File.separator+"roster";
 
 	// initialize logging	
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoFile.class.getName());

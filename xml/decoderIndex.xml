@@ -1,55 +1,55 @@
 <?xml version="1.0"?>
-<!DOCTYPE decoderIndex:decoderIndex-config SYSTEM "DTD/decoderIndex-config.dtd">
-<decoderIndex:decoderIndex-config xmlns:decoderIndex="http://jmri.sourceforge.net/xml/decoderIndex">
-<!-- $Id: decoderIndex.xml,v 1.1 2001-11-18 01:55:11 jacobsen Exp $ -->
-<decoderIndex:decoderIndex>
+<!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
+<decoderIndex-config xmlns:decoderIndex="http://jmri.sourceforge.net/xml/decoderIndex">
+<!-- $Id: decoderIndex.xml,v 1.2 2001-11-27 03:26:31 jacobsen Exp $ -->
+<decoderIndex>
 
-<decoderIndex:mfgList>
-	<decoderIndex:manufacturer mfg="NMRA"/>
-	<decoderIndex:manufacturer mfgID="137"	mfg="A-Train Electronics"/>
-	<decoderIndex:manufacturer mfgID="173"	mfg="Arnold"/>
-	<decoderIndex:manufacturer mfgID="7"	mfg="CVP Products"/>
-	<decoderIndex:manufacturer mfgID="129"	mfg="Digitrax"/>
-	<decoderIndex:manufacturer mfgID="133"	mfg="ICC"/>
-	<decoderIndex:manufacturer mfgID="99"	mfg="Lenz"/>
-	<decoderIndex:manufacturer mfgID="143"	mfg="MRC"/>
-	<decoderIndex:manufacturer mfgID="11" 	mfg="North Coast Engineering"/>
-	<decoderIndex:manufacturer mfgID="14" 	mfg="PSI -Dynatrol"/>
-	<decoderIndex:manufacturer mfgID="15" 	mfg="RamFixx Technologies"/>
-	<decoderIndex:manufacturer mfgID="139" 	mfg="RealRail Effects"/>
-	<decoderIndex:manufacturer mfgID="149"	mfg="Rock Junction Controls"/>
-	<decoderIndex:manufacturer mfgID="153"	mfg="Train Control Systems"/>
-	<decoderIndex:manufacturer mfgID="141"	mfg="Throttle-Up"/>
-	<decoderIndex:manufacturer mfgID="131"	mfg="Trix Modelleisenbahn"/>
-	<decoderIndex:manufacturer mfgID="147"	mfg="Umelic Ing Buero"/>
-	<decoderIndex:manufacturer mfgID="12"	mfg="Wangrow"/>
-	<decoderIndex:manufacturer mfgID="145"	mfg="Zimo"/>
-	<decoderIndex:manufacturer mfgID="132"	mfg="ZTC"/>
-</decoderIndex:mfgList>
+<mfgList>
+	<manufacturer mfg="NMRA"/>
+	<manufacturer mfgID="137"	mfg="A-Train Electronics"/>
+	<manufacturer mfgID="173"	mfg="Arnold"/>
+	<manufacturer mfgID="7"	mfg="CVP Products"/>
+	<manufacturer mfgID="129"	mfg="Digitrax"/>
+	<manufacturer mfgID="133"	mfg="ICC"/>
+	<manufacturer mfgID="99"	mfg="Lenz"/>
+	<manufacturer mfgID="143"	mfg="MRC"/>
+	<manufacturer mfgID="11" 	mfg="North Coast Engineering"/>
+	<manufacturer mfgID="14" 	mfg="PSI -Dynatrol"/>
+	<manufacturer mfgID="15" 	mfg="RamFixx Technologies"/>
+	<manufacturer mfgID="139" 	mfg="RealRail Effects"/>
+	<manufacturer mfgID="149"	mfg="Rock Junction Controls"/>
+	<manufacturer mfgID="153"	mfg="Train Control Systems"/>
+	<manufacturer mfgID="141"	mfg="Throttle-Up"/>
+	<manufacturer mfgID="131"	mfg="Trix Modelleisenbahn"/>
+	<manufacturer mfgID="147"	mfg="Umelic Ing Buero"/>
+	<manufacturer mfgID="12"	mfg="Wangrow"/>
+	<manufacturer mfgID="145"	mfg="Zimo"/>
+	<manufacturer mfgID="132"	mfg="ZTC"/>
+</mfgList>
 
 <!-- The very first decoder entry becomes the default, so leave it an NMRA one -->
 
-<decoderIndex:familyList>
-	<decoderIndex:family name="NMRA" file="NMRA.xml" mfg="NMRA">
-		<decoderIndex:decoder model="All CVs" comment="List is from RP 9.2.2" />
-	</decoderIndex:family>
+<familyList>
+	<family name="NMRA" file="NMRA.xml" mfg="NMRA">
+		<decoder model="All CVs" comment="List is from RP 9.2.2" />
+	</family>
 
-	<decoderIndex:family name="Digitrax 1x1" file="Digitrax_1x1.xml" mfg="Digitrax" versionID="33">
-		<decoderIndex:decoder model="DH121" numFns="2" />
-		<decoderIndex:decoder model="DN121" numFns="2" />
-		<decoderIndex:decoder model="DN141" numFns="4" />
-	</decoderIndex:family>
+	<family name="Digitrax 1x1" file="Digitrax_1x1.xml" mfg="Digitrax" versionID="33">
+		<decoder model="DH121" numFns="2" />
+		<decoder model="DN121" numFns="2" />
+		<decoder model="DN141" numFns="4" />
+	</family>
 
-	<decoderIndex:family name="Digitrax 1x2" file="Digitrax_1x2.xml" mfg="Digitrax" versionID="242">
-		<decoderIndex:decoder model="DH142" numFns="4" />
-		<decoderIndex:decoder model="DN142" numFns="4" />
-	</decoderIndex:family>
+	<family name="Digitrax 1x2" file="Digitrax_1x2.xml" mfg="Digitrax" versionID="242">
+		<decoder model="DH142" numFns="4" />
+		<decoder model="DN142" numFns="4" />
+	</family>
 			
-	<decoderIndex:family name="Digitrax 150" file="Digitrax_150.xml" mfg="Digitrax" versionID="45">
-		<decoderIndex:decoder model="DH150" numFns="2" />
-	</decoderIndex:family>
+	<family name="Digitrax 150" file="Digitrax_150.xml" mfg="Digitrax" versionID="45">
+		<decoder model="DH150" numFns="2" />
+	</family>
 
-</decoderIndex:familyList>
+</familyList>
 
-</decoderIndex:decoderIndex>
-</decoderIndex:decoderIndex-config>
+</decoderIndex>
+</decoderIndex-config>

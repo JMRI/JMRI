@@ -1,100 +1,100 @@
 <?xml version="1.0"?>
-<!DOCTYPE decoder:decoder-config SYSTEM "DTD/decoder-config.dtd">
-<!-- $Id: Digitrax_1x1.xml,v 1.2 2001-11-23 21:59:48 jacobsen Exp $ -->
-<decoder:decoder-config xmlns:decoder="http://jmri.sourceforge.net/xml/decoder">
-<decoder:decoder>
-	<decoder:id family="Digitrax 1x1" mfg="Digitrax" mfgID="129" defnVersion="33"
-				comment="CVs for Digitrax 1x1, e.g. DH121"></decoder:id>
+<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<!-- $Id: Digitrax_1x1.xml,v 1.3 2001-11-27 03:26:33 jacobsen Exp $ -->
+<decoder-config xmlns:decoder="http://jmri.sourceforge.net/xml/decoder">
+<decoder>
+	<id family="Digitrax 1x1" mfg="Digitrax" mfgID="129" defnVersion="33"
+				comment="CVs for Digitrax 1x1, e.g. DH121"></id>
 
-	<decoder:programming direct="byteOnly" paged="yes" 
-	                     register="yes" ops="yes"></decoder:programming>
+	<programming direct="byteOnly" paged="yes" 
+	                     register="yes" ops="yes"></programming>
 
-	<decoder:variables>
-		<decoder:variable name="Address" CV="1" mask="VVVVVVVV" stdName="Primary Address">
-			<decoder:decVal min="1" max="127"/>
-			</decoder:variable>
-		<decoder:variable name="Start voltage" CV="2" stdName="Vstart"
+	<variables>
+		<variable name="Address" CV="1" mask="VVVVVVVV" stdName="Primary Address">
+			<decVal min="1" max="127"/>
+			</variable>
+		<variable name="Start voltage" CV="2" stdName="Vstart"
 						comment="A value of 255 corresponds to 100%">
-			<decoder:decVal></decoder:decVal>
-			</decoder:variable>
-		<decoder:variable name="Acceleration Rate" CV="3">
-			<decoder:decVal max="31"/>
-			</decoder:variable>
-		<decoder:variable name="Deceleration Rate" CV="4">
-			<decoder:decVal max="31"/>
-			</decoder:variable>
-		<decoder:variable name="Maximum Voltage" CV="5" stdName="Vhigh">
-			<decoder:decVal/>
-			</decoder:variable>
-		<decoder:variable name="Midpoint Voltage" CV="6" stdName="Vmid">
-			<decoder:decVal/>
-			</decoder:variable>
-		<decoder:variable name="Version ID" CV="7" readOnly="yes" stdName="Manufacturer Version No">
-				<decoder:decVal/>
-			</decoder:variable>
-		<decoder:variable name="Manufacturer ID" CV="8" readOnly="yes">
-				<decoder:decVal/>
-			</decoder:variable>
-		<decoder:variable name="Long Address" CV="17" stdName="Extended Address">
-			<decoder:longAddressVal/>
-			</decoder:variable>
-		<decoder:variable name="Advanced Consist address" CV="19" stdName="Consist Address">
-			<decoder:decVal/>
-			</decoder:variable>
-		<decoder:variable name="Normal direction of motion" CV="29" mask="XXXXXXXV" stdName="Locomotive Direction">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="forward"/>
-				<decoder:enumChoice choice="reverse"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="Speed steps" CV="29" mask="XXXXXXVX" stdName="FL Location">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="14"/>
-				<decoder:enumChoice choice="28/128"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="Analog conversion mode" CV="29" mask="XXXXXVXX"
+			<decVal></decVal>
+			</variable>
+		<variable name="Acceleration Rate" CV="3">
+			<decVal max="31"/>
+			</variable>
+		<variable name="Deceleration Rate" CV="4">
+			<decVal max="31"/>
+			</variable>
+		<variable name="Maximum Voltage" CV="5" stdName="Vhigh">
+			<decVal/>
+			</variable>
+		<variable name="Midpoint Voltage" CV="6" stdName="Vmid">
+			<decVal/>
+			</variable>
+		<variable name="Version ID" CV="7" readOnly="yes" stdName="Manufacturer Version No">
+				<decVal/>
+			</variable>
+		<variable name="Manufacturer ID" CV="8" readOnly="yes">
+				<decVal/>
+			</variable>
+		<variable name="Long Address" CV="17" stdName="Extended Address">
+			<longAddressVal/>
+			</variable>
+		<variable name="Advanced Consist address" CV="19" stdName="Consist Address">
+			<decVal/>
+			</variable>
+		<variable name="Normal direction of motion" CV="29" mask="XXXXXXXV" stdName="Locomotive Direction">
+			<enumVal>
+				<enumChoice choice="forward"/>
+				<enumChoice choice="reverse"/>
+				</enumVal>
+			</variable>
+		<variable name="Speed steps" CV="29" mask="XXXXXXVX" stdName="FL Location">
+			<enumVal>
+				<enumChoice choice="14"/>
+				<enumChoice choice="28/128"/>
+				</enumVal>
+			</variable>
+		<variable name="Analog conversion mode" CV="29" mask="XXXXXVXX"
 					 stdName="Power Source Conversion">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="Off"/>
-				<decoder:enumChoice choice="On"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="Speed Table" CV="29" mask="XXXVXXXX"
+			<enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+				</enumVal>
+			</variable>
+		<variable name="Speed Table" CV="29" mask="XXXVXXXX"
 					stdName="Speed Table Definition">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="Off"/>
-				<decoder:enumChoice choice="On"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="Addressing Mode" CV="29" mask="XXVXXXXX"
+			<enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+				</enumVal>
+			</variable>
+		<variable name="Addressing Mode" CV="29" mask="XXVXXXXX"
 					stdName="Address Format">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="2 digit addressing"/>
-				<decoder:enumChoice choice="4 digit addressing"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="Kick Start" CV="65">
-			<decoder:decVal/>
-			</decoder:variable>
-		<decoder:variable name="Forward Trim" CV="66">
-			<decoder:decVal/>
-			</decoder:variable>
-		<decoder:variable name="Reverse Trim" CV="95">
-			<decoder:decVal/>
-			</decoder:variable>
-		<decoder:variable name="User Private ID #1" CV="105"
+			<enumVal>
+				<enumChoice choice="2 digit addressing"/>
+				<enumChoice choice="4 digit addressing"/>
+				</enumVal>
+			</variable>
+		<variable name="Kick Start" CV="65">
+			<decVal/>
+			</variable>
+		<variable name="Forward Trim" CV="66">
+			<decVal/>
+			</variable>
+		<variable name="Reverse Trim" CV="95">
+			<decVal/>
+			</variable>
+		<variable name="User Private ID #1" CV="105"
 					stdName="User Identification #1">
-			<decoder:decVal/>
-			</decoder:variable>
-		<decoder:variable name="User Private ID #2" CV="106"
+			<decVal/>
+			</variable>
+		<variable name="User Private ID #2" CV="106"
 					stdName="User Identification #2">
-			<decoder:decVal/>
-			</decoder:variable>
-		<decoder:variable name="Speed Table" CV="67">
-			<decoder:speedTableVal/>
-			</decoder:variable>
-	</decoder:variables>
+			<decVal/>
+			</variable>
+		<variable name="Speed Table" CV="67">
+			<speedTableVal/>
+			</variable>
+	</variables>
 	
-</decoder:decoder>
-</decoder:decoder-config>
+</decoder>
+</decoder-config>

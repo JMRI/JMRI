@@ -1,32 +1,32 @@
 <!-- Defines XML documenting the list of available decoder definitions -->
-<!-- $Id: decoderIndex-config.dtd,v 1.4 2001-11-23 21:59:20 jacobsen Exp $ -->
+<!-- $Id: decoderIndex-config.dtd,v 1.5 2001-11-27 03:26:33 jacobsen Exp $ -->
 
-<!ELEMENT decoderIndex:decoderIndex-config (decoderIndex:decoderIndex)>
-<!ATTLIST decoderIndex:decoderIndex-config xmlns:decoderIndex CDATA "">
+<!ELEMENT decoderIndex-config (decoderIndex)>
+<!ATTLIST decoderIndex-config xmlns:decoderIndex CDATA "">
 
-<!ELEMENT decoderIndex:decoderIndex (decoderIndex:mfgList, decoderIndex:familyList)>
+<!ELEMENT decoderIndex (mfgList, familyList)>
 
 <!-- Match NMRA codes to manufacturer names & vice versa -->
-<!ELEMENT decoderIndex:mfgList (decoderIndex:manufacturer*) >
+<!ELEMENT mfgList (manufacturer*) >
 
-<!ELEMENT decoderIndex:manufacturer EMPTY >
-<!ATTLIST decoderIndex:manufacturer mfg       CDATA #REQUIRED>  <!-- mfg name used for identification   -->
-<!ATTLIST decoderIndex:manufacturer mfgID     CDATA #IMPLIED>  <!-- CV08 value, missing means any           -->
-<!ATTLIST decoderIndex:manufacturer comment   CDATA #IMPLIED>
+<!ELEMENT manufacturer EMPTY >
+<!ATTLIST manufacturer mfg       CDATA #REQUIRED>  <!-- mfg name used for identification   -->
+<!ATTLIST manufacturer mfgID     CDATA #IMPLIED>  <!-- CV08 value, missing means any           -->
+<!ATTLIST manufacturer comment   CDATA #IMPLIED>
 
 <!-- familyList is actually a list of families and hence decoder definitions -->
-<!ELEMENT decoderIndex:familyList (decoderIndex:family*) >
+<!ELEMENT familyList (family*) >
 
-<!ELEMENT decoderIndex:family (decoderIndex:decoder*) >
-<!ATTLIST decoderIndex:family file      CDATA #REQUIRED>  <!-- file name for details -->
-<!ATTLIST decoderIndex:family name      CDATA #REQUIRED>  <!-- family name used for identification -->
-<!ATTLIST decoderIndex:family mfg       CDATA #REQUIRED>  <!-- mfg name used for identification   -->
-<!ATTLIST decoderIndex:family versionID CDATA #IMPLIED >  <!-- CV07 value, default default blank means any   -->
-<!ATTLIST decoderIndex:family comment   CDATA #IMPLIED>
+<!ELEMENT family (decoder*) >
+<!ATTLIST family file      CDATA #REQUIRED>  <!-- file name for details -->
+<!ATTLIST family name      CDATA #REQUIRED>  <!-- family name used for identification -->
+<!ATTLIST family mfg       CDATA #REQUIRED>  <!-- mfg name used for identification   -->
+<!ATTLIST family versionID CDATA #IMPLIED >  <!-- CV07 value, default default blank means any   -->
+<!ATTLIST family comment   CDATA #IMPLIED>
 
-<!ELEMENT decoderIndex:decoder EMPTY >
-<!ATTLIST decoderIndex:decoder model     CDATA #REQUIRED>  <!-- model name used for identification -->
-<!ATTLIST decoderIndex:decoder versionID CDATA #IMPLIED >  <!-- CV07 value, default default blank means any   -->
-<!ATTLIST decoderIndex:decoder numFns    CDATA #IMPLIED>   <!-- number of functions, default is all -->
-<!ATTLIST decoderIndex:decoder options   CDATA #IMPLIED>   <!-- comma-sep list of included options, but default is all on -->
-<!ATTLIST decoderIndex:decoder comment   CDATA #IMPLIED>
+<!ELEMENT decoder EMPTY >
+<!ATTLIST decoder model     CDATA #REQUIRED>  <!-- model name used for identification -->
+<!ATTLIST decoder versionID CDATA #IMPLIED >  <!-- CV07 value, default default blank means any   -->
+<!ATTLIST decoder numFns    CDATA #IMPLIED>   <!-- number of functions, default is all -->
+<!ATTLIST decoder options   CDATA #IMPLIED>   <!-- comma-sep list of included options, but default is all on -->
+<!ATTLIST decoder comment   CDATA #IMPLIED>

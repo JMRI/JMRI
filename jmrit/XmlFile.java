@@ -14,29 +14,41 @@ import java.io.*;
 
 import org.jdom.*;
 import org.jdom.input.*;
+import com.sun.java.util.collections.*;
 
 /** 
  * XmlFile contains various member implementations for handling aspects of XML files.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version		$Id: XmlFile.java,v 1.2 2001-11-12 21:53:25 jacobsen Exp $	
+ * @version		$Id: XmlFile.java,v 1.3 2001-11-27 03:27:15 jacobsen Exp $	
  */
 public abstract class XmlFile {
 	
-	abstract public Namespace getNamespace();
-
 	/**
 	 * Read the contents of an XML file, using the abstract service routines.
 	 */
-	public Element rootFromFile(String name, boolean verify) throws org.jdom.JDOMException, java.io.FileNotFoundException {
-		if (log.isInfoEnabled()) log.info("readFile "+name);
+	public Element rootFromFile(String name) throws org.jdom.JDOMException, java.io.FileNotFoundException {
+		String rawpath = new File("xml"+File.separator+"DTD"+File.separator).getAbsolutePath();
+		String apath = rawpath;
+        if (File.separatorChar != '/') {
+            apath = apath.replace(File.separatorChar, '/');
+        }
+        if (!apath.startsWith("/")) {
+            apath = "/" + apath;
+        }
+		String path = "file::"+apath;
+
+		if (log.isInfoEnabled()) log.info("readFile: "+name+" path: "+rawpath); 
 		// This is taken in large part from "Java and XML" page 354
 			
 		// Open and parse file
-		Namespace ns = getNamespace();
+		
+		// DOMBuilder builder = new DOMBuilder(verify);  // argument controls validation, on for now
+		// Document doc = builder.build(new BufferedInputStream(new FileInputStream(new File(name))));
 		
 		SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation, on for now
-		Document doc = builder.build(new FileInputStream(new File(name)),"xml"+File.separator);
+		Document doc = builder.build(new BufferedInputStream(new FileInputStream(new File(name))),rawpath+File.separator);
+		
 		// find root
 		return doc.getRootElement();
 			
@@ -51,6 +63,22 @@ public abstract class XmlFile {
 		return file.exists();
 	}
 
+
+	/** 
+	* Diagnostic printout of as much as we can find
+	*/
+	static public void dumpElement(Element name) { 
+		List l = name.getChildren();
+		for (int i = 0; i<l.size(); i++) {
+			System.out.println(" Element: "+((Element)l.get(i)).getName()+" ns: "+((Element)l.get(i)).getNamespace());
+		}
+	}
+	
+	static boolean verify = true;
+	
+	// initialize SAXbuilder
+	static private SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation, on for now
+	
 	// initialize logging	
     static private org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XmlFile.class.getName());
 		

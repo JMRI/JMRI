@@ -14,7 +14,6 @@ import java.beans.*;
 import javax.swing.*;
 import com.sun.java.util.collections.List;
 import org.jdom.Element;
-import org.jdom.Namespace;
 
 public class CvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 

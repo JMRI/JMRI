@@ -20,7 +20,6 @@ import junit.framework.Assert;
 import org.jdom.Document;
 import org.jdom.DocType;
 import org.jdom.Element;
-import org.jdom.Namespace;
 
 public class VariableTableModelTest extends TestCase {
 
@@ -54,31 +53,30 @@ public class VariableTableModelTest extends TestCase {
 		VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null));
 		
 		// create a JDOM tree with just some elements
-		Namespace ns = Namespace.getNamespace("decoder", "http://www.slac.stanford.edu/BFROOT/java/streamcalc");
-		Element root = new Element("decoder-config", ns);
+		Element root = new Element("decoder-config");
 		Document doc = new Document(root);
-		doc.setDocType(new DocType("decoder:decoder-config","DTD/decoder-config.dtd"));
+		doc.setDocType(new DocType("decoder-config","decoder-config.dtd"));
 		
 		// add some elements
 		Element el0, el1;
-		root.addContent(new Element("decoder",ns)		// the sites information here lists all relevant
-					.addContent(new Element("variables", ns)
-									.addContent(el0 = new Element("variable", ns)
+		root.addContent(new Element("decoder")		// the sites information here lists all relevant
+					.addContent(new Element("variables")
+									.addContent(el0 = new Element("variable")
 												.addAttribute("CV","1")
 												.addAttribute("name","one")
 												.addAttribute("stdName", "really two")
 												.addAttribute("readOnly","no")
-												.addContent( new Element("decVal", ns)
+												.addContent( new Element("decVal")
 														.addAttribute("max","31")
 														.addAttribute("min","1")
 													)
 												)
-									.addContent(el1 = new Element("variable", ns)
+									.addContent(el1 = new Element("variable")
 												.addAttribute("CV","4")
 												.addAttribute("readOnly","no")
 												.addAttribute("mask","XXXVVVVX")
 												.addAttribute("name","two")
-												.addContent( new Element("decVal", ns)
+												.addContent( new Element("decVal")
 														.addAttribute("max","31")
 														.addAttribute("min","1")
 													)
@@ -98,7 +96,7 @@ public class VariableTableModelTest extends TestCase {
 
 		log.warn("expect next message: WARN jmri.symbolicprog.VariableTableModel  - Element missing mask attribute: one");
 		// and test reading this
-		t.setRow(0, el0, ns);
+		t.setRow(0, el0);
 		assert(t.getValueAt(0,0).equals("1"));
 		assert(t.getValueAt(0,1).equals("one"));
 		
@@ -106,7 +104,7 @@ public class VariableTableModelTest extends TestCase {
 		Assert.assertEquals("check loaded name ", "one", t.getName(0));
 		Assert.assertEquals("check loaded stdName ", "really two", t.getStdName(0));
 
-		t.setRow(1, el1, ns);
+		t.setRow(1, el1);
 		assert(t.getValueAt(1,0).equals("4"));
 		assert(t.getValueAt(1,1).equals("two"));
 
@@ -124,21 +122,20 @@ public class VariableTableModelTest extends TestCase {
 		VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null));
 		
 		// create a JDOM tree with just some elements
-		Namespace ns = Namespace.getNamespace("decoder", "http://www.slac.stanford.edu/BFROOT/java/streamcalc");
-		Element root = new Element("decoder-config", ns);
+		Element root = new Element("decoder-config");
 		Document doc = new Document(root);
-		doc.setDocType(new DocType("decoder:decoder-config","DTD/decoder-config.dtd"));
+		doc.setDocType(new DocType("decoder-config","decoder-config.dtd"));
 		
 		// add some elements
 		Element el0, el1;
-		root.addContent(new Element("decoder",ns)		// the sites information here lists all relevant
-					.addContent(new Element("variables", ns)
-									.addContent(el0 = new Element("variable", ns)
+		root.addContent(new Element("decoder")		// the sites information here lists all relevant
+					.addContent(new Element("variables")
+									.addContent(el0 = new Element("variable")
 												.addAttribute("CV","17")
 												.addAttribute("readOnly","no")
 												.addAttribute("mask","VVVVVVVV")
 												.addAttribute("name","long")
-												.addContent( new Element("longAddressVal", ns)
+												.addContent( new Element("longAddressVal")
 													)
 												)
 										)	// variables element									
@@ -155,7 +152,7 @@ public class VariableTableModelTest extends TestCase {
 		//} catch (Exception e) { System.out.println("error writing XML: "+e);}	
 
 		// and test reading this
-		t.setRow(0, el0, ns);
+		t.setRow(0, el0);
 		assert(t.getValueAt(0,0).equals("17"));
 		assert(t.getValueAt(0,1).equals("long"));
 
@@ -169,19 +166,18 @@ public class VariableTableModelTest extends TestCase {
 		VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null));
 		
 		// create a JDOM tree with just some elements
-		Namespace ns = Namespace.getNamespace("decoder", "http://www.slac.stanford.edu/BFROOT/java/streamcalc");
-		Element root = new Element("decoder-config", ns);
+		Element root = new Element("decoder-config");
 		Document doc = new Document(root);
-		doc.setDocType(new DocType("decoder:decoder-config","DTD/decoder-config.dtd"));
+		doc.setDocType(new DocType("decoder-config","decoder-config.dtd"));
 		
 		// add some elements
 		Element el0, el1;
-		root.addContent(new Element("decoder",ns)		// the sites information here lists all relevant
-					.addContent(new Element("variables", ns)
-									.addContent(el0 = new Element("variable", ns)
+		root.addContent(new Element("decoder")		// the sites information here lists all relevant
+					.addContent(new Element("variables")
+									.addContent(el0 = new Element("variable")
 												.addAttribute("CV","67")
 												.addAttribute("name","Speed Table")
-												.addContent( new Element("speedTableVal", ns)
+												.addContent( new Element("speedTableVal")
 													)
 												)
 										)	// variables element									
@@ -189,7 +185,7 @@ public class VariableTableModelTest extends TestCase {
 			; // end of adding contents
 
 		// and test reading this
-		t.setRow(0, el0, ns);
+		t.setRow(0, el0);
 
 		// check finding
 		Assert.assertEquals("length of variable list ", 1, t.getRowCount());
@@ -205,21 +201,20 @@ public class VariableTableModelTest extends TestCase {
 		VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null));
 		
 		// create a JDOM tree with just some elements
-		Namespace ns = Namespace.getNamespace("decoder", "http://www.slac.stanford.edu/BFROOT/java/streamcalc");
-		Element root = new Element("decoder-config", ns);
+		Element root = new Element("decoder-config");
 		Document doc = new Document(root);
-		doc.setDocType(new DocType("decoder:decoder-config","DTD/decoder-config.dtd"));
+		doc.setDocType(new DocType("decoder-config","decoder-config.dtd"));
 		
 		// add some elements
 		Element el0, el1;
-		root.addContent(new Element("decoder",ns)		// the sites information here lists all relevant
-					.addContent(new Element("variables", ns)
-									.addContent(el0 = new Element("variable", ns)
+		root.addContent(new Element("decoder")		// the sites information here lists all relevant
+					.addContent(new Element("variables")
+									.addContent(el0 = new Element("variable")
 												.addAttribute("CV","17")
 												.addAttribute("mask","VVVVVVVV")
 												.addAttribute("readOnly","no")
 												.addAttribute("name","long")
-												.addContent( new Element("bogusVal", ns)
+												.addContent( new Element("bogusVal")
 													)
 												)
 										)	// variables element									
@@ -237,7 +232,7 @@ public class VariableTableModelTest extends TestCase {
 
 		// and test reading this
 		log.warn("expect next message: ERROR jmri.symbolicprog.VariableTableModel  - Did not find a valid variable type");
-		t.setRow(0, el0, ns);
+		t.setRow(0, el0);
 		assert(t.getRowCount() == 0);
 		
 	}

@@ -11,7 +11,6 @@ import com.sun.java.util.collections.Hashtable;
 
 import org.jdom.Attribute;
 import org.jdom.Element;
-import org.jdom.Namespace;
 
 // try to limit the JDOM to this class, so that others can manipulate...
 
@@ -20,7 +19,7 @@ import org.jdom.Namespace;
  *
  * Description:		Manipulates the index of decoder definitions.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecoderIndexFile.java,v 1.3 2001-11-12 21:53:27 jacobsen Exp $
+ * @version			$Id: DecoderIndexFile.java,v 1.4 2001-11-27 03:27:15 jacobsen Exp $
  *
  * DecoderIndex represents a decoderIndex.xml file in memory, allowing a program
  * to navigate to various decoder descriptions without having to 
@@ -36,11 +35,6 @@ import org.jdom.Namespace;
 public class DecoderIndexFile extends XmlFile {
 	
 	// fill in abstract members
-	
-	public Namespace getNamespace() {
-		return Namespace.getNamespace("decoderIndex",
-										"http://jmri.sourceforge.net/xml/decoderIndex");
-	}
 	
 	protected List decoderList = new ArrayList();
 	public int numDecoders() { return decoderList.size(); }
@@ -111,8 +105,9 @@ public class DecoderIndexFile extends XmlFile {
 	}
 
 	static DecoderIndexFile _instance = null;
-	public static DecoderIndexFile instance() {
+	public synchronized static DecoderIndexFile instance() {
 		if (_instance == null) {
+			if (log.isDebugEnabled()) log.debug("DecoderIndexFile creating instance");
 			// create and load
 			_instance = new DecoderIndexFile();
 			try {
@@ -121,6 +116,7 @@ public class DecoderIndexFile extends XmlFile {
 				log.error("Exception during decoder index reading: "+e);
 			}
 		}
+		if (log.isDebugEnabled()) log.debug("DecoderIndexFile returns instance "+_instance);
 		return _instance;
 	}
 	
@@ -132,24 +128,23 @@ public class DecoderIndexFile extends XmlFile {
 		if (log.isInfoEnabled()) log.info("readFile "+name);
 
 		// read file, find root
-		Namespace ns = getNamespace();
-		Element root = rootFromFile(name, true);
+		Element root = rootFromFile(name);
 			
 		// decode type, invoke proper processing routine if a decoder file
-		if (root.getChild("decoderIndex", ns) != null) {
-			readMfgSection(root.getChild("decoderIndex", ns), ns);
-			readFamilySection(root.getChild("decoderIndex", ns), ns);
+		if (root.getChild("decoderIndex") != null) {
+			readMfgSection(root.getChild("decoderIndex"));
+			readFamilySection(root.getChild("decoderIndex"));
 		}
 		else {
 			log.error("Unrecognized decoderIndex file contents in file: "+name);
 		}
 	}
 
-	void readMfgSection(Element decoderIndex, Namespace ns) {
-		Element mfgList = decoderIndex.getChild("mfgList", ns);
+	void readMfgSection(Element decoderIndex) {
+		Element mfgList = decoderIndex.getChild("mfgList");
 		if (mfgList != null) {
 		
-			List l = mfgList.getChildren("manufacturer",ns);
+			List l = mfgList.getChildren("manufacturer");
 			if (log.isDebugEnabled()) log.debug("readMfgSection sees "+l.size()+" children");
 			for (int i=0; i<l.size(); i++) {
 				// handle each entry
@@ -164,21 +159,21 @@ public class DecoderIndexFile extends XmlFile {
 		} else log.warn("no mfgList found in decoderIndexFile");
 	}
 	
-	void readFamilySection(Element decoderIndex, Namespace ns) {
-		Element familyList = decoderIndex.getChild("familyList", ns);
+	void readFamilySection(Element decoderIndex) {
+		Element familyList = decoderIndex.getChild("familyList");
 		if (familyList != null) {
 		
-			List l = familyList.getChildren("family",ns);
+			List l = familyList.getChildren("family");
 			if (log.isDebugEnabled()) log.debug("readFamilySection sees "+l.size()+" children");
 			for (int i=0; i<l.size(); i++) {
 				// handle each entry
 				Element el = (Element)l.get(i);
-				readFamily(el, ns);
+				readFamily(el);
 			}
 		} else log.warn("no familyList found in decoderIndexFile");
 	}
 
-	void readFamily(Element family, Namespace ns) {
+	void readFamily(Element family) {
 		Attribute attr;
 		String filename = family.getAttribute("file").getValue();
 		String parentVersID = ((attr = family.getAttribute("versionID"))     != null ? attr.getValue() : null );
@@ -187,7 +182,7 @@ public class DecoderIndexFile extends XmlFile {
 		String mfgID   = mfgIdFromName(mfg);
 
 		// record the decoders
-		List l = family.getChildren("decoder",ns);
+		List l = family.getChildren("decoder");
 		if (log.isDebugEnabled()) log.debug("readFamily sees "+l.size()+" children");
 		for (int i=0; i<l.size(); i++) {
 			// handle each entry by creating a DecoderFile object containing all it knows

@@ -32,13 +32,15 @@ public class PaneProgPaneTest extends TestCase {
 	public void testColumn() {
 		setupDoc();
 		CvTableModel cvModel = new CvTableModel(new JLabel());
+		if (log.isInfoEnabled()) log.info("CvTableModel ctor complete");
 		String[] args = {"CV", "Name"};
 		VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
+		if (log.isInfoEnabled()) log.info("VariableTableModel ctor complete");
 		
-		// create test object with speciai implementation of the newColumn(String) operation
+		// create test object with special implementation of the newColumn(String) operation
 		colCount = 0;
-		PaneProgPane p = new PaneProgPane("name", pane1, ns, cvModel, varModel) {
-				public JPanel newColumn(Element e, Namespace ns) { colCount++; return new JPanel();}
+		PaneProgPane p = new PaneProgPane("name", pane1, cvModel, varModel) {
+				public JPanel newColumn(Element e) { colCount++; return new JPanel();}
 			};
 	
 		assertEquals("column count", 2, colCount);
@@ -50,11 +52,12 @@ public class PaneProgPaneTest extends TestCase {
 		CvTableModel cvModel = new CvTableModel(new JLabel());
 		String[] args = {"CV", "Name"};
 		VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
+		if (log.isInfoEnabled()) log.info("VariableTableModel ctor complete");
 		
 		// create test object with special implementation of the newVariable(String) operation
 		varCount = 0;
-		PaneProgPane p = new PaneProgPane("name", pane1, ns, cvModel, varModel) {
-				public void newVariable(Element e, Namespace ns, JComponent p, GridBagLayout g, GridBagConstraints c) 
+		PaneProgPane p = new PaneProgPane("name", pane1, cvModel, varModel) {
+				public void newVariable(Element e, JComponent p, GridBagLayout g, GridBagConstraints c) 
 					{ varCount++; }
 			};
 
@@ -67,24 +70,29 @@ public class PaneProgPaneTest extends TestCase {
 		CvTableModel cvModel = new CvTableModel(new JLabel());
 		String[] args = {"CV", "Name"};
 		VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
+		if (log.isInfoEnabled()) log.info("VariableTableModel ctor complete");
 		// have to add a couple of defined variables
-		Element el0 = new Element("variable", ns)
+		Element el0 = new Element("variable")
 												.addAttribute("CV","17")
 												.addAttribute("readOnly","no")
 												.addAttribute("mask","VVVVVVVV")
 												.addAttribute("name","Start voltage")
-												.addContent( new Element("longAddressVal", ns));
-		varModel.setRow(0, el0, ns);
-		Element el1 = new Element("variable", ns)
+												.addContent( new Element("longAddressVal"));
+		if (log.isInfoEnabled()) log.info("First element created");
+		varModel.setRow(0, el0);
+		if (log.isInfoEnabled()) log.info("First element loaded");
+		Element el1 = new Element("variable")
 												.addAttribute("CV","17")
 												.addAttribute("readOnly","no")
 												.addAttribute("mask","VVVVVVVV")
 												.addAttribute("name","Primary Address")
-												.addContent( new Element("decVal", ns));
-		varModel.setRow(1, el1, ns);
+												.addContent( new Element("decVal"));
+		if (log.isInfoEnabled()) log.info("Second element created");
+		varModel.setRow(1, el1);
+		if (log.isInfoEnabled()) log.info("Two elements loaded");
 		
 		// test by invoking
-		PaneProgPane p = new PaneProgPane("name", pane1, ns, cvModel, varModel);
+		PaneProgPane p = new PaneProgPane("name", pane1, cvModel, varModel);
 		assertEquals("variable list length", 2, p.varList.size());
 		assertEquals("1st variable index ", new Integer(1), p.varList.get(0));
 		assertEquals("2nd variable index ", new Integer(0), p.varList.get(1));
@@ -101,28 +109,30 @@ public class PaneProgPaneTest extends TestCase {
 		CvTableModel cvModel = new CvTableModel(new JLabel());
 		String[] args = {"CV", "Name"};
 		VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
+		if (log.isInfoEnabled()) log.info("VariableTableModel ctor complete");
 		// have to add a couple of defined variables
-		Element el0 = new Element("variable", ns)
+		Element el0 = new Element("variable")
 												.addAttribute("CV","2")
 												.addAttribute("readOnly","no")
 												.addAttribute("mask","VVVVVVVV")
 												.addAttribute("name","Start voltage")
-												.addContent( new Element("decVal", ns));
-		varModel.setRow(0, el0, ns);
-		Element el1 = new Element("variable", ns)
+												.addContent( new Element("decVal"));
+		varModel.setRow(0, el0);
+		Element el1 = new Element("variable")
 												.addAttribute("CV","1")
 												.addAttribute("readOnly","no")
 												.addAttribute("mask","VVVVVVVV")
 												.addAttribute("name","Primary Address")
-												.addContent( new Element("decVal", ns));
-		varModel.setRow(1, el1, ns);
+												.addContent( new Element("decVal"));
+		varModel.setRow(1, el1);
 		
-		PaneProgPane p = new PaneProgPane("name", pane1, ns, cvModel, varModel);
+		PaneProgPane p = new PaneProgPane("name", pane1, cvModel, varModel);
 
 		// test by invoking
 		p.readPane();
 		
 		// wait for reply (normally, done by callback; will check that later)
+		if (log.isInfoEnabled()) log.info("Start to wait for reply");
 		int i = 0;
 		while ( p.isBusy() && i++ < 100 )  {
 			try {
@@ -149,28 +159,31 @@ public class PaneProgPaneTest extends TestCase {
 		CvTableModel cvModel = new CvTableModel(new JLabel());
 		String[] args = {"CV", "Name"};
 		VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
+		if (log.isInfoEnabled()) log.info("VariableTableModel ctor complete");
 		// have to add a couple of defined variables
-		Element el0 = new Element("variable", ns)
+		Element el0 = new Element("variable")
 												.addAttribute("CV","2")
 												.addAttribute("readOnly","no")
 												.addAttribute("mask","VVVVVVVV")
 												.addAttribute("name","Start voltage")
-												.addContent( new Element("decVal", ns));
-		varModel.setRow(0, el0, ns);
-		Element el1 = new Element("variable", ns)
+												.addContent( new Element("decVal"));
+		varModel.setRow(0, el0);
+		Element el1 = new Element("variable")
 												.addAttribute("CV","1")
 												.addAttribute("readOnly","no")
 												.addAttribute("mask","VVVVVVVV")
 												.addAttribute("name","Primary Address")
-												.addContent( new Element("decVal", ns));
-		varModel.setRow(1, el1, ns);
+												.addContent( new Element("decVal"));
+		varModel.setRow(1, el1);
+		if (log.isInfoEnabled()) log.info("Two elements loaded");
 		
-		PaneProgPane p = new PaneProgPane("name", pane1, ns, cvModel, varModel);
+		PaneProgPane p = new PaneProgPane("name", pane1, cvModel, varModel);
 
 		// test by invoking
 		p.writePane();
 		
 		// wait for reply (normally, done by callback; will check that later)
+		if (log.isInfoEnabled()) log.info("Start to wait for reply");
 		int i = 0;
 		while ( p.isBusy() && i++ < 100 )  {
 			try {
@@ -193,7 +206,6 @@ public class PaneProgPaneTest extends TestCase {
 	static int varCount = -1;
 	
 	// static variables for the test XML structures
-	Namespace ns = null;
 	Element root = null;
 	Element pane1 = null;
 	Element pane2 = null;
@@ -203,56 +215,55 @@ public class PaneProgPaneTest extends TestCase {
 	// provide a test document in the above static variables
 	void setupDoc() {
 		// create a JDOM tree with just some elements
-		ns = Namespace.getNamespace("programmer", "");
-		root = new Element("programmer-config", ns);
+		root = new Element("programmer-config");
 		doc = new Document(root);
-		doc.setDocType(new DocType("programmer:programmer-config","DTD/programmer-config.dtd"));
+		doc.setDocType(new DocType("programmer-config","programmer-config.dtd"));
 		
 		// add some elements
-		root.addContent(new Element("programmer",ns)
-					.addContent(pane1 = new Element("pane", ns)
+		root.addContent(new Element("programmer")
+					.addContent(pane1 = new Element("pane")
 									.addAttribute("name","Basic")
-									.addContent(new Element("column", ns)
-										.addContent(new Element("variable", ns)
+									.addContent(new Element("column")
+										.addContent(new Element("variable")
 													.addAttribute("name", "Primary Address")
 													)
-										.addContent(new Element("variable", ns)
+										.addContent(new Element("variable")
 													.addAttribute("name", "Start voltage")
 													)
-										.addContent(new Element("variable", ns)
+										.addContent(new Element("variable")
 													.addAttribute("name", "Normal direction of motion")
 													)
 												)
-									.addContent(new Element("column", ns)
-										.addContent(new Element("variable", ns)
+									.addContent(new Element("column")
+										.addContent(new Element("variable")
 													.addAttribute("name", "Address")
 													)
-										.addContent(new Element("variable", ns)
+										.addContent(new Element("variable")
 													.addAttribute("name", "Normal direction of motion")
 													)
-										.addContent(new Element("variable", ns)
+										.addContent(new Element("variable")
 													.addAttribute("name", "Normal direction of motion")
 													.addAttribute("format","checkbox")
 													)
-										.addContent(new Element("variable", ns)
+										.addContent(new Element("variable")
 													.addAttribute("name", "Normal direction of motion")
 													.addAttribute("format","radiobuttons")
 													)
 												)
 								)
-					.addContent(pane2 = new Element("pane",ns)
+					.addContent(pane2 = new Element("pane")
 									.addAttribute("name", "CV")
-									.addContent(new Element("column", ns)
-										.addContent(new Element("cvtable", ns))
+									.addContent(new Element("column")
+										.addContent(new Element("cvtable"))
 												)
 								)
-					.addContent(pane3 = new Element("pane",ns)
+					.addContent(pane3 = new Element("pane")
 									.addAttribute("name", "Other")
-									.addContent(new Element("column", ns)
-										.addContent(new Element("variable", ns)
+									.addContent(new Element("column")
+										.addContent(new Element("variable")
 													.addAttribute("name", "Address")
 													)
-										.addContent(new Element("variable", ns)
+										.addContent(new Element("variable")
 													.addAttribute("name", "Normal direction of motion")
 													)
 												)
@@ -260,6 +271,7 @@ public class PaneProgPaneTest extends TestCase {
 				)
 			; // end of adding contents
 		
+		if (log.isInfoEnabled()) log.info("setupDoc complete");
 		return;
 	}
 

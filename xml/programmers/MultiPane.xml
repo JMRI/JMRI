@@ -1,130 +1,133 @@
 <?xml version="1.0"?>
-<!DOCTYPE programmer:programmer-config SYSTEM "DTD/programmer-config.dtd">
-<programmer:programmer-config xmlns:programmer="http://jmri.sourceforge.net/xml/programmer">
-<!-- $Id: MultiPane.xml,v 1.7 2001-11-23 22:02:28 jacobsen Exp $ -->
-<programmer:programmer>
+<!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
+<programmer-config xmlns:programmer="http://jmri.sourceforge.net/xml/programmer">
+<!-- $Id: MultiPane.xml,v 1.8 2001-11-27 03:26:33 jacobsen Exp $ -->
+<programmer>
 
-	<programmer:pane name="Basic">
-		<programmer:column>
-			<programmer:variable name="Primary Address"/>
-			<programmer:variable name="Extended Address"/>
-			<programmer:variable name="Address Format"/>
-			<programmer:variable name="Locomotive Direction" format ="radiobuttons" layout="left"/>
-			<programmer:variable name="User Identification #1"/>
-			<programmer:variable name="User Identification #2"/>
-			<programmer:variable name="FL Location" layout="above"/>
-			<programmer:variable name="Power Source Conversion" format="radiobuttons" layout="left"/>
-			<programmer:variable name="Analog Power Conversion" format="checkbox"/>
-			<programmer:variable name="Radio Power Conversion" format="checkbox"/>
-			<programmer:variable name="Zero-1 Power Conversion" format="checkbox"/>
-			<programmer:variable name="Trix Power Conversion" format="checkbox"/>
-			<programmer:variable name="CTC/Railcommand Power Conversion" format="checkbox"/>
-		</programmer:column>
-	</programmer:pane>
+	<pane name="Basic">
+		<column>
+			<variable name="Primary Address"/>
+			<variable name="Extended Address"/>
+			<variable name="Address Format"/>
+
+			<dccaddress/>
+			
+			<variable name="Locomotive Direction" format ="radiobuttons" layout="left"/>
+			<variable name="User Identification #1"/>
+			<variable name="User Identification #2"/>
+			<variable name="FL Location" layout="above"/>
+			<variable name="Power Source Conversion" format="radiobuttons" layout="left"/>
+			<variable name="Analog Power Conversion" format="checkbox"/>
+			<variable name="Radio Power Conversion" format="checkbox"/>
+			<variable name="Zero-1 Power Conversion" format="checkbox"/>
+			<variable name="Trix Power Conversion" format="checkbox"/>
+			<variable name="CTC/Railcommand Power Conversion" format="checkbox"/>
+		</column>
+	</pane>
 	
-	<programmer:pane name="Motor">
-		<programmer:column>
-			<programmer:variable name="Kick Start"/>
-			<programmer:variable name="Acceleration Rate"/>
-			<programmer:variable name="Deceleration Rate"/>
-			<programmer:label label=" "/>
-			<programmer:variable name="Total PWM Period"/>
-		</programmer:column>
-		<programmer:column>
-			<programmer:variable name="EMF Static Config"/>  <!-- Not an NMRA S&RP term -->
-			<programmer:variable name="EMF Dynamic Config"/>  <!-- Not an NMRA S&RP term -->
-			<programmer:variable name="EMF Droop Config"/>  <!-- Not an NMRA S&RP term -->
-			<programmer:variable name="EMF Feedback Cutout"/>
-			<programmer:variable name="DC Mode"/>  <!-- Not an NMRA S&RP term -->
-		</programmer:column>
-	</programmer:pane>
+	<pane name="Motor">
+		<column>
+			<variable name="Kick Start"/>
+			<variable name="Acceleration Rate"/>
+			<variable name="Deceleration Rate"/>
+			<label label=" "/>
+			<variable name="Total PWM Period"/>
+		</column>
+		<column>
+			<variable name="EMF Static Config"/>  <!-- Not an NMRA S&RP term -->
+			<variable name="EMF Dynamic Config"/>  <!-- Not an NMRA S&RP term -->
+			<variable name="EMF Droop Config"/>  <!-- Not an NMRA S&RP term -->
+			<variable name="EMF Feedback Cutout"/>
+			<variable name="DC Mode"/>  <!-- Not an NMRA S&RP term -->
+		</column>
+	</pane>
 	
-	<programmer:pane name="Speed Control">
-		<programmer:column>
-			<programmer:variable name="Speed Table Definition" layout="above"/>
-			<programmer:variable name="Vstart"/>
-			<programmer:variable name="Vmid"/>
-			<programmer:variable name="Vhigh"/>
-			<programmer:variable name="Forward Trim"/>
-			<programmer:variable name="Reverse Trim"/>
-		</programmer:column>
-		<programmer:column>
-			<programmer:variable name="Speed Table"/>
-		</programmer:column>
-	</programmer:pane>
+	<pane name="Speed Control">
+		<column>
+			<variable name="Speed Table Definition" layout="above"/>
+			<variable name="Vstart"/>
+			<variable name="Vmid"/>
+			<variable name="Vhigh"/>
+			<variable name="Forward Trim"/>
+			<variable name="Reverse Trim"/>
+		</column>
+		<column>
+			<variable name="Speed Table"/>
+		</column>
+	</pane>
 
-	<programmer:pane name="Function Map">
-		<programmer:column>
-			<programmer:fnmapping/>
-		</programmer:column>
-	</programmer:pane>
+	<pane name="Function Map">
+		<column>
+			<fnmapping/>
+		</column>
+	</pane>
 
-	<programmer:pane name="Light FX">
-		<programmer:column>
-			<programmer:variable name="Function F0F effect generated"/>
-			<programmer:variable name="Function F0F behaviour"/>
-			<programmer:separator/>
-			<programmer:variable name="Function F0R effect generated"/>
-			<programmer:variable name="Function F0R behaviour"/>
-			<programmer:separator/>
-			<programmer:variable name="Function 1 effect generated"/>
-			<programmer:variable name="Function 1 behaviour"/>
-			<programmer:separator/>
-			<programmer:variable name="Function 2 effect generated"/>
-			<programmer:variable name="Function 2 behaviour"/>
-			<programmer:separator/>
-			<programmer:variable name="Function 3 effect generated"/>
-			<programmer:variable name="Function 3 behaviour"/>
-			<programmer:separator/>
-			<programmer:variable name="Function 4 effect generated"/>
-			<programmer:variable name="Function 4 behaviour"/>
-			<programmer:separator/>
-			<programmer:variable name="Function 5 effect generated"/>
-			<programmer:variable name="Function 5 behaviour"/>
-			<programmer:separator/>
-			<programmer:variable name="Function 6 effect generated"/>
-			<programmer:variable name="Function 6 behaviour"/>
-			<programmer:separator/>
-			<programmer:variable name="Function 7 effect generated"/>
-			<programmer:variable name="Function 7 behaviour"/>
-			<programmer:separator/>
-			<programmer:variable name="Function 8 effect generated"/>
-			<programmer:variable name="Function 8 behaviour"/>
-			<programmer:separator/>
-		</programmer:column>
-	</programmer:pane>
+	<pane name="Light FX">
+		<column>
+			<variable name="Function F0F effect generated"/>
+			<variable name="Function F0F behaviour"/>
+			<separator/>
+			<variable name="Function F0R effect generated"/>
+			<variable name="Function F0R behaviour"/>
+			<separator/>
+			<variable name="Function 1 effect generated"/>
+			<variable name="Function 1 behaviour"/>
+			<separator/>
+			<variable name="Function 2 effect generated"/>
+			<variable name="Function 2 behaviour"/>
+			<separator/>
+			<variable name="Function 3 effect generated"/>
+			<variable name="Function 3 behaviour"/>
+			<separator/>
+			<variable name="Function 4 effect generated"/>
+			<variable name="Function 4 behaviour"/>
+			<separator/>
+			<variable name="Function 5 effect generated"/>
+			<variable name="Function 5 behaviour"/>
+			<separator/>
+			<variable name="Function 6 effect generated"/>
+			<variable name="Function 6 behaviour"/>
+			<separator/>
+			<variable name="Function 7 effect generated"/>
+			<variable name="Function 7 behaviour"/>
+			<separator/>
+			<variable name="Function 8 effect generated"/>
+			<variable name="Function 8 behaviour"/>
+			<separator/>
+		</column>
+	</pane>
 
-	<programmer:pane name="Consist">
-		<programmer:column>
-			<programmer:label label="Will decoder respond to function requests at consist address?"/>
-			<programmer:variable name="Consist Address Active For F1"  format="checkbox"/>
-			<programmer:variable name="Consist Address Active For F2"  format="checkbox"/>
-			<programmer:variable name="Consist Address Active For F3"  format="checkbox"/>
-			<programmer:variable name="Consist Address Active For F4"  format="checkbox"/>
-			<programmer:variable name="Consist Address Active For F5"  format="checkbox"/>
-			<programmer:variable name="Consist Address Active For F6"  format="checkbox"/>
-			<programmer:variable name="Consist Address Active For F7"  format="checkbox"/>
-			<programmer:variable name="Consist Address Active For F8"  format="checkbox"/>
-			<programmer:variable name="Consist Address Active For FL in Forward"  format="checkbox"/>
-			<programmer:variable name="Consist Address Active For FL in Reverse"  format="checkbox"/>
-		</programmer:column>
-	</programmer:pane>
+	<pane name="Consist">
+		<column>
+			<label label="Will decoder respond to function requests at consist address?"/>
+			<variable name="Consist Address Active For F1"  format="checkbox"/>
+			<variable name="Consist Address Active For F2"  format="checkbox"/>
+			<variable name="Consist Address Active For F3"  format="checkbox"/>
+			<variable name="Consist Address Active For F4"  format="checkbox"/>
+			<variable name="Consist Address Active For F5"  format="checkbox"/>
+			<variable name="Consist Address Active For F6"  format="checkbox"/>
+			<variable name="Consist Address Active For F7"  format="checkbox"/>
+			<variable name="Consist Address Active For F8"  format="checkbox"/>
+			<variable name="Consist Address Active For FL in Forward"  format="checkbox"/>
+			<variable name="Consist Address Active For FL in Reverse"  format="checkbox"/>
+		</column>
+	</pane>
 	
-	<programmer:pane name="Sound">
-		<programmer:column>
-		</programmer:column>
-	</programmer:pane>
+	<pane name="Sound">
+		<column>
+		</column>
+	</pane>
 
-	<programmer:pane name="Sound Levels">
-		<programmer:column>
-		</programmer:column>
-	</programmer:pane>
+	<pane name="Sound Levels">
+		<column>
+		</column>
+	</pane>
 
-	<programmer:pane name="CVs">
-		<programmer:column>
-			<programmer:cvtable/>
-		</programmer:column>
-	</programmer:pane>
+	<pane name="CVs">
+		<column>
+			<cvtable/>
+		</column>
+	</pane>
 
-</programmer:programmer>
-</programmer:programmer-config>
+</programmer>
+</programmer-config>

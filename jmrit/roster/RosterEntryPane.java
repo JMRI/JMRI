@@ -5,12 +5,13 @@ package jmri.jmrit.roster;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import com.sun.java.util.collections.List;
 
 /** 
  * Display and edit a RosterEntry.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: RosterEntryPane.java,v 1.4 2001-11-23 22:23:54 jacobsen Exp $
+ * @version			$Id: RosterEntryPane.java,v 1.5 2001-11-27 03:27:15 jacobsen Exp $
  */
 public class RosterEntryPane extends javax.swing.JPanel  {
 
@@ -26,6 +27,9 @@ public class RosterEntryPane extends javax.swing.JPanel  {
 	JLabel decoderFamily 	= new JLabel();
 	JTextField decoderComment 	= new JTextField(12);
 	
+	Component pane = null;
+	RosterEntry re = null;
+	
 	public RosterEntryPane(RosterEntry r) {
 		id.setText(r.getId());
 		filename.setText(r.getFileName());
@@ -39,6 +43,9 @@ public class RosterEntryPane extends javax.swing.JPanel  {
 		decoderFamily.setText(r.getDecoderFamily());
 		decoderComment.setText(r.getDecoderComment());
 		
+		pane = this;
+		re = r;
+		
 		// add options
 		id.setToolTipText("Identifies this locomotive in the roster");
 		
@@ -46,6 +53,19 @@ public class RosterEntryPane extends javax.swing.JPanel  {
 		decoderModel.setToolTipText("This is filled in automatically by your earlier selections");
 		decoderFamily.setToolTipText("This is filled in automatically by your earlier selections");
 		filename.setToolTipText("This is filled in automatically by the program");
+		
+		id.addActionListener( new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// check its not a duplicate
+				List l = Roster.instance().matchingList(null, null, null, null, null, null, id.getText());
+				boolean oops = false;
+				for (int i=0; i<l.size(); i++) {
+					if (re != (RosterEntry)l.get(i)) oops = true;
+				}
+				if (oops) JOptionPane.showMessageDialog(pane, "This ID is a duplicate, please change it");
+
+			}
+		});
 		
 		// assemble the GUI
 		setLayout(new GridLayout(11,2));

@@ -37,12 +37,12 @@ public class PaneProgFrameTest extends TestCase {
 
 		PaneProgFrame p = new PaneProgFrame();
 		//PaneProgFrame p = new PaneProgFrame() {
-		//		public void newPane(String s, Element e, Namespace ns) { result = s; }
+		//		public void newPane(String s, Element e) { result = s; }
 		//	};
 	
 		// invoke
 		result = null;
-		p.readConfig(root, ns, new RosterEntry());
+		p.readConfig(root, new RosterEntry());
 		Assert.assertEquals("paneList length ", 3, p.paneList.size());
 	}
 
@@ -56,9 +56,9 @@ public class PaneProgFrameTest extends TestCase {
 		jmri.jmrit.decoderdefn.DecoderFileTest t = new jmri.jmrit.decoderdefn.DecoderFileTest("");
 		t.setupDecoder();
 		DecoderFile df = new DecoderFile();  // used as a temporary
-		df.loadVariableModel(t.decoder, t.ns, p.variableModel);
+		df.loadVariableModel(t.decoder, p.variableModel);
 		
-		p.readConfig(root, ns, new RosterEntry());
+		p.readConfig(root, new RosterEntry());
 		p.pack();
 		p.show();
 	}
@@ -69,63 +69,61 @@ public class PaneProgFrameTest extends TestCase {
 	static int varCount = -1;
 	
 	// static variables for the test XML structures
-	Namespace ns = null;
 	Element root = null;
 	Document doc = null;
 	
 	// provide a test document in the above static variables
 	void setupDoc() {
 		// create a JDOM tree with just some elements
-		ns = Namespace.getNamespace("programmer", "");
-		root = new Element("programmer-config", ns);
+		root = new Element("programmer-config");
 		doc = new Document(root);
-		doc.setDocType(new DocType("programmer:programmer-config","DTD/programmer-config.dtd"));
+		doc.setDocType(new DocType("programmer-config","programmer-config.dtd"));
 		
 		// add some elements
-		root.addContent(new Element("programmer",ns)
-					.addContent(new Element("pane", ns)
+		root.addContent(new Element("programmer")
+					.addContent(new Element("pane")
 									.addAttribute("name","Basic")
-									.addContent(new Element("column", ns)
-										.addContent(new Element("variable", ns)
+									.addContent(new Element("column")
+										.addContent(new Element("variable")
 													.addAttribute("name", "Address")
 													)
-										.addContent(new Element("variable", ns)
+										.addContent(new Element("variable")
 													.addAttribute("name", "Start voltage")
 													)
-										.addContent(new Element("variable", ns)
+										.addContent(new Element("variable")
 													.addAttribute("name", "Normal direction of motion")
 													)
 												)
-									.addContent(new Element("column", ns)
-										.addContent(new Element("variable", ns)
+									.addContent(new Element("column")
+										.addContent(new Element("variable")
 													.addAttribute("name", "Address")
 													)
-										.addContent(new Element("variable", ns)
+										.addContent(new Element("variable")
 													.addAttribute("name", "Normal direction of motion")
 													)
-										.addContent(new Element("variable", ns)
+										.addContent(new Element("variable")
 													.addAttribute("name", "Normal direction of motion")
 													.addAttribute("format","checkbox")
 													)
-										.addContent(new Element("variable", ns)
+										.addContent(new Element("variable")
 													.addAttribute("name", "Normal direction of motion")
 													.addAttribute("format","radiobuttons")
 													)
 												)
 								)
-					.addContent(new Element("pane",ns)
+					.addContent(new Element("pane")
 									.addAttribute("name", "CV")
-									.addContent(new Element("column", ns)
-										.addContent(new Element("cvtable", ns))
+									.addContent(new Element("column")
+										.addContent(new Element("cvtable"))
 												)
 								)
-					.addContent(new Element("pane",ns)
+					.addContent(new Element("pane")
 									.addAttribute("name", "Other")
-									.addContent(new Element("column", ns)
-										.addContent(new Element("variable", ns)
+									.addContent(new Element("column")
+										.addContent(new Element("variable")
 													.addAttribute("name", "Address")
 													)
-										.addContent(new Element("variable", ns)
+										.addContent(new Element("variable")
 													.addAttribute("name", "Normal direction of motion")
 													)
 												)

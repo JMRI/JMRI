@@ -1,39 +1,44 @@
 <!-- Defines XML documenting a CV programmer format -->
-<!-- $Id: programmer-config.dtd,v 1.6 2001-11-23 21:59:20 jacobsen Exp $ -->
+<!-- $Id: programmer-config.dtd,v 1.7 2001-11-27 03:26:33 jacobsen Exp $ -->
 
-<!ELEMENT programmer:programmer-config (programmer:programmer*)>
-<!ATTLIST programmer:programmer-config xmlns:programmer CDATA "">
+<!ELEMENT programmer-config (programmer*)>
+<!ATTLIST programmer-config xmlns:programmer CDATA "">
 
-<!ELEMENT programmer:programmer (programmer:pane*)>
+<!ELEMENT programmer (pane*)>
+<!-- Which name to show in GUI? -->
+<!ATTLIST programmer nameFmt (mfg | stdName | NMRA ) "mfg">
 
 
 <!-- The pane sections define each tabbed pane of options -->
-<!ELEMENT programmer:pane (programmer:column*)>
-<!ATTLIST programmer:pane name CDATA #REQUIRED>  <!-- Name used for identification -->
+<!ELEMENT pane (column*)>
+<!ATTLIST pane name CDATA #REQUIRED>  <!-- Name used for identification -->
 
 <!-- The column section describes each column in the pane -->
-<!ELEMENT programmer:column ((programmer:variable | programmer:label | programmer:separator | programmer:cvtable| programmer:fnmapping )*)>
+<!ELEMENT column ((variable | label | separator | cvtable | fnmapping | dccaddress )*)>
 
 <!-- Insert a separator line -->
-<!ELEMENT programmer:separator EMPTY>
+<!ELEMENT separator EMPTY>
 
 <!-- Insert a cv table -->
-<!ELEMENT programmer:cvtable EMPTY>
+<!ELEMENT cvtable EMPTY>
 
 <!-- Insert a function mapping display/edit panel -->
-<!ELEMENT programmer:fnmapping EMPTY>
+<!ELEMENT fnmapping EMPTY>
+
+<!-- Insert a variable that handles long & short dcc addresses -->
+<!ELEMENT dccaddress EMPTY>
 
 <!-- The label items describes an arbitrary text string -->
-<!ELEMENT programmer:label EMPTY >
-<!ATTLIST programmer:label label CDATA #REQUIRED>
+<!ELEMENT label EMPTY >
+<!ATTLIST label label CDATA #REQUIRED>
 
 <!-- The variable items define each identified variables -->
 <!-- in the column and how they are displayed -->
 
-<!ELEMENT programmer:variable EMPTY >
-<!ATTLIST programmer:variable name CDATA #REQUIRED>  <!-- Name used for identification -->
-<!ATTLIST programmer:variable label CDATA  #IMPLIED>  <!-- optional, default is from name -->
-<!ATTLIST programmer:variable tooltip CDATA #IMPLIED>  <!-- optional, default is from variable tooltip -->
-<!ATTLIST programmer:variable layout ( left | above | below | right ) "right" > <!-- label position -->
-<!ATTLIST programmer:variable format  (default | slider | radiobuttons | checkbox ) "default" >
+<!ELEMENT variable EMPTY >
+<!ATTLIST variable name CDATA #REQUIRED>  <!-- Name used for identification -->
+<!ATTLIST variable label CDATA  #IMPLIED>  <!-- optional, default is from name -->
+<!ATTLIST variable tooltip CDATA #IMPLIED>  <!-- optional, default is from variable tooltip -->
+<!ATTLIST variable layout ( left | above | below | right ) "right" > <!-- label position -->
+<!ATTLIST variable format  (default | slider | radiobuttons | checkbox ) "default" >
 

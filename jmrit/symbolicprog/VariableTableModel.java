@@ -20,7 +20,6 @@ import javax.swing.JLabel;
 import com.sun.java.util.collections.List;
 import org.jdom.Attribute;
 import org.jdom.Element;
-import org.jdom.Namespace;
 
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -156,7 +155,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 	
 	// for loading config:	
 	// Read from an Element to configure the row
-	public void setRow(int row, Element e, Namespace ns) {
+	public void setRow(int row, Element e) {
 		// get the values for the VariableValue ctor
 		String name = e.getAttribute("name").getValue();
 		if (log.isDebugEnabled()) log.debug("Starting to setRow \""+name+"\"");
@@ -210,7 +209,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		// have to handle various value types, see "snippet"
 		Element child;
 		VariableValue v = null;
-		if ( (child = e.getChild("decVal", ns)) != null) {
+		if ( (child = e.getChild("decVal")) != null) {
 			Attribute a;
 			if ( (a = child.getAttribute("min")) != null)
 				minVal = Integer.valueOf(a.getValue()).intValue();
@@ -219,7 +218,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 			v = new DecVariableValue(name, comment, readOnly, 
 								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, stdname);
 								
-		} else if ( (child = e.getChild("hexVal", ns)) != null) {
+		} else if ( (child = e.getChild("hexVal")) != null) {
 			Attribute a;
 			if ( (a = child.getAttribute("min")) != null)
 				minVal = Integer.valueOf(a.getValue(),16).intValue();
@@ -228,15 +227,15 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 			v = new HexVariableValue(name, comment, readOnly, 
 								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, stdname);
 								
-		} else if ( (child = e.getChild("enumVal", ns)) != null) {
-			List l = child.getChildren("enumChoice", ns);
+		} else if ( (child = e.getChild("enumVal")) != null) {
+			List l = child.getChildren("enumChoice");
 			EnumVariableValue v1 = new EnumVariableValue(name, comment, readOnly, 
 								CV, mask, 0, l.size()-1, _cvModel.allCvVector(), _status, stdname);
 			v = v1;
 			for (int k=0; k< l.size(); k++)
 				v1.addItem(((Element)l.get(k)).getAttribute("choice").getValue());
 
-		} else if ( (child = e.getChild("speedTableVal", ns)) != null) {
+		} else if ( (child = e.getChild("speedTableVal")) != null) {
 			log.warn("Speed tables are still experimental!");
 			// ensure all 28 CVs exist
 			for (int i=0; i<28; i++) { _cvModel.addCV(""+(CV+i)); }
@@ -244,7 +243,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 			v = new SpeedTableVarValue(name, comment, readOnly, 
 								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, stdname);
 
-		} else if ( (child = e.getChild("longAddressVal", ns)) != null) {
+		} else if ( (child = e.getChild("longAddressVal")) != null) {
 			_cvModel.addCV(""+(CV+1));  // ensure 2nd CV exists
 			v = new LongAddrVariableValue(name, comment, readOnly, 
 								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, stdname);

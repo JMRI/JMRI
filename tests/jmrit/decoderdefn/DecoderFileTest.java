@@ -23,12 +23,12 @@ public class DecoderFileTest extends TestCase {
 	
 	public void testMfgName() {
 		setupDecoder();
-		Assert.assertEquals("mfg name ", "Digitrax", DecoderFile.getMfgName(decoder, ns));
+		Assert.assertEquals("mfg name ", "Digitrax", DecoderFile.getMfgName(decoder));
 	}
 	
 	public void testFamilyName() {
 		setupDecoder();
-		Assert.assertEquals("Family name ", "DH142 etc", DecoderFile.getFamilyName(decoder, ns));
+		Assert.assertEquals("Family name ", "DH142 etc", DecoderFile.getFamilyName(decoder));
 	}
 	
 	public void testLoadTable() {
@@ -42,14 +42,13 @@ public class DecoderFileTest extends TestCase {
 					cvModel);
 		DecoderFile d = new DecoderFile();
 		
-		d.loadVariableModel(decoder, ns, variableModel);
+		d.loadVariableModel(decoder, variableModel);
 		Assert.assertEquals("read rows ", 3, variableModel.getRowCount());
 		Assert.assertEquals("first row name ", "Address", variableModel.getName(0));
 		Assert.assertEquals("third row name ", "Normal direction of motion", variableModel.getName(2));
 	}
 	
 	// static variables for the test XML structures
-	public Namespace ns = null;
 	Element root = null;
 	public Element decoder = null;
 	Document doc = null;
@@ -57,55 +56,54 @@ public class DecoderFileTest extends TestCase {
 	// provide a test document in the above static variables
 	public void setupDecoder() {
 		// create a JDOM tree with just some elements
-		ns = Namespace.getNamespace("decoder", "");
-		root = new Element("decoder-config", ns);
+		root = new Element("decoder-config");
 		doc = new Document(root);
-		doc.setDocType(new DocType("decoder:decoder-config","DTD/decoder-config.dtd"));
+		doc.setDocType(new DocType("decoder-config","decoder-config.dtd"));
 		
 		// add some elements
-		root.addContent(decoder = new Element("decoder",ns)
-					.addContent(new Element("id", ns)
+		root.addContent(decoder = new Element("decoder")
+					.addContent(new Element("id")
 									.addAttribute("family","DH142 etc")
 									.addAttribute("mfg","Digitrax")
 									.addAttribute("defnVersion","242")
 									.addAttribute("mfgID","129")
 									.addAttribute("comment","DH142 decoder: FX, transponding")
 								)
-					.addContent(new Element("programming", ns)
+					.addContent(new Element("programming")
 									.addAttribute("direct","byteOnly")
 									.addAttribute("paged","yes")
 									.addAttribute("register","yes")
 									.addAttribute("ops","yes")
 								)
-					.addContent(new Element("variables", ns)
-									.addContent(new Element("variable", ns)
+					.addContent(new Element("variables")
+									.addContent(new Element("variable")
 										.addAttribute("name", "Address")
 										.addAttribute("CV", "1")
 										.addAttribute("mask", "VVVVVVVV")
 										.addAttribute("readOnly", "no")
-										.addContent(new Element("decVal", ns)
+										.addContent(new Element("decVal")
 											.addAttribute("max", "127")
 													)
 												)
-									.addContent(new Element("variable", ns)
+									.addContent(new Element("variable")
 										.addAttribute("name", "Acceleration rate")
 										.addAttribute("CV", "3")
 										.addAttribute("mask", "VVVVVVVV")
 										.addAttribute("readOnly", "no")
-										.addContent(new Element("decVal", ns)
+										.addContent(new Element("decVal")
 											.addAttribute("max", "127")
 													)
 												)
-									.addContent(new Element("variable", ns)
+									.addContent(new Element("variable")
 										.addAttribute("name", "Normal direction of motion")
 										.addAttribute("CV", "29")
 										.addAttribute("mask", "XXXXXXXV")
 										.addAttribute("readOnly", "no")
-										.addContent(new Element("enumVal", ns)
-											.addContent(new Element("enumChoice", ns)
+										.addContent(new Element("enumVal")
+											.addContent(new Element("enumChoice")
 													.addAttribute("choice", "forward")
 														)
-											.addContent(new Element("enumChoice", ns)
+											.addContent(new Element("enumChoice")
 													.addAttribute("choice", "reverse")
 														)
 													)
