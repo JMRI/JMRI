@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_LC_Diesel.xml,v 1.16 2004-02-11 04:57:28 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_LC_Diesel.xml,v 1.17 2004-03-06 18:37:00 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Michael Mosher" version="9" lastUpdated="20040205"/>
 

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Zimo_MX61_1.xml,v 1.1 2003-08-10 21:58:18 jacobsen Exp $ -->
+<!-- $Id: Zimo_MX61_1.xml,v 1.2 2004-03-06 18:37:00 jacobsen Exp $ -->
 <decoder-config>
 		<version author="sip@euronet.nl"
 			version="1.02" lastUpdated="20021201" />

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: CT_Elektronik_Sound_GE_70_80.xml,v 1.1 2004-01-25 09:09:01 jacobsen Exp $ -->
+<!-- $Id: CT_Elektronik_Sound_GE_70_80.xml,v 1.2 2004-03-06 18:37:00 jacobsen Exp $ -->
 <decoder-config>
 		<version author="peter.brandenburg@t-online.de"
 			version="1.3 beta" lastUpdated="20030811"/>
