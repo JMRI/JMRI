@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -171,11 +171,11 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     }
 
     protected AbstractMRMessage enterProgMode() {
-        log.error("enterProgMode doesnt make sense for C/MRI serial");
+        log.warn("enterProgMode doesnt make sense for C/MRI serial");
         return null;
     }
     protected AbstractMRMessage enterNormalMode() {
-        log.error("enterNormalMode doesnt make sense for C/MRI serial");
+        log.warn("enterNormalMode doesnt make sense for C/MRI serial");
         return null;
     }
 
