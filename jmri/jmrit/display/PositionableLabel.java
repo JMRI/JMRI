@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.event.*;
 
 import jmri.*;
+import jmri.jmrit.catalog.NamedIcon;
 
 /**
  * <p>Title: PositionableLabel is a JLabel that can be dragged around the
@@ -11,7 +12,7 @@ import jmri.*;
  * <p>Description: </p>
  * <p>Copyright: Bob Jacobsen Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class PositionableLabel extends JLabel
@@ -25,10 +26,9 @@ public class PositionableLabel extends JLabel
         setToolTipText("Alt-click to see menu, drag with meta key to move");
         connect();
     }
-    public PositionableLabel(Icon s, String name) {
+    public PositionableLabel(NamedIcon s) {
         super(s);
         icon = true;
-        iconName = name;
         debug = log.isDebugEnabled();
         setToolTipText("Alt-click to see menu, drag with meta key to move");
         connect();
@@ -38,8 +38,6 @@ public class PositionableLabel extends JLabel
     boolean icon = false;
     public boolean isText() { return text; }
     boolean text = false;
-    String iconName = null;
-    public String getIconName() { return iconName; }
 
     /**
      * Connect listeners

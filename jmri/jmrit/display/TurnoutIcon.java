@@ -2,21 +2,21 @@ package jmri.jmrit.display;
 
 import javax.swing.*;
 import java.awt.event.*;
-
+import jmri.jmrit.catalog.NamedIcon;
 import jmri.*;
 
 /**
  * TurnoutIcon provides a small icon to display a status of a turnout.</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
     public TurnoutIcon() {
         // super ctor call to make sure this is an icon label
-        super(new ImageIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/os-upper-right-closed.gif")),
-            "default turnout icon");
+        super(new NamedIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/os-upper-right-closed.gif"),
+                            "resources/icons/smallschematics/tracksegments/os-upper-right-closed.gif"));
         displayState(turnoutState());
     }
 
@@ -29,31 +29,38 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
 
     /**
      * Attached a named turnout to this display item
-     * @param name Used as a user name to lookup the turnout object
+     * @param pUserName Used as a user name to lookup the turnout object
+     * @param pSystemName Used as a system name to lookup the turnout object
      */
-    public void setTurnout(String name) {
+    public void setTurnout(String pUserName, String pSystemName) {
         turnout = InstanceManager.turnoutManagerInstance().
-            newTurnout(null,name);
+            newTurnout(pUserName, pSystemName);
         turnout.addPropertyChangeListener(this);
     }
 
+    public Turnout getTurnout() { return turnout; }
+
     // display icons
-    Icon closed = new ImageIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/os-upper-right-closed.gif"));
-    Icon thrown = new ImageIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/os-upper-right-thrown.gif"));
-    Icon inconsistent = new ImageIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/os-upper-right-error.gif"));
-    Icon unknown = new ImageIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/os-upper-right-unknown.gif"));
+    NamedIcon closed = new NamedIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/os-upper-right-closed.gif"),
+                            "resources/icons/smallschematics/tracksegments/os-upper-right-closed.gif");
+    NamedIcon thrown = new NamedIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/os-upper-right-thrown.gif"),
+                            "resources/icons/smallschematics/tracksegments/os-upper-right-thrown.gif");
+    NamedIcon inconsistent = new NamedIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/os-upper-right-error.gif"),
+                            "resources/icons/smallschematics/tracksegments/os-upper-right-error.gif");
+    NamedIcon unknown = new NamedIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/os-upper-right-unknown.gif"),
+                            "resources/icons/smallschematics/tracksegments/os-upper-right-unknown.gif");
 
-    public Icon getClosedIcon() { return closed; }
-    public void setClosedIcon(Icon i) { closed = i; displayState(turnoutState()); }
+    public NamedIcon getClosedIcon() { return closed; }
+    public void setClosedIcon(NamedIcon i) { closed = i; displayState(turnoutState()); }
 
-    public Icon getThrownIcon() { return thrown; }
-    public void setThrownIcon(Icon i) { thrown = i; displayState(turnoutState()); }
+    public NamedIcon getThrownIcon() { return thrown; }
+    public void setThrownIcon(NamedIcon i) { thrown = i; displayState(turnoutState()); }
 
-    public Icon getInconsistentIcon() { return inconsistent; }
-    public void setInconsistentIcon(Icon i) { inconsistent = i; displayState(turnoutState()); }
+    public NamedIcon getInconsistentIcon() { return inconsistent; }
+    public void setInconsistentIcon(NamedIcon i) { inconsistent = i; displayState(turnoutState()); }
 
-    public Icon getUnknownIcon() { return unknown; }
-    public void setUnknownIcon(Icon i) { unknown = i; displayState(turnoutState()); }
+    public NamedIcon getUnknownIcon() { return unknown; }
+    public void setUnknownIcon(NamedIcon i) { unknown = i; displayState(turnoutState()); }
 
     public int getHeight() {
         return Math.max(

@@ -5,40 +5,44 @@ import org.jdom.Element;
 import jmri.InstanceManager;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.configurexml.XmlAdapter;
-import jmri.jmrit.catalog.NamedIcon;
+
+import jmri.jmrit.display.TurnoutIcon;
 import jmri.jmrit.display.PanelEditor;
 
 import javax.swing.*;
 
 /**
- * Handle configuration for display.PositionableLabel objects
+ * Handle configuration for display.TurnoutIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.1 $
  */
-public class PositionableLabelXml implements XmlAdapter {
+public class TurnoutIconXml implements XmlAdapter {
 
-    public PositionableLabelXml() {
+    public TurnoutIconXml() {
     }
 
     /**
      * Default implementation for storing the contents of a
-     * PositionableLabel
-     * @param o Object to store, of type PositionableLabel
+     * TurnoutIcon
+     * @param o Object to store, of type TurnoutIcon
      * @return Element containing the complete info
      */
     public Element store(Object o) {
-        Element element = new Element("positionablelabel");
-        element.addAttribute("class", "jmri.jmrit.display.configurexml.PositionableLabelXml");
+        Element element = new Element("turnouticon");
+        element.addAttribute("class", "jmri.jmrit.display.configurexml.TurnoutIconXml");
 
         // include contents
-        PositionableLabel p = (PositionableLabel)o;
+        TurnoutIcon p = (TurnoutIcon)o;
         element.addAttribute("x", ""+p.getX());
         element.addAttribute("y", ""+p.getY());
         element.addAttribute("height", ""+p.getHeight());
         element.addAttribute("width", ""+p.getWidth());
-        if (p.isText() && p.getText()!=null) element.addAttribute("text", p.getText());
-        if (p.isIcon() && p.getIcon()!=null) element.addAttribute("icon", ((NamedIcon)p.getIcon()).getName());
+        element.addAttribute("closed", p.getClosedIcon().getName());
+        element.addAttribute("thrown", p.getThrownIcon().getName());
+        element.addAttribute("unknown", p.getUnknownIcon().getName());
+        element.addAttribute("inconsistent", p.getInconsistentIcon().getName());
+        element.addAttribute("turnout", p.getTurnout().getSystemName());
 
         return element;
     }
@@ -56,13 +60,24 @@ public class PositionableLabelXml implements XmlAdapter {
     public void load(Element element, Object o) {
         // create the objects
         PanelEditor p = (PanelEditor)o;
-        PositionableLabel l = null;
-        if (element.getAttribute("text")!=null) {
-            l = new PositionableLabel(element.getAttribute("text").getValue());
-        } else if (element.getAttribute("icon")!=null) {
-            String name = element.getAttribute("icon").getValue();
-            l = new PositionableLabel(p.catalog.getIconByName(name));
-        }
+        String name;
+
+        TurnoutIcon l = new TurnoutIcon();
+
+        name = element.getAttribute("closed").getValue();
+        l.setClosedIcon(p.catalog.getIconByName(name));
+
+        name = element.getAttribute("thrown").getValue();
+        l.setThrownIcon(p.catalog.getIconByName(name));
+
+        name = element.getAttribute("unknown").getValue();
+        l.setUnknownIcon(p.catalog.getIconByName(name));
+
+        name = element.getAttribute("inconsistent").getValue();
+        l.setInconsistentIcon(p.catalog.getIconByName(name));
+
+        l.setTurnout(element.getAttribute("turnout").getValue(), null);
+
         // find coordinates
         int x = 0;
         int y = 0;
@@ -74,18 +89,14 @@ public class PositionableLabelXml implements XmlAdapter {
             height = element.getAttribute("height").getIntValue();
             width = element.getAttribute("width").getIntValue();
         } catch ( org.jdom.DataConversionException e) {
-            log.error("failed to convert PanelEditor's attribute");
+            log.error("failed to convert positional attribute");
         }
         l.setLocation(x,y);
         l.setSize(width, height);
-        if (element.getAttribute("text")!=null) {
-            p.putLabel(l);
-        } else if (element.getAttribute("icon")!=null) {
-            p.putIcon(l);
-        }
+        p.putTurnout(l);
 
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PanelEditorXml.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TurnoutIconXml.class.getName());
 
 }

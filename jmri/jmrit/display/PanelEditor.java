@@ -4,29 +4,40 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import jmri.jmrit.catalog.CatalogPane;
+import jmri.jmrit.catalog.NamedIcon;
 import com.sun.java.util.collections.ArrayList;
 
 /**
  * Provides a simple editor for adding jmri.jmrit.display items
  * to a captive JFrame
  * <P>GUI is structured as a band of common parameters across the
- * top, then a series of things you can add. Unfortunately, I don't
- * know how to automatically get item widths when using a null layout
- * (Specific location) layout manager, so you have to specify these.
+ * top, then a series of things you can add.
  * <P>
- * All created objects are put at the "front", ahead of everything that
- * is already there, except the background, which clearly has to be put at
- * the back.
+ * All created objects are put specific levels depending on their
+ * type (higher levels are in front):
+ * <UL>
+ * <LI>BKG background
+ * <LI>ICONS icons and other drawing symbols
+ * <LI>LABELS text labels
+ * <LI>TURNOUTS turnouts and other variable track items
+ * <LI>SENSORS sensors and other independently modified objects
+ * </UL>
  * <P>
  * The "contents" List keeps track of all the objects added to the target
  * frame for later manipulation.
  *
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class PanelEditor extends JPanel {
+
+    final Integer BKG       = new Integer(1);
+    final Integer ICONS     = new Integer(3);
+    final Integer LABELS    = new Integer(5);
+    final Integer TURNOUTS  = new Integer(7);
+    final Integer SENSORS   = new Integer(9);
 
     JTextField nextX = new JTextField("20",4);
     JTextField nextY = new JTextField("30",4);
@@ -37,33 +48,28 @@ public class PanelEditor extends JPanel {
     JButton iconAdd = new JButton("add");
     JButton pickIcon = new JButton("pick");
     JLabel nextIconLabel = new JLabel();
-    Icon labelIcon = null;
-    String labelIconName;
+    NamedIcon labelIcon = null;
 
     JButton turnoutAdd = new JButton("add");
     JTextField nextTurnout = new JTextField(10);
 
     JButton closedIconButton = new JButton("Pick closed icon");
-    Icon closedIcon;
-    String closedIconName;
+    NamedIcon closedIcon;
     JLabel closedIconLabel;
 
     JButton thrownIconButton = new JButton("Pick thrown icon");
-    Icon thrownIcon;
-    String thrownIconName;
+    NamedIcon thrownIcon;
     JLabel thrownIconLabel;
 
     JButton sensorAdd = new JButton("add");
     JTextField nextSensor = new JTextField(10);
 
     JButton activeIconButton = new JButton("Pick active icon");
-    Icon activeIcon;
-    String activeIconName;
+    NamedIcon activeIcon;
     JLabel activeIconLabel;
 
     JButton inactiveIconButton = new JButton("Pick inactive icon");
-    Icon inactiveIcon;
-    String inactiveIconName;
+    NamedIcon inactiveIcon;
     JLabel inactiveIconLabel;
 
     JButton backgroundAddButton = new JButton("Pick image");
@@ -189,9 +195,7 @@ public class PanelEditor extends JPanel {
 
             SensorIcon to = new SensorIcon();
             activeIcon = to.getActiveIcon();
-            activeIconName = to.getActiveIconName();
             inactiveIcon = to.getInactiveIcon();
-            inactiveIconName = to.getInactiveIconName();
             activeIconLabel = new JLabel(activeIcon);
 
             inactiveIconLabel = new JLabel(inactiveIcon);
@@ -234,7 +238,6 @@ public class PanelEditor extends JPanel {
      */
     void pickLabelIcon() {
         labelIcon = pickIcon();
-        labelIconName = pickIconName();
         nextIconLabel.setIcon(labelIcon);
     }
 
@@ -243,7 +246,6 @@ public class PanelEditor extends JPanel {
      */
     void pickThrownIcon() {
         thrownIcon = pickIcon();
-        thrownIconName = pickIconName();
         thrownIconLabel.setIcon(thrownIcon);
     }
 
@@ -252,7 +254,6 @@ public class PanelEditor extends JPanel {
      */
     void pickClosedIcon() {
         closedIcon = pickIcon();
-        closedIconName = pickIconName();
         closedIconLabel.setIcon(closedIcon);
     }
 
@@ -261,7 +262,6 @@ public class PanelEditor extends JPanel {
      */
     void pickActiveIcon() {
         activeIcon = pickIcon();
-        activeIconName = pickIconName();
         activeIconLabel.setIcon(activeIcon);
     }
 
@@ -270,19 +270,14 @@ public class PanelEditor extends JPanel {
      */
     void pickInactiveIcon() {
         inactiveIcon = pickIcon();
-        inactiveIconName = pickIconName();
         inactiveIconLabel.setIcon(inactiveIcon);
     }
 
     /**
      * Select and create and image
      */
-    Icon pickIcon() {
+    NamedIcon pickIcon() {
         return catalog.getSelectedIcon();
-    }
-
-    String pickIconName() {
-        return catalog.getSelectedIconName();
     }
 
     /**
@@ -293,13 +288,16 @@ public class PanelEditor extends JPanel {
 		int retVal = inputFileChooser.showOpenDialog(this);
 		if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
         log.debug("Open image file: "+inputFileChooser.getSelectedFile().getPath());
-		ImageIcon icon = new ImageIcon(inputFileChooser.getSelectedFile().getPath());
-        JLabel l = new PositionableLabel(icon, "another sensor icon name");
+		NamedIcon icon = new NamedIcon(inputFileChooser.getSelectedFile().getPath(),
+                                        inputFileChooser.getSelectedFile().getPath());
+        JLabel l = new PositionableLabel(icon);
         l.setSize(icon.getIconWidth(), icon.getIconHeight());
-        target.add(l);
+        putBackground(l);
+    }
+    public void putBackground(JLabel l) {
+        target.add(l, BKG);
         contents.add(l);
         backgroundAddButton.setEnabled(false);   // theres only one
-        target.moveToBack(l);
         target.revalidate();
     }
 
@@ -310,35 +308,35 @@ public class PanelEditor extends JPanel {
         TurnoutIcon l = new TurnoutIcon();
         if (closedIcon!=null) l.setClosedIcon(closedIcon);
         if (thrownIcon!=null) l.setThrownIcon(thrownIcon);
-        l.setTurnout(nextTurnout.getText());
+        l.setTurnout(null, nextTurnout.getText());
 
         log.debug("turnout height, width: "+l.getHeight()+" "+l.getWidth());
         setNextLocation(l);
+        putTurnout(l);
+    }
+    public void putTurnout(TurnoutIcon l) {
         l.invalidate();
-        target.add(l);
+        target.add(l, TURNOUTS);
         contents.add(l);
-        target.moveToFront(l);
-
         // reshow the panel
         target.validate();
     }
 
     /**
-     * Add a turnout indicator to the target
+     * Add a sensor indicator to the target
      */
     void addSensor() {
         SensorIcon l = new SensorIcon();
-        if (activeIcon!=null) l.setActiveIcon(activeIcon, activeIconName);
-        if (inactiveIcon!=null) l.setInactiveIcon(inactiveIcon, inactiveIconName);
-        l.setSensor(nextSensor.getText());
-
-        log.debug("sensor height, width: "+l.getHeight()+" "+l.getWidth());
+        if (activeIcon!=null) l.setActiveIcon(activeIcon);
+        if (inactiveIcon!=null) l.setInactiveIcon(inactiveIcon);
+        l.setSensor(null, nextSensor.getText());
         setNextLocation(l);
+        putSensor(l);
+    }
+    public void putSensor(SensorIcon l) {
         l.invalidate();
-        target.add(l);
+        target.add(l, SENSORS);
         contents.add(l);
-        target.moveToFront(l);
-
         // reshow the panel
         target.validate();
     }
@@ -349,27 +347,27 @@ public class PanelEditor extends JPanel {
     void addLabel() {
         JComponent l = new PositionableLabel(nextLabel.getText());
         setNextLocation(l);
+        putLabel(l);
+    }
+    public void putLabel(JComponent l) {
         l.invalidate();
-        target.add(l);
+        target.add(l, LABELS);
         contents.add(l);
-        target.moveToFront(l);
-
-        // reshow the panel
         target.validate();
-        log.debug("label height, width: "+l.getHeight()+" "+l.getWidth());
     }
 
     /**
      * Add an icon to the target
      */
     void addIcon() {
-        PositionableLabel l = new PositionableLabel(labelIcon, labelIconName );
+        PositionableLabel l = new PositionableLabel(labelIcon );
         setNextLocation(l);
+        putIcon(l);
+    }
+    public void putIcon(PositionableLabel l) {
         l.invalidate();
-        target.add(l);
+        target.add(l, ICONS);
         contents.add(l);
-        target.moveToFront(l);
-
         // reshow the panel
         target.validate();
     }
