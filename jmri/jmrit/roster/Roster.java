@@ -2,14 +2,17 @@
 
 package jmri.jmrit.roster;
 
-import jmri.jmrit.*;
-import java.io.*;
+import jmri.jmrit.XmlFile;
+import java.io.File;
 
-import javax.swing.*;
+import javax.swing.JComboBox;
 
-import com.sun.java.util.collections.*;
-import org.jdom.*;
-import org.jdom.output.*;
+import org.jdom.DocType;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.output.XMLOutputter;
+import com.sun.java.util.collections.ArrayList;
+import com.sun.java.util.collections.List;
 
 /**
  * Roster manages and manipulates a roster of locomotives.  It works
@@ -35,7 +38,7 @@ import org.jdom.output.*;
  * sort is done manually each time an entry is added.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
