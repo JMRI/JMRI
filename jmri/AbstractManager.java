@@ -16,7 +16,7 @@ import com.sun.java.util.collections.Collections;
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 abstract public class AbstractManager
     implements Manager, java.beans.PropertyChangeListener {
@@ -71,6 +71,9 @@ abstract public class AbstractManager
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     * <P>
+     * The non-system-specific SignalHeadManagers
+     * use this method extensively.
      */
     public void register(NamedBean s) {
         String systemName = s.getSystemName();
@@ -78,7 +81,7 @@ abstract public class AbstractManager
         String userName = s.getUserName();
         if (userName != null) _tuser.put(userName, s);
         firePropertyChange("length", null, new Integer(_tsys.size()));
-        // listen for name changes
+        // listen for name and state changes to forward
         s.addPropertyChangeListener(this);
     }
 
