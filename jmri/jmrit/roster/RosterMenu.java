@@ -10,7 +10,7 @@ import javax.swing.*;
  * <P>
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version		 	$Revision: 1.2 $
+ * @version		 	$Revision: 1.3 $
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
@@ -50,11 +50,11 @@ public class RosterMenu extends JMenu {
 
         // create the menu
 
-        //AbstractAction importAction = new ImportRosterItemAction("Import ...", pWho);
-        //importAction.setEnabled(false);
+        AbstractAction importAction = new ImportRosterItemAction("Import ...", pWho);
+        importAction.setEnabled(false);
 
-        //AbstractAction exportAction = new ExportRosterItemAction("Export ...", pWho);
-        //exportAction.setEnabled(false);
+        AbstractAction exportAction = new ExportRosterItemAction("Export ...", pWho);
+        exportAction.setEnabled(false);
 
         AbstractAction copyAction = new CopyRosterItemAction("Copy ...", pWho);
         copyAction.setEnabled(false);
@@ -63,12 +63,16 @@ public class RosterMenu extends JMenu {
         deleteAction.setEnabled(false);
 
         add(copyAction);
+        add(importAction);
+        add(exportAction);
         add(deleteAction);
 
         // activate the right items
         switch (pMenuType) {
             case MAINMENU:
                 deleteAction.setEnabled(true);
+                importAction.setEnabled(true);
+                exportAction.setEnabled(true);
                 copyAction.setEnabled(true);
                 break;
             case SELECTMENU:
