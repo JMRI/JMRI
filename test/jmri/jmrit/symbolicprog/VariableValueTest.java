@@ -18,7 +18,7 @@ import jmri.progdebugger.*;
 /**
  * Base for tests of classes inheriting from VariableValue abstract class
  * @author	Bob Jacobsen, Copyright 2002
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public abstract class VariableValueTest extends TestCase {
 
@@ -112,7 +112,7 @@ public abstract class VariableValueTest extends TestCase {
         VariableValue variable = makeVar("label", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
         setValue(variable, "5");
 
-        variable.read();
+        variable.readAll();
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;
         while ( variable.isBusy() && i++ < 100 )  {
@@ -141,7 +141,7 @@ public abstract class VariableValueTest extends TestCase {
         VariableValue variable = makeVar("label", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
         setValue(variable, "5");
 
-        variable.write();
+        variable.writeAll();
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;
         while ( variable.isBusy() && i++ < 100  )  {
@@ -324,7 +324,7 @@ public abstract class VariableValueTest extends TestCase {
         VariableValue var2 = makeVar("alternate", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
         setValue(var1, "5");
 
-        var1.write();
+        var1.writeAll();
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;
         while ( var1.isBusy() && i++ < 100  )  {

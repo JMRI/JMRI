@@ -17,7 +17,7 @@ import junit.framework.*;
  *
  * @todo need a check of the MIXED state model for long address
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 
@@ -25,7 +25,7 @@ public class SplitVariableValueTest extends VariableValueTest {
     final int lowCV = 12;
     final int offset = 6;
     ProgDebugger p = new ProgDebugger();
-    
+
     // abstract members invoked by tests in parent VariableValueTest class
     VariableValue makeVar(String label, String comment, boolean readOnly,
                           int cvNum, String mask, int minVal, int maxVal,
@@ -210,10 +210,10 @@ public class SplitVariableValueTest extends VariableValueTest {
         // set to specific value
         ((JTextField)var.getValue()).setText("5");
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
-        
+
         // read should get 123, 123 from CVs
-        var.read();
-        
+        var.readAll();
+
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;
         while ( var.isBusy() && i++ < 100 )  {
@@ -254,7 +254,7 @@ public class SplitVariableValueTest extends VariableValueTest {
         ((JTextField)var.getValue()).setText("4797");
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 
-        var.write();
+        var.writeAll();
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;
         while ( var.isBusy() && i++ < 100  )  {

@@ -21,11 +21,11 @@ import javax.swing.JTextField;
  * operation is complete, and the Value and State are stable.  During a read
  * operation, Value changes before State, so you can assume that Value is stable
  * if notified of a State change.
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.10 $
+ * @author			Bob Jacobsen   Copyright (C) 2001, 2003, 2004
+ * @version			$Revision: 1.11 $
  */
 public class CvValue extends AbstractValue implements ProgListener {
-    
+
     public CvValue(int num, Programmer pProgrammer) {
         _num = num;
         mProgrammer = pProgrammer;
@@ -35,15 +35,15 @@ public class CvValue extends AbstractValue implements ProgListener {
     }
     public int number() { return _num; }
     private int _num;
-    
+
     private JLabel _status = null;
-    
+
     private Programmer mProgrammer;
-    
+
     public int getValue()  { return _value; }
-    
+
     Color getColor() { return _tableEntry.getBackground(); }
-    
+
     protected void notifyValueChange(int value) {
         prop.firePropertyChange("Value", null, new Integer(value));
     }
@@ -123,22 +123,22 @@ public class CvValue extends AbstractValue implements ProgListener {
 
     /**
      * Set bean keeping track of whether this CV is intended to be
-     * read-only.  Does not otherwise affect behaviour! 
+     * read-only.  Does not otherwise affect behaviour!
      * Default is "false".
      */    public void setReadOnly(boolean is) {
         _readOnly = is;
     }
-    
+
     private boolean _readOnly = false;
     /**
      * Retrieve bean keeping track of whether this CV is intended to be
-     * read-only.  Does not otherwise affect behaviour! 
+     * read-only.  Does not otherwise affect behaviour!
      * Default is "false".
      */
     public boolean getReadOnly() {
         return _readOnly;
     }
-    
+
     // read, write support
     private boolean _reading = false;
     private boolean _confirm = false;

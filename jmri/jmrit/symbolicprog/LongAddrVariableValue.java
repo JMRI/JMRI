@@ -18,7 +18,7 @@ import javax.swing.text.Document;
 /**
  * Extends VariableValue to represent a NMRA long address
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  *
  */
 public class LongAddrVariableValue extends VariableValue
@@ -166,8 +166,21 @@ public class LongAddrVariableValue extends VariableValue
         ((CvValue)_cvVector.elementAt(getCvNum()+1)).setState(state);
     }
 
-    //
-    public void read() {
+    public boolean isChanged() {
+        CvValue cv1 = ((CvValue)_cvVector.elementAt(getCvNum()));
+        CvValue cv2 = ((CvValue)_cvVector.elementAt(getCvNum()+1));
+        return (considerChanged(cv1)||considerChanged(cv2));
+    }
+
+    public void readChanges() {
+         if (isChanged()) readAll();
+    }
+
+    public void writeChanges() {
+         if (isChanged()) writeAll();
+    }
+
+    public void readAll() {
         if (log.isDebugEnabled()) log.debug("longAddr read() invoked");
         setBusy(true);  // will be reset when value changes
         //super.setState(READ);
@@ -177,7 +190,7 @@ public class LongAddrVariableValue extends VariableValue
         ((CvValue)_cvVector.elementAt(getCvNum())).read(_status);
     }
 
-    public void write() {
+    public void writeAll() {
         if (log.isDebugEnabled()) log.debug("write() invoked");
         if (getReadOnly()) log.error("unexpected write operation when readOnly is set");
         setBusy(true);  // will be reset when value changes

@@ -21,8 +21,8 @@ import jmri.jmrit.decoderdefn.*;
 import jmri.jmrit.roster.*;
 
 /**
- * @author			Bob Jacobsen
- * @version         $Revision: 1.6 $
+ * @author	Bob Jacobsen Copyright 2001, 2002, 2003, 2004
+ * @version         $Revision: 1.7 $
  */
 public class PaneProgPaneTest extends TestCase {
 
@@ -127,7 +127,7 @@ public class PaneProgPaneTest extends TestCase {
         PaneProgPane progPane = new PaneProgPane("name", pane1, cvModel, varModel, null);
 
         // test by invoking
-        progPane.readPane();
+        progPane.readPaneAll();
 
         // wait for reply (normally, done by callback; will check that later)
         if (log.isDebugEnabled()) log.debug("Start to wait for reply");
@@ -175,7 +175,7 @@ public class PaneProgPaneTest extends TestCase {
         PaneProgPane progPane = new PaneProgPane("name", pane1, cvModel, varModel, null);
 
         // test by invoking
-        progPane.writePane();
+        progPane.writePaneAll();
 
         // wait for reply (normally, done by callback; will check that later)
         if (log.isDebugEnabled()) log.debug("Start to wait for reply");

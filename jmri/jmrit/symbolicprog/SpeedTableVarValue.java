@@ -58,7 +58,7 @@ import javax.swing.event.ChangeListener;
  * be removed.
  *<P>
  * @author	Bob Jacobsen, Alex Shepherd   Copyright (C) 2001, 2004
- * @version	$Revision: 1.20 $
+ * @version	$Revision: 1.21 $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -427,9 +427,22 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         }
     }
 
-    //
-    public void read() {
-        if (log.isDebugEnabled()) log.debug("longAddr read() invoked");
+    boolean onlyChanges = false;
+
+    public boolean isChanged() {
+        for (int i=0; i<nValues; i++) {
+            if (considerChanged((CvValue)_cvVector.elementAt(getCvNum()+i))) {
+                // this one is changed, return true
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void readChanges() {
+        if (log.isDebugEnabled()) log.debug("readChanges() invoked");
+        if (!isChanged()) return;
+        onlyChanges = true;
         setBusy(true);  // will be reset when value changes
         if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in read()");
         isReading = true;
@@ -439,8 +452,37 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         readNext();
     }
 
-    public void write() {
-        if (log.isDebugEnabled()) log.debug("write() invoked");
+    public void writeChanges() {
+        if (log.isDebugEnabled()) log.debug("writeChanges() invoked");
+        if (!isChanged()) return;
+        onlyChanges = true;
+        if (getReadOnly()) log.error("unexpected write operation when readOnly is set");
+        setBusy(true);  // will be reset when value changes
+        super.setState(STORED);
+        if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in write()");
+        isReading = false;
+        isWriting = true;
+        _progState = -1;
+        if (log.isDebugEnabled()) log.debug("start series of write operations");
+        writeNext();
+    }
+
+
+    public void readAll() {
+        if (log.isDebugEnabled()) log.debug("readAll() invoked");
+        onlyChanges = false;
+        setBusy(true);  // will be reset when value changes
+        if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in read()");
+        isReading = true;
+        isWriting = false;
+        _progState = -1;
+        if (log.isDebugEnabled()) log.debug("start series of read operations");
+        readNext();
+    }
+
+    public void writeAll() {
+        if (log.isDebugEnabled()) log.debug("writeAll() invoked");
+        onlyChanges = false;
         if (getReadOnly()) log.error("unexpected write operation when readOnly is set");
         setBusy(true);  // will be reset when value changes
         super.setState(STORED);
@@ -467,7 +509,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()+_progState));
         int state = cv.getState();
         if (log.isDebugEnabled()) log.debug("invoke CV read index "+_progState+" cv state "+state);
-        if (state == UNKNOWN || state == FROMFILE || state == EDITED) cv.read(_status);
+        if (!onlyChanges || considerChanged(cv) ) cv.read(_status);
         else readNext(); // repeat until end
     }
 
@@ -484,7 +526,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()+_progState));
         int state = cv.getState();
         if (log.isDebugEnabled()) log.debug("invoke CV write index "+_progState+" cv state "+state);
-        if (state == UNKNOWN || state == FROMFILE || state == EDITED) cv.write(_status);
+        if (!onlyChanges || considerChanged(cv) ) cv.write(_status);
         else writeNext();
     }
 

@@ -13,8 +13,8 @@ import java.awt.Color;
 
 /**
  * Represents a single Variable value; abstract base class.
- * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version     $Revision: 1.12 $
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2004
+ * @version     $Revision: 1.13 $
  *
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
@@ -40,8 +40,22 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     abstract public void setIntValue(int i);
 
     // methods to command a read from / write to the decoder of the underlying CVs
-    abstract public void read();
-    abstract public void write();
+    abstract public void readAll();
+    abstract public void writeAll();
+    abstract public void readChanges();
+    abstract public void writeChanges();
+
+    abstract public boolean isChanged();
+
+    /**
+     * Used by subclasses to tell if a CV meets a common definition
+     * of "changed"
+     * @param c CV to be examined
+     * @return true if to be considered changed
+     */
+    static public boolean considerChanged(CvValue c) {
+        return c.getState() == CvValue.EDITED;
+    }
 
     // handle incoming parameter notification
     abstract public void propertyChange(java.beans.PropertyChangeEvent e);
@@ -163,7 +177,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * Find number of places to shift a value left to align
      * if with a mask.  For example, as mask of "XXVVVXXX"
      * means that the value 5 needs to be shifted left 3 places
-     * before being masked and stored as XX101XXX 
+     * before being masked and stored as XX101XXX
      */
     protected int offsetVal(String maskString) {
         // convert String mask to int

@@ -21,7 +21,7 @@ import com.sun.java.util.collections.ArrayList;
  * Extends VariableValue to represent a constant enum-like-thing
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
- * @version   $Revision: 1.6 $
+ * @version   $Revision: 1.7 $
  *
  */
 public class ConstantValue extends VariableValue {
@@ -125,6 +125,19 @@ public class ConstantValue extends VariableValue {
     void setColor(Color c) {
     }
 
+    public boolean isChanged() {
+        CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()));
+        return considerChanged(cv);
+    }
+
+    public void readChanges() {
+         if (isChanged()) readAll();
+    }
+
+    public void writeChanges() {
+         if (isChanged()) writeAll();
+    }
+
     /**
      * Notify the connected CVs of a state change from above
      * @param state
@@ -136,12 +149,19 @@ public class ConstantValue extends VariableValue {
     }
 
     /**
-     * We still read the values of read-only variables.
+     * Skip actually reading, but set states and notifications anyway.
+     * <P>
+     * This sets the state to READ so that you can
+     * have algorithms like "write all variables that aren't in READ state"
+     * This is different from the 'normal' VariableValue objects, which
+     * rely on the associated CV objects to drive state changes at the
+     * end of the write.
      */
-    public void read() {
-        setBusy(true);  // will be reset when value changes
-        //super.setState(READ);
-        ((CvValue)_cvVector.elementAt(getCvNum())).read(_status);
+    public void readAll() {
+        if (log.isDebugEnabled()) log.debug("read invoked");
+        setState(READ);
+        setBusy(true);
+        setBusy(false);
     }
     /**
      * Skip actually writing, but set states and notifications anyway.
@@ -152,7 +172,7 @@ public class ConstantValue extends VariableValue {
      * rely on the associated CV objects to drive state changes at the
      * end of the write.
      */
-    public void write() {
+    public void writeAll() {
         if (log.isDebugEnabled()) log.debug("write invoked");
         setState(STORED);
         setBusy(true);

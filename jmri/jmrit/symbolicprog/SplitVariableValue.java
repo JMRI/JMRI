@@ -16,7 +16,7 @@ import javax.swing.text.Document;
  * split across two CVs.
  * <P>The mask represents the part of the value that's
  * present in the first CV; higher-order bits are loaded to the
- * second CV.  
+ * second CV.
  * <P>The original use is for addresses of stationary (accessory)
  * <P>Factor and Offset are applied when going <i>to</i> value
  * of the variable <i>to</> the CV values:
@@ -26,7 +26,7 @@ import javax.swing.text.Document;
  *</PRE>
  * decoders.
  * @author			Bob Jacobsen   Copyright (C) 2002, 2003, 2004
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  *
  */
 public class SplitVariableValue extends VariableValue
@@ -53,7 +53,7 @@ public class SplitVariableValue extends VariableValue
         lowerbitmask = maskVal(mask);
         lowerbitoffset = offsetVal(mask);
         upperbitmask = maskVal(uppermask);
-        
+
         // upper bit offset includes lower bit offset, and MSB bits missing from upper part
         upperbitoffset = offsetVal(uppermask);
         String t = mask;
@@ -64,7 +64,7 @@ public class SplitVariableValue extends VariableValue
         }
         if (log.isDebugEnabled()) log.debug("upper mask "+uppermask+" had offsetVal="+offsetVal(uppermask)
             +" so upperbitoffset="+upperbitoffset);
-                  
+
         // connect for notification
         CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()));
         cv.addPropertyChangeListener(this);
@@ -80,13 +80,13 @@ public class SplitVariableValue extends VariableValue
 
     public int getSecondCvNum() { return mSecondCV;}
 
-    int lowerbitmask;  
+    int lowerbitmask;
     int lowerbitoffset;
-    int upperbitmask;  
+    int upperbitmask;
     // number of bits to shift _left_ the 8-16 bits in 2nd CV
     // e.g. multiply by 256, then shift by this
     int upperbitoffset;
-    
+
     public void setTooltipText(String t) {
         super.setTooltipText(t);   // do default stuff
         _value.setToolTipText(t);  // set our value
@@ -130,14 +130,14 @@ public class SplitVariableValue extends VariableValue
         int newVal = (newEntry-mOffset)/mFactor;
 
         // combine with existing values via mask
-        if (log.isDebugEnabled()) 
+        if (log.isDebugEnabled())
             log.debug("lo cv was "+cv1.getValue()+" mask="+lowerbitmask+" offset="+lowerbitoffset);
-        int newCv1 = ( (newVal << lowerbitoffset) & lowerbitmask ) 
+        int newCv1 = ( (newVal << lowerbitoffset) & lowerbitmask )
                     | (~lowerbitmask & cv1.getValue());
-            
-        if (log.isDebugEnabled()) 
+
+        if (log.isDebugEnabled())
             log.debug("hi cv was "+cv2.getValue()+" mask="+upperbitmask+" offset="+upperbitoffset);
-        int newCv2 = (((newVal << upperbitoffset)>>8)&upperbitmask) 
+        int newCv2 = (((newVal << upperbitoffset)>>8)&upperbitmask)
                     | (~upperbitmask & cv2.getValue());
         if (log.isDebugEnabled()) log.debug("new value "+newVal+" gives first="+newCv1+" second="+newCv2);
 
@@ -228,8 +228,21 @@ public class SplitVariableValue extends VariableValue
     private static final int WRITING_FIRST = 3;
     private static final int WRITING_SECOND = 4;
 
-    //
-    public void read() {
+    public boolean isChanged() {
+        CvValue cv1 = ((CvValue)_cvVector.elementAt(getCvNum()));
+        CvValue cv2 = ((CvValue)_cvVector.elementAt(getSecondCvNum()));
+        return (considerChanged(cv1)||considerChanged(cv2));
+    }
+
+    public void readChanges() {
+         if (isChanged()) readAll();
+    }
+
+    public void writeChanges() {
+         if (isChanged()) writeAll();
+    }
+
+    public void readAll() {
         if (log.isDebugEnabled()) log.debug("longAddr read() invoked");
         setBusy(true);  // will be reset when value changes
         //super.setState(READ);
@@ -239,7 +252,7 @@ public class SplitVariableValue extends VariableValue
         ((CvValue)_cvVector.elementAt(getCvNum())).read(_status);
     }
 
-    public void write() {
+    public void writeAll() {
         if (log.isDebugEnabled()) log.debug("write() invoked");
         if (getReadOnly()) log.error("unexpected write operation when readOnly is set");
         setBusy(true);  // will be reset when value changes
@@ -302,7 +315,7 @@ public class SplitVariableValue extends VariableValue
             CvValue cv1 = (CvValue)_cvVector.elementAt(getSecondCvNum());
             int newVal = ((cv0.getValue()&lowerbitmask) >> lowerbitoffset)
                 + (((cv1.getValue()&upperbitmask)*256)>>upperbitoffset);
-            if (log.isDebugEnabled()) 
+            if (log.isDebugEnabled())
                 log.debug("set value to "+newVal+" based on cv0="+cv0.getValue()+" cv1="+cv1.getValue());
             setValue(newVal);  // check for duplicate done inside setVal
             // state change due to CV state change, so propagate that
@@ -333,7 +346,7 @@ public class SplitVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.8 $
+     * @version     $Revision: 1.9 $
      */
     public class VarTextField extends JTextField {
 
