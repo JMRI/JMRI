@@ -18,7 +18,7 @@ import javax.swing.JMenuBar;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.21 $
+ * @version     $Revision: 1.22 $
  */
 public class LocoTools extends Apps {
 
@@ -61,7 +61,7 @@ public class LocoTools extends Apps {
         createFrame(new LocoTools(f), f);
 
         log.info("main initialization done");
-        splash(true);
+        splash(false);
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoTools.class.getName());
