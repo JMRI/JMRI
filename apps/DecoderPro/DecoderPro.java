@@ -13,7 +13,7 @@ import jmri.util.oreilly.*;
  * DecoderPro application.
  *
  * @author                      Bob Jacobsen
- * @version                     $Revision: 1.25 $
+ * @version                     $Revision: 1.26 $
  */
 public class DecoderPro extends JPanel {
     public DecoderPro() {
@@ -57,7 +57,9 @@ public class DecoderPro extends JPanel {
 
         JMenu toolMenu = new JMenu("Tools");
         menuBar.add(toolMenu);
+        toolMenu.add(new jmri.jmrit.powerpanel.PowerPanelAction("Power Control"));
         toolMenu.add(new jmri.jmrit.simpleprog.SimpleProgAction("Single CV Programmer"));
+        toolMenu.add(new JSeparator());
         toolMenu.add(new jmri.jmrit.XmlFileCheckAction("Check XML File", this));
         toolMenu.add(new jmri.jmrit.decoderdefn.NameCheckAction("Check decoder names", this));
         toolMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.ProgCheckAction("Check programmer names", this));
