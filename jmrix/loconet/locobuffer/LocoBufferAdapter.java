@@ -10,12 +10,16 @@
 
 package jmri.jmrix.loconet.locobuffer;
 
+import javax.comm.PortInUseException;
 import javax.comm.CommPortIdentifier;
+import javax.comm.SerialPortEventListener;
+import javax.comm.SerialPortEvent;
 import javax.comm.SerialPort;
 import java.util.Enumeration;
 import java.util.Vector;
 import java.io.DataOutputStream;
 import java.io.DataInputStream;
+import java.io.InputStream;
 
 import jmri.jmrix.loconet.*;
 
@@ -37,33 +41,128 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 		return portNameVector;
 	}
 	
-	public void openPort(String portName, String appName)  {
+	public String openPort(String portName, String appName)  {
 		// open the primary and secondary ports in LocoNet mode, check ability to set moderators
 		try {
 			// get and open the primary port
 			CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
-  			activeSerialPort = (SerialPort) portID.open(appName, 0);  // name of program, msec to wait
-
+			try {
+	  			activeSerialPort = (SerialPort) portID.open(appName, 100);  // name of program, msec to wait
+	  			}
+			catch (PortInUseException p) {
+				log.error(portName+" port is in use: "+p.getMessage());
+				return portName+" port is in use";
+			}
 			// try to set it for LocoNet via LocoBuffer
 			try {
 				activeSerialPort.setSerialPortParams(19200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 			} catch (javax.comm.UnsupportedCommOperationException e) {
-				log.error("Cannot open serial port: "+e);	
+				log.error("Cannot set serial parameters on port "+portName+": "+e.getMessage());	
+				return "Cannot set serial parameters on port "+portName+": "+e.getMessage();
 			}
 			
-			// activeSerialPort.setFlowControlMode(0);
-			activeSerialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN | SerialPort.FLOWCONTROL_RTSCTS_OUT);
-
-			// set RTS high, DTR high
+			// set RTS high, DTR high - done early, so flow control can be configured later
 			activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
 			activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+
+			// activeSerialPort.setFlowControlMode(0);
+			activeSerialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_OUT);
+			
+			// set timeout
+			// activeSerialPort.enableReceiveTimeout(1000);
+			log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
+						+" "+activeSerialPort.isReceiveTimeoutEnabled());
+			
+			// get and save stream
+			serialStream = activeSerialPort.getInputStream();
+			
+			// purge contents, if any
+			int count = serialStream.available();
+			log.debug("input stream shows "+count+" bytes available");
+			while ( count > 0) {
+				serialStream.skip(count);
+				count = serialStream.available();
+			}
+				
+			// report status?
+			if (log.isInfoEnabled()) {
+				// report now
+				log.info(portName+" port opened at "
+						+activeSerialPort.getBaudRate()+" baud with"
+						+" DTR: "+activeSerialPort.isDTR()
+						+" RTS: "+activeSerialPort.isRTS()
+						+" DSR: "+activeSerialPort.isDSR()
+						+" CTS: "+activeSerialPort.isCTS()
+						+"  CD: "+activeSerialPort.isCD()
+					);
+			}
+			if (log.isDebugEnabled()) {
+				// arrange to notify later
+				activeSerialPort.addEventListener(new SerialPortEventListener(){
+						public void serialEvent(SerialPortEvent e) {
+							int type = e.getEventType();
+							switch (type) {
+								case SerialPortEvent.DATA_AVAILABLE:
+									log.info("SerialEvent: DATA_AVAILABLE is "+e.getNewValue());
+									return;
+								case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
+									log.info("SerialEvent: OUTPUT_BUFFER_EMPTY is "+e.getNewValue());
+									return;
+								case SerialPortEvent.CTS:
+									log.info("SerialEvent: CTS is "+e.getNewValue());
+									return;
+								case SerialPortEvent.DSR:
+									log.info("SerialEvent: DSR is "+e.getNewValue());
+									return;
+								case SerialPortEvent.RI:
+									log.info("SerialEvent: RI is "+e.getNewValue());
+									return;
+								case SerialPortEvent.CD:
+									log.info("SerialEvent: CD is "+e.getNewValue());
+									return;
+								case SerialPortEvent.OE:
+									log.info("SerialEvent: OE (overrun error) is "+e.getNewValue());
+									return;
+								case SerialPortEvent.PE:
+									log.info("SerialEvent: PE (parity error) is "+e.getNewValue());
+									return;
+								case SerialPortEvent.FE:
+									log.info("SerialEvent: FE (framing error) is "+e.getNewValue());
+									return;
+								case SerialPortEvent.BI:
+									log.info("SerialEvent: BI (break interrupt) is "+e.getNewValue());
+									return;
+								default:
+									log.info("SerialEvent of unknown type: "+type+" value: "+e.getNewValue());
+									return;
+							}
+						}
+					}
+				);
+				try { activeSerialPort.notifyOnFramingError(true); }
+					catch (Exception e) { log.debug("Could not notifyOnFramingError: "+e); }
+						
+				try { activeSerialPort.notifyOnBreakInterrupt(true); }
+					catch (Exception e) { log.debug("Could not notifyOnBreakInterrupt: "+e); }	
+					
+				try { activeSerialPort.notifyOnParityError(true); }
+					catch (Exception e) { log.debug("Could not notifyOnParityError: "+e); }	
+					
+				try { activeSerialPort.notifyOnOverrunError(true); }
+					catch (Exception e) { log.debug("Could not notifyOnOverrunError: "+e); }	
+					
+			}
 						
 			opened = true;
 			
 		}
 		catch (Exception ex) {
+			log.error("Unexpected exception while opening port "+portName+" trace follows: "+ex);
 			ex.printStackTrace();
-		}		
+			return "Unexpected error while opening port "+portName+": "+ex;
+		}
+		
+		return null; // normal operation
 	}
 
 	/**
@@ -101,13 +200,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 // base class methods for the LnPortController interface
 	public DataInputStream getInputStream() {
 		if (!opened) log.error("getInputStream called before load(), stream not available");
-		try {
-			return new DataInputStream(activeSerialPort.getInputStream());
-     		}
-     	catch (java.io.IOException e) {
-     		log.error("getInputStream exception: "+e);
-     	}
-     	return null;
+		return new DataInputStream(serialStream);
 	}
 	
 	public DataOutputStream getOutputStream() {
@@ -116,7 +209,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
      		return new DataOutputStream(activeSerialPort.getOutputStream());
      		}
      	catch (java.io.IOException e) {
-     		log.error("getOutputStream exception: "+e);
+     		log.error("getOutputStream exception: "+e.getMessage());
      	}
      	return null;
 	}
@@ -125,6 +218,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 	
 // private control members
 	private boolean opened = false;
+	InputStream serialStream = null;
 	
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoBufferAdapter.class.getName());
 

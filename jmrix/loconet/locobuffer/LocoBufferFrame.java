@@ -102,12 +102,15 @@ public class LocoBufferFrame extends javax.swing.JFrame {
 	public void openPortButtonActionPerformed(java.awt.event.ActionEvent e) {
 		if ((String) portList.getSelectedValue() != null) {
 			// connect to the port
-			adapter.openPort((String) portList.getSelectedValue(),"LocoBufferFrame");
-				
-			adapter.configure();
-						
-			// hide this frame, since we're done
-			hide();
+			String errCode = adapter.openPort((String) portList.getSelectedValue(),"LocoBufferFrame");
+			
+			if (errCode == null)	{
+				adapter.configure();						
+				// hide this frame, since we're done
+				hide();
+			} else {
+				JOptionPane.showMessageDialog(this,errCode);
+			}
 		} else {
 			// not selected
 			JOptionPane.showMessageDialog(this, "Please select a port name first");

@@ -17,7 +17,7 @@ package jmri.jmrix.loconet;
  * ideas being tested there will eventually be moved back to here.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Id: LocoNetMessage.java,v 1.6 2002-01-02 23:51:42 jacobsen Exp $
+ * @version			$Id: LocoNetMessage.java,v 1.7 2002-01-08 03:54:17 jacobsen Exp $
  * @see             jmri.jrmix.nce.NceMessage
  *
  */
@@ -61,6 +61,20 @@ public class LocoNetMessage {
 		String s = "";
 		for (int i=0; i<_nDataBytes; i++) s+=Integer.toHexString(_dataBytes[i])+" ";
 		return s;
+	}
+	
+	/**
+	 * check whether the message has a valid parity
+	 */
+	public boolean checkParity() {
+		int len = getNumDataElements();
+		int chksum = 0xff;  /* the seed */
+   		int loop;
+
+    	for(loop = 0; loop < len-1; loop++) {  // calculate contents for data part
+        	chksum ^= getElement(loop);
+        }
+		return (chksum == getElement(len-1));
 	}
 	
 	// contents (private)

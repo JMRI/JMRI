@@ -150,41 +150,75 @@ public class LnTrafficController implements LocoNetInterface, Runnable {
 	 * Terminates with the input stream breaking out of the try block.
 	 */
 	public void run() {
-			int opCode;
+		int opCode;
+		while (true) {   // loop permanently, program close will exit
 			try {
-			 while (true) {   // loop permanently, stream close will exit
-				// start by looking for command
-				while ( ((opCode = (istream.readByte()&0xFF)) & 0x80) ==0 )  {};  // skip if bit not set
+				// start by looking for command -  skip if bit not set
+				while ( ((opCode = (istream.readByte()&0xFF)) & 0x80) == 0 )  {
+					//log.debug("Skipping: "+Integer.toHexString(opCode));
+				} 
 				// here opCode is OK. Create output message
+				// log.debug("Start message with opcode: "+Integer.toHexString(opCode));
 				LocoNetMessage msg = null;
-				// Capture 2nd byte, always present
-				int byte2 = istream.readByte()&0xFF;
-				// Decide length
-				switch((opCode & 0x60) >> 5)
-                    {
-                        case 0:     /* 2 byte message */
-                            msg = new LocoNetMessage(2);
-                            break;
+				while (msg == null) {
+					try {
+						// Capture 2nd byte, always present
+						int byte2 = istream.readByte()&0xFF;
+						//log.debug("Byte2: "+Integer.toHexString(byte2));
+						// Decide length
+						switch((opCode & 0x60) >> 5)
+                    		{
+                        		case 0:     /* 2 byte message */
+                            		msg = new LocoNetMessage(2);
+                            		break;
 
-                        case 1:     /* 4 byte message */
-                            msg = new LocoNetMessage(4);
-                            break;
+                       			case 1:     /* 4 byte message */
+                            		msg = new LocoNetMessage(4);
+                            		break;
 
-                        case 2:     /* 6 byte message */
-                            msg = new LocoNetMessage(6);
-                            break;
-
-                        case 3:     /* N byte message */
-                            msg = new LocoNetMessage(byte2);
-                            break;
-                    }
-             	// message exists, now fill it
-             	msg.setOpCode(opCode);
-             	msg.setElement(1, byte2);
-             	int len = msg.getNumDataElements();
-             	for (int i = 2; i < len; i++) msg.setElement(i, istream.readByte()&0xFF);
-             	// confirm you've got the message right...
-             	
+	                        	case 2:     /* 6 byte message */
+    	                        	msg = new LocoNetMessage(6);
+         		                   	break;
+	
+    	                    	case 3:     /* N byte message */
+    	                    		if (byte2<2) log.error("LocoNet message length invalid: "+byte2
+    	                    						+" opcode: "+Integer.toHexString(opCode));
+        	                    	msg = new LocoNetMessage(byte2);
+            	                	break;
+                	    	}
+             			// message exists, now fill it
+             			msg.setOpCode(opCode);
+             			msg.setElement(1, byte2);
+             			int len = msg.getNumDataElements();
+						//log.debug("len: "+len);
+             			for (int i = 2; i < len; i++)  {
+             				// check for message-blocking error
+             				int b = istream.readByte()&0xFF;
+ 							//log.debug("char "+i+" is: "+Integer.toHexString(b));
+            				if ( (b&0x80) != 0) {
+             					log.warn("LocoNet message with opCode: "
+             							+Integer.toHexString(opCode)
+             							+" ended early. Expected length: "+len
+             							+" seen length: "+i
+             							+" unexpected byte: "
+             							+Integer.toHexString(b));
+             					opCode = b;
+             					throw new LocoNetMessageException();
+             				}
+             				msg.setElement(i, b);
+             			}
+ 					}
+ 					catch (LocoNetMessageException e) {
+ 						// retry by destroying the existing message
+ 						// opCode is set for the newly-started packet
+ 						msg = null;
+ 					}       
+ 				}     	
+				// check parity
+				if (!msg.checkParity()) {
+					log.warn("Ignore Loconet packet with bad checksum: "+msg.toString());
+					throw new LocoNetMessageException();
+				}		
              	// message is complete, dispatch it !!
              	{ 
              		final LocoNetMessage thisMsg = msg;
@@ -194,7 +228,6 @@ public class LnTrafficController implements LocoNetInterface, Runnable {
 						LocoNetMessage msgForLater = thisMsg;
 						LnTrafficController myTC = thisTC;
 						public void run() { 
-							log.debug("Delayed notify starts");
            					myTC.notify(msgForLater);
 						}
 					};
@@ -202,15 +235,26 @@ public class LnTrafficController implements LocoNetInterface, Runnable {
 				}
               	
              	// done with this one
-            	}  // end loop until no data available
-            // at this point, input stream is not available
-            // so we just fall off end to stop running
-            
-			} // end of try
-		catch (Exception e) {
-			log.warn("run: Exception: "+e.toString());
+            }
+ 			catch (LocoNetMessageException e) {
+				// just let it ride for now
 			}
-		}
+ 			catch (java.io.EOFException e) {
+				// posted from idle port when enableReceiveTimeout used
+				log.debug("EOFException, is LocoNet serial I/O using timeouts?");
+			}
+ 			catch (java.io.IOException e) {
+				// fired when write-end of HexFile reaches end
+				log.debug("IOException, should only happen with HexFIle: "+e);
+				log.info("End of file");
+				disconnectPort(controller);
+				return;
+			}
+ 			catch (Exception e) {
+				log.warn("run: unexpected exception: "+e);
+			}
+		} // end of permanent loop
+	}
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnTrafficController.class.getName());
 }
