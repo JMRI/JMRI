@@ -1,14 +1,15 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_1x2.xml,v 1.21 2003-03-18 13:55:21 jacobsen Exp $ -->
+<!-- $Id: Digitrax_1x2.xml,v 1.22 2003-05-29 19:35:39 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
-					version="7" lastUpdated="20021016"/>
+					version="8" lastUpdated="20021016"/>
 
 		<!-- Version 4 - added wire colors -->
 		<!-- Version 5 - added some specific models, extended CV7 range to 249 -->
 		<!-- Version 6 - renamed family, added models -->
 		<!-- version 7 - adjusted top range of versionID -->
+		<!-- version 8 - default BEMF value corrected -->
 		
 <decoder>
 	<family name="Premium FX with BEMF" mfg="Digitrax" 
@@ -434,13 +435,13 @@
 			<decVal/>
 			</variable>
 		<variable label="Solo operation droop compensation for speed stabilization" 
-						CV="57" mask="XXXXVVVV"
+						CV="57" mask="XXXXVVVV" default="6"
 				item="EMF Droop Config"
 				comment="0 is compenstation off, 15 is full on, typical value is 5">
 			<decVal max="15"/>
 			</variable>
 		<variable label="Advanced consist droop compensation for speed stabilization" 
-						CV="57" mask="VVVVXXXX"
+						CV="57" mask="VVVVXXXX" default="0"
 				comment="0 is compenstation off, 15 is full on, typical value is 5">
 			<decVal max="15"/>
 			</variable>

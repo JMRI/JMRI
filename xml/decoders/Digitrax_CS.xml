@@ -1,14 +1,15 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_CS.xml,v 1.6 2002-10-17 12:38:05 jacobsen Exp $ -->
+<!-- $Id: Digitrax_CS.xml,v 1.7 2003-05-29 19:35:49 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
-					version="4" lastUpdated="20021016"/>
+					version="5" lastUpdated="20021016"/>
 					
 		<!-- made from 150 file (Basic FX) -->
 		<!-- version 3 added BEMF, transponding control, short address -->
 		<!--   side effects -->
 		<!-- version 4 adjusts versionID range -->
+		<!-- version 5 correct BEMF defaults -->
 
 <decoder>
 	<family name="Basic CS" mfg="Digitrax" lowVersionID="225" highVersionID="239">
@@ -194,13 +195,13 @@
 			<decVal/>
 			</variable>
 		<variable label="Solo operation droop compensation for speed stabilization" 
-						CV="57" mask="XXXXVVVV"
+						CV="57" mask="XXXXVVVV" default="6"
 				item="EMF Droop Config"
 				comment="0 is compenstation off, 15 is full on, typical value is 5">
 			<decVal max="15"/>
 			</variable>
 		<variable label="Advanced consist droop compensation for speed stabilization" 
-						CV="57" mask="VVVVXXXX"
+						CV="57" mask="VVVVXXXX" default="0"
 				comment="0 is compenstation off, 15 is full on, typical value is 5">
 			<decVal max="15"/>
 			</variable>
