@@ -6,7 +6,7 @@ import jmri.jmrix.AbstractThrottle;
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
  * @author     Paul Bender (C) 2002,2003
- * @version    $Revision: 1.14 $
+ * @version    $Revision: 1.15 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -558,7 +558,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	           /* the address is in bytes 3 and 4*/
 		   if(getDccAddressHigh()==l.getElement(2) && getDccAddressLow()==l.getElement(3)) {
 			//Set the Is available flag to "False"
-	              log.warn("Loco " +getDccAddress() + " In use by another device");
+	              log.info("Loco " +getDccAddress() + " In use by another device");
         	      notifyPropertyChangeListener("IsAvailable",
                 	                         new Boolean(this.isAvailable),
                         	                 new Boolean(this.isAvailable = false));
@@ -572,6 +572,12 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	    if(l.getElement(0)==XNetConstants.LI_MESSAGE_RESPONCE_HEADER &&
 	       l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONCE_SEND_SUCCESS) {
 	    	 if(log.isDebugEnabled()) { log.debug("Last Command processed successfully."); }
+                 // Since we recieved an "ok",  we want to make sure "isAvailable reflects we are in control
+	         if(this.isAvailable==false) {
+                    notifyPropertyChangeListener("IsAvailable",
+                                                 new Boolean(this.isAvailable),
+                                                 new Boolean(this.isAvailable = true));
+                 }
 		requestState=THROTTLEIDLE;
 	    } else if(l.getElement(0)==XNetConstants.LI_MESSAGE_RESPONCE_HEADER &&
                      ((l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONCE_UNKNOWN_DATA_ERROR ||
@@ -589,7 +595,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
               } else {
                         /* this is an unknown error */
 		     requestState=THROTTLEIDLE;                        
-                     log.error("Recieved unhandled responce: " + l);
+                     log.warn("Recieved unhandled responce: " + l);
               }
 
 	} else if(requestState==THROTTLESTATSENT) {
@@ -666,7 +672,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	           /* the address is in bytes 3 and 4*/
 		   if(getDccAddressHigh()==l.getElement(2) && getDccAddressLow()==l.getElement(3)) {
 			//Set the Is available flag to "False"
-                      log.warn("Loco "+ getDccAddress() + " In use by another device");
+                      log.info("Loco "+ getDccAddress() + " In use by another device");
         	      notifyPropertyChangeListener("IsAvailable",
                 	                           new Boolean(this.isAvailable),
                         	                   new Boolean(this.isAvailable = false));
@@ -695,7 +701,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 
 	if((b1 & 0x08)==0x08 && isAvailable==true)
 	{
-	   log.warn("Loco " +getDccAddress() + " In use by another device");
+	   log.info("Loco " +getDccAddress() + " In use by another device");
            notifyPropertyChangeListener("IsAvailable",
                                          new Boolean(this.isAvailable),
                                          new Boolean(this.isAvailable = false));
