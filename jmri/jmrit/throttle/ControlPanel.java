@@ -71,10 +71,10 @@ public class ControlPanel extends JInternalFrame
 	public void notifyThrottleFound(DccThrottle t)
 	{
 		this.throttle = t;
+		this.setEnabled(true);
 		this.setIsForward(throttle.getIsForward());
 		this.setSpeedValues((int) throttle.getSpeedIncrement(),
 				(int) throttle.getSpeedSetting());
-		this.setEnabled(true);
 	}
 
 	/**
