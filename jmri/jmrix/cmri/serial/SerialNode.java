@@ -23,7 +23,7 @@ import jmri.Sensor;
  * more than 64 total cards.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class SerialNode {
 
@@ -49,6 +49,7 @@ public class SerialNode {
     // node definition instance variables
     public int nodeAddress = 0;                 // UA, Node address, 0-127 allowed
     protected int nodeType = SMINI;             // See above
+    protected int transmissionDelay = 0;        // DL, delay between bytes on Receive (units of 10 microsec.)
     protected int bitsPerCard = 24;             // 24 for SMINI and USIC, 24 or 32 for SUSIC
     protected int num2LSearchLights = 0;        // SMINI only, 'NS' number of two lead bicolor signals
     protected byte[] locSearchLightBits = new byte[48]; // SMINI only, 0 = not searchlight LED, 
