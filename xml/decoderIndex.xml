@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <decoderIndex version="44">
+  <decoderIndex version="45">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -277,6 +277,14 @@
           <output name="3" label="C - Green" />
         </model>
         <model model="LE113XF" numOuts="4">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+          <output name="3" label="C - Green" />
+          <output name="4" label="D - Violet" />
+        </model>
+      </family>
+      <family name="Function Decoder" mfg="Lenz" lowVersionID="10" type="locomotive" file="Lenz_LF100XF.xml">
+        <model model="LF100XF" numOuts="4" numFns="12">
           <output name="1" label="A - White" />
           <output name="2" label="B - Yellow" />
           <output name="3" label="C - Green" />
