@@ -24,7 +24,7 @@ antjava  -a ant0 java
 ant0 -d java scripts build.xml
 
 # build target - both ant and jbuilder
-build -a runtime antjava 
+build -a runtime antjava jbuilder
 
 # properties target; all the properties files
 properties -a \
