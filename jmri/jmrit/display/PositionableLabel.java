@@ -11,7 +11,7 @@ import jmri.jmrit.catalog.NamedIcon;
  * PositionableLabel is a JLabel that can be dragged around the
  * inside of the enclosing Container using a right-drag.
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class PositionableLabel extends JLabel
@@ -178,6 +178,21 @@ public class PositionableLabel extends JLabel
               }, Font.BOLD));
             popup.add(styleMenu);
 
+            JMenu colorMenu = new JMenu("Font color");
+            colorButtonGroup = new ButtonGroup();
+            addColorMenuEntry(colorMenu, "Black", Color.black);
+            addColorMenuEntry(colorMenu, "Dark Gray",Color.darkGray);
+            addColorMenuEntry(colorMenu, "Gray",Color.gray);
+            addColorMenuEntry(colorMenu, "Light Gray",Color.lightGray);
+            addColorMenuEntry(colorMenu, "White",Color.white);
+            addColorMenuEntry(colorMenu, "Red",Color.red);
+            addColorMenuEntry(colorMenu, "Orange",Color.orange);
+            addColorMenuEntry(colorMenu, "Yellow",Color.yellow);
+            addColorMenuEntry(colorMenu, "Green",Color.green);
+            addColorMenuEntry(colorMenu, "Blue",Color.blue);
+            addColorMenuEntry(colorMenu, "Magenta",Color.magenta);
+            popup.add(colorMenu);
+
             popup.add(new AbstractAction("Remove") {
                 public void actionPerformed(ActionEvent e) {
                     remove();
@@ -207,6 +222,19 @@ public class PositionableLabel extends JLabel
         setSize(getPreferredSize().width, getPreferredSize().height);
     }
 
+    void addColorMenuEntry(JMenu menu, final String name, final Color color) {
+        AbstractAction a = new AbstractAction(name) {
+            final String desiredName = name;
+            final Color desiredColor = color;
+            public void actionPerformed(ActionEvent e) { setForeground(desiredColor); }
+        };
+        JRadioButtonMenuItem r = new JRadioButtonMenuItem(a);
+        colorButtonGroup.add(r);
+        if (getForeground() == color) r.setSelected(true);
+        else r.setSelected(false);
+        menu.add(r);
+    }
+
     public JMenuItem newStyleMenuItem(AbstractAction a, int mask) {
         JCheckBoxMenuItem c = new JCheckBoxMenuItem(a);
         if ( (mask & getFont().getStyle()) == mask ) c.setSelected(true);
@@ -216,6 +244,7 @@ public class PositionableLabel extends JLabel
     JMenuItem italic = null;
     JMenuItem bold = null;
     ButtonGroup fontButtonGroup = null;
+    ButtonGroup colorButtonGroup = null;
 
     public void setFontStyle(int addStyle, int dropStyle) {
         int styleValue = (getFont().getStyle() & ~dropStyle) | addStyle;
@@ -241,7 +270,8 @@ public class PositionableLabel extends JLabel
      */
     void dispose() {
         if (popup != null) popup.removeAll();
-        fontButtonGroup =null;
+        fontButtonGroup = null;
+        colorButtonGroup = null;
         popup = null;
         italic = null;
         bold = null;
