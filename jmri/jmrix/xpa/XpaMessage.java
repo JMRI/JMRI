@@ -6,7 +6,7 @@ package jmri.jmrix.xpa;
  * Encodes a message to an XPressNet command station via an XPA and a modem.
  *
  * @author	Paul Bender  Copyright (C) 2004
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class XpaMessage {
 
@@ -165,6 +165,14 @@ public class XpaMessage {
     */
     static XpaMessage getSwitchReverseMsg(int Address){
 	XpaMessage m=new XpaMessage("ATDT#" + Address +"#1;");
+	return m;
+    }
+
+    // Xpa Device Settings
+   
+    /* Get a message for setting a Device value */
+    public static XpaMessage getDeviceSettingMsg(int setting){
+	XpaMessage m = new XpaMessage("ATDT*" + setting +"*");
 	return m;
     }
 
