@@ -11,7 +11,7 @@ import javax.swing.JSeparator;
  * Create the default "Panels" menu for use in a menubar.
  *
  * @author	Bob Jacobsen   Copyright 2003, 2004
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class PanelMenu extends JMenu {
     public PanelMenu() {
@@ -26,6 +26,8 @@ public class PanelMenu extends JMenu {
         add(new JSeparator());
         add(new jmri.jmrit.jython.RunJythonScript(rb.getString("MenuItemScript")));
         add(new jmri.jmrit.automat.monitor.AutomatTableAction(rb.getString("MenuItemMonitor")));
+        add(new jmri.jmrit.jython.JythonWindow(rb.getString("MenuItemScriptLog")));
+        add(new jmri.jmrit.jython.InputWindow(rb.getString("MenuItemScriptInput")));
 
     }
 }
