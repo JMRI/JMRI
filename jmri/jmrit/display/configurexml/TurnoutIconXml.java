@@ -9,7 +9,7 @@ import org.jdom.*;
  * Handle configuration for display.TurnoutIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class TurnoutIconXml implements XmlAdapter {
 
@@ -23,10 +23,13 @@ public class TurnoutIconXml implements XmlAdapter {
      * @return Element containing the complete info
      */
     public Element store(Object o) {
+
+        TurnoutIcon p = (TurnoutIcon)o;
+        if (!p.isActive()) return null;  // if flagged as inactive, don't store
+
         Element element = new Element("turnouticon");
 
         // include contents
-        TurnoutIcon p = (TurnoutIcon)o;
         element.addAttribute("turnout", p.getTurnout().getSystemName());
         element.addAttribute("x", ""+p.getX());
         element.addAttribute("y", ""+p.getY());

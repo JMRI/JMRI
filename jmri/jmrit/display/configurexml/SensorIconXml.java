@@ -9,7 +9,7 @@ import org.jdom.*;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class SensorIconXml implements XmlAdapter {
 
@@ -23,10 +23,13 @@ public class SensorIconXml implements XmlAdapter {
      * @return Element containing the complete info
      */
     public Element store(Object o) {
+
+        SensorIcon p = (SensorIcon)o;
+        if (!p.isActive()) return null;  // if flagged as inactive, don't store
+
         Element element = new Element("sensoricon");
 
         // include contents
-        SensorIcon p = (SensorIcon)o;
         element.addAttribute("sensor", p.getSensor().getID());
         element.addAttribute("x", ""+p.getX());
         element.addAttribute("y", ""+p.getY());

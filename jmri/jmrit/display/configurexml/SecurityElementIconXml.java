@@ -10,7 +10,7 @@ import org.jdom.Element;
  * Handle configuration for display.SecurityElementIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class SecurityElementIconXml implements XmlAdapter {
 
@@ -24,10 +24,13 @@ public class SecurityElementIconXml implements XmlAdapter {
      * @return Element containing the complete info
      */
     public Element store(Object o) {
+
+        SecurityElementIcon p = (SecurityElementIcon)o;
+        if (!p.isActive()) return null;  // if flagged as inactive, don't store
+
         Element element = new Element("securityelementicon");
 
         // include contents
-        SecurityElementIcon p = (SecurityElementIcon)o;
         SecurityElement s = p.getSecurityElement();
         element.addAttribute("number", ""+s.getNumber());
         if (!p.getRightBoundAX())

@@ -9,7 +9,7 @@ import org.jdom.*;
  * Handle configuration for display.SignalHeadIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class SignalHeadIconXml implements XmlAdapter {
 
@@ -23,10 +23,13 @@ public class SignalHeadIconXml implements XmlAdapter {
      * @return Element containing the complete info
      */
     public Element store(Object o) {
+
+        SignalHeadIcon p = (SignalHeadIcon)o;
+        if (!p.isActive()) return null;  // if flagged as inactive, don't store
+
         Element element = new Element("signalheadicon");
 
         // include contents
-        SignalHeadIcon p = (SignalHeadIcon)o;
         element.addAttribute("aspectgenerator", p.getAspectGenerator().getSEName());
         element.addAttribute("head", ""+p.getHeadNumber());
         element.addAttribute("x", ""+p.getX());
