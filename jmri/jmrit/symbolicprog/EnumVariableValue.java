@@ -2,26 +2,21 @@
 
 package jmri.jmrit.symbolicprog;
 
-import jmri.Programmer;
-import jmri.InstanceManager;
-import jmri.ProgListener;
-
-import java.awt.Component;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeListener;
+import java.awt.*;
+import java.awt.event.*;
+import java.beans.*;
 import java.util.Vector;
-import javax.swing.*;
-import java.awt.Color;
 
-import com.sun.java.util.collections.List;
+import javax.swing.*;
+
 import com.sun.java.util.collections.ArrayList;
+import com.sun.java.util.collections.List;
 
 /**
  * Extends VariableValue to represent a enumerated variable.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
@@ -41,10 +36,31 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 
     public void nItems(int n) {
         _itemArray = new String[n];
+        _valueArray = new int[n];
         _nstored = 0;
     }
 
+    /**
+     * Create a new item in the enumeration, with an associated
+     * value one more than the last item (or zero if this is the first
+     * one added)
+     * @param s  Name of the enumeration item
+     */
     public void addItem(String s) {
+        if (_nstored == 0) {
+            addItem(s, 0);
+        } else {
+            addItem(s, _valueArray[_nstored-1]+1);
+        }
+    }
+
+    /**
+     * Create a new item in the enumeration, with a specified
+     * associated value.
+     * @param s  Name of the enumeration item
+     */
+    public void addItem(String s, int value) {
+        _valueArray[_nstored] = value;
         _itemArray[_nstored++] = s;
     }
 
@@ -64,8 +80,9 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     // stored value
     JComboBox _value = null;
 
-    // place to keep the items
+    // place to keep the items & associated numbers
     String[] _itemArray = null;
+    int[] _valueArray = null;
     int _nstored;
 
     private int _maxVal;
@@ -91,9 +108,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
         // compute new cv value by combining old and request
         int oldCv = cv.getValue();
-        int newVal;
-        try { newVal = _value.getSelectedIndex(); }
-        catch (java.lang.NumberFormatException ex) { newVal = 0; }
+        int newVal = getIntValue();
         int newCv = newValue(oldCv, newVal, getMask());
         if (newCv != oldCv) cv.setValue(newCv);  // to prevent CV going EDITED during loading of decoder file
     }
@@ -107,7 +122,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         _value.setSelectedIndex(i);  // automatically fires a change event
     }
     public int getIntValue() {
-        return _value.getSelectedIndex();
+        return _valueArray[_value.getSelectedIndex()];
     }
 
     public Component getValue()  { return _value; }
@@ -203,7 +218,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * model between this object and the real JComboBox value.
      *
      * @author			Bob Jacobsen   Copyright (C) 2001
-     * @version         $Revision: 1.5 $
+     * @version         $Revision: 1.6 $
      */
     public class VarComboBox extends JComboBox {
 
