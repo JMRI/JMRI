@@ -37,7 +37,7 @@ import jmri.jmrit.catalog.NamedIcon;
  *
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class PanelEditor extends JFrame {
@@ -285,6 +285,9 @@ public class PanelEditor extends JFrame {
         // register the result for later configuration
         InstanceManager.configureManagerInstance().register(this);
 
+        // move it off the panel's position
+        setLocation(250,0);
+
     }  // end ctor
 
     /**
@@ -480,8 +483,6 @@ public class PanelEditor extends JFrame {
     public JFrame getFrame() { return frame; }
     public void setFrame(JFrame f) {
         frame = f;
-        if (f.getWidth()<200 || f.getHeight()<200)
-            frame.setSize(200, 200);
         // handle target window closes
 		frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		frame.addWindowListener(new java.awt.event.WindowAdapter() {

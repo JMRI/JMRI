@@ -11,7 +11,7 @@ import jmri.InstanceManager;
  * connect it to.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  * @see             jmri.jmrit.display.PanelEditorAction
  */
 public class PanelEditorAction extends AbstractAction {
@@ -22,6 +22,7 @@ public class PanelEditorAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
         JFrame targetFrame = new JFrame("Panel");
+        targetFrame.setSize(200,200);
         JLayeredPane targetPanel = new JLayeredPane();
         targetFrame.getContentPane().add(targetPanel);
         targetPanel.setLayout(null);
