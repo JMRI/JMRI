@@ -16,7 +16,7 @@ import com.sun.java.util.collections.List;
  * it works through the identification progress.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: IdentifyDecoder.java,v 1.1 2001-11-10 21:41:04 jacobsen Exp $
+ * @version			$Id: IdentifyDecoder.java,v 1.2 2001-11-10 21:46:55 jacobsen Exp $
  * @see             jmri.jmrit.roster.RosterEntry
  */
 public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {

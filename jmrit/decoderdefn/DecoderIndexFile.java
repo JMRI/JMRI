@@ -17,7 +17,7 @@ import org.jdom.Namespace;
  *
  * Description:		Manipulates the index of decoder definitions.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecoderIndexFile.java,v 1.1 2001-11-10 21:41:04 jacobsen Exp $
+ * @version			$Id: DecoderIndexFile.java,v 1.2 2001-11-10 21:46:55 jacobsen Exp $
  *
  * DecoderIndex represents a decoderIndex.xml file in memory, allowing a program
  * to navigate to various decoder descriptions without having to 
