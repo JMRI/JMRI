@@ -151,6 +151,12 @@ public final static int CS_STATUS  = 0x24;
    used as the first two bytes of the command */
 public final static int CS_SET_POWERMODE    = 0x22;
 
+/* the third byte of the Power up mode is set for either Auto or Manual 
+   startup */
+public final static int CS_POWERMODE_AUTO = 0x04;
+public final static int CS_POWERMODE_MANUAL = 0x00;
+
+
 /* Emergency Stop */
 public final static int ALL_ESTOP = 0x80;
 

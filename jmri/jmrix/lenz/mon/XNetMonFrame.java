@@ -20,7 +20,7 @@ import jmri.jmrix.lenz.XNetConstants;
 /**
  * Frame displaying (and logging) XpressNet messages
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version         $Revision: 2.4 $
+ * @version         $Revision: 2.5 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
@@ -156,6 +156,40 @@ import jmri.jmrix.lenz.XNetConstants;
 		  default:
 			text = l.toString();
 		  }
+		/* We want to look at responses to specific requests made to the Command Station */
+		} else if (l.getElement(0) == XNetConstants.CS_REQUEST_RESPONSE) {
+              	    if (l.getElement(1) == XNetConstants.CS_STATUS_RESPONSE) {
+			text = new String("Command Station Status:") ;
+                        int statusByte=l.getElement(2);
+                        if((statusByte&0x01)==0x01) {
+                           // Command station is in Emergency Off Mode
+                           text = text + " Emergency Off";
+			}
+                	if ((statusByte&0x02)==0x02){
+                   	   // Command station is in Emergency Stop Mode
+                           text= text + " Emergency Stop";
+                	} 
+			if ((statusByte&0x08)==0x08){
+                           // Command station is in Service Mode
+                           text = text + " Service Mode";
+                	} 
+			if ((statusByte&0x40)==0x40){
+                   	   // Command station is in Power Up Mode
+			   text = text + " Powering up";
+			} 
+                        if((statusByte&0x04)==0x04) 
+				   text = text + " Auto power-up Mode";
+                                else text = text + " Manual power-up Mode";
+			if ((statusByte&0x80)==0x80){
+                   	   // Command station has a experienced a ram check error
+                           text=text + " RAM check error!";
+                	} 
+		   } else if (l.getElement(1) == XNetConstants.CS_SOFTWARE_VERSION) {
+			/* This is a Software version response for XPressNet 
+                           Version 1 or 2 */
+				text = new String("Command Station Software Version: " + (l.getElementBCD(2).floatValue())/10 + "Type: Unknown (X-Bus V1 or V2)") ;			
+		   } else text = l.toString(); 
+
 		} else { 
 		     text = l.toString(); 
 		}
@@ -199,6 +233,14 @@ import jmri.jmrix.lenz.XNetConstants;
 		  default:
 			text = l.toString();
 		  }
+		} else if(l.getElement(0)==XNetConstants.CS_SET_POWERMODE &&
+			  l.getElement(1)==XNetConstants.CS_SET_POWERMODE &&
+			  l.getElement(2)==XNetConstants.CS_POWERMODE_AUTO ) {
+			  text= new String("REQUEST: Set Power-up Mode to Automatic");
+		} else if(l.getElement(0)==XNetConstants.CS_SET_POWERMODE &&
+			  l.getElement(1)==XNetConstants.CS_SET_POWERMODE &&
+			  l.getElement(2)==XNetConstants.CS_POWERMODE_MANUAL ) {
+			  text= new String("REQUEST: Set Power-up Mode to Manual");
 		/* Next, we have Programming Requests */
 		} else if(l.getElement(0)==XNetConstants.PROG_READ_REQUEST) {
 		  switch(l.getElement(1)) {

@@ -20,7 +20,7 @@ import jmri.jmrix.lenz.*;
  * Commander or Compact)
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 2.1 $
+ * @version			$Revision: 2.2 $
  */
 public class SystemInfoFrame extends JFrame implements XNetListener {
 
@@ -33,6 +33,9 @@ public class SystemInfoFrame extends JFrame implements XNetListener {
 
           getContentPane().add(new JLabel("Software Version:"));
           getContentPane().add(CSSoftwareVersion);
+
+	  getContentPane().add(new JLabel("Status:"));
+          getContentPane().add(CSStatus);
 
           getContentPane().add(new JLabel("Interface: "));
           getContentPane().add(LIType);
@@ -88,6 +91,7 @@ public class SystemInfoFrame extends JFrame implements XNetListener {
 
     JLabel CSType = new JLabel("                ");
     JLabel CSSoftwareVersion = new JLabel("");
+    JLabel CSStatus = new JLabel("Unknown");
     JLabel LIType = new JLabel("       ");
     JLabel LIHardwareVersion = new JLabel("");
     JLabel LISoftwareVersion = new JLabel("");
@@ -111,6 +115,12 @@ public class SystemInfoFrame extends JFrame implements XNetListener {
         msg2.setParity(); // Set the parity bit
         //Then send to the controller
         XNetTrafficController.instance().sendXNetMessage(msg2,this);
+	/* Finally, we send a request for the Command Station Status*/
+	XNetMessage msg3=XNetTrafficController.instance()
+                                             .getCommandStation()
+                                             .getCSStatusRequestMessage();
+        //Then send to the controller
+        XNetTrafficController.instance().sendXNetMessage(msg3,this);
     }
 
     // listen for responses from the LI101
@@ -136,6 +146,27 @@ public class SystemInfoFrame extends JFrame implements XNetListener {
                                      .setCommandStationType(l);
                 setCSVersionDisplay();
               }
+       } else if (l.getElement(0) == XNetConstants.CS_REQUEST_RESPONSE) {
+	      if (l.getElement(1) == XNetConstants.CS_STATUS_RESPONSE) {
+		int statusByte=l.getElement(2);
+		if((statusByte&0x01)==0x01) {
+		   // Command station is in Emergency Off Mode
+			CSStatus.setText("Emergency Off");
+		} else if ((statusByte&0x02)==0x02){
+		   // Command station is in Emergency Stop Mode
+			CSStatus.setText("Emergency Stop");
+		} else if ((statusByte&0x08)==0x08){
+		   // Command station is in Service Mode
+			CSStatus.setText("Service Mode");
+		} else if ((statusByte&0x40)==0x40){
+		   // Command station is in Power Up Mode
+			if((statusByte&0x04)==0x04) CSStatus.setText("Powering up, Auto Mode");
+			    else CSStatus.setText("Powering up, Manual Mode");
+		} else if ((statusByte&0x80)==0x80){
+		   // Command station has a experienced a ram check error
+			CSStatus.setText("RAM check error!");
+		} else CSStatus.setText("Normal");
+	      }
        }
     }
     

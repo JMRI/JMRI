@@ -3,7 +3,7 @@
  *
  * Description:		PowerManager implementation for controlling layout power
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 2.1 $
+ * @version			$Revision: 2.2 $
  */
 
 package jmri.jmrix.lenz;
@@ -19,6 +19,9 @@ public class XNetPowerManager implements PowerManager, XNetListener {
 		// connect to the TrafficManager
 		tc = XNetTrafficController.instance();
 		tc.addXNetListener(~0, this);
+		// request the current command station status
+		tc.sendXNetMessage(tc.getCommandStation()
+                                     .getCSStatusRequestMessage(),this);
 	}
 
 	int power = UNKNOWN;
@@ -67,7 +70,7 @@ public class XNetPowerManager implements PowerManager, XNetListener {
 	XNetTrafficController tc = null;
 
 	// to listen for Broadcast messages related to track power.
-        // There are 4 messages to listen for
+        // There are 5 messages to listen for
 	public void message(XNetReply m) {
 		if (log.isDebugEnabled()) log.debug("Message recieved: " +m.toString());
                 // First, we check for a "normal operations resumed message"
@@ -91,7 +94,42 @@ public class XNetPowerManager implements PowerManager, XNetListener {
                          m.getElement(1) == jmri.jmrix.lenz.XNetConstants.BC_EVERYTHING_OFF) {
 			power = OFF;
 			firePropertyChange("Power", null, null);
+		} 
+                // Next we check for a "Service Mode Entry" message
+                // This indicatse track power is off on the mainline.
+		else if (m.getElement(0) == jmri.jmrix.lenz.XNetConstants.CS_INFO &&
+                         m.getElement(1) == jmri.jmrix.lenz.XNetConstants.BC_SERVICE_MODE_ENTRY) {
+			power = OFF;
+			firePropertyChange("Power", null, null);
 		}
+		// Finally, we look at for the response to a Command 
+                // Station Status Request
+		else if (m.getElement(0) == jmri.jmrix.lenz.XNetConstants.CS_REQUEST_RESPONSE &&
+                         m.getElement(1) == jmri.jmrix.lenz.XNetConstants.CS_STATUS_RESPONSE) {
+                     int statusByte=m.getElement(2); 
+                     if((statusByte&0x01)==0x01) {
+                        // Command station is in Emergency Off Mode
+			power = OFF;
+			firePropertyChange("Power", null, null);
+                     } else if ((statusByte&0x02)==0x02){
+                        // Command station is in Emergency Stop Mode
+			power = OFF;
+			firePropertyChange("Power", null, null);
+                     } else if ((statusByte&0x08)==0x08){
+                        // Command station is in Service Mode, power to the 
+                        // track is off
+			power = OFF;
+			firePropertyChange("Power", null, null);
+                     } else if ((statusByte&0x40)==0x40){
+                        // Command station is in Power Up Mode, and not yet on
+			power = OFF;
+			firePropertyChange("Power", null, null);
+                     } else {
+		        power = ON;
+			firePropertyChange("Power", null, null);
+		     }
+              }
+
 	}
 
         // listen for the messages to the LI100/LI101
