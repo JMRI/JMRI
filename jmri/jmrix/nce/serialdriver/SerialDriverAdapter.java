@@ -23,7 +23,7 @@ import jmri.jmrix.nce.*;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -119,36 +119,19 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
         // connect to the traffic controller
         NceTrafficController.instance().connectPort(this);
 
-        // If a jmri.Programmer instance doesn't exist, create a
-        // nce.NceProgrammer to do that
-        if (jmri.InstanceManager.programmerManagerInstance() == null)
-            jmri.InstanceManager.setProgrammerManager(
+        jmri.InstanceManager.setProgrammerManager(
                 new NceProgrammerManager(
                     new NceProgrammer()));
 
+        jmri.InstanceManager.setPowerManager(new jmri.jmrix.nce.NcePowerManager());
 
-        // If a jmri.PowerManager instance doesn't exist, create a
-        // nce.NcePowerManager to do that
-        if (jmri.InstanceManager.powerManagerInstance() == null)
-            jmri.InstanceManager.setPowerManager(new jmri.jmrix.nce.NcePowerManager());
+        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.nce.NceTurnoutManager());
 
-        // If a jmri.TurnoutManager instance doesn't exist, create a
-        // nce.NceTurnoutManager to do that
-        if (jmri.InstanceManager.turnoutManagerInstance() == null)
-            jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.nce.NceTurnoutManager());
+        NceSensorManager s;
+        jmri.InstanceManager.setSensorManager(s = new jmri.jmrix.nce.NceSensorManager());
+        NceTrafficController.instance().setSensorManager(s);
 
-        // If a jmri.SensorManager instance doesn't exist, create a
-        // nce.NceSensorManager to do that
-        if (jmri.InstanceManager.sensorManagerInstance() == null) {
-            NceSensorManager s;
-            jmri.InstanceManager.setSensorManager(s = new jmri.jmrix.nce.NceSensorManager());
-            NceTrafficController.instance().setSensorManager(s);
-        }
-
-        // If a jmri.ThrottleManager instance doesn't exist, create a
-        // NceThrottleManager to do that
-        if (jmri.InstanceManager.throttleManagerInstance() == null)
-            jmri.InstanceManager.setThrottleManager(new jmri.jmrix.nce.NceThrottleManager());
+        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.nce.NceThrottleManager());
 
     }
 

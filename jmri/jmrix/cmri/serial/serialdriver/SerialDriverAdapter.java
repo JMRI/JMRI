@@ -19,7 +19,7 @@ import jmri.jmrix.cmri.serial.*;
  * Provide access to C/MRI via a serial comm port.
  * Normally controlled by the cmri.serial.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -174,26 +174,11 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         // connect to the traffic controller
         SerialTrafficController.instance().connectPort(this);
 
-        // If a jmri.Programmer instance doesn't exist, create one
-        //if (jmri.InstanceManager.programmerInstance() == null)
-        //	jmri.jmrix.loconet.SlotManager.instance();
+        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.cmri.serial.SerialTurnoutManager());
 
-        // If a jmri.PowerManager instance doesn't exist, create one
-        //if (jmri.InstanceManager.powerManagerInstance() == null)
-        //	jmri.InstanceManager.setPowerManager(new jmri.jmrix.loconet.LnPowerManager());
-
-        // If a jmri.TurnoutManager instance doesn't exist, create a
-        // TurnoutManager to do that
-        if (jmri.InstanceManager.turnoutManagerInstance() == null)
-        	jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.cmri.serial.SerialTurnoutManager());
-
-        // If a jmri.SensorManager instance doesn't exist, create a
-        // SerialSensorManager to do that
-        if (jmri.InstanceManager.sensorManagerInstance() == null) {
-            SerialSensorManager s;
-            jmri.InstanceManager.setSensorManager(s = new jmri.jmrix.cmri.serial.SerialSensorManager());
-            SerialTrafficController.instance().setSensorManager(s);
-        }
+        SerialSensorManager s;
+        jmri.InstanceManager.setSensorManager(s = new jmri.jmrix.cmri.serial.SerialSensorManager());
+        SerialTrafficController.instance().setSensorManager(s);
     }
 
     private Thread sinkThread;

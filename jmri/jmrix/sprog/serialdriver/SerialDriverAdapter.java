@@ -22,7 +22,7 @@ import jmri.jmrix.sprog.*;
  * not use any other options at configuration time.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Id: SerialDriverAdapter.java,v 1.1 2003-01-27 05:35:40 jacobsen Exp $
+ * @version			$Id: SerialDriverAdapter.java,v 1.2 2003-07-21 09:33:22 jacobsen Exp $
  */
 public class SerialDriverAdapter extends SprogPortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -115,29 +115,20 @@ public class SerialDriverAdapter extends SprogPortController  implements jmri.jm
 	 * station connected to this port
 	 */
 	public void configure() {
-			// connect to the traffic controller
-			SprogTrafficController.instance().connectPort(this);
+            // connect to the traffic controller
+            SprogTrafficController.instance().connectPort(this);
 
-			// If a jmri.Programmer instance doesn't exist, create a
-			// SprogProgrammer to do that
-			if (jmri.InstanceManager.programmerManagerInstance() == null)
-				jmri.jmrix.sprog.SprogProgrammer.instance();
+            jmri.jmrix.sprog.SprogProgrammer.instance();  // create Programmer in InstanceManager
 
-			// If a jmri.PowerManager instance doesn't exist, create a
-			// SprogPowerManager to do that
-			if (jmri.InstanceManager.powerManagerInstance() == null)
-				jmri.InstanceManager.setPowerManager(new jmri.jmrix.sprog.SprogPowerManager());
+            jmri.InstanceManager.setPowerManager(new jmri.jmrix.sprog.SprogPowerManager());
 
-			// If a jmri.TurnoutManager instance doesn't exist, create a
-			// SprogPowerManager to do that
-			if (jmri.InstanceManager.turnoutManagerInstance() == null)
-				jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.sprog.SprogTurnoutManager());
+            jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.sprog.SprogTurnoutManager());
 
-			// start operation
-			// sourceThread = new Thread(p);
-			// sourceThread.start();
-			sinkThread = new Thread(SprogTrafficController.instance());
-			sinkThread.start();
+            // start operation
+            // sourceThread = new Thread(p);
+            // sourceThread.start();
+            sinkThread = new Thread(SprogTrafficController.instance());
+            sinkThread.start();
 	}
 
 	private Thread sinkThread;

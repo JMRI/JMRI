@@ -5,7 +5,7 @@
  * Description:		Provide access to XPressNet via a LI100 on an attached serial comm port.
  *					Normally controlled by the lenz.li100.LI100Frame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 
 package jmri.jmrix.lenz.li100;
@@ -179,32 +179,17 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
 	 * connected to this port
 	 */
 	public void configure() {
-			// connect to a packetizing traffic controller
+            // connect to a packetizing traffic controller
             XNetPacketizer packets = new XNetPacketizer(new LenzCommandStation());
-			packets.connectPort(this);
+            packets.connectPort(this);
 
-			// If a jmri.Programmer instance doesn't exist, create an
-			// object for that
-			if (jmri.InstanceManager.programmerManagerInstance() == null)
-				jmri.jmrix.lenz.XNetProgrammer.instance();
+            jmri.jmrix.lenz.XNetProgrammer.instance();
+            jmri.InstanceManager.setPowerManager(new jmri.jmrix.lenz.XNetPowerManager());
+            jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager());
+            jmri.InstanceManager.setThrottleManager(new jmri.jmrix.lenz.XNetThrottleManager());
 
-			// If a jmri.PowerManager instance doesn't exist, create a
-			// loconet.XNetPowerManager to do that
-			if (jmri.InstanceManager.powerManagerInstance() == null)
-				jmri.InstanceManager.setPowerManager(new jmri.jmrix.lenz.XNetPowerManager());
-
-			// If a jmri.TurnoutManager instance doesn't exist, create a
-			// loconet.XNetTurnoutManager to do that
-			if (jmri.InstanceManager.turnoutManagerInstance() == null)
-				jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager());
-
-			// If a jmri.ThrottleManager instance doesn't exist, create a
-			// lenz.XNetThrottleManager to do that
-			if (jmri.InstanceManager.throttleManagerInstance() == null)
-				jmri.InstanceManager.setThrottleManager(new jmri.jmrix.lenz.XNetThrottleManager());
-
-			// start operation
-			packets.startThreads();
+            // start operation
+            packets.startThreads();
 	}
 
 	private Thread sinkThread;

@@ -15,7 +15,7 @@ import jmri.jmrix.*;
  * serial port.  Sensor "1" will be via DCD, and sensor "2" via DSR
  *
  * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SerialSensorAdapter extends AbstractPortController
                 implements jmri.jmrix.SerialPortAdapter  {
@@ -238,7 +238,7 @@ public class SerialSensorAdapter extends AbstractPortController
             int value = Sensor.INACTIVE;
             if (mValue) value = Sensor.ACTIVE;
             try {
-                InstanceManager.sensorManagerInstance().newSensor(null, mSensor)
+                InstanceManager.sensorManagerInstance().provideSensor(mSensor)
                     .setKnownState(value);
             } catch (JmriException e) { log.error("Exception setting state: "+e); }
         }
