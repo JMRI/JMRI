@@ -32,7 +32,7 @@ import java.util.Enumeration;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
 
@@ -136,6 +136,8 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
                     log.debug("Selection event with "+dTree.getSelectionPath().toString());
                     locoBox.setSelectedIndex(0);
                     go2.setEnabled(true);
+                    go2.setRequestFocusEnabled(true);
+                    go2.requestFocus();
                     go2.setToolTipText("Click to open the programmer");
                 } else {
                     // decoder not selected - require one

@@ -36,7 +36,7 @@ import com.sun.java.util.collections.List;
  * </UL>
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeListener {
 
@@ -66,6 +66,8 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         			// reset and disable loco selection
         			locoBox.setSelectedIndex(0);
         			go2.setEnabled(true);
+                                go2.setRequestFocusEnabled(true);
+                                go2.requestFocus();
         			go2.setToolTipText("Click to open the programmer");
         		} else {
         			go2.setEnabled(false);
@@ -138,6 +140,8 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
 						// reset and disable decoder selection
 						setDecoderSelectionFromLoco((String)locoBox.getSelectedItem());
 						go2.setEnabled(true);
+                                                go2.setRequestFocusEnabled(true);
+                                                go2.requestFocus();
 						go2.setToolTipText("Click to open the programmer");
 					} else {
 						go2.setEnabled(false);
