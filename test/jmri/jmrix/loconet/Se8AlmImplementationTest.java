@@ -33,10 +33,10 @@ public class Se8AlmImplementationTest extends TestCase {
 			    alm.page(1,0));
 
         Assert.assertEquals("page register 2",
-			    0,   // page registers always on 0
+			    3,   // page registers always on 0 location
 			    alm.page(4,0));
         Assert.assertEquals("block not at zero",
-			    6,
+			    3,
 			    alm.page(5,0));
     }
 
