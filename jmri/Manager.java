@@ -28,9 +28,12 @@ import com.sun.java.util.collections.Collections;
  * return an existing object or null, and will never create a new object.
  * The "new" method will log a warning if an object already exists with
  * that system name.
- *
+ * <P>
+ * add/remove PropertyChangeListener methods are provided. At a minimum,
+ * subclasses must notify of changes to the list of available NamedBeans;
+ * they may have other properties that will also notify.
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public interface Manager {
 
@@ -57,8 +60,19 @@ public interface Manager {
 
     public List getSystemNameList();
 
+	/**
+	 * At a minimum,
+ 	 * subclasses must notify of changes to the list of available NamedBeans;
+     * they may have other properties that will also notify.
+     */
     public void addPropertyChangeListener(java.beans.PropertyChangeListener l);
+	/**
+	 * At a minimum,
+ 	 * subclasses must notify of changes to the list of available NamedBeans;
+     * they may have other properties that will also notify.
+     */
     public void removePropertyChangeListener(java.beans.PropertyChangeListener l);
+    
     public void register(NamedBean n);
 }
 

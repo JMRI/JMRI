@@ -11,7 +11,7 @@ import com.sun.java.util.collections.List;
  * from the InstanceManager. A typical call
  * sequence might be:
  *<PRE>
- * Turnout turnout = InstanceManager.turnoutManagerInstance().newTurnout(null,"23");
+ * Turnout turnout = InstanceManager.turnoutManagerInstance().provideTurnout("23");
  *</PRE>
  * <P>
  * Each turnout has a two names.  The "user" name is entirely free form, and
@@ -22,11 +22,12 @@ import com.sun.java.util.collections.List;
  * Much of the book-keeping is implemented in the AbstractTurnoutManager class, which
  * can form the basis for a system-specific implementation.
  * <P>
- * A sample use of the TurnoutManager interface can be seen in the jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
+ * A sample use of the TurnoutManager interface can be seen in the 
+ * jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
  * class, which provides a simple GUI for controlling a single turnout.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  * @see             jmri.Turnout
  * @see             jmri.AbstractTurnoutManager
  * @see             jmri.InstanceManager

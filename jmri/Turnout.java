@@ -1,4 +1,4 @@
-// Managed.java
+// Turnout.java
 
 package jmri;
 
@@ -23,7 +23,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  * @see         jmri.AbstractTurnout
  * @see         jmri.TurnoutManager
  * @see         jmri.InstanceManager
@@ -31,17 +31,19 @@ package jmri;
  */
 public interface Turnout extends NamedBean {
 
-    // states are parameters; 'both closed and thrown' is possible!
-
     /**
      * Constant representing an "closed" state, either in readback
-     * or as a commanded state.
+     * or as a commanded state. Note that it's possible to be
+     * both CLOSED and THROWN at the same time on some systems,
+     * which should be called INCONSISTENT
      */
     public static final int CLOSED       = 0x02;
 
     /**
      * Constant representing an "thrown" state, either in readback
-     * or as a commanded state.
+     * or as a commanded state. Note that it's possible to be
+     * both CLOSED and THROWN at the same time on some systems,
+     * which should be called INCONSISTENT
      */
     public static final int THROWN       = 0x04;
 
