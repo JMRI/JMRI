@@ -1,10 +1,4 @@
-/**
- * NceTest.java
- *
- * Description:	    tests for the jmri.jmrix.nce package
- * @author			Bob Jacobsen
- * @version   $Revision: 1.2 $
- */
+// NceTest.java
 
 package jmri.jmrix.nce;
 
@@ -15,39 +9,44 @@ import junit.framework.TestSuite;
 import org.jdom.*;
 import org.jdom.output.*;
 
+/**
+ * tests for the jmri.jmrix.nce package
+ * @author			Bob Jacobsen
+ * @version   $Revision: 1.3 $
+ */
 public class NceTest extends TestCase {
 
-	// from here down is testing infrastructure
+    // from here down is testing infrastructure
 
-	public NceTest(String s) {
-		super(s);
-	}
+    public NceTest(String s) {
+        super(s);
+    }
 
-	// a dummy test to avoid JUnit warning
-	public void testDemo() {
-		assertTrue(true);
-	}
+    // a dummy test to avoid JUnit warning
+    public void testDemo() {
+        assertTrue(true);
+    }
 
-	// Main entry point
-	static public void main(String[] args) {
-		String[] testCaseName = {NceTest.class.getName()};
-		junit.swingui.TestRunner.main(testCaseName);
-	}
+    // Main entry point
+    static public void main(String[] args) {
+        String[] testCaseName = {NceTest.class.getName()};
+        junit.swingui.TestRunner.main(testCaseName);
+    }
 
-	// test suite from all defined tests
-	public static Test suite() {
-		apps.tests.AllTest.initLogging();
-		TestSuite suite = new TestSuite("jmri.jmrix.nce.NceTest");
-		suite.addTest(jmri.jmrix.nce.NceTurnoutTest.suite());
-		suite.addTest(jmri.jmrix.nce.NceTurnoutManagerTest.suite());
-		suite.addTest(jmri.jmrix.nce.ncemon.NceMonFrameTest.suite());
-		suite.addTest(jmri.jmrix.nce.NceProgrammerTest.suite());
-		suite.addTest(jmri.jmrix.nce.packetgen.NcePacketGenFrameTest.suite());
-		suite.addTest(jmri.jmrix.nce.NceTrafficControllerTest.suite());
-		suite.addTest(jmri.jmrix.nce.NceMessageTest.suite());
-		suite.addTest(jmri.jmrix.nce.NceReplyTest.suite());
-		suite.addTest(jmri.jmrix.nce.NcePowerManagerTest.suite());
-		return suite;
-	}
+    // test suite from all defined tests
+    public static Test suite() {
+        apps.tests.AllTest.initLogging();
+        TestSuite suite = new TestSuite("jmri.jmrix.nce.NceTest");
+        suite.addTest(jmri.jmrix.nce.NceTurnoutTest.suite());
+        suite.addTest(jmri.jmrix.nce.NceTurnoutManagerTest.suite());
+        suite.addTest(jmri.jmrix.nce.ncemon.NceMonFrameTest.suite());
+        suite.addTest(jmri.jmrix.nce.NceProgrammerTest.suite());
+        suite.addTest(jmri.jmrix.nce.packetgen.NcePacketGenFrameTest.suite());
+        suite.addTest(jmri.jmrix.nce.NceTrafficControllerTest.suite());
+        suite.addTest(jmri.jmrix.nce.NceMessageTest.suite());
+        suite.addTest(jmri.jmrix.nce.NceReplyTest.suite());
+        suite.addTest(jmri.jmrix.nce.NcePowerManagerTest.suite());
+        return suite;
+    }
 
 }
