@@ -30,7 +30,7 @@ import java.util.Vector;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.2 $
+ * @version 		$Revision: 1.3 $
  *
  */
 public class XNetPacketizer extends XNetTrafficController {
@@ -41,25 +41,9 @@ public class XNetPacketizer extends XNetTrafficController {
     }
 
 
-// The methods to implement the XNetNetInterface
-
-	protected Vector listeners = new Vector();
+// The methods to implement the XNetInterface
 
 	public boolean status() { return (ostream != null & istream != null);
-		}
-
-	public synchronized void addXNetListener(int mask, XNetListener l) {
-			// add only if not already registered
-			if (l == null) throw new java.lang.NullPointerException();
-			if (!listeners.contains(l)) {
-					listeners.addElement(l);
-				}
-		}
-
-	public synchronized void removeXNetListener(int mask, XNetListener l) {
-			if (listeners.contains(l)) {
-					listeners.removeElement(l);
-				}
 		}
 
 	/**
@@ -84,7 +68,7 @@ public class XNetPacketizer extends XNetTrafficController {
 	 * is converted to a byte array and queue for transmission
      * @param m Message to send; will be updated with CRC
 	 */
-	public void sendXNetMessage(XNetMessage m) {
+	public void sendXNetMessage(XNetMessage m, XNetListener reply) {
 		// set the error correcting code byte
 		int len = m.getNumDataElements();
 		int chksum = 0x00;  /* the seed */
@@ -94,6 +78,9 @@ public class XNetPacketizer extends XNetTrafficController {
         	chksum ^= m.getElement(loop);
         }
 		m.setElement(len-1, chksum);  // checksum is last element of message
+
+        // notify all _other_ listeners
+		notify(m, reply);
 
 		// stream to port in single write, as that's needed by serial
 		byte msg[] = new byte[len];
@@ -141,24 +128,6 @@ public class XNetPacketizer extends XNetTrafficController {
 	DataInputStream istream = null;
 	OutputStream ostream = null;
 
-	/**
-	 * Forward a XNetMessage to all registered listeners.
-     * @param m Message to forward. Listeners should not modify it!
-	 */
-	protected void notify(XNetMessage m) {
-		// make a copy of the listener vector to synchronized not needed for transmit
-		Vector v;
-		synchronized(this) {
-			v = (Vector) listeners.clone();
-		}
-		if (log.isDebugEnabled()) log.debug("notify of incoming XNet packet: "+m.toString());
-		// forward to all listeners
-		int cnt = v.size();
-		for (int i=0; i < cnt; i++) {
-			XNetListener client = (XNetListener) listeners.elementAt(i);
-			client.message(m);
-		}
-	}
 
 	/**
 	 * Handle incoming characters.  This is a permanent loop,
@@ -199,7 +168,7 @@ public class XNetPacketizer extends XNetTrafficController {
 						XNetMessage msgForLater = thisMsg;
 						XNetPacketizer myTC = thisTC;
 						public void run() {
-           					myTC.notify(msgForLater);
+           					myTC.notify(msgForLater,null);
 						}
 					};
 					javax.swing.SwingUtilities.invokeLater(r);
@@ -274,7 +243,7 @@ public class XNetPacketizer extends XNetTrafficController {
 						    XNetMessage msgForLater = thisMsg;
 						    XNetPacketizer myTC = thisTC;
 						    public void run() {
-           					    myTC.notify(msgForLater);
+           					    myTC.notify(msgForLater, null);
 						    }
 					    };
                         log.debug("schedule notify of incoming packet");

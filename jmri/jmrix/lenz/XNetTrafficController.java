@@ -11,7 +11,7 @@ import java.util.Vector;
  * method for locating the local implementation.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Revision: 1.2 $
+ * @version 		$Revision: 1.3 $
  *
  */
 public abstract class XNetTrafficController implements XNetInterface {
@@ -43,7 +43,7 @@ public abstract class XNetTrafficController implements XNetInterface {
 	 * Forward a preformatted XNetMessage to the actual interface.
      * @param m Message to send; will be updated with CRC
 	 */
-	abstract public void sendXNetMessage(XNetMessage m);
+	abstract public void sendXNetMessage(XNetMessage m, XNetListener reply);
 
     // The methods to implement adding and removing listeners
 	protected Vector listeners = new Vector();
@@ -65,19 +65,21 @@ public abstract class XNetTrafficController implements XNetInterface {
 	/**
 	 * Forward a message to all registered listeners.
      * @param m Message to forward. Listeners should not modify it!
+     * @param replyTo Listener for the reply to this message, doesn't get
+     *                the echo of it.
 	 */
-	protected void notify(XNetMessage m) {
+	protected void notify(XNetMessage m, XNetListener replyTo) {
 		// make a copy of the listener vector to synchronized not needed for transmit
 		Vector v;
 		synchronized(this) {
 			v = (Vector) listeners.clone();
 		}
-		if (log.isDebugEnabled()) log.debug("notify of incoming LocoNet packet: "+m.toString());
+		if (log.isDebugEnabled()) log.debug("notify of incoming packet: "+m.toString());
 		// forward to all listeners
 		int cnt = v.size();
 		for (int i=0; i < cnt; i++) {
 			XNetListener client = (XNetListener) listeners.elementAt(i);
-			client.message(m);
+			if (client!=replyTo) client.message(m);
 		}
 	}
 

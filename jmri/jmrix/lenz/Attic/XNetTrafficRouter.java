@@ -18,7 +18,7 @@ import java.util.Vector;
  * without traffic over the connection.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Revision: 1.1 $
+ * @version 		$Revision: 1.2 $
  *
  */
 public class XNetTrafficRouter extends XNetTrafficController implements XNetListener {
@@ -41,8 +41,8 @@ public class XNetTrafficRouter extends XNetTrafficController implements XNetList
 	 *
      * @param m Message to send; will be updated with CRC
 	 */
-	public void sendXNetMessage(XNetMessage m) {
-        destination.sendXNetMessage(m);
+	public void sendXNetMessage(XNetMessage m, XNetListener replyTo) {
+        destination.sendXNetMessage(m, replyTo);
 	}
 
     /**

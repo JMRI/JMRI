@@ -35,9 +35,10 @@ public interface XNetInterface {
 	 * Request a message be sent to the attached XNet. Return is immediate,
 	 * with the message being queued for eventual sending.  If you're interested
 	 * in a reply, you need to register a XNetListener object to watch the
-	 * message stream.
+	 * message stream. When sending, you specify (in 2nd parameter) who
+     * you are so you're not redundantly notified of this message.
 	 */
-	public void sendXNetMessage(XNetMessage msg);
+	public void sendXNetMessage(XNetMessage msg, XNetListener replyTo);
 
 	/**
 	 * Request notification of things happening on the XNet.

@@ -26,7 +26,7 @@ import java.beans.PropertyChangeEvent;
  * <LI>Wait for Normal Operations Resumed broadcast
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -140,14 +140,15 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		// format and send message to go to program mode
         if (_mode == Programmer.PAGEMODE)
 		    controller().sendXNetMessage(XNetTrafficController.instance()
-                                    .getCommandStation().getWritePagedCVMsg(CV, val));
+                                    .getCommandStation().getWritePagedCVMsg(CV, val), this);
         else if (_mode == Programmer.DIRECTBITMODE || _mode == Programmer.DIRECTBYTEMODE)
 		    controller().sendXNetMessage(XNetTrafficController.instance()
-                                    .getCommandStation().getWriteDirectCVMsg(CV, val));
+                                    .getCommandStation().getWriteDirectCVMsg(CV, val), this);
 
         else // register mode by elimination
 		    controller().sendXNetMessage(XNetTrafficController.instance()
-                                    .getCommandStation().getWriteRegisterMsg(registerFromCV(CV), val));
+                                    .getCommandStation().getWriteRegisterMsg(registerFromCV(CV), val)
+                                    ,this);
 	}
 
 	public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
@@ -163,15 +164,17 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		_cv = CV;
 
 		// start the error timer
-		startShortTimer();
+		startLongTimer();
 
 		// format and send message to go to program mode
         if (_mode == Programmer.PAGEMODE)
 		    controller().sendXNetMessage(XNetTrafficController.instance()
-                                    .getCommandStation().getReadPagedCVMsg(CV));
+                                    .getCommandStation().getReadPagedCVMsg(CV)
+                                    , this);
         else // register mode by elimination
 		    controller().sendXNetMessage(XNetTrafficController.instance()
-                                    .getCommandStation().getReadRegisterMsg(registerFromCV(CV)));
+                                    .getCommandStation().getReadRegisterMsg(registerFromCV(CV))
+                                    , this);
 	}
 
 	private jmri.ProgListener _usingProgrammer = null;
@@ -203,7 +206,8 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 			    progState = INQUIRESENT;
                 startLongTimer();
 			    controller().sendXNetMessage(XNetTrafficController.instance()
-                                    .getCommandStation().getServiceModeResultsMsg());
+                                    .getCommandStation().getServiceModeResultsMsg(),
+                                    this);
             }
             return;
 
@@ -220,7 +224,8 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 				startShortTimer();
 			    progState = RETURNSENT;
 				controller().sendXNetMessage(XNetTrafficController.instance()
-                                    .getCommandStation().getExitProgModeMsg());
+                                    .getCommandStation().getExitProgModeMsg(),
+                                    this);
                 return;
 
             } else if (m.getElement(0)==0x61 && m.getElement(1)==0x13) {
@@ -228,7 +233,8 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 				progState = NOTPROGRAMMING;
                 stopTimer();
 				controller().sendXNetMessage(XNetTrafficController.instance()
-                                    .getCommandStation().getExitProgModeMsg());
+                                    .getCommandStation().getExitProgModeMsg(),
+                                    this);
 				notifyProgListenerEnd(_val, jmri.ProgListener.NoLocoDetected);
                 return;
             } else {
@@ -260,7 +266,8 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 			// perhaps no loco present? Fail back to end of programming
 			progState = NOTPROGRAMMING;
 			controller().sendXNetMessage(XNetTrafficController.instance()
-                                    .getCommandStation().getExitProgModeMsg());
+                                    .getCommandStation().getExitProgModeMsg(),
+                                    this);
 			notifyProgListenerEnd(_val, jmri.ProgListener.FailedTimeout);
 		}
 	}
