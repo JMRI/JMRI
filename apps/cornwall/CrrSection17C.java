@@ -10,7 +10,7 @@ import jmri.*;
  * Based on Crr0029.bas, but the logic has been changed due to renaming of tu20, tu21, tu22
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class CrrSection17C extends CrrSection {
 
@@ -44,11 +44,11 @@ public class CrrSection17C extends CrrSection {
         boolean si129 = ( si[129].getCommandedState() == THROWN);
 
         int value = GREEN;
-        if ( !tu20 || bo30 )
+        if ( !tu20 && bo30 )
             value = RED;
-        else if ( !tu20 && tu25 && bo32 )
+        else if ( !tu20 && !bo30 && tu25 && bo32 )
             value = RED;
-        else if ( !tu20 && !tu25 && bo31 )
+        else if ( !tu20 && !bo30 && !tu25 && bo31 )
             value = RED;
         else if ( tu20 && !tu21 )
             value = RED;
