@@ -30,7 +30,7 @@ import java.util.Vector;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.7 $
+ * @version 		$Revision: 1.8 $
  *
  */
 public class XNetPacketizer extends XNetTrafficController {
@@ -296,12 +296,20 @@ public class XNetPacketizer extends XNetTrafficController {
 					try {
 						if (ostream != null) {
 							if (!controller.okToSend()) {
+							   int attemptCount;
                                                            if (debug) log.debug ("XPressNet port not ready to receive");
-                                                           while(!controller.okToSend()) { 
-                                                           if (debug) log.debug ("Waiting for XPressNet port to become ready");
-                                                                 /* this is a busy loop to handle waiting until we can send */
+							   for(attemptCount=20; attemptCount > 0; attemptCount--) {
+                                                              if (debug) log.debug ("Waiting for XPressNet port to become ready");
+							      /* wait for one second, then test again to see if the port is ready */
+						              try {
+						                  synchronized(this) {
+						                  wait(1000);
+						                  }
+						               } catch (java.lang.InterruptedException ei) {}
+							      if(controller.okToSend()) { break; } 
                                                            }
-                                                        log.debug("Ready to send to XPressNet port");
+							   if(attemptCount==0) throw(new XNetException("Timeout Sending data to port dropping packet" + msg));
+                                                           log.debug("Ready to send to XPressNet port");
                                                         }
 							if (debug) log.debug("start write to stream");
                                                         controller.setOutputBufferEmpty(false);
@@ -315,6 +323,9 @@ public class XNetPacketizer extends XNetTrafficController {
 					catch (java.io.IOException e) {
 						log.warn("send message: IOException: "+e.toString());
 					}
+					catch (XNetException e) {
+						log.warn("send message: XNetException: " +e.toString());
+ 					}
 				}
 				catch (NoSuchElementException e) {
 					// message queue was empty, wait for input

@@ -9,7 +9,7 @@ package jmri.jmrix.lenz;
  * based on the Command Station Type.
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class XNetInitilizationManager implements XNetListener {
 
@@ -26,15 +26,17 @@ public class XNetInitilizationManager implements XNetListener {
                                              .getCSVersionRequestMessage();
         // The constructor MUST wait until we get the 
         // initilization to exit.
-        // We'll attempt to send the version request a fixed number of 
-        // times before quiting and enabling everything.  This way the 
-        // program will start even if the layout is not powered
-        for(int i=0;i<20;i++) {
+
+        //Then Send the version request to the controller
+        XNetTrafficController.instance().sendXNetMessage(msg,this);
+
+        // We'll check for a fixed time period (30 seconds) to see if 
+        // we've gotten a response to our message. This way the program 
+        // will start even if the layout is not powered.
+        for(int i=0;i<30;i++) {
         // The done variable forces us to quit when we get a response to 
-        // our XPressnet Message.
+        // our XPressnet Message.  
           if(done) break;
-          //Then send the request to the controller
-          XNetTrafficController.instance().sendXNetMessage(msg,this);
            if (log.isDebugEnabled()) log.debug("start wait");
            try {
                   synchronized(this) {
