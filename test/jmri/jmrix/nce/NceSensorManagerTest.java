@@ -2,19 +2,15 @@
 
 package jmri.jmrix.nce;
 
-import jmri.*;
-
-import junit.framework.Test;
 import junit.framework.Assert;
+import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import jmri.jmrix.nce.NceReply;
-
 /**
- * JUnit tests for the NceAIU class
- * @author			Bob Jacobsen
- * @version			$Revision: 1.2 $
+ * JUnit tests for the NceAIU class.
+ * @author	Bob Jacobsen Copyright 2002
+ * @version	$Revision: 1.3 $
  */
 public class NceSensorManagerTest extends TestCase {
 

@@ -8,8 +8,8 @@ import junit.framework.TestSuite;
 
 /**
  * Set of tests for the jmri.jmrix package
- * @author			Bob Jacobsen
- * @version         $Revision: 1.6 $
+ * @author	Bob Jacobsen  Copyright 2003
+ * @version         $Revision: 1.7 $
  */
 public class JmrixTest extends TestCase {
 
