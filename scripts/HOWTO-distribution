@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.23 $)
+distribution.  ($Revision: 1.24 $)
 
 Start with a directory, typically called "Distributions", that
 contains:
@@ -24,7 +24,9 @@ This probably already exists....
 ( ) Go to your working directory and
 	cvs tag Release-1-2-3 src test manifest default.lcf jmri.jpx build.xml 
 	cd ..
-	cvs tag Release-1-2-3 xml resources lib 
+	cvs tag Release-1-2-3 xml resources help jython
+	cd lib
+	cvs tag Release-1-2-3 collections.jar comm.jar crimson.jar jdom-jdk11.jar jh.jar log4.j.jar security.policy
 	
 	(be sure that's the default.lcf you want!)
 
