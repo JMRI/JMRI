@@ -16,11 +16,17 @@ import javax.swing.text.Document;
  * split across two CVs.
  * <P>The mask represents the part of the value that's
  * present in the first CV; higher-order bits are loaded to the
- * second CV.
+ * second CV.  
  * <P>The original use is for addresses of stationary (accessory)
+ * <P>Factor and Offset are applied when going <i>to</i> value
+ * of the variable <i>to</> the CV values:
+ *<PRE>
+ Value to put in CVs = ((value in text field) - Offset)/Factor
+ Value to put in text field = ((value in CVs) * Factor) + Offset
+ *</PRE>
  * decoders.
- * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.7 $
+ * @author			Bob Jacobsen   Copyright (C) 2002, 2003, 2004
+ * @version			$Revision: 1.8 $
  *
  */
 public class SplitVariableValue extends VariableValue
@@ -30,7 +36,7 @@ public class SplitVariableValue extends VariableValue
                               int cvNum, String mask, int minVal, int maxVal,
                               Vector v, JLabel status, String stdname,
                               int pSecondCV,
-                              int pFactor, int pOffset) {
+                              int pFactor, int pOffset, String uppermask) {
         super(name, comment, readOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
@@ -43,15 +49,22 @@ public class SplitVariableValue extends VariableValue
         _value.addActionListener(this);
         _value.addFocusListener(this);
         mSecondCV = pSecondCV;
-        mShift = 0;
+
+        lowerbitmask = maskVal(mask);
+        lowerbitoffset = offsetVal(mask);
+        upperbitmask = maskVal(uppermask);
+        
+        // upper bit offset includes lower bit offset, and MSB bits missing from upper part
+        upperbitoffset = offsetVal(uppermask);
         String t = mask;
-        while (t.endsWith("V")) {
-            mShift++;
-            t = t.substring(0,t.length()-1);
+        while (t.length()>0) {
+            if (!t.startsWith("V"))
+                upperbitoffset++;
+            t = t.substring(1);
         }
-        if (mShift<=0) {
-            log.warn("split variable "+name+" mask "+mask+" must have V in the right most position");
-        }
+        if (log.isDebugEnabled()) log.debug("upper mask "+uppermask+" had offsetVal="+offsetVal(uppermask)
+            +" so upperbitoffset="+upperbitoffset);
+                  
         // connect for notification
         CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()));
         cv.addPropertyChangeListener(this);
@@ -66,8 +79,14 @@ public class SplitVariableValue extends VariableValue
     int mOffset;
 
     public int getSecondCvNum() { return mSecondCV;}
-    int mShift;
 
+    int lowerbitmask;  
+    int lowerbitoffset;
+    int upperbitmask;  
+    // number of bits to shift _left_ the 8-16 bits in 2nd CV
+    // e.g. multiply by 256, then shift by this
+    int upperbitoffset;
+    
     public void setTooltipText(String t) {
         super.setTooltipText(t);   // do default stuff
         _value.setToolTipText(t);  // set our value
@@ -79,7 +98,7 @@ public class SplitVariableValue extends VariableValue
     int _minVal;
 
     public Object rangeVal() {
-        return new String("Long address");
+        return new String("Split value");
     }
 
     String oldContents = "";
@@ -98,11 +117,11 @@ public class SplitVariableValue extends VariableValue
     }
 
     void updatedTextField() {
-        if (log.isDebugEnabled()) log.debug("actionPerformed");
+        if (log.isDebugEnabled()) log.debug("enter updatedTextField");
         // called for new values - set the CV as needed
         CvValue cv1 = (CvValue)_cvVector.elementAt(getCvNum());
         CvValue cv2 = (CvValue)_cvVector.elementAt(getSecondCvNum());
-        // no masking involved for long address
+
         int newEntry;  // entered value
         try { newEntry = Integer.valueOf(_value.getText()).intValue(); }
         catch (java.lang.NumberFormatException ex) { newEntry = 0; }
@@ -110,12 +129,24 @@ public class SplitVariableValue extends VariableValue
         // calculate resulting number
         int newVal = (newEntry-mOffset)/mFactor;
 
-        // no masked combining of old value required, as this fills the two CVs
-        int newCv1 = newVal& ((1<<mShift)-1);
-        int newCv2 = newVal >>mShift;
+        // combine with existing values via mask
+        if (log.isDebugEnabled()) 
+            log.debug("lo cv was "+cv1.getValue()+" mask="+lowerbitmask+" offset="+lowerbitoffset);
+        int newCv1 = ( (newVal << lowerbitoffset) & lowerbitmask ) 
+                    | (~lowerbitmask & cv1.getValue());
+            
+        if (log.isDebugEnabled()) 
+            log.debug("hi cv was "+cv2.getValue()+" mask="+upperbitmask+" offset="+upperbitoffset);
+        int newCv2 = (((newVal << upperbitoffset)>>8)&upperbitmask) 
+                    | (~upperbitmask & cv2.getValue());
+        if (log.isDebugEnabled()) log.debug("new value "+newVal+" gives first="+newCv1+" second="+newCv2);
+
+        // cv updates here trigger updated property changes, which means
+        // we're going to get notified sooner or later.
         cv1.setValue(newCv1);
         cv2.setValue(newCv2);
-        if (log.isDebugEnabled()) log.debug("new value "+newVal+" gives first="+newCv1+" second="+newCv2);
+        if (log.isDebugEnabled()) log.debug("exit updatedTextField");
+
     }
 
     /** ActionListener implementations */
@@ -157,6 +188,7 @@ public class SplitVariableValue extends VariableValue
     }
 
     public void setValue(int value) {
+        if (log.isDebugEnabled()) log.debug("setValue "+value);
         int oldVal;
         try {
             oldVal = (Integer.valueOf(_value.getText()).intValue()-mOffset)/mFactor;
@@ -268,8 +300,10 @@ public class SplitVariableValue extends VariableValue
             // update value of Variable
             CvValue cv0 = (CvValue)_cvVector.elementAt(getCvNum());
             CvValue cv1 = (CvValue)_cvVector.elementAt(getSecondCvNum());
-            int newVal = (cv0.getValue()&((1<<mShift)-1))
-                + (cv1.getValue()<<mShift);
+            int newVal = ((cv0.getValue()&lowerbitmask) >> lowerbitoffset)
+                + (((cv1.getValue()&upperbitmask)*256)>>upperbitoffset);
+            if (log.isDebugEnabled()) 
+                log.debug("set value to "+newVal+" based on cv0="+cv0.getValue()+" cv1="+cv1.getValue());
             setValue(newVal);  // check for duplicate done inside setVal
             // state change due to CV state change, so propagate that
             setState(cv0.getState());
@@ -299,7 +333,7 @@ public class SplitVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.7 $
+     * @version     $Revision: 1.8 $
      */
     public class VarTextField extends JTextField {
 
