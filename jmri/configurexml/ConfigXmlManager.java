@@ -15,7 +15,7 @@ import org.jdom.output.XMLOutputter;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -71,6 +71,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 Class.forName(adapter);
             } catch (java.lang.ClassNotFoundException ex) {
                 locateClassFailed(ex, adapter, o);
+            } catch (java.lang.NoClassDefFoundError ex) {
+            log.error("Could not load adapter class = "+adapter+" "+ex);
             }
         // and add to list
         clist.add(o);
