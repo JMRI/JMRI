@@ -14,8 +14,8 @@ import jmri.PowerManager;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * <P>
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.3 $
+ * @author	Bob Jacobsen Copyright (C) 2001
+ * @version         $Revision: 1.4 $
  */
 public class LnPowerManager implements PowerManager, LocoNetListener {
 
