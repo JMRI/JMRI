@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.23 2003-09-19 08:14:17 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.24 2003-10-17 03:25:31 jacobsen Exp $ -->
 
 <!-- This DTD is Copyright 2001, 2003 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -92,7 +92,9 @@
     <!ATTLIST securityelement onXAReservation		(none|stopOpposite|stopUnreserved) "none" >
     <!ATTLIST securityelement makeReservation	(none|A|AB|AC|ABC|B|BC|C) "none" >
 
-    <!-- attachXleg is coded 0 for none, 1 for A, 2 for B, 4 for C -->
+    <!ATTLIST securityelement calculates		(yes | no ) "yes" >
+    
+        <!-- attachXleg is coded 0 for none, 1 for A, 2 for B, 4 for C -->
     <!ATTLIST securityelement attachAnum		CDATA #IMPLIED>
     <!ATTLIST securityelement attachAleg		CDATA #IMPLIED>
     <!ATTLIST securityelement attachBnum		CDATA #IMPLIED>
