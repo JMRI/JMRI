@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: NMRA.xml,v 1.7 2001-12-10 06:10:49 jacobsen Exp $ -->
-<decoder-config xmlns:decoder="http://jmri.sourceforge.net/xml/decoder">
+<!-- $Id: NMRA.xml,v 1.8 2001-12-18 07:16:37 jacobsen Exp $ -->
+<decoder-config>
 		<version author="Bob Jacobsen" version="1" lastUpdated="20011209"/>
 
 <decoder>

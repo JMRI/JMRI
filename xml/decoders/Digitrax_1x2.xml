@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_1x2.xml,v 1.5 2001-12-07 07:16:28 jacobsen Exp $ -->
-<decoder-config xmlns:decoder="http://jmri.sourceforge.net/xml/decoder">
+<!-- $Id: Digitrax_1x2.xml,v 1.6 2001-12-18 07:16:37 jacobsen Exp $ -->
+<decoder-config>
 		<version author="" version="" lastUpdated=""/>
 
 <decoder>

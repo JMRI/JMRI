@@ -1,15 +1,17 @@
 <?xml version="1.0"?>
 <!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
-<programmer-config xmlns:programmer="http://jmri.sourceforge.net/xml/programmer">
-<!-- $Id: MultiPane.xml,v 1.15 2001-12-10 15:29:03 jacobsen Exp $ -->
-		<version author="" version="" lastUpdated=""/>
+
+<programmer-config>
+<!-- $Id: MultiPane.xml,v 1.16 2001-12-18 07:16:37 jacobsen Exp $ -->
+		<version author="Mark Gurries, Bob Jacobsen" 
+					version="2" lastUpdated="20011206"/>
 
 <programmer decoderFilePanes="yes">
 
 	<pane name="Basic">
 		<column>
 
-<!-- 			<dccaddress/> -->
+			<dccaddress/>
 
 			<label label=" "/>
 			<label label=" "/>
@@ -24,6 +26,9 @@
 		<column>
 			<display name="User Id #1"/>
 			<display name="User Id #2"/>
+			<label label=" "/>
+<!-- 			<display name="Decoder Version"/> -->
+<!-- 			<display name="Manufacturer"/> -->
 		</column>
 	</pane>
 	

@@ -1,8 +1,8 @@
 <!-- Defines XML for configuring the DecoderPro program -->
-<!-- $Id: DecoderPro-config.dtd,v 1.1 2001-12-04 19:44:37 jacobsen Exp $ -->
+<!-- $Id: DecoderPro-config.dtd,v 1.2 2001-12-18 07:16:37 jacobsen Exp $ -->
 
 <!ELEMENT DecoderPro-config (connection, gui, programmer)>
-<!ATTLIST DecoderPro-config xmlns:JMRIdemo CDATA "">
+<!ATTLIST DecoderPro-config>
 
 <!--  Section identifies serial port info -->
 <!ELEMENT connection EMPTY>

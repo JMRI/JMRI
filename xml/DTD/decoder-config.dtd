@@ -1,9 +1,8 @@
 <!-- Defines XML documenting a DCC decoder as a component, esp. information -->
 <!-- on how to program it. -->
-<!-- $Id: decoder-config.dtd,v 1.11 2001-12-07 07:16:28 jacobsen Exp $ -->
+<!-- $Id: decoder-config.dtd,v 1.12 2001-12-18 07:16:37 jacobsen Exp $ -->
 
 <!ELEMENT decoder-config (version, decoder, pane*)>
-<!ATTLIST decoder-config xmlns:decoder CDATA "">
 
 <!-- The version section identifies the file information.  Similar -->
 <!-- clauses appear in other DTD files; check consistency. -->
@@ -21,8 +20,8 @@
 <!ELEMENT id EMPTY>
 <!ATTLIST id family     	CDATA #REQUIRED>  <!--family name used for identification -->
 <!ATTLIST id mfg       		CDATA #REQUIRED>  <!-- mfg name used for identification   -->
-<!ATTLIST id type      	( stationary | locomotive ) "locomotive">
 <!ATTLIST id mfgID     		CDATA #REQUIRED>  <!-- CV08 value, XX means any           -->
+<!ATTLIST id type      	( stationary | locomotive ) "locomotive">
 <!ATTLIST id defnVersion 	CDATA #REQUIRED> <!-- version of the XML defining the decoder -->
 <!ATTLIST id comment   		CDATA #IMPLIED>
 <!-- lowVersionID, highVersionID define an inclusive range, with both endpoints included. -->
@@ -47,7 +46,7 @@
 
 <!ELEMENT variables (variable*, constant*)>
 
-<!ELEMENT variable  (enumVal | binaryVal | 
+<!ELEMENT variable  (enumVal |
                              decVal | hexVal | 
                              speedTableVal | longAddressVal ) >
 <!ATTLIST variable name CDATA #REQUIRED>  <!-- Name used for identification -->
@@ -143,6 +142,6 @@
 <!ATTLIST display label CDATA  #IMPLIED>  <!-- optional, default is from name -->
 <!ATTLIST display tooltip CDATA #IMPLIED>  <!-- optional, default is from variable tooltip -->
 <!ATTLIST display layout ( left | above | below | right ) "right" > <!-- label position -->
-<!ATTLIST display format  (default | slider | radiobuttons | checkbox 
+<!ATTLIST display format  (default | slider | radiobuttons | checkbox |
 							onradiobutton | offradiobutton) "default" >
 

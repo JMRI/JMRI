@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
+
+<programmer-config>
+<!-- $Id: Registers.xml,v 1.1 2001-12-18 07:16:37 jacobsen Exp $ -->
+		<version author="Bob Jacobsen" version="1" lastUpdated="20011214"/>
+
+<!-- A very basic programmer, containing only the variables that -->
+<!-- register-mode decoders have. -->
+
+<programmer decoderFilePanes="no">
+
+	<pane name="Basic">
+		<column>
+
+	 		<display name="Short Address"/>
+			<label label=" "/>
+
+			<display name="Analog (DC) Operation"/>
+			<display name="Speed Step Mode"/>
+			<display name="Locomotive Direction"/>
+			<label label=" "/>
+
+	 		<display name="Vstart"/>
+			<label label=" "/>
+
+	 		<display name="Accel"/>
+			<label label=" "/>
+
+	 		<display name="Decel"/>
+			<label label=" "/>
+
+		</column>
+	</pane>
+
+</programmer>
+</programmer-config>

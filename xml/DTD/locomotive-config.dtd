@@ -1,9 +1,9 @@
 <!-- Defines XML documenting on a locomotive, esp. information -->
 <!-- on how it is programmed. -->
-<!-- $Id: locomotive-config.dtd,v 1.9 2001-11-27 03:26:33 jacobsen Exp $ -->
+<!-- $Id: locomotive-config.dtd,v 1.10 2001-12-18 07:16:37 jacobsen Exp $ -->
 
 <!ELEMENT locomotive-config (locomotive)>
-<!ATTLIST locomotive-config xmlns:locomotive CDATA "">
+<!ATTLIST locomotive-config>
 
 <!-- The identification attributes in locomotive and -->
 <!-- decoder must be kept the same as the ones in the roster DTD -->

@@ -1,8 +1,7 @@
 <!-- Defines XML documenting a CV programmer format -->
-<!-- $Id: programmer-config.dtd,v 1.10 2001-12-09 18:00:16 jacobsen Exp $ -->
+<!-- $Id: programmer-config.dtd,v 1.11 2001-12-18 07:16:37 jacobsen Exp $ -->
 
 <!ELEMENT programmer-config (version, programmer)>
-<!ATTLIST programmer-config xmlns:programmer CDATA "">
 
 <!-- The version section identifies the file information.  Similar -->
 <!-- clauses appear in other DTD files; check consistency. -->
@@ -53,6 +52,6 @@
 <!ATTLIST display label CDATA  #IMPLIED>  <!-- optional, default is from name -->
 <!ATTLIST display tooltip CDATA #IMPLIED>  <!-- optional, default is from variable tooltip -->
 <!ATTLIST display layout ( left | above | below | right ) "right" > <!-- label position -->
-<!ATTLIST display format  (default | vslider | hslider | radiobuttons | checkbox 
+<!ATTLIST display format  (default | vslider | hslider | radiobuttons | checkbox |
 							onradiobutton | offradiobutton) "default" >
 

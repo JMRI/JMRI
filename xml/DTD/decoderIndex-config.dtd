@@ -1,8 +1,8 @@
 <!-- Defines XML documenting the list of available decoder definitions -->
-<!-- $Id: decoderIndex-config.dtd,v 1.6 2001-12-04 19:44:37 jacobsen Exp $ -->
+<!-- $Id: decoderIndex-config.dtd,v 1.7 2001-12-18 07:16:37 jacobsen Exp $ -->
 
 <!ELEMENT decoderIndex-config (decoderIndex)>
-<!ATTLIST decoderIndex-config xmlns:decoderIndex CDATA "">
+<!ATTLIST decoderIndex-config>
 
 <!ELEMENT decoderIndex (mfgList, familyList)>
 
@@ -21,6 +21,7 @@
 <!ATTLIST family file      		CDATA #REQUIRED>  <!-- file name for details -->
 <!ATTLIST family name      		CDATA #REQUIRED>  <!-- family name used for identification -->
 <!ATTLIST family mfg       		CDATA #REQUIRED>  <!-- mfg name used for identification   -->
+<!ATTLIST id type      	( stationary | locomotive ) "locomotive">
 <!ATTLIST family comment   		CDATA #IMPLIED>
 <!-- lowVersionID, highVersionID define an inclusive range, with both endpoints included. -->
 <!-- If only one is specified, only that single value is acceptable -->

@@ -1,28 +1,42 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
-<decoderIndex-config xmlns:decoderIndex="http://jmri.sourceforge.net/xml/decoderIndex">
-<!-- $Id: decoderIndex.xml,v 1.5 2001-12-10 06:10:47 jacobsen Exp $ -->
+<decoderIndex-config>
+<!-- $Id: decoderIndex.xml,v 1.6 2001-12-18 07:16:34 jacobsen Exp $ -->
 <decoderIndex>
 
 <mfgList>
+	<!-- Updated to the December 1st, 2001 NMRA list NMRA Tech Dept #635 -->
 	<manufacturer mfg="NMRA"/>
-	<manufacturer mfgID="99"	mfg="Atlas"/>  <!-- Note: same as Lenz -->
 	<manufacturer mfgID="137"	mfg="A-Train Electronics"/>
 	<manufacturer mfgID="173"	mfg="Arnold"/>
-	<manufacturer mfgID="7"		mfg="CVP Products"/>
+	<manufacturer mfgID="127"	mfg="Atlas"/>
+	<manufacturer mfgID="170"	mfg="AuroTrains"/>
+	<manufacturer mfgID="123"	mfg="Computer Dialysis France"/>
+	<manufacturer mfgID="117"	mfg="cT Elektronik"/>
+	<manufacturer mfgID="135"	mfg="CVP Products"/>
+	<manufacturer mfgID="115"	mfg="Dietz Modellbahntechnik"/>
 	<manufacturer mfgID="129"	mfg="Digitrax"/>
-	<manufacturer mfgID="133"	mfg="ICC"/>
+	<manufacturer mfgID="151"	mfg="Electronic Solutions Ulm GmbH"/>
+	<manufacturer mfgID="155"	mfg="Gebr. Fleishmann GmbH Co."/>
+	<manufacturer mfgID="133"	mfg="Intelligent Command Control"/>
+	<manufacturer mfgID="157"	mfg="Kuehn Ing."/>
 	<manufacturer mfgID="99"	mfg="Lenz"/>
+	<manufacturer mfgID="159"	mfg="LGB"/>
 	<manufacturer mfgID="143"	mfg="MRC"/>
-	<manufacturer mfgID="11" 	mfg="North Coast Engineering"/>
-	<manufacturer mfgID="14" 	mfg="PSI -Dynatrol"/>
-	<manufacturer mfgID="15" 	mfg="RamFixx Technologies"/>
+	<manufacturer mfgID="11" 	mfg="NCE Corp"/>
+	<manufacturer mfgID="125" 	mfg="ProfiLok Modellbahntechnik GmbH"/>
+	<manufacturer mfgID="14" 	mfg="PSI-Dynatrol"/>
+	<manufacturer mfgID="13" 	mfg="Public-domain and DIY"/>
+	<manufacturer mfgID="15" 	mfg="RamFixx Technologies (Wangrow)"/>
 	<manufacturer mfgID="139" 	mfg="RealRail Effects"/>
 	<manufacturer mfgID="149"	mfg="Rock Junction Controls"/>
-	<manufacturer mfgID="153"	mfg="Train Control Systems"/>
+	<manufacturer mfgID="161" 	mfg="Roco Modelspielwaren"/>
 	<manufacturer mfgID="141"	mfg="Throttle-Up"/>
+	<manufacturer mfgID="153"	mfg="Train Control Systems"/>
 	<manufacturer mfgID="131"	mfg="Trix Modelleisenbahn"/>
-	<manufacturer mfgID="147"	mfg="Umelic Ing Buero"/>
+	<manufacturer mfgID="85"	mfg="Uhlenbrock"/>
+	<manufacturer mfgID="147"	mfg="Umelec Ing Buero"/>
+	<manufacturer mfgID="119"	mfg="W.S. Ataras Engineering"/>
 	<manufacturer mfgID="12"	mfg="Wangrow"/>
 	<manufacturer mfgID="145"	mfg="Zimo"/>
 	<manufacturer mfgID="132"	mfg="ZTC"/>
@@ -33,8 +47,12 @@
 <!-- that's the one that will appear at the top of the selection box           -->
 
 <familyList>
-	<family name="NMRA" file="NMRA.xml" mfg="NMRA">
+	<family name="NMRA All CVs" file="NMRA.xml" mfg="NMRA">
 		<decoder model="All CVs" comment="List is from RP 9.2.2" />
+	</family>
+
+	<family name="NMRA Registers" file="NMRA_registers.xml" mfg="NMRA">
+		<decoder model="Registers" comment="List is from RP 9.2.2" />
 	</family>
 
 	<family name="Atlas" file="Atlas_DualMode.xml" mfg="Atlas">
@@ -44,6 +62,7 @@
 	<family name="Digitrax 1x2" file="Digitrax_1x2.xml" mfg="Digitrax" lowVersionID="240" highVersionID="242">
 		<decoder model="DH142" numOuts="4" />
 		<decoder model="DN142" numOuts="4" />
+		<decoder model="DH083" numOuts="5" />
 	</family>
 
 	<family name="Digitrax 1x1" file="Digitrax_1x1.xml" mfg="Digitrax" lowVersionID="33" highVersionID="45">

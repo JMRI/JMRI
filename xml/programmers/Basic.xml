@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
+
+<programmer-config>
+<!-- $Id: Basic.xml,v 1.1 2001-12-18 07:16:37 jacobsen Exp $ -->
+		<version author="Bob Jacobsen" version="1" lastUpdated="20011214"/>
+
+<!-- A very basic programmer, containing only the most important few CVs -->
+
+<programmer decoderFilePanes="no">
+
+	<pane name="Basic">
+		<column>
+
+	 		<dccaddress/>
+
+			<label label=" "/>
+			<label label=" "/>
+			<display name="Analog (DC) Operation"/>
+		</column>
+	</pane>
+
+</programmer>
+</programmer-config>
