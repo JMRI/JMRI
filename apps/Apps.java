@@ -4,7 +4,9 @@ package apps;
 
 import jmri.InstanceManager;
 import jmri.util.JmriJFrame;
+import jmri.util.FileUtil;
 import jmri.jmrit.XmlFile;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -23,7 +25,7 @@ import javax.swing.*;
  * Base class for Jmri applications.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 public class Apps extends JPanel {
 
@@ -169,15 +171,17 @@ public class Apps extends JPanel {
     protected void helpMenu(JMenuBar menuBar, final JFrame frame) {
         try {
             String helpsetName = "help/JmriHelp_en.hs";
+            URL hsURL;
             try {
-                URL hsURL;
                 // HelpSet.findHelpSet doesn't seem to be working, so is temporarily bypassed
                 // hsURL = HelpSet.findHelpSet(ClassLoader.getSystemClassLoader(), helpsetName);
-                hsURL = new URL("file:"+helpsetName);
+                // following line doesn't work on Mac Classic
+                // hsURL = new URL("file:"+helpsetName);
+                hsURL = new URL(FileUtil.getUrl(new File(helpsetName)));
                 globalHelpSet = new HelpSet(null, hsURL);
             } catch (java.lang.NoClassDefFoundError ee) {
-                ee.printStackTrace();
-                System.out.println(ee.getMessage());
+                log.debug("classpath="+System.getProperty("java.class.path","<unknown>"));
+                log.debug("classversion="+System.getProperty("java.class.version","<unknown>"));
                 log.error("Help classes not found, help system omitted");
                 return;
             } catch (java.lang.Exception e2) {
@@ -185,13 +189,19 @@ public class Apps extends JPanel {
                 return;
             }
             globalHelpBroker = globalHelpSet.createHelpBroker();
+            
             JMenu helpMenu = new JMenu("Help");
             menuBar.add(helpMenu);
             JMenuItem menuItem = new JMenuItem("Help");
             helpMenu.add(menuItem);
             menuItem.addActionListener(new CSH.DisplayHelpFromSource(globalHelpBroker));
+            
+            // start help to see what happend
+            log.debug("help: "+globalHelpSet.getHomeID()+":"+globalHelpSet.getTitle()
+                               +":"+globalHelpSet.getHelpSetURL());
+
         } catch (java.lang.NoSuchMethodError e2) {
-            log.error("Is jh.jar available? Error loading help system: "+e2);
+            log.error("Is jh.jar available? Error starting help system: "+e2);
         }
     }
 
@@ -289,7 +299,7 @@ public class Apps extends JPanel {
                 org.apache.log4j.Category.getRoot().setPriority(org.apache.log4j.Priority.ERROR);
             }
         }
-        catch (java.lang.NoSuchMethodError e) { System.out.println("Exception starting logging: "+e); }
+        catch (java.lang.NoSuchMethodError e) { log.error("Exception starting logging: "+e); }
     }
 
     static protected void setConfigFilename(String def, String args[]) {
