@@ -13,13 +13,18 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
 /**
- * Provide GUI to configure communications links.  This is
+ * Provide GUI to configure communications links.
+ * <P>
+ * This is
  * really just a catalog of connections to classes within
  * the systems. Reflection is used to reduce coupling.
  * <P>
+ * To add a new system package, add entries
+ * to the list in {@link #availableProtocolClasses}.
+ * <P>
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class JmrixConfigPane extends JPanel {
 
