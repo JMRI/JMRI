@@ -29,7 +29,7 @@ import com.sun.java.util.collections.List;
  * Based in part on SignalHeadTableAction.java by Bob Jacobson
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -77,12 +77,17 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     JFrame addFrame = null;
+    TableModel routeTurnoutModel = null;
     JTextField name = new JTextField(10);
-    JTextField userName = new JTextField(10);
+    JTextField userName = new JTextField(22);
     JTextField sensor1 = new JTextField(8);
     JTextField sensor2 = new JTextField(8);
     JTextField sensor3 = new JTextField(8);
     
+    ButtonGroup selGroup = null;
+    JRadioButton allButton = null;   
+    JRadioButton includedButton = null; 
+      
     JLabel nameLabel = new JLabel("Route System Name:");
     JLabel userLabel = new JLabel("Route User Name:");
     JLabel fixedSystemName = new JLabel("xxxxxxxxxxx");
@@ -100,6 +105,8 @@ public class RouteTableAction extends AbstractTableAction {
 
     JLabel status1 = new JLabel(createInst);
     JLabel status2 = new JLabel(editInst);
+    
+    JPanel p2x = null;   // Turnout list table
 
     Route curRoute = null;
     boolean routeCreated = false;
@@ -110,6 +117,7 @@ public class RouteTableAction extends AbstractTableAction {
         for (int i = 0; i<MAX_TURNOUTS ; i++ ) {
             includeTurnout[i] = false;
             setState[i] = "CLOSED";
+            includedPosition[i] = 0;
         }
         turnoutSysNameList = InstanceManager.turnoutManagerInstance().getSystemNameList();
         numTurnouts = turnoutSysNameList.size();
@@ -136,8 +144,45 @@ public class RouteTableAction extends AbstractTableAction {
             p.add(userLabel);
             p.add(userName);
             contentPane.add(p);
+            // add Turnout Display Choice
+            JPanel py = new JPanel();
+            py.add(new JLabel("Show "));
+            selGroup = new ButtonGroup();
+            allButton = new JRadioButton("All",true);
+            selGroup.add(allButton);
+            py.add(allButton);
+            allButton.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent e) {
+                        // Setup for display of all Turnouts, if needed
+                        if (!showAll) {
+                            showAll = true;
+                            ((RouteTurnoutModel)routeTurnoutModel).
+                                                fireTableDataChanged();
+                        }
+                    }
+                });
+            includedButton = new JRadioButton("Included",false);
+            selGroup.add(includedButton);
+            py.add(includedButton);
+            includedButton.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent e) {
+                        // Setup for display of included Turnouts only, if needed
+                        if (showAll) {
+                            showAll = false;
+                            initializeIncludedList();
+                            ((RouteTurnoutModel)routeTurnoutModel).
+                                                fireTableDataChanged();
+                        }
+                    }
+                });
+            py.add(new JLabel("  Turnouts"));
+            contentPane.add(py);
             // add turnout table
-            JPanel p2x = new JPanel();
+            p2x = new JPanel();
+            JPanel p2xSpace = new JPanel();
+            p2xSpace.setLayout(new BoxLayout(p2xSpace, BoxLayout.Y_AXIS));
+            p2xSpace.add(new JLabel("XXX"));
+            p2x.add(p2xSpace);
             JPanel p21 = new JPanel();
             p21.setLayout(new BoxLayout(p21, BoxLayout.Y_AXIS));
             p21.add(new JLabel("Please select "));
@@ -145,27 +190,30 @@ public class RouteTableAction extends AbstractTableAction {
             p21.add(new JLabel(" be included "));
             p21.add(new JLabel(" in this Route."));
             p2x.add(p21);
-            TableModel routeTurnoutModel = new RouteTurnoutModel();
+            routeTurnoutModel = new RouteTurnoutModel();
             JTable routeTurnoutTable = new JTable(routeTurnoutModel);
             routeTurnoutTable.setRowSelectionAllowed(false);
             routeTurnoutTable.setPreferredScrollableViewportSize(new 
-                                                            java.awt.Dimension(330,100));
+                                                            java.awt.Dimension(480,100));
             JComboBox stateCombo = new JComboBox();
             stateCombo.addItem("CLOSED");
             stateCombo.addItem("THROWN");
             TableColumnModel routeTurnoutColumnModel = routeTurnoutTable.getColumnModel();
             TableColumn includeColumn = routeTurnoutColumnModel.
                                                 getColumn(RouteTurnoutModel.INCLUDE_COLUMN);
-            includeColumn.setMinWidth(70);
-            includeColumn.setMaxWidth(80);
+            includeColumn.setResizable(false);
+            includeColumn.setMinWidth(55);
+            includeColumn.setMaxWidth(65);
             TableColumn sNameColumn = routeTurnoutColumnModel.
                                                 getColumn(RouteTurnoutModel.SNAME_COLUMN);
+            sNameColumn.setResizable(true);
             sNameColumn.setMinWidth(70);
-            sNameColumn.setMaxWidth(80);
+            sNameColumn.setMaxWidth(90);
             TableColumn uNameColumn = routeTurnoutColumnModel.
                                                 getColumn(RouteTurnoutModel.UNAME_COLUMN);
-            uNameColumn.setMinWidth(100);
-            uNameColumn.setMaxWidth(110);
+            uNameColumn.setResizable(true);
+            uNameColumn.setMinWidth(200);
+            uNameColumn.setMaxWidth(250);
             TableColumn stateColumn = routeTurnoutColumnModel.
                                                 getColumn(RouteTurnoutModel.STATE_COLUMN);
             stateColumn.setCellEditor(new DefaultCellEditor(stateCombo));
@@ -254,6 +302,9 @@ public class RouteTableAction extends AbstractTableAction {
             create.setVisible(true);
             delete.setVisible(false);  // keep off for the time being
             contentPane.add(pb);
+            // pack and release space
+            addFrame.pack();
+            p2xSpace.setVisible(false);
         }
         // set listener for window closing
         addFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -274,8 +325,23 @@ public class RouteTableAction extends AbstractTableAction {
                 }
             });
         // display the window
-        addFrame.pack();
         addFrame.show();
+        ((RouteTurnoutModel)routeTurnoutModel).fireTableDataChanged();
+    }
+
+    /**
+     * Initialize list of included turnout positions
+     */
+    void initializeIncludedList() {
+        numIncludedTurnouts = 0;
+        if (numTurnouts > 0) {
+            for (int i = 0; i<numTurnouts; i++) {
+                if (includeTurnout[i]) {
+                    includedPosition[numIncludedTurnouts] = i;
+                    numIncludedTurnouts ++;
+                }
+            }
+        }
     }
 
     /**
@@ -424,7 +490,9 @@ public class RouteTableAction extends AbstractTableAction {
         }
         sensor1.setText(temNames[0]);
         sensor2.setText(temNames[1]);
-        sensor3.setText(temNames[2]);    
+        sensor3.setText(temNames[2]); 
+        // begin with showing all Turnouts   
+        cancelIncludedOnly();
         // set up buttons and notes
         status1.setText(updateInst);
         status2.setText(cancelInst);
@@ -474,6 +542,8 @@ public class RouteTableAction extends AbstractTableAction {
         g.clearRouteSensors();
         // add those Sensors entered in the window if any
         setSensorInformation(g);
+        // move to show all turnouts if not there
+        cancelIncludedOnly();
         // Provide feedback to user
         status1.setText("Route updated: "+g.getSystemName()+", "+uName+", "+
                                                             numIncluded+" Turnouts");
@@ -520,6 +590,17 @@ public class RouteTableAction extends AbstractTableAction {
             // get out of edit mode
             editMode = false;
             curRoute = null;
+            // move to show all turnouts if not there
+            cancelIncludedOnly();
+        }
+    }
+    
+    /** 
+     * Cancels included Turnouts only option
+     */
+    void cancelIncludedOnly() {
+        if (!showAll) {
+            allButton.doClick();
         }
     }
 
@@ -538,39 +619,58 @@ public class RouteTableAction extends AbstractTableAction {
             }
         }
         public int getColumnCount () {return 4;}
-        public int getRowCount () {return numTurnouts;}
+        public int getRowCount () {
+            if (showAll)
+                return numTurnouts;
+            else
+                return numIncludedTurnouts;
+        }
         public Object getValueAt (int r,int c) {
+            int rx = r;
+            if (rx > numTurnouts) {
+                return null;
+            }
+            if (!showAll) {
+                rx = includedPosition[r];
+            }
             switch (c) {
             case INCLUDE_COLUMN:
-                if (includeTurnout[r]) {
+                if (includeTurnout[rx]) {
                     return Boolean.TRUE;
                 }
                 else {
                     return Boolean.FALSE;
                 }
             case SNAME_COLUMN:  // slot number
-                return turnoutSysNameList.get(r);
+                return turnoutSysNameList.get(rx);
             case UNAME_COLUMN:  //
                 return InstanceManager.turnoutManagerInstance().
-                        getBySystemName((String)turnoutSysNameList.get(r)).getUserName();
+                        getBySystemName((String)turnoutSysNameList.get(rx)).getUserName();
             case STATE_COLUMN:  //
-                return setState[r];
+                return setState[rx];
             default:
                 return null;
             }
         }
         public void setValueAt(Object type,int r,int c) {
+            int rx = r;
+            if (rx > numTurnouts) {
+                return;
+            }
+            if (!showAll) {
+                rx = includedPosition[r];
+            }
             switch (c) {
                 case INCLUDE_COLUMN:  
                     if (type == Boolean.FALSE) {
-                        includeTurnout[r] = false;
+                        includeTurnout[rx] = false;
                     }
                     else {
-                        includeTurnout[r] = true;
+                        includeTurnout[rx] = true;
                     }
                     break;
                 case STATE_COLUMN: 
-                    setState[r] = (String)type;
+                    setState[rx] = (String)type;
                     break;
             }
         }
@@ -583,6 +683,8 @@ public class RouteTableAction extends AbstractTableAction {
         public static final int UNAME_COLUMN = 2;
         public static final int STATE_COLUMN = 3;
     }
+    private boolean showAll = true;   // false indicates show only included Turnouts
+    private int numIncludedTurnouts = 0;
     private int numTurnouts = 0;
     private static final int MAX_TURNOUTS = 1000;
     private String[] routeTurnoutColumnNames = {"Include","System Name","User Name",
@@ -590,6 +692,9 @@ public class RouteTableAction extends AbstractTableAction {
     private List turnoutSysNameList = null;
     private boolean[] includeTurnout = new boolean[MAX_TURNOUTS];
     private String[] setState = new String[MAX_TURNOUTS];
+    private int[] includedPosition = new int[MAX_TURNOUTS];  // indexed by row of included turnout in included
+                                                            // Turnouts only list.  Contains position in full
+                                                            // Turnout list.
 
     static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RouteTableAction.class.getName());
 }
