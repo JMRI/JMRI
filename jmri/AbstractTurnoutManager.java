@@ -6,7 +6,7 @@ package jmri;
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
     implements TurnoutManager {
@@ -58,7 +58,9 @@ public abstract class AbstractTurnoutManager extends AbstractManager
             return s;
         }
         if ( (s = getBySystemName(systemName)) != null) {
-            if (userName != null) log.warn("Found turnout via system name ("+systemName
+			if ((s.getUserName() == null) && (userName != null))
+				s.setUserName(userName);
+            else if (userName != null) log.warn("Found turnout via system name ("+systemName
                                     +") with non-null user name ("+userName+")");
             return s;
         }

@@ -5,7 +5,7 @@ package jmri;
 /**
  * Abstract base implementation of the SensorManager interface.
  * @author			Bob Jacobsen Copyright (C) 2001, 2003
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public abstract class AbstractSensorManager extends AbstractManager implements SensorManager {
 
@@ -56,7 +56,9 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
             return s;
         }
         if ( (s = getBySystemName(systemName)) != null) {
-            if (userName != null) log.warn("Found sensor via system name ("+systemName
+			if ((s.getUserName() == null) && (userName != null))
+				s.setUserName(userName);
+            else if (userName != null) log.warn("Found sensor via system name ("+systemName
                                     +") with non-null user name ("+userName+")");
             return s;
         }
