@@ -3,7 +3,7 @@
  *
  * Description:		extend jmri.AbstractTurnout for XNet layouts
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 package jmri.jmrix.lenz;
@@ -46,44 +46,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                     .getCommandStation()
                     .getTurnoutMsgAddr(l) != mNumber) return;
 		// is for this object, parse message type
-		switch (l.getOpCode()) {
-        	case jmri.jmrix.loconet.LnConstants.OPC_SW_REQ: {               /* page 9 of Loconet PE */
-	            int sw2 = l.getElement(2);
-                if (log.isDebugEnabled()) log.debug("SW_REQ received with valid address");
-                if ((sw2 & jmri.jmrix.loconet.LnConstants.OPC_SW_REQ_DIR)!=0)
-                	newCommandedState(CLOSED);
-                else
-                	newCommandedState(THROWN);
-                break;
-            }
-	        case jmri.jmrix.loconet.LnConstants.OPC_SW_REP: {               /* page 9 of Loconet PE */
-            	int sw2 = l.getElement(2);
-                if (log.isDebugEnabled()) log.debug("SW_REP received with valid address");
-                // see if its a turnout state report
-                if ((sw2 & jmri.jmrix.loconet.LnConstants.OPC_SW_REP_INPUTS)==0) {
-                	// sort out states
-                	switch (sw2 &
-                		(jmri.jmrix.loconet.LnConstants.OPC_SW_REP_CLOSED|jmri.jmrix.loconet.LnConstants.OPC_SW_REP_THROWN)) {
-
-                        case jmri.jmrix.loconet.LnConstants.OPC_SW_REP_CLOSED:
-                            setKnownState(CLOSED);
-                            break;
-                        case jmri.jmrix.loconet.LnConstants.OPC_SW_REP_THROWN:
-                            setKnownState(THROWN);
-                            break;
-                        case jmri.jmrix.loconet.LnConstants.OPC_SW_REP_CLOSED|jmri.jmrix.loconet.LnConstants.OPC_SW_REP_THROWN:
-                            setKnownState(CLOSED+THROWN);
-                            break;
-                        default:
-                        	setKnownState(0);
-                        	break;
-                        }
-                    }
-				}
-			default:
-				return;
-			}
-		// reach here only in error
+        log.error("message function invoked, but not yet prepared");
 	}
 
 	public void dispose() {
