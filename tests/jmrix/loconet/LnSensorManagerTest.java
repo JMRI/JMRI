@@ -18,51 +18,34 @@ import jmri.*;
 
 public class LnSensorManagerTest extends TestCase  {
 
-	public void testLnTurnoutCreate() {
+	public void testLnSensorCreate() {
 		// create and register the manager object
-		LnTurnoutManager l = new LnTurnoutManager();
-		jmri.InstanceManager.setTurnoutManager(l);
-		assert(l == jmri.InstanceManager.turnoutManagerInstance());
+		LnSensorManager l = new LnSensorManager();
+		jmri.InstanceManager.setSensorManager(l);
+		assert(l == jmri.InstanceManager.sensorManagerInstance());
 				
-	}
-
-	public void testLnTurnoutPutGet() {
-		// create and register the manager object
-		LnTurnoutManager l = new LnTurnoutManager();
-
-		// sample turnout object
-		LnTurnout t = new LnTurnout(22);
-		
-		// store and get
-		l.putByUserName("mine", t);
-		assert(t == l.getByUserName("mine"));
-		assert(t == l.getBySystemName("LT22"));				
 	}
 
 	public void testByAddress() {
 		// create and register the manager object
-		LnTurnoutManager l = new LnTurnoutManager();
+		LnSensorManager l = new LnSensorManager();
 
 		// sample turnout object
-		LnTurnout t = new LnTurnout(22);
-		
-		// sample address object
-		TurnoutAddress a = new TurnoutAddress("LT22", "user");
-		
-		// store and get
-		l.putByUserName("user", t);
-		assert(t == l.getByAddress(a));				
+		Sensor t = l.newSensor("LS22", "test");
+				
+		// test get
+		assert(t == l.getByUserName("test"));				
+		assert(t == l.getBySystemName("LS22"));				
 	}
 
 	public void testMisses() {
 		// create and register the manager object
-		LnTurnoutManager l = new LnTurnoutManager();
-		
-		// sample address object
-		TurnoutAddress a = new TurnoutAddress("LT22", "user");
-		
+		LnSensorManager l = new LnSensorManager();
+				
+		// sample turnout object
+		Sensor t = l.newSensor("LS22", "test");
+				
 		// try to get nonexistant turnouts
-		assert(null == l.getByAddress(a));				
 		assert(null == l.getByUserName("foo"));				
 		assert(null == l.getBySystemName("bar"));				
 	}
@@ -72,50 +55,40 @@ public class LnSensorManagerTest extends TestCase  {
 		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
 		// create and register the manager object
-		LnTurnoutManager l = new LnTurnoutManager();
+		LnSensorManager l = new LnSensorManager();
 		
 		// send messages for 21, 22
 		// notify the Ln that somebody else changed it...
 		LocoNetMessage m1 = new LocoNetMessage(4);
-		m1.setOpCode(0xb1);
-		m1.setElement(1, 0x14);     // set CLOSED
-		m1.setElement(2, 0x20);
-		m1.setElement(3, 0x7b);
+		m1.setOpCode(0xb2);         // OPC_INPUT_REP
+		m1.setElement(1, 0x15);     // all but lowest bit of address
+		m1.setElement(2, 0x60);     // Aux (low addr bit high), sensor high
+		m1.setElement(3, 0x38);
 		lnis.sendTestMessage(m1);
-
-		// notify the Ln that somebody else changed it...
-		LocoNetMessage m2 = new LocoNetMessage(4);
-		m2.setOpCode(0xb0);
-		m2.setElement(1, 0x15);     // set CLOSED
-		m2.setElement(2, 0x20);
-		m2.setElement(3, 0x7a);
-		lnis.sendTestMessage(m2);
-
 				
-		// try to get turnouts to see if they exist
-		assert(null != l.getBySystemName("LT21"));				
-		assert(null != l.getBySystemName("LT22"));				
+		// see if sensor exists
+		assert(null != l.getBySystemName("LS43"));				
 	}
 
 	public void testAsAbstractFactory () {
 		// create and register the manager object
-		LnTurnoutManager l = new LnTurnoutManager();
-		jmri.InstanceManager.setTurnoutManager(l);
+		LnSensorManager l = new LnSensorManager();
+		jmri.InstanceManager.setSensorManager(l);
 		
-		// ask for a Turnout, and check type
-		TurnoutManager t = jmri.InstanceManager.turnoutManagerInstance();
+		// ask for a Sensor, and check type
+		SensorManager t = jmri.InstanceManager.sensorManagerInstance();
 		
-		Turnout o = t.newTurnout("LT21", "my name");
+		Sensor o = t.newSensor("LS21", "my name");
 		
 		
-		if (log.isDebugEnabled()) log.debug("received turnout value "+o);
-		assert( null != (LnTurnout)o);
+		if (log.isDebugEnabled()) log.debug("received sensor value "+o);
+		assert( null != (LnSensor)o);
 		
 		// make sure loaded into tables
-		if (log.isDebugEnabled()) log.debug("by system name: "+t.getBySystemName("LT21"));
+		if (log.isDebugEnabled()) log.debug("by system name: "+t.getBySystemName("LS21"));
 		if (log.isDebugEnabled()) log.debug("by user name:   "+t.getByUserName("my name"));
 		
-		assert(null != t.getBySystemName("LT21"));				
+		assert(null != t.getBySystemName("LS21"));				
 		assert(null != t.getByUserName("my name"));				
 		
 	}

@@ -37,6 +37,7 @@ public class LocoNetTest extends TestCase {
 		suite.addTest(LnTurnoutTest.suite());
 		suite.addTest(LnTurnoutManagerTest.suite());
 		suite.addTest(LnSensorTest.suite());
+		suite.addTest(LnSensorAddressTest.suite());
 		suite.addTest(LnSensorManagerTest.suite());
 		return suite;
 	}

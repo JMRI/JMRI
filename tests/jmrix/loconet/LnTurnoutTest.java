@@ -92,7 +92,7 @@ public class LnTurnoutTest extends TestCase {
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {LnTurnout.class.getName()};
+		String[] testCaseName = {LnTurnoutTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 	

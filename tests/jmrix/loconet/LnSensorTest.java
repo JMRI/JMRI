@@ -21,24 +21,10 @@ public class LnSensorTest extends TestCase {
 		// prepare an interface
 		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 		
-		LnSensor t = new LnSensor(21);
-		
-		// notify the Ln that somebody else changed it...
-		LocoNetMessage m = new LocoNetMessage(4);
-		m.setOpCode(0xb0);
-		m.setElement(1, 0x14);     // set CLOSED
-		m.setElement(2, 0x30);
-		m.setElement(3, 0x00);
-		lnis.sendTestMessage(m);
-		// assert(t.getCommandedState() == jmri.Turnout.CLOSED);
+		LnSensor t = new LnSensor("LS042");
 
-		m = new LocoNetMessage(4);
-		m.setOpCode(0xb0);
-		m.setElement(1, 0x14);     // set THROWN
-		m.setElement(2, 0x10);
-		m.setElement(3, 0x00);
-		lnis.sendTestMessage(m);
-		// assert(t.getCommandedState() == jmri.Turnout.THROWN);
+		// created in UNKNOWN state		
+		assert(t.getKnownState() == jmri.Sensor.UNKNOWN);
 	}
 
 	// LnSensor test for incoming status message
@@ -46,27 +32,39 @@ public class LnSensorTest extends TestCase {
 		// prepare an interface
 		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 		
-		LnTurnout t = new LnTurnout(21);
+		LnSensor t = new LnSensor("LS043");
 		
-		// set closed 
-		try {
-			t.setCommandedState(jmri.Turnout.CLOSED);
-		} catch (Exception e) { log.error("TO exception: "+e);
-		}	
-		assert(lnis.outbound.elementAt(0).toString().equals("b0 14 30 0 "));  // CLOSED loconet message
-		assert(t.getCommandedState() == jmri.Turnout.CLOSED);
-
 		// notify the Ln that somebody else changed it...
 		LocoNetMessage m = new LocoNetMessage(4);
-		m.setOpCode(0xb1);
-		m.setElement(1, 0x14);     // set CLOSED
-		m.setElement(2, 0x20);
-		m.setElement(3, 0x7b);
+		m.setOpCode(0xb2);         // OPC_INPUT_REP
+		m.setElement(1, 0x15);     // all but lowest bit of address
+		m.setElement(2, 0x60);     // Aux (low addr bit high), sensor high
+		m.setElement(3, 0x38);
 		lnis.sendTestMessage(m);
-		assert(t.getCommandedState() == jmri.Turnout.CLOSED);
+		assert(t.getKnownState() == jmri.Sensor.ACTIVE);
+
+		m = new LocoNetMessage(4);
+		m.setOpCode(0xb2);         // OPC_INPUT_REP
+		m.setElement(1, 0x15);     // all but lowest bit of address
+		m.setElement(2, 0x40);     // Aux (low addr bit high), sensor low
+		m.setElement(3, 0x18);
+		lnis.sendTestMessage(m);
+		assert(t.getKnownState() == jmri.Sensor.INACTIVE);
 
 	}
 
+
+	// LnSensor test for outgoing status request
+	public void testLnSensorStatusRequest() {
+		// prepare an interface
+		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
+		
+		LnSensor t = new LnSensor("LS042");
+		
+		t.requestUpdateFromLayout();
+		// doesn't send a message right now, pending figuring out what
+		// to send.
+	}
 
 	// from here down is testing infrastructure
 	
