@@ -24,7 +24,7 @@ import org.jdom.Attribute;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 abstract public class AbstractConfigFrame extends JFrame {
 
@@ -550,14 +550,23 @@ abstract public class AbstractConfigFrame extends JFrame {
         // invocation of the program can then continue.
         if (getCurrentProtocolName()!=null)
             e.addAttribute("class", getCurrentProtocolName());
+
         if (getCurrentPortName()!=null)
             e.addAttribute("port", getCurrentPortName());
+        else e.addAttribute("port", "(None selected)");
+
         if (getCurrentBaudRate()!=null)
             e.addAttribute("speed", getCurrentBaudRate());
+        else e.addAttribute("speed", "(None selected)");
+
         if (getCurrentOption1Setting()!=null)
             e.addAttribute("option1", getCurrentOption1Setting());
+        else e.addAttribute("option1", "(None selected)");
+
         if (getCurrentOption2Setting()!=null)
             e.addAttribute("option2", getCurrentOption2Setting());
+        else e.addAttribute("option2", "(None selected)");
+
         return e;
     }
 
