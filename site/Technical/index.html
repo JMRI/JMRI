@@ -58,6 +58,7 @@ lots of different layout types, jmri.InstanceManager satisfies these requests.
 </UL>
 <h3>Development tools</h3>
 
+<A id="JBuilder">
 Development is currently done using Borland's JBuilder.  The Personal Edition
 is available for free download at 
 <A HREF="http://www.borland.com/jbuilder/personal/">http://www.borland.com/jbuilder/personal/</A>.
@@ -73,6 +74,27 @@ project directory.
 jmri.jpx file you'll find there.
 <LI>Click run, and sit back to watch it go.
 </UL>
+
+<P>
+<A id="ant">
+Those of you who prefer a command line approach might want to investigate "ant", a
+better make-like utility for Java projects.  Ant is available for 
+download at
+<A HREF="http://jakarta.apache.org/ant/index.html">http://jakarta.apache.org/ant/index.html/</a>. 
+Install it, then:
+<UL>
+<LI>Create a "project" directory.
+<LI>In the project directory, do a CVS checkout of the "ant" 
+module from our repository. This will create a "java" subdirectory 
+where Ant will run, and load it with source, tests and resources.
+It will also create and populate directories for xml and libraries in the 
+project directory.
+<LI>Change to the newly created java subdirectory. To compile, type "ant compile"; 
+to create a .jar file, type "ant dist". Note that you don't have to create the
+.jar file to run the program.
+<LI>To run the program, type "ant decoderpro" or "ant jmridemo", and sit back to watch it go.
+</ul>
+
 <P>
 Originally, I (Bob) used CodeWarrior on the Macintosh as a development platform. This handles
 selective recompilation, etc, and provides nice IDE capabilities.  The debugger
@@ -85,7 +107,8 @@ like Ant.  That would then work on any machine that people are interested in.
 
 <h3>Recommended Tools</h3>
 <UL>
-<LI>We use Java Swing for our GUI development.  It's a lot more powerful
+<LI>
+We use Java Swing for our GUI development.  It's a lot more powerful
 than the original AWT, and the price is right. In particular, we
 try to use the "Bean format" of setting and getting members, call-backs to
 notify of changes, etc, to make it easier to build applications from JRMI components.
