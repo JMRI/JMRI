@@ -1,9 +1,12 @@
 package jmri;
 
+import jmri.jmrit.throttle.ThrottleFrame;
+import java.util.Iterator;
+
 /**
  * Interface for controlling throttles
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public interface ThrottleManager
 {
@@ -24,5 +27,10 @@ public interface ThrottleManager
      * @param l The ThrottleListener cancelling request for a throttle.
      */
     public void cancelThrottleRequest(int address, ThrottleListener l);
+
+
+    public void notifyNewThrottleFrame(ThrottleFrame tf);
+
+    public Iterator getThrottleFrames();
 
 }
