@@ -9,7 +9,7 @@ package jmri.jmrix.lenz;
  * Defines standard operations for Dcc command stations.
  *
  * @author			Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
     
@@ -68,28 +68,33 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
     }
     
     /**
-     * If this is an accessory decoder information response message, 
-     * return the group address.  Otherwise return -1.
+     * If this is a feedback response message, 
+     * return the GROUP address.  Otherwise return -1.
      * Note we only identify the command here; the reponse to a
      * request for status seen here.
      */
     public int getTurnoutMsgAddr(XNetMessage pMsg) {
-        if (isTurnoutCommand(pMsg)) {
+        if (isFeedbackMessage(pMsg)) {
             int a1 = pMsg.getElement(1);
             int a2 = pMsg.getElement(2);
-            int address=(a1 & 0xff) * 4;
-            if(((a2 & 0x13)==0x01) || ((a2 &0x13)==0x02)) {
-                // This is the first address in the group*/
-                return(address + 1);
-            } else if(((a2 & 0x1a)==0x04) || ((a2 &0x1a)==0x06)) {
-                // This is the second address in the group
-                return(address + 2);
-            } else if(((a2 & 0x13)==0x11) || ((a2 &0x13)==0x12)) {
-                // This is the third address in the group
-                return(address + 3);
-            } else if(((a2 & 0x1a)==0x14) || ((a2 &0x1a)==0x16)) { 
-                // This is the fourth address in the group
-                return(address + 4);
+            int messagetype=getFeedbackMessageType(pMsg);
+	    if ( messagetype == 0 || messagetype == 1)
+            {
+               // This is a turnout message
+               int address=(a1 & 0xff) * 4;
+               if(((a2 & 0x13)==0x01) || ((a2 &0x13)==0x02)) {
+                  // This is the first address in the group*/
+                  return(address + 1);
+               } else if(((a2 & 0x1a)==0x04) || ((a2 &0x1a)==0x06)) {
+                  // This is the second address in the group
+                  return(address + 2);
+               } else if(((a2 & 0x13)==0x11) || ((a2 &0x13)==0x12)) {
+                  // This is the third address in the group
+                  return(address + 3);
+               } else if(((a2 & 0x1a)==0x14) || ((a2 &0x1a)==0x16)) { 
+                  // This is the fourth address in the group
+                  return(address + 4);
+     	       } else return -1;
             } else return -1;
         } else return -1;
     }
@@ -97,9 +102,23 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
     /**
      * Is this an accessory decoder response message?
      */
-    public boolean isTurnoutCommand(XNetMessage pMsg) {
+    public boolean isFeedbackMessage(XNetMessage pMsg) {
         return (pMsg.getElement(0)==XNetConstants.ACC_INFO_RESPONSE);
     }
+
+    /**
+     * Extract the feedback message type from a feedback message
+     * this is the middle two bits of the upper byte of the second data 
+     * byte.  returned values are 0-3.
+     */ 
+    public int getFeedbackMessageType(XNetMessage pMsg) {
+        if (isFeedbackMessage(pMsg)) {
+            int a2 = pMsg.getElement(2);
+            return((a2 & 0xff) / 16);            
+	}
+        else return -1;
+    }
+
     /**
      * If this is a throttle-type message, return address. Otherwise
      * return -1.
@@ -212,7 +231,13 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
         return m;
     }
 
-    
+    // In the interest of code reuse, The following function checks to see 
+    // if an XPressNet Message is the OK message (01 04 05)
+    public boolean isOkMessage(XNetMessage m) {
+        return (m.getElement(0)==XNetConstants.LI_MESSAGE_RESPONSE_HEADER && 
+                m.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_SEND_SUCCESS);
+    }	
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LenzCommandStation.class.getName());
     
 }

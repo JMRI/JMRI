@@ -13,7 +13,7 @@ import jmri.*;
  *
  * @see            jmri.Programmer
  * @author         Paul Bender Copyright (C) 2003
- * @version        $Revision: 1.3 $
+ * @version        $Revision: 1.4 $
  */
 
 public class XNetOpsModeProgrammer implements Programmer,XNetListener 
@@ -115,8 +115,7 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
            // request, so just ignore anything that comes in
            return;
         } else if (progState==XNetProgrammer.REQUESTSENT) {
-            if(l.getElement(0)==XNetConstants.LI_MESSAGE_RESPONSE_HEADER &&
-               l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_SEND_SUCCESS) {
+            if(XNetTrafficController.instance().getCommandStation().isOkMessage(l)) {
 	  	  progListener.programmingOpReply(value,jmri.ProgListener.OK);
 	    } else {
               /* this is an error */

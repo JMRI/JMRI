@@ -15,7 +15,7 @@ import jmri.jmrix.lenz.*;
  *                 Track Voltage 
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class LZV100Frame extends JFrame implements XNetListener {
 
@@ -178,9 +178,7 @@ public class LZV100Frame extends JFrame implements XNetListener {
 
     // listen for responses from the LZV100
     synchronized public void message(XNetMessage l) {
-
-    if(l.getElement(0)==XNetConstants.LI_MESSAGE_RESPONSE_HEADER &&
-       l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_SEND_SUCCESS) {
+    if(XNetTrafficController.instance().getCommandStation().isOkMessage(l)) {
 	  /* this was an "OK" message*/
        }
     }

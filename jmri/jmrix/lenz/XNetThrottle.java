@@ -6,7 +6,7 @@ import jmri.jmrix.AbstractThrottle;
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
  * @author     Paul Bender (C) 2002,2003
- * @version    $Revision: 1.16 $
+ * @version    $Revision: 1.17 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -569,8 +569,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	    	 if(log.isDebugEnabled()) { log.debug("Current throttle status is THROTTLECMDSENT"); }
 	    // For a Throttle Command, we're just looking for a return 
             // acknowledgment, Either a Success or Failure message.
-	    if(l.getElement(0)==XNetConstants.LI_MESSAGE_RESPONSE_HEADER &&
-	       l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_SEND_SUCCESS) {
+	    if(XNetTrafficController.instance().getCommandStation().isOkMessage(l)) 
+		{
 	    	 if(log.isDebugEnabled()) { log.debug("Last Command processed successfully."); }
                  // Since we recieved an "ok",  we want to make sure "isAvailable reflects we are in control
 	         if(this.isAvailable==false) {
