@@ -18,15 +18,16 @@ import org.jdom.input.SAXBuilder;
  * Handle common aspects of XML files.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 public abstract class XmlFile {
 
 
     /**
-     * Read the contents of an XML file from its name.  The search order is implemented in
-     * this routine via testing for the existance, not the parsebility, of the files
-     * @param name Filename, without xml or preferences part (which is searched for)
+     * Read the contents of an XML file from its name.  
+     * The name is expanded by the {@link #findFile}
+     * routine.
+     * @param name Filename, as needed by {@link #findFile}
      * @throws org.jdom.JDOMException
      * @throws java.io.FileNotFoundException
      * @return null if not found, else root element of located file
@@ -84,12 +85,10 @@ public abstract class XmlFile {
 
 
     /**
-     * Check if a file of the given name exists. This is here so it can
-     * be overridden during tests. Note that it also obeys the
-     * search rules listed in the {@link #findFile} method.
+     * Check if a file of the given name exists. This uses the 
+     * same search order as {@link #findFile} 
      *
-     * @param name subdirectory and file name, not including the leading path
-     *                   to either the xml or preferences directory
+     * @param name file name, either absolute or relative
      * @return true if the file exists in a searched place
      */
     protected boolean checkFile(String name) {
@@ -116,8 +115,8 @@ public abstract class XmlFile {
      * search rule:
      * <OL>
      * <LI>Check for absolute name.
-     * <LI>If not found look in prefsDir
-     * <LI>If still not found, look in xmlDir()
+     * <LI>If not found look in user preferences directory, located by {@link #prefsDir}
+     * <LI>If still not found, look in distribution directory, located by {@link #xmlDir}
      * </OL>
      * @param name Filename perhaps containing
      *               subdirectory information (e.g. "decoders/Mine.xml")
@@ -222,11 +221,17 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.16 2004-07-25 01:21:16 jacobsen Exp $";
+                        +" $Id: XmlFile.java,v 1.17 2004-12-06 05:52:36 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
 
+    /**
+     * Define the location of XML files within the distribution
+     * directory. <P>
+     * Because the programs runtime working directory is also the
+     * distribution directory, we just use a relative file name.
+     */
     static public String xmlDir() {return "xml"+File.separator;}
 
     /**
