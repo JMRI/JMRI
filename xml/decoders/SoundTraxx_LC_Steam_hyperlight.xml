@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_LC_Steam_hyperlight.xml,v 1.1 2002-12-20 03:10:39 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_LC_Steam_hyperlight.xml,v 1.2 2003-01-04 14:09:55 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Robin Becker" version="7" lastUpdated="20020808"/>
 
@@ -346,17 +346,17 @@
 			<enumVal>
 				<enumChoice choice="On/Off"/>
 				<enumChoice choice="Dimmable"/>
-				<enumChoice choice="Mars light)"/>
-				<enumChoice choice="Gyralite)"/>
-				<enumChoice choice="Oscillating)"/>
-				<enumChoice choice="Single flash strobe)"/>
-				<enumChoice choice="Double flash strobe)"/>
-				<enumChoice choice="Rotary beacon simulation)"/>
-				<enumChoice choice="Stratolite)"/>
-				<enumChoice choice="Type 1 ditch light)"/>
-				<enumChoice choice="Type 2 ditch light)"/>
-				<enumChoice choice="FRED end of train flasher)"/>
-				<enumChoice choice="Engine exhaust flicker)"/>
+				<enumChoice choice="Mars light"/>
+				<enumChoice choice="Gyralite"/>
+				<enumChoice choice="Oscillating"/>
+				<enumChoice choice="Single flash strobe"/>
+				<enumChoice choice="Double flash strobe"/>
+				<enumChoice choice="Rotary beacon simulation"/>
+				<enumChoice choice="Stratolite"/>
+				<enumChoice choice="Type 1 ditch light"/>
+				<enumChoice choice="Type 2 ditch light"/>
+				<enumChoice choice="FRED end of train flasher"/>
+				<enumChoice choice="Engine exhaust flicker"/>
 				<enumChoice choice="Firebox flicker"/>
 				<enumChoice choice="Smart firebox flicker"/>
 				<enumChoice choice="Reserved (0x0F)"/>
@@ -382,17 +382,17 @@
 			<enumVal>
 				<enumChoice choice="On/Off"/>
 				<enumChoice choice="Dimmable"/>
-				<enumChoice choice="Mars light)"/>
-				<enumChoice choice="Gyralite)"/>
-				<enumChoice choice="Oscillating)"/>
-				<enumChoice choice="Single flash strobe)"/>
-				<enumChoice choice="Double flash strobe)"/>
-				<enumChoice choice="Rotary beacon simulation)"/>
-				<enumChoice choice="Stratolite)"/>
-				<enumChoice choice="Type 1 ditch light)"/>
-				<enumChoice choice="Type 2 ditch light)"/>
-				<enumChoice choice="FRED end of train flasher)"/>
-				<enumChoice choice="Engine exhaust flicker)"/>
+				<enumChoice choice="Mars light"/>
+				<enumChoice choice="Gyralite"/>
+				<enumChoice choice="Oscillating"/>
+				<enumChoice choice="Single flash strobe"/>
+				<enumChoice choice="Double flash strobe"/>
+				<enumChoice choice="Rotary beacon simulation"/>
+				<enumChoice choice="Stratolite"/>
+				<enumChoice choice="Type 1 ditch light"/>
+				<enumChoice choice="Type 2 ditch light"/>
+				<enumChoice choice="FRED end of train flasher"/>
+				<enumChoice choice="Engine exhaust flicker"/>
 				<enumChoice choice="Firebox flicker"/>
 				<enumChoice choice="Smart firebox flicker"/>
 				<enumChoice choice="Reserved (0x0F)"/>
@@ -530,6 +530,7 @@
 </pane>
 
 </decoder-config>
+
 
 
 
