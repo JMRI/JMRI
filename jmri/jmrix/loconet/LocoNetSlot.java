@@ -5,7 +5,7 @@ package jmri.jmrix.loconet;
 import java.util.Vector;
 
 /**
- * Represents the contents of a single slot in the LocoNet command station
+ * Represents the contents of a single slot in the LocoNet command station.
  * <P>
  * A SlotListener can be registered to hear of changes in this slot.  All
  * changes in values will result in notification.
@@ -17,7 +17,7 @@ import java.util.Vector;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.9 $
+ * @version         $Revision: 1.10 $
  */
 public class LocoNetSlot {
 
@@ -86,9 +86,10 @@ public class LocoNetSlot {
             dirf = l.getElement(6);
             trk =  l.getElement(7);
             ss2 =  l.getElement(8);
-            // item 9 is add2
+            // item 9 is in add2
             snd =  l.getElement(10);
             id =   l.getElement(11)+128*l.getElement(12);
+
             notifySlotListeners();
             return;
         }
@@ -155,18 +156,18 @@ public class LocoNetSlot {
     }
 
     public LocoNetMessage writeSlot() {
-        LocoNetMessage l = new LocoNetMessage(13);
+        LocoNetMessage l = new LocoNetMessage(14);
         l.setOpCode( LnConstants.OPC_WR_SL_DATA );
         l.setElement(1, 0x0E);
-        l.setElement(2, slot);
-        l.setElement(3, stat);
+        l.setElement(2, slot & 0x7F);
+        l.setElement(3, stat & 0x7F);
         l.setElement(4, addr & 0x7F); l.setElement(9, (addr/128)&0x7F);
-        l.setElement(5, spd);
-        l.setElement(6, dirf);
-        l.setElement(7, trk);
-        l.setElement(8, ss2);
+        l.setElement(5, spd & 0x7F);
+        l.setElement(6, dirf & 0x7F);
+        l.setElement(7, trk & 0x7F);
+        l.setElement(8, ss2 & 0x7F);
         // item 9 is add2
-        l.setElement(10, snd);
+        l.setElement(10, snd & 0x7F);
         l.setElement(11, id&0x7F); l.setElement(12, (id/128)&0x7F );
         return l;
     }
@@ -218,6 +219,72 @@ public class LocoNetSlot {
             SlotListener client = (SlotListener) v.elementAt(i);
             client.notifyChangedSlot(this);
         }
+    }
+
+    /**
+     * For fast-clock slot, return "days" value.
+     * @return
+     */
+    public int getFcDays() {
+        if (getSlot()!=LnConstants.FC_SLOT) log.error("getFcDays invalid for slot "+getSlot());
+        return (addr&0x3f80)/0x80;
+    }
+    /**
+     * For fast-clock slot, set "days" value.
+     */
+    public void setFcDays(int val) {
+        if (getSlot()!=LnConstants.FC_SLOT) log.error("setFcDays invalid for slot "+getSlot());
+        addr = val*128+(addr&0x7f);
+    }
+
+    /**
+     * For fast-clock slot, return "hours" value.
+     * @return
+     */
+    public int getFcHours() {
+        if (getSlot()!=LnConstants.FC_SLOT) log.error("getFcHours invalid for slot "+getSlot());
+        int temp = ((256-ss2) &0x7F) % 24;
+        return (24 - temp) % 24;
+    }
+    /**
+     * For fast-clock slot, set "hours" value.
+     */
+    public void setFcHours(int val) {
+        if (getSlot()!=LnConstants.FC_SLOT) log.error("setFcHours invalid for slot "+getSlot());
+        ss2 = (256-(24-val))&0x7F;
+    }
+
+    /**
+     * For fast-clock slot, return "minutes" value.
+     * @return
+     */
+    public int getFcMinutes() {
+        if (getSlot()!=LnConstants.FC_SLOT) log.error("getFcMinutes invalid for slot "+getSlot());
+        int temp = ((255-dirf) & 0x7F) % 60;
+        return (60-temp)% 60;
+    }
+    /**
+     * For fast-clock slot, set "minutes" value.
+     */
+    public void setFcMinutes(int val) {
+        if (getSlot()!=LnConstants.FC_SLOT) log.error("setFcMinutes invalid for slot "+getSlot());
+        dirf = (255-(60-val))&0x7F;
+    }
+
+    /**
+     * For fast-clock slot, return "rate" value.
+     * @return
+     */
+    public int getFcRate() {
+        if (getSlot()!=LnConstants.FC_SLOT) log.error("getFcMinutes invalid for slot "+getSlot());
+        return stat;
+    }
+    /**
+     * For fast-clock slot, set "rate" value.
+     */
+    public void setFcRate(int val) {
+        if (getSlot()!=LnConstants.FC_SLOT) log.error("setFcMinutes invalid for slot "+getSlot());
+        stat = val & 0x7F;
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoNetSlot.class.getName());
