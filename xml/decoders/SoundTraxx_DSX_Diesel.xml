@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_DSX_Diesel.xml,v 1.6 2002-07-11 14:14:33 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_DSX_Diesel.xml,v 1.7 2002-08-08 06:52:36 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Robin Becker" version="7" lastUpdated="20020711"/>
 
@@ -110,9 +110,9 @@
 				</enumVal></variable>
 
 		<variable label="Consist Acceleration Rate" CV="23" mask="XVVVVVVV"
-				item="Consist Acceleration Adjustment"
+				default="0" item="Consist Acceleration Adjustment"
 		        comment="Additional consist acceleration (combined with CV3)">
-			<decVal default="0" max="127"/>
+			<decVal max="127"/>
 			</variable>
 		<variable label="Consist Acceleration Sign" CV="23" mask="VXXXXXXX"
 				item="Consist Acceleration Adjustment Sign">
@@ -122,9 +122,9 @@
 				</enumVal>
 			</variable>
 		<variable label="Consist Braking Rate" CV="24" mask="XVVVVVVV"
-				item="Consist Deceleration Adjustment"
+				default="0" item="Consist Deceleration Adjustment"
 		        comment="Additional consist braking (combined with CV4)">
-			<decVal default="0" max="127"/>
+			<decVal max="127"/>
 			</variable>
 		<variable label="Consist Braking Sign" CV="24" mask="VXXXXXXX"
 				item="Consist Deceleration Adjustment Sign">
@@ -161,8 +161,8 @@
 				<enumChoice choice="Watchdog timeout occurred"/>
 				</enumVal></variable>
 		<variable label="EEROM Data Corrupted" CV="30" mask="XXXXXXVX"
-				item="Advanced Group 1 Option 2">
-			<enumVal default="0">
+				item="Advanced Group 1 Option 2" default="0">
+			<enumVal >
 				<enumChoice choice="System Normal"/>
 				<enumChoice choice="Data corrupted. Reset to defaults."/>
 				</enumVal></variable>
@@ -472,9 +472,9 @@
 	<!-- Volumes section -->
 
 		<variable label="Exhaust Auto Notching Control" CV="58" mask="XXXXVVVV"
-				item="Sound Setting 1"
+				item="Sound Setting 1" default="7"
 				comment="Number of speed steps per throttle notch.">
-				<decVal  default="7" max="15"/>
+				<decVal  max="15"/>
 			</variable>
 
 		<variable label="Bell Rate" CV="59" mask="XXXXVVVV"
