@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE layout-config SYSTEM "layout-config.dtd">
 <layout-config>
-  <memorys class="jmri.configurexml.DefaultMemoryManagerXml">
+  <memories class="jmri.configurexml.DefaultMemoryManagerXml">
     <memory systemName="IM12" userName="Foo" />
-  </memorys>
+  </memories>
   <paneleditor class="jmri.jmrit.display.configurexml.PanelEditorXml" name="Test memory" x="20" y="22" height="282" width="238" editable="yes" positionable="yes" controlling="yes" hide="no">
     <memoryicon memory="IM12" x="10" y="10" class="jmri.jmrit.display.configurexml.MemoryIconXml">
       <memorystate value="0" icon="resource:resources/icons/misc/Nixie/M0.gif" />
