@@ -12,7 +12,6 @@ jbuilder4 -d java &xml
 
 # we're still missing a CodeWarrior target
 
-
 # Three different line formats are valid:
 #	key	-a    aliases...
 #	key [options] directory
