@@ -24,7 +24,7 @@ import javax.swing.event.ChangeListener;
  * Represent an entire speed table as a single Variable.
  *<P>
  * _value is a holdover from the LongAddrVariableValue, which this was copied from; it should
- * be removed. _maxVal, _minVal are also redundant.
+ * be removed. 
  *
  *<P> Color (hence state) of individual sliders (hence CVs) are directly coupled to the
  * state of those CVs.
@@ -44,16 +44,19 @@ import javax.swing.event.ChangeListener;
  * Speed tables can have different numbers of entries; 28 is the default, and also the maximum.
  *<P>
  * @author	Bob Jacobsen, Alex Shepherd   Copyright (C) 2001, 2004
- * @version	$Revision: 1.18 $
+ * @version	$Revision: 1.19 $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
 
     int nValues;
     BoundedRangeModel[] models;
+    int _min;
+    int _max;
+    int _range;
 
     /**
-     * Create the object with a "standard format ctor".  Note that max and min are ignored.
+     * Create the object with a "standard format ctor".
      */
     public SpeedTableVarValue(String name, String comment, boolean readOnly,
                               int cvNum, String mask, int minVal, int maxVal,
@@ -61,11 +64,16 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         super(name, comment, readOnly, cvNum, mask, v, status, stdname);
 
         nValues = entries;
+        _min = minVal;
+        _max = maxVal;
+        _range = maxVal-minVal;
+        
         models = new BoundedRangeModel[nValues];
+
         // create the set of models
         for (int i=0; i<nValues; i++) {
             // create each model
-            DefaultBoundedRangeModel j = new DefaultBoundedRangeModel(255*i/nValues, 0, 0, 255);
+            DefaultBoundedRangeModel j = new DefaultBoundedRangeModel(_range*i/(nValues-1)+_min, 0, _min, _max);
             models[i] = j;
             // connect each model to CV for notification
             // the connection is to cvNum through cvNum+nValues (28 values total typically)
@@ -74,7 +82,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             // values here.  We leave that as work item 177, and move on to set the
             // CV states to "FromFile"
             CvValue c = (CvValue)_cvVector.elementAt(getCvNum()+i);
-            c.setValue(255*i/nValues);
+            c.setValue(_range*i/(nValues-1)+_min);
             c.addPropertyChangeListener(this);
             c.setState(CvValue.FROMFILE);
         }
@@ -114,7 +122,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         prop.firePropertyChange("Value", null, j);
     }
 
-    void setModel(int i, int value) {  // value is 0 to 255
+    void setModel(int i, int value) {  // value is _min to _max
         if (models[i].getValue() != value)
             models[i].setValue(value);
         // update the CV
@@ -203,7 +211,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             int currentValue = cv.getValue();
 
             DecVariableValue decVal = new DecVariableValue("val"+i,"", false,
-                                                           getCvNum()+i, "VVVVVVVV", 0, 255,
+                                                           getCvNum()+i, "VVVVVVVV", _min, _max,
                                                            _cvVector, _status, "");
             decVal.setValue(currentValue);
             decVal.setState(currentState);
@@ -286,11 +294,11 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     }
 
     /**
-     * Set the values to a straight line from 0 to 255
+     * Set the values to a straight line from _min to _max
      */
     void doForceStraight(java.awt.event.ActionEvent e) {
-        ((CvValue)_cvVector.elementAt(getCvNum()+0)).setValue(0);
-        ((CvValue)_cvVector.elementAt(getCvNum()+nValues-1)).setValue(255);
+        ((CvValue)_cvVector.elementAt(getCvNum()+0)).setValue(_min);
+        ((CvValue)_cvVector.elementAt(getCvNum()+nValues-1)).setValue(_max);
         doMatchEnds(e);
     }
     /**
