@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Examples.html,v 1.2 2004-08-24 05:13:18 jacobsen Exp $ -->
+<!-- $Id: Examples.html,v 1.3 2004-09-06 14:11:52 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -89,6 +89,69 @@
 		</div>
 
 		<div class=section>
+		    <h2>Invoking another script file from a script</h2>
+
+		    <div class=para>
+		    
+		    <pre>
+jmri.jmrit.jython.RunJythonScript.runScript("filename.py");
+		    </pre>
+		    </div>
+
+		</div>
+
+		<div class=section>
+		    <h2>Loading a panel file from within a script</h2>
+
+		    <div class=para>
+		    
+		    <pre>
+InstanceManager.configureManagerInstance().load(new File("filename.xml"));
+		    </pre>
+		    </div>
+
+		</div>
+
+		<div class=section>
+		    <h2>Communicating between scripts</h2>
+
+		    <div class=para>
+		    All scripts share a single address space, which 
+		    means that a variable like "x" refers to the same
+		    location in all scripts.  This allows you to 
+		    define a procedure, for example, in one script, and
+		    use it elsewhere.  For example, if a "definitions.py"
+		    file contained:
+		    <pre>
+def printStatus() :
+  print "x is", x
+  print "y is", y
+  print "z is", z
+  return
+
+x = 0
+y = 0
+z = 0
+		    </pre>
+
+            Once that file has been executed, any later script can
+            invoke the <code>printStatus()</code> routine whenever needed.
+    	    </div>
+
+		    <div class=para>
+            You can also share variables, which allows two routines to 
+            share information.  In the example above, the <code>x</code>,
+            <code>y</code>, and <code>z</code> variables are available to
+            anybody.
+            This can lead to obscure bugs if two different routines 
+            are using a variable of the same name, without realizing that
+            they are sharing data with each other.  Putting your code
+            into "classes" is a way to avoid that.
+    	    </div>
+
+		</div>
+
+		<div class=section>
 		    <h2>Listening to more than one Turnout</h2>
 
 		    <div class=para>
@@ -133,29 +196,6 @@ class MyListener(java.beans.PropertyChangeListener):
 
 		</div>
 
-		<div class=section>
-		    <h2>Invoking another script file from a script</h2>
-
-		    <div class=para>
-		    
-		    <pre>
-jmri.jmrit.jython.RunJythonScript.runScript("filename.py");
-		    </pre>
-		    </div>
-
-		</div>
-
-		<div class=section>
-		    <h2>Loading a panel file from within a script</h2>
-
-		    <div class=para>
-		    
-		    <pre>
-InstanceManager.configureManagerInstance().load(new File("filename.xml"));
-		    </pre>
-		    </div>
-
-		</div>
 
 <!-- Footer -->
     <hr class="hide">
