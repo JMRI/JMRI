@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: I8N.html,v 1.2 2004-07-25 06:27:45 jacobsen Exp $ -->
+<!-- $Id: I8N.html,v 1.3 2004-08-13 02:20:06 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -205,17 +205,42 @@ new locale.  On a Unix machine, this would be:
   cp AppsConfigBundle.properties AppsConfigBundle_xy.properties
 </PRE>
 and so on.  You can then edit those files to enter text in 
-your own language.
+your own language. Please don't edit the lines in the 
+file that contain things like $Release: $; those are used 
+by 
+<A HREF="CVSFAQ.html">CVS</a> 
+to keep track of the history of changeds.
 <P>
 Languages that involve non-roman letters require some
 extra care; please see the 
 <A HREF="http://java.sun.com/j2se/1.3/docs/guide/intl/faq.html">Sun internationalization FAQ</a>
 for more info on how to include those characters in your property files.
 <P>
-That adapts the program itself, at least as far as we've 
+All that adapts the program itself, at least as far as we've 
 "internationalized" it.  (That's an ongoing effort, with 
 more and more parts of the program able to be customized 
 in each release).  
+<P>
+To make your work available to other JMRI users, please 
+use a TAR or ZIP utility to create an archive of the
+<B>entire</b>
+"properties" directory, including all the files you didn't modify,
+and upload it to the "Patches" tracker on sourceforge:<br>
+<A HREF="http://sourceforge.net/tracker/?group_id=26788&atid=388315">http://sourceforge.net/tracker/?group_id=26788&atid=388315</a>.
+On this page:
+<ul>
+<LI>Click "Submit new"
+<LI>Fill out the title and summary on the
+new page that appears, 
+<LI>Click the "check to upload and attach a file" 
+box at the bottom, 
+<LI>and then select your file "using the choose file" button.
+<LI>Click "Submit" to upload the file and notify people that you've done this.
+</ul>
+By using this tracker and providing the <b>complete</b>
+"properties" tree, it's easy for us to merge your new and/or changed
+files into the code repository.
+
 <P>
 You may also want to provide additional language-specific 
 features for users:
