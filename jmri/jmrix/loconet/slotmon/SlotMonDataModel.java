@@ -11,7 +11,7 @@ import jmri.jmrix.loconet.locoio.*;
 /**
  * Table data model for display of slot manager contents
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version		$Revision: 1.6 $
+ * @version		$Revision: 1.7 $
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener  {
 
@@ -264,7 +264,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 return;
             }
             if (s.slotStatus()!=LnConstants.LOCO_FREE) {
-                // send status to common
+                // send status to free
                 LnTrafficController.instance().sendLocoNetMessage(
                         s.writeStatus(LnConstants.LOCO_FREE
                     ));
