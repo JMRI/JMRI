@@ -3,11 +3,9 @@
 package jmri.jmrix.easydcc;
 
 /**
- * EasyDccReply.java
- *
- * Description:		Carries the reply to an EasyDccMessage
+ * Carries the reply to an EasyDccMessage
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class EasyDccReply {
 	// is this logically an abstract class?
