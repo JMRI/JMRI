@@ -21,7 +21,7 @@ import org.jdom.Attribute;
  * stored in local variables.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecoderProConfigFrame.java,v 1.6 2002-01-08 04:06:05 jacobsen Exp $
+ * @version			$Id: DecoderProConfigFrame.java,v 1.7 2002-01-12 22:11:30 jacobsen Exp $
  */
 public class DecoderProConfigFrame extends JFrame {
 		
@@ -41,6 +41,9 @@ public class DecoderProConfigFrame extends JFrame {
 				savePressed();
 			}
 		});
+		
+		// add some space at the bottom
+		getContentPane().add(new JLabel(" "));
 		
 		// show is deferred to some action somewhere else
 		pack();
@@ -69,13 +72,25 @@ public class DecoderProConfigFrame extends JFrame {
 	//}
 	
 	/**
-	 * Handle the Save button:  Backup the file, write a new one, close the frame.
+	 * Handle the Save button:  Backup the file, write a new one, prompt for
+	 * what to do next.  To do that, the last step is to present a dialog
+	 * box prompting the user to end the program.
 	 */
 	public void savePressed() {
 		jmri.jmrit.XmlFile.ensurePrefsPresent(jmri.jmrit.XmlFile.prefsDir());
 		DecoderProConfigFile f = new DecoderProConfigFile();
 		f.makeBackupFile(DecoderProConfigFile.defaultConfigFilename());
 		f.writeFile(DecoderProConfigFile.defaultConfigFilename(), this);
+		if (JOptionPane.showConfirmDialog(null, 
+		   	"Your updated preferences will take effect when the program is restarted. Quit now?", 
+		    "Quit now?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+		    	// end the program
+			setVisible(false);
+			dispose();
+			System.exit(0);	    	
+		}
+		// don't end the program, just close the window
+		setVisible(false);
 	}
 	
 	JComboBox protocolBox;
