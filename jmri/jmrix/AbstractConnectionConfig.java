@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 abstract public class AbstractConnectionConfig  implements jmri.jmrix.ConnectionConfig {
 
@@ -90,10 +90,13 @@ abstract public class AbstractConnectionConfig  implements jmri.jmrix.Connection
         }
 
         String[] baudList = adapter.validBaudRates();
+        baudBox.removeAllItems();
         for (int i=0; i<baudList.length; i++) baudBox.addItem(baudList[i]);
         String[] opt1List = adapter.validOption1();
+        opt1Box.removeAllItems();
         for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
         String[] opt2List = adapter.validOption2();
+        opt2Box.removeAllItems();
         for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
 
         if (baudList.length>1) {
