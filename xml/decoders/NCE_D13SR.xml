@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: NCE_D13SR.xml,v 1.16 2003-05-27 01:12:07 jacobsen Exp $ -->
+<!-- $Id: NCE_D13SR.xml,v 1.17 2003-05-31 04:36:57 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen" version="6" lastUpdated="20021016"/>
 
 	<!-- version 4 added D15, D14, DA-SR, P2K, KRS, SW9, D408 and more functions -->
 	<!-- version 6 changed the versionID range -->
+	<!-- version 7 added N12 series decoders -->
 	
 <decoder>
   <family name="Silent Drive decoders" mfg="North Coast Engineering" 
@@ -24,7 +25,12 @@
     <model model="NIMFT-B" numOuts="2" numFns="3" >
 			<output name="1" label="Pad 1"/>
 			<output name="2" label="Pad 2"/> </model>
-    
+    <model model="N12SR" numOuts="7" numFns="12" />
+    <model model="N12A0" numOuts="7" numFns="12" />
+    <model model="N12A1" numOuts="7" numFns="12" />
+    <model model="N12K0a" numOuts="7" numFns="12" />
+    <model model="N12K1a" numOuts="7" numFns="12" />
+    <model model="N12K2" numOuts="7" numFns="12" />
   </family>
 
 	<programming direct="yes" paged="yes" 
