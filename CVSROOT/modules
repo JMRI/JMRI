@@ -2,7 +2,7 @@
 
 jbuilder -a src prx
 src -d java/src &jmri &apps &xml
-prx site/index.html
+prx -d java site/index.html
 
 #djmri -d java/src jmri
 #dapps -d java/src apps
