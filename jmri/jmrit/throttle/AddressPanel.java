@@ -159,7 +159,7 @@ public class AddressPanel extends JInternalFrame
 		 constraints.gridy= GridBagConstraints.RELATIVE;
 		 constraints.fill = GridBagConstraints.HORIZONTAL;
 		 constraints.weightx = 1;
-		 constraints.weighty = 1;
+		 constraints.weighty = 0;
 		 mainPanel.add(rosterBox, constraints);
 
 		 JPanel buttonPanel = new JPanel();
