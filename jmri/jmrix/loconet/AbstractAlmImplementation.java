@@ -18,7 +18,7 @@ package jmri.jmrix.loconet;
  * contact Digitrax Inc for separate permission.
  *
  * @author Bob Jacobsen     Copyright 2002
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public abstract class AbstractAlmImplementation implements LocoNetListener {
@@ -31,13 +31,13 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
     /**
      * What ALM number does this object respond to?
      */
-    private int mNumber;
+    protected int mNumber;
     /**
      * Does this ALM reply on the LocoNet, or just
      * form an image of an implementation elsewhere?
      * <P>True for image, false for primary implementation on LocoNet
      */
-    private boolean mImage;
+    protected boolean mImage;
 
     public AbstractAlmImplementation(int pNumber, boolean pImage) {
         mNumber = pNumber;
@@ -67,54 +67,64 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
         // sort out the ATASK
         switch (msg.getElement(3)) {
         case INTERROGATE: {
-            // send canned reply
-            LocoNetMessage l = new LocoNetMessage(16);
-            l.setElement( 0, 0xE6);
-            l.setElement( 1, 0x10);
-            l.setElement( 2, mNumber);
-            l.setElement( 3, INTERROGATE);
-            l.setElement( 4, 0x40);
-            l.setElement( 5, 0x00);
-            l.setElement( 6, 0x03);
-            l.setElement( 7, 0x02);
-            l.setElement( 8, 0x08);
-            l.setElement( 9, 0x7F);
-            l.setElement(10, 0x00);
-            l.setElement(11, 0x00);
-            l.setElement(12, 0x00);
-            l.setElement(13, 0x00);
-            l.setElement(14, 0x00);
-            l.setElement(15, 0x00);
-            LnTrafficController.instance().sendLocoNetMessage(l);
+            // if primary implementation
+            if (!mImage) {
+                // send canned reply
+                LocoNetMessage l = new LocoNetMessage(16);
+                l.setElement( 0, 0xE6);
+                l.setElement( 1, 0x10);
+                l.setElement( 2, mNumber);
+                l.setElement( 3, INTERROGATE);
+                l.setElement( 4, 0x40);
+                l.setElement( 5, 0x00);
+                l.setElement( 6, 0x03);
+                l.setElement( 7, 0x02);
+                l.setElement( 8, 0x08);
+                l.setElement( 9, 0x7F);
+                l.setElement(10, 0x00);
+                l.setElement(11, 0x00);
+                l.setElement(12, 0x00);
+                l.setElement(13, 0x00);
+                l.setElement(14, 0x00);
+                l.setElement(15, 0x00);
+                LnTrafficController.instance().sendLocoNetMessage(l);
+            }
             return;
         }
         case READ: {
-            // find address
             int block = msg.getElement(5)*128+msg.getElement(4);
-            int arg1 = retrieve(block,0);
-            int arg2 = retrieve(block,1);
-            int arg3 = retrieve(block,2);
-            int arg4 = retrieve(block,3);
+            // if primary implementation
+            if (!mImage) {
+                // send information in reply
+                // find address
+                int arg1 = retrieve(block,0);
+                int arg2 = retrieve(block,1);
+                int arg3 = retrieve(block,2);
+                int arg4 = retrieve(block,3);
 
-            // format message and send
-            LocoNetMessage l = new LocoNetMessage(16);
-            l.setElement( 0, 0xE6);
-            l.setElement( 1, 0x10);
-            l.setElement( 2, mNumber);
-            l.setElement( 3, READ);
-            l.setElement( 4, msg.getElement(4));
-            l.setElement( 5, msg.getElement(5));
-            l.setElement( 6, 0x03);
-            l.setElement( 7, arg1&0x7F);
-            l.setElement( 8, arg1/128);
-            l.setElement( 9, arg2&0x7F);
-            l.setElement(10, arg2/128);
-            l.setElement(11, arg3&0x7F);
-            l.setElement(12, arg3/128);
-            l.setElement(13, arg4&0x7F);
-            l.setElement(14, arg4/128);
-            l.setElement(15, 0x00);
-            LnTrafficController.instance().sendLocoNetMessage(l);
+                // format message and send
+                LocoNetMessage l = new LocoNetMessage(16);
+                l.setElement( 0, 0xE6);
+                l.setElement( 1, 0x10);
+                l.setElement( 2, mNumber);
+                l.setElement( 3, READ);
+                l.setElement( 4, msg.getElement(4));
+                l.setElement( 5, msg.getElement(5));
+                l.setElement( 6, 0x03);
+                l.setElement( 7, arg1&0x7F);
+                l.setElement( 8, arg1/128);
+                l.setElement( 9, arg2&0x7F);
+                l.setElement(10, arg2/128);
+                l.setElement(11, arg3&0x7F);
+                l.setElement(12, arg3/128);
+                l.setElement(13, arg4&0x7F);
+                l.setElement(14, arg4/128);
+                l.setElement(15, 0x00);
+                LnTrafficController.instance().sendLocoNetMessage(l);
+            }
+            
+            noteRead(block);
+            
             return;
         }
         case WRITE:
@@ -129,12 +139,18 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
             store(block, 2, arg3);
             int arg4 = msg.getElement(14)*128+msg.getElement(13);
             store(block, 3, arg4);
-            // send LACK
-            LocoNetMessage l = new LocoNetMessage(4);
-            l.setElement( 0, 0xB4);
-            l.setElement( 2, 0x66);  // E6 without high bit
-            l.setElement( 3, 0x7F);
-            LnTrafficController.instance().sendLocoNetMessage(l);
+            
+            noteChanged(block);
+            
+            // if primary implementation
+            if (!mImage) {
+                // send LACK
+                LocoNetMessage l = new LocoNetMessage(4);
+                l.setElement( 0, 0xB4);
+                l.setElement( 2, 0x66);  // E6 without high bit
+                l.setElement( 3, 0x7F);
+                LnTrafficController.instance().sendLocoNetMessage(l);
+            }
             return;
         default:
             log.warn("Unexpected ATASK: "+msg.getElement(3));
@@ -142,6 +158,16 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
         }
     }
 
+    /**
+     * Notify possible subclass that a block has changed.
+     */
+    public void noteChanged(int block) {}
+
+    /**
+     * Notify possible subclass that a read is being handled
+     */
+    public void noteRead(int block) {}
+    
     /**
      * Handle ALM_RD_ACCESS message.
      * <P>
@@ -153,6 +179,67 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
     void readMsg(LocoNetMessage msg) {
     }
 
+    /**
+     * Create and send the LocoNet message to read a 
+     * particular block.
+     * <P>
+     * The results will return later.
+     */
+    void sendRead(int block) {
+        LocoNetMessage l = new LocoNetMessage(16);
+        l.setElement( 0, 0xEE);
+        l.setElement( 1, 0x10);
+        l.setElement( 2, mNumber);
+        l.setElement( 3, 2);    // read
+        l.setElement( 4, block&0x7F);    // blockl
+        l.setElement( 5, block/128);    // blockh
+        l.setElement( 6, 0x03);
+        l.setElement( 7, 0x02);
+        l.setElement( 8, 0x08);
+        l.setElement( 9, 0x7F);
+        l.setElement(10, 0x00);
+        l.setElement(11, 0x00);
+        l.setElement(12, 0x00);
+        l.setElement(13, 0x00);
+        l.setElement(14, 0x00);
+        l.setElement(15, 0x00);
+        LnTrafficController.instance().sendLocoNetMessage(l);
+    }
+
+    /**
+     * Create and send the LocoNet message to read a 
+     * particular block.
+     * <P>
+     * The results will return later.
+     */
+    void sendWrite(int block) {
+        int arg1 = retrieve(block, 0);
+        int arg2 = retrieve(block, 1);
+        int arg3 = retrieve(block, 2);
+        int arg4 = retrieve(block, 3);
+
+        // format message and send
+        LocoNetMessage l = new LocoNetMessage(16);
+        l.setElement( 0, 0xEE);
+        l.setElement( 1, 0x10);
+        l.setElement( 2, mNumber);
+        l.setElement( 3, 3);    // write
+        l.setElement( 4, block&0x7F);  // blockl
+        l.setElement( 5, block/128);  // blockh
+        l.setElement( 6, 0x03);
+        l.setElement( 7, arg1&0x7F);
+        l.setElement( 8, arg1/128);
+        l.setElement( 9, arg2&0x7F);
+        l.setElement(10, arg2/128);
+        l.setElement(11, arg3&0x7F);
+        l.setElement(12, arg3/128);
+        l.setElement(13, arg4&0x7F);
+        l.setElement(14, arg4/128);
+        l.setElement(15, 0x00);
+        LnTrafficController.instance().sendLocoNetMessage(l);
+        return;
+    }
+    
     /**
      * Abstract method invoked to save a new value.
      * <P>
