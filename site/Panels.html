@@ -55,25 +55,29 @@ holding the meta (Apple, command, etc) key down.
 <LI>A button to pick a background image.  The editor's drawing capability is rudimentary
 and likely to stay that way for a long time.  To create CTC panels, complex track diagrams, etc,
 its easier to draw them in some other program and insert them as the background image
-for a JMRI control panel.  When you click this button, you'll be prompted for the file to
-use.  GIF and JPG formats (and perhaps others) will work.
+for a JMRI control panel. 
+
 <LI>A button to add a text label.  Put the desired text in the field and click the button. You can 
 slide the label around after inserting it, but you currently can't edit the text later.
+
 <LI>A button to add an icon as a label.  This is a way to add track symbols, etc. To select the
 icon, use the tree in the bottom of the window (see below for details), then click the "pick" button
 to load the selected icon.  This is a general mechanism:  Any icon on the editor window
 can be replaced by selecting the desired new one and clicking on the icon to replace.
+
 <LI>Two sections for adding left- and right-bound turnouts.  These actually work the same
 way, only with different icons to represent the states of the turnouts.  Enter the turnout number
 (e.g. 23) and click "Add turnout:".  If you'd prefer a different graphic for the closed
 and thrown states, you can change their icons as described above.
+
 <LI>A section for adding a sensor.  Note that only LocoNet currently has sensors implemented.
 Type the sensor number (e.g. 74) in the field and click "Add sensor:".
 <LI>The tree of available icons, see below.
 </UL>
 
 <P>
-After getting the panel the way you want, you can use the "Store panel..." entry in the "Panels" menu
+After getting the panel the way you want, you can use the "Store panel..." 
+entry in the "Panels" menu
 to write it to an XML file.
 
 <h3>Icons</h3>
@@ -82,6 +86,13 @@ for representing CTC panels, LEDs, etc.  You can browse through them with the tr
 in the bottom of the editor frame.  Perhaps the best way to see what each looks like
 is to select it in the tree, then click on the icon next to the "Add icon" button.  That
 will load it.
+<P>
+For little bits of track, e.g. to connect turnouts, you might want
+<pre>
+ resources -> icons -> small schematics ->tracksegments
+</PRE>
+then block.gif, etc.
+
 <P>
 We do need to do a better job of organizing those...
 
@@ -95,6 +106,19 @@ give you "mechanical" levers you can flip back and forth with a click.
 To make this really easy, we need to have a better editor.  And making a "real"
 CTC panel will require better signal logic to handle the code buttons, etc.  
 If you've got opinions on how this should work, please send comments!
+
+<h2>Using the panel</h2>
+
+To command a turnout to change state (e.g. closed to thrown), click on it.
+<P>
+To move it around, you "meta-drag" it.  On a Mac, that's "hold the cmd key and 
+drag with the cursor"; on windows, it might be the Windows  or control key.  
+Or it might be a right-drag.  Sorry, I don't have a Windows machine here to 
+figure it out.
+<P>
+There's also a pop-up menu (ctrl-click on a Mac) that will let you rotate the 
+icon so that it points in whatever direction you want.
+<P>
 
 <h2>Acknowledgements</h2>
 
