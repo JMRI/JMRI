@@ -3,7 +3,7 @@
 jbuilder -a xml jbuilderjava
 
 # build the java/ directory, which contains the actual JBuilder project
-jbuilder -a jbuilderjava jbuilder1 jbuilder2 jbuilder3
+jbuilderjava  -a jbuilderjava jbuilder1 jbuilder2 jbuilder3
 jbuilder1 -d java site index.html
 jbuilder2 -d java/src &jmri &apps
 jbuilder3 -d java &test
