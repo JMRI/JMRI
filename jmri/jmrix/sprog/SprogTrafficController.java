@@ -15,7 +15,7 @@ import java.util.Vector;
  * handled in an independent thread.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SprogTrafficController implements SprogInterface, Runnable {
 
@@ -239,14 +239,14 @@ public class SprogTrafficController implements SprogInterface, Runnable {
          * SPROG replies will end with the prompt for the next command
         */
         boolean endReply(SprogReply msg) {
-          // detect that the reply buffer ends with "P> " (note ending space)
+          // detect that the reply buffer ends with "P> " or "R> " (note ending space)
           int num = msg.getNumDataElements();
           if ( num >= 3) {
             // ptr is offset of last element in NceReply
             int ptr = num-1;
             if (msg.getElement(ptr)   != ' ') return false;
             if (msg.getElement(ptr-1) != '>') return false;
-            if (msg.getElement(ptr-2) != 'P') return false;
+            if ((msg.getElement(ptr-2) != 'P')||(msg.getElement(ptr-2) != 'R')) return false;
             return true;
           }
           else return false;
