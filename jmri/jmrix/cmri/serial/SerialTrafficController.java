@@ -21,7 +21,7 @@ import java.util.Vector;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -70,7 +70,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         // closed is a 0 in the output
         if (!closed) outputArray[loc] |= bit;
         else outputArray[loc] &= (~bit);
-        if (log.isDebugEnabled()) log.debug("setOutputState n="+number+" loc="+loc+" bit="+bit);
+        if (log.isDebugEnabled()) log.debug("setOutputState n="+number+" loc="+loc+" bit="+bit+" closed="+closed);
 
         // force a send next time if the value changed
         synchronized (this) {
@@ -117,7 +117,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
             // if need to send, do so
             if (mustSend) {
                 mustSend = false;
-                log.debug("request write commend to send");
+                log.debug("request write command to send");
                 return nextWrite();
             }
         }
