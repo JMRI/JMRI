@@ -16,48 +16,23 @@ import junit.framework.TestSuite;
 import jmri.jmrix.loconet.*;
 import jmri.*;
 
-public class LnTurnoutManagerTest extends TestCase  {
+public class LnTurnoutManagerTest extends jmri.tests.jmrix.AbstractTurnoutMgrTest  {
 
-	public void testLnTurnoutCreate() {
-		// create and register the manager object
-		LnTurnoutManager l = new LnTurnoutManager();
-		jmri.InstanceManager.setTurnoutManager(l);
-		assert(l == jmri.InstanceManager.turnoutManagerInstance());
-				
+	public String getSystemName(int i) {
+		return "LT"+i;
 	}
-
-	public void testLnTurnoutPutGet() {
+	
+	LocoNetInterfaceScaffold lnis;
+	
+	public void setUp() {
+		// prepare an interface, register
+		lnis = new LocoNetInterfaceScaffold();
 		// create and register the manager object
-		LnTurnoutManager l = new LnTurnoutManager();
-
-		// sample turnout object
-		LnTurnout t = new LnTurnout(22);
-		
-		// store and get
-		l.putByUserName("mine", t);
-		assert(t == l.getByUserName("mine"));
-		assert(t == l.getBySystemName("LT22"));				
-	}
-
-	public void testByAddress() {
-		// create and register the manager object
-		LnTurnoutManager l = new LnTurnoutManager();
-
-		// sample turnout object
-		LnTurnout t = new LnTurnout(22);
-		
-		// sample address object
-		TurnoutAddress a = new TurnoutAddress("LT22", "user");
-		
-		// store and get
-		l.putByUserName("user", t);
-		assert(t == l.getByAddress(a));				
+		l = new LnTurnoutManager();
+		jmri.InstanceManager.setTurnoutManager(l);				
 	}
 
 	public void testMisses() {
-		// create and register the manager object
-		LnTurnoutManager l = new LnTurnoutManager();
-		
 		// sample address object
 		TurnoutAddress a = new TurnoutAddress("LT22", "user");
 		
@@ -68,12 +43,6 @@ public class LnTurnoutManagerTest extends TestCase  {
 	}
 
 	public void testLocoNetMessages() {
-		// prepare an interface, register
-		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
-
-		// create and register the manager object
-		LnTurnoutManager l = new LnTurnoutManager();
-		
 		// send messages for 21, 22
 		// notify the Ln that somebody else changed it...
 		LocoNetMessage m1 = new LocoNetMessage(4);

@@ -24,13 +24,6 @@ public class NceTurnoutManager extends jmri.AbstractTurnoutManager {
 
 	// NCE-specific methods
 	
-	public void putByUserName(String s, NceTurnout t) {
-		_tuser.put(s, t);
-		// find the system name, and put that way also
-		String system = "NT"+t.getNumber();
-		_tsys.put(system, t);
-	}
-
 	public void putBySystemName(NceTurnout t) {
 		String system = "LT"+t.getNumber();
 		_tsys.put(system, t);

@@ -103,7 +103,9 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
 		// reach here only in error
 	}
 	
-	public void dispose() {}
+	public void dispose() {
+		LnTrafficController.instance().removeLocoNetListener(~0, this);
+	}
 		
 	// data members
 	int _number;   // loconet turnout number

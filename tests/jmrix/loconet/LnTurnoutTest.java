@@ -15,30 +15,32 @@ import junit.framework.TestSuite;
 
 import jmri.jmrix.loconet.*;
 
-public class LnTurnoutTest extends TestCase {
+public class LnTurnoutTest extends jmri.tests.jmrix.AbstractTurnoutTest {
 
-	public void testLnTurnoutCreate() {
+	public void setUp() {
 		// prepare an interface
-		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
+		lnis = new LocoNetInterfaceScaffold();
 		
-		LnTurnout t = new LnTurnout(21);
-		
-		// set closed 
-		try {
-			t.setCommandedState(jmri.Turnout.CLOSED);
-		} catch (Exception e) { log.error("TO exception: "+e);
-		}	
-		assert(lnis.outbound.elementAt(0).toString().equals("b0 14 30 0 "));  // CLOSED loconet message
+		t = new LnTurnout(21);
+	}
+	
+	public int numListeners() {
+		return lnis.numListeners();
+	}
+	
+	LocoNetInterfaceScaffold lnis;
+	
+	public void checkClosedMsgSent() {
+		assert(lnis.outbound.elementAt(lnis.outbound.size()-1).toString().equals("b0 14 30 0 "));  // CLOSED loconet message
 		assert(t.getCommandedState() == jmri.Turnout.CLOSED);
-		
-		// set thrown 
-		try {
-			t.setCommandedState(jmri.Turnout.THROWN);
-		} catch (Exception e) { log.error("TO exception: "+e);
-		}	
-		assert(lnis.outbound.elementAt(1).toString().equals("b0 14 10 0 "));  // THROWN loconet message
-		assert(t.getCommandedState() == jmri.Turnout.THROWN);
+	}
 
+	public void checkThrownMsgSent() {
+		assert(lnis.outbound.elementAt(lnis.outbound.size()-1).toString().equals("b0 14 10 0 "));  // THROWN loconet message
+		assert(t.getCommandedState() == jmri.Turnout.THROWN);
+	}
+	
+	public void checkIncoming() {
 		// notify the Ln that somebody else changed it...
 		LocoNetMessage m = new LocoNetMessage(4);
 		m.setOpCode(0xb0);
@@ -60,10 +62,6 @@ public class LnTurnoutTest extends TestCase {
 	// LnTurnout test for incoming status message
 	public void testLnTurnoutStatusMsg() {
 		// prepare an interface
-		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
-		
-		LnTurnout t = new LnTurnout(21);
-		
 		// set closed 
 		try {
 			t.setCommandedState(jmri.Turnout.CLOSED);

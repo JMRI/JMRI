@@ -45,7 +45,6 @@ public abstract class AbstractTurnoutManager
 		if (e.getPropertyName().equals("UserName")) {
 			String old = (String) e.getOldValue();
 			String now = (String) e.getNewValue();
-			System.out.println("change: "+old+" "+now);
 			Turnout t = getByUserName(old);
 			_tuser.remove(old);
 			_tuser.put(now, t);

@@ -23,29 +23,30 @@ public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements Loc
 
 	// LocoNet-specific methods
 	
-	public void putByUserName(String s, LnTurnout t) {
-		_tuser.put(s, t);
-		// find the system name, and put that way also
-		String system = "LT"+t.getNumber();
-		_tsys.put(system, t);
-	}
-
 	public void putBySystemName(LnTurnout t) {
 		String system = "LT"+t.getNumber();
 		_tsys.put(system, t);
 	}
 	
 	public Turnout newTurnout(String systemName, String userName) {
+		// return existing if there is one
+		Turnout t;
+		if ( (t = getByUserName(userName)) != null) return t;
+		if ( (t = getBySystemName(systemName)) != null) return t;
+
 		// get number from name
 		if (!systemName.startsWith("LT")) {
 			log.error("Invalid system name for LocoNet turnout: "+systemName);
 			return null;
 		}
 		int addr = Integer.valueOf(systemName.substring(2)).intValue();
-		LnTurnout t = new LnTurnout(addr);
+		t = new LnTurnout(addr);
+		t.setUserName(userName);
 		
 		_tsys.put(systemName, t);
 		_tuser.put(userName, t);
+		t.addPropertyChangeListener(this);
+
 		return t;
 	}
 
