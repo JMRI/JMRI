@@ -11,6 +11,7 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterEntryPane;
 import jmri.jmrit.symbolicprog.*;
+import jmri.util.JmriJFrame;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -27,9 +28,9 @@ import org.jdom.Element;
 /**
  * Frame providing a command station programmer from decoder definition files.
  * @author			Bob Jacobsen   Copyright (C) 2001, 2004; D Miller Copyright 2003
- * @version			$Revision: 1.45 $
+ * @version			$Revision: 1.46 $
  */
-abstract public class PaneProgFrame extends javax.swing.JFrame
+abstract public class PaneProgFrame extends JmriJFrame
 							implements java.beans.PropertyChangeListener  {
 
     // members to contain working variable, CV values

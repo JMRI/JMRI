@@ -10,16 +10,17 @@ import jmri.*;
 
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.catalog.*;
+import jmri.util.JmriJFrame;
 
 /**
  * <p>Creates a JFrame containing an analog clockface and hands</p>
  *
  * <p> Time code copied from code for the Nixie clock by Bob Jacobsen</p>
  * @author                     Dennis Miller Copyright (C) 2004
- * @version                    $Revision: 1.5 $
+ * @version                    $Revision: 1.6 $
  */
 
-public class AnalogClockFrame extends javax.swing.JFrame implements java.beans.PropertyChangeListener {
+public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 
       // GUI member declarations
 
@@ -209,7 +210,7 @@ public void paint(Graphics g){
 
      g.drawString(amPm, -amPmFontM.stringWidth(amPm)/2, faceSize/5 );
    }
-   
+
    // Method to convert degrees to radians
    // Math.toRadians was not available until Java 1.2
    double toRadians(double degrees) {

@@ -3,6 +3,7 @@
 package jmri.jmrix.loconet.hexfile;
 
 import jmri.jmrix.loconet.LnPacketizer;
+import jmri.util.JmriJFrame;
 
 import java.awt.Dimension;
 import java.io.File;
@@ -18,9 +19,9 @@ import javax.swing.JPanel;
  * a .hex file, feeding the information to a LocoMonFrame (monitor) and
  * connecting to a LocoGenFrame (for sending a few commands).
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version                     $Revision: 1.15 $
+ * @version                     $Revision: 1.16 $
  */
-public class HexFileFrame extends javax.swing.JFrame {
+public class HexFileFrame extends JmriJFrame {
 
     // member declarations
     javax.swing.JButton openHexFileButton = new javax.swing.JButton();

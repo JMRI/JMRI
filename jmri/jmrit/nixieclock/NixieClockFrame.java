@@ -10,6 +10,7 @@ import jmri.*;
 
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.catalog.*;
+import jmri.util.JmriJFrame;
 
 /**
  * Frame providing a simple clock showing Nixie tubes.
@@ -21,9 +22,9 @@ import jmri.jmrit.catalog.*;
  * Modified by Dennis Miller for resizing Nov, 2004
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
-public class NixieClockFrame extends javax.swing.JFrame implements java.beans.PropertyChangeListener {
+public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 
     // GUI member declarations
     JLabel h1;  // msb of hours

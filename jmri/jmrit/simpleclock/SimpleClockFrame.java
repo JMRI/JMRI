@@ -4,6 +4,7 @@ package jmri.jmrit.simpleclock;
 
 import jmri.Timebase;
 import jmri.InstanceManager;
+import jmri.util.JmriJFrame;
 
 import java.awt.*;
 
@@ -17,9 +18,9 @@ import javax.swing.border.Border;
  * Frame for user configuration of Simple Timebase
  *
  * @author	Dave Duchamp   Copyright (C) 2004
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
-public class SimpleClockFrame extends javax.swing.JFrame 
+public class SimpleClockFrame extends JmriJFrame
 	implements java.beans.PropertyChangeListener {
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.simpleclock.SimpleClockBundle");
@@ -28,9 +29,9 @@ public class SimpleClockFrame extends javax.swing.JFrame
     javax.swing.Timer timer = null;
     static int delay = 2*1000;  // update display every two seconds
     protected boolean showTime = false;
-    
+
     protected javax.swing.JComboBox timeSourceBox = null;
-    
+
     protected javax.swing.JTextField factorField = new javax.swing.JTextField(5);
     protected javax.swing.JTextField hoursField = new javax.swing.JTextField(2);
     protected javax.swing.JTextField minutesField = new javax.swing.JTextField(2);
@@ -39,10 +40,10 @@ public class SimpleClockFrame extends javax.swing.JFrame
     protected javax.swing.JButton setTimeButton = new javax.swing.JButton(rb.getString("ButtonSet"));
     protected javax.swing.JButton startButton = new javax.swing.JButton(rb.getString("ButtonStart"));
     protected javax.swing.JButton stopButton = new javax.swing.JButton(rb.getString("ButtonStop"));
-    
+
     protected javax.swing.JLabel clockStatus = new javax.swing.JLabel();
     protected javax.swing.JLabel timeLabel = new javax.swing.JLabel();
-    
+
     /**
      * Constructor method
      */
@@ -50,15 +51,15 @@ public class SimpleClockFrame extends javax.swing.JFrame
     	super();
     }
 
-    /** 
+    /**
      *  Initialize the config window
      */
     public boolean initComponents() {
         setTitle(rb.getString("SimpleClockWindowTitle"));
-			
+
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        
+
         // Determine current state of the clock
         clock = InstanceManager.timebaseInstance();
         if (clock==null) {
@@ -68,7 +69,7 @@ public class SimpleClockFrame extends javax.swing.JFrame
             dispose();
             return false;
         }
-			
+
         // Set up time source choice
         JPanel panel11 = new JPanel();
         panel11.add(new JLabel(rb.getString("TimeSource")+" "));
@@ -85,7 +86,7 @@ public class SimpleClockFrame extends javax.swing.JFrame
         panel12.add(factorField);
         factorField.setText(Double.toString(clock.getRate()));
         factorField.setToolTipText(rb.getString("TipFactorField"));
-        panel12.add(new JLabel(":1 "));        
+        panel12.add(new JLabel(":1 "));
         setRateButton.setToolTipText(rb.getString("TipSetRateButton"));
         setRateButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -94,7 +95,7 @@ public class SimpleClockFrame extends javax.swing.JFrame
             });
         panel12.add(setRateButton);
         contentPane.add(panel12);
-        
+
         // Set up time setup information
         JPanel panel2 = new JPanel();
         panel2.add(new JLabel(rb.getString("NewTime")+" "));
@@ -118,7 +119,7 @@ public class SimpleClockFrame extends javax.swing.JFrame
         JPanel panel3 = new JPanel();
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
         JPanel panel31 = new JPanel();
-		
+
         panel31.add(clockStatus);
         panel3.add(panel31);
         JPanel panel32 = new JPanel();
@@ -129,9 +130,9 @@ public class SimpleClockFrame extends javax.swing.JFrame
         Border panel3Border = BorderFactory.createEtchedBorder();
         Border panel3Titled = BorderFactory.createTitledBorder(panel3Border,
                                                 rb.getString("BoxLabelClockState"));
-        panel3.setBorder(panel3Titled);                
+        panel3.setBorder(panel3Titled);
         contentPane.add(panel3);
-        
+
         // Set up Start and Stop buttons
         JPanel panel4 = new JPanel();
         startButton.setToolTipText(rb.getString("TipStartButton"));
@@ -172,10 +173,10 @@ public class SimpleClockFrame extends javax.swing.JFrame
                         updateTime();
                     }
                 });
-        
+
         return true;
     }
-    
+
     /**
      * Method to adjust to rate changes
      */
@@ -202,8 +203,8 @@ public class SimpleClockFrame extends javax.swing.JFrame
 	}
 
     /**
-     * Method to handle Set Rate button 
-     */        
+     * Method to handle Set Rate button
+     */
     public void setRateButtonActionPerformed() {
         double rate = 1.0;
         try {
@@ -224,10 +225,10 @@ public class SimpleClockFrame extends javax.swing.JFrame
             log.error("Exception when setting timebase rate: "+e);
         }
     }
-    
+
     /**
-     * Method to handle Set Time button 
-     */        
+     * Method to handle Set Time button
+     */
     public void setTimeButtonActionPerformed() {
         int hours = 0;
         int minutes = 0;
@@ -272,17 +273,17 @@ public class SimpleClockFrame extends javax.swing.JFrame
         clock.setTime(new Date(nNumMSec));
         showTime = true;
     }
-    
+
     /**
-     * Method to handle Start Clock button 
-     */        
+     * Method to handle Start Clock button
+     */
     public void startButtonActionPerformed() {
         clock.setRun(true);
     }
-    
+
     /**
-     * Method to handle Stop Clock button 
-     */        
+     * Method to handle Stop Clock button
+     */
     public void stopButtonActionPerformed() {
         clock.setRun(false);
     }
@@ -329,8 +330,8 @@ public class SimpleClockFrame extends javax.swing.JFrame
         }
         dispose();
     }
-    
-    
+
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SimpleClockFrame.class.getName());
 }
 

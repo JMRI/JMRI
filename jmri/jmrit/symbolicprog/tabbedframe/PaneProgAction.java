@@ -7,6 +7,7 @@ import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.CombinedLocoSelTreePane;
+import jmri.util.JmriJFrame;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
@@ -33,7 +34,7 @@ import javax.swing.JSeparator;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.23 $
+ * @version			$Revision: 1.24 $
  */
 public class PaneProgAction 			extends AbstractAction {
 
@@ -76,7 +77,7 @@ public class PaneProgAction 			extends AbstractAction {
         if (log.isDebugEnabled()) log.debug("Pane programmer requested");
 
         // create the initial frame that steers
-        final JFrame f = new JFrame("Service-mode Programmer Setup");
+        final JmriJFrame f = new JmriJFrame("Service-mode Programmer Setup");
         f.getContentPane().setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
 
         // add the Roster menu
