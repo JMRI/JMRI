@@ -1,9 +1,9 @@
-/** 
+/**
  * CvTableModel.java
  *
  * Description:		Table data model for display of CvValues in symbolic programmer
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			
+ * @author			Bob Jacobsen   Copyright (C) 2001, 2002
+ * @version			$Revision: 1.2 $
  */
 
 package jmri.jmrit.symbolicprog;
@@ -23,7 +23,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 	public Vector allCvVector() { return _cvAllVector; }
 	private Vector _writeButtons = new Vector();
 	private Vector _readButtons = new Vector();
-	
+
 	// Defines the columns
 	private static final int NUMCOLUMN   = 0;
 	private static final int VALCOLUMN   = 1;
@@ -31,38 +31,38 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 	private static final int READCOLUMN  = 3;
 	private static final int WRITECOLUMN = 4;
 	private static final int HIGHESTCOLUMN = WRITECOLUMN+1;
-	
+
 	private JLabel _status = null;
-	
-	public CvTableModel(JLabel status) {  
+
+	public CvTableModel(JLabel status) {
 		super();
-		
+
 		// save a place for notification
 		_status = status;
 		// initialize the 512-length _cvAllVector;
 		for (int i=0; i<512; i++) _cvAllVector.addElement(null);
-		
+
 		// define just address CV at start, pending some variables
 		addCV("1");
 		}
-	
+
 	// basic methods for AbstractTableModel implementation
 	public int getRowCount() { return _numRows; }
-	
+
 	public int getColumnCount( ){ return HIGHESTCOLUMN;}
 
-	public String getColumnName(int col) { 
+	public String getColumnName(int col) {
 		switch (col) {
 			case NUMCOLUMN: return "Number";
-			case VALCOLUMN: return "Value";
+			case VALCOLUMN: return "Value (Decimal)";
 			case STATECOLUMN: return "State";
 			case READCOLUMN: return "Read";
 			case WRITECOLUMN: return "Write";
 			default: return "unknown";
 		}
 	}
-	
-	public Class getColumnClass(int col) { 
+
+	public Class getColumnClass(int col) {
 		switch (col) {
 			case NUMCOLUMN: return String.class;
 			case VALCOLUMN: return JTextField.class;
@@ -83,21 +83,21 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 			default: return false;
 		}
 	}
-	
+
 	public String getName(int row) {  // name is text number
 		return ""+((CvValue)_cvDisplayVector.elementAt(row)).number();
 	}
-	
+
 	public String getValString(int row) {
 		return ""+((CvValue)_cvDisplayVector.elementAt(row)).getValue();
 	}
-	
+
 	public CvValue getCvByRow(int row) { return ((CvValue)_cvDisplayVector.elementAt(row)); }
 	public CvValue getCvByNumber(int row) { return ((CvValue)_cvAllVector.elementAt(row)); }
-	
-	public Object getValueAt(int row, int col) { 
+
+	public Object getValueAt(int row, int col) {
 		switch (col) {
-			case NUMCOLUMN: 
+			case NUMCOLUMN:
 				return ""+((CvValue)_cvDisplayVector.elementAt(row)).number();
 			case VALCOLUMN:
 				return ((CvValue)_cvDisplayVector.elementAt(row)).getTableEntry();
@@ -111,15 +111,15 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 					case CvValue.FROMFILE:  	return "From file";
 					default: return "inconsistent";
 				}
-			case READCOLUMN: 
+			case READCOLUMN:
 				return _readButtons.elementAt(row);
 			case WRITECOLUMN:
 				return _writeButtons.elementAt(row);
 			default: return "unknown";
 		}
-	}	
+	}
 
-	public void setValueAt(Object value, int row, int col) { 
+	public void setValueAt(Object value, int row, int col) {
 		switch (col) {
 			case VALCOLUMN: // Object is actually an Integer
 				((CvValue)_cvDisplayVector.elementAt(row)).setValue(((Integer)value).intValue() );
@@ -127,8 +127,8 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 			default:
 				break;
 		}
-	}	
-	
+	}
+
 	public void actionPerformed(ActionEvent e) {
 		if (log.isDebugEnabled()) log.debug("action command: "+e.getActionCommand());
 		char b = e.getActionCommand().charAt(0);
@@ -142,11 +142,11 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 			((CvValue)_cvDisplayVector.elementAt(row)).write(_status);
 		}
 	}
-	
+
 	public void propertyChange(PropertyChangeEvent e) {
-		fireTableDataChanged();	
+		fireTableDataChanged();
 	}
-	
+
 	public void addCV(String s) {
 		int num = Integer.valueOf(s).intValue();
 		if (_cvAllVector.elementAt(num) == null) {
@@ -167,12 +167,12 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 			fireTableDataChanged();
 		}
 	}
-	
+
 	public boolean decoderDirty() {
 		int len = _cvDisplayVector.size();
 		for (int i=0; i< len; i++) {
 			if (((CvValue)(_cvDisplayVector.elementAt(i))).getState() == CvValue.EDITTED ) {
-				if (log.isDebugEnabled()) 
+				if (log.isDebugEnabled())
 					log.debug("CV decoder dirty due to "+((CvValue)(_cvDisplayVector.elementAt(i))).number());
 				return true;
 			}
@@ -182,7 +182,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 
 	public void dispose() {
 		if (log.isDebugEnabled()) log.debug("dispose");
-	
+
 		// remove buttons
 		for (int i = 0; i<_writeButtons.size(); i++) {
 			((JButton)_writeButtons.elementAt(i)).removeActionListener(this);
@@ -195,22 +195,22 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 		for (int i = 0; i<_cvDisplayVector.size(); i++) {
 			((CvValue)_cvDisplayVector.elementAt(i)).removePropertyChangeListener(this);
 		}
-		
-		// null references, so that they can be gc'd even if this isn't.				
+
+		// null references, so that they can be gc'd even if this isn't.
 		_cvDisplayVector.removeAllElements();
 		_cvDisplayVector = null;
 
 		_cvAllVector.removeAllElements();
 		_cvAllVector = null;
-		
+
 		_writeButtons.removeAllElements();
 		_writeButtons = null;
-		
+
 		_readButtons.removeAllElements();
 		_readButtons = null;
 
 		_status = null;
 	}
-	
+
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CvTableModel.class.getName());
 }
