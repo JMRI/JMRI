@@ -12,9 +12,9 @@ package jmri;
  * of several heads.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
-public interface SignalHead {
+public interface SignalHead extends NamedBean {
 
     public static final int DARK        = 0x00;
     public static final int RED         = 0x01;
@@ -32,25 +32,6 @@ public interface SignalHead {
      */
     public int getAppearance();
     public void setAppearance(int newAppearance);
-
-    public String getSystemName();
-    public String getUserName();
-
-    /**
-     * Request a call-back when the bound KnownState property changes.
-     */
-    public void addPropertyChangeListener(java.beans.PropertyChangeListener l);
-
-    /**
-     * Remove a request for a call-back when a bound property changes.
-     */
-    public void removePropertyChangeListener(java.beans.PropertyChangeListener l);
-
-    /**
-     * Remove references to and from this object, so that it can
-     * eventually be garbage-collected.
-     */
-    public void dispose();  // remove _all_ connections!
 
 }
 

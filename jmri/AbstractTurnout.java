@@ -1,7 +1,6 @@
 // AbstractTurnout.java
 
 package jmri;
-import jmri.Turnout;
 
 /**
  * Abstract base for the Turnout interface.
@@ -18,9 +17,17 @@ import jmri.Turnout;
  *
  * Description:		Abstract class providing the basic logic of the Turnout interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
-public abstract class AbstractTurnout implements Turnout, java.io.Serializable {
+public abstract class AbstractTurnout extends AbstractNamedBean implements Turnout, java.io.Serializable {
+
+    public AbstractTurnout(String systemName) {
+        super(systemName);
+    }
+
+    public AbstractTurnout(String systemName, String userName) {
+        super(systemName, userName);
+    }
 
     /**
      * Handle a request to change state, typically by
@@ -28,16 +35,14 @@ public abstract class AbstractTurnout implements Turnout, java.io.Serializable {
      * @param s new state value
      */
     abstract protected void forwardCommandChangeToLayout(int s);
-    
+
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call
     //		public void firePropertyChange(String propertyName,
     //					       	Object oldValue,
     //						Object newValue)
     // _once_ if anything has changed state
-    
-    // Implementation methods
-    
+
     /**
      * Sets a new Commanded state, if need be notifying the
      * listeners, but does NOT send the command downstream.  This is used
@@ -51,28 +56,19 @@ public abstract class AbstractTurnout implements Turnout, java.io.Serializable {
                                new Integer(_commandedState));
         }
     }
-    
-    // interface function implementations
-    
-    public String getUserName() {return _id;}
-    public void   setUserName(String s) {
-        String old = _id;
-        _id = s;
-        firePropertyChange("UserName", old, s);
-    }
-    
+
     public int getKnownState() {return _knownState;}
-    
+
     public void setCommandedState(int s) {
         forwardCommandChangeToLayout(s);
         newCommandedState(s);
         newKnownState(s);       // for NONE feedback
     }
-    
+
     public int getCommandedState() {return _commandedState;}
-    
+
     public int getFeedbackType() {return _feedbackType;}
-    
+
     /**
      * Add a protected newKnownState() for use by implementations. Not intended for
      * general use, e.g. for users to set the KnownState, but rather for
@@ -85,28 +81,13 @@ public abstract class AbstractTurnout implements Turnout, java.io.Serializable {
             firePropertyChange("KnownState", new Integer(oldState), new Integer(_knownState));
         }
     }
-    
+
     // internal data members
-    private String _id;
     private int _feedbackType   = NONE;
     private int _knownState     = UNKNOWN;
     private int _commandedState = UNKNOWN;
-    
-    // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
-    // reflect to it.
-    // Note that dispose() doesn't act on these.  Its not clear whether it should...
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-    
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-    
-    protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
-    
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-}
+
+ }
 
 
 /* @(#)AbstractTurnout.java */

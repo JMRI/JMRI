@@ -4,19 +4,18 @@ package jmri;
 
  /**
  * Abstract class providing the basic logic of the SignalHead interface
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.5 $
+ * @author	Bob Jacobsen Copyright (C) 2001
+ * @version     $Revision: 1.6 $
  */
-public abstract class AbstractSignalHead
+public abstract class AbstractSignalHead extends AbstractNamedBean
     implements SignalHead, java.io.Serializable {
 
-    public AbstractSignalHead(String sys, String user) {
-        this(sys);
-        mUserName = user;
+    public AbstractSignalHead(String systemName, String userName) {
+        super(systemName, userName);
     }
 
-    public AbstractSignalHead(String sys) {
-        mSystemName = sys;
+    public AbstractSignalHead(String systemName) {
+        super(systemName);
     }
 
     protected int mAppearance = DARK;
@@ -28,30 +27,6 @@ public abstract class AbstractSignalHead
     //						Object oldValue,
     //						Object newValue)
     // _once_ if anything has changed state
-
-
-    // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
-    // reflect to it
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-    public void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    public void dispose() {
-        // this doesn't remove the listeners themselves, but should still allow garbage collection
-        // of the PropertyChangeSupport object
-        pcs = null;
-    }
-
-    public String getSystemName() { return mSystemName; }
-    public String getUserName() { return mUserName; }
-
-    String mSystemName;
-    String mUserName;
 
 }
 
