@@ -41,9 +41,8 @@
     <familyList>
       <family name="NMRA standard CV definitions" mfg="NMRA" type="locomotive" file="0NMRA.xml" />
       <family name="NMRA standard register definitions" mfg="NMRA" type="locomotive" file="0NMRA_registers.xml" />
-      <family name="Atlas Dual Mode" mfg="Atlas" type="locomotive" file="Atlas_DualMode.xml" />
-      <family name="Digitrax early decoders" mfg="Digitrax" lowVersionID="33" highVersionID="45" type="locomotive" file="Digitrax_120.xml">
-        <model model="DH120" numOuts="2" numFns="2" />
+      <family name="Dual Mode" mfg="Atlas" type="locomotive" file="Atlas_DualMode.xml">
+        <model model="Dual Mode" numOuts="4" numFns="8" />
       </family>
       <family name="Digitrax 150-series decoders" mfg="Digitrax" lowVersionID="107" type="locomotive" file="Digitrax_150.xml">
         <model model="DH150" numOuts="5" numFns="3" />
@@ -51,18 +50,51 @@
       <family name="Digitrax STD decoders" mfg="Digitrax" lowVersionID="33" highVersionID="45" type="locomotive" file="Digitrax_1x1.xml">
         <model model="DH121" numOuts="2" numFns="2" />
         <model model="DN140" numOuts="4" numFns="2" />
+        <model model="DN144K" numOuts="4" numFns="2" />
+        <model model="DN145K" numOuts="4" numFns="2" />
+        <model model="DN146A" numOuts="4" numFns="2" lowVersionID="106" highVersionID="106" />
+        <model model="DN146" numOuts="4" numFns="2" />
+        <model model="DN147A" numOuts="4" numFns="2" />
+        <model model="DN148K" numOuts="4" numFns="2" />
       </family>
-      <family name="Digitrax FX decoders with BEMF" mfg="Digitrax" lowVersionID="240" highVersionID="242" type="locomotive" file="Digitrax_1x2.xml">
+      <family name="Digitrax FX decoders with BEMF" mfg="Digitrax" lowVersionID="240" highVersionID="249" type="locomotive" file="Digitrax_1x2.xml">
         <model model="DH142" numOuts="4" numFns="2">
           <output name="4" label="Violet" />
         </model>
         <model model="DN142" numOuts="4" numFns="2">
           <output name="4" label="Violet" />
         </model>
+        <model model="DN149K2" numOuts="4" numFns="2">
+          <output name="4" label="Violet" />
+        </model>
+        <model model="DN141K2" numOuts="4" numFns="2">
+          <output name="4" label="Violet" />
+        </model>
+        <model model="DN141E2" numOuts="4" numFns="2">
+          <output name="4" label="Violet" />
+        </model>
         <model model="DH083" numOuts="5" numFns="2">
           <output name="4" label="Violet" />
           <output name="5" label="Pad" />
         </model>
+      </family>
+      <family name="Digitrax FX3 decoders" mfg="Digitrax" lowVersionID="49" highVersionID="49" type="locomotive" file="Digitrax_1x3.xml">
+        <model model="DH163P" numOuts="6" numFns="12">
+          <output name="4" label="Violet" />
+          <output name="5" label="Pad" />
+          <output name="6" label="Pad" />
+        </model>
+        <model model="DG383" numOuts="8" numFns="12">
+          <output name="4" label="Violet" />
+          <output name="5" label="Pad" />
+        </model>
+        <model model="DZ143" numOuts="4" numFns="12">
+          <output name="4" label="Violet" />
+          <output name="5" label="Pad" />
+        </model>
+      </family>
+      <family name="Digitrax early decoders" mfg="Digitrax" lowVersionID="33" highVersionID="45" type="locomotive" file="Digitrax_early.xml">
+        <model model="DH120" numOuts="2" numFns="2" />
       </family>
       <family name="Lenz 5th gen BEMF decoders" mfg="Lenz" lowVersionID="54" type="locomotive" file="Lenz_54.xml">
         <model model="LE010XF" numOuts="2">
@@ -115,6 +147,10 @@
           <output name="1" label="A - White" />
           <output name="2" label="B - Yellow" />
         </model>
+        <model model="LE063XF" numOuts="2">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+        </model>
         <model model="LE077XF" numOuts="3">
           <output name="1" label="A - White" />
           <output name="2" label="B - Yellow" />
@@ -148,7 +184,7 @@
       <family name="MRC 14 step decoders" mfg="MRC" type="locomotive" file="MRC_14step.xml">
         <model model="AD305" comment="14 step only" />
       </family>
-      <family name="NCE Silent Drive decoders" mfg="North Coast Engineering" type="locomotive" file="NCE_D13SR.xml">
+      <family name="Silent Drive decoders" mfg="North Coast Engineering" type="locomotive" file="NCE_D13SR.xml">
         <model model="D15SR" lowVersionID="32" numOuts="5" numFns="6" />
         <model model="D14SRP" lowVersionID="32" numOuts="4" numFns="6" />
         <model model="D13SR" lowVersionID="32" numOuts="3" numFns="6" />
@@ -158,7 +194,7 @@
         <model model="SW9-SR" lowVersionID="32" numOuts="4" numFns="8" />
         <model model="D408SR" lowVersionID="32" numOuts="7" numFns="12" />
       </family>
-      <family name="Soundtraxx LC diesel decoders" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_100LC_Diesel.xml">
+      <family name="LC diesel decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_100LC_Diesel.xml">
         <model model="100LC Diesel" numOuts="2" numFns="8">
           <versionCV lowVersionID="34" />
           <output name="Horn" />
@@ -174,7 +210,7 @@
           <!-- headlight, FX1, FX2 -->
         </model>
       </family>
-      <family name="Soundtraxx LC steam decoders" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_100LC_Steam.xml">
+      <family name="LC steam decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_100LC_Steam.xml">
         <model model="100LC Steam" numOuts="2" numFns="8">
           <versionCV lowVersionID="32" />
           <output name="Whistle" />
@@ -187,8 +223,8 @@
           <!-- headlight-->
         </model>
       </family>
-      <family name="Soundtrax DSD diesel decoders" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_DSD_Diesel.xml">
-        <model model="DSD Diesel" numOuts="4" numFns="8">
+      <family name="DSD diesel" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_DSD_Diesel.xml">
+        <model model="DSD diesel" numOuts="4" numFns="8">
           <versionCV lowVersionID="9" highVersionID="14" />
           <versionCV lowVersionID="21" />
           <output name="Bell" />
@@ -205,7 +241,7 @@
           <!-- headlight, F5, F6 -->
         </model>
       </family>
-      <family name="Soundtrax DSD steam decoders" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_DSD_Steam.xml">
+      <family name="DSD Steam" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_DSD_Steam.xml">
         <model model="DSD Steam" numOuts="4" numFns="8">
           <versionCV lowVersionID="6" highVersionID="7" />
           <versionCV lowVersionID="15" highVersionID="16" />
@@ -222,7 +258,7 @@
           <!-- headlight, F1, F5 -->
         </model>
       </family>
-      <family name="Soundtraxx DSX diesel decoders" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_DSX_Diesel.xml">
+      <family name="DSX Diesel" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_DSX_Diesel.xml">
         <model model="DSX Diesel" numOuts="0" numFns="8">
           <versionCV lowVersionID="18" highVersionID="19" />
           <output name="Bell" />
@@ -239,7 +275,7 @@
           <!-- for the DSX version -->
         </model>
       </family>
-      <family name="Soundtraxx DSX steam decoders" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_DSX_Steam.xml">
+      <family name="DSX Steam" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_DSX_Steam.xml">
         <model model="DSX Steam" numOuts="0" numFns="8">
           <versionCV lowVersionID="17" />
           <!--output name="3" label="F1/grn" /-->
@@ -254,7 +290,7 @@
           <!-- for the DSX version -->
         </model>
       </family>
-      <family name="SoundTrax Plug&amp;Play LC diesel decoders" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_pnpLC_Diesel.xml">
+      <family name="Plug&amp;Play LC diesel decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_pnpLC_Diesel.xml">
         <model model="C628LC Diesel" numOuts="4" numFns="8">
           <versionCV lowVersionID="37" />
           <output name="Horn" />
@@ -293,7 +329,7 @@
           <output name="Mute" />
         </model>
       </family>
-      <family name="SoundTrax Plug&amp;Play LC steam decoders" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_pnpLC_Steam.xml">
+      <family name="Plug&amp;Play LC steam decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_pnpLC_Steam.xml">
         <model model="B280LC Steam" numOuts="2" numFns="8">
           <versionCV lowVersionID="33" />
           <output name="Whistle" />

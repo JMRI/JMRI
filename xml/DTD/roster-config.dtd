@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a locomotive roster -->
-<!-- $Id: roster-config.dtd,v 1.4 2001-12-20 15:14:45 jacobsen Exp $ -->
+<!-- $Id: roster-config.dtd,v 1.5 2002-07-11 14:16:17 jacobsen Exp $ -->
 
 <!ELEMENT roster-config (roster*)>
 
@@ -24,6 +24,7 @@
 <!ATTLIST locomotive roadName	CDATA #IMPLIED>          
 <!ATTLIST locomotive roadNumber	CDATA #IMPLIED>          
 <!ATTLIST locomotive mfg			CDATA #IMPLIED>
+<!ATTLIST locomotive owner			CDATA #IMPLIED>
 <!ATTLIST locomotive model		CDATA #IMPLIED>
 <!ATTLIST locomotive dccAddress	CDATA #IMPLIED>	<!-- DCC address -->
 <!ATTLIST locomotive comment		CDATA #IMPLIED>
