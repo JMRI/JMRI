@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: FAQLinux.html,v 1.1 2004-10-05 13:53:40 jacobsen Exp $ -->
+<!-- $Id: FAQLinux.html,v 1.2 2004-10-05 13:59:24 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -82,6 +82,26 @@ Java programs like JMRI.
 <P>
 "JRE" means Java Runtime Environment.  It's just the things you need to run
 Java programs, not develop them, so it's smaller.
+</dd>
+
+<dt class=left><a id="#comm"/>Where do I install the Java comm libraries?</dt>
+<dd class=first>
+Those libraries need to be installed where they will be found at the java startup.
+That means they need to be in the directory associated with the "java" command
+you'll be running.
+<P>
+To find the right version:
+<CODE>
+<PRE>
+   java -version
+</pre>
+</CODE>
+<P>
+Then locate the directories associated with that version.  If you have 
+both the "SDK" and "JRE" forms of java installed, it will <i>usually</i>
+use the SDK directories, but you might want to install to both.
+</dd>
+
 
 </dl>
       <hr class="hide">
