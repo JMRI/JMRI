@@ -13,7 +13,7 @@ import javax.swing.*;
  * Note: This class is obsolete, and not being used.
  *<P>
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  * @see             jmri.jmrit.XmlFile
  */
 public class LoadLayoutAction extends AbstractAction {
@@ -26,12 +26,7 @@ public class LoadLayoutAction extends AbstractAction {
         File fp = new File("layout.temp.config.xml");
         LayoutConfigXML layout = new LayoutConfigXML();
         
-        // write it out
-        //try {
         layout.readFile(fp);
-        //} catch (java.io.IOException ex) {
-        //	log.error("Error writing layout config file: "+ex.getMessage());
-        //}
     }
     
     // initialize logging
