@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: MS100.html,v 1.7 2004-11-12 02:56:41 jacobsen Exp $ -->
+<!-- $Id: MS100.html,v 1.8 2005-01-07 01:17:14 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -98,6 +98,25 @@ company, based in part on the original LocoBuffer design.
 	  then you won't be able to use your computer with a MS100.  You
 	  should use a LocoBuffer.</p>
 
+<h3>Linux hack to set the baud rate</h3>
+
+Some users have reported success using Linux commands to 
+directly set the baud rate while the program is running.  To do this:
+<UL>
+<LI>Start DecoderPro,
+and wait until you see the error message that the baud rate could
+not be set. 
+<LI>Run the following commands from the Linux command line:
+<PRE>
+setserial /dev/ttyS0 divisor 7
+setserial /dev/ttyS0 spd_cust
+stty speed 38400 &lt; /dev/ttyS0
+</PRE>
+<LI>Then click on "OK" and continue on. 
+</UL>
+
+This has been reported to work
+with both RH9 and FC3.
       <hr class="hide">
 
 <!-- Footer -->
