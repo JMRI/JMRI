@@ -26,7 +26,7 @@
  * Reverse engineering of OPC_MULTI_SENSE was provided by Al Silverstein.
  *
  * @author			Bob Jacobsen
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 
 package jmri.jmrix.loconet.locomon;
@@ -35,11 +35,11 @@ import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
 
 public class Llnmon {
-    
+
     static private int LOCO_ADR(int a1, int a2)   { return (((a1 & 0x7f) * 128) + (a2 & 0x7f)); }
     static private int SENSOR_ADR(int a1, int a2) { return (((a2 & 0x0f) * 128) + (a1 & 0x7f)); }
-    
-    
+
+
     // control data
     private boolean  rawLogMode      = false;  /* logging mode - 0=normal 1=raw (data only)        */
     private int   	msgNumber        = 1;      /* message number                                   */
@@ -48,8 +48,8 @@ public class Llnmon {
     private boolean  showDiscards    = false;  /* TRUE if the user wants to display discarded data */
     private boolean  showTrackStatus = true;   /* if TRUE, show track status on every slot read    */
     private int   	trackStatus      = -1;     /* most recent track status value                   */
-    
-    
+
+
     /****************************************************************************
      *
      *  convertToMixed
@@ -64,12 +64,12 @@ public class Llnmon {
      *
      *     Nothing.
      */
-    
+
     public static String convertToMixed(
                                         int addressLow,
                                         int addressHigh)
     {
-        
+
         /* if we have a 2 digit decoder address and proceed accordingly */
         if (addressHigh == 0) {
             if (addressLow >= 120)
@@ -85,13 +85,13 @@ public class Llnmon {
 	    return String.valueOf(LOCO_ADR(addressHigh, addressLow));
 	}
     }
-    
+
     /**
      * Global flag to indicate the message was not fully parsed,
      * so the hex should be included.
      */
     protected boolean forceHex = false;
-    
+
     /****************************************************************************
      *
      *  display
@@ -105,9 +105,9 @@ public class Llnmon {
      *
      *    The created string representation.
      */
-    
+
     public String displayMessage(LocoNetMessage l) {
-        
+
         forceHex = false;
         String s = format(l);
         if (forceHex) s += "contents: "+l.toString()+"\n";
@@ -120,44 +120,44 @@ public class Llnmon {
      * @return String representation
      */
     protected String format(LocoNetMessage l) {
-        
+
         boolean showStatus = false;   /* show track status in this message? */
-        
+
 	int minutes;  // temporary time values
 	int hours;
-        
-        
+
+
         switch (l.getOpCode()) {
             /***************************
              * ; 2 Byte MESSAGE OPCODES *
              * ; FORMAT = <OPC>,<CKSUM> *
              * ;                        *
              ***************************/
-            
+
             /*************************************************
              * OPC_BUSY         0x81   ;MASTER busy code, NUL *
              *************************************************/
         case LnConstants.OPC_GPBUSY:                /* page 8 of Loconet PE */
             return "Master is busy\n";
-            
+
             /****************************************************
              * OPC_GPOFF        0x82   ;GLOBAL power OFF request *
              ****************************************************/
         case LnConstants.OPC_GPOFF:                 /* page 8 of Loconet PE */
             return "Global Power OFF\n";
-            
+
             /***************************************************
              * OPC_GPON         0x83   ;GLOBAL power ON request *
              ***************************************************/
         case LnConstants.OPC_GPON:                  /* page 8 of Loconet PE */
             return "Global Power ON\n";
-            
+
             /**********************************************************************
              * OPC_IDLE         0x85   ;FORCE IDLE state, Broadcast emergency STOP *
              **********************************************************************/
         case LnConstants.OPC_IDLE:                  /* page 8 of Loconet PE */
             return "Force Idle, Emergency STOP\n";
-            
+
             /*****************************************
              * ; 4 byte MESSAGE OPCODES               *
              * ; FORMAT = <OPC>,<ARG1>,<ARG2>,<CKSUM> *
@@ -165,7 +165,7 @@ public class Llnmon {
              *  CODES 0xA8 to 0xAF have responses     *
              *  CODES 0xB8 to 0xBF have responses     *
              *****************************************/
-            
+
             /***************************************************************************
              * OPC_LOCO_ADR     0xBF   ; REQ loco ADR                                   *
              *                         ; Follow on message: <E7>SLOT READ               *
@@ -183,7 +183,7 @@ public class Llnmon {
             return "Request slot information for loco address "
                 +convertToMixed(adrLo, adrHi)+"\n";
         }
-            
+
             /*****************************************************************************
              * OPC_SW_ACK       0xBD   ; REQ SWITCH WITH acknowledge function (not DT200) *
              *                         ; Follow on message: LACK                          *
@@ -211,7 +211,7 @@ public class Llnmon {
                 ((sw2 & LnConstants.OPC_SW_ACK_OUTPUT)!=0 ? " (Output On)" : " (Output Off)")+
                 " with Acknowledge\n";
         }
-            
+
             /*************************************************************************
              * OPC_SW_STATE     0xBC   ; REQ state of SWITCH                          *
              *                         ; Follow on message: LACK                      *
@@ -223,7 +223,7 @@ public class Llnmon {
             return "Request state of switch "+
                 String.valueOf(SENSOR_ADR(sw1, sw2))+"\n";
         }
-            
+
             /************************************************************************************
              * OPC_RQ_SL_DATA   0xBB   ; Request SLOT DATA/status block                          *
              *                         ; Follow on message: <E7>SLOT READ                        *
@@ -233,7 +233,7 @@ public class Llnmon {
             int slot = l.getElement(1);
             return "Request data/status for slot "+slot+"\n";
         }
-            
+
             /*******************************************************************************
              * OPC_MOVE_SLOTS   0xBA   ; MOVE slot SRC to DEST                              *
              *                         ; Follow on message: <E7>SLOT READ                   *
@@ -254,7 +254,7 @@ public class Llnmon {
         case LnConstants.OPC_MOVE_SLOTS: {           /* page 8 of Loconet PE */
             int src = l.getElement(1);
             int dest = l.getElement(2);
-            
+
             /* check special cases */
             if (src == 0) {                  						/* DISPATCH GET */
                 return "Get most recently dispatched slot\n";
@@ -266,7 +266,7 @@ public class Llnmon {
                 return "Move data in slot "+src+" to slot "+dest+"\n";
             }
         }
-            
+
             /********************************************************************************
              * OPC_LINK_SLOTS   0xB9   ; LINK slot ARG1 to slot ARG2                         *
              *                         ; Follow on message: <E7>SLOT READ                    *
@@ -281,7 +281,7 @@ public class Llnmon {
             int dest = l.getElement(2);
             return "Consist loco in slot "+src+" to loco in slot "+dest+"\n";
         }
-            
+
             /*******************************************************************************************
              * OPC_UNLINK_SLOTS 0xB8   ;UNLINK slot ARG1 from slot ARG2                                 *
              *                         ; Follow on message: <E7>SLOT READ                               *
@@ -294,7 +294,7 @@ public class Llnmon {
             int dest = l.getElement(2);
             return "Remove loco in slot "+src+" from consist with loco in slot "+dest+"\n";
         }
-            
+
             /*************************************************************************************
              * OPC_CONSIST_FUNC 0xB6   ; SET FUNC bits in a CONSIST uplink element                *
              *                         ; <0xB6>,<SLOT>,<DIRF>,<CHK> UP consist FUNC bits          *
@@ -311,8 +311,8 @@ public class Llnmon {
                 +"F3="+((dirf & LnConstants.DIRF_F3)!=0  ? "On, "  : "Off,")
                 +"F4="+((dirf & LnConstants.DIRF_F4)!=0  ? "On"    : "Off")+"\n";
         }
-            
-            
+
+
             /********************************************************************
              * OPC_SLOT_STAT1   0xB5   ; WRITE slot stat1                        *
              *                         ; <0xB5>,<SLOT>,<STAT1>,<CHK> WRITE stat1 *
@@ -327,7 +327,7 @@ public class Llnmon {
                 +"\n\tand operating in "+LnConstants.DEC_MODE(stat)
                 +" speed step mode\n";
         }
-            
+
             /*******************************************************************************
              * OPC_LONG_ACK     0xB4   ; Long acknowledge                                   *
              *                         ; <0xB4>,<LOPC>,<ACK1>,<CHK> Long acknowledge        *
@@ -338,14 +338,14 @@ public class Llnmon {
         case LnConstants.OPC_LONG_ACK:              /* page 9 of Loconet PE */
             int opcode = l.getElement(1);
             int ack1 = l.getElement(2);
-            
+
             switch (opcode | 0x80) {
             case (LnConstants.OPC_LOCO_ADR):             /* response for OPC_LOCO_ADR */
                 return "LONG_ACK: No free slot\n";
-                
+
             case (LnConstants.OPC_LINK_SLOTS):           /* response for OPC_LINK_SLOTS */
                 return "LONG_ACK: Invalid consist\n";
-                
+
             case (LnConstants.OPC_SW_ACK):               /* response for OPC_SW_ACK   */
                 if (ack1 == 0) {
                     return "LONG_ACK: The DCS-100 FIFO is full, the switch command was rejected\n";
@@ -355,10 +355,10 @@ public class Llnmon {
                     forceHex = true;
                     return "LONG_ACK: Unknown response to 'Request Switch with ACK' command, 0x"+Integer.toHexString(ack1)+"\n";
                 }
-                
+
             case (LnConstants.OPC_SW_REQ):               /* response for OPC_SW_REQ */
                 return "LONG_ACK: Switch request Failed!\n";
-                
+
             case (LnConstants.OPC_WR_SL_DATA):
                 if (ack1 == 0) {
                     return "LONG_ACK: The Slot Write command was rejected\n";
@@ -372,10 +372,10 @@ public class Llnmon {
                     forceHex = true;
                     return "LONG_ACK: Unknown response to Write Slot Data message 0x"+Integer.toHexString(ack1)+"\n";
                 }
-                
+
             case (LnConstants.OPC_SW_STATE):
                 return "LONG_ACK: Response to switch state message 0x"+Integer.toHexString(ack1)+"\n";
-                
+
             case (LnConstants.OPC_MOVE_SLOTS):
                 if (ack1 == 0) {
                     return "LONG_ACK: The Move Slots command was rejected\n";
@@ -385,7 +385,7 @@ public class Llnmon {
                     forceHex = true;
                     return "LONG_ACK: unknown reponse to Move Slots message 0x"+Integer.toHexString(ack1)+"\n";
                 }
-                
+
             case LnConstants.OPC_IMM_PACKET:      /* special response to OPC_IMM_PACKET */
                 if (ack1 == 0) {
                     return "LONG_ACK: the Send IMM Packet command was rejected, the buffer is full/busy\n";
@@ -395,17 +395,17 @@ public class Llnmon {
                     forceHex = true;
                     return "Unknown reponse to Send IMM Packet message 0x"+Integer.toHexString(ack1)+"\n";
                 }
-                
+
             case LnConstants.OPC_IMM_PACKET_2:    /* special response to OPC_IMM_PACKET */
                 return "LONG_ACK: the Lim Master responded to the Send IMM Packet command with "+ack1+" (0x"+Integer.toHexString(ack1)+")\n";
-                
-                
+
+
             default:
                 // forceHex = TRUE;
                 return "LONG_ACK: Response "+ack1+" (0x"+Integer.toHexString(ack1)
                     +") to opcode 0x"+Integer.toHexString(opcode)+" not available in plain english\n";
             }
-            
+
             /********************************************************************************************
              * OPC_INPUT_REP    0xB2   ; General SENSOR Input codes                                      *
              *                         ; <0xB2>, <IN1>, <IN2>, <CHK>                                     *
@@ -428,7 +428,7 @@ public class Llnmon {
         case LnConstants.OPC_INPUT_REP:             /* page 9 of Loconet PE */
             int in1 = l.getElement(1);
             int in2 = l.getElement(2);
-            
+
             String bdl = " (BDL16 "+in1/8+" ";
             if ( ((in1/2) & 3) == 0 ) bdl = bdl+"A";
             else if ( ((in1/2) & 3) == 1 ) bdl = bdl+"B";
@@ -438,10 +438,10 @@ public class Llnmon {
             else if ( ((in1 & 1) !=0) && ((in2 & LnConstants.OPC_INPUT_REP_SW)==0) ) bdl=bdl+"3)";
             else if ( ((in1 & 1) ==0) && ((in2 & LnConstants.OPC_INPUT_REP_SW)!=0) ) bdl=bdl+"2)";
             else bdl=bdl+"1)";
-            
+
             String ds = " (DS54 "+(SENSOR_ADR(in1,in2)/4)+" ch"+((SENSOR_ADR(in1, in2)&3)+1)
                 +((in2 & LnConstants.OPC_INPUT_REP_SW)!=0 ? " Sw  input)" : " Aux input)");
-            
+
             return "General sensor input report: contact "+
                 (SENSOR_ADR(in1, in2)*2+((in2 & LnConstants.OPC_INPUT_REP_SW)!=0?1:0))
                 +ds+
@@ -450,8 +450,8 @@ public class Llnmon {
                 ((in2 & LnConstants.OPC_INPUT_REP_HI)!=0 ? "Hi" : "Lo")+" "+
                 ((in2 & LnConstants.OPC_INPUT_REP_CB)==0 ? "\n\t(Unexpected 0 value of reserved control bit)" : "")+
                 "\n";
-            
-            
+
+
             /***************************************************************************************
              * OPC_SW_REP       0xB1   ; Turnout SENSOR state REPORT                                *
              *                         ; <0xB1>,<SN1>,<SN2>,<CHK> SENSOR state REPORT               *
@@ -484,7 +484,7 @@ public class Llnmon {
         case LnConstants.OPC_SW_REP:                /* page 9 of Loconet PE */
             int sn1 = l.getElement(1);
             int sn2 = l.getElement(2);
-            
+
             if ((sn2 & LnConstants.OPC_SW_REP_INPUTS)!=0) {
                 return "Turnout sensor input state for address "+
                     SENSOR_ADR(sn1, sn2)+
@@ -500,8 +500,8 @@ public class Llnmon {
                     ", Thrown output is "+
                     ((sn2 & LnConstants.OPC_SW_REP_THROWN)!=0 ? "ON (sink)" : "OFF (open)")+"\n";
             }
-            
-            
+
+
             /*******************************************************************************************
              * OPC_SW_REQ       0xB0   ; REQ SWITCH function                                            *
              *                         ; <0xB0>,<SW1>,<SW2>,<CHK> REQ SWITCH function                   *
@@ -535,9 +535,9 @@ public class Llnmon {
         case LnConstants.OPC_SW_REQ:                /* page 9 of Loconet PE */
             int sw1 = l.getElement(1);
             int sw2 = l.getElement(2);
-            
+
             String retVal;
-            
+
             // check for special forms first
             if ( ((sw2 & 0xCF) == 0x0F)  && ((sw1 & 0xFC) == 0x78) ) { // broadcast address LPU V1.0 page 12
                 retVal = "Request Switch to broadcast address with bits "+
@@ -546,7 +546,7 @@ public class Llnmon {
                     " b="+ ((sw1 & 0x01)) +
                     "\n\tOutput "+
                     ((sw2 & LnConstants.OPC_SW_REQ_OUT)!=0 ? "On"     : "Off")+"\n";
-                
+
             } else if ( ((sw2 & 0xCF) == 0x07)  && ((sw1 & 0xFC) == 0x78) ) { // broadcast address LPU V1.0 page 13
                 retVal = "Request switch command is Interrogate LocoNet with bits "+
                     "a="+ ((sw2 & 0x20)>>5) +
@@ -555,7 +555,7 @@ public class Llnmon {
                     "\n\tOutput "+
                     ((sw2 & LnConstants.OPC_SW_REQ_OUT)!=0 ? "On"     : "Off")+"\n"+
                     ( ( (sw2&0x10) == 0 ) ? "" : "\tNote 0x10 bit in sw2 is unexpectedly 0\n");
-                
+
             } else { // normal command
                 retVal = "Requesting Switch at "+
                     SENSOR_ADR(sw1, sw2)+
@@ -564,17 +564,17 @@ public class Llnmon {
                     " (output "+
                     ((sw2 & LnConstants.OPC_SW_REQ_OUT)!=0 ? "On"     : "Off")+")\n";
             }
-            
+
             return retVal;
-            
-            
+
+
             /****************************************************
              * OPC_LOCO_SND     0xA2   ;SET SLOT sound functions *
              ****************************************************/
         case LnConstants.OPC_LOCO_SND:    {          /* page 10 of Loconet PE */
             int slot = l.getElement(1);
             int snd  = l.getElement(2);
-            
+
             return "Set loco in slot "
                 +slot
                 +" Sound1/F5="
@@ -587,7 +587,7 @@ public class Llnmon {
                 +((snd & LnConstants.SND_F8) != 0  ? "On"  : "Off")
                 +"\n";
       	}
-            
+
             /****************************************************
              * OPC_LOCO_DIRF    0xA1   ;SET SLOT dir, F0-4 state *
              ****************************************************/
@@ -595,7 +595,7 @@ public class Llnmon {
             {
                 int slot = l.getElement(1);
                 int dirf  = l.getElement(2);
-                
+
                 return "Set loco in slot "
                     +slot
                     +" direction to "
@@ -612,22 +612,22 @@ public class Llnmon {
                     +((dirf & LnConstants.DIRF_F4) != 0  ? "On"    : "Off")
                     +"\n";
             }
-            
-            
+
+
             /***********************************************************************
              * OPC_LOCO_SPD     0xA0   ;SET SLOT speed e.g. <0xA0><SLOT#><SPD><CHK> *
              ***********************************************************************/
         case LnConstants.OPC_LOCO_SPD:     {         /* page 10 of Loconet PE */
             int slot = l.getElement(1);
             int spd  = l.getElement(2);
-            
+
             if (spd == LnConstants.OPC_LOCO_SPD_ESTOP) { /* emergency stop */
                 return "Set speed of loco in slot "+slot+" to EMERGENCY STOP!\n";
             } else {
                 return "Set speed of loco in slot "+slot+" to "+spd+"\n";
             }
         }
-            
+
             /*******************************************************
              * ; 6 byte MESSAGE OPCODES                             *
              * ; FORMAT = <OPC>,<ARG1>,<ARG2>,<ARG3>,<ARG4>,<CKSUM> *
@@ -635,7 +635,7 @@ public class Llnmon {
              *  CODES 0xC8 to 0xCF have responses                   *
              *  CODES 0xD8 to 0xDF have responses                   *
              ********************************************************/
-            
+
             /************************************************************************
              * OPC_MULTI_SENSE     0xD0 messages about power management              *
              *                          and transponding                             *
@@ -646,14 +646,14 @@ public class Llnmon {
             int type = l.getElement(1)&LnConstants.OPC_MULTI_SENSE_MSG;
             forceHex = true;
             String m;
-            
+
             String zone;
             if      ((l.getElement(2)&0x0F) == 0x00) zone = "A";
             else if ((l.getElement(2)&0x0F) == 0x02) zone = "B";
             else if ((l.getElement(2)&0x0F) == 0x04) zone = "C";
             else if ((l.getElement(2)&0x0F) == 0x06) zone = "D";
             else zone="<unknown "+(l.getElement(2)&0x0F)+">";
-            
+
             switch (type) {
             case LnConstants.OPC_MULTI_SENSE_POWER:
                 return "OPC_MULTI_SENSE power message PM4 "
@@ -678,12 +678,12 @@ public class Llnmon {
                 return "OPC_MULTI_SENSE unknown format ";
             }
         }
-            
+
             /********************************************************************
              * ; VARIABLE Byte MESSAGE OPCODES                                   *
              * ; FORMAT = <OPC>,<COUNT>,<ARG2>,<ARG3>,...,<ARG(COUNT-3)>,<CKSUM> *
              ********************************************************************/
-            
+
             /**********************************************************************************************
              * OPC_WR_SL_DATA   0xEF   ; WRITE SLOT DATA, 10 bytes                                         *
              *                         ; Follow on message: LACK                                           *
@@ -837,7 +837,7 @@ public class Llnmon {
                 String locoAdrStr;
                 String mixedAdrStr;
                 String logString;
-                
+
                 // rwSlotData = (rwSlotDataMsg *) msgBuf;
                 int command =   l.getElement(0);
                 int mesg_size = l.getElement(1);     // ummmmm, size of the message in bytes?
@@ -852,10 +852,10 @@ public class Llnmon {
                 int snd = 		l.getElement(10);    // Sound 1-4 / F5-F8
                 int id1 = 		l.getElement(11);    // ls 7 bits of ID code
                 int id2 = 		l.getElement(12);    // ms 7 bits of ID code
-                
+
                 /* build loco address string */
                 mixedAdrStr = convertToMixed(adr, adr2);
-                
+
                 /* figure out the alias condition, and create the loco address string */
                 if (adr2 == 0x7f) {
                     if ((ss2 & LnConstants.STAT2_ALIAS_MASK) == LnConstants.STAT2_ID_IS_ALIAS) {
@@ -874,19 +874,19 @@ public class Llnmon {
                     /* regular 4 digit address, 128 to 9983 */
                     locoAdrStr = mixedAdrStr;
                 }
-                
+
                 /*
                  *  These share a common data format with the only
                  *  difference being whether we are reading or writing
                  *  the slot data.
                  */
-                
+
                 if (command == LnConstants.OPC_WR_SL_DATA) {
                     mode = "Write";
                 } else {
                     mode = "Read";
                 }
-                
+
                 if (slot == LnConstants.FC_SLOT) {
                     /**********************************************************************************************
                      * FAST Clock:                                                                                 *
@@ -924,7 +924,7 @@ public class Llnmon {
                      *                         <00><00> shows no set has happened                                  *
                      *     <7F><7x>        are reserved for PC access                                              *
                      **********************************************************************************************/
-                    
+
                     /* make message easier to deal with internally */
                     // fastClock = (fastClockMsg *)msgBuf;
                     int clk_rate 	= l.getElement(3);   // 0 = Freeze clock, 1 = normal, 10 = 10:1 etc. Max is 0x7f
@@ -938,19 +938,19 @@ public class Llnmon {
                     //  "  "   0; ignore this reply
                     // id1/id2 is device id of last device to set the clock
                     //  "   "  = zero shows not set has happened
-                    
+
                     /* recover hours and minutes values */
                     minutes = ((256 - mins_60) & 0x7f) % 60;
                     hours   = ((256 - hours_24)& 0x7f) % 24;
                     hours   = (24 - hours) % 24;
                     minutes = (60 - minutes) % 60;
-                    
+
                     /* check track status value and display */
                     if ((trackStatus != track_stat) || showTrackStatus) {
                         trackStatus = track_stat;
                         showStatus  = true;
                     }
-                    
+
                     if (showStatus) {
                         logString = mode
                             +" Fast Clock: (Data is "
@@ -978,10 +978,10 @@ public class Llnmon {
                             +". Last set by ID 0x"+Integer.toHexString(id2)+Integer.toHexString(id1)+"\n";
                     }
                     // end fast clock block
-                    
+
                 } else if (slot == LnConstants.PRG_SLOT) {
-                    
-                    
+
+
                     /**********************************************************************************************
                      * Programmer track:                                                                           *
                      * =================                                                                           *
@@ -1087,7 +1087,7 @@ public class Llnmon {
                     int 	cvData;
                     boolean opsMode = false;
                     int  	cvNumber;
-                    
+
                     // progTask   = (progTaskMsg *) msgBuf;
                     // slot - slot number for this request - slot 124 is programmer
                     int pcmd 	= l.getElement(3);  // programmer command
@@ -1098,14 +1098,14 @@ public class Llnmon {
                     int cvh		= l.getElement(8);  // hi 3 bits of CV# and msb of data7
                     int cvl		= l.getElement(9);  // lo 7 bits of CV#
                     int data7	= l.getElement(10); // 7 bits of data to program, msb is in cvh above
-                    
+
                     cvData     =  (((cvh & LnConstants.CVH_D7) << 6) | (data7 & 0x7f));  // was PROG_DATA
                     cvNumber   = (((((cvh & LnConstants.CVH_CV8_CV9) >> 3) | (cvh & LnConstants.CVH_CV7)) * 128)
                                   + (cvl & 0x7f))+1;   // was PROG_CV_NUM(progTask)
-                    
+
                     /* generate loco address, mixed mode or true 4 digit */
                     mixedAdrStr = convertToMixed(lopsa, hopsa);
-                    
+
                     /* determine programming mode for printing */
                     if ((pcmd & LnConstants.PCMD_MODE_MASK) == LnConstants.PAGED_ON_SRVC_TRK) {
                         progMode = "Byte in Paged Mode on Service Track";
@@ -1135,12 +1135,12 @@ public class Llnmon {
                         progMode = "Unknown mode "+pcmd+" (0x"+Integer.toHexString(pcmd)+")";
                         forceHex = true;
                     }
-                    
+
                     /* are we sending or receiving? */
                     if ((pcmd & LnConstants.PCMD_RW) != 0) {
                         /* sending a command */
                         operation = "Programming Track: Write";
-                        
+
                         /* printout based on whether we're doing Ops mode or not */
                         if (opsMode) {
                             logString = mode+" "
@@ -1160,7 +1160,7 @@ public class Llnmon {
                     } else {
                         /* receiving a reply */
                         operation = "Programming Track: Read";
-                        
+
                         /* printout based on whether we're doing Ops mode or not */
                         if (opsMode) {
                             logString = mode+" "
@@ -1177,25 +1177,25 @@ public class Llnmon {
                                 +" to "+cvData
                                 +" (0x"+Integer.toHexString(cvData)+")\n";
                         }
-                        
+
                         /* if we're reading the slot back, check the status        */
                         /* this is supposed to be the Programming task final reply */
                         /* and will have the resulting status byte                 */
-                        
+
                         if (command == LnConstants.OPC_SL_RD_DATA) {
                             if (pstat != 0) {
                                 if ((pstat & LnConstants.PSTAT_USER_ABORTED) != 0) {
                                     logString += "\tStatus = Failed, User Aborted\n";
                                 }
-                                
+
                                 if ((pstat & LnConstants.PSTAT_READ_FAIL) != 0) {
                                     logString += "\tStatus = Failed, Read Compare Acknowledge not detected\n";
                                 }
-                                
+
                                 if ((pstat & LnConstants.PSTAT_WRITE_FAIL) != 0 ) {
                                     logString += "\tStatus = Failed, No Write Acknowledge from decoder\n";
                                 }
-                                
+
                                 if ((pstat & LnConstants.PSTAT_NO_DECODER) != 0 ) {
                                     logString += "\tStatus = Failed, Service Mode programming track empty\n";
                                 }
@@ -1209,17 +1209,17 @@ public class Llnmon {
                         }
                     }
                     // end programming track block
-                    
+
                 } else {
                     /**************************************************
                      * normal slot read/write message - see info above *
                      **************************************************/
-                    
+
                     if ((trackStatus != trk) || showTrackStatus) {
                         trackStatus = trk;
                         showStatus  = true;
                     }
-                    
+
                     if (showStatus) {
                         logString = mode
                             +" slot "+slot
@@ -1266,54 +1266,86 @@ public class Llnmon {
                     }
                     // end normal slot read/write case
                 }
-                
+
                 // end of OPC_WR_SL_DATA, OPC_SL_RD_DATA case
                 return logString;
             }
-            
-            /***********************************************************************************
-             * OPC_PEER_XFER    0xE5   ; move 8 bytes PEER to PEER, SRC->DST                    *
-             *                         ; Message has response                                   *
-             *                         ; <0xE5>,<10>,<SRC>,<DSTL><DSTH>,<PXCT1>,<D1>,           *
-             *                         ;        <D2>,<D3>,<D4>,<PXCT2>,<D5>,<D6>,<D7>,          *
-             *                         ;        <D8>,<CHK>                                      *
-             *                         ;   SRC/DST are 7 bit args. DSTL/H=0 is BROADCAST msg    *
-             *                         ;   SRC=0 is MASTER                                      *
-             *                         ;   SRC=0x70-0x7E are reserved                           *
-             *                         ;   SRC=7F is THROTTLE msg xfer,                         *
-             *                         ;        <DSTL><DSTH> encode ID#,                        *
-             *                         ;        <0><0> is THROT B'CAST                          *
-             *                         ;   <PXCT1>=<0,XC2,XC1,XC0 - D4.7,D3.7,D2.7,D1.7>        *
-             *                         ;        XC0-XC2=ADR type CODE-0=7 bit Peer TO Peer adrs *
-             *                         ;           1=<D1>is SRC HI,<D2>is DST HI                *
-             *                         ;   <PXCT2>=<0,XC5,XC4,XC3 - D8.7,D7.7,D6.7,D5.7>        *
-             *                         ;        XC3-XC5=data type CODE- 0=ANSI TEXT string,     *
-             *                         ;           balance RESERVED                             *
-             ***********************************************************************************/
-        case LnConstants.OPC_PEER_XFER:             /* page 10 of Loconet PE */
-            int src 	= l.getElement(2);            	// source of transfer
-            int dst_l 	= l.getElement(3);          	// ls 7 bits of destination
-            int dst_h 	= l.getElement(4);          	// ms 7 bits of destination
-            int pxct1 	= l.getElement(5);
-            int pxct2	= l.getElement(10);
-            
-            int d[] = l.getPeerXfrData();
-            
-            return "Peer to Peer transfer: SRC=0x"+Integer.toHexString(src)
-                +", DSTL=0x"+Integer.toHexString(dst_l)
-                +", DSTH=0x"+Integer.toHexString(dst_h)
-                +", PXCT1=0x"+Integer.toHexString(pxct1)
-                +", PXCT2=0x"+Integer.toHexString(pxct2)+"\n"
-                +"\tD1=0x"+Integer.toHexString(d[0])
-                +", D2=0x"+Integer.toHexString(d[1])
-                +", D3=0x"+Integer.toHexString(d[2])
-                +", D4=0x"+Integer.toHexString(d[3])
-                +", D5=0x"+Integer.toHexString(d[4])
-                +", D6=0x"+Integer.toHexString(d[5])
-                +", D7=0x"+Integer.toHexString(d[6])
-                +", D8=0x"+Integer.toHexString(d[7])
-                +"\n";
-            
+
+        case 0xE5:
+            // there are several different formats for 0xE5 messages, with
+            // the length apparently the distinquishing item.
+            switch (l.getElement(1)) {
+            case 0x10: {
+                /***********************************************************************************
+                 * OPC_PEER_XFER    0xE5   ; move 8 bytes PEER to PEER, SRC->DST                    *
+                 *                         ; Message has response                                   *
+                 *                         ; <0xE5>,<10>,<SRC>,<DSTL><DSTH>,<PXCT1>,<D1>,           *
+                 *                         ;        <D2>,<D3>,<D4>,<PXCT2>,<D5>,<D6>,<D7>,          *
+                 *                         ;        <D8>,<CHK>                                      *
+                 *                         ;   SRC/DST are 7 bit args. DSTL/H=0 is BROADCAST msg    *
+                 *                         ;   SRC=0 is MASTER                                      *
+                 *                         ;   SRC=0x70-0x7E are reserved                           *
+                 *                         ;   SRC=7F is THROTTLE msg xfer,                         *
+                 *                         ;        <DSTL><DSTH> encode ID#,                        *
+                 *                         ;        <0><0> is THROT B'CAST                          *
+                 *                         ;   <PXCT1>=<0,XC2,XC1,XC0 - D4.7,D3.7,D2.7,D1.7>        *
+                 *                         ;        XC0-XC2=ADR type CODE-0=7 bit Peer TO Peer adrs *
+                 *                         ;           1=<D1>is SRC HI,<D2>is DST HI                *
+                 *                         ;   <PXCT2>=<0,XC5,XC4,XC3 - D8.7,D7.7,D6.7,D5.7>        *
+                 *                         ;        XC3-XC5=data type CODE- 0=ANSI TEXT string,     *
+                 *                         ;           balance RESERVED                             *
+                 ***********************************************************************************/
+
+                int src 	= l.getElement(2);            	// source of transfer
+                int dst_l 	= l.getElement(3);          	// ls 7 bits of destination
+                int dst_h 	= l.getElement(4);          	// ms 7 bits of destination
+                int pxct1 	= l.getElement(5);
+                int pxct2	= l.getElement(10);
+
+                int d[] = l.getPeerXfrData();
+
+                return "Peer to Peer transfer: SRC=0x"+Integer.toHexString(src)
+                    +", DSTL=0x"+Integer.toHexString(dst_l)
+                    +", DSTH=0x"+Integer.toHexString(dst_h)
+                    +", PXCT1=0x"+Integer.toHexString(pxct1)
+                    +", PXCT2=0x"+Integer.toHexString(pxct2)+"\n"
+                    +"\tD1=0x"+Integer.toHexString(d[0])
+                    +", D2=0x"+Integer.toHexString(d[1])
+                    +", D3=0x"+Integer.toHexString(d[2])
+                    +", D4=0x"+Integer.toHexString(d[3])
+                    +", D5=0x"+Integer.toHexString(d[4])
+                    +", D6=0x"+Integer.toHexString(d[5])
+                    +", D7=0x"+Integer.toHexString(d[6])
+                    +", D8=0x"+Integer.toHexString(d[7])
+                    +"\n";
+            }
+            case 0x0A: {
+                // throttle status
+                int tcntrl = l.getElement(2);
+                String stat;
+                if (tcntrl==0x40) stat = " (OK) ";
+                else if (tcntrl==0x7F) stat = " (no key, immed, ignored) ";
+                else if (tcntrl==0x43) stat = " (+ key during msg) ";
+                else if (tcntrl==0x42) stat = " (- key during msg) ";
+                else if (tcntrl==0x41) stat = " (R/S key during msg, aborts) ";
+                else stat=" (unknown) ";
+
+                return "Throttle status TCNTRL="+Integer.toHexString(tcntrl)
+                    +stat
+                    +" ID1,ID2="+Integer.toHexString(l.getElement(3))
+                    +Integer.toHexString(l.getElement(4))
+                    +" SLA="+Integer.toHexString(l.getElement(7))
+                    +" SLB="+Integer.toHexString(l.getElement(8))
+                    +"\n";            }
+            default: {
+                // 0xE5 message of unknown format
+                forceHex = true;
+                return "Message with opcode 0xE5 and unknown format";
+
+            }
+            } // end of 0xE5 switch statement
+
+
             /***********************************************************************************
              *                  0xE4   ;                                                        *
              *                         ;                                                        *
@@ -1324,7 +1356,7 @@ public class Llnmon {
                 forceHex = true;
                 return "Unrecognized command varient\n";
             }
-            
+
             // OK, format
             int element = l.getElement(2)*128+l.getElement(3);
             int stat = l.getElement(5);
@@ -1346,7 +1378,7 @@ public class Llnmon {
             return "SE"+element+" reports AX:"+l.getElement(6)*4
                 +" XA:"+l.getElement(7)*4
                 +status+"\n";
-            
+
             /**************************************************************************
              * OPC_IMM_PACKET   0xED   ;SEND n-byte packet immediate LACK              *
              *                         ; Follow on message: LACK                       *
@@ -1374,7 +1406,7 @@ public class Llnmon {
             int im3 	= l.getElement(8);
             int im4 	= l.getElement(9);
             int im5 	= l.getElement(10);
-            
+
             /* see if it really is a 'Send Packet' as defined in Loconet PE */
             if (val7f == 0x7f) {
                 /* it is */
@@ -1393,33 +1425,33 @@ public class Llnmon {
                 return "Weird Send Packet Immediate, 3rd byte id 0x"+Integer.toHexString(val7f)
                     +" not 0x7f\n";
             }
-            
+
         default:
             forceHex = true;
             return "Command is not defined in Loconet Personal Use Edition 1.0\n";
-            
+
         }  // end switch over opcode type - default handles unrecognized cases, so can't reach here
-        
+
     }  // end of format() member function
-    
-    
+
+
     public String crcCheck(LocoNetMessage m) {
 	// set the error correcting code byte
 	int len = m.getNumDataElements();
 	int chksum = 0xff;  /* the seed */
    	int loop;
-        
+
         for(loop = 0; loop < len; loop++) {  // calculate contents for data part
             chksum ^= m.getElement(loop);
         }
-        
+
 	// if zero, the checksum in the stored message is correct
 	if (chksum != 0)
             return "Warning - checksum invalid in message:\n";
 	else
             return "";
     }
-    
+
 }  // end of class
 
 
