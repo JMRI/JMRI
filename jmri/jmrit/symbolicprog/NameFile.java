@@ -24,7 +24,7 @@ import org.jdom.Element;
  * locate the one associated with the "xml/names.xml" file.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: NameFile.java,v 1.1 2002-02-28 20:30:16 jacobsen Exp $
+ * @version			$Id: NameFile.java,v 1.2 2002-07-13 02:56:39 jacobsen Exp $
  */
 public class NameFile extends XmlFile {
 
@@ -80,12 +80,21 @@ public class NameFile extends XmlFile {
 	void readNames(Element root) {
 
 		List l = root.getChildren("definition");
-		if (log.isDebugEnabled()) log.debug("readNames sees "+l.size()+" children");
+		if (log.isDebugEnabled()) log.debug("readNames sees "+l.size()+" direct children");
 		for (int i=0; i<l.size(); i++) {
 			// handle each entry
 			Element el = (Element)l.get(i);
 			storeDefinition(el);
 		}
+        // now recurse with "definitiongroup" children
+        l = root.getChildren("definitiongroup");
+		if (log.isDebugEnabled()) log.debug("readNames sees "+l.size()+" groups");
+		for (int i=0; i<l.size(); i++) {
+			// handle each entry
+			Element el = (Element)l.get(i);
+			readNames(el);
+		}
+
 	}
 
 	void storeDefinition(Element el) {

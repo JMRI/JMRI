@@ -1,7 +1,7 @@
 <!-- Defines XML documenting standard names and aliases -->
-<!-- $Id: names-config.dtd,v 1.5 2002-01-13 03:36:57 jacobsen Exp $ -->
+<!-- $Id: names-config.dtd,v 1.6 2002-07-13 02:55:12 jacobsen Exp $ -->
 
-<!ELEMENT names-config (version, definition*)>
+<!ELEMENT names-config (version, (definitiongroup | definition)*)>
 
 <!-- The version section identifies the file information.  Similar -->
 <!-- clauses appear in other DTD files; check consistency. -->
@@ -11,6 +11,9 @@
 <!ATTLIST version lastUpdated   CDATA #IMPLIED>
 <!ATTLIST version comment     	CDATA #IMPLIED>
 
+<!-- definitiongroup is just a way to put them together for ease of reading now -->
+<!ELEMENT definitiongroup (definition*)>
+<!ATTLIST definitiongroup name CDATA #IMPLIED>
 
 <!-- The following are very similar to the definitions in decoder-config.dtd, -->
 <!-- and should be kept consistent -->

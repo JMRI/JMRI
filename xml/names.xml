@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE names-config SYSTEM "names-config.dtd">
-<!-- $Id: names.xml,v 1.8 2002-03-12 05:36:40 jacobsen Exp $ -->
+<!-- $Id: names.xml,v 1.9 2002-07-13 02:55:12 jacobsen Exp $ -->
 <names-config>
 		<version author="jake@physics.berkeley.edu" 
 			version="7" lastUpdated="20020112"/>
@@ -29,15 +29,19 @@
 	
 	
 	<!-- Basic configuration variables -->
+	<definitiongroup name="Basic">
 		<definition item="Short Address" CV="1" />
 
 		<definition item="Long Address" CV="17" />
 						
 		<definition item="Advanced Ack" CV="29" mask="XXXXVXXXX" />
 		<definition item="Address Format" CV="29" mask="XXVXXXXX" />
+	</definitiongroup>
+
 		
 	<!-- Speed and motor-related variables -->
 	
+	<definitiongroup name="Speed And Motor">
 		<definition item="Vstart" CV="2" />
 		<definition item="Vmid" CV="6" />
 		<definition item="Vhigh" CV="5" />
@@ -58,8 +62,11 @@
 
 		<definition item="Total PWM Period" CV="9" />
 
+	</definitiongroup>
+
 	<!-- Power conversion (analog) -->
 
+	<definitiongroup name="AnalogPowerConversion">
 		<definition item="Analog (DC) Operation" CV="29" mask="XXXXXVXX" />
 
 		<definition item="Packet Time-out Value" CV="11" />
@@ -83,7 +90,11 @@
 		<definition item="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" />
 		<definition item="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" />
 		
+	</definitiongroup>
+
 	<!-- Identification -->
+
+	<definitiongroup name="Identification">
 	
 		<definition item="User Id #1" CV="105" />
 		<definition item="User Id #2" CV="106" />
@@ -91,8 +102,11 @@
 		<definition item="Decoder Version" CV="7" />
 		<definition item="Manufacturer" CV="8" />
 
+	</definitiongroup>
+
 	<!-- Consisting variables -->
 
+	<definitiongroup name="Consisting">
 		<definition item="Consist Address" CV="19" />
 		<definition item="Consist Direction"/>
 		
@@ -115,8 +129,12 @@
 		<definition item="Consist Adjustments Active"/>
 
 
+	</definitiongroup>
+
 	<!-- BEMF & motor control variables -->
 		
+	<definitiongroup name="BEMF and Motor Control">
+
 		<definition item="EMF Feedback Cutout" CV="10" /> <!-- NMRA -->
 		<definition item="EMF Static Config" />
 		<definition item="EMF Dynamic Config" />
@@ -126,8 +144,12 @@
 		<definition item="Dither frequency" />
 		<definition item="Dither option" />
 		
+	</definitiongroup>
+
 	<!-- Lighting section -->
 		
+	<definitiongroup name="Lighting">
+
 		<definition item="Directional Headlights"/>
 		
 		<!-- Four placeholders for timing and intensity options -->
@@ -221,9 +243,13 @@
 		<definition item="Output 8 options"/>
 
 
+	</definitiongroup>
+
 		<!-- Variables for mapping functions to and from outputs -->
 		<!-- These are also used in the _code_ for the fnmapping -->
 		<!-- element, so their names are somewhat fixed          -->
+	<definitiongroup name="Function mapping">
+
 		<definition item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" />
 		<definition item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" />
 		<definition item="FL(f) controls output 3" CV="33" mask="XXXXXVXX" />
@@ -434,8 +460,12 @@
 		<definition item="F12 controls output 13" CV="46" mask="XVXXXXXX" />
 		<definition item="F12 controls output 14" CV="46" mask="VXXXXXXX" />
 		
+	</definitiongroup>
+
 	<!-- Sound section -->
 	
+	<definitiongroup name="Sound">
+
 		<!-- Sound group 1, typically foreground sound configuration -->
 		<definition item="Sound Group 1 Control" />
 		<definition item="Sound Group 1 Option 1" />
@@ -477,5 +507,7 @@
 		<definition item="Sound Option 6" />
 		<definition item="Sound Option 7" />
 		<definition item="Sound Option 8" />
+
+	</definitiongroup>
 
 </names-config>
