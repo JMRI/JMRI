@@ -20,7 +20,7 @@ import jmri.jmrix.lenz.XNetConstants;
 /**
  * Frame displaying (and logging) XpressNet messages
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version         $Revision: 2.5 $
+ * @version         $Revision: 2.6 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
@@ -78,21 +78,35 @@ import jmri.jmrix.lenz.XNetConstants;
 		  default:
 			text = l.toString();
 		  }
-		} else if(l.getElement(0)==XNetConstants.LI_VERSION_REQUEST) {
-			text = l.toString();
 		} else if(l.getElement(0)==XNetConstants.LI_VERSION_RESPONSE) {
-			text = l.toString();
+			text = new String("LI10x hardware Version:  " + 
+					    (l.getElementBCD(1).floatValue())/10 + 
+					  " Software Version: " +
+					    l.getElementBCD(2));
 		} else if(l.getElement(0)==XNetConstants.LI101_REQUEST) {
+		  // The request and response for baud rate look the same, 
+		  // so we need this for both incoming and outgoing directions
 		  switch(l.getElement(1)) {
 		  case XNetConstants.LI101_REQUEST_ADDRESS:
-				text= new String("REQUEST LI101 Address " +l.getElement(2));
+				text= new String("RESPONSE LI101 Address " +l.getElement(2));
 				break;
 		  case XNetConstants.LI101_REQUEST_BAUD:
-				text= new String("REQUEST LI101 Baud Rate " +l.getElement(2));
+				text= new String("RESPONSE LI101 Baud Rate: ");
+				switch(l.getElement(2)){
+				   case 1: text += "19200bps (default)";
+					break;
+				   case 2: text += "38400bps";
+					break;
+				   case 3: text += "57600bps";
+					break;
+				   case 4: text += "115200bps";
+					break;
+				   default: text += "<undefined>";
+				}
 				break;
 		  default:
 			text = l.toString();
-		}
+		  }
 		/* Next, check the "CS Info" messages */
 		} else if(l.getElement(0)==XNetConstants.CS_INFO) {
 		  switch(l.getElement(1)) {
@@ -126,6 +140,9 @@ import jmri.jmrix.lenz.XNetConstants;
 		  default:
 			text = l.toString();
 		  }
+		} else if(l.getElement(0)==XNetConstants.BC_EMERGENCY_STOP &&
+			  l.getElement(1)==XNetConstants.BC_EVERYTHING_STOP) {
+				text= new String("Broadcast: Emergency Stop (track power on)");
                 /* Followed by Service Mode responces */
 		} else if(l.getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONSE) {
 		  switch(l.getElement(1)) {
@@ -212,8 +229,33 @@ import jmri.jmrix.lenz.XNetConstants;
 		// display the decoded data
 		String text;
                 /* Start decoding messages sent by the computer */
-		/* Start with generic requests */
-		if(l.getElement(0)==XNetConstants.CS_REQUEST) {
+		/* Start with LI101F requests */
+		if(l.getElement(0)==XNetConstants.LI_VERSION_REQUEST) {
+			text = new String("Request LI10x hardware/software version");
+		} else if(l.getElement(0)==XNetConstants.LI101_REQUEST) {
+		  switch(l.getElement(1)) {
+		  case XNetConstants.LI101_REQUEST_ADDRESS:
+				text= new String("REQUEST LI101 Address " +l.getElement(2));
+				break;
+		  case XNetConstants.LI101_REQUEST_BAUD:
+				text= new String("REQUEST LI101 Baud Rate ");
+				switch(l.getElement(2)){
+				   case 1: text += "19200bps (default)";
+					break;
+				   case 2: text += "38400bps";
+					break;
+				   case 3: text += "57600bps";
+					break;
+				   case 4: text += "115200bps";
+					break;
+				   default: text += "<undefined>";
+				}
+				break;
+		  default:
+			text = l.toString();
+		  }
+		/* Next, we have generic requests */
+		} else if(l.getElement(0)==XNetConstants.CS_REQUEST) {
 		  switch(l.getElement(1)) {
 		  case XNetConstants.EMERGENCY_OFF: 
 				text = new String("REQUEST: Emergency Off");
