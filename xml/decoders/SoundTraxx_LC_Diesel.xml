@@ -1,24 +1,23 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_LC_Diesel.xml,v 1.17 2004-03-06 18:37:00 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_LC_Diesel.xml,v 1.18 2004-03-06 18:40:28 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Michael Mosher" version="9" lastUpdated="20040205"/>
+		<version author="Michael Mosher" version="8" lastUpdated="20030706"/>
 
 		<!-- version 4: updates to minOut usage, function mapping -->
 		<!-- version 5: removed erroneous CV19 definition, corrected VersionID -->
 		<!-- version 6: rename for tree structure -->
 		<!-- version 7: add Atlas/Kato -->
 		<!-- version 8: added CV105&106 set CV9 default to 180   -->
-		<!-- version 9: update by Robin Becker -->
 
 <decoder>
 	<family name="LC Diesel decoders" mfg="Throttle-Up (SoundTraxx)">
-		<model model="100LC Diesel" numOuts="2" numFns="8">
+		<model model="100LC Diesel" numOuts="4" numFns="8">
 			<versionCV lowVersionID="34"/>
 			<output name="Horn"/> 
 			<output name="Bell"/> 
-			<!--output name="3" label="FX1/grn" /-->
-			<!--output name="4" label="FX2/brwn" /-->
+			<output name="3" label="FX1"/>
+			<output name="4" label="FX2"/>
 			<output name="DynBrake"/> 
 			<output name="RPM+"/> 
 			<output name="RPM-"/> 
