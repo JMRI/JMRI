@@ -1,13 +1,15 @@
 package jmri.jmrix;
 
 import jmri.DccThrottle;
+import java.util.*;
+import java.beans.*;
 
 /**
  * An abstract implementation of DccThrottle.
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author  Bob Jacobsen  Copyright (C) 2001
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 abstract public class AbstractThrottle implements DccThrottle {
     protected float speedSetting;
@@ -120,12 +122,45 @@ abstract public class AbstractThrottle implements DccThrottle {
 
 
     // register for notification if any of the properties change
-    public void removePropertyChangeListener(java.beans.PropertyChangeListener p) {
+    public void removePropertyChangeListener(PropertyChangeListener l) {
+        if (listeners.contains(l)) {
+            listeners.removeElement(l);
+        }
     }
 
-    public void addPropertyChangeListener(java.beans.PropertyChangeListener p) {
+    public void addPropertyChangeListener(PropertyChangeListener l) {
+        // add only if not already registered
+        if (!listeners.contains(l)) {
+            listeners.addElement(l);
+        }
     }
 
+    /**
+     * Trigger the notification of all PropertyChangeListeners
+     * @param s The changed slot to notify.
+     */
+    protected void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
+        if (oldValue.equals(newValue)) log.error("notifyPropertyChangeListener without change");
+        // make a copy of the listener vector to synchronized not needed for transmit
+        Vector v;
+        synchronized(this)
+            {
+                v = (Vector) listeners.clone();
+            }
+        if (log.isDebugEnabled()) log.debug("notify "+v.size()
+                                            +" listeners about property "
+                                            +property);
+        // forward to all listeners
+        int cnt = v.size();
+        for (int i=0; i < cnt; i++) {
+            PropertyChangeListener client = (PropertyChangeListener) v.elementAt(i);
+            client.propertyChange(new PropertyChangeEvent(this, property, oldValue, newValue));
+        }
+    }
+
+
+    // data members to hold contact with the property listeners
+    final private Vector listeners = new Vector();
 
     /**
      * Dispose when finished with this object.  After this, further usage of

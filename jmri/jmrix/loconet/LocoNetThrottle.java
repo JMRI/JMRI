@@ -3,9 +3,16 @@ package jmri.jmrix.loconet;
 import jmri.jmrix.AbstractThrottle;
 
 /**
- * An implementation of DccThrottle via AbstractThrottle with code specific to a LocoNet connection.
+ * An implementation of DccThrottle via AbstractThrottle with code specific
+ * to a LocoNet connection.
+ * <P>
+ * Speed in the Throttle interfaces and AbstractThrottle is a float, but in LocoNet is an int
+ * with values from 0 to 127.
+ * <P>
+ * @author  Glen Oberhauser, Bob Jacobsen  Copyright (C) 2003
+ * @version $Revision: 1.11 $
  */
-public class LocoNetThrottle extends AbstractThrottle {
+public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     private LocoNetSlot slot;
     private LocoNetInterface network;
 
@@ -25,7 +32,7 @@ public class LocoNetThrottle extends AbstractThrottle {
         network.sendLocoNetMessage(msg);
 
         // cache settings
-        this.speedSetting = slot.speed();
+        this.speedSetting = floatSpeed(slot.speed());
         this.f0           = slot.isF0();
         this.f1           = slot.isF1();
         this.f2           = slot.isF2();
@@ -56,12 +63,24 @@ public class LocoNetThrottle extends AbstractThrottle {
             case LnConstants.DEC_MODE_14: this.speedIncrement = 8; break;
         }
 
+        // listen for changes
+        slot.addSlotListener(this);
+
         // start a periodically sending the speed, to keep this
         // attached
         startRefresh();
 
     }
 
+
+    /**
+     * Convert a LocoNet speed integer to a float speed value
+     */
+    protected float floatSpeed(int lSpeed) {
+        if (lSpeed == 0) return 0.f;
+        else if (lSpeed == 1) return -1.f;   // estop
+        else return ( (lSpeed-1)/126.f);
+    }
 
     /**
      * Send the LocoNet message to set the state of locomotive
@@ -113,6 +132,8 @@ public class LocoNetThrottle extends AbstractThrottle {
     public void setSpeedSetting(float speed)
     {
         this.speedSetting = speed;
+        if (speed<0) this.speedSetting = -1.f;
+
         LocoNetMessage msg = new LocoNetMessage(4);
         msg.setOpCode(LnConstants.OPC_LOCO_SPD);
         msg.setElement(1, slot.getSlot());
@@ -177,6 +198,8 @@ public class LocoNetThrottle extends AbstractThrottle {
         mRefreshTimer.stop();
 
         // release connections
+        slot.removeSlotListener(this);
+
         mRefreshTimer = null;
         slot = null;
         network = null;
@@ -205,6 +228,63 @@ public class LocoNetThrottle extends AbstractThrottle {
         setSpeedSetting(speedSetting);
     }
 
+    /**
+     * Get notified when underlying slot information changes
+     */
+    public void notifyChangedSlot(LocoNetSlot pSlot) {
+        if (slot!=pSlot) log.error("notified of change in different slot");
+
+        // handle change in each state
+        if (this.speedSetting != floatSpeed(slot.speed())) {
+            notifyPropertyChangeListener("SpeedSetting",
+                    new Float(this.speedSetting), new Float(this.speedSetting = floatSpeed(slot.speed())));
+        }
+
+        if (this.isForward != slot.isForward()) {
+            notifyPropertyChangeListener("IsForward",
+                    new Boolean(this.isForward), new Boolean(this.isForward = slot.isForward()));
+        }
+
+        if (this.f0 != slot.isF0()) {
+            notifyPropertyChangeListener("F0",
+                    new Boolean(this.f0), new Boolean(this.f0 = slot.isF0()));
+        }
+        if (this.f1 != slot.isF1()) {
+            notifyPropertyChangeListener("F1",
+                    new Boolean(this.f1), new Boolean(this.f1 = slot.isF1()));
+        }
+        if (this.f2 != slot.isF2()) {
+            notifyPropertyChangeListener("F2",
+                    new Boolean(this.f2), new Boolean(this.f2 = slot.isF2()));
+        }
+        if (this.f3 != slot.isF3()) {
+            notifyPropertyChangeListener("F3",
+                    new Boolean(this.f3), new Boolean(this.f3 = slot.isF3()));
+        }
+        if (this.f4 != slot.isF4()) {
+            notifyPropertyChangeListener("F4",
+                    new Boolean(this.f4), new Boolean(this.f4 = slot.isF4()));
+        }
+        if (this.f5 != slot.isF5()) {
+            notifyPropertyChangeListener("F5",
+                    new Boolean(this.f5), new Boolean(this.f5 = slot.isF5()));
+        }
+        if (this.f6 != slot.isF6()) {
+            notifyPropertyChangeListener("F6",
+                    new Boolean(this.f6), new Boolean(this.f6 = slot.isF6()));
+        }
+        if (this.f7 != slot.isF7()) {
+            notifyPropertyChangeListener("F7",
+                    new Boolean(this.f7), new Boolean(this.f7 = slot.isF7()));
+        }
+        if (this.f8 != slot.isF8()) {
+            notifyPropertyChangeListener("F8",
+                    new Boolean(this.f8), new Boolean(this.f8 = slot.isF8()));
+        }
+
+        // f9 through f12 are not in the slot
+
+    }
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoNetThrottle.class.getName());
 
