@@ -170,8 +170,7 @@ Making a distribution (substitute the release-name for 0.N throughout):
 
 	cd
 	zip -rl snapshot-release-0-N.zip cvs
-	
-	(l option modified newlines to cr-lf)
+	mv snapshot-release-0-N.zip htdocs/Technical/snapshots/
 	
 ( ) Create JavaDoc
 	Ensure that CW JMRI debug target has JavaDoc selected as prelinker
@@ -181,6 +180,18 @@ Making a distribution (substitute the release-name for 0.N throughout):
 
 	Upload the Development Project:Docs folder to htdocs/Technical/
 
-( ) News item
+( ) Wait for the files to appear in the upload area
 
-( ) mail announcement 
+( ) News item from JMRI sourceforge page
+
+	Title is of the form "JMRI Demo 0.N is available"
+
+( ) mail announcement to jmri-announce@lists.sourceforge.net
+
+( ) Decide if worth announcing elsewhere:
+		MAC_DCC@yahoogroups.com
+		loconet_hackers@yahoogroups.com
+		digitrax@yahoogroups.com
+		
+( ) Take a break!
+

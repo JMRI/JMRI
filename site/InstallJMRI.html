@@ -20,7 +20,8 @@ join the effort.<P>
 
 This page describes the installation options for the JMRI demo application.
 
-<P><A HREF="#SimpleMac">Simple Macintosh install</A>
+<P><A HREF="#SimpleMac9">Simple Macintosh MacOS 8/9 install</A>
+<P><A HREF="#SimpleMacX">Simple Macintosh MacOS X install</A>
 <P><A HREF="#SimpleWin">Simple Windows install</A>
 <P><A HREF="#SimpleOS2">Simple OS/2 install</A>
 <P><A HREF="#SimpleLinux">Simple Linux install</A>
@@ -42,7 +43,7 @@ then the specifics for your system:
 <P><A HREF="#OS2Details">OS/2 details</A>
 <P><A HREF="#LinuxDetails">Linux details</A>
 
-<h3><A NAME="SimpleMac"></A>Simple Macintosh install</h3>
+<h3><A NAME="SimpleMac9"></A>Simple Macintosh MacOS 8/9 install</h3>
 A Macintosh self-extracting archive is available.  When you
 download and run it, it creates a folder containing the 
 double-clickable application
@@ -81,6 +82,53 @@ Its not known if a standard Macintosh RS422 serial port will work directly
 with an MS100; if you have a pre-USB Macintosh and want to use this demo, please 
 contact us for more information.
 
+<h3><A NAME="SimpleMacX"></A>Simple Macintosh MacOS X install</h3>
+A Macintosh self-extracting archive is available.  When you
+download and run it, it creates a folder containing the 
+double-clickable application
+and various support files.  
+<UL>
+<LI><A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.demo.0.8.hqx">Download the archive</A>
+<LI>Find the "JMRI.demo.0.8.sea" file and double-click it to 
+expand the folder.
+<LI>You should now have a "JMRI.demo.0.8" folder.  
+<LI>You will need drivers for the serial hardware you're using.  We test
+using a Keyspan PDA Adapter; those drivers are available at 
+<A HREF="http://www.keyspan.com/support/macosx">http://www.keyspan.com/support/macosx</A>. 
+Download the most
+recent version for your hardware and run the installer.
+<LI>You will need to install the javax.comm package to get access to the serial ports.
+An installer is available at
+<A HREF="http://prdownloads.sourceforge.net/jmri/JavaCommInstaller04.hqx">http://prdownloads.sourceforge.net/jmri/JavaCommInstaller04.hqx</A>. 
+Download and run that installer.
+</UL>
+To run the program, open the JMRI.demo.0.8 folder and double-click
+on the "JMRI MacOSX" icon.
+
+<P>
+The listings of available ports may show several different types for each port, with names 
+that start with "tty" or "cu".  In that case, select the "tty" version for best performance.
+
+<h4>Possible problems</h4>
+If after the download you're left with a "JMRI.demo.0.8.hqx"
+file, rather than a "JMRI.demo.0.8.sea" file, your browser is not 
+configured to expand files in "binhex" format.  You'll need a program 
+like StuffIt Expander, UnStuff or similar to convert this file to 
+a self-expanding archive.  Drag the JMRI.demo.0.8.hqx file to the 
+icon for one of those programs, which should convert it to 
+a JMRI.demo.0.8.sea file.
+
+<h4>Hardware requirements</h4>
+
+JMRI is primarily developed on a PowerBook 400MHz. 
+We test that it
+runs on a PowerMac 7200/90  (90MHz) with 40MB of memory. Performance on that
+machine is poor, but usable: Some windows take several seconds to open, and certain file
+operations take too long.
+
+We use a USB Macintosh connected to a Keyspan PDA Adapter to 
+provide the serial port; for information please see 
+http://jmri.sourceforge.net/DigiTrax/KeyspanAdapters/KeyspanUSB.html.  
 
 <h3><A NAME="SimpleWin"></A>Simple Windows install</h3>
 
@@ -230,6 +278,11 @@ your system, you might not need dedicated copies of these:
 			file if needed for debugging.  Most distributions don't have it.
 	</UL>
 
+<P>Note that these files are merged into the JmriWin95.jar file in
+Windows distributions, so they won't appear separately.  We do this
+because we don't have a consistent way of handling the classpath 
+across the various Windows variants.
+
 <P>The "xml" subdirectory is also updated from one JMRI release to the
 next.  To pick up the most recent decoder configurations, etc, you
 need to update this directory. Be careful to preserve any files you've
@@ -238,7 +291,7 @@ distribution).
 
 <P>To summarize, to update to a new JMRI release, you need to:
 <UL>
-<LI>Get a new jmri.jar file and drop it into the distribution directory.
+<LI>Get a new jmri.jar or JmriWin95.jar file and drop it into the distribution directory.
 This updates the program itself.
 <LI>Update the contents of the xml folder/directory.  This updates data files
 used by the program.
@@ -263,9 +316,6 @@ all applications that need it. You can then remove it from the lib
 folder of the JMRI distribution.
 
 <h4>MacOS X</h4>
-There is currently no implementation of the Java communications toolbox for
-MacOS X.  This means that the JMRI demo can run natively in MacOS X or under
-Classic, but neither can communicate with the actual layout.  
 
 <h3><A NAME="WinDetails"></A>Windows details</h3>
 

@@ -29,8 +29,8 @@ different ways.  More information on the details of the various packages is
 available at http://jmri.sourceforge.net/Technical/Packaging.html
 
 
-Macintosh instructions:
-=======================
+Macintosh MacOS 8 and 9 instructions:
+=====================================
 
 This demo should run with any recent release of the Macintosh Runtime for Java (MRJ).  
 MRJ requires Mac OS 8.1 or later.  Development is currently using MRJ 2.2.5, 
@@ -39,12 +39,24 @@ available for download from Apple at
 
 Start the demo by double-clicking on the "JMRI Demo" application icon.  
 
-Under MacOS X, the demo runs under Classic if you double-click on the 
-"JMRI demo" application icon.  If you double-click the "JMRI MacOSX"
-icon it will start natively under MacOS X, and have the nice Aqua interface.
-Unfortunately, the serial connection when running under native MacOS X is 
-not yet working.  We hope to have that available in the 0.9 JMRI release,
-due in November 2001.
+
+Macintosh MacOS X instructions:
+=====================================
+
+Under MacOS 10.1 and later, double-click the "JMRI MacOSX" icon
+to run the demo natively under MacOS X. It will have the nice Aqua interface.  
+
+You will need drivers for the serial hardware you're using.  We test
+using a Keyspan PDA Adapter; those drivers are available at 
+  http://www.keyspan.com/support/macosx
+  
+You also need the javax.comm package.  An installer can be downloaded from
+  http://prdownloads.sourceforge.net/jmri/JavaCommInstaller04.hqx
+You will need the MacOS X administrator password to run it.
+  
+Some device drivers will list each port under several names, e.g. starting
+with "tty" or "cu".  In that case, select the one that starts with "tty" 
+for best performance.
 
 
 OS/2 instructions:
@@ -144,8 +156,8 @@ an adapter cable as needed.  For more information on the MS100, please see
 For more information on the LocoBuffer, please see
   http://groups.yahoo.com/group/loconet_hackers/files/LocoBuffer/
   
-The demo program is tested on a USB Macintosh using a Keyspan PDA Adapter to 
-provide the serial port; for information please see 
+The demo program is tested on an MS100 and USB Macintosh using a Keyspan PDA 
+Adapter to provide the serial port; for information please see 
 http://jmri.sourceforge.net/DigiTrax/KeyspanAdapters/KeyspanUSB.html.  
 Its not known if a standard Macintosh RS422 serial port will work directly 
 with an MS100; if you have a pre-USB Macintosh and want to use this demo, please 
@@ -158,8 +170,8 @@ NCE System Hardware Connection:
 ===============================
 
 The demo program is tested on a USB Macintosh using a Keyspan PDA Adapter to 
-provide the serial port; for information please see 
-http://jmri.sourceforge.net/DigiTrax/KeyspanAdapters/KeyspanUSB.html.  
+provide the serial port.
+  
 Its not known if a standard Macintosh RS422 serial port will work directly 
 with an NCE system; if you have a pre-USB Macintosh and want to use this demo, please 
 contact us for more information.
@@ -280,7 +292,6 @@ web pages at http://jmri.sourceforge.net/  The source code is available vis CVS
 from that page.
 
 To comply with the Sun trademark policy, JMRI is not an acronym.
-
 
 </PRE>
 
