@@ -15,7 +15,7 @@ import jmri.Sensor;
  * see nextAiuPoll()
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialSensorManager extends jmri.AbstractSensorManager
                             implements SerialListener {
@@ -61,11 +61,14 @@ public class SerialSensorManager extends jmri.AbstractSensorManager
 
         // ensure the serial node exists
         int index = (number/128);
-        if (nodeArray[index] == null) nodeArray[index] = new SerialNode();
+        if (nodeArray[index] == null) {
+            if (log.isDebugEnabled()) log.debug("New SerialNode index:"+index+" number:"+number);
+            nodeArray[index] = new SerialNode();
+        }
         nodesPresent = true;
 
-        // register this sensor with the AIU
-        nodeArray[index].registerSensor((SerialSensor)s, number-(index-1)*16);
+        // register this sensor with the SerialNode
+        nodeArray[index].registerSensor((SerialSensor)s, number-index*128-1);
 
         return s;
     }

@@ -19,7 +19,7 @@ import jmri.jmrix.cmri.serial.*;
  * Provide access to C/MRI via a serial comm port.
  * Normally controlled by the cmri.serial.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -257,19 +257,30 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     }
 
     /**
-     * Since option 1 is not used for this, return an array with just a single string
+     * Option 1 is used to select an init string
      */
-    public String[] validOption1() { return new String[]{""}; }
+    public String[] validOption1() { return new String[]{
+            "SMINI: UA=0 I M 00",
+            "Cornwall: UA=0 I N DL=10 NS=3 CT=90,150,02"
+        }; }
 
     /**
      * Option 1 not used, so return a null string.
      */
-    public String option1Name() { return ""; }
+    public String option1Name() { return "Init command"; }
 
     /**
      * The first port option isn't used, so just ignore this call.
      */
-    public void configureOption1(String value) {}
+    public void configureOption1(String value) {
+        // check the special cases
+        if (value.startsWith("SMINI")) {
+            SerialTrafficController.setInitString("\101\111\115\000");  // octal!
+        }
+        else if (value.startsWith("Cornwall")) {
+            SerialTrafficController.setInitString("\101\111\115\000\012\003\132\226\002");
+        }
+    }
 
     protected String [] validSpeeds = new String[]{"9,600 baud","19,200 baud", "57,600 baud"};
     protected int [] validSpeedValues = new int[]{9600, 19200, 57600};

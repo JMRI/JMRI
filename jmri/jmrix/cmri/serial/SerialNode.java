@@ -19,11 +19,12 @@ import jmri.Sensor;
  * that node is polled.
  *
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialNode {
 
     final int MAXSENSORS = 128;
+    int LASTUSEDSENSOR = 1;
 
     public SerialNode() {
         for (int i = 0; i<MAXSENSORS; i++) {
@@ -41,11 +42,11 @@ public class SerialNode {
      */
     public void markChanges(SerialReply l) {
         try {
-            for (int i=0; i<MAXSENSORS; i++) {
+            for (int i=0; i<=LASTUSEDSENSOR; i++) {
                 int loc = i/8;
                 int bit = i%8;
-                int value = (l.getElement(loc+1)>>bit)&0x01;
-                if (log.isDebugEnabled()) log.debug("markChanges loc="+loc+" bit="+bit+" is "+value);
+                int value = (l.getElement(loc+2)>>bit)&0x01;  // byte 2 is first of data
+                // if (log.isDebugEnabled()) log.debug("markChanges loc="+loc+" bit="+bit+" is "+value);
                 if ( value == 1) {
                     // bit set, considered ACTIVE
                     if ( sensorArray[i]!=null &&
@@ -68,10 +69,12 @@ public class SerialNode {
     /**
      * The numbers here are 0 to 127, not 1 to 128
      * @param s
-     * @param i
+     * @param i 0 to 127 number of sensor on unit
      */
     public void registerSensor(Sensor s, int i) {
+        log.debug("registerSensor "+i);
         sensorArray[i] = s;
+        if (LASTUSEDSENSOR<i) LASTUSEDSENSOR=i;
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialNode.class.getName());

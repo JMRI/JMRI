@@ -21,13 +21,18 @@ import java.util.Vector;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
     public SerialTrafficController() {
         super();
+
+        // entirely poll driven, so reduce interval
+        mWaitBeforePoll = 20;
     }
+
+    boolean mustInit = true;
 
     // The methods to implement the SerialInterface
 
@@ -96,6 +101,13 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     SerialSensorManager mSensorManager = null;
     public void setSensorManager(SerialSensorManager m) { mSensorManager = m; }
     protected AbstractMRMessage pollMessage() {
+        if (mustInit) {
+            mustInit = false;
+            // send the initial message
+            SerialMessage m = new SerialMessage(mInitString);
+            m.setTimeout(2000);  // wait for init to finish
+            return m;
+        }
         synchronized (this) {
             // if need to send, do so
             if (mustSend) {
@@ -151,17 +163,62 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     protected AbstractMRReply newReply() { return new SerialReply(); }
 
     protected boolean endOfMessage(AbstractMRReply msg) {
-        // detect that the reply buffer ends with "COMMAND: " (note ending space)
-        int num = msg.getNumDataElements();
-        if ( num >= 9) {
-            // ptr is offset of last element in NceReply
-            int ptr = num-1;
-            if (msg.getElement(ptr-1) != ':') return false;
-            if (msg.getElement(ptr)   != ' ') return false;
-            if (msg.getElement(ptr-2) != 'D') return false;
-            return true;
+        log.error("Not using endOfMessage, should not be called");
+        return false;
+    }
+
+    protected void loadChars(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
+        int i;
+        for (i = 0; i < msg.maxSize; i++) {
+            byte char1 = istream.readByte();
+            if (char1 == 0x03) break;           // check before DLE handling
+            if (char1 == 0x10) char1 = istream.readByte();
+            msg.setElement(i, char1);
         }
-        else return false;
+    }
+
+    protected void waitForStartOfReply(DataInputStream istream) throws java.io.IOException {
+        // loop looking for the start character
+        while (istream.readByte()!=0x02) {}
+    }
+
+    /**
+     * Add header to the outgoing byte stream.
+     * @param msg  The output byte stream
+     * @returns next location in the stream to fill
+     */
+    protected int addHeaderToOutput(byte[] msg, AbstractMRMessage m) {
+        msg[0] = (byte) 0xFF;
+        msg[1] = (byte) 0xFF;
+        msg[2] = (byte) 0x02;  // STX
+        return 3;
+    }
+
+    /**
+     * Add trailer to the outgoing byte stream.
+     * @param msg  The output byte stream
+     * @param offset the first byte not yet used
+     */
+    protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {
+        msg[offset] = 0x03;  // etx
+    }
+
+    /**
+     * Determine how much many bytes the entire
+     * message will take, including space for header and trailer
+     * @param m  The message to be sent
+     * @returns Number of bytes
+     */
+    protected int lengthOfByteStream(AbstractMRMessage m) {
+        int len = m.getNumDataElements();
+        int cr = 4;
+        return len+cr;
+
+    }
+
+    static String mInitString = "";
+    static public void setInitString(String s) {
+        mInitString = s;
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTrafficController.class.getName());
