@@ -8,7 +8,7 @@ import jmri.*;
 /**
  * SensorIcon provides a small icon to display a status of a Sensor.</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -33,9 +33,13 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
      * @param pSystemName System name to lookup the sensor object
      */
     public void setSensor(String pUserName, String pSystemName) {
-        sensor = InstanceManager.sensorManagerInstance().
-            newSensor(pUserName,pSystemName);
-        sensor.addPropertyChangeListener(this);
+        if (InstanceManager.sensorManagerInstance()!=null) {
+            sensor = InstanceManager.sensorManagerInstance().
+                newSensor(pUserName,pSystemName);
+            sensor.addPropertyChangeListener(this);
+        } else {
+            log.error("No SensorManager for this protocol, sensor won't see changes");
+        }
     }
     public Sensor getSensor() {
         return sensor;
@@ -144,6 +148,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     public void mouseClicked(java.awt.event.MouseEvent e) {
         if (e.isAltDown() || e.isMetaDown()) return;
         try {
+            if (sensor==null) return;   // no sensor connected for this protocol
             if (sensor.getKnownState()==jmri.Sensor.ACTIVE)
                 sensor.setKnownState(jmri.Sensor.INACTIVE);
             else
