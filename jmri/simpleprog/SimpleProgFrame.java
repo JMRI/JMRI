@@ -69,7 +69,6 @@ public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgList
 		
 		tPane = new JPanel();
 			tPane.setLayout(new BoxLayout(tPane, BoxLayout.X_AXIS));
-			tPane.add(Box.createHorizontalGlue());
 			tPane.add(readButton);
 			tPane.add(writeButton);
 		getContentPane().add(tPane);

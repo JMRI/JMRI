@@ -19,13 +19,14 @@ import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Vector;
 import javax.swing.JTextField;
+import javax.swing.JLabel;
 
 public class LongAddrVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
 
 	public LongAddrVariableValue(String name, String comment, boolean readOnly,
 							int cvNum, String mask, int minVal, int maxVal,
-							Vector v) {
-		super(name, comment, readOnly, cvNum, mask, v);
+							Vector v, JLabel status) {
+		super(name, comment, readOnly, cvNum, mask, v, status);
 		_maxVal = maxVal;
 		_minVal = minVal;
 		_value = new JTextField();
@@ -95,7 +96,7 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 		super.setState(READ);
 		if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in read()");
 		_progState = READING_FIRST;
-		((CvValue)_cvVector.elementAt(getCvNum())).read();
+		((CvValue)_cvVector.elementAt(getCvNum())).read(_status);
 	}
 	
  	public void write() {
@@ -104,7 +105,7 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
  		super.setState(STORED);
 		if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in write()");
 		_progState = WRITING_FIRST;
- 		((CvValue)_cvVector.elementAt(getCvNum())).write();
+ 		((CvValue)_cvVector.elementAt(getCvNum())).write(_status);
  	}
 
 	// handle incoming parameter notification
@@ -123,7 +124,7 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 						setBusy(true);  // will be reset when value changes
  						super.setState(STORED);
 						_progState = WRITING_SECOND;
- 						((CvValue)_cvVector.elementAt(getCvNum()+1)).write();
+ 						((CvValue)_cvVector.elementAt(getCvNum()+1)).write(_status);
 						return;
 				case WRITING_SECOND:  // now done with complete request
 						_progState = IDLE;
@@ -156,7 +157,7 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 						setBusy(true);  // will be reset when value changes
 						super.setState(READ);
 						_progState = READING_SECOND;
-						((CvValue)_cvVector.elementAt(getCvNum()+1)).read();
+						((CvValue)_cvVector.elementAt(getCvNum()+1)).read(_status);
 						return;
 				case READING_SECOND:  // now done with complete request
 						_progState = IDLE;

@@ -39,40 +39,42 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 	JTextField locoRoadNumber 	= new JTextField();
 	JTextField locoMfg 			= new JTextField();
 	JTextField locoModel 		= new JTextField();
-		
-	JButton selectFileButton = new JButton();
-	JButton storeFileButton = new JButton();
+	
+	JLabel progStatus       	= new JLabel(" OK ");
+	
+	JButton selectFileButton 	= new JButton();
+	JButton storeFileButton 	= new JButton();
 
-	CvTableModel		cvModel	= new CvTableModel();
-	JTable					cvTable	= new JTable(cvModel);
-	JScrollPane 			cvScroll	= new JScrollPane(cvTable);
+	CvTableModel	cvModel		= new CvTableModel(progStatus);
+	JTable			cvTable		= new JTable(cvModel);
+	JScrollPane 	cvScroll	= new JScrollPane(cvTable);
 
-	VariableTableModel		variableModel	= new VariableTableModel(
+	VariableTableModel		variableModel	= new VariableTableModel(progStatus,
 					new String[]  {"Name", "Value", "Range", "State", "Read", "Write", "CV", "Mask", "Comment" },
 					cvModel);
-	JTable					variableTable	= new JTable(variableModel);
-	JScrollPane 			variableScroll	= new JScrollPane(variableTable);
+	JTable		variableTable	= new JTable(variableModel);
+	JScrollPane variableScroll	= new JScrollPane(variableTable);
 	
-	JButton  newCvButton = new JButton();
-	JLabel   newCvLabel  = new JLabel();
-	JTextField newCvNum  = new JTextField();
+	JButton  newCvButton 		= new JButton();
+	JLabel   newCvLabel  		= new JLabel();
+	JTextField newCvNum  		= new JTextField();
 
-	JButton  newVarButton = new JButton();
-	JLabel   newVarNameLabel  = new JLabel();
-	JTextField newVarName  = new JTextField();
-	JLabel   newVarCvLabel  = new JLabel();
-	JTextField newVarCv  = new JTextField();
-	JLabel   newVarMaskLabel  = new JLabel();
-	JTextField newVarMask  = new JTextField();
+	JButton  	newVarButton 	= new JButton();
+	JLabel   	newVarNameLabel = new JLabel();
+	JTextField 	newVarName  	= new JTextField();
+	JLabel   	newVarCvLabel 	= new JLabel();
+	JTextField 	newVarCv  		= new JTextField();
+	JLabel   	newVarMaskLabel = new JLabel();
+	JTextField 	newVarMask  	= new JTextField();
 
-	ProgModePane   modePane = new ProgModePane(BoxLayout.X_AXIS);
+	ProgModePane   modePane 	= new ProgModePane(BoxLayout.X_AXIS);
 			
-	JLabel decoderMfg  = new JLabel("         ");
-	JLabel decoderModel   = new JLabel("         ");
+	JLabel decoderMfg  			= new JLabel("         ");
+	JLabel decoderModel   		= new JLabel("         ");
 	
 	// member to find and remember the configuration file in and out
-	final JFileChooser fci = new JFileChooser("xml");
-	final JFileChooser fco = new JFileChooser("xml");
+	final JFileChooser fci 		= new JFileChooser("xml");
+	final JFileChooser fco 		= new JFileChooser("xml");
 
 	// ctor
 	public SymbolicProgFrame() {
@@ -173,8 +175,16 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 			tPane3.add(Box.createHorizontalGlue());
 		getContentPane().add(tPane3);
 
-		getContentPane().add(modePane);
-			
+		JPanel tPane2 = new JPanel();
+			tPane2.setLayout(new BoxLayout(tPane2, BoxLayout.X_AXIS));
+			tPane2.add(modePane);
+			tPane2.add(Box.createHorizontalGlue());
+		getContentPane().add(tPane2);
+		
+		getContentPane().add(new JSeparator());
+
+		getContentPane().add(progStatus);
+		
 		getContentPane().add(variableScroll);
 		
 		getContentPane().add(cvScroll);
@@ -212,8 +222,10 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 		if (retVal == JFileChooser.APPROVE_OPTION) {
 			File file = fci.getSelectedFile();
 			if (log.isInfoEnabled()) log.info("selectFileButtonActionPerformed: located file "+file+" for XML processing");
+			progStatus.setText("Reading file...");
 			// handle the file (later should be outside this thread?)
 			readAndParseConfigFile(file);
+			progStatus.setText("OK");
 			if (log.isInfoEnabled()) log.info("selectFileButtonActionPerformed: parsing complete");
 
 		}

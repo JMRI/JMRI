@@ -12,11 +12,15 @@ import jmri.Programmer;
 import jmri.InstanceManager;
 import jmri.ProgListener;
 
+import javax.swing.JLabel;
+
 public class CvValue implements ProgListener {
 
 	public CvValue(int num) { _num = num; }
 	public int number() { return _num; }
 	private int _num;
+	
+	private JLabel _status = null;
 	
 	public int getValue()  { return _value; }
 	public void setValue(int value) { 
@@ -53,8 +57,10 @@ public class CvValue implements ProgListener {
 
 	private boolean _reading = false;
 	
-	public void read() {
+	public void read(JLabel status) {
 		// get a programmer reference and write
+		_status = status;
+		if (status != null) status.setText("Reading...");
 		Programmer p = InstanceManager.programmerInstance();
 		if (p != null) {
 			_busy = true;
@@ -62,16 +68,20 @@ public class CvValue implements ProgListener {
 			try {
 				p.readCV(_num, this);
 			} catch (Exception e) {
+				if (status != null) status.setText("Exception during CV read: "+e);
 				log.warn("Exception during CV read: "+e);
 				setBusy(false);
 			}
 		} else {
+			if (status != null) status.setText("No programmer available!");
 			log.error("No programmer available!");
 		}
 	}
 	
-	public void write() {
+	public void write(JLabel status) {
 		// get a programmer reference and write
+		_status = status;
+		if (status != null) status.setText("Writing...");
 		Programmer p = InstanceManager.programmerInstance();
 		if (p != null) {
 			_busy = true;
@@ -79,19 +89,22 @@ public class CvValue implements ProgListener {
 			try {
 				p.writeCV(_num, _value, this);
 			} catch (Exception e) {
+				if (status != null) status.setText("Exception during CV write: "+e);
 				log.warn("Exception during CV write: "+e);
 				setBusy(false);
 			}
 			setState(UNKNOWN);
 		} else {
+			if (status != null) status.setText("No programmer available!");
 			log.error("No programmer available!");
 		}
 	}
 	
-	public void programmingOpReply(int value, int status) {
+	public void programmingOpReply(int value, int retval) {
 		if (!_busy) log.error("opReply when not busy!");
 		setBusy(false);
-		if (status == OK) {
+		if (retval == OK) {
+			if (_status != null) _status.setText("OK");
 			if (_reading) {
 				setState(READ);
 				// set & notify value directly to avoid state going to EDITTED
@@ -104,6 +117,7 @@ public class CvValue implements ProgListener {
 				setState(STORED);
 			}
 		} else {
+			if (_status != null) _status.setText("Programmer returned error status "+retval);
 			setState(UNKNOWN);
 		}
 	}

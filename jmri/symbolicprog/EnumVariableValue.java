@@ -19,13 +19,14 @@ import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Vector;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
 
 	public EnumVariableValue(String name, String comment, boolean readOnly,
 							int cvNum, String mask, int minVal, int maxVal,
-							Vector v) {
-		super(name, comment, readOnly, cvNum, mask, v);
+							Vector v, JLabel status) {
+		super(name, comment, readOnly, cvNum, mask, v, status);
 		_maxVal = maxVal;
 		_minVal = minVal;
 		_value = new JComboBox();
@@ -79,14 +80,14 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 	public void read() {
  		setBusy(true);  // will be reset when value changes
 		super.setState(READ);
-		((CvValue)_cvVector.elementAt(getCvNum())).read();
+		((CvValue)_cvVector.elementAt(getCvNum())).read(_status);
 	}
 	
  	public void write() {
  		if (getReadOnly()) log.error("unexpected write operation when readOnly is set");
  		setBusy(true);  // will be reset when value changes
  		super.setState(STORED);
- 		((CvValue)_cvVector.elementAt(getCvNum())).write();
+ 		((CvValue)_cvVector.elementAt(getCvNum())).write(_status);
  	}
 
 	// handle incoming parameter notification

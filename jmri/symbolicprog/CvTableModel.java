@@ -34,8 +34,13 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 	private static final int WRITECOLUMN = 4;
 	private static final int HIGHESTCOLUMN = WRITECOLUMN+1;
 	
-	public CvTableModel() {  
+	private JLabel _status = null;
+	
+	public CvTableModel(JLabel status) {  
 		super();
+		
+		// save a place for notification
+		_status = status;
 		// initialize the 512-length _cvAllVector;
 		for (int i=0; i<512; i++) _cvAllVector.addElement(null);
 		
@@ -130,10 +135,10 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 		if (log.isDebugEnabled()) log.debug("event on "+b+" row "+row);
 		if (b=='R') {
 			// read command
-			((CvValue)_cvDisplayVector.elementAt(row)).read();
+			((CvValue)_cvDisplayVector.elementAt(row)).read(_status);
 		} else {
 			// write command
-			((CvValue)_cvDisplayVector.elementAt(row)).write();
+			((CvValue)_cvDisplayVector.elementAt(row)).write(_status);
 		}
 	}
 	

@@ -15,6 +15,7 @@ import jmri.ProgListener;
 
 import java.util.Vector;
 import java.awt.Component;
+import javax.swing.JLabel;
 
 public abstract class VariableValue implements java.beans.PropertyChangeListener {
 
@@ -38,20 +39,22 @@ public abstract class VariableValue implements java.beans.PropertyChangeListener
 
 	// methods implemented here:
 	public VariableValue(String name, String comment, boolean readOnly,
-							int cvNum, String mask, Vector v) { 
+							int cvNum, String mask, Vector v, JLabel status) { 
 		_name = name;
 		_comment = comment;
 		_readOnly = readOnly;
 		_cvNum = cvNum;
 		_mask = mask;
 		_cvVector = v;
+		_status = status;
 	}
 
 	// common information - none of these are bound
 	public String name() { return _name; }
 	private String _name;
 	protected Vector _cvVector;   // Vector of 512 CV objects used to look up CVs
-		
+	protected JLabel _status = null;
+	
 	public String getComment() { return _comment; }
 	private String _comment;
 	
