@@ -14,7 +14,7 @@ import javax.swing.event.*;
  * Create a JPanel containing a tree of resources
  *
  * @author			Bob Jacobsen
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class CatalogPane extends JPanel {
 	public CatalogPane() {
@@ -133,6 +133,40 @@ public class CatalogPane extends JPanel {
             } else log.error("unexpected first element on getSelectedIcon: "+path.getPathComponent(1));
         }
         return null;
+    }
+
+    public String getSelectedIconName() {
+        if (!dTree.isSelectionEmpty() && dTree.getSelectionPath()!=null ) {
+            // somebody has been selected
+            log.debug("getSelectedIconName with "+dTree.getSelectionPath().toString());
+            TreePath path = dTree.getSelectionPath();
+            int level = path.getPathCount();
+            if (level < 3) return null;
+            if (((DefaultMutableTreeNode)path.getPathComponent(1)).getUserObject().equals("resources")) {
+                // process a file
+                String name = resourceRoot;
+                for (int i=2; i<level; i++) {
+                    name = name+"/"
+                            +(String)((DefaultMutableTreeNode)path.getPathComponent(i)).getUserObject();
+                }
+                log.debug("attempt to load resource from "+name);
+                return name;
+            } else if (((DefaultMutableTreeNode)path.getPathComponent(1)).getUserObject().equals("files")) {
+                // process a file
+                String name = fileRoot;
+                for (int i=2; i<level; i++) {
+                    name = name+File.separator
+                            +(String)((DefaultMutableTreeNode)path.getPathComponent(i)).getUserObject();
+                }
+                log.debug("attempt to load file from "+name);
+                return name;
+            } else log.error("unexpected first element on getSelectedIcon: "+path.getPathComponent(1));
+        }
+        return null;
+    }
+
+    public Icon getIconByName(String name) {
+        return new ImageIcon(ClassLoader.getSystemResource(name));
     }
 
     JTree dTree;
