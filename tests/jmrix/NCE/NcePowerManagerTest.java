@@ -11,65 +11,113 @@ package jmri.tests.jmrix.nce;
 import jmri.*;
 
 import java.io.*;
+import java.util.Vector;
 import java.beans.PropertyChangeListener;
+
 import junit.framework.Test;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import jmri.jmrix.nce.NcePowerManager;
+import jmri.jmrix.nce.NceTrafficController;
+import jmri.jmrix.nce.NceMessage;
 
-public class NcePowerManagerTest extends TestCase {
+import jmri.tests.jmrix.AbstractPowerManagerTest;
 
-	// setup a default LnTrafficController interface
+public class NcePowerManagerTest extends AbstractPowerManagerTest {
+
+	/**
+	* provide an implementation to detect outbound messages
+	*/
+	class NceInterfaceScaffold extends NceTrafficController {
+		public NceInterfaceScaffold() {
+		}
+
+		// override some NceInterfaceController methods for test purposes
+	
+		public boolean status() { return true; 
+		}
+
+		/**
+	 	* record messages sent, provide access for making sure they are OK
+	 	*/
+		public Vector outbound = new Vector();  // public OK here, so long as this is a test class
+		public void sendNceMessage(NceMessage m) {
+			if (log.isDebugEnabled()) log.debug("sendLocoNetMessage ["+m+"]");
+			// save a copy
+			outbound.addElement(m);
+			// forward as an echo
+			notify(m);
+		}
+
+		// test control member functions
+	
+		/** 
+		 * forward a message to the listeners, e.g. test receipt
+		 */
+		protected void sendTestMessage (NceMessage m) {
+			// forward a test message to LocoNetListeners
+			if (log.isDebugEnabled()) log.debug("sendTestMessage    ["+m+"]");
+			notify(m);
+			return;
+		}
+	
+		/*
+		* Check number of listeners, used for testing dispose()
+		*/
+		public int numListeners() {
+			return listeners.size();
+		}
+
+	}
+
+	// service routines to simulate recieving on, off from interface
+	protected void hearOn() {
+		// this does nothing, as there is no unsolicited on
+	}
+	
+	protected void hearOff() {
+		// this does nothing, as there is no unsolicited on
+	}
+	
+	protected int numListeners() {
+		return controller.numListeners();
+	}
+	
+	protected int outboundSize() {
+		return controller.outbound.size();
+	}
+	
+	protected boolean outboundOnOK(int index) {
+		return 'E' == ((NceMessage)(controller.outbound.elementAt(index))).getOpCode();
+	}
+
+	protected boolean outboundOffOK(int index) {
+		return 'K' == ((NceMessage)(controller.outbound.elementAt(index))).getOpCode();
+	}
+
+	// setup a default NceTrafficController interface
 	public void setUp() {
+		controller = new NceInterfaceScaffold();
+		p = new NcePowerManager();
 	}
 	
-	// test creation
-	public void testCreate() {
-		NcePowerManager p = new NcePowerManager();
-	}
-
-	// test power
-	public void testSetPowerOn() {
-		NcePowerManager p = new NcePowerManager();
+	NceInterfaceScaffold controller;  // holds dummy NceTrafficController for testing
+	
+	// replace some standard tests, as there's no unsolicted message from the
+	// master saying power has changed.  Instead, these test the 
+	// state readback by sending messages
+	public void testStateOn() throws JmriException {
 		p.setPower(PowerManager.ON);
-		// check one message sent, correct form
-		//Assert.assertEquals("messages sent", 1, controller.outbound.size());
-		//Assert.assertEquals("message type", LnConstants.OPC_GPON, 
-		//					((LocoNetMessage)(controller.outbound.elementAt(0))).getOpCode());
-		
-	}
-
-	public void testDispose() throws JmriException {
-		NcePowerManager p = new NcePowerManager();
-		p.setPower(PowerManager.ON); // in case registration is deferred
-		p.getPower();
-		p.dispose();
-	}
-
-	static private boolean listenerResult = false;
-	private class Listen implements PropertyChangeListener {
-		public void propertyChange(java.beans.PropertyChangeEvent e) {listenerResult = true;}
-	}
-		
-	public void testAddListener() {
-		NcePowerManager p = new NcePowerManager();
-		p.addPropertyChangeListener(new Listen());
-		// receive a message setting the state
-		listenerResult = false;
+		Assert.assertEquals("power state", PowerManager.ON, p.getPower());;
 	}
 	
-	public void testRemoveListener() {
-		NcePowerManager p = new NcePowerManager();
-		p.addPropertyChangeListener(new Listen());
-		p.removePropertyChangeListener(new Listen());
-		listenerResult = false;
-		//l = new LocoNetMessage(2);
-		//l.setOpCode(LnConstants.OPC_GPON);
-		//controller.sendTestMessage(l);
-		Assert.assertTrue("listener invoked by GPON", listenerResult);
+	public void testStateOff() throws JmriException {
+		p.setPower(PowerManager.OFF);
+		Assert.assertEquals("power state", PowerManager.OFF, p.getPower());;
 	}
+	
 
 	// from here down is testing infrastructure
 	
@@ -88,5 +136,7 @@ public class NcePowerManagerTest extends TestCase {
 		TestSuite suite = new TestSuite(NcePowerManagerTest.class);
 		return suite;
 	}
+
+	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NcePowerManagerTest.class.getName());
 	
 }

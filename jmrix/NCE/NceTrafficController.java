@@ -29,7 +29,7 @@ public class NceTrafficController implements NceInterface, Runnable {
 
 // The methods to implement the NceInterface
 
-	private Vector listeners = new Vector();
+	protected Vector listeners = new Vector();
 	
 	public boolean status() { return (ostream != null & istream != null); 
 		}
@@ -148,36 +148,14 @@ public class NceTrafficController implements NceInterface, Runnable {
 			int opCode;
 			try {
 			 while (true) {   // loop permanently, stream close will exit
-				// start by looking for command
-				while ( ((opCode = (istream.readByte()&0xFF)) & 0x80) ==0 )  {};  // skip if bit not set
+				// read first byte, assumed to start reply
+				char char1 = istream.readChar();
 				// here opCode is OK. Create output message
-				NceMessage msg = null;
-				// Capture 2nd byte, always present
-				int byte2 = istream.readByte()&0xFF;
-				// Decide length
-				switch((opCode & 0x60) >> 5)
-                    {
-                        case 0:     /* 2 byte message */
-                            msg = new NceMessage(2);
-                            break;
-
-                        case 1:     /* 4 byte message */
-                            msg = new NceMessage(4);
-                            break;
-
-                        case 2:     /* 6 byte message */
-                            msg = new NceMessage(6);
-                            break;
-
-                        case 3:     /* N byte message */
-                            msg = new NceMessage(byte2);
-                            break;
-                    }
+				NceMessage msg = new NceMessage(1);
              	// message exists, now fill it
-             	msg.setOpCode(opCode);
-             	msg.setElement(1, byte2);
-             	int len = msg.getNumDataElements();
-             	for (int i = 2; i < len; i++) msg.setElement(i, istream.readByte()&0xFF);
+             	msg.setOpCode(char1);
+               	int len = msg.getNumDataElements();
+             	for (int i = 2; i < len; i++) msg.setElement(i, istream.readChar());
              	// confirm you've got the message right...
              	
              	// message is complete, dispatch it !!

@@ -15,29 +15,29 @@ public class NceMessage {
 	public  NceMessage(int i) {
 		if (i<1)
 			log.error("invalid length in call to ctor");
-		_nDataBytes = i;
-		_dataBytes = new int[i];
+		_nDataChars = i;
+		_dataChars = new char[i];
 	}
 
-	public void setOpCode(int i) { _dataBytes[0]=i;}
-	public int getOpCode() {return _dataBytes[0];}
+	public void setOpCode(char i) { _dataChars[0]=i;}
+	public char getOpCode() {return _dataChars[0];}
 	public String getOpCodeHex() { return "0x"+Integer.toHexString(getOpCode()); }
 
 	// accessors to the bulk data
-	public int getNumDataElements() {return _nDataBytes;}
-	public int getElement(int n) {return _dataBytes[n];}
-	public void setElement(int n, int v) { _dataBytes[n] = v; }
+	public int getNumDataElements() {return _nDataChars;}
+	public int getElement(int n) {return _dataChars[n];}
+	public void setElement(int n, char v) { _dataChars[n] = v; }
 
 	// display format
 	public String toString() {
 		String s = "";
-		for (int i=0; i<_nDataBytes; i++) s+=Integer.toHexString(_dataBytes[i])+" ";
+		for (int i=0; i<_nDataChars; i++) s+=_dataChars[i];
 		return s;
 	}
 	
 	// contents (private)
-	private int _nDataBytes = 0;
-	private int _dataBytes[] = null;
+	private int _nDataChars = 0;
+	private char _dataChars[] = null;
 
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceMessage.class.getName());
 

@@ -47,12 +47,12 @@ public class LnPowerManagerTest extends AbstractPowerManagerTest {
 		return controller.outbound.size();
 	}
 	
-	protected boolean outboundOpCodeOn(int index) {
+	protected boolean outboundOnOK(int index) {
 	 return LnConstants.OPC_GPON == 
 				((LocoNetMessage)(controller.outbound.elementAt(index))).getOpCode();
 	}
 
-	protected boolean outboundOpCodeOff(int index) {
+	protected boolean outboundOffOK(int index) {
 	 return LnConstants.OPC_GPOFF == 
 				((LocoNetMessage)(controller.outbound.elementAt(index))).getOpCode();
 	}

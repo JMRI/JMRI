@@ -27,8 +27,8 @@ public abstract class AbstractPowerManagerTest extends TestCase {
 	protected abstract void hearOff();
 	protected abstract int numListeners();
 	protected abstract int outboundSize();
-	protected abstract boolean outboundOpCodeOn(int index);
-	protected abstract boolean outboundOpCodeOff(int index);
+	protected abstract boolean outboundOnOK(int index);
+	protected abstract boolean outboundOffOK(int index);
 	
 	protected PowerManager p = null;	// holds objects under test
 
@@ -49,7 +49,7 @@ public abstract class AbstractPowerManagerTest extends TestCase {
 		p.setPower(PowerManager.ON);
 		// check one message sent, correct form
 		Assert.assertEquals("messages sent", 1, outboundSize());
-		Assert.assertTrue("message type OK", outboundOpCodeOn(0));
+		Assert.assertTrue("message type OK", outboundOnOK(0));
 		
 	}
 
@@ -57,7 +57,7 @@ public abstract class AbstractPowerManagerTest extends TestCase {
 		p.setPower(PowerManager.OFF);
 		// check one message sent, correct form
 		Assert.assertEquals("messages sent", 1, outboundSize());
-		Assert.assertTrue("message type OK", outboundOpCodeOff(0));
+		Assert.assertTrue("message type OK", outboundOffOK(0));
 		
 	}
 

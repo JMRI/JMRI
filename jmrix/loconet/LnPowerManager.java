@@ -62,11 +62,11 @@ public class LnPowerManager implements PowerManager, LocoNetListener {
 	public void message(LocoNetMessage m) {
 		if (m.getOpCode() == LnConstants.OPC_GPON) {
 			power = ON;
-			firePropertyChange("PowerOn", null, null);
+			firePropertyChange("Power", null, null);
 		}
 		else if (m.getOpCode() == LnConstants.OPC_GPOFF) {
 			power = OFF;
-			firePropertyChange("PowerOn", null, null);
+			firePropertyChange("Power", null, null);
 		}
 	}
 	

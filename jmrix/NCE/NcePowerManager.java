@@ -22,19 +22,30 @@ public class NcePowerManager implements PowerManager, NceListener {
 	}
 
 	int power = UNKNOWN;
-	
+
+	boolean waiting = false;
+	int onReply = UNKNOWN;
+		
 	public void setPower(int v) {
 		power = v;
 		if (v==ON) {
-			// send GPON
-			NceMessage l = new NceMessage(2);
-			// load constants
+			// send "Enable main track"
+			NceMessage l = new NceMessage(1);
+			l.setOpCode('E');
 			tc.sendNceMessage(l);
+			// configure to wait for reply
+			waiting = true;
+			onReply = PowerManager.ON;
+			firePropertyChange("Power", null, null);
 		} else if (v==OFF) {
-			// send GPOFF
-			NceMessage l = new NceMessage(2);
-			//load contents
+			// send "Kill main track"
+			NceMessage l = new NceMessage(1);
+			l.setOpCode('K');
 			tc.sendNceMessage(l);
+			// configure to wait for reply
+			waiting = true;
+			onReply = PowerManager.ON;
+			firePropertyChange("Power", null, null);
 		}
 	}
 	
@@ -60,14 +71,11 @@ public class NcePowerManager implements PowerManager, NceListener {
 
 	// to listen for status changes from NCE system
 	public void message(NceMessage m) {
-		if (m.getOpCode() == 000) {  
-			power = ON;
-			firePropertyChange("PowerOn", null, null);
+		if (waiting) {  
+			power = onReply;
+			firePropertyChange("Power", null, null);
 		}
-		else if (m.getOpCode() == 000) {
-			power = OFF;
-			firePropertyChange("PowerOn", null, null);
-		}
+		waiting = false;
 	}
 	
 }
