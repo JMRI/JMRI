@@ -6,7 +6,7 @@
  * Description:		Abstract base action to create a ConfigFrame
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 
 package apps;
@@ -62,30 +62,30 @@ abstract public class AbstractConfigAction 			extends AbstractAction {
 
     public boolean configOK;
 
-	/**
-	 * What action should be taken if there's
-	 * a failure while doing the configure?
-	 * Default is to show the frame.
-	 */
-	protected void configFailed() {
+    /**
+     * What action should be taken if there's
+     * a failure while doing the configure?
+     * Default is to show the frame.
+     */
+    protected void configFailed() {
         configOK = false;
-		frame.show();
-	}
+        frame.show();
+    }
 
-	/**
-	 * What action should be taken if there's
-	 * a failure while doing the file read?
-	 * Default is to show the frame.
-	 */
-	protected void readFailed(Exception e) {
-		// did not succeed, have to pop now
+    /**
+     * What action should be taken if there's
+     * a failure while doing the file read?
+     * Default is to show the frame.
+     */
+    protected void readFailed(Exception e) {
+        // did not succeed, have to pop now
         configOK = false;
-		log.info("configuration file could not be located and read");
-		log.debug("error was "+e);
-		// create an unconfigured Frame
-		frame = newFrame("Preferences");
-		frame.show();
-	}
+        log.info("configuration file could not be located and read");
+        log.debug("error was "+e);
+        // create an unconfigured Frame
+        frame = newFrame("Preferences");
+        frame.show();
+    }
 
 	public String getCurrentProtocolName() { return (frame != null ? frame.getCurrentProtocolName():null); }
 	public String getCurrentPortName() { return (frame != null ? frame.getCurrentPortName():null); }
