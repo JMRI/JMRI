@@ -43,11 +43,11 @@ import com.sun.java.util.collections.ArrayList;
  * consistent via the {#setTitle} method.
  *
  * @author Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
- * @version $Revision: 1.36 $
+ * @version $Revision: 1.37 $
  */
 
 public class PanelEditor extends JFrame {
-
+    
     final public static Integer BKG       = new Integer(1);
     final public static Integer ICONS     = new Integer(3);
     final public static Integer LABELS    = new Integer(5);
@@ -55,31 +55,31 @@ public class PanelEditor extends JFrame {
     final public static Integer TURNOUTS  = new Integer(7);
     final public static Integer SIGNALS   = new Integer(9);
     final public static Integer SENSORS   = new Integer(10);
-
+    
     JTextField nextX = new JTextField("20",4);
     JTextField nextY = new JTextField("30",4);
-
+    
     JCheckBox editableBox = new JCheckBox("Panel items popup menus active");
     JCheckBox positionableBox = new JCheckBox("Panel items can be repositioned");
     JCheckBox controllingBox = new JCheckBox("Panel items control layout");
-
+    
     JButton labelAdd = new JButton("Add text:");
     JTextField nextLabel = new JTextField(10);
-
+    
     JButton iconAdd = new JButton("Add icon:");
     MultiIconEditor iconEditor;
     JFrame iconFrame;
-
+    
     JButton turnoutAddR = new JButton("Add right-hand turnout:");
     JTextField nextTurnoutR = new JTextField(5);
     MultiIconEditor turnoutRIconEditor;
     JFrame turnoutRFrame;
-
+    
     JButton turnoutAddL = new JButton("Add left-hand turnout:");
     JTextField nextTurnoutL = new JTextField(5);
     MultiIconEditor turnoutLIconEditor;
     JFrame turnoutLFrame;
-
+    
     JButton sensorAdd = new JButton("Add sensor:");
     JTextField nextSensor = new JTextField(5);
     MultiIconEditor sensorIconEditor;
@@ -113,15 +113,15 @@ public class PanelEditor extends JFrame {
             namep.setLayout(new FlowLayout());
             JButton b = new JButton("Set panel name");
             b.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    // prompt for name
-                    String newName = JOptionPane.showInputDialog(target, "Enter new name:");
-                    if (newName==null) return;  // cancelled
-
-                    if (getTarget().getTopLevelAncestor()!=null) ((JFrame)getTarget().getTopLevelAncestor()).setTitle(newName);
-                    setTitle();
-                }
-            });
+                    public void actionPerformed(ActionEvent e) {
+                        // prompt for name
+                        String newName = JOptionPane.showInputDialog(target, "Enter new name:");
+                        if (newName==null) return;  // cancelled
+                        
+                        if (getTarget().getTopLevelAncestor()!=null) ((JFrame)getTarget().getTopLevelAncestor()).setTitle(newName);
+                        setTitle();
+                    }
+                });
             namep.add(b);
             this.getContentPane().add(namep);
         }
@@ -139,7 +139,7 @@ public class PanelEditor extends JFrame {
                                                    );
             this.getContentPane().add(panel);
         }
-
+        
         // add a text label
         {
             JPanel panel = new JPanel();
@@ -154,7 +154,7 @@ public class PanelEditor extends JFrame {
                                         );
             this.getContentPane().add(panel);
         }
-
+        
         // Add icon label
         {
             JPanel panel = new JPanel();
@@ -165,27 +165,27 @@ public class PanelEditor extends JFrame {
                         addIcon();
                     }
                 }
-                                           );
-
+                                       );
+            
             iconEditor = new MultiIconEditor(1);
             iconEditor.setIcon(0, "","resources/icons/smallschematics/tracksegments/block.gif");
             iconEditor.complete();
             iconFrame = new JFrame("Edit icon");
             iconFrame.getContentPane().add(iconEditor);
             iconFrame.pack();
-
+            
             JButton j = new JButton("Edit icon...");
             j.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         iconFrame.show();
                     }
                 }
-                                           );
+                                 );
             panel.add(j);
-
+            
             this.getContentPane().add(panel);
         }
-
+        
         // Add a turnout indicator for right-hand
         {
             JPanel panel = new JPanel();
@@ -198,7 +198,7 @@ public class PanelEditor extends JFrame {
                     }
                 }
                                            );
-
+            
             turnoutRIconEditor = new MultiIconEditor(4);
             turnoutRIconEditor.setIcon(0, "Closed:","resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif");
             turnoutRIconEditor.setIcon(1, "Thrown", "resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif");
@@ -208,19 +208,19 @@ public class PanelEditor extends JFrame {
             turnoutRFrame = new JFrame("Edit RH turnout icons");
             turnoutRFrame.getContentPane().add(turnoutRIconEditor);
             turnoutRFrame.pack();
-
+            
             JButton j = new JButton("Edit icons...");
             j.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         turnoutRFrame.show();
                     }
                 }
-                                           );
+                                 );
             panel.add(j);
-
+            
             this.getContentPane().add(panel);
         }
-
+        
         // Add a turnout indicator for left-hand
         {
             JPanel panel = new JPanel();
@@ -233,7 +233,7 @@ public class PanelEditor extends JFrame {
                     }
                 }
                                            );
-
+            
             turnoutLIconEditor = new MultiIconEditor(4);
             turnoutLIconEditor.setIcon(0, "Closed:","resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif");
             turnoutLIconEditor.setIcon(1, "Thrown", "resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif");
@@ -243,19 +243,19 @@ public class PanelEditor extends JFrame {
             turnoutLFrame = new JFrame("Edit LH turnout icons");
             turnoutLFrame.getContentPane().add(turnoutLIconEditor);
             turnoutLFrame.pack();
-
+            
             JButton j = new JButton("Edit icons...");
             j.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         turnoutLFrame.show();
                     }
                 }
-                                           );
+                                 );
             panel.add(j);
-
+            
             this.getContentPane().add(panel);
         }
-
+        
         // Add a sensor indicator
         {
             JPanel panel = new JPanel();
@@ -267,8 +267,8 @@ public class PanelEditor extends JFrame {
                         addSensor();
                     }
                 }
-                                           );
-
+                                         );
+            
             sensorIconEditor = new MultiIconEditor(4);
             sensorIconEditor.setIcon(0, "Active:","resources/icons/smallschematics/tracksegments/circuit-occupied.gif");
             sensorIconEditor.setIcon(1, "Inactive", "resources/icons/smallschematics/tracksegments/circuit-empty.gif");
@@ -278,19 +278,19 @@ public class PanelEditor extends JFrame {
             sensorFrame = new JFrame("Edit sensor icons");
             sensorFrame.getContentPane().add(sensorIconEditor);
             sensorFrame.pack();
-
+            
             JButton j = new JButton("Edit icons...");
             j.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         sensorFrame.show();
                     }
                 }
-                                           );
+                                 );
             panel.add(j);
-
+            
             this.getContentPane().add(panel);
         }
-
+        
         // Add a signal indicator
         {
             JPanel panel = new JPanel();
@@ -302,8 +302,8 @@ public class PanelEditor extends JFrame {
                         addSignalHead();
                     }
                 }
-                                           );
-
+                                         );
+            
             signalIconEditor = new MultiIconEditor(4);
             signalIconEditor.setIcon(0, "Red:","resources/icons/smallschematics/searchlights/left-red-marker.gif");
             signalIconEditor.setIcon(1, "Yellow", "resources/icons/smallschematics/searchlights/left-yellow-marker.gif");
@@ -313,16 +313,16 @@ public class PanelEditor extends JFrame {
             signalFrame = new JFrame("Edit signal icons");
             signalFrame.getContentPane().add(signalIconEditor);
             signalFrame.pack();
-
+            
             JButton j = new JButton("Edit icons...");
             j.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         signalFrame.show();
                     }
                 }
-                                           );
+                                 );
             panel.add(j);
-
+            
             this.getContentPane().add(panel);
         }
         // edit, position, control controls
@@ -336,35 +336,35 @@ public class PanelEditor extends JFrame {
                 public void actionPerformed(ActionEvent e) {
                     setAllEditable(editableBox.isSelected());
                 }
-            });
-
+                });
+            
             this.getContentPane().add(p = new JPanel());
             p.setLayout(new FlowLayout());
             p.add(positionableBox);
             positionableBox.setSelected(true);
             positionableBox.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    setAllPositionable(positionableBox.isSelected());
-                }
-            });
-
+                    public void actionPerformed(ActionEvent e) {
+                        setAllPositionable(positionableBox.isSelected());
+                    }
+                });
+            
             this.getContentPane().add(p = new JPanel());
             p.setLayout(new FlowLayout());
             p.add(controllingBox);
             controllingBox.setSelected(true);
             controllingBox.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    setAllControlling(controllingBox.isSelected());
-                }
-            });
-       }
-
+                    public void actionPerformed(ActionEvent e) {
+                        setAllControlling(controllingBox.isSelected());
+                    }
+                });
+        }
+        
         // register the resulting panel for later configuration
         InstanceManager.configureManagerInstance().registerUser(this);
-
+        
         // move this editor panel off the panel's position
         setLocation(250,0);
-
+        
         // when this window closes, set contents of target uneditable
         addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent e) {
@@ -372,7 +372,7 @@ public class PanelEditor extends JFrame {
                 }
             });
     }  // end ctor
-
+    
     /**
      * Button pushed, add a background image. Note that a background image
      * differs from a regular icon only in the level at which it's presented.
@@ -562,7 +562,7 @@ public class PanelEditor extends JFrame {
     void targetWindowClosing(java.awt.event.WindowEvent e) {
         frame.setVisible(false);  // removes the target window
         this.setVisible(false);        // doesn't remove the editor!
-
+        
         dispose();
     }
     public void setTitle() {
@@ -571,7 +571,7 @@ public class PanelEditor extends JFrame {
         if (name==null || name.equals("")) super.setTitle("Editor");
         super.setTitle(name+" Editor");
     }
-
+    
     /**
      *  Control whether target panel items are positionable.
      *  Does this by invoke the {@link Positionable#setPositionable} function of
