@@ -4,11 +4,16 @@ package jmri.jmrix.lenz.li100;
 
 
 /**
- * Definition of objects to handle configuring an LocoBuffer layout connection
- * via an lenz LI100 SerialDriverAdapter object.
+ * Handle configuring an XPressNet layout connection
+ * via a Lenz LI100 or LI101 adapter.
+ * <P>
+ * This uses the {@link LI100Adapter} class to do the actual
+ * connection.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
+ *
+ * @see LI100Adapter
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
@@ -26,7 +31,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
         super();
     }
 
-    public String name() { return "Lenz LI100"; }
+    public String name() { return "Lenz LI100/LI101"; }
 
     protected void setInstance() { adapter = LI100Adapter.instance(); }
 }
