@@ -70,7 +70,7 @@ at the top (the examples are from the <A HREF="../xml/Digitrax_1x2.xml">Digitrax
 <PRE>
     &lt;?xml version="1.0"?&gt;
     &lt;!DOCTYPE decoder-config SYSTEM "decoder-config.dtd"&gt;
-    &lt;!-- $Id: ConfigFile.html,v 1.13 2002-07-15 14:51:34 jacobsen Exp $ --&gt;
+    &lt;!-- $Id: ConfigFile.html,v 1.14 2003-01-04 05:04:21 jacobsen Exp $ --&gt;
     &lt;decoder-config&gt;
 </PRE>
 Don't mess with these lines; they describe the format of the file.
@@ -257,6 +257,12 @@ example.  For a 4 bit choice, like the FX codes in a Digitrax decoder, you
 can use up to 16 choices.  They are displayed in the order they are entered
 in the file, and are also numbered in that order.  If the first is chosen,
 a 0 is entered in the CV bits; choosing the second stores 1; etc.
+If you need to specific a specific number for an enum option, add
+a "value" attribute:
+<PRE>
+            &lt;enumChoice choice=&quot;Blue&quot; value=&quot;32&quot;/&gt;
+</PRE>
+
 </UL>
 At this point, you've created a new configuration file.
 You can check it for syntax by selecting the "Check XML file"
