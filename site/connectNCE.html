@@ -50,6 +50,11 @@ of these command stations, <I>a normal 9-pin serial cable will not work!</I>
 You'll need to make a custom cable that just connects the "send data", "receive data"
 and "ground" pins.  See your NCE manual for details.
 
+<P>
+NCE AIU units can be used as occupancy sensors by JMRI.  The sensors are numbered
+from 0 to 13 on each AIU. The AIU cab address is multipled by 16
+to find the number of the first sensor.
+For example, AIU 50 carries sensors 16*(50-1) = 784 through 16*(50-1)+13 = 797.
 <HR>
 <BR>Site hosted by: <BR>
 <A href="http://sourceforge.net"> 
