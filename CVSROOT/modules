@@ -24,7 +24,7 @@ antfiles  -a ant0
 ant0 -d java scripts build.xml
 
 # build the java/ directory for both ant and jbuilder
-all -a runtime java jbuilderfiles antfiles 
+all -a runtime jbuilderfiles antfiles java
 
 
 # properties target; all the properties files
