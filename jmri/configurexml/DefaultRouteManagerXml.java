@@ -15,7 +15,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class DefaultRouteManagerXml implements XmlAdapter {
 
@@ -126,7 +126,7 @@ public class DefaultRouteManagerXml implements XmlAdapter {
      */
     public void load(Element routes) {
         // create the master object
-        DefaultRouteManager mgr = DefaultRouteManager.instance();
+        replaceRouteManager();
         // load individual routes
         loadRoutes(routes);
     }
@@ -233,6 +233,27 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                 log.error ("failed to create Route: "+sysName);
             }
         }
+    }
+
+    /**
+     * Replace the current RouteManager, if there is one, with
+     * one newly created during a load operation. This is skipped
+     * if they are of the same absolute type.
+     */
+    protected void replaceRouteManager() {
+        if (InstanceManager.routeManagerInstance().getClass().getName()
+                .equals(DefaultRouteManager.class.getName()))
+            return;
+        // if old manager exists, remove it from configuration process
+        if (InstanceManager.routeManagerInstance() != null)
+            InstanceManager.configureManagerInstance().deregister(
+                InstanceManager.routeManagerInstance() );
+
+        // register new one with InstanceManager
+        DefaultRouteManager pManager = DefaultRouteManager.instance();
+        InstanceManager.setRouteManager(pManager);
+        // register new one for configuration
+        InstanceManager.configureManagerInstance().registerConfig(pManager);
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DefaultRouteManagerXml.class.getName());
