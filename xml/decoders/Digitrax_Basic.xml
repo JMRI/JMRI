@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_Basic.xml,v 1.5 2003-06-05 17:45:34 jacobsen Exp $ -->
+<!-- $Id: Digitrax_Basic.xml,v 1.6 2003-06-05 18:03:54 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
 					version="6" lastUpdated="20030606"/>
@@ -13,12 +13,14 @@
 <decoder>
 	<family name="Basic FX" mfg="Digitrax" lowVersionID="91" highVersionID="111">
 		<model model="DH083" numOuts="5" numFns="3"/>
+		<model model="DH84FX" numOuts="5" numFns="6"/>
 		<model model="DH140" numOuts="4" numFns="2"/>
 		<model model="DH150" numOuts="5" numFns="3"/>
 		<model model="DH380" numOuts="8" numFns="12"/>
 		<model model="DH580" numOuts="8" numFns="12"/>
 		<model model="DG380" numOuts="8" numFns="12" lowVersionID="63" highVersionID="63"/>
 		<model model="DG580" numOuts="8" numFns="12"/>
+		<model model="DN93FX" numOuts="4" numFns="6"/>
 		<model model="DN140" numOuts="4" numFns="2"/>
 		<model model="DN144" numOuts="4" numFns="3"/>
 		<model model="DN145" numOuts="4" numFns="3"/>
