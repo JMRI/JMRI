@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_01x3.xml,v 1.21 2004-04-03 03:56:26 jacobsen Exp $ -->
+<!-- $Id: Digitrax_01x3.xml,v 1.22 2004-08-24 04:58:13 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Michael Mosher mjmx@comcast.net" 
 					version="12" lastUpdated="20040227"/>
@@ -161,7 +161,7 @@
 			<output name="6" label="Pad" connection="solder" />
 			<size length="2.158" width="0.58" height="0.135" units="inches" />
 			</model>
-		<model model="DZ123" numOuts="2" numFns="8" lowVersionID="64" highVersionID="36"
+		<model model="DZ123" numOuts="2" numFns="8" lowVersionID="36" highVersionID="64"
 	    		maxMotorCurrent="1A (peak=2A)" formFactor="Z" >
 			<size length="0.57" width="0.38" height="0.13" units="inches" />
 			</model>
