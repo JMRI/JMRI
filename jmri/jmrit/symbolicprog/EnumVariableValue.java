@@ -21,7 +21,7 @@ import com.sun.java.util.collections.ArrayList;
  * Extends VariableValue to represent a enumerated variable.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: EnumVariableValue.java,v 1.3 2002-08-28 16:16:16 jacobsen Exp $
+ * @version			$Id: EnumVariableValue.java,v 1.4 2002-10-16 16:01:37 jacobsen Exp $
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
@@ -95,7 +95,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         try { newVal = _value.getSelectedIndex(); }
         catch (java.lang.NumberFormatException ex) { newVal = 0; }
         int newCv = newValue(oldCv, newVal, getMask());
-        if (newCv != oldCv) cv.setValue(newCv);  // to prevent CV going EDITTED during loading of decoder file
+        if (newCv != oldCv) cv.setValue(newCv);  // to prevent CV going EDITED during loading of decoder file
     }
 
     // to complete this class, fill in the routines to handle "Value" parameter
@@ -203,7 +203,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * model between this object and the real JComboBox value.
      *
      * @author			Bob Jacobsen   Copyright (C) 2001
-     * @version         $Revision: 1.3 $
+     * @version         $Revision: 1.4 $
      */
     public class VarComboBox extends JComboBox {
 

@@ -22,7 +22,7 @@ import javax.swing.JTextField;
  * operation, Value changes before State, so you can assume that Value is stable
  * if notified of a State change.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class CvValue extends AbstractValue implements ProgListener {
 
@@ -49,10 +49,10 @@ public class CvValue extends AbstractValue implements ProgListener {
     }
     /**
      * Edit a new value into the CV. Only use this for external edits, e.g. set form a GUI,
-     * not for internal uses, as it sets the state to EDITTED
+     * not for internal uses, as it sets the state to EDITED
      */
     public void setValue(int value) {
-        setState(EDITTED);
+        setState(EDITED);
         if (_value != value) {
             int old = _value;
             _value = value;
@@ -72,7 +72,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         _state = state;
         switch (state) {
         case UNKNOWN : setColor(COLOR_UNKNOWN ); break;
-        case EDITTED : setColor(COLOR_EDITTED ); break;
+        case EDITED : setColor(COLOR_EDITED ); break;
         case READ    : setColor(COLOR_READ    ); break;
         case STORED  : setColor(COLOR_STORED  ); break;
         case FROMFILE: setColor(COLOR_FROMFILE); break;
@@ -203,7 +203,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         if (retval == OK) {
             if (_status != null) _status.setText("OK");
             if (_reading) {
-				// set & notify value directly to avoid state going to EDITTED
+				// set & notify value directly to avoid state going to EDITED
                 int old = _value;
                 _value = value;
                 _tableEntry.setText(Integer.toString(value));

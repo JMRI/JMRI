@@ -21,7 +21,7 @@ import org.jdom.output.*;
  * directly. That's why it's not a public class.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version		 	$Revision: 1.6 $
+ * @version		 	$Revision: 1.7 $
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
@@ -33,7 +33,7 @@ class LocoFile extends XmlFile {
     public String titleString() {
         return "no title form yet";
     }
-    
+
     /**
      * Load a CvTableModel from the locomotive element in the File
      * @param loco A JDOM Element containing the locomotive definition
@@ -49,7 +49,7 @@ class LocoFile extends XmlFile {
             // get the CV values and load
             List elementList = values.getChildren("CVvalue");
             if (log.isDebugEnabled()) log.debug("Found "+elementList.size()+" CVvalues");
-            
+
             for (int i=0; i<elementList.size(); i++) {
                 // locate the row
                 if ( ((Element)(elementList.get(i))).getAttribute("name") == null) {
@@ -60,11 +60,11 @@ class LocoFile extends XmlFile {
                     if (log.isDebugEnabled()) log.debug("unexpected null in value "+((Element)(elementList.get(i)))+" "+((Element)(elementList.get(i))).getAttributes());
                     break;
                 }
-                
+
                 String name = ((Element)(elementList.get(i))).getAttribute("name").getValue();
                 String value = ((Element)(elementList.get(i))).getAttribute("value").getValue();
                 if (log.isDebugEnabled()) log.debug("CV: "+i+"th entry, CV number "+name+" has value: "+value);
-                
+
                 int cv = Integer.valueOf(name).intValue();
                 cvObject = (CvValue)(cvModel.allCvVector().elementAt(cv));
                 if (cvObject == null) {
@@ -76,14 +76,14 @@ class LocoFile extends XmlFile {
                 cvObject.setState(CvValue.FROMFILE);
             }
         } else log.error("no values element found in config file; CVs not configured");
-        
+
         // ugly hack - set CV17 back to fromFile if present
         // this is here because setting CV17, then CV18 seems to set
-        // CV17 to Editted.  This needs to be understood & fixed.
+        // CV17 to Edited.  This needs to be understood & fixed.
         cvObject = (CvValue)(cvModel.allCvVector().elementAt(17));
         if (cvObject!=null) cvObject.setState(CvValue.FROMFILE);
     }
-    
+
     /**
      * Write an XML version of this object, including also the RosterEntry
      * information.  Does not do an automatic backup of the file, so that
@@ -97,12 +97,12 @@ class LocoFile extends XmlFile {
     public void writeFile(File file, CvTableModel cvModel, VariableTableModel variableModel, RosterEntry r) {
         try {
             // This is taken in large part from "Java and XML" page 368
-            
+
             // create root element
             Element root = new Element("locomotive-config");
             Document doc = new Document(root);
             doc.setDocType(new DocType("locomotive-config","locomotive-config.dtd"));
-            
+
             // add top-level elements
             Element values;
             root.addContent(new Element("locomotive")		// locomotive values are first item
@@ -121,7 +121,7 @@ class LocoFile extends XmlFile {
                             .addContent(values = new Element("values"))
                             )
                 ;
-            
+
             // Append a decoderDef element to values
             Element decoderDef;
             values.addContent(decoderDef = new Element("decoderDef"));
@@ -139,14 +139,14 @@ class LocoFile extends XmlFile {
                                   .addAttribute("value", cvModel.getValString(i))
                                   );
             }
-            
+
             // write the result to selected file
             java.io.FileOutputStream o = new java.io.FileOutputStream(file);
             XMLOutputter fmt = new XMLOutputter();
             fmt.setNewlines(true);   // pretty printing
             fmt.setIndent(true);
             fmt.output(doc, o);
-            
+
             // mark file as OK
             variableModel.setFileDirty(false);
         }
@@ -154,7 +154,7 @@ class LocoFile extends XmlFile {
             log.error(e);
         }
     }
-    
+
     /**
      * Write an XML version of this object, including also the RosterEntry
      * information.  Does not do an automatic backup of the file, so that
@@ -171,34 +171,34 @@ class LocoFile extends XmlFile {
     public void writeFile(File pFile, Element pRootElement, RosterEntry pEntry) {
         try {
             // This is taken in large part from "Java and XML" page 368
-            
+
             // create root element
             Document doc = new Document(pRootElement);
             doc.setDocType(new DocType("locomotive-config","locomotive-config.dtd"));
-            
+
             // Update the locomotive.id element
             pRootElement.getChild("locomotive").getAttribute("id").setValue(pEntry.getId());
-            
+
             // write the result to selected file
             java.io.FileOutputStream o = new java.io.FileOutputStream(pFile);
             XMLOutputter fmt = new XMLOutputter();
             fmt.setNewlines(true);   // pretty printing
             fmt.setIndent(true);
             fmt.output(doc, o);
-            
+
         }
         catch (Exception ex) {
             log.error(ex);
         }
     }
-    
+
     /**
      * Defines the preferences subdirectory in which LocoFiles are kept
      * by default.
      */
     static public String fileLocation = "roster"+File.separator;
-    
+
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoFile.class.getName());
-    
+
 }

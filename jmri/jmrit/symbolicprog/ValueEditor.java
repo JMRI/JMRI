@@ -14,7 +14,7 @@ import javax.swing.table.*;
  * JTable editor for cells representing CV values.  This is a somewhat unconventional
  * thing in several ways:
  * <UL>
- * <LI>The returned value is not the String editted into the cell, but an
+ * <LI>The returned value is not the String edited into the cell, but an
  * Integer value.  It's not clear how that arose, and it should probably be
  * changed at some point.
  * <LI>This is also a focus listener.  People are not used to having to
@@ -24,7 +24,7 @@ import javax.swing.table.*;
  * </UL>
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class ValueEditor extends JComboBox implements TableCellEditor, FocusListener {
 

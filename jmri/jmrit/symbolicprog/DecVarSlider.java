@@ -11,11 +11,11 @@ import java.beans.PropertyChangeEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 
-/* Extends a JSlider so that its color & value are consistent with 
+/* Extends a JSlider so that its color & value are consistent with
  * an underlying variable; we return one of these in DecValVariable.getRep.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecVarSlider.java,v 1.1 2002-02-28 20:30:16 jacobsen Exp $
+ * @version			$Id: DecVarSlider.java,v 1.2 2002-10-16 16:01:37 jacobsen Exp $
  */
 public class DecVarSlider extends JSlider implements ChangeListener {
 
@@ -33,7 +33,7 @@ public class DecVarSlider extends JSlider implements ChangeListener {
 			public void propertyChange(java.beans.PropertyChangeEvent e) {
 				originalPropertyChanged(e);
 			}
-		});		
+		});
 	}
 
 	public void stateChanged(ChangeEvent e) {
@@ -41,9 +41,9 @@ public class DecVarSlider extends JSlider implements ChangeListener {
 		// e.getSource() points to the JSlider object - find it in the list
 		JSlider j = (JSlider) e.getSource();
 		BoundedRangeModel r = j.getModel();
-		
+
 		_var.setIntValue(r.getValue());
-		_var.setState(AbstractValue.EDITTED);
+		_var.setState(AbstractValue.EDITED);
 	}
 
 	DecVariableValue _var;
@@ -53,14 +53,14 @@ public class DecVarSlider extends JSlider implements ChangeListener {
 		// update this color from original state
 		if (e.getPropertyName().equals("State")) {
 			setBackground(_var.getColor());
-		}	
+		}
 		if (e.getPropertyName().equals("Value")) {
 			int newValue = Integer.valueOf(((JTextField)_var.getValue()).getText()).intValue();
 			setValue(newValue);
-		}	
+		}
 	}
-	
-	// initialize logging	
+
+	// initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DecVarSlider.class.getName());
 
 }

@@ -37,7 +37,7 @@ import jmri.jmrit.catalog.NamedIcon;
  *
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class PanelEditor extends JFrame {
@@ -523,7 +523,7 @@ public class PanelEditor extends JFrame {
     }
 
     /**
-     * Set the JLayeredPane containing the objects to be editted.
+     * Set the JLayeredPane containing the objects to be edited.
      */
     public void setTarget(JLayeredPane f) {
         target = f;

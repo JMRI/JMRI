@@ -17,7 +17,7 @@ import junit.framework.*;
  *
  * @todo need a check of the MIXED state model for long address
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 
@@ -81,7 +81,7 @@ public class SplitVariableValueTest extends VariableValueTest {
                                                         lowCV, "XXVVVVVV", 0, 255, v, null, null,
                                                         lowCV+offset, 1, 0);
         Assert.assertTrue(var.label() == "label");
-        // pretend you've editted the value, check its in same object
+        // pretend you've edited the value, check its in same object
         ((JTextField)var.getValue()).setText(""+(17+189*64));
         Assert.assertEquals("text value", ""+(17+189*64), ((JTextField)var.getValue()).getText() );
         // manually notify

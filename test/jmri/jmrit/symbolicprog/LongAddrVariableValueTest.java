@@ -17,7 +17,7 @@ import junit.framework.*;
  *
  * @todo need a check of the MIXED state model for long address
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class LongAddrVariableValueTest extends VariableValueTest {
 
@@ -74,7 +74,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
         // create a variable pointed at CV 17&18, check name
         LongAddrVariableValue var = new LongAddrVariableValue("label", "comment", false, 17, "VVVVVVVV", 0, 255, v, null, null);
         Assert.assertTrue(var.label() == "label");
-        // pretend you've editted the value, check its in same object
+        // pretend you've edited the value, check its in same object
         ((JTextField)var.getValue()).setText("4797");
         Assert.assertTrue( ((JTextField)var.getValue()).getText().equals("4797") );
         // manually notify

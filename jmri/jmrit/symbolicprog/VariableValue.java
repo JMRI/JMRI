@@ -14,7 +14,7 @@ import java.awt.Color;
 /**
  * Represents a single Variable value; abstract base class
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  *
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
@@ -83,7 +83,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
 	public void setState(int state) {
 		switch (state) {
 			case UNKNOWN : setColor(COLOR_UNKNOWN ); break;
-			case EDITTED : setColor(COLOR_EDITTED ); break;
+			case EDITED : setColor(COLOR_EDITED ); break;
 			case READ    : setColor(COLOR_READ    ); break;
 			case STORED  : setColor(COLOR_STORED  ); break;
 			case FROMFILE: setColor(COLOR_FROMFILE); break;

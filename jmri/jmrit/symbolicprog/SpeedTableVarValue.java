@@ -21,7 +21,7 @@ import javax.swing.event.*;
  *The mapping is (in order):
  *<UL>
  *<LI>If any CVs are UNKNOWN, its UNKNOWN..
- *<LI>If not, and any are EDITTED, its EDITTED.
+ *<LI>If not, and any are EDITED, its EDITED.
  *<LI>If not, and any are FROMFILE, its FROMFILE.
  *<LI>If not, and any are READ, its READ.
  *<LI>If not, and any are STORED, its STORED.
@@ -34,7 +34,7 @@ import javax.swing.event.*;
  *<P>
  * Description:		Extends VariableValue to represent a NMRA long address
  * @author			Bob Jacobsen, Alex Shepherd   Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -126,7 +126,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 		for (i=0; i<nValues; i++)
 				if (((CvValue)_cvVector.elementAt(getCvNum()+i)).getState() == UNKNOWN ) return UNKNOWN;
 		for (i=0; i<nValues; i++)
-				if (((CvValue)_cvVector.elementAt(getCvNum()+i)).getState() == EDITTED ) return EDITTED;
+				if (((CvValue)_cvVector.elementAt(getCvNum()+i)).getState() == EDITED ) return EDITED;
 		for (i=0; i<nValues; i++)
 				if (((CvValue)_cvVector.elementAt(getCvNum()+i)).getState() == FROMFILE ) return FROMFILE;
 		for (i=0; i<nValues; i++)
@@ -373,7 +373,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 		CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()+_progState));
 		int state = cv.getState();
 		if (log.isDebugEnabled()) log.debug("invoke CV read index "+_progState+" cv state "+state);
-		if (state == UNKNOWN || state == FROMFILE || state == EDITTED) cv.read(_status);
+		if (state == UNKNOWN || state == FROMFILE || state == EDITED) cv.read(_status);
 		else readNext(); // repeat until end
 	}
 
@@ -390,7 +390,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 		CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()+_progState));
 		int state = cv.getState();
 		if (log.isDebugEnabled()) log.debug("invoke CV write index "+_progState+" cv state "+state);
-		if (state == UNKNOWN || state == FROMFILE || state == EDITTED) cv.write(_status);
+		if (state == UNKNOWN || state == FROMFILE || state == EDITED) cv.write(_status);
 		else writeNext();
 	}
 

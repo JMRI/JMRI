@@ -17,7 +17,7 @@ import jmri.progdebugger.*;
  * Test CvValue class
  *
  * @author			Bob Jacobsen
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 public class CvValueTest extends TestCase {
 
@@ -139,7 +139,7 @@ public class CvValueTest extends TestCase {
         CvValue cv = new CvValue(21, p);
         Assert.assertTrue(cv.getState() == CvValue.UNKNOWN);
         cv.setValue(23);
-        Assert.assertTrue(cv.getState() == CvValue.EDITTED);
+        Assert.assertTrue(cv.getState() == CvValue.EDITED);
     }
 
     // check the initial color
@@ -148,11 +148,11 @@ public class CvValueTest extends TestCase {
         Assert.assertEquals("initial color", CvValue.COLOR_UNKNOWN, cv.getTableEntry().getBackground());
     }
 
-    // check color update for EDITTED
-    public void testEdittedColor() {
+    // check color update for EDITED
+    public void testEditedColor() {
         CvValue cv = new CvValue(21, p);
         cv.setValue(23);
-        Assert.assertEquals("editted color", CvValue.COLOR_EDITTED, cv.getTableEntry().getBackground());
+        Assert.assertEquals("edited color", CvValue.COLOR_EDITED, cv.getTableEntry().getBackground());
     }
 
 

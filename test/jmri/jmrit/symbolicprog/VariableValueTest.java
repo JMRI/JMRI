@@ -18,7 +18,7 @@ import jmri.progdebugger.*;
 /**
  * Base for tests of classes inheriting from VariableValue abstract class
  * @author	Bob Jacobsen, Copyright 2002
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public abstract class VariableValueTest extends TestCase {
 
@@ -60,7 +60,7 @@ public abstract class VariableValueTest extends TestCase {
         Assert.assertEquals("label", "label", variable.label() );
         checkValue(variable, "value object initially contains ", "0");
 
-        // pretend you've editted the value & manually notify
+        // pretend you've edited the value & manually notify
         setValue(variable, "5");
 
         // check value
@@ -206,7 +206,7 @@ public abstract class VariableValueTest extends TestCase {
         cv.setState(CvValue.UNKNOWN);
         Assert.assertEquals("after CV set unknown", VariableValue.UNKNOWN, variable.getState());
         setValue(variable, "5");
-        Assert.assertEquals("state after setValue", VariableValue.EDITTED, variable.getState());
+        Assert.assertEquals("state after setValue", VariableValue.EDITED, variable.getState());
     }
 
     // check the state <-> color connection for value
@@ -217,7 +217,7 @@ public abstract class VariableValueTest extends TestCase {
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, loaded as 5, manually notified
         VariableValue variable = makeVar("label", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
-        Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, variable.getValue().getBackground() );
+        Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, variable.getValue().getBackground() );
 
         cv.setState(CvValue.UNKNOWN);
         Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, variable.getValue().getBackground() );
@@ -234,8 +234,8 @@ public abstract class VariableValueTest extends TestCase {
         // get a representation
         JTextField rep = (JTextField)variable.getRep("");
 
-        Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, variable.getValue().getBackground() );
-        Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, rep.getBackground() );
+        Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, variable.getValue().getBackground() );
+        Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, rep.getBackground() );
 
         cv.setState(CvValue.UNKNOWN);
 
@@ -244,8 +244,8 @@ public abstract class VariableValueTest extends TestCase {
 
         setValue(variable, "5");
 
-        Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, variable.getValue().getBackground() );
-        Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, rep.getBackground() );
+        Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, variable.getValue().getBackground() );
+        Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, rep.getBackground() );
     }
 
     // check the state <-> color connection for var when rep changes
@@ -259,8 +259,8 @@ public abstract class VariableValueTest extends TestCase {
         // get a representation
         JTextField rep = (JTextField)variable.getRep("");
 
-        Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, variable.getValue().getBackground() );
-        Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, rep.getBackground() );
+        Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, variable.getValue().getBackground() );
+        Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, rep.getBackground() );
 
         cv.setState(CvValue.UNKNOWN);
         Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, variable.getValue().getBackground() );
@@ -268,8 +268,8 @@ public abstract class VariableValueTest extends TestCase {
 
         rep.setText("9");
         rep.postActionEvent();
-        Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, variable.getValue().getBackground() );
-        Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, rep.getBackground() );
+        Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, variable.getValue().getBackground() );
+        Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, rep.getBackground() );
     }
 
     // check synchonization of value, representations

@@ -16,7 +16,7 @@ import jmri.*;
  * Programmer used to access it is a data member.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class CvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -122,7 +122,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
             switch (state) {
             case CvValue.UNKNOWN:  		return "Unknown";
             case CvValue.READ:  		return "Read";
-            case CvValue.EDITTED:  		return "Editted";
+            case CvValue.EDITED:  		return "Edited";
             case CvValue.STORED:  		return "Stored";
             case CvValue.FROMFILE:  	return "From file";
             default: return "inconsistent";
@@ -187,7 +187,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
     public boolean decoderDirty() {
         int len = _cvDisplayVector.size();
         for (int i=0; i< len; i++) {
-            if (((CvValue)(_cvDisplayVector.elementAt(i))).getState() == CvValue.EDITTED ) {
+            if (((CvValue)(_cvDisplayVector.elementAt(i))).getState() == CvValue.EDITED ) {
                 if (log.isDebugEnabled())
                     log.debug("CV decoder dirty due to "+((CvValue)(_cvDisplayVector.elementAt(i))).number());
                 return true;
