@@ -11,7 +11,7 @@ package jmri;
  * that corresponds to a particular physical Reporter on the layout.
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public abstract class AbstractMemory extends AbstractNamedBean implements Memory, java.io.Serializable {
 
@@ -32,7 +32,7 @@ public abstract class AbstractMemory extends AbstractNamedBean implements Memory
     	Object old = _current;
     	_current = v;
     	// notify
-    	firePropertyChange("value", _current, old);
+    	firePropertyChange("value", old, _current);
     }
     
     // internal data members
