@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <decoderIndex version="59">
+  <decoderIndex version="61">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -707,6 +707,26 @@
       <family name="TCS Mx series decoders" mfg="Train Control Systems" type="locomotive" file="TCS_zMx.xml">
         <model model="M1" numOuts="2" numFns="2" lowVersionID="24" highVersionID="24" />
       </family>
+      <family name="Zimo Silent BEMF decoders, early model" mfg="Zimo" type="locomotive" file="Zimo_MX61_1.xml">
+        <model model="MX61_2000 version 4/10" lowVersionID="4" highVersionID="10" maxInputVolts="12-24V" maxMotorCurrent="1A (peak=2A, 5 sec.)" maxTotalCurrent="1.2A" formFactor="HO" numOuts="6" numFns="6">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Brown" />
+          <output name="4" label="Brown or Green" />
+          <output name="5" label="NC - Logic Level" />
+          <output name="6" label="NC - Logic Level" />
+        </model>
+      </family>
+      <family name="Zimo Silent BEMF decoders, early model" mfg="Zimo" type="locomotive" file="Zimo_MX61_2.xml">
+        <model model="MX61_2000 version 11/17" lowVersionID="11" highVersionID="17" maxInputVolts="12-24V" maxMotorCurrent="1A (peak=2A, 5 sec.)" maxTotalCurrent="1.2A" formFactor="HO" numOuts="6" numFns="6">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Brown" />
+          <output name="4" label="Green" />
+          <output name="5" label="NC - Logic Level" />
+          <output name="6" label="NC - Logic Level" />
+        </model>
+      </family>
       <family name="Zimo Silent BEMF decoders, late model" mfg="Zimo" type="locomotive" file="Zimo_MX61_2000_11.xml">
         <model model="MX61_2000" numOuts="6" numFns="6" maxMotorCurrent="1 Amp" maxTotalCurrent="1.2 Amp">
           <versionCV lowVersionID="11" highVersionID="15" />
@@ -733,6 +753,92 @@
           <output name="4" label="Brown" />
           <output name="5" label="NC - Logic Level" />
           <output name="6" label="NC - Logic Level" />
+        </model>
+      </family>
+      <family name="Zimo Silent BEMF decoders, late model" mfg="Zimo" type="locomotive" file="Zimo_MX62_1.xml">
+        <model model="MX62 version 4/7" lowVersionID="4" highVersionID="7" maxInputVolts="12-24V" maxMotorCurrent="0.7A (peak=1.5A, 5 sec.)" maxTotalCurrent="0.8A" formFactor="N, HOe, HOm" numOuts="4" numFns="6">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="NC - Logic Level" />
+          <output name="4" label="NC - Logic Level" />
+        </model>
+      </family>
+      <family name="Zimo Silent BEMF decoders, late model" mfg="Zimo" type="locomotive" file="Zimo_MX62_64_1.xml">
+        <model model="MX62 version 8" lowVersionID="8" highVersionID="8" maxInputVolts="12-24V" maxMotorCurrent="0.7A (peak=1.5A, 5 sec.)" maxTotalCurrent="0.8A" formFactor="N, HOe, HOm" numOuts="4" numFns="6">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="NC - Logic Level" />
+          <output name="4" label="NC - Logic Level" />
+        </model>
+        <model model="MX63 version 6/8" lowVersionID="6" highVersionID="8" maxInputVolts="12-24V" maxMotorCurrent="1A (peak=2A for 5 sec.)" maxTotalCurrent="1.2A" formFactor="HO" numOuts="6" numFns="6">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Brown" />
+          <output name="4" label="Green" />
+          <output name="5" label="NC - Logic Level" />
+          <output name="6" label="NC - Logic Level" />
+        </model>
+        <model model="MX64(H) version 5/8" lowVersionID="5" highVersionID="8" maxInputVolts="12-24V" maxMotorCurrent="1A(1.5A), peak=2A for 5 sec." maxTotalCurrent="1.2A (1.6A)" formFactor="HO" numOuts="7" numFns="6">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Brown" />
+          <output name="4" label="Green" />
+          <output name="5" label="Not Connected, Logic" />
+          <output name="6" label="Level Output, except" />
+          <output name="7" label="for H-type (normal output)" />
+        </model>
+      </family>
+      <family name="Zimo Silent BEMF decoders, late model" mfg="Zimo" type="locomotive" file="Zimo_MX64(H)_1.xml">
+        <model model="MX64(H) version 3/4" lowVersionID="3" highVersionID="4" maxInputVolts="12-24V" maxMotorCurrent="1A(1.5A), peak=2A for 5 sec." maxTotalCurrent="1.2A (1.6A)" formFactor="HO" numOuts="7" numFns="8">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Brown" />
+          <output name="4" label="Green" />
+          <output name="5" label="Not Connected, Logic" />
+          <output name="6" label="Level Output, except" />
+          <output name="7" label="for H-type (normal output)" />
+        </model>
+      </family>
+      <family name="Zimo Silent BEMF decoders, large scales" mfg="Zimo" type="locomotive" file="Zimo_MX66M(V)_1.xml">
+        <model model="MX66M(V) version 3/11" lowVersionID="3" highVersionID="11" maxInputVolts="12-24V" maxMotorCurrent="3A, peak=5A for 5 sec." maxTotalCurrent="3A" formFactor="0, LGB, 1, 2" numOuts="14" numFns="12">
+          <output name="1" label="Front head lights" />
+          <output name="2" label="Rear head lights" />
+          <output name="3" label="pin-2, right" />
+          <output name="4" label="pin-3, right" />
+          <output name="5" label="pin-4, right" />
+          <output name="6" label="pin-5, right" />
+          <output name="7" label="pin-6, right" />
+          <output name="8" label="pin-7, right" />
+          <output name="9" label="pin-1, left" />
+          <output name="10" label="pin-2, left" />
+          <output name="11" label="pin-3, left" />
+          <output name="12" label="pin-4, left" />
+          <output name="13" label="pin-5, left" />
+          <output name="14" label="pin-6, left" />
+        </model>
+      </family>
+      <family name="Zimo Silent BEMF decoders, large scales" mfg="Zimo" type="locomotive" file="Zimo_MX66S_1.xml">
+        <model model="MX66S version 3/11" lowVersionID="3" highVersionID="11" maxInputVolts="12-24V" maxMotorCurrent="3A, peak=5A for 5 sec." maxTotalCurrent="3A" formFactor="0, LGB, 1, 2" numOuts="8" numFns="12">
+          <output name="1" label="Front head lights" />
+          <output name="2" label="Rear head lights" />
+          <output name="3" label="Function 2" />
+          <output name="4" label="Function 3" />
+          <output name="5" label="Function 4" />
+          <output name="6" label="Function 5" />
+          <output name="7" label="Function 6" />
+          <output name="8" label="Function 7" />
+        </model>
+      </family>
+      <family name="Zimo Function Decoders" mfg="Zimo" type="locomotive" file="Zimo_MX68(L)_1.xml">
+        <model model="MX68(L) version 3" lowVersionID="3" highVersionID="3" maxInputVolts="12-24V" maxTotalCurrent="0,4A per left/right group" formFactor="all scales" numOuts="8" numFns="7">
+          <output name="1" label="white" />
+          <output name="2" label="yellow" />
+          <output name="3" label="brown" />
+          <output name="4" label="green" />
+          <output name="5" label="5 - 8" />
+          <output name="6" label="(all orange)" />
+          <output name="7" label="not present" />
+          <output name="8" label="on L version" />
         </model>
       </family>
     </familyList>
