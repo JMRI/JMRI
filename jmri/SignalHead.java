@@ -12,12 +12,11 @@ package jmri;
  * of several heads.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public interface SignalHead {
 
-    // states are parameters; both closed and thrown is possible!
-    public static final int NONE        = 0x00;
+    public static final int DARK        = 0x00;
     public static final int RED         = 0x01;
     public static final int FLASHRED    = 0x02;
     public static final int YELLOW      = 0x04;
@@ -33,6 +32,9 @@ public interface SignalHead {
      */
     public int getAppearance();
     public void setAppearance(int newAppearance);
+
+    public String getSystemName();
+    public String getUserName();
 
     /**
      * Request a call-back when the bound KnownState property changes.
