@@ -1,6 +1,6 @@
 <!-- ugly first attempt at an ANT build.xml file for JMRI development -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.8 $ -->
+<!-- Revision $Revision: 1.9 $ -->
 
 <project name="JMRI" default="xslt" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -157,7 +157,7 @@
 	</style>
   </target>
   
-  <target name="xslt" depends="init, models, index, selection, csv, id"
+  <target name="xslt" depends="init, models, index, selection, csv, id, cvsummary"
   		description="run the whole sequence of processing" />
   		
   <target name="upload" description="Upload existing results to web site" >
