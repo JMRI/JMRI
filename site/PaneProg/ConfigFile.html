@@ -88,7 +88,7 @@ at the top (the examples are from the <A HREF="../xml/Digitrax_1x2.xml">Digitrax
 <PRE>
 	&lt;?xml version="1.0"?&gt;
 	&lt;!DOCTYPE decoder-config SYSTEM "decoder-config.dtd"&gt;
-	&lt;!-- $Id: ConfigFile.html,v 1.10 2002-02-02 06:58:56 jacobsen Exp $ --&gt;
+	&lt;!-- $Id: ConfigFile.html,v 1.11 2002-02-04 07:29:45 jacobsen Exp $ --&gt;
 	&lt;decoder-config&gt;
 </PRE>
 Don't mess with these lines; they describe the format of the file.
@@ -379,11 +379,13 @@ The decoder definitions in the decoderIndex.xml file
 contain two attributes that describe each model within
 the family:
 <UL>
-<LI><dfn>numOuts</dfn> - the number of output wires.  This includes
+<LI><dfn>numOuts</dfn> - the number of output 
+<u>wires</u>.  This includes
 the wires that drive the forward and reverse headlights,
 F(f) and F(r), plus any other function outputs.
-<LI><dfn>numFns</dfn> - the number of functions.  This is the
-highest numbered function that the decoder responds
+<LI><dfn>numFns</dfn> - the number of 
+<u>functions</u>.  This is the
+highest numbered function on a cab that the decoder will respond
 to. For example, if F4 is the highest, set numFns="4".
 </UL>
 
@@ -391,7 +393,7 @@ Within each decoder definition file, two attributes
 describe whether a variable is associated with a
 specific function or output:
 <UL>
-<LI><dfn>minOut</dfn> - What is the minimum number of
+<LI><dfn>minOut</dfn> - What is the <u>minimum</u> number of
 outputs for this variable to be useful?  For example, 
 a variable with minOut="4" would not be displayed for
 a decoder model with numOuts="3", but would be 
@@ -493,8 +495,91 @@ programmer pane, which will be presented to the user.  (But see
 the section on defining a programmer for information on how to
 control this)
 
+<a id="fnMap"><h4>Function mapping</h4>
+Some decoders provide a way of configuring which functions, i.e.
+buttons on the cab, operate each output, i.e. the output wires that
+are connected to lights. Generally, decoders which have this
+capability use a large number of bits to control the mapping.
 <P>
-(Procedure for updating the names.xml file?)
+Decoder Pro provides a special programming element to 
+make configuring these easier. Just insert the element
+&lt;fnmapping/&gt;
+in the programmer definition XML file.  (This takes up
+a bunch of screen space, so you might want to have it 
+on a pane by iteself)
+<P>
+The function map creates a rectangular grid with function
+names on the left and outputs across the top, then
+looks in the decoder definition for
+variables with names like "F1 controls output 1".
+For each of these that it finds, it fills in 
+the corresponding element on the grid with a checkbox.
+If the default value for the variable is 1, the checkbox
+will start with a check in it.
+<P>
+
+
+<a id="sounds"><h4>Sound outputs</h4>
+Sound-generating decoders use functions like F2
+to control sounds instead of output wires.  We want to be able
+to handle these properly in function mapping, etc.  It's much
+more convenient to refer to these as "Bell", etc, rather than 
+trying to remember that "Output 5" is really a specific sound rather
+than an output wire.
+<P>
+To do this, include some extra elements in the decoder definition 
+itself:
+<PRE>
+	&lt;family name="DSD Steam" mfg="Throttle-Up"
+			lowVersionID="6" highVersionID="7"&gt;
+		&lt;model model="DSD Steam" numOuts="4"&gt;
+			&lt;output name="Whistle"/&gt;
+			&lt;output name="Bell"/&gt; 
+			&lt;output name="Hiss"/&gt; 
+			&lt;output name="Dynamo"/&gt; 
+			&lt;output name="Coupler"/&gt; 
+			&lt;output name="Mute"/&gt; 
+			&lt;/model&gt;
+	&lt;/family&gt;
+</PRE>
+The output elements within the model tell Decoder Pro that,
+in addition to the wires defined by numOuts, there are additional
+sound outputs that should appear when mapping functions.
+
+<a id="fnMap"><h4>Function mapping</h4>
+Some decoders provide a way of configuring which functions, i.e.
+buttons on the cab, operate each output, i.e. the output wires that
+are connected to lights. Generally, decoders which have this
+capability use a large number of bits to control the mapping.
+<P>
+Decoder Pro provides a special programming element to 
+make configuring these easier. Just insert the element
+<PRE>
+       &lt;fnmapping/&gt;
+</PRE>
+in the programmer definition XML file.  (This takes up
+a bunch of screen space, so you might want to have it 
+on a pane by iteself)
+<P>
+The function map creates a rectangular grid with function
+names on the left and outputs across the top, then
+looks in the decoder definition for
+variables with names like "F1 controls output 1".
+For each of these that it finds, it fills in 
+the corresponding element on the grid with a checkbox.
+If the default value for the variable is 1, the checkbox
+will start with a check in it.
+<P>
+More formally, the map is looking for 
+variables with a name of the form 
+<PRE>
+"(function) controls output (output)"
+</PRE>
+The function name can be one of "FL(f)", "FL(r)", and "F1" 
+through "F12".
+The output name can be from "1" to "14", plus whatever names
+have been defined as 
+<A HREF="sounds">extra outputs</a>.
 
 <a id="files"><h3>What the configuration files contain and where they are located</h3></a>
 
