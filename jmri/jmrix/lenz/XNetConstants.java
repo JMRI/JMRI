@@ -267,6 +267,12 @@ public final static int CS_MULTI_UNIT_REQ = 0xE2;
 public final static int CS_MULTI_UNIT_REQ_FWD = 0x03;
 public final static int CS_MULTI_UNIT_REQ_BKWD = 0x04;
 
+/* The following are for information requests from the LI100/LI100F/LI101*/
+public final static int LI101_REQUEST = 0xF2;
+/* The following are the two possible values for the second byte of a 
+request to the LI101 */
+public final static int LI101_REQUEST_ADDRESS = 0x01;
+public final static int LI101_REQUEST_BAUD = 0x02;
 
 }
 
