@@ -34,7 +34,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * used with permission.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2003
- * @version			$Revision: 1.30 $
+ * @version			$Revision: 1.31 $
  */
 public class Llnmon {
 
@@ -1276,11 +1276,12 @@ public class Llnmon {
             {
                 if (l.getElement(1)!=0x10) return "ALM message with unexpected length "+l.getElement(1)+"\n";
                 String message;
-                if (l.getElement(0)==0xEE) message = "Write ALM ";
-                else message = "Read ALM ";
+                if (l.getElement(0)==0xEE) message = "Write ALM msg ";
+                else message = "Read ALM msg (Write reply) ";
                 message = message+l.getElement(2)+" ATASK="+l.getElement(3);
                 if (l.getElement(3) == 2) message=message+" (RD)";
-                if (l.getElement(3) == 3) message=message+" (WR)";
+                else if (l.getElement(3) == 3) message=message+" (WR)";
+                else if (l.getElement(3) == 0) message=message+" (ID)";
                 message = message+" BLKL="+l.getElement(4)+" BLKH="+l.getElement(5);
                 message = message+" LOGIC="+l.getElement(6)+"\n      ";
                 message = message+" ARG1L=0x"+Integer.toHexString(l.getElement(7))
