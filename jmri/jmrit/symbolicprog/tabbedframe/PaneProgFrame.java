@@ -29,7 +29,7 @@ import org.jdom.JDOMException;
 /**
  * Frame providing a command station programmer from decoder definition files
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 abstract class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
@@ -49,8 +49,8 @@ abstract class PaneProgFrame extends javax.swing.JFrame
 
     // GUI member declarations
     JTabbedPane tabPane = new JTabbedPane();
-    JToggleButton readAllButton = new JToggleButton("Read all highlighted");
-    JToggleButton writeAllButton = new JToggleButton("Write all highlighted");
+    JToggleButton readAllButton = new JToggleButton("Read changes on all sheets");
+    JToggleButton writeAllButton = new JToggleButton("Write changes on all sheets");
     JToggleButton rereadAllButton = new JToggleButton("Read all sheets");
     JToggleButton rewriteAllButton = new JToggleButton("Write all sheets");
 

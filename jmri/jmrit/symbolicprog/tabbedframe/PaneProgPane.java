@@ -19,7 +19,7 @@ import org.jdom.*;
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
@@ -154,9 +154,9 @@ public class PaneProgPane extends javax.swing.JPanel
      */
     List cvList = new ArrayList();
 
-    JToggleButton readButton     = new JToggleButton("Read highlighted");
+    JToggleButton readButton     = new JToggleButton("Read changes on sheet");
     JToggleButton reReadButton   = new JToggleButton("Read full sheet");
-    JToggleButton writeButton    = new JToggleButton("Write highlighted");
+    JToggleButton writeButton    = new JToggleButton("Write changes on sheet");
     JToggleButton reWriteButton  = new JToggleButton("Write full sheet");
 
     /**
