@@ -3,8 +3,10 @@ package jmri.jmrix.loconet;
 import jmri.ThrottleManager;
 import jmri.ThrottleListener;
 import jmri.DccThrottle;
+import jmri.jmrit.throttle.ThrottleFrame;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * LocoNet implementation of a ThrottleManager
@@ -14,11 +16,28 @@ public class LnThrottleManager implements ThrottleManager, SlotListener
     private SlotManager slotManager;
     private HashMap throttleListeners;
     private HashMap throttleMap;
+    private ArrayList throttleFrames;
 
     public LnThrottleManager()
     {
         slotManager = SlotManager.instance();
     }
+
+
+    public void notifyNewThrottleFrame(ThrottleFrame tf)
+    {
+        if (throttleFrames == null)
+        {
+            throttleFrames = new ArrayList(2);
+        }
+        throttleFrames.add(tf);
+    }
+
+    public Iterator getThrottleFrames()
+    {
+        return throttleFrames.iterator();
+    }
+
 
     /**
      * Request a throttle, given a decoder address. When the decoder address
@@ -43,14 +62,12 @@ public class LnThrottleManager implements ThrottleManager, SlotListener
         if (!list.contains(l))
         {
             list.add(l);
-            System.out.println("Added throttle listener for " + l.getClass());
         }
         throttleListeners.put(addressKey, list);
         if (list.size() == 1)
         {
             // Only need to do this once per address.
             slotManager.slotFromLocoAddress(address, this);
-            System.out.println("Requesting a slot from address: " + address);
         }
     }
 
@@ -63,7 +80,6 @@ public class LnThrottleManager implements ThrottleManager, SlotListener
             if (list != null)
             {
                 list.remove(l);
-                System.out.println("Removed request for " + l.getClass());
                 throttleListeners.put(addressKey, list);
             }
         }
@@ -95,7 +111,6 @@ public class LnThrottleManager implements ThrottleManager, SlotListener
             {
                 ThrottleListener listener = (ThrottleListener)list.get(i);
                 listener.notifyThrottleFound(throttle);
-                System.out.println("Sent throttle to " + listener.getClass());
             }
         }
     }
