@@ -11,11 +11,17 @@ import jmri.Sensor;
  * System names are "LSnnn", where nnn is the sensor number without padding.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class LnSensorManager extends jmri.AbstractSensorManager implements LocoNetListener {
 
     public char systemLetter() { return 'L'; }
+
+    static public LnSensorManager instance() {
+        if (mInstance == null) new LnSensorManager();
+        return mInstance;
+    }
+    static private LnSensorManager mInstance = null;
 
     // to free resources when no longer used
     public void dispose() {
@@ -23,36 +29,14 @@ public class LnSensorManager extends jmri.AbstractSensorManager implements LocoN
 
     // LocoNet-specific methods
 
-    public Sensor newSensor(String systemName, String userName) {
-        if (log.isDebugEnabled()) log.debug("newSensor:"
-                                            +( (systemName==null) ? "null" : systemName)
-                                            +";"+( (userName==null) ? "null" : userName));
-
-        // if system name is null, supply one from the number in userName
-        if (systemName == null) systemName = "LS"+userName;
-
-        // get number from name
-        if (!systemName.startsWith("LS")) {
-            log.error("Invalid system name for LocoNet sensor: "+systemName);
-            return null;
-        }
-
-        // return existing if there is one
-        Sensor s;
-        if ( (userName!=null) && ((s = getByUserName(userName)) != null)) return s;
-        if ( (systemName!=null) && ((s = getBySystemName(systemName)) != null)) return s;
-
-        // doesn't exist, make a new one
-        s = new LnSensor(systemName);
-
-        _tsys.put(systemName, s);
-        if (userName!=null) _tuser.put(userName, s);
-        return s;
+    public Sensor createNewSensor(String systemName, String userName) {
+        return new LnSensor(systemName);
     }
 
     // ctor has to register for LocoNet events
     public LnSensorManager() {
         LnTrafficController.instance().addLocoNetListener(~0, this);
+        mInstance = this;
     }
 
     // listen for sensors, creating them as needed
@@ -75,7 +59,7 @@ public class LnSensorManager extends jmri.AbstractSensorManager implements LocoN
         if (null == getBySystemName(s)) {
             // need to store a new one
             if (log.isDebugEnabled()) log.debug("Create new LnSensor as "+s);
-            newSensor(s, "");
+            newSensor(s, null);
         }
     }
 

@@ -18,14 +18,13 @@ import jmri.Turnout;
  * <P>
  * Description:		Implement turnout manager for loconet
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.11 $
+ * @version         $Revision: 1.12 $
  */
 
 public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements LocoNetListener {
 
     // ctor has to register for LocoNet events
     public LnTurnoutManager() {
-        prefix = "LT";
         _instance = this;
         if (LnTrafficController.instance() != null)
             LnTrafficController.instance().addLocoNetListener(~0, this);
@@ -33,43 +32,19 @@ public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements Loc
             log.error("No layout connection, turnout manager can't function");
     }
 
+    public char systemLetter() { return 'L'; }
+
     public void dispose() {
         if (LnTrafficController.instance() != null)
             LnTrafficController.instance().removeLocoNetListener(~0, this);
         super.dispose();
     }
 
-    // LocoNet-specific methods
-
-    public void putBySystemName(LnTurnout t) {
-        String system = prefix+t.getNumber();
-        _tsys.put(system, t);
-    }
-
-    public Turnout newTurnout(String systemName, String userName) {
-        // if system name is null, supply one from the number in userName
-        if (systemName == null) systemName = prefix+userName;
-
-        // return existing if there is one
+    public Turnout createNewTurnout(String systemName, String userName) {
         Turnout t;
-        if ( (userName!=null) && ((t = getByUserName(userName)) != null)) return t;
-        if ( (t = getBySystemName(systemName)) != null) {
-            if (userName != null) log.warn("Found turnout via system name ("+systemName
-                                    +") with non-null user name ("+userName+")");
-            return t;
-        }
-
-        // get number from name
-        if (!systemName.startsWith(prefix)) {
-            log.error("Invalid system name for LocoNet turnout: "+systemName);
-            return null;
-        }
         int addr = Integer.valueOf(systemName.substring(2)).intValue();
         t = new LnTurnout(addr);
         t.setUserName(userName);
-
-        _tsys.put(systemName, t);
-        if (userName!=null) _tuser.put(userName, t);
         t.addPropertyChangeListener(this);
 
         return t;
@@ -98,12 +73,7 @@ public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements Loc
             return;
         }
         // reach here for loconet switch command; make sure we know about this one
-        String s = prefix+addr;
-        if (null == getBySystemName(s)) {
-            // need to store a new one
-            LnTurnout t = new LnTurnout(addr);
-            putBySystemName(t);
-        }
+        provideTurnout("LT"+addr);
     }
 
     private int address(int a1, int a2) {

@@ -15,16 +15,23 @@ import jmri.Sensor;
  * see nextAiuPoll()
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class NceSensorManager extends jmri.AbstractSensorManager
                             implements NceListener {
 
     public NceSensorManager() {
         super();
+        mInstance = this;
         for (int i=MINAIU; i<=MAXAIU; i++)
             aiuArray[i] = null;
     }
+
+    static public NceSensorManager instance() {
+        if (mInstance == null) new NceSensorManager();
+        return mInstance;
+    }
+    static private NceSensorManager mInstance = null;
 
     public char systemLetter() { return 'N'; }
 
@@ -32,32 +39,10 @@ public class NceSensorManager extends jmri.AbstractSensorManager
     public void dispose() {
     }
 
-    public Sensor newSensor(String systemName, String userName) {
-        if (log.isDebugEnabled()) log.debug("newSensor:"
-                                            +( (systemName==null) ? "null" : systemName)
-                                            +";"+( (userName==null) ? "null" : userName));
-
-        // if system name is null, supply one from the number in userName
-        if (systemName == null) systemName = "NS"+userName;
-
-        // get number from name
-        if (!systemName.startsWith("NS")) {
-            log.error("Invalid system name for NCE sensor: "+systemName);
-            return null;
-        }
+    public Sensor createNewSensor(String systemName, String userName) {
         int number = Integer.parseInt(systemName.substring(2));
 
-        // return existing if there is one
-        Sensor s;
-        if ( (userName!=null) && ((s = getByUserName(userName)) != null)) return s;
-        if ( (systemName!=null) && ((s = getBySystemName(systemName)) != null)) return s;
-
-        // doesn't exist, make a new one
-        s = new NceSensor(systemName);
-
-        // save in the maps
-        _tsys.put(systemName, s);
-        if (userName!=null) _tuser.put(userName, s);
+        Sensor s = new NceSensor(systemName);
 
         // ensure the AIU exists
         int index = (number/16)+1;

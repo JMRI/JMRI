@@ -2,7 +2,6 @@
 
 package jmri.jmrix.easydcc;
 
-import jmri.JmriException;
 import jmri.Turnout;
 
 /**
@@ -11,48 +10,22 @@ import jmri.Turnout;
  * System names are "ETnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 
 public class EasyDccTurnoutManager extends jmri.AbstractTurnoutManager {
 
     public EasyDccTurnoutManager() {
-        prefix = "ET";
         _instance = this;
     }
 
-    // to free resources when no longer used
-    public void dispose() {
-        super.dispose();
-    }
+    public char systemLetter() { return 'E'; }
 
-    // EasyDcc-specific methods
-
-    public void putBySystemName(EasyDccTurnout t) {
-        String system = prefix+t.getNumber();
-        _tsys.put(system, t);
-    }
-
-    public Turnout newTurnout(String systemName, String userName) {
-        // if system name is null, supply one from the number in userName
-        if (systemName == null) systemName = prefix+userName;
-
-        // return existing if there is one
+    public Turnout createNewTurnout(String systemName, String userName) {
         Turnout t;
-        if ( (userName != null) && ((t = getByUserName(userName)) != null)) return t;
-        if ( (t = getBySystemName(systemName)) != null) return t;
-
-        // get number from name
-        if (!systemName.startsWith(prefix)) {
-            log.error("Invalid system name for EasyDcc turnout: "+systemName);
-            return null;
-        }
         int addr = Integer.valueOf(systemName.substring(2)).intValue();
         t = new EasyDccTurnout(addr);
         t.setUserName(userName);
-
-        _tsys.put(systemName, t);
-        if (userName!=null) _tuser.put(userName, t);
         t.addPropertyChangeListener(this);
 
         return t;

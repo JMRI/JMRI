@@ -1,4 +1,4 @@
-// ProxyTurnoutManager.java
+// ProxySensorManager.java
 
 package jmri.managers;
 
@@ -9,39 +9,41 @@ import com.sun.java.util.collections.List;
 import jmri.*;
 
 /**
- * Implementation of a TurnoutManager that can serves as a proxy
+ * Implementation of a SensorManager that can serves as a proxy
  * for multiple system-specific implementations.  The first to
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.1 $
  */
-public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
+public class ProxySensorManager extends AbstractProxyManager
+                            implements SensorManager {
+
     /**
      * Locate via user name, then system name if needed.
      *
      * @param name
      * @return Null if nothing by that name exists
      */
-    public Turnout getTurnout(String name) {
-        Turnout t = getByUserName(name);
+    public Sensor getSensor(String name) {
+        Sensor t = getByUserName(name);
         if (t != null) return t;
         return getBySystemName(name);
     }
 
-    public Turnout provideTurnout(String name) {
-        Turnout t = getTurnout(name);
+    public Sensor provideSensor(String name) {
+        Sensor t = getSensor(name);
         if (t!=null) return t;
         // if the systemName is specified, find that system
         for (int i=0; i<mgrs.size(); i++) {
-            if ( ( (TurnoutManager)mgrs.get(i)).systemLetter() == name.charAt(0) )
-                return ((TurnoutManager)mgrs.get(i)).newTurnout(
-                            ((TurnoutManager)mgrs.get(i)).makeSystemName(name), null);
+            if ( ( (SensorManager)mgrs.get(i)).systemLetter() == name.charAt(0) )
+                return ((SensorManager)mgrs.get(i)).newSensor(
+                            ((SensorManager)mgrs.get(i)).makeSystemName(name), null);
         }
         // did not find a manager, allow it to default to the primary
         log.debug("Did not find manager for name "+name+", assume it's a number");
-        return ((TurnoutManager)mgrs.get(0)).newTurnout(
-                    ((TurnoutManager)mgrs.get(0)).makeSystemName(name), null);
+        return ((SensorManager)mgrs.get(0)).newSensor(
+                    ((SensorManager)mgrs.get(0)).makeSystemName(name), null);
     }
 
 
@@ -50,10 +52,10 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
      * instance already exists.
      * @return requested Turnout object or null if none exists
      */
-    public Turnout getBySystemName(String systemName) {
-        Turnout t = null;
+    public Sensor getBySystemName(String systemName) {
+        Sensor t = null;
         for (int i=0; i<mgrs.size(); i++) {
-            t = ( (TurnoutManager)mgrs.get(i)).getBySystemName(systemName);
+            t = ( (SensorManager)mgrs.get(i)).getBySystemName(systemName);
             if (t!=null) return t;
         }
         return null;
@@ -64,10 +66,10 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
      * instance already exists.
      * @return requested Turnout object or null if none exists
      */
-    public Turnout getByUserName(String userName) {
-        Turnout t = null;
+    public Sensor getByUserName(String userName) {
+        Sensor t = null;
         for (int i=0; i<mgrs.size(); i++) {
-            t = ( (TurnoutManager)mgrs.get(i)).getByUserName(userName);
+            t = ( (SensorManager)mgrs.get(i)).getByUserName(userName);
             if (t!=null) return t;
         }
         return null;
@@ -101,24 +103,24 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
      * be looking them up.
      * @return requested Sensor object (never null)
      */
-    public Turnout newTurnout(String systemName, String userName) {
+    public Sensor newSensor(String systemName, String userName) {
         // if the systemName is specified, find that system
         if (systemName != null) {
             Sensor t = null;
             for (int i=0; i<mgrs.size(); i++) {
-                if ( ( (TurnoutManager)mgrs.get(i)).systemLetter() == systemName.charAt(0) )
-                    return ( (TurnoutManager)mgrs.get(i)).newTurnout(systemName, userName);
+                if ( ( (SensorManager)mgrs.get(i)).systemLetter() == systemName.charAt(0) )
+                    return ( (SensorManager)mgrs.get(i)).newSensor(systemName, userName);
             }
             // did not find a manager, allow it to default to the primary
             log.debug("Did not find manager for system name "+systemName+", assume it's a number");
-            return ( (TurnoutManager)mgrs.get(0)).newTurnout(systemName, userName);
+            return ( (SensorManager)mgrs.get(0)).newSensor(systemName, userName);
         } else {  // no systemName specified, use primary
-            return ( (TurnoutManager)mgrs.get(0)).newTurnout(systemName, userName);
+            return ( (SensorManager)mgrs.get(0)).newSensor(systemName, userName);
         }
     }
 
     // initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ProxyTurnoutManager.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ProxySensorManager.class.getName());
 }
 
 /* @(#)ProxyTurnoutManager.java */
