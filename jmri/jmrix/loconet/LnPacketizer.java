@@ -31,7 +31,7 @@ import com.sun.java.util.collections.NoSuchElementException;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.6 $
+ * @version 		$Revision: 1.7 $
  *
  */
 public class LnPacketizer extends LnTrafficController {
@@ -45,7 +45,7 @@ public class LnPacketizer extends LnTrafficController {
 
     public boolean status() { return (ostream != null & istream != null);
     }
-    
+
     public synchronized void addLocoNetListener(int mask, LocoNetListener l) {
         // add only if not already registered
         if (l == null) throw new java.lang.NullPointerException();
@@ -53,28 +53,28 @@ public class LnPacketizer extends LnTrafficController {
             listeners.addElement(l);
         }
     }
-    
+
     public synchronized void removeLocoNetListener(int mask, LocoNetListener l) {
         if (listeners.contains(l)) {
             listeners.removeElement(l);
         }
     }
-    
+
     /**
      * Synchronized list used as a transmit queue
      */
-    LinkedList xmtList = new LinkedList();
-    
+    protected LinkedList xmtList = new LinkedList();
+
     /**
      * XmtHandler (a local class) object to implement the transmit thread
      */
-    XmtHandler xmtHandler = new XmtHandler();
-    
+    protected Runnable xmtHandler ;
+
     /**
      * RcvHandler (a local class) object to implement the receive thread
      */
-    RcvHandler rcvHandler = new RcvHandler(this);
-    
+    protected Runnable rcvHandler ;
+
     /**
      * Forward a preformatted LocoNetMessage to the actual interface.
      *
@@ -87,17 +87,17 @@ public class LnPacketizer extends LnTrafficController {
         int len = m.getNumDataElements();
         int chksum = 0xff;  /* the seed */
         int loop;
-        
+
     	for(loop = 0; loop < len-1; loop++) {  // calculate contents for data part
             chksum ^= m.getElement(loop);
         }
         m.setElement(len-1, chksum);  // checksum is last element of message
-        
+
         // stream to port in single write, as that's needed by serial
         byte msg[] = new byte[len];
         for (int i=0; i< len; i++)
             msg[i] = (byte) m.getElement(i);
-        
+
         if (log.isDebugEnabled()) log.debug("queue LocoNet packet: "+m.toString());
         // in an atomic operation, queue the request and wake the xmit thread
         synchronized(xmtHandler) {
@@ -105,10 +105,10 @@ public class LnPacketizer extends LnTrafficController {
             xmtHandler.notify();
         }
     }
-    
+
     // methods to connect/disconnect to a source of data in a LnPortController
     private LnPortController controller = null;
-    
+
     /**
      * Make connection to existing LnPortController object.
      * @param p Port controller for connected. Save this for a later
@@ -134,11 +134,11 @@ public class LnPacketizer extends LnTrafficController {
             log.warn("disconnectPort: disconnect called from non-connected LnPortController");
         controller = null;
     }
-    
+
     // data members to hold the streams
-    DataInputStream istream = null;
-    OutputStream ostream = null;
-    
+    protected DataInputStream istream = null;
+    protected OutputStream ostream = null;
+
     /**
      * Forward a LocoNetMessage to all registered listeners.
      * @param m Message to forward. Listeners should not modify it!
@@ -157,7 +157,7 @@ public class LnPacketizer extends LnTrafficController {
             client.message(m);
         }
     }
-    
+
     /**
      * Handle incoming characters.  This is a permanent loop,
      * looking for input messages in character form on the
@@ -188,15 +188,15 @@ public class LnPacketizer extends LnTrafficController {
                             case 0:     /* 2 byte message */
                                 msg = new LocoNetMessage(2);
                                 break;
-                                
+
                             case 1:     /* 4 byte message */
                                 msg = new LocoNetMessage(4);
                                 break;
-                                
+
                             case 2:     /* 6 byte message */
                                 msg = new LocoNetMessage(6);
                                 break;
-                                
+
                             case 3:     /* N byte message */
                                 if (byte2<2) log.error("LocoNet message length invalid: "+byte2
                                                        +" opcode: "+Integer.toHexString(opCode));
@@ -250,7 +250,7 @@ public class LnPacketizer extends LnTrafficController {
                         };
                     javax.swing.SwingUtilities.invokeLater(r);
                 }
-                
+
              	// done with this one
             }
             catch (LocoNetMessageException e) {
@@ -273,7 +273,7 @@ public class LnPacketizer extends LnTrafficController {
             }
         } // end of permanent loop
     }
-    
+
     /**
      * Captive class to handle incoming characters.  This is a permanent loop,
      * looking for input messages in character form on the
@@ -287,10 +287,10 @@ public class LnPacketizer extends LnTrafficController {
         public RcvHandler(LnPacketizer lt) {
             trafficController = lt;
         }
-        
+
         public void run() {
             boolean debug = log.isDebugEnabled();
-            
+
             int opCode;
             while (true) {   // loop permanently, program close will exit
                 try {
@@ -311,15 +311,15 @@ public class LnPacketizer extends LnTrafficController {
                             case 0:     /* 2 byte message */
                                 msg = new LocoNetMessage(2);
                                 break;
-                                
+
                             case 1:     /* 4 byte message */
                                 msg = new LocoNetMessage(4);
                                 break;
-                                
+
                             case 2:     /* 6 byte message */
                                 msg = new LocoNetMessage(6);
                                 break;
-                                
+
                             case 3:     /* N byte message */
                                 if (byte2<2) log.error("LocoNet message length invalid: "+byte2
                                                        +" opcode: "+Integer.toHexString(opCode));
@@ -374,7 +374,7 @@ public class LnPacketizer extends LnTrafficController {
                             };
                         javax.swing.SwingUtilities.invokeLater(r);
                     }
-                    
+
                     // done with this one
             	}
                 catch (LocoNetMessageException e) {
@@ -400,14 +400,14 @@ public class LnPacketizer extends LnTrafficController {
             } // end of permanent loop
         }
     }
-    
+
     /**
      * Captive class to handle transmission
      */
     class XmtHandler implements Runnable {
         public void run() {
             boolean debug = log.isDebugEnabled();
-            
+
             while (true) {   // loop permanently
                 // any input?
                 try {
@@ -417,7 +417,7 @@ public class LnPacketizer extends LnTrafficController {
                     synchronized (this) {
                         msg = (byte[])xmtList.removeFirst();
                     }
-                    
+
                     // input - now send
                     try {
                         if (ostream != null) {
@@ -450,7 +450,7 @@ public class LnPacketizer extends LnTrafficController {
             }
         }
     }
-    
+
     /**
      * Invoked at startup to start the threads needed here.
      */
@@ -460,24 +460,28 @@ public class LnPacketizer extends LnTrafficController {
                   " max available = "+Thread.MAX_PRIORITY+
                   " default = "+Thread.NORM_PRIORITY+
                   " min available = "+Thread.MIN_PRIORITY);
-        
+
         // make sure that the xmt priority is no lower than the current priority
         int xmtpriority = (Thread.MAX_PRIORITY-1>priority ? Thread.MAX_PRIORITY-1 : Thread.MAX_PRIORITY);
         // start the XmtHandler in a thread of its own
+        if( xmtHandler == null )
+          xmtHandler = new XmtHandler();
         Thread xmtThread = new Thread(xmtHandler, "LocoNet transmit handler");
         log.debug("Xmt thread starts at priority "+xmtpriority);
         xmtThread.setDaemon(true);
         xmtThread.setPriority(Thread.MAX_PRIORITY-1);
         xmtThread.start();
-        
+
         // start the RcvHandler in a thread of its own
+        if( rcvHandler == null )
+          rcvHandler = new RcvHandler(this) ;
         Thread rcvThread = new Thread(rcvHandler, "LocoNet receive handler");
         rcvThread.setDaemon(true);
         rcvThread.setPriority(Thread.MAX_PRIORITY);
         rcvThread.start();
-        
+
     }
-    
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnPacketizer.class.getName());
 }
 
