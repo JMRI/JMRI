@@ -31,7 +31,7 @@ import org.jdom.output.XMLOutputter;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -40,6 +40,8 @@ public class DecoderIndexFile extends XmlFile {
 
 	protected List decoderList = new ArrayList();
 	public int numDecoders() { return decoderList.size(); }
+
+    int fileVersion = -1;
 
 	// map mfg ID numbers from & to mfg names
 	protected Hashtable _mfgIdFromNameHash = new Hashtable();
@@ -137,20 +139,132 @@ public class DecoderIndexFile extends XmlFile {
 		if (_instance == null) {
 			if (log.isDebugEnabled()) log.debug("DecoderIndexFile creating instance");
 			// create and load
-			_instance = new DecoderIndexFile();
 			try {
+			    _instance = new DecoderIndexFile();
 				_instance.readFile(defaultDecoderIndexFilename());
 			} catch (Exception e) {
 				log.error("Exception during decoder index reading: "+e);
+                e.printStackTrace();
+			}
+            // see if needs to be updated
+            try {
+                if (updateIndexIfNeeded(defaultDecoderIndexFilename())) {
+			        try {
+			            _instance = new DecoderIndexFile();
+				        _instance.readFile(defaultDecoderIndexFilename());
+			        } catch (Exception e) {
+				        log.error("Exception during decoder index reload: "+e);
+                        e.printStackTrace();
+			        }
+                }
+			} catch (Exception e) {
+				log.error("Exception during decoder index update: "+e);
+                e.printStackTrace();
 			}
 		}
 		if (log.isDebugEnabled()) log.debug("DecoderIndexFile returns instance "+_instance);
 		return _instance;
 	}
 
+    /**
+     * Check whether the user's version of the decoder index file needs to be
+     * updated; if it does, then force the update.
+     * @returns true is the index should be reloaded because it was updated
+     * @param name
+     * @throws JDOMException
+     * @throws FileNotFoundException
+     */
+    static boolean updateIndexIfNeeded(String name) throws org.jdom.JDOMException, java.io.FileNotFoundException {
+        // get version from master index; if not found, give up
+        String masterVersion = null;
+        DecoderIndexFile masterXmlFile = new DecoderIndexFile();
+        File masterFile = new File("xml"+File.separator+defaultDecoderIndexFilename());
+        if (! masterFile.exists()) return false;
+        Element masterRoot = masterXmlFile.rootFromFile(masterFile);
+		if (masterRoot.getChild("decoderIndex") != null ) {
+            if (masterRoot.getChild("decoderIndex").getAttribute("version")!=null)
+                masterVersion = masterRoot.getChild("decoderIndex").getAttribute("version").getValue();
+                log.debug("master version found, is "+masterVersion);
+		}
+		else {
+			return false;
+		}
+
+        // get from user index.  Unless they are equal, force an update.
+        // note we find this file via the search path; if not exists, so that
+        // the master is found, we still do the right thing (nothing).
+        String userVersion = null;
+        DecoderIndexFile userXmlFile = new DecoderIndexFile();
+        Element userRoot = userXmlFile.rootFromName(defaultDecoderIndexFilename());
+		if (userRoot.getChild("decoderIndex") != null ) {
+            if (userRoot.getChild("decoderIndex").getAttribute("version")!=null)
+                userVersion = userRoot.getChild("decoderIndex").getAttribute("version").getValue();
+                log.debug("user version found, is "+userVersion);
+		}
+		if (userRoot!=null && masterVersion.equals(userVersion)) return false;
+
+        // force the update, with the version number located earlier
+        _instance.fileVersion = Integer.parseInt(masterVersion);
+
+        forceCreationOfNewIndex();
+        // and force it's use
+        return true;
+
+    }
+
+    /**
+     * Force creation of a new user index
+     */
+    static public void forceCreationOfNewIndex() {
+        log.info("update decoder index");
+		// create an array of file names from decoders dir in preferences, count entries
+		int i;
+		int np = 0;
+		String[] sp = null;
+		XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+DecoderFile.fileLocation);
+		File fp = new File(XmlFile.prefsDir()+DecoderFile.fileLocation);
+		if (fp.exists()) {
+			sp = fp.list();
+			for (i=0; i<sp.length; i++) {
+				if (sp[i].endsWith(".xml")) np++;
+			}
+		} else {
+			log.warn(XmlFile.prefsDir()+"decoders was missing, though tried to create it");
+		}
+		// create an array of file names from xml/decoders, count entries
+		String[] sx = (new File(XmlFile.xmlDir()+DecoderFile.fileLocation)).list();
+		int nx = 0;
+		for (i=0; i<sx.length; i++) {
+			if (sx[i].endsWith(".xml")) nx++;
+		}
+		// copy the decoder entries to the final array
+		// note: this results in duplicate entries if the same name is also local.
+		// But for now I can live with that.
+		String sbox[] = new String[np+nx];
+		int n=0;
+		if (sp != null && np> 0)
+			for (i=0; i<sp.length; i++) {
+				if (sp[i].endsWith(".xml")) sbox[n++] = sp[i];
+			}
+		for (i=0; i<sx.length; i++) {
+			if (sx[i].endsWith(".xml")) sbox[n++] = sx[i];
+		}
+
+		// create a new decoderIndex
+		DecoderIndexFile index = new DecoderIndexFile();
+        index.fileVersion = _instance.fileVersion;
+
+		// write it out
+		try {
+			index.writeFile("decoderIndex.xml", _instance, sbox);
+		} catch (java.io.IOException ex) {
+			log.error("Error writing new decoder index file: "+ex.getMessage());
+		}
+    }
+
 	/**
 	 * Read the contents of a decoderIndex XML file into this object. Note that this does not
-	 * clear any existing entries.
+	 * clear any existing entries; reset the instance to do that.
 	 */
 	void readFile(String name) throws org.jdom.JDOMException, java.io.FileNotFoundException {
 		if (log.isDebugEnabled()) log.debug("readFile "+name);
@@ -160,6 +274,12 @@ public class DecoderIndexFile extends XmlFile {
 
 		// decode type, invoke proper processing routine if a decoder file
 		if (root.getChild("decoderIndex") != null) {
+            if (root.getChild("decoderIndex").getAttribute("version")!=null)
+                fileVersion = Integer.parseInt(root.getChild("decoderIndex")
+                                                .getAttribute("version")
+                                                .getValue()
+                                            );
+                log.debug("found fileVersion of "+fileVersion);
 			readMfgSection(root.getChild("decoderIndex"));
 			readFamilySection(root.getChild("decoderIndex"));
 		}
@@ -263,6 +383,8 @@ public class DecoderIndexFile extends XmlFile {
 		// add top-level elements
 		Element index;
 		root.addContent(index = new Element("decoderIndex"));
+        index.addAttribute("version", Integer.toString(fileVersion));
+        log.debug("version written to file as "+fileVersion);
 
 		// add mfg list from existing DecoderIndexFile item
 		Element mfgList = new Element("mfgList");

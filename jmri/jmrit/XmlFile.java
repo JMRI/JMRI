@@ -21,7 +21,7 @@ import com.sun.java.util.collections.*;
  * XmlFile contains various member implementations for handling aspects of XML files.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version		$Id: XmlFile.java,v 1.2 2002-06-29 19:26:10 jacobsen Exp $
+ * @version		$Id: XmlFile.java,v 1.3 2002-07-05 03:21:46 jacobsen Exp $
  */
 public abstract class XmlFile {
 
@@ -218,27 +218,18 @@ public abstract class XmlFile {
         String mrjVersion   = System.getProperty("mrj.version","<unknown>");
         String userHome     = System.getProperty("user.home","");
 
-        // add a File.separator to userHome here, so can ignore whether its null later on
+        // add a File.separator to userHome here, so can ignore whether its empty later on
         if (!userHome.equals("")) userHome = userHome+File.separator;
 
         String result;          // no value; that allows compiler to check completeness of algorithm
 
-        if (log.isDebugEnabled())
-            log.debug("prefsDir decision based on os.name=\""
-                    +osName
-                    +"\" mrj.version=\""
-                    +mrjVersion
-                    +"\" user.home=\""
-                    +userHome
-                    +"\"");
-
         if ( !mrjVersion.equals("<unknown>")) {
             // Macintosh, test for OS X
-            if (osName.equals("Mac OS X"))
+            if (osName.equals("Mac OS X")) {
                 // Mac OS X
                 result = userHome+"Library"+File.separator+"Preferences"
                             +File.separator+"JMRI"+File.separator;
-            else
+            } else {
                 // Mac Classic, by elimination. Check consistency of mrjVersion
                 // with that assumption
                 if (!(mrjVersion.charAt(0)=='2'))
@@ -247,14 +238,23 @@ public abstract class XmlFile {
                                     +osName+"\"");
                 // userHome is the overall preferences directory
                 result = userHome+"JMRI"+File.separator;
+            }
         } else if (osName.equals("Linux")) {
             // Linux, so use an invisible file
                 result = userHome+".jmri"+File.separator;
-        } else
+        } else {
             // Could be Windows, other
             result = userHome+"JMRI"+File.separator;
+        }
 
-        if (log.isDebugEnabled()) log.debug("prefsDir defined as \""+result+"\"");
+        if (log.isDebugEnabled()) log.debug("prefsDir defined as \""+result+
+                    "\" based on os.name=\""
+                    +osName
+                    +"\" mrj.version=\""
+                    +mrjVersion
+                    +"\" user.home=\""
+                    +userHome
+                    +"\"");
         return result;
     }
 
