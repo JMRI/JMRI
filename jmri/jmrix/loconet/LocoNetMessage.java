@@ -17,7 +17,7 @@ package jmri.jmrix.loconet;
  * ideas being tested there will eventually be moved back to here.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Id: LocoNetMessage.java,v 1.3 2002-03-11 02:46:39 jacobsen Exp $
+ * @version			$Id: LocoNetMessage.java,v 1.4 2002-03-18 04:52:44 jacobsen Exp $
  * @see             jmri.jrmix.nce.NceMessage
  *
  */
@@ -171,7 +171,7 @@ public class LocoNetMessage {
      * @return True if the argument has the high bit set
      */
     static protected boolean highBit(int val) {
-        if ((val&(~0x7F)) != 0) log.error("highBit called with too large value: "
+        if ((val&(~0xFF)) != 0) log.error("highBit called with too large value: "
                                         +Integer.toHexString(val));
         return (0!=(val&0x80));
     }
