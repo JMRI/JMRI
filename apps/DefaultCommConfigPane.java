@@ -24,7 +24,7 @@ import org.jdom.Attribute;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002. AC 11/09/2002 Added SPROG support
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class DefaultCommConfigPane extends JPanel {
 
@@ -148,6 +148,7 @@ public class DefaultCommConfigPane extends JPanel {
             portBox.removeAllItems();  // start over
             baudBox.removeAllItems();  // start over
             opt1Box.removeAllItems();  // start over
+            opt1Box.setEditable(false);
             opt2Box.removeAllItems();  // start over
 
             log.debug("Connection selected: "+protocolName);
@@ -426,6 +427,9 @@ public class DefaultCommConfigPane extends JPanel {
                 for (int i=0; i<baudList.length; i++) baudBox.addItem(baudList[i]);
                 String[] opt1List = a.validOption1();
                 for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
+                opt1Box.setEditable(true);
+                // Special case!  Note that the first option box is editable!
+
                 String[] opt2List = a.validOption2();
                 for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
 
@@ -559,7 +563,7 @@ public class DefaultCommConfigPane extends JPanel {
         // configure port name
         portName = e.getAttribute("port").getValue();
         // ugly special-case hack: skip parts for certain protocols
-        if (!protocolName.equals("LocoNet HexFile")) {
+        if (!protocolName.equals("LocoNet HexFile")) {   // LocoNet hexfile doesn't have a port, speed, etc
             portBox.setSelectedItem(e.getAttribute("port").getValue());
             portName = e.getAttribute("port").getValue();  // may have been changed by prior line
             // check that the specified port exists
@@ -571,7 +575,7 @@ public class DefaultCommConfigPane extends JPanel {
                 return false;
             }
 
-            if (!protocolName.equals("LocoNet Server")) {
+            if (!protocolName.equals("LocoNet Server")) {   // LocoNet server doesn't have a speed value
                 // configure baud rate - an optional attribute
                 if (e.getAttribute("speed")!=null) {
                     baudRate = e.getAttribute("speed").getValue();
