@@ -54,6 +54,59 @@
       <family name="Dual Mode" mfg="Atlas" lowVersionID="1" highVersionID="255" type="locomotive" file="Atlas_DualMode.xml">
         <model model="Dual Mode" numOuts="4" numFns="8" />
       </family>
+      <family name="CT Elektronik DCX X0" mfg="CT Elektronik" type="locomotive" file="CT Elektronik DCX X0.xml">
+        <model model="DCX50" numOuts="7" numFns="8" maxMotorCurrent="1.2 Amp" maxTotalCurrent="1.2 Amp">
+          <versionCV lowVersionID="3" />
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Brown" />
+          <output name="4" label="Brown" />
+          <output name="5" label="NC-Logic Level" />
+          <output name="6" label="NC-Logic Level" />
+          <output name="7" label="NC-Logic Level" />
+        </model>
+        <model model="DCX70" numOuts="7" numFns="8" maxMotorCurrent="0.8 Amp" maxTotalCurrent="0.8 Amp">
+          <versionCV lowVersionID="3" />
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Brown" />
+          <output name="4" label="Brown" />
+          <output name="5" label="NC-Logic Level" />
+          <output name="6" label="NC-Logic Level" />
+          <output name="7" label="NC-Logic Level" />
+        </model>
+        <model model="DCX73" numOuts="2" numFns="8" maxMotorCurrent="0.8 Amp" maxTotalCurrent="0.8 Amp">
+          <versionCV lowVersionID="3" />
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+        </model>
+      </family>
+      <family name="CT Elektronik DCX 30/V Function Decoder" mfg="CT Elektronik" type="locomotive" file="CT Elektronik DCX30.xml">
+        <model model="DCX30" numOuts="8" numFns="10" maxMotorCurrent="0.8 Amp per group" maxTotalCurrent="1.6 Amp">
+          <versionCV lowVersionID="3" />
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Brown" />
+          <output name="4" label="Brown" />
+          <output name="5" label="Brown" />
+          <output name="6" label="Brown" />
+          <output name="7" label="Brown" />
+          <output name="8" label="Brown" />
+        </model>
+        <model model="DCX30V" numOuts="10" numFns="12" maxMotorCurrent="0.8 Amp per group" maxTotalCurrent="1.6 Amp">
+          <versionCV lowVersionID="3" />
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Brown" />
+          <output name="4" label="Brown" />
+          <output name="5" label="Brown" />
+          <output name="6" label="Brown" />
+          <output name="7" label="Brown" />
+          <output name="8" label="Brown" />
+          <output name="9" label="Brown" />
+          <output name="10" label="Brown" />
+        </model>
+      </family>
       <family name="AD4" mfg="CVP Products" lowVersionID="40" highVersionID="65" type="stationary" file="CVProducts_AD4.xml">
         <model model="AD4" />
       </family>
@@ -192,6 +245,11 @@
       <family name="DS54" mfg="Digitrax" comment="DS54 is a stationary decoder, but it can be programmed in the usual way" type="locomotive" file="Digitrax_yDS54.xml">
         <model model="DS54" />
       </family>
+      <family name="Function Only, with transponding" mfg="Digitrax" lowVersionID="244" type="locomotive" file="Digitrax_yfunction.xml">
+        <model model="TL1" numOuts="1" numFns="4">
+          <output name="1" label="White" />
+        </model>
+      </family>
       <family name="ESU LokSound2 Silent BEMF/Sound decoders" mfg="ESU" lowVersionID="21" type="locomotive" file="ESU_LokSound2_21.xml">
         <model model="ESU_LokSound2" numOuts="13" numFns="12">
           <output name="1" label="Front Lights" />
@@ -321,6 +379,9 @@
         <model model="KRS-SR" numOuts="4" numFns="8" />
         <model model="SW9-SR" numOuts="4" numFns="8" />
         <model model="D408SR" numOuts="7" numFns="12" />
+      </family>
+      <family name="Quantum" mfg="QSIndustries" type="locomotive" file="QSI_Quantum.xml">
+        <model model="Quantum" />
       </family>
       <family name="DSD diesel" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_DSD_Diesel.xml">
         <model model="DSD diesel" numOuts="4" numFns="8">
