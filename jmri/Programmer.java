@@ -18,7 +18,7 @@ import java.beans.PropertyChangeListener;
  * which in turn can be located from the InstanceManager.
  * @see             jmri.ProgrammerManager
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public interface Programmer  {
 
@@ -28,6 +28,10 @@ public interface Programmer  {
     public static final int PAGEMODE        = 21;
     public static final int DIRECTBITMODE   = 31;
     public static final int DIRECTBYTEMODE  = 32;
+    public static final int ADDRESSMODE     = 41;
+
+    public static final int OPSBYTEMODE     = 101;
+    public static final int OPSBITMODE      = 102;
 
     /**
      * Perform a CV write in the system-specific manner,
