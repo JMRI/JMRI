@@ -3,15 +3,15 @@
 package jmri.jmrix.easydcc;
 
 /**
+ * Defines the interface for listening to traffic on the EasyDcc
+ * communications link.
  *
- * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @author		Bob Jacobsen  Copyright (C) 2001, 2004
+ * @version		$Revision: 1.3 $
  */
-
-public interface EasyDccListener extends java.util.EventListener{
-	public void message(EasyDccMessage m);
-	public void reply(EasyDccReply m);
+public interface EasyDccListener extends jmri.jmrix.AbstractMRListener {
+    public void message(EasyDccMessage m);
+    public void reply(EasyDccReply m);
 }
-
 
 /* @(#)EasyDccListener.java */

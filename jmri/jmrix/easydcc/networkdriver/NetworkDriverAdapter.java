@@ -24,7 +24,7 @@ import javax.comm.SerialPort;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class NetworkDriverAdapter extends EasyDccPortController {
 
@@ -43,12 +43,6 @@ public class NetworkDriverAdapter extends EasyDccPortController {
         jmri.InstanceManager.setPowerManager(new jmri.jmrix.easydcc.EasyDccPowerManager());
 
         jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.easydcc.EasyDccTurnoutManager());
-
-        // start operation
-        // sourceThread = new Thread(p);
-        // sourceThread.start();
-        sinkThread = new Thread(EasyDccTrafficController.instance());
-        sinkThread.start();
 
         jmri.jmrix.easydcc.ActiveFlag.setActive();
     }

@@ -26,7 +26,7 @@ import javax.comm.SerialPort;
  * not use any other options at configuration time.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class SerialDriverAdapter extends EasyDccPortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -134,12 +134,6 @@ public class SerialDriverAdapter extends EasyDccPortController  implements jmri.
 		// KSL 20040409 - Create an instance of EasyDccThrottleManager 
 		jmri.InstanceManager.setThrottleManager(new jmri.jmrix.easydcc.EasyDccThrottleManager());
         
-        // start operation
-        // sourceThread = new Thread(p);
-        // sourceThread.start();
-        sinkThread = new Thread(EasyDccTrafficController.instance());
-        sinkThread.start();
-
         jmri.jmrix.easydcc.ActiveFlag.setActive();
     }
 

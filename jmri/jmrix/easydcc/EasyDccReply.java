@@ -3,51 +3,31 @@
 package jmri.jmrix.easydcc;
 
 /**
- * Carries the reply to an EasyDccMessage
- * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * Carries the reply to an EasyDccMessage.
+ *
+ * @author		Bob Jacobsen  Copyright (C) 2001, 2004
+ * @version             $Revision: 1.8 $
  */
-public class EasyDccReply {
-	// is this logically an abstract class?
+public class EasyDccReply extends jmri.jmrix.AbstractMRReply {
 
-	// create a new one
-	public  EasyDccReply() {
-	}
+    // create a new one
+    public  EasyDccReply() {
+        super();
+    }
+    public EasyDccReply(String s) {
+        super(s);
+    }
+    public EasyDccReply(EasyDccReply l) {
+        super(l);
+    }
 
-	// copy one
-	public  EasyDccReply(EasyDccReply m) {
-		if (m == null)
-			log.error("copy ctor of null message");
-		_nDataChars = m._nDataChars;
-		for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
-	}
-
-	// from String
-	public EasyDccReply(String s) {
-		_nDataChars = s.length();
-		for (int i = 0; i<_nDataChars; i++)
-			_dataChars[i] = s.charAt(i);
-	}
-
-	public void setOpCode(int i) { _dataChars[0]= (char)i;}
-	public int getOpCode() {return _dataChars[0];}
-
-	// accessors to the bulk data
-	public int getNumDataElements() {return _nDataChars;}
-	public int getElement(int n) {return _dataChars[n];}
-	public void setElement(int n, int v) {
-		_dataChars[n] = (char) v;
-		_nDataChars = Math.max(_nDataChars, n+1);
-	}
-
-	// display format
-	public String toString() {
-		String s = "";
-		for (int i=0; i<_nDataChars; i++) {
-				s+=(char)_dataChars[i];
-		}
-		return s;
-	}
+    protected int skipPrefix(int index) {
+		// start at index, passing any whitespace & control characters at the start of the buffer
+		while (index < getNumDataElements()-1 &&
+			((char)getElement(index) <= ' '))
+				index++;
+		return index;
+    }
 
     /**
      * Extracts Read-CV returned value from a message.  Returns
@@ -80,27 +60,7 @@ public class EasyDccReply {
 		return val;
 	}
 
-	int match(String s) {
-		// find a specific string in the reply
-		String rep = new String(_dataChars, 0, _nDataChars);
-		return rep.indexOf(s);
-	}
-
-	int skipWhiteSpace(int index) {
-		// start at index, passing any whitespace & control characters at the start of the buffer
-		while (index < getNumDataElements()-1 &&
-			((char)getElement(index) <= ' '))
-				index++;
-		return index;
-	}
-
-	static public int maxSize = 120;
-
-	// contents (private)
-	private int _nDataChars;
-	private char _dataChars[] = new char[maxSize];
-
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccReply.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccReply.class.getName());
 
 }
 

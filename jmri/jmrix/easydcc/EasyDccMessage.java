@@ -6,11 +6,11 @@ package jmri.jmrix.easydcc;
  * Encodes a message to an EasyDCC command station.  The EasyDccReply
  * class handles the response from the command station.
  * <P>
- * The "state" referred to here is the command station
- * state needed before this message can be sent.
+ * The {@link EasyDccReply}
+ * class handles the response from the command station.
  *
- * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.10 $
+ * @author			Bob Jacobsen  Copyright (C) 2001, 2004
+ * @version			$Revision: 1.11 $
  */
 public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -119,6 +119,8 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
         m.addIntAsThree(val, 3);
         return m;
     }
+
+    static protected int LONG_TIMEOUT=180000;  // e.g. for programming options
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccMessage.class.getName());
 

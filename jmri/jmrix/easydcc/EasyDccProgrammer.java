@@ -12,29 +12,14 @@ import java.beans.PropertyChangeEvent;
  * Implements the jmri.Programmer interface via commands for the EasyDcc powerstation
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccListener {
 
     public EasyDccProgrammer() {
-        // error if more than one constructed?
-        if (self != null)
-            log.debug("Creating too many EasyDccProgrammer objects");
-
-        // register this as the default, register as the Programmer
-        self = this;
-        jmri.InstanceManager.setProgrammerManager(new jmri.DefaultProgrammerManager(this));
-
+        // need a longer LONG_TIMEOUT
+        LONG_TIMEOUT=180000;
     }
-
-    /*
-     * method to find the existing EasyDccProgrammer object, if need be creating one
-     */
-    static public final EasyDccProgrammer instance() {
-        if (self == null) self = new EasyDccProgrammer();
-        return self;
-    }
-    static private EasyDccProgrammer self = null;
 
     // handle mode
     protected int _mode = Programmer.PAGEMODE;
@@ -97,9 +82,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
 
     int progState = 0;
     static final int NOTPROGRAMMING = 0;// is notProgramming
-    static final int MODESENT = 1; 		// waiting reply to command to go into programming mode
     static final int COMMANDSENT = 2; 	// read/write command sent, waiting reply
-    static final int RETURNSENT = 4; 	// waiting reply to go back to ops mode
     boolean  _progRead = false;
     int _val;	// remember the value being read/written for confirmative reply
     int _cv;	// remember the cv being read/written
@@ -110,15 +93,20 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
         useProgrammer(p);
         _progRead = false;
         // set commandPending state
-        progState = MODESENT;
+        progState = COMMANDSENT;
         _val = val;
         _cv = CV;
 
-        // start the error timer
-        startShortTimer();
+        try {
+            // start the error timer
+            startLongTimer();
 
-        // format and send message to go to program mode
-        controller().sendEasyDccMessage(EasyDccMessage.getProgMode(), this);
+            // format and send the write message
+            controller().sendEasyDccMessage(progTaskStart(getMode(), _val, _cv), this);
+        } catch (jmri.ProgrammerException e) {
+            progState = NOTPROGRAMMING;
+            throw e;
+        }
     }
 
     public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
@@ -129,16 +117,20 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
         if (log.isDebugEnabled()) log.debug("readCV "+CV+" listens "+p);
         useProgrammer(p);
         _progRead = true;
-        // set commandPending state
-        // set commandPending state
-        progState = MODESENT;
+
+        progState = COMMANDSENT;
         _cv = CV;
 
-        // start the error timer
-        startShortTimer();
+        try {
+            // start the error timer
+            startLongTimer();
 
-        // format and send message to go to program mode
-        controller().sendEasyDccMessage(EasyDccMessage.getProgMode(), this);
+            // format and send the write message
+            controller().sendEasyDccMessage(progTaskStart(getMode(), -1, _cv), this);
+        } catch (jmri.ProgrammerException e) {
+            progState = NOTPROGRAMMING;
+            throw e;
+        }
 
     }
 
@@ -184,60 +176,26 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
             // we get the complete set of replies now, so ignore these
             if (log.isDebugEnabled()) log.debug("reply in NOTPROGRAMMING state");
             return;
-		} else if (progState == MODESENT) {
-                    if (log.isDebugEnabled()) log.debug("reply in MODESENT state");
-                    // see if reply is the acknowledge of program mode; if not, wait
-                    if ( m.match("P") == -1 ) return;
-                    // here ready to send the read/write command
-                    progState = COMMANDSENT;
-                    // see why waiting
-                    try {
-                        startLongTimer();
-                        if (_progRead) {
-                            // read was in progress - send read command
-                            controller().sendEasyDccMessage(progTaskStart(getMode(), -1, _cv), this);
-                        } else {
-                            // write was in progress - send write command
-                            controller().sendEasyDccMessage(progTaskStart(getMode(), _val, _cv), this);
-                        }
-                    } catch (Exception e) {
-                        // program op failed, go straight to end
-                        log.error("program operation failed, exception "+e);
-                        progState = RETURNSENT;
-                        controller().sendEasyDccMessage(EasyDccMessage.getExitProgMode(), this);
-                    }
-		} else if (progState == COMMANDSENT) {
-                    if (log.isDebugEnabled()) log.debug("reply in COMMANDSENT state");
-                    // operation done, capture result, then have to leave programming mode
-                    progState = RETURNSENT;
-                    // check for errors
-                    if (m.match("--") >= 0) {
-                        if (log.isDebugEnabled()) log.debug("handle error reply "+m);
-                        // perhaps no loco present? Fail back to end of programming
-                        progState = NOTPROGRAMMING;
-                        controller().sendEasyDccMessage(EasyDccMessage.getExitProgMode(), this);
-                        notifyProgListenerEnd(-1, jmri.ProgListener.NoLocoDetected);
-                    }
-                    else {
-                        // see why waiting
-                        if (_progRead) {
-                            // read was in progress - get return value
-                            _val = m.value();
-                        }
-                        startShortTimer();
-                        controller().sendEasyDccMessage(EasyDccMessage.getExitProgMode(), this);
-                    }
-		} else if (progState == RETURNSENT) {
-                    if (log.isDebugEnabled()) log.debug("reply in RETURNSENT state");
-                    // all done, notify listeners of completion
-                    progState = NOTPROGRAMMING;
-                    stopTimer();
-                    // if this was a read, we cached the value earlier.  If its a
-                    // write, we're to return the original write value
-                    notifyProgListenerEnd(_val, jmri.ProgListener.OK);
-		} else {
-                    if (log.isDebugEnabled()) log.debug("reply in un-decoded state");
-		}
+        } else if (progState == COMMANDSENT) {
+            if (log.isDebugEnabled()) log.debug("reply in COMMANDSENT state");
+            // operation done, capture result, then have to leave programming mode
+            progState = NOTPROGRAMMING;
+            // check for errors
+            if (m.match("--") >= 0) {
+                if (log.isDebugEnabled()) log.debug("handle error reply "+m);
+                // perhaps no loco present? Fail back to end of programming
+                notifyProgListenerEnd(-1, jmri.ProgListener.NoLocoDetected);
+            } else {
+                // see why waiting
+                if (_progRead) {
+                // read was in progress - get return value
+                    _val = m.value();
+                }
+                // if this was a read, we retreived the value above.  If its a
+                // write, we're to return the original write value
+                notifyProgListenerEnd(_val, jmri.ProgListener.OK);
+            }
+        }
     }
 
     /**
