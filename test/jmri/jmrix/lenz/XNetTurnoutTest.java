@@ -3,7 +3,7 @@
  *
  * Description:	    tests for the jmri.jmrix.loconet.LnTurnout class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 
 package jmri.jmrix.lenz;
@@ -68,9 +68,9 @@ public class XNetTurnoutTest extends jmri.AbstractTurnoutTest {
 		}
 		Assert.assertTrue(t.getCommandedState() == jmri.Turnout.CLOSED);
 
-		// notify the Ln that somebody else changed it...
+		// notify that somebody else changed it...
 		XNetMessage m = new XNetMessage(4);
-		m.setOpCode(0xb1);
+		m.setOpCode(0x1);
 		m.setElement(1, 0x14);     // set CLOSED
 		m.setElement(2, 0x20);
 		m.setElement(3, 0x7b);
