@@ -11,7 +11,7 @@ import jmri.jmrit.XmlFile;
  * <P>
  * Uses the local preferences for test files.
  * @author Bob Jacobsen Copyright 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class ConfigXmlManagerTest extends TestCase {
 
@@ -57,6 +57,11 @@ public class ConfigXmlManagerTest extends TestCase {
         File f = new File(XmlFile.prefsDir()+"layout"+File.separator+"testConfigXmlManagerTest.xml");
         f.delete();  // remove it if its there
 
+        // if file is at top level, remove that too
+        result = new File("testConfigXmlManagerTest.xml");
+        if (result.exists()) result.delete();
+
+        // check for not found if doesn't exist
         result = configxmlmanager.find("testConfigXmlManagerTest.xml");
         Assert.assertTrue("should not find testConfigXmlManagerTest.xml", result==null);
 
@@ -67,7 +72,18 @@ public class ConfigXmlManagerTest extends TestCase {
 
         result = configxmlmanager.find("testConfigXmlManagerTest.xml");
         Assert.assertTrue("should find testConfigXmlManagerTest.xml", result!=null);
+        f.delete();  // make sure it's gone again
 
+        // check file in the current app dir
+        f = new File("testConfigXmlManagerTest.xml");
+        f.delete();  // remove it if its there
+        p = new PrintStream (new FileOutputStream(f));
+        p.println("stuff"); // load a new one
+        p.close();
+
+        result = configxmlmanager.find("testConfigXmlManagerTest.xml");
+        Assert.assertTrue("should find testConfigXmlManagerTest.xml in app dir", result!=null);
+        f.delete();  // make sure it's gone again
     }
 
     // test suite from all defined tests
