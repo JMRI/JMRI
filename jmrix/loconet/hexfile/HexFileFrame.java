@@ -23,9 +23,6 @@ import ErrLoggerJ.ErrLog;
 
 public class HexFileFrame extends javax.swing.JFrame {
 
-// IMPORTANT: Source code between BEGIN/END comment pair will be regenerated
-// every time the form is saved. All manual changes will be overwritten.
-// BEGIN GENERATED CODE
 	// member declarations
 	javax.swing.JTextField filenameTextField = new javax.swing.JTextField();
 	javax.swing.JButton openHexFileButton = new javax.swing.JButton();
@@ -33,15 +30,11 @@ public class HexFileFrame extends javax.swing.JFrame {
 	javax.swing.JButton jButton1 = new javax.swing.JButton();
 	javax.swing.JTextField delayField = new javax.swing.JTextField();
 	javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
-// END GENERATED CODE
 
 	public HexFileFrame() {
 	}
 
 	public void initComponents() throws Exception {
-// IMPORTANT: Source code between BEGIN/END comment pair will be regenerated
-// every time the form is saved. All manual changes will be overwritten.
-// BEGIN GENERATED CODE
 		// the following code sets the frame's initial state
 
 		filenameTextField.setText("lnpacket.hex");
@@ -117,8 +110,6 @@ public class HexFileFrame extends javax.swing.JFrame {
 			}
 		});
 
-// END GENERATED CODE
-
 		// create a new Hex file handler, set its delay
 		p = new LnHexFilePort();
 		p.setDelay(Integer.valueOf(delayField.getText()).intValue());
@@ -165,6 +156,11 @@ public class HexFileFrame extends javax.swing.JFrame {
 		LnTrafficController.instance().connectPort(p);
 		connected = true;
 		
+		// If a jmri.Programmer instance doesn't exist, create a 
+		// loconet.SlotManager to do that
+		if (jmri.InstanceManager.programmerInstance() == null) 
+			jmri.jmrix.loconet.SlotManager.instance();
+
 		// start operation
 		sourceThread = new Thread(p);
 		sourceThread.start();

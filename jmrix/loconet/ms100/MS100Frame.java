@@ -103,6 +103,11 @@ public class MS100Frame extends javax.swing.JFrame {
 				
 		// connect to the traffic controller
 		LnTrafficController.instance().connectPort(adapter);
+		
+		// If a jmri.Programmer instance doesn't exist, create a 
+		// loconet.SlotManager to do that
+		if (jmri.InstanceManager.programmerInstance() == null) 
+			jmri.jmrix.loconet.SlotManager.instance();
 				
 		// start operation
 		// sourceThread = new Thread(p);

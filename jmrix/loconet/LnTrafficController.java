@@ -113,10 +113,13 @@ public class LnTrafficController implements LocoNetInterface, Runnable {
 				
 	/**
 	 * static function returning the LnTrafficController instance to use.
-	 * @return The registered LnTrafficController instance for general use
-	 *         or null if none exist yet.
+	 * @return The registered LnTrafficController instance for general use,
+	 *         if need be creating one.
 	 */
-	static public LnTrafficController instance() { return self;}
+	static public LnTrafficController instance() { 
+		if (self == null) self = new LnTrafficController();
+		return self;
+	}
 	
 	static private LnTrafficController self = null;
 	

@@ -11,15 +11,16 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
-import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.hexfile.LnHexFileAction;
 import jmri.jmrix.loconet.ms100.MS100Action;
 import jmri.jmrix.loconet.locomon.LocoMonAction;
 import jmri.jmrix.loconet.locogen.LocoGenAction;
 import jmri.jmrix.loconet.locoecho.LocoEchoAction;
 import jmri.jmrix.loconet.slotmon.SlotMonAction;
+
 import jmri.simpleprog.SimpleProgAction;
 import jmri.symbolicprog.SymbolicProgAction;
+
 import ErrLoggerJ. ErrLogFrameAction;
 
 public class JMRIdemo extends JPanel {
@@ -42,9 +43,6 @@ public class JMRIdemo extends JPanel {
 		add(helpLabel2, BorderLayout.SOUTH);     
 		helpLabel2.setText("then one or more things from the right.");
 	
-	// create infrastructure objects for LocoNet
-		LnTrafficController tc = new LnTrafficController();
-
 	// create actions for user control
 		hexfileAction  = new LnHexFileAction("Hex File");
 		ms100Action    = new MS100Action("MS100");
@@ -100,8 +98,6 @@ public class JMRIdemo extends JPanel {
 	private SymbolicProgAction symbolicprogAction;
 
 	private ErrLogFrameAction errlogAction;
-
-	private LnTrafficController tc;
 	
 	// GUI members
     private JMenuBar menuBar;

@@ -44,7 +44,9 @@ public class SlotManager implements LocoNetListener, Programmer {
 	// this will actually require a delayed return value - what impact does that have?
 	LocoNetSlot fromLocoAddress(int i) { return null; }
 	
-// method to find the existing SlotManager object
+	/* 
+	 * method to find the existing SlotManager object, if need be creating one
+	 */
 	static public final SlotManager instance() { 
 		if (self == null) self = new SlotManager();
 		return self;

@@ -198,19 +198,33 @@ public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgList
 	
 	// handle the buttons being pushed
 	public void readPushed(java.awt.event.ActionEvent e) {
-		try {
-			resultsField.setText("programming...");
-			jmri.InstanceManager.programmerInstance().readCV(getNewAddr(),getNewMode(),this);
-		} catch (jmri.ProgrammerException ex) {
-			resultsField.setText(""+ex);
+		Programmer p = jmri.InstanceManager.programmerInstance();
+		if (p == null) {
+			resultsField.setText("No programmer connected");
+			readButton.setSelected(false);
+		} else {
+			try {
+				resultsField.setText("programming...");
+				p.readCV(getNewAddr(),getNewMode(),this);
+			} catch (jmri.ProgrammerException ex) {
+				resultsField.setText(""+ex);
+				readButton.setSelected(false);
+			}
 		}
 	}
 	public void writePushed(java.awt.event.ActionEvent e) {
-		try {
-			resultsField.setText("programming...");
-			jmri.InstanceManager.programmerInstance().writeCV(getNewAddr(),getNewVal(),getNewMode(),this);
-		} catch (jmri.ProgrammerException ex) {
-			resultsField.setText(""+ex);
+		Programmer p = jmri.InstanceManager.programmerInstance();
+		if (p == null) {
+			resultsField.setText("No programmer connected");
+			writeButton.setSelected(false);
+		} else {
+			try {
+				resultsField.setText("programming...");
+			p.writeCV(getNewAddr(),getNewVal(),getNewMode(),this);
+			} catch (jmri.ProgrammerException ex) {
+				resultsField.setText(""+ex);
+				writeButton.setSelected(false);
+			}
 		}
 	}
 
