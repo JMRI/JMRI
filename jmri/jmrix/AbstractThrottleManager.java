@@ -3,7 +3,7 @@ package jmri.jmrix;
 import jmri.ThrottleManager;
 import jmri.ThrottleListener;
 import jmri.DccThrottle;
-import java.util.*;
+import java.util.HashMap;
 
 /**
  * Abstract implementation of a ThrottleManager.
@@ -12,12 +12,10 @@ import java.util.*;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 abstract public class AbstractThrottleManager implements ThrottleManager {
     private HashMap throttleListeners;
-    private HashMap throttleMap;
-
 
     /**
      * Request a throttle, given a decoder address. When the decoder address
@@ -34,26 +32,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         }
 
         Integer addressKey = new Integer(address);
-        ArrayList list = (ArrayList)throttleListeners.get(addressKey);
-        if (list == null)
-        {
-            list = new ArrayList(2);
-        }
-        if (!list.contains(l))
-        {
-            list.add(l);
-        }
-        throttleListeners.put(addressKey, list);
-
-        // does Throttle object already exist for this?
-        if (throttleMap!=null) {
-            // return existing one if it exists
-            DccThrottle throttle = (DccThrottle)throttleMap.get(addressKey);
-            if (throttle!=null)
-                notifyThrottleKnown(throttle, address);
-                return;
-        }
-        // if we get here, we need to make a new one
+        throttleListeners.put(addressKey, l);
         requestThrottleSetup(address);
     }
 
@@ -73,12 +52,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         if (throttleListeners != null)
         {
             Integer addressKey = new Integer(address);
-            ArrayList list = (ArrayList)throttleListeners.get(addressKey);
-            if (list != null)
-            {
-                list.remove(l);
-                throttleListeners.put(addressKey, list);
-            }
+            throttleListeners.remove(addressKey);
         }
 
     }
@@ -94,21 +68,11 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     {
         log.debug("notifyThrottleKnown for "+addr);
         Integer address = new Integer(addr);
-        ArrayList list = (ArrayList)throttleListeners.get(address);
-        if (list != null)
+        ThrottleListener l = (ThrottleListener)throttleListeners.get(address);
+        if (l != null)
         {
-            if (throttleMap == null)
-            {
-                throttleMap = new HashMap();
-            }
-
-            throttleMap.put(address, throttle);
-            for (int i=0; i<list.size(); i++)
-            {
-                ThrottleListener listener = (ThrottleListener)list.get(i);
-                log.debug("Notify listener");
-                listener.notifyThrottleFound(throttle);
-            }
+			log.debug("Notify listener");
+            l.notifyThrottleFound(throttle);
         }
     }
 

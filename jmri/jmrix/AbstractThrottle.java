@@ -9,7 +9,7 @@ import java.beans.*;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author  Bob Jacobsen  Copyright (C) 2001
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 abstract public class AbstractThrottle implements DccThrottle {
     protected float speedSetting;
@@ -25,9 +25,9 @@ abstract public class AbstractThrottle implements DccThrottle {
     protected boolean active;
 
     public AbstractThrottle() {
-        active = true;
+		active = true;
     }
-
+	
     /** speed - expressed as a value 0.0 -> 1.0. Negative means emergency stop.
      * This is an bound parameter.
      */
