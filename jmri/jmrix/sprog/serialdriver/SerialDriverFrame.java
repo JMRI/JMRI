@@ -1,19 +1,14 @@
-/** 
- * SerialDriverFrame.java
- *
- * Description:		Frame to control and connect Sprog command station via SerialDriver interface and comm port
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: SerialDriverFrame.java,v 1.1 2003-01-27 05:35:40 jacobsen Exp $
- */
+// SerialDriverFrame.java
 
 package jmri.jmrix.sprog.serialdriver;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+import javax.swing.JOptionPane;
 
-import jmri.jmrix.sprog.SprogTrafficController;
-
+/**
+ * Frame to control and connect Sprog command station via SerialDriver interface and comm port
+ * @author			Bob Jacobsen   Copyright (C) 2001
+ * @version			$Revision: 1.2 $
+ */
 public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {
 
 	public SerialDriverFrame() {
@@ -25,9 +20,9 @@ public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {
 		if ((String) portBox.getSelectedItem() != null) {
 			// connect to the port
 			adapter.openPort((String) portBox.getSelectedItem(),"SerialDriverFrame");
-				
+
 			adapter.configure();
-						
+
 			// hide this frame, since we're done
 			hide();
 		} else {

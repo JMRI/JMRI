@@ -33,7 +33,7 @@ import org.jdom.Element;
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
@@ -55,11 +55,11 @@ public class PaneProgPane extends javax.swing.JPanel
     /**
      * Construct the Pane from the XML definition element.
      *
-     * @parameter name  Name to appear on tab of pane
-     * @parameter pane  The JDOM Element for the pane definition
-     * @parameter cvModel Already existing TableModel containing the CV definitions
-     * @parameter varModel Already existing TableModel containing the variable definitions
-     * @parameter modelElem "model" element from the Decoder Index, used to check what decoder options are present.
+     * @param name  Name to appear on tab of pane
+     * @param pane  The JDOM Element for the pane definition
+     * @param cvModel Already existing TableModel containing the CV definitions
+     * @param varModel Already existing TableModel containing the variable definitions
+     * @param modelElem "model" element from the Decoder Index, used to check what decoder options are present.
      */
     public PaneProgPane(String name, Element pane, CvTableModel cvModel, VariableTableModel varModel, Element modelElem) {
 

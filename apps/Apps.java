@@ -2,8 +2,6 @@
 
 package apps;
 
-import apps.PanelPro.PanelProConfigPanel;
-
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import java.awt.Dimension;
@@ -20,7 +18,7 @@ import javax.swing.*;
  * Base class for Jmri Apps
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class Apps extends JPanel {
 
@@ -164,7 +162,7 @@ public class Apps extends JPanel {
 
     /**
      * Fill in the logo and status panel
-     * @return
+     * @return Properly-filled out JPanel
      */
     protected JPanel statusPanel() {
         JPanel pane1 = new JPanel();

@@ -1,10 +1,19 @@
 package jmri.jmrit.throttle;
-import java.awt.*;
-import java.awt.event.*;
+import jmri.DccThrottle;
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.*;
-import javax.swing.event.*;
-import jmri.DccThrottle;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.jdom.Element;
 
@@ -13,7 +22,7 @@ import org.jdom.Element;
  *  for forward, reverse and STOP. TODO: fix speed increments (14, 28)
  *
  * @author     glen
- * @created    March 30, 2003
+ * @version    $Revision: 1.21 $
  */
 public class ControlPanel extends JInternalFrame
 {
@@ -277,7 +286,7 @@ public class ControlPanel extends JInternalFrame
 	 *  A KeyAdapter that listens for the keys that work the control pad buttons
 	 *
 	 * @author     glen
-	 * @created    March 30, 2003
+         * @version    $Revision: 1.21 $
 	 */
 	class ControlPadKeyListener extends KeyAdapter
 	{

@@ -17,7 +17,7 @@ package jmri;
  * be using the reserve/release interface.
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public interface ProgrammerManager  {
 
@@ -28,8 +28,8 @@ public interface ProgrammerManager  {
     public Programmer getServiceModeProgrammer();
     /**
      * Gain access to a Ops Mode Programmer without reservation.
-     * @parm pLongAddress true if this is a long (14 bit) address, else false
-     * @parm pAddress Specific decoder address to use.
+     * @param pLongAddress true if this is a long (14 bit) address, else false
+     * @param pAddress Specific decoder address to use.
      * @return null only if there isn't an Ops Mode Programmer in the system
      */
     public Programmer getOpsModeProgrammer(boolean pLongAddress, int pAddress);
@@ -49,8 +49,8 @@ public interface ProgrammerManager  {
     /**
      * Gain access to a (the) Ops Mode Programmer, in the process
      * reserving it for yourself.
-     * @parm pLongAddress true if this is a long (14 bit) address, else false
-     * @parm pAddress Specific decoder address to use.
+     * @param pLongAddress true if this is a long (14 bit) address, else false
+     * @param pAddress Specific decoder address to use.
      * @return null if the address is in use by a reserved programmer
      */
     public Programmer reserveOpsModeProgrammer(boolean pLongAddress, int pAddress);
@@ -63,7 +63,7 @@ public interface ProgrammerManager  {
     /**
      * Convenience method to check whether you'll be able to get
      * an Ops Mode programmer.
-     * @returns false if there's no chance of getting one
+     * @return false if there's no chance of getting one
      */
     public boolean isOpsModePossible();
 

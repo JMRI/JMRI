@@ -1,14 +1,11 @@
-/**
- * NceInterface.java
- *
- * Description:		<describe the NceInterface class here>
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Id: NceInterface.java,v 1.1 2002-02-28 23:57:35 jacobsen Exp $
- */
+// NceInterface.java
 
 package jmri.jmrix.nce;
 
-
+/**
+ * @author			Bob Jacobsen Copyright (C) 2001
+ * @version			$Revision: 1.2 $
+ */
 public interface NceInterface {
 
 	public void addNceListener( NceListener l);

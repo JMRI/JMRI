@@ -1,13 +1,11 @@
-/**
- * SprogInterface.java
- *
- * Description:		<describe the SprogInterface class here>
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Id: SprogInterface.java,v 1.1 2003-01-27 05:24:00 jacobsen Exp $
- */
+// SprogInterface.java
 
 package jmri.jmrix.sprog;
 
+/**
+ * @author			Bob Jacobsen Copyright (C) 2001
+ * @version			$Revision: 1.2 $
+ */
 
 public interface SprogInterface {
 

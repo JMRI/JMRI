@@ -1,27 +1,17 @@
-/**
- * SprogMonFrame.java
- *
- * Description:		Frame displaying (and logging) Sprog command messages
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: SprogMonFrame.java,v 1.1 2003-01-27 05:35:40 jacobsen Exp $
- */
+// SprogMonFrame.java
 
 package jmri.jmrix.sprog.sprogmon;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import java.util.Date;
-import java.text.DateFormat;
-import java.io.File;
-import java.io.PrintStream;
-import java.io.FileOutputStream;
-
 import jmri.jmrix.sprog.SprogListener;
-import jmri.jmrix.sprog.SprogTrafficController;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
+import jmri.jmrix.sprog.SprogTrafficController;
 
+/**
+ * Frame displaying (and logging) Sprog command messages
+ * @author			Bob Jacobsen   Copyright (C) 2001
+ * @version			$Revision: 1.2 $
+ */
 public class SprogMonFrame extends jmri.jmrix.AbstractMonFrame implements SprogListener {
 
 	public SprogMonFrame() {

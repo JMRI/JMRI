@@ -2,18 +2,13 @@
 
 package jmri;
 
-import java.util.Hashtable;
-import java.util.Enumeration;
-import com.sun.java.util.collections.List;
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.Collections;
 
 
 /**
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
     implements TurnoutManager {
@@ -82,7 +77,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
     /**
      * Internal method to invoke the factory, after all the
      * logic for returning an existing method has been invoked.
-     * @return
+     * @return never null
      */
     abstract protected Turnout createNewTurnout(String systemName, String userName);
 

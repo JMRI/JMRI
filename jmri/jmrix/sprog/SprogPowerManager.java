@@ -1,10 +1,4 @@
-/** 
- * SprogPowerManager.java
- *
- * Description:		PowerManager implementation for controlling layout power
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Id: SprogPowerManager.java,v 1.1 2003-01-27 05:24:00 jacobsen Exp $
- */
+// SprogPowerManager.java
 
 package jmri.jmrix.sprog;
 
@@ -13,6 +7,11 @@ import jmri.PowerManager;
 
 import java.beans.PropertyChangeListener;
 
+/**
+ * PowerManager implementation for controlling layout power
+ * @author			Bob Jacobsen Copyright (C) 2001
+ * @version			$Revision: 1.2 $
+ */
 public class SprogPowerManager implements PowerManager, SprogListener {
 
 	public SprogPowerManager() {
@@ -25,7 +24,7 @@ public class SprogPowerManager implements PowerManager, SprogListener {
 
 	boolean waiting = false;
 	int onReply = UNKNOWN;
-		
+
 	public void setPower(int v) throws JmriException {
 		power = UNKNOWN; // while waiting for reply
 		checkTC();
@@ -47,7 +46,7 @@ public class SprogPowerManager implements PowerManager, SprogListener {
 		}
 		firePropertyChange("Power", null, null);
 	}
-	
+
 	public int getPower() { return power;}
 
 	// to free resources when no longer used
@@ -59,22 +58,22 @@ public class SprogPowerManager implements PowerManager, SprogListener {
 	private void checkTC() throws JmriException {
 		if (tc == null) throw new JmriException("attempt to use SprogPowerManager after dispose");
 	}
-	
+
 	// to hear of changes
 	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-	public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) { 
+	public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
 		pcs.addPropertyChangeListener(l);
 		}
 	protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
-	public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) { 
+	public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
 		pcs.removePropertyChangeListener(l);
 		}
-	
+
 	SprogTrafficController tc = null;
 
 	// to listen for status changes from Sprog system
 	public void reply(SprogReply m) {
-		if (waiting) {  
+		if (waiting) {
 			power = onReply;
 			firePropertyChange("Power", null, null);
 		}
@@ -82,7 +81,7 @@ public class SprogPowerManager implements PowerManager, SprogListener {
 	}
 
 	public void message(SprogMessage m) {
-		if (m.isKillMain() ) {  
+		if (m.isKillMain() ) {
 			// configure to wait for reply
 			waiting = true;
 			onReply = PowerManager.OFF;
@@ -92,7 +91,7 @@ public class SprogPowerManager implements PowerManager, SprogListener {
 			onReply = PowerManager.ON;
 		}
 	}
-	
+
 }
 
 

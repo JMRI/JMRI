@@ -2,11 +2,12 @@
 
 package jmri.jmrix.cmri.serial;
 
-import jmri.jmrix.*;
-import java.io.InputStream;
+import jmri.jmrix.AbstractMRListener;
+import jmri.jmrix.AbstractMRMessage;
+import jmri.jmrix.AbstractMRReply;
+import jmri.jmrix.AbstractMRTrafficController;
+
 import java.io.DataInputStream;
-import java.io.OutputStream;
-import java.util.Vector;
 
 /**
  * Converts Stream-based I/O to/from C/MRI serial messages.  The "SerialInterface"
@@ -21,7 +22,7 @@ import java.util.Vector;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -190,7 +191,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     /**
      * Add header to the outgoing byte stream.
      * @param msg  The output byte stream
-     * @returns next location in the stream to fill
+     * @return next location in the stream to fill
      */
     protected int addHeaderToOutput(byte[] msg, AbstractMRMessage m) {
         msg[0] = (byte) 0xFF;
@@ -212,7 +213,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
      * Determine how much many bytes the entire
      * message will take, including space for header and trailer
      * @param m  The message to be sent
-     * @returns Number of bytes
+     * @return Number of bytes
      */
     protected int lengthOfByteStream(AbstractMRMessage m) {
         int len = m.getNumDataElements();

@@ -1,23 +1,23 @@
-/** 
- * SprogMonAction.java
- *
- * Description:		Swing action to create and register a 
- *       			SprogMonFrame object
- *
- * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Id: SprogMonAction.java,v 1.1 2003-01-27 05:35:40 jacobsen Exp $
- */
+//SprogMonAction.java
 
 package jmri.jmrix.sprog.sprogmon;
 
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
+import javax.swing.AbstractAction;
+
+/**
+ * Swing action to create and register a
+ *       			SprogMonFrame object
+ *
+ * @author			Bob Jacobsen    Copyright (C) 2001
+ * @version			$Revision: 1.2 $
+ */
 
 public class SprogMonAction 			extends AbstractAction {
 
 	public SprogMonAction(String s) { super(s);}
-	
+
     public void actionPerformed(ActionEvent e) {
 		// create a SprogMonFrame
 		SprogMonFrame f = new SprogMonFrame();
@@ -27,7 +27,7 @@ public class SprogMonAction 			extends AbstractAction {
 		catch (Exception ex) {
 			log.warn("SprogMonAction starting SprogMonFrame: Exception: "+ex.toString());
 			}
-		f.show();	
+		f.show();
 	}
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogMonAction.class.getName());

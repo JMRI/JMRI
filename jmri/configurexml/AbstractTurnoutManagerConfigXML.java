@@ -1,10 +1,9 @@
 package jmri.configurexml;
 
-import org.jdom.Element;
-import com.sun.java.util.collections.List;
-
 import jmri.InstanceManager;
 import jmri.TurnoutManager;
+import com.sun.java.util.collections.List;
+import org.jdom.Element;
 
 /**
  * Provides the abstract base and store functionality for
@@ -18,7 +17,7 @@ import jmri.TurnoutManager;
  * specific Turnout or AbstractTurnout subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
 

@@ -2,14 +2,15 @@
 
 package jmri.jmrix.loconet;
 
-import jmri.*;
+import jmri.DefaultProgrammerManager;
+import jmri.Programmer;
 
 /**
  * Extend DefaultProgrammerManager to provide ops mode programmers on LocoNet
  *
  * @see         jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class LnProgrammerManager  extends DefaultProgrammerManager {
 
@@ -24,7 +25,7 @@ public class LnProgrammerManager  extends DefaultProgrammerManager {
 
     /**
      * LocoNet command station does provide Ops Mode
-     * @returns true
+     * @return true
      */
     public boolean isOpsModePossible() {return true;}
 

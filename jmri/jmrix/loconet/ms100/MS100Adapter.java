@@ -2,19 +2,24 @@
 
 package jmri.jmrix.loconet.ms100;
 
+import jmri.jmrix.loconet.LnPacketizer;
+import jmri.jmrix.loconet.LnPortController;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Enumeration;
+import java.util.Vector;
+
 import javax.comm.CommPortIdentifier;
 import javax.comm.PortInUseException;
 import javax.comm.SerialPort;
-import java.util.Enumeration;
-import java.util.Vector;
-import java.io.DataOutputStream;
-import java.io.DataInputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 
-import Serialio.*;
-
-import jmri.jmrix.loconet.*;
+import Serialio.SerInputStream;
+import Serialio.SerOutputStream;
+import Serialio.SerialConfig;
+import Serialio.SerialPortLocal;
 
 /**
  * Provide access to LocoNet via a MS100 attached to a serial comm port.
@@ -24,7 +29,7 @@ import jmri.jmrix.loconet.*;
  * Neither the baud rate configuration nor the "option 1" option are used.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -299,7 +304,6 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
     /**
      * Set the second port option.  Only to be used after construction, but
      * before the openPort call
-     * @throws jmri.jmrix.SerialConfigException
      */
     public void configureOption2(String value) {
         super.configureOption2(value);

@@ -1,18 +1,18 @@
-/**
- * SprogPacketGenAction.java
- *
- * Description:		Swing action to create and register a
- *       			SprogPacketGenFrame object
- *
- * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Id: SprogPacketGenAction.java,v 1.1 2003-01-27 05:35:40 jacobsen Exp $
- */
+// SprogPacketGenAction.java
 
 package jmri.jmrix.sprog.packetgen;
 
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
+import javax.swing.AbstractAction;
+
+/**
+ * Swing action to create and register a
+ *       			SprogPacketGenFrame object
+ *
+ * @author			Bob Jacobsen    Copyright (C) 2001
+ * @version			$Revision: 1.2 $
+ */
 public class SprogPacketGenAction 			extends AbstractAction {
 
 	public SprogPacketGenAction(String s) { super(s);}

@@ -16,13 +16,13 @@ import java.io.Serializable;
  * They may not appear at all...
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  *
  */
 public abstract class NetMessage implements Serializable {
 
 	/** Create a new object, representing a specific-length message.
-	 * @parameter len Total bytes in message, including opcode and error-detection byte.
+	 * @param len Total bytes in message, including opcode and error-detection byte.
 	 */
 	public NetMessage(int len) {
 		if (len<0)

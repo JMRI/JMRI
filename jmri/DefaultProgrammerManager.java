@@ -9,7 +9,7 @@ package jmri;
  *
  * @see             jmri.ProgrammerManager
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class DefaultProgrammerManager implements ProgrammerManager {
 
@@ -40,7 +40,7 @@ public class DefaultProgrammerManager implements ProgrammerManager {
 
     /**
      * Default programmer does not provide Ops Mode
-     * @returns false if there's no chance of getting one
+     * @return false if there's no chance of getting one
      */
     public boolean isOpsModePossible() {return false;}
 

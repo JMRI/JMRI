@@ -2,9 +2,6 @@
 
 package jmri.jmrix.loconet;
 
-import com.sun.java.util.collections.LinkedList;
-import com.sun.java.util.collections.NoSuchElementException;
-
 import java.util.Vector;
 
 /**
@@ -18,7 +15,7 @@ import java.util.Vector;
  * without traffic over the connection.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Id: LnTrafficRouter.java,v 1.2 2002-03-28 04:21:46 jacobsen Exp $
+ * @version 		$Revision: 1.3 $
  *
  */
 public class LnTrafficRouter extends LnTrafficController implements LocoNetListener {

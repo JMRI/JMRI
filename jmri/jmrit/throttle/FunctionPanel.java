@@ -1,10 +1,14 @@
 package jmri.jmrit.throttle;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.event.KeyListener;
 import jmri.DccThrottle;
+import java.awt.FlowLayout;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+import javax.swing.ActionMap;
+import javax.swing.JInternalFrame;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
 import org.jdom.Element;
 
@@ -174,7 +178,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener
 	 *  A KeyAdapter that listens for the keys that work the function buttons
 	 *
 	 * @author     glen
-	 * @created    March 30, 2003
+          * @version    $Revision: 1.18 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter
 	{

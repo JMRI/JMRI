@@ -1,19 +1,18 @@
-/**
- * SerialMonAction.java
- *
- * Description:		Swing action to create and register a
- *       			SerialMonFrame object
- *
- * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Id: SerialMonAction.java,v 1.2 2003-05-11 02:00:34 jacobsen Exp $
- */
+// SerialMonAction.java
 
 package jmri.jmrix.cmri.serial.serialmon;
 
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
+import javax.swing.AbstractAction;
 
+/**
+ * Swing action to create and register a
+ *       			SerialMonFrame object
+ *
+ * @author			Bob Jacobsen    Copyright (C) 2001
+ * @version			$Revision: 1.3 $
+ */
 public class SerialMonAction 			extends AbstractAction {
 
 	public SerialMonAction(String s) { super(s);}

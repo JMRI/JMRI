@@ -1,18 +1,19 @@
 package jmri.jmrit.display.configurexml;
 
-import org.jdom.Element;
-import com.sun.java.util.collections.List;
-
 import jmri.InstanceManager;
-import jmri.jmrit.display.PanelEditor;
 import jmri.configurexml.XmlAdapter;
-import javax.swing.*;
+import jmri.jmrit.display.PanelEditor;
+import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
+
+import com.sun.java.util.collections.List;
+import org.jdom.Element;
 
 /**
  * Handle configuration for display.PanelEditor panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class PanelEditorXml implements XmlAdapter {
 

@@ -1,9 +1,9 @@
 package jmri.configurexml;
 
-import org.jdom.Element;
+import jmri.InstanceManager;
+import jmri.SensorManager;
 import com.sun.java.util.collections.List;
-
-import jmri.*;
+import org.jdom.Element;
 
 /**
  * Provides the abstract base and store functionality for
@@ -17,7 +17,7 @@ import jmri.*;
  * specific Sensor or AbstractSensor subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public abstract class AbstractSensorManagerConfigXML implements XmlAdapter {
 

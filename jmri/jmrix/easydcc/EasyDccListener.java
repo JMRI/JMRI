@@ -1,13 +1,12 @@
-/** 
- * EasyDccListener.java
- *
- * Description:		<describe the EasyDccListener class here>
- * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Id: EasyDccListener.java,v 1.1 2002-03-23 07:28:30 jacobsen Exp $
- */
+// EasyDccListener.java
 
 package jmri.jmrix.easydcc;
 
+/**
+ *
+ * @author			Bob Jacobsen  Copyright (C) 2001
+ * @version			$Revision: 1.2 $
+ */
 
 public interface EasyDccListener extends java.util.EventListener{
 	public void message(EasyDccMessage m);

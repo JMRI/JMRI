@@ -1,15 +1,28 @@
 package jmri.jmrit.throttle;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.PrintWriter;
-import javax.swing.*;
-import javax.swing.event.*;
-
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.ThrottleListener;
-import jmri.ThrottleManager;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JDesktopPane;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 
 import org.jdom.Element;
 
@@ -21,8 +34,7 @@ import org.jdom.Element;
  *  directed by the interface.
  *
  * @author     Glen Oberhauser
- * @created    March 25, 2003
- * @version     $Revision: 1.18 $
+ * @version    $Revision: 1.19 $
  */
 public class ThrottleFrame extends JFrame implements AddressListener, ThrottleListener
 {
@@ -284,7 +296,6 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 	 * the JInternalFrames.
 	 *
 	 * @author     glen
-	 * @created    March 30, 2003
 	 */
 	class FrameCyclingKeyListener extends KeyAdapter
 	{
@@ -333,7 +344,6 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 	 *  this frame's internal frames.
 	 *
 	 * @author     glen
-	 * @created    March 25, 2003
 	 */
 	class FrameListener extends InternalFrameAdapter
 	{

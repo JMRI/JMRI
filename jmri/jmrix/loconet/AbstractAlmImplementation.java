@@ -18,7 +18,7 @@ package jmri.jmrix.loconet;
  * contact Digitrax Inc for separate permission.
  *
  * @author Bob Jacobsen     Copyright 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public abstract class AbstractAlmImplementation implements LocoNetListener {
@@ -170,7 +170,7 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
      *
      * @param block The block number, starting with 0
      * @param item Item number within the block, as 0,1,2,3
-     * @returns The integer argument value
+     * @return The integer argument value
      */
     abstract int retrieve(int block, int item);
 

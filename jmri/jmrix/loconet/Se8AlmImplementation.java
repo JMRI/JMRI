@@ -19,7 +19,7 @@ package jmri.jmrix.loconet;
  * contact Digitrax Inc for separate permission.
  *
  * @author Bob Jacobsen     Copyright 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class Se8AlmImplementation extends AbstractAlmImplementation {
@@ -57,7 +57,7 @@ public class Se8AlmImplementation extends AbstractAlmImplementation {
      *
      * @param block The block number, starting with 0
      * @param item Item number within the block, as 0,1,2,3
-     * @returns The integer argument value
+     * @return The integer argument value
      */
     int retrieve(int block, int item) {
         return contents[page(block, item)][block*4+item];
@@ -87,7 +87,7 @@ public class Se8AlmImplementation extends AbstractAlmImplementation {
      * Pages are numbered 0 to MAXPAGE-1 internally, are are stored
      * in the array that way, but because of the way the throttle-resident
      * editor works, are visible to the user as the human-readable 1 to MAXPAGE.
-     * @returns 0-7
+     * @return 0-7
      */
     int page(int block, int item) {
         // if you're accessing the page value, it's on internal page 0

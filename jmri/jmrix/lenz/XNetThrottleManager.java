@@ -1,16 +1,13 @@
 package jmri.jmrix.lenz;
 
-import jmri.ThrottleManager;
 import jmri.ThrottleListener;
-import jmri.DccThrottle;
-import jmri.JmriException;
-import com.sun.java.util.collections.*;
+import jmri.ThrottleManager;
+import com.sun.java.util.collections.HashMap;
 
 /**
  * XNet implementation of a ThrottleManager
  * @author     Paul Bender Copyright (C) 2002,2003
- * @created    December 20,2002
- * @version    $Revision: 1.6 $
+ * @version    $Revision: 1.7 $
  */
 
 public class XNetThrottleManager implements ThrottleManager,XNetListener

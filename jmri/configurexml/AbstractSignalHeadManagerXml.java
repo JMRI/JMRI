@@ -1,9 +1,10 @@
 package jmri.configurexml;
 
-import org.jdom.Element;
+import jmri.AbstractSignalHeadManager;
+import jmri.InstanceManager;
+import jmri.SignalHeadManager;
 import com.sun.java.util.collections.List;
-
-import jmri.*;
+import org.jdom.Element;
 
 /**
  * Provides the abstract base and store functionality for
@@ -19,7 +20,7 @@ import jmri.*;
  * Based on AbstractTurnoutManagerConfigXML
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class AbstractSignalHeadManagerXml implements XmlAdapter {
 

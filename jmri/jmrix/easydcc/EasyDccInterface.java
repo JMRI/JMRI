@@ -1,14 +1,12 @@
-/**
- * EasyDccInterface.java
- *
- * Description:		<describe the EasyDccInterface class here>
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Id: EasyDccInterface.java,v 1.1 2002-03-23 07:28:30 jacobsen Exp $
- */
+// EasyDccInterface.java
 
 package jmri.jmrix.easydcc;
 
-
+/**
+ * Layout interface, similar to command station
+ * @author			Bob Jacobsen Copyright (C) 2001
+ * @version			$Revision: 1.2 $
+ */
 public interface EasyDccInterface {
 
 	public void addEasyDccListener( EasyDccListener l);

@@ -2,17 +2,24 @@
 
 package jmri.jmrit;
 
-import javax.swing.*;
-import java.awt.event.*;
-import java.awt.*;
-import jmri.jmrit.roster.*;
-import jmri.jmrit.decoderdefn.*;
+import jmri.jmrit.decoderdefn.DecoderIndexFile;
+import jmri.jmrit.roster.Roster;
+import java.awt.Container;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 /**
  * Display memory usage on request
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: MemoryFrameAction.java,v 1.3 2003-05-11 02:00:30 jacobsen Exp $
+ * @version			$Revision: 1.4 $
  */
 public class MemoryFrameAction extends AbstractAction {
 

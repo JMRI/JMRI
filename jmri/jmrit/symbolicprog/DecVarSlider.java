@@ -2,20 +2,18 @@
 
 package jmri.jmrit.symbolicprog;
 
-import java.awt.Component;
-import java.util.*;
-import javax.swing.*;
-import javax.swing.table.*;
-import javax.swing.event.*;
-import java.beans.PropertyChangeEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
+import javax.swing.BoundedRangeModel;
+import javax.swing.DefaultBoundedRangeModel;
+import javax.swing.JSlider;
+import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /* Extends a JSlider so that its color & value are consistent with
  * an underlying variable; we return one of these in DecValVariable.getRep.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecVarSlider.java,v 1.3 2003-06-05 23:36:08 jacobsen Exp $
+ * @version			$Revision: 1.4 $
  */
 public class DecVarSlider extends JSlider implements ChangeListener {
 

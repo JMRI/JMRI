@@ -22,7 +22,7 @@ package jmri;
  * and deassign locos from this throttle, but that doesn't seem right.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Id: Throttle.java,v 1.8 2003-04-03 03:28:46 glenobie Exp $
+ * @version			$Revision: 1.9 $
  */
 public interface Throttle {
 
@@ -31,7 +31,7 @@ public interface Throttle {
      */
     public float getSpeedSetting();
     public void setSpeedSetting(float speed);
-	
+
     /** direction
      * This is an bound parameter.
      */

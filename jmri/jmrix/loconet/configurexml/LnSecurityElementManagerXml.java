@@ -1,18 +1,21 @@
 package jmri.jmrix.loconet.configurexml;
 
-import org.jdom.*;
 import jmri.InstanceManager;
-import jmri.configurexml.*;
-import jmri.jmrix.loconet.*;
-import java.util.Enumeration;
+import jmri.configurexml.XmlAdapter;
+import jmri.jmrix.loconet.AspectGenerator;
+import jmri.jmrix.loconet.LnSecurityElementManager;
+import jmri.jmrix.loconet.SecurityElement;
+
 import com.sun.java.util.collections.List;
+import org.jdom.Attribute;
+import org.jdom.Element;
 
 /**
  * Provides load and store functionality for
  * configuring LnSecurityElementManager.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class LnSecurityElementManagerXml implements XmlAdapter {
 

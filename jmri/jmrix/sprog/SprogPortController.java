@@ -1,17 +1,15 @@
-/**
- * SprogPortController.java
- *
- * Description:		Abstract base for classes representing a Sprog communications port
- * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Id: SprogPortController.java,v 1.1 2003-01-27 05:24:00 jacobsen Exp $
- */
+// SprogPortController.java
 
 package jmri.jmrix.sprog;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
-public abstract class SprogPortController extends jmri.jmrix.AbstractPortController {
+/**
+ * Abstract base for classes representing a Sprog communications port
+ * @author			Bob Jacobsen    Copyright (C) 2001
+ * @version			$Revision: 1.2 $
+ */public abstract class SprogPortController extends jmri.jmrix.AbstractPortController {
 	// base class. Implementations will provide InputStream and OutputStream
 	// objects to SprogTrafficController classes, who in turn will deal in messages.
 

@@ -3,13 +3,9 @@
 package jmri.jmrit.symbolicprog;
 
 import jmri.jmrit.XmlFile;
-import java.io.File;
-import javax.swing.JComboBox;
-import com.sun.java.util.collections.List;
 import com.sun.java.util.collections.ArrayList;
 import com.sun.java.util.collections.Hashtable;
-
-import org.jdom.Attribute;
+import com.sun.java.util.collections.List;
 import org.jdom.Element;
 
 // try to limit the JDOM to this class, so that others can manipulate...
@@ -24,7 +20,7 @@ import org.jdom.Element;
  * locate the one associated with the "xml/names.xml" file.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: NameFile.java,v 1.2 2002-07-13 02:56:39 jacobsen Exp $
+ * @version			$Revision: 1.3 $
  */
 public class NameFile extends XmlFile {
 

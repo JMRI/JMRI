@@ -1,15 +1,18 @@
 package jmri.jmrit.display.configurexml;
 
-import jmri.configurexml.*;
-import jmri.jmrit.catalog.*;
-import jmri.jmrit.display.*;
-import org.jdom.*;
+import jmri.configurexml.XmlAdapter;
+import jmri.jmrit.catalog.CatalogPane;
+import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.PanelEditor;
+import jmri.jmrit.display.SignalHeadIcon;
+import org.jdom.Attribute;
+import org.jdom.Element;
 
 /**
  * Handle configuration for display.SignalHeadIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class SignalHeadIconXml implements XmlAdapter {
 

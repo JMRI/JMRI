@@ -4,13 +4,14 @@ import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.SecurityElementIcon;
 import jmri.jmrix.loconet.SecurityElement;
+
 import org.jdom.Element;
 
 /**
  * Handle configuration for display.SecurityElementIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class SecurityElementIconXml implements XmlAdapter {
 

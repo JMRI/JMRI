@@ -10,13 +10,13 @@ package jmri;
  * Callbacks are guaranteed to be in the Swing execution thread.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Id: ProgListener.java,v 1.7 2003-04-06 05:05:40 jacobsen Exp $
+ * @version			$Revision: 1.8 $
  */
 public interface ProgListener extends java.util.EventListener{
 	/** Receive a callback at the end of a programming operation.
 	 *
-	 * @parameter value  Value from a read operation, or value written on a write
-	 * @parameter status Denotes the completion code. Note that this is a
+	 * @param value  Value from a read operation, or value written on a write
+	 * @param status Denotes the completion code. Note that this is a
 	 *                    bitwise combination of the various status coded defined
 	 *                    in this interface.
 	 */

@@ -1,18 +1,18 @@
-/**
- * EasyDccPacketGenAction.java
- *
- * Description:		Swing action to create and register a
- *       			EasyDccPacketGenFrame object
- *
- * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Id: EasyDccPacketGenAction.java,v 1.2 2003-05-11 02:00:35 jacobsen Exp $
- */
+// EasyDccPacketGenAction.java
 
 package jmri.jmrix.easydcc.packetgen;
 
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
+import javax.swing.AbstractAction;
+
+/**
+ * Swing action to create and register a
+ *       			EasyDccPacketGenFrame object
+ *
+ * @author			Bob Jacobsen    Copyright (C) 2001
+ * @version			$Revision: 1.3 $
+ */
 public class EasyDccPacketGenAction 			extends AbstractAction {
 
 	public EasyDccPacketGenAction(String s) { super(s);}

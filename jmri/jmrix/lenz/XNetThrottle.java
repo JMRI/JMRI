@@ -2,15 +2,11 @@ package jmri.jmrix.lenz;
 
 import jmri.jmrix.AbstractThrottle;
 
-import jmri.jmrix.lenz.XNetListener;
-import jmri.jmrix.lenz.XNetTrafficController;
-
 /**
- * An implementation of DccThrottle with code specific to a 
+ * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
  * @author     Paul Bender (C) 2002,2003
- * @created    December 20,2002
- * @version    $Revision: 1.8 $
+ * @version    $Revision: 1.9 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -53,12 +49,12 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     protected void sendFunctionGroup1()
     {
        XNetMessage msg=new XNetMessage(6);
-       msg.setElement(0,XNetConstants.LOCO_OPER_REQ);   
+       msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
        msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP1);
-       msg.setElement(2,this.getDccAddressHigh());// set to the upper 
+       msg.setElement(2,this.getDccAddressHigh());// set to the upper
 						    // byte of the  DCC address
        msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
-						    //of the DCC address 
+						    //of the DCC address
        // Now, we need to figure out what to send in element 3
        int element4value=0;
        if(f0)
@@ -94,12 +90,12 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     protected void sendFunctionGroup2()
     {
        XNetMessage msg=new XNetMessage(6);
-        msg.setElement(0,XNetConstants.LOCO_OPER_REQ);   
+        msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
         msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP2);
-       msg.setElement(2,this.getDccAddressHigh());// set to the upper 
+       msg.setElement(2,this.getDccAddressHigh());// set to the upper
 						    // byte of the  DCC address
        msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
-						    //of the DCC address 
+						    //of the DCC address
        // Now, we need to figure out what to send in element 3
        int element4value=0;
        if(f5)
@@ -131,12 +127,12 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     protected void sendFunctionGroup3()
     {
        XNetMessage msg=new XNetMessage(6);
-       msg.setElement(0,XNetConstants.LOCO_OPER_REQ);   
+       msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
        msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP3);
-       msg.setElement(2,this.getDccAddressHigh());// set to the upper 
+       msg.setElement(2,this.getDccAddressHigh());// set to the upper
 						    // byte of the  DCC address
        msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
-						    //of the DCC address 
+						    //of the DCC address
        // Now, we need to figure out what to send in element 3
        int element4value=0;
        if(f9)
@@ -181,14 +177,14 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	{
 	/* we're sending a speed to the locomotive */
        	 XNetMessage msg=new XNetMessage(6);
-         msg.setElement(0,XNetConstants.LOCO_OPER_REQ);   
+         msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
 	 msg.setElement(1,XNetConstants.LOCO_SPEED_128);
-                                    // currently we're going to assume 128 
+                                    // currently we're going to assume 128
 			            // speed step mode
-      	 msg.setElement(2,this.getDccAddressHigh());// set to the upper 
+      	 msg.setElement(2,this.getDccAddressHigh());// set to the upper
 						    // byte of the  DCC address
          msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
-						    //of the DCC address 
+						    //of the DCC address
          // Now, we need to figure out what to send in element 3
          int element4value=(int)((speed)*(128)/speedIncrement);
          if(isForward)
@@ -211,13 +207,13 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	  /* Emergency stop sent */
       	  XNetMessage msg=new XNetMessage(4);
          msg.setElement(0,XNetConstants.EMERGENCY_STOP);
-      	 msg.setElement(1,this.getDccAddressHigh());// set to the upper 
+      	 msg.setElement(1,this.getDccAddressHigh());// set to the upper
 						    // byte of the  DCC address
          msg.setElement(2,this.getDccAddressLow()); // set to the lower byte
-						    //of the DCC address 
+						    //of the DCC address
         msg.setParity(); // Set the parity bit
         // now, we send the message to the command station
-        XNetTrafficController.instance().sendXNetMessage(msg,this);		
+        XNetTrafficController.instance().sendXNetMessage(msg,this);
  	}
 
 
@@ -448,9 +444,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 
     private int getDccAddressHigh()
     {
-        /* this isn't actually the high byte, For addresses below 100, we 
+        /* this isn't actually the high byte, For addresses below 100, we
 	just return 0, otherwise, we need to return the upper byte of the
-	address after we add the offset 0xC000 The first address used for 
+	address after we add the offset 0xC000 The first address used for
         addresses over 99 is 0xC064*/
 	if(this.address < 100)
 	{
@@ -467,8 +463,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 
     private int getDccAddressLow()
     {
-        /* For addresses below 100, we just return the address, otherwise, 
-	we need to return the upper byte of the address after we add the 
+        /* For addresses below 100, we just return the address, otherwise,
+	we need to return the upper byte of the address after we add the
 	offset 0xC000. The first address used for addresses over 99 is 0xC064*/
 	if(this.address < 100)
 	{
@@ -488,23 +484,23 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     {
        /* First, send the request for status */
        XNetMessage msg=new XNetMessage(5);
-       msg.setElement(0,XNetConstants.LOCO_STATUS_REQ);   
+       msg.setElement(0,XNetConstants.LOCO_STATUS_REQ);
        msg.setElement(1,XNetConstants.LOCO_INFO_REQ_V3);
-       msg.setElement(2,this.getDccAddressHigh());// set to the upper 
+       msg.setElement(2,this.getDccAddressHigh());// set to the upper
 						    // byte of the  DCC address
        msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
-						    //of the DCC address 
+						    //of the DCC address
        msg.setParity(); // Set the parity bit
        // now, we send the message to the command station
        XNetTrafficController.instance().sendXNetMessage(msg,this);
 
        /* next, send the request for function values */
-       msg.setElement(0,XNetConstants.LOCO_STATUS_REQ);   
+       msg.setElement(0,XNetConstants.LOCO_STATUS_REQ);
        msg.setElement(1,XNetConstants.LOCO_INFO_REQ_FUNC);
-       msg.setElement(2,this.getDccAddressHigh());// set to the upper 
+       msg.setElement(2,this.getDccAddressHigh());// set to the upper
 						    // byte of the  DCC address
        msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
-						    //of the DCC address 
+						    //of the DCC address
        msg.setParity(); // Set the parity bit
        // now, we send the message to the command station
        XNetTrafficController.instance().sendXNetMessage(msg,this);
@@ -521,8 +517,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call
     //          public void firePropertyChange(String propertyName,
-    //                                                                         
-    //                                                                         
+    //
+    //
     // _once_ if anything has changed state (or set the commanded state directly
     public void message(XNetMessage l) {
         // check to see if this is a throttle message
@@ -541,34 +537,34 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 		int b4=l.getElement(4);
 
 		/* the first data bite indicates the speed step mode, and
-		if the locomotive is being controlled by another 
+		if the locomotive is being controlled by another
 		throttle */
 		if((b1 & 0x08)==0x08) this.isAvailable=false;
 		   else this.isAvailable=true;
-		if((b1 & 0x01)==0x01) 
+		if((b1 & 0x01)==0x01)
 		{
 			this.speedIncrement=XNetConstants.SPEED_STEP_27_INCREMENT;
 		}
 		else if((b1 & 0x02)==0x02)
-		{ 
+		{
 			this.speedIncrement=XNetConstants.SPEED_STEP_28_INCREMENT;
 		}
 		else if((b1 & 0x04)==0x04)
-		{ 
+		{
 			this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;
 		}
-		else if((b1 & 0x04)==0x04) 
+		else if((b1 & 0x04)==0x04)
 		{
 			this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;;
 		}
-		else 
+		else
 		{
 			this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;
 		}
 
 		/* the second byte indicates the speed and direction setting */
-		
-		if ((b2 & 0x80)==0x80 && this.isForward==false) 
+
+		if ((b2 & 0x80)==0x80 && this.isForward==false)
 		{
 		        log.error("Throttle - Direction Forward Locomotive:" +address);
 			notifyPropertyChangeListener("IsForward",
@@ -583,7 +579,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 			notifyPropertyChangeListener("IsForward",
 				new Boolean(this.isForward),
 				new Boolean(this.isForward=false));
-		        if(this.isForward==false) 
+		        if(this.isForward==false)
 				log.error("Throttle - Changed direction to Reverse Locomotive:" +address);
 		}
 		if(this.speedIncrement==XNetConstants.SPEED_STEP_128_INCREMENT)
@@ -591,7 +587,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 			if(this.getSpeedSetting()!=(float)((b2 & 0x7f)-2)/126)
  			{
 			  notifyPropertyChangeListener("SpeedSetting",
-                                  new Float(this.speedSetting), 
+                                  new Float(this.speedSetting),
 				  new Float(this.speedSetting = (float)((b2 & 0x7f)-2)/126));
 			}
 		}
@@ -600,11 +596,11 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 			if(this.getSpeedSetting()!=(float)(((b2 & 0x7f)-4)/(126/this.speedIncrement)))
 			{
   			  notifyPropertyChangeListener("SpeedSetting",
-                                    new Float(this.speedSetting), 
+                                    new Float(this.speedSetting),
 			  	  new Float(this.speedSetting = (float)(((b2 & 0x7f)-4)/(126/this.speedIncrement))));
 			}
 		}
-	
+
 		/* data byte 3 is the status of F0 F4 F3 F2 F1 */
 		if((b3 & 0x10)==0x10 && getF0()==false)
 		{

@@ -2,7 +2,8 @@
 
 package jmri.progdebugger;
 
-import jmri.*;
+import jmri.DefaultProgrammerManager;
+import jmri.Programmer;
 import java.util.Hashtable;
 
 /**
@@ -15,7 +16,7 @@ import java.util.Hashtable;
  *
  * @see             jmri.ProgrammerManager
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class DebugProgrammerManager extends DefaultProgrammerManager {
 
@@ -55,7 +56,7 @@ public class DebugProgrammerManager extends DefaultProgrammerManager {
 
     /**
      * Debug programmer does provide Ops Mode
-     * @returns true
+     * @return true
      */
     public boolean isOpsModePossible() {return true;}
 

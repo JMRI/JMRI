@@ -1,16 +1,21 @@
 package jmri.jmrit.display.configurexml;
 
-import jmri.configurexml.*;
-import jmri.jmrit.catalog.*;
-import jmri.jmrit.display.*;
-import org.jdom.*;
+import jmri.configurexml.XmlAdapter;
+import jmri.jmrit.catalog.CatalogPane;
+import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.PanelEditor;
+import jmri.jmrit.display.PositionableLabel;
 import java.awt.Color;
+
+import org.jdom.Attribute;
+import org.jdom.DataConversionException;
+import org.jdom.Element;
 
 /**
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 

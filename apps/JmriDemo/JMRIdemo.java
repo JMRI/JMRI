@@ -2,17 +2,12 @@
 
 package apps.JmriDemo;
 
-import jmri.InstanceManager;
-import jmri.jmrit.XmlFile;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.io.File;
+import apps.Apps;
+import apps.SplashWindow;
+
 import java.text.MessageFormat;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import apps.*;
-import javax.swing.*;
+
+import javax.swing.JFrame;
 
 /**
  * The JMRI demo program
@@ -22,7 +17,7 @@ import javax.swing.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.55 $
+ * @version     $Revision: 1.56 $
  */
 public class JMRIdemo extends Apps {
 

@@ -2,14 +2,15 @@
 
 package jmri.jmrix.nce;
 
-import jmri.*;
+import jmri.DefaultProgrammerManager;
+import jmri.Programmer;
 
 /**
  * Extend DefaultProgrammerManager to provide ops mode programmers for NCE systems
  *
  * @see         jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class NceProgrammerManager  extends DefaultProgrammerManager {
 
@@ -23,7 +24,7 @@ public class NceProgrammerManager  extends DefaultProgrammerManager {
 
     /**
      * Works with command station to provide Ops Mode, so say it works
-     * @returns true
+     * @return true
      */
     public boolean isOpsModePossible() {return true;}
 

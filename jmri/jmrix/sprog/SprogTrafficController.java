@@ -1,10 +1,4 @@
-/**
- * SprogTrafficController.java
- *
- * Description:		Converts Stream-based I/O to/from Sprog messages
- * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Id: SprogTrafficController.java,v 1.1 2003-01-27 05:24:00 jacobsen Exp $
- */
+// SprogTrafficController.java
 
 package jmri.jmrix.sprog;
 
@@ -21,6 +15,7 @@ import java.util.Vector;
  * handled in an independent thread.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
+ * @version			$Revision: 1.2 $
  */
 public class SprogTrafficController implements SprogInterface, Runnable {
 

@@ -2,18 +2,22 @@
 
 package jmri.jmrit;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.Date;
 
 import com.sun.java.util.collections.List;
-import org.jdom.*;
-import org.jdom.input.*;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.input.SAXBuilder;
 
 /**
  * XmlFile contains various member implementations for handling aspects of XML files.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001, 2002
- * @version		$Revision: 1.5 $
+ * @version		$Revision: 1.6 $
  */
 public abstract class XmlFile {
 
@@ -93,7 +97,7 @@ public abstract class XmlFile {
      * Check if a file of the given name exists. This is here so it can
      * be overridden during tests. Note that it also obeys the
      * search rules.
-     * @parameter name subdirectory and file name, not including the leading path
+     * @param name subdirectory and file name, not including the leading path
      *                   to either the xml or preferences directory
      * @return true if the file exists in a searched place
      */

@@ -1,27 +1,17 @@
-/**
- * EasyDccMonFrame.java
- *
- * Description:		Frame displaying (and logging) EasyDcc command messages
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: EasyDccMonFrame.java,v 1.2 2002-03-30 19:22:53 jacobsen Exp $
- */
+// EasyDccMonFrame.java
 
 package jmri.jmrix.easydcc.easydccmon;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import java.util.Date;
-import java.text.DateFormat;
-import java.io.File;
-import java.io.PrintStream;
-import java.io.FileOutputStream;
-
 import jmri.jmrix.easydcc.EasyDccListener;
-import jmri.jmrix.easydcc.EasyDccTrafficController;
 import jmri.jmrix.easydcc.EasyDccMessage;
 import jmri.jmrix.easydcc.EasyDccReply;
+import jmri.jmrix.easydcc.EasyDccTrafficController;
 
+/**
+ * Frame displaying (and logging) EasyDcc command messages
+ * @author			Bob Jacobsen   Copyright (C) 2001
+ * @version			$Revision: 1.3 $
+ */
 public class EasyDccMonFrame extends jmri.jmrix.AbstractMonFrame implements EasyDccListener {
 
 	public EasyDccMonFrame() {

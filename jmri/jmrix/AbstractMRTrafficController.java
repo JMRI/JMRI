@@ -2,7 +2,8 @@
 
 package jmri.jmrix;
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.OutputStream;
 import java.util.Vector;
 
 import com.sun.java.util.collections.LinkedList;
@@ -22,7 +23,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 abstract public class AbstractMRTrafficController {
 
@@ -269,7 +270,7 @@ abstract public class AbstractMRTrafficController {
     /**
      * Add header to the outgoing byte stream.
      * @param msg  The output byte stream
-     * @returns next location in the stream to fill
+     * @return next location in the stream to fill
      */
     protected int addHeaderToOutput(byte[] msg, AbstractMRMessage m) {
         return 0;
@@ -291,7 +292,7 @@ abstract public class AbstractMRTrafficController {
      * Determine how much many bytes the entire
      * message will take, including space for header and trailer
      * @param m  The message to be sent
-     * @returns Number of bytes
+     * @return Number of bytes
      */
     protected int lengthOfByteStream(AbstractMRMessage m) {
         int len = m.getNumDataElements();

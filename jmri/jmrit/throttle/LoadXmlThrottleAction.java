@@ -1,20 +1,21 @@
 package jmri.jmrit.throttle;
 
-import jmri.jmrit.*;
-import java.awt.event.*;
-import java.io.*;
+import jmri.jmrit.XmlFile;
+import java.awt.event.ActionEvent;
+import java.io.FileNotFoundException;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
-import com.sun.java.util.collections.*;
-import org.jdom.*;
+import com.sun.java.util.collections.List;
+import org.jdom.Element;
 
 /**
  *  Load throttles from XML
  *
  * @author     Glen Oberhauser
- * @created    March 27, 2003
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class LoadXmlThrottleAction extends AbstractAction
 {
@@ -102,7 +103,7 @@ public class LoadXmlThrottleAction extends AbstractAction
 	 *  An extension of the abstract XmlFile. No changes made to that class.
 	 *
 	 * @author     glen
-	 * @created    March 27, 2003
+         * @version    $Revision: 1.8 $
 	 */
 	class ThrottlePrefs extends XmlFile
 	{

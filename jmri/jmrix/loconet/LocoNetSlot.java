@@ -2,7 +2,7 @@
 
 package jmri.jmrix.loconet;
 
-import java.util.*;
+import java.util.Vector;
 
 /**
  * Represents the contents of a single slot in the LocoNet command station
@@ -17,7 +17,7 @@ import java.util.*;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.9 $
  */
 public class LocoNetSlot {
 
@@ -136,7 +136,7 @@ public class LocoNetSlot {
     /**
      * Update the status bits in STAT1 (D5, D4)
      * @param status
-     * @return
+     * @return Formatted message
      */
     public LocoNetMessage writeStatus(int status) {
         LocoNetMessage l = new LocoNetMessage(4);

@@ -2,14 +2,15 @@
 
 package jmri.jmrix.easydcc;
 
-import jmri.*;
+import jmri.DefaultProgrammerManager;
+import jmri.Programmer;
 
 /**
  * Extend DefaultProgrammerManager to provide ops mode programmers for EasyDcc systems
  *
  * @see         jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class EasyDccProgrammerManager  extends DefaultProgrammerManager {
 
@@ -23,7 +24,7 @@ public class EasyDccProgrammerManager  extends DefaultProgrammerManager {
 
     /**
      * Works with command station to provide Ops Mode, so say it works
-     * @returns true
+     * @return true
      */
     public boolean isOpsModePossible() {return true;}
 

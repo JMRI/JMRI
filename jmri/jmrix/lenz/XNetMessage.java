@@ -12,13 +12,13 @@ import java.io.Serializable;
  * actually a variable number of bytes in Unicode.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  *
  */
 public class XNetMessage extends jmri.jmrix.NetMessage implements Serializable {
 
 	/** Create a new object, representing a specific-length message.
-	 * @parameter len Total bytes in message, including opcode and error-detection byte.
+	 * @param len Total bytes in message, including opcode and error-detection byte.
 	 */
 	public XNetMessage(int len) {
         super(len);

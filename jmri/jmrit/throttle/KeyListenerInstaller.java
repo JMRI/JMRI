@@ -1,7 +1,6 @@
 package jmri.jmrit.throttle;
 import java.awt.Component;
 import java.awt.Container;
-
 import java.awt.event.KeyListener;
 
 /**
@@ -9,7 +8,7 @@ import java.awt.event.KeyListener;
  * all of its subcomponents.
  *
  * @author     glen
- * @created    March 30, 2003
+ * @version    $Revision: 1.2 $
  */
 public class KeyListenerInstaller
 {

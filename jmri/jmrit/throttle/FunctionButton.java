@@ -1,14 +1,17 @@
 package jmri.jmrit.throttle;
 
-import jmri.InstanceManager;
-import javax.swing.JToggleButton;
-import javax.swing.JPopupMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JOptionPane;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-import java.awt.event.*;
-import java.awt.*;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+import javax.swing.JToggleButton;
 
 import org.jdom.Element;
 
@@ -53,7 +56,7 @@ public class FunctionButton extends JToggleButton implements ActionListener
         this.setMargin(new Insets(2,2,2,2));
     }
 
-	
+
     /**
      * Set the function number this button will operate
      * @param id An integer from 0 to 9.
@@ -76,13 +79,13 @@ public class FunctionButton extends JToggleButton implements ActionListener
 	{
 		actionKey = key;
 	}
-	
-	
+
+
 	public int getKeyCode()
 	{
 		return actionKey;
 	}
-	
+
     /**
      * Set the state of the function
      * @param isOn True if the function should be active.
@@ -131,7 +134,7 @@ public class FunctionButton extends JToggleButton implements ActionListener
 
     /**
      * Change the state of the function.
-     * @parem newState The new state. True = Is on, False = Is off.
+     * @param newState The new state. True = Is on, False = Is off.
      */
     public void changeState(boolean newState)
     {

@@ -2,13 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
-import jmri.Programmer;
-import jmri.InstanceManager;
-import jmri.ProgListener;
-
 import java.awt.Color;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 
 /**
  * Define common base class methods for CvValue and VariableValue classes
@@ -19,7 +13,7 @@ import javax.swing.JTextField;
  *
  * Description:		Represents a single CV value
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: AbstractValue.java,v 1.3 2002-10-17 11:38:28 jacobsen Exp $
+ * @version			$Revision: 1.4 $
  */
 public abstract class AbstractValue {
 

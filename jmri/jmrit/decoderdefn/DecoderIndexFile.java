@@ -2,17 +2,20 @@
 
 package jmri.jmrit.decoderdefn;
 
-import java.io.*;
-import java.util.*;
+import jmri.jmrit.XmlFile;
+import java.io.File;
+import java.util.Enumeration;
 
-import javax.swing.*;
+import javax.swing.JComboBox;
 
 import com.sun.java.util.collections.ArrayList;
 import com.sun.java.util.collections.Hashtable;
 import com.sun.java.util.collections.List;
-import jmri.jmrit.*;
-import org.jdom.*;
-import org.jdom.output.*;
+import org.jdom.Attribute;
+import org.jdom.DocType;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.output.XMLOutputter;
 
 // try to limit the JDOM to this class, so that others can manipulate...
 
@@ -28,7 +31,7 @@ import org.jdom.output.*;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -168,7 +171,7 @@ public class DecoderIndexFile extends XmlFile {
     /**
      * Check whether the user's version of the decoder index file needs to be
      * updated; if it does, then force the update.
-     * @returns true is the index should be reloaded because it was updated
+     * @return true is the index should be reloaded because it was updated
      * @param name
      * @throws JDOMException
      * @throws FileNotFoundException

@@ -1,13 +1,11 @@
-/** 
- * SprogListener.java
- *
- * Description:		<describe the SprogListener class here>
- * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Id: SprogListener.java,v 1.1 2003-01-27 05:24:00 jacobsen Exp $
- */
+// SprogListener.java
 
 package jmri.jmrix.sprog;
 
+/**
+ * @author			Bob Jacobsen  Copyright (C) 2001
+ * @version			$Revision: 1.2 $
+ */
 
 public interface SprogListener extends java.util.EventListener{
 	public void message(SprogMessage m);

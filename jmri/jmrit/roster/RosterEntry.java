@@ -2,11 +2,14 @@
 
 package jmri.jmrit.roster;
 
-import jmri.jmrit.*;
-import jmri.jmrit.symbolicprog.*;
-import java.io.*;
+import jmri.jmrit.XmlFile;
+import jmri.jmrit.symbolicprog.CvTableModel;
+import jmri.jmrit.symbolicprog.VariableTableModel;
+import java.io.File;
+import java.io.IOException;
+import java.io.Writer;
 
-import org.jdom.*;
+import org.jdom.Element;
 
 /**
  * RosterEntry represents a single element in a locomotive roster, including
@@ -26,7 +29,7 @@ import org.jdom.*;
  * organize the roster into directories.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  * @see jmri.jmrit.roster.LocoFile
  *
  */
@@ -138,7 +141,7 @@ public class RosterEntry {
      * Construct this Entry from XML. This member has to remain synchronized with the
      * detailed DTD in roster-config.xml
      *
-     * @parameter e  Locomotive XML element
+     * @param e  Locomotive XML element
      */
     public RosterEntry(org.jdom.Element e) {
         if (log.isDebugEnabled()) log.debug("ctor from element "+e);

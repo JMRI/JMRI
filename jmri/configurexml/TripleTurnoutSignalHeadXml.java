@@ -1,16 +1,18 @@
 package jmri.configurexml;
 
-import org.jdom.*;
-
-import jmri.*;
-import jmri.configurexml.XmlAdapter;
+import jmri.InstanceManager;
+import jmri.SignalHead;
+import jmri.TripleTurnoutSignalHead;
+import jmri.Turnout;
 import com.sun.java.util.collections.List;
+import org.jdom.Attribute;
+import org.jdom.Element;
 
 /**
  * Handle configuration for TripleTurnoutSignalHead objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class TripleTurnoutSignalHeadXml implements XmlAdapter {
 

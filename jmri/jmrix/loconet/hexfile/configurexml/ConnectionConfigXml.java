@@ -18,7 +18,7 @@ import org.jdom.Element;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -31,7 +31,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
      * we reimplement the superclass method to just write the
      * necessary parts.
      * @param o
-     * @return
+     * @return Formatted element containing no attributes except the class name
      */
     public Element store(Object o) {
         getInstance();
