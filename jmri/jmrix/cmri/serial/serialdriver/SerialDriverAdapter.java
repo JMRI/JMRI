@@ -19,7 +19,7 @@ import jmri.jmrix.cmri.serial.*;
  * Provide access to C/MRI via a serial comm port.
  * Normally controlled by the cmri.serial.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -278,7 +278,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             SerialTrafficController.setInitString("\101\111\115\000");  // octal!
         }
         else if (value.startsWith("Cornwall")) {
-            SerialTrafficController.setInitString("\101\111\115\000\012\003\132\226\002");
+            SerialTrafficController.setInitString("\101\111\115\000\012\003\132\232\002"); // 90,154,2 e.g. 05A, 09A, 0x02
         }
     }
 
