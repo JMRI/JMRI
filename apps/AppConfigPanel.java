@@ -29,7 +29,7 @@ import com.sun.java.util.collections.ArrayList;
  * Basic configuration GUI infrastructure.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class AppConfigPanel extends JPanel {
 
@@ -126,6 +126,13 @@ public class AppConfigPanel extends JPanel {
         files.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutStartupFiles")));
         advancedPane.add(files);
         clist.add(files);
+
+        // default roster location configuration
+        log.debug("start roster");
+        JPanel roster = new jmri.jmrit.roster.RosterConfigPane();
+        roster.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutRoster")));
+        advancedPane.add(roster);
+        clist.add(roster);
 
         // put the "Save" button at the bottom
         JButton save = new JButton(rb.getString("ButtonSave"));
