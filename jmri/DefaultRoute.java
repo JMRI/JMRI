@@ -6,7 +6,7 @@ package jmri;
  * Class providing the basic logic of the Route interface.
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class DefaultRoute extends AbstractNamedBean
     implements Route, java.io.Serializable {
@@ -226,7 +226,7 @@ public class DefaultRoute extends AbstractNamedBean
                 }
             }
         }
-        if (mControlTurnout.length() > 2) {
+        if ( (mControlTurnout!=null) && (mControlTurnout.length() > 2)) {
             mTurnout = InstanceManager.turnoutManagerInstance().
                                             getBySystemName(mControlTurnout);
             if (mTurnout!=null) {
