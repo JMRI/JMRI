@@ -9,7 +9,7 @@ package jmri;
  * the CV value from a read operation.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public interface ProgListener extends java.util.EventListener{
 	/** Receive a callback at the end of a programming operation.
@@ -55,6 +55,9 @@ public interface ProgListener extends java.util.EventListener{
 
 	/** Constant denoting that the programming operation timed out */
 	public final int FailedTimeout  = 0x80;
+
+	/** Constant denoting that a short circuit occured while programming */
+	public final int ProgrammingShort  = 0x100;
 
 }
 

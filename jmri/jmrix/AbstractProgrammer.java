@@ -12,7 +12,7 @@ import java.util.Vector;
  * Common implementations for the Programmer interface.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public abstract class AbstractProgrammer implements Programmer {
 
@@ -28,6 +28,7 @@ public abstract class AbstractProgrammer implements Programmer {
         if ((code & ProgListener.FailedTimeout) != 0) sbuf.append("timeout talking to command station; ");
         if ((code & ProgListener.UnknownError) != 0) sbuf.append("Unknown error; ");
         if ((code & ProgListener.NoAck) != 0) sbuf.append("No acknowledge from locomotive; ");
+	if ((code & ProgListener.ProgrammingShort) != 0) sbuf.append("Short Circuit on Programming Track; ");
 
         // remove trailing separators
         if (sbuf.length() > 2) sbuf.setLength(sbuf.length()-2);

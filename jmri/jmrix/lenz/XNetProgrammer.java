@@ -26,7 +26,7 @@ import java.beans.PropertyChangeEvent;
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Paul Bender  Copyright (c) 2003,2004
- * @version $Revision: 2.2 $
+ * @version $Revision: 2.3 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -228,6 +228,13 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 			   progState = NOTPROGRAMMING;
 			   stopTimer();
 			   notifyProgListenerEnd(_val, jmri.ProgListener.UnknownError);
+            		} else if (m.getElement(0)==XNetConstants.CS_INFO && 
+			   m.getElement(1)==XNetConstants.PROG_SHORT_CIRCUIT) {
+			   // We experienced a short Circuit on the Programming Track
+			   log.error("Short Circuit While Programming Decoder");
+			   progState = NOTPROGRAMMING;
+			   stopTimer();
+			   notifyProgListenerEnd(_val, jmri.ProgListener.ProgrammingShort);
 			}
 		} else if (progState == INQUIRESENT) {
 			if (log.isDebugEnabled()) log.debug("reply in INQUIRESENT state");
@@ -277,6 +284,13 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		   	   stopTimer();
 		   	   notifyProgListenerEnd(_val, jmri.ProgListener.UnknownError);
                	    	   return;
+            		} else if (m.getElement(0)==XNetConstants.CS_INFO && 
+			   m.getElement(1)==XNetConstants.PROG_SHORT_CIRCUIT) {
+			   // We experienced a short Circuit on the Programming Track
+			   log.error("Short Circuit While Programming Decoder");
+			   progState = NOTPROGRAMMING;
+			   stopTimer();
+			   notifyProgListenerEnd(_val, jmri.ProgListener.ProgrammingShort);
 			} else {
                            // nothing important, ignore
                            return;
