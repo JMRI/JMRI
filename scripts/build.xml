@@ -1,6 +1,6 @@
 <!-- ugly first attempt at an ANT build.xml file for JMRI development -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.33 $ -->
+<!-- Revision $Revision: 1.34 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -336,6 +336,7 @@
            destdir="${target}" 
            includes="jmri/util/StringUtil.java, 
                  jmri/util/FontUtil.java,
+                 jmri/util/JmriJFrame.java,
                  jmri/util/JTreeUtil.java,
                  jmri/util/LocaleUtil.java"
            target="1.1" 
