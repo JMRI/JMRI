@@ -26,9 +26,10 @@ import javax.swing.JSeparator;
 import com.sun.java.util.collections.ArrayList;
 
 /**
+ * Basic configuration GUI infrastructure.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class AppConfigPanel extends JPanel {
 
