@@ -1,32 +1,36 @@
-Making a distribution (substitute the release-name for 0.N throughout):
+Making a distribution (substitute the release-number for 0.N throughout
+and the application name for <app>):
 
 ( ) Copy and rename the last distribution
 
-( ) update the README in cvs to include any changes, esp. including updating
-	the release name and URLs. 
+( ) update the README in site section in cvs to include any changes, esp. 
+    including updating the release name and URLs. 
 
-( ) Commit all cvs source and tag "Release-0-N"
+( ) Commit all cvs source and tag "Release-<app>-0-N"
 
 ( ) Make sure that the "make manifest" button is pushed, then
-	make the jmri.jar file with the JMRI demo release target.
+	make the <app>.jar file with the <app> release target.
 
 ( ) Make sure that the following .jar files (and only these) have the
 	merge button pushed, then
 	make the jmriwin95.jar file with the JMRI demo release target.
 		collections.jar
 		log4j.jar
-		xerces.jar
+		crimson.jar
 		comm.jar
 		jdom-jdk11.jar
 
-( ) Move the jmri.jar and JmriWin95.jar files to the distribution folder
+( ) Move the <app>.jar and <app>Win95.jar files to the distribution folder
 
-( ) Update the various text files from the CVS scripts module. Change the
+( ) Update the various text files from the CVS scripts module. 
+
+()  Create a text README file from the site area. Change the
 	creator code of README to ttxt (SimpleText)
 
 ( ) Update the xml subdirectory, removing the CVS subdirs
 
-( ) Make sure there's a clean "prefs" directory.
+( ) Make sure there's a clean "prefs" directory with a clean
+    "roster" subdir
 
 ( ) Any new jar files that need to be put in the lib area? If so, the app
 	will have to change (next step).  Move them into the distribution lib
@@ -54,7 +58,7 @@ Making a distribution (substitute the release-name for 0.N throughout):
 	
 	( ) Remove the win32com.dll, JmriWin95.jar files
 
-	( ) Drag folder onto DropStuff, which will create a file JMRI.demo.0.N.hqx
+	( ) Drag folder onto DropStuff, which will create a file <app>.0.N.hqx
 		(Preferences should be set for Macintosh, include linefeeds, remote .sit
 		suffix)
 
