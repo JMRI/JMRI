@@ -142,6 +142,9 @@
           <output name="2" label="B - Yellow" />
         </model>
       </family>
+      <family name="Lenz Drive-Select decoders" mfg="Lenz" lowVersionID="46" highVersionID="46" type="locomotive" file="Lenz_DriveSelect.xml">
+        <model model="LE0511" numOuts="2" />
+      </family>
       <family name="Lenz XF, precision glide decoders" mfg="Lenz" lowVersionID="44" highVersionID="45" type="locomotive" file="Lenz_LE077XF.xml">
         <model model="LE062XF" numOuts="2">
           <output name="1" label="A - White" />
