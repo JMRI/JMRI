@@ -21,8 +21,8 @@ import org.jdom.output.XMLOutputter;
  * This class is intended for use by RosterEntry only; you should not use it
  * directly. That's why this is not a public class.
  *
- * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version     $Revision: 1.12 $
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2002;  Dennis Miller Copyright 2004
+ * @version     $Revision: 1.13 $
  * @see         jmri.jmrit.roster.RosterEntry
  * @see         jmri.jmrit.roster.Roster
  */
@@ -105,6 +105,41 @@ class LocoFile extends XmlFile {
             Document doc = new Document(root);
             doc.setDocType(new DocType("locomotive-config","locomotive-config.dtd"));
 
+
+            //Before adding the roster locomotive values, scan the Comment and
+            //Decoder Comment fields to change any \n to a <?p?> processor directive.
+            //Extract the Comment from the RosterEntry and transfer it one character
+            //at a time to the xmlComment string.  If a \n is encountered, insert
+            //<?p?> in the xmlComment string instead.  When adding the Attribute
+            //to the xml file, use the new xmlComment string instead.  This
+            //leaves the RosterEntry model unchanged, but records the values
+            //correctly in the xml file
+            //Note: an equivalent change also done in the Roster.java class to do the
+            //same thing for the roster index file
+            String tempComment =  r.getComment();
+            String xmlComment = new String();
+            for (int k = 0; k < tempComment.length(); k++) {
+              if (tempComment.startsWith("\n",k)){
+                xmlComment = xmlComment + "<?p?>";
+              }
+              else {
+                xmlComment = xmlComment + tempComment.substring(k,k+1);
+              }
+            }
+
+            //Now do the same thing for the Decoder Comment field
+            String tempDecoderComment =  r.getDecoderComment();
+            String xmlDecoderComment = new String();
+            for (int k = 0; k < tempDecoderComment.length(); k++) {
+              if (tempDecoderComment.startsWith("\n",k)){
+                xmlDecoderComment = xmlDecoderComment + "<?p?>";
+              }
+              else {
+                xmlDecoderComment = xmlDecoderComment + tempDecoderComment.substring(k,k+1);
+              }
+            }
+
+
             // add top-level elements
             Element values;
             root.addContent(new Element("locomotive")		// locomotive values are first item
@@ -114,11 +149,11 @@ class LocoFile extends XmlFile {
                             .addAttribute("mfg",r.getMfg())
                             .addAttribute("model",r.getModel())
                             .addAttribute("dccAddress",r.getDccAddress())
-                            .addAttribute("comment",r.getComment())
+                            .addAttribute("comment",xmlComment)
                             .addContent(new Element("decoder")
                                         .addAttribute("model",r.getDecoderModel())
                                         .addAttribute("family",r.getDecoderFamily())
-                                        .addAttribute("comment",r.getDecoderComment())
+                                        .addAttribute("comment",xmlDecoderComment)
                                         )
                             .addContent(values = new Element("values"))
                             )
@@ -164,6 +199,9 @@ class LocoFile extends XmlFile {
      * should be done elsewhere. This is intended for copy and import
      * operations, where the tree has been read from an existing file.
      * Hence, only the "ID" information in the roster entry is updated.
+     * Note that any multi-line comments are not changed here.  Any calling
+     * class should ensure that they are in xml file format
+     * with embedded <?p?> processor directives for line breaks.
      *
      * @param pFile Destination file. This file is overwritten if it exists.
      * @param pRootElement Root element of the JDOM tree to write.
