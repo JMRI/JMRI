@@ -5,7 +5,7 @@ src -a djmri dapps dxml
 djmri -d java/src &jmri 
 dapps -d java/src &apps
 dxml -d java/src &xml
-prx -a site/index.html
+prx -d java site index.html
 
 #djmri -d java/src jmri
 #dapps -d java/src apps
