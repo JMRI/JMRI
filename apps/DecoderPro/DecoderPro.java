@@ -25,7 +25,7 @@ import javax.swing.JPanel;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.44 $
+ * @version     $Revision: 1.45 $
  */
 public class DecoderPro extends Apps {
 
@@ -35,22 +35,6 @@ public class DecoderPro extends Apps {
 
     protected AppConfigPanel newPrefs() {
         return new AppConfigPanel(configFilename, 1);
-    }
-    protected void createMenus(JMenuBar menuBar, JFrame frame) {
-        fileMenu(menuBar, frame);
-        editMenu(menuBar, frame);
-        toolsMenu(menuBar, frame);
-        rosterMenu(menuBar, frame);
-        panelMenu(menuBar, frame);
-
-        // show active systems
-        jmri.jmrix.ActiveSystemsMenu.addItems(menuBar);
-
-        // debug, but not development
-        debugMenu(menuBar, frame);
-
-        helpMenu(menuBar, frame);
-        windowMenu(menuBar, frame);
     }
 
     protected String logo() {

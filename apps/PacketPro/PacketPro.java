@@ -23,22 +23,12 @@ import javax.swing.JMenuBar;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2002
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class PacketPro extends Apps {
 
     PacketPro(JFrame p) {
         super(p);
-        }
-
-    protected void createMenus(JMenuBar menuBar, JFrame frame) {
-        fileMenu(menuBar, frame);
-        editMenu(menuBar, frame);
-        toolsMenu(menuBar, frame);
-        panelMenu(menuBar, frame);
-        systemsMenu(menuBar, frame);
-        debugMenu(menuBar, frame);
-        helpMenu(menuBar, frame);
     }
 
     protected String line1() {
