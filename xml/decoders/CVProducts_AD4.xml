@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: CVProducts_AD4.xml,v 1.1 2002-08-08 06:13:31 jacobsen Exp $ -->
+<!-- $Id: CVProducts_AD4.xml,v 1.2 2002-08-11 16:44:43 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
 					version="1" lastUpdated="20020808"/>
@@ -10,7 +10,7 @@
 		<model model="AD4" />
 	</family>
 
-	<programming direct="byteOnly" paged="yes" 
+	<programming direct="byteOnly" paged="no" 
 	                     register="yes" ops="yes"></programming>
 
 	<variables>
