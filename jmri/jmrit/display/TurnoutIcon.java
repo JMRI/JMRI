@@ -11,7 +11,7 @@ import jmri.*;
  * <p>Description: </p>
  * <p>Copyright: Bob Jacobsen Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -40,15 +40,36 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
     }
 
     // display icons
-    Icon closed = new ImageIcon(ClassLoader.getSystemResource("resources/images19x16/Checkmark-green.gif"));
-    Icon thrown = new ImageIcon(ClassLoader.getSystemResource("resources/images19x16/Twiddle-yellow.gif"));
+    Icon closed = new ImageIcon(ClassLoader.getSystemResource("resources/TrackSegments/GriffenSet/Turnouts44x40/RHNORMUP.gif"));
+    Icon thrown = new ImageIcon(ClassLoader.getSystemResource("resources/TrackSegments/GriffenSet/Turnouts44x40/RHREVUP.gif"));
     Icon inconsistent = new ImageIcon(ClassLoader.getSystemResource("resources/images19x16/X-red.gif"));
     Icon unknown = new ImageIcon(ClassLoader.getSystemResource("resources/images19x16/Question-black.gif"));
 
+    public Icon getClosedIcon() { return closed; }
     public void setClosedIcon(Icon i) { closed = i; displayState(turnoutState()); }
+
+    public Icon getThrownIcon() { return thrown; }
     public void setThrownIcon(Icon i) { thrown = i; displayState(turnoutState()); }
+
+    public Icon getInconsistentIcon() { return inconsistent; }
     public void setInconsistentIcon(Icon i) { inconsistent = i; displayState(turnoutState()); }
+
+    public Icon getUnknownIcon() { return unknown; }
     public void setUnknownIcon(Icon i) { unknown = i; displayState(turnoutState()); }
+
+    public int getHeight() {
+        return Math.max(
+            Math.max(closed.getIconHeight(), thrown.getIconHeight()),
+            Math.max(inconsistent.getIconHeight(), unknown.getIconHeight())
+            );
+    }
+
+    public int getWidth() {
+        return Math.max(
+            Math.max(closed.getIconWidth(), thrown.getIconWidth()),
+            Math.max(inconsistent.getIconWidth(), unknown.getIconWidth())
+            );
+    }
 
     /**
      * Get current state of attached turnout
