@@ -1,6 +1,6 @@
 <!-- ugly first attempt at an ANT build.xml file for JMRI development -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.42 $ -->
+<!-- Revision $Revision: 1.43 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -230,11 +230,24 @@
  		 description="create a distribution jar file"/>
 
 
+<!-- ******************************************************* -->
+<!-- ** below here are targets for building distributions ** -->
+<!-- ******************************************************* -->
 
  <property name="release" value="NO_RELEASE_SPECIFIED" />
  <property name="number"  value="NO_NUMBER_SPECIFIED"  />
- <target name="release1" depends=""
- 					description="part 1 of build a release; useage is ant -Drelease=Release-1-2-3 -Dnumber=1.2.3 release1">
+ <target name="release1" depends="x-rel-base-build, x-rel-create-windows, x-rel-create-osx, x-rel-create-linux,
+                                  x-rel-create-classic, x-rel-create-os2, 
+                                  x-rel-installer-osx, x-rel-installer-linux, x-rel-installer-os2"
+ 	description="part 1 of build a release; useage is ant -Drelease=Release-1-2-3 -Dnumber=1.2.3 release1"
+ >
+	<echo message="build the Windows .exe now"/>
+	<echo message="end of part 1; do part 2 after MacOSX, Linux, OS2 uploads completely built"/>
+</target>
+
+ <target name="x-rel-base-build" depends=""
+ 					description="checkout, test, create jar files">
+
  	<echo message="Building ${release} numbered ${release}" />
     <delete dir="${release}" />
     <mkdir dir="${release}"/>
@@ -249,20 +262,46 @@
     
     <echo message="make distribution jar" />
     <ant dir="${release}/java" target="dist" />
-    
+</target>
+
+<target name="x-rel-create-windows" depends=""
+ 					description="update files in master Windows directory">
+
     <echo message="update files in master Windows directory" />
     <copy todir="Windows/JMRI">
       <fileset dir="${release}" includes="jmri.jar"  /> 
     </copy>
+    <delete dir="Windows/JMRI/lib" />
+    <cvs command="export" quiet="true" package="lib" dest="Windows/JMRI" tag="${release}"/>
+    <move todir="Windows/JMRI" file="Windows/JMRI/lib/Serialio.jar"/>
+    <delete file="Windows/JMRI/lib/junit.jar" />
     <delete dir="Windows/JMRI/xml" />
-    <cvs command="export" package="xml" dest="Windows/JMRI" tag="${release}"/>
+    <cvs command="export" quiet="true" package="xml" dest="Windows/JMRI" tag="${release}"/>
     <delete dir="Windows/JMRI/resources" />
-    <cvs command="export" package="resources" dest="Windows/JMRI" tag="${release}"/>
+    <cvs command="export" quiet="true" package="resources" dest="Windows/JMRI" tag="${release}"/>
     <delete dir="Windows/JMRI/help" />
-    <cvs command="export" package="help" dest="Windows/JMRI" tag="${release}"/>
+    <cvs command="export" quiet="true" package="help" dest="Windows/JMRI" tag="${release}"/>
     <delete dir="Windows/JMRI/jython" />
     <cvs command="export" package="jython" dest="Windows/JMRI" tag="${release}"/>
+    <cvs command="export" package="scripts" dest="Windows/JMRI" tag="${release}"/>
+    <move todir="Windows/JMRI">
+		<fileset dir="Windows/JMRI/scripts" >
+      		<include name="*.bat"/>
+      		<include name="default.lcf"/>
+      		<include name="COPYING"/>
+      		<include name="README"/>
+      	</fileset>
+	</move>
+    <move todir="Windows/JMRI">
+		<fileset dir="Windows/JMRI/scripts/WinInstallFiles" >
+      		<include name="*"/>
+      	</fileset>
+   	</move>
+    <delete dir="Windows/JMRI/scripts" />
+</target>
 
+<target name="x-rel-create-osx" depends=""
+ 					description="update files in master MacOSX directory">
     <echo message="update files in master MacOSX directory" />
     <copy todir="MacOSX/JMRI">
       <fileset dir="${release}" includes="jmri.jar"  /> 
@@ -275,11 +314,18 @@
     <cvs command="export" package="help" dest="MacOSX/JMRI" tag="${release}"/>
     <delete dir="MacOSX/JMRI/jython" />
     <cvs command="export" package="jython" dest="MacOSX/JMRI" tag="${release}"/>
+</target>
 
+<target name="x-rel-create-linux" depends=""
+ 					description="update files in master Linux directory">
     <echo message="update files in master Linux directory" />
     <copy todir="Linux/JMRI">
       <fileset dir="${release}" includes="jmri.jar"  /> 
     </copy>
+    <delete dir="Linux/JMRI/lib" />
+    <cvs command="export" quiet="true" package="lib" dest="Linux/JMRI" tag="${release}"/>
+    <delete file="Linux/JMRI/lib/junit.jar" />
+    <delete file="Linux/JMRI/lib/Serialio.jar" />
     <delete dir="Linux/JMRI/xml" />
     <cvs command="export" package="xml" dest="Linux/JMRI" tag="${release}"/>
     <delete dir="Linux/JMRI/resources" />
@@ -288,7 +334,21 @@
     <cvs command="export" package="help" dest="Linux/JMRI" tag="${release}"/>
     <delete dir="Linux/JMRI/jython" />
     <cvs command="export" package="jython" dest="Linux/JMRI" tag="${release}"/>
+    <cvs command="export" package="scripts" dest="Linux/JMRI" tag="${release}"/>
+    <move todir="Linux/JMRI">
+		<fileset dir="Linux/JMRI/scripts" >
+      		<include name="*.csh"/>
+      		<include name="jmrithon"/>
+      		<include name="default.lcf"/>
+      		<include name="COPYING"/>
+      		<include name="README"/>
+      	</fileset>
+	</move>
+    <delete dir="Linux/JMRI/scripts" />
+</target>
 
+<target name="x-rel-create-classic" depends=""
+ 					description="update files in master MacOS Classic directory">
     <echo message="update files in master MacClassic directory" />
     <copy todir="MacClassic/JMRI">
       <fileset dir="${release}" includes="jmri.jar"  /> 
@@ -301,7 +361,10 @@
     <cvs command="export" package="help" dest="MacClassic/JMRI" tag="${release}"/>
     <delete dir="MacClassic/JMRI/jython" />
     <cvs command="export" package="jython" dest="MacClassic/JMRI" tag="${release}"/>
+</target>
 
+<target name="x-rel-create-os2" depends=""
+ 					description="update files in master OS2 Classic directory">
     <echo message="update files in master OS2 directory" />
     <copy todir="OS2/JMRI">
       <fileset dir="${release}" includes="jmri.jar"  /> 
@@ -314,24 +377,37 @@
     <cvs command="export" package="help" dest="OS2/JMRI" tag="${release}"/>
     <delete dir="OS2/JMRI/jython" />
     <cvs command="export" package="jython" dest="OS2/JMRI" tag="${release}"/>
+</target>
 
-    
-	<!-- The following steps build the distribution archives -->
+<target name="x-rel-installer-osx" depends=""
+ 					description="create MacOS X archive">
+	<!-- The following steps build the distribution archive -->
     <!-- using MacOSX tools -->
-    <echo message="build archives"/>
+    <echo message="create MacOS X archive"/>
     <exec executable="open">
     	<arg line="-a DropStuff MacOSX/JMRI" />
     </exec>
+</target>
+
+<target name="x-rel-installer-linux" depends=""
+ 					description="create MacOS X archive">
+	<!-- The following steps build the distribution archive -->
+    <!-- using MacOSX tools -->
+    <echo message="create Linux archive"/>
     <exec executable="open">
     	<arg line="-a DropTar Linux/JMRI" />
     </exec>
+</target>
+
+<target name="x-rel-installer-os2" depends=""
+ 					description="create OS2 archive">
+	<!-- The following steps build the distribution archive -->
+    <!-- using MacOSX tools -->
+    <echo message="create OS2 archive"/>
     <exec executable="open">
     	<arg line="-a DropZip OS2/JMRI" />
     </exec>
-
-	<echo message="build the Windows .exe now"/>
-	<echo message="end of part 1; do part 2 after MacOSX, Linux, OS2 uploads completely built"/>
- </target>
+</target>
  
  <target name="release2" depends=""
  					description="part 2 of build a release; useage is ant -Drelease=R1.2.3 -Dnumber=1.2.3 release2">
