@@ -14,9 +14,9 @@ import jmri.jmrix.lenz.XNetTrafficController;
 /**
  * Frame for user input of XpressNet messages
  * @author			Bob Jacobsen   Copyright (C) 2001,2002
- * @version			$Revision: 2.0 $
+ * @version			$Revision: 2.1 $
  */
-public class PacketGenFrame extends javax.swing.JFrame {
+public class PacketGenFrame extends jmri.util.JmriJFrame {
 
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
