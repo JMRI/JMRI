@@ -6,7 +6,7 @@
  * @version			
  */
 
-package LocoNet;
+package loconet;
 
 import ErrLoggerJ.ErrLog;
 

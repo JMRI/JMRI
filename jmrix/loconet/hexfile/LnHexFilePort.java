@@ -21,7 +21,9 @@
 	and separated by a space. Variable whitespace is not (yet) supported
 */
 
-package LocoMon;
+package hexfile;
+
+import loconet.LnTrafficController;
 
 import ErrLoggerJ.ErrLog;
 import java.io.FileInputStream;
@@ -32,11 +34,11 @@ import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class LnHexFilePort 			extends LocoNet.LnPortController implements Runnable {
+public class LnHexFilePort 			extends loconet.LnPortController implements Runnable {
+
 /* load("filename") fills the contents from a file */
 public void load(String filename) {
 		//attempt to access the file
-		ErrLog.msg(ErrLog.routine, "LnHexFilePort", "load", "Loading data from file "+filename);
 		try {
 			sFile = new DataInputStream(new FileInputStream(filename));
 			}
@@ -45,7 +47,7 @@ public void load(String filename) {
 			}
 
 		// create the pipe stream for output, also store as the input stream if somebody wants to send
-		// (This will emulate the LocoNet echo
+		// (This will emulate the LocoNet echo)
 		try {
 			PipedInputStream tempPipe = new PipedInputStream();
 			pin = new DataInputStream(tempPipe);
@@ -56,9 +58,9 @@ public void load(String filename) {
 			ErrLog.msg(ErrLog.error, "LnHexFilePort", "load (pipe)", "Exception: "+e.toString());
 			}
 	}
-	
+
 public void run() { // invoked in a new thread
-		ErrLog.msg(ErrLog.debugging,"LnHexFilePort","run","entry point");
+		_running = true;
 		// process the input file into the output side of pipe
 		try {
 			String s;
@@ -83,7 +85,9 @@ public void run() { // invoked in a new thread
 			}
 		catch (Exception e) {
 			ErrLog.msg(ErrLog.error, "LnHexFilePort","run", "Exception: "+e.toString());
-			}
+			}		
+		// here we're done processing the file, return to end the thread
+		_running = false;
 	}
 
 public void setDelay(int newDelay) {
@@ -103,8 +107,11 @@ public void setDelay(int newDelay) {
 	
 	public boolean status() {return (pout!=null)&(pin!=null);}
 
+// to tell if we're currently putting out data
+	public boolean running() { return _running; }
 
 // private data
+private boolean _running = false;
 
 // streams to share with user class
 private DataOutputStream pout = null; // this is provided to classes who want to write to us

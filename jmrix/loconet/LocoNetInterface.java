@@ -6,7 +6,7 @@
  * @version			
  */
 
-package LocoNet;
+package loconet;
 
 
 public interface LocoNetInterface {
@@ -18,11 +18,11 @@ public interface LocoNetInterface {
 // request notification of things happening on the LocoNet. The same listener
 // can register multiple times with different masks.  (Multiple registrations with
 // a single mask value are equivalent to a single registration)
-void notifyLocoNetEvents(int mask, LocoNetListener l);
+void addLocoNetListener(int mask, LocoNetListener l);
 
 // stop notification of things happening on the LocoNet. Note that mask and LocoNetListener
 // must match a previous request exactly.
-void endLocoNetEvents(int mask, LocoNetListener l);
+void removeLocoNetListener(int mask, LocoNetListener l);
 
 
 boolean status();   // true if the implementation is operational

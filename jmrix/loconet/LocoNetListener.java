@@ -6,7 +6,7 @@
  * @version			
  */
 
-package LocoNet;
+package loconet;
 
 
 public interface LocoNetListener extends java.util.EventListener{

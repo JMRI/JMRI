@@ -20,9 +20,10 @@
  * @version			0.2.1
  */
 
-package LocoMon;
+package locomon;
 
-import LocoNet.*;
+import loconet.LnConstants;
+import loconet.LocoNetMessage;
 
 public class Llnmon {
 

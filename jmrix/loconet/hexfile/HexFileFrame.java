@@ -11,16 +11,13 @@
 // a .hex file, feeding the information to a LocoMonFrame (monitor) and 
 // connecting to a LocoGenFrame (for sending a few commands).
 
-package LocoMonAppl;
+package hexfile;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import LocoMon.LnHexFilePort;
-import LocoMon.LocoMonFrame;
-import LocoMon.LocoMonGen;
-import LocoMon.MS100Frame;
-import LocoNet.LnTrafficController;
+import hexfile.LnHexFilePort;
+import loconet.LnTrafficController;
 import ErrLoggerJ.ErrLog;
 
 public class HexFileFrame extends javax.swing.JFrame {
@@ -120,34 +117,7 @@ public class HexFileFrame extends javax.swing.JFrame {
 		});
 
 // END GENERATED CODE
-	// this is still initComponents; add the LocoMonFrame frame
-		lmFrame = new LocoMonFrame();
-		try {
-			lmFrame.initComponents();
-			}
-		catch (Exception ex) {
-			ErrLog.msg(ErrLog.error, "LocoMonAppl.HexFileFrame starting LocoMonFrame", "", "Exception: "+ex.toString());
-			}
-		lmFrame.show();
-	// this is still initComponents; add the LocoMonGen frame
-		lmGen = new LocoMonGen();
-		try {
-			lmGen.initComponents();
-			}
-		catch (Exception ex) {
-			ErrLog.msg(ErrLog.error, "LocoMonAppl.HexFileFrame starting LocoMonGen", "", "Exception: "+ex.toString());
-			}
-		lmGen.show();
-	// this is still initComponents; add the MS100Frame frame
-		ms100 = new MS100Frame();
-		try {
-			ms100.initComponents();
-			}
-		catch (Exception ex) {
-			ErrLog.msg(ErrLog.error, "LocoMonAppl.HexFileFrame starting MS100Frame:", "", "Exception: "+ex.toString());
-			}
-		lmGen.show();
-	// connect and configure
+
 		// create a new Hex file handler, set its delay
 		p = new LnHexFilePort();
 		p.setDelay(Integer.valueOf(delayField.getText()).intValue());
@@ -174,31 +144,34 @@ public class HexFileFrame extends javax.swing.JFrame {
 		mShown = true;
 	}
 
+	boolean connected = false;
+	
 	// Close the window when the close box is clicked
 	void thisWindowClosing(java.awt.event.WindowEvent e) {
 		setVisible(false);
 		dispose();
-		System.exit(0);
+		// disconnect from LnTrafficManager if connected
+		if (connected) LnTrafficController.instance().disconnectPort(p);
+		connected = false;
 	}
 	
 	public void openHexFileButtonActionPerformed(java.awt.event.ActionEvent e) {
 		// call load to process the file
 		p.load(filenameTextField.getText());
 
-		//create a LnTrafficController object and a LocoMonFrame,
-		LnTrafficController tc = new LnTrafficController();
 
-		// connect them all together
-		tc.notifyLocoNetEvents(~0, lmFrame);
-		tc.connectToPort(p);
-		lmGen.connect(tc);
+		// connect to the traffic controller
+		LnTrafficController.instance().connectPort(p);
+		connected = true;
 		
 		// start operation
 		sourceThread = new Thread(p);
 		sourceThread.start();
-		sinkThread = new Thread(tc);
+		sinkThread = new Thread(LnTrafficController.instance());
 		sinkThread.start();
 		
+		// reach here while file runs.  Need to return so GUI still acts, 
+		// but that normally lets the button go back to default.
 	}
 	
 	public void filePauseButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -220,9 +193,6 @@ public class HexFileFrame extends javax.swing.JFrame {
 	
 	private Thread sourceThread;
 	private Thread sinkThread;
-	private LocoMonFrame lmFrame = null;
 	private LnHexFilePort p = null;
-	private LocoMonGen lmGen = null;
-	private MS100Frame ms100 = null;
 	
 }

@@ -6,7 +6,7 @@
  * @version			
  */
 
-package LocoMon;
+package locomon;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -15,14 +15,15 @@ import java.util.Date;
 import java.text.DateFormat;
 import java.io.File;
 
-import LocoNet.LocoNetListener;
-import LocoNet.LocoNetMessage;
-import LocoMon.Llnmon;
+import loconet.LocoNetListener;
+import loconet.LnTrafficController;
+import loconet.LocoNetMessage;
+import locomon.Llnmon;
 import java.io.PrintStream;
 import java.io.FileOutputStream;
 import ErrLoggerJ.ErrLog;
 
-public class LocoMonFrame extends javax.swing.JFrame implements LocoNet.LocoNetListener {
+public class LocoMonFrame extends javax.swing.JFrame implements loconet.LocoNetListener {
 
 // IMPORTANT: Source code between BEGIN/END comment pair will be regenerated
 // every time the form is saved. All manual changes will be overwritten.
@@ -166,7 +167,8 @@ public class LocoMonFrame extends javax.swing.JFrame implements LocoNet.LocoNetL
 	void thisWindowClosing(java.awt.event.WindowEvent e) {
 		setVisible(false);
 		dispose();
-		System.exit(0);
+	// and disconnect from the LnTrafficController
+	LnTrafficController.instance().removeLocoNetListener(~0,this);
 	}
 	
 	public synchronized void message(LocoNetMessage l) {  // receive a LocoNet message and log it

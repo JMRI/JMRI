@@ -8,7 +8,10 @@ and jmrix.* components.
 
 Defined applications:
 
-	LocoMonAppl:  A standalone LocoNet monitor program.
+	JMRIdemo:  	 Full featured demo, aim is to include _everything_
+	
+	LocoMonAppl: A standalone LocoNet monitor program 
+				 that's meant to be as simple as possible (currently broken)
 	
 	
 

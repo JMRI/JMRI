@@ -1,5 +1,5 @@
 /** 
- * LocoMonGenFrame.java
+ * LocoGenFrame.java
  *
  * Description:		Frame for user input of LocoNet messages
  * @author			Bob Jacobsen   Copyright (C) 2001
@@ -12,11 +12,11 @@ package locogen;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import LocoNet.LocoNetMessage;
-import LocoNet.LnConstants;
-import LocoNet.LnTrafficController;
+import loconet.LocoNetMessage;
+import loconet.LnConstants;
+import loconet.LnTrafficController;
 
-public class LocoMonGenFrame extends javax.swing.JFrame {
+public class LocoGenFrame extends javax.swing.JFrame {
 
 // IMPORTANT: Source code between BEGIN/END comment pair will be regenerated
 // every time the form is saved. All manual changes will be overwritten.
@@ -31,7 +31,7 @@ public class LocoMonGenFrame extends javax.swing.JFrame {
 	javax.swing.JCheckBox switchOnCheckBox = new javax.swing.JCheckBox();
 // END GENERATED CODE
 
-	public LocoMonGenFrame() {
+	public LocoGenFrame() {
 	}
 
 	public void initComponents() throws Exception {
@@ -83,7 +83,7 @@ public class LocoMonGenFrame extends javax.swing.JFrame {
 		switchOnCheckBox.setSelected(true);
 
 		setLocation(new java.awt.Point(400, 400));
-		setTitle("locogen.LocoMonGenFrame");
+		setTitle("locogen.LocoGenFrame");
 		getContentPane().setLayout(null);
 		setSize(new java.awt.Dimension(566, 250));
 		getContentPane().add(jLabel1);
@@ -143,7 +143,8 @@ public class LocoMonGenFrame extends javax.swing.JFrame {
 	void thisWindowClosing(java.awt.event.WindowEvent e) {
 		setVisible(false);
 		dispose();
-		System.exit(0);
+	// disconnect from LnTrafficController
+		tc = null;
 	}
 	
 	// connect to the LnTrafficController

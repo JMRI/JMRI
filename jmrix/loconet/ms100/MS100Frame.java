@@ -6,15 +6,13 @@
  * @version			
  */
 
-package LocoMon;
+package ms100;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import LocoMon.LocoMonFrame;
-import LocoMon.LocoMonGen;
-import LocoNet.LnTrafficController;
+import loconet.LnTrafficController;
 import ErrLoggerJ.ErrLog;
 
 
@@ -117,50 +115,22 @@ public class MS100Frame extends javax.swing.JFrame {
 	
 	public void openPortButtonActionPerformed(java.awt.event.ActionEvent e) {
 		adapter.openPort((String) portList.getSelectedValue(),"MS100SerialFrame");
-		
-		// now continue firing up the rest of the app
-		// add the LocoMonFrame frame
-		lmFrame = new LocoMonFrame();
-		try {
-			lmFrame.initComponents();
-			}
-		catch (Exception ex) {
-			ErrLog.msg(ErrLog.error, "LocoMonAppl.Frame1 starting LocoMonFrame", "", "Exception: "+ex.toString());
-			}
-		lmFrame.show();
-		// add the LocoMonGen frame
-		lmGen = new LocoMonGen();
-		try {
-			lmGen.initComponents();
-			}
-		catch (Exception ex) {
-			ErrLog.msg(ErrLog.error, "LocoMonAppl.Frame1 starting LocoMonGen", "", "Exception: "+ex.toString());
-			}
-		lmGen.show();
-		//create a LnTrafficController object and a LocoMonFrame,
-		LnTrafficController tc = new LnTrafficController();
-
-		// connect them all together
-		tc.notifyLocoNetEvents(~0, lmFrame);
-		tc.connectToPort(adapter);
-		lmGen.connect(tc);
-		
+				
+		// connect to the traffic controller
+		LnTrafficController.instance().connectPort(adapter);
+				
 		// start operation
 		// sourceThread = new Thread(p);
 		// sourceThread.start();
-		sinkThread = new Thread(tc);
+		sinkThread = new Thread(LnTrafficController.instance());
 		sinkThread.start();
 		
 		// hide this frame, since we're done
 		hide();
-
 	}
 	
 // Data members
 	private MS100Adapter adapter = new MS100Adapter();
 	// private Thread sourceThread;
 	private Thread sinkThread;
-	private LocoMonFrame lmFrame = null;
-	private LocoMonGen lmGen = null;
-
 }

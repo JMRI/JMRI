@@ -6,7 +6,7 @@
  * @version			
  */
 
-package LocoNet;
+package loconet;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

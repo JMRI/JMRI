@@ -8,7 +8,7 @@
  * @version			
  */
 
-package LocoMon;
+package ms100;
 
 import javax.comm.CommPortIdentifier;
 import javax.comm.SerialPort;
@@ -17,11 +17,11 @@ import java.util.Vector;
 import java.io.DataOutputStream;
 import java.io.DataInputStream;
 
-import LocoNet.LnPortController;
+import loconet.LnPortController;
 
 import ErrLoggerJ.ErrLog;
 
-public class MS100Adapter extends LocoNet.LnPortController  {
+public class MS100Adapter extends loconet.LnPortController  {
 
 	Vector portNameVector = null;
 	SerialPort activeSerialPort = null;

@@ -6,26 +6,37 @@
  * @version			
  */
 
-package LocoNet;
+package loconet;
 
 import java.io.InputStream;
 import java.io.DataInputStream;
 import java.io.OutputStream;
+import java.util.Vector;
 import ErrLoggerJ.ErrLog;
 
 public class LnTrafficController implements LocoNetInterface, Runnable {
 
+	public LnTrafficController() {self=this;}
+	
 
 // The methods to implement the LocoNetInterface
 
+	private Vector listeners = new Vector();
+	
 	public boolean status() { return (ostream != null & istream != null); 
 		}
 
-	public void notifyLocoNetEvents(int mask, LocoNetListener l) { //!! only one!
-		oneListener = l;
+	public synchronized void addLocoNetListener(int mask, LocoNetListener l) { 
+			// add only if not already registered
+			if (!listeners.contains(l)) {
+					listeners.addElement(l);
+				}
 		}
 
-	public void endLocoNetEvents(int mask, LocoNetListener l) {  //!! nothing yet
+	public synchronized void removeLocoNetListener(int mask, LocoNetListener l) {
+			if (listeners.contains(l)) {
+					listeners.removeElement(l);
+				}
 		}
 
 	public void sendLocoNetMessage(LocoNetMessage m) {
@@ -44,45 +55,76 @@ public class LnTrafficController implements LocoNetInterface, Runnable {
 		for (int i=0; i< len; i++)
 			msg[i] = (byte) m.getElement(i);
 		try {
-			ostream.write(msg);
+			if (ostream != null)
+				ostream.write(msg);
+			else {
+				// no stream connected
+				ErrLog.msg(ErrLog.warning, "LnTrafficController", "sendLocoNetMessage", "no connection established");
+				}
 			}
 		catch (Exception e) {
-			ErrLog.msg(ErrLog.error, "LnTrafficController", "", "Exception: "+e.toString());
+			ErrLog.msg(ErrLog.error, "LnTrafficController", "sendLocoNetMessage", "Exception: "+e.toString());
 			}
 		}
 
-// methods to connect to a source of data in a LnPortController
-	public void connectToPort(LnPortController p) {
+// methods to connect/disconnect to a source of data in a LnPortController
+	private LnPortController controller = null;
+	
+	public void connectPort(LnPortController p) {
 			istream = p.getInputStream();
 			ostream = p.getOutputStream();
-			// ErrLog.msg(ErrLog.routine,"LnTrafficController","connectToPort","went OK");
+			if (controller != null)
+				ErrLog.msg(ErrLog.error,"LnTrafficController", "connectPort", 
+							"connect called while connected");
+			controller = p;
 		}
-			
+	public void disconnectPort(LnPortController p) {
+			istream = null;
+			ostream = null;
+			if (controller != p)
+				ErrLog.msg(ErrLog.error,"LnTrafficController", "disconnectPort", 
+							"disconnect called from non-connected LnPortController");
+			controller = null;
+		}
+		
 // the methods to connect to the streams from a port
-	void setInputStream(InputStream s) { 
-			istream = new DataInputStream(s);
-		}
+	//void setInputStream(InputStream s) { 
+	//		istream = new DataInputStream(s);
+	//	}
 		
-	void setOutputStream(OutputStream o) { 
-			ostream = o;
-		}
+	//void setOutputStream(OutputStream o) { 
+	//		ostream = o;
+	//	}
 		
+// static function to find object
+	static public LnTrafficController instance() { return self;}
+	static private LnTrafficController self = null;
+	
 // data members to hold the streams
 	DataInputStream istream = null;
 	OutputStream ostream = null;
 
 // data members to hold contact with the listeners
-	LocoNetListener oneListener = null;  // no protection, no provision for more than one!!
-	private void dispatch(LocoNetMessage m) {
-		oneListener.message(m);
-		}
+	protected void notify(LocoNetMessage m) {
+		// make a copy of the listener vector to synchronized not needed for transmit
+		Vector v;
+		synchronized(this)
+			{
+				v = (Vector) listeners.clone();
+			}
+		// forward to all listeners
+		int cnt = v.size();
+		for (int i=0; i < cnt; i++) {
+			LocoNetListener client = (LocoNetListener) listeners.elementAt(i);
+			client.message(m);
+						}
+	}
 	
 // main running member function
 	public void run() {
 			int opCode;
 			try {
-			 while (true /* istream.available() > 0 */ ) {   // loop permanently, not right!!
-				// ErrLog.msg(ErrLog.debugging,"LnTrafficController","run","looking at data");
+			 while (true) {   // loop permanently, stream close will exit
 				// start by looking for command
 				while ( ((opCode = (istream.readByte()&0xFF)) & 0x80) ==0 )  {};  // skip if bit not set
 				// here opCode is OK. Create output message
@@ -117,13 +159,16 @@ public class LnTrafficController implements LocoNetInterface, Runnable {
              	// ErrLog.msg(ErrLog.debugging,"LnTrafficController", "dispatch msg:", msg.toString());
              	
              	// message is complete, dispatch it !!
-             	dispatch(msg);
+             	notify(msg);
              	
              	// done with this one
             	}  // end loop until no data available
+            // at this point, input stream is not available
+            // so we just fall off end to stop running
+            
 			} // end of try
 		catch (Exception e) {
-			ErrLog.msg(ErrLog.error, "LnTrafficController", "", "Exception: "+e.toString());
+			ErrLog.msg(ErrLog.error, "LnTrafficController", "run", "Exception: "+e.toString());
 			}
 		}
 }
