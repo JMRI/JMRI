@@ -1,32 +1,18 @@
-/**
- * LnPowerManagerTest.java
- *
- * Description:	    tests for the Jmri package
- * @author			Bob Jacobsen
- * @version         $Id: LnPowerManagerTest.java,v 1.2 2002-03-18 02:11:27 jacobsen Exp $
- */
+// LnPowerManagerTest.java
 
 package jmri.jmrix.loconet;
 
-import jmri.*;
+import jmri.jmrix.*;
+import junit.framework.*;
 
-import java.io.*;
-import java.beans.PropertyChangeListener;
-import junit.framework.Test;
-import junit.framework.Assert;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import jmri.jmrix.AbstractPowerManagerTest;
-
-import jmri.jmrix.loconet.LnConstants;
-import jmri.jmrix.loconet.LnPowerManager;
-import jmri.jmrix.loconet.LnTrafficController;
-import jmri.jmrix.loconet.LocoNetMessage;
-
+/**
+ * tests for the Jmri package LnPowerManager
+ * @author	Bob Jacobsen   Copyright 2001
+ * @version     $Revision: 1.3 $
+ */
 public class LnPowerManagerTest extends AbstractPowerManagerTest {
 
-	// service routines to simulate recieving on, off from interface
+	/** service routines to simulate receiving on, off from interface */
 	protected void hearOn() {
 		LocoNetMessage l = new LocoNetMessage(2);
 		l.setOpCode(LnConstants.OPC_GPON);
@@ -46,17 +32,17 @@ public class LnPowerManagerTest extends AbstractPowerManagerTest {
 	}
 
 	protected int outboundSize() {
-		return controller.outbound.size();
+            return controller.outbound.size();
 	}
 
 	protected boolean outboundOnOK(int index) {
-	 return LnConstants.OPC_GPON ==
-				((LocoNetMessage)(controller.outbound.elementAt(index))).getOpCode();
+	    return LnConstants.OPC_GPON ==
+                    ((LocoNetMessage)(controller.outbound.elementAt(index))).getOpCode();
 	}
 
 	protected boolean outboundOffOK(int index) {
-	 return LnConstants.OPC_GPOFF ==
-				((LocoNetMessage)(controller.outbound.elementAt(index))).getOpCode();
+            return LnConstants.OPC_GPOFF ==
+                ((LocoNetMessage)(controller.outbound.elementAt(index))).getOpCode();
 	}
 
 	// setup a default interface
