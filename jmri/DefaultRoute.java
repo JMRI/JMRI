@@ -6,7 +6,7 @@ package jmri;
  * Class providing the basic logic of the Route interface.
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class DefaultRoute extends AbstractNamedBean
     implements Route, java.io.Serializable {
@@ -39,6 +39,7 @@ public class DefaultRoute extends AbstractNamedBean
                     new java.beans.PropertyChangeListener[MAX_CONTROL_SENSORS];
     protected Turnout mTurnout = null;
     protected java.beans.PropertyChangeListener mTurnoutListener = null;
+	private boolean busy = false;
      
     /**
      * Method to add a Turnout to the list of Turnouts in this Route
@@ -195,21 +196,16 @@ public class DefaultRoute extends AbstractNamedBean
     /**
      * Method to set the Route
      * Sets all Route Turnouts to the state shown in the Route definition
+	 * This call is ignored if the Route is 'busy', i.e., if there is a 
+	 *    thread currently sending commands to this Route's turnouts.
      */
     public void setRoute() {
         if (mNumTurnouts>0) {
-            for (int k = 0; k < mNumTurnouts; k++) {
-                Turnout t = InstanceManager.turnoutManagerInstance().
-                                            getBySystemName(mRouteTurnout[k]);
-                if (t!=null) {
-                    t.setCommandedState(mRouteTurnoutState[k]);
-                    try {
-                        Thread.sleep(250);
-                    }
-                    catch (InterruptedException e) {
-                    }
-                }
-            }
+			if (!busy) {
+				setRouteBusy();
+				SetRouteThread thread = new SetRouteThread(this);
+				thread.start();
+			}
         }
     }
 
@@ -323,7 +319,58 @@ public class DefaultRoute extends AbstractNamedBean
             mTurnoutListener = null;
         }
     }
-    
+
+    /**
+     * Method to set Route busy when commands are being issued to 
+     *   Route turnouts
+	 */
+    public void setRouteBusy() {
+		busy = true;
+	}
+
+    /**
+     * Method to set Route not busy when all commands have been
+     *   issued to Route turnouts
+	 */
+    public void setRouteNotBusy() {
+		busy = false;
+	}
+
+    /**
+     * Method to query if Route is busy (returns true if commands are
+     *   being issued to Route turnouts)
+	 */
+    public boolean isRouteBusy() {
+		return (busy);
+	}
+
+    /**
+     * Method to return the 'k'th Turnout of the Route.
+     *   Returns null if there are less than 'k' Turnouts defined
+	 */
+    public Turnout getRouteTurnout(int k) {
+		if (mNumTurnouts<=k) {
+			return (null);
+		}
+		else {
+			return (InstanceManager.turnoutManagerInstance().
+                                            getBySystemName(mRouteTurnout[k]));
+		}
+	}
+	
+    /**
+     * Method to get the desired state of 'k'th Turnout of the Route.
+     *   Returns -1 if there are less than 'k' Turnouts defined
+	 */
+    public int getRouteTurnoutState(int k) {
+		if (mNumTurnouts<=k) {
+			return (-1);
+		}
+		else {
+			return (mRouteTurnoutState[k]);
+		}
+	}
+
     /**
      * Not needed for Routes - included to complete implementation of the NamedBean interface.
      */
@@ -340,5 +387,45 @@ public class DefaultRoute extends AbstractNamedBean
         return;
     }    
 }
-     
+
+/**
+ * Class providing a thread to set route turnouts
+ */
+class SetRouteThread extends Thread
+{
+	/**
+	 * Constructs the thread
+	 */
+	public SetRouteThread (Route aRoute) {
+		r = aRoute;
+	}
+	
+	/** 
+	 * Runs the thread - sends commands to Route Turnouts
+	 */
+	public void run () {
+		for (int k = 0; k < Route.MAX_TURNOUTS_PER_ROUTE; k++) {
+			Turnout t = r.getRouteTurnout(k);
+			if (t!=null) {
+				int state = r.getRouteTurnoutState(k);
+				if (state!=-1) {
+					t.setCommandedState(state);
+					try {
+						Thread.sleep(250);
+					}
+					catch (InterruptedException e) {
+						break;
+					}
+				}
+			}
+			else {
+				break;
+			}
+		}
+		r.setRouteNotBusy();
+	}
+	
+	private Route r;
+}
+
 /* @(#)DefaultRoute.java */
