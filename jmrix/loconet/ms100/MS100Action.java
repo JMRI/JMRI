@@ -28,10 +28,7 @@ public class MS100Action 			extends AbstractAction {
 		catch (Exception ex) {
 			ErrLog.msg(ErrLog.error, "MS100Action","starting MS100Frame:", "Exception: "+ex.toString());
 			}
-		f.show();	
-		// it connects to the LnTrafficController when the right button is pressed
-		
-		
+		f.show();			
 	};
 
 }
