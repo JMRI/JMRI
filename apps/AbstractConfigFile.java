@@ -15,7 +15,7 @@ import org.jdom.output.*;
  * application. Works with the AbstractConfigFrame
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version		 	$Revision: 1.6 $
+ * @version		 	$Revision: 1.7 $
  * @see apps.AbstractConfigFrame
  */
 abstract public class AbstractConfigFile extends XmlFile {
@@ -59,7 +59,7 @@ abstract public class AbstractConfigFile extends XmlFile {
 
             // add connection element
             Element values;
-            root.addContent(f.getConnection());
+            root.addContent(f.getCommPane().getConnection());
 
             // add gui element
             root.addContent(f.getGUI());
