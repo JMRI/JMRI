@@ -19,7 +19,7 @@ import junit.framework.TestSuite;
  *
  * @todo need a check of the MIXED state model for long address
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 
@@ -34,7 +34,9 @@ public class SplitVariableValueTest extends VariableValueTest {
 		CvValue cvNext = new CvValue(cvNum+offset);
 		cvNext.setValue(0);
 		v.setElementAt(cvNext, cvNum+offset);
-		return new SplitVariableValue(label, comment, readOnly, cvNum, mask, minVal, maxVal, v, status, item, cvNum+offset);
+		return new SplitVariableValue(label, comment, readOnly,
+                                cvNum, mask, minVal, maxVal, v, status, item,
+                                cvNum+offset, 1, 0);
 	}
 
 
@@ -75,7 +77,9 @@ public class SplitVariableValueTest extends VariableValueTest {
 		v.setElementAt(cv1, lowCV);
 		v.setElementAt(cv2, lowCV+offset);
 		// create a variable pointed at CVs, check name
-		SplitVariableValue var = new SplitVariableValue("label", "comment", false, lowCV, "XXVVVVVV", 0, 255, v, null, null, lowCV+offset);
+		SplitVariableValue var = new SplitVariableValue("label", "comment", false,
+                                                    lowCV, "XXVVVVVV", 0, 255, v, null, null,
+                                                    lowCV+offset, 1, 0);
 		Assert.assertTrue(var.label() == "label");
 		// pretend you've editted the value, check its in same object
 		((JTextField)var.getValue()).setText(""+(17+189*64));
@@ -97,7 +101,9 @@ public class SplitVariableValueTest extends VariableValueTest {
 		v.setElementAt(cv1, lowCV);
 		v.setElementAt(cv2, lowCV+offset);
 		// create a variable pointed at CVs
-		SplitVariableValue var = new SplitVariableValue("name", "comment", false, lowCV, "XXVVVVVV", 0, 255, v, null, null, lowCV+offset);
+		SplitVariableValue var = new SplitVariableValue("name", "comment", false, lowCV,
+                                        "XXVVVVVV", 0, 255, v, null, null,
+                                        lowCV+offset, 1, 0);
 		((JTextField)var.getValue()).setText("1029");
 		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 
@@ -124,7 +130,9 @@ public class SplitVariableValueTest extends VariableValueTest {
 		v.setElementAt(cv1, lowCV);
 		v.setElementAt(cv2, lowCV+offset);
 
-		SplitVariableValue var = new SplitVariableValue("name", "comment", false, lowCV, "XXVVVVVV", 0, 255, v, null, null, lowCV+offset);
+		SplitVariableValue var = new SplitVariableValue("name", "comment", false,
+                                                            lowCV, "XXVVVVVV", 0, 255, v, null, null,
+                                                            lowCV+offset, 1, 0);
 		// register a listener for parameter changes
 		java.beans.PropertyChangeListener listen = new java.beans.PropertyChangeListener() {
 			public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -180,7 +188,9 @@ public class SplitVariableValueTest extends VariableValueTest {
 		v.setElementAt(cv1, lowCV);
 		v.setElementAt(cv2, lowCV+offset);
 
-		SplitVariableValue var = new SplitVariableValue("name", "comment", false, lowCV, "XXVVVVVV", 0, 255, v, null, null,lowCV+offset);
+		SplitVariableValue var = new SplitVariableValue("name", "comment",
+                                                false, lowCV, "XXVVVVVV", 0, 255, v, null, null,
+                                                lowCV+offset, 1, 0);
 		((JTextField)var.getValue()).setText("4797");
 		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 
