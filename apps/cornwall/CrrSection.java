@@ -5,64 +5,62 @@ package apps.cornwall;
 import jmri.*;
 
 /**
- * Automate sections 1A and 1B of the Cornwall RR.
- * <P>
- * Based on Crr0024.bas
+ * Abstract base class for Cornwall RR automation.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
-public class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
+public abstract class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
+    static final int RED    = SignalHead.RED;
+    static final int YELLOW = SignalHead.YELLOW;
+    static final int GREEN  = SignalHead.GREEN;
+    static final int DARK   = SignalHead.DARK;
+
+    static final int ACTIVE   = Sensor.ACTIVE;
+    static final int INACTIVE = Sensor.INACTIVE;
+
+    static final int CLOSED   = Turnout.CLOSED;
+    static final int THROWN   = Turnout.THROWN;
 
     /**
-     * References the signalheads to be controlled.
+     * Calculate the signal settings
      */
-    SignalHead si1a;
-    SignalHead si1b;
+    abstract void setOutput();
 
     /**
-     * References the sensors to be monitored
+     * Locate and define the output Signal object, stored in sig
      */
-    Sensor bo4;
-    Sensor bo16;
-    Sensor tu1;
-    Sensor tu12;
-
+    abstract void defineIO();
 
     /**
-     * Obtain the input and output objects
-     * <P>
-     * This also sets the outpts to an initial state
+     * References the signalhead to be controlled.
+     */
+    SignalHead sig;
+
+    /**
+     * Array of sensors needed as inputs; changes in these will
+     * kick off processing
+     */
+    Sensor[] sensors;
+
+    /**
+     * Obtain the output object, sets the output to an initial state
      * to make sure everything is consistent at the start.
      */
     protected void init() {
         TurnoutManager tm = InstanceManager.turnoutManagerInstance();
         SensorManager  sm = InstanceManager.sensorManagerInstance();
-        if ( tm==null || sm==null ) return;
+        SignalHeadManager hm = InstanceManager.signalHeadManagerInstance();
+        if ( tm==null || sm==null || hm ==null) {
+            log.error("Can't function with missing managers");
+            return;
+        }
 
-        // get references to sample layout objects
-
-        si1a  = new TripleTurnoutSignalHead("si1a", "Signal 1A",
-                                            tm.newTurnout("CT1","1a green"),
-                                            tm.newTurnout("CT2","1a yellow"),
-                                            tm.newTurnout("CT3","1a red"));
-        InstanceManager.signalHeadManagerInstance().register(si1a);
-        si1a.setAppearance(SignalHead.RED);
-
-        si1b  = new TripleTurnoutSignalHead("si1b", "Signal 1B",
-                                            tm.newTurnout("CT4","1b green"),
-                                            tm.newTurnout("CT5","1b yellow"),
-                                            tm.newTurnout("CT6","1b red"));
-        InstanceManager.signalHeadManagerInstance().register(si1b);
-        si1b.setAppearance(SignalHead.RED);
-
-        bo4  = sm.newSensor("CS7", "Reading Relay track 2 bo(04)");
-        bo16 = sm.newSensor("CS27","PRR/Lebanon entrance bo(16)");
-
-        tu1  = sm.newSensor("CS2", "Cornwall Jct 1 tu(01)");
-        tu12 = sm.newSensor("CS29","East Cornwall Junction switch tu(12)");
+        // get references to needed layout objects
+        defineIO();
 
         // set up the initial correlation
+        sig.setAppearance(SignalHead.RED);
         setOutput();
     }
 
@@ -74,51 +72,134 @@ public class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
         log.debug("Waiting for state change");
 
         // wait until a sensor changes state
-        Sensor[] sensors = new Sensor[]{ bo4, bo16, tu1, tu12};
         waitSensorChange(sensors);
 
         // recalculate outputs
+        int oldAppearance = sig.getAppearance();
         setOutput();
+
+        // report if needed
+        int newAppearance = sig.getAppearance();
+
+        if ( (oldAppearance != newAppearance) && log.isDebugEnabled()) {
+            switch (newAppearance) {
+            case DARK:   log.debug(sig.getUserName()+"set DARK"); break;
+            case RED:    log.debug(sig.getUserName()+"set RED");  break;
+            case YELLOW: log.debug(sig.getUserName()+"set YELLOW"); break;
+            case GREEN:  log.debug(sig.getUserName()+"set GREEN"); break;
+            default:     log.warn(sig.getUserName()+"set to unknown new appearance: "+newAppearance); break;
+            }
+        }
 
         return true;   // never terminate permanently
     }
 
-    /**
-     * Set outputs to match the sensor state
-     */
-    void setOutput() {
-        boolean bo4now  = ( bo4.getKnownState() == Sensor.ACTIVE);
-        boolean bo16now = (bo16.getKnownState() == Sensor.ACTIVE);
-        boolean tu1now  = ( tu1.getKnownState() == Sensor.ACTIVE);
-        boolean tu12now = (tu12.getKnownState() == Sensor.ACTIVE);
-        if (log.isDebugEnabled()) log.debug("Section 1 with bo4="+bo4now+" bo16="+bo16now+" tu1="+tu1now+" tu12="+tu12now);
-
-        // section 1a
-        if (
-                ( bo4now && tu1now && tu12now)
-             || ( bo16now && !tu1now )
-             || ( tu1now && !tu12now )
-            ) {
-            si1a.setAppearance(SignalHead.RED);
-            log.debug("1a set RED");
-        } else {
-            si1a.setAppearance(SignalHead.GREEN);
-            log.debug("1a set GREEN");
+    CrrSection() {
+        SensorManager tm = InstanceManager.sensorManagerInstance();
+        // initialize the static turnout list
+        if (tu==null) {
+            tu = new Sensor[]{
+                null,
+                tm.getByUserName("Cornwall Jct 1 tu(01)"),
+                tm.getByUserName("Ridge tu(02)"),
+                tm.getByUserName("unused tu(03)"),
+                tm.getByUserName("Reading Relay Track West Switch tu(04)"),
+                tm.getByUserName("Lickdale East tu(05)"),
+                tm.getByUserName("Colebrook West tu(06)"),
+                tm.getByUserName("Colebrook East tu(07)"),
+                tm.getByUserName("Colebrook Branch tu(08)"),
+                tm.getByUserName("Conewago West tu(09)"),
+                tm.getByUserName("Blackies tu(10)"),
+                tm.getByUserName("Lickdale Xover tu(11)"),
+                tm.getByUserName("East Cornwall Junction Switch tu(12)"),
+                tm.getByUserName("Cornwall Mine Lead tu(13)"),
+                tm.getByUserName("Lebanon Jct East tu(14)"),
+                tm.getByUserName("Lebanon Jct West tu(15)"),
+                tm.getByUserName("Lebanon Low Line West tu(16)"),
+                tm.getByUserName("Conewago Xover West tu(17)"),
+                tm.getByUserName("Conewago Xover East tu(18)"),
+                tm.getByUserName("Conewago Reading West tu(19)"),
+                tm.getByUserName("Conewago Reading East tu(20)"),
+                tm.getByUserName("Conewago Departure East tu(21)"),
+                tm.getByUserName("Conewago Reading Interchange East tu(22)"),
+                tm.getByUserName("Lickdale Interchange NorthWest Switch tu(23)"),
+                tm.getByUserName("Lickdale Interchange NorthEast Switch tu(24)"),
+                tm.getByUserName("Lickdale Interchange SouthWest Switch tu(25)"),
+                tm.getByUserName("Lickdale Interchange SouthEast Switch tu(26)")
+            };
+            // check for error!
+            if (tu.length != 26+1) log.error("Unexpected tu[] length: "+tu.length);
+            for (int i = 1; i<tu.length; i++)
+                if (tu[i]==null) log.error("tu["+i+"] unexpectedly null");
         }
 
-        // section 1B
-        if (
-                ( tu1now )
-             || ( !tu1now && bo4now )
-             || ( !tu1now && !tu12now )
-            ) {
-            si1b.setAppearance(SignalHead.RED);
-            log.debug("1b set RED");
-        } else {
-            si1b.setAppearance(SignalHead.GREEN);
-            log.debug("1b set GREEN");
+        // initialize the static occupancy detector list
+        if (bo==null) {
+            bo = new Sensor[]{
+                null,
+                tm.getByUserName("Q Curve bo(01)"),
+                tm.getByUserName("PRR Highline 2 bo(02)"),
+                tm.getByUserName("PRR Highline 1 bo(03)"),
+                tm.getByUserName("Reading Relay Track 2 bo(04)"),
+                tm.getByUserName("Ridge bo(05)"),
+                tm.getByUserName("Lickdale Approach bo(06)"),
+                tm.getByUserName("Lickdale Passenger Siding bo(07)"),
+                tm.getByUserName("Lickdale Mainline bo(08)"),
+                tm.getByUserName("Gate North bo(09)"),
+                tm.getByUserName("Gate South bo(10)"),
+                tm.getByUserName("Colebrook Main bo(11)"),
+                tm.getByUserName("Colebrook Passing Siding bo(12)"),
+                tm.getByUserName("Edisonville North bo(13)"),
+                tm.getByUserName("Edisonville South bo(14)"),
+                tm.getByUserName("Conewago Approach bo(15)"),
+                tm.getByUserName("PRR/Lebanon Entrance bo(16)"),
+                tm.getByUserName("Cornwall Relay 1 bo(17)"),
+                tm.getByUserName("Reading Low Line Track 2 bo(18)"),
+                tm.getByUserName("Reading Low Line Track 1 bo(19)"),
+                tm.getByUserName("Lebanon Main Lead bo(20)"),
+                tm.getByUserName("Lebanon Yard Lead bo(21)"),
+                tm.getByUserName("Conewago Main West bo(22)"),
+                tm.getByUserName("Conewago Yard West bo(23)"),
+                tm.getByUserName("Conewago Main East bo(24)"),
+                tm.getByUserName("Conewago Departure bo(25)"),
+                tm.getByUserName("Conewago Reading Interchange bo(26)"),
+                tm.getByUserName("Relay Track 2 bo(27)"),
+                tm.getByUserName("Lickdale Interchange Track 4 bo(28)"),
+                tm.getByUserName("Lickdale Interchange Track 3 bo(29)"),
+                tm.getByUserName("Relay Track 1 bo(30)"),
+                tm.getByUserName("Lickdale Interchange Track 2 bo(31)"),
+                tm.getByUserName("Lickdale Interchange Track 1 bo(32)"),
+                tm.getByUserName("Conewago Interlocking bo(33)")
+            };
+            // check for error!
+            if (bo.length != 33+1) log.error("Unexpected bo[] length: "+bo.length);
+            for (int i = 1; i<bo.length; i++)
+                if (bo[i]==null) log.error("bo["+i+"] unexpectedly null");
+
+
         }
+
     }
+
+    /**
+     * Java array of Sensor objects corresponding to TU() turnout sensors
+     * in the C/MRI code.  Note that TU[1] is like TU(1) in BASIC, so there's
+     * an extra null entry at the beginning (as TU[0]).
+     * <P>
+     * Initialization of the contents happens when the first CrrSection object
+     * constructor is run.
+     */
+    static Sensor[] tu = null;
+
+    /**
+     * Java array of Sensor objects corresponding to BO() occupancy sensors
+     * in the C/MRI code.  Note that BO[1] is like BO(1) in BASIC, so there's
+     * an extra null entry at the beginning (as BO[0]).
+     * <P>
+     * Initialization of the contents happens when the first CrrSection object
+     * constructor is run.
+     */
+    static Sensor[] bo = null;
 
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CrrSection.class.getName());
