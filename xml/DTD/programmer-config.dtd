@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a CV programmer format -->
-<!-- $Revision: 1.15 $ -->
+<!-- $Revision: 1.16 $ -->
 
 <!ELEMENT programmer-config (version, programmer)>
 
@@ -39,6 +39,7 @@
 
 <!-- Insert a variable that handles long & short dcc addresses -->
 <!ELEMENT dccaddress EMPTY>
+<!ATTLIST dccaddress label CDATA  #IMPLIED>  <!-- optional, default is from name -->
 
 <!-- The label items describes an arbitrary text string -->
 <!ELEMENT label EMPTY >
