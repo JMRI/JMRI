@@ -5,6 +5,8 @@ package apps.cornwall;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.io.*;
+import jmri.*;
 
 /**
  * The JMRI program for Nick Kulp's Cornwall Railroad.
@@ -14,7 +16,7 @@ import javax.swing.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class CornwallRR extends JPanel {
     public CornwallRR() {
@@ -121,6 +123,13 @@ public class CornwallRR extends JPanel {
         pane2.add(new JLabel(" "));
         pane2.add(new JLabel(" JMRI version "+jmri.Version.name()));
         pane2.add(new JLabel(" Java version "+System.getProperty("java.version","<unknown>")));
+        JButton reload = new JButton("Load panel");
+        pane2.add(reload);
+        reload.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                showPanel();
+            }
+        });
         pane1.add(pane2);
         add(pane1);
     }
@@ -158,9 +167,22 @@ public class CornwallRR extends JPanel {
         frame.pack();
         frame.setVisible(true);
         log.info("main initialization done");
-
         // start automation
         new CrrSection().start();
+
+        // show panel
+        showPanel();
+
+    }
+
+    static void showPanel(){
+        // open the main panel if it can be found
+        String name = "CornwallMain.xml";
+        File pFile = InstanceManager.configureManagerInstance().find(name);
+        if (pFile!=null)
+            InstanceManager.configureManagerInstance().load(pFile);
+        else
+            log.warn("Could not find "+name+" config file");
 
     }
 
