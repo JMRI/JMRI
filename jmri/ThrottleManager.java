@@ -6,7 +6,7 @@ import java.util.Iterator;
 /**
  * Interface for controlling throttles
  * @author			Glen Oberhauser
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public interface ThrottleManager
 {
@@ -41,4 +41,8 @@ public interface ThrottleManager
      */
     public Iterator getThrottleFrames();
 
+    /**
+     * Get a reference to the Function
+     */
+    public jmri.jmrit.throttle.FunctionButtonPropertyEditor getFunctionButtonEditor();
 }
