@@ -1,15 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_CS.xml,v 1.2 2002-08-08 07:00:39 jacobsen Exp $ -->
+<!-- $Id: Digitrax_CS.xml,v 1.3 2002-08-11 16:42:34 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
-					version="1" lastUpdated="20020805"/>
+					version="2" lastUpdated="20020809"/>
 					
 		<!-- made from 150 file (Basic FX) -->
 
 <decoder>
 	<family name="Basic CS" mfg="Digitrax" >
 		<model model="DZ121" numOuts="5" numFns="3"/>
+		<model model="DN122K2" numOuts="5" numFns="3"/>
 	</family>
 
 	<programming direct="no" paged="yes" 
