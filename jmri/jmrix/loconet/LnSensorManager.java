@@ -10,7 +10,7 @@ import jmri.Sensor;
  * System names are "LSnnn", where nnn is the sensor number without padding.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class LnSensorManager extends jmri.AbstractSensorManager implements LocoNetListener {
 
@@ -59,7 +59,8 @@ public class LnSensorManager extends jmri.AbstractSensorManager implements LocoN
         if (null == getBySystemName(s)) {
             // need to store a new one
             if (log.isDebugEnabled()) log.debug("Create new LnSensor as "+s);
-            newSensor(s, null);
+            LnSensor ns = (LnSensor)newSensor(s, null);
+            ns.message(l);  // have it update state
         }
     }
 
