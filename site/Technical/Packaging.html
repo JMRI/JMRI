@@ -1,0 +1,108 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Bob Jacobsen, LBL">
+   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>JMRI Packaging</title>
+</head>
+<body>
+
+<A href="../index.html">
+<IMG SRC="../images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
+</a>
+<H2>JMRI Packaging</H2>
+
+This page discusses how JMRI is packaged for various systems.
+<P>
+The JMRI collection of classes are normally distributed in a "jmri.jar" file, 
+which contains only the JMRI classes.  These require other publicly-available
+Java classes, which are normally distributed separately as jar files.  
+The exact set of jar files varies from platform to platform, and the Windows
+version is packaged with both the JMRI and external classes packaged in a 
+single .jar file.
+
+<h3>Macintosh</h3>
+
+<h4>MacOS "Classic", 8.1 through 9.X</h4>
+
+The main jmri.jar file contains all of our code.  The "JMRI demo" application
+configures Java, and then starts the JMRI code.
+<P>
+External jar files are included in the 
+lib folder in the distribution. These are expected to be somewhat stable
+so we've put them in a separate place to make updaters easy to create.
+Note that we don't have any updaters yet.
+<P>
+To get communications support, we distribute javax.comm.MRJ.jar
+as part of a JMRI distribution. This file is specific to MacOS
+Classic.
+<P>
+We also distribute swingall.jar, as Java Swing is not installed
+by default with MRJ (Macintosh Runtime for Java).
+<P>
+
+<h4>MacOS X</h4>
+
+The main jmri.jar file contains all of our code.  The "JMRI demo" application
+configures Java, and then starts the JMRI code.
+<P>
+External jar files are included in the 
+lib folder in the distribution. These are expected to be somewhat stable
+so we've put them in a separate place to make updaters easy to create.
+Note that we don't have any updaters yet.
+<P>
+Because the Mac Classic and MacOS X distributions are combined into one,
+the lib subdirectory contains the swingall.jar and javax.comm.MRJ.jar
+files.  These are not included in the CLASSPATH, hence not used, when the
+MacOS X app is launched.
+
+<h3>OS/2</h3>
+
+<h3>Linux</h3>
+
+<h3>Windows</h3>
+
+We don't know how to handle the class path consistently across all the varients
+of Windows.  We deal with this by including external classes within a single
+.jar file which we distribute.  Specifically, we include the contents of these
+separate files from other platforms:
+<UL>
+<LI>jmri.jar
+<LI>xerxes.jar
+<LI>log4j.jar
+<LI>jdom-jdk11.jar
+</UL>
+
+The jmriwin95.jar file contains all these. Its manifest is configured so
+you can just double click to launch it.  Unfortunately, in that case the
+log information (warnings, errors, etc) is not displayed.  To see that
+information, use the "java -jar jmriwin95.jar" command in a DOS 
+window.
+
+<HR>
+<BR>Site hosted by: <BR>
+<A href="http://sourceforge.net"> 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
+
+<!-- Begin Small Box -->
+<form method="POST" action="http://mindit.netmind.com/mindit.shtml">
+<input type="hidden" name="FORM" value="C">
+<table border="0" cellpadding="5" cellspacing="0" bgcolor="#666666"><tr><td align="center">
+<font face="arial,helvetica" size="-1" color="#ffffff"><b>Click to receive email <br>when this page changes</b></font></td>
+</tr><tr><td align="center">
+<input type="image" src="http://mindit.netmind.com/images/mindit.gif" border="0"></td>
+</tr><tr bgcolor="#FFFFCC"><td align="center">
+<font face="arial,helvetica" size="-2">&#149;<b> Powered by <a href="http://www.netmind.com"><font color="#000000">NetMind</font></a> </b>&#149;</font>
+</td></tr></table>
+<input type=hidden value="http://jmri.sourceforge.net/Technical/Packaging.html" name="REDIRECT"> 
+</form>
+<!-- End Small Box -->
+
+<hr>
+Bob Jacobsen<BR>
+jake@physics.berkeley.edu
+
+</body>
+</html>

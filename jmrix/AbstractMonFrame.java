@@ -39,7 +39,7 @@ public abstract class AbstractMonFrame extends javax.swing.JFrame  {
 	protected javax.swing.JButton openFileChooserButton = new javax.swing.JButton();
 	
 	// to find and remember the log file
-	final javax.swing.JFileChooser logFileChooser = new JFileChooser(".");
+	final javax.swing.JFileChooser logFileChooser = new JFileChooser(" ");
 
 	public AbstractMonFrame() {
 	}

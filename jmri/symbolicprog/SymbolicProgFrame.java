@@ -73,8 +73,8 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 	JLabel decoderModel   		= new JLabel("         ");
 	
 	// member to find and remember the configuration file in and out
-	final JFileChooser fci 		= new JFileChooser("xml");
-	final JFileChooser fco 		= new JFileChooser("xml");
+	final JFileChooser fci 		= new JFileChooser("xml"+File.separator);
+	final JFileChooser fco 		= new JFileChooser("xml"+File.separator);
 
 	// ctor
 	public SymbolicProgFrame() {

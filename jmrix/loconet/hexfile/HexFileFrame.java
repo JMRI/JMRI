@@ -30,7 +30,7 @@ public class HexFileFrame extends javax.swing.JFrame {
 	javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
 
 	// to find and remember the log file
-	final javax.swing.JFileChooser inputFileChooser = new JFileChooser(".");
+	final javax.swing.JFileChooser inputFileChooser = new JFileChooser(" ");
 
 	public HexFileFrame() {
 	}
