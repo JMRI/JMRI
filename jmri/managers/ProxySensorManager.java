@@ -2,11 +2,8 @@
 
 package jmri.managers;
 
-import java.util.*;
-import com.sun.java.util.collections.*;
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.List;
-import jmri.*;
+import jmri.Sensor;
+import jmri.SensorManager;
 
 /**
  * Implementation of a SensorManager that can serves as a proxy
@@ -14,7 +11,7 @@ import jmri.*;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class ProxySensorManager extends AbstractProxyManager
                             implements SensorManager {
@@ -37,8 +34,7 @@ public class ProxySensorManager extends AbstractProxyManager
         // if the systemName is specified, find that system
         for (int i=0; i<mgrs.size(); i++) {
             if ( ( (SensorManager)mgrs.get(i)).systemLetter() == name.charAt(0) )
-                return ((SensorManager)mgrs.get(i)).newSensor(
-                            ((SensorManager)mgrs.get(i)).makeSystemName(name), null);
+                return ((SensorManager)mgrs.get(i)).newSensor(name, null);
         }
         // did not find a manager, allow it to default to the primary
         log.debug("Did not find manager for name "+name+", assume it's a number");

@@ -2,11 +2,9 @@
 
 package jmri.managers;
 
-import java.util.*;
-import com.sun.java.util.collections.*;
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.List;
-import jmri.*;
+import jmri.Sensor;
+import jmri.Turnout;
+import jmri.TurnoutManager;
 
 /**
  * Implementation of a TurnoutManager that can serves as a proxy
@@ -14,7 +12,7 @@ import jmri.*;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
     /**
@@ -35,8 +33,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
         // if the systemName is specified, find that system
         for (int i=0; i<mgrs.size(); i++) {
             if ( ( (TurnoutManager)mgrs.get(i)).systemLetter() == name.charAt(0) )
-                return ((TurnoutManager)mgrs.get(i)).newTurnout(
-                            ((TurnoutManager)mgrs.get(i)).makeSystemName(name), null);
+                return ((TurnoutManager)mgrs.get(i)).newTurnout(name, null);
         }
         // did not find a manager, allow it to default to the primary
         log.debug("Did not find manager for name "+name+", assume it's a number");
