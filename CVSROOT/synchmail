@@ -7,7 +7,7 @@
 This script is used to provide email notifications of changes to the CVS
 repository.  These email changes will include context diffs of the changes.
 Really big diffs will be trimmed.
- 
+
 This script is run from a CVS loginfo file (see $CVSROOT/CVSROOT/loginfo).  To
 set this up, create a loginfo entry that looks something like this:
 
@@ -116,7 +116,7 @@ def calculate_diff(filespec, contextlines):
             difftype = "-C " + str(contextlines)
         else:
             difftype = "-u"
-        diffcmd = "/usr/bin/cvs -f diff -kk %s --minimal -r %s -r %s '%s'" % (
+        diffcmd = '/usr/bin/cvs -f diff -kk %s -r %s -r %s %s' % (
             difftype, oldrev, newrev, file)
         fp = os.popen(diffcmd)
         lines = fp.readlines()
@@ -199,15 +199,6 @@ def main():
         return
     if specs[-3:] == ['-', 'New', 'directory']:
         del specs[-3:]
-    elif len(specs) > 2:
-        L = specs[:2]
-        for s in specs[2:]:
-            prev = L[-1]
-            if string.count(prev, ",") < 2:
-                L[-1] = "%s %s" % (prev, s)
-            else:
-                L.append(s)
-        specs = L
     print 'Generating notification message...'
     blast_mail(mailcmd, specs[1:], contextlines)
     print 'Generating notification message... done.'
@@ -217,4 +208,3 @@ def main():
 if __name__ == '__main__':
     main()
     sys.exit(0)
-
