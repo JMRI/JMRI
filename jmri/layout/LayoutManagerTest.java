@@ -20,7 +20,7 @@ public class LayoutManagerTest extends JFrame implements LayoutEventListener
 
     JMenuItem jMenuItem1 = new JMenuItem();
     JSplitPane jSplitPane1 = new JSplitPane();
-    JTree mLayoutElementTree = new JTree();
+    JTree mLayoutElementTree = new JTree( mLayout.getLayoutTree() );
     JTextArea mLogTextBox = new JTextArea();
 
     /**Construct the frame*/
@@ -44,7 +44,7 @@ public class LayoutManagerTest extends JFrame implements LayoutEventListener
         //setIconImage(Toolkit.getDefaultToolkit().createImage(LayoutManagerTest.class.getResource("[Your Icon]")));
         contentPane = (JPanel) this.getContentPane();
         contentPane.setLayout(borderLayout1);
-        this.setSize(new Dimension(400, 300));
+        this.setSize(new Dimension(800, 600));
         this.setTitle("Layout Manager Test Application");
         statusBar.setText(" ");
         jMenuFile.setText("File");
@@ -75,6 +75,15 @@ public class LayoutManagerTest extends JFrame implements LayoutEventListener
             }
         });
         mLogTextBox.setText("jTextArea1");
+        contentPane.addHierarchyBoundsListener(new java.awt.event.HierarchyBoundsAdapter()
+        {
+            public void ancestorResized(HierarchyEvent e)
+            {
+                contentPane_ancestorResized(e);
+            }
+        });
+        jSplitPane1.setOrientation(JSplitPane.VERTICAL_SPLIT);
+        jSplitPane1.setPreferredSize(new Dimension(395, 19));
         jMenuFile.add(jMenuFileExit);
         jMenuHelp.add(jMenuHelpAbout);
         jMenuBar1.add(jMenuFile);
@@ -83,10 +92,17 @@ public class LayoutManagerTest extends JFrame implements LayoutEventListener
         this.setJMenuBar(jMenuBar1);
         contentPane.add(statusBar, BorderLayout.SOUTH);
         contentPane.add(jSplitPane1, BorderLayout.WEST);
-        jSplitPane1.add(mLayoutElementTree, JSplitPane.LEFT);
-        jSplitPane1.add(mLogTextBox, JSplitPane.RIGHT);
+        jSplitPane1.add(mLayoutElementTree, JSplitPane.TOP);
+        jSplitPane1.add(mLogTextBox, JSplitPane.BOTTOM);
         jMenu1.add(jMenuItem1);
+        jSplitPane1.setDividerLocation(200 );
     }
+
+    void contentPane_ancestorResized(HierarchyEvent e)
+    {
+        jSplitPane1.setSize( this.getWidth(), this.getHeight() - 30 );
+    }
+
     /**File | Exit action performed*/
     public void jMenuFileExit_actionPerformed(ActionEvent e)
     {
@@ -126,17 +142,17 @@ public class LayoutManagerTest extends JFrame implements LayoutEventListener
                 vRandomNumber = 0 - vRandomNumber ;
 
             String  vLayoutName = vLayoutNames[ vRandomNumber % vLayoutNames.length ] ;
-            int     vType = vRandomNumber % LayoutEventData.ELEMENT_TYPE_MISC ;
-            String  vAddress = Integer.toString( vRandomNumber % 1000 ) ;
+            int     vType = vRandomNumber % LayoutAddress.ELEMENT_TYPE_LAST ;
+            int     vOffset = vRandomNumber % 1000 ;
 
             String vState ;
             switch( vType )
             {
-            case LayoutEventData.ELEMENT_TYPE_SENSOR:
+            case LayoutAddress.ELEMENT_TYPE_SENSOR:
                 vState = ( vRandomNumber % 2 ) == 0 ? "Open" : "Closed" ;
                 break ;
 
-            case LayoutEventData.ELEMENT_TYPE_TURNOUT:
+            case LayoutAddress.ELEMENT_TYPE_TURNOUT:
                 vState = ( vRandomNumber % 2 ) == 0 ? "Thrown" : "Closed" ;
                 break ;
 
@@ -145,7 +161,7 @@ public class LayoutManagerTest extends JFrame implements LayoutEventListener
                     " Dir: " + (( vRandomNumber % 2 ) == 0 ? "Fwd" : "Rev" ) ;
             }
 
-            vData = new LayoutEventData( vLayoutName, vType, vAddress, vState ) ;
+            vData = new LayoutEventData( vLayoutName, vType, vOffset, vState ) ;
             mLayout.message( vData ) ;
         }
     }

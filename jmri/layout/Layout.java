@@ -6,18 +6,21 @@ package jmri.layout;
  * Copyright:    Copyright (c) 2002
  * Company:
  * @author Alex Shepherd
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 import java.lang.Integer ;
+import java.util.TreeMap;
+import java.util.Enumeration;
 
 public class Layout implements LayoutEventListener, LayoutEventInterface
 {
-    private LayoutElement mRootElement = null ;
+    private TreeMap         mElementMap = new TreeMap() ;
+    private LayoutElement   mRootElement = new LayoutElement( "Layouts", null ) ;
 
     public Layout( String pHostname )
     {
-        mRootElement = new LayoutElement( "LocalHost" ) ;
+        mRootElement = new LayoutElement( null ) ;
     }
 
     public LayoutElement getLayoutTree() { return mRootElement ; }
@@ -34,34 +37,70 @@ public class Layout implements LayoutEventListener, LayoutEventInterface
 
     public void message( LayoutEventData pLayoutEvent )
     {
-        String vNodeAddress = pLayoutEvent.getLayoutName() ;
-        LayoutElement vLayoutNode = mRootElement.getChild( vNodeAddress ) ;
-        if( vLayoutNode == null )
+        LayoutAddress vAddress = pLayoutEvent.getLayoutAddress() ;
+        LayoutElement vElement = (LayoutElement)mElementMap.get( vAddress ) ;
+        if( vElement == null )
         {
-            vLayoutNode = new LayoutElement( vNodeAddress ) ;
-            mRootElement.addChild( vLayoutNode ) ;
+            LayoutElement vParentElement = mRootElement ;
+            String vLayoutName = vAddress.getLayoutName() ;
+            int vChildCount = vParentElement.getChildCount() ;
+            for( int vChildIndex = 0; vChildIndex < vChildCount; vChildIndex++ )
+            {
+                vElement = (LayoutElement)vParentElement.getChildAt( vChildIndex ) ;
+                if( vElement.getAddress().getLayoutName().equals( vLayoutName ) )
+                    break ;
+
+                vElement = null ;
+            }
+
+            if( vElement == null )
+            {
+                vElement = new LayoutElement( vLayoutName, vAddress ) ;
+                vParentElement.add( vElement );
+            }
+
+            vParentElement = vElement ;
+            vElement = null ;
+            vChildCount = vParentElement.getChildCount() ;
+            int vType = vAddress.getType() ;
+            for( int vChildIndex = 0; vChildIndex < vChildCount; vChildIndex++ )
+            {
+                vElement = (LayoutElement)vParentElement.getChildAt( vChildIndex ) ;
+                if( vElement.getAddress().getType() == vType )
+                    break ;
+
+                vElement = null ;
+            }
+
+            if( vElement == null )
+            {
+                vElement = new LayoutElement( LayoutAddress.getTypeDescription( vType ),  vAddress ) ;
+                vParentElement.add( vElement );
+            }
+
+            vParentElement = vElement ;
+            vElement = null ;
+            vChildCount = vParentElement.getChildCount() ;
+            int vOffset = vAddress.getOffset() ;
+            for( int vChildIndex = 0; vChildIndex < vChildCount; vChildIndex++ )
+            {
+                vElement = (LayoutElement)vParentElement.getChildAt( vChildIndex ) ;
+                if( vElement.getAddress().getOffset() == vOffset )
+                    break ;
+
+                vElement = null ;
+            }
+
+            if( vElement == null )
+            {
+                vElement = new LayoutElement( Integer.toString( vOffset ), vAddress ) ;
+                vParentElement.add( vElement );
+            }
+
+            log( "Added: " + vAddress );
         }
 
-        vNodeAddress = pLayoutEvent.getTypeDescription() ;
-        LayoutElement vTypeNode = vLayoutNode.getChild( vNodeAddress ) ;
-        if( vTypeNode == null )
-        {
-            vTypeNode = new LayoutElement( vNodeAddress ) ;
-            vLayoutNode.addChild( vTypeNode ) ;
-        }
-
-        vNodeAddress = pLayoutEvent.getAddress() ;
-        LayoutElement vNode = vTypeNode.getChild( vNodeAddress ) ;
-        if( vNode == null )
-        {
-            vNode = new LayoutElement( vNodeAddress ) ;
-            vTypeNode.addChild( vNode ) ;
-        }
-
-        vNode.setData( pLayoutEvent );
-        vTypeNode.message( pLayoutEvent );
-        vLayoutNode.message( pLayoutEvent );
-        mRootElement.message( pLayoutEvent);
+        vElement.setData( pLayoutEvent );
     }
 
     private void log( String pMessage )
