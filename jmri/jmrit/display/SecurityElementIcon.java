@@ -15,7 +15,7 @@ import jmri.jmrix.loconet.SecurityElement;
  * explicitly add the code for Positionable
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class SecurityElementIcon extends JPanel
@@ -302,7 +302,7 @@ public class SecurityElementIcon extends JPanel
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(popup,
                                                                 "Set max A->B speed:",
-                                                                "Max AB speed "+element.maxSpeedAB,
+                                                                "Max AB speed in SE "+element.getNumber(),
                                                                 javax.swing.JOptionPane.OK_CANCEL_OPTION);
                     if (newVal!=null) {
                         element.maxSpeedAB=Integer.parseInt(newVal);
@@ -315,7 +315,7 @@ public class SecurityElementIcon extends JPanel
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(popup,
                                                                 "Set max B->A speed:",
-                                                                "Max BA speed "+element.maxSpeedBA,
+                                                                "Max BA speed in SE "+element.getNumber(),
                                                                 javax.swing.JOptionPane.OK_CANCEL_OPTION);
                     if (newVal!=null) {
                         element.maxSpeedBA=Integer.parseInt(newVal);
@@ -328,7 +328,7 @@ public class SecurityElementIcon extends JPanel
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(popup,
                                                                 "Set max A->C speed:",
-                                                                "Max AC speed "+element.maxSpeedAC,
+                                                                "Max AC speed in SE "+element.getNumber(),
                                                                 javax.swing.JOptionPane.OK_CANCEL_OPTION);
                     if (newVal!=null) {
                         element.maxSpeedAC=Integer.parseInt(newVal);
@@ -341,7 +341,7 @@ public class SecurityElementIcon extends JPanel
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(popup,
                                                                 "Set max C->A speed:",
-                                                                "Max CA speed "+element.maxSpeedCA,
+                                                                "Max CA speed in SE "+element.getNumber(),
                                                                 javax.swing.JOptionPane.OK_CANCEL_OPTION);
                     if (newVal!=null) {
                         element.maxSpeedCA=Integer.parseInt(newVal);
@@ -357,7 +357,7 @@ public class SecurityElementIcon extends JPanel
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(popup,
                                                                 "Set A->B braking:",
-                                                                "AB braking "+element.maxBrakingAB,
+                                                                "AB braking in SE "+element.getNumber(),
                                                                 javax.swing.JOptionPane.OK_CANCEL_OPTION);
                     if (newVal!=null) {
                         element.maxBrakingAB=Integer.parseInt(newVal);
@@ -370,7 +370,7 @@ public class SecurityElementIcon extends JPanel
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(popup,
                                                                 "Set B->A braking:",
-                                                                "BA braking "+element.maxBrakingBA,
+                                                                "BA braking in SE "+element.getNumber(),
                                                                 javax.swing.JOptionPane.OK_CANCEL_OPTION);
                     if (newVal!=null) {
                         element.maxBrakingBA=Integer.parseInt(newVal);
@@ -383,7 +383,7 @@ public class SecurityElementIcon extends JPanel
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(popup,
                                                                 "Set A->C braking:",
-                                                                "AC braking "+element.maxBrakingAC,
+                                                                "AC braking in SE "+element.getNumber(),
                                                                 javax.swing.JOptionPane.OK_CANCEL_OPTION);
                     if (newVal!=null) {
                         element.maxBrakingAC=Integer.parseInt(newVal);
@@ -396,7 +396,7 @@ public class SecurityElementIcon extends JPanel
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(popup,
                                                                 "Set C->A braking:",
-                                                                "CA braking "+element.maxBrakingCA,
+                                                                "CA braking in SE "+element.getNumber(),
                                                                 javax.swing.JOptionPane.OK_CANCEL_OPTION);
                     if (newVal!=null) {
                         element.maxBrakingCA=Integer.parseInt(newVal);
