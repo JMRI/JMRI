@@ -16,7 +16,7 @@ import java.io.File;
  * Java 1.1.8 system, or at least try to fake it.
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class FileUtil {
@@ -24,11 +24,21 @@ public class FileUtil {
     static public String getUrl(File file) {
         try {
             return file.toURI().toURL().toString();
+        } catch (NoSuchMethodError e2) {  // File.toURI first available in Java 1.4
+            try {
+                return file.toURL().toString();
+            } catch (NoSuchMethodError e3) {  // File.toURL not in 1.1.8
+                return "file:"+file.getAbsolutePath()+File.separator;
+            } catch (Exception e) {
+                if (log.isDebugEnabled()) log.debug(" Exception 1: "+e);
+                return "file:"+file.getAbsolutePath()+File.separator;
+            }
         } catch (Exception e) {
-            return "file:"+file.getAbsolutePath();
-        } catch (NoSuchMethodError e2) {
-            return "file:"+file.getAbsolutePath();
+            if (log.isDebugEnabled()) log.debug(" Exception 2: "+e);
+            return "file:"+file.getAbsolutePath()+File.separator;
         }
     }
 
+    // initialize logging
+    static private org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(FileUtil.class.getName());
 }
