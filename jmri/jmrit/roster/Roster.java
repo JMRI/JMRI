@@ -27,9 +27,12 @@ import org.jdom.output.*;
  *<P>
  * This predates the "XmlFile" base class, so doesn't use it.  Not sure
  * whether it should...
+ * <P>
+ * The only bound property is the list of RoterEntrys; a PropertyChangedEvent
+ * is fired every time that changes.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  * @see             jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -64,6 +67,7 @@ public class Roster extends XmlFile {
 		if (log.isDebugEnabled()) log.debug("Add entry "+e);
 		_list.add(_list.size(), e);
 		setDirty(true);
+        firePropertyChange("add", null, e);
 	}
 
     /**
@@ -75,6 +79,7 @@ public class Roster extends XmlFile {
 		if (log.isDebugEnabled()) log.debug("Remove entry "+e);
 		_list.remove(_list.indexOf(e));
 		setDirty(true);
+        firePropertyChange("remove", null, e);
 	}
 
     /**
@@ -96,6 +101,15 @@ public class Roster extends XmlFile {
 		}
 		return b;
 	}
+
+    public void updateComboBox(JComboBox box) {
+        List l = matchingList(null, null, null, null, null, null, null );
+        box.removeAllItems();
+		for (int i = 0; i < l.size(); i++) {
+			RosterEntry r = (RosterEntry)_list.get(i);
+			box.addItem(r.titleString());
+		}
+    }
 
 	/**
 	 * Return RosterEntry from a "title" string, ala selection in matchingComboBox
@@ -263,6 +277,21 @@ public class Roster extends XmlFile {
 
 	static protected String fileLocation  = "";
 	static final protected String rosterFileName = "roster.xml";
+
+	// since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
+	// reflect to it.
+	// Note that dispose() doesn't act on these.  Its not clear whether it should...
+	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
+
+	public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
+		pcs.addPropertyChangeListener(l);
+	}
+
+	protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
+
+	public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
+		pcs.removePropertyChangeListener(l);
+	}
 
 	// initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Roster.class.getName());
