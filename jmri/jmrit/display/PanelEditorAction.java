@@ -1,17 +1,17 @@
 package jmri.jmrit.display;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
-import jmri.InstanceManager;
 
 /**
  * Start a PanelEditor.  Creates a JFrame to contain it, and another to
  * connect it to.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  * @see             jmri.jmrit.display.PanelEditorAction
  */
 public class PanelEditorAction extends AbstractAction {

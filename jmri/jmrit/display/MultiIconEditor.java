@@ -1,23 +1,25 @@
 package jmri.jmrit.display;
 
-import jmri.*;
-import jmri.jmrit.catalog.*;
-import java.awt.*;
-import java.awt.event.*;
+import jmri.jmrit.catalog.CatalogPane;
+import jmri.jmrit.catalog.NamedIcon;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.*;
-
-import com.sun.java.util.collections.*;
+import javax.swing.BoxLayout;
+import javax.swing.Icon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  * Provides a simple editor for selecting N NamedIcons, perhaps
- * for use in creating a panel icon (see SensorIcon for an item
+ * for use in creating a panel icon.
+ * <P>See {@link SensorIcon} for an item
  * that might want to have that type of information, and
- * PanelEditor for an example of how to use this)
+ * {@link PanelEditor} for an example of how to use this.
  *
- * <p>Copyright: Copyright (c) 2003</p>
- * @author Bob Jacobsen
- * @version $Revision: 1.2 $
+ * @author Bob Jacobsen  Copyright (c) 2003
+ * @version $Revision: 1.3 $
  * @see jmri.jmrit.display.SensorIcon
  * @see jmri.jmrit.display.PanelEditor
  * @see jmri.jmrit.catalog
