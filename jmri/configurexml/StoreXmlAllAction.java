@@ -15,7 +15,7 @@ import javax.swing.JFileChooser;
  * types of information stored in configuration files.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  * @see         jmri.jmrit.XmlFile
  */
 public class StoreXmlAllAction extends StoreXmlConfigAction {
@@ -29,7 +29,7 @@ public class StoreXmlAllAction extends StoreXmlConfigAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        java.io.File file = getFileName();
+        java.io.File file = getFileName(allFileChooser);
         if (file==null) return;
         
         // and finally store

@@ -18,10 +18,10 @@ import javax.swing.JOptionPane;
  * types of information stored in configuration files.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  * @see         jmri.jmrit.XmlFile
  */
-public class StoreXmlConfigAction extends AbstractAction {
+public class StoreXmlConfigAction extends LoadStoreBaseAction {
 
     public StoreXmlConfigAction() {
         this("Store configuration ...");
@@ -29,9 +29,6 @@ public class StoreXmlConfigAction extends AbstractAction {
 
     public StoreXmlConfigAction(String s) {
         super(s);
-        // ensure that an XML config manager exists
-        if (InstanceManager.configureManagerInstance()==null)
-            InstanceManager.setConfigureManager(new ConfigXmlManager());
     }
 
     /**
@@ -43,15 +40,14 @@ public class StoreXmlConfigAction extends AbstractAction {
      *</OL>
      * Returns null if selection failed for any reason
      */
-    protected File getFileName() {
-        LoadStoreBase.fileChooser.rescanCurrentDirectory();
-        int retVal = LoadStoreBase.fileChooser.showSaveDialog(null);
+    protected File getFileName(JFileChooser fileChooser) {
+        fileChooser.rescanCurrentDirectory();
+        int retVal = fileChooser.showSaveDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) return null;  // give up if no file selected
         
-        File file = LoadStoreBase.fileChooser.getSelectedFile();
+        File file = fileChooser.getSelectedFile();
         if (log.isDebugEnabled()) log.debug("Save file: "+file.getPath());
         // check for possible overwrite
-        System.out.println("check "+file.exists());
         if (file.exists()) {
             int selectedValue = JOptionPane.showConfirmDialog(null,
                                                                  "File "+file.getName()+" already exists, overwrite it?",
@@ -63,7 +59,7 @@ public class StoreXmlConfigAction extends AbstractAction {
     }
     
     public void actionPerformed(ActionEvent e) {
-        File file = getFileName();
+        File file = getFileName(configFileChooser);
         if (file==null) return;
         
         // and finally store

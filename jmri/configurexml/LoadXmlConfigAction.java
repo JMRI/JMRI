@@ -11,35 +11,44 @@ import javax.swing.JFileChooser;
 /**
  * Load configuration information from an XML file.
  * <P>
+ * The file context for this is the "config" file chooser.
+ * <P>
  * This will load whatever information types are present in the file.
  * See {@link jmri.ConfigureManager} for information on the various
  * types of information stored in configuration files.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2002
- * @version	    $Revision: 1.7 $
+ * @version	    $Revision: 1.8 $
  * @see             jmri.jmrit.XmlFile
  */
-public class LoadXmlConfigAction extends AbstractAction {
+public class LoadXmlConfigAction extends LoadStoreBaseAction {
 
     public LoadXmlConfigAction() {
-        super("Load ...");
+        this("Load ...");
     }
 
     public LoadXmlConfigAction(String s) {
         super(s);
-        // ensure that an XML config manager exists
-        if (InstanceManager.configureManagerInstance()==null)
-            InstanceManager.setConfigureManager(new ConfigXmlManager());
     }
 
     public void actionPerformed(ActionEvent e) {
-        LoadStoreBase.fileChooser.rescanCurrentDirectory();
-        int retVal = LoadStoreBase.fileChooser.showOpenDialog(null);
-        if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
-        if (log.isDebugEnabled()) log.debug("Open config file: "+LoadStoreBase.fileChooser.getSelectedFile().getPath());
-        InstanceManager.configureManagerInstance().load(LoadStoreBase.fileChooser.getSelectedFile());
+        loadFile(configFileChooser);
     }
-
+    
+    void loadFile(JFileChooser fileChooser) {
+        java.io.File file = getFile(fileChooser);
+        if (file!=null)
+            InstanceManager.configureManagerInstance().load(file);
+    }
+    
+    java.io.File getFile(JFileChooser fileChooser) {
+        fileChooser.rescanCurrentDirectory();
+        int retVal = fileChooser.showOpenDialog(null);
+        if (retVal != JFileChooser.APPROVE_OPTION) return null;  // give up if no file selected
+        if (log.isDebugEnabled()) log.debug("Open file: "+fileChooser.getSelectedFile().getPath());
+        return fileChooser.getSelectedFile();
+    }
+    
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LoadXmlConfigAction.class.getName());
 
