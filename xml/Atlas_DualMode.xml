@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<!DOCTYPE decoder:decoder-config SYSTEM "DTD/decoder-config.dtd">
+<decoder:decoder-config xmlns:decoder="http://jmri.sourceforge.net/xml/decoder">
+<decoder:decoder>
+	<decoder:id model="Dual-Mode" mfg="Atlas" mfgID="127"
+				comment="Item #340"></decoder:id>
+
+	<decoder:programming direct="yes" paged="yes" 
+	                     register="yes" ops="yes"></decoder:programming>
+
+	<decoder:variables>
+		<decoder:variable name="Address" CV="1" mask="VVVVVVVV" comment="Short address">
+			<decoder:decVal min="1" max="127"></decoder:decVal>
+			</decoder:variable>
+		<decoder:variable name="Start voltage" CV="2" mask="VVVVVVVV"
+						comment="A value of 255 corresponds to 100%">
+			<decoder:decVal></decoder:decVal>
+			</decoder:variable>
+		<decoder:variable name="Acceleration momentum" CV="3" mask="VVVVVVVV">
+			<decoder:decVal max="31"></decoder:decVal>
+			</decoder:variable>
+		<decoder:variable name="Brake momentum" CV="4" mask="VVVVVVVV">
+			<decoder:decVal max="31"></decoder:decVal>
+			</decoder:variable>
+		<decoder:variable name="Acceleration trim" CV="23" mask="VVVVVVVV">
+			<decoder:decVal></decoder:decVal>
+			</decoder:variable>
+		<decoder:variable name="Deceleration trim" CV="24" mask="VVVVVVVV">
+			<decoder:decVal></decoder:decVal>
+			</decoder:variable>
+		<decoder:variable name="Locomotive direction" CV="29" mask="XXXXXXXV">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="normal"></decoder:enumChoice>
+				<decoder:enumChoice choice="inverted"></decoder:enumChoice>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Headlight mode" CV="29" mask="XXXXXXVX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="14 or 27 speed step system"></decoder:enumChoice>
+				<decoder:enumChoice choice="28, 55 or 128 speed step system"></decoder:enumChoice>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Usage on conventional DC layouts" CV="29" mask="XXXXXVXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="digital mode only"></decoder:enumChoice>
+				<decoder:enumChoice choice="can operate on DC or DCC"></decoder:enumChoice>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Speed curve selection" CV="29" mask="XXXVXXXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="factory preset curve is used"></decoder:enumChoice>
+				<decoder:enumChoice choice="user defined curve is used"></decoder:enumChoice>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Extended addressing" CV="29" mask="XXVXXXXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="normal addressing"></decoder:enumChoice>
+				<decoder:enumChoice choice="Two Byte extended addressing"></decoder:enumChoice>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="CV23 and CV24" CV="50" mask="XXXXXXVX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="not active"></decoder:enumChoice>
+				<decoder:enumChoice choice="active, modify CV3 and CV4"></decoder:enumChoice>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Brake momentum on DC operation" CV="50" mask="XXXXXVXX">
+			<decoder:binaryVal>
+				</decoder:binaryVal phrasing="OffOn">
+			</decoder:variable>
+		<decoder:variable name="Directional headlights" CV="51" mask="XXXXXXXV">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="headlights are directional"></decoder:enumChoice>
+				<decoder:enumChoice choice="headlights independent, F0 controls front, F1 controls rear"></decoder:enumChoice>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Functional headlight dimming" CV="51" mask="XXXXXXVX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Dimming disabled"></decoder:enumChoice>
+				<decoder:enumChoice choice="Dimming enabled. If headlights independent, F1 dims the headlight if on"></decoder:enumChoice>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="If lights independent, F4 dims F0" CV="51" mask="XXXXXVXX">
+			<decoder:binaryVal>
+				</decoder:binaryVal phrasing="NoYes">
+			</decoder:variable>
+			</decoder:variable>
+		<decoder:variable name="If lights independent, F4 dims F1" CV="51" mask="XXXXVXXX">
+			<decoder:binaryVal>
+				</decoder:binaryVal phrasing="NoYes">
+			</decoder:variable>
+			</decoder:variable>
+		<decoder:variable name="Dimming value (CV52)" CV="52" mask="VVVVVVVV">
+			<decoder:decVal></decoder:decVal>
+			</decoder:variable>
+		<decoder:variable name="User private ID #1" CV="105" mask="VVVVVVVV">
+			<decoder:decVal></decoder:decVal>
+			</decoder:variable>
+		<decoder:variable name="User private ID #2" CV="106" mask="VVVVVVVV">
+			<decoder:decVal></decoder:decVal>
+			</decoder:variable>
+	</decoder:variables>
+	
+</decoder:decoder>
+</decoder:decoder-config>
