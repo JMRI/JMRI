@@ -11,14 +11,14 @@ import jmri.*;
  * SlotManager object.
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class LnOpsModeProgrammer implements Programmer  {
 
     SlotManager mSlotMon;
     int mAddress;
     boolean mLongAddr;
-    public LnOpsModeProgrammer(SlotManager pSlotMon, 
+    public LnOpsModeProgrammer(SlotManager pSlotMon,
                                int pAddress, boolean pLongAddr) {
         mSlotMon = pSlotMon;
         mAddress = pAddress;
@@ -52,8 +52,13 @@ public class LnOpsModeProgrammer implements Programmer  {
         return mSlotMon.hasMode(mode);
     }
 
+    /**
+     * Can this ops-mode programmer read back values?  For now, no,
+     * but maybe later.
+     * @return always false for now
+     */
     public boolean getCanRead() {
-        return mSlotMon.getCanRead();
+        return false;
     }
 
     public void addPropertyChangeListener(PropertyChangeListener p) {

@@ -15,7 +15,7 @@ import java.beans.PropertyChangeEvent;
  * counter-part of a LocoNet command station.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.9 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 
@@ -33,7 +33,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 
         // register this as the default, register as the Programmer
         self = this;
-        jmri.InstanceManager.setProgrammerManager(new jmri.DefaultProgrammerManager(this));
+        jmri.InstanceManager.setProgrammerManager(new LnProgrammerManager(this));
 
         // listen to the LocoNet
         LnTrafficController.instance().addLocoNetListener(~0, this);
@@ -362,7 +362,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
         doConfirm(CV, val, p, pcmd);
     }
 
-    public void doConfirm(int CV, int val, ProgListener p, 
+    public void doConfirm(int CV, int val, ProgListener p,
                           int pcmd) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) log.debug("confirmCV: "+CV);
         useProgrammer(p);
