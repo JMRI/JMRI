@@ -9,13 +9,13 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
- * Action to print the information in a VariableTable and CV table.
+ * Action to print the information in a VariableTable.
  * <P>
  * This uses the older style printing, for compatibility with Java 1.1.8 in
  * Macintosh MRJ
  *
- * @author			Bob Jacobsen   Copyright (C) 2003
- * @version             $Revision: 1.2 $
+ * @author		Bob Jacobsen   Copyright (C) 2003
+ * @version             $Revision: 1.3 $
  */
 public class PrintAction  extends AbstractAction {
 
