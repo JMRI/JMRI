@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_01x3.xml,v 1.22 2004-08-24 04:58:13 jacobsen Exp $ -->
+<!-- $Id: Digitrax_01x3.xml,v 1.23 2004-11-28 22:06:36 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Michael Mosher mjmx@comcast.net" 
 					version="12" lastUpdated="20040227"/>
@@ -178,7 +178,8 @@
 	</family>
 
 	<programming direct="yes" paged="yes" 
-	                     register="yes" ops="yes"></programming>
+	                     register="yes" ops="yes"
+	                     transpRead="yes"></programming>
 
 	<variables>
 		<variable label="Primary Address" CV="1" comment="Short address"
