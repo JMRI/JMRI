@@ -1,16 +1,16 @@
-/**
- * XNetTurnoutTest.java
- *
- * Description:	    tests for the jmri.jmrix.loconet.LnTurnout class
- * @author			Bob Jacobsen
- * @version         $Revision: 1.3 $
- */
+// XNetTurnoutTest.java
 
 package jmri.jmrix.lenz;
 
-import java.io.*;
-import junit.framework.*;
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
+/**
+ * Tests for the {@link jmri.jmrix.lenz.XNetTurnout} class.
+ * @author	    Bob Jacobsen
+ * @version         $Revision: 1.4 $
+ */
 public class XNetTurnoutTest extends jmri.AbstractTurnoutTest {
 
 	public void setUp() {
@@ -28,13 +28,13 @@ public class XNetTurnoutTest extends jmri.AbstractTurnoutTest {
 	XNetInterfaceScaffold lnis;
 
 	public void checkClosedMsgSent() {
-		Assert.assertEquals("closed message","52 5 10 0 ",
+		Assert.assertEquals("closed message","52 5 88 0 ",
                 lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
 		Assert.assertEquals("CLOSED state",jmri.Turnout.CLOSED,t.getCommandedState());
 	}
 
 	public void checkThrownMsgSent() {
-		Assert.assertEquals("thrown message","52 5 11 0 ",
+		Assert.assertEquals("thrown message","52 5 89 0 ",
                 lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
 		Assert.assertEquals("THROWN state",jmri.Turnout.THROWN,t.getCommandedState());
 	}
