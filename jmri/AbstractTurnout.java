@@ -17,7 +17,7 @@ package jmri;
  *
  * Description:		Abstract class providing the basic logic of the Turnout interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean 
         implements Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -104,6 +104,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean
     protected int[] _validFeedbackModes = {DIRECT, ONESENSOR, TWOSENSOR};
     protected int _validFeedbackTypes = DIRECT | ONESENSOR | TWOSENSOR;
     
+    protected int _activeFeedbackType   = DIRECT;
+
     private int _knownState     = UNKNOWN;
     private int _commandedState = UNKNOWN;
 
@@ -123,7 +125,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean
         throw new IllegalArgumentException("Unexpected mode: "+mode);
     }
     
-    private int _activeFeedbackType   = DIRECT;
     public void setFeedbackMode(int mode) {
         // check for error - following removed the low bit from mode
         int test = mode & (mode-1);
