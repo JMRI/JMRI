@@ -17,9 +17,9 @@ import jmri.ProgrammerException;
  * It allows the user to set the Track Voltage  and E-line status.
  *
  * @author			Paul Bender  Copyright (C) 2004
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
-public class LV102Frame extends JFrame implements jmri.ProgListener {
+public class LV102Frame extends jmri.util.JmriJFrame implements jmri.ProgListener {
 
     private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.lv102.LV102Bundle");
 
