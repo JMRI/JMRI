@@ -32,7 +32,7 @@ public class LnOpsModeProgrammerTest extends TestCase {
     public void testGetCanRead() {
 	SlotManager val1=  null;
 	LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1,1, true);
-	Assert.assertEquals("ops mode cant yet read", false,
+	Assert.assertEquals("ops mode always can read", true,
 			    lnopsmodeprogrammer.getCanRead());
     }
     public void testHasMode() {
