@@ -79,7 +79,7 @@
   <property category="sys" name="TestPath" value="test"/>
   <property category="sys" name="Title" value=""/>
   <property category="sys" name="TitleLabel" value="Title:"/>
-  <property category="sys" name="Version" value="$Revision: 1.9 $"/>
+  <property category="sys" name="Version" value="$Revision: 1.10 $"/>
   <property category="sys" name="VersionLabel" value="@version"/>
   <property category="sys" name="WorkingDirectory" value="../"/>
   <node name="Additional Settings" type="Folder">
@@ -97,6 +97,7 @@
   </node>
   <node name="jmri" type="Package"/>
   <node name="org.apache" type="Package"/>
+  <node name="xml" type="Package"/>
   <node name="jmri.jar file" type="Archive">
     <property category="archiving" name="archiverClass" value="com.borland.jbuilder.wizard.archive.ApplicationArchiver"/>
     <property category="archiving" name="buildWithProject" value="0"/>
@@ -107,7 +108,6 @@
     <property category="archiving" name="targetPath" value="/Volumes/Users/jake/Documents/Trains/JMRI/project/jmri.jar"/>
   </node>
   <node name="Standard JavaDoc Doclet" type="Javadoc">
-    <property category="docletJavadoc" name="additionalOptions" value="-overview myoverview.html"/>
     <property category="docletJavadoc" name="author" value="1"/>
     <property category="docletJavadoc" name="deprecated" value="0"/>
     <property category="docletJavadoc" name="use" value="1"/>
@@ -115,15 +115,9 @@
     <property category="javadoc" name="scope" value="private"/>
     <property category="nodeJavadoc" name="buildWithProject" value="0"/>
     <property category="nodeJavadoc" name="directory" value="doc"/>
-    <property category="nodeJavadoc" name="displayAllOutput" value="0"/>
+    <property category="nodeJavadoc" name="displayAllOutput" value="1"/>
   </node>
   <file path="src/jmri/configureXML/AbstractTurnoutManagerConfigXML.java"/>
+  <file path="src/xml/DTD/decoder-config.dtd"/>
   <file path="../resources/decoderpro.gif"/>
-  <file path="src/jmri/configureXML/LayoutConfigXML.java"/>
-  <file path="src/jmri/jmrix/loconet/locormi/LnMessageClientAction.java"/>
-  <file path="src/jmri/configurexml/LoadLayoutAction.java"/>
-  <file path="test/jmri/jmrix/loconet/LocoNetMessageTest.java"/>
-  <file path="src/jmri/jmrit/display/PanelEditorAction.java"/>
-  <file path="src/jmri/jmrit/display/PositionableLabel.java"/>
-  <file path="test/jmri/jmrit/display/PositionableLabelTest.java"/>
 </project>
