@@ -18,7 +18,7 @@ package jmri;
  * Based in part on SignalHead.java
  *
  * @author			Dave Duchamp Copyright (C) 2004
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public interface Light extends NamedBean {
 
@@ -26,7 +26,7 @@ public interface Light extends NamedBean {
     public static final int ON          = 0x01;
     public static final int OFF         = 0x00;
     
-    // control types - initially 5 types defined
+    // control types - initially 3 types defined
     public static final int SENSOR_CONTROL          = 0x01;
     public static final int FAST_CLOCK_CONTROL      = 0x02;
     public static final int TURNOUT_STATUS_CONTROL  = 0x03;
@@ -67,18 +67,14 @@ public interface Light extends NamedBean {
     /**
      * Activates a light by control type.  This method tests the 
      *   control type, and set up a control mechanism, appropriate 
-     *   for the control type.  Some lights, e.g. signal head lights,
-     *   are controlled by the signal head, so no activation is needed
-     *   here.
+     *   for the control type.  
      */
     public void activateLight();
     
     /**
      * Deactivates a light by control type.  This method tests the 
      *   control type, and deactivates the control mechanism, appropriate 
-     *   for the control type.  Some lights, e.g. signal head lights,
-     *   are controlled by the signal head, so no deactivation is needed
-     *   here.
+     *   for the control type.  
      */
     public void deactivateLight();
 }

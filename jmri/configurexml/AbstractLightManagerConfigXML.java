@@ -5,9 +5,6 @@ package jmri.configurexml;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
-import jmri.Sensor;
-import jmri.SignalHead;
-import jmri.Turnout;
 import com.sun.java.util.collections.List;
 import org.jdom.Element;
 
@@ -17,7 +14,7 @@ import org.jdom.Element;
  * AbstractLightManagers.
  * <P>
  * Typically, a subclass will just implement the load(Element sensors)
- * class, relying on implementation here to load the individual sensors.
+ * class, relying on implementation here to load the individual lights.
  * Note that these are stored explicitly, so the
  * resolution mechanism doesn't need to see *Xml classes for each
  * specific Light or AbstractLight subclass at store time.
@@ -25,7 +22,7 @@ import org.jdom.Element;
  * Based on AbstractSensorManagerConfigXML.java
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
 
@@ -90,7 +87,7 @@ public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
     /**
      * Create a LightManager object of the correct class, then
      * register and fill it.
-     * @param sensors Top level Element to unpack.
+     * @param lights Top level Element to unpack.
      */
     abstract public void load(Element lights);
 
@@ -113,7 +110,7 @@ public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
             String sysName = ((Element)(lightList.get(i))).getAttribute("systemName").getValue();
             String userName = null;
             if ( ((Element)(lightList.get(i))).getAttribute("userName") != null)
-            userName = ((Element)(lightList.get(i))).getAttribute("userName").getValue();
+                userName = ((Element)(lightList.get(i))).getAttribute("userName").getValue();
             if (log.isDebugEnabled()) log.debug("create light: ("+sysName+")("+
                                                             (userName==null?"<null>":userName)+")");
             Light lgt = tm.newLight(sysName, userName);
