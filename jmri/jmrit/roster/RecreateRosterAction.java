@@ -14,7 +14,7 @@ import org.jdom.*;
  * Recreate the roster index file if it's been damaged or lost
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class RecreateRosterAction extends AbstractAction {
 
@@ -84,6 +84,8 @@ public class RecreateRosterAction extends AbstractAction {
         }
         // create an array of file names from xml/roster, count entries
         String[] sx = (new File(XmlFile.xmlDir()+LocoFile.fileLocation)).list();
+        if (sx == null) sx = new String[0];
+
         int nx = 0;
         for (i=0; i<sx.length; i++) {
             if (sx[i].endsWith(".xml") || sx[i].endsWith(".XML")) {
