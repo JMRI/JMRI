@@ -27,7 +27,7 @@ public class DiagnosticAction 	extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
 // temporary for testing, remove when multiple serial nodes is operational
-        if (SerialTrafficController.instance().getFirstSerialNode() == null) {
+        if (SerialTrafficController.instance().getSerialNode(0) == null) {
             setUpTestConfiguration();
         }
 //  end temporary
