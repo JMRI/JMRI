@@ -14,11 +14,10 @@ import java.beans.PropertyChangeEvent;
 
 /**
  * Programmer support for Lenz XpressNet.
- * Currently only register and paged mode is implemented.
  * <P>
  * The read operation state sequence is:
  * <UL>
- * <LI>Send Register Mode / Paged mode read request
+ * <LI>Send Register Mode / Paged mode /Direct Mode read request
  * <LI>Wait for Broadcast Service Mode Entry message
  * <LI>Send Request for Service Mode Results request
  * <LI>Wait for results reply, interpret
@@ -26,7 +25,7 @@ import java.beans.PropertyChangeEvent;
  * <LI>Wait for Normal Operations Resumed broadcast
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -56,10 +55,10 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 	protected int _mode = Programmer.PAGEMODE;
 
     /**
-     * Switch to a new programming mode.  Note that lenz can now only
-     * do register and page mode. If you attempt to switch to
-     * any others, the new mode will set & notify, then
-     * set back to the original.  This lets the listeners
+     * Switch to a new programming mode.  Lenz can now only
+     * do register, page, and direct mode. If you attempt to 
+     * switch to any others, the new mode will set & notify, 
+     * then set back to the original.  This lets the listeners
      * know that a change happened, and then was undone.
      * @param mode The new mode, use values from the jmri.Programmer interface
      */
@@ -80,7 +79,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
     /**
      * Signifies mode's available
      * @param mode
-     * @return True if paged or register mode
+     * @return True if paged,register,or Direct Mode (Bit or Byte) mode
      */
     public boolean hasMode(int mode) {
         if ( mode == Programmer.PAGEMODE ||
