@@ -30,12 +30,12 @@ public class ThrottleCreationAction extends AbstractAction {
         ThrottleFrame tf = new ThrottleFrame();
         tf.pack();
         tf.setVisible(true);
-        ThrottleManager manager = InstanceManager.throttleManagerInstance();
+        ThrottleFrameManager manager = InstanceManager.throttleFrameManagerInstance();
         manager.notifyNewThrottleFrame(tf);
 
     }
 
     // initialize logging
-    //static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ThrottleCreationAction.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ThrottleCreationAction.class.getName());
 
 }

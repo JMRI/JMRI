@@ -51,7 +51,7 @@ public class StoreXmlThrottleAction extends AbstractAction {
 
         try
         {
-            ThrottleManager manager = InstanceManager.throttleManagerInstance();
+            ThrottleFrameManager manager = InstanceManager.throttleFrameManagerInstance();
             Element root = new Element("throttle-config");
             Document doc = new Document(root);
             doc.setDocType(new DocType("throttle-config", "throttle-config.dtd"));
@@ -75,15 +75,17 @@ public class StoreXmlThrottleAction extends AbstractAction {
         }
         catch (FileNotFoundException ex)
         {
-            System.out.println(ex);
+			log.warn("Exception in storing throttle xml: "+ex);
+
         }
         catch (IOException ex)
         {
-            System.out.println(ex);
+            log.warn("Exception in storing throttle xml: "+ex);
+
         }
     }
 
     // initialize logging
-    //static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ThrottleCreationAction.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(StoreXmlThrottleAction.class.getName());
 
 }

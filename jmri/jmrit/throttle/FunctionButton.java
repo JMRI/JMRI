@@ -109,7 +109,7 @@ public class FunctionButton extends JButton implements ActionListener
     public void actionPerformed(ActionEvent e)
     {
         FunctionButtonPropertyEditor editor =
-                InstanceManager.throttleManagerInstance().getFunctionButtonEditor();
+                InstanceManager.throttleFrameManagerInstance().getFunctionButtonEditor();
         editor.setFunctionButton(this);
         editor.setLocation(this.getLocationOnScreen());
         editor.setVisible(true);
