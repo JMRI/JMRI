@@ -18,93 +18,61 @@ import com.sun.java.util.collections.List;
  * Copy a roster element, including the definition file.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  * @see             jmri.jmrit.XmlFile
  */
-public class CopyRosterItemAction extends AbstractAction {
+public class CopyRosterItemAction extends AbstractRosterItemAction {
 
-	public CopyRosterItemAction(String s, Component who) {
-		super(s);
-		mParent = who;
+	public CopyRosterItemAction(String pName, Component pWho) {
+		super(pName, pWho);
 	}
 
-	Component mParent;
+    boolean selectFrom() {
+        return selectExistingFromEntry();
+    }
 
-    public void actionPerformed(ActionEvent event) {
+    boolean selectTo() {
+        return selectNewToEntryID();
+    }
 
-        Roster roster = Roster.instance();
+    boolean doTransfer() {
 
-		// create a dialog to select the roster entry to copy
-        JComboBox selections = roster.matchingComboBox(null, null, null, null, null, null, null);
-        int retval = JOptionPane.showOptionDialog(mParent,
-                        "Select one roster entry to copy", "Select roster entry",
-                        0, JOptionPane.INFORMATION_MESSAGE, null,
-                        new Object[]{"Cancel", "OK", selections}, null );
-        log.debug("Dialog value "+retval+" selected "+selections.getSelectedIndex()+":\""
-                    +selections.getSelectedItem()+"\"");
-        if (retval!=1) return;  // user didn't select
+        // read the from file, change the ID, and write it out
 
-        String fromID = (String) selections.getSelectedItem();
+        // ensure preferences will be found
+        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+LocoFile.fileLocation);
 
-        // find the file for the selected entry to copy
-        RosterEntry fromEntry = roster.entryFromTitle(fromID);
-        String fromFilename = roster.fileFromTitle(fromID);
-        String fullFromFilename = LocoFile.fileLocation+fromFilename;
-        log.debug("resolves to \""+fromFilename+"\", \""+fullFromFilename+"\"");
+        // locate the file
+        File f = new File(mFullFromFilename);
 
-        String newEntryID = null;
-        do {
-            // prompt for the new ID
-            newEntryID = JOptionPane.showInputDialog(mParent, "Enter id for new roster entry:");
-            if (newEntryID==null) return;
+        // read it
+        LocoFile lf = new LocoFile();  // used as a temporary
+        Element lroot = null;
+        try {
+            lroot = lf.rootFromName(mFullFromFilename);
+        } catch (Exception e) {
+            log.error("Exception while loading loco XML file: "+mFullFromFilename+" exception: "+e);
+            return false;
+        }
 
-            // check for duplicate
-            if (0 == roster.matchingList(null, null, null, null, null, null, newEntryID).size()) break;
+        // create a new entry
+        mToEntry = new RosterEntry(mFromEntry, mToID);
 
-            // here it is a duplicate, reprompt
-            JOptionPane.showMessageDialog(mParent,
-                                    "That entry already exists, please choose another");
+        // set the filename from the ID
+        mToEntry.ensureFilenameExists();
 
-        } while (true);
+        // transfer the contents to a new file
+        LocoFile newLocoFile = new LocoFile();
+        File fout = new File(XmlFile.prefsDir()+LocoFile.fileLocation+mToEntry.getFileName());
+        newLocoFile.writeFile(fout, lroot, mToEntry);
 
-        // read the input file, change the ID, and write it out
-		try {
-            // ensure preferences will be found
-            XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+LocoFile.fileLocation);
-
-            // locate the file
-			File f = new File(fullFromFilename);
-
-            // read it
-            LocoFile lf = new LocoFile();  // used as a temporary
-		    Element lroot = null;
-		    try {
-			    lroot = lf.rootFromName(fullFromFilename);
-		    } catch (Exception e) {
-                log.error("Exception while loading loco XML file: "+fullFromFilename+" exception: "+e);
-                return;
-            }
-
-            // create a new entry
-            RosterEntry newEntry = new RosterEntry(fromEntry, newEntryID);
-
-            // set the filename from the ID
-            newEntry.ensureFilenameExists();
-
-            // transfer the contents to a new file
-            LocoFile newLocoFile = new LocoFile();
-            File fout = new File(XmlFile.prefsDir()+LocoFile.fileLocation+newEntry.getFileName());
-            newLocoFile.writeFile(fout, lroot, newEntry);
-
-            // add the new entry to the roster & write it out
-            roster.addEntry(newEntry);
-            roster.writeRosterFile();
-
-		} catch (Exception ex) {
-			log.error("unexpected error during copy operation: "+ex);
-            return;
-		}
+        return true;
 	}
+
+    void updateRoster() {
+        addToEntryToRoster();
+    }
 
 	// initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CopyRosterItemAction.class.getName());
@@ -132,7 +100,7 @@ public class CopyRosterItemAction extends AbstractAction {
 		// log.info("CopyRosterItemAction starts");
 
         // fire the action
-        Action a = new CopyRosterItemAction("Delete Roster Item", null);
+        Action a = new CopyRosterItemAction("Copy Roster Item", null);
         a.actionPerformed(new ActionEvent(a, 0, "dummy"));
     }
 }
