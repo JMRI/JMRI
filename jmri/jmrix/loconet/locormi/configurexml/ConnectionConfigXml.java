@@ -20,7 +20,7 @@ import org.jdom.Element;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -83,7 +83,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         new Exception().printStackTrace();
     }
     protected void register(String host) {
-        InstanceManager.configureManagerInstance().registerConfig(new ConnectionConfig(host));
+        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(host));
     }
 
     // initialize logging
