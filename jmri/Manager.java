@@ -9,7 +9,7 @@ package jmri;
  * managers for more than one system.
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public interface Manager {
 
@@ -22,7 +22,7 @@ public interface Manager {
      * Free resources when no longer used. Specifically, remove all references
      * to and from this object, so it can be garbage-collected.
      */
-    public void dispose() throws JmriException;
+    public void dispose();
 
 }
 
