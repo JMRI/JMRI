@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractMRListener;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2004
- * @version 		$Revision: 2.4 $
+ * @version 		$Revision: 2.5 $
  *
  */
 public abstract class XNetTrafficController extends AbstractMRTrafficController implements XNetInterface {
@@ -102,7 +102,16 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     /**
       * enterNormalMode() returns the value of getExitProgModeMsg();
       */
-    protected AbstractMRMessage enterNormalMode() { return XNetMessage.getExitProgModeMsg(); }
+    protected AbstractMRMessage enterNormalMode() { 
+		return XNetMessage.getExitProgModeMsg();
+	}
+
+    /**
+      * enterNormalMode() returns the value of getExitProgModeMsg();
+      */
+    protected boolean programmerIdle() { 
+	  return !(XNetProgrammer.instance().programmerBusy());
+	}
 
     protected boolean endOfMessage(AbstractMRReply msg) { 
            int len = (((XNetReply)msg).getElement(0)&0x0f)+2;  // opCode+Nbytes+ECC

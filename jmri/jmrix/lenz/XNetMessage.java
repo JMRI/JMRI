@@ -12,19 +12,30 @@ import java.io.Serializable;
  * actually a variable number of bytes in Unicode.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version			$Revision: 2.3 $
+ * @author			Paul Bender  Copyright (C) 2003,2004
+ * @version			$Revision: 2.4 $
  *
  */
 public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Serializable {
 
+	static private final int _nRetries = 5;
+	
+	/* According to the specification, XPressNet has a maximum timing 
+	   interval of 500 milliseconds durring normal communications */
+	static private final int XNetProgrammingTimeout = 10000;
+	static private final int XNetMessageTimeout = 1000;
 
 	int _nDataChars = 0;
+
+
 	/** Create a new object, representing a specific-length message.
 	 * @param len Total bytes in message, including opcode and error-detection byte.
 	 */
 	public XNetMessage(int len) {
         super(len);
 	setBinary(true);
+	setRetries(_nRetries);
+	setTimeout(XNetMessageTimeout);
         if (len>15||len<0) log.error("Invalid length in ctor: "+len);
 	_nDataChars=len;
 	}
@@ -35,6 +46,8 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
 	public XNetMessage(XNetMessage message) {
            super(message);
 	   setBinary(true);
+	   setRetries(_nRetries);
+	   setTimeout(XNetMessageTimeout);
 	}
 
 	/**
@@ -43,6 +56,8 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
 	public XNetMessage(XNetReply message) {
 	    super(message.getNumDataElements());                            
        	    setBinary(true);
+	    setRetries(_nRetries);
+	    setTimeout(XNetMessageTimeout);
             for(int i=0;i<message.getNumDataElements();i++)
        		{
           	   setElement(i,message.getElement(i));
@@ -166,7 +181,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     public static XNetMessage getServiceModeResultsMsg() {
         XNetMessage m = new XNetMessage(3);
 	m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
-	m.setTimeout(LONG_TIMEOUT);
+	m.setTimeout(XNetProgrammingTimeout);
         m.setElement(0, XNetConstants.CS_REQUEST);
         m.setElement(1, XNetConstants.SERVICE_MODE_CSRESULT);
         return m;
@@ -184,7 +199,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     public static XNetMessage getReadPagedCVMsg(int cv) {
         XNetMessage m = new XNetMessage(4);
 	m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
-	//m.setTimeout(LONG_TIMEOUT);
+	m.setTimeout(XNetProgrammingTimeout);
         m.setElement(0, XNetConstants.PROG_READ_REQUEST);
         m.setElement(1, XNetConstants.PROG_READ_MODE_PAGED);
         m.setElement(2, cv);
@@ -194,7 +209,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     public static XNetMessage getReadDirectCVMsg(int cv) {
         XNetMessage m = new XNetMessage(4);
 	m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
-	//m.setTimeout(LONG_TIMEOUT);
+	m.setTimeout(XNetProgrammingTimeout);
         m.setElement(0, XNetConstants.PROG_READ_REQUEST);
         m.setElement(1, XNetConstants.PROG_READ_MODE_CV);
         m.setElement(2, cv);
@@ -204,7 +219,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     public static XNetMessage getWritePagedCVMsg(int cv, int val) {
         XNetMessage m = new XNetMessage(5);
 	m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
-	//m.setTimeout(LONG_TIMEOUT);
+	m.setTimeout(XNetProgrammingTimeout);
         m.setElement(0, XNetConstants.PROG_WRITE_REQUEST);
         m.setElement(1, XNetConstants.PROG_WRITE_MODE_PAGED);
         m.setElement(2, cv);
@@ -215,7 +230,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     public static XNetMessage getWriteDirectCVMsg(int cv, int val) {
         XNetMessage m = new XNetMessage(5);
 	m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
-	//m.setTimeout(LONG_TIMEOUT);
+	m.setTimeout(XNetProgrammingTimeout);
         m.setElement(0, XNetConstants.PROG_WRITE_REQUEST);
         m.setElement(1, XNetConstants.PROG_WRITE_MODE_CV);
         m.setElement(2, cv);
@@ -227,7 +242,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         if (reg>8) log.error("register number too large: "+reg);
         XNetMessage m = new XNetMessage(4);
 	m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
-	//m.setTimeout(LONG_TIMEOUT);
+	m.setTimeout(XNetProgrammingTimeout);
         m.setElement(0, XNetConstants.PROG_READ_REQUEST);
         m.setElement(1, XNetConstants.PROG_READ_MODE_REGISTER);
         m.setElement(2, reg);
@@ -238,7 +253,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         if (reg>8) log.error("register number too large: "+reg);
         XNetMessage m = new XNetMessage(5);
 	m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
-	//m.setTimeout(LONG_TIMEOUT);
+	m.setTimeout(XNetProgrammingTimeout);
         m.setElement(0, XNetConstants.PROG_WRITE_REQUEST);
         m.setElement(1, XNetConstants.PROG_WRITE_MODE_REGISTER);
         m.setElement(2, reg);
@@ -426,9 +441,6 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         msg.setParity();
         return(msg);
     }
-
-/* @(#)LenzCommandStation.java */
-
 
 
 	// initialize logging

@@ -26,9 +26,11 @@ import java.beans.PropertyChangeEvent;
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Paul Bender  Copyright (c) 2003,2004
- * @version $Revision: 2.1 $
+ * @version $Revision: 2.2 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
+
+	static private final int XNetProgrammerTimeout = 20000;
 
 	public XNetProgrammer() {
 		// error if more than one constructed?
@@ -118,7 +120,6 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		static final int NOTPROGRAMMING = 0; // is notProgramming
 		static final int REQUESTSENT    = 1; // waiting reply to command to go into programming mode
 		static final int INQUIRESENT    = 2; // read/write command sent, waiting reply
-		static final int RETURNSENT     = 4; // waiting reply to go back to ops mode
 	boolean  _progRead = false;
 	int _val;	// remember the value being read/written for confirmative reply
 	int _cv;	// remember the cv being read/written
@@ -132,19 +133,22 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		progState = REQUESTSENT;
 		_val = val;
 		_cv = CV;
+		
+		try {
+		   // start the error timer
+		   restartTimer(XNetProgrammerTimeout);
 
-		// start the error timer
-		//startShortTimer();
-		startLongTimer();
-
-		// format and send message to go to program mode
-        if (_mode == Programmer.PAGEMODE)
-		    controller().sendXNetMessage(XNetMessage.getWritePagedCVMsg(CV, val), this);
-        else if (_mode == Programmer.DIRECTBITMODE || _mode == Programmer.DIRECTBYTEMODE)
-		    controller().sendXNetMessage(XNetMessage.getWriteDirectCVMsg(CV, val), this);
-
-        else // register mode by elimination
-		    controller().sendXNetMessage(XNetMessage.getWriteRegisterMsg(registerFromCV(CV), val),this);
+		   // format and send message to go to program mode
+        	   if (_mode == Programmer.PAGEMODE)
+		       controller().sendXNetMessage(XNetMessage.getWritePagedCVMsg(CV, val), this);
+        	   else if (_mode == Programmer.DIRECTBITMODE || _mode == Programmer.DIRECTBYTEMODE)
+		       controller().sendXNetMessage(XNetMessage.getWriteDirectCVMsg(CV, val), this);
+        	   else // register mode by elimination 
+                       controller().sendXNetMessage(XNetMessage.getWriteRegisterMsg(registerFromCV(CV), val),this);
+		} catch (jmri.ProgrammerException e) {
+		  progState = NOTPROGRAMMING;
+		  throw e;
+	        }
 	}
 
 	public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
@@ -158,18 +162,21 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		// set new state
 		progState = REQUESTSENT;
 		_cv = CV;
+		try {
+		   // start the error timer
+		   restartTimer(XNetProgrammerTimeout);
 
-		// start the error timer
-		//startShortTimer();
-		startLongTimer();
-
-		// format and send message to go to program mode
-        if (_mode == Programmer.PAGEMODE)
-		    controller().sendXNetMessage(XNetMessage.getReadPagedCVMsg(CV), this);
-        else if (_mode == Programmer.DIRECTBITMODE || _mode == Programmer.DIRECTBYTEMODE)
-		    controller().sendXNetMessage(XNetMessage.getReadDirectCVMsg(CV), this);
-        else // register mode by elimination
-		    controller().sendXNetMessage(XNetMessage.getReadRegisterMsg(registerFromCV(CV)), this);
+		   // format and send message to go to program mode
+        	   if (_mode == Programmer.PAGEMODE)
+		       controller().sendXNetMessage(XNetMessage.getReadPagedCVMsg(CV), this);
+                   else if (_mode == Programmer.DIRECTBITMODE || _mode == Programmer.DIRECTBYTEMODE)
+		       controller().sendXNetMessage(XNetMessage.getReadDirectCVMsg(CV), this);
+        	   else // register mode by elimination		     
+		       controller().sendXNetMessage(XNetMessage.getReadRegisterMsg(registerFromCV(CV)), this);
+		} catch (jmri.ProgrammerException e) {
+		  progState = NOTPROGRAMMING;
+		  throw e;
+	        }
 	}
 
 	private jmri.ProgListener _usingProgrammer = null;
@@ -193,84 +200,101 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 			return;
 
 		} else if (progState == REQUESTSENT) {
-			if (log.isDebugEnabled()) log.debug("reply in REQUESTSENT state");
+		   	if (log.isDebugEnabled()) log.debug("reply in REQUESTSENT state");
 			// see if reply is the acknowledge of program mode; if not, wait for next
-            if (m.getElement(0)==XNetConstants.CS_INFO && 
-                m.getElement(1)==XNetConstants.BC_SERVICE_MODE_ENTRY) {
+            		if (m.isOkMessage() || (m.getElement(0)==XNetConstants.CS_INFO && 
+                	   (m.getElement(1)==XNetConstants.BC_SERVICE_MODE_ENTRY ||
+		            m.getElement(1)==XNetConstants.PROG_CS_READY )) ) {
+			       stopTimer();
 
-			    // here ready to request the results
-			    progState = INQUIRESENT;
-		            //startShortTimer();
-                	    startLongTimer();
-			    controller().sendXNetMessage(XNetMessage.getServiceModeResultsMsg(),
-                                    this);
-                return;
-            } else if (m.getElement(0)==XNetConstants.CS_INFO && 
-                       m.getElement(1)==XNetConstants.CS_NOT_SUPPORTED) {
-                // programming operation not supported by this command station
-			    progState = NOTPROGRAMMING;
-			    notifyProgListenerEnd(_val, jmri.ProgListener.NotImplemented);
-                return;
-            }
+			       // here ready to request the results
+			       progState = INQUIRESENT;
+                	       //start the error timer
+			       restartTimer(XNetProgrammerTimeout);
 
+			       controller().sendXNetMessage(XNetMessage.getServiceModeResultsMsg(),
+                                                            this);
+                               return;
+            		} else if (m.getElement(0)==XNetConstants.CS_INFO && 
+                           m.getElement(1)==XNetConstants.CS_NOT_SUPPORTED) {
+                           // programming operation not supported by this command station
+			   progState = NOTPROGRAMMING;
+			   notifyProgListenerEnd(_val, jmri.ProgListener.NotImplemented);
+                           return;
+            		} else if (m.getElement(0)==XNetConstants.CS_INFO && 
+			   m.getElement(1)==XNetConstants.BC_NORMAL_OPERATIONS) {
+			   // We Exited Programming Mode early
+			   log.error("Service mode exited before sequence complete.");
+			   progState = NOTPROGRAMMING;
+			   stopTimer();
+			   notifyProgListenerEnd(_val, jmri.ProgListener.UnknownError);
+			}
 		} else if (progState == INQUIRESENT) {
 			if (log.isDebugEnabled()) log.debug("reply in INQUIRESENT state");
-            // check for right message, else return
-            if (m.getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONSE && 
-                m.getElement(1)==XNetConstants.CS_SERVICE_REG_PAGE_RESPONSE) {
-                // valid operation response
-				// see why waiting
-				if (_progRead) {
-					// read was in progress - get return value
-					_val = m.getElement(3);
-				}
-				progState = NOTPROGRAMMING;
+            		// check for right message, else return
+            		if (m.getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONSE && 
+                	    m.getElement(1)==XNetConstants.CS_SERVICE_REG_PAGE_RESPONSE) {
+                	    // valid operation response, but does it belong to us?
+			    if(m.getElement(2)!=_cv) return;
+			    // see why waiting
+			    if (_progRead) {
+			        // read was in progress - get return value
+				_val = m.getElement(3);
+			    }
+			    progState = NOTPROGRAMMING;
 			    stopTimer();
-			    // if this was a read, we cached the value earlier.  If its a
-			    // write, we're to return the original write value
+			    // if this was a read, we cached the value earlier.  
+			    // If its a write, we're to return the original write value
 			    notifyProgListenerEnd(_val, jmri.ProgListener.OK);
-                return;
-
-            } else if (m.getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONSE && 
-                m.getElement(1)==XNetConstants.CS_SERVICE_DIRECT_RESPONSE) {
-                // valid operation response
-				// see why waiting
-				if (_progRead) {
-					// read was in progress - get return value
-					_val = m.getElement(3);
-				}
-				progState = NOTPROGRAMMING;
-			    stopTimer();
-			    // if this was a read, we cached the value earlier.  If its a
-			    // write, we're to return the original write value
-			    notifyProgListenerEnd(_val, jmri.ProgListener.OK);
-                return;
-
-            } else if (m.getElement(0)==XNetConstants.CS_INFO && 
-                       m.getElement(1)==XNetConstants.PROG_BYTE_NOT_FOUND) {
-                // "data byte not found", e.g. no reply
-				progState = NOTPROGRAMMING;
-		                stopTimer();
-				notifyProgListenerEnd(_val, jmri.ProgListener.NoLocoDetected);
-                return;
-            } else {
-                // nothing important, ignore
-                return;
-			}
-		} else if (progState == RETURNSENT) {
-			if (log.isDebugEnabled()) log.debug("reply in RETURNSENT state");
-            if (m.getElement(0)==0x61 && m.getElement(1)==0x01) {
-			    // all done, notify listeners of completion
+                	    return;
+            		} else if (m.getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONSE && 
+                		   m.getElement(1)==XNetConstants.CS_SERVICE_DIRECT_RESPONSE) {
+                	    // valid operation response, but does it belong to us?
+			    if(m.getElement(2)!=_cv) return;
+			    // see why waiting
+			    if (_progRead) {
+				// read was in progress - get return value
+				_val = m.getElement(3);
+			    }
 			    progState = NOTPROGRAMMING;
 			    stopTimer();
 			    // if this was a read, we cached the value earlier.  If its a
 			    // write, we're to return the original write value
 			    notifyProgListenerEnd(_val, jmri.ProgListener.OK);
-            }
-		} else {
-			if (log.isDebugEnabled()) log.debug("reply in un-decoded state");
-		}
+                	    return;
+            		} else if (m.getElement(0)==XNetConstants.CS_INFO && 
+				   m.getElement(1)==XNetConstants.PROG_BYTE_NOT_FOUND) {
+                    	   // "data byte not found", e.g. no reply
+		    	   progState = NOTPROGRAMMING;
+		    	   stopTimer();
+		     	   notifyProgListenerEnd(_val, jmri.ProgListener.NoLocoDetected);
+               	    	   return;
+            		} else if (m.getElement(0)==XNetConstants.CS_INFO && 
+				   m.getElement(1)==XNetConstants.BC_NORMAL_OPERATIONS) {
+		  	   // We Exited Programming Mode early
+		   	   log.error("Service Mode exited before sequence complete.");
+		   	   progState = NOTPROGRAMMING;
+		   	   stopTimer();
+		   	   notifyProgListenerEnd(_val, jmri.ProgListener.UnknownError);
+               	    	   return;
+			} else {
+                           // nothing important, ignore
+                           return;
+		   	}
+	    } else {
+		if (log.isDebugEnabled()) log.debug("reply in un-decoded state");
+	    }
 	}
+
+	/*
+         * Since the Lenz programming sequence requires several 
+         * operations, We want to be able to check and see if we are 
+         * currently programming before allowing the Traffic Controller 
+         * to send a request to exit service mode
+	 */
+	public boolean programmerBusy() {
+	    return (progState!=NOTPROGRAMMING);
+	} 
 
 	/**
 	 * Internal routine to handle a timeout
