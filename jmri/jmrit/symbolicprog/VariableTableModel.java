@@ -1,9 +1,9 @@
-/** 
+/**
  * VariableTableModel.java
  *
  * Description:		Table data model for display of variables in symbolic programmer
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			
+ * @version      $Revision: 1.2 $
  */
 
 package jmri.jmrit.symbolicprog;
@@ -30,30 +30,30 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 	private Vector _writeButtons = new Vector();
 	private Vector _readButtons = new Vector();
 	private JLabel _status = null;
-	
-	/** Defines the columns; values understood are: 	
+
+	/** Defines the columns; values understood are:
 	 *  "Name", "Value", "Range", "Read", "Write", "Comment", "CV", "Mask", "State"
 	 */
-	public VariableTableModel(JLabel status, String h[], CvTableModel cvModel) { 
+	public VariableTableModel(JLabel status, String h[], CvTableModel cvModel) {
 		super();
 		_status = status;
-		_cvModel = cvModel; 
+		_cvModel = cvModel;
 		headers = h;
 		}
-	
+
 	// basic methods for AbstractTableModel implementation
-	public int getRowCount() { 
+	public int getRowCount() {
 		return rowVector.size();
 	}
-	
+
 	public int getColumnCount( ){ return headers.length;}
 
-	public String getColumnName(int col) { 
+	public String getColumnName(int col) {
 		if (log.isDebugEnabled()) log.debug("getColumnName "+col);
 		return headers[col];
 	}
-	
-	public Class getColumnClass(int col) { 
+
+	public Class getColumnClass(int col) {
 		// if (log.isDebugEnabled()) log.debug("getColumnClass "+col);
 		if (headers[col].equals("Value"))
 			return JTextField.class;
@@ -71,25 +71,25 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 			return true;
 		else if (headers[col].equals("Read"))
 			return true;
-		else if (headers[col].equals("Write") 
+		else if (headers[col].equals("Write")
 				&& !((VariableValue)(rowVector.elementAt(row))).getReadOnly())
 			return true;
 		else
 			return false;
 	}
-			
+
 	public VariableValue getVariable(int row) {
 		return ((VariableValue)rowVector.elementAt(row));
 	}
-			
+
 	public String getLabel(int row) {
 		return ((VariableValue)rowVector.elementAt(row)).label();
 	}
-	
+
 	public String getItem(int row) {
 		return ((VariableValue)rowVector.elementAt(row)).item();
 	}
-	
+
 	public String getValString(int row) {
 		return ((VariableValue)rowVector.elementAt(row)).getValueString();
 	}
@@ -104,7 +104,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 	public int getState(int row) {
 		return ((VariableValue)rowVector.elementAt(row)).getState();
 	}
-	
+
 	/*
 	 * Request a "unique representation", e.g. something we can show
 	 * for the row-th variable.
@@ -113,8 +113,8 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		VariableValue v = (VariableValue)rowVector.elementAt(row);
 		return v.getRep(format);
 	}
-	
-	public Object getValueAt(int row, int col) { 
+
+	public Object getValueAt(int row, int col) {
 		// if (log.isDebugEnabled()) log.debug("getValueAt "+row+" "+col);
 		VariableValue v = (VariableValue)rowVector.elementAt(row);
 		if (headers[col].equals("Value"))
@@ -142,18 +142,18 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 				default: return "inconsistent";
 			}
 		}
-		else if (headers[col].equals("Range")) 
+		else if (headers[col].equals("Range"))
 			return v.rangeVal();
 		else
 			return "Later, dude";
 	}
-		
-	public void setValueAt(Object value, int row, int col) { 
+
+	public void setValueAt(Object value, int row, int col) {
 		if (log.isDebugEnabled()) log.debug("setvalueAt "+row+" "+col+" "+value);
 		setFileDirty(true);
 	}
-	
-	// for loading config:	
+
+	// for loading config:
 	// Read from an Element to configure the row
 	public void setRow(int row, Element e) {
 		// get the values for the VariableValue ctor
@@ -167,16 +167,16 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 			comment = e.getAttribute("comment").getValue();
 		int CV = Integer.valueOf(e.getAttribute("CV").getValue()).intValue();
 		String mask = null;
-		if (e.getAttribute("mask") != null) 
+		if (e.getAttribute("mask") != null)
 			mask = e.getAttribute("mask").getValue();
 		else {
 			log.warn("Element missing mask attribute: "+name);
 			mask ="VVVVVVVV";
 		}
-		
+
 		int minVal = 0;
 		int maxVal = 255;
-		
+
 		boolean readOnly = false;
 		if (e.getAttribute("readOnly") != null) {
 			readOnly = e.getAttribute("readOnly").getValue().equals("yes") ? true : false;
@@ -193,7 +193,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		} else {
 			log.warn("Element missing readOnly attribute: "+name);
 		}
-		
+
 		// config read button
 		JButton br = new JButton("Read");
 		br.setActionCommand("R"+row);
@@ -205,7 +205,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 			return;
 		}
 		_cvModel.addCV(""+CV);
-		
+
 		// have to handle various value types, see "snippet"
 		Attribute a;
 		Element child;
@@ -215,37 +215,37 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 				minVal = Integer.valueOf(a.getValue()).intValue();
 			if ( (a = child.getAttribute("max")) != null)
 				maxVal = Integer.valueOf(a.getValue()).intValue();
-			v = new DecVariableValue(name, comment, readOnly, 
+			v = new DecVariableValue(name, comment, readOnly,
 								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item);
-								
+
 		} else if ( (child = e.getChild("hexVal")) != null) {
 			if ( (a = child.getAttribute("min")) != null)
 				minVal = Integer.valueOf(a.getValue(),16).intValue();
 			if ( (a = child.getAttribute("max")) != null)
 				maxVal = Integer.valueOf(a.getValue(),16).intValue();
-			v = new HexVariableValue(name, comment, readOnly, 
+			v = new HexVariableValue(name, comment, readOnly,
 								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item);
-								
+
 		} else if ( (child = e.getChild("enumVal")) != null) {
 			List l = child.getChildren("enumChoice");
-			EnumVariableValue v1 = new EnumVariableValue(name, comment, readOnly, 
+			EnumVariableValue v1 = new EnumVariableValue(name, comment, readOnly,
 								CV, mask, 0, l.size()-1, _cvModel.allCvVector(), _status, item);
 			v = v1;
 			v1.nItems(l.size());
 			for (int k=0; k< l.size(); k++)
 				v1.addItem(((Element)l.get(k)).getAttribute("choice").getValue());
 			v1.lastItem();
-			
+
 		} else if ( (child = e.getChild("speedTableVal")) != null) {
 			// ensure all 28 CVs exist
 			for (int i=0; i<28; i++) { _cvModel.addCV(""+(CV+i)); }
-	
-			v = new SpeedTableVarValue(name, comment, readOnly, 
+
+			v = new SpeedTableVarValue(name, comment, readOnly,
 								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item);
 
 		} else if ( (child = e.getChild("longAddressVal")) != null) {
 			_cvModel.addCV(""+(CV+1));  // ensure 2nd CV exists
-			v = new LongAddrVariableValue(name, comment, readOnly, 
+			v = new LongAddrVariableValue(name, comment, readOnly,
 								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item);
 		} else {
 			log.error("Did not find a valid variable type");
@@ -253,21 +253,21 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		}
 
 		// back to general processing
-				
+
 		// record new variable, update state, hook up listeners
 		rowVector.addElement(v);
 		v.setState(VariableValue.FROMFILE);
 		v.addPropertyChangeListener(this);
-		
+
 		// set to default value if specified (CV load will later override this)
 		if ( (a = e.getAttribute("default")) != null) {
 			String val = a.getValue();
 			if (log.isDebugEnabled()) log.debug("Found default value: "+val+" for "+name);
 			v.setIntValue(Integer.valueOf(val).intValue());
 		}
-		
+
 	}
-	
+
 	/**
 	 * Configure from a constant.  This is like setRow (which processes
 	 * a variable Element).
@@ -287,13 +287,13 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		// intrinsically readOnly, so use just that branch
 		JButton bw = new JButton();
 		_writeButtons.addElement(bw);
-		
+
 		// config read button as a dummy - there's really nothing to read
 		JButton br = new JButton("Read");
 		_readButtons.addElement(br);
 
 		// no CV references are added here
-				
+
 		// have to handle various value types, see "snippet"
 		Attribute a;
 
@@ -306,24 +306,24 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		}
 
 		// create the specific object
-		
-		ConstantValue v = new ConstantValue(name, comment, true, 
+
+		ConstantValue v = new ConstantValue(name, comment, true,
 								0, mask, defaultVal, defaultVal, null, _status, stdname);
-							
+
 		// record new variable, update state, hook up listeners
 		rowVector.addElement(v);
 		v.setState(VariableValue.FROMFILE);
 		v.addPropertyChangeListener(this);
-		
+
 		// set to default value if specified (CV load will later override this)
 		if ( (a = e.getAttribute("default")) != null) {
 			String val = a.getValue();
 			if (log.isDebugEnabled()) log.debug("Found default value: "+val+" for "+name);
 			v.setIntValue(defaultVal);
 		}
-		
+
 	}
-	
+
 	public void newDecVariableValue(String name, int CV, String mask) {
 		setFileDirty(true);
 		String comment = "";
@@ -333,7 +333,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		_cvModel.addCV(""+CV);
 
 		int row = getRowCount();
-		
+
 		// config write button
 		JButton bw = new JButton("Write");
 		bw.setActionCommand("W"+row);
@@ -346,12 +346,12 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		br.addActionListener(this);
 		_readButtons.addElement(br);
 
-		VariableValue v = new DecVariableValue(name, comment, readOnly, 
+		VariableValue v = new DecVariableValue(name, comment, readOnly,
 								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, null);
 		rowVector.addElement(v);
 		v.addPropertyChangeListener(this);
 	}
-	
+
 	public void actionPerformed(ActionEvent e) {
 		if (log.isDebugEnabled()) log.debug("action performed,  command: "+e.getActionCommand());
 		setFileDirty(true);
@@ -366,7 +366,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 			write(row);
 		}
 	}
-	
+
 	public void read(int i) {
 		VariableValue v = (VariableValue)rowVector.elementAt(i);
 		v.read();
@@ -376,16 +376,16 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		VariableValue v = (VariableValue)rowVector.elementAt(i);
 		v.write();
 	}
-	
+
 	public void propertyChange(PropertyChangeEvent e) {
 		if (log.isDebugEnabled()) log.debug("prop changed "+e.getPropertyName()
 													+" new value: "+e.getNewValue());
 		setFileDirty(true);
-		fireTableDataChanged();	
+		fireTableDataChanged();
 	}
 
 	public void configDone() {
-		fireTableDataChanged();	
+		fireTableDataChanged();
 	}
 
 	/**
@@ -399,7 +399,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		_fileDirty = b;
 	}
 	private boolean _fileDirty;
-	
+
 	public boolean decoderDirty() {
 		int len = rowVector.size();
 		for (int i=0; i< len; i++) {
@@ -409,24 +409,24 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 	}
 
 	public VariableValue findVar(String name) {
-		for (int i=0; i<getRowCount(); i++) 
+		for (int i=0; i<getRowCount(); i++)
 			if (name.equals(getItem(i))) return getVariable(i);
-		for (int i=0; i<getRowCount(); i++) 
+		for (int i=0; i<getRowCount(); i++)
 			if (name.equals(getLabel(i))) return  getVariable(i);
 		return null;
 	}
 
 	public int findVarIndex(String name) {
-		for (int i=0; i<getRowCount(); i++) 
+		for (int i=0; i<getRowCount(); i++)
 			if (name.equals(getItem(i))) return i;
-		for (int i=0; i<getRowCount(); i++) 
+		for (int i=0; i<getRowCount(); i++)
 			if (name.equals(getLabel(i))) return i;
 		return -1;
 	}
 
 	public void dispose() {
 		if (log.isDebugEnabled()) log.debug("dispose");
-		
+
 		// remove buttons
 		for (int i = 0; i<_writeButtons.size(); i++) {
 			((JButton)_writeButtons.elementAt(i)).removeActionListener(this);
@@ -457,7 +457,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
 		_status = null;
 	}
-	
+
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(VariableTableModel.class.getName());
 
 }
