@@ -1,23 +1,18 @@
 package jmri.jmrit.roster;
 
-import junit.framework.Test;
-import junit.framework.Assert;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import junit.framework.*;
 
 /**
- * RosterEntryPaneTest.java
- *
- * Description:	    tests for the jmrit.roster.RosterEntryPane class
- * @author			Bob Jacobsen
- * @version			$Revision: 1.3 $
+ * Tests for the jmrit.roster.RosterEntryPane class
+ * @author	Bob Jacobsen     Copyright (C) 2001, 2002
+ * @version	$Revision: 1.4 $
  */
 public class RosterEntryPaneTest extends TestCase {
 
     // statics for test objects
     org.jdom.Element e = null;
     RosterEntry r = null;
-    
+
     public void setUp() {
         // create Element
         e = new org.jdom.Element("locomotive")
@@ -32,10 +27,10 @@ public class RosterEntryPaneTest extends TestCase {
                         .addAttribute("model","33")
                         )
             ; // end create element
-        
+
         r = new RosterEntry(e);
     }
-    
+
     public void testCreate() {
         RosterEntryPane p = new RosterEntryPane(r);
         // check for field text contents
@@ -46,25 +41,25 @@ public class RosterEntryPaneTest extends TestCase {
         Assert.assertEquals("manufacturer ", "Athearn", p.mfg.getText());
         Assert.assertEquals("model ", "33",p.decoderModel.getText());
         Assert.assertEquals("family ", "91", p.decoderFamily.getText());
-        
+
     }
-    
+
     // from here down is testing infrastructure
-    
+
     public RosterEntryPaneTest(String s) {
         super(s);
     }
-    
+
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {RosterEntryPane.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
-    
+
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite(RosterEntryPaneTest.class);
         return suite;
     }
-    
+
 }
