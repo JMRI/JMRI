@@ -10,7 +10,7 @@ import jmri.*;
  * Based on Crr0024.bas
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
 
@@ -26,7 +26,6 @@ public class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
     Sensor bo4;
     Sensor bo16;
     Sensor tu1;
-    Sensor tu3;
     Sensor tu12;
 
 
@@ -61,7 +60,6 @@ public class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
         bo16 = sm.newSensor("CS27","PRR/Lebanon entrance bo(16)");
 
         tu1  = sm.newSensor("CS2", "Cornwall Jct 1 tu(01)");
-        tu3  = sm.newSensor("CS6", "unused tu(03)");
         tu12 = sm.newSensor("CS29","East Cornwall Junction switch tu(12)");
 
         // set up the initial correlation
@@ -76,7 +74,7 @@ public class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
         log.debug("Waiting for state change");
 
         // wait until a sensor changes state
-        Sensor[] sensors = new Sensor[]{ bo4, bo16, tu1, tu3, tu12};
+        Sensor[] sensors = new Sensor[]{ bo4, bo16, tu1, tu12};
         waitSensorChange(sensors);
 
         // recalculate outputs
@@ -92,30 +90,33 @@ public class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
         boolean bo4now  = ( bo4.getKnownState() == Sensor.ACTIVE);
         boolean bo16now = (bo16.getKnownState() == Sensor.ACTIVE);
         boolean tu1now  = ( tu1.getKnownState() == Sensor.ACTIVE);
-        boolean tu3now  = ( tu3.getKnownState() == Sensor.ACTIVE);
         boolean tu12now = (tu12.getKnownState() == Sensor.ACTIVE);
+        if (log.isDebugEnabled()) log.debug("Section 1 with bo4="+bo4now+" bo16="+bo16now+" tu1="+tu1now+" tu12="+tu12now);
 
         // section 1a
         if (
-                ( bo4now && tu1now && tu3now && tu12now)
-             || ( !tu3now && tu1now )
+                ( bo4now && tu1now && tu12now)
              || ( bo16now && !tu1now )
-             || ( tu1now && tu3now && !tu12now )
+             || ( tu1now && !tu12now )
             ) {
             si1a.setAppearance(SignalHead.RED);
+            log.debug("1a set RED");
         } else {
             si1a.setAppearance(SignalHead.GREEN);
+            log.debug("1a set GREEN");
         }
 
         // section 1B
         if (
-                ( tu3now )
-             || ( !tu3now && bo4now )
-             || ( !tu3now && !tu12now )
+                ( tu1now )
+             || ( !tu1now && bo4now )
+             || ( !tu1now && !tu12now )
             ) {
             si1b.setAppearance(SignalHead.RED);
+            log.debug("1b set RED");
         } else {
             si1b.setAppearance(SignalHead.GREEN);
+            log.debug("1b set GREEN");
         }
     }
 
