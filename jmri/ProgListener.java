@@ -10,7 +10,7 @@ package jmri;
  * Callbacks are guaranteed to be in the Swing execution thread.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Id: ProgListener.java,v 1.4 2001-12-09 17:59:44 jacobsen Exp $
+ * @version			$Id: ProgListener.java,v 1.5 2002-01-02 23:44:17 jacobsen Exp $
  */
 public interface ProgListener extends java.util.EventListener{
 	/** Receive a callback at the end of a programming operation.
@@ -22,35 +22,40 @@ public interface ProgListener extends java.util.EventListener{
 	 */
 	public void programmingOpReply(int value, int status);
 	
-	/** Constant denoting that the request completed correctly */
+	/** Constant denoting that the request completed correctly. Note this
+	 *  is a specific value; all others are bitwise combinations
+	 */
 	public final int OK 			= 0;
 	
 	/** Constant denoting the request failed, but no specific reason is known */
 	public final int UnknownError 	= 1;
 	
-	/** Constant denoting there was no acknowledge from the locomotive, so
-	 *  the CV may or may not have been written on a write.  No value was read. */
-	public final int NoAck			= 2;
-	
 	/** Constant denoting that no decoder was detected on the programming track */
-	public final int NoLocoDetected = 4;
+	public final int NoLocoDetected = 2;
 	
 	/** Constant denoting that the request failed because the decoding hardware
 	 * was already busy */
-	public final int ProgrammerBusy = 8;
+	public final int ProgrammerBusy = 4;
 	
 	/** Constant denoting that the request failed because it requested some
 	 * unimplemented capability.  Note that this can also result in an
 	 * exception during the original request; which happens is implementation
 	 * dependent */
-	public final int NotImplemented = 0x10;
+	public final int NotImplemented = 8;
 	
 	/** Constant denoting that the user (human or software) aborted the request
 	 * before completion */
-	public final int UserAborted    = 0x20;
+	public final int UserAborted    = 0x10;
 
+	/** Constant denoting there was no acknowledge from the locomotive, so
+	 *  the CV may or may not have been written on a write.  No value was read. */
+	public final int NoAck			= 0x20;
+	
 	/** Constant denoting that confirm failed, likely due to another value being present */
 	public final int ConfirmFailed    = 0x40;
+		
+	/** Constant denoting that the programming operation timed out */
+	public final int FailedTimeout    = 0x80;
 		
 }
 

@@ -67,6 +67,8 @@ public interface Programmer  {
 	// error handling on request is via exceptions
 	// results are returned via the ProgListener callback
 	
+	public String decodeErrorCode(int i);
+	
 	// special case for CV18/19 double write?	
 	// access to direct mode bit operations?
 	// programming on the main / ops mode?

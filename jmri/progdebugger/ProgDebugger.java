@@ -23,6 +23,11 @@ public class ProgDebugger implements Programmer  {
 	public int lastWrite() { return _lastWriteVal; }
 	public int lastWriteCv() { return _lastWriteCv; }
 
+	public String decodeErrorCode(int i) {
+		log.info("decoderErrorCode "+i);
+		return "error "+i;
+	}
+	
 	public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException
 	{
 		final ProgListener m = p;
