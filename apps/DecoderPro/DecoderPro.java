@@ -3,13 +3,15 @@
 package apps.DecoderPro;
 
 import java.awt.*;
+import java.io.*;
+
 import javax.swing.*;
 
 /**
  * DecoderPro application.
  *
  * @author                      Bob Jacobsen
- * @version                     $Revision: 1.33 $
+ * @version                     $Revision: 1.34 $
  */
 public class DecoderPro {
 
@@ -47,7 +49,7 @@ class SplashWindow extends JFrame {
         // get the splash image
        MediaTracker mt = new MediaTracker(this);
        splashIm = Toolkit.getDefaultToolkit(
-           ).getImage("resources/logo.gif");
+           ).getImage("resources"+File.separator+"logo.gif");
        mt.addImage(splashIm,0);
        try {
           mt.waitForID(0);
