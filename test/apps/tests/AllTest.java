@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  * Invoke all the JMRI project JUnit tests via a GUI interface
  *
  * @author			Bob Jacobsen
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class AllTest extends TestCase  {
 	public AllTest(String s) {
@@ -56,10 +56,11 @@ public class AllTest extends TestCase  {
 	    		org.apache.log4j.BasicConfigurator.configure();
 	   			// only log warnings and above
 	   			org.apache.log4j.Category.getRoot().setPriority(org.apache.log4j.Priority.INFO);
-     		}
-		}
-	}
+                        org.apache.log4j.Category.getRoot().setPriority(org.apache.log4j.Priority.ERROR);
+            }
+        }
+    }
 
-  	static org.apache.log4j.Category log = null;
+    static org.apache.log4j.Category log = null;
 
 }
