@@ -29,7 +29,7 @@ import org.jdom.JDOMException;
 /**
  * Frame providing a command station programmer from decoder definition files
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 abstract class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
@@ -49,8 +49,8 @@ abstract class PaneProgFrame extends javax.swing.JFrame
 
     // GUI member declarations
     JTabbedPane tabPane = new JTabbedPane();
-    JToggleButton readAllButton = new JToggleButton("Read all");
-    JToggleButton writeAllButton = new JToggleButton("Write all");
+    JToggleButton readAllButton = new JToggleButton("Read all sheets");
+    JToggleButton writeAllButton = new JToggleButton("Write all sheets");
 
     ActionListener l1;
     ActionListener l2;
@@ -70,7 +70,7 @@ abstract class PaneProgFrame extends javax.swing.JFrame
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
 
         // configure GUI elements
-        readAllButton.setToolTipText("Read current values from decoder. Warning: may take a long time!");
+        readAllButton.setToolTipText("Read highlighted values from decoder. Warning: may take a long time!");
         // check with CVTable programmer to see if read is possible
         if (cvModel!= null && cvModel.getProgrammer()!= null
             && !cvModel.getProgrammer().getCanRead()) {
@@ -83,7 +83,7 @@ abstract class PaneProgFrame extends javax.swing.JFrame
                     if (readAllButton.isSelected()) readAll();
                 }
             });
-        writeAllButton.setToolTipText("Write current values to decoder");
+        writeAllButton.setToolTipText("Write highlighted values to decoder");
         writeAllButton.addActionListener( l2 = new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     if (writeAllButton.isSelected()) writeAll();
