@@ -33,7 +33,7 @@ import java.util.Vector;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.25 $
+ * @version     $Revision: 1.26 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
@@ -238,9 +238,12 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             if (log.isDebugEnabled())
                 log.debug("LACK in state "+progState+" message: "+m.toString());
             if (m.getElement(1) == 0x6F && progState == 1 ) {
+                // in programming state
                 // check status byte
                 if ((m.getElement(2) == 1) // task accepted
-                    || (m.getElement(2) == 0x7F)) { // not implemented (op on main)
+                    || (m.getElement(2) == 0x7F)) { 
+                    // 'not implemented' (op on main)
+                    // but BDL16 and other devices can eventually reply, so
                     // move to commandExecuting state
                     if (_progRead || _progConfirm)
                         startLongTimer();
@@ -536,7 +539,6 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         lopsa = addr&0x7f;
         hopsa = (addr/128)&0x7f;
         mServiceMode = false;
-        // if (!longAddr) hopsa|=0x40;  // Not clear that's needed?
         doWrite(CV, val, p, 0x67);  // ops mode byte write, with feedback
     }
     public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
@@ -573,7 +575,6 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         lopsa = addr&0x7f;
         hopsa = (addr/128)&0x7f;
         mServiceMode = false;
-        if (!longAddr) hopsa|=0x40;
         doConfirm(CV, val, p, 0x2C);
     }
     public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
@@ -624,8 +625,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         lopsa = addr&0x7f;
         hopsa = (addr/128)&0x7f;
         mServiceMode = false;
-        if (!longAddr) hopsa|=0x40;
-        doRead(CV, p, 0x2C);
+        doRead(CV, p, 0x2F);  // although LPE implies 0x2C, 0x2F is observed
     }
     public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         lopsa = 0;
