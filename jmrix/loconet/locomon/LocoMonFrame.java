@@ -23,94 +23,81 @@ import jmri.jmrix.loconet.LocoNetMessage;
 
 public class LocoMonFrame extends javax.swing.JFrame implements LocoNetListener {
 
-// IMPORTANT: Source code between BEGIN/END comment pair will be regenerated
-// every time the form is saved. All manual changes will be overwritten.
-// BEGIN GENERATED CODE
 	// member declarations
 	javax.swing.JButton clearButton = new javax.swing.JButton();
 	javax.swing.JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
 	javax.swing.JTextPane locoMonTextPane = new javax.swing.JTextPane();
-	javax.swing.JTextField logFileTextField = new javax.swing.JTextField();
 	javax.swing.JButton startLogButton = new javax.swing.JButton();
 	javax.swing.JButton stopLogButton = new javax.swing.JButton();
-	javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
 	javax.swing.JCheckBox hexCheckBox = new javax.swing.JCheckBox();
 	javax.swing.JButton openFileChooserButton = new javax.swing.JButton();
-// END GENERATED CODE
+	
+	// to find and remember the log file
+	final javax.swing.JFileChooser logFileChooser = new JFileChooser();
 
 	public LocoMonFrame() {
 	}
 
 	public void initComponents() throws Exception {
-// IMPORTANT: Source code between BEGIN/END comment pair will be regenerated
-// every time the form is saved. All manual changes will be overwritten.
-// BEGIN GENERATED CODE
 		// the following code sets the frame's initial state
 
-		clearButton.setText("Clear");
-		clearButton.setLocation(new java.awt.Point(170, 280));
+		clearButton.setText("Clear screen");
 		clearButton.setVisible(true);
-		clearButton.setToolTipText("Clear to clear monitoring history");
-		clearButton.setSize(new java.awt.Dimension(80, 30));
+		clearButton.setToolTipText("Clear monitoring history");
 
-		jScrollPane1.setLocation(new java.awt.Point(10, 10));
 		jScrollPane1.setVisible(true);
-		jScrollPane1.setSize(new java.awt.Dimension(550, 260));
 		jScrollPane1.getViewport().add(locoMonTextPane);
 
 		locoMonTextPane.setVisible(true);
+		locoMonTextPane.setPreferredSize(new java.awt.Dimension(40,100));
 		locoMonTextPane.setToolTipText("LocoNet monitoring information appears here");
 		locoMonTextPane.setEditable(false);
 
-		logFileTextField.setText("loconetLog.txt");
-		logFileTextField.setLocation(new java.awt.Point(360, 280));
-		logFileTextField.setVisible(true);
-		logFileTextField.setToolTipText("Enter log file name");
-		logFileTextField.setSize(new java.awt.Dimension(150, 30));
-
-		startLogButton.setText("start");
-		startLogButton.setLocation(new java.awt.Point(360, 320));
+		startLogButton.setText("Start log file");
 		startLogButton.setVisible(true);
-		startLogButton.setToolTipText("start logging");
-		startLogButton.setSize(new java.awt.Dimension(70, 20));
+		startLogButton.setToolTipText("start logging to file");
 
-		stopLogButton.setText("stop");
-		stopLogButton.setLocation(new java.awt.Point(440, 320));
+		stopLogButton.setText("Stop log file");
 		stopLogButton.setVisible(true);
-		stopLogButton.setToolTipText("stop logging");
-		stopLogButton.setSize(new java.awt.Dimension(70, 20));
+		stopLogButton.setToolTipText("Stop logging to file");
 
-		jLabel1.setText("Log to file:");
-		jLabel1.setLocation(new java.awt.Point(290, 280));
-		jLabel1.setVisible(true);
-		jLabel1.setSize(new java.awt.Dimension(70, 30));
-
-		hexCheckBox.setText("show raw data");
-		hexCheckBox.setLocation(new java.awt.Point(26, 298));
+		hexCheckBox.setText("Show raw data");
 		hexCheckBox.setVisible(true);
-		hexCheckBox.setToolTipText("if checked, show the raw LocoNet packets in hex");
-		hexCheckBox.setSize(new java.awt.Dimension(104, 21));
+		hexCheckBox.setToolTipText("If checked, show the raw LocoNet packets in hex");
 
-		openFileChooserButton.setText("Log file:");
-		openFileChooserButton.setLocation(new java.awt.Point(260, 320));
+		openFileChooserButton.setText("Choose log file");
 		openFileChooserButton.setVisible(true);
 		openFileChooserButton.setToolTipText("Click here to select a new output log file");
-		openFileChooserButton.setSize(new java.awt.Dimension(80, 20));
 
-		setLocation(new java.awt.Point(400, 10));
+		// set sizes to same
+		clearButton.setMaximumSize(openFileChooserButton.getMaximumSize());
+		hexCheckBox.setMaximumSize(openFileChooserButton.getMaximumSize());
+		startLogButton.setMaximumSize(openFileChooserButton.getMaximumSize());
+		stopLogButton.setMaximumSize(openFileChooserButton.getMaximumSize());
+
 		setTitle("LocoNet monitoring");
-		getContentPane().setLayout(null);
-		setSize(new java.awt.Dimension(567, 352));
-		getContentPane().add(clearButton);
+		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+		
+		// add items to GUI
 		getContentPane().add(jScrollPane1);
-		getContentPane().add(logFileTextField);
-		getContentPane().add(startLogButton);
-		getContentPane().add(stopLogButton);
-		getContentPane().add(jLabel1);
-		getContentPane().add(hexCheckBox);
-		getContentPane().add(openFileChooserButton);
+		
+		JPanel paneA = new JPanel();
+			paneA.setLayout(new BoxLayout(paneA, BoxLayout.X_AXIS));
+			JPanel pane1 = new JPanel();
+				pane1.setLayout(new BoxLayout(pane1, BoxLayout.Y_AXIS));
+				pane1.add(clearButton);
+				pane1.add(hexCheckBox);
+			paneA.add(pane1);
+		
+			JPanel pane2 = new JPanel();
+				pane2.setLayout(new BoxLayout(pane2, BoxLayout.Y_AXIS));
+				pane2.add(startLogButton);
+				pane2.add(stopLogButton);
+				pane2.add(openFileChooserButton);
+			paneA.add(pane2);
+		getContentPane().add(paneA);
 
-
+		// connect actions to buttons
 		clearButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				clearButtonActionPerformed(e);
@@ -136,9 +123,9 @@ public class LocoMonFrame extends javax.swing.JFrame implements LocoNetListener 
 				thisWindowClosing(e);
 			}
 		});
-
-// END GENERATED CODE
 		
+		// set file chooser to a default
+		logFileChooser.setSelectedFile(new File("LocoNetLog.txt"));
 	}
   
   	private boolean mShown = false;
@@ -153,7 +140,7 @@ public class LocoMonFrame extends javax.swing.JFrame implements LocoNetListener 
 		JMenuBar jMenuBar = getJMenuBar();
 		if (jMenuBar != null) {
 			int jMenuBarHeight = jMenuBar.getPreferredSize().height;
-			Dimension dimension = getSize();
+			java.awt.Dimension dimension = getSize();
 			dimension.height += jMenuBarHeight;
 			setSize(dimension);
 		}
@@ -241,7 +228,7 @@ public class LocoMonFrame extends javax.swing.JFrame implements LocoNetListener 
 		if ( logStream==null) {  // successive clicks don't restart the file
 			// start logging
 			try {
-				logStream = new PrintStream (new FileOutputStream(logFileTextField.getText()));
+				logStream = new PrintStream (new FileOutputStream(logFileChooser.getSelectedFile()));
 			} catch (Exception ex) {
 				log.error("exception "+ex);
 			}
@@ -259,15 +246,13 @@ public class LocoMonFrame extends javax.swing.JFrame implements LocoNetListener 
 	
 	public void openFileChooserButtonActionPerformed(java.awt.event.ActionEvent e) {
 		// start at current file, show dialog
-		fc.setSelectedFile(new File(logFileTextField.getText()));
-		int retVal = fc.showSaveDialog(this);
+		int retVal = logFileChooser.showSaveDialog(this);
 
 		// handle selection or cancel
 		if (retVal == JFileChooser.APPROVE_OPTION) {
 			boolean loggingNow = (logStream != null);
 			stopLogButtonActionPerformed(e);  // stop before changing file
-			File file = fc.getSelectedFile();
-			logFileTextField.setText(file.getPath());
+			File file = logFileChooser.getSelectedFile();
 			// if we were currently logging, start the new file
 			if (loggingNow) startLogButtonActionPerformed(e); 
 		}
@@ -304,9 +289,6 @@ public class LocoMonFrame extends javax.swing.JFrame implements LocoNetListener 
 	// to get a time string
 	DateFormat df = DateFormat.getTimeInstance();
 	
-	// to find and remember the log file
-	final JFileChooser fc = new JFileChooser("logonetLog.txt");
-
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoMonFrame.class.getName());
 
 }
