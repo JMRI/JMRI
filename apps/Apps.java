@@ -18,7 +18,7 @@ import javax.swing.*;
  * Base class for Jmri Apps
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class Apps extends JPanel {
 
@@ -192,6 +192,16 @@ public class Apps extends JPanel {
     protected JFrame prefsFrame;
     protected ResourceBundle rb;
     protected AppConfigPanel prefs;
+
+    static SplashWindow sp = null;
+    static protected void splash(boolean show) {
+        if (sp==null) sp = new SplashWindow();
+        sp.setVisible(show);
+        if (!show) {
+            sp.dispose();
+            sp = null;
+        }
+    }
 
     static protected void initLog4J() {
         // initialize log4j - from logging control file (lcf) only
