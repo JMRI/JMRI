@@ -11,25 +11,33 @@ import jmri.*;
  * SlotManager object.
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class LnOpsModeProgrammer implements Programmer  {
 
     SlotManager mSlotMon;
-    public LnOpsModeProgrammer(SlotManager pSlotMon) {
+    int mAddress;
+    boolean mLongAddr;
+    public LnOpsModeProgrammer(SlotManager pSlotMon, 
+                               int pAddress, boolean pLongAddr) {
         mSlotMon = pSlotMon;
+        mAddress = pAddress;
+        mLongAddr = pLongAddr;
     }
 
+    /**
+     * Forward a write request to an ops-mode write operation
+     */
     public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
-        mSlotMon.writeCV(CV, val, p);
+        mSlotMon.writeCVOpsMode(CV, val, p, mAddress, mLongAddr);
     }
 
     public void readCV(int CV, ProgListener p) throws ProgrammerException {
-        mSlotMon.readCV(CV, p);
+        mSlotMon.readCVOpsMode(CV, p, mAddress, mLongAddr);
     }
 
     public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
-        mSlotMon.confirmCV(CV, val, p);
+        mSlotMon.confirmCVOpsMode(CV, val, p, mAddress, mLongAddr);
     }
 
     public void setMode(int mode) {
