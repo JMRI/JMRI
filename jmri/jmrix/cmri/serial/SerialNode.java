@@ -19,7 +19,7 @@ import jmri.Sensor;
  * that node is polled.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class SerialNode {
 
@@ -34,6 +34,8 @@ public class SerialNode {
      * Must be less than, and is general one less than,
      * {@link SerialSensorManager#SENSORSPERUA}
      */
+    static final int MAXSENSORS = 999;
+
     // class constants 
     public static final int SMINI = 1;          // SMINI node type
     public static final int USIC_SUSIC = 2;     // USIC/SUSIC node type 
@@ -50,11 +52,10 @@ public class SerialNode {
     protected int num2LSearchLights = 0;        // SMINI only, 'NS' number of two lead bicolor signals
     protected byte[] locSearchLightBits = new byte[48]; // SMINI only, 0 = not searchlight LED, 
                                                 //   1 = searchlight LED, 2*NS bits must be set to 1
-    protected byte[] cardTypeLocation = new byte[64]; // USIC/SUSIC only, the first numInputCards+numOutputCards
-                                                //   must be set to either INPUT_CARD or OUTPUT_CARD, and 
+    protected byte[] cardTypeLocation = new byte[64]; // USIC/SUSIC only, there must numInputCards bytes set to
+    											// INPUT_CARD, and numOutputCards set to OUTPUT_CARD, with 
                                                 //   the remaining locations must be set to NO_CARD
          
-    static final int MAXSENSORS = 999;
     protected int LASTUSEDSENSOR = 1;  // grows as sensors defined
 
     public SerialNode() {
