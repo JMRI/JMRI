@@ -31,7 +31,7 @@ import java.util.Hashtable;
  * in TRAILINGMAIN doesn't make any sense.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 
 public class BlockBossLogic extends Siglet {
@@ -68,22 +68,61 @@ public class BlockBossLogic extends Siglet {
         return driveSignal.getSystemName();
     }
 
-    public void setSensor(String name) {
+    public void setSensor1(String name) {
         if (name == null || name.equals("")) {
-            watchSensor = null;
+            watchSensor1 = null;
             return;
         }
-        watchSensor = InstanceManager.sensorManagerInstance().getSensor(name);
-        if (watchSensor == null) log.warn("Sensor "+name+" was not found!");
+        watchSensor1 = InstanceManager.sensorManagerInstance().provideSensor(name);
+        if (watchSensor1 == null) log.warn("Sensor1 "+name+" was not found!");
+    }
+
+    public void setSensor2(String name) {
+        if (name == null || name.equals("")) {
+            watchSensor2 = null;
+            return;
+        }
+        watchSensor2 = InstanceManager.sensorManagerInstance().provideSensor(name);
+        if (watchSensor2 == null) log.warn("Sensor2 "+name+" was not found!");
+    }
+
+    public void setSensor3(String name) {
+        if (name == null || name.equals("")) {
+            watchSensor3 = null;
+            return;
+        }
+        watchSensor3 = InstanceManager.sensorManagerInstance().provideSensor(name);
+        if (watchSensor3 == null) log.warn("Sensor3 "+name+" was not found!");
+    }
+
+    public void setSensor4(String name) {
+        if (name == null || name.equals("")) {
+            watchSensor4 = null;
+            return;
+        }
+        watchSensor4 = InstanceManager.sensorManagerInstance().provideSensor(name);
+        if (watchSensor4 == null) log.warn("Sensor4 "+name+" was not found!");
     }
 
     /**
      * Return the system name of the sensor being monitored
      * @return system name; null if no sensor configured
      */
-    public String getSensor() {
-        if (watchSensor == null) return null;
-        return watchSensor.getSystemName();
+    public String getSensor1() {
+        if (watchSensor1 == null) return null;
+        return watchSensor1.getSystemName();
+    }
+    public String getSensor2() {
+        if (watchSensor2 == null) return null;
+        return watchSensor2.getSystemName();
+    }
+    public String getSensor3() {
+        if (watchSensor3 == null) return null;
+        return watchSensor3.getSystemName();
+    }
+    public String getSensor4() {
+        if (watchSensor4 == null) return null;
+        return watchSensor4.getSystemName();
     }
 
     public void setTurnout(String name) {
@@ -91,7 +130,7 @@ public class BlockBossLogic extends Siglet {
             watchTurnout = null;
             return;
         }
-        watchTurnout = InstanceManager.turnoutManagerInstance().getTurnout(name);
+        watchTurnout = InstanceManager.turnoutManagerInstance().provideTurnout(name);
         if (watchTurnout == null) log.warn("Turnout "+name+" was not found!");
     }
 
@@ -150,7 +189,10 @@ public class BlockBossLogic extends Siglet {
 
     String name;
     SignalHead driveSignal = null;
-    Sensor watchSensor = null;
+    Sensor watchSensor1 = null;
+    Sensor watchSensor2 = null;
+    Sensor watchSensor3 = null;
+    Sensor watchSensor4 = null;
     Turnout watchTurnout = null;
     SignalHead watchedSignal1 = null;
     SignalHead watchedSignal2 = null;
@@ -167,8 +209,20 @@ public class BlockBossLogic extends Siglet {
             tempArray[n]= watchTurnout;
             n++;
         }
-        if (watchSensor != null) {
-            tempArray[n]= watchSensor;
+        if (watchSensor1 != null) {
+            tempArray[n]= watchSensor1;
+            n++;
+        }
+        if (watchSensor2 != null) {
+            tempArray[n]= watchSensor2;
+            n++;
+        }
+        if (watchSensor3 != null) {
+            tempArray[n]= watchSensor3;
+            n++;
+        }
+        if (watchSensor4 != null) {
+            tempArray[n]= watchSensor4;
             n++;
         }
 
@@ -223,8 +277,10 @@ public class BlockBossLogic extends Siglet {
             appearance = SignalHead.YELLOW;
 
         // check for red overriding yellow or green
-        if (watchSensor!=null && watchSensor.getKnownState() != Sensor.INACTIVE)
-            appearance = SignalHead.RED;
+        if (watchSensor1!=null && watchSensor1.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
+        if (watchSensor2!=null && watchSensor2.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
+        if (watchSensor3!=null && watchSensor3.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
+        if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
 
         // show result if changed
         if (appearance != oldAppearance)
@@ -241,8 +297,10 @@ public class BlockBossLogic extends Siglet {
             appearance = SignalHead.YELLOW;
 
         // check for red overriding yellow or green
-        if (watchSensor!=null && watchSensor.getKnownState() != Sensor.INACTIVE)
-            appearance = SignalHead.RED;
+        if (watchSensor1!=null && watchSensor1.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
+        if (watchSensor2!=null && watchSensor2.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
+        if (watchSensor3!=null && watchSensor3.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
+        if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
         if (watchTurnout!=null && watchTurnout.getKnownState() != Turnout.CLOSED)
             appearance = SignalHead.RED;
 
@@ -261,8 +319,10 @@ public class BlockBossLogic extends Siglet {
             appearance = SignalHead.YELLOW;
 
         // check for red overriding yellow or green
-        if (watchSensor!=null && watchSensor.getKnownState() != Sensor.INACTIVE)
-            appearance = SignalHead.RED;
+        if (watchSensor1!=null && watchSensor1.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
+        if (watchSensor2!=null && watchSensor2.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
+        if (watchSensor3!=null && watchSensor3.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
+        if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
         if (watchTurnout!=null && watchTurnout.getKnownState() != Turnout.THROWN)
             appearance = SignalHead.RED;
 
@@ -287,8 +347,10 @@ public class BlockBossLogic extends Siglet {
             appearance = SignalHead.YELLOW;
 
         // check for red overriding yellow or green
-        if (watchSensor!=null && watchSensor.getKnownState() != Sensor.INACTIVE)
-            appearance = SignalHead.RED;
+        if (watchSensor1!=null && watchSensor1.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
+        if (watchSensor2!=null && watchSensor2.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
+        if (watchSensor3!=null && watchSensor3.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
+        if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
 
         // show result if changed
         if (appearance != oldAppearance)

@@ -16,36 +16,60 @@ import javax.swing.*;
  * Provides four panels, corresponding to the four possible
  * modes described in {@link BlockBossLogic}, which
  * are then selected via radio buttons in the GUI.
+ * <P>
+ * The four modes are:
+ * <UL>
+ * <LI>Single block (s)
+ * <LI>Facing point (f)
+ * <LI>Trailing point main (tm)
+ * <LI>Trailing point diverging (td)
+ * </UL>
+ * <P>
+ * The multiple-panel approach to the GUI is used to make layout easier;
+ * the code just flips from one to the other as the user selects a mode.
+ * The individual items all share data models to simplify the logic.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class BlockBossFrame extends JFrame {
 
     JPanel modeSingle               = new JPanel();
     JRadioButton buttonSingle;
-    JTextField sSensorField         = new JTextField(6);
+    JTextField sSensorField1        = new JTextField(6);
+    JTextField sSensorField2        = new JTextField(6);
+    JTextField sSensorField3        = new JTextField(6);
+    JTextField sSensorField4        = new JTextField(6);
     JTextField sNextSignalField1    = new JTextField(6);
     JCheckBox sFlashBox;
 
     JPanel modeTrailMain                = new JPanel();
     JRadioButton buttonTrailMain;
-    JTextField tmSensorField            = new JTextField(6);
+    JTextField tmSensorField1           = new JTextField(6);
+    JTextField tmSensorField2           = new JTextField(6);
+    JTextField tmSensorField3           = new JTextField(6);
+    JTextField tmSensorField4           = new JTextField(6);
     JTextField tmProtectTurnoutField    = new JTextField(6);
     JTextField tmNextSignalField1       = new JTextField(6);
     JCheckBox tmFlashBox;
 
     JPanel modeTrailDiv                 = new JPanel();
     JRadioButton buttonTrailDiv;
-    JTextField tdSensorField            = new JTextField(6);
+    JTextField tdSensorField1           = new JTextField(6);
+    JTextField tdSensorField2           = new JTextField(6);
+    JTextField tdSensorField3           = new JTextField(6);
+    JTextField tdSensorField4           = new JTextField(6);
     JTextField tdProtectTurnoutField    = new JTextField(6);
     JTextField tdNextSignalField1       = new JTextField(6);
     JCheckBox tdFlashBox;
 
     JPanel modeFacing               = new JPanel();
     JRadioButton buttonFacing;
-    JTextField fSensorField         = new JTextField(6);
+    JTextField fSensorField1        = new JTextField(6);
+    JTextField fSensorField2        = new JTextField(6);
+    JTextField fSensorField3        = new JTextField(6);
+    JTextField fSensorField4        = new JTextField(6);
     JTextField fProtectTurnoutField = new JTextField(6);
     JTextField fNextSignalField1    = new JTextField(6);
     JTextField fNextSignalField2    = new JTextField(6);
@@ -98,9 +122,22 @@ public class BlockBossFrame extends JFrame {
         buttonTrailDiv.addActionListener(a);
         buttonFacing.addActionListener(a);
 
-        tmSensorField.setDocument(sSensorField.getDocument());
-        tdSensorField.setDocument(sSensorField.getDocument());
-        fSensorField.setDocument(sSensorField.getDocument());
+        // share data models
+        tmSensorField1.setDocument(sSensorField1.getDocument());
+        tdSensorField1.setDocument(sSensorField1.getDocument());
+        fSensorField1.setDocument(sSensorField1.getDocument());
+
+        tmSensorField2.setDocument(sSensorField2.getDocument());
+        tdSensorField2.setDocument(sSensorField2.getDocument());
+        fSensorField2.setDocument(sSensorField2.getDocument());
+
+        tmSensorField3.setDocument(sSensorField3.getDocument());
+        tdSensorField3.setDocument(sSensorField3.getDocument());
+        fSensorField3.setDocument(sSensorField3.getDocument());
+
+        tmSensorField4.setDocument(sSensorField4.getDocument());
+        tdSensorField4.setDocument(sSensorField4.getDocument());
+        fSensorField4.setDocument(sSensorField4.getDocument());
 
         tdProtectTurnoutField.setDocument(tmProtectTurnoutField.getDocument());
         fProtectTurnoutField.setDocument(tmProtectTurnoutField.getDocument());
@@ -159,8 +196,11 @@ public class BlockBossFrame extends JFrame {
         modeSingle.setLayout(new BoxLayout(modeSingle, BoxLayout.Y_AXIS));
 
         JPanel line = new JPanel();
-        line.add(new JLabel("Protects Sensor "));
-        line.add(sSensorField);
+        line.add(new JLabel("Protects Sensors "));
+        line.add(sSensorField1);
+        line.add(sSensorField2);
+        line.add(sSensorField3);
+        line.add(sSensorField4);
         modeSingle.add(line);
 
         line = new JPanel();
@@ -177,7 +217,10 @@ public class BlockBossFrame extends JFrame {
 
         JPanel line = new JPanel();
         line.add(new JLabel("Protects Sensor "));
-        line.add(tmSensorField);
+        line.add(tmSensorField1);
+        line.add(tmSensorField2);
+        line.add(tmSensorField3);
+        line.add(tmSensorField4);
         modeTrailMain.add(line);
 
         line = new JPanel();
@@ -200,7 +243,10 @@ public class BlockBossFrame extends JFrame {
 
         JPanel line = new JPanel();
         line.add(new JLabel("Protects Sensor "));
-        line.add(tdSensorField);
+        line.add(tdSensorField1);
+        line.add(tdSensorField2);
+        line.add(tdSensorField3);
+        line.add(tdSensorField4);
         modeTrailDiv.add(line);
 
         line = new JPanel();
@@ -223,7 +269,10 @@ public class BlockBossFrame extends JFrame {
 
         JPanel line = new JPanel();
         line.add(new JLabel("Protects Sensor "));
-        line.add(fSensorField);
+        line.add(fSensorField1);
+        line.add(fSensorField2);
+        line.add(fSensorField3);
+        line.add(fSensorField4);
         modeFacing.add(line);
 
         line = new JPanel();
@@ -267,7 +316,10 @@ public class BlockBossFrame extends JFrame {
     }
 
     void loadSingle(BlockBossLogic b) {
-        b.setSensor(sSensorField.getText());
+        b.setSensor1(sSensorField1.getText());
+        b.setSensor2(sSensorField2.getText());
+        b.setSensor3(sSensorField3.getText());
+        b.setSensor4(sSensorField4.getText());
         b.setMode(BlockBossLogic.SINGLEBLOCK);
 
         b.setWatchedSignal1(sNextSignalField1.getText(), sFlashBox.isSelected());
@@ -276,7 +328,10 @@ public class BlockBossFrame extends JFrame {
     }
 
     void loadTrailMain(BlockBossLogic b) {
-        b.setSensor(tmSensorField.getText());
+        b.setSensor1(tmSensorField1.getText());
+        b.setSensor2(tmSensorField2.getText());
+        b.setSensor3(tmSensorField3.getText());
+        b.setSensor4(tmSensorField4.getText());
         b.setMode(BlockBossLogic.TRAILINGMAIN);
 
         b.setTurnout(tmProtectTurnoutField.getText());
@@ -286,7 +341,10 @@ public class BlockBossFrame extends JFrame {
         b.start();
     }
     void loadTrailDiv(BlockBossLogic b) {
-        b.setSensor(tdSensorField.getText());
+        b.setSensor1(tdSensorField1.getText());
+        b.setSensor2(tdSensorField2.getText());
+        b.setSensor3(tdSensorField3.getText());
+        b.setSensor4(tdSensorField4.getText());
         b.setMode(BlockBossLogic.TRAILINGDIVERGING);
 
         b.setTurnout(tdProtectTurnoutField.getText());
@@ -296,7 +354,10 @@ public class BlockBossFrame extends JFrame {
         b.start();
     }
     void loadFacing(BlockBossLogic b) {
-        b.setSensor(fSensorField.getText());
+        b.setSensor1(fSensorField1.getText());
+        b.setSensor2(fSensorField2.getText());
+        b.setSensor3(fSensorField3.getText());
+        b.setSensor4(fSensorField4.getText());
         b.setMode(BlockBossLogic.FACING);
 
         b.setTurnout(fProtectTurnoutField.getText());
@@ -311,7 +372,10 @@ public class BlockBossFrame extends JFrame {
         BlockBossLogic b = BlockBossLogic.getExisting(outSignalField.getText());
         if (b==null) return;
 
-        sSensorField.setText(b.getSensor());
+        sSensorField1.setText(b.getSensor1());
+        sSensorField2.setText(b.getSensor2());
+        sSensorField3.setText(b.getSensor3());
+        sSensorField4.setText(b.getSensor4());
 
         tmProtectTurnoutField.setText(b.getTurnout());
 
