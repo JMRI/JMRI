@@ -25,13 +25,24 @@ public class NceMessageTest extends TestCase {
 
 	public void testToString() {
 		NceMessage m = new NceMessage(4);
-		m.setOpCode('1');
-		m.setElement(1, '2');
-		m.setElement(2, 'A');
-		m.setElement(3, 'D');
-		Assert.assertEquals("string compare ", "12AD", m.toString());
+		m.setOpCode(0x81);
+		m.setElement(1, 0x02);
+		m.setElement(2, 0xA2);
+		m.setElement(3, 0x00);
+		Assert.assertEquals("string compare ", "81 02 a2 00", m.toString());
 	}
 	
+	public void testGetEnable() {
+		NceMessage m = NceMessage.getEnableMain();
+		Assert.assertEquals("length", 1, m.getNumDataElements());
+		Assert.assertEquals("opCode", 'E', m.getOpCode());
+	}
+
+	public void testRecognizeEnable() {
+		NceMessage m = NceMessage.getEnableMain();
+		Assert.assertEquals("isEnableMain", true, m.isEnableMain());
+		Assert.assertEquals("isKillMain", false, m.isKillMain());
+	}
 	// from here down is testing infrastructure
 	
 	public NceMessageTest(String s) {
