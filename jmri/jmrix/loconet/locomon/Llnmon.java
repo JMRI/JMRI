@@ -34,7 +34,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * used with permission.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2003
- * @version			$Revision: 1.24 $
+ * @version			$Revision: 1.25 $
  */
 public class Llnmon {
 
@@ -953,7 +953,7 @@ public class Llnmon {
                             +(clk_rate != 0 ? "Running" : "Frozen")
                             +", rate is "+clk_rate
                             +":1. Day "+days+", "+hours+":"+minutes
-                            +". Last set by ID 0x"+Integer.toHexString(id2)+Integer.toHexString(id1)
+                            +". Last set by ID "+idString(id1, id2)
                             +"\n\tMaster controller "
                             +((track_stat & LnConstants.GTRK_MLOK1)!=0 ? "implements LocoNet 1.1" : "is a DT-200")
                             +",\n\tTrack Status is "
@@ -970,7 +970,7 @@ public class Llnmon {
                             +(clk_rate != 0 ? "Frozen" : "Running")
                             +", rate is "+clk_rate
                             +":1. Day "+days+", "+hours+":"+minutes
-                            +". Last set by ID 0x"+Integer.toHexString(id2)+Integer.toHexString(id1)+"\n";
+                            +". Last set by ID "+idString(id1, id2)+"\n";
                     }
                     // end fast clock block
 
@@ -1237,7 +1237,7 @@ public class Llnmon {
                             +",\n\tTrack Status is "+((trk  & LnConstants.GTRK_IDLE) != 0  ? "On" : "Off")
                             +",\n\tProgramming Track is "+((trk  & LnConstants.GTRK_PROG_BUSY) != 0 ? "Busy" : "Available")
                             +"\n\tSS2=0x"+Integer.toHexString(ss2)
-                            +", ID=0x"+Integer.toHexString( (id2&0x7F)*128+(id1&0x7F))+"\n";
+                            +", ID="+idString(id1, id2)+"\n";
                     } else {
                         logString = mode
                             +" slot "+slot
@@ -1257,7 +1257,7 @@ public class Llnmon {
                             +" Sound3/F7="+((snd  & LnConstants.SND_F7) != 0 ? "On, "  : "Off,")
                             +" Sound4/F8="+((snd  & LnConstants.SND_F8) != 0 ? "On"    : "Off")
                             +"\n\tSS2=0x"+Integer.toHexString(ss2)
-                            +", ID =0x"+Integer.toHexString(id2)+Integer.toHexString(id1)+"\n";
+                            +", ID ="+idString(id1, id2)+"\n";
                     }
                     // end normal slot read/write case
                 }
@@ -1504,6 +1504,11 @@ public class Llnmon {
             forceHex = true;
             return "OPC_MULTI_SENSE power message PM4 "
                     +(l.getElement(2)+1)+" unknown CMD=0x"+Integer.toHexString(pCMD)+" ";
+    }
+
+    String idString(int id1, int id2) {
+        return "0x"+Integer.toHexString( (id2&0x7F)*128+(id1&0x7F))
+            +" ("+((id2/4&0)&0x3f)+")";
     }
 
 }  // end of class
