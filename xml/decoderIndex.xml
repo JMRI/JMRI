@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <!--Written by JMRI version 1.5.3 on Mon Aug 23 20:27:08 PDT 2004 $Id: decoderIndex.xml,v 1.67 2004-08-24 03:28:30 jacobsen Exp $-->
+  <!--Written by JMRI version 1.5.3 on Mon Aug 23 22:18:04 PDT 2004 $Id: decoderIndex.xml,v 1.68 2004-08-24 05:19:38 jacobsen Exp $-->
   <decoderIndex version="83">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -250,7 +250,7 @@
           <output name="6" label="Pad" connection="solder" />
           <size length="2.158" width="0.58" height="0.135" units="inches" />
         </model>
-        <model model="DZ123" numOuts="2" numFns="8" lowVersionID="64" highVersionID="36" maxMotorCurrent="1A (peak=2A)" formFactor="Z" connector="unspecified" nmraWarrant="no">
+        <model model="DZ123" numOuts="2" numFns="8" lowVersionID="36" highVersionID="64" maxMotorCurrent="1A (peak=2A)" formFactor="Z" connector="unspecified" nmraWarrant="no">
           <size length="0.57" width="0.38" height="0.13" units="inches" />
         </model>
         <model model="DZ143" numOuts="4" numFns="8" lowVersionID="64" highVersionID="65" maxMotorCurrent="1.5A (peak=2A)" formFactor="Z" connector="unspecified" nmraWarrant="no">
@@ -492,6 +492,11 @@
           <output name="2" label="B - Yellow" connection="unspecified" />
           <output name="3" label="C - Green" connection="unspecified" />
           <output name="4" label="D - Violet" connection="unspecified" />
+        </model>
+      </family>
+      <family name="Lenz Value Line decoders" mfg="Lenz" lowVersionID="10" highVersionID="10" type="locomotive" file="Lenz_LE1000.xml">
+        <model model="LE1000A" numOuts="2" numFns="0" lowVersionID="10" highVersionID="10" nmraWarrant="yes" nmraWarrantEnd="01/2009" connector="unspecified">
+          <size length="0.9" width=".63" height=".13" units="inches" />
         </model>
       </family>
       <family name="Function Decoder" mfg="Lenz" lowVersionID="10" type="locomotive" file="Lenz_LF100XF.xml">
