@@ -189,21 +189,25 @@ your system, you might not need dedicated copies of these:
 			large log files during normal operation. For more
 			information, see the 
 			<A HREF="http://jakarta.apache.org/log4j/docs/index.html">log4j home page</A>.
+	<LI>jdom-jdk11.jar - Lightweight toolkit for reading and writing XML files.
+			In release 0.7, this is only needed by the symbolic programmer
+			tool, but its so useful that other tools will be using it soon.
+			For more information, see the
+			<A HREF="http://www.jdom.org">JDOM home page</A>.
+	<LI>xerces.jar - An XML parser used for our configuration files.
+			This is a commonly used utility. If you have other Java
+			programs installed, you might already have this.
 	<LI>collections.jar - Part of recent versions of Java, this file
 			provides a powerful set of collection classes.  You might
 			not need this file if you have Java 1.3 or later installed.
+			Its small, so we include it in our distributions.
 	<LI>swingall.jar - Part of recent versions of Java, this file
 			provides the Swing graphical user interface.  You might 
 			have this (or the equivalent swingnew.jar) file
 			already installed as part of Java, in which case you don't
-			need this one. Unfortunately, swingall.jar is a 4MB file,
-			so its a pain to download as part of the simple install process.
-	<LI>jdom-jdk11.jar - Lightweight toolkit for reading and writing XML files.
-			In release 0.7, this is only needed by the symbolic programmer
-			tool, but its so useful that other tools will be using it soon.
-	<LI>xerces.jar - An XML parser used for our configuration files.
-			This is a commonly used utility. If you have other Java
-			programs installed, you might already have this.
+			need this one. Macintosh systems before MacOS X don't generally
+			have this, so we include it in the Macintosh (.hqx) distribution.
+			Unfortunately, swingall.jar is a 4MB file.
 	<LI>javax.comm.MRJ.jar - A Macintosh-specific implementation of 
 			the Java communications classes. Only Macintosh computers
 			use this file. Other distributions don't have it.
@@ -216,6 +220,15 @@ next.  To pick up the most recent decoder configurations, etc, you
 need to update this directory. Be careful to preserve any files you've
 modified (and that you've not contributed, so that they appear in the
 distribution).
+
+<P>To summarize, to update to a new JMRI release, you need to:
+<UL>
+<LI>Get a new jmri.jar file and drop it into the distribution directory.
+This updates the program itself.
+<LI>Update the contents of the xml folder/directory.  This updates data files
+used by the program.
+</UL>
+<P>For future releases, we plan to provide "updaters" with just the changed files.
 
 <h3><A NAME="MacDetails"></A>Macintosh details</h3>
 
@@ -231,7 +244,8 @@ inside a set of folders:
           MRJClasses
 </PRE>
 A single swingall.jar file in that folder, for example, will serve 
-all applications that need it.
+all applications that need it. You can then remove it from the lib
+folder of the JMRI distribution.
 
 <h4>MacOS X</h4>
 There is currently no implementation of the Java communications toolbox for
