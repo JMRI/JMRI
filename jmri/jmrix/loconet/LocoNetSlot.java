@@ -17,7 +17,7 @@ import java.util.Vector;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.10 $
+ * @version         $Revision: 1.11 $
  */
 public class LocoNetSlot {
 
@@ -136,8 +136,8 @@ public class LocoNetSlot {
 
     /**
      * Update the status bits in STAT1 (D5, D4)
-     * @param status
-     * @return Formatted message
+     * @param status New values for STAT1 (D5, D4)
+     * @return Formatted LocoNet message to change value.
      */
     public LocoNetMessage writeStatus(int status) {
         LocoNetMessage l = new LocoNetMessage(4);
@@ -222,8 +222,8 @@ public class LocoNetSlot {
     }
 
     /**
-     * For fast-clock slot, return "days" value.
-     * @return
+     * Only valid for fast-clock slot.
+     * @return "Days" value currently in fast-clock slot.
      */
     public int getFcDays() {
         if (getSlot()!=LnConstants.FC_SLOT) log.error("getFcDays invalid for slot "+getSlot());
@@ -238,8 +238,8 @@ public class LocoNetSlot {
     }
 
     /**
-     * For fast-clock slot, return "hours" value.
-     * @return
+     * Only valid for fast-clock slot.
+     * @return "Hours" value currently stored in fast clock slot.
      */
     public int getFcHours() {
         if (getSlot()!=LnConstants.FC_SLOT) log.error("getFcHours invalid for slot "+getSlot());
@@ -255,8 +255,8 @@ public class LocoNetSlot {
     }
 
     /**
-     * For fast-clock slot, return "minutes" value.
-     * @return
+     * Only valid for fast-clock slot.
+     * @return Return minutes value currently stored in the fast clock slot.
      */
     public int getFcMinutes() {
         if (getSlot()!=LnConstants.FC_SLOT) log.error("getFcMinutes invalid for slot "+getSlot());
@@ -272,8 +272,8 @@ public class LocoNetSlot {
     }
 
     /**
-     * For fast-clock slot, return "rate" value.
-     * @return
+     * Only valid for fast-clock slot.
+     * @return Rate stored in fast clock slot.
      */
     public int getFcRate() {
         if (getSlot()!=LnConstants.FC_SLOT) log.error("getFcMinutes invalid for slot "+getSlot());
