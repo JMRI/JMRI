@@ -10,7 +10,7 @@ import jmri.jmrix.AbstractThrottle;
  * with values from 0 to 127.
  * <P>
  * @author  Glen Oberhauser, Bob Jacobsen  Copyright (C) 2003
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     private LocoNetSlot slot;
@@ -22,7 +22,6 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      */
     public LocoNetThrottle(LocoNetSlot slot) {
         super();
-
         this.slot = slot;
         network = LnTrafficController.instance();
         LocoNetMessage msg = new LocoNetMessage(4);
