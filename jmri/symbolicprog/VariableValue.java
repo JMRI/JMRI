@@ -13,44 +13,67 @@ import jmri.Programmer;
 import jmri.InstanceManager;
 import jmri.ProgListener;
 
-abstract class VariableValue implements java.beans.PropertyChangeListener {
+import java.util.Vector;
 
-	// to complete this class, fill in the routines to handle "Value" parameter
-	// and to read/write/hear parameter changes.  But what should the type be?
-	public int getValue()  { return _value; }
-	public void setValue(int value) { 
-		if (_value != value) prop.firePropertyChange("Value", new Integer(_value), new Integer(value));
-		_value = value; 
-		setState(EDITTED); 
-	}
-	private int _value = 0;
+public abstract class VariableValue implements java.beans.PropertyChangeListener {
 
+	// The actual stored value is internal, not showing in the interface.
+	// Instead, you can get a (Object) representation for display in 
+	// a table, etc. Modification of the state of that object then
+	// gets reflected back, causing the underlying CV objects to change.
+	abstract public Object getValue();
+
+	// methods to command a read from / write to the decoder of the underlying CVs
 	abstract public void read();
 	
 	abstract public void write();
 
 	// handle incoming parameter notification
-	public void propertyChange(java.beans.PropertyChangeEvent e) {
-	}
+	abstract public void propertyChange(java.beans.PropertyChangeEvent e);
+
 
 
 	// methods implemented here:
-	public VariableValue(String name) { _name = name; }
+	public VariableValue(String name, String comment, boolean readOnly,
+							int cvNum, String mask, Vector v) { 
+		_name = name;
+		_comment = comment;
+		_readOnly = readOnly;
+		_cvNum = cvNum;
+		_mask = mask;
+		_cvVector = v;
+	}
+
+	// common information - none of these are bound
 	public String name() { return _name; }
 	private String _name;
+	private Vector _cvVector;   // Vector of 512 CV objects used to look up CVs
 		
-	public int getState()  { return _state; }
-	private void setState(int state) {
-		if (_state != state) prop.firePropertyChange("State", new Integer(_state), new Integer(state));
-		_state = state;
-	}
-	private int _state = 0;
+	public String getComment() { return _comment; }
+	private String _comment;
 	
+	public boolean getReadOnly() { return _readOnly; }
+	private boolean _readOnly;
+	
+	public int getCvNum() { return _cvNum; }
+	private int _cvNum;
+	
+	public String getMask() { return _mask; }
+	private String _mask;
+
 	// states
 	public static final int UNKNOWN = 0;
 	public static final int EDITTED = 4;
 	public static final int READ    = 16;
 	public static final int STORED  = 64;
+
+	public int getState()  { return _state; }
+	protected void setState(int state) {
+		if (_state != state) prop.firePropertyChange("State", new Integer(_state), new Integer(state));
+		_state = state;
+	}
+	private int _state = 0;
+	
 	
 	// busy during read, write operations
 	public boolean isBusy() { return _busy; }
