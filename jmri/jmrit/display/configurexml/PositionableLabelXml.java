@@ -14,7 +14,7 @@ import javax.swing.*;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 
@@ -28,14 +28,21 @@ public class PositionableLabelXml implements XmlAdapter {
      * @return Element containing the complete info
      */
     public Element store(Object o) {
+        PositionableLabel p = (PositionableLabel)o;
+
+        if (!p.isActive()) return null;  // if flagged as inactive, don't store
+
         Element element = new Element("positionablelabel");
         element.addAttribute("class", "jmri.jmrit.display.configurexml.PositionableLabelXml");
 
         // include contents
-        PositionableLabel p = (PositionableLabel)o;
         element.addAttribute("x", String.valueOf(p.getX()));
         element.addAttribute("y", String.valueOf(p.getY()));
-        if (p.isText() && p.getText()!=null) element.addAttribute("text", p.getText());
+        if (p.isText() && p.getText()!=null) {
+            element.addAttribute("text", p.getText());
+            element.addAttribute("size", ""+p.getFont().getSize());
+            element.addAttribute("style", ""+p.getFont().getStyle());
+        }
         if (p.isIcon() && p.getIcon()!=null) {
             NamedIcon icon = (NamedIcon)p.getIcon();
             element.addAttribute("icon", icon.getName());
@@ -61,6 +68,19 @@ public class PositionableLabelXml implements XmlAdapter {
         PositionableLabel l = null;
         if (element.getAttribute("text")!=null) {
             l = new PositionableLabel(element.getAttribute("text").getValue());
+            Attribute a = element.getAttribute("size");
+            try {
+                if (a!=null) l.setFontSize(a.getFloatValue());
+            } catch (DataConversionException ex) {
+                log.warn("invalid size attribute value");
+            }
+            a = element.getAttribute("style");
+            try {
+                if (a!=null) l.setFontStyle(a.getIntValue(), 0);  // label is created plain, so don't need to drop
+            } catch (DataConversionException ex) {
+                log.warn("invalid style attribute value");
+            }
+
         } else if (element.getAttribute("icon")!=null) {
             String name = element.getAttribute("icon").getValue();
             NamedIcon icon = p.catalog.getIconByName(name);
