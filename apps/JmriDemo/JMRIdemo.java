@@ -18,7 +18,7 @@ import javax.swing.border.*;
  * the file is searched for in the usual way, first in prefs/ and then in
  * xml/
  * @author			Bob Jacobsen
- * @version         $Revision: 1.19 $
+ * @version         $Revision: 1.20 $
  */
 public class JMRIdemo extends JPanel {
 	public JMRIdemo() {
@@ -117,8 +117,8 @@ public class JMRIdemo extends JPanel {
         menuBar.add(devMenu);
           	devMenu.add(new jmri.jmrix.loconet.locormi.LnMessageClientAction( "Start LocoNet Client" ));
           	devMenu.add(new jmri.jmrit.display.PanelEditorAction( "PanelEditor" ));
-	        devMenu.add(new jmri.configurexml.LoadLayoutAction("Load layout config"));
-	        devMenu.add(new jmri.configurexml.StoreLayoutAction("Store layout config"));
+	        devMenu.add(new jmri.configurexml.LoadXmlConfigAction("Load config"));
+	        devMenu.add(new jmri.configurexml.StoreXmlConfigAction("Store config"));
 	        devMenu.add(new jmri.jmrit.MemoryFrameAction("Memory usage monitor"));
 	        // devMenu.add(new jmri.jmrit.symbolicprog.symbolicframe.SymbolicProgAction("Symbolic Programmer"));
 	        devMenu.add(new jmri.jmrit.XmlFileCheckAction("Check XML File", this));
