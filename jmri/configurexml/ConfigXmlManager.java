@@ -16,7 +16,7 @@ import org.jdom.output.XMLOutputter;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -272,6 +272,9 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 } catch (Exception e) {
                     log.error("Exception while loading "+item.getName()+":"+e);
                     e.printStackTrace();
+                } catch (Throwable et) {
+                    log.error("Thrown while loading "+item.getName()+":"+et);
+                    et.printStackTrace();
                 }
             }
 
