@@ -14,19 +14,36 @@ package jmri.util;
  * back to an explicit implementation when running on Java 1.1
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class StringUtil {
 
+static char[] hexChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' } ;
+
     /**
      * Convert an int to a exactly two hexadecimal characters
-     * @param n
+     * @param val
      * @return String exactly two characters long
      */
-    static public String twoHexFromInt(int n) {
-        if ((n&0xFF) < 16) return "0"+Integer.toHexString(n&0xFF);
-        else return Integer.toHexString(n&0xFF);
+    static public String twoHexFromInt(int val) {
+        StringBuffer sb = new StringBuffer() ;
+	    sb.append( hexChars[ (val&0xF0) >> 4 ] );
+		sb.append( hexChars[ val & 0x0F ] ) ;
+		return sb.toString() ;
+    }
+
+    /**
+     * Quickly append an int to a String as exactly two hexadecimal characters
+     * @param val Value to append in hex
+     * @param inString String to be extended
+     * @return String exactly two characters long
+     */
+    static public String appendTwoHexFromInt(int val, String inString) {
+        StringBuffer sb = new StringBuffer(inString) ;
+	    sb.append( hexChars[ (val&0xF0) >> 4 ] );
+		sb.append( hexChars[ val & 0x0F ] ) ;
+		return sb.toString() ;
     }
 
     /**
