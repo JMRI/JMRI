@@ -51,11 +51,11 @@
         <model model="DH120" numOuts="2" numFns="2" />
       </family>
       <family name="Digitrax 150" mfg="Digitrax" lowVersionID="107" type="locomotive" file="Digitrax_150.xml">
+        <model model="DN140" numOuts="4" numFns="2" />
         <model model="DH150" numOuts="5" numFns="3" />
       </family>
       <family name="Digitrax 1x1" mfg="Digitrax" lowVersionID="33" highVersionID="45" type="locomotive" file="Digitrax_1x1.xml">
         <model model="DH121" numOuts="2" numFns="2" />
-        <model model="DN140" numOuts="4" numFns="2" />
       </family>
       <family name="Digitrax 1x2" mfg="Digitrax" lowVersionID="240" highVersionID="242" type="locomotive" file="Digitrax_1x2.xml">
         <model model="DH142" numOuts="4" numFns="2">
