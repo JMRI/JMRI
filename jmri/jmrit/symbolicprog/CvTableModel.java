@@ -1,10 +1,4 @@
-/**
- * CvTableModel.java
- *
- * Description:		Table data model for display of CvValues in symbolic programmer
- * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.2 $
- */
+// CvTableModel.java
 
 package jmri.jmrit.symbolicprog;
 
@@ -15,6 +9,11 @@ import javax.swing.*;
 import com.sun.java.util.collections.List;
 import org.jdom.Element;
 
+/**
+ * Table data model for display of CvValues in symbolic programmer
+ * @author			Bob Jacobsen   Copyright (C) 2001, 2002
+ * @version			$Revision: 1.3 $
+ */
 public class CvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
 	private int _numRows = 0;                // must be zero until Vectors are initialized
@@ -33,6 +32,8 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 	private static final int HIGHESTCOLUMN = WRITECOLUMN+1;
 
 	private JLabel _status = null;
+
+        public JLabel getStatusLabel() { return _status;}
 
 	public CvTableModel(JLabel status) {
 		super();
