@@ -21,7 +21,7 @@ import org.jdom.Attribute;
  * stored in local variables.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecoderProConfigFrame.java,v 1.15 2002-04-07 02:55:28 jacobsen Exp $
+ * @version			$Revision: 1.16 $
  */
 public class DecoderProConfigFrame extends apps.AbstractConfigFrame {
 

@@ -20,7 +20,7 @@ import org.jdom.Attribute;
  * stored in local variables.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: JmriDemoConfigFrame.java,v 1.1 2002-02-28 17:24:20 jacobsen Exp $
+ * @version			$Revision: 1.2 $
  */
 public class JmriDemoConfigFrame extends apps.AbstractConfigFrame {
 

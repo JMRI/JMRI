@@ -24,7 +24,7 @@ import org.jdom.Attribute;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 abstract public class AbstractConfigFrame extends JFrame {
 
@@ -58,6 +58,7 @@ abstract public class AbstractConfigFrame extends JFrame {
      * <LI>"NCE"
      * <LI>"LocoNet LocoBuffer"
      * <LI>"LocoNet MS100"
+     * <LI>"LocoNet Server"
      * <LI>"CMRI serial"
      * <LI>"EasyDCC"
      * </UL>
@@ -69,6 +70,7 @@ abstract public class AbstractConfigFrame extends JFrame {
      */
     public String[] availableProtocols() {
         return  new String[] {"(None selected)","NCE","LocoNet LocoBuffer","LocoNet MS100",
+                            "LocoNet Server",
                             "CMRI serial", "EasyDCC"};
     }
 
@@ -194,6 +196,7 @@ abstract public class AbstractConfigFrame extends JFrame {
 	 */
 	void protocolSelected() {
 		portBox.setEnabled(true);
+        portBox.setEditable(false);
 		portBox.setToolTipText("Select a communications port");
 
 		// create the eventual serial driver object, and ask it for available comm ports
@@ -262,6 +265,18 @@ abstract public class AbstractConfigFrame extends JFrame {
 				opt1Box.setToolTipText("There are no options for this protocol");
 				opt1Box.setEnabled(false);
 			}
+
+		} else if (protocolName.equals("LocoNet Server")) {
+			// This is somewhat special, as the option has to
+            // allow editting in a host name
+            portBox.setEditable(true);
+	    	portBox.setToolTipText("Enter a server hostname");
+
+            baudBox.setToolTipText("Don't need to specify baud rate");
+            baudBox.setEnabled(false);
+
+    		opt1Box.setToolTipText("There are no options for this protocol");
+    		opt1Box.setEnabled(false);
 
 		} else if (protocolName.equals("NCE")) {
 			//
@@ -481,6 +496,17 @@ abstract public class AbstractConfigFrame extends JFrame {
 					= new jmri.jmrix.loconet.ms100.MS100Adapter();
 			a.openPort(portName, "JMRI/DecoderPro");
 			a.configure();
+
+		} else if (protocolName.equals("LocoNet Server")) {
+			// slightly different, as not based on a serial port...
+            // create the LnMessageClient
+            jmri.jmrix.loconet.locormi.LnMessageClient client = new jmri.jmrix.loconet.locormi.LnMessageClient();
+
+            // start the connection
+            client.configureRemoteConnection(portName, 500);
+
+            // configure the other instance objects
+            client.configureLocalServices();
 
 		} else if (protocolName.equals("NCE")) {
 			//

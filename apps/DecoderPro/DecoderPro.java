@@ -12,7 +12,7 @@ import jmri.util.oreilly.BasicWindowMonitor;
  * DecoderPro application.
  *
  * @author			Bob Jacobsen
- * @version			$Id: DecoderPro.java,v 1.12 2002-04-07 02:55:28 jacobsen Exp $
+ * @version			$Revision: 1.13 $
  */
 public class DecoderPro extends JPanel {
 	public DecoderPro() {
