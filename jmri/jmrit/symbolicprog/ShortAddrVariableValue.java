@@ -14,7 +14,7 @@ import javax.swing.*;
  * stored in two arrays for simplicity.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  *
  */
 public class ShortAddrVariableValue extends DecVariableValue {
@@ -26,10 +26,9 @@ public class ShortAddrVariableValue extends DecVariableValue {
         super(name, comment, readOnly, cvNum, mask, 1, 127, v, status, stdname);
 
         // add default overwrites as per NMRA spec
-        cvNumbers[firstFreeSpace] = 19;         // consisting
-        newValues[firstFreeSpace++] = 0;
-        cvNumbers[firstFreeSpace] = 29;         // short address
-        newValues[firstFreeSpace] = -1;
+        firstFreeSpace = 0;
+        setModifiedCV(19);         // consisting
+        setModifiedCV(29);         // control bits
     }
 
     /**
@@ -42,29 +41,19 @@ public class ShortAddrVariableValue extends DecVariableValue {
             return;
         }
         cvNumbers[firstFreeSpace] = cvNum;
-        newValues[firstFreeSpace] = -1;
+        newValues[firstFreeSpace] = -10;
         firstFreeSpace++;
     }
 
-    /**
-     * Register a CV to be modified if the value is
-     * different.
-     */
-    public void setModifiedCV(int cvNum, int newValue) {
-        if (firstFreeSpace>=maxCVs) {
-            log.error("too many CVs registered for changes!");
-            return;
-        }
-        cvNumbers[firstFreeSpace] = cvNum;
-        newValues[firstFreeSpace] = newValue;
-        firstFreeSpace++;
-    }
     /**
      * Change CV values due to change in short address
      */
     private void updateCvForAddrChange() {
         for (int i=0; i<firstFreeSpace; i++) {
             CvValue cv = ((CvValue)_cvVector.elementAt(cvNumbers[i]));
+            if (cvNumbers[i]!=cv.number())
+                log.error("CV numbers don't match: "
+                            +cvNumbers[i]+" "+cv.number());
             if (cv!=null && cv.getValue()!=newValues[i]
                 && cv.getState()!=CvValue.EDITED)
                 cv.setState(CvValue.EDITED);
