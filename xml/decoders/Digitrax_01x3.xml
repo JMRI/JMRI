@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_01x3.xml,v 1.4 2003-01-05 13:40:14 jacobsen Exp $ -->
+<!-- $Id: Digitrax_01x3.xml,v 1.5 2003-03-18 13:55:20 jacobsen Exp $ -->
 <decoder-config>
-		<version author="jake@physics.berkeley.edu" 
-					version="5" lastUpdated="20030102"/>
+		<version author="Simon.Ginsburg@freesurf.ch" 
+					version="5" lastUpdated="20030118"/>
 
 		<!-- Created from version 5 of the 1x2 file -->
 		<!-- V2: fix default values for CV56, 57 BEMF -->
 		<!-- V3: change to new name -->
 		<!-- V4: change to yet another name, add decoders -->
-		<!-- V5: (Simon Ginsburg) add consist control for functions -->
+		<!-- V5: advanced consist options and parameters added -->
 		
 <decoder>
 	<family name="Series 3 with FX3, silent, readback" 
@@ -57,19 +57,32 @@
 			<output name="5" label="Pad"/> </model>
 		<model model="DN163" numOuts="4" numFns="12">
 			<output name="4" label="Violet"/> 
-			<output name="5" label="Pad"/> </model>
+			<output name="5" label="Pad"/>
+			<output name="6" label="Pad"/> </model>
 		<model model="DN163K0A" numOuts="4" numFns="12">
 			<output name="4" label="Violet"/> 
-			<output name="5" label="Pad"/> </model>
+			<output name="5" label="Pad"/>
+			<output name="6" label="Pad"/> </model>
+		<model model="DN163K1A" numOuts="4" numFns="12">
+			<output name="4" label="Violet"/> 
+			<output name="5" label="Pad"/>
+			<output name="6" label="Pad"/> </model>
+		<model model="DN163K2" numOuts="4" numFns="12">
+			<output name="4" label="Violet"/> 
+			<output name="5" label="Pad"/>
+			<output name="6" label="Pad"/> </model>
 		<model model="DN163M0" numOuts="4" numFns="12">
 			<output name="4" label="Violet"/> 
-			<output name="5" label="Pad"/> </model>
+			<output name="5" label="Pad"/>
+			<output name="6" label="Pad"/> </model>
 		<model model="DN163A0" numOuts="4" numFns="12">
 			<output name="4" label="Violet"/> 
-			<output name="5" label="Pad"/> </model>
+			<output name="5" label="Pad"/>
+			<output name="6" label="Pad"/> </model>
 		<model model="DN163A1" numOuts="4" numFns="12">
 			<output name="4" label="Violet"/> 
-			<output name="5" label="Pad"/> </model>
+			<output name="5" label="Pad"/>
+			<output name="6" label="Pad"/> </model>
 		<model model="DZ143" numOuts="4" numFns="12">
 			<output name="4" label="Violet"/> 
 			<output name="5" label="Pad"/> </model>
@@ -111,8 +124,14 @@
 		<variable label="Long Address" CV="17" item="Extended Address">
 			<longAddressVal/>
 			</variable>
-		<variable label="Advanced Consist address" CV="19" item="Consist Address">
-			<decVal/>
+		<variable label="Advanced Consist address" CV="19" item="Consist Address" mask="XVVVVVVV" default="0">
+			<decVal max="127"/>
+			</variable>
+		<variable label="Advanced Consist direction" CV="19" item="Consist Direction" mask="VXXXXXXX" default="0">
+			<enumVal>
+				<enumChoice choice="forward"/>
+				<enumChoice choice="reverse"/>
+				</enumVal>
 			</variable>
 		<variable label="Advanced Consist Function 1 Override" CV="21" mask="XXXXXXXV" item="Consist Address Active For F1" default="0">
 			<enumVal>
@@ -632,7 +651,7 @@
 			</variable>
 			
 		
-		<variable label="Switching speed" CV="54" mask="XXXXXXXV" >
+		<variable label="Switching speed enabled by F6" CV="54" mask="XXXXXXXV" >
 			<enumVal>
 				<enumChoice choice="Disabled"/>
 				<enumChoice choice="Enabled"/>
@@ -917,7 +936,7 @@
 		<display item="Split field motor" />		
 		<display item="Vstart/Vmid/Vfull in 128 step mode" />
 		<display item="Short-circuit protection" />
-		<display item="Switching speed" />
+		<display item="Switching speed enabled by F6" />
 		<display item="Torque compensation" />
 	</column>
 </pane>

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_1x2.xml,v 1.20 2002-10-17 12:38:05 jacobsen Exp $ -->
+<!-- $Id: Digitrax_1x2.xml,v 1.21 2003-03-18 13:55:21 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
 					version="7" lastUpdated="20021016"/>
@@ -115,9 +115,35 @@
 		<variable label="Long Address" CV="17" item="Extended Address">
 			<longAddressVal/>
 			</variable>
-		<variable label="Advanced Consist address" CV="19" item="Consist Address">
-			<decVal/>
+		<variable label="Advanced Consist address" CV="19" item="Consist Address" mask="XVVVVVVV" default="0">
+			<decVal max="127"/>
 			</variable>
+		<variable label="Advanced Consist direction" CV="19" item="Consist Direction" mask="VXXXXXXX" default="0">
+			<enumVal>
+				<enumChoice choice="forward"/>
+				<enumChoice choice="reverse"/>
+				</enumVal>
+			</variable>
+<!--
+		<variable label="Advanced Consist Function 1 Override" CV="21" mask="XXXXXXXV" item="Consist Address Active For F1" default="0">
+			<enumVal>
+				<enumChoice choice="No"/>
+				<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+		<variable label="Advanced Consist Function 2 Override" CV="21" mask="XXXXXXVX" item="Consist Address Active For F2" default="0">
+			<enumVal>
+				<enumChoice choice="No"/>
+				<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+		<variable label="Advanced Consist Function 0 Override" CV="22" mask="XXXXXXXV" item="Consist Address Active For F0" default="0">
+			<enumVal>
+				<enumChoice choice="No"/>
+				<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+-->
 		<variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
 			<enumVal>
 				<enumChoice choice="forward"/>
