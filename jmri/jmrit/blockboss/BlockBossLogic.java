@@ -13,7 +13,7 @@ import java.util.Hashtable;
  * some collection services.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class BlockBossLogic extends Siglet {
@@ -35,26 +35,48 @@ public class BlockBossLogic extends Siglet {
 
     public void setTurnout(String name, int state) {
         watchTurnout = InstanceManager.turnoutManagerInstance().getTurnout(name);
+        watchTurnoutState = state;
+    }
+
+    public void setSignal(String name, boolean useFlash) {
+        protectSignal = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
+        protectWithFlashing = useFlash;
     }
 
     String name;
     SignalHead driveSignal = null;
     Sensor watchSensor = null;
     Turnout watchTurnout = null;
+    int watchTurnoutState = -1;
+    SignalHead protectSignal = null;
+    boolean protectWithFlashing = false;
 
     /**
      * Define the siglet's input and output.
      */
     public void defineIO() {
-        if (watchTurnout!=null && watchSensor != null) {
-            inputs = new NamedBean[]{watchSensor, watchTurnout};
-        } else if (watchTurnout==null && watchSensor != null) {
-            inputs = new NamedBean[]{watchSensor};
-        } else if (watchTurnout!=null && watchSensor == null) {
-            inputs = new NamedBean[]{watchTurnout};
-        } else {
-            log.error("Can't leave sensor and turnout undefined");
+        NamedBean[] tempArray = new NamedBean[10];
+        int n = 0;
+
+        if (watchTurnout!=null ) {
+            tempArray[n]= watchTurnout;
+            n++;
         }
+        if (watchSensor != null) {
+            tempArray[n]= watchSensor;
+            n++;
+        }
+
+        if (protectSignal != null) {
+            tempArray[n]= protectSignal;
+            n++;
+        }
+
+        // copy temp to definitive inputs
+        inputs = new NamedBean[n];
+        for (int i = 0; i< inputs.length; i++)
+            inputs[i] = tempArray[i];
+
         outputs = new NamedBean[]{driveSignal};
     }
 
@@ -63,15 +85,28 @@ public class BlockBossLogic extends Siglet {
      * and apply it.
      */
     public void setOutput() {
-        System.out.println("got it "+watchSensor.getKnownState());
         int appearance = SignalHead.GREEN;
+        int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
+
+        // check for yellow, flashing yellow overriding green
+        if (protectWithFlashing && protectSignal.getAppearance()==SignalHead.FLASHYELLOW)
+            appearance = SignalHead.YELLOW;
+        if (protectSignal.getAppearance()==SignalHead.RED)
+            if (protectWithFlashing)
+                appearance = SignalHead.FLASHYELLOW;
+            else
+                appearance = SignalHead.YELLOW;
+
+        // check for red overriding yellow or green
         if (watchSensor!=null && watchSensor.getKnownState() != Sensor.INACTIVE)
             appearance = SignalHead.RED;
-        if (watchSensor!=null && watchSensor.getKnownState() != Sensor.INACTIVE)
+        if (watchTurnout!=null && watchTurnout.getKnownState() == watchTurnoutState)
             appearance = SignalHead.RED;
 
+        // show result if changed
         System.out.println("Appear "+appearance);
-        ((SignalHead)outputs[0]).setAppearance(appearance);
+        if (appearance != oldAppearance)
+            ((SignalHead)outputs[0]).setAppearance(appearance);
     }
 
 

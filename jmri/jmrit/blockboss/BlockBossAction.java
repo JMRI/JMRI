@@ -3,6 +3,7 @@
 package jmri.jmrit.blockboss;
 
 import java.awt.event.*;
+import jmri.Turnout;
 import java.awt.*;
 import javax.swing.*;
 
@@ -11,7 +12,7 @@ import javax.swing.*;
  * "Simple Signal Logic" GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 public class BlockBossAction extends AbstractAction {
@@ -21,6 +22,11 @@ public class BlockBossAction extends AbstractAction {
 
     JTextField outSignalField;
     JTextField sensorField;
+    JTextField protectTurnoutField;
+    JRadioButton protectTurnoutThrownButton;
+    JRadioButton protectTurnoutClosedButton;
+    JTextField nextSignalField1;
+    JCheckBox flashBox;
 
     public void actionPerformed(ActionEvent e) {
 
@@ -44,16 +50,22 @@ public class BlockBossAction extends AbstractAction {
 
         line = new JPanel();
         line.add(new JLabel("Protects turnout: "));
-        line.add(new JTextField(5));
+        line.add(protectTurnoutField = new JTextField(5));
         line.add(new JLabel("when "));
-        line.add(new JRadioButton("Closed"));
-        line.add(new JRadioButton("Thrown"));
+        JPanel above = new JPanel();
+        above.setLayout(new BoxLayout(above, BoxLayout.Y_AXIS));
+        above.add(protectTurnoutClosedButton = new JRadioButton("Closed"));
+        above.add(protectTurnoutThrownButton = new JRadioButton("Thrown"));
+        line.add(above);
+        ButtonGroup g = new ButtonGroup();
+        g.add(protectTurnoutClosedButton);
+        g.add(protectTurnoutThrownButton);
         f.getContentPane().add(line);
 
         line = new JPanel();
         line.add(new JLabel("Protects signal: "));
-        line.add(new JTextField(5));
-        line.add(new JCheckBox("with flashing yellow"));
+        line.add(nextSignalField1 = new JTextField(5));
+        line.add(flashBox = new JCheckBox("with flashing yellow"));
         f.getContentPane().add(line);
 
         JButton b = new JButton("OK");
@@ -72,6 +84,10 @@ public class BlockBossAction extends AbstractAction {
         BlockBossLogic b = BlockBossLogic.getStoppedObject(outSignalField.getText());
         b.setSensor(sensorField.getText());
 
+        b.setTurnout(protectTurnoutField.getText(),
+                    protectTurnoutThrownButton.isSelected() ? Turnout.THROWN : Turnout.CLOSED);
+
+        b.setSignal(nextSignalField1.getText(), flashBox.isSelected());
         b.retain();
         b.start();
     }
