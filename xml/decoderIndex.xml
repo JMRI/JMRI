@@ -108,6 +108,9 @@
         <model model="DN147" numOuts="4" numFns="3" />
         <model model="DN148" numOuts="4" numFns="3" />
       </family>
+      <family name="Basic CS" mfg="Digitrax" type="locomotive" file="Digitrax_CS.xml">
+        <model model="DZ121" numOuts="5" numFns="3" />
+      </family>
       <family name="Basic STD" mfg="Digitrax" lowVersionID="33" highVersionID="45" type="locomotive" file="Digitrax_STD.xml">
         <model model="DH121" numOuts="2" numFns="2" />
         <model model="DN140" numOuts="4" numFns="2" />
