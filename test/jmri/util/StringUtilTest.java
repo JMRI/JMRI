@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.util.StringUtil class
  * @author	Bob Jacobsen  Copyright 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class StringUtilTest extends TestCase {
 
@@ -70,6 +70,59 @@ public class StringUtilTest extends TestCase {
 		Assert.assertEquals("7th byte",0xB1,b[7]&0xFF);
 	}
 
+        private boolean compareStringArray(String[] s1, String[] s2) {
+            if (s1 == null && s2 == null) return true;
+            if (s1 == null && s2 != null) return false;
+            if (s1 != null && s2 == null) return false;
+            if (s1.length != s2.length) return false;
+
+            for (int i = 0; i<s1.length; i++) {
+                if (! s1[i].equals(s2[i]) ) return false;
+            }
+            return true;
+        }
+
+        public void testSort1() {
+            String input[] = new String[]{ "A", "B", "C" };
+            String output[] = new String[]{ "A", "B", "C" };
+            StringUtil.sort(input);
+            Assert.assertTrue(compareStringArray(input, output));
+        }
+
+        public void testSort2() {
+            String input[] = new String[]{ "A", "b", "C" };
+            String output[] = new String[]{ "A", "C", "b" };
+            StringUtil.sort(input);
+            Assert.assertTrue(compareStringArray(input, output));
+        }
+
+        public void testSort3() {
+            String input[] = new String[]{ "B", "C", "A" };
+            String output[] = new String[]{ "A", "B", "C" };
+            StringUtil.sort(input);
+            Assert.assertTrue(compareStringArray(input, output));
+        }
+
+        public void testSort4() {
+            String input[] = new String[]{ "c", "b", "a" };
+            String output[] = new String[]{ "a", "b", "c" };
+            StringUtil.sort(input);
+            Assert.assertTrue(compareStringArray(input, output));
+        }
+
+        public void testSort5() {
+            String input[] = new String[]{ "A", "c", "b" };
+            String output[] = new String[]{ "A", "b", "c" };
+            StringUtil.sort(input);
+            Assert.assertTrue(compareStringArray(input, output));
+        }
+
+        public void testSort6() {
+            String input[] = new String[]{ "A", "A", "b" };
+            String output[] = new String[]{ "A", "A", "b" };
+            StringUtil.sort(input);
+            Assert.assertTrue(compareStringArray(input, output));
+        }
 
 	// from here down is testing infrastructure
 

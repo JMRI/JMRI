@@ -37,7 +37,7 @@ public class LnTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 
     public void testArraySort() {
         String[] str = new String[]{"8567", "8456"};
-        java.util.Arrays.sort(str);
+        jmri.util.StringUtil.sort(str);
         Assert.assertEquals("first ","8456",str[0]);
     }
 

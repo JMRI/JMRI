@@ -3,7 +3,7 @@
  *
  * Description:	    tests for the jmri.jmrix.lenz.XNetTurnoutManager class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 
 package jmri.jmrix.lenz;
@@ -37,7 +37,7 @@ public class XNetTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 
     public void testArraySort() {
         String[] str = new String[]{"8567", "8456"};
-        java.util.Arrays.sort(str);
+        jmri.util.StringUtil.sort(str);
         Assert.assertEquals("first ","8456",str[0]);
     }
 

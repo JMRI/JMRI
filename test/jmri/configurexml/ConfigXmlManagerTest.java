@@ -5,6 +5,7 @@ package jmri.configurexml;
 import jmri.jmrit.XmlFile;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 
@@ -18,7 +19,7 @@ import junit.framework.TestSuite;
  * <P>
  * Uses the local preferences for test files.
  * @author Bob Jacobsen Copyright 2003
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class ConfigXmlManagerTest extends TestCase {
 
@@ -86,7 +87,7 @@ public class ConfigXmlManagerTest extends TestCase {
                             c.adapterName(""));
     }
 
-    public void testFindFile() throws FileNotFoundException {
+    public void testFindFile() throws FileNotFoundException, IOException {
         ConfigXmlManager configxmlmanager = new ConfigXmlManager(){
             void locateClassFailed(java.lang.ClassNotFoundException ex, String adapterName, Object o) {
                     innerFlag=true;

@@ -74,11 +74,15 @@ public class LayoutManagerTest extends JFrame implements LayoutEventListener
             }
         });
         mLogTextBox.setText("jTextArea1");
-        contentPane.addHierarchyBoundsListener(new java.awt.event.HierarchyBoundsAdapter() {
-            public void ancestorResized(HierarchyEvent e) {
-                contentPane_ancestorResized(e);
-            }
-        });
+
+        // The following lines are commented out to get Java 1.1.8 compilation.
+        // They cause some convenient-but-not-vital window resizing to occur
+        //    contentPane.addHierarchyBoundsListener(new java.awt.event.HierarchyBoundsAdapter() {
+        //        public void ancestorResized(HierarchyEvent e) {
+        //            contentPane_ancestorResized(e);
+        //        }
+        //    });
+
         jSplitPane1.setOrientation(JSplitPane.VERTICAL_SPLIT);
         jSplitPane1.setPreferredSize(new Dimension(395, 19));
         jMenuFile.add(jMenuFileExit);
@@ -95,11 +99,13 @@ public class LayoutManagerTest extends JFrame implements LayoutEventListener
         jSplitPane1.setDividerLocation(200 );
     }
 
-    void contentPane_ancestorResized(HierarchyEvent e)
-    {
-        Dimension d = this.getSize();
-        jSplitPane1.setSize( d.width, d.height - 30 );
-    }
+    // The following lines are commented out to get Java 1.1.8 compilation.
+    // They cause some convenient-but-not-vital window resizing to occur
+    //    void contentPane_ancestorResized(HierarchyEvent e)
+    //    {
+    //        Dimension d = this.getSize();
+    //        jSplitPane1.setSize( d.width, d.height - 30 );
+    //    }
 
     /**File | Exit action performed*/
     public void jMenuFileExit_actionPerformed(ActionEvent e)
