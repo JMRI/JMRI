@@ -151,7 +151,7 @@ public class LnTrafficController implements LocoNetInterface, Runnable {
                             break;
 
                         case 2:     /* 6 byte message */
-                            msg = new LocoNetMessage(4);
+                            msg = new LocoNetMessage(6);
                             break;
 
                         case 3:     /* N byte message */

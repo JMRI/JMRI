@@ -401,11 +401,21 @@ public String displayMessage(LocoNetMessage l) {
         case LnConstants.OPC_INPUT_REP:             /* page 9 of Loconet PE */
             int in1 = l.getElement(1);
             int in2 = l.getElement(2);
+	
+			String bdl = " (BDL16 "+in1/8+" ";
+			if ( ((in1/2) & 3) == 0 ) bdl = bdl+"A";
+			else if ( ((in1/2) & 3) == 1 ) bdl = bdl+"B";
+			else if ( ((in1/2) & 3) == 2 ) bdl = bdl+"C";
+			else bdl = bdl+"D";
+			if ( ((in1 & 1) !=0) && ((in2 & LnConstants.OPC_INPUT_REP_SW)!=0) ) bdl=bdl+"4)";
+			else if ( ((in1 & 1) !=0) && ((in2 & LnConstants.OPC_INPUT_REP_SW)==0) ) bdl=bdl+"3)";
+			else if ( ((in1 & 1) ==0) && ((in2 & LnConstants.OPC_INPUT_REP_SW)!=0) ) bdl=bdl+"2)";
+			else bdl=bdl+"1)";
 
             return "General sensor input report: "+
-                    ((in2 & LnConstants.OPC_INPUT_REP_SW)!=0 ? "Switch input" : "Aux input")+
-                    " at "+
                     SENSOR_ADR(in1,in2)+
+                    ((in2 & LnConstants.OPC_INPUT_REP_SW)!=0 ? " Sw  input" : " Aux input")+
+                     bdl+
                     " is "+
                     ((in2 & LnConstants.OPC_INPUT_REP_HI)!=0 ? "Hi" : "Lo")+" "+
                     ((in2 & LnConstants.OPC_INPUT_REP_CB)==0 ? "\n\t(Unexpected 0 value of reserved control bit)" : "")+
@@ -1049,7 +1059,7 @@ public String displayMessage(LocoNetMessage l) {
                     /* are we sending or receiving? */
                     if ((pcmd & LnConstants.PCMD_RW) != 0) {
                         /* sending a command */
-                        operation = "Programming: Write";
+                        operation = "Programming Track: Write";
                             
                         /* printout based on whether we're doing Ops mode or not */
                         if (opsMode) {
@@ -1069,7 +1079,7 @@ public String displayMessage(LocoNetMessage l) {
                         }
                     } else {
                         /* receiving a reply */
-                        operation = "Programming: Read";
+                        operation = "Programming Track: Read";
 
                         /* printout based on whether we're doing Ops mode or not */
                         if (opsMode) {
