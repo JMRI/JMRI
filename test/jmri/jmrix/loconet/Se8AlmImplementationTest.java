@@ -1,8 +1,8 @@
 
 package jmri.jmrix.loconet;
 
-import junit.framework.*;
-import jmri.*;
+import junit.framework.Assert;
+import junit.framework.TestCase;
 
 
 public class Se8AlmImplementationTest extends TestCase {

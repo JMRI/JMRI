@@ -2,29 +2,23 @@
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import java.awt.*;
-import java.io.*;
-import java.util.*;
-import javax.swing.*;
+import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.roster.RosterEntry;
+import javax.swing.JPanel;
+
+import org.jdom.DocType;
+import org.jdom.Document;
+import org.jdom.Element;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.jdom.*;
-import org.jdom.output.*;
-import org.jdom.input.*;
-
-import jmri.*;
-import jmri.progdebugger.*;
-import jmri.jmrit.symbolicprog.*;
-import jmri.jmrit.decoderdefn.*;
-import jmri.jmrit.roster.*;
 
 /**
  * Test PaneProgFrame
  *
  * @author			Bob Jacobsen
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class PaneProgFrameTest extends TestCase {
 
