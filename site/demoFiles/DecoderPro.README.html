@@ -10,9 +10,7 @@
 <body>
 
 <P>
-This is the README file for version 0.9b3 of "DecoderPro". This is a development
-version for the Macintosh. It is available for download at
-<A HREF="http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b3.hqx">DecoderPro.0.9b3.hqx</A>.
+This is the README file for version 0.9b4 of "DecoderPro". 
 
 <P>
 DecoderPro provides a simple yet powerful tool for programming
@@ -35,35 +33,49 @@ described at
 <A HREF="http://jmri.sourceforge.net/">http://jmri.sourceforge.net/</a>.
 
 <P>
+Note that there are four distributions for DecoderPro, with different contents.
+The basic Java code is the same, but because of the specific features of
+various system's support for Java, its necessary to handle the 
+distribution details in
+different ways.  More information on the details of the various packages is 
+available at 
+<a href="http://jmri.sourceforge.net/Technical/Packaging.html">http://jmri.sourceforge.net/Technical/Packaging.html</a>.
 For more installation information, please 
 see 
 <A HREF="http://jmri.sourceforge.net/InstallJmri.html">http://jmri.sourceforge.net/InstallJmri.html</a>
-
 <P>
-This version is only available for the Macintosh (Classic and MacOS X).
-Note that there will eventually be four distributions for 
-DecoderPro, with different contents. 
-The basic Java code is the same, but because of the specific features of
-various system's support for Java, its necessary to handle the details in
-different ways.  More information on the details of the various packages is 
-available at 
-<A HREF="http://jmri.sourceforge.net/Technical/Packaging.html">http://jmri.sourceforge.net/Technical/Packaging.html</A>.
+The specific download files are:
+<DL>
+<DT>Macintosh<DD>
+<A HREF="http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b4.hqx">http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b4.hqx</A>
 
+<DT>Windows<DD>
+<A HREF="http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b4.0.8.zip">http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b4.0.8.zip</A>
+
+<DT>OS/2<DD>
+<A HREF="http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b4.OS2.zip">http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b4.OS2.zip</A>
+
+<DT>Linux<DD>
+<A HREF="http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b4.tar.gz">http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b4.tar.gz</A>
+
+</dL>
 
 <h3>Macintosh MacOS 8 and 9 instructions:</h3>
 
-This demo should run with any recent release of the Macintosh Runtime for Java (MRJ).  
+The Macintosh version of DecoderPro can be downloaded from 
+<A HREF="http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b4.hqx">DecoderPro.0.9b4.hqx</A>.
+<P>
+This application should run with any recent release of the Macintosh Runtime for Java (MRJ).  
 MRJ requires Mac OS 8.1 or later.  Development is currently using MRJ 2.2.5, 
 available for download from Apple at
   <a href="http://developer.apple.com/java/download.html">http://developer.apple.com/java/download.html</a>
 <P>
 You need to have the Java Swing and Java communications libraries installed.
 An installer can be downloaded from
-  <a href="http://prdownloads.sourceforge.net/jmri/JavaLibsInstaller.hqx">http://prdownloads.sourceforge.net/jmri/JavaLibsInstaller.hqx</a>.
+  <a href="http://prdownloads.sourceforge.net/jmri/JavaLibsInstaller-1.hqx">http://prdownloads.sourceforge.net/jmri/JavaLibsInstaller-1.hqx</a>.
 Unfortunately, its a 4MB download.  You only have to do it once, however; 
 future updates of DecoderPro will continue to use these same libraries.
 Run the installer before starting DecoderPro.
-
 <P>
 Once those packages are installed, you can
 start the program by double-clicking on the "DecoderPro" application icon.  
@@ -71,9 +83,11 @@ start the program by double-clicking on the "DecoderPro" application icon.
 
 <h3>Macintosh MacOS X instructions:</h3>
 
-Under MacOS 10.1 and later, double-click the "DecoderPro" icon
-to run the application natively under MacOS X. 
-By default, it will have the nice Aqua interface.  
+The Macintosh version of DecoderPro can be downloaded from 
+<A HREF="http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b4.hqx">DecoderPro.0.9b4.hqx</A>.
+
+<P>
+MacOS X version 10.1.1 or later is required.
 
 <P>
 You will need drivers for the serial hardware you're using.  We test
@@ -91,12 +105,119 @@ with "/dev/tty" or "/dev/cu", for example "/dev/tty.KeyUSA19181.1". In that case
 select the one that starts with "tty" for best performance.
 
 <P>
-Note that MacOS X 10.1 is required for this to work. Further, MacOS 10.1 does
+Double-click the "DecoderPro" icon
+to run the application natively under MacOS X. 
+By default, it will have the nice Aqua interface.  
+
+<P>
+Note that MacOS X 10.1.1 is required for this to work. Further, MacOS X does
 not yet support the LocoNet baud rate, so you must use a LocoBuffer to
 access a LocoNet; a MS100 will not yet work.  We're working 
 to get this fixed, but don't expect it to happen soon.
 The NCE direct connection
 does work fine. 
+
+<h3>OS/2 instructions:</h3>
+
+You need to have Java (at least 1.1.8), Swing and javacomm installed on your 
+machine. These can be downloaded from the IBM site.
+<P>
+Download the 
+<A HREF="http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b4.OS2.zip">DecoderPro.0.9b4.OS2.zip</A>
+file and expand it with 
+<pre>
+   PKZIP -extr -dir DecoderPro.0.9b4.OS2.zip
+</pre>
+Change to the directory just created, then run the DecoderPro.CMD  
+script from this directory with
+<Pre>
+   DecoderPro
+</pre>   
+
+<h3>Linux instructions:</h3>
+
+You need to have Java 1.2 or later installed on your machine, including Swing. 
+You can get this from Sun at
+  <a href="http://java.sun.com/j2se/">http://java.sun.com/j2se/</a>.
+For information on installing Java, please see 
+  <a href="http://jmri.sourceforge.net/Java/InstallJava.html">http://jmri.sourceforge.net/Java/InstallJava.html</a>.
+
+To communicate with a LocoNet, you need to have a version of the javax.comm 
+package installed on your computer.  One is available at 
+  <a href="http://www.interstice.com/kevinh/linuxcomm.html">http://www.interstice.com/kevinh/linuxcomm.html</a>
+with additional information at
+  <a href="http://www.rxtx.org/">http://www.rxtx.org/</a>.  
+ 
+
+Download the 
+<A HREF="http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b4.tar.gz">DecoderPro.0.9b4.tar.gz</A>
+file, then unpack it with
+<PRE>
+   gunzip DecoderPro.0.9b4.tar.gz
+   tar xf DecoderPro.0.9b4.tar
+</PRE>      
+Switch to the demo directory and run the demo using
+
+<Pre>
+  ./DecoderPro.csh
+</pre>
+  
+<P>
+We really need better Linux instructions, esp. the part about the javax.comm
+package. It would be great if you were interested in helping with this.
+
+<h3>Windows instructions:</h3>
+
+You need to have Java 1.2 or later installed on your machine, including Swing. 
+We test with JRE 1.3.1-01. You can get this from Sun at
+  <a href="http://java.sun.com/j2se/">http://java.sun.com/j2se/</a>.
+For information on installing Java, please see 
+  <a href="http://jmri.sourceforge.net/Java/InstallJava.html">http://jmri.sourceforge.net/Java/InstallJava.html</a>
+ 
+<P>
+You will need to know where your Java installation is on your disk.  This is
+called the "Java home directory" below.  The Sun installers use
+<pre>
+  C:\Program Files\JavaSoft\JRE\_your_version_
+</pre>
+for this, for example
+<pre>
+  C:\Program Files\JavaSoft\JRE\1.3.1
+</pre>
+<P>
+To communicate with a LocoNet or NCE system, you need to have a version 
+of the javax.comm package installed on your computer.  The one from 
+  <a href="http://java.sun.com/products/javacomm/">http://java.sun.com/products/javacomm/</a>
+is included with the DecoderPro distribution, but you have to copy some files
+to their final locations.
+<P>
+Download the 
+<A HREF="http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b4.zip">DecoderPro.0.9b4.zip</A>
+file and expand it with WinZip or similar.
+
+<P>
+Copy the "win32com.dll" file just unpacked to the "bin" subdirectory of your
+Java home directory, for example:
+<PRE>
+  copy win32com.dll C:\Program Files\JavaSoft\JRE\1.3.1\bin
+</PRE>
+Copy the "javax.comm.properties" file just unpacked to the "lib" subdirectory 
+of your Java home directory, for example:
+<PRE>
+  copy javax.comm.properties C:\Program Files\JavaSoft\JRE\1.3.1\lib
+</PRE>
+<P>
+Installation is complete.
+<P>
+To start the program, double click on the "DecoderProWin95" icon, or type in a DOS
+window in the install directory:
+<pre>
+  java -jar DecoderProWin95.jar
+</pre>
+<P>
+Note: We've heard that some types of Comm ports can't handle the LocoNet baud
+rate.  If you get errors messages about "Unsupported baud rate", please let
+use know so we can help find a solution for this.
 
 <h3>LocoNet Hardware Connection:</h3>
 
@@ -167,7 +288,23 @@ will select the decoder model in the selection box.  Usually
 it will only be able to narrow the selection down.
 Pull down the "Decoder installed" selection box and check that the
 right model is selected.  If your decoder doesn't appear, select
-something that seems close and hit "Open Programmer".
+something that seems close.
+
+<P>Some people prefer a very simple programmer, and some want to 
+have access to every feature. To handle this, DecoderPro
+provides several displays.  As shipped, it comes with:
+<DL>
+<DT>Basic<DD>A simple one, with just the most popular information
+<DT>MultiPane<DD>The most complete display, with multiple panes 
+of detailed information.
+<DT>Registers<DD>Complete configuration for a register-only decoder
+</DL>
+You can even define your own format if you'd prefer to just see
+the variables you use.  For this first pass through the program,
+select "MultiPane" in the lowest selection box.
+
+<P>Now hit "Open Programmer", and wait for a few seconds while the
+programmer is set up.
 
 <P>
 The main programmer window opens.  In the top field, labeled
@@ -192,7 +329,7 @@ move from screen to screen to watch the read operation move through the variable
 
 <P>
 You can now go back to the "Roster Entry" tab and click "Save" to 
-store the decoder contents.
+store the decoder contents in a file for later use.
 
 <P>
 If you want to change something, just type or click the new value.  Note
@@ -218,7 +355,7 @@ will then open a programmer window configured for the proper decoder
 type, and containing the last values stored.  This saves the long
 wait while you read the configuration information from the decoder.
 
-<P>The "Debug" menu has a couple of useful tools. 
+<P>The "Debug" menu has a couple of useful tools:
 
 <P>
 If you're connected to a LocoNet, select "LocoNet Monitor" to open 
@@ -236,7 +373,6 @@ listing, and to write output to a log file.
 
 
 <h3>For more information</H3>
-
 
 More information is available on the JMRI web page:   <a href="http://jmri.sourceforge.net/">http://jmri.sourceforge.net/</a>
 

@@ -36,7 +36,7 @@ the code is available via open source, if you want to improve on it you can.
 
 When you first open the programmer, you see a window like this:
 <p>
-<IMG SRC="images/BlankSetup.gif" WIDTH="436" HEIGHT="209" HSPACE="0" VSPACE="0">
+<IMG SRC="images/BlankSetup.gif" WIDTH="436" HEIGHT="234" HSPACE="0" VSPACE="0">
 <p>
 
 You use this to configure the programmer with information about a specific
@@ -47,7 +47,7 @@ about the available settings.
 You can manually select the 
 decoder type from the selection box:
 <p>
-<IMG SRC="images/SelDecoder.gif" WIDTH="441" HEIGHT="249" HSPACE="0" VSPACE="0">
+<IMG SRC="images/SelDecoder.gif" WIDTH="436" HEIGHT="234" HSPACE="0" VSPACE="0">
 <p>
 You can also click the adjacent "Ident" button to have the programmer
 read the decoder and attempt to identify it.   
@@ -59,6 +59,23 @@ will select the decoder model in the selection box.  Usually
 it will only be able to narrow the selection down to a few choices.
 Pull down the "Decoder installed" selection box and check that the
 right model is selected.  
+<P>
+Some people prefer a very simple programmer, and some want to 
+have access to every feature. To handle this, DecoderPro
+provides several displays.  
+<p>
+<IMG SRC="images/SelProg.gif" WIDTH="436" HEIGHT="234" HSPACE="0" VSPACE="0">
+<p>
+As shipped, it comes with:
+<DL>
+<DT>Basic<DD>A simple one, with just the most popular information
+<DT>MultiPane<DD>The most complete display, with multiple panes 
+of detailed information.
+<DT>Registers<DD>Complete configuration for a register-only decoder
+</DL>
+You can even define your own format if you'd prefer to just see
+the variables you use.  For this first pass through the program,
+we select "MultiPane" in the lowest selection box.
 
 <P>
 Then, click "Open Programmer" to start working with the decoder.
@@ -122,7 +139,7 @@ even redo the entire appearance.
 To do that,
 DecoderPro is driven by human-readable files in XML format.  
 <A HREF="ConfigFile.html">Incomplete documentation</a> exists, and we hope to
-update it soon (November 2001).
+update it soon (December 2001).
 <P>
 These files make it convenient to update DecoderPro to work
 with a new decoder.  For example, the unique capabilities of a
@@ -149,7 +166,7 @@ decoder configuration to a file, and then later work with CV values
 from the file.  This saves the time it takes to read a complete 
 decoder, which can be quite long. The roster can also store
 locomotive information for you.  
-The "Roster entry" sheet displays this info and allows you to edit it:
+The "Roster Entry" sheet displays this info and allows you to edit it:
 <P>
 <IMG SRC="images/Roster75.gif" WIDTH="618" HEIGHT="387" HSPACE="0" VSPACE="0">
 <P>
@@ -161,7 +178,7 @@ this locomotive.  You can put whatever you'd like in it.
 For example, during the startup, you can
 select a specific locomotive to work with:
 <P>
-<IMG SRC="images/SelLoco.gif" WIDTH="462" HEIGHT="284" HSPACE="0" VSPACE="0">
+<IMG SRC="images/SelLoco.gif" WIDTH="434" HEIGHT="234" HSPACE="0" VSPACE="0">
 <P>
 The "Ident" button uses the DCC address to select a specific locomotive in 
 the roster.
@@ -176,13 +193,11 @@ programmer opens each sheet with the current values already present.
 
 <h3>Availability</h3>
 The programmer is available in the current distributions of the JMRI libraries,
-and separately packaged as the "DecoderPro" application. A development
-version for the Macintosh is available for download at
-<A HREF="http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b3.hqx">DecoderPro.0.9b3.hqx</A>.
-Before downloading, please read the 
+and separately packaged as the "DecoderPro" application. 
+For downloading and installation instructions, please read the 
 <A HREF="../demoFiles/DecoderPro.README.html">README file</A>.
-<P>
-Note that this is not a final version; the programmer is still being developed.  
+Note that the versions currently posted are not in any sense final; the 
+programmer is still being developed.  
 In part, this page
 exists to encourage people to suggest how it can be improved.  Please send any comments 
 to <A HREF="mailto:jake@physics.berkeley.edu">Bob Jacobsen</A>, or post them
