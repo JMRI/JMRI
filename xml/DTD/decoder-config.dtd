@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a DCC decoder as a component, esp. information -->
 <!-- on how to program it. -->
-<!-- $Id: decoder-config.dtd,v 1.18 2002-02-20 16:05:36 jacobsen Exp $ -->
+<!-- $Id: decoder-config.dtd,v 1.19 2002-04-08 03:23:34 jacobsen Exp $ -->
 
 <!ELEMENT decoder-config (version, decoder, pane*)>
 
@@ -136,7 +136,8 @@
 <!ATTLIST pane nameFmt (label | item) "label">
 
 <!-- The column section describes each column in the pane -->
-<!ELEMENT column ((display | label | separator | cvtable | fnmapping | dccaddress )*)>
+<!ELEMENT column ((row | display | label | separator | cvtable | fnmapping | dccaddress )*)>
+<!ELEMENT row ((column | display | label | separator | cvtable | fnmapping | dccaddress )*)>
 
 <!-- Insert a separator line -->
 <!ELEMENT separator EMPTY>
