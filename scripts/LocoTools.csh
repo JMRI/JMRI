@@ -1,6 +1,6 @@
 #! /bin/csh -f
 #
-#  short csh script to start LocoTools in java
+#  short csh script to start LocoTools in java ($Revision: 1.3 $)
 #
 #  Assumes that the program is being run from the distribution directory
 #

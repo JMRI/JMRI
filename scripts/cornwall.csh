@@ -1,6 +1,6 @@
 #!/bin/csh -f
 #
-#  short csh script to start PanelPro in java ($Revision: 1.1 $)
+#  short csh script to start CornwallRR in java ($Revision: 1.2 $)
 #
 #  Assumes that the program is being run from the distribution directory
 #
