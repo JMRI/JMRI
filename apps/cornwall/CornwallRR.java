@@ -16,7 +16,7 @@ import jmri.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class CornwallRR extends JPanel {
     public CornwallRR(JFrame frame) {
@@ -147,7 +147,7 @@ public class CornwallRR extends JPanel {
         String logFile = "default.lcf";
         try {
             if (new java.io.File(logFile).canRead()) {
-                org.apache.log4j.PropertyConfigurator.configure("default.lcf");
+                org.apache.log4j.PropertyConfigurator.configure(logFile);
             } else {
                 org.apache.log4j.BasicConfigurator.configure();
                 org.apache.log4j.Category.getRoot().setPriority(org.apache.log4j.Priority.ERROR);

@@ -17,7 +17,7 @@ import javax.swing.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2002
- * @version     $Revision: 1.48 $
+ * @version     $Revision: 1.49 $
  */
 public class JMRIdemo extends JPanel {
     public JMRIdemo(JFrame frame) {
@@ -192,7 +192,7 @@ public class JMRIdemo extends JPanel {
         String logFile = "default.lcf";
         try {
             if (new java.io.File(logFile).canRead()) {
-                org.apache.log4j.PropertyConfigurator.configure("default.lcf");
+                org.apache.log4j.PropertyConfigurator.configure(logFile);
             } else {
                 org.apache.log4j.BasicConfigurator.configure();
                 org.apache.log4j.Category.getRoot().setPriority(org.apache.log4j.Priority.ERROR);

@@ -16,7 +16,7 @@ import javax.swing.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author			Bob Jacobsen
- * @version         $Revision: 1.14 $
+ * @version         $Revision: 1.15 $
  */
 public class LocoTools extends JPanel {
     public LocoTools(JFrame frame) {
@@ -124,7 +124,7 @@ public class LocoTools extends JPanel {
         add(pane1);
 
         // start the test AlmImplementation for ALM 2
-        new jmri.jmrix.loconet.Se8AlmImplementation(2, false);
+        // new jmri.jmrix.loconet.Se8AlmImplementation(2, false);
     }
 
     // Main entry point
@@ -135,7 +135,7 @@ public class LocoTools extends JPanel {
     	String logFile = "default.lcf";
     	try {
             if (new java.io.File(logFile).canRead()) {
-                org.apache.log4j.PropertyConfigurator.configure("default.lcf");
+                org.apache.log4j.PropertyConfigurator.configure(logFile);
             } else {
                 org.apache.log4j.BasicConfigurator.configure();
                 org.apache.log4j.Category.getRoot().setPriority(org.apache.log4j.Priority.ERROR);

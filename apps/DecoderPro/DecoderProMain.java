@@ -13,7 +13,7 @@ import jmri.util.oreilly.*;
  * DecoderPro application main class.
  *
  * @author                      Bob Jacobsen
- * @version                     $Revision: 1.3 $
+ * @version                     $Revision: 1.4 $
  */
 public class DecoderProMain extends JPanel {
     public DecoderProMain(JFrame frame) {
@@ -139,7 +139,7 @@ public class DecoderProMain extends JPanel {
         String logFile = "default.lcf";
         try {
             if (new java.io.File(logFile).canRead()) {
-                org.apache.log4j.PropertyConfigurator.configure("default.lcf");
+                org.apache.log4j.PropertyConfigurator.configure(logFile);
             } else {
                 org.apache.log4j.BasicConfigurator.configure();
                 org.apache.log4j.Category.getRoot().setPriority(org.apache.log4j.Priority.ERROR);
