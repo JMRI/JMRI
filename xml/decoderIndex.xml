@@ -1,283 +1,313 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-<!-- $Id: decoderIndex.xml,v 1.15 2002-04-08 03:24:48 jacobsen Exp $ -->
-<decoderIndex>
-
-<mfgList>
-	<!-- Updated to the December 1st, 2001 NMRA list NMRA Tech Dept #635 -->
-	<manufacturer mfg="NMRA"/>
-	<manufacturer mfgID="137"	mfg="A-Train Electronics"/>
-	<manufacturer mfgID="173"	mfg="Arnold"/>
-	<manufacturer mfgID="127"	mfg="Atlas"/>
-	<manufacturer mfgID="170"	mfg="AuroTrains"/>
-	<manufacturer mfgID="123"	mfg="Computer Dialysis France"/>
-	<manufacturer mfgID="117"	mfg="cT Elektronik"/>
-	<manufacturer mfgID="135"	mfg="CVP Products"/>
-	<manufacturer mfgID="115"	mfg="Dietz Modellbahntechnik"/>
-	<manufacturer mfgID="129"	mfg="Digitrax"/>
-	<manufacturer mfgID="151"	mfg="Electronic Solutions Ulm GmbH"/>
-	<manufacturer mfgID="155"	mfg="Gebr. Fleishmann GmbH Co."/>
-	<manufacturer mfgID="133"	mfg="Intelligent Command Control"/>
-	<manufacturer mfgID="157"	mfg="Kuehn Ing."/>
-	<manufacturer mfgID="99"	mfg="Lenz"/>
-	<manufacturer mfgID="159"	mfg="LGB"/>
-	<manufacturer mfgID="143"	mfg="MRC"/>
-	<manufacturer mfgID="11" 	mfg="NCE Corp"/>
-	<manufacturer mfgID="125" 	mfg="ProfiLok Modellbahntechnik GmbH"/>
-	<manufacturer mfgID="14" 	mfg="PSI-Dynatrol"/>
-	<manufacturer mfgID="13" 	mfg="Public-domain and DIY"/>
-	<manufacturer mfgID="15" 	mfg="RamFixx Technologies (Wangrow)"/>
-	<manufacturer mfgID="139" 	mfg="RealRail Effects"/>
-	<manufacturer mfgID="149"	mfg="Rock Junction Controls"/>
-	<manufacturer mfgID="161" 	mfg="Roco Modelspielwaren"/>
-	<manufacturer mfgID="141"	mfg="Throttle-Up"/>
-	<manufacturer mfgID="153"	mfg="Train Control Systems"/>
-	<manufacturer mfgID="131"	mfg="Trix Modelleisenbahn"/>
-	<manufacturer mfgID="85"	mfg="Uhlenbrock"/>
-	<manufacturer mfgID="147"	mfg="Umelec Ing Buero"/>
-	<manufacturer mfgID="119"	mfg="W.S. Ataras Engineering"/>
-	<manufacturer mfgID="12"	mfg="Wangrow"/>
-	<manufacturer mfgID="145"	mfg="Zimo"/>
-	<manufacturer mfgID="132"	mfg="ZTC"/>
-</mfgList>
-
-<!-- The very first decoder entry becomes the default, so leave it an NMRA one -->
-<!-- The first entry in each family should be the highest-function model, as   -->
-<!-- that's the one that will appear at the top of the selection box           -->
-
-<familyList>
-	<family name="NMRA All CVs" file="NMRA.xml" mfg="NMRA">
-		<model model="All CVs" comment="List is from RP 9.2.2" />
-	</family>
-
-	<family name="NMRA Registers" file="NMRA_registers.xml" mfg="NMRA">
-		<model model="Registers" comment="List is from RP 9.2.2" />
-	</family>
-
-	<family name="Atlas" file="Atlas_DualMode.xml" mfg="Atlas">
-		<model model="Dual Mode" numOuts="2" numFns="0" />
-	</family>
-
-	<family name="Digitrax 1x2" file="Digitrax_1x2.xml" mfg="Digitrax"
-				lowVersionID="240" highVersionID="242">
-		<model model="DH142" numOuts="4" numFns="2">
-			<output name="4" label="Violet"/> </model>
-		<model model="DN142" numOuts="4" numFns="2">
-			<output name="4" label="Violet"/> </model>
-		<model model="DH083" numOuts="5" numFns="2">
-			<output name="4" label="Violet"/> 
-			<output name="5" label="Pad"/> </model>
-	</family>
-
-	<family name="Digitrax 1x1" file="Digitrax_1x1.xml" mfg="Digitrax" 
-				lowVersionID="33" highVersionID="45">
-		<model model="DH121" numOuts="2" numFns="2"/>
-		<model model="DN140" numOuts="4" numFns="2"/>
-	</family>
-			
-	<family name="Digitrax 150" file="Digitrax_150.xml" mfg="Digitrax" 
-				lowVersionID="107">
-		<model model="DH150" numOuts="5" numFns="3"/>
-	</family>
-
-	<family name="Digitrax DH120" file="Digitrax_120.xml" mfg="Digitrax" 
-				lowVersionID="33" highVersionID="45">
-		<model model="DH120" numOuts="2" numFns="2"/>
-	</family>
-
-	<family name="Lenz 5.4" file="Lenz_54.xml" mfg="Lenz" lowVersionID="54">
-		<model model="LE010XF" numOuts="2" >
-			<output name="1" label="A - White" />
-			<output name="2" label="B - Yellow" /></model>
-		<model model="LE011XF" numOuts="2" >
-			<output name="1" label="A - White" />
-			<output name="2" label="B - Yellow" /></model>
-		<model model="LE130XF" numOuts="4" >
-			<output name="1" label="A - White" />
-			<output name="2" label="B - Yellow" />
-			<output name="3" label="C - Green" />
-			<output name="4" label="D - Violet" /></model>
-		<model model="LE0521W" numOuts="2" >
-			<output name="1" label="A - White" />
-			<output name="2" label="B - Yellow" /></model>
-		<model model="LE0521D" numOuts="2" >
-			<output name="1" label="A - White" />
-			<output name="2" label="B - Yellow" /></model>
-		<model model="LE1024"  numOuts="4" >
-			<output name="1" label="A - White" />
-			<output name="2" label="B - Yellow" />
-			<output name="3" label="C - Green" />
-			<output name="4" label="D - Violet" /></model>
-		<model model="LE1025C" numOuts="4" >
-			<output name="1" label="A - White" />
-			<output name="2" label="B - Yellow" />
-			<output name="3" label="C - Green" />
-			<output name="4" label="D - Violet" /></model>
-		<model model="LE4024"  numOuts="4" >
-			<output name="1" label="A - White" />
-			<output name="2" label="B - Yellow" />
-			<output name="3" label="C - Green" />
-			<output name="4" label="D - Violet" /></model>
-		<model model="LE0511W" numOuts="2" >
-			<output name="1" label="A - White" />
-			<output name="2" label="B - Yellow" /></model>
-	</family>
-
-	<family name="Lenz LE077XF" file="Lenz_LE077XF.xml" mfg="Lenz" lowVersionID="44" highVersionID="45">
-		<model model="LE062XF" numOuts="2" >
-			<output name="1" label="A - White" />
-			<output name="2" label="B - Yellow" /></model>
-		<model model="LE077XF" numOuts="3" >
-			<output name="1" label="A - White" />
-			<output name="2" label="B - Yellow" />
-			<output name="3" label="C - Green" /></model>
-		<model model="LE102XF" numOuts="3" >
-			<output name="1" label="A - White" />
-			<output name="2" label="B - Yellow" />
-			<output name="3" label="C - Green" /></model>
-		<model model="LE103XF" numOuts="3" >
-			<output name="1" label="A - White" />
-			<output name="2" label="B - Yellow" />
-			<output name="3" label="C - Green" /></model>
-		<model model="LE104XF" numOuts="3" >
-			<output name="1" label="A - White" />
-			<output name="2" label="B - Yellow" />
-			<output name="3" label="C - Green" /></model>
-		<model model="LE113XF" numOuts="4" >
-			<output name="1" label="A - White" />
-			<output name="2" label="B - Yellow" />
-			<output name="3" label="C - Green" />
-			<output name="4" label="D - Violet" /></model>
-	</family>
-
-	<family name="MRC 14 step" file="MRC_14step.xml" mfg="MRC">
-		<model model="AD305" comment="14 step only" />
-	</family>
-
-	<family name="MRC 14/28 step" file="MRC_1428step.xml" mfg="MRC">
-		<model model="AD310" comment="14 step only" />
-	</family>
-
-	<family name="D13SR Family" file="NCE_D13SR.xml" mfg="North Coast Engineering">
-		<model model="D13SR" numOuts="3" numFns="3"/>
-	</family>
-
-	<family name="DSD Steam" file="SoundTraxx_DSD_Steam.xml" mfg="Throttle-Up"
-			lowVersionID="6" highVersionID="7">
-		<model model="DSD Steam" numOuts="4" numFns="8">
-			<output name="3" label="F1/grn" />
-			<output name="4" label="F5/brwn" />
-			<output name="Whistle"/>
-			<output name="Bell"/> 
-			<output name="Hiss"/> 
-			<output name="Dynamo"/> 
-			<output name="Coupler"/> 
-			<output name="Mute"/> 
-			</model>
-	</family>
-
-	<family name="DSX Steam" file="SoundTraxx_DSX_Steam.xml" mfg="Throttle-Up"
-			lowVersionID="6" highVersionID="7">
-		<model model="DSX Steam" numOuts="1" numFns="8">
-			<output name="3" label="F1/grn" />
-			<output name="4" label="F5/brwn" />
-			<output name="Whistle"/>
-			<output name="Bell"/> 
-			<output name="Hiss"/> 
-			<output name="Dynamo"/> 
-			<output name="Coupler"/> 
-			<output name="Mute"/> 
-			</model>
-	</family>
-
-	<family name="DSD Diesel" file="SoundTraxx_DSD_Diesel.xml" mfg="Throttle-Up"
-			lowVersionID="9" highVersionID="14">
-		<model model="DSD Diesel"  numOuts="4" numFns="8">
-			<output name="3" label="F5/grn" />
-			<output name="4" label="F6/brwn" />
-			<output name="Horn"/> 
-			<output name="Bell"/> 
-			<output name="Dim"/>
-			<output name="Mute"/> 
-			<output name="Dynamic Brake"/> 
-			<output name="Exhaust Up"/> 
-			<output name="Exhaust Down"/> 
-			<output name="Coupler"/> 
-			</model>
-	</family>
-
-	<family name="DSX Diesel" file="SoundTraxx_DSX_Diesel.xml" mfg="Throttle-Up"
-			lowVersionID="9" highVersionID="14">
-		<model model="DSX Diesel" numOuts="1" numFns="8">
-			<output name="3" label="F5/grn" />
-			<output name="4" label="F6/brwn" />
-			<output name="Horn"/> 
-			<output name="Bell"/> 
-			<output name="Dim"/>
-			<output name="Mute"/> 
-			<output name="Dynamic Brake"/> 
-			<output name="Exhaust Up"/> 
-			<output name="Exhaust Down"/> 
-			<output name="Coupler"/> 
-			</model>
-	</family>
-
-	<family name="LC Steam" file="SoundTraxx_LC_Steam.xml" mfg="Throttle-Up"
-				lowVersionID="32" highVersionID="33">
-		<model model="100LC Steam" numOuts="2" numFns="8">
-			<output name="3" label="FX1/grn" />
-			<output name="4" label="FX2/brwn" />
-			<output name="Whistle"/> 
-			<output name="Bell"/> 
-			<output name="Dim"/>
-			<output name="Mute"/> 
-			</model>
-	</family>
-
-	<family name="LC Diesel" file="SoundTraxx_LC_Diesel.xml" mfg="Throttle-Up"
-			lowVersionID="34" highVersionID="37">
-		<model model="100LC Diesel" numOuts="2" numFns="8">
-			<output name="3" label="FX1/grn" />
-			<output name="4" label="FX2/brwn" />
-			<output name="Horn"/> 
-			<output name="Bell"/> 
-			<output name="Dim"/>
-			<output name="Mute"/> 
-			<output name="Dynamic Brake"/> 
-			<output name="Exhaust Up"/> 
-			<output name="Exhaust Down"/> 
-			</model>
-		<model model="C628LC Diesel" numOuts="4" numFns="8">
-			<output name="3" label="FX1/grn" />
-			<output name="4" label="FX2/brwn" />
-			<output name="Horn"/> 
-			<output name="Bell"/> 
-			<output name="Dim"/>
-			<output name="Mute"/> 
-			<output name="Dynamic Brake"/> 
-			<output name="Exhaust Up"/> 
-			<output name="Exhaust Down"/> 
-			</model>
-	</family>
-
-	<family name="TCS Tx" file="TCS_Tx.xml" mfg="Train Control Systems"
-				lowVersionID="16">
-		<model model="T1" numOuts="2" numFns="2" />
-		<model model="T2" numOuts="5" numFns="5">
-			<output name="4" label="Violet"/> </model>
-	</family>
-
-	<family name="TCS 150" file="TCS_TH150DP.xml" mfg="Train Control Systems">
-		<model model="TH150DP" numOuts="5" numFns="6">
-			<output name="4" label="Violet"/> </model>
-		<model model="TH150W" numOuts="5" numFns="6">
-			<output name="4" label="Violet"/> </model>
-		<model model="TH141" numOuts="4" numFns="2">
-			<output name="4" label="Violet"/> </model>
-	</family>
-
-</familyList>
-
-</decoderIndex>
+  <decoderIndex>
+    <mfgList>
+      <manufacturer mfgID="151" mfg="Electronic Solutions Ulm GmbH" />
+      <manufacturer mfgID="119" mfg="W.S. Ataras Engineering" />
+      <manufacturer mfgID="117" mfg="cT Elektronik" />
+      <manufacturer mfgID="115" mfg="Dietz Modellbahntechnik" />
+      <manufacturer mfgID="149" mfg="Rock Junction Controls" />
+      <manufacturer mfgID="147" mfg="Umelec Ing Buero" />
+      <manufacturer mfgID="85" mfg="Uhlenbrock" />
+      <manufacturer mfgID="145" mfg="Zimo" />
+      <manufacturer mfgID="143" mfg="MRC" />
+      <manufacturer mfgID="141" mfg="Throttle-Up" />
+      <manufacturer mfgID="173" mfg="Arnold" />
+      <manufacturer mfgID="170" mfg="AuroTrains" />
+      <manufacturer mfgID="15" mfg="RamFixx Technologies (Wangrow)" />
+      <manufacturer mfgID="14" mfg="PSI-Dynatrol" />
+      <manufacturer mfgID="13" mfg="Public-domain and DIY" />
+      <manufacturer mfgID="12" mfg="Wangrow" />
+      <manufacturer mfgID="11" mfg="NCE Corp" />
+      <manufacturer mfgID="139" mfg="RealRail Effects" />
+      <manufacturer mfgID="137" mfg="A-Train Electronics" />
+      <manufacturer mfgID="135" mfg="CVP Products" />
+      <manufacturer mfgID="133" mfg="Intelligent Command Control" />
+      <manufacturer mfgID="132" mfg="ZTC" />
+      <manufacturer mfgID="131" mfg="Trix Modelleisenbahn" />
+      <manufacturer mfgID="161" mfg="Roco Modelspielwaren" />
+      <manufacturer mfgID="129" mfg="Digitrax" />
+      <manufacturer mfgID="127" mfg="Atlas" />
+      <manufacturer mfgID="125" mfg="ProfiLok Modellbahntechnik GmbH" />
+      <manufacturer mfgID="123" mfg="Computer Dialysis France" />
+      <manufacturer mfgID="99" mfg="Lenz" />
+      <manufacturer mfgID="159" mfg="LGB" />
+      <manufacturer mfgID="157" mfg="Kuehn Ing." />
+      <manufacturer mfgID="155" mfg="Gebr. Fleishmann GmbH Co." />
+      <manufacturer mfgID="153" mfg="Train Control Systems" />
+    </mfgList>
+    <familyList>
+      <family name="NMRA All CVs" mfg="NMRA" type="locomotive" file="NMRA.xml">
+        <model model="All CVs" comment="List is from RP 9.2.2" />
+      </family>
+      <family name="NMRA Registers" mfg="NMRA" type="locomotive" file="NMRA_registers.xml">
+        <model model="Registers" comment="List is from RP 9.2.2" />
+      </family>
+      <family name="Atlas" mfg="Atlas" type="locomotive" file="Atlas_DualMode.xml">
+        <model model="Dual Mode" numOuts="2" numFns="0" />
+      </family>
+      <family name="Digitrax 120" mfg="Digitrax" lowVersionID="33" highVersionID="45" type="locomotive" file="Digitrax_120.xml">
+        <model model="DH120" numOuts="2" numFns="2" />
+      </family>
+      <family name="Digitrax 150" mfg="Digitrax" lowVersionID="107" type="locomotive" file="Digitrax_150.xml">
+        <model model="DH150" numOuts="5" numFns="3" />
+      </family>
+      <family name="Digitrax 1x1" mfg="Digitrax" lowVersionID="33" highVersionID="45" type="locomotive" file="Digitrax_1x1.xml">
+        <model model="DH121" numOuts="2" numFns="2" />
+        <model model="DN140" numOuts="4" numFns="2" />
+      </family>
+      <family name="Digitrax 1x2" mfg="Digitrax" lowVersionID="240" highVersionID="242" type="locomotive" file="Digitrax_1x2.xml">
+        <model model="DH142" numOuts="4" numFns="2">
+          <output name="4" label="Violet" />
+        </model>
+        <model model="DN142" numOuts="4" numFns="2">
+          <output name="4" label="Violet" />
+        </model>
+        <model model="DH083" numOuts="5" numFns="2">
+          <output name="4" label="Violet" />
+          <output name="5" label="Pad" />
+        </model>
+      </family>
+      <family name="Lenz 5.4" mfg="Lenz" lowVersionID="54" type="locomotive" file="Lenz_54.xml">
+        <model model="LE010XF" numOuts="2">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+        </model>
+        <model model="LE011XF" numOuts="2">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+        </model>
+        <model model="LE130XF" numOuts="4">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+          <output name="3" label="C - Green" />
+          <output name="4" label="D - Violet" />
+        </model>
+        <model model="LE0521W" numOuts="2">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+        </model>
+        <model model="LE0521D" numOuts="2">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+        </model>
+        <model model="LE1024" numOuts="4">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+          <output name="3" label="C - Green" />
+          <output name="4" label="D - Violet" />
+        </model>
+        <model model="LE1025C" numOuts="4">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+          <output name="3" label="C - Green" />
+          <output name="4" label="D - Violet" />
+        </model>
+        <model model="LE4024" numOuts="4">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+          <output name="3" label="C - Green" />
+          <output name="4" label="D - Violet" />
+        </model>
+        <model model="LE0511W" numOuts="2">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+        </model>
+      </family>
+      <family name="Lenz LE077XF" mfg="Lenz" lowVersionID="44" highVersionID="45" type="locomotive" file="Lenz_LE077XF.xml">
+        <model model="LE062XF" numOuts="2">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+        </model>
+        <model model="LE077XF" numOuts="3">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+          <output name="3" label="C - Green" />
+        </model>
+        <model model="LE102XF" numOuts="3">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+          <output name="3" label="C - Green" />
+        </model>
+        <model model="LE103XF" numOuts="3">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+          <output name="3" label="C - Green" />
+        </model>
+        <model model="LE104XF" numOuts="3">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+          <output name="3" label="C - Green" />
+        </model>
+        <model model="LE113XF" numOuts="4">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+          <output name="3" label="C - Green" />
+          <output name="4" label="D - Violet" />
+        </model>
+      </family>
+      <family name="MRC 14/28 step" mfg="MRC" type="locomotive" file="MRC_1428step.xml">
+        <model model="AD310" />
+      </family>
+      <family name="MRC 14 step" mfg="MRC" type="locomotive" file="MRC_14step.xml">
+        <model model="AD305" comment="14 step only" />
+      </family>
+      <family name="D13SR Family" mfg="North Coast Engineering" type="locomotive" file="NCE_D13SR.xml">
+        <model model="D13SR" numOuts="3" numFns="3" />
+      </family>
+      <family name="LC Diesel" mfg="Throttle-Up" lowVersionID="34" highVersionID="37" type="locomotive" file="SoundTraxx_100LC_Diesel.xml">
+        <model model="100LC Diesel" numOuts="2" numFns="8">
+          <output name="Horn" />
+          <output name="Bell" />
+          <!--output name="3" label="FX1/grn" /-->
+          <!--output name="4" label="FX2/brwn" /-->
+          <output name="DynBrake" />
+          <output name="RPM+" />
+          <output name="RPM-" />
+          <output name="Dim" />
+          <output name="Mute" />
+          <!-- The four electrical outputs are front headlight, back -->
+          <!-- headlight, FX1, FX2 -->
+        </model>
+      </family>
+      <family name="LC Steam" mfg="Throttle-Up" lowVersionID="32" highVersionID="33" type="locomotive" file="SoundTraxx_100LC_Steam.xml">
+        <model model="100LC Steam" numOuts="2" numFns="8">
+          <output name="Whistle" />
+          <output name="Bell" />
+          <!--output name="3" label="FX1/grn" /-->
+          <!--output name="4" label="FX2/brwn" /-->
+          <output name="Dim" />
+          <output name="Mute" />
+          <!-- The two electical outputs are front headlight, back -->
+          <!-- headlight-->
+        </model>
+      </family>
+      <family name="DSD Diesel" mfg="Throttle-Up" lowVersionID="9" highVersionID="14" type="locomotive" file="SoundTraxx_DSD_Diesel.xml">
+        <model model="DSD Diesel" numOuts="4" numFns="8">
+          <output name="Bell" />
+          <output name="Horn" />
+          <output name="RPM+" />
+          <output name="RPM-" />
+          <output name="3" label="F5/grn" />
+          <output name="4" label="F6/brwn" />
+          <output name="Coupler" />
+          <output name="DynBrake" />
+          <output name="Dim" />
+          <output name="Mute" />
+          <!-- The four electical outputs are front headlight, back -->
+          <!-- headlight, F5, F6 -->
+        </model>
+      </family>
+      <family name="DSD Steam" mfg="Throttle-Up" lowVersionID="6" highVersionID="7" type="locomotive" file="SoundTraxx_DSD_Steam.xml">
+        <model model="DSD Steam" numOuts="4" numFns="8">
+          <output name="3" label="F1/grn" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="Hiss" />
+          <output name="4" label="F5/brwn" />
+          <output name="Dynamo" />
+          <output name="Coupler" />
+          <output name="Mute" />
+          <!-- The four electical outputs are front headlight, back -->
+          <!-- headlight, F1, F5 -->
+        </model>
+      </family>
+      <family name="DSX Diesel" mfg="Throttle-Up" lowVersionID="9" highVersionID="14" type="locomotive" file="SoundTraxx_DSX_Diesel.xml">
+        <model model="DSX Diesel" numOuts="0" numFns="8">
+          <output name="Bell" />
+          <output name="Horn" />
+          <output name="RPM+" />
+          <output name="RPM-" />
+          <!--output name="3" label="F5/grn"/-->
+          <!--output name="4" label="F6/brwn"/-->
+          <output name="Coupler" />
+          <output name="DynBrake" />
+          <output name="Dim" />
+          <output name="Mute" />
+          <!-- There are no electrical outputs -->
+          <!-- for the DSX version -->
+        </model>
+      </family>
+      <family name="DSX Steam" mfg="Throttle-Up" lowVersionID="6" highVersionID="7" type="locomotive" file="SoundTraxx_DSX_Steam.xml">
+        <model model="DSX Steam" numOuts="0" numFns="8">
+          <!--output name="3" label="F1/grn" /-->
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="Hiss" />
+          <!-- output name="4" label="F5/brwn" /-->
+          <output name="Dynamo" />
+          <output name="Coupler" />
+          <output name="Mute" />
+          <!-- There are no electrical outputs -->
+          <!-- for the DSX version -->
+        </model>
+      </family>
+      <family name="LC Diesel" mfg="Throttle-Up" lowVersionID="34" highVersionID="37" type="locomotive" file="SoundTraxx_pnpLC_Diesel.xml">
+        <model model="C628LC Diesel" numOuts="4" numFns="8">
+          <output name="Horn" />
+          <output name="Bell" />
+          <output name="3" label="FX1/grn" />
+          <output name="4" label="FX2/brwn" />
+          <output name="DynBrake" />
+          <output name="RPM+" />
+          <output name="RPM-" />
+          <output name="Dim" />
+          <output name="Mute" />
+        </model>
+        <model model="AT100LC Diesel" numOuts="2" numFns="8">
+          <output name="Horn" />
+          <output name="Bell" />
+          <!--output name="3" label="FX1/grn" /-->
+          <!--output name="4" label="FX2/brwn" /-->
+          <output name="DynBrake" />
+          <output name="RPM+" />
+          <output name="RPM-" />
+          <output name="Dim" />
+          <output name="Mute" />
+        </model>
+        <model model="KT100LC Diesel" numOuts="2" numFns="8">
+          <output name="Horn" />
+          <output name="Bell" />
+          <!--output name="3" label="FX1/grn" /-->
+          <!--output name="4" label="FX2/brwn" /-->
+          <output name="DynBrake" />
+          <output name="RPM+" />
+          <output name="RPM-" />
+          <output name="Dim" />
+          <output name="Mute" />
+        </model>
+      </family>
+      <family name="LC Steam" mfg="Throttle-Up" lowVersionID="32" highVersionID="33" type="locomotive" file="SoundTraxx_pnpLC_Steam.xml">
+        <model model="B280LC Steam" numOuts="2" numFns="8">
+          <output name="Whistle" />
+          <output name="Bell" />
+          <!--output name="3" label="FX1/grn" /-->
+          <!--output name="4" label="FX2/brwn" /-->
+          <output name="Dim" />
+          <output name="Mute" />
+          <!-- The two electical outputs are front headlight, back -->
+          <!-- headlight-->
+        </model>
+      </family>
+      <family name="TCS 150" mfg="Train Control Systems" type="locomotive" file="TCS_TH150DP.xml">
+        <model model="TH150DP" numOuts="5" numFns="6">
+          <output name="4" label="Violet" />
+        </model>
+        <model model="TH150W" numOuts="5" numFns="6">
+          <output name="4" label="Violet" />
+        </model>
+        <model model="TH141" numOuts="4" numFns="2">
+          <output name="4" label="Violet" />
+        </model>
+      </family>
+      <family name="TCS Tx" mfg="Train Control Systems" lowVersionID="16" type="locomotive" file="TCS_Tx.xml">
+        <model model="T1" numOuts="2" numFns="2" />
+        <model model="T2" numOuts="5" numFns="5">
+          <output name="4" label="Violet" />
+        </model>
+      </family>
+    </familyList>
+  </decoderIndex>
 </decoderIndex-config>
+
