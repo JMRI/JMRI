@@ -66,14 +66,13 @@ log4j.appender.T.MaxBackupIndex=1
 # Examples of changing priority of specific categories (classes, packages):
 #
 # log4j.category.jmri=DEBUG
-# log4j.category.jmri.progdebugger.ProgDebugger=DEBUG
+# log4j.category.jmri.apps=DEBUG
 # log4j.category.jmri.jmrit.symbolicprog=DEBUG
-# log4j.category.jmri.jmrit.symbolicprog.LongAddrVariableValue=DEBUG
-# log4j.category.jmri.jmrit.symbolicprog.LongAddrVariableValueTest=DEBUG
 # log4j.category.jmri.jmrit.symbolicprog.tabbedframe=DEBUG
 # log4j.category.jmri.jmrit.symbolicprog.tabbedframe.PaneProgPaneTest=DEBUG
+# log4j.category.jmri.jmrit.symbolicprog.DecVariableValue=DEBUG
+# log4j.category.jmri.jmrit.symbolicprog.LongAddrVariableValueTest=DEBUG
 # log4j.category.jmri.InstanceManager=DEBUG
-# log4j.category.jmri.ProgModePane=DEBUG
 # log4j.category.jmri.jmrix.nce=DEBUG
 # log4j.category.jmri.jmrix.nce.NceTrafficController=WARN
 # log4j.category.jmri.tests=DEBUG
