@@ -24,13 +24,32 @@ updated soon (Novemeber 2001).</b>
 
 This page provides a little information on how the configuration files
 for the DecoderPro Symbolic Programmer work.
-(Introductory information is available on the 
+(Introductory information for the programmer is available on the 
 <A HREF="index.html">prior page</A>)
 For details on JMRI internals, please see the
 <A HREF="../Technical/index.html" NAME="technical pages">technical pages</A>, which are unfortunately still
 being written.
 <P>
-<h3>Creating a custom configuration file</h3>
+Contents:
+<UL>
+<LI><A HREF="#createDecoder">Creating a custom decoder configuration file</A>
+<LI><A HREF="#introXML">A very short introduction to XML files</A>
+<LI><A HREF="#">More details of decoder configuration</A>
+<LI><A HREF="#">What the configuration files contain and where they are located</A>
+<LI><A HREF="#">Defining a new programmer format</A>
+<LI><A HREF="#">How the roster is stored; updating it by hand</A>
+<LI><A HREF="#">What's in a locomotive file?</A>
+<LI><A HREF="#"></A>
+</UL>
+In the first section, we walk you through the process of creating a file to
+describe a new file.
+This section is first because we think that its the first thing that 
+most people will want to do.  But you might benefit from reading 
+the later sections to get background information, especially
+the XML introduction and the section on what the configuration files contain.
+
+
+<a id="createDecoder"><h3>Creating a custom decoder configuration file</h3></a>
 
 The easiest way to create a configuration file is to 
 modify an existing one.  In this section, we walk you 
@@ -42,41 +61,59 @@ call this new file anything you like, it will work best
 if you use the same convention as the provided files.  That's
 <code>"manufacturer name"_"decoder family".xml</code>, for example:
 <PRE>
-    Digitrax_DH142.xml
+    Digitrax_1x2.xml
     Atlas_DualMode.xml
-    Lenz_LE320.xml
 </pre>
 For the provided files, we use the same capitalization, etc, that the
 decoder manufacturer uses in their documentation. 
 <P>
-This new file should go in the "xml" subdirectory of where you've installed
-the JMRI package.  This will make it easy to find from the program.
+This new file should go in the "xml" subdirectory in the "prefs"
+directory where you've installed
+the JMRI package.  The program will find it there.
 
 <LI>
 Open the new file with your favorite editor.  You'll see something like this
-at the top (the examples are from the <A HREF="Digitrax_DH142.xml.html">Digitrax_DH142.xml</A> file):
+at the top (the examples are from the <A HREF="../xml/Digitrax_1x2.xml">Digitrax_1x2.xml</A> file):
 	<PRE>
-	&lt;?xml version=&quot;1.0&quot;?&gt;
-	&lt;!DOCTYPE decoder:decoder-config SYSTEM &quot;DTD/decoder-config.dtd&quot;&gt;
-	&lt;decoder:decoder-config xmlns:decoder=&quot;http://jmri.sourceforge.net/xml/decoder&quot;&gt;
+	&lt;?xml version="1.0"?&gt;
+	&lt;!DOCTYPE decoder-config SYSTEM "decoder-config.dtd"&gt;
+	&lt;!-- $Id: ConfigFile.html,v 1.3 2001-12-27 16:31:18 jacobsen Exp $ --&gt;
+	&lt;decoder-config&gt;
 	</PRE>
 Don't mess with these lines; they describe the format of the file.
 
 <LI>
+The next element describes the decoder file:
+<PRE>
+		&lt;version author="jake@physics.berkeley.edu" 
+			version="1" lastUpdated="20011201"/&gt;
+</PRE>
+These attributes are only read by people, not the program, so their
+exact format isn't critical.  But we encourage you to insert your email
+address in files you create or change, so that if anybody has any questions
+they can find you.  The version and lastUpdated attributes provide a 
+way of telling different versions of a decoder definition apart, so we'd
+also like you to update those.  For a new file, set the version back to "1",
+and if you're modifying an existing file, increment the version attribute
+to the next number.			
+
+<LI>
 The next lines describe the decoder:
 	<PRE>
-	&lt;decoder:decoder&gt;
-	&lt;decoder:id model=&quot;All&quot; mfg=&quot;Digitrax&quot; mfgID=&quot;129&quot; defnVersion=&quot;0&quot;
-				comment=&quot;DH142 decoder: FX, transponding&quot;&gt;&lt;/decoder:id&gt;
+	&lt;decoder&gt;
+		&lt;id family="Digitrax 1x2" mfg="Digitrax" mfgID="129" defnVersion="0"
+				lowVersionID="240" highVersionID="242"
+				comment="Digitrax DH142, etc" /&gt;
 	</PRE>
 The spacing is not important, but its useful to ident the file like this to make it more readable.
 XML uses "elements" and "attributes" to carry information.  The &lt;abc&gt; things are elements; attributes
-are set to specific values within elements.  In the 2nd line above
+are set to specific values within elements.  In the 2nd through 4th lines above
 	<PRE>
-	&lt;decoder:id model=&quot;All&quot; mfg=&quot;Digitrax&quot; mfgID=&quot;129&quot; defnVersion=&quot;0&quot;
-				comment=&quot;DH142 decoder: FX, transponding&quot;&gt;&lt;/decoder:id&gt;
+		&lt;id family="Digitrax 1x2" mfg="Digitrax" mfgID="129" defnVersion="0"
+				lowVersionID="240" highVersionID="242"
+				comment="Digitrax DH142, etc" /&gt;
 	</PRE>
-the element is 'decoder:id', with attributes 'model', 'mfg', 'mfgID', 'defnVersion', and 'comment'.
+the element is 'id', with attributes 'family', 'mfg', 'mfgID', 'defnVersion', and 'comment'.
 An attribute is given a value with an equals sign and a value in quotes (the quotes are required).
 The order of the attributes is not important, and you can break them across lines if that
 makes the file easier to read. Note that all of the attributes must be inside the angle
@@ -91,107 +128,216 @@ In this element, change the attributes to match your new decoder:
 	<LI>mfgID - the numeric manufacturer id that the manufacturer loads into CV 8 of their decoders.
 		Each manufacturer has a different code, so the programmer can check if
 		this file is being used with the expected decoder type.
-		The NMRA has standardized these. If you don't know it, just leave it as
-		an empty (zero-length) string "".
-	<LI>defnVersion - the decoder version number that the manufacturer loads into CV 7 of this
-		type of decoder.  Not all manufacturers do this, but if one is available
-		the programmer can check if
-		this file is being used with the expected decoder type.	
+		The NMRA has standardized these. You can read the 
+		value from a decoder, or perhaps look it up in the
+		decoderIndex.xml file distributed with the program.
 		If you don't know it, just leave it as
 		an empty (zero-length) string "".
+	<LI> lowVersionID, highVersionID - 
+		The manufacturer can load a version number into CV 7 of a
+		decoder.  
+		Not all manufacturers do this, but if one is available
+		the programmer can check if
+		this file is being used with the expected decoder type.	
+		If only one value is valid, define the attribute
+		lowVersionID, e.g. 
+		<PRE>
+	lowVersionID="123"
+		</PRE>
+		If the decoder type can have any one of a range of numbers,
+		for example because the manufacturer has made some updates,
+		define both attributes.
+		If you don't know the version number, don't define
+		either of these attributes.
+	<LI>defnVersion - a version number for this decoder definition.  This might be
+		a software version number from a manufacturer or similar.  It doesn't 
+		correspond to any standard CV value.
 	<LI>comment - this is optional. You might want to include your name, or other
 		info about the changes in the file.
 	</UL>
 
 <LI>
-The next element defines what modes the decoder can understand:
+The next element defines what programming modes the decoder can understand:
 	<PRE>
-	&lt;decoder:programming direct=&quot;byteOnly&quot; paged=&quot;yes&quot; 
-	                     register=&quot;yes&quot; ops=&quot;yes&quot;&gt;&lt;/decoder:programming&gt;
+	&lt;programming direct="byteOnly" paged="yes" 
+	                     register="yes" ops="yes"&gt;&lt;/programming&gt;
 	</PRE>
 Paged, register and ops can be set to either "yes" or "no".  Direct can
-be set to "no", "bitOnly", "byteOnly", or "yes".  Currently, the symbolic 
-programmer doesn't use this information, as it allows you to select
-any programming mode without restriction. 
+be set to "no", "bitOnly", "byteOnly", or "yes".
+The programmer uses this 
+information to select the programming mode to use when working with a decoder.
 
 <LI>
-The rest of the file consists of a set of decoder:variable elements
+The enxt part of the file consists of a set of 'variable' elements
 defining specific variables, nested inside
-a decoder:variables (note the extra "s") element. An example:
+a 'variables' (note the extra "s") element. An example:
 	<PRE>
-		&lt;decoder:variable name=&quot;Address&quot; CV=&quot;1&quot; mask=&quot;VVVVVVVV&quot; comment=&quot;Short address&quot;&gt;
-			&lt;decoder:decVal min=&quot;1&quot; max=&quot;127&quot;/&gt;
-			&lt;/decoder:variable&gt;
+	&lt;variable name="Short Address" CV="1" stdName="Primary Address" default="03"&gt;
+		&lt;decVal min="1" max="127"/&gt;
+		&lt;/variable&gt;
 	</PRE>
+Each variable represents one thing to configure.  They can represent 
+a single CV, e.g. address, or a few bits that can be
+configured to control a particular function.
 If some of these aren't appropriate to your decoder, you can just remove them.
-Make sure you remove the entire element from the &lt;decoder:variable
-to the matching &lt;/decoder:variable&gt;.
+Make sure you remove the entire element from the &lt;variable&gt;
+to the matching &lt;/variable&gt;.
+You can also rearrange them if you'd prefer a different order.
 <P>
-You can also rearrange them if you'd prefer a different order.  They are displayed
-by the programmer in the same order they appear in the file.
+The attributes include:
+	<UL>
+	<LI>name - The name for this variable.
+	<LI>stdName - An alternative, 'standard' name. See below for
+		more information on this.
+	<LI>CV - Which CV contains the configuration information
+		for this variable.
+	<LI>mask - A pattern like "XXXVVVXX" which controls which
+		bits in the CV make up the variable. Each "V" is a bit
+		that's included, and "X" are bits that are not to be 
+		included.  Its best to have eight characters, as that
+		makes it clearer what's going on.  If the variable
+		is a full byte, this attribute can be omitted.
+	<LI>default - The default value for this variable. This is
+		used for a new decoder, or when you want to set the
+		decoder back to its defaults.
+	<LI>comment - Use this for whatever you want.
+	</UL>
+(There are a few more, which we'll leave for the advanced section below)
 
 <LI>
 You can also define new variables. A good starting point is to copy a
 similar definition, change its name to a new value, and then edit its
 contents.
-<P>	
-The CV attribute defines the CV this variable will program. The mask attribute
-can restrict it to only some of the bits in the CV, as a "X" means the bit will be
-left alone, while a "V" makes a bit that will be programmed.
 <P>
 To define how the new variable is displayed and editted, you add elements within
-the decoder:variable element.  There are several possible forms:
-	<UL>
-	<LI>For a decimal value, you include a decoder:decVal element like the 
-		example above.  The two optional attributes are min and max, 
-		which define the range of acceptable values.
-	<LI>If you'd rather enter and display values in hexadecimal, use a
-		decoder:hexVal element. Its otherwise the same as the
-		decoder:decVal element we've alread discussed.
-	<LI>If your decoder supports a long address, you can add a 
-		decoder:longAddress element. Its perhaps easiest to copy
-		this from another file, or from this example:
-		<PRE>
-		&lt;decoder:variable name=&quot;Long Address&quot; CV=&quot;17&quot;&gt;
-			&lt;decoder:longAddressVal/&gt;
-			&lt;/decoder:variable&gt;
-		<\PRE>		
-	<LI>Although it doesn't work in the programmer yet, you can enter
-		a decoder:speedTableVal element for the speed table.  The only
-		attribute is entries, which can be either "28", "14" or some
-		other value.  Example:
-		<PRE>
-		&lt;decoder:variable name=&quot;Speed Table&quot; CV=&quot;67&quot;&gt;
-			&lt;decoder:speedTableVal/&gt;
-			&lt;/decoder:variable&gt;
-		<\PRE>
-	<LI>Some decoder options are best represented by "choose one choice".
-	These are represented by a decoder:enumVariable element. Example:
-		<PRE>
-		&lt;decoder:variable name=&quot;F6 during DC operation&quot; CV=&quot;13&quot; mask=&quot;XXVXXXXX&quot;&gt;
-			&lt;decoder:enumVal&gt;
-				&lt;decoder:enumChoice choice=&quot;Off&quot;/&gt;
-				&lt;decoder:enumChoice choice=&quot;On&quot;/&gt;
-				&lt;/decoder:enumVal&gt;
-			&lt;/decoder:variable&gt;
-		</PRE>
-	Each decoder:enumChoice element describes one possibility.  There can be 
-	as many of these as desired.  For a one bit choice, you use two as in the
-	example.  For a 4 bit choice, like the FX codes in a Digitrax decoder, you
-	can use up to 16 choices.  They are displayed in the order they are entered
-	in the file, and are also numbered in that order.  If the first is chosen,
-	a 0 is entered in the CV bits; chosing the second stores 1; etc.
-	You can also specific a specific value to associate with a choice with the
-	value attribute; see the Digitrax_DS54.xml file for an example.
-	
-	</UL>
-
+the 'variable' element.  There are several possible forms:
+<UL>
+<LI>For a decimal value, you include a decVal element like the 
+example above.  The two optional attributes are min and max, 
+which define the range of acceptable values. If you
+omit them, values from 0 to 255 are allowed.
+<LI>If you'd rather enter and display values in hexadecimal, use a
+'hexVal' element. Its otherwise the same as the
+'decVal' element we've alread discussed.
+<LI>If your decoder supports a long address, you can add a 
+'longAddress' element. Its perhaps easiest to copy
+this from another file, or from this example:
+<PRE>
+	&lt;variable name=&quot;Long Address&quot; CV=&quot;17&quot;&gt;
+		&lt;longAddressVal/&gt;
+		&lt;/variable&gt;
+<\PRE>		
+<LI>if your decoder, supports it, you can enter
+a 'speedTableVal' element for the speed table.  The only
+attribute is entries, which can be either "28", "14" or some
+other value.  Example:
+<PRE>
+	&lt;variable name=&quot;Speed Table&quot; CV=&quot;67&quot;&gt;
+		&lt;speedTableVal/&gt;
+		&lt;/variable&gt;
+<\PRE>
+<LI>Some decoder options are best represented by "choose one choice". These are 
+represented by a enumVariable element. Example:
+<PRE>
+	&lt;variable name=&quot;F6 during DC operation&quot; CV=&quot;13&quot; mask=&quot;XXVXXXXX&quot;&gt;
+		&lt;enumVal&gt;
+			&lt;enumChoice choice=&quot;Off&quot;/&gt;
+			&lt;enumChoice choice=&quot;On&quot;/&gt;
+			&lt;/enumVal&gt;
+		&lt;/variable&gt;
+</PRE>
+Each enumChoice element describes one possibility.  There can be 
+as many of these as desired.  For a one bit choice, you use two 
+enumChoice elements as in the
+example.  For a 4 bit choice, like the FX codes in a Digitrax decoder, you
+can use up to 16 choices.  They are displayed in the order they are entered
+in the file, and are also numbered in that order.  If the first is chosen,
+a 0 is entered in the CV bits; choosing the second stores 1; etc.
+</UL>
+At this point, you've created a new configuration file.
+<LI>
+All that's left is to enter your new file in the index.  This index
+is used to speed the startup of the program, when a list of 
+possible decoder's is constructed.
+<P>
+Open the "decoderIndex.xml" file in the "xml" directory.
+You'll see a number of clauses like:
+<PRE>
+	&lt;family name="Digitrax 1x2" file="Digitrax_1x2.xml" mfg="Digitrax" 
+				lowVersionID="240" highVersionID="242"&gt;
+		&lt;decoder model="DH142" numOuts="4" /&gt;
+		&lt;decoder model="DN142" numOuts="4" /&gt;
+		&lt;decoder model="DH083" numOuts="5" /&gt;
+	&lt;/family&gt;
+</PRE>
+Each of these 'family' elements enters a decoder file into the index.
+Since a file might represent several different specific
+decoder models in a family, the 'decoder' elements define the
+specific decoder models.  We leave the "numOuts" attribute for
+later discussion in the advanced section. The rest of the 
+attributes are pretty self-describing.
+<P>
+Add one more of these clauses for your new file.
 </ol>
 
 <P>
-Congratulations!  You've created a new configuration file.  Next, open the 
-symbolic programmer inside the
-JMRI application and try it.
+Congratulations!  You're done.  Next, open the 
+programmer application and try it.
+
+<a id="introXML"><h3>A very short introduction to XML files</h3></a>
+
+All of the configuration files use the XML format. 
+This section is a  
+brief explanation of that format to make it a little easier to read.
+
+<P>XML files are made up of "elements", which are delimited by "tags". 
+It's a lot like HTML, if you're familiar with that.  A tag is enclosed
+in angle brackets, for example <decoder>.  An element can either begin
+and end with a tag:
+<PRE>
+	&lt;decoder&gt;
+		other stuff here
+	&lt;/decoder&gt;
+</pre>
+or have both the start and end tags combined:
+<PRE>
+	&lt;decoder/&gt;
+</PRE>
+Note the back-slash characters. They mark the end of the element.  The starting
+tag of an element can also carry attributes:
+<PRE>
+	&lt;decoder name="foo"&gt;
+		other stuff here
+	&lt;/decoder&gt;
+</PRE>
+The example shows the attribute "name" being set to a value of "foo".
+Some attributes are required, and some are optional.  Note the double-quotes
+around the attribute value. They are required.
+<P>
+Finally, a word about line-breaks and indentation. 
+Tabs, spaces and line-breaks don't mean anything in XML files
+except within the double quotes of an attribute value.  
+To make it easier
+to read the original file, we often use the indenting to show what elements
+are inside each other.  Each time we start a new element, we indent its
+contents by another four spaces.  An example would be:
+<PRE>
+	&lt;decoder&gt;
+		&lt;variable&gt;
+		 	stuff in the 1st variable element
+		&lt;/variable&gt;
+		&lt;variable&gt;
+			stuff in the 2nd variable element
+		&lt;/variable&gt;
+	&lt;/decoder&gt;
+</PRE>
+You can break the contents of an element across a line, if that
+makes it easier to read:
+<PRE>
+	&lt;tagWithLotsOfAttributes  firstAttribute="foo" secondAttribute="bar"
+			thirdAttribute="biff" fourthAttribute="bing" /&gt;
+</PRE>
+
 <HR>
 <BR>Site hosted by: <BR>
 <A href="http://sourceforge.net"> 
