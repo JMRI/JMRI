@@ -45,8 +45,10 @@ public class AllTest extends TestCase  {
 		// all tests from here
 		TestSuite suite = new TestSuite(AllTest.class);
 		// all tests from other classes
+		suite.addTest(jmri.tests.jmrix.loconet.LocoNetTest.suite());
 		suite.addTest(JmriTest.suite());
 		suite.addTest(SymbolicProgTest.suite());
+		suite.addTest(jmri.tests.jmrix.nce.NceTest.suite());
 		
 		return suite;
 	}

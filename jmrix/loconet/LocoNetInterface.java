@@ -25,9 +25,9 @@ void addLocoNetListener(int mask, LocoNetListener l);
 void removeLocoNetListener(int mask, LocoNetListener l);
 
 
-boolean status();   // true if the implementation is operational
+public boolean status();   // true if the implementation is operational
 
-void sendLocoNetMessage(LocoNetMessage m);
+public void sendLocoNetMessage(LocoNetMessage m);
 }
 
 

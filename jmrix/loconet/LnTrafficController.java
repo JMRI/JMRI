@@ -117,7 +117,7 @@ public class LnTrafficController implements LocoNetInterface, Runnable {
 		return self;
 	}
 	
-	static private LnTrafficController self = null;
+	static protected LnTrafficController self = null;
 	
 // data members to hold the streams
 	DataInputStream istream = null;
