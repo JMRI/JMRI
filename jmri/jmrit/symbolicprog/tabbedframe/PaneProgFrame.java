@@ -1,10 +1,4 @@
-/**
- * PaneProgFrame.java
- *
- * Description:		Frame providing a command station programmer from decoder definition files
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.2 $
- */
+// PaneProgFrame.java
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
@@ -32,6 +26,11 @@ import org.jdom.DocType;
 import org.jdom.output.XMLOutputter;
 import org.jdom.JDOMException;
 
+/**
+ * Frame providing a command station programmer from decoder definition files
+ * @author			Bob Jacobsen   Copyright (C) 2001
+ * @version			$Revision: 1.3 $
+ */
 public class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
 
@@ -177,6 +176,39 @@ public class PaneProgFrame extends javax.swing.JFrame
 
 		// and build the GUI
 		loadProgrammerFile(r);
+
+        // set the programming mode
+        if (jmri.InstanceManager.programmerInstance() != null) {
+            // go through in preference order, trying to find a mode
+            // that exists in both the programmer and decoder.
+            // First, get attributes. If not present, assume that
+            // all modes are usable
+            Element programming = null;
+            boolean paged = true;
+            boolean direct= true;
+            boolean register= true;
+            if (decoderRoot != null
+                    && (programming = decoderRoot.getChild("decoder").getChild("programming"))!= null) {
+                Attribute a;
+                if ( (a = programming.getAttribute("paged")) != null )
+                    if (a.getValue().equals("no")) paged = false;
+                if ( (a = programming.getAttribute("direct")) != null )
+                    if (a.getValue().equals("no")) direct = false;
+                if ( (a = programming.getAttribute("register")) != null )
+                    if (a.getValue().equals("no")) register = false;
+            }
+
+            jmri.Programmer p = jmri.InstanceManager.programmerInstance();
+            if (p.hasMode(Programmer.PAGEMODE)&&paged)
+                p.setMode(jmri.Programmer.PAGEMODE);
+            else if (p.hasMode(Programmer.DIRECTBYTEMODE)&&direct)
+                p.setMode(jmri.Programmer.DIRECTBYTEMODE);
+            else if (p.hasMode(Programmer.REGISTERMODE)&&register)
+                p.setMode(jmri.Programmer.REGISTERMODE);
+            else log.warn("No acceptable mode found, leave as found");
+        } else {
+            log.error("Can't set programming mode, no programmer instance");
+        }
 
 		// optionally, add extra panes from the decoder file
 		Attribute a;

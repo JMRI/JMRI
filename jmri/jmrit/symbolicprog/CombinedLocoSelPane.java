@@ -13,19 +13,19 @@ import javax.swing.*;
 import javax.swing.border.*;
 import com.sun.java.util.collections.List;
 
-/** 
+/**
  * Provide GUI controls to select a known loco and/or new decoder.
  * <P>
- * When the "open programmer" button is pushed, i.e. the user is ready to 
+ * When the "open programmer" button is pushed, i.e. the user is ready to
  * continue, the startProgrammer method is invoked.  This should be
  * overridden (e.g. in a local anonymous class) to create the programmer frame
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: CombinedLocoSelPane.java,v 1.1 2002-02-28 20:30:16 jacobsen Exp $
+ * @version			$Revision: 1.2 $
  */
 public class CombinedLocoSelPane extends javax.swing.JPanel  {
-		
+
 	public CombinedLocoSelPane(JLabel s) {
 		_statusLabel = s;
 		init();
@@ -34,7 +34,7 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 	public CombinedLocoSelPane() {
 		init();
 	}
-	
+
 	protected void init() {
 		JLabel last;
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -68,10 +68,10 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 				}
 			});
 			pane2a.add(idloco);
-			pane2a.setAlignmentX(JLabel.RIGHT_ALIGNMENT);				
+			pane2a.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
 		add(pane2a);
-			
-		
+
+
 			JPanel pane1a = new JPanel();
 			pane1a.setLayout(new BoxLayout(pane1a, BoxLayout.X_AXIS));
 			pane1a.add(new JLabel("Decoder installed: "));
@@ -101,21 +101,21 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 				}
 			});
 			pane1a.add(iddecoder);
-			pane1a.setAlignmentX(JLabel.RIGHT_ALIGNMENT);				
+			pane1a.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
 		add(pane1a);
-		
+
 			JPanel pane3a = new JPanel();
 			pane3a.setLayout(new BoxLayout(pane3a, BoxLayout.X_AXIS));
 			pane3a.add(new JLabel("Programmer format: "));
-			
+
 			// create the programmer box
-			programmerBox = new JComboBox(findListOfProgFiles());			
+			programmerBox = new JComboBox(findListOfProgFiles());
 			programmerBox.setSelectedIndex(0);
 			if (defaultProgFile!=null) programmerBox.setSelectedItem(defaultProgFile);
 			pane3a.add(programmerBox);
-			pane3a.setAlignmentX(JLabel.RIGHT_ALIGNMENT);				
+			pane3a.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
 		add(pane3a);
-		
+
 		go2 = new JButton("Open Programmer");
 		go2.addActionListener( new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -129,7 +129,7 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 		add(go2);
 		setBorder(new EmptyBorder(6,6,6,6));
 	}
-	
+
 	JLabel _statusLabel = null;
 
 	private void startIdentifyLoco() {
@@ -176,7 +176,7 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 		// raise the button again
 		idloco.setSelected(false);
 		// locate that loco
-		List l = Roster.instance().matchingList(null, null, Integer.toString(dccAddress), 
+		List l = Roster.instance().matchingList(null, null, Integer.toString(dccAddress),
 												null, null, null, null);
 		if (log.isDebugEnabled()) log.debug("selectLoco found "+l.size()+" matches");
 		if (l.size() > 0) {
@@ -191,7 +191,7 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 			_statusLabel.setText("Read address "+dccAddress+", but no such loco in roster");
 		}
 	}
-			
+
 	private void selectDecoder(int mfgID, int modelID) {
 		// raise the button again
 		iddecoder.setSelected(false);
@@ -218,7 +218,7 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 	private JToggleButton iddecoder;
 	private JToggleButton idloco;
 	private JButton go2;
-	
+
 	/** handle pushing the open programmer button by finding names, then calling a template method */
 	protected void openButton() {
 		// figure out which we're dealing with
@@ -233,24 +233,24 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 			log.error("openButton with neither combobox nonzero");
 		}
 	}
-	
+
 	protected void openKnownLoco() {
 
 		RosterEntry re = Roster.instance().entryFromTitle((String)locoBox.getSelectedItem());
 		if (re == null) log.error("RosterEntry is null during open; that shouldnt be possible");
-		
+
 		String locoFile = Roster.instance().fileFromTitle((String)locoBox.getSelectedItem());
 		if (log.isDebugEnabled()) log.debug("loco file: "+locoFile);
-		
+
 		startProgrammer(null, locoFile, re, (String)programmerBox.getSelectedItem());
 	}
-	
+
 	protected void openNewLoco() {
 		String locoFile = null;
-		
+
 		// find the loco file
 		if ( ! ((String)locoBox.getSelectedItem()).equals("<none>")) {
-		
+
 			locoFile = Roster.instance().fileFromTitle((String)locoBox.getSelectedItem());
 			if (log.isDebugEnabled()) log.debug("loco file: "+locoFile);
 		}
@@ -266,7 +266,7 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 		re.setId("<new loco>");
 		// add the new roster entry to the in-memory roster
 		Roster.instance().addEntry(re);
-		
+
 		startProgrammer(decoderFile, locoFile, re, (String)programmerBox.getSelectedItem());
 	}
 
@@ -274,7 +274,7 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 	protected void startProgrammer(DecoderFile decoderFile, String locoFile, RosterEntry r, String progName) {
 		log.error("startProgrammer method in CombinedLocoSelPane should have been overridden");
 	}
-	
+
 	static public String[] findListOfProgFiles() {
 		// create an array of file names from prefs/programmers, count entries
 		int i;
@@ -312,7 +312,7 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 	}
 	static private String defaultProgFile = null;
 	static public void setDefaultProgFile(String s) { defaultProgFile = s; }
-	
+
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CombinedLocoSelPane.class.getName());
 
 }
