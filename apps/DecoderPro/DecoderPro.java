@@ -13,7 +13,7 @@ import jmri.util.oreilly.*;
  * DecoderPro application.
  *
  * @author                      Bob Jacobsen
- * @version                     $Revision: 1.23 $
+ * @version                     $Revision: 1.24 $
  */
 public class DecoderPro extends JPanel {
     public DecoderPro() {
@@ -97,7 +97,8 @@ public class DecoderPro extends JPanel {
         m1.addActionListener(opsprog);
         m1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         add(m1);
-        if (!jmri.InstanceManager.programmerManagerInstance().isOpsModePossible()) {
+        if (jmri.InstanceManager.programmerManagerInstance()==null ||
+            !jmri.InstanceManager.programmerManagerInstance().isOpsModePossible()) {
             m1.setEnabled(false);
             m1.setToolTipText("This button is disabled because your command station can't do "
                             +"ops mode programming, or we don't yet have code to do "
