@@ -9,7 +9,7 @@ import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
  * refers to the switch settings on the new LocoBuffer II
  
  * @author			Bob Jacobsen   Copyright (C) 2004
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class LocoBufferIIAdapter extends LocoBufferAdapter {
 
@@ -33,6 +33,7 @@ public class LocoBufferIIAdapter extends LocoBufferAdapter {
 
     public String option1Name() { return "LocoBuffer-II connection uses "; }
 
+    static public boolean hasInstance() { return (null!=m2Instance); }
     static public LocoBufferAdapter instance() {
         if (m2Instance == null) {
         	m2Instance = new LocoBufferIIAdapter();
