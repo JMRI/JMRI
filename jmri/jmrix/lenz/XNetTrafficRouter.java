@@ -18,7 +18,7 @@ import java.util.Vector;
  * without traffic over the connection.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Revision: 2.0 $
+ * @version 		$Revision: 2.1 $
  *
  */
 public class XNetTrafficRouter extends XNetTrafficController implements XNetListener {
@@ -85,18 +85,7 @@ public class XNetTrafficRouter extends XNetTrafficController implements XNetList
      * @param m Message to forward. Listeners should not modify it!
 	 */
 	protected void notify(XNetReply m) {
-		// make a copy of the listener vector to synchronized not needed for transmit
-		Vector v;
-		synchronized(this) {
-			v = (Vector) listeners.clone();
-		}
-		if (log.isDebugEnabled()) log.debug("notify of incoming packet: "+m.toString());
-		// forward to all listeners
-		int cnt = v.size();
-		for (int i=0; i < cnt; i++) {
-			XNetListener client = (XNetListener) listeners.elementAt(i);
-			client.message(m);
-		}
+		notifyReply((jmri.jmrix.AbstractMRReply)m,this);
 	}
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetTrafficRouter.class.getName());
