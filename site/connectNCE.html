@@ -13,7 +13,8 @@
 
 <h2>Connecting to an NCE DCC system</h2>
 
-To connect your computer to an NCE system, you just connect the 
+To connect your computer to an NCE system, you 
+can usually just connect the 
 command station to the computer's serial
 port using a 9-pin serial cable.
 <P>
@@ -40,6 +41,14 @@ override this each time you open the programmer, so this is here just for conven
 Click "Save".  You'll be asked if it's OK for the program to quit, click "Yes".
 <P>
 Restart the program. You should be up and running.
+
+<P>
+Note: Some NCE command stations
+have an "optional analog control circuit".  In these, pins 5, 6, and 9
+are used with an analog voltage as a separate throttle.  If you have one
+of these command stations, <I>a normal 9-pin serial cable will not work!</I>
+You'll need to make a custom cable that just connects the "send data", "receive data"
+and "ground" pins.  See your NCE manual for details.
 
 <HR>
 <BR>Site hosted by: <BR>
