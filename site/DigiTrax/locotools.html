@@ -26,6 +26,8 @@ the traffic on the LocoNet, in either hex or human readable form.
 of the command station's slots as they're changed.
 <LI><A HREF="#sendpkt"><dfn>Packet source</dfn></a> - A tool to let you type 
 and send packets to the LocoNet
+<LI><A HREF="#locoIO"><dfn>LocoIO programmer</dfn></a> - A tool to let help
+you configure a LocoIO board.
 </UL>
 The libraries also contain utilities for controlling your layout (operating
 turnouts and signals, responding to inputs and block occupancy, etc), for 
@@ -56,9 +58,24 @@ The Send Packet tool lets you type in a LocoNet packet and send it to the layout
 You type the packet in hexadecimal as pairs of characters, in the same
 way its displayed in the LocoNet monitor.
 
-<h2>Demos</h2>
+<A id="locoio"><h3>Programming LocoIO boards</h3></a>
+<IMG SRC="../images/locoio.gif" ALT="Screen shot of LocoIO programmer" WIDTH="637" HEIGHT="326" HSPACE="0" VSPACE="0"><P>
+The LocoIO programmer provides a simple interface for configuring
+<A HREF="http://groups.yahoo.com/group/loconet_hackers/files/LocoIO/">John Jabour's LocoIO board</a>, a powerful component for
+building CTC boards and control panels. (More information on the
+board is available at
+<A HREF="http://groups.yahoo.com/group/loconet_hackers/files/LocoIO/">http://groups.yahoo.com/group/loconet_hackers/files/LocoIO/</a>)
+A more detailed description of the programmer is available on
+<A HREF="locoIOprog.html">a separate page</a>.
 
-A complete demo of these tools is available.  It will work on many 
+Note that this tool is not yet available in a JMRI download, as it's
+still being debugged.
+<A HREF="locoIOprog.html#demo">(Info on expected availability)</a>
+
+
+<h2>Getting these tools</h2>
+
+A complete version of these tools is available for download.  It will work on many 
 Macintosh, Windows, Linux and OS/2 computers.  The JMRI libraries
 will work with NCE or Digitrax equipment, but of course the LocoNet
 tools only work with a Digitrax LocoNet.
@@ -83,23 +100,13 @@ information, please see the
 
 <h2>Running the tools</h2>
 <UL>
-<LI><A HREF="./demoFiles/README.html">Download and install</a> the program.
+<LI><A HREF="./demoFiles/README.html">Download and install</a> the JMRI demo program.
 <LI>Start the program.
 <LI>From the input menu, select either "MS100" or "LocoBuffer", depending on 
 how your layout is connected.  Then select the serial port, and click "open".
 <li>Select a tool from the "LocoNet" menu.
 <LI><A HREF="mailto:jake@physics.berkeley.edu">Send us feedback</a>
 on how to make this better.
-</UL>
-<h3>Digitrax-specific information</h3>
-As a convenience for people using JRMI with Digitrax systems, we've got a directory of 
-<A HREF="DigiTrax/">Digitrax-specific information</A>:
-<UL>
-<LI><A HREF="DigiTrax/KeyspanAdapters/KeyspanUSB.html">Using a Keyspan USB adapter for LocoNet</A>: 
-Notes on connecting Macintosh
-computers with USB ports to the MS100 Loconet interface.
-<LI><A HREF="DigiTrax/DigitraxPower/DigitraxPower.html">Notes on power wiring for Digitrax components</A>:
-Some information on why Digitrax wants you to use different power transformers for the different types of cards
 </UL>
 
 <h2>Acknowledgements</h2>

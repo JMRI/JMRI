@@ -1,0 +1,247 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Bob Jacobsen, LBL">
+   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>JMRI LocoIO programmer</title>
+</head>
+<body>
+
+
+<IMG SRC="../images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
+
+<h2>JMRI LocoIO Programmer</h2>
+
+<B>Note that this tool is not yet available in a JMRI download. See
+<A HREF="#demo">below</a>
+for more information.</B><P>
+
+The 
+<A HREF="../index.html">JMRI libraries</a>
+contain a number of LocoNet tools.  This page describes the 
+tool for programming LocoIO boards.
+<P>
+A LocoIO board has 16 signal pins, each of which can be programmed
+as an input or output, and to do a number of different things.
+The board is also sometimes described as having 16 channels.
+<P>
+The channels are configured via LocoNet messages.  The LocoIO programmer
+uses a table to represent the configuration of each channel.
+
+<P>
+<IMG SRC="../images/locoio.gif" ALT="Screen shot of LocoIO programmer" WIDTH="637" HEIGHT="326" HSPACE="0" VSPACE="0"><P>
+<P>
+The "Function" column is used to select how the 
+channel behaves.  Click in a cell to be given a menu
+of available choices. 
+Currently, the choices are:
+<UL>
+<LI>
+<dfn>"Toggle switch"</dfn><P>
+Generate a OPC_SW_REQ to close/throw a turnout
+when a toggle switch changes state.
+When the input goes high, a "close" command is
+sent; when the input goes low, a "throw" command is sent.
+The channel configuration value is 0x0F.
+
+<LI>
+<dfn>"Pushbutton active low"</dfn><P>
+Generate a OPC_SW_REQ LocoNet message
+when the input goes low.  This
+is intended for use with a momentary pushbutton.
+The command sent will alternate the  position
+of the addressed turnout or signal; if "close" 
+was last sent, a "throw" will be sent now and vice-versa.
+The channel configuration value is 0x2F.
+
+<LI>
+<dfn>"Pushbutton active high"</dfn><P>
+Generate a OPC_SW_REQ LocoNet message 
+when the input goes high.This
+is intended for use with a momentary pushbutton.
+The command sent will alternate the  position
+of the addressed turnout or signal; if "close" 
+was last sent, a "throw" will be sent now and vice-versa.
+The channel configuration value is 0x6F.
+
+<LI>
+<dfn>"Status message"</dfn><P>
+Drive an output from OPC_INPUT_REP 
+input status messages on the LocoNet.
+The output goes high when an "input high" message
+is received, and goes low when an "input low" message 
+is received. These messages are also used
+for block occupancy status; the output will go high
+when the block is occupied, and low when its empty.
+The channel configuration value is 0XC0.
+
+<LI>
+<dfn>"Turnout close command"</dfn><P>
+Drive an output on 
+the LocoIO board from a OPC_SW_REQ command.
+The channel configuration value is 0x80. This adjusts the address field
+to look for a command that sets the turnout "closed".
+
+<LI>
+<dfn>"Turnout thrown command"</dfn><P>
+Drive an output on 
+the LocoIO board from a OPC_SW_REQ command.
+The channel configuration value is 0x80. This adjusts the address field
+to look for a command that sets the turnout "thrown".
+
+</UL>
+<p>
+The "Address" column sets the address that the
+LocoIO board will use for LocoNet communications.
+For turnout messages, this is the same number that 
+you would use on your throttle.  For block occupancy
+messages, this is the block number. For input status
+messages, this is the input number, which is twice the 
+number of the associated turnout, plus one if its
+a DS54 "switch" input.  You generally don't need
+to figure out these addresses, as the "capture" buttons
+will find them for you.
+<P>
+The "Read" button reads from the LocoIO board via the LocoNet
+and shows the current configuration for that pin.
+The "Write" button stores the current settings to the LocoIO board.
+
+<P>
+The "Capture" button provides an easier way to 
+find a needed LocoNet address.  Configure the input and output
+for a particular pin, then press the capture button.
+The address in the next LocoNet message of the right type will 
+be put in the address column.  
+<P>
+For example, if you
+have a channel set to act when a "Turnout closed status message"
+is received, press the capture button and use your
+throttle to command the correct turnout closed.  
+<P>
+As another
+example, if the channel is configured to send a 
+"Send throw turnout command", press the capture button and use your
+throttle to command the correct turnout thrown.
+
+<P>
+At the bottom of the table are some general controls.  The 
+LocoIO address field sets the address of the board being programmed.
+LocoIO processors are sent with an address of 1081 programmed; see
+below for how to change that.
+Address "0" is a global address which any LocoIO board will
+respond to; make sure you have only one connected when you use that!
+<P>
+The "Set address" button will use the global address to configure a
+specific address into a LocoIO board.  Again, make sure you have
+only one connected.
+<P>
+The "Open..." and "Save..." buttons are not yet implemented. They will
+eventually allow you to load and store configuration files.
+<P>
+The "Read All" and "Write All" buttons are not also not yet implemented.
+They will read or write all of the channels, and are just a convenience.
+
+<P>Status messages during capture/read/write are displayed at the
+bottom of the window.  If no response is heard from the LocoIO
+unit, an error message will be shown and the operation will be retried
+until it succeeds.
+Clicking another capture/read/write button will terminate an operation in 
+progress.
+
+<A id="demo"><h2>Getting the programmer</h2></a>
+
+A complete version of this tool will be made available for download around
+February 26, 2002.
+It will work on many 
+Macintosh, Windows, Linux and OS/2 computers.  The JMRI libraries
+will work with NCE or Digitrax equipment, but of course the LocoNet
+tools only work with a Digitrax LocoNet.
+The demo program also contains several other
+<A  HREF="locotools.html">LocoNet tools</a>,
+and a complete version of the
+<A HREF="../PaneProg/index.html">Decoder Pro</a> 
+decoder programming tool.
+We call this a "demo" because 
+<UL>
+<LI>JMRI is a work in progress, and the demo program should not be considered complete
+<LI>The project is creating libraries, which we hope people will use to 
+create their own layout automation programs.  This program is just a demo
+of the tools and capabilities
+</UL>
+Note that JMRI is free software, and there is no "pay" version to go with the
+demo!
+<P>
+For more information on
+how to install the demo, whether it will run on your computer, etc, please see the 
+<A HREF="./demoFiles/README.html">README file</A>.
+
+JMRI is an open-source project, so you can get the entire source code at any time
+via the <A HREF="http://sourceforge.net/projects/jmri/">Project page</A>. For more
+information, please see the
+<A HREF="../index.html">main JMRI page<a/>.
+
+<h2>Running the tools</h2>
+<UL>
+<LI><A HREF="./demoFiles/README.html">Download and install</a> the program.
+<LI>Start the program.
+<LI>From the input menu, select either "MS100" or "LocoBuffer", depending on 
+how your layout is connected.  Then select the serial port, and click "open".
+<li>Select a tool from the "LocoNet" menu.
+<LI><A HREF="mailto:jake@physics.berkeley.edu">Send us feedback</a>
+on how to make this better.
+</UL>
+<h3>Digitrax-specific information</h3>
+As a convenience for people using JRMI with Digitrax systems, we've got a directory of 
+<A HREF="DigiTrax/">Digitrax-specific information</A>:
+<UL>
+<LI><A HREF="DigiTrax/KeyspanAdapters/KeyspanUSB.html">Using a Keyspan USB adapter for LocoNet</A>: 
+Notes on connecting Macintosh
+computers with USB ports to the MS100 Loconet interface.
+<LI><A HREF="DigiTrax/DigitraxPower/DigitraxPower.html">Notes on power wiring for Digitrax components</A>:
+Some information on why Digitrax wants you to use different power transformers for the different types of cards
+</UL>
+
+<h2>Acknowledgements</h2>
+
+<A HREF="../Acknowledgements.html">Many people</a>
+have contributed, and we thank 
+<A HREF="../Acknowledgements.html">all of them</a>.
+
+<HR>
+<BR>Site hosted by: <BR>
+<A href="http://sourceforge.net"> 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A>
+
+<!-- Begin Small Box -->
+<form method="POST" action="http://mindit.netmind.com/mindit.shtml">
+<input type="hidden" name="FORM" value="C">
+<table border="0" cellpadding="5" cellspacing="0" bgcolor="#666666"><tr><td align="center">
+<font face="arial,helvetica" size="-1" color="#ffffff"><b>Click to receive email <br>when this page changes</b></font></td>
+</tr><tr><td align="center">
+<input type="image" src="http://mindit.netmind.com/images/mindit.gif" border="0"></td>
+</tr><tr bgcolor="#FFFFCC"><td align="center">
+<font face="arial,helvetica" size="-2">&#149;<b> Powered by <a href="http://www.netmind.com"><font color="#000000">NetMind</font></a> </b>&#149;</font>
+</td></tr></table>
+<input type=hidden value="http://jmri.sourceforge.net/index.html" name="REDIRECT"> 
+</form>
+<!-- End Small Box -->
+ 
+
+<script language=javascript 
+src="http://ss.webring.com/navbar?f=j;y=bob_jacobsen15;u=100088115910095949">
+</script><noscript><center>
+<table bgcolor=gray cellspacing=0 border=2 bordercolor=red><tr>
+<td><table cellpadding=2 cellspacing=0 border=0><tr><td align=center>
+<font face=arial size=-1>This site is a member of WebRing. 
+<br>To browse visit <a href="http://ss.webring.com/navbar?f=l;y=bob_jacobsen15;u=100088115910095949">
+Here</a>.</font></td></tr></table></td></tr></table>
+</center></noscript>
+
+<hr>
+Bob Jacobsen<BR>
+jake@physics.berkeley.edu
+
+</body>
+</html>
