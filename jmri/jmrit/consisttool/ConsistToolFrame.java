@@ -4,7 +4,7 @@
  * Description:          Frame object for manipulating consists.
  *
  * @author               Paul Bender Copyright (C) 2003
- * @version              $Revision: 1.5 $
+ * @version              $Revision: 1.6 $
  */
 
 
@@ -330,7 +330,12 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 
     public void consistSelected() {
 	if(log.isDebugEnabled()) log.debug("Consist Selected");
-	if(consistAdrBox.getSelectedItem().equals("")) {
+	if(consistAdrBox.getSelectedIndex()==-1 && !adrTextField.getText().equals("")) {
+	   if(log.isDebugEnabled()) log.debug("No Consist Selected");
+	   adrTextField.setEnabled(false);
+	   recallConsist();
+	}
+	else if(consistAdrBox.getSelectedItem().equals("")) {
 	   if(log.isDebugEnabled()) log.debug("Null Consist Selected");
 	   adrTextField.setText("");
 	   adrTextField.setEnabled(true);
