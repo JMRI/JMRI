@@ -8,7 +8,7 @@ package jmri.jmrix;
  * Carries a sequence of characters, with accessors.
  *
  * @author	        Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 abstract public class AbstractMRMessage {
 
@@ -37,6 +37,13 @@ abstract public class AbstractMRMessage {
         for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
         setTimeout(m.getTimeout());
         setNeededMode(m.getNeededMode());
+    }
+
+    // from String
+    public AbstractMRMessage(String s) {
+        this(s.length());
+        for (int i = 0; i<_nDataChars; i++)
+            _dataChars[i] = s.charAt(i);
     }
 
     public void setOpCode(int i) { _dataChars[0]=i;}

@@ -22,7 +22,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 abstract public class AbstractMRTrafficController {
 
@@ -96,6 +96,7 @@ abstract public class AbstractMRTrafficController {
      * or null if the TC should just sleep.
      */
     abstract protected AbstractMRMessage pollMessage();
+    abstract protected AbstractMRListener pollReplyHandler();
 
     protected AbstractMRListener mLastSender = null;
 
@@ -248,7 +249,7 @@ abstract public class AbstractMRTrafficController {
                         if (msg != null) {
                             // yes, send that
                             mCurrentState = WAITMSGREPLYSTATE;
-                            forwardToPort(msg, null);
+                            forwardToPort(msg, pollReplyHandler());
                             // wait for reply
                             try {
                                 synchronized(xmtRunnable) {

@@ -8,7 +8,7 @@ package jmri.jmrix;
  * Handles the character manipulation.
  *
  * @author		Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 abstract public class AbstractMRReply {
     // is this logically an abstract class?
@@ -77,6 +77,23 @@ abstract public class AbstractMRReply {
         int val = -1;
         try {
             val = Integer.parseInt(s);
+        } catch (Exception e) {
+            log.error("Unable to get number from reply: \""+s+"\" index: "+index
+                      +" message: \""+toString()+"\"");
+        }
+        return val;
+    }
+
+    public int pollValue() {  // integer value of HHHH
+        int index = 0;
+        index = skipWhiteSpace(index);
+        index = skipPrefix(index);
+        index = skipWhiteSpace(index);
+        String s = ""+(char)getElement(index)+(char)getElement(index+1)
+                    +(char)getElement(index+2)+(char)getElement(index+3);
+        int val = -1;
+        try {
+            val = Integer.parseInt(s,16);
         } catch (Exception e) {
             log.error("Unable to get number from reply: \""+s+"\" index: "+index
                       +" message: \""+toString()+"\"");
