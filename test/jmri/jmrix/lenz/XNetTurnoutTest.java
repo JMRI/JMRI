@@ -3,7 +3,7 @@
  *
  * Description:	    tests for the jmri.jmrix.loconet.LnTurnout class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 
 package jmri.jmrix.lenz;
@@ -14,6 +14,7 @@ import junit.framework.*;
 public class XNetTurnoutTest extends jmri.AbstractTurnoutTest {
 
 	public void setUp() {
+        log4jfixtureInst.setUp();
 		// prepare an interface
 		lnis = new XNetInterfaceScaffold(new LenzCommandStation());
 
@@ -27,13 +28,13 @@ public class XNetTurnoutTest extends jmri.AbstractTurnoutTest {
 	XNetInterfaceScaffold lnis;
 
 	public void checkClosedMsgSent() {
-		Assert.assertEquals("closed message","52 5 0 0 ",
+		Assert.assertEquals("closed message","52 5 10 0 ",
                 lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
 		Assert.assertEquals("CLOSED state",jmri.Turnout.CLOSED,t.getCommandedState());
 	}
 
 	public void checkThrownMsgSent() {
-		Assert.assertEquals("thrown message","52 5 1 0 ",
+		Assert.assertEquals("thrown message","52 5 11 0 ",
                 lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
 		Assert.assertEquals("THROWN state",jmri.Turnout.THROWN,t.getCommandedState());
 	}
@@ -97,6 +98,9 @@ public class XNetTurnoutTest extends jmri.AbstractTurnoutTest {
 		return suite;
 	}
 
-	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetTurnoutTest.class.getName());
+    // The minimal setup for log4J
+    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
+    protected void tearDown() { log4jfixtureInst.tearDown(); }
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetTurnoutTest.class.getName());
 
 }

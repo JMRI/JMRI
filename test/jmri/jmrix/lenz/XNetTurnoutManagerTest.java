@@ -1,9 +1,9 @@
 /**
  * XNetTurnoutManagerTest.java
  *
- * Description:	    tests for the jmri.jmrix.loconet.LnTurnoutManager class
+ * Description:	    tests for the jmri.jmrix.lenz.XNetTurnoutManager class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 
 package jmri.jmrix.lenz;
@@ -27,6 +27,7 @@ public class XNetTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 	XNetInterfaceScaffold lnis;
 
 	public void setUp() {
+        log4jfixtureInst.setUp();
 		// prepare an interface, register
 		lnis = new XNetInterfaceScaffold(new LenzCommandStation());
 		// create and register the manager object
@@ -54,17 +55,17 @@ public class XNetTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 		// send messages for 21, 22
 		// notify that somebody else changed it...
 		XNetMessage m1 = new XNetMessage(4);
-		m1.setOpCode(0xb1);
-		m1.setElement(1, 0x14);     // set CLOSED
-		m1.setElement(2, 0x20);
+		m1.setElement(0, 0x52);
+		m1.setElement(1, 0x05);     // set CLOSED
+		m1.setElement(2, 0x10);
 		m1.setElement(3, 0x7b);
 		lnis.sendTestMessage(m1);
 
-		// notify the Ln that somebody else changed it...
+		// notify that somebody else changed it...
 		XNetMessage m2 = new XNetMessage(4);
-		m2.setOpCode(0xb0);
-		m2.setElement(1, 0x15);     // set CLOSED
-		m2.setElement(2, 0x20);
+		m2.setElement(0, 0x52);
+		m2.setElement(1, 0x05);     // set CLOSED
+		m2.setElement(2, 0x12);
 		m2.setElement(3, 0x7a);
 		lnis.sendTestMessage(m2);
 
@@ -122,6 +123,9 @@ public class XNetTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 		return suite;
 	}
 
-	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetTurnoutManagerTest.class.getName());
+    // The minimal setup for log4J
+    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
+    protected void tearDown() { log4jfixtureInst.tearDown(); }
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetTurnoutManagerTest.class.getName());
 
 }

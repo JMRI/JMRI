@@ -11,7 +11,7 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.XNetMessage class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class XNetMessageTest extends TestCase {
 
@@ -89,6 +89,10 @@ public class XNetMessageTest extends TestCase {
 		return suite;
 	}
 
-	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetMessageTest.class.getName());
+    // The minimal setup for log4J
+    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
+    protected void setUp() { log4jfixtureInst.setUp(); }
+    protected void tearDown() { log4jfixtureInst.tearDown(); }
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetMessageTest.class.getName());
 
 }

@@ -10,21 +10,12 @@ import apps.tests.*;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class XNetTrafficRouterTest extends TestCase {
-    Log4JFixture log4jfixtureInst = new Log4JFixture(this);
 
     public XNetTrafficRouterTest(String s) {
         super(s);
-    }
-
-    protected void setUp() {
-        log4jfixtureInst.setUp();
-    }
-
-    protected void tearDown() {
-        log4jfixtureInst.tearDown();
     }
 
     public void testConnectAndSend() {
@@ -87,5 +78,10 @@ public class XNetTrafficRouterTest extends TestCase {
         router.disconnectPort(upstream);
         Assert.assertTrue("not connected", !router.status());
     }
+
+    // The minimal setup for log4J
+    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
+    protected void setUp() { log4jfixtureInst.setUp(); }
+    protected void tearDown() { log4jfixtureInst.tearDown(); }
 
 }
