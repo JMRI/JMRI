@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Atlas_342.xml,v 1.1 2003-07-16 06:03:41 jacobsen Exp $ -->
+<!-- $Id: Atlas_342.xml,v 1.2 2003-08-01 20:15:40 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Michael Mosher"
 			version="1" lastUpdated="20030706" />
 		<!-- version 1 - made from Lenz_DriveSelect version 3 -->
 
 <decoder>
-	<family name="342 Four Function Dual Mode" mfg="Atlas" 
+	<family name="Four Function Dual Mode" mfg="Atlas" 
 			lowVersionID="46" highVersionID="46">
-		<model model="342 Four Function Dual Mode" numOuts="4" numFns="8" />
+		<model model="Four Function Dual Mode" numOuts="4" numFns="8" />
 	</family>
 
 	<programming direct="yes" paged="yes"
@@ -21,7 +21,7 @@
 						item="Short Address"  default="03">
 			<shortAddressVal/></variable>
 
-		<variable label="Kick Start" CV="2" default="16"
+		<variable label="Start Volts" CV="2" item="Vstart" default="16"
 				comment="Range 0-31">
 			<decVal></decVal>
 			</variable>

@@ -1,12 +1,14 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Lenz_DriveSelect.xml,v 1.7 2003-07-16 05:59:11 jacobsen Exp $ -->
+<!-- $Id: Lenz_DriveSelect.xml,v 1.8 2003-08-01 20:15:40 jacobsen Exp $ -->
 <decoder-config>
-		<version author="jake@physics.berkeley.edu"
-			version="3" lastUpdated="20030706" />
+		<version author="Phil Grainger (phil.grainger@ca.com)"
+			version="5" lastUpdated="20030731" />
 			<!-- Made from the Lenz_54.xml file version 4 -->
 		<!-- version 2 - add consist direction - jake -->
 		<!-- Version 3 - added outputs C & D programing, copied from Lenz_54.xml  -->
+		<!-- Version 4 - fixed varable name mismatch between definition and dispaly on Lenz pane & vstart bug  --> 
+		<!-- Version 5 - made speed table selection more generic -->
 
 
 <decoder>
@@ -25,7 +27,7 @@
 						item="Short Address"  default="03">
 			<shortAddressVal/></variable>
 
-		<variable label="Kick Start" CV="2" default="16"
+		<variable label="Start Volts" CV="2" item="Vstart" default="16"
 				comment="Range 0-31">
 			<decVal></decVal>
 			</variable>
@@ -102,8 +104,8 @@
 		<variable label="Use Speed Table" CV="29" mask="XXXVXXXX"
 				item="Speed Table Definition">
 			<enumVal>
-				<enumChoice choice="Use Vstart, Vmid, Vhigh"/>
-				<enumChoice choice="Use Table"/>
+				<enumChoice choice="Don't use Speed Table"/>
+				<enumChoice choice="Use Speed Table"/>
 				</enumVal>
 			</variable>
 
@@ -151,7 +153,7 @@
 		         </enumVal>
 			</variable>
 
-	<variable label="Front headlight (Output A) dimming" CV="51" 
+	<variable label="Output A dimming" CV="51" 
 	          	comment="Controls how front headlights dim"
                	mask="XXXXXVXX">
 		     <enumVal>
@@ -198,7 +200,7 @@
 			</variable>
 
 
-	<variable label="Back headlight (Output B) dimming control" CV="57"
+	<variable label="Output B dimming control" CV="57"
               	mask="XXXXXXVX">
 		     <enumVal>
 		         <enumChoice choice="Always dim"/>
@@ -361,8 +363,14 @@
 	<display item="Motor Drive Selection" />
 	<display item="Decoder Software Version" />
 	<label label=" "/>
+	</column>
+	
+	<column>
+	<display item="Directional Headlights" />
 
-	<display item="Front headlight (Output A) dimming" />
+	<label label=" "/>
+
+	<display item="Output A dimming" />
 	<display item="Output A dimming control" />
 	<display item="Output A is Gyrolight" format="checkbox" />
 	<display item="Output A is Mars light" format="checkbox" />
@@ -372,7 +380,7 @@
 
 	<label label=" "/>
 
-	<display item="Back headlight (Output B) dimming control" />
+	<display item="Output B dimming" />
 	<display item="Output B dimming control" />
 	<display item="Output B is Gyrolight" format="checkbox" />
 	<display item="Output B is Mars light" format="checkbox"  />
@@ -392,4 +400,4 @@
 
 </decoder-config>
 
-
+

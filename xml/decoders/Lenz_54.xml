@@ -1,11 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Lenz_54.xml,v 1.4 2003-06-05 17:45:10 jacobsen Exp $ -->
+<!-- $Id: Lenz_54.xml,v 1.5 2003-08-01 20:15:40 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Bob Jacobsen jake@physics.berkeley.edu"
-			version="2" lastUpdated="20030606" />
+		<version author="Phil Grainger (phil.grainger@ca.com)"
+			version="4" lastUpdated="20030731" />
 
 		<!-- version 2 - add consist direction - jake -->
+		<!-- version 3 fix vstart bug -->
+		<!-- version 4 made speed table selection more generic -->
 
 <!-- These are the version 5.4 decoders, with "12 bit BEMF" or "5th gen BEMF " -->
 <!-- and "XF & special" -->
@@ -58,7 +60,7 @@
 						item="Short Address"  default="03">
 			<shortAddressVal/></variable>
 
-		<variable label="Kick Start" CV="2"
+		<variable label="Start Volts" CV="2" item="Vstart"
 				comment="Range 0-31">
 			<decVal></decVal>
 			</variable>
@@ -138,8 +140,8 @@
 		<variable label="Use Speed Table" CV="29" mask="XXXVXXXX"
 				item="Speed Table Definition">
 			<enumVal>
-				<enumChoice choice="Use Vstart, Vmid, Vhigh"/>
-				<enumChoice choice="Use Table"/>
+				<enumChoice choice="Don't use Speed Table"/>
+				<enumChoice choice="Use Speed Table"/>
 				</enumVal>
 			</variable>
 
@@ -425,4 +427,5 @@
 </pane>
 
 </decoder-config>
+
 
