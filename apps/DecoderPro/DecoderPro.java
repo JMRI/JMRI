@@ -12,7 +12,7 @@ import jmri.util.oreilly.BasicWindowMonitor;
  * DecoderPro application.
  *
  * @author			Bob Jacobsen
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class DecoderPro extends JPanel {
 	public DecoderPro() {
@@ -49,6 +49,8 @@ public class DecoderPro extends JPanel {
         JMenu editMenu = new JMenu("Edit");
         menuBar.add(editMenu);
 	        editMenu.add(prefs);
+
+        menuBar.add(new jmri.jmrit.roster.RosterMenu("Roster", jmri.jmrit.roster.RosterMenu.MAINMENU, this));
 
         JMenu toolMenu = new JMenu("Tools");
         menuBar.add(toolMenu);
