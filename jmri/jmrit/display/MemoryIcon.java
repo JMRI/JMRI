@@ -17,7 +17,7 @@ import javax.swing.JPopupMenu;
  * have to subclass to do that.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -26,15 +26,27 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         // super ctor call to make sure this is an icon label
         super(new NamedIcon("resources/icons/misc/X-red.gif",
                             "resources/icons/misc/X-red.gif"));
-        setDefaultIcon();
+                            
+        // have to do following explicitly, after the ctor
+        resetDefaultIcon();
+        
         setMap();
         icon = true;
         text = false;
     }
 
-	private void setDefaultIcon() {
-        if (defaultIcon == null) defaultIcon = new NamedIcon("resources/icons/misc/X-red.gif",
+    private void resetDefaultIcon() {
+        defaultIcon = new NamedIcon("resources/icons/misc/X-red.gif",
                             "resources/icons/misc/X-red.gif");
+    }
+    
+	public void setDefaultIcon(NamedIcon n) {
+        defaultIcon = n;
+        displayState(); // in case changed
+	}
+	
+	public NamedIcon getDefaultIcon() {
+	    return defaultIcon;
 	}
 	
 	private void setMap() {
@@ -93,7 +105,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     	if (height > 0) return height;
     	// no, loop to update
     	if (map == null) setMap();
-    	if (defaultIcon == null) setDefaultIcon();
+    	if (defaultIcon == null) resetDefaultIcon();
     	height = defaultIcon.getIconHeight();
     	com.sun.java.util.collections.Collection collection = map.values();
     	com.sun.java.util.collections.Iterator iterator = collection.iterator();
@@ -115,7 +127,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     	if (width > 0) return width;
     	// no, loop to update
     	if (map == null) setMap();
-    	if (defaultIcon == null) setDefaultIcon();
+    	if (defaultIcon == null) resetDefaultIcon();
     	width = defaultIcon.getIconWidth();
     	com.sun.java.util.collections.Collection collection = map.values();
     	com.sun.java.util.collections.Iterator iterator = collection.iterator();
