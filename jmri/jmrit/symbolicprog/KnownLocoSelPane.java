@@ -26,7 +26,7 @@ import com.sun.java.util.collections.List;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class KnownLocoSelPane extends LocoSelPane  {
 
@@ -91,9 +91,9 @@ public class KnownLocoSelPane extends LocoSelPane  {
         pane3a.add(new JLabel("Programmer format: "));
 
         // create the programmer box
-        programmerBox = new JComboBox(findListOfProgFiles());
+        programmerBox = new JComboBox(ProgDefault.findListOfProgFiles());
         programmerBox.setSelectedIndex(0);
-        if (defaultProgFile!=null) programmerBox.setSelectedItem(defaultProgFile);
+        if (ProgDefault.getDefaultProgFile()!=null) programmerBox.setSelectedItem(ProgDefault.getDefaultProgFile());
         pane3a.add(programmerBox);
         // pane3a.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
         add(pane3a);

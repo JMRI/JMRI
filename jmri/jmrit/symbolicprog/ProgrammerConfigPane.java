@@ -13,15 +13,15 @@ import javax.swing.JPanel;
  *
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class ProgrammerConfigPane extends JPanel {
 
     public ProgrammerConfigPane() {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         add(new JLabel("Format:"));
-        add(programmerBox = new JComboBox(jmri.jmrit.symbolicprog.CombinedLocoSelPane.findListOfProgFiles()));
-        programmerBox.setSelectedItem(jmri.jmrit.symbolicprog.CombinedLocoSelPane.defaultProgFile);
+        add(programmerBox = new JComboBox(jmri.jmrit.symbolicprog.ProgDefault.findListOfProgFiles()));
+        programmerBox.setSelectedItem(jmri.jmrit.symbolicprog.ProgDefault.getDefaultProgFile());
 
         // also create the advanced panel
         advancedPanel = new JPanel();

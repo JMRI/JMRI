@@ -41,9 +41,16 @@ import com.sun.java.util.collections.List;
  * <LI>isDecoderSelected
  * <LI>selectedDecoderName
  * </UL>
+ * 
+ * <P>
+ * On MacOS Classic, this class was causing a problem with multiple 
+ * initialization of the programmer file default.  See
+ * {@link ProgDefaults} and 
+ * {@link jmri.jmrit.symbolicprog.configurexml.ProgrammerConfigPaneXml}
+ * for further information.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeListener {
     
@@ -183,9 +190,9 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         pane3a.add(new JLabel("Programmer format: "));
         
         // create the programmer box
-        programmerBox = new JComboBox(findListOfProgFiles());
+        programmerBox = new JComboBox(ProgDefault.findListOfProgFiles());
         programmerBox.setSelectedIndex(0);
-        if (defaultProgFile!=null) programmerBox.setSelectedItem(defaultProgFile);
+        if (ProgDefault.getDefaultProgFile()!=null) programmerBox.setSelectedItem(ProgDefault.getDefaultProgFile());
         pane3a.add(programmerBox);
         pane3a.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
         add(pane3a);
