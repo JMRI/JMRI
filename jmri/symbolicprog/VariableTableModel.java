@@ -113,6 +113,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 	}
 		
 	public void setValueAt(Object value, int row, int col) { 
+		setFileDirty(true);
 	}
 	
 	// for loading config:	
@@ -197,6 +198,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 	}
 	
 	public void newDecVariableValue(String name, int CV, String mask) {
+		setFileDirty(true);
 		String comment = "";
 		boolean readOnly = false;
 		int minVal = 0;
@@ -210,6 +212,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 	
 	public void actionPerformed(ActionEvent e) {
 		if (log.isDebugEnabled()) log.debug("action command: "+e.getActionCommand());
+		setFileDirty(true);
 		char b = e.getActionCommand().charAt(0);
 		int row = Integer.valueOf(e.getActionCommand().substring(1)).intValue();
 		if (log.isDebugEnabled()) log.debug("event on "+b+" row "+row);
@@ -224,13 +227,32 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 	}
 	
 	public void propertyChange(PropertyChangeEvent e) {
+		setFileDirty(true);
 		fireTableDataChanged();	
 	}
 
 	public void configDone() {
 		fireTableDataChanged();	
 	}
+
+	// fileDirty represents any chance to values, etc, hence rewriting the
+	// file is desirable
+	public boolean fileDirty() {
+		return _fileDirty;
+	}
+	public void setFileDirty(boolean b) {
+		_fileDirty = b;
+	}
+	private boolean _fileDirty;
 	
+	public boolean decoderDirty() {
+		int len = rowVector.size();
+		for (int i=0; i< len; i++) {
+			if (((VariableValue)(rowVector.elementAt(i))).getState() == CvValue.EDITTED ) return true;
+		}
+		return false;
+	}
+
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(VariableTableModel.class.getName());
 
 }

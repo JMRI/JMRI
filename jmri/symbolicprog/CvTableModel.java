@@ -149,4 +149,12 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 			fireTableDataChanged();
 		}
 	}
+	
+	public boolean decoderDirty() {
+		int len = _cvDisplayVector.size();
+		for (int i=0; i< len; i++) {
+			if (((CvValue)(_cvDisplayVector.elementAt(i))).getState() == CvValue.EDITTED ) return true;
+		}
+		return false;
+	}
 }

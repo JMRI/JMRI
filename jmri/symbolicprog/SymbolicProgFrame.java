@@ -30,9 +30,15 @@ import org.jdom.input.DOMBuilder;
 import org.jdom.input.SAXBuilder;
 import org.xml.sax.InputSource;
 
-public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgListener {
+public class SymbolicProgFrame extends javax.swing.JFrame  {
 
 	// GUI member declarations
+
+	JTextField locoRoadName 	= new JTextField();
+	JTextField locoRoadNumber 	= new JTextField();
+	JTextField locoMfg 			= new JTextField();
+	JTextField locoModel 		= new JTextField();
+		
 	JButton selectFileButton = new JButton();
 	JButton storeFileButton = new JButton();
 
@@ -60,11 +66,12 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 
 	ProgModePane   modePane = new ProgModePane(BoxLayout.X_AXIS);
 			
-	JLabel vendor  = new JLabel("         ");
-	JLabel model   = new JLabel("         ");
+	JLabel decoderMfg  = new JLabel("         ");
+	JLabel decoderModel   = new JLabel("         ");
 	
-	// member to find and remember the configuration file
-	final JFileChooser fc = new JFileChooser("xml");
+	// member to find and remember the configuration file in and out
+	final JFileChooser fci = new JFileChooser("xml");
+	final JFileChooser fco = new JFileChooser("xml");
 
 	// ctor
 	public SymbolicProgFrame() {
@@ -114,7 +121,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 		});
 		storeFileButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				JOptionPane.showMessageDialog(storeFileButton, "Sorry, not yet implemented");
+				writeFile();
 			}
 		});
 		newCvButton.addActionListener(new java.awt.event.ActionListener() {
@@ -128,19 +135,38 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 			}
 		});
 			
+			setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+			addWindowListener(new java.awt.event.WindowAdapter() {
+			public void windowClosing(java.awt.event.WindowEvent e) {
+				thisWindowClosing(e);
+			}
+		});
+
 		// general GUI config
 		setTitle("Symbolic Programmer");
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
 		// install items in GUI
+		JPanel tPane1 = new JPanel();
+			tPane1.setLayout(new BoxLayout(tPane1, BoxLayout.X_AXIS));
+			tPane1.add(new JLabel("Road Name: "));  
+			tPane1.add(locoRoadName);
+			tPane1.add(new JLabel("Number: "));  
+			tPane1.add(locoRoadNumber);
+			tPane1.add(new JLabel("Manufacturer: "));  
+			tPane1.add(locoMfg);
+			tPane1.add(new JLabel("Model: "));  
+			tPane1.add(locoModel);
+		getContentPane().add(tPane1);
+		
 		JPanel tPane3 = new JPanel();
 			tPane3.setLayout(new BoxLayout(tPane3, BoxLayout.X_AXIS));
 			tPane3.add(selectFileButton);  
 			tPane3.add(Box.createHorizontalGlue());
-			tPane3.add(new JLabel(" Vendor: "));
-			tPane3.add(vendor);
+			tPane3.add(new JLabel("Decoder Manufacturer: "));
+			tPane3.add(decoderMfg);
 			tPane3.add(new JLabel(" Model: "));
-			tPane3.add(model);
+			tPane3.add(decoderModel);
 			tPane3.add(Box.createHorizontalGlue());
 			tPane3.add(storeFileButton);  
 			tPane3.add(Box.createHorizontalGlue());
@@ -179,14 +205,14 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
   	
   	protected void selectFileButtonActionPerformed(java.awt.event.ActionEvent e) {
 		// show dialog
-		int retVal = fc.showOpenDialog(this);
+		int retVal = fci.showOpenDialog(this);
 
 		// handle selection or cancel
 		if (retVal == JFileChooser.APPROVE_OPTION) {
-			File file = fc.getSelectedFile();
+			File file = fci.getSelectedFile();
 			if (log.isInfoEnabled()) log.info("selectFileButtonActionPerformed: located file "+file+" for XML processing");
 			// handle the file (later should be outside this thread?)
-			readAndParseDecoderConfig(file);
+			readAndParseConfigFile(file);
 			if (log.isInfoEnabled()) log.info("selectFileButtonActionPerformed: parsing complete");
 
 		}
@@ -221,53 +247,112 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 
 	// Close the window when the close box is clicked
 	void thisWindowClosing(java.awt.event.WindowEvent e) {
+		// check for various types of dirty - first table data not written back
+		if (cvModel.decoderDirty() || variableModel.decoderDirty() ) {
+			if (JOptionPane.showConfirmDialog(null, 
+		   		"Some changes have not been written to the decoder. They will be lost. Close window?", 
+		    	"choose one", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.CANCEL_OPTION) return;
+		    }
+		if (variableModel.fileDirty() ) {
+			if (JOptionPane.showConfirmDialog(null, 
+		    	"Some changes have not been written to a configuration file. Close window?", 
+		    	"choose one", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.CANCEL_OPTION) return;
+		    }
+
+		//OK, close
 		setVisible(false);
 		modePane.done();
-		dispose();
-	// and disconnect from the SlotManager
-	
+		dispose();	
 	}
-
-	// handle programming later
-	public void programmingOpReply(int value, int status) {}
 	
-	// data members for XML configuration
-	Document doc = null;
-	Namespace ns = null;
-	Element root = null;
-
-	void readAndParseDecoderConfig(File file) {
+	void readAndParseConfigFile(File file) {
 		try {
 			// This is taken in large part from "Java and XML" page 354
 			
 			// Open and parse file
-			ns = Namespace.getNamespace("decoder",
+			Namespace ns = Namespace.getNamespace("decoder",
 										"http://jmri.sourceforge.net/xml/decoder");
 			SAXBuilder builder = new SAXBuilder(true);  // arugment controls validation, on for now
-			doc = builder.build(file);
+			Document doc = builder.build(file);
 			
 			// find root
-			root = doc.getRootElement();
+			Element root = doc.getRootElement();
+			
+			// decode type, invoke proper processing routine
+			if (root.getChild("decoder", ns) != null) processDecoderFile(root.getChild("decoder", ns), ns);
+			else if (root.getChild("locomotive", ns) != null) processLocoFile();
+			else log.error("Unrecognized config file contents");
+		} catch (Exception e) {
+			if (log.isInfoEnabled()) log.warn("readAndParseDecoderConfig: readAndParseDecoderConfig exception: "+e);
+		}
+	}
 		
+	void processDecoderFile(Element base, Namespace ns) {
 			// find decoder id, assuming first decoder is fine for now (e.g. one per file)
-			Element decoderID = root.getChild("decoder",ns).getChild("id",ns);
+			Element decoderID = base.getChild("id",ns);
 			
 			// store name, type
-			vendor.setText(root.getChild("decoder", ns).getChild("id",ns).getAttribute("mfg").getValue());
-			model.setText(root.getChild("decoder", ns).getChild("id",ns).getAttribute("model").getValue());
+			decoderMfg.setText(base.getChild("id",ns).getAttribute("mfg").getValue());
+			decoderModel.setText(base.getChild("id",ns).getAttribute("model").getValue());
 			
 			// start loading variables to table
-			List varList = root.getChild("decoder", ns).getChild("variables",ns).getChildren("variable",ns);
+			List varList = base.getChild("variables",ns).getChildren("variable",ns);
 			for (int i=0; i<varList.size(); i++) {
 				// load each row
 				variableModel.setRow(i, (Element)(varList.get(i)), ns);
 				}
 			variableModel.configDone();
-			
-		} catch (Exception e) {
-			if (log.isInfoEnabled()) log.warn("readAndParseDecoderConfig: readAndParseDecoderConfig exception: "+e);
-		}
+	}
 
+	void processLocoFile() {
+			// first, load the variable definitions for the decoder
+			// processDecoderFile()
+			// now get the rest of the loco specific info and store
+			log.error("dont have loco loading code yet");
+	}
+
+	void writeFile() {
+		try {
+			// get the file
+			int retVal = fco.showSaveDialog(this);
+			// handle selection or cancel
+			if (retVal != JFileChooser.APPROVE_OPTION) return; // leave early
+				
+			File file = fco.getSelectedFile();
+
+			// This is taken in large part from "Java and XML" page 368 
+			Namespace ns = Namespace.getNamespace("locomotive",
+										"http://jmri.sourceforge.net/xml/decoder");
+
+			// create root element
+			Element root = new Element("locomotive-config", ns);
+			Document doc = new Document(root);
+			doc.setDocType(new DocType("locomotive:locomotive-config","DTD/locomotive-config.dtd"));
+		
+			// add some elements
+			root.addContent(new Element("locomotive",ns)		// locomotive values are first item
+					.addAttribute("roadNumber",locoRoadNumber.getText())
+					.addAttribute("roadName",locoRoadName.getText())
+					.addAttribute("mfg",locoMfg.getText())
+					.addAttribute("model",locoModel.getText())
+					.addContent(new Element("decoder", ns)
+									.addAttribute("model",decoderModel.getText())
+									.addAttribute("mfg",decoderMfg.getText())
+									.addAttribute("versionID","")
+									.addAttribute("mfgID","")
+								)
+					);
+			// write the result to selected file
+			java.io.FileOutputStream o = new java.io.FileOutputStream(file);
+			XMLOutputter fmt = new XMLOutputter();
+			fmt.setNewlines(true);   // pretty printing
+			fmt.setIndent(true);
+			fmt.output(doc, o);
+			
+			}
+		catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 	
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SymbolicProgFrame.class.getName());
