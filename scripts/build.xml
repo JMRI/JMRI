@@ -1,6 +1,6 @@
 <!-- ugly first attempt at an ANT build.xml file for JMRI development -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.6 $ -->
+<!-- Revision $Revision: 1.7 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -29,6 +29,7 @@
     <pathelement location="../lib/comm.jar" />
     <pathelement location="../lib/jdom-jdk11.jar" />
     <pathelement location="../lib/log4j.jar" />
+    <pathelement location="../lib/Serialio.jar" />
     <pathelement location="../lib/junit.jar" />
     <pathelement location="classes/" />
   </path>
