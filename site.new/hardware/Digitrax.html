@@ -1,0 +1,302 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+ <TITLE>
+      JMRI Hardware Guide: Digitrax DCC via MS-100 or LocoBuffer
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Bob Jacobsen, LBL" name=Author>
+    <META name="keywords" content="Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
+
+    <link rel="stylesheet" type="text/css" href="../css/default.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="../css/print.css" media="print">
+    <link rel="icon" href="../images/jmri-16.png" type="image/png">
+    <link rel="home" title="Home" href="http://jmri.sourceforge.net/">
+</head>
+
+<body>
+<div id="container">
+  <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
+<!-- Header -->
+    <div id="header">
+	<!-- Logo -->
+	<a href="/site.new/" title="Return to home page" accesskey="1">
+	    <img src="/site.new//images/logo-jmri.gif" width="160" height="135" alt="JMRI Logo"> </a>
+	<!-- /Logo -->
+	<ul id="mainNav"> <!-- Top tool bar -->
+	   <li><a href="/site.new/download/"  title="Get the latest software">Download</a></li>
+	   <li><a href="/site.new/apps/"      title="Learn about JMRI applications">Applications</a></li>
+	   <li><a href="/site.new/hardware/"  title="What hardware does JMRI support">Hardware</a></li>
+	   <li><a href="/site.new/doc/Manual/"   title="Trouble-shooting, and FAQs">Manual</a></li>
+	   <li><a href="/site.new/doc/Technical/" title="Developing and extending JMRI">Developers</a></li>
+	   <li><A href="/site.new/community/" title="Who is JMRI">Acknowledgements</a></li>
+	</ul>
+
+	<div id="searchform"> <!--  Search Form -->
+	  <form id="search" method="get" action="http://www.google.com/custom">
+	     <label for="q" title="Search JMRI.SourceForge.net">search JMRI: </label>
+	     <input type="hidden" name="cof" value="LW:200;LH:95;L:http://JMRI.sourceforge.net/images/logo.gif;GIMP:#cc0000;T:black;ALC:#0000ff;GFNT:grey;LC:#990000;BGC:white;AH:center;VLC:purple;GL:0;GALT:#666633;AWFID:9262c37cefe23a86;">
+	    <input type="hidden" name="domains" value="JMRI.sourceforge.net">
+	    <input type="hidden" name="sitesearch" value="JMRI.sourceforge.net">
+	    <input type="text" id="q" name="q" accesskey="s" size="30">
+	    <input type="submit" id="submit" value="go">
+	  </form>
+       </div> <!--  End #searchform -->
+    </div> <!-- closes #header-->
+<!-- /Header -->
+
+  <hr class="hide">
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1> 
+      JMRI Hardware Guide: Digitrax DCC via MS-100 or LocoBuffer
+      </h1>
+
+	<h2>Supported Hardware</h2>
+	<p>DecoderPro works with your DIgitrax command station to program
+	decoders.  To do this, it communicates with the command station
+	over the LocoNet using an MS100 or LocoBuffer adapter.</p>
+	<ul>
+	  <li>Zephyr Starter Set</li>
+	  <li>Super Empire Builder Set</li>
+	  <li>Super Chief Set</li>
+	  <li>DCS50 Command Station/Booster/Throttle </li>
+	  <li>DB150 Command Station/Booster</li>
+	  <li>DCS100 Command Station/Booster</li>
+	  <li>DCS200 Command Station/Booster</li>
+	  <li><a href="http://www.uhlenbrock.de/3/index.htm">Intellibox: The Uhlenbrock Central Unit</a></li>
+	  <p>
+	  <li><a href="http://www.locobuffer.com/LocoBuffer.htm">LocoBuffer</a></li>
+	  <li><a href="http://www.digitrax.com/computer.htm">MS-100</a></li>
+	</ul>
+
+	<h2>Limitations</h2>
+	<P><b>PR-1 not currently supported</b> - Note that DecoderPro
+	cannot directly program decoders via a PR1 programmer.  You have to
+	use one of the command stations above.</p>
+
+	<p><b>Serial ports on older Macintoshes and the MS100</B> - 
+	A standard Macintosh RS422 serial port will not work directly with
+	an MS100. Since it doesn't have two output status lines (DTR and
+	RTS), it can't provide correct power to the MS100.  It may be
+	possible to provide external power; if you're interested in trying
+	this, we'd be happy to help work out a solution. A LocoBuffer will
+	work fine with a standard Macintosh RS422 serial port.</p>
+
+	<P><b>Apple USB connections</B> -
+	  DecoderPro is tested with both a MS100 and a LocoBuffer on a
+	  USB Macintosh using a Keyspan PDA Adapter to provide the serial
+	  port; for information please see <a
+	  href="http://jmri.sourceforge.net/DigiTrax/KeyspanAdapters/KeyspanUSB.html">http://jmri.sourceforge.net/DigiTrax/KeyspanAdapters/KeyspanUSB.html</a>.
+	  Note that we've had a report that certain models of the PDA
+	  adapter don't work at 57,600 baud with the LocoBuffer,  so please
+	  try 19,200 baud if you're having trouble. See locobuffer below
+	  for instructions on how to set the LocoBuffer's speed.  </p>
+	<h2>Setup</h2>
+
+	  <p>To connect your computer to a Digitrax DCC system, you need a
+	  either a MS100 or LocoBuffer adapter.  See below for more
+	  information on these.  The LocoBuffer is recommended.</p>
+	  
+	  <ol>
+	  <li>Connect
+	  your MS100 or LocoBuffer to the LocoNet, and connect your
+	  computer to it with the appropriate serial cable.</li>
+
+	  <li> Then go to the preferences panel of a JMRI-based program.
+	  This opens automatically the first time a program is run, or you
+	  can select it from the "Edit" menu.  </li>
+
+	  <li> Select "Digitrax MS100" or "Digitrax LocoBuffer" from the top
+	  selection box. You can then select the proper serial port in the
+	  second selection box.  </li>
+
+	  <li> The baud rate box will be fixed if you've selected an MS100.
+	  There are two choices for the LocoBuffer; select the one the
+	  corresponds to the jumper settings on the LocoBuffer board. We
+	  recommend that you start with the 19,200 choice for the
+	  LocoBuffer, see "locobuffer" below for more information.</li>
+
+	  <li> The fourth box should be left on "hardware flow control"
+	  unless you later consistently get a message about the LocoBuffer
+	  control leads being improperly set up, in which case you might
+	  want to try to bypass that by selecting "no flow control".  This
+	  box will be blank if you've selected MS100.</li>
+
+	  <li> In the fifth box, select the type of command station you
+	  have.  Note that this program can't read decoder CVs if you have
+	  an Empire Builder (DB150); that's due to the Empire Builder
+	  hardware, and there's nothing we can do about it.</li>
+
+	  <li> The series of radio buttons labelled "GUI style" allows you
+	  to select how the program will look.  "Metal" is the native Java
+	  look available on all types.  Other choices will vary with your
+	  computer type. "Motif", "Windows", "MacOS" and "MacOS Adaptive"
+	  look native on Linux, Windows, MacOS "Classic" and MacOS X
+	  respectively.</li>
+
+	  <li> In the bottom selection box, you can pick the default
+	  programmer format. You can override this each time you open the
+	  programmer, so this is here just for convenience.</li>
+
+	  <li> Click "Save".  You'll be asked if it's OK for the program to
+	  quit, click "Yes".</li>
+
+	  <li> Restart the program. You should be up and running.</li>
+	  </ol>
+
+	  <h2>Loconet Interfaces</h2>
+	  <p>There are two hardware adapters available to connect to a
+	  LocoNet.  The LocoBuffer is the strongly preferred alternative,
+	  as it reduces the load on the host computer and has a
+	  significantly smaller error rate.  The Digitrax MS100 interface
+	  adapter is also supported (except on MacOS X). </p>
+
+	  <P> Note that these are LocoNet interfaces, not standalone
+	  programmers like the Digitrax PR1.  Neither of them will let you
+	  read CVs if you have an Empire Builder!  For that you need a
+	  Chief or Zephyr command station.  (We're working on PR1 support,
+	  and would welcome help).</p>
+
+
+	  <ul>
+	  <LI>MS-100</LI>
+	  <p>In MS100 mode, the program attempts to open the port at 16600
+	  baud, the LocoNet rate.  If this fails, it attempts to open the
+	  port at 16457 baud, which is a standard rate that's close enough
+	  to work.  If this also fails, the program pops a dialog box to
+	  tell you that it can't set the port to a usable baud rate.  This
+	  will always happen on MacOS X, which is why the MS100 can't be
+	  used with MacOS X.  It has also happened on some computers with
+	  Intel-based hardware.  Because we can't be sure your computer
+	  will be able to talk to a MS100 without trying it, you should
+	  test this before spending money on the MS100. To do that:</p>
+	  <UL>
+	    <LI>Start the program.</li>
+	    <LI>Set the preferences for MS100 and your serial port. You
+	    don't need to have anything connected, but do select the port
+	    you will eventually be using. </li>
+	    <LI>Save the preferences.</li>
+	    <LI>Quit the program and restart it so that the preferences
+	    take effect.</li>
+	  </UL>
+	  
+	  <p>If you get a dialog box saying "Could not set baud rate...",
+	  then you won't be able to use your computer with a MS100.  You
+	  should use a LocoBuffer.</p>
+
+
+	  <p></p>
+	  <LI>LocoBuffer</LI>
+
+	  <p>The LocoBuffer was created by John Jabour (
+	    <a href="mailto:jjabour@optonline.net">jjabour@optonline.net</a>
+	    ).  More information is also available from his web page, 
+	  <a href="http://www.locobuffer.com/LocoBuffer.htm">http://www.locobuffer.com/LocoBuffer.htm</a>
+	  .</p>
+
+	  <P> The LocoBuffer should be configured with J1, J4 and J5 set on
+	  pins 1 and 2, J2 and J3 set to pins 2 and 3. This configures it
+	  for a 19,200 baud connection, so select "19,200 baud" when
+	  configuring the connection.</p>
+
+	  <P> For the most reliable operation, turn on your layout and
+	  computer before you turn on the LocoBuffer.</p>
+
+	  <P> Some computers can successfully communicate at 57,600bps with
+	  a LocoBuffer.  To do this, select "57,600 baud" when configuring
+	  and configure your LocoBuffer with J4 and J5 set on pins 1 and 2,
+	  J1, J2 and J3 set to pins 2 and 3 (J1 is the one that determines
+	  the baud rate).  But we strongly recommend that you try 19,200
+	  and make sure that works first.</p>
+
+	  <P>The LocoBuffer controller chip should contain version 1.4.6 or
+	  later of the LocoBuffer program. Note that LocoBuffer version
+	  1.4.5 has a bug that prevents it from working with this program.
+	  If you got your LocoBuffer chip after February 2002, this should
+	  not be a problem for you.</p>
+
+	  <p></p>
+
+
+	  <B>LocoBuffer flow control</B>
+
+	  <p>Some Windows versions, in particular Win2000, cannot handle
+	  the LocoBuffer's control leads properly.  You'll see this as
+	  DecoderPro or JmriDemo being unable to communicate with the
+	  command station, even though you can see LocoNet traffic with the
+	  LocoNet monitor.  To fix this, try opening the preferences and
+	  select "no flow control" option, click save, then quit and
+	  restart the program.  Note that this problem is specific to
+	  certain Windows versions, and you generally should have "hardware
+	  flow control" selected.  </p>
+
+	  <P> If the problem persists, please try jumpering-together the
+	  pins 5, 6 and 8 on the LocoBuffer's 25-pin connector.  These are
+	  the CTS, DSR, and DCD leads in the LocoBuffers RS232 interface,
+	  and connecting them will (perhaps) fool your computer into
+	  accepting the LocoBuffers flow control signals.</p>
+
+	  <p> That connector has a row of 12 pins and a row of 13.  Looking
+	  at the solder-side of the board, pin 1 is at the end of the row
+	  of 13 (toward the center of the board), at the end nearest the
+	  RJ12 LocoNet jack.  Next to that are pins 2, 3, 4 and 5 with
+	  traces on them.    Pin 6 is next to that, with nothing connected.
+	  Pin 7 (ground) has a trace, then pin 8 does not.</p>
+
+	  <P> So the suggestion is to connect pin 5 (with a trace) to pin 6
+	  and 8 (without traces).  Be careful not to short to pin 7, which
+	  is already connected.  </p>
+	</UL>
+
+	<h2>Measurements on the power circuits of DigiTrax components</h2>
+	<p class=subtitle>
+		Why can't various Digitrax components share a power supply?
+	</p>
+
+	<p>
+	I wanted to understand the reasons behind Digitrax's recommendations
+	about separate power sources for PM4 and DS54 boards. The following
+	describes some measurements on my layout, and what I conclude from
+	them.
+	</p>
+
+	<p><strong> Conclusions </strong></p>
+	<p> The DCS100 and PM4 appear to use full-wave rectifier power
+	supplies, while the DS54 uses a half-wave rectifier supply. These two
+	types require different offsets between system ground and the
+	transformer leads, which explains why these three types of components
+	can't share AC auxillary power supplies.</p>
+
+	<p>See the <a href="./DigitraxPower/">in depth technical details</a></p>
+
+
+
+	<h2>Debugging</h2>
+
+	<p><a href="http://www.digitrax.com/pdfdocs.htm">Digitrax Manuals</a></p>
+
+      <hr class="hide">
+<!-- Footer -->
+    <hr class="hide">
+    <div id="footer">
+	<ul id="bn">
+	<li><a href="/site.new/sitemap/">Site Map</a></li>
+	<li><a href="/site.new/contact/">Contact Us</a></li>
+	</ul>
+
+	<p>Thanks and congratulations to
+	   <A href="/site.new/community/" title="Who is JMRI">
+	   	all who contributed</A>! </p>
+
+	<p>Copyright &copy; 2003,2004 JMRI Community</p>
+    </div>
+<!-- /Footer -->
+
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+</div> <!-- closes #container -->
+</body>
+</html>
+
