@@ -5,7 +5,7 @@
  * Description:		Provide access to C/MRI via a serial comm port.
  *					Normally controlled by the cmri.serial.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Id: SerialDriverAdapter.java,v 1.2 2002-06-26 03:53:09 jacobsen Exp $
+ * @version			$Revision: 1.3 $
  */
 
 package jmri.jmrix.cmri.serial.serialdriver;
@@ -49,8 +49,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 	  			activeSerialPort = (SerialPort) portID.open(appName, 100);  // name of program, msec to wait
 	  			}
 			catch (PortInUseException p) {
-				log.error(portName+" port is in use: "+p.getMessage());
-				return portName+" port is in use";
+				return handlePortBusy(p, portName, log);
 			}
 			// try to set it for CMRI serial
 			try {

@@ -22,7 +22,7 @@ import jmri.jmrix.easydcc.*;
  * not use any other options at configuration time.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Id: SerialDriverAdapter.java,v 1.3 2002-06-26 03:53:09 jacobsen Exp $
+ * @version			$Id: SerialDriverAdapter.java,v 1.4 2002-07-29 06:13:50 jacobsen Exp $
  */
 public class SerialDriverAdapter extends EasyDccPortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -51,8 +51,7 @@ public class SerialDriverAdapter extends EasyDccPortController  implements jmri.
 	  			activeSerialPort = (SerialPort) portID.open(appName, 100);  // name of program, msec to wait
 	  			}
 			catch (PortInUseException p) {
-				log.error(portName+" port is in use: "+p.getMessage());
-				return portName+" port is in use";
+				return handlePortBusy(p, portName, log);
 			}
 
 			// try to set it for comunication via SerialDriver

@@ -24,7 +24,7 @@ import jmri.jmrix.loconet.*;
  * Neither the baud rate configuration nor the "option 1" option are used.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -126,8 +126,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
                     activeSerialPort = (SerialPort) portID.open(appName, 100);  // name of program, msec to wait
                 }
                 catch (PortInUseException p) {
-                    log.error(portName+" port is in use: "+p.getMessage());
-                    return portName+" port is in use";
+				    return handlePortBusy(p, portName, log);
                 }
 
                 // try to set it for LocoNet direct (e.g. via MS100)

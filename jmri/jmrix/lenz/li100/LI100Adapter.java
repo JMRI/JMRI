@@ -5,7 +5,7 @@
  * Description:		Provide access to XPressNet via a LI100 on an attached serial comm port.
  *					Normally controlled by the lenz.li100.LI100Frame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 package jmri.jmrix.lenz.li100;
@@ -50,8 +50,7 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
 	  			activeSerialPort = (SerialPort) portID.open(appName, 100);  // name of program, msec to wait
 	  			}
 			catch (PortInUseException p) {
-				log.error(portName+" port is in use: "+p.getMessage());
-				return portName+" port is in use";
+				return handlePortBusy(p, portName, log);
 			}
 			// try to set it for XNet
 			try {

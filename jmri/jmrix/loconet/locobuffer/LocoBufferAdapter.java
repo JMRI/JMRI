@@ -5,7 +5,7 @@
  * Description:		Provide access to LocoNet via a LocoBuffer attached to a serial comm port.
  *					Normally controlled by the LocoBufferFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 
 package jmri.jmrix.loconet.locobuffer;
@@ -50,8 +50,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 	  			activeSerialPort = (SerialPort) portID.open(appName, 100);  // name of program, msec to wait
 	  			}
 			catch (PortInUseException p) {
-				log.error(portName+" port is in use: "+p.getMessage());
-				return portName+" port is in use";
+				return handlePortBusy(p, portName, log);
 			}
 			// try to set it for LocoNet via LocoBuffer
 			try {

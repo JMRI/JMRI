@@ -9,7 +9,7 @@ package jmri.jmrix;
  *<P>
  * To configure for operation, a
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  * @see             jmri.jmrix.SerialConfigException
  */
 public interface SerialPortAdapter  {
@@ -76,4 +76,12 @@ public interface SerialPortAdapter  {
 	 * before the openPort call
 	 */
 	public void configureOption2(String value) throws SerialConfigException;
+
+    /**
+     * Error handling for busy port at open.
+     * @see jmri.jmrix.AbstractPortController
+     */
+    public String handlePortBusy(javax.comm.PortInUseException p,
+                            String portName,
+                            org.apache.log4j.Category log);
 }

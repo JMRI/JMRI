@@ -21,8 +21,9 @@ import jmri.jmrix.nce.*;
  * The current implementation only handles the 19,200 baud rate, and does
  * not use any other options at configuration time.
  *
+ *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -51,8 +52,7 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
 	  			activeSerialPort = (SerialPort) portID.open(appName, 100);  // name of program, msec to wait
 	  			}
 			catch (PortInUseException p) {
-				log.error(portName+" port is in use: "+p.getMessage());
-				return portName+" port is in use";
+                return handlePortBusy(p, portName, log);
 			}
 
 			// try to set it for comunication via SerialDriver
