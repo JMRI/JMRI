@@ -17,7 +17,7 @@ import javax.swing.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2002
- * @version     $Revision: 1.49 $
+ * @version     $Revision: 1.50 $
  */
 public class JMRIdemo extends JPanel {
     public JMRIdemo(JFrame frame) {
@@ -92,6 +92,7 @@ public class JMRIdemo extends JPanel {
         funcMenu.add(new jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlAction("Turnout Control"));
         funcMenu.add(new jmri.jmrit.powerpanel.PowerPanelAction("Power Control"));
         funcMenu.add(new jmri.jmrit.speedometer.SpeedometerAction( "Speedometer" ));
+        funcMenu.add(new jmri.jmrit.sendpacket.SendPacketAction( "Send DCC Packet" ));
 
         menuBar.add(new jmri.jmrit.roster.RosterMenu("Roster", jmri.jmrit.roster.RosterMenu.MAINMENU, this));
 
