@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-<!-- $Id: decoderIndex.xml,v 1.14 2002-04-07 23:43:57 jacobsen Exp $ -->
+<!-- $Id: decoderIndex.xml,v 1.15 2002-04-08 03:24:48 jacobsen Exp $ -->
 <decoderIndex>
 
 <mfgList>
@@ -86,13 +86,69 @@
 		<model model="DH120" numOuts="2" numFns="2"/>
 	</family>
 
-	<family name="Lenz LE077XF" file="Lenz_LE077XF.xml" mfg="Lenz" 
-				lowVersionID="44" highVersionID="45">
-		<model model="LE077XF" numOuts="3" />
-		<model model="LE103XF" numOuts="2" />
-		<model model="LE105XF" numOuts="4" />
-		<model model="LE062XF" numOuts="2" />
-		<model model="LE010XF" numOuts="2" />
+	<family name="Lenz 5.4" file="Lenz_54.xml" mfg="Lenz" lowVersionID="54">
+		<model model="LE010XF" numOuts="2" >
+			<output name="1" label="A - White" />
+			<output name="2" label="B - Yellow" /></model>
+		<model model="LE011XF" numOuts="2" >
+			<output name="1" label="A - White" />
+			<output name="2" label="B - Yellow" /></model>
+		<model model="LE130XF" numOuts="4" >
+			<output name="1" label="A - White" />
+			<output name="2" label="B - Yellow" />
+			<output name="3" label="C - Green" />
+			<output name="4" label="D - Violet" /></model>
+		<model model="LE0521W" numOuts="2" >
+			<output name="1" label="A - White" />
+			<output name="2" label="B - Yellow" /></model>
+		<model model="LE0521D" numOuts="2" >
+			<output name="1" label="A - White" />
+			<output name="2" label="B - Yellow" /></model>
+		<model model="LE1024"  numOuts="4" >
+			<output name="1" label="A - White" />
+			<output name="2" label="B - Yellow" />
+			<output name="3" label="C - Green" />
+			<output name="4" label="D - Violet" /></model>
+		<model model="LE1025C" numOuts="4" >
+			<output name="1" label="A - White" />
+			<output name="2" label="B - Yellow" />
+			<output name="3" label="C - Green" />
+			<output name="4" label="D - Violet" /></model>
+		<model model="LE4024"  numOuts="4" >
+			<output name="1" label="A - White" />
+			<output name="2" label="B - Yellow" />
+			<output name="3" label="C - Green" />
+			<output name="4" label="D - Violet" /></model>
+		<model model="LE0511W" numOuts="2" >
+			<output name="1" label="A - White" />
+			<output name="2" label="B - Yellow" /></model>
+	</family>
+
+	<family name="Lenz LE077XF" file="Lenz_LE077XF.xml" mfg="Lenz" lowVersionID="44" highVersionID="45">
+		<model model="LE062XF" numOuts="2" >
+			<output name="1" label="A - White" />
+			<output name="2" label="B - Yellow" /></model>
+		<model model="LE077XF" numOuts="3" >
+			<output name="1" label="A - White" />
+			<output name="2" label="B - Yellow" />
+			<output name="3" label="C - Green" /></model>
+		<model model="LE102XF" numOuts="3" >
+			<output name="1" label="A - White" />
+			<output name="2" label="B - Yellow" />
+			<output name="3" label="C - Green" /></model>
+		<model model="LE103XF" numOuts="3" >
+			<output name="1" label="A - White" />
+			<output name="2" label="B - Yellow" />
+			<output name="3" label="C - Green" /></model>
+		<model model="LE104XF" numOuts="3" >
+			<output name="1" label="A - White" />
+			<output name="2" label="B - Yellow" />
+			<output name="3" label="C - Green" /></model>
+		<model model="LE113XF" numOuts="4" >
+			<output name="1" label="A - White" />
+			<output name="2" label="B - Yellow" />
+			<output name="3" label="C - Green" />
+			<output name="4" label="D - Violet" /></model>
 	</family>
 
 	<family name="MRC 14 step" file="MRC_14step.xml" mfg="MRC">

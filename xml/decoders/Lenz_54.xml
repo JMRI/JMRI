@@ -1,40 +1,50 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Lenz_LE077XF.xml,v 1.7 2002-04-08 03:24:48 jacobsen Exp $ -->
+<!-- $Id: Lenz_54.xml,v 1.1 2002-04-08 03:24:48 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Joe Ellis filker@mindspring.com"
-			version="3" lastUpdated="20020405" />
-			<!-- Updated to new names by jake@physics.berkeley.edu -->
-			<!-- Added CV 23, 24, and function mapping - Bob J -->
+		<version author="Bob Jacobsen jake@physics.berkeley.edu"
+			version="1" lastUpdated="20020323" />
 
-<!-- These are the version 4.5 decoders, with "precision glide" and "XF" -->
+<!-- These are the version 5.4 decoders, with "12 bit BEMF" or "5th gen BEMF " -->
+<!-- and "XF & special" -->
 
 <decoder>
-	<family name="Lenz LE077XF" mfg="Lenz" lowVersionID="44" highVersionID="45">
-		<model model="LE062XF" numOuts="2" >
+	<family name="Lenz 5.4" mfg="Lenz" lowVersionID="54">
+		<model model="LE010XF" numOuts="2" >
 			<output name="1" label="A - White" />
 			<output name="2" label="B - Yellow" /></model>
-		<model model="LE077XF" numOuts="3" >
+		<model model="LE011XF" numOuts="2" >
 			<output name="1" label="A - White" />
-			<output name="2" label="B - Yellow" />
-			<output name="3" label="C - Green" /></model>
-		<model model="LE102XF" numOuts="3" >
-			<output name="1" label="A - White" />
-			<output name="2" label="B - Yellow" />
-			<output name="3" label="C - Green" /></model>
-		<model model="LE103XF" numOuts="3" >
-			<output name="1" label="A - White" />
-			<output name="2" label="B - Yellow" />
-			<output name="3" label="C - Green" /></model>
-		<model model="LE104XF" numOuts="3" >
-			<output name="1" label="A - White" />
-			<output name="2" label="B - Yellow" />
-			<output name="3" label="C - Green" /></model>
-		<model model="LE113XF" numOuts="4" >
+			<output name="2" label="B - Yellow" /></model>
+		<model model="LE130XF" numOuts="4" >
 			<output name="1" label="A - White" />
 			<output name="2" label="B - Yellow" />
 			<output name="3" label="C - Green" />
 			<output name="4" label="D - Violet" /></model>
+		<model model="LE0521W" numOuts="2" >
+			<output name="1" label="A - White" />
+			<output name="2" label="B - Yellow" /></model>
+		<model model="LE0521D" numOuts="2" >
+			<output name="1" label="A - White" />
+			<output name="2" label="B - Yellow" /></model>
+		<model model="LE1024"  numOuts="4" >
+			<output name="1" label="A - White" />
+			<output name="2" label="B - Yellow" />
+			<output name="3" label="C - Green" />
+			<output name="4" label="D - Violet" /></model>
+		<model model="LE1025C" numOuts="4" >
+			<output name="1" label="A - White" />
+			<output name="2" label="B - Yellow" />
+			<output name="3" label="C - Green" />
+			<output name="4" label="D - Violet" /></model>
+		<model model="LE4024"  numOuts="4" >
+			<output name="1" label="A - White" />
+			<output name="2" label="B - Yellow" />
+			<output name="3" label="C - Green" />
+			<output name="4" label="D - Violet" /></model>
+		<model model="LE0511W" numOuts="2" >
+			<output name="1" label="A - White" />
+			<output name="2" label="B - Yellow" /></model>
 	</family>
 
 	<programming direct="byteOnly" paged="yes"
@@ -53,16 +63,17 @@
 			</variable>
 
 		<variable label="Accel" CV="3"
-				comment="Range 0-31">
+				comment="Range 0-31" default="4">
 			<decVal max="31"/>
 			</variable>
 
 		<variable label="Decel" CV="4"
-				comment="Range 0-31">
+				comment="Range 0-31" default="1" >
 			<decVal max="31"/>
 			</variable>
 
-<!-- deleted max and mid voltage-->
+		<variable label="Vhigh" CV="5" default="10" >
+					<decVal max="10"/></variable>
 
 		<variable label="Version ID" CV="7" readOnly="yes"
 				item="Decoder Version" >
@@ -70,16 +81,18 @@
 			</variable>
 
 		<variable label="Manufacturer ID" CV="8" readOnly="yes"
-				item="Manufacturer">
-			<decVal default="99"/>
+				item="Manufacturer" default="99">
+			<decVal/>
 			</variable>
-
 
 		<variable label="Manufacturer ID - Reset" CV="8">
-			<decVal default="99"/>
+			<decVal/>
 			</variable>
 
-<!-- Deleted all CV 13 references-->
+		<variable label="EWF frequency" CV="9"
+				item="Total PWM Period" default="10">
+			<decVal/>
+			</variable>
 
 		<variable label="Long Address" CV="17" item="Extended Address"
 		        comment="4 digit address (Range 0001-9999)">
@@ -90,18 +103,6 @@
 				item="Consist Address"
 				comment="Allows permanent storage of consist address. Range 0-255">
 			<decVal/>
-			</variable>
-
-		<variable label="Acceleration Trim (range 0-255)" CV="23"
-				item="Consist Acceleration Adjustment"
-		        comment="Additional Acceleration rate info for fine-tuning. (Range 0-255)">
-			<decVal default="255" min="0" max="255"/>
-			</variable>
-
-		<variable label="Deceleration Trim (range 0-255)" CV="24"
-				item="Consist Deceleration Adjustment"
-		        comment="Additional Deceleration (braking) rate info for fine-tuning. (Range 0-255)">
-			<decVal default="255" min="0" max="255"/>
 			</variable>
 
 		<variable label="Normal direction of motion" CV="29"
@@ -146,12 +147,11 @@
 				</enumVal>
 			</variable>
 
-	<variable label="Accel/Decel Trim" CV="50"
-				mask="XXXXXXXV"
-	          	comment="Governs how loco acts in DC track block">
+	<variable label="Back EMF control" CV="50"
+				mask="XXXXXXXV">
   			<enumVal>
-				<enumChoice choice="Accel/Decel trim OFF"/>
-				<enumChoice choice="Accel/Decel trim ON"/>
+				<enumChoice choice="Back EMF control inactive"/>
+				<enumChoice choice="Back EMF control active"/>
 				</enumVal>
 			</variable>
 
@@ -387,8 +387,10 @@
 
 <pane name="Lenz">
 	<column>
-	<display item="Accel/Decel Trim" />
-	<label label=" "/>
+
+	<display item="Back EMF control" />
+	<label label=""/>
+	<label label=""/>
 
 	<display item="Front headlight (Output A) dimming" />
 	<display item="Output A dimming control" />
@@ -398,7 +400,7 @@
 	<display item="Output A is double strobe" format="checkbox" />
 	<display item="Output A dim intensity" />
 
-	<label label=" "/>
+	<label label=""/>
 
 	<display item="Back headlight (Output B) dimming control" />
 	<display item="Output B dimming control" />
@@ -408,7 +410,7 @@
 	<display item="Output B is double strobe" format="checkbox" />
 	<display item="Output B dim intensity" />
 	
-	<label label=" "/>
+	<label label=""/>
 
 	<display item="Output C, D blink rate" />
 	<display item="Output C blinks" />
