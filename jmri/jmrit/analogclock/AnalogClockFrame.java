@@ -16,7 +16,7 @@ import jmri.jmrit.catalog.*;
  *
  * <p> Time code copied from code for the Nixie clock by Bob Jacobsen</p>
  * @author                     Dennis Miller Copyright (C) 2004
- * @version                    $Revision: 1.3 $
+ * @version                    $Revision: 1.4 $
  */
 
 public class AnalogClockFrame extends javax.swing.JFrame implements java.beans.PropertyChangeListener {
@@ -80,19 +80,10 @@ public class clockPanel extends JPanel {
       Image scaledLogo;
       NamedIcon jmriIcon;
       NamedIcon scaledIcon;
-      Image minute;
-      Image scaledMinute;
-      NamedIcon minuteIcon;
-      NamedIcon scaledMinuteIcon;
-      Image hour;
-      Image scaledHour;
-      NamedIcon hourIcon;
-      NamedIcon scaledHourIcon;
       int hourX[] = {-12, -11, -25, -10, -10, 0, 10, 10, 25, 11 ,12};
       int hourY[] = {-31, -163, -170, -211, -276, -285, -276, -211, -170, -163, -31};
       int minuteX[] = {-12, -11, -24, -11, -11, 0, 11, 11, 24, 11, 12};
       int minuteY[] = {-31, -261, -266, -314, -381, -391, -381, -314, -266, -261, -31};
-   //   int minuteY[] = {-31, -237, -242, -290, -381, -391, -381, -290, -242, -237, -31};
       int scaledHourX[] = new int[hourX.length];
       int scaledHourY[] = new int[hourY.length];
       int scaledMinuteX[] = new int[minuteX.length];
