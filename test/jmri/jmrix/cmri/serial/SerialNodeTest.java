@@ -11,7 +11,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialNode class
  * @author		Bob Jacobsen  Copyright 2003
- * @version		$Revision: 1.6 $
+ * @version		$Revision: 1.7 $
  */
 public class SerialNodeTest extends TestCase {
 
@@ -71,5 +71,10 @@ public class SerialNodeTest extends TestCase {
         TestSuite suite = new TestSuite(SerialNodeTest.class);
         return suite;
     }
+
+    // The minimal setup for log4J
+    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
+    protected void setUp() { log4jfixtureInst.setUp(); }
+    protected void tearDown() { log4jfixtureInst.tearDown(); }
 
 }
