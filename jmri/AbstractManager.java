@@ -16,15 +16,21 @@ import com.sun.java.util.collections.Collections;
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 abstract public class AbstractManager
     implements Manager, java.beans.PropertyChangeListener {
 
     public AbstractManager() {
         // register the result for later configuration
-        InstanceManager.configureManagerInstance().register(this);
-        log.debug("register");
+         if (InstanceManager.configureManagerInstance()!=null) {
+            InstanceManager.configureManagerInstance().register(this);
+            log.debug("register");
+        }
+    }
+
+    public String makeSystemName(String s) {
+        return systemLetter()+typeLetter()+s;
     }
 
     // abstract methods to be extended by subclasses
@@ -74,9 +80,9 @@ abstract public class AbstractManager
 
     /**
      * The PropertyChangeListener interface in this class is
-     * intended to keep track of SignalHead user name changes.
+     * intended to keep track of user name changes to individual NamedBeans.
      * It is not completely implemented yet. In particular, listeners
-     * are not added to newly registered SignalHead objects.
+     * are not added to newly registered objects.
      */
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("UserName")) {
