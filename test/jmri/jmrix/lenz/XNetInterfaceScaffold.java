@@ -3,7 +3,7 @@
  *
  * Description:	 	Test scaffold implementation of XNetInterface
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  *
  * Use an object of this type as a XNetTrafficController in tests
  */
@@ -32,8 +32,6 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
 		if (log.isDebugEnabled()) log.debug("sendXNetMessage ["+m+"]");
 		// save a copy
 		outbound.addElement(m);
-		// we don't return an echo so that the processing before the echo can be
-		// separately tested
 	}
 
 	// test control member functions
