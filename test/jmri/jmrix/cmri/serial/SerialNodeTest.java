@@ -8,7 +8,7 @@ import junit.framework.*;
 /**
  * JUnit tests for the SerialNode class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SerialNodeTest extends TestCase {
 
@@ -23,7 +23,6 @@ public class SerialNodeTest extends TestCase {
         SerialReply r = new SerialReply();
         r.setElement(2, '2');
         a.markChanges(r);
-        System.out.println("find "+s1.getKnownState()+" "+s2.getKnownState()+" "+s3.getKnownState());
         Assert.assertEquals("check s1", Sensor.INACTIVE, s1.getKnownState());
         Assert.assertEquals("check s2", Sensor.ACTIVE, s2.getKnownState());
         Assert.assertEquals("check s3", Sensor.INACTIVE, s3.getKnownState());
