@@ -6,7 +6,7 @@ package jmri;
  * Class providing the basic logic of the Route interface.
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class DefaultRoute extends AbstractNamedBean
     implements Route, java.io.Serializable {
@@ -25,6 +25,7 @@ public class DefaultRoute extends AbstractNamedBean
     protected String[] mRouteTurnout = new String[MAX_TURNOUTS_PER_ROUTE];
     protected int[] mRouteTurnoutState = new int[MAX_TURNOUTS_PER_ROUTE];
     protected String[] mControlSensors = new String[MAX_CONTROL_SENSORS];
+    protected int[] mSensorMode = new int[MAX_CONTROL_SENSORS];
     protected String mControlTurnout = "";
     protected int mControlTurnoutState = jmri.Turnout.THROWN;
 
@@ -63,7 +64,7 @@ public class DefaultRoute extends AbstractNamedBean
     /**
      * Method to add a Sensor to the list of control Sensors for this Route
      */
-    public boolean addSensorToRoute(String sensorSystemName) {
+    public boolean addSensorToRoute(String sensorSystemName, int mode) {
         if (mNumSensors >= MAX_CONTROL_SENSORS) {
             // reached maximum
             log.warn("Reached maximum number of control Sensors for Route: "+
@@ -71,6 +72,7 @@ public class DefaultRoute extends AbstractNamedBean
             return false;
         }
         mControlSensors[mNumSensors] = sensorSystemName;
+        mSensorMode[mNumSensors] = mode;
         mNumSensors ++;
         return true;
     }
@@ -134,11 +136,25 @@ public class DefaultRoute extends AbstractNamedBean
      *  If there is no Sensor with that 'index', or if 'index'
      *      is not in the range 0 thru MAX_SENSORS-1, null is returned.
      */
-    public String getRouteSensor(int index) {
+    public String getRouteSensorName(int index) {
         if (index < 0 || index >= mNumSensors) {
             return (null);
         }
         return (mControlSensors[index]);
+    }
+    /**
+     * Method to get the mode associated with a control Sensor in this Route
+     *  'index' is the index in the Sensor array of the requested 
+     *      Sensor.  
+     *  If there is no Sensor with that 'index', or if 'index'
+     *      is not in the range 0 thru MAX_SENSORS-1, 
+     *      ONACTIVE is returned
+     */
+    public int getRouteSensorMode(int index) {
+        if (index < 0 || index >= mNumSensors) {
+            return ONACTIVE;
+        }
+        return (mSensorMode[index]);
     }
 
     /**
@@ -198,6 +214,47 @@ public class DefaultRoute extends AbstractNamedBean
     }
 
     /**
+     * Handle sensor update event to see if that will set the route.
+     * Called when a "KnownState" event is received.
+     */
+    protected void checkSensor(int state, Sensor sensor) {
+        String name = sensor.getSystemName();
+        if (log.isDebugEnabled()) log.debug("check Sensor "+name+" for "+getSystemName());
+        boolean activated = false;  // need to have a sensor hitting active
+        for (int i = 0; i < mNumSensors; i++) {
+            if (getRouteSensorName(i).equals(name)) {
+                // here for match, check mode & handle onActive, onInactive
+                int mode = getRouteSensorMode(i);
+                if (log.isDebugEnabled()) log.debug("match mode: "+mode+" state: "+state);
+                if (  ( (mode==ONACTIVE) && (state!=Sensor.ACTIVE) )
+                    || ( (mode==ONINACTIVE) && (state!=Sensor.INACTIVE) ) )
+                    return;
+                if (  ( (mode==ONACTIVE) && (state==Sensor.ACTIVE) )
+                    || ( (mode==ONINACTIVE) && (state==Sensor.INACTIVE) ) )
+                   activated = true;
+                // if any other modes, just skip
+                else return;
+            }
+        }
+        
+        log.debug("check activated");
+        if (!activated) return;
+        
+        log.debug("check for veto");
+        // if we got here, now check any vetos
+        for (int i = 0; i < mNumSensors; i++) {
+            int s = mSensors[i].getKnownState();
+            int mode = getRouteSensorMode(i);
+            if (  ( (mode==VETOACTIVE) && (s==Sensor.ACTIVE) )
+                    || ( (mode==VETOINACTIVE) && (s==Sensor.INACTIVE) ) )
+                 return;
+        }
+        // and finally set the route
+        if (log.isDebugEnabled()) log.debug("call setRoute for "+getSystemName());
+        setRoute();
+    }
+    
+    /**
      * Method to activate the Route via Sensors and control Turnout
      * Sets up for Route activation based on a list of Sensors and a control Turnout
      */
@@ -212,9 +269,7 @@ public class DefaultRoute extends AbstractNamedBean
                             public void propertyChange(java.beans.PropertyChangeEvent e) {
                                 if (e.getPropertyName().equals("KnownState")) {
                                     int now = ((Integer) e.getNewValue()).intValue();
-                                    if (now==Sensor.ACTIVE) { 
-                                        setRoute();
-                                    }
+                                    checkSensor(now, (Sensor)e.getSource());
                                 }
                             }
                     });
