@@ -10,7 +10,7 @@ import java.util.Iterator;
  * Different systems will distrinquish between short and long addresses
  * in different ways.
  * @author			Glen Oberhauser
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public interface ThrottleManager
 {
@@ -21,8 +21,10 @@ public interface ThrottleManager
      * method.
      * @param address The decoder address desired.
      * @param l The ThrottleListener awaiting notification of a found throttle.
+	 * @return True if the request will continue, false if the request will not
+	 * be made. False may be returned if a the throttle is already in use.
      */
-    public void requestThrottle(int address, ThrottleListener l);
+    public boolean requestThrottle(int address, ThrottleListener l);
 
 
     /**
