@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE layout-config SYSTEM "layout-config.dtd">
-<!-- $Id: CornwallDefinitions.xml,v 1.1 2003-05-25 23:42:38 jacobsen Exp $ -->
+<!-- $Id: CornwallDefinitions.xml,v 1.2 2003-05-30 19:09:17 jacobsen Exp $ -->
 <!-- Cornwall RR configuration: turnout, sensor, signal definitions -->
 <layout-config>
 
@@ -259,6 +259,10 @@
     <turnout systemName="CT127" userName="21b green" />
     <turnout systemName="CT128" userName="21b yellow" />
     <turnout systemName="CT129" userName="21b red" />
+
+    <turnout systemName="CT130" userName="22a green" />
+    <turnout systemName="CT131" userName="22a yellow" />
+    <turnout systemName="CT132" userName="22a red" />
   </turnouts>
 
   <signalheads class="jmri.configurexml.AbstractSignalHeadManagerXml">
@@ -476,6 +480,11 @@
       <turnout systemName="CT127" userName="21b green" />
       <turnout systemName="CT128" userName="21b yellow" />
       <turnout systemName="CT129" userName="21b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="si22a" userName="Signal 22A">
+      <turnout systemName="CT130" userName="22a green" />
+      <turnout systemName="CT131" userName="22a yellow" />
+      <turnout systemName="CT132" userName="22a red" />
     </signalhead>
   </signalheads>
 
