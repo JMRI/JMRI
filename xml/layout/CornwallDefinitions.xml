@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE layout-config SYSTEM "layout-config.dtd">
-<!-- $Id: CornwallDefinitions.xml,v 1.4 2003-08-30 13:29:18 jacobsen Exp $ -->
+<!-- $Id: CornwallDefinitions.xml,v 1.5 2003-09-05 04:14:45 jacobsen Exp $ -->
 <!-- Cornwall RR configuration: turnout, sensor, signal definitions -->
 <layout-config>
 
@@ -14,6 +14,7 @@
     <turnout systemName="LT8"  userName="Colebrook Branch" />
     <turnout systemName="LT9"  userName="Conewago West" />
     <turnout systemName="LT10" userName="Blackies" />
+    <turnout systemName="LT11" userName="Lickdale Xover" />
     <turnout systemName="LT12" userName="East Cornwall Junction switch" />
     <turnout systemName="LT13" userName="Cornwall Mine Lead" />
     <turnout systemName="LT14" userName="Lebanon Jct East" />
