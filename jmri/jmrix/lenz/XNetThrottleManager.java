@@ -25,6 +25,7 @@ public class XNetThrottleManager implements ThrottleManager
      */
     public XNetThrottleManager()
     {
+       super();
        log.error("XNetThrottleManger constructor");
     }
 
@@ -59,7 +60,7 @@ public class XNetThrottleManager implements ThrottleManager
      * @param address The decoder address desired.
      * @param l The ThrottleListener awaiting notification of a found throttle.
      */
-    public void requestThrottle(int address, ThrottleListener l)
+    public boolean requestThrottle(int address, ThrottleListener l)
     {
         if (throttleListeners == null)
         {
@@ -82,6 +83,7 @@ public class XNetThrottleManager implements ThrottleManager
             // Only need to do this once per address.
             //slotManager.slotFromLocoAddress(address, this);
         }
+        return(true);
     }
 
     /**
