@@ -21,7 +21,7 @@ import org.jdom.Attribute;
  * stored in local variables.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public class DecoderProConfigFrame extends apps.AbstractConfigFrame {
 
@@ -33,7 +33,8 @@ public class DecoderProConfigFrame extends apps.AbstractConfigFrame {
      * DecoderPro only supports the DCE protocols, so the parent member is overloaded
      */
     public String[] availableProtocols() {
-        return  new String[] {"(None selected)","NCE","LocoNet LocoBuffer","LocoNet MS100", "EasyDCC"};
+        return  new String[] {"(None selected)","NCE","LocoNet LocoBuffer","LocoNet MS100",
+                                "EasyDCC", "Lenz XPressNet"};
     }
 	/**
 	 * Abstract method to save the data
