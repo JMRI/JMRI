@@ -2,25 +2,29 @@
 
 package jmri.progdebugger;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Hashtable;
+import java.util.Vector;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-import java.util.Vector;
 
 /**
  * Debugging implementation of Programmer interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.11 $
+ * @version         $Revision: 1.12 $
  */
 public class ProgDebugger implements Programmer  {
 
-	// write CV
+	// write CV is recorded for later use
 	private int _lastWriteVal = -1;
 	private int _lastWriteCv = -1;
 	public int lastWrite() { return _lastWriteVal; }
 	public int lastWriteCv() { return _lastWriteCv; }
+
+    // write CV values are remembered for later reads
+    Hashtable mValues = new Hashtable();
 
 	public String decodeErrorCode(int i) {
 		log.info("decoderErrorCode "+i);
@@ -34,6 +38,9 @@ public class ProgDebugger implements Programmer  {
 		log.debug("write CV: "+CV+" to: "+val+" mode: "+getMode());
 		_lastWriteVal = val;
 		_lastWriteCv = CV;
+        // save for later retrieval
+        mValues.put(new Integer(CV), new Integer(val));
+
 		// return a notification via the queue to ensure end
 		Runnable r = new Runnable() {
 			ProgListener l = m;
@@ -44,7 +51,8 @@ public class ProgDebugger implements Programmer  {
 		javax.swing.SwingUtilities.invokeLater(r);
 	}
 
-	// read CV
+	// read CV values
+    // note that the hashTable will be used if the CV has been written
 	private int _nextRead = 123;
 	public void nextRead(int r) { _nextRead = r; }
 
@@ -74,6 +82,11 @@ public class ProgDebugger implements Programmer  {
 		final ProgListener m = p;
 		log.debug("read CV: "+CV+" mode: "+getMode()+" will read "+_nextRead);
 		_lastReadCv = CV;
+
+        // try to get something from hash table
+        Integer saw = ((Integer)mValues.get(new Integer(CV)));
+        if (saw!=null) _nextRead = saw.intValue();
+
 		// return a notification via the queue to ensure end
 		Runnable r = new Runnable() {
 			ProgListener l = m;
