@@ -3,7 +3,7 @@
  *
  * Description:		extend jmri.AbstractTurnout for XNet layouts
  * @author			Bob Jacobsen Copyright (C) 2001, Portions by Paul Bender Copyright (C) 2003,2004 
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 
 package jmri.jmrix.lenz;
@@ -12,7 +12,7 @@ import jmri.AbstractTurnout;
 
 public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
-    static private int TimeoutValue = 5000;  /* Default delay 5 seconds */
+    static private int TimeoutValue = 500;  /* Default delay 1/2 seconds */
 
     private javax.swing.Timer timer;
 
