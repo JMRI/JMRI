@@ -7,7 +7,7 @@ import junit.framework.*;
 /**
  * Tests for the jmri.jmrix.loconet.LnSensorAddress class
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class LnSensorAddressTest extends TestCase {
 
@@ -20,8 +20,9 @@ public class LnSensorAddressTest extends TestCase {
 
     public void testLnSensorInvalid() {
         LnSensorAddress a;
-        log.error("expect next message: ERROR - Can't parse sensor address string: foo");
-        a = new LnSensorAddress("foo");
+        a = new LnSensorAddress("foo"){
+            void reportParseError(String s) {}
+        };
         assertTrue(!a.isValid());
     }
 

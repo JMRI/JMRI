@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the NceTrafficController class
  * @author			Bob Jacobsen
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 package jmri.jmrix.nce;
@@ -153,7 +153,6 @@ public class NceTrafficControllerTest extends TestCase {
 		}
 		if (log.isDebugEnabled()) log.debug("past loop, i="+i
 									+" reply="+rcvdReply);
-		if (i==0) log.warn("waitForReply saw an immediate return; is threading right?");
 		return i<100;
 	}
 

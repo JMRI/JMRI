@@ -17,7 +17,7 @@ import junit.framework.*;
  *
  * @todo need a check of the MIXED state model for long address
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class LongAddrVariableValueTest extends VariableValueTest {
 
@@ -145,7 +145,6 @@ public class LongAddrVariableValueTest extends VariableValueTest {
             }
         }
         if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+((JTextField)var.getValue()).getText()+" state="+var.getState());
-        if (i==0) log.warn("testLongAddressRead saw an immediate return from isBusy");
         Assert.assertTrue("wait satisfied ", i<100);
 
         int nBusyFalse = 0;
@@ -189,8 +188,6 @@ public class LongAddrVariableValueTest extends VariableValueTest {
         if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+((JTextField)var.getValue()).getText()
                                             +" state="+var.getState()
                                             +" last write: "+p.lastWrite());
-        if (i==0) log.warn("testLongAddressWrite saw an immediate return from isBusy");
-
         Assert.assertTrue("wait satisfied ", i<100);
 
         Assert.assertEquals("CV 17 value ", 210, cv17.getValue());
@@ -226,6 +223,11 @@ public class LongAddrVariableValueTest extends VariableValueTest {
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance( LongAddrVariableValueTest.class.getName());
+
+    // The minimal setup for log4J
+    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
+    protected void setUp() { log4jfixtureInst.setUp(); }
+    protected void tearDown() { log4jfixtureInst.tearDown(); }
 
 }
 

@@ -17,7 +17,7 @@ import jmri.progdebugger.*;
  * Test CvValue class
  *
  * @author			Bob Jacobsen
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.8 $
  */
 public class CvValueTest extends TestCase {
 
@@ -101,7 +101,6 @@ public class CvValueTest extends TestCase {
             }
         }
         if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+cv.getValue()+" state="+cv.getState());
-        if (i==0) log.warn("textCvValRead saw an immediate return from isBusy");
 
         Assert.assertTrue("loop passes before 100", i<100);
         Assert.assertEquals("CV value ", 123, cv.getValue());
@@ -126,7 +125,6 @@ public class CvValueTest extends TestCase {
             }
         }
         if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+cv.getValue()+" state="+cv.getState());
-        if (i==0) log.warn("textCvValWrite saw an immediate return from isBusy");
 
         Assert.assertTrue("iterations ", i<100);
         Assert.assertEquals("cv value ", 12, cv.getValue());
@@ -174,7 +172,7 @@ public class CvValueTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CvValue.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CvValueTest.class.getName());
     // The minimal setup for log4J
     apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
     protected void setUp() { log4jfixtureInst.setUp(); }

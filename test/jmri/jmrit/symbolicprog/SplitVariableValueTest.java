@@ -17,7 +17,7 @@ import junit.framework.*;
  *
  * @todo need a check of the MIXED state model for long address
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 
@@ -35,7 +35,7 @@ public class SplitVariableValueTest extends VariableValueTest {
         cvNext.setValue(0);
         v.setElementAt(cvNext, cvNum+offset);
         return new SplitVariableValue(label, comment, readOnly,
-                                      cvNum, mask, minVal, maxVal, v, status, item,
+                                      cvNum, "XXXXVVVV", minVal, maxVal, v, status, item,
                                       cvNum+offset, 1, 0);
     }
 
@@ -64,10 +64,12 @@ public class SplitVariableValueTest extends VariableValueTest {
     public void testVariableValueCreate() {}// mask is ignored by splitAddre
     public void testVariableFromCV() {}     // low CV is upper part of address
     public void testVariableValueRead() {}	// due to multi-cv nature of SplitAddr
+    // public void testVariableReadOnly() {}	// due to multi-cv nature of SplitAddr
     public void testVariableValueWrite() {} // due to multi-cv nature of SplitAddr
     public void testVariableCvWrite() {}    // due to multi-cv nature of SplitAddr
     public void testWriteSynch2() {}        // programmer synch is different
-    // can we create long address , then manipulate the variable to change the CV?
+
+    // can we create long value , then manipulate the variable to change the CV?
     public void testSplitAddressCreate() {
         Vector v = createCvVector();
         CvValue cv1 = new CvValue(lowCV, p);
@@ -144,7 +146,6 @@ public class SplitVariableValueTest extends VariableValueTest {
         // set to specific value
         ((JTextField)var.getValue()).setText("5");
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
-        System.out.println("start read");
         var.read();
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;
@@ -155,13 +156,11 @@ public class SplitVariableValueTest extends VariableValueTest {
             }
         }
         if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+((JTextField)var.getValue()).getText()+" state="+var.getState());
-        if (i==0) log.warn("testSplitAddressRead saw an immediate return from isBusy");
         Assert.assertTrue("wait satisfied ", i<100);
 
         int nBusyFalse = 0;
         for (int k = 0; k < evtList.size(); k++) {
             java.beans.PropertyChangeEvent e = (java.beans.PropertyChangeEvent) evtList.get(k);
-            // System.out.println("name: "+e.getPropertyName()+" new value: "+e.getNewValue());
             if (e.getPropertyName().equals("Busy") && ((Boolean)e.getNewValue()).equals(Boolean.FALSE))
                 nBusyFalse++;
         }
@@ -200,7 +199,6 @@ public class SplitVariableValueTest extends VariableValueTest {
         if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+((JTextField)var.getValue()).getText()
                                             +" state="+var.getState()
                                             +" last write: "+p.lastWrite());
-        if (i==0) log.warn("testSplitAddressWrite saw an immediate return from isBusy");
 
         Assert.assertTrue("wait satisfied ", i<100);
 

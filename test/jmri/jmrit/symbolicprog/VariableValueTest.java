@@ -18,7 +18,7 @@ import jmri.progdebugger.*;
 /**
  * Base for tests of classes inheriting from VariableValue abstract class
  * @author	Bob Jacobsen, Copyright 2002
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public abstract class VariableValueTest extends TestCase {
 
@@ -44,7 +44,7 @@ public abstract class VariableValueTest extends TestCase {
         cv.setValue(3);
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, check name
-        VariableValue variable = makeVar("label check", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, "item check");
+        VariableValue variable = makeVar("label check", "comment", false, 81, "XXVVVVVV", 0, 255, v, null, "item check");
         Assert.assertEquals("label", "label check", variable.label() );
         Assert.assertEquals("item", "item check", variable.item() );
     }
@@ -122,7 +122,6 @@ public abstract class VariableValueTest extends TestCase {
             }
         }
         if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+variable.getValue()+" state="+variable.getState());
-        if (i==0) log.warn("textVariableValueRead saw an immediate return from isBusy");
 
         Assert.assertTrue("wait time for message",i<100);
         checkValue(variable, "text var value ", "14");
@@ -152,7 +151,6 @@ public abstract class VariableValueTest extends TestCase {
             }
         }
         if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+variable.getValue()+" state="+variable.getState());
-        if (i==0) log.warn("testVariableValueWrite saw an immediate return from isBusy");
 
         Assert.assertTrue("iterations ",i<100);
         checkValue(variable, "value ","5");
@@ -183,7 +181,6 @@ public abstract class VariableValueTest extends TestCase {
             }
         }
         if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+cv.getValue()+" state="+cv.getState());
-        if (i==0) log.warn("testVariableCvWrite saw an immediate return from isBusy");
 
         Assert.assertTrue("iterations needed ", i<100);
         checkValue(variable, "value ","5");
@@ -337,7 +334,6 @@ public abstract class VariableValueTest extends TestCase {
             }
         }
         if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+var1.getValue()+" state="+var1.getState());
-        if (i==0) log.warn("testWriteSynch2 saw an immediate return from isBusy");
 
         Assert.assertTrue("Number of iterations ",i<100);
         checkValue(var1, "var 1 value","5");

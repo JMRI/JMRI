@@ -119,7 +119,6 @@ public class EasyDccTrafficControllerTest extends TestCase {
 		}
 		if (log.isDebugEnabled()) log.debug("past loop, i="+i
 									+" reply="+rcvdReply);
-		if (i==0) log.warn("waitForReply saw an immediate return; is threading right?");
 		return i<100;
 	}
 

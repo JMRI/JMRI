@@ -3,7 +3,7 @@
  *
  * Description:
  * @author			Bob Jacobsen
- * @version    $Revision: 1.4 $
+ * @version    $Revision: 1.5 $
  */
 
 package jmri.jmrit.symbolicprog;
@@ -59,6 +59,7 @@ public class VariableTableModelTest extends TestCase {
                 .addContent(el0 = new Element("variable")
                     .addAttribute("CV","1")
                     .addAttribute("label","one")
+                    .addAttribute("mask","VVVVVVVV")
                     .addAttribute("item", "really two")
                     .addAttribute("readOnly","no")
                     .addContent( new Element("decVal")
@@ -89,7 +90,6 @@ public class VariableTableModelTest extends TestCase {
         //	 fmt.output(doc, o);
         //} catch (Exception e) { System.out.println("error writing XML: "+e);}
 
-        log.warn("expect next message: WARN jmri.symbolicprog.VariableTableModel  - Element missing mask attribute: one");
         // and test reading this
         t.setRow(0, el0);
         Assert.assertTrue(t.getValueAt(0,0).equals("1"));
@@ -172,6 +172,8 @@ public class VariableTableModelTest extends TestCase {
                 .addContent(el0 = new Element("variable")
                     .addAttribute("CV","67")
                     .addAttribute("label","Speed Table")
+                    .addAttribute("mask","VVVVVVVV")
+                    .addAttribute("readOnly", "")
                     .addContent( new Element("speedTableVal")
                         )
                     )
@@ -193,7 +195,9 @@ public class VariableTableModelTest extends TestCase {
     // Check creating bogus XML (unknown variable type)
     public void testVarTableLoadBogus() {
         String[] args = {"CV", "Name"};
-        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p));
+        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p)){
+            void reportBogus(){}
+        };
 
         // create a JDOM tree with just some elements
         Element root = new Element("decoder-config");
@@ -226,7 +230,6 @@ public class VariableTableModelTest extends TestCase {
         //} catch (Exception e) { System.out.println("error writing XML: "+e);}
 
         // and test reading this
-        log.warn("expect next message: ERROR jmri.symbolicprog.VariableTableModel  - Did not find a valid variable type");
         t.setRow(0, el0);
         Assert.assertTrue(t.getRowCount() == 0);
 
@@ -251,5 +254,10 @@ public class VariableTableModelTest extends TestCase {
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(VariableTableModelTest.class.getName());
+
+    // The minimal setup for log4J
+    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
+    protected void setUp() { log4jfixtureInst.setUp(); }
+    protected void tearDown() { log4jfixtureInst.tearDown(); }
 
 }

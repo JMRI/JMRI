@@ -14,7 +14,9 @@ public class LnOpsModeProgrammerTest extends TestCase {
 
     public void testSetMode() {
 	SlotManager val1=  null;
-	LnOpsModeProgrammer lops = new LnOpsModeProgrammer(val1, 1, true);
+	LnOpsModeProgrammer lops = new LnOpsModeProgrammer(val1, 1, true){
+            void reportBadMode(int i){}
+        };
 	lops.setMode(Programmer.PAGEMODE);
 	Assert.assertEquals("did not go to page mode", Programmer.OPSBYTEMODE, lops.getMode());
 	lops.setMode(Programmer.REGISTERMODE);

@@ -9,7 +9,7 @@ import junit.framework.*;
 /**
  * Test the jmri.jmrix.symbolicprog package.
  * @author			Bob Jacobsen
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.8 $
  */
 public class SymbolicProgTest extends TestCase {
 
@@ -52,7 +52,6 @@ public class SymbolicProgTest extends TestCase {
         return suite;
     }
 
-    // static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SymbolicProgTest.class.getName());
     // The minimal setup for log4J
     apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
     protected void setUp() { log4jfixtureInst.setUp(); }

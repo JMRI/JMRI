@@ -1,10 +1,4 @@
-/**
- * ComboCheckBoxTest.java
- *
- * Description:
- * @author			Bob Jacobsen
- * @version			$Revision: 1.4 $
- */
+// ComboCheckBoxTest.java
 
 package jmri.jmrit.symbolicprog;
 
@@ -21,6 +15,10 @@ import com.sun.java.util.collections.ArrayList;
 import jmri.*;
 import jmri.progdebugger.*;
 
+/**
+ * @author			Bob Jacobsen
+ * @version			$Revision: 1.5 $
+ */
 public class ComboCheckBoxTest extends TestCase {
 
     ProgDebugger p = new ProgDebugger();
@@ -31,17 +29,17 @@ public class ComboCheckBoxTest extends TestCase {
         CvValue cv = new CvValue(81, p);
         cv.setValue(3);
         v.setElementAt(cv, 81);
-        if (log.isInfoEnabled()) log.info("Enum variable created, loaded");
+        if (log.isDebugEnabled()) log.debug("Enum variable created, loaded");
 
         EnumVariableValue var = new EnumVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
         addTestItems(var);
-        if (log.isInfoEnabled()) log.info("Enum variable created");
+        if (log.isDebugEnabled()) log.debug("Enum variable created");
 
         JComboBox combo = (JComboBox)(var.getValue());
 
         // create object under test
         ComboCheckBox b = new ComboCheckBox(combo,var);
-        if (log.isInfoEnabled()) log.info("ComboCheckBox created");
+        if (log.isDebugEnabled()) log.debug("ComboCheckBox created");
 
         // set it to "checked" & test state
         b.doClick();
@@ -121,6 +119,11 @@ public class ComboCheckBoxTest extends TestCase {
         TestSuite suite = new TestSuite(ComboCheckBoxTest.class);
         return suite;
     }
+
+    // The minimal setup for log4J
+    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
+    protected void setUp() { log4jfixtureInst.setUp(); }
+    protected void tearDown() { log4jfixtureInst.tearDown(); }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ComboCheckBoxTest.class.getName());
 

@@ -1,10 +1,4 @@
-/**
- * PaneProgPaneTest.java
- *
- * Description:
- * @author			Bob Jacobsen
- * @version         $Revision: 1.5 $
- */
+// PaneProgPaneTest.java
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
@@ -26,6 +20,10 @@ import jmri.jmrit.symbolicprog.*;
 import jmri.jmrit.decoderdefn.*;
 import jmri.jmrit.roster.*;
 
+/**
+ * @author			Bob Jacobsen
+ * @version         $Revision: 1.6 $
+ */
 public class PaneProgPaneTest extends TestCase {
 
     ProgDebugger p = new ProgDebugger();
@@ -34,10 +32,10 @@ public class PaneProgPaneTest extends TestCase {
     public void testColumn() {
         setupDoc();
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
-        if (log.isInfoEnabled()) log.info("CvTableModel ctor complete");
+        if (log.isDebugEnabled()) log.debug("CvTableModel ctor complete");
         String[] args = {"CV", "Name"};
         VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
-        if (log.isInfoEnabled()) log.info("VariableTableModel ctor complete");
+        if (log.isDebugEnabled()) log.debug("VariableTableModel ctor complete");
 
         // create test object with special implementation of the newColumn(String) operation
         colCount = 0;
@@ -54,7 +52,7 @@ public class PaneProgPaneTest extends TestCase {
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
         VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
-        if (log.isInfoEnabled()) log.info("VariableTableModel ctor complete");
+        if (log.isDebugEnabled()) log.debug("VariableTableModel ctor complete");
 
         // create test object with special implementation of the newVariable(String) operation
         varCount = 0;
@@ -72,7 +70,7 @@ public class PaneProgPaneTest extends TestCase {
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
         VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
-        if (log.isInfoEnabled()) log.info("VariableTableModel ctor complete");
+        if (log.isDebugEnabled()) log.debug("VariableTableModel ctor complete");
         // have to add a couple of defined variables
         Element el0 = new Element("variable")
             .addAttribute("CV","17")
@@ -80,18 +78,18 @@ public class PaneProgPaneTest extends TestCase {
             .addAttribute("mask","VVVVVVVV")
             .addAttribute("label","Start voltage")
             .addContent( new Element("longAddressVal"));
-        if (log.isInfoEnabled()) log.info("First element created");
+        if (log.isDebugEnabled()) log.debug("First element created");
         varModel.setRow(0, el0);
-        if (log.isInfoEnabled()) log.info("First element loaded");
+        if (log.isDebugEnabled()) log.debug("First element loaded");
         Element el1 = new Element("variable")
             .addAttribute("CV","17")
             .addAttribute("readOnly","no")
             .addAttribute("mask","VVVVVVVV")
             .addAttribute("label","Primary Address")
             .addContent( new Element("decVal"));
-        if (log.isInfoEnabled()) log.info("Second element created");
+        if (log.isDebugEnabled()) log.debug("Second element created");
         varModel.setRow(1, el1);
-        if (log.isInfoEnabled()) log.info("Two elements loaded");
+        if (log.isDebugEnabled()) log.debug("Two elements loaded");
 
         // test by invoking
         PaneProgPane p = new PaneProgPane("name", pane1, cvModel, varModel, null);
@@ -109,7 +107,7 @@ public class PaneProgPaneTest extends TestCase {
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
         VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
-        if (log.isInfoEnabled()) log.info("VariableTableModel ctor complete");
+        if (log.isDebugEnabled()) log.debug("VariableTableModel ctor complete");
         // have to add a couple of defined variables
         Element el0 = new Element("variable")
             .addAttribute("CV","2")
@@ -132,7 +130,7 @@ public class PaneProgPaneTest extends TestCase {
         progPane.readPane();
 
         // wait for reply (normally, done by callback; will check that later)
-        if (log.isInfoEnabled()) log.info("Start to wait for reply");
+        if (log.isDebugEnabled()) log.debug("Start to wait for reply");
         int i = 0;
         while ( progPane.isBusy() && i++ < 100 )  {
             try {
@@ -141,7 +139,6 @@ public class PaneProgPaneTest extends TestCase {
             }
         }
         if (log.isDebugEnabled()) log.debug("past loop, i="+i);
-        if (i==0) log.warn("testPaneRead saw an immediate return from isBusy");
         assertTrue("busy period ends before timeout ", i<=100);
 
         Assert.assertEquals("last cv read ", 2, p.lastReadCv());
@@ -157,7 +154,7 @@ public class PaneProgPaneTest extends TestCase {
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
         VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
-        if (log.isInfoEnabled()) log.info("VariableTableModel ctor complete");
+        if (log.isDebugEnabled()) log.debug("VariableTableModel ctor complete");
         // have to add a couple of defined variables
         Element el0 = new Element("variable")
             .addAttribute("CV","2")
@@ -173,7 +170,7 @@ public class PaneProgPaneTest extends TestCase {
             .addAttribute("label","Primary Address")
             .addContent( new Element("decVal"));
         varModel.setRow(1, el1);
-        if (log.isInfoEnabled()) log.info("Two elements loaded");
+        if (log.isDebugEnabled()) log.debug("Two elements loaded");
 
         PaneProgPane progPane = new PaneProgPane("name", pane1, cvModel, varModel, null);
 
@@ -181,7 +178,7 @@ public class PaneProgPaneTest extends TestCase {
         progPane.writePane();
 
         // wait for reply (normally, done by callback; will check that later)
-        if (log.isInfoEnabled()) log.info("Start to wait for reply");
+        if (log.isDebugEnabled()) log.debug("Start to wait for reply");
         int i = 0;
         while ( progPane.isBusy() && i++ < 100 )  {
             try {
@@ -190,7 +187,6 @@ public class PaneProgPaneTest extends TestCase {
             }
         }
         if (log.isDebugEnabled()) log.debug("past loop, i="+i);
-        if (i==0) log.warn("testPaneWrite saw an immediate return from isBusy");
         assertTrue("busy period ends before timeout ", i<=100);
 
         Assert.assertEquals("last cv written ", 2, p.lastWriteCv());
@@ -269,7 +265,7 @@ public class PaneProgPaneTest extends TestCase {
             )
             ; // end of adding contents
 
-        if (log.isInfoEnabled()) log.info("setupDoc complete");
+        if (log.isDebugEnabled()) log.debug("setupDoc complete");
         return;
     }
 
@@ -290,6 +286,11 @@ public class PaneProgPaneTest extends TestCase {
         TestSuite suite = new TestSuite(PaneProgPaneTest.class);
         return suite;
     }
+
+    // The minimal setup for log4J
+    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
+    protected void setUp() { log4jfixtureInst.setUp(); }
+    protected void tearDown() { log4jfixtureInst.tearDown(); }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PaneProgPaneTest.class.getName());
 
