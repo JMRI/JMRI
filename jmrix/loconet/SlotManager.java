@@ -254,7 +254,10 @@ public class SlotManager implements LocoNetListener, jmri.Programmer {
 	}
 	
 	// internal method to create the LocoNetMessage for programmer task start
-	protected LocoNetMessage progTaskStart(int mode, int val, int addr) throws jmri.ProgrammerException {
+	protected LocoNetMessage progTaskStart(int mode, int val, int cvnum) throws jmri.ProgrammerException {
+	
+		int addr = cvnum-1;    // cvnum is in human readable form; addr is what's sent over loconet
+		
 		LocoNetMessage m = new LocoNetMessage(14);
 
 		m.setOpCode(0xEF);

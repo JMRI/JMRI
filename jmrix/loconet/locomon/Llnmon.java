@@ -1021,7 +1021,7 @@ public String displayMessage(LocoNetMessage l) {
 
                     cvData     =  (((cvh & LnConstants.CVH_D7) << 6) | (data7 & 0x7f));  // was PROG_DATA
                     cvNumber   = (((((cvh & LnConstants.CVH_CV8_CV9) >> 3) | (cvh & LnConstants.CVH_CV7)) * 128)
-                            + (cvl & 0x7f));   // was PROG_CV_NUM(progTask)
+                            + (cvl & 0x7f))+1;   // was PROG_CV_NUM(progTask)
 
                     /* generate loco address, mixed mode or true 4 digit */
                     mixedAdrStr = convertToMixed(lopsa, hopsa);
@@ -1118,6 +1118,10 @@ public String displayMessage(LocoNetMessage l) {
 
                                 if ((pstat & LnConstants.PSTAT_NO_DECODER) != 0 ) {
                                     logString += "\tStatus = Failed, Service Mode programming track empty\n";
+                                }
+                                if ((pstat & 0xF0) != 0) {
+                                	logString += "Warning: reserved bit set. Message may be invalid. PSTAT = 0x"
+                                				+Integer.toHexString(pstat);
                                 }
                             } else {
                                 logString += "\tStatus = Success\n";
