@@ -29,7 +29,7 @@ import jmri.jmrix.*;
  * code definitely can't.
  * <P>
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.17 $
+ * @version         $Revision: 1.18 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 
@@ -170,7 +170,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
         }
 
         // save this message for context next time
-        lastMessage = m.getOpCode();
+        // unless it is a OPC_GPBUSY AJS 28-Mar-03
+        if( m.getOpCode() != LnConstants.OPC_GPBUSY )
+            lastMessage = m.getOpCode();
     }
 
     public int findSlotFromMessage(LocoNetMessage m) {
