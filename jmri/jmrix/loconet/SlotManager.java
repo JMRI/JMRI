@@ -29,7 +29,7 @@ import jmri.jmrix.*;
  * code definitely can't.
  * <P>
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.15 $
+ * @version         $Revision: 1.16 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 
@@ -85,14 +85,15 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
      * @param l  The SlotListener to notify of the answer.
      */
     public void slotFromLocoAddress(int i, SlotListener l) {
+        // store connection between this address and listener for later
+        mLocoAddrHash.put(new Integer(i), l);
+
+        // send info request
         LocoNetMessage m = new LocoNetMessage(4);
         m.setOpCode(0xBF);  // OPC_LOCO_ADR
         m.setElement(1, (i/128)&0x7F);
         m.setElement(2, i&0x7F);
         LnTrafficController.instance().sendLocoNetMessage(m);
-
-        // store connection between this address and listener for later
-        mLocoAddrHash.put(new Integer(i), l);
     }
 
     /**
