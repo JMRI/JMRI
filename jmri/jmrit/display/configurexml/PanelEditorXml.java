@@ -16,7 +16,7 @@ import org.jdom.*;
  * Handle configuration for {@link PanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class PanelEditorXml implements XmlAdapter {
 
@@ -44,6 +44,7 @@ public class PanelEditorXml implements XmlAdapter {
         panel.addAttribute("editable", ""+(p.isEditable()?"yes":"no"));
         panel.addAttribute("positionable", ""+(p.isPositionable()?"yes":"no"));
         panel.addAttribute("controlling", ""+(p.isControlling()?"yes":"no"));
+        panel.addAttribute("hide", "no");
 
         // include contents
 
@@ -131,9 +132,14 @@ public class PanelEditorXml implements XmlAdapter {
             value = false;
         panel.setAllControlling(value);
 
+        boolean hide = false;
+        if ((a = element.getAttribute("hide"))!=null && a.getValue().equals("yes"))
+            value = true;
+
         // display the results, with the editor in back
         panel.pack();
-        panel.show();
+        System.out.println("hide"+hide);
+        if (hide) panel.show();
         panel.getFrame().pack();
         panel.getFrame().show();
 
