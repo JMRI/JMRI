@@ -1,16 +1,4 @@
-/**
- * EasyDccTurnout.java
- *
- * Description:		extend jmri.AbstractTurnout for EasyDcc layouts
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Id: EasyDccTurnout.java,v 1.3 2002-06-26 03:52:20 jacobsen Exp $
- */
-
-/**
- *  This object doesn't listen to the EasyDcc communications.  This is because
- *  it should be the only object that is sending messages for this turnout;
- *  more than one Turnout object pointing to a single device is not allowed.
- */
+// EasyDccTurnout.java
 
 package jmri.jmrix.easydcc;
 
@@ -18,12 +6,22 @@ import jmri.AbstractTurnout;
 import jmri.Turnout;
 import jmri.NmraPacket;
 
+/**
+ * EasyDcc implementation of the Turnout interface.
+ * <P>
+ *  This object doesn't listen to the EasyDcc communications.  This is because
+ *  it should be the only object that is sending messages for this turnout;
+ *  more than one Turnout object pointing to a single device is not allowed.
+ *
+ * Description:		extend jmri.AbstractTurnout for EasyDcc layouts
+ * @author			Bob Jacobsen Copyright (C) 2001
+ * @version			$Revision: 1.4 $
+ */
 public class EasyDccTurnout extends AbstractTurnout {
 
 	/**
 	 * EasyDcc turnouts use the NMRA number (0-511) as their numerical identification.
 	 */
-
 	public EasyDccTurnout(int number) {
 		_number = number;
 		// At construction, register for messages
@@ -32,15 +30,8 @@ public class EasyDccTurnout extends AbstractTurnout {
 	public int getNumber() { return _number; }
 	public String getSystemName() { return "ET"+getNumber(); }
 
-	// Handle a request to change state by sending a LocoNet command
+	// Handle a request to change state by sending a formatted DCC packet
 	protected void forwardCommandChangeToLayout(int s) throws jmri.JmriException {
-		// implementing classes will typically have a function/listener to get
-		// updates from the layout, which will then call
-		//		public void firePropertyChange(String propertyName,
-		//										Object oldValue,
-		//										Object newValue)
-		// _once_ if anything has changed state (or set the commanded state directly)
-
 		// sort out states
 		if ( (s & Turnout.CLOSED) > 0) {
 			// first look for the double case, which we can't handle
