@@ -22,20 +22,20 @@ public class LocoGenAction 			extends AbstractAction {
     public LocoGenAction() { this("Send LocoNet message");}
 
     public void actionPerformed(ActionEvent e) {
-		// create a LocoGenFrame
-		LocoGenFrame f = new LocoGenFrame();
-		try {
-			f.initComponents();
-			}
-		catch (Exception ex) {
-			log.error("Exception: "+ex.toString());
-			}
-		f.show();
-
-		// connect to the LnTrafficController
-		f.connect(LnTrafficController.instance());
-	}
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoGenAction.class.getName());
+        // create a LocoGenFrame
+        LocoGenFrame f = new LocoGenFrame();
+        try {
+            f.initComponents();
+        }
+        catch (Exception ex) {
+            log.error("Exception: "+ex.toString());
+        }
+        f.show();
+        
+        // connect to the LnTrafficController
+        f.connect(LnTrafficController.instance());
+    }
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoGenAction.class.getName());
 }
 
 

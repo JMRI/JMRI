@@ -18,7 +18,7 @@ import jmri.jmrix.loconet.*;
  * <LI>When the timer trips, repeat if buttons still down.
  * </UL>
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class LocoGenFrame extends javax.swing.JFrame implements LocoNetListener {
 
@@ -47,22 +47,22 @@ public class LocoGenFrame extends javax.swing.JFrame implements LocoNetListener 
         {
             JPanel pane1 = new JPanel();
             pane1.setLayout(new BoxLayout(pane1, BoxLayout.Y_AXIS));
-
+            
             jLabel1.setText("Packet:");
             jLabel1.setVisible(true);
-
+            
             sendButton.setText("Send");
             sendButton.setVisible(true);
             sendButton.setToolTipText("Send packet");
-
+            
             packetTextField.setToolTipText("Enter packet as hex pairs, e.g. 82 7D");
-
-
+            
+            
             pane1.add(jLabel1);
             pane1.add(packetTextField);
             pane1.add(sendButton);
             pane1.add(Box.createVerticalGlue());
-
+            
             sendButton.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         sendButtonActionPerformed(e);
@@ -73,12 +73,12 @@ public class LocoGenFrame extends javax.swing.JFrame implements LocoNetListener 
                         thisWindowClosing(e);
                     }
                 });
-
+            
             getContentPane().add(pane1);
         }
-
+        
         getContentPane().add(new JSeparator());
-
+        
         // Configure the sequence
         getContentPane().add(new JLabel("Send sequence of packets:"));
         JPanel pane2 = new JPanel();
@@ -98,26 +98,26 @@ public class LocoGenFrame extends javax.swing.JFrame implements LocoNetListener 
         }
         pane2.add(mRunButton); // starts a new row in layout
         getContentPane().add(pane2);
-
+        
         mRunButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                runButtonActionPerformed(e);
-            }
-        });
-
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    runButtonActionPerformed(e);
+                }
+            });
+        
         // pack to cause display
         pack();
     }
-
+    
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         tc.sendLocoNetMessage(createPacket(packetTextField.getText()));
     }
-
+    
     // control sequence operation
     int mNextSequenceElement = 0;
     LocoNetMessage mNextEcho = null;
     javax.swing.Timer timer = null;
-
+    
     /**
      * Internal routine to handle timer starts & restarts
      */
@@ -134,7 +134,7 @@ public class LocoGenFrame extends javax.swing.JFrame implements LocoNetListener 
         timer.setRepeats(false);
         timer.start();
     }
-
+    
     /**
      * Run button pressed down, start the sequence operation
      * @param e
@@ -154,7 +154,7 @@ public class LocoGenFrame extends javax.swing.JFrame implements LocoNetListener 
         mNextSequenceElement = 0;
         sendNextItem();
     }
-
+    
     /**
      * Process the incoming message to look for the needed echo
      * @param m
@@ -167,7 +167,7 @@ public class LocoGenFrame extends javax.swing.JFrame implements LocoNetListener 
         // yes, we got it, do the next
         startSequenceDelay();
     }
-
+    
     /**
      * Echo has been heard, start delay for next packet
      */
@@ -180,7 +180,7 @@ public class LocoGenFrame extends javax.swing.JFrame implements LocoNetListener 
         // start timer
         restartTimer(delay);
     }
-
+    
     /**
      * Send next item; may be used for the first item or
      * when a delay has elapsed.
@@ -206,7 +206,7 @@ public class LocoGenFrame extends javax.swing.JFrame implements LocoNetListener 
             sendNextItem();
         }
     }
-
+    
     /**
      * Create a well-formed LocoNet packet from a String
      * @param s
@@ -220,7 +220,7 @@ public class LocoGenFrame extends javax.swing.JFrame implements LocoNetListener 
         for (int i=0; i<b.length; i++) m.setElement(i, b[i]);
         return m;
     }
-
+    
     int[] parseString(String s) {
         String ts = s+"  "; // ensure blanks on end to make scan easier
         int len = 0;
@@ -260,15 +260,15 @@ public class LocoGenFrame extends javax.swing.JFrame implements LocoNetListener 
         }
         return b;
     }
-
+    
     private boolean mShown = false;
-
+    
     public void addNotify() {
         super.addNotify();
-
+        
         if (mShown)
             return;
-
+        
         // resize frame to account for menubar
         JMenuBar jMenuBar = getJMenuBar();
         if (jMenuBar != null) {
@@ -277,10 +277,10 @@ public class LocoGenFrame extends javax.swing.JFrame implements LocoNetListener 
             dimension.height += jMenuBarHeight;
             setSize(dimension);
         }
-
+        
         mShown = true;
     }
-
+    
     // Close the window when the close box is clicked
     void thisWindowClosing(java.awt.event.WindowEvent e) {
         setVisible(false);
@@ -288,15 +288,15 @@ public class LocoGenFrame extends javax.swing.JFrame implements LocoNetListener 
 	// disconnect from LnTrafficController
         tc = null;
     }
-
+    
     // connect to the LnTrafficController
     public void connect(LnTrafficController t) {
         tc = t;
         tc.addLocoNetListener(~0, this);
     }
-
-
+    
+    
     // private data
     private LnTrafficController tc = null;
-
+    
 }
