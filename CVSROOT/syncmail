@@ -7,7 +7,7 @@
 This script is used to provide email notifications of changes to the CVS
 repository.  These email changes will include context diffs of the changes.
 Really big diffs will be trimmed.
-
+ 
 This script is run from a CVS loginfo file (see $CVSROOT/CVSROOT/loginfo).  To
 set this up, create a loginfo entry that looks something like this:
 
