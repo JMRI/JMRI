@@ -171,7 +171,7 @@ public class ControlPanel extends JInternalFrame
                    {
                        if (!speedSlider.getValueIsAdjusting())
                        {
-                           throttle.setSpeedSetting(speedSlider.getValue());
+                           throttle.setSpeedSetting(speedSlider.getValue()/127.0f);
                        }
                    }
                 });

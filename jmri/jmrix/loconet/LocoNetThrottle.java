@@ -107,7 +107,7 @@ public class LocoNetThrottle implements DccThrottle
         LocoNetMessage msg = new LocoNetMessage(4);
         msg.setOpCode(LnConstants.OPC_LOCO_SPD);
         msg.setElement(1, slot.getSlot());
-        msg.setElement(2, (int)speed);
+        msg.setElement(2, (int)(127*speed));
         network.sendLocoNetMessage(msg);
     }
 
