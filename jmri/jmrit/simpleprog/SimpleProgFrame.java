@@ -13,7 +13,7 @@ import jmri.ProgModePane;
 /**
  * Frame providing a simple command station programmer
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgListener {
 
@@ -104,6 +104,9 @@ public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgList
 
         getContentPane().add(resultsField);
 
+        if (modePane.getProgrammer()== null)
+            modePane.setDefaultMode();
+
         pack();
     }
 
@@ -128,17 +131,13 @@ public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgList
         }
     }
 
-    public String statusCode(int status) {
-        String temp;
-        if (status == jmri.ProgListener.OK)
-            temp = "OK. ";
-        else
-            temp = "Error. ";
-        if ((status & jmri.ProgListener.NoLocoDetected) != 0)
-            temp += "No Locomotive on programming track. ";
-        if ((status & jmri.ProgListener.NoAck) != 0)
-            temp += "Decoder acknowledge not seen. ";
-        return temp;
+    private String statusCode(int status) {
+        Programmer p = modePane.getProgrammer();
+        if (p == null) {
+            return "No programmer connected";
+        } else {
+            return p.decodeErrorCode(status);
+        }
     }
 
     // listen for messages from the Programmer object
