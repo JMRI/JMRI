@@ -1,0 +1,69 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Bob Jacobsen, LBL">
+   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>Compilation</title>
+</head>
+<body>
+
+<A href="../index.html">
+<IMG SRC="../images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
+</a>
+
+This page discusses how to compile a simple java class.  For more complicated
+situations, including building the complete JMRI libraries, see our
+<A HREF="index.html">Technical page</a>. For more information on JMRI, see the
+<A HREF="../index.html">main JMRI page</a>.
+
+<h2>Preparation</h2>
+For simple compilations, you only need the Java "Software Development Kit" (SDK).
+Macintosh computers already have it installed.  For Linux and Windows computers, 
+this is a free download from Sun:
+<BR>
+<A HREF="http://java.sun.com/j2se/downloads.html">Main Java download page</>
+<BR>
+<A HREF="http://java.sun.com/j2se/1.3/download.html">Download page for the popular Java 1.3.1 version</a>.
+<BR>
+Note that this is a large (30MB or so) download!
+
+<P>
+Once you've installed the Java SDK, you <B>must</b> run the JMRI installer again.
+This is necessary to reconnect the JMRI communications routines with new versions
+of the Java libaries you've just installed.
+
+<h2>Compiling - Windows</h2>
+
+In the project folder, you'll find a compilation script called "compile.bat". 
+(Depending on your system options, you might need to "show details" to see the
+.bat extension).  Double clicking on this file
+recompiles all the Java source code in the folder.
+<P>
+When you double click, a new DOS window opens and a "javac" command is 
+issued with a bunch of options specific to your system, the java version, etc.
+If there are any compilation errors, the error messages will appear in that
+window.
+
+<HR>
+<BR>Site hosted by: <BR>
+<A href="http://sourceforge.net"> 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
+
+<script language=javascript 
+src="http://ss.webring.com/navbar?f=j;y=bob_jacobsen15;u=100088115910095949">
+</script><noscript><center>
+<table bgcolor=gray cellspacing=0 border=2 bordercolor=red><tr>
+<td><table cellpadding=2 cellspacing=0 border=0><tr><td align=center>
+<font face=arial size=-1>This site is a member of WebRing. 
+<br>To browse visit <a href="http://ss.webring.com/navbar?f=l;y=bob_jacobsen15;u=100088115910095949">
+Here</a>.</font></td></tr></table></td></tr></table>
+</center></noscript>
+
+<hr>
+Bob Jacobsen<BR>
+jake@physics.berkeley.edu
+
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Bob Jacobsen, LBL">
+   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>Introduction to Java for JMRI</title>
+</head>
+<body>
+
+<A href="../index.html">
+<IMG SRC="../images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
+</a>
+
+This page introduces you to some simple Java constructs for JMRI.  
+For information on compiling these, please see the
+<A HREF="compile.html">compilation page</a>.
+For more complicated
+situations, including building the complete JMRI libraries, see our
+<A HREF="index.html">Technical page</a>. For more information on JMRI, see the
+<A HREF="../index.html">main JMRI page</a>.
+
+<P>
+Throughout, we're assuming that you've got a working piece of sample
+code that you want to modify and use.  See the 
+<A HREF="index.html">Technical pages</a>, particularly the pages on
+<A HREF="loconet/LocoNetClasses.html">LocoNet classes</a>, if you want more in-depth information
+on how to use the JMRI libraries.
+
+<h2>Java variables</h2>
+
+The Java language requires that you declare a variable before using it.  You do this
+by specifying the type and name of the variable. For example:
+<PRE>
+    int    count;
+    
+    Sensor sensor1x1;
+
+    Turnout output1;
+
+</PRE>
+declares an integer variable "count", a variable that represents an input
+sensor called "sensor1x1", and a variable that represents a Turnout called "output1".
+You can use letters, digits and the "_" character in names; it's traditional
+to start variable names with a lower case letter.
+<P>
+Integers can be used in the usual type of assignment statements, such as:
+<PRE>
+   count = 3;
+   
+   count = oldCount;
+   
+   count = count + 1;
+   
+</PRE>
+In order, these set the value of "count" to three; set the value of "count"
+to the current value of "oldCount", and adds one to the current value of "count".
+Note that an integer variable starts out with no specific value; you have to 
+assign a value to it before you can use its value, or you'll get an error message.
+<P>
+Variables representing sensors and turnouts must be initialized before they 
+can be used.  That's done with statements like:
+<PRE>
+        sensor1x1 = InstanceManager.sensorManagerInstance().
+                    newSensor(null,"0");
+
+        output1 = InstanceManager.turnoutManagerInstance().
+                    newTurnout(null,"1");
+</PRE>
+
+In Java, parentheses represent a procedure call, similar to a function or
+subroutine call in some other languages.  The "." operator means a reference.
+So you read the first of the examples above like:
+
+<PRE>
+    Find the InstanceManager
+    
+        call its "sensorManagerInstance" procedure, which 
+        returns the name of a SensorManager 
+        
+        
+           call the "newSensor" procedure of that SensorManager,
+           passing it the values "null" and "0"
+           
+    Assign the result of that procedure to the "sensor1x1" variable.
+    
+</PRE>
+At this point, it's not really necessary to know how put that together. 
+It's sufficient that this sequence of operations will set the
+"sensor1x1" variable so that it controls the sensor with address "0".
+Similarly, the sequence in the second example sets the "output1"
+variable so that it controls turnout number 1.
+
+<P>
+You can then use these variables to control the layout.  For example:
+
+<PRE>
+       if (sensor1x1.getKnownState() == ACTIVE)
+                  output1.setCommandedState(OFF);
+</PRE>
+
+The "if" statement will check to see if the expression in parentheses 
+"sensor1x1.getKnownState() == ACTIVE" is true.  Note the double-equals "==",
+which is true if the two values are equal (remember that the single
+equal "=" sets a variable to a value, which is not what we want to do here).
+If that's true, the 2nd statement "output1.setCommandedState(OFF)" will
+be executed, otherwise it will be skipped.
+<P>
+You can ask the current state of a sensor using "sensor1x1.getKnownState()";
+the possible values are "ACTIVE", "INACTIVE", "UNKNOWN" and "ERROR".
+<P>
+You can set an output using "output1.setCommandedState(OFF)", where the
+possible states are either "ON" or "OFF".  "THROWN" is the same as "ON", 
+and "CLOSED" is the same as "OFF".
+
+<h2>Writing to the screen</h2>
+
+There are four ways to write to the screen, and also optionally to log files:
+<PRE>
+   log.debug("message");   // debugging messages suppressed in normal operation
+   log.info("message");    // routine messages that don't imply an error
+   log.warn("message");    // something odd happened, but it might not be an error
+   log.error("message");   // something happened that's certainly bad
+</PRE>
+The double-slash "//" means the rest of the line is a comment.
+There are multiple type of messages so we can control what's actually
+printed to the screen or log from a outside the program.  (For an example
+of this, look at the default.lcf file in every JMRI distribution).  Normally,
+only warn() or error() messages are shown to the user, but during development
+it's often convenient to also show the info or even the debugging messages.
+
+<HR>
+<BR>Site hosted by: <BR>
+<A href="http://sourceforge.net"> 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
+
+<script language=javascript 
+src="http://ss.webring.com/navbar?f=j;y=bob_jacobsen15;u=100088115910095949">
+</script><noscript><center>
+<table bgcolor=gray cellspacing=0 border=2 bordercolor=red><tr>
+<td><table cellpadding=2 cellspacing=0 border=0><tr><td align=center>
+<font face=arial size=-1>This site is a member of WebRing. 
+<br>To browse visit <a href="http://ss.webring.com/navbar?f=l;y=bob_jacobsen15;u=100088115910095949">
+Here</a>.</font></td></tr></table></td></tr></table>
+</center></noscript>
+
+<hr>
+Bob Jacobsen<BR>
+jake@physics.berkeley.edu
+
+</body>
+</html>
