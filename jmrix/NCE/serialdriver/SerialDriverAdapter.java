@@ -46,7 +46,7 @@ public class SerialDriverAdapter extends NcePortController  {
 
 			// try to set it for comunication via SerialDriver
 			try {
-				activeSerialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_EVEN);
+				activeSerialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 			} catch (javax.comm.UnsupportedCommOperationException e) {
 				log.error("Cannot open serial port: "+e);	
 			}

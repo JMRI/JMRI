@@ -53,7 +53,7 @@ public class SerialDriverFrame extends javax.swing.JFrame {
 		setLocation(new java.awt.Point(5, 40));
 		setTitle("SerialDriver connection");
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-		getContentPane().add(new JLabel("using 19200 baud,"));
+		getContentPane().add(new JLabel("using 9600 baud,"));
 		getContentPane().add(new JLabel("     local echo"));
 		getContentPane().add(getNamesButton);
 		getContentPane().add(portList);

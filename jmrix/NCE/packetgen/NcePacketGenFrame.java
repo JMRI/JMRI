@@ -63,7 +63,12 @@ public class NcePacketGenFrame extends javax.swing.JFrame implements jmri.jmrix.
 	}
   
   	public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-  		NceTrafficController.instance().sendNceMessage(createPacket(packetTextField.getText()), this);
+  		NceMessage m = new NceMessage(packetTextField.getText().length());
+  		for (int i=0; i<packetTextField.getText().length(); i++)
+  			m.setElement(i, packetTextField.getText().charAt(i));
+  			
+  		NceTrafficController.instance().sendNceMessage(m, this);
+  		//NceTrafficController.instance().sendNceMessage(createPacket(packetTextField.getText()), this);
   	}
   	
   	public void  message(NceMessage m) {}  // ignore replies

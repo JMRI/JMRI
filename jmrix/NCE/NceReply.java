@@ -50,8 +50,45 @@ public class NceReply {
 	}
 
 	public int value() {  // integer value of 1st three digits
-		String s = ""+(char)getElement(0)+(char)getElement(1)+(char)getElement(2);
-		return Integer.parseInt(s);
+		int index = 0;
+		index = skipWhiteSpace(index);
+		index = skipCOMMAND(index);
+		index = skipWhiteSpace(index);
+		String s = ""+(char)getElement(index)+(char)getElement(index+1)+(char)getElement(index+2);
+		int val = -1;
+		try {
+			val = Integer.parseInt(s);
+		} catch (Exception e) {
+			log.error("Unable to get number from reply: \""+s+"\" index: "+index
+					+" message: \""+toString()+"\"");
+		}
+		return val;
+	}
+	
+	int skipWhiteSpace(int index) {
+		// start at index, passing any whitespace & control characters at the start of the buffer
+		while (index < getNumDataElements()-1 && 
+			((char)getElement(index) <= ' ')) 
+				index++;
+		return index;
+	}
+
+	int skipCOMMAND(int index) {
+		// start at index, passing any control characters at the start of the buffer
+		int len = "COMMAND: ".length();
+		if ( getNumDataElements() >= index+len-1
+			&& 'C'== (char)getElement(index)
+			&& 'O'== (char)getElement(index+1)
+			&& 'M'== (char)getElement(index+2)
+			&& 'M'== (char)getElement(index+3)
+			&& 'A'== (char)getElement(index+4)
+			&& 'N'== (char)getElement(index+5)
+			&& 'D'== (char)getElement(index+6)
+			&& ':'== (char)getElement(index+7)
+			&& ' '== (char)getElement(index+8)  ) {
+				index = index +"COMMAND: ".length();
+		}
+		return index;
 	}
 	
 	static public int maxSize = 120;

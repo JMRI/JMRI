@@ -42,7 +42,7 @@ public class NceTest extends TestCase {
 		suite.addTest(jmri.jmrix.nce.packetgen.NcePacketGenFrameTest.suite());
 		suite.addTest(jmri.jmrix.nce.NceTrafficControllerTest.suite());
 		suite.addTest(jmri.tests.jmrix.nce.NceMessageTest.suite());
-		suite.addTest(jmri.tests.jmrix.nce.NceReplyTest.suite());
+		suite.addTest(jmri.jmrix.nce.NceReplyTest.suite());
 		suite.addTest(jmri.tests.jmrix.nce.NcePowerManagerTest.suite());
 		return suite;
 	}
