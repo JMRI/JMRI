@@ -37,7 +37,7 @@ import javax.swing.*;
  * a warning will be logged if they are used before the thread starts.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 abstract public class AbstractAutomaton implements Runnable {
 
@@ -276,6 +276,113 @@ abstract public class AbstractAutomaton implements Runnable {
         }
         return throttle;
     }
+
+    /**
+     * Write a CV on the service track, including waiting for completion.
+     * @param CV Number 1 through 512
+     * @param value
+     * @return true if completed OK
+     */
+    public boolean writeServiceModeCV(int CV, int value) {
+        // get service mode programmer
+        Programmer programmer = InstanceManager.programmerManagerInstance()
+                        .getServiceModeProgrammer();
+
+        // do the write, response will wake the thread
+        try {
+            programmer.writeCV(CV, value, new ProgListener() {
+                public void programmingOpReply(int value, int status) {
+                    synchronized (self) { self.notify(); }
+                }
+            });
+        } catch (ProgrammerException e) {
+            log.warn("Exception during writeServiceModeCV: "+e);
+            return false;
+        }
+        // wait for the result
+        try {
+            synchronized (self) {
+                super.wait(30000);
+            }
+        } catch (InterruptedException e) {
+            log.warn("writeServiceModeCV got unexpected interrupt");
+        }
+        return true;
+    }
+
+    private volatile int cvReturnValue;
+    private volatile int cvReturnStatus;
+
+    /**
+     * Read a CV on the service track, including waiting for completion.
+     * @param CV Number 1 through 512
+     * @return -1 if error, else value
+     */
+    public int readServiceModeCV(int CV) {
+        // get service mode programmer
+        Programmer programmer = InstanceManager.programmerManagerInstance()
+                        .getServiceModeProgrammer();
+
+        // do the write, response will wake the thread
+        cvReturnValue = -1;
+        try {
+            programmer.readCV(CV, new ProgListener() {
+                public void programmingOpReply(int value, int status) {
+                    cvReturnValue = value;
+                    cvReturnStatus = status;
+                    synchronized (self) { self.notify(); }
+                }
+            });
+        } catch (ProgrammerException e) {
+            log.warn("Exception during writeServiceModeCV: "+e);
+            return -1;
+        }
+        // wait for the result
+        try {
+            synchronized (self) {
+                super.wait(30000);
+            }
+        } catch (InterruptedException e) {
+            log.warn("writeServiceModeCV got unexpected interrupt");
+        }
+        return cvReturnValue;
+    }
+
+    /**
+     * Write a CV in ops mode, including waiting for completion.
+     * @param CV Number 1 through 512
+     * @param value
+     * @param loco   Locomotive decoder address
+     * @param longAddress true is the locomotive is using a long address
+     * @return true if completed OK
+     */
+    public boolean writeOpsModeCV(int CV, int value, boolean longAddress, int loco) {
+        // get service mode programmer
+        Programmer programmer = InstanceManager.programmerManagerInstance()
+                        .getOpsModeProgrammer(longAddress, loco);
+
+        // do the write, response will wake the thread
+        try {
+            programmer.writeCV(CV, value, new ProgListener() {
+                public void programmingOpReply(int value, int status) {
+                    synchronized (self) { self.notify(); }
+                }
+            });
+        } catch (ProgrammerException e) {
+            log.warn("Exception during writeServiceModeCV: "+e);
+            return false;
+        }
+        // wait for the result
+        try {
+            synchronized (self) {
+                super.wait(30000);
+            }
+        } catch (InterruptedException e) {
+            log.warn("writeServiceModeCV got unexpected interrupt");
+        }
+        return true;
+    }
+
 
     JFrame debugWaitFrame = null;
 
