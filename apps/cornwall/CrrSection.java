@@ -8,7 +8,7 @@ import jmri.*;
  * Abstract base class for Cornwall RR automation.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public abstract class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
     static final int RED    = SignalHead.RED;
@@ -38,10 +38,10 @@ public abstract class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
     SignalHead sig;
 
     /**
-     * Array of sensors needed as inputs; changes in these will
+     * Array of sensors and/or turnouts needed as inputs; changes in these will
      * kick off processing
      */
-    Sensor[] sensors;
+    NamedBean[] inputs;
 
 
     /**
@@ -73,7 +73,7 @@ public abstract class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
         log.debug("Waiting for state change");
 
         // wait until a sensor changes state
-        waitSensorChange(sensors);
+        waitChange(inputs);
 
         // recalculate outputs
         int oldAppearance = sig.getAppearance();
@@ -177,11 +177,42 @@ public abstract class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
             for (int i = 1; i<bo.length; i++)
                 if (bo[i]==null) log.error("bo["+i+"] unexpectedly null");
 
-            // also initialize 'gate'
+            // Also initialize 'gate'
             gate = tm.getByUserName("Gate Power Interlock Gate");
             if (gate == null) log.error("Failed to initialize gate");
         }
 
+        if (si == null) {
+            // unlike the sections above, this is done programmatically
+            si = new Turnout[133];  // allow room for si[0] = null through si[132]
+            si[0] = null;
+
+            int n = 1;
+            TurnoutManager man = InstanceManager.turnoutManagerInstance();
+            final String[] letters = new String[]{"a", "b", "c"};
+            final String[] lights = new String[]{"green", "yellow", "red"};
+
+            for (int sig = 1; sig<=29; sig++) {  // sig is signal number
+                for (int letter = 0; letter<3; letter++) { // loop over signal a, b, c
+                    for (int light = 0; light<3; light++) { // loop over green, yellow, red
+                        String name = ""+sig
+                                +letters[letter]+" "
+                                +lights[light];
+                        // see if that one exists, and store it
+                        Turnout t = man.getByUserName(name);
+                        if (t!=null) {
+                            // yes, save
+                            si[n] = t;
+                            log.debug("Found si["+n+"] = "+name);
+                            n++;
+                        }
+                    }
+                }
+            }
+            if (n!=132+1) log.error("unexpected number of found si[] entries: "+n);
+            if (si[0]!= null) log.error("unexpected non-null si[0]");
+            if (si[132]==null) log.error("unexpected null in si[132]");
+        }
     }
 
     /**
@@ -208,6 +239,16 @@ public abstract class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
      * constructor is run.
      */
     static Sensor[] bo = null;
+
+    /**
+     * Java array of Turnout objects corresponding to SI() signal outputs
+     * in the C/MRI code.  Note that SI[1] is like SI(1) in BASIC, so there's
+     * an extra null entry at the beginning (as SI[0]).
+     * <P>
+     * Initialization of the contents happens when the first CrrSection object
+     * constructor is run.
+     */
+    static Turnout[] si = null;
 
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CrrSection.class.getName());
