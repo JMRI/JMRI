@@ -12,7 +12,7 @@ import com.sun.java.util.collections.List;
  * configuring LnSecurityElementManager.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class LnSecurityElementManagerXml implements XmlAdapter {
 
@@ -202,7 +202,8 @@ public class LnSecurityElementManagerXml implements XmlAdapter {
                     se.onAXReservation = SecurityElement.STOPOPPOSITE;
                     se.makeBReservation = true;
                 }
-                else log.error("Unrecognized mode: "+mode);
+                else if (!mode.equals("none"))
+                    log.error("Unrecognized mode: "+mode);
             }
         }
     }
