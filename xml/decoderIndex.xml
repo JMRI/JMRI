@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <decoderIndex version="48">
+  <decoderIndex version="49">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -20,6 +20,7 @@
       <manufacturer mfg="Kuehn Ing." mfgID="157" />
       <manufacturer mfg="LGB" mfgID="159" />
       <manufacturer mfg="Lenz" mfgID="99" />
+      <manufacturer mfg="MERG" mfgID="255" />
       <manufacturer mfg="MRC" mfgID="143" />
       <manufacturer mfg="North Coast Engineering" mfgID="11" />
       <manufacturer mfg="PSI-Dynatrol" mfgID="14" />
@@ -300,6 +301,9 @@
           <output name="3" label="C - Green" />
           <output name="4" label="D - Violet" />
         </model>
+      </family>
+      <family name="DCCACC" mfg="MERG" comment="DCCACC is a stationary decoder, but it can be programmed in the usual way" type="locomotive" file="MERG_DCCACC.xml">
+        <model model="DCCACC" />
       </family>
       <family name="MRC 14/28 step decoders" mfg="MRC" type="locomotive" file="MRC_1428step.xml">
         <model model="AD310" />
