@@ -11,50 +11,50 @@ import jmri.Sensor;
  * System names are "LSnnn", where nnn is the sensor number without padding.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class LnSensorManager extends jmri.AbstractSensorManager implements LocoNetListener {
 
     // ABC implementations
-    
+
     // to free resources when no longer used
     public void dispose() throws JmriException {
     }
-    
+
     // LocoNet-specific methods
-    
+
     public Sensor newSensor(String systemName, String userName) {
         if (log.isDebugEnabled()) log.debug("newSensor:"
                                             +( (systemName==null) ? "null" : systemName)
                                             +";"+( (userName==null) ? "null" : userName));
-        
+
         // if system name is null, supply one from the number in userName
         if (systemName == null) systemName = "LS"+userName;
-        
+
         // get number from name
         if (!systemName.startsWith("LS")) {
-            log.error("Invalid system name for LocoNet turnout: "+systemName);
+            log.error("Invalid system name for LocoNet sensor: "+systemName);
             return null;
         }
-        
+
         // return existing if there is one
         Sensor s;
         if ( (userName!=null) && ((s = getByUserName(userName)) != null)) return s;
         if ( (systemName!=null) && ((s = getBySystemName(systemName)) != null)) return s;
-        
+
         // doesn't exist, make a new one
         s = new LnSensor(systemName);
-        
+
         _tsys.put(systemName, s);
         if (userName!=null) _tuser.put(userName, s);
         return s;
     }
-    
+
     // ctor has to register for LocoNet events
     public LnSensorManager() {
         LnTrafficController.instance().addLocoNetListener(~0, this);
     }
-    
+
     // listen for sensors, creating them as needed
     public void message(LocoNetMessage l) {
         // parse message type
@@ -78,14 +78,14 @@ public class LnSensorManager extends jmri.AbstractSensorManager implements LocoN
             newSensor(s, "");
         }
     }
-    
+
     private int address(int a1, int a2) {
         // the "+ 1" in the following converts to throttle-visible numbering
         return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1);
     }
-    
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnSensorManager.class.getName());
-    
+
 }
 
-/* @(#)LnTurnoutManager.java */
+/* @(#)LnSensorManager.java */
