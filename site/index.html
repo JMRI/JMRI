@@ -84,6 +84,26 @@ The
 <A HREF="demoFiles/README.html">README file</A>
 from the latest demo is also available separately.
 
+<h2>How can you use this?</h2>
+
+There are several different ways to use JMRI:
+<OL>
+<LI>You can just run the demo and use the tools it provides.  As we
+add more and more, the demo becomes more useful.  But you shouldn't expect
+it to be as powerful as a commercial layout management program; JMRI
+isn't meant to compete directly with them.
+<LI>You can use the JRMI interfaces to write programs for your own layouts.
+Making this easy is an important goal.
+<LI>You can write new general-purpose tools.  Although this is a little
+harder than writing automation for your own layout, writing tools that other
+people use can be very satisfying.
+<LI>You can implement the JMRI interfaces for a new system.  We're starting with
+LocoNet, but having JMRI work with other systems is an important goal.  
+Once an implementation for another system works, the general tools (e.g.
+symbolic programmer, automations tools, signalling, etc) can be immediately
+used.
+</ol>
+
 <h2>Further information</h2>
 
 The <A href="http://lists.sourceforge.net/lists/listinfo/jmri-announce">jmri-announce</a> 
@@ -144,6 +164,17 @@ If you have problems accessing that, please check for scheduled outages on the
 
 This is still an early stage, and we're critically short of documentation.  But if you're interested
 in working with the code, we'd love to help you get started via email, etc.
+
+<h2>Acknowledgements</h2>
+JMRI is a volunteer project, and we welcome people to contribute in any way.
+Contributors include:
+<UL>
+<LI>Patrick Beard, who allows us to distribute his javax.comm.MRJ package for the Macintosh.
+<LI>Ron W. Auld, who's llnmon program formed the basis for the LocoNet monitoring.
+<LI>Rob Hamerling, who got the demo to run on OS/2 and contributed his scripts.
+<LI>John Jabour, for help with the LocoBuffer interface.
+<LI>Ronald Angel, who figured out how to run the demo on Linux
+</ul>
 
 <HR>
 <BR>Site hosted by: <BR>
