@@ -10,7 +10,7 @@ import jmri.jmrix.lenz.XNetTrafficController;
  * XpressnetNet connection.
  * @author     Paul Bender (C) 2002,2003
  * @created    December 20,2002
- * @version    $Revision: 1.6 $
+ * @version    $Revision: 1.7 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -20,6 +20,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     private int address;
     private boolean isForward;
     private boolean f0, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12;
+    private boolean isAvailable;
 
     /**
      * Constructor
@@ -38,9 +39,11 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     {
        super();
        this.address=address;
-       this.speedIncrement=1;
+       this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;
        this.isForward=true;
+       this.isAvailable=false;
        XNetTrafficController.instance().addXNetListener(~0, this);
+       sendStatusInformationRequest();
     }
 
     /**
@@ -187,7 +190,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
          msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
 						    //of the DCC address 
          // Now, we need to figure out what to send in element 3
-         int element4value=(int)((speed)*(127)/speedIncrement);
+         int element4value=(int)((speed)*(128)/speedIncrement);
          if(isForward)
  	 {
 	    /* the direction bit is always the most significant bit */
@@ -445,17 +448,67 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 
     private int getDccAddressHigh()
     {
-        /* this isn't actually the hi bite, but the 100s and 1000s 
-           positions of the address */
-	int temp=address / 100;
-	return temp;
+        /* this isn't actually the high byte, For addresses below 100, we 
+	just return 0, otherwise, we need to return the upper byte of the
+	address after we add the offset 0xC000 The first address used for 
+        addresses over 99 is 0xC064*/
+	if(this.address < 100)
+	{
+		return(0x00);
+	}
+	else
+	{
+		int temp=address + 0xC000;
+		temp=temp & 0xFF00;
+		temp=temp/256;
+		return temp;
+	}
     }
 
     private int getDccAddressLow()
     {
-        /* this is actually the 10s and 100s position of the address */
-	int temp=address % 100;
-	return temp;
+        /* For addresses below 100, we just return the address, otherwise, 
+	we need to return the upper byte of the address after we add the 
+	offset 0xC000. The first address used for addresses over 99 is 0xC064*/
+	if(this.address < 100)
+	{
+		return(this.address);
+	}
+	else
+	{
+		int temp=this.address + 0xC000;
+		temp=temp & 0x00FF;
+		return temp;
+	}
+    }
+
+    // getStatusInformation sends a request to get the status
+    // speed and function status from the command station
+    private void sendStatusInformationRequest()
+    {
+       /* First, send the request for status */
+       XNetMessage msg=new XNetMessage(5);
+       msg.setElement(0,XNetConstants.LOCO_STATUS_REQ);   
+       msg.setElement(1,XNetConstants.LOCO_INFO_REQ_V3);
+       msg.setElement(2,this.getDccAddressHigh());// set to the upper 
+						    // byte of the  DCC address
+       msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
+						    //of the DCC address 
+       msg.setParity(); // Set the parity bit
+       // now, we send the message to the command station
+       XNetTrafficController.instance().sendXNetMessage(msg,this);
+
+       /* next, send the request for function values */
+       msg.setElement(0,XNetConstants.LOCO_STATUS_REQ);   
+       msg.setElement(1,XNetConstants.LOCO_INFO_REQ_FUNC);
+       msg.setElement(2,this.getDccAddressHigh());// set to the upper 
+						    // byte of the  DCC address
+       msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
+						    //of the DCC address 
+       msg.setParity(); // Set the parity bit
+       // now, we send the message to the command station
+       XNetTrafficController.instance().sendXNetMessage(msg,this);
+       return;
     }
 
     // to handle quantized speed. Note this can change! Valued returned is
@@ -472,12 +525,105 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     //                                                                         
     // _once_ if anything has changed state (or set the commanded state directly
     public void message(XNetMessage l) {
-        // check validity & addressing
-        if (XNetTrafficController.instance()
-            .getCommandStation()
-            .getThrottleMsgAddr(l) != address) return;
-        // is for this object, parse message type
-        log.error("message function invoked, but not yet prepared");
+        // check to see if this is a throttle message
+        //if (XNetTrafficController.instance()
+        //    .getCommandStation()
+        //    .isThrottleCommand(l) != true) return;
+        // this is a throttle message, we need to parse it
+	if (l.getOpCode()==XNetConstants.LOCO_INFO_NORMAL_UNIT)
+	{
+                /* there is no address sent with this information */
+		int b1=l.getElement(1);
+		int b2=l.getElement(2);
+		int b3=l.getElement(3);
+		int b4=l.getElement(4);
+
+		/* the first data bite indicates the speed step mode, and
+		if the locomotive is being controlled by another 
+		throttle */
+		if((b1 & 0x08)==0x08) this.isAvailable=false;
+		   else this.isAvailable=true;
+		if((b1 & 0x01)==0x01) 
+		{
+			this.speedIncrement=XNetConstants.SPEED_STEP_27_INCREMENT;
+		}
+		else if((b1 & 0x02)==0x02)
+		{ 
+			this.speedIncrement=XNetConstants.SPEED_STEP_28_INCREMENT;
+		}
+		else if((b1 & 0x04)==0x04)
+		{ 
+			this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;
+		}
+		else if((b1 & 0x04)==0x04) 
+		{
+			this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;;
+		}
+		else 
+		{
+			this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;
+		}
+
+		/* the second byte indicates the speed and direction setting */
+		
+		if ((b2 & 0x80)==0x80) this.isForward=true;
+		   else this.isForward=false;
+		if(this.speedIncrement==XNetConstants.SPEED_STEP_128_INCREMENT)
+		{
+			setSpeedSetting((float)((b2 & 0x7f)-2)/126);
+			notifyPropertyChangeListener("SpeedSetting",
+                                  new Float(this.speedSetting), 
+				  new Float(this.speedSetting = this.speedSetting));
+
+		}
+		else
+		{
+			setSpeedSetting((float)(((b2 & 0x7f)-4)/(126/this.speedIncrement)));
+			notifyPropertyChangeListener("SpeedSetting",
+                                  new Float(this.speedSetting), 
+				  new Float(this.speedSetting = this.speedSetting));
+		}
+	
+		/* data byte 3 is the status of F0 F4 F3 F2 F1 */
+		if((b3 & 0x10)==0x10)
+		{
+	           notifyPropertyChangeListener("F0",new Boolean(this.f0),new Boolean(this.f0 = true));
+		   this.f0=true;
+		}
+                else 
+		{
+	           notifyPropertyChangeListener("F0",new Boolean(this.f0),new Boolean(this.f0 = false));
+		   this.f0=false;
+		}
+
+		if((b3 &0x01)==0x01) this.f1=true;
+                   else this.f1=false;
+		if((b3 &0x02)==0x02) this.f2=true;
+                   else this.f2=false;
+		if((b3 &0x04)==0x04) this.f3=true;
+                   else this.f3=false;
+		if((b3 &0x08)==0x08) this.f4=true;
+                   else this.f4=false;
+
+		/* data byte 4 is the status of F12 F11 F10 F9 F8 F7 F6 F5 */
+		if((b4 &0x01)==0x01) this.f5=true;
+                   else this.f5=false;
+		if((b4 &0x02)==0x02) this.f6=true;
+                   else this.f6=false;
+		if((b4 &0x04)==0x04) this.f7=true;
+                   else this.f7=false;
+		if((b4 &0x08)==0x08) this.f8=true;
+                   else this.f8=false;
+		if((b4 &0x10)==0x10) this.f9=true;
+                   else this.f9=false;
+		if((b4 &0x20)==0x20) this.f10=true;
+                   else this.f10=false;
+		if((b4 &0x40)==0x40) this.f11=true;
+                   else this.f11=false;
+		if((b4 &0x08)==0x80) this.f12=true;
+                   else this.f12=false;
+	}
+
     }
 
 
@@ -487,3 +633,4 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetThrottle.class.getName());
 }
+

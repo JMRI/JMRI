@@ -8,8 +8,8 @@ package jmri.jmrix.lenz;
 /**
  * Defines standard operations for Dcc command stations.
  *
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @author			Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
+ * @version			$Revision: 1.9 $
  */
 public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
     
@@ -94,7 +94,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
         if (isThrottleCommand(pMsg)) {
             int a1 = pMsg.getElement(3);
             int a2 = pMsg.getElement(4);
-            return (((a1 & 0xff) * 4) + (a2 & 0x6)/2 + 1);
+            return ((a1 * 100) + a2);
         }
         else return -1;
     }
@@ -103,7 +103,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
      * Is this a throttle message?
      */
     public boolean isThrottleCommand(XNetMessage pMsg) {
-        int message=pMsg.getOpCode();
+        int message=pMsg.getElement(0);
         if( message==0x83 || message==0x84 || message==0xA3 || 
             message == 0xA4 ||message == 0xE2 || message == 0xE3 || 
            message == 0xE4) return true;

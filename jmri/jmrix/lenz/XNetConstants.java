@@ -3,7 +3,7 @@
  *
  * Description:		Constants to represent values seen in XpressNet traffic
  * @author		Paul Bender  Copyright (C) 2003
- * @version             $ Revision: 1.4 $
+ * @version             $ Revision: 1.5 $
  *
  * Variable prefix abreviation keys:
  * ACC_ is for accessory messages
@@ -20,6 +20,12 @@
 package jmri.jmrix.lenz;
 
 public final class XNetConstants {
+
+/* a few constants */
+public final static int SPEED_STEP_14_INCREMENT=9;
+public final static int SPEED_STEP_27_INCREMENT=4;
+public final static int SPEED_STEP_28_INCREMENT=4;
+public final static int SPEED_STEP_128_INCREMENT=1;
 
 /* Commands send from the command station to the computer*/
 
