@@ -28,7 +28,7 @@ import org.jdom.output.*;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -264,6 +264,9 @@ public class DecoderIndexFile extends XmlFile {
             if (sx[i].endsWith(".xml") || sx[i].endsWith(".XML"))
                 sbox[n++] = sx[i];
         }
+        //the resulting array is now sorted on file-name to make it easier
+        // for humans to read
+        java.util.Arrays.sort(sbox);
 
         // create a new decoderIndex
         // the existing version is used, so that a new master file
