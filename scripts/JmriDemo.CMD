@@ -4,8 +4,11 @@
 
    Author: Rob Hamerling (email r.hamerling@planet.nl)
 
-   Version: 0.7
+   Version: 0.8
 
+   Made from version 0.7 of JmriDemo.CMD
+   Made from version 0.9b8 of DecoderPro.CMD
+   
    To be started in directory with application, unless
    application is in a CLASSPATH directory.
 
@@ -25,13 +28,17 @@
    Notes:
    - Libraries will be prepended to current CLASSPATH.
 
+   History (most recent at top):
+   - loads crimson.jar instead of xerces.jar
+   - Made from version 0.7 of JmriDemo.CMD
+  
    ================================================================ */
 
 DefaultApplication = "JMRIdemo"         /* default application */
 
-j1 = "JMRI.jar;"                        /* JMRI files */
+j1 = "jmri.jar;"                        /* JMRI files */
 j2 = "lib\log4j.jar;lib\collections.jar;"
-j3 = "lib\xerces.jar;lib\jdom-jdk11.jar;"
+j3 = "lib\crimson.jar;lib\jdom-jdk11.jar;"
 DefaultClassPath = j1||j2||j3           /* Default classpath prepend */
 
 parse arg app lib .                     /* scan commandline (max 2 parms) */
