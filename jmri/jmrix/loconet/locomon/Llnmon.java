@@ -33,7 +33,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * Reverse engineering of OPC_MULTI_SENSE was provided by Al Silverstein.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 public class Llnmon {
 
@@ -414,7 +414,7 @@ public class Llnmon {
             int in1 = l.getElement(1);
             int in2 = l.getElement(2);
 
-            String bdl = " (BDL16 "+in1/8+" ";
+            String bdl = " (BDL16 "+((in1+(in2&0xF)*128)/8+1)+" ";
             if ( ((in1/2) & 3) == 0 ) bdl = bdl+"A";
             else if ( ((in1/2) & 3) == 1 ) bdl = bdl+"B";
             else if ( ((in1/2) & 3) == 2 ) bdl = bdl+"C";
@@ -476,7 +476,7 @@ public class Llnmon {
                     ":\n\t"+
                     ((sn2 & LnConstants.OPC_SW_REP_SW) !=0 ? "Switch" : "Aux input")+
                     " is "+
-                    (((sn2 & LnConstants.OPC_SW_REP_HI)!=0) ? "Hi" : "Lo")+"\n";
+                    (((sn2 & LnConstants.OPC_SW_REP_HI)!=0) ? "Closed (output off)" : "Thrown (output on)")+"\n";
             } else {  // OPC_SW_REP_INPUTS is 0
                 return "Turnout sensor output state for address "+
                     SENSOR_ADR(sn1, sn2)+
