@@ -22,7 +22,7 @@ import javax.swing.JTextField;
  *
  * Description:		Represents a single CV value
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: CvValue.java,v 1.11 2002-01-02 23:48:57 jacobsen Exp $
+ * @version			$Id: CvValue.java,v 1.12 2002-01-08 04:09:26 jacobsen Exp $
  */
 public class CvValue extends AbstractValue implements ProgListener {
 
@@ -126,7 +126,7 @@ public class CvValue extends AbstractValue implements ProgListener {
 		if (log.isDebugEnabled()) log.debug("read call with Cv number "+_num);
 		// get a programmer reference and write
 		_status = status;
-		if (status != null) status.setText("Reading...");
+		if (status != null) status.setText("Reading CV"+_num+"...");
 		Programmer p = InstanceManager.programmerInstance();
 		if (p != null) {
 			setBusy(true);
@@ -149,7 +149,7 @@ public class CvValue extends AbstractValue implements ProgListener {
 		if (log.isDebugEnabled()) log.debug("confirm call with Cv number "+_num);
 		// get a programmer reference and write
 		_status = status;
-		if (status != null) status.setText("Reading...");
+		if (status != null) status.setText("Confirming CV"+_num+"...");
 		Programmer p = InstanceManager.programmerInstance();
 		if (p != null) {
 			setBusy(true);
@@ -172,7 +172,7 @@ public class CvValue extends AbstractValue implements ProgListener {
 		if (log.isDebugEnabled()) log.debug("write call with Cv number "+_num);
 		// get a programmer reference and write
 		_status = status;
-		if (status != null) status.setText("Writing...");
+		if (status != null) status.setText("Writing CV"+_num+"...");
 		Programmer p = InstanceManager.programmerInstance();
 		if (p != null) {
 			setBusy(true);

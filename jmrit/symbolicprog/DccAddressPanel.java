@@ -13,7 +13,7 @@ import com.sun.java.util.collections.List;
  * Provide a graphical representation of the DCC address, either long or short
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DccAddressPanel.java,v 1.8 2002-01-02 23:48:57 jacobsen Exp $
+ * @version			$Id: DccAddressPanel.java,v 1.9 2002-01-08 04:09:27 jacobsen Exp $
  */
 public class DccAddressPanel extends JPanel {
 
@@ -41,15 +41,15 @@ public class DccAddressPanel extends JPanel {
 
 		// connect to variables
 		primaryAddr = variableModel.findVar("Short Address");
-		if (primaryAddr==null) log.error("DCC Address monitor did not find a Short Address variable");
+		if (primaryAddr==null) log.debug("DCC Address monitor did not find a Short Address variable");
 		else primaryAddr.addPropertyChangeListener(dccNews);
 
 		extendAddr = variableModel.findVar("Long Address");
-		if (extendAddr==null) log.warn("DCC Address monitor did not find an Long Address variable");
+		if (extendAddr==null) log.debug("DCC Address monitor did not find an Long Address variable");
 		else extendAddr.addPropertyChangeListener(dccNews);
 
 		addMode = (EnumVariableValue)variableModel.findVar("Address Format");
-		if (addMode==null) log.warn("DCC Address monitor didnt find an Address Format variable");
+		if (addMode==null) log.debug("DCC Address monitor didnt find an Address Format variable");
 		else addMode.addPropertyChangeListener(dccNews);
 				
 		// show the selection

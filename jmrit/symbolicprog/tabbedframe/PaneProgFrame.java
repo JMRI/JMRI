@@ -372,13 +372,13 @@ public class PaneProgFrame extends javax.swing.JFrame
 			public void propertyChange(java.beans.PropertyChangeEvent e) { updateDccAddress(); }
 		};
 		primaryAddr = variableModel.findVar("Short Address");
-		if (primaryAddr==null) log.warn("DCC Address monitor didnt find a Short Address variable");
+		if (primaryAddr==null) log.debug("DCC Address monitor didnt find a Short Address variable");
 		else primaryAddr.addPropertyChangeListener(dccNews);
 		extendAddr = variableModel.findVar("Long Address");
-		if (extendAddr==null) log.warn("DCC Address monitor didnt find an Long Address variable");
+		if (extendAddr==null) log.debug("DCC Address monitor didnt find an Long Address variable");
 		else extendAddr.addPropertyChangeListener(dccNews);
 		addMode = variableModel.findVar("Address Format");
-		if (addMode==null) log.warn("DCC Address monitor didnt find an Address Format variable");
+		if (addMode==null) log.debug("DCC Address monitor didnt find an Address Format variable");
 		else addMode.addPropertyChangeListener(dccNews);
 		
 		return body;
@@ -550,6 +550,8 @@ public class PaneProgFrame extends javax.swing.JFrame
 		LocoFile df = new LocoFile();
 		
 		// do I/O
+		XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+LocoFile.fileLocation);
+		
 		try {
 			String fullFilename = XmlFile.prefsDir()+LocoFile.fileLocation+filename;
 			File f = new File(fullFilename);
@@ -567,6 +569,7 @@ public class PaneProgFrame extends javax.swing.JFrame
 		variableModel.setFileDirty(false);
 
 		//and store an updated roster file
+		XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
 		Roster.writeRosterFile();
 
 	}

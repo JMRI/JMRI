@@ -5,7 +5,7 @@
  *       			SymbolicProg object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			
+ * @version			$Id: SymbolicProgAction.java,v 1.2 2002-01-08 04:09:27 jacobsen Exp $
  */
 
 package jmri.jmrit.symbolicprog.symbolicframe;

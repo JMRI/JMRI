@@ -29,7 +29,7 @@ import org.jdom.Attribute;
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: PaneProgPane.java,v 1.13 2002-01-01 01:57:25 jacobsen Exp $
+ * @version			$Id: PaneProgPane.java,v 1.14 2002-01-08 04:09:27 jacobsen Exp $
  */
 public class PaneProgPane extends javax.swing.JPanel 
 							implements java.beans.PropertyChangeListener  {
@@ -481,7 +481,7 @@ public class PaneProgPane extends javax.swing.JPanel
 		
 		// check label orientation
 		Attribute attr;
-		String layout ="right";  // this default is also set in the DTD
+		String layout ="left";  // this default is also set in the DTD
 		if ( (attr = var.getAttribute("layout")) != null && attr.getValue() != null)
 				layout = attr.getValue(); 
 		

@@ -28,7 +28,7 @@ import com.sun.java.util.collections.List;
  * Although support for the "CV label column" is still here, its turned off now.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: FnMapPanel.java,v 1.5 2002-01-02 23:48:57 jacobsen Exp $
+ * @version			$Id: FnMapPanel.java,v 1.6 2002-01-08 04:09:27 jacobsen Exp $
  */
 public class FnMapPanel extends JPanel {
 	// columns
@@ -104,40 +104,15 @@ public class FnMapPanel extends JPanel {
 		labelAt( firstFn+13, fnName, "Function 12");
 		
 		// label outputs
-		labelAt( outputNum, firstOut   , outList[0]);
-		labelAt( outputNum, firstOut+ 1, outList[1]);
-		labelAt( outputNum, firstOut+ 2, outList[2]);
-		labelAt( outputNum, firstOut+ 3, outList[3]);
-		labelAt( outputNum, firstOut+ 4, outList[4]);
-		labelAt( outputNum, firstOut+ 5, outList[5]);
-		labelAt( outputNum, firstOut+ 6, outList[6]);
-		labelAt( outputNum, firstOut+ 7, outList[7]);
-		labelAt( outputNum, firstOut+ 8, outList[8]);
-		labelAt( outputNum, firstOut+ 9, outList[9]);
-		labelAt( outputNum, firstOut+10, outList[10]);
-		labelAt( outputNum, firstOut+11, outList[11]);
-		labelAt( outputNum, firstOut+12, outList[12]);
-		labelAt( outputNum, firstOut+13, outList[13]);
-		
-		labelAt( outputLabel, firstOut   , outLabel[0]);
-		labelAt( outputLabel, firstOut+ 1, outLabel[1]);
-		labelAt( outputLabel, firstOut+ 2, outLabel[2]);
-		labelAt( outputLabel, firstOut+ 3, outLabel[3]);
-		labelAt( outputLabel, firstOut+ 4, outLabel[4]);
-		labelAt( outputLabel, firstOut+ 5, outLabel[5]);
-		labelAt( outputLabel, firstOut+ 6, outLabel[6]);
-		labelAt( outputLabel, firstOut+ 7, outLabel[7]);
-		labelAt( outputLabel, firstOut+ 8, outLabel[8]);
-		labelAt( outputLabel, firstOut+ 9, outLabel[9]);
-		labelAt( outputLabel, firstOut+10, outLabel[10]);
-		labelAt( outputLabel, firstOut+11, outLabel[11]);
-		labelAt( outputLabel, firstOut+12, outLabel[12]);
-		labelAt( outputLabel, firstOut+13, outLabel[13]);
+		for (int iOut=0; iOut<numOut; iOut++) {
+			labelAt( outputNum,   firstOut+iOut, Integer.toString(iOut+1));
+			labelAt( outputLabel, firstOut+iOut, outLabel[iOut]);
+		}
 		
 		for (int iFn = 0; iFn < numFn; iFn++) {
 			for (int iOut = 0; iOut < numOut; iOut++) {
 				// find the variable
-				String name = fnList[iFn]+" controls output "+outList[iOut];
+				String name = fnList[iFn]+" controls output "+(iOut+1);
 				int iVar = _varModel.findVarIndex(name);
 				if (iVar>=0) {
 					if (log.isDebugEnabled()) log.debug("Process var: "+name+" as index "+iVar);
@@ -156,11 +131,9 @@ public class FnMapPanel extends JPanel {
 	
 	final String[] fnList = new String[] { "FL(f)", "FL(r)", "F1", "F2", "F3", "F4", "F5", "F6", "F7", 
 									"F8", "F9", "F10", "F11", "F12" };
-	final String[] outList = new String[] {"14", "13", "12", "11", "10", "9", "8", "7", "6",
-									"5", "4", "3", "2", "1" };
 
-	final String[] outLabel = new String[] {"", "", "", "", "", "", "", "", "",
-									"", "Violet", "Green", "Yellow", "White" };
+	final String[] outLabel = new String[] {"White", "Yellow", "Green", "Violet", "", "", "", "", "",
+									"", "", "", "", "" };
 									
 	void saveAt(int row, int column, JComponent j) {
 		if (row<0 || column<0) return;

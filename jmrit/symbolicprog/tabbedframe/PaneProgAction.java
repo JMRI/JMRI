@@ -38,10 +38,10 @@ public class PaneProgAction 			extends AbstractAction {
 			public void run() { 
 				Roster.instance();
 				DecoderIndexFile.instance();
-				jmri.jmrit.NameFile.instance(); 
-				if (log.isInfoEnabled()) log.info("xml loading thread finishes reading Roster, DecoderIndexFIle, NameFile");
+				//jmri.jmrit.NameFile.instance(); 
+				if (log.isDebugEnabled()) log.debug("xml loading thread finishes prereading Roster, DecoderIndexFile");
 			}
-		}, "read roster, decoderIndex, names");
+		}, "pre-read XML files");
 		xmlThread.setPriority(Thread.NORM_PRIORITY-2);	
 		xmlThread.start();
 
