@@ -23,7 +23,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 abstract public class AbstractMRTrafficController {
 
@@ -353,14 +353,20 @@ abstract public class AbstractMRTrafficController {
                     for (int i = 0; i<msg.length; i++) f=f+Integer.toHexString(0xFF&msg[i])+" ";
                     log.debug(f);
                 }
-		if(portReadyToSend(controller)) {                
+		while(m.getRetries()>=0) {
+		  if(portReadyToSend(controller)) {                
 			ostream.write(msg);
-		} else if(m.getRetries()!=0) {
-                   if (log.isDebugEnabled()) log.debug("Retry message: "+m.toString() +" attempts remaining: " + m.getRetries());
-		  m.setRetries(m.getRetries() - 1);
-	          msgQueue.addLast(m);
-                  listenerQueue.addLast(reply);
-		} else log.warn("sendMessage: port not ready for data sending: " +msg.toString());
+			break;
+		  } else if(m.getRetries()>=0) {
+                     if (log.isDebugEnabled()) log.debug("Retry message: "+m.toString() +" attempts remaining: " + m.getRetries());
+		     m.setRetries(m.getRetries() - 1);
+                     try {
+                        synchronized(xmtRunnable) {
+                        xmtRunnable.wait(m.getTimeout());
+                        }
+                     } catch (InterruptedException e) { log.error("retry wait interupted"); }
+		  } else log.warn("sendMessage: port not ready for data sending: " +msg.toString());
+		}
             }
             else {
                 // no stream connected
