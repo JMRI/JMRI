@@ -19,6 +19,7 @@ import java.io.IOException;
 
 import javax.swing.*;
 import java.util.StringTokenizer;
+import java.util.Vector;
 import java.awt.Color;
 
 
@@ -36,7 +37,7 @@ import com.sun.java.util.collections.List;   // resolve ambiguity with package-l
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001; D Miller Copyright 2003
- * @version			$Revision: 1.26 $
+ * @version			$Revision: 1.27 $
  */
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
@@ -851,9 +852,7 @@ public class PaneProgPane extends javax.swing.JPanel
             if (cvList.size() > 0){
               s = mName.toUpperCase();
               w.write(s, 0, s.length());
-              w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber() + 1, 0);
-              w.write(w.getCurrentLineNumber(), w.getCharactersPerLine() + 1,
-                      w.getCurrentLineNumber() + 1, w.getCharactersPerLine() + 1);
+              w.writeBorders();
               //Draw horizontal dividing line for each Pane section
               w.write(w.getCurrentLineNumber()-1, 0, w.getCurrentLineNumber()-1,
                       w.getCharactersPerLine()+1);
@@ -863,8 +862,7 @@ public class PaneProgPane extends javax.swing.JPanel
             else {
               s = mName.toUpperCase();
               w.write(s, 0, s.length());
-              w.write(w.getCurrentLineNumber(),0,w.getCurrentLineNumber() + 1,0);
-              w.write(w.getCurrentLineNumber(),w.getCharactersPerLine() + 1,w.getCurrentLineNumber() + 1,w.getCharactersPerLine() + 1);
+              w.writeBorders();
               //Draw horizontal dividing line for each Pane section
               w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(),
                       w.getCharactersPerLine()+1);
@@ -873,18 +871,31 @@ public class PaneProgPane extends javax.swing.JPanel
               w.setFontStyle(Font.BOLD + Font.ITALIC);
               s = "   " + heading1 + spaces.substring(0,interval) + "   Setting";
               w.write(s, 0, s.length());
-              w.write(w.getCurrentLineNumber(),0,w.getCurrentLineNumber() + 1,0);
-              w.write(w.getCurrentLineNumber(),w.getCharactersPerLine() + 1,w.getCurrentLineNumber() + 1,w.getCharactersPerLine() + 1);
+              w.writeBorders();
               s = "\n";
               w.write(s,0,s.length());
             }
             w.setFontStyle(Font.PLAIN);
+            // Define a vector to store the names of variables that have been printed
+            // already.  If they have been printed, they will be skipped.
+            // Using a vector here since we don't know how many variables will
+            // be printed and it allows expansion as necessary
+            Vector printedVariables = new Vector(10,5);
             // index over variables
             for (int i=0; i<varList.size(); i++) {
                 int varNum = ((Integer)varList.get(i)).intValue();
                 VariableValue var = _varModel.getVariable(varNum);
                 String name = var.label();
                 if (name == null) name = var.item();
+                // Check if variable has been printed.  If not store it and print
+                boolean alreadyPrinted = false;
+                for (int j = 0; j < printedVariables.size(); j++) {
+                  if (printedVariables.elementAt(j).toString() == name) alreadyPrinted = true;
+                }
+                //If already printed, skip it.  If not, store it and print
+                if (alreadyPrinted == true) continue;
+                printedVariables.add(name);
+
                 String value = var.getTextValue();
                 String originalName = name;
                 String originalValue = value;
@@ -944,8 +955,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     value = "";
                   }
                   w.write(s,0,s.length());
-                  w.write(w.getCurrentLineNumber(),0,w.getCurrentLineNumber() + 1,0);
-                  w.write(w.getCurrentLineNumber(),w.getCharactersPerLine() + 1,w.getCurrentLineNumber() + 1,w.getCharactersPerLine() + 1);
+                  w.writeBorders();
                   s = "\n";
                   w.write(s,0,s.length());
                 }
@@ -963,8 +973,7 @@ public class PaneProgPane extends javax.swing.JPanel
                  int here = w.getCurrentLineNumber();
                  if (pageSize - here < speedFrameLineHeight) {
                    for (int j = 0; j < (pageSize - here); j++) {
-                     w.write(w.getCurrentLineNumber(),0,w.getCurrentLineNumber() + 1,0);
-                     w.write(w.getCurrentLineNumber(),w.getCharactersPerLine() + 1,w.getCurrentLineNumber() + 1,w.getCharactersPerLine() + 1);
+                     w.writeBorders();
                      w.write(s,0,s.length());
                    }
                  }
@@ -1017,8 +1026,7 @@ public class PaneProgPane extends javax.swing.JPanel
                  w.write(speedWindow);
                  // Now need to write the borders on sides of table
                  for (int j = 0; j < speedFrameLineHeight; j++) {
-                   w.write(w.getCurrentLineNumber(),0,w.getCurrentLineNumber() + 1,0);
-                   w.write(w.getCurrentLineNumber(),w.getCharactersPerLine() + 1,w.getCurrentLineNumber() + 1,w.getCharactersPerLine() + 1);
+                   w.writeBorders();
                    w.write(s,0,s.length());
                  }
                }
@@ -1030,16 +1038,12 @@ public class PaneProgPane extends javax.swing.JPanel
               // print a simple heading
               s = "         Value               Value               Value               Value";
               w.write(s, 0, s.length());
-              w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber() + 1, 0);
-              w.write(w.getCurrentLineNumber(), w.getCharactersPerLine() + 1,
-                      w.getCurrentLineNumber() + 1, w.getCharactersPerLine() + 1);
+              w.writeBorders();
               s = "\n";
               w.write(s,0,s.length());
               s = "   CV   Dec Hex        CV   Dec Hex        CV   Dec Hex        CV   Dec Hex";
               w.write(s, 0, s.length());
-              w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber() + 1, 0);
-              w.write(w.getCurrentLineNumber(), w.getCharactersPerLine() + 1,
-                      w.getCurrentLineNumber() + 1, w.getCharactersPerLine() + 1);
+              w.writeBorders();
               s = "\n";
               w.write(s,0,s.length());
               w.setFontStyle(0); //set font back to Normal
@@ -1060,7 +1064,6 @@ public class PaneProgPane extends javax.swing.JPanel
 
                 int cvNum = ( (Integer) cvList.get(i)).intValue();
                 CvValue cv = _cvModel.getCvByRow(cvNum);
-      //-------------------------------------------------------------------------
 
                 int num = cv.number();
                 int value = cv.getValue();
@@ -1108,17 +1111,15 @@ public class PaneProgPane extends javax.swing.JPanel
                   s = cvStrings[i] + "    " + cvStrings[i + tableHeight] + "    " + cvStrings[i +
                       tableHeight * 2] + "    " + cvStrings[i + tableHeight * 3];
                   w.write(s, 0, s.length());
-                  w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber() + 1, 0);
-                  w.write(w.getCurrentLineNumber(), w.getCharactersPerLine() + 1,
-                          w.getCurrentLineNumber() + 1, w.getCharactersPerLine() + 1);
-                  s = "\n";
+                 w.writeBorders();
+                 s = "\n";
                   w.write(s,0,s.length());
                 }
             }
-              s = "\n\n";
-              w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber() + 2, 0);
-              w.write(w.getCurrentLineNumber(), w.getCharactersPerLine() + 1,
-                      w.getCurrentLineNumber() + 2, w.getCharactersPerLine() + 1);
+              s = "\n";
+              w.writeBorders();
+              w.write(s, 0, s.length());
+              w.writeBorders();
               w.write(s, 0, s.length());
 
             // handle special cases
