@@ -16,7 +16,7 @@ import com.sun.java.util.collections.Collections;
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 abstract public class AbstractManager
     implements Manager, java.beans.PropertyChangeListener {
@@ -77,6 +77,7 @@ abstract public class AbstractManager
         _tsys.put(systemName, s);
         String userName = s.getUserName();
         if (userName != null) _tuser.put(userName, s);
+        firePropertyChange("length", null, new Integer(_tsys.size()));
     }
 
     /**
@@ -87,11 +88,11 @@ abstract public class AbstractManager
      */
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("UserName")) {
-            String old = (String) e.getOldValue();
+            String old = (String) e.getOldValue();  // OldValue is actually system name
             String now = (String) e.getNewValue();
-            Object t = getInstanceByUserName(old);
-            _tuser.remove(old);
-            _tuser.put(now, t);
+            Object t = e.getSource();
+            if (old!= null) _tuser.remove(old);
+            if (now!= null) _tuser.put(now, t);
         }
     }
 
@@ -108,6 +109,15 @@ abstract public class AbstractManager
         for (i=0; i<arr.length; i++) out.add(arr[i]);
         return out;
     }
+
+    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
+    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
+        pcs.addPropertyChangeListener(l);
+    }
+    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
+        pcs.removePropertyChangeListener(l);
+    }
+    protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractManager.class.getName());
 

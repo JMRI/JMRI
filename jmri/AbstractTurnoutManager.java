@@ -13,7 +13,7 @@ import com.sun.java.util.collections.Collections;
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
     implements TurnoutManager {
@@ -74,8 +74,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
         s = createNewTurnout(systemName, userName);
 
         // save in the maps
-        _tsys.put(systemName, s);
-        if (userName!=null) _tuser.put(userName, s);
+        register(s);
 
         return s;
     }

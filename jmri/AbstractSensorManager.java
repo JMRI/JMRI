@@ -11,7 +11,7 @@ import com.sun.java.util.collections.List;
 /**
  * Abstract base implementation of the SensorManager interface
  * @author			Bob Jacobsen Copyright (C) 2001, 2003
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public abstract class AbstractSensorManager extends AbstractManager implements SensorManager {
 
@@ -71,8 +71,7 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
         s = createNewSensor(systemName, userName);
 
         // save in the maps
-        _tsys.put(systemName, s);
-        if (userName!=null) _tuser.put(userName, s);
+        register(s);
 
         return s;
     }
