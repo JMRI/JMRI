@@ -3,7 +3,7 @@
  *
  * Description:	 	Test scaffold implementation of XNetInterface
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 2.0 $
+ * @version			$Revision: 2.1 $
  *
  * Use an object of this type as a XNetTrafficController in tests
  */
@@ -42,7 +42,7 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
 	public void sendTestMessage (XNetReply m) {
 		// forward a test message to XNetListeners
 		if (log.isDebugEnabled()) log.debug("sendTestMessage    ["+m+"]");
-		notify(m, null);
+		notifyReply(m,null);
 		return;
 	}
 
@@ -51,7 +51,7 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
 	*/
 
 	public int numListeners() {
-		return listeners.size();
+		return cmdListeners.size();
 	}
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetInterfaceScaffold.class.getName());

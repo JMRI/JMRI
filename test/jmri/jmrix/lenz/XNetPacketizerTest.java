@@ -10,7 +10,7 @@ import junit.framework.TestCase;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 2.0 $
+ * @version $Revision: 2.1 $
  */
 public class XNetPacketizerTest extends TestCase {
 
@@ -24,8 +24,8 @@ public class XNetPacketizerTest extends TestCase {
         // connect to iostream via port controller scaffold
         XNetPortControllerScaffold p = new XNetPortControllerScaffold();
         c.connectPort(p);
-        c.startThreads();
-        XNetMessage m = lcs.getTurnoutCommandMsg(22, true, false, true);
+        //c.startThreads();
+        XNetMessage m = XNetMessage.getTurnoutCommandMsg(22, true, false, true);
         c.sendXNetMessage(m, null);
 	Thread.sleep(100); // intermittent problem with seeing 4 characters?
         Assert.assertEquals("total length ", 4, p.tostream.available());
@@ -47,14 +47,14 @@ public class XNetPacketizerTest extends TestCase {
         // connect to iostream via port controller
         XNetPortControllerScaffold p = new XNetPortControllerScaffold();
         c.connectPort(p);
-        c.startThreads();
+        //c.startThreads();
 
         // object to receive reply
         XNetListenerScaffold l = new XNetListenerScaffold();
         c.addXNetListener(0xff, l);
 
         // send a message
-        XNetMessage m = lcs.getTurnoutCommandMsg(22, true, false, true);
+        XNetMessage m = XNetMessage.getTurnoutCommandMsg(22, true, false, true);
         // that's already tested, so don't do here.
 
         // now send reply
