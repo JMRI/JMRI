@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: QSI_Quantum.xml,v 1.2 2003-06-05 17:44:40 jacobsen Exp $ -->
+<!-- $Id: QSI_Quantum.xml,v 1.3 2004-03-01 03:56:58 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen" version="2" lastUpdated="20030606"/>
 
@@ -9,6 +9,7 @@
 <decoder>
 	<family name="Quantum" mfg="QSIndustries">
 		<model model="Quantum" />
+		<model model="Lionel Challenger" lowVersionID="4" />
 	</family>
 
 	<programming direct="yes" paged="yes" 
