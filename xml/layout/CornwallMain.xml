@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE layout-config SYSTEM "layout-config.dtd">
-<!-- $Id: CornwallMain.xml,v 1.25 2003-06-08 22:22:32 jacobsen Exp $ -->
+<!-- $Id: CornwallMain.xml,v 1.26 2003-06-08 22:30:36 jacobsen Exp $ -->
 <!-- Cornwall RR main dispatcher panel -->
 <!-- The layout turnouts, signals, and sensors are defined in CornwallDefinitions.xml -->
 <layout-config>
@@ -8,10 +8,6 @@
   <paneleditor class="jmri.jmrit.display.configurexml.PanelEditorXml" name="Panel" x="1" y="48" height="640" width="1000">
 
 	<!-- control lever layout (upper row) -->
-    <sensoricon sensor="CS25" x="410" y="246" inactive="resource:resources/icons/smallschematics/LEDs/green.gif" active="resources/icons/smallschematics/LEDs/gray.gif" unknown="resources/icons/smallschematics/LEDs/gray.gif" inconsistent="resources/icons/smallschematics/LEDs/gray.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
-    <sensoricon sensor="CS25" x="458" y="246" inactive="resource:resources/icons/smallschematics/LEDs/gray.gif" active="resources/icons/smallschematics/LEDs/red.gif" unknown="resources/icons/smallschematics/LEDs/gray.gif" inconsistent="resources/icons/smallschematics/LEDs/gray.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
-    <turnouticon turnout="LT10" x="408" y="246" closed="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
-
     <sensoricon sensor="CS11" x="475" y="246" inactive="resource:resources/icons/smallschematics/LEDs/green.gif" active="resources/icons/smallschematics/LEDs/gray.gif" unknown="resources/icons/smallschematics/LEDs/gray.gif" inconsistent="resources/icons/smallschematics/LEDs/gray.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
     <sensoricon sensor="CS11" x="523" y="246" inactive="resource:resources/icons/smallschematics/LEDs/gray.gif" active="resources/icons/smallschematics/LEDs/red.gif" unknown="resources/icons/smallschematics/LEDs/gray.gif" inconsistent="resources/icons/smallschematics/LEDs/gray.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
     <turnouticon turnout="LT5" x="473" y="246" closed="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
