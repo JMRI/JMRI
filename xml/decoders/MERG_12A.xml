@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: MERG_12A.xml,v 1.1 2003-11-29 06:03:35 jacobsen Exp $ -->
+<!-- $Id: MERG_12A.xml,v 1.2 2003-11-29 06:09:22 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Len Royles len@len-royles.co.uk"
 			version="1" lastUpdated="20031001" />
@@ -10,8 +10,8 @@
 <!-- This is the first go at the MERG 12A decoder -->
 
 <decoder>
-	<family name="MERG HF PWM decoders" mfg="MERG" lowVersionID="133">
-		<model model="MERG 12a" numOuts="5" numFns="3">
+	<family name="MERG HF PWM decoders" mfg="Public-domain and DIY" lowVersionID="133">
+	<model model="MERG 12a" numOuts="5" numFns="3">
 		
 		
 			<output name="01" label="White" />
@@ -21,11 +21,7 @@
 			<output name="05" label="Brown" />
 			
 			
-			</model>
-		
-		
-		
-		
+	</model>
 	</family>
 
 	<programming direct="byteOnly" paged="yes"
@@ -64,7 +60,7 @@
 			</variable>
 
 		<variable label="Manufacturer ID" CV="8" readOnly="yes"
-			item="Manufacturer" default="13" >
+			item="Manufacturer" default="165" >
 			<decVal/>
 			</variable>
 
