@@ -1,12 +1,11 @@
 package jmri.jmrix.loconet.locormi;
 
 /**
- * Title:
+ * Handle a RMI connection for a single remote client.
  * Description:
  * Copyright:    Copyright (c) 2002
- * Company:
- * @author
- * @version $Id: LnMessageBuffer.java,v 1.2 2002-03-28 02:25:24 jacobsen Exp $
+ * @author   Alex Shepherd
+ * @version $Id: LnMessageBuffer.java,v 1.3 2002-03-28 04:21:19 jacobsen Exp $
  */
 
 import com.sun.java.util.collections.LinkedList;
