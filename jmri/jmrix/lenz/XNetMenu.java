@@ -7,10 +7,10 @@ import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
 /**
- * Create a "Systems" menu containing the Jmri XPressNet-specific tools
+ * Create a menu containing the XPressNet specific tools
  *
- * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.1 $
+ * @author	Paul Bender   Copyright 2003
+ * @version     $Revision: 1.2 $
  */
 public class XNetMenu extends JMenu {
     public XNetMenu(String name) {
@@ -22,12 +22,13 @@ public class XNetMenu extends JMenu {
 
         super();
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
+        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.XNetBundle");
 
-        setText(rb.getString("MenuItemXPressNet"));
+        setText(rb.getString("MenuXPressNet"));
 
-        add(new jmri.jmrix.lenz.mon.XNetMonAction(rb.getString("MenuItemCommandMonitor")));
-        add(new jmri.jmrix.lenz.packetgen.PacketGenAction(rb.getString("MenuItemSendCommand")));
+        add(new jmri.jmrix.lenz.mon.XNetMonAction(rb.getString("MenuItemXNetCommandMonitor")));
+        add(new jmri.jmrix.lenz.li101.LI101Action(rb.getString("MenuItemLI101ConfigurationManager")));
+        add(new jmri.jmrix.lenz.packetgen.PacketGenAction(rb.getString("MenuItemSendXNetCommand")));
 
     }
 
