@@ -10,7 +10,7 @@ import org.jdom.Element;
  * Handle configuration for display.SecurityElementIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SecurityElementIconXml implements XmlAdapter {
 
@@ -25,17 +25,17 @@ public class SecurityElementIconXml implements XmlAdapter {
      */
     public Element store(Object o) {
         Element element = new Element("securityelementicon");
-        element.addAttribute("class", "jmri.jmrit.display.configurexml.SecurityElementIconXml");
 
         // include contents
         SecurityElementIcon p = (SecurityElementIcon)o;
         SecurityElement s = p.getSecurityElement();
-        element.addAttribute("x", ""+p.getX());
-        element.addAttribute("y", ""+p.getY());
         element.addAttribute("number", ""+s.getNumber());
-
         if (!p.getRightBoundAX())
             element.addAttribute("AX", "leftbound");
+
+        element.addAttribute("x", ""+p.getX());
+        element.addAttribute("y", ""+p.getY());
+        element.addAttribute("class", "jmri.jmrit.display.configurexml.SecurityElementIconXml");
         return element;
     }
 
