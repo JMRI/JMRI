@@ -22,7 +22,7 @@ import javax.comm.SerialPortEventListener;
  * Provide access to XPressNet via a LI100 on an attached serial comm port.
  *					Normally controlled by the lenz.li100.LI100Frame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 
 public class LI100Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -226,7 +226,7 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
 		// find the baud rate value, configure comm options
 		int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
 		for (int i = 0; i<validSpeeds.length; i++ )
-			if (validSpeeds[i].equals(selectedSpeed))
+			if (validSpeeds[i].equals(mBaudRate))
 				baud = validSpeedValues[i];
 		activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
@@ -241,80 +241,39 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
 		activeSerialPort.setFlowControlMode(flow);
 	}
 
-	/**
-	 * Get an array of valid baud rates. This is currently just a message
-	 * saying its fixed
-	 */
-	public String[] validBaudRates() {
-		return validSpeeds;
-	}
 
-	/**
-	 * Set the baud rate.  This currently does nothing, as there's
-	 * only one possible value
-	 */
-	public void configureBaudRate(String rate) {
-		log.debug("configureBaudRate: "+rate);
-		selectedSpeed = rate;
-	}
-
-	/**
-	 * Option 1 is flow control
-	 */
-	public String[] validOption1() { return validOption1; }
+        /**
+         * Get an array of valid baud rates. This is currently just a message
+         * saying its fixed
+         */
+        public String[] validBaudRates() {
+            return validSpeeds;
+        }
 
 	/**
 	 * Option 1 controls flow control option
 	 */
 	public String option1Name() { return "LI100 connections uses "; }
-
-	/**
-	 * The first option configures flow control
-	 */
-	public void configureOption1(String value) {
-		log.debug("configureOption1: "+value);
-		selectedOption1 = value;
-	}
-
-        /**
-	 * Get an array of valid values for "option 2"; used to display valid options.
-	 * May not be null, but may have zero entries
-	 */
-	public String[] validOption2() { return new String[]{""}; }
-
-	/**
-	 * Get a String that says what Option 2 represents
-	 * May be an empty string, but will not be null
-	 */
-	public String option2Name() { return ""; }
-
-	/**
-	 * Set the second port option.  Only to be used after construction, but
-	 * before the openPort call
-	 */
-	public void configureOption2(String value) {}
-
+        public String[] validOption1() { return validOption1; }
 
 	protected String [] validSpeeds = new String[]{"9,600 baud","19,200 baud","38,400 baud","57,600 baud","115,200 baud"};
 	protected int [] validSpeedValues = new int[]{9600,19200,38400,57600,115200};
-	protected String selectedSpeed=validSpeeds[0];
 
 	// meanings are assigned to these above, so make sure the order is consistent
 	protected String [] validOption1 = new String[]{"hardware flow control (recommended)", "no flow control"};
 	protected String selectedOption1=validOption1[0];
 
-// private control members
 	private boolean opened = false;
 	InputStream serialStream = null;
 
-    static public LI100Adapter instance() {
-        if (mInstance == null) mInstance = new LI100Adapter();
-        return mInstance;
-    }
-    static LI100Adapter mInstance = null;
-    static public boolean hasInstance() {
-        return (mInstance != null);
-    }
+        static public LI100Adapter instance() {
+            if (mInstance == null) mInstance = new LI100Adapter();
+            return mInstance;
+        }
+        static LI100Adapter mInstance = null;
+        static public boolean hasInstance() {
+            return (mInstance != null);
+        }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LI100Adapter.class.getName());
 
