@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE layout-config SYSTEM "layout-config.dtd">
-<!-- $Id: CornwallMain.xml,v 1.8 2003-05-24 19:09:16 jacobsen Exp $ -->
+<!-- $Id: CornwallMain.xml,v 1.9 2003-05-24 21:50:57 jacobsen Exp $ -->
 <!-- Cornwall RR configuration and main panel -->
 <layout-config>
 
   <turnouts class="jmri.jmrix.loconet.configurexml.LnTurnoutManagerXml">
     <turnout systemName="LT1"  userName="Cornwall Jct 1" />
     <turnout systemName="LT2"  userName="Ridge" />
-    <turnout systemName="LT4"  userName="Reading relay track West switch" />
+    <turnout systemName="LT4"  userName="Reading Relay Track West Switch" />
     <turnout systemName="LT5"  userName="Lickdale East" />
     <turnout systemName="LT6"  userName="Colebrook West" />
     <turnout systemName="LT7"  userName="Colebrook East" />
     <turnout systemName="LT9"  userName="Conewago West " />
     <turnout systemName="LT10" userName="Blackies" />
     <turnout systemName="LT12" userName="East Cornwall Junction switch" />
-    <turnout systemName="LT13" userName="Cornwall Mine lead" />
+    <turnout systemName="LT13" userName="Cornwall Mine Lead" />
     <turnout systemName="LT14" userName="Lebanon Jct East" />
     <turnout systemName="LT15" userName="Lebanon Jct West" />
-    <turnout systemName="LT16" userName="Lebanon Low line West" />
+    <turnout systemName="LT16" userName="Lebanon Low Line West" />
     <turnout systemName="LT17" userName="Conewago Xover West" />
     <turnout systemName="LT18" userName="Conewago Xover East" />
     <turnout systemName="LT19" userName="Conewago Reading West" />
@@ -30,37 +30,37 @@
     <sensor systemName="CS4" userName="PRR Highline 1 bo(03)" />
     <sensor systemName="CS5" userName="Ridge tu(02)" />
     <sensor systemName="CS6" userName="unused tu(03)" />
-    <sensor systemName="CS7" userName="Reading Relay track 2 bo(04)" />
+    <sensor systemName="CS7" userName="Reading Relay Track 2 bo(04)" />
     <sensor systemName="CS8" userName="Ridge bo(05)" />
-    <sensor systemName="CS9" userName="Reading relay track West switch tu(04)" />
+    <sensor systemName="CS9" userName="Reading Relay Track West Switch tu(04)" />
     <sensor systemName="CS10" userName="Lickdale Approach bo(06)" />
     <sensor systemName="CS11" userName="Lickdale East tu(05)" />
-    <sensor systemName="CS12" userName="Lickdale Passenger siding bo(07)" />
+    <sensor systemName="CS12" userName="Lickdale Passenger Siding bo(07)" />
     <sensor systemName="CS13" userName="Lickdale Mainline bo(08)" />
     <sensor systemName="CS14" userName="Gate North bo(09)" />
     <sensor systemName="CS15" userName="Gate South bo(10)" />
     <sensor systemName="CS16" userName="Colebrook West tu(06)" />
     <sensor systemName="CS17" userName="Colebrook Main bo(11)" />
-    <sensor systemName="CS18" userName="Colebrook Passing siding bo(12)" />
+    <sensor systemName="CS18" userName="Colebrook Passing Siding bo(12)" />
     <sensor systemName="CS19" userName="Colebrook East tu(07)" />
     <sensor systemName="CS20" userName="Edisonville North bo(13)" />
     <sensor systemName="CS21" userName="Edisonville South bo(14)" />
     <sensor systemName="CS22" userName="Conewago Approach bo(15)" />
-    <sensor systemName="CS23" userName="Colebrook branch tu(08)" />
+    <sensor systemName="CS23" userName="Colebrook Branch tu(08)" />
     <sensor systemName="CS24" userName="Conewago West tu(09)" />
     <sensor systemName="CS25" userName="Blackies tu(10)" />
     <sensor systemName="CS26" userName="Lickdale Xover tu(11)" />
-    <sensor systemName="CS27" userName="PRR/Lebanon entrance bo(16)" />
+    <sensor systemName="CS27" userName="PRR/Lebanon Entrance bo(16)" />
     <sensor systemName="CS28" userName="Cornwall Relay 1 bo(17)" />
-    <sensor systemName="CS29" userName="East Cornwall Junction switch tu(12)" />
-    <sensor systemName="CS30" userName="Cornwall Mine lead tu(13)" />
-    <sensor systemName="CS31" userName="Reading Low line track 2 bo(18)" />
-    <sensor systemName="CS32" userName="Reading Low line track 1 bo(19)" />
+    <sensor systemName="CS29" userName="East Cornwall Junction Switch tu(12)" />
+    <sensor systemName="CS30" userName="Cornwall Mine Lead tu(13)" />
+    <sensor systemName="CS31" userName="Reading Low Line Track 2 bo(18)" />
+    <sensor systemName="CS32" userName="Reading Low Line Track 1 bo(19)" />
     <sensor systemName="CS33" userName="Lebanon Main Lead bo(20)" />
     <sensor systemName="CS34" userName="Lebanon Yard Lead bo(21)" />
     <sensor systemName="CS35" userName="Lebanon Jct East tu(14)" />
     <sensor systemName="CS36" userName="Lebanon Jct West tu(15)" />
-    <sensor systemName="CS37" userName="Lebanon Low line West tu(16)" />
+    <sensor systemName="CS37" userName="Lebanon Low Line West tu(16)" />
     <sensor systemName="CS38" userName="Conewago Main West bo(22)" />
     <sensor systemName="CS39" userName="Conewago Yard West bo(23)" />
     <sensor systemName="CS40" userName="Conewago Main East bo(24)" />
@@ -73,16 +73,16 @@
     <sensor systemName="CS47" userName="Conewago Departure East tu(21)" />
     <sensor systemName="CS48" userName="Conewago Reading Interchange East tu(22)" />
     <sensor systemName="CS49" userName="Relay Track 2 bo(27)" />
-    <sensor systemName="CS50" userName="Lickdale Interchange track 4 bo(28)" />
-    <sensor systemName="CS51" userName="Lickdale Interchange track 3 bo(29)" />
-    <sensor systemName="CS52" userName="Lickdale Interchange NorthWest switch tu(23)" />
-    <sensor systemName="CS53" userName="Lickdale Interchange NorthEast switch tu(24)" />
+    <sensor systemName="CS50" userName="Lickdale Interchange Track 4 bo(28)" />
+    <sensor systemName="CS51" userName="Lickdale Interchange Track 3 bo(29)" />
+    <sensor systemName="CS52" userName="Lickdale Interchange NorthWest Switch tu(23)" />
+    <sensor systemName="CS53" userName="Lickdale Interchange NorthEast Switch tu(24)" />
     <sensor systemName="CS54" userName="Relay Track 1 bo(30)" />
-    <sensor systemName="CS55" userName="Lickdale Interchnge track 2 bo(31)" />
-    <sensor systemName="CS56" userName="Lickdale Interchnge track 1 bo(32)" />
-    <sensor systemName="CS57" userName="Lickdale Interchange SouthWest switch tu(25)" />
-    <sensor systemName="CS58" userName="Lickdale Interchange SouthEast switch tu(26)" />
-    <sensor systemName="CS59" userName="Gate Power Interlock gate" />
+    <sensor systemName="CS55" userName="Lickdale Interchange Track 2 bo(31)" />
+    <sensor systemName="CS56" userName="Lickdale Interchange Track 1 bo(32)" />
+    <sensor systemName="CS57" userName="Lickdale Interchange SouthWest Switch tu(25)" />
+    <sensor systemName="CS58" userName="Lickdale Interchange SouthEast Switch tu(26)" />
+    <sensor systemName="CS59" userName="Gate Power Interlock Gate" />
     <sensor systemName="CS60" userName="Conewago Interlocking bo(33)" />
   </sensors>
   
@@ -488,7 +488,8 @@
     <turnouticon turnout="LT4" x="559" y="246" closed="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
     <turnouticon turnout="LT13" x="619" y="246" closed="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
     <turnouticon turnout="LT12" x="709" y="246" closed="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
-    <turnouticon turnout="LT1" x="784" y="246" closed="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="LT1" x="794" y="246" closed="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="LT14" x="890" y="246" closed="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
 
 	<!-- occupancy sensors (upper row) -->
     <sensoricon sensor="CS42" x="2" y="116" active="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" inactive="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
@@ -551,7 +552,7 @@
     <sensoricon sensor="CS2" x="816" y="61" active="resource:resources/icons/cornwall/TurnoutThrownL.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedL.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothL.gif" rotate="2" class="jmri.jmrit.display.configurexml.SensorIconXml" />
     <sensoricon sensor="CS2" x="834" y="43" active="resource:resources/icons/cornwall/TurnoutThrownL.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedL.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothL.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
 
-    <sensoricon sensor="CS11" x="913" y="118" active="resource:resources/icons/cornwall/TurnoutClosedL.gif" inactive="resource:resources/icons/cornwall/TurnoutThrownL.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothR.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="CS35" x="913" y="118" active="resource:resources/icons/cornwall/TurnoutClosedL.gif" inactive="resource:resources/icons/cornwall/TurnoutThrownL.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothR.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
 
 	<!-- signal heads on the upper schematic -->
     <signalheadicon signalhead="si18a" x="50" y="85" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="2" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
@@ -589,20 +590,66 @@
     <signalheadicon signalhead="si10a" x="890" y="127" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="0" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
   
 	<!-- control lever layout (lower row) -->
-    <turnouticon turnout="LT2" x="60" y="511" closed="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
-    <turnouticon turnout="LT6" x="120" y="511" closed="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
-    <turnouticon turnout="LT7" x="180" y="511" closed="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
-    <turnouticon turnout="LT9" x="240" y="511" closed="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
-    <turnouticon turnout="LT14" x="300" y="511" closed="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
-    <turnouticon turnout="LT15" x="360" y="511" closed="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
-    <turnouticon turnout="LT16" x="420" y="511" closed="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
-    <turnouticon turnout="LT17" x="480" y="511" closed="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
-    <turnouticon turnout="LT18" x="540" y="511" closed="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
-    <turnouticon turnout="LT19" x="600" y="511" closed="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="LT2" x="40" y="506" closed="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="LT15" x="100" y="516" closed="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="LT6" x="160" y="506" closed="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="LT16" x="220" y="516" closed="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="LT7" x="280" y="506" closed="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="LT9" x="380" y="506" closed="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="LT17" x="500" y="506" closed="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="LT19" x="560" y="506" closed="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
+    <turnouticon turnout="LT18" x="620" y="506" closed="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchN.gif" thrown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitchR.gif" unknown="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" inconsistent="resource:resources/icons/CTCpanels/CtcPlates60x60/plateSwitch.gif" rotate="0" class="jmri.jmrit.display.configurexml.TurnoutIconXml" />
 
 	<!-- occupancy sensors (lower row) -->
 
+    <sensoricon sensor="CS8" x="123" y="339" active="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" inactive="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+
+    <sensoricon sensor="CS1" x="185" y="463" active="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" inactive="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+
+    <sensoricon sensor="CS17" x="235" y="339" active="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" inactive="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="CS18" x="235" y="364" active="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" inactive="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+
+    <sensoricon sensor="CS33" x="305" y="438" active="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" inactive="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="CS34" x="305" y="463" active="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" inactive="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+
+    <sensoricon sensor="CS22" x="335" y="339" active="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" inactive="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+
+    <sensoricon sensor="CS38" x="460" y="339" active="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" inactive="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="CS39" x="460" y="364" active="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" inactive="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+
+    <sensoricon sensor="CS40" x="695" y="339" active="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" inactive="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="CS41" x="695" y="364" active="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" inactive="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="CS42" x="695" y="389" active="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" inactive="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+
+    <sensoricon sensor="CS43" x="885" y="339" active="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" inactive="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+
 	<!-- turnouts on the lower schematic (left to right); the C/MRI ones are inputs only, so are coded with sensors -->
+    <sensoricon sensor="CS5" x="71" y="341" active="resource:resources/icons/cornwall/TurnoutThrownL.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedL.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothL.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+
+    <sensoricon sensor="CS35" x="117" y="458" active="resource:resources/icons/cornwall/TurnoutThrownR.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedR.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherR.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothR.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+
+    <sensoricon sensor="CS16" x="171" y="341" active="resource:resources/icons/cornwall/TurnoutThrownR.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedR.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherR.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothR.gif" rotate="2" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+
+    <sensoricon sensor="CS37" x="244" y="458" active="resource:resources/icons/cornwall/TurnoutThrownL.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedL.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothL.gif" rotate="2" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+
+    <sensoricon sensor="CS19" x="296" y="341" active="resource:resources/icons/cornwall/TurnoutThrownL.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedL.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothL.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+
+    <sensoricon sensor="CS23" x="363" y="341" active="resource:resources/icons/cornwall/TurnoutThrownL.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedL.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothL.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+
+    <sensoricon sensor="CS24" x="397" y="341" active="resource:resources/icons/cornwall/TurnoutThrownR.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedR.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherR.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothR.gif" rotate="2" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+
+    <sensoricon sensor="CS43" x="515" y="341" active="resource:resources/icons/cornwall/TurnoutThrownR.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedR.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherR.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothR.gif" rotate="2" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="CS43" x="533" y="359" active="resource:resources/icons/cornwall/TurnoutThrownR.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedR.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherR.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothR.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+
+    <sensoricon sensor="CS45" x="584" y="366" active="resource:resources/icons/cornwall/TurnoutThrownR.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedR.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherR.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothR.gif" rotate="2" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+
+    <sensoricon sensor="CS44" x="644" y="341" active="resource:resources/icons/cornwall/TurnoutThrownL.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedL.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothL.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="CS44" x="626" y="359" active="resource:resources/icons/cornwall/TurnoutThrownL.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedL.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothL.gif" rotate="2" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+
+    <sensoricon sensor="CS46" x="764" y="366" active="resource:resources/icons/cornwall/TurnoutThrownL.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedL.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothL.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="CS48" x="746" y="384" active="resource:resources/icons/cornwall/TurnoutThrownL.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedL.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothL.gif" rotate="2" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+
+    <sensoricon sensor="CS47" x="808" y="341" active="resource:resources/icons/cornwall/TurnoutThrownL.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedL.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothL.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
 
 	<!-- signal heads on the upper schematic -->
 
