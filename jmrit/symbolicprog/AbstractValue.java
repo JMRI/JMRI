@@ -19,7 +19,7 @@ import javax.swing.JTextField;
  *
  * Description:		Represents a single CV value
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			
+ * @version			$Id: AbstractValue.java,v 1.3 2001-11-23 22:23:54 jacobsen Exp $
  */
 public abstract class AbstractValue {
 	

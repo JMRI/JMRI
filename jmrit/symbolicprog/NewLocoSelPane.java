@@ -22,7 +22,7 @@ import com.sun.java.util.collections.List;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			
+ * @version			$Id: NewLocoSelPane.java,v 1.6 2001-11-23 22:23:54 jacobsen Exp $
  */
 public class NewLocoSelPane extends javax.swing.JPanel  {
 			
@@ -36,6 +36,7 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
 		locoBox = Roster.instance().matchingComboBox(null, null, null, null, null, null, null);
 		locoBox.addActionListener( new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				if (log.isInfoEnabled()) log.info("Locomotive selected changed");
 				matchDecoderToLoco();
 			}
 		});
@@ -49,6 +50,7 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
 			JButton iddecoder= new JButton("Identify decoder");
 			iddecoder.addActionListener( new ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
+					if (log.isInfoEnabled()) log.info("identify decoder pressed");
 					startIdentify();
 				}
 			});
@@ -64,6 +66,7 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
 		JButton go1 = new JButton("Open programmer");
 		go1.addActionListener( new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				if (log.isInfoEnabled()) log.info("Open programmer pressed");
 				openButton();
 			}
 		});

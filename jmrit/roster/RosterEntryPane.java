@@ -10,7 +10,7 @@ import javax.swing.*;
  * Display and edit a RosterEntry.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			
+ * @version			$Id: RosterEntryPane.java,v 1.4 2001-11-23 22:23:54 jacobsen Exp $
  */
 public class RosterEntryPane extends javax.swing.JPanel  {
 
@@ -99,6 +99,10 @@ public class RosterEntryPane extends javax.swing.JPanel  {
 	}
 	
 	public void setDccAddress(String a) { dccAddress.setText(a); }
+	
+	public void dispose() {
+		if (log.isDebugEnabled()) log.debug("dispose");
+	}
 	
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RosterEntryPane.class.getName());
 

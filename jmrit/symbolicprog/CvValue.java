@@ -22,7 +22,7 @@ import javax.swing.JTextField;
  *
  * Description:		Represents a single CV value
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			
+ * @version			$Id: CvValue.java,v 1.7 2001-11-23 22:23:54 jacobsen Exp $
  */
 public class CvValue extends AbstractValue implements ProgListener {
 
@@ -203,6 +203,11 @@ public class CvValue extends AbstractValue implements ProgListener {
 	public void removePropertyChangeListener(java.beans.PropertyChangeListener p) { prop.removePropertyChangeListener(p); }
 	public void addPropertyChangeListener(java.beans.PropertyChangeListener p) { prop.addPropertyChangeListener(p); }
 		
+	// clean up connections when done
+	public void dispose() {
+		if (log.isDebugEnabled()) log.debug("dispose");
+	}
+
 	// initialize logging	
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CvValue.class.getName());
 		

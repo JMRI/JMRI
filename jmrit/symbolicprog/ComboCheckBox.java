@@ -7,6 +7,9 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
 import javax.swing.event.*;
+import java.beans.PropertyChangeEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
 
 /* Represents a JComboBox as a JCheckBox
  *
@@ -21,19 +24,19 @@ public class ComboCheckBox extends JCheckBox {
 		_box = box;
 		setBackground(_var._value.getBackground());
 		// listen for changes to ourself
-		addActionListener(new java.awt.event.ActionListener() {
+		addActionListener(l1 = new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				thisActionPerformed(e);
 			}
 		});		
 		// listen for changes to original
-		_box.addActionListener(new java.awt.event.ActionListener() {
+		_box.addActionListener(l2 = new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				originalActionPerformed(e);
 			}
 		});		
 		// listen for changes to original state
-		_var.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+		_var.addPropertyChangeListener(p1 = new java.beans.PropertyChangeListener() {
 			public void propertyChange(java.beans.PropertyChangeEvent e) {
 				originalPropertyChanged(e);
 			}
@@ -60,9 +63,21 @@ public class ComboCheckBox extends JCheckBox {
 		}	
 	}
 	
+	ActionListener l1;
+	ActionListener l2;
+	PropertyChangeListener p1;
+	
 	EnumVariableValue _var = null;
 	JComboBox _box = null;
 
+	public void dispose() {
+		removeActionListener(l1);
+		_box.removeActionListener(l2);
+		_var.removePropertyChangeListener(p1);
+		_var = null;
+		_box = null;
+	}
+	
 	// initialize logging	
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ComboCheckBox.class.getName());
 

@@ -19,7 +19,7 @@ import org.jdom.Namespace;
  * decoder identification info _before_ the actual decoder file is read.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version		
+ * @version			$Id: DecoderFile.java,v 1.5 2001-11-23 22:23:54 jacobsen Exp $
  * @see jmri.jmrit.decoderdefn.DecoderIndexFile	
  */
 public class DecoderFile extends XmlFile {

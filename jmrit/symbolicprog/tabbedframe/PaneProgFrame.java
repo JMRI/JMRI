@@ -55,6 +55,9 @@ public class PaneProgFrame extends javax.swing.JFrame
 	JButton writeAll = new JButton("Write all");
 	JButton confirmAll = new JButton("Confirm all");
 	
+	ActionListener l1;
+	ActionListener l2;
+	
 	protected void installComponents() {
 		// configure GUI elements
 		confirmAll.setEnabled(false);
@@ -62,12 +65,12 @@ public class PaneProgFrame extends javax.swing.JFrame
 		
 		// general GUI config
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-		readAll.addActionListener( new ActionListener() {
+		readAll.addActionListener( l1 = new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				readAll();
 			}
 		});
-		writeAll.addActionListener( new ActionListener() {
+		writeAll.addActionListener( l2 = new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				writeAll();
 			}
@@ -93,6 +96,14 @@ public class PaneProgFrame extends javax.swing.JFrame
 	public PaneProgFrame() {
 		super();
 		installComponents();
+
+		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new java.awt.event.WindowAdapter() {
+			public void windowClosing(java.awt.event.WindowEvent e) {
+				thisWindowClosing(e);
+			}
+		});
+
 	}
   		
 	public PaneProgFrame(DecoderFile decoderFile, String locoFile, RosterEntry r, String name) {
@@ -109,6 +120,14 @@ public class PaneProgFrame extends javax.swing.JFrame
 		
 		// and build the GUI
 		loadProgrammerFile(r);
+
+		// ensure cleanup at end
+		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new java.awt.event.WindowAdapter() {
+			public void windowClosing(java.awt.event.WindowEvent e) {
+				thisWindowClosing(e);
+			}
+		});
 	}
   	
 	Namespace lns = null;
@@ -165,6 +184,7 @@ public class PaneProgFrame extends javax.swing.JFrame
   	
   	protected void loadProgrammerFile(RosterEntry r) {
 		// Open and parse programmer file
+		if (log.isInfoEnabled()) log.info("read programmer file "+"MultiPane.xml");
 		File pfile = new File("xml"+File.separator+"programmers"+File.separator+"MultiPane.xml");
 		Namespace pns = Namespace.getNamespace("programmer",
 										"http://jmri.sourceforge.net/xml/programmer");
@@ -215,16 +235,18 @@ public class PaneProgFrame extends javax.swing.JFrame
 			return;
 		}
 
+		// add the Info tab
+		tabPane.addTab("Info", makeInfoPane(r));
+		
 		// for all "pane" elements ...
 		List paneList = base.getChildren("pane",ns);
+		if (log.isDebugEnabled()) log.debug("will process "+paneList.size()+" pane definitions");
 		for (int i=0; i<paneList.size(); i++) {
 			// load each pane
 			String name = ((Element)(paneList.get(i))).getAttribute("name").getValue();
 			newPane( name, ((Element)(paneList.get(i))), ns);
 		}
-		
-		// add the Info tab
-		tabPane.addTab("Info", makeInfoPane(r));
+
 	}
 	
 	protected JPanel makeInfoPane(RosterEntry r) {
@@ -239,7 +261,7 @@ public class PaneProgFrame extends javax.swing.JFrame
 		body.add(_rPane);
 		
 		// add the store button
-		JButton store = new JButton("      Store to file       ");
+		JButton store = new JButton("      Save      ");
 		store.addActionListener( new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				storeFile();
@@ -440,6 +462,49 @@ public class PaneProgFrame extends javax.swing.JFrame
 		} catch (Exception e) {
 			log.error("error during locomotive file output: "+e);
 		}
+		
+	}
+	
+	/**
+	 * local dispose, which also invokes parent
+	 */
+	public void dispose() {
+		if (log.isDebugEnabled()) log.debug("dispose superclass");
+		super.dispose();
+
+		if (log.isDebugEnabled()) log.debug("dispose local");
+		
+		// remove listeners (not much of a point, though)
+		readAll.removeActionListener(l1);
+		writeAll.removeActionListener(l2);
+		if (_programmingPane != null) _programmingPane.removePropertyChangeListener(this);
+		
+		// dispose the list of panes
+		for (int i=0; i<paneList.size(); i++) {
+			PaneProgPane p = (PaneProgPane) paneList.get(i);
+			p.dispose();
+		}
+		
+		// dispose of things we owned
+		cvModel.dispose();
+		variableModel.dispose();
+		_rosterEntry.dispose();
+		_rPane.dispose();
+		
+		// remove references to everything we remember
+		progStatus = null;
+		cvModel = null;
+		variableModel = null;
+		_rosterEntry = null;
+		_rPane = null;
+		paneList = null;
+		_programmingPane = null;
+		lns = null;
+		lroot = null;
+		tabPane = null;
+		readAll = null;
+		writeAll = null;
+		confirmAll = null;
 		
 	}
 	

@@ -40,7 +40,7 @@ import com.sun.java.util.collections.ArrayList;
  *<P>
  * Description:		Extends VariableValue to represent a NMRA long address
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			
+ * @version			$Id: SpeedTableVarValue.java,v 1.2 2001-11-23 22:23:54 jacobsen Exp $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -261,11 +261,6 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 		}
 	}
 
-	// clean up connections when done
-	public void dispose() {
-		((CvValue)_cvVector.elementAt(getCvNum())).removePropertyChangeListener(this);
-	}
-	
 	/* Internal class extends a JSlider so that its color is consistent with 
 	 * an underlying CV; we return one of these in getRep.
 	 *<P>
@@ -303,6 +298,18 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 		}
 	
 	}
+
+	// clean up connections when done
+	public void dispose() {
+		if (log.isDebugEnabled()) log.debug("dispose");
+		// the connection is to cvNum through cvNum+27 (28 values total)
+		for (int i=0; i<nValues; i++) {
+			((CvValue)_cvVector.elementAt(getCvNum()+i)).removePropertyChangeListener(this);
+		}
+		
+		// do something about the VarSlider objects
+	}
+
 	// initialize logging	
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SpeedTableVarValue.class.getName());
 		

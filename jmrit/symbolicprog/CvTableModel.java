@@ -174,5 +174,29 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 		return false;
 	}
 
+	public void dispose() {
+		if (log.isDebugEnabled()) log.debug("dispose");
+	
+		// remove buttons
+		for (int i = 0; i<_writeButtons.size(); i++) {
+			((JButton)_writeButtons.elementAt(i)).removeActionListener(this);
+		}
+		for (int i = 0; i<_readButtons.size(); i++) {
+			((JButton)_readButtons.elementAt(i)).removeActionListener(this);
+		}
+
+		// remove CV listeners
+		for (int i = 0; i<_cvDisplayVector.size(); i++) {
+			((CvValue)_cvDisplayVector.elementAt(i)).removePropertyChangeListener(this);
+		}
+		
+		// null references, so that they can be gc'd even if this isn't.				
+		_cvDisplayVector = null;
+		_cvAllVector = null;
+		_writeButtons = null;
+		_readButtons = null;
+		_status = null;
+	}
+	
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CvTableModel.class.getName());
 }

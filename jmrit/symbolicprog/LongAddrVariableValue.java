@@ -206,13 +206,6 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 	// stored value
 	JTextField _value = null;
 
-	// clean up connections when done
-	public void dispose() {
-		if (_value != null) _value.removeActionListener(this);
-		((CvValue)_cvVector.elementAt(getCvNum())).removePropertyChangeListener(this);
-		((CvValue)_cvVector.elementAt(getCvNum()+1)).removePropertyChangeListener(this);
-	}
-	
 	/* Internal class extends a JTextField so that its color is consistent with 
 	 * an underlying variable
 	 *
@@ -256,6 +249,17 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 	
 	}
 
+	// clean up connections when done
+	public void dispose() {
+		if (log.isDebugEnabled()) log.debug("dispose");
+		if (_value != null) _value.removeActionListener(this);
+		((CvValue)_cvVector.elementAt(getCvNum())).removePropertyChangeListener(this);
+		((CvValue)_cvVector.elementAt(getCvNum()+1)).removePropertyChangeListener(this);
+		
+		_value = null;
+		// do something about the VarTextField
+	}
+	
 	// initialize logging	
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LongAddrVariableValue.class.getName());
 		

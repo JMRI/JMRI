@@ -9,7 +9,7 @@ package jmri.jmrit.roster;
  * All the attributes have a content, not null.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: RosterEntry.java,v 1.4 2001-11-16 15:02:41 jacobsen Exp $
+ * @version			$Id: RosterEntry.java,v 1.5 2001-11-23 22:23:54 jacobsen Exp $
  */
 public class RosterEntry {
 
@@ -129,6 +129,23 @@ public class RosterEntry {
 		return out;
 	}
 		
+	public void dispose() {
+		if (log.isDebugEnabled()) log.debug("dispose");
+		// null everything out
+		_fileName 	= null;
+		_id 		= null;
+		_roadName 	= null;
+		_roadNumber = null;
+		_mfg 		= null;
+		_model 		= null;
+		_dccAddress = null;
+		_comment 	= null;
+		_decoderModel = null;
+		_decoderFamily = null;
+		_decoderComment = null;
+		
+	}
+	
 	// members to remember all the info
 	protected String _fileName = "";
 

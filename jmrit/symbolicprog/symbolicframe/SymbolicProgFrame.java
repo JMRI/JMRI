@@ -142,8 +142,8 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 			}
 		});
 			
-			setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-			addWindowListener(new java.awt.event.WindowAdapter() {
+		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new java.awt.event.WindowAdapter() {
 			public void windowClosing(java.awt.event.WindowEvent e) {
 				thisWindowClosing(e);
 			}

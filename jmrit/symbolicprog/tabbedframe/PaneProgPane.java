@@ -30,13 +30,17 @@ import org.jdom.Attribute;
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			
+ * @version			$Id: PaneProgPane.java,v 1.4 2001-11-23 22:23:55 jacobsen Exp $
  */
 public class PaneProgPane extends javax.swing.JPanel 
 							implements java.beans.PropertyChangeListener  {
 		
 	CvTableModel _cvModel;
 	VariableTableModel _varModel;
+  	
+  	ActionListener l1;
+  	ActionListener l2;
+  	ActionListener l3;
   	
   	/**
   	 * Construct the Pane from the XML definition element.
@@ -76,15 +80,16 @@ public class PaneProgPane extends javax.swing.JPanel
 		JPanel bottom = new JPanel();
 		bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
 		readButton.setToolTipText("Read current values from decoder. Warning: may take a long time!");
-		readButton.addActionListener( new ActionListener() {
+		readButton.addActionListener( l1 = new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				readPane();
 			}
 		});
 		confButton.setEnabled(false);
 		confButton.setToolTipText("Not implemented yet");
+		
 		writeButton.setToolTipText("Write current values to decoder");
-		writeButton.addActionListener( new ActionListener() {
+		writeButton.addActionListener( l3 = new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				writePane();
 			}
@@ -408,6 +413,25 @@ public class PaneProgPane extends javax.swing.JPanel
 
 	JComponent getRep(int i, String format) {
 		return (JComponent)(_varModel.getRep(i, format));
+	}
+	
+	public void dispose() {
+		if (log.isDebugEnabled()) log.debug("dispose");
+
+		readButton.removeActionListener(l1);
+		writeButton.removeActionListener(l3);
+		
+		if (_programmingVar != null) _programmingVar.removePropertyChangeListener(this);
+
+		prop = null;
+		_programmingVar = null;
+		varList = null;
+		readButton = null;
+		confButton = null;
+		writeButton = null;
+		// these two are disposed elsewhere
+		_cvModel = null;
+		_varModel = null;
 	}
 	
 	// handle outgoing parameter notification for the Busy parameter

@@ -38,7 +38,8 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
 
 	// handle incoming parameter notification
 	abstract public void propertyChange(java.beans.PropertyChangeEvent e);
-
+	abstract public void dispose();
+	
 	abstract public Object rangeVal();
 	
 	// methods implemented here:

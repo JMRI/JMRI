@@ -142,11 +142,6 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 	// stored value, read-only Value
 	JTextField _value = null;
 
-	// clean up connections when done
-	public void dispose() {
-		if (_value != null) _value.removeActionListener(this);
-		((CvValue)_cvVector.elementAt(getCvNum())).removePropertyChangeListener(this);
-	}
 	
 	/* Internal class extends a JTextField so that its color is consistent with 
 	 * an underlying variable
@@ -189,6 +184,16 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 			}	
 		}
 	
+	}
+	
+	// clean up connections when done
+	public void dispose() {
+		if (log.isDebugEnabled()) log.debug("dispose");
+		if (_value != null) _value.removeActionListener(this);
+		((CvValue)_cvVector.elementAt(getCvNum())).removePropertyChangeListener(this);
+		
+		_value = null;
+		// do something about the VarTextField
 	}
 
 	// initialize logging	

@@ -14,11 +14,14 @@ import java.util.Vector;
 import javax.swing.*;
 import java.awt.Color;
 
+import com.sun.java.util.collections.List;
+import com.sun.java.util.collections.ArrayList;
+
 /** 
  * Extends VariableValue to represent a enumerated variable.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: EnumVariableValue.java,v 1.6 2001-11-22 09:11:06 jacobsen Exp $
+ * @version			$Id: EnumVariableValue.java,v 1.7 2001-11-23 22:23:54 jacobsen Exp $
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
@@ -33,7 +36,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 		_value.setActionCommand("");
 		_defaultColor = _value.getBackground();
 		_value.setBackground(COLOR_UNKNOWN);
-		// connect to the JTextField value, cv
+		// connect to the JComboBox model and the CV so we'll see changes.
 		_value.addActionListener(this);
 		((CvValue)_cvVector.elementAt(getCvNum())).addPropertyChangeListener(this);
 	}
@@ -90,19 +93,26 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 		// sort on format type
 		if (format.equals("checkbox")) {
 			// this only makes sense if there are exactly two options
-
-			return new ComboCheckBox(_value, this);
-			//box.setActionCommand( ((String)(_value.getItemAt(1))) ); // set to name of "1" item
-			//box.addActionListener(this);
+			ComboCheckBox b = new ComboCheckBox(_value, this);
+			comboCBs.add(b);
+			return b;
 		}
 		else if (format.equals("radiobuttons")) {
-			return new ComboRadioButtons(_value, this);
+			ComboRadioButtons b = new ComboRadioButtons(_value, this);
+			comboRBs.add(b);
+			return b;
 		}
-		else 
-		// return a new JComboBox representing the same model
-		return new VarComboBox(_value.getModel(), this);
+		else {
+			// return a new JComboBox representing the same model
+			VarComboBox b = new VarComboBox(_value.getModel(), this);
+			comboVars.add(b);
+			return b;
+		}
 	}
 	
+	List comboCBs = new ArrayList();
+	List comboVars = new ArrayList();
+	List comboRBs = new ArrayList();
 	
 	// implement an abstract member to set colors
 	void setColor(Color c) {
@@ -146,12 +156,6 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 	// stored value
 	JComboBox _value = null;
 
-	// clean up connections when done
-	public void dispose() {
-		if (_value != null) _value.removeActionListener(this);
-		((CvValue)_cvVector.elementAt(getCvNum())).removePropertyChangeListener(this);
-	}
-	
 	/* Internal class extends a JComboBox so that its color is consistent with 
 	 * an underlying variable; we return one of these in getRep.
 	 *<P>
@@ -167,18 +171,20 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 		VarComboBox(ComboBoxModel m, EnumVariableValue var) {
 			super(m);
 			_var = var;
-			// get the original color right
-			setBackground(_var._value.getBackground());
-			// listen for changes to original state
-			_var.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+			_l = new java.beans.PropertyChangeListener() {
 				public void propertyChange(java.beans.PropertyChangeEvent e) {
 					if (log.isDebugEnabled()) log.debug("VarComboBox saw property change: "+e);
 					originalPropertyChanged(e);
 				}
-			});		
+			};
+			// get the original color right
+			setBackground(_var._value.getBackground());
+			// listen for changes to original state
+			_var.addPropertyChangeListener(_l);		
 		}
 
 		EnumVariableValue _var;
+		java.beans.PropertyChangeListener _l = null;
 	
 		void originalPropertyChanged(java.beans.PropertyChangeEvent e) {
 			// update this color from original state
@@ -187,6 +193,30 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 			}	
 		}
 	
+		public void dispose() {
+			if (_var != null && _l != null ) _var.removePropertyChangeListener(_l);
+			_l = null;
+			_var = null;
+		}
+	}
+
+	// clean up connections when done
+	public void dispose() {
+		if (log.isDebugEnabled()) log.debug("dispose");
+		if (_value != null) _value.removeActionListener(this);
+		((CvValue)_cvVector.elementAt(getCvNum())).removePropertyChangeListener(this);
+		for (int i = 0; i<comboCBs.size(); i++) {
+			((ComboCheckBox)comboCBs.get(i)).dispose();
+		}
+		for (int i = 0; i<comboVars.size(); i++) {
+			((VarComboBox)comboVars.get(i)).dispose();
+		}
+		for (int i = 0; i<comboRBs.size(); i++) {
+			((ComboRadioButtons)comboRBs.get(i)).dispose();
+		}
+		
+		_value = null;
+		// do something about the VarComboBox
 	}
 
 	// initialize logging	

@@ -30,6 +30,7 @@ public class PaneProgAction 			extends AbstractAction {
 	
     public void actionPerformed(ActionEvent e) {
 
+		if (log.isInfoEnabled()) log.info("Pane programmer requested");
 		// create the initial frame that steers
 		JFrame f = new JFrame("Tab-Programmer Setup");
 		f.getContentPane().setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));

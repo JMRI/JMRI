@@ -20,7 +20,7 @@ import com.sun.java.util.collections.List;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			
+ * @version			$Id: KnownLocoSelPane.java,v 1.4 2001-11-23 22:23:54 jacobsen Exp $
  */
 public class KnownLocoSelPane extends javax.swing.JPanel  {
 		
@@ -36,6 +36,7 @@ public class KnownLocoSelPane extends javax.swing.JPanel  {
 			JButton idloco = new JButton("Identify locomotive");
 			idloco.addActionListener( new ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
+					if (log.isInfoEnabled()) log.info("Identify locomotive pressed");
 					startIdentify();
 				}
 			});
@@ -49,6 +50,7 @@ public class KnownLocoSelPane extends javax.swing.JPanel  {
 		JButton go2 = new JButton("Open programmer");
 		go2.addActionListener( new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
+				if (log.isInfoEnabled()) log.info("Open programmer pressed");
 				openButton();
 			}
 		});

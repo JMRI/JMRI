@@ -158,8 +158,8 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 	// Read from an Element to configure the row
 	public void setRow(int row, Element e, Namespace ns) {
 		// get the values for the VariableValue ctor
-		if (log.isDebugEnabled()) log.debug("Starting to setRow");
 		String name = e.getAttribute("name").getValue();
+		if (log.isDebugEnabled()) log.debug("Starting to setRow \""+name+"\"");
 		String stdname = ( e.getAttribute("stdName")!=null ?
 						 e.getAttribute("stdName").getValue() :
 						 null);
@@ -357,6 +357,32 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		return -1;
 	}
 
+	public void dispose() {
+		if (log.isDebugEnabled()) log.debug("dispose");
+		
+		// remove buttons
+		for (int i = 0; i<_writeButtons.size(); i++) {
+			((JButton)_writeButtons.elementAt(i)).removeActionListener(this);
+		}
+		for (int i = 0; i<_readButtons.size(); i++) {
+			((JButton)_readButtons.elementAt(i)).removeActionListener(this);
+		}
+
+		// remove variables listeners
+		for (int i = 0; i<rowVector.size(); i++) {
+			VariableValue v = (VariableValue)rowVector.elementAt(i);
+			v.removePropertyChangeListener(this);
+			v.dispose();
+		}
+
+		headers = null;
+		rowVector = null;
+		_cvModel = null;
+		_writeButtons = null;
+		_readButtons = null;
+		_status = null;
+	}
+	
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(VariableTableModel.class.getName());
 
 }
