@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Zimo_MX62_1.xml,v 1.2 2003-10-18 23:51:56 jacobsen Exp $ -->
+<!-- $Id: Zimo_MX62_1.xml,v 1.3 2004-02-13 02:22:38 jacobsen Exp $ -->
 <decoder-config>
 		<version author="sip@euronet.nl"
 			version="1.2" lastUpdated="20031008" />
@@ -14,10 +14,11 @@
 		 maxInputVolts="12-24V" maxMotorCurrent="0.7A (peak=1.5A, 5 sec.)"
 		 maxTotalCurrent="0.8A" formFactor="N, HOe, HOm"
 		 numOuts="4" numFns="6" >
+		<size length="0.55" width="0.35" height="0.10" units="inches" />
 		<output name="1" label="White" />
-	    	<output name="2" label="Yellow" />
-	    	<output name="3" label="NC - Logic Level" />
-	    	<output name="4" label="NC - Logic Level" />
+	    <output name="2" label="Yellow" />
+	    <output name="3" label="NC - Logic Level" />
+	    <output name="4" label="NC - Logic Level" />
 	  	</model>
 	</family>
 

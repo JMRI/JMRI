@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: NCE_D13SR.xml,v 1.19 2003-10-18 23:51:55 jacobsen Exp $ -->
+<!-- $Id: NCE_D13SR.xml,v 1.20 2004-02-13 02:24:00 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen" version="8.1" lastUpdated="20031008"/>
       <!-- version 4 added D15, D14, DA-SR, P2K, KRS, SW9, D408 and more functions -->
@@ -26,7 +26,9 @@
     <model model="NIMFT-B" numOuts="2" numFns="3" >
 			<output name="1" label="Pad 1"/>
 			<output name="2" label="Pad 2"/> </model>
-    <model model="N12SR" numOuts="7" numFns="12" />
+    <model model="N12SR" numOuts="7" numFns="12">
+			<size length="0.625" width="0.375" height="0.125" units="inches" />
+    	</model>
     <model model="N12A0" numOuts="7" numFns="12" />
     <model model="N12A1" numOuts="7" numFns="12" />
     <model model="N12K0a" numOuts="7" numFns="12" />

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Lenz_54.xml,v 1.7 2003-08-15 15:22:39 jacobsen Exp $ -->
+<!-- $Id: Lenz_54.xml,v 1.8 2004-02-13 02:19:03 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Michael Mosher mjmx@comcast.net"
 			version="5" lastUpdated="20030815" />
@@ -28,10 +28,14 @@
 			<output name="4" label="D - Violet" /></model>
 		<model model="LE0521W" numOuts="2" >
 			<output name="1" label="A - White" />
-			<output name="2" label="B - Yellow" /></model>
+			<output name="2" label="B - Yellow" />
+			<size length="0.51" width="0.36" height="0.14" units="inches" />
+			</model>
 		<model model="LE0521D" numOuts="2" >
 			<output name="1" label="A - White" />
-			<output name="2" label="B - Yellow" /></model>
+			<output name="2" label="B - Yellow" />
+			<size length="0.51" width="0.36" height="0.14" units="inches" />
+			</model>
 		<model model="LE1024"  numOuts="4" >
 			<output name="1" label="A - White" />
 			<output name="2" label="B - Yellow" />
@@ -435,4 +439,4 @@
 </decoder-config>
 
 
-
+
