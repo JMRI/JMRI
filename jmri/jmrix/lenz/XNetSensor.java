@@ -9,7 +9,7 @@ import jmri.Sensor;
  * Extend jmri.AbstractSensor for XPressNet layouts.
  * <P>
  * @author			Paul Bender Copyright (C) 2003
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class XNetSensor extends AbstractSensor implements XNetListener {
 
@@ -85,14 +85,6 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
                                                                        false);
        XNetTrafficController.instance().sendXNetMessage(msg, this);
     }
-
-    /**
-     * User request to set the state.
-     * @param s
-     * @throws JmriException
-     */
-    //public void setKnownState(int s) throws jmri.JmriException {
-    //}
 
     /**
      * implementing classes will typically have a function/listener to get

@@ -1,22 +1,17 @@
-TODO List for Lenz code (as of 12/31/2003):
+TODO List for Lenz code (as of 2/28/2004):
 1) Need to add  listeners to all classes that SEND messages so they 
 recieve the apropriate response messages.  On classes where more than 
 one instance may exists, need to syncronize the listeners for the messages
 that DO NOT include addresses (The Throttle is one of them).  
-2) Need to make  Feedback code actually do something with sensors that are 
-created.
-3) Need to seperate constants for Xpressnet V1 from those for X-Bus V1 
+2) Need to seperate constants for Xpressnet V1 from those for X-Bus V1 
 and V2.
-4) Implement a browser for the Command Station Locomotive database 
+3) Implement a browser for the Command Station Locomotive database 
 (similar to the Digitrax "Slot Manager")
-5) Need to make sure we can listen to the different type of messages for 
+4) Need to make sure we can listen to the different type of messages for 
 each class, instead of listen for ALL messages (i.e. need to make the mask
 parameter to "addXpressnetListener" work properly)
-6) Revise utility programs so they use a properties file for button 
+5) Revise utility programs so they use a properties file for button 
 names/menu titles.
-7) When the throttle is taken over by another XPressNet device, we need to 
-request the current status of the throttle (should this be done on a popup 
-window trigger, or as part of a status loop?).
-8) Add a message box indicating another device has put the command station 
+6) Add a message box indicating another device has put the command station 
 in service mode.  This should automatically appear and disappear as 
 appropriate.
