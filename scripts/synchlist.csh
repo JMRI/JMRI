@@ -55,8 +55,8 @@ echo '  </path>												' >>ClassicCompile.xml
 
 echo '  <\!-- path including Java 1.1.8 libraries -->		' >>ClassicCompile.xml
 echo '  <path id="compile1.1.8.path">						' >>ClassicCompile.xml
-echo '      <pathelement location="lib/JDKClasses.zip"/>	' >>ClassicCompile.xml
-echo '      <pathelement location="lib/swingall.jar"/>		' >>ClassicCompile.xml
+echo '      <pathelement location="lib118/JDKClasses.zip"/>	' >>ClassicCompile.xml
+echo '      <pathelement location="lib118/swingall.jar"/>		' >>ClassicCompile.xml
 echo '      <path refid="project.class.path"/>				' >>ClassicCompile.xml
 echo '  </path>												' >>ClassicCompile.xml
 
