@@ -1,7 +1,7 @@
 /** 
- * LnTurnoutManagerTest.java
+ * LnSensorManagerTest.java
  *
- * Description:	    tests for the jmri.jmrix.loconet.LnTurnoutManager class
+ * Description:	    tests for the jmri.jmrix.loconet.LnSensorManagerTurnout class
  * @author			Bob Jacobsen
  * @version			
  */
@@ -16,7 +16,7 @@ import junit.framework.TestSuite;
 import jmri.jmrix.loconet.*;
 import jmri.*;
 
-public class LnTurnoutManagerTest extends TestCase  {
+public class LnSensorManagerTest extends TestCase  {
 
 	public void testLnTurnoutCreate() {
 		// create and register the manager object
@@ -123,22 +123,22 @@ public class LnTurnoutManagerTest extends TestCase  {
 	
 	// from here down is testing infrastructure
 	
-	public LnTurnoutManagerTest(String s) {
+	public LnSensorManagerTest(String s) {
 		super(s);
 	}
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {LnTurnoutManager.class.getName()};
+		String[] testCaseName = {LnSensorManagerTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 	
 	// test suite from all defined tests
 	public static Test suite() {
-		TestSuite suite = new TestSuite(LnTurnoutManagerTest.class);
+		TestSuite suite = new TestSuite(LnSensorManagerTest.class);
 		return suite;
 	}
 	 
-	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnTurnoutManagerTest.class.getName());
+	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnSensorManagerTest.class.getName());
 
 }
