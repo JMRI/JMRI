@@ -23,7 +23,7 @@ import jmri.Sensor;
  * more than 64 total cards.   
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class SerialNode {
 
@@ -57,8 +57,9 @@ public class SerialNode {
                                                 //   1 = searchlight LED, 2*NS bits must be set to 1
     protected byte[] cardTypeLocation = new byte[64]; // USIC/SUSIC only, there must numInputCards bytes set to
     						//   INPUT_CARD, and numOutputCards set to OUTPUT_CARD, with 
-                                                //   the remaining locations must be set to NO_CARD.  All 
-                                                //   NO_CARD locations must be at the end of the array.
+                                                //   the remaining locations set to NO_CARD.  All 
+                                                //   NO_CARD locations must be at the end of the array.  The
+                                                //   array is indexed by card address.
          
     protected int LASTUSEDSENSOR = 1;  // grows as sensors defined
 
