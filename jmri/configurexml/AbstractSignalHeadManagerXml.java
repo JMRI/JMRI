@@ -20,7 +20,7 @@ import org.jdom.Element;
  * Based on AbstractTurnoutManagerConfigXML
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class AbstractSignalHeadManagerXml implements XmlAdapter {
 
@@ -75,8 +75,7 @@ public class AbstractSignalHeadManagerXml implements XmlAdapter {
      */
     public void load(Element signalheads) {
         // create the master object
-        AbstractSignalHeadManager mgr = new AbstractSignalHeadManager();
-        replaceSignalHeadManager(mgr);
+        replaceSignalHeadManager();
 
         // load individual turnouts
         loadSignalHeads(signalheads);
@@ -121,9 +120,9 @@ public class AbstractSignalHeadManagerXml implements XmlAdapter {
      * if they are of the same absolute type.
      * @param pManager
      */
-    protected void replaceSignalHeadManager(SignalHeadManager pManager) {
+    protected void replaceSignalHeadManager() {
         if (InstanceManager.signalHeadManagerInstance().getClass().getName()
-                .equals(pManager.getClass().getName()))
+                .equals(AbstractSignalHeadManager.class.getName()))
             return;
         // if old manager exists, remove it from configuration process
         if (InstanceManager.signalHeadManagerInstance() != null)
@@ -131,6 +130,7 @@ public class AbstractSignalHeadManagerXml implements XmlAdapter {
                 InstanceManager.signalHeadManagerInstance() );
 
         // register new one with InstanceManager
+        AbstractSignalHeadManager pManager = new AbstractSignalHeadManager();
         InstanceManager.setSignalHeadManager(pManager);
         // register new one for configuration
         InstanceManager.configureManagerInstance().registerConfig(pManager);
