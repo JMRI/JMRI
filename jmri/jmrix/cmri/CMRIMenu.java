@@ -10,7 +10,7 @@ import javax.swing.JMenu;
  * Create a "Systems" menu containing the Jmri CMRI-specific tools
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class CMRIMenu extends JMenu {
     public CMRIMenu(String name) {
@@ -30,6 +30,8 @@ public class CMRIMenu extends JMenu {
         add(new jmri.jmrix.cmri.serial.packetgen.SerialPacketGenAction(rb.getString("MenuItemSendCommand")));
         add(new javax.swing.JSeparator());
         add(new jmri.jmrix.cmri.serial.diagnostic.DiagnosticAction(rb.getString("MenuItemDiagnostics")));
+        add(new javax.swing.JSeparator());
+        add(new jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction());
 
     }
 
