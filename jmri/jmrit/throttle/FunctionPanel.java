@@ -176,7 +176,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
 	 *  A KeyAdapter that listens for the keys that work the function buttons
 	 *
 	 * @author     glen
-          * @version    $Revision: 1.22 $
+          * @version    $Revision: 1.23 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter
 	{
@@ -191,7 +191,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
 		{
 			if (keyReleased)
 			{
-				System.out.println("Pressed");
+				log.debug("Pressed");
 				for (int i=0; i<NUM_FUNCTION_BUTTONS; i++)
 				{
 					if (e.getKeyCode() == functionButton[i].getKeyCode())
@@ -205,12 +205,12 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
 
 		public void keyTyped(KeyEvent e)
 		{
-			System.out.println("Typed");
+			log.debug("Typed");
 		}
 
 		public void keyReleased(KeyEvent e)
 		{
-			System.out.println("Released");
+ 			log.debug("Released");
 			for (int i=0; i<NUM_FUNCTION_BUTTONS; i++)
 			{
 				if (e.getKeyCode() == functionButton[i].getKeyCode())
