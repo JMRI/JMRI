@@ -1,8 +1,8 @@
 // AbstractConfigFrame.java
 
-package jmri.apps;
+package apps;
 
-import jmri.apps.AbstractConfigFile;
+import apps.AbstractConfigFile;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -10,8 +10,8 @@ import javax.swing.*;
 import org.jdom.Element;
 import org.jdom.Attribute;
 
-/** 
- * AbstractConfigFrame provides startup configuration, a GUI for setting 
+/**
+ * AbstractConfigFrame provides startup configuration, a GUI for setting
  * config/preferences, and read/write support.   Note that routine GUI config,
  * menu building, etc is done in other code.
  *<P>For now, we're implicitly assuming that configuration of these
@@ -20,19 +20,19 @@ import org.jdom.Attribute;
  * stored in local variables.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: AbstractConfigFrame.java,v 1.1 2002-02-20 07:33:45 jacobsen Exp $
+ * @version			$Id: AbstractConfigFrame.java,v 1.2 2002-03-01 01:19:12 jacobsen Exp $
  */
 abstract public class AbstractConfigFrame extends JFrame {
-		
+
 	public AbstractConfigFrame(String name) {
 		super(name);
-		
+
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		// create the GUI in steps
 		getContentPane().add(createConnectionPane());
 		getContentPane().add(createGUIPane());
 		getContentPane().add(createProgrammerPane());
-		
+
 		JButton save = new JButton("Save");
 		getContentPane().add(save);
 		save.addActionListener( new ActionListener() {
@@ -40,15 +40,15 @@ abstract public class AbstractConfigFrame extends JFrame {
 				savePressed();
 			}
 		});
-		
+
 		// add some space at the bottom
 		getContentPane().add(new JLabel(" "));
-		
+
 		// show is deferred to some action somewhere else
 		pack();
 		}
-		
-	
+
+
 	/**
 	 * Command reading the configuration, and setting it into the application.
 	 * Returns true if
@@ -60,7 +60,7 @@ abstract public class AbstractConfigFrame extends JFrame {
 		boolean programmer = configureProgrammer(file.getProgrammerElement());
 		return connected&&gui&&programmer;
 	}
-	
+
 	/**
 	 * Command writing the current configuration, without setting it.
 	 * Returns true if
@@ -69,12 +69,12 @@ abstract public class AbstractConfigFrame extends JFrame {
 	//public boolean writeConfig() {
 	//	return true;
 	//}
-	
+
 	/**
 	 * Abstract method to save the data
 	 */
-	abstract void saveContents();
-	
+	public abstract void saveContents();
+
 	/**
 	 * Handle the Save button:  Backup the file, write a new one, prompt for
 	 * what to do next.  To do that, the last step is to present a dialog
@@ -84,19 +84,19 @@ abstract public class AbstractConfigFrame extends JFrame {
 		jmri.jmrit.XmlFile.ensurePrefsPresent(jmri.jmrit.XmlFile.prefsDir());
 
 		saveContents();
-		
-		if (JOptionPane.showConfirmDialog(null, 
-		   	"Your updated preferences will take effect when the program is restarted. Quit now?", 
+
+		if (JOptionPane.showConfirmDialog(null,
+		   	"Your updated preferences will take effect when the program is restarted. Quit now?",
 		    "Quit now?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 		    	// end the program
 			setVisible(false);
 			dispose();
-			System.exit(0);	    	
+			System.exit(0);
 		}
 		// don't end the program, just close the window
 		setVisible(false);
 	}
-	
+
 	JComboBox protocolBox;
 	JComboBox portBox;
 	JComboBox baudBox;
@@ -106,9 +106,9 @@ abstract public class AbstractConfigFrame extends JFrame {
 	 */
 	JPanel createConnectionPane() {
 		JPanel j = new JPanel();
-		
+
 		JLabel l;
-		
+
 		j.setLayout(new GridLayout(4,2));
 		protocolBox = new JComboBox(new String[] {"(None selected)","NCE","LocoNet LocoBuffer","LocoNet MS100"});
 		protocolBox.addActionListener( new ActionListener() {
@@ -120,7 +120,7 @@ abstract public class AbstractConfigFrame extends JFrame {
 		l = new JLabel("Layout connection: ");
 		j.add(l);
 		j.add(protocolBox);
-		
+
 		portBox = new JComboBox(new String[] {"(select a connection method first)"});
 		portBox.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -129,11 +129,11 @@ abstract public class AbstractConfigFrame extends JFrame {
 		});
 		portBox.setToolTipText("This is disabled until you select a connection method");
 		portBox.setEnabled(false);
-		
+
 		l = new JLabel("Serial port: ");
 		j.add(l);
 		j.add(portBox);
-		
+
 		baudBox = new JComboBox(new String[] {"(select a connection method first)"});
 		baudBox.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -142,7 +142,7 @@ abstract public class AbstractConfigFrame extends JFrame {
 		});
 		baudBox.setToolTipText("This is disabled until you select a connection method");
 		baudBox.setEnabled(false);
-		
+
 		l = new JLabel("Baud rate: ");
 		j.add(l);
 		j.add(baudBox);
@@ -155,31 +155,31 @@ abstract public class AbstractConfigFrame extends JFrame {
 		});
 		opt1Box.setToolTipText("This is disabled until you select a connection method");
 		opt1Box.setEnabled(false);
-		
+
 		l = new JLabel("Communications option: ");
 		j.add(l);
 		j.add(opt1Box);
 
 		return j;
 	}
-	
+
 	/*
 	 * Connection method has been selected; show available ports
 	 */
 	void protocolSelected() {
 		portBox.setEnabled(true);
 		portBox.setToolTipText("Select a communications port");
-		
+
 		// create the eventual serial driver object, and ask it for available comm ports
 		protocolName = (String) protocolBox.getSelectedItem();
 		portBox.removeAllItems();  // start over
 		baudBox.removeAllItems();  // start over
 		opt1Box.removeAllItems();  // start over
-		
+
 		log.debug("Connection selected: "+protocolName);
 		if (protocolName.equals("LocoNet LocoBuffer")) {
 			//
-			jmri.jmrix.loconet.locobuffer.LocoBufferAdapter a 
+			jmri.jmrix.loconet.locobuffer.LocoBufferAdapter a
 					= new jmri.jmrix.loconet.locobuffer.LocoBufferAdapter();
 			Vector v = a.getPortNames();
 			log.debug("Found "+v.size()+" LocoBuffer HS ports");
@@ -206,10 +206,10 @@ abstract public class AbstractConfigFrame extends JFrame {
 				opt1Box.setToolTipText("There are no options for this protocol");
 				opt1Box.setEnabled(false);
 			}
-						
+
 		} else if (protocolName.equals("LocoNet MS100")) {
 			//
-			jmri.jmrix.loconet.ms100.MS100Adapter a 
+			jmri.jmrix.loconet.ms100.MS100Adapter a
 					= new jmri.jmrix.loconet.ms100.MS100Adapter();
 			Vector v = a.getPortNames();
 			log.debug("Found "+v.size()+" MS100 ports");
@@ -221,7 +221,7 @@ abstract public class AbstractConfigFrame extends JFrame {
 			for (int i=0; i<baudList.length; i++) baudBox.addItem(baudList[i]);
 			String[] optList = a.validOption1();
 			for (int i=0; i<optList.length; i++) opt1Box.addItem(optList[i]);
-			
+
 			if (baudList.length>1) {
 				baudBox.setToolTipText("Must match the baud rate setting of your hardware");
 				baudBox.setEnabled(true);
@@ -239,7 +239,7 @@ abstract public class AbstractConfigFrame extends JFrame {
 
 		} else if (protocolName.equals("NCE")) {
 			//
-			jmri.jmrix.nce.serialdriver.SerialDriverAdapter a 
+			jmri.jmrix.nce.serialdriver.SerialDriverAdapter a
 					= new jmri.jmrix.nce.serialdriver.SerialDriverAdapter();
 			Vector v = a.getPortNames();
 			log.debug("Found "+v.size()+" NCE ports");
@@ -251,7 +251,7 @@ abstract public class AbstractConfigFrame extends JFrame {
 			for (int i=0; i<baudList.length; i++) baudBox.addItem(baudList[i]);
 			String[] optList = a.validOption1();
 			for (int i=0; i<optList.length; i++) opt1Box.addItem(optList[i]);
-			
+
 			if (baudList.length>1) {
 				baudBox.setToolTipText("Must match the baud rate setting of your hardware");
 				baudBox.setEnabled(true);
@@ -306,8 +306,8 @@ abstract public class AbstractConfigFrame extends JFrame {
 	String portName = "(None selected)";
 	String baudRate = "(None selected)";
 	String option1Setting = "(None selected)";
-	
-	Element getConnection() {
+
+	public Element getConnection() {
 		Element e = new Element("connection");
 		e.addAttribute("class", getCurrentProtocolName());
 		e.addAttribute("port", getCurrentPortName());
@@ -317,64 +317,64 @@ abstract public class AbstractConfigFrame extends JFrame {
 			e.addAttribute("option1", getCurrentOption1Setting());
 		return e;
 	}
-	
+
 	public String getCurrentProtocolName() { return protocolName; }
 	public String getCurrentPortName() { return portName; }
 	public String getCurrentBaudRate() { return baudRate; }
 	public String getCurrentOption1Setting() { return option1Setting; }
-	
+
 	boolean configureConnection(Element e) throws jmri.JmriException {
 		protocolName = e.getAttribute("class").getValue();
-		
+
 		// check that the config file has a protocol selected
 		if (protocolName.equals("(None selected)")) return false;
-		
+
 		protocolBox.setSelectedItem(protocolName);
-		// note that the line above will _change_ the value of portName, as it 
+		// note that the line above will _change_ the value of portName, as it
 		// selects a default and runs the GUI config for that protocol
 
 		// configure port name
 		portName = e.getAttribute("port").getValue();
 		portBox.setSelectedItem(e.getAttribute("port").getValue());
 		portName = e.getAttribute("port").getValue();  // may have been changed by prior line
-		// check that the specified port exists		
+		// check that the specified port exists
 		if (!e.getAttribute("port").getValue().equals(portBox.getSelectedItem())) {
 			// can't connect to a non-existant port!
 			log.error("Configured port \""+portName+"\" doesn't exist, no connection to layout made");
 			return false;
 		}
-		
+
 		// configure baud rate - an optional attribute
 		if (e.getAttribute("speed")!=null) {
 			baudRate = e.getAttribute("speed").getValue();
 			baudBox.setSelectedItem(baudRate);
 			baudRate = e.getAttribute("speed").getValue();  // may have been changed by prior line
-			// check that the specified setting exists		
+			// check that the specified setting exists
 			if (!e.getAttribute("speed").getValue().equals(baudBox.getSelectedItem())) {
 				// can't set non-existant option value!
 				log.error("Configured baud rate\""+baudRate+"\" doesn't exist, no connection to layout made");
 				return false;
 			}
 		}
-		
+
 		// configure option1 - an optional attribute
 		if (e.getAttribute("option1")!=null) {
 			option1Setting = e.getAttribute("option1").getValue();
 			opt1Box.setSelectedItem(option1Setting);
 			option1Setting = e.getAttribute("option1").getValue();  // may have been changed by prior line
-			// check that the specified setting exists		
+			// check that the specified setting exists
 			if (!e.getAttribute("option1").getValue().equals(opt1Box.getSelectedItem())) {
 				// can't set non-existant option value!
 				log.error("Configured option value \""+option1Setting+"\" doesn't exist, no connection to layout made");
 				return false;
 			}
 		}
-		
+
 		// handle the specific case (a good use for reflection!)
 		log.info("Configuring connection with "+protocolName+" "+portName);
 		if (protocolName.equals("LocoNet LocoBuffer")) {
 			//
-			jmri.jmrix.loconet.locobuffer.LocoBufferAdapter a 
+			jmri.jmrix.loconet.locobuffer.LocoBufferAdapter a
 					= new jmri.jmrix.loconet.locobuffer.LocoBufferAdapter();
 			a.configureBaudRate(getCurrentBaudRate());
 			a.configureOption1(getCurrentOption1Setting());
@@ -382,44 +382,44 @@ abstract public class AbstractConfigFrame extends JFrame {
 			a.configure();
 			if (!a.okToSend()) {
 				log.info("LocoBuffer port not ready to send");
-				JOptionPane.showMessageDialog(null, 
+				JOptionPane.showMessageDialog(null,
 				   	"The LocoBuffer is unable to accept data.\n"
 				   	+"Make sure its power is on, it is connected\n"
 				   	+"to a working LocoNet, and the command station is on.\n"
 				   	+"The LocoNet LED on the LocoBuffer should be off.\n"
-				   	+"Reset the LocoBuffer by cycling its power.", 
+				   	+"Reset the LocoBuffer by cycling its power.",
 				    "LocoBuffer not ready", JOptionPane.ERROR_MESSAGE);
 			}
-			
+
 		} else if (protocolName.equals("LocoNet MS100")) {
 			//
-			jmri.jmrix.loconet.ms100.MS100Adapter a 
+			jmri.jmrix.loconet.ms100.MS100Adapter a
 					= new jmri.jmrix.loconet.ms100.MS100Adapter();
 			a.openPort(portName, "DecoderPro");
 			a.configure();
-			
+
 		} else if (protocolName.equals("NCE")) {
 			//
-			jmri.jmrix.nce.serialdriver.SerialDriverAdapter a 
+			jmri.jmrix.nce.serialdriver.SerialDriverAdapter a
 					= new jmri.jmrix.nce.serialdriver.SerialDriverAdapter();
 			a.openPort(portName, "DecoderPro");
 			a.configure();
-			
+
 		} else {
 			// selected no match, so throw an error
 			throw new jmri.JmriException();
 		}
-		
+
 		return true;
 	}
-	
+
 	/*
 	 * Create a panel showing the valid Swing Look&Feels and allowing selection
 	 */
 	JPanel createGUIPane() {
 		JPanel c = new JPanel();
 		c.setLayout(new FlowLayout());
-		
+
 		c.add(new JLabel("GUI style: "));
 		// find L&F definitions
         UIManager.LookAndFeelInfo[] plafs = UIManager.getInstalledLookAndFeels();
@@ -446,17 +446,17 @@ abstract public class AbstractConfigFrame extends JFrame {
                 jmi.setSelected(true);
                 selectedLAF = name;
             }
-        } 
+        }
  		return c;
 	}
 	java.util.Hashtable installedLAFs;
 	ButtonGroup LAFGroup;
 	String selectedLAF;
-	
-	Element getGUI() {
+
+	public Element getGUI() {
 		Element e = new Element("gui");
 		String lafClassName = LAFGroup.getSelection().getActionCommand();
-		
+
 		e.addAttribute("LAFclass", lafClassName);
 		return e;
 	}
@@ -483,14 +483,14 @@ abstract public class AbstractConfigFrame extends JFrame {
 		return true;
 	}
 
-    /** 
+    /**
      *  Change the look-and-feel to the specified class.
      *  Alert the user if there were problems loading the PLAF.
      *  @param name (String) the presentable name for the class
      *  @param className (String) the className to be fed to the UIManager
      *  @see javax.swing.UIManager#setLookAndFeel
      *  @see javax.swing.SwingUtilities#updateComponentTreeUI
-     */ 
+     */
     public void updateLookAndFeel(String name, String className) {
 	try {
             // Set the new look and feel, and update the sample message to reflect it.
@@ -506,14 +506,14 @@ abstract public class AbstractConfigFrame extends JFrame {
             } else {
                 errMsg += "could not be loaded.";
             }
-            
+
             log.error(errMsg);
-            
+
         }
     }
-                
+
     JComboBox programmerBox = null;
-    
+
 	JPanel createProgrammerPane() {
 		JPanel j = new JPanel();
 		j.setLayout(new BoxLayout(j, BoxLayout.X_AXIS));
@@ -521,22 +521,22 @@ abstract public class AbstractConfigFrame extends JFrame {
 		j.add(programmerBox = new JComboBox(jmri.jmrit.symbolicprog.CombinedLocoSelPane.findListOfProgFiles()));
 		return j;
 	}
-	
+
 	public Element getProgrammer() {
 		Element programmer = new Element("programmer");
 		programmer.addAttribute("defaultFile", (String)programmerBox.getSelectedItem());
 		programmer.addAttribute("verifyBeforeWrite", "no");
 		return programmer;
 	}
-	
+
 	boolean configureProgrammer(Element e) {
 		jmri.jmrit.symbolicprog.CombinedLocoSelPane.setDefaultProgFile(e.getAttribute("defaultFile").getValue());
 		programmerBox.setSelectedItem(e.getAttribute("defaultFile").getValue());
 		return true;
 	}
 
-	
-	// initialize logging	
+
+	// initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractConfigFrame.class.getName());
-		
+
 }
