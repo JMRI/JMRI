@@ -14,7 +14,7 @@ java2 -d java &test
 java3 -d java &lib
 
 # runtime target - top level project runtime contents
-runtime -a xml lib resources
+runtime -a xml lib resources help
 
 # ant target - Ant directory in standard form, includes jbuilder
 ant -a runtime antfiles java
