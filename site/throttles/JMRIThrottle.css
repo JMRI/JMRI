@@ -1,0 +1,25 @@
+@charset "iso-8859-1";
+BODY {FONT-SIZE: 10pt; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: normal; COLOR: #000080; TEXT-TRANSFORM: none; MARGIN-TOP: 0px; MARGIN-LEFT: 0px}
+H1 {FONT-SIZE: 18pt; FONT-FAMILY: Comic Sans MS, Haettenschweiler, Arial, Helvetica, sans-serif; FONT-STYLE: normal; FONT-WEIGHT: bold; COLOR: #00008B; TEXT-ALIGN: center; TEXT-TRANSFORM: none}
+H2 {FONT-SIZE: 16pt; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: normal; FONT-WEIGHT: bold; COLOR: #D2691E; TEXT-ALIGN: center; TEXT-TRANSFORM: none}
+H3 {FONT-SIZE: 14pt; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: normal; FONT-WEIGHT: bold; COLOR: #8B4513; BACKGROUND: #FFFF00; TEXT-TRANSFORM: none; BORDER: thin; TEXT-ALIGN: center; WIDTH: auto; WORD-SPACING: normal}
+H4 {FONT-SIZE: 12pt; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: normal; FONT-WEIGHT: bold; COLOR: #9932CC; TEXT-TRANSFORM: uppercase}
+H5 {FONT-SIZE: 12pt; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: normal; FONT-WEIGHT: bold; COLOR: #006400; TEXT-TRANSFORM: uppercase}
+H6 {FONT-SIZE: 11pt; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: normal; FONT-WEIGHT: bold; COLOR: #990066; TEXT-TRANSFORM: uppercase}
+P {FONT-SIZE: 12pt; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: normal; FONT-WEIGHT: normal; TEXT-TRANSFORM: none; COLOR: #000080}
+U {FONT-SIZE: 12pt; FONT-FAMILY: "Times New Roman", Arial, Helvetica, sans-serif; FONT-STYLE: normal; FONT-WEIGHT: bold; TEXT-TRANSFORM: none; COLOR: #2F4F4F}
+B {FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: normal; FONT-WEIGHT: bold; TEXT-TRANSFORM: none; COLOR: #0000CD}
+I {FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: italic; FONT-WEIGHT: bold; TEXT-TRANSFORM: none; COLOR: #009999}
+BIG {FONT-SIZE: 14pt; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: normal; FONT-WEIGHT: bold; TEXT-TRANSFORM: none; COLOR: #9400D3}
+STRONG {FONT-SIZE: 12pt; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: normal; FONT-WEIGHT: bold; TEXT-TRANSFORM: none; COLOR: #FF1493}
+SUB {FONT-SIZE: 10pt; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: normal; FONT-WEIGHT: bold; TEXT-TRANSFORM: none; COLOR: #FF0000}
+DIV {FONT-SIZE: 10pt; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: normal; FONT-WEIGHT: bold; TEXT-TRANSFORM: none; TEXT-ALIGN: justify; COLOR: #CD5C5C}
+DIR {FONT-SIZE: 12pt; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: normal; FONT-WEIGHT: normal; TEXT-TRANSFORM: none; COLOR: #000000}
+UL LI {FONT-SIZE: 12pt; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: normal; FONT-WEIGHT: normal; TEXT-TRANSFORM: none; COLOR: #0033CC}
+UL LI UL LI {FONT-SIZE: 11pt; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: normal; FONT-WEIGHT: bold; TEXT-TRANSFORM: none; COLOR: #BA55D3}
+UL LI UL LI UL LI {FONT-SIZE: 10pt; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: normal; FONT-WEIGHT: bold; TEXT-TRANSFORM: none; COLOR: #228B22}
+UL LI UL LI UL LI UL LI {FONT-SIZE: 10pt; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: normal; FONT-WEIGHT: bold; TEXT-TRANSFORM: none; COLOR: #008B8B}
+A:link {BACKGROUND-COLOR: #BDD6FC; COLOR: #000066; FONT-FAMILY: Arial, Helvetica; TEXT-DECORATION: none; TEXT-TRANSFORM: none}
+A:visited {BACKGROUND-COLOR: #BDD6FC; COLOR: #000066; FONT-FAMILY: Arial, Helvetica; TEXT-DECORATION: none; TEXT-TRANSFORM: none}
+A:active {BACKGROUND-COLOR: #CCFFE0; COLOR: #FF0000; FONT-FAMILY: Arial, Helvetica; TEXT-DECORATION: none; TEXT-TRANSFORM: none}
+A:hover {BACKGROUND-COLOR: #CCFFE0; COLOR: #FF0000; FONT-FAMILY: Arial, Helvetica; TEXT-DECORATION: none; TEXT-TRANSFORM: none}
