@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_1x2.xml,v 1.7 2001-12-18 16:44:41 jacobsen Exp $ -->
+<!-- $Id: Digitrax_1x2.xml,v 1.8 2001-12-27 16:28:10 jacobsen Exp $ -->
 <decoder-config>
-		<version author="" version="" lastUpdated=""/>
+		<version author="jake@physics.berkeley.edu" version="2" lastUpdated="20011221"/>
 
 <decoder>
-	<id family="Digitrax 1x2" mfg="Digitrax" mfgID="129" defnVersion="242"
+	<id family="Digitrax 1x2" mfg="Digitrax" mfgID="129" defnVersion="0"
+				lowVersionID="240" highVersionID="242"
 				comment="Digitrax DH142, etc"></id>
 
 	<programming direct="byteOnly" paged="yes" 
@@ -211,7 +212,7 @@
 				<enumChoice choice="Reserved (0xF)"/>
 				</enumVal>
 			</variable>
-		<variable name="Function 1 effect generated" CV="50" mask="XXXXVVVV">
+		<variable name="Function 1 effect generated" CV="51" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Normal function of lead"/>
 				<enumChoice choice="Random flicker"/>
@@ -231,7 +232,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable name="Function 1 behaviour" CV="50" mask="VVVVXXXX">
+		<variable name="Function 1 behaviour" CV="51" mask="VVVVXXXX">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -465,12 +466,14 @@
 				comment="Factory default is 48, no effect until droop (CV57) set">
 			<decVal/>
 			</variable>
-		<variable name="Solo operation droop compensation for speed stabilization" CV="57" mask="VVVVXXXX"
+		<variable name="Solo operation droop compensation for speed stabilization" 
+						CV="57" mask="XXXXVVVV"
 				stdName="EMF Droop Config"
 				comment="0 is compenstation off, 15 is full on, typical value is 5">
 			<decVal max="15"/>
 			</variable>
-		<variable name="Advanced consist droop compensation for speed stabilization" CV="57" mask="XXXXVVVV"
+		<variable name="Advanced consist droop compensation for speed stabilization" 
+						CV="57" mask="VVVVXXXX"
 				comment="0 is compenstation off, 15 is full on, typical value is 5">
 			<decVal max="15"/>
 			</variable>

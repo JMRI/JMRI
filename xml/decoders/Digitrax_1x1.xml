@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_1x1.xml,v 1.7 2001-12-18 07:16:37 jacobsen Exp $ -->
+<!-- $Id: Digitrax_1x1.xml,v 1.8 2001-12-27 16:28:10 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen" version="1" lastUpdated="20011207"/>
 
@@ -8,7 +8,8 @@
 <!-- These have STD (not STD*) outputs. -->
 
 <decoder>
-	<id family="Digitrax 1x1" mfg="Digitrax" mfgID="129" defnVersion="33"
+	<id family="Digitrax 1x1" mfg="Digitrax" mfgID="129" defnVersion="0"
+				lowVersionID="33" highVersionID="45"
 				comment="CVs for Digitrax 1x1, e.g. DH121"></id>
 
 	<programming direct="byteOnly" paged="yes" 

@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_150.xml,v 1.6 2001-12-18 16:44:41 jacobsen Exp $ -->
+<!-- $Id: Digitrax_150.xml,v 1.7 2001-12-27 16:28:10 jacobsen Exp $ -->
 <decoder-config>
 		<version author="" version="" lastUpdated=""/>
 
 <decoder>
-	<id family="Digitrax 150" mfg="Digitrax" mfgID="129" defnVersion="45"
+	<id family="Digitrax 150" mfg="Digitrax" mfgID="129" defnVersion="0"
+				lowVersionID="107"
 				comment="DH150  FX"></id>
 
 	<programming direct="byteOnly" paged="yes" 
