@@ -2,177 +2,134 @@
 
 package jmri.jmrix.cmri.serial;
 
+import jmri.jmrix.*;
 import java.io.InputStream;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Vector;
 
 /**
- * Converts Stream-based I/O to/from CMRI messages.  The "SerialInterface"
- * side sends/receives message objects.  The connection to
+ * Converts Stream-based I/O to/from C/MRI serial messages.  The "SerialInterface"
+ * side sends/receives message objects.
+ * <P>
+ * The connection to
  * a SerialPortController is via a pair of *Streams, which then carry sequences
  * of characters for transmission.     Note that this processing is
  * handled in an independent thread.
+ * <P>
+ * This handles the state transistions, based on the
+ * necessary state in each message.
  *
- * @author    Bob Jacobsen  Copyright (C) 2001, 2002
- * @version   $Revision: 1.3 $
+ * @author			Bob Jacobsen  Copyright (C) 2003
+ * @version			$Revision: 1.4 $
  */
-public class SerialTrafficController implements SerialInterface, Runnable {
+public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
     public SerialTrafficController() {
-        if (log.isDebugEnabled()) log.debug("setting instance: "+this);
-        self=this;
+        super();
     }
-
 
     // The methods to implement the SerialInterface
 
-    protected Vector cmdListeners = new Vector();
-
-    public boolean status() { return (ostream != null & istream != null);
-    }
-
     public synchronized void addSerialListener(SerialListener l) {
-        // add only if not already registered
-        if (l == null) throw new java.lang.NullPointerException();
-        if (!cmdListeners.contains(l)) {
-            cmdListeners.addElement(l);
-        }
+        this.addListener(l);
     }
 
     public synchronized void removeSerialListener(SerialListener l) {
-        if (cmdListeners.contains(l)) {
-            cmdListeners.removeElement(l);
-        }
+        this.removeListener(l);
     }
-
 
     /**
-     * Forward a SerialMessage to all registered Serialnterface listeners.
+     * Do we need to send an output message?
+     * <P>
+     * This is currently written for only one node,
+     * so only need to remember one bit of info
      */
-    protected void notifyMessage(SerialMessage m, SerialListener notMe) {
-        // make a copy of the listener vector to synchronized not needed for transmit
-        Vector v;
-        synchronized(this)
-            {
-                v = (Vector) cmdListeners.clone();
-            }
-        // forward to all listeners
-        int cnt = v.size();
-        for (int i=0; i < cnt; i++) {
-            SerialListener client = (SerialListener) v.elementAt(i);
-            if (notMe != client) {
-                if (log.isDebugEnabled()) log.debug("notify client: "+client);
-                try {
-                    client.message(m);
-                }
-                catch (Exception e)
-                    {
-                        log.warn("notify: During dispatch to "+client+"\nException "+e);
-                    }
-            }
+    private boolean mustSend = false;
+
+    int highByte = 0;
+
+    int[] outputArray = new int[48];
+
+    /**
+     * Manage the outputs
+     */
+    public void setOutputState(int number, boolean closed) {
+        int loc = (number-1)/8;
+        if (loc>highByte) highByte=loc;
+        int bit = 1<<((number-1) % 8);
+        // update that bit
+        int oldValue = outputArray[loc];
+        if (closed) outputArray[loc] |= bit;
+        else outputArray[loc] &= (~bit);
+        if (log.isDebugEnabled()) log.debug("setOutputState n="+number+" loc="+loc+" bit="+bit);
+        // force a send next time if the value changed
+        synchronized (this) {
+            if (oldValue != outputArray[loc])
+                mustSend = true;
         }
     }
 
-    SerialListener lastSender = null;
-
-    protected void notifyReply(SerialReply r) {
-
-        // make a copy of the listener vector to synchronized (not needed for transmit?)
-        Vector v;
-        synchronized(this)
-            {
-                v = (Vector) cmdListeners.clone();
-            }
-        // forward to all listeners
-        int cnt = v.size();
-        for (int i=0; i < cnt; i++) {
-            SerialListener client = (SerialListener) v.elementAt(i);
-            if (log.isDebugEnabled()) log.debug("notify client: "+client);
-            try {
-                client.reply(r);
-            }
-            catch (Exception e)
-                {
-                    log.warn("notify: During dispatch to "+client+"\nException "+e);
-                }
-        }
-
-        // forward to the last listener who send a message
-        // this is done _second_ so monitoring can have already stored the reply
-        // before a response is sent
-        if (lastSender != null) lastSender.reply(r);
+    protected AbstractMRMessage enterProgMode() {
+        log.error("enterProgMode doesnt make sense for C/MRI serial");
+        return null;
+    }
+    protected AbstractMRMessage enterNormalMode() {
+        log.error("enterNormalMode doesnt make sense for C/MRI serial");
+        return null;
     }
 
+    /**
+     * Forward a SerialMessage to all registered SerialInterface listeners.
+     */
+    protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
+        ((SerialListener)client).message((SerialMessage)m);
+    }
 
+    /**
+     * Forward a SerialReply to all registered SerialInterface listeners.
+     */
+    protected void forwardReply(AbstractMRListener client, AbstractMRReply m) {
+        ((SerialListener)client).reply((SerialReply)m);
+    }
+
+    SerialSensorManager mSensorManager = null;
+    public void setSensorManager(SerialSensorManager m) { mSensorManager = m; }
+    protected AbstractMRMessage pollMessage() {
+        synchronized (this) {
+            // if need to send, do so
+            if (mustSend) {
+                mustSend = false;
+                log.debug("request write commend to send");
+                return nextWrite();
+            }
+        }
+        if (mSensorManager == null) return null;
+        else return mSensorManager.nextPoll();
+    }
+    protected AbstractMRListener pollReplyHandler() {
+        return mSensorManager;
+    }
+
+    /**
+     * Create the write message with the current states
+     */
+    protected SerialMessage nextWrite() {
+        SerialMessage m = new SerialMessage(highByte+3);  // UA, 'T', plus 1 OB even if highByte == 0
+        m.setElement(0,(byte)0x41);
+        m.setElement(1,(byte)0x54);
+        for (int i = 0; i<=highByte; i++) {
+            m.setElement(i+2, outputArray[i]);
+        }
+        if (log.isDebugEnabled()) log.debug("nextWrite with highByte="+highByte+" is "+m);
+        m.setTimeout(25); // short delay, as no reply expected in C/MRI
+        return m;
+    }
     /**
      * Forward a preformatted message to the actual interface.
      */
     public void sendSerialMessage(SerialMessage m, SerialListener reply) {
-        if (log.isDebugEnabled()) log.debug("sendSerialMessage message: ["+m+"]");
-        // remember who sent this
-        lastSender = reply;
-
-        // notify all _other_ listeners
-        notifyMessage(m, reply);
-
-        // stream to port in single write, as that's needed by serial
-        int len = m.getNumDataElements();
-        int cr = 4;    // space for control characters
-
-        byte msg[] = new byte[len+cr];
-
-        // add the start sequence
-        msg[0] = (byte) 0xFF;
-        msg[1] = (byte) 0xFF;
-        msg[2] = (byte) 0x02;  // STX
-
-        for (int i=0; i< len; i++)
-            msg[i+3] = (byte) m.getElement(i);
-        msg[len+cr-1] = 0x03;  // etx
-        try {
-            if (ostream != null) {
-                if (log.isDebugEnabled()) {
-                    String f = "write message: ";
-                    for (int i = 0; i<msg.length; i++) f=f+(0xFF&msg[i])+" ";
-                    log.debug(f);
-                }
-                ostream.write(msg);
-            }
-            else {
-                // no stream connected
-                log.warn("sendMessage: no connection established");
-            }
-        }
-        catch (Exception e) {
-            log.warn("sendMessage: Exception: "+e.toString());
-        }
-    }
-
-    // methods to connect/disconnect to a source of data in a LnPortController
-    private SerialPortController controller = null;
-
-    /**
-     * Make connection to existing PortController object.
-     */
-    public void connectPort(SerialPortController p) {
-        istream = p.getInputStream();
-        ostream = p.getOutputStream();
-        if (controller != null)
-            log.warn("connectPort: connect called while connected");
-        controller = p;
-    }
-
-    /**
-     * Break connection to existing SerialPortController object. Once broken,
-     * attempts to send via "message" member will fail.
-     */
-    public void disconnectPort(SerialPortController p) {
-        istream = null;
-        ostream = null;
-        if (controller != p)
-            log.warn("disconnectPort: disconnect called from non-connected LnPortController");
-        controller = null;
+        sendMessage(m, reply);
     }
 
     /**
@@ -189,66 +146,27 @@ public class SerialTrafficController implements SerialInterface, Runnable {
     }
 
     static protected SerialTrafficController self = null;
+    protected void setInstance() { self = this; }
 
-    // data members to hold the streams
-    DataInputStream istream = null;
-    OutputStream ostream = null;
+    protected AbstractMRReply newReply() { return new SerialReply(); }
 
-
-    /**
-     * Handle incoming characters.  This is a permanent loop,
-     * looking for input messages in character form on the
-     * stream connected to the PortController via <code>connectPort</code>.
-     * Terminates with the input stream breaking out of the try block.
-     */
-    public void run() {
-        while (true) {   // loop permanently, stream close will exit via exception
-            try {
-                handleOneIncomingReply();
-            }
-            catch (java.io.IOException e) {
-                log.warn("run: Exception: "+e.toString());
-            }
+    protected boolean endOfMessage(AbstractMRReply msg) {
+        // detect that the reply buffer ends with "COMMAND: " (note ending space)
+        int num = msg.getNumDataElements();
+        if ( num >= 9) {
+            // ptr is offset of last element in NceReply
+            int ptr = num-1;
+            if (msg.getElement(ptr-1) != ':') return false;
+            if (msg.getElement(ptr)   != ' ') return false;
+            if (msg.getElement(ptr-2) != 'D') return false;
+            return true;
         }
-    }
-
-    void handleOneIncomingReply() throws java.io.IOException {
-        // we sit in this until the message is complete, relying on
-        // threading to let other stuff happen
-
-        // Create output message
-        SerialReply msg = new SerialReply();
-        // loop looking for the start character
-        while (istream.readByte()!=0x02) {}
-
-        // message exists, now read it into the buffer
-        int i;
-        for (i = 0; i < SerialReply.maxSize; i++) {
-            byte char1 = istream.readByte();
-            if (log.isDebugEnabled()) log.debug("received char: "+(char1&0xFF));
-            if (char1 == 0x03) break;
-            msg.setElement(i, char1);
-        }
-
-        // message is complete, dispatch it !!
-        if (log.isDebugEnabled()) log.debug("dispatch reply of length "+i);
-        {
-            final SerialReply thisMsg = msg;
-            final SerialTrafficController thisTC = this;
-            // return a notification via the queue to ensure end
-            Runnable r = new Runnable() {
-                    SerialReply msgForLater = thisMsg;
-                    SerialTrafficController myTC = thisTC;
-                    public void run() {
-                        log.debug("Delayed notify starts");
-                        myTC.notifyReply(msgForLater);
-                    }
-                };
-            javax.swing.SwingUtilities.invokeLater(r);
-        }
+        else return false;
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTrafficController.class.getName());
 }
 
+
 /* @(#)SerialTrafficController.java */
+

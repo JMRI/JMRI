@@ -10,45 +10,28 @@ package jmri.jmrix.cmri.serial;
  * are included. But it does include addressing characters,
  * etc.
  * @author	Bob Jacobsen  Copyright (C) 2002
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
-public class SerialReply {
-    // is this logically an abstract class?
+public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
     // create a new one
     public  SerialReply() {
+        super();
     }
-
-    // copy one
-    public  SerialReply(SerialReply m) {
-        if (m == null)
-            log.error("copy ctor of null message");
-        _nDataChars = m._nDataChars;
-        for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
-    }
-
-    // from String
     public SerialReply(String s) {
-        _nDataChars = s.length();
-        for (int i = 0; i<_nDataChars; i++)
-            _dataChars[i] = s.charAt(i);
+        super(s);
     }
-
-    // accessors to the bulk data
-    public int getNumDataElements() {return _nDataChars;}
-    public int getElement(int n) {return _dataChars[n];}
-    public void setElement(int n, int v) {
-        _dataChars[n] = (char) v;
-        _nDataChars = Math.max(_nDataChars, n+1);
+    public SerialReply(SerialReply l) {
+        super(l);
     }
 
     // display format
     public String toString() {
         String s = "";
-        for (int i=0; i<_nDataChars; i++) {
+        for (int i=0; i<getNumDataElements(); i++) {
             if (i!=0) s+=" ";
-            if (_dataChars[i] < 16) s+="0";
-            s+=Integer.toHexString(_dataChars[i]&0xFF);
+            if (getElement(i) < 16) s+="0";
+            s+=Integer.toHexString(getElement(i)&0xFF);
         }
         return s;
     }
@@ -57,11 +40,10 @@ public class SerialReply {
     public boolean isRcv()  { return getElement(1)==0x52;}
     public int getUA() { return getElement(0)-65; }
 
-    static public int maxSize = 120;
-
-    // contents (private)
-    private int _nDataChars;
-    private char _dataChars[] = new char[maxSize];
+    protected int skipPrefix(int index) {
+        // doesn't have to do anything
+        return index;
+    }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialReply.class.getName());
 

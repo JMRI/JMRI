@@ -19,7 +19,7 @@ import jmri.jmrix.cmri.serial.*;
  * Provide access to C/MRI via a serial comm port.
  * Normally controlled by the cmri.serial.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -183,15 +183,17 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         //	jmri.InstanceManager.setPowerManager(new jmri.jmrix.loconet.LnPowerManager());
 
         // If a jmri.TurnoutManager instance doesn't exist, create a
-        // loconet.LnTurnoutManager to do that
-        //if (jmri.InstanceManager.turnoutManagerInstance() == null)
-        //	jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager());
+        // TurnoutManager to do that
+        if (jmri.InstanceManager.turnoutManagerInstance() == null)
+        	jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.cmri.serial.SerialTurnoutManager());
 
-        // start the threads as needed
-        sinkThread = new Thread(SerialTrafficController.instance());
-        sinkThread.start();
-
-
+        // If a jmri.SensorManager instance doesn't exist, create a
+        // SerialSensorManager to do that
+        if (jmri.InstanceManager.sensorManagerInstance() == null) {
+            SerialSensorManager s;
+            jmri.InstanceManager.setSensorManager(s = new jmri.jmrix.cmri.serial.SerialSensorManager());
+            SerialTrafficController.instance().setSensorManager(s);
+        }
     }
 
     private Thread sinkThread;

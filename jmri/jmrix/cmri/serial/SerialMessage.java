@@ -9,41 +9,38 @@ package jmri.jmrix.cmri.serial;
  * the header or trailer, nor the padding DLE characters
  * are included. These are added during transmission.
  * @author    Bob Jacobsen  Copyright (C) 2001
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 
-public class SerialMessage {
+public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     // is this logically an abstract class?
+
+    public SerialMessage() {
+        super();
+    }
 
     // create a new one
     public  SerialMessage(int i) {
-        if (i<1)
-            log.error("invalid length in call to ctor");
-        _nDataChars = i;
-        _dataChars = new int[i];
+        super(i);
     }
 
     // copy one
     public  SerialMessage(SerialMessage m) {
-        if (m == null)
-            log.error("copy ctor of null message");
-        _nDataChars = m._nDataChars;
-        _dataChars = new int[_nDataChars];
-        for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
+        super(m);
     }
 
-    // accessors to the bulk data
-    public int getNumDataElements() {return _nDataChars;}
-    public int getElement(int n) {return _dataChars[n];}
-    public void setElement(int n, int v) { _dataChars[n] = v; }
+    // from String
+    public  SerialMessage(String m) {
+        super(m);
+    }
 
     // display format
     public String toString() {
         String s = "";
-        for (int i=0; i<_nDataChars; i++) {
+        for (int i=0; i<getNumDataElements(); i++) {
             if (i!=0) s+=" ";
-            if (_dataChars[i] < 16) s+="0";
-            s+=Integer.toHexString(_dataChars[i]);
+            if (getElement(i) < 16) s+="0";
+            s+=Integer.toHexString(getElement(i)&0xFF);
         }
         return s;
     }
@@ -60,20 +57,6 @@ public class SerialMessage {
         m.setElement(0, 65+UA);
         m.setElement(1, 0x50); // 'P'
         return m;
-    }
-
-    // contents (private)
-    private int _nDataChars = 0;
-    private int _dataChars[] = null;
-
-    private static String addIntAsThree(int val, SerialMessage m, int offset) {
-        String s = ""+val;
-        if (s.length() != 3) s = "0"+s;  // handle <10
-        if (s.length() != 3) s = "0"+s;  // handle <100
-        m.setElement(offset,s.charAt(0));
-        m.setElement(offset+1,s.charAt(1));
-        m.setElement(offset+2,s.charAt(2));
-        return s;
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialMessage.class.getName());
