@@ -37,7 +37,7 @@ import com.sun.java.util.collections.List;   // resolve ambiguity with package-l
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2003, 2004; D Miller Copyright 2003
- * @version			$Revision: 1.33 $
+ * @version			$Revision: 1.34 $
  */
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
@@ -745,6 +745,13 @@ public class PaneProgPane extends javax.swing.JPanel
         }
     }
 
+    /**
+     * Get a GUI representation of a particular variable for display.
+     * @parm name Name used to look up the Variable object
+     * @parm var XML Element which might contain a "format" attribute to be used in the {@link VariableValue#getRep} call
+     * from the Variable object; "tooltip" elements are also processed here.
+     * @return JComponent representing this variable
+     */
     public JComponent getRepresentation(String name, Element var) {
         int i = _varModel.findVarIndex(name);
         JComponent rep = null;
