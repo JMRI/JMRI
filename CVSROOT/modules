@@ -34,7 +34,7 @@ properties -a \
         jmri/jmrix/loconet/LocoNetBundle.properties \
         \
         apps/AppsBundle_de.properties \
-        apps/AppsConfigBundle_de.properties \
+        #        apps/AppsConfigBundle_de.properties \
         jmri/jmrit/display/DisplayBundle_de.properties \
         jmri/jmrit/JmritDebugBundle_de.properties \
         jmri/jmrit/JmritToolsBundle_de.properties \
