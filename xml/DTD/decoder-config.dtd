@@ -51,13 +51,13 @@
 <!ATTLIST decoder:binaryVal default CDATA #IMPLIED>
 
 <!ELEMENT decoder:decVal EMPTY>
-<!ATTLIST decoder:decVal max CDATA "0" >    <!-- if decimal/hex, smallest acceptable value -->
-<!ATTLIST decoder:decVal min CDATA #REQUIRED >  <!-- if decimal/hex, largest acceptable value -->
+<!ATTLIST decoder:decVal min CDATA "0" >    <!-- if decimal/hex, smallest acceptable value -->
+<!ATTLIST decoder:decVal max CDATA #REQUIRED >  <!-- if decimal/hex, largest acceptable value -->
 <!ATTLIST decoder:decVal default CDATA #IMPLIED>
 
 <!ELEMENT decoder:hexVal EMPTY>
-<!ATTLIST decoder:hexVal max CDATA "0" >  <!-- if decimal/hex, smallest acceptable value -->
-<!ATTLIST decoder:hexVal min CDATA #REQUIRED>  <!-- if decimal/hex, largest acceptable value -->
+<!ATTLIST decoder:hexVal min CDATA "0" >  <!-- if decimal/hex, smallest acceptable value -->
+<!ATTLIST decoder:hexVal max CDATA #REQUIRED>  <!-- if decimal/hex, largest acceptable value -->
 <!ATTLIST decoder:hexVal default CDATA #IMPLIED>
 
 <!ELEMENT decoder:enumVal (enumChoice*) >

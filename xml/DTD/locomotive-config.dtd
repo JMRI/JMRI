@@ -1,8 +1,31 @@
+<!-- Defines XML documenting on a locomotive, esp. information -->
+<!-- on how it is programmed. -->
+
+<!ELEMENT locomotive:locomotive-config (locomotive:locomotive*)>
+<!ATTLIST locomotive:locomotive-config xmlns:locomotive CDATA "">
+
+
+<!ELEMENT locomotive:locomotive (locomotive:decoder?, locomotive:values) >
+<!ATTLIST locomotive:locomotive roadNumber CDATA #IMPLIED>          
+<!ATTLIST locomotive:locomotive roadName   CDATA #IMPLIED>          
+<!ATTLIST locomotive:locomotive comment   CDATA #IMPLIED>
+
+<!-- The decoder optional section defines the type of the installed decoder -->
+<!ELEMENT locomotive:decoder EMPTY >
+<!ATTLIST locomotive:decoder model     CDATA #REQUIRED>  <!-- model name used for identification -->
+<!ATTLIST locomotive:decoder mfg       CDATA #REQUIRED>  <!-- mfg name used for identification   -->
+<!ATTLIST locomotive:decoder versionID CDATA #IMPLIED >      <!-- CV07 value, default XX means any   -->
+<!ATTLIST locomotive:decoder mfgID     CDATA #IMPLIED>  <!-- CV08 value, XX means any           -->
+<!ATTLIST locomotive:decoder comment   CDATA #IMPLIED>
+
 <!-- The values section defines values for CVs and/or variables -->
-<!ELEMENT decoder:values (decoder:value)>
-<!ATTLIST decoder:value name CDATA #REQUIRED>            <!-- Name used for identification -->
-<!ATTLIST decoder:value type (CV | variable) #REQUIRED>  <!-- What is specified -->
-<!ATTLIST decoder:value value NUMBER #REQUIRED>          <!-- Value of specified CV/variable -->
+<!ELEMENT locomotive:values (locomotive:value)>
+
+<!ELEMENT locomotive:value EMPTY>
+<!ATTLIST locomotive:value name CDATA #REQUIRED>            <!-- Name used for identification -->
+<!ATTLIST locomotive:value type (CV | variable) #REQUIRED>  <!-- What is specified -->
+<!ATTLIST locomotive:value value CDATA #REQUIRED>          <!-- Value of specified CV/variable -->
+<!ATTLIST locomotive:value comment   CDATA #IMPLIED>
 
 
 

@@ -10,17 +10,17 @@
 
 	<decoder:variables>
 		<decoder:variable name="Address" CV="1" mask="VVVVVVVV" comment="Short address">
-			<decoder:decVal></decoder:decVal>
+			<decoder:decVal min="1" max="127"></decoder:decVal>
 			</decoder:variable>
 		<decoder:variable name="Start voltage" CV="2" mask="VVVVVVVV"
 						comment="A value of 255 corresponds to 100%">
 			<decoder:decVal></decoder:decVal>
 			</decoder:variable>
 		<decoder:variable name="Acceleration rate" CV="3" mask="VVVVVVVV">
-			<decoder:decVal></decoder:decVal>
+			<decoder:decVal max="31"></decoder:decVal>
 			</decoder:variable>
 		<decoder:variable name="Deceleration rate" CV="4" mask="VVVVVVVV">
-			<decoder:decVal></decoder:decVal>
+			<decoder:decVal max="31"></decoder:decVal>
 			</decoder:variable>
 		<decoder:variable name="Maximum voltage" CV="5" mask="VVVVVVVV">
 			<decoder:decVal></decoder:decVal>
@@ -43,10 +43,10 @@
 		<decoder:variable name="Analog conversion mode" CV="29" mask="XXXXXVXX">
 			<decoder:binaryVal phrasing="OffOn"></decoder:binaryVal>
 			</decoder:variable>
-		<decoder:variable name="Speed table" CV="29" mask="XXXXVXXX">
+		<decoder:variable name="Speed table" CV="29" mask="XXXVXXXX">
 			<decoder:binaryVal phrasing="OffOn"></decoder:binaryVal>
 			</decoder:variable>
-		<decoder:variable name="Addressing mode" CV="29" mask="XXXVXXXX">
+		<decoder:variable name="Addressing mode" CV="29" mask="XXVXXXXX">
 			<decoder:enumVal>
 				<decoder:enumChoice choice="2 digit addressing"></decoder:enumChoice>
 				<decoder:enumChoice choice="4 digit addressing"></decoder:enumChoice>
