@@ -19,7 +19,7 @@ import jmri.*;
  * created and invoked by a SampleAutomaton3Action.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @see         jmri.jmrit.automat.SampleAutomaton3Action
  */
 public class SampleAutomaton3 extends AbstractAutomaton {
@@ -56,12 +56,6 @@ public class SampleAutomaton3 extends AbstractAutomaton {
                     newSensor(null,"178");
 
         throttle = getThrottle(77, false);
-        //InstanceManager.throttleManagerInstance()
-        //        .requestThrottle(77,new ThrottleListener() {
-        //            public void notifyThrottleFound(DccThrottle t) {
-        //                throttle = t;
-        //            }
-        //        });
     }
 
     boolean moveFwd;
@@ -73,22 +67,16 @@ public class SampleAutomaton3 extends AbstractAutomaton {
      * @return Always returns true to continue operation
      */
     public boolean handle() {
-        // make sure the throttle has been initialized
-        // while (throttle == null) {
-        //     log.debug("waiting for throttle");
-        //     wait(10000);
-        //    if (throttle == null) log.warn("Still waiting for throttle!");
-        // }
 
         // we're supposed to be moving forward here
         // This initialization is only needed the first time through,
         // but it doesn't hurt to do it each time.
         moveFwd = true;
         throttle.setIsForward(moveFwd);
-
-        log.debug("Waiting for state change");
+        throttle.setSpeedSetting(0.50f);
 
         // wait until the forward sensor is ACTIVE
+        log.debug("Waiting for state change");
         while ((fwdState = fwdSensor.getKnownState()) != Sensor.ACTIVE) {
             waitSensorChange(fwdState, fwdSensor);
         }
@@ -96,6 +84,7 @@ public class SampleAutomaton3 extends AbstractAutomaton {
 
         moveFwd = false;
         throttle.setIsForward(moveFwd);
+        throttle.setSpeedSetting(0.33f);
 
         // wait until the reverse sensor is ACTIVE
         while ((revState = revSensor.getKnownState()) != Sensor.ACTIVE) {
