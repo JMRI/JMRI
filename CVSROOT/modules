@@ -44,13 +44,17 @@ properties -a \
         jmri/NamedBeanBundle.properties \
         \
         apps/AppsBundle_de.properties \
+        apps/AppsConfigBundle_de.properties \
         jmri/jmrit/beantable/BeanTableBundle_de.properties \
         jmri/jmrit/display/DisplayBundle_de.properties \
         jmri/jmrit/JmritDebugBundle_de.properties \
         jmri/jmrit/JmritToolsBundle_de.properties \
+        jmri/jmrit/powerpanel/PowerPanelBundle_de.properties \
         jmri/jmrit/roster/JmritRosterBundle_de.properties \
         jmri/jmrix/JmrixSystemsBundle_de.properties \
+        jmri/jmrix/lenz/XNetBundle_de.properties \
         jmri/jmrix/loconet/LocoNetBundle_de.properties \
+        jmri/NamedBeanBundle_de.properties \
         \
         jmri/jmrit/roster/JmritRosterBundle_en_GB.properties 
 
