@@ -6,10 +6,12 @@
  * @version			
  */
 
-package jmri;
+package jmri.progdebugger;
 
 import ErrLoggerJ.ErrLog;
 import jmri.ProgListener;
+import jmri.Programmer;
+import jmri.ProgrammerException;
 
 public class ProgDebugger implements Programmer  {
 
