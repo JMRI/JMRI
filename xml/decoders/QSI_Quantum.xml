@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: QSI_Quantum.xml,v 1.4 2004-03-01 05:07:05 jacobsen Exp $ -->
+<!-- $Id: QSI_Quantum.xml,v 1.5 2004-04-03 03:55:44 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen" version="2" lastUpdated="20030606"/>
 
@@ -17,6 +17,7 @@
 		<model model="Broadway Limited On30 Consolidation 2-8-0" lowVersionID="5" />
 		<model model="Broadway Limited PRR M1a/b 4-8-2" lowVersionID="5" />
 		<model model="Broadway Limited USRA Heavy Mikado 2-8-2" lowVersionID="5" />
+		<model model="Broadway Limited AC5 Cab Forward" lowVersionID="5" />
 	</family>
 
 	<programming direct="yes" paged="yes" 
