@@ -3,7 +3,7 @@
  *
  * Description:		PowerManager implementation for controlling layout power
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 
 package jmri.jmrix.lenz;
@@ -68,11 +68,14 @@ public class XNetPowerManager implements PowerManager, XNetListener {
 
 	// to listen for status changes from net
 	public void message(XNetMessage m) {
-		if (m.getOpCode() == jmri.jmrix.loconet.LnConstants.OPC_GPON) {
+		if (m.getElement(0) == jmri.jmrix.lenz.XNetConstants.CS_INFO &&
+                    m.getElement(1) == jmri.jmrix.lenz.XNetConstants.BC_NORMAL_OPERATIONS) {
 			power = ON;
 			firePropertyChange("Power", null, null);
 		}
-		else if (m.getOpCode() == jmri.jmrix.loconet.LnConstants.OPC_GPOFF) {
+		else if (m.getElement(0) == jmri.jmrix.lenz.XNetConstants.CS_INFO ||
+                         m.getElement(0) == jmri.jmrix.lenz.XNetConstants.CS_BUSY &&
+                         m.getElement(1) == jmri.jmrix.lenz.XNetConstants.BC_EVERYTHING_OFF) {
 			power = OFF;
 			firePropertyChange("Power", null, null);
 		}
