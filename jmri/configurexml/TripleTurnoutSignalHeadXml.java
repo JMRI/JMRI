@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for TripleTurnoutSignalHead objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class TripleTurnoutSignalHeadXml implements XmlAdapter {
 
@@ -34,7 +34,6 @@ public class TripleTurnoutSignalHeadXml implements XmlAdapter {
         // include contents
         element.addAttribute("systemName", p.getSystemName());
         if (p.getUserName() != null) element.addAttribute("userName", p.getUserName());
-        log.warn("no systemName, userName on store");
 
         element.addContent(addTurnoutElement(p.getGreen()));
         element.addContent(addTurnoutElement(p.getYellow()));
