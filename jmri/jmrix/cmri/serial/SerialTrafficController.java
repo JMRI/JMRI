@@ -21,7 +21,7 @@ import java.util.Vector;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -108,7 +108,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         if (mustInit) {
             mustInit = false;
             // send the initial message
-            SerialMessage m = new SerialMessage(mInitString);
+            SerialMessage m = mInitMessage;
             log.debug("send init message: "+m);
             m.setTimeout(2000);  // wait for init to finish
             return m;
@@ -221,9 +221,9 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
 
     }
 
-    static String mInitString = "";
-    static public void setInitString(String s) {
-        mInitString = s;
+    static SerialMessage mInitMessage;
+    static public void setInitMessage(SerialMessage s) {
+        mInitMessage = s;
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTrafficController.class.getName());

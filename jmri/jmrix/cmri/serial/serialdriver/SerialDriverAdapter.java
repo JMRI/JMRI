@@ -19,7 +19,7 @@ import jmri.jmrix.cmri.serial.*;
  * Provide access to C/MRI via a serial comm port.
  * Normally controlled by the cmri.serial.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -256,13 +256,28 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         selectedSpeed = rate;
     }
 
+    String[] stdOption1Values = new String[]{
+            "SMINI: UA=0 I M 00",
+            "Cornwall: UA=0 I N DL=10 NS=3 CT=90,150,02"
+        };
+
     /**
      * Option 1 is used to select an init string
      */
-    public String[] validOption1() { return new String[]{
-            "SMINI: UA=0 I M 00",
-            "Cornwall: UA=0 I N DL=10 NS=3 CT=90,150,02"
-        }; }
+    public String[] validOption1() {
+        log.debug("request option 1 values. Current setting is: "+((opt1CurrentValue!=null)?opt1CurrentValue:"<null>"));
+        if (opt1CurrentValue == null) return stdOption1Values;
+        // if the current value is one of the standard values, return them
+        for (int i = 0; i<stdOption1Values.length; i++)
+            if (opt1CurrentValue.equals(stdOption1Values[i])) return stdOption1Values;
+        String[] r = new String[stdOption1Values.length+1];
+        r[0] = opt1CurrentValue;
+        for (int i = 0; i<stdOption1Values.length; i++)
+            r[i+1]= stdOption1Values[i];
+        return r;
+
+    }
+    String opt1CurrentValue = null;
 
     /**
      * Option 1 not used, so return a null string.
@@ -273,13 +288,23 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
      * The first port option isn't used, so just ignore this call.
      */
     public void configureOption1(String value) {
+        opt1CurrentValue = value;
         // check the special cases
+        String inputString;
         if (value.startsWith("SMINI")) {
-            SerialTrafficController.setInitString("\101\111\115\000");  // octal!
+            inputString = "41 49 4D 00";
         }
         else if (value.startsWith("Cornwall")) {
-            SerialTrafficController.setInitString("\101\111\115\000\012\003\132\232\002"); // 90,154,2 e.g. 05A, 09A, 0x02
+            inputString = "41 49 4D 00 0A 03 5A 9A 02";  // 90,154,2 e.g. 05A, 09A, 0x02
         }
+        else {
+            inputString = value;
+        }
+        byte[] a = jmri.util.StringUtil.bytesFromHexString(inputString);
+        SerialMessage m = new SerialMessage(a.length);
+        for (int i = 0; i<a.length; i++)
+            m.setElement(i, a[i]);
+        SerialTrafficController.setInitMessage(m);
     }
 
     protected String [] validSpeeds = new String[]{"9,600 baud","19,200 baud", "57,600 baud"};
