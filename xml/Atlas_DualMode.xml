@@ -2,7 +2,7 @@
 <!DOCTYPE decoder:decoder-config SYSTEM "DTD/decoder-config.dtd">
 <decoder:decoder-config xmlns:decoder="http://jmri.sourceforge.net/xml/decoder">
 <decoder:decoder>
-	<decoder:id model="Dual-Mode" mfg="Atlas" mfgID="127" versionID="45"  defnVersion="0"
+	<decoder:id model="DualMode" mfg="Atlas" mfgID="127" versionID="45"  defnVersion="0"
 				comment="Item #340"></decoder:id>
 
 	<decoder:programming direct="yes" paged="yes" 

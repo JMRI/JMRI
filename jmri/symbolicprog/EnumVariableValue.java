@@ -59,6 +59,13 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 	
 	// to complete this class, fill in the routines to handle "Value" parameter
 	// and to read/write/hear parameter changes. 
+	public String getValueString() {
+		return ""+_value.getSelectedIndex();
+	}
+	public void setIntValue(int i) {
+		_value.setSelectedIndex(i);
+	}
+	
 	public Component getValue()  { return _value; }
 	public void setValue(int value) { 
 		int oldVal;

@@ -26,11 +26,6 @@
 <!ELEMENT locomotive:values (locomotive:decoderDef, locomotive:CVvalue*)>
 
 <!ELEMENT locomotive:decoderDef (locomotive:varValue*) >   <!-- Where the variable definitions came from -->
-<!ATTLIST locomotive:decoderDef filename CDATA #IMPLIED >  <!-- Not present means no file,
-														     which better be CV values only; how
-														     to enforce? -->
-<!ATTLIST locomotive:decoderDef version  CDATA #IMPLIED >  <!-- From  -->
-
 		  						
 <!ELEMENT locomotive:CVvalue EMPTY>
 <!ATTLIST locomotive:CVvalue name CDATA #REQUIRED>            <!-- Name used for identification -->

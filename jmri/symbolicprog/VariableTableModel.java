@@ -25,10 +25,10 @@ import org.jdom.Namespace;
 
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
-	String headers[] = null;
+	private String headers[] = null;
 
-	Vector rowVector = new Vector();  // vector of Variable items
-	CvTableModel _cvModel = null;          // reference to external table model
+	private Vector rowVector = new Vector();  // vector of Variable items
+	private CvTableModel _cvModel = null;          // reference to external table model
 	
 	/** Defines the columns; values understood are: 	
 	 *  "Name", "Value", "Range", "Read", "Write", "Comment", "CV", "Mask", "State"
@@ -70,6 +70,18 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 			return false;
 	}
 			
+	public String getName(int row) {  // name is text number
+		return ((VariableValue)rowVector.elementAt(row)).name();
+	}
+	
+	public String getValString(int row) {
+		return ((VariableValue)rowVector.elementAt(row)).getValueString();
+	}
+
+	public void setIntValue(int row, int val) {
+		((VariableValue)rowVector.elementAt(row)).setIntValue(val);
+	}
+	
 	public Object getValueAt(int row, int col) { 
 		VariableValue v = (VariableValue)rowVector.elementAt(row);
 		if (headers[col].equals("Value"))

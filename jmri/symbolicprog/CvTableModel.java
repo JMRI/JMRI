@@ -79,6 +79,13 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 		}
 	}
 	
+	public String getName(int row) {  // name is text number
+		return ""+((CvValue)_cvDisplayVector.elementAt(row)).number();
+	}
+	
+	public String getValString(int row) {
+		return ""+((CvValue)_cvDisplayVector.elementAt(row)).getValue();
+	}
 	
 	public Object getValueAt(int row, int col) { 
 		switch (col) {

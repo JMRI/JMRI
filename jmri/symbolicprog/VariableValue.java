@@ -23,6 +23,8 @@ public abstract class VariableValue implements java.beans.PropertyChangeListener
 	// a table, etc. Modification of the state of that object then
 	// gets reflected back, causing the underlying CV objects to change.
 	abstract public Component getValue();
+	abstract public String getValueString();
+	abstract public void setIntValue(int i);
 
 	// methods to command a read from / write to the decoder of the underlying CVs
 	abstract public void read();

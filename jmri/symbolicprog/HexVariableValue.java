@@ -55,6 +55,13 @@ public class HexVariableValue extends VariableValue implements ActionListener, P
 	
 	// to complete this class, fill in the routines to handle "Value" parameter
 	// and to read/write/hear parameter changes. 
+	public String getValueString() {
+		return _value.getText();
+	}
+	public void setIntValue(int i) {
+		_value.setText(""+i);
+	}
+	
 	public Component getValue()  { return _value; }
 	public void setValue(int value) { 
 		int oldVal;

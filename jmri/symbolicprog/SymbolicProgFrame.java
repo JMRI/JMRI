@@ -272,16 +272,23 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 			// Open and parse file
 			Namespace ns = Namespace.getNamespace("decoder",
 										"http://jmri.sourceforge.net/xml/decoder");
-			SAXBuilder builder = new SAXBuilder(true);  // arugment controls validation, on for now
+			SAXBuilder builder = new SAXBuilder(true);  // argument controls validation, on for now
 			Document doc = builder.build(file);
 			
 			// find root
 			Element root = doc.getRootElement();
 			
-			// decode type, invoke proper processing routine
+			// decode type, invoke proper processing routine if a decoder file
 			if (root.getChild("decoder", ns) != null) processDecoderFile(root.getChild("decoder", ns), ns);
-			else if (root.getChild("locomotive", ns) != null) processLocoFile();
-			else log.error("Unrecognized config file contents");
+			else { // try again as a loco file
+				ns = Namespace.getNamespace("locomotive",
+										"http://jmri.sourceforge.net/xml/locomotive");
+				builder = new SAXBuilder(true);  // argument controls validation, on for now
+				doc = builder.build(file);
+				root = doc.getRootElement();
+				if (root.getChild("locomotive", ns) != null) processLocoFile(root.getChild("locomotive", ns));
+				else log.error("Unrecognized config file contents");
+			}
 		} catch (Exception e) {
 			if (log.isInfoEnabled()) log.warn("readAndParseDecoderConfig: readAndParseDecoderConfig exception: "+e);
 		}
@@ -304,11 +311,88 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 			variableModel.configDone();
 	}
 
-	void processLocoFile() {
-			// first, load the variable definitions for the decoder
-			// processDecoderFile()
-			// now get the rest of the loco specific info and store
-			log.error("dont have loco loading code yet");
+	void processLocoFile(Element loco) {
+			// switch to a correct namespace definition
+			Namespace ns = Namespace.getNamespace("locomotive",
+										"http://jmri.sourceforge.net/xml/locomotive");
+			// load the name et al
+			locoRoadName.setText(loco.getAttributeValue("roadName"));
+			locoRoadNumber.setText(loco.getAttributeValue("roadNumber"));
+			locoMfg.setText(loco.getAttributeValue("mfg"));
+			locoModel.setText(loco.getAttributeValue("model"));
+			// load the variable definitions for the decoder
+			Element decoder = loco.getChild("decoder", ns);
+			if (decoder != null) {
+				// get the file name
+				String mfg = decoder.getAttribute("mfg").getValue();
+				String model = decoder.getAttribute("model").getValue();
+				String filename = "xml/"+mfg+"_"+model+".xml";
+				if (log.isInfoEnabled()) log.info("will read decoder info from "+filename);
+				readAndParseConfigFile(new File(filename));
+				if (log.isDebugEnabled()) log.debug("finished processing decoder file for loco file");
+			} else log.error("No decoder element found in config file");
+			
+			// get the CVs and load
+			Element values = loco.getChild("values", ns);
+			if (values != null) {
+			// get the CV values and load
+				List varList = values.getChildren("CVvalue",ns);
+				if (log.isDebugEnabled()) log.debug("Found "+varList.size()+" CVvalues");
+				
+				for (int i=0; i<varList.size(); i++) {
+					// locate the row 
+					if ( ((Element)(varList.get(i))).getAttribute("name") == null) {
+						  if (log.isDebugEnabled()) log.debug("unexpected null in name "+((Element)(varList.get(i)))+" "+((Element)(varList.get(i))).getAttributes());
+						  break;
+					}
+					if ( ((Element)(varList.get(i))).getAttribute("value") == null) {
+						  if (log.isDebugEnabled()) log.debug("unexpected null in value "+((Element)(varList.get(i)))+" "+((Element)(varList.get(i))).getAttributes());
+						  break;
+					}
+
+					String name = ((Element)(varList.get(i))).getAttribute("name").getValue();
+					String value = ((Element)(varList.get(i))).getAttribute("value").getValue();
+					if (log.isDebugEnabled()) log.debug("CV: "+i+"th entry, CV number "+name+" has value: "+value);
+
+					int cv = Integer.valueOf(name).intValue();
+					((CvValue)(cvModel.allCvVector().elementAt(cv))).setValue(Integer.valueOf(value).intValue());
+				}
+				variableModel.configDone();
+			} else log.error("no values element found in config file; CVs not configured");
+			
+			// get the variable values and load
+			Element decoderDef = values.getChild("decoderDef", ns);
+			if (decoderDef != null) {
+				List varList = decoderDef.getChildren("varValue",ns);
+				if (log.isDebugEnabled()) log.debug("Found "+varList.size()+" varValues");
+				
+				for (int i=0; i<varList.size(); i++) {
+					// locate the row 
+					if ( ((Element)(varList.get(i))).getAttribute("name") == null) {
+						  if (log.isDebugEnabled()) log.debug("unexpected null in name "+((Element)(varList.get(i))));
+						  break;
+					}
+					if ( ((Element)(varList.get(i))).getAttribute("value") == null) {
+						  if (log.isDebugEnabled()) log.debug("unexpected null in value "+((Element)(varList.get(i))));
+						  break;
+					}
+
+					String name = ((Element)(varList.get(i))).getAttribute("name").getValue();
+					String value = ((Element)(varList.get(i))).getAttribute("value").getValue();
+					if (log.isDebugEnabled()) log.debug("Variable "+i+" is "+name+" value: "+value);
+
+					int row;
+					for (row=0; row<variableModel.getRowCount(); row++) {
+						if (variableModel.getName(row).equals(name)) break;
+					}
+					if (log.isDebugEnabled()) log.debug("Variable "+name+" is row "+row);
+					variableModel.setIntValue(row, Integer.valueOf(value).intValue());
+				}
+				variableModel.configDone();
+			} else log.error("no decoderDef element found in config file");
+		
+			// the act of loading values marks as dirty, but we're actually in synch
+			variableModel.setFileDirty(false);
 	}
 
 	void writeFile() {
@@ -322,14 +406,15 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 
 			// This is taken in large part from "Java and XML" page 368 
 			Namespace ns = Namespace.getNamespace("locomotive",
-										"http://jmri.sourceforge.net/xml/decoder");
+										"http://jmri.sourceforge.net/xml/locomotive");
 
 			// create root element
 			Element root = new Element("locomotive-config", ns);
 			Document doc = new Document(root);
 			doc.setDocType(new DocType("locomotive:locomotive-config","DTD/locomotive-config.dtd"));
 		
-			// add some elements
+			// add top-level elements
+			Element values;
 			root.addContent(new Element("locomotive",ns)		// locomotive values are first item
 					.addAttribute("roadNumber",locoRoadNumber.getText())
 					.addAttribute("roadName",locoRoadName.getText())
@@ -341,7 +426,28 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 									.addAttribute("versionID","")
 									.addAttribute("mfgID","")
 								)
-					);
+						  .addContent(values = new Element("values", ns))
+					)
+				;
+					
+			// Append a decoderDef element to values
+			Element decoderDef;
+			values.addContent(decoderDef = new Element("decoderDef", ns));
+			// add the variable values to the decoderDef Element
+			for (int i = 0; i < variableModel.getRowCount(); i++) {
+				decoderDef.addContent(new Element("varValue", ns)
+									.addAttribute("name", variableModel.getName(i))
+									.addAttribute("value", variableModel.getValString(i))
+						);
+			}
+			// add the CV values to the values Element
+			for (int i = 0; i < cvModel.getRowCount(); i++) {
+				values.addContent(new Element("CVvalue", ns)
+									.addAttribute("name", cvModel.getName(i))
+									.addAttribute("value", cvModel.getValString(i))
+						);
+			}
+			
 			// write the result to selected file
 			java.io.FileOutputStream o = new java.io.FileOutputStream(file);
 			XMLOutputter fmt = new XMLOutputter();
@@ -349,9 +455,11 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 			fmt.setIndent(true);
 			fmt.output(doc, o);
 			
+			// make file as OK
+			variableModel.setFileDirty(false);
 			}
 		catch (Exception e) {
-			System.out.println(e);
+			log.error(e);
 		}
 	}
 	
