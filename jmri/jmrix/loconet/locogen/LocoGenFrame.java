@@ -2,10 +2,13 @@
 
 package jmri.jmrix.loconet.locogen;
 
-import jmri.util.*;
-import jmri.jmrix.loconet.*;
+import jmri.util.StringUtil;
+import jmri.jmrix.loconet.LnTrafficController;
+import jmri.jmrix.loconet.LocoNetListener;
+import jmri.jmrix.loconet.LocoNetMessage;
 
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 
 import javax.swing.*;
 
@@ -19,7 +22,7 @@ import javax.swing.*;
  * <LI>When the timer trips, repeat if buttons still down.
  * </UL>
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class LocoGenFrame extends javax.swing.JFrame implements LocoNetListener {
 
@@ -56,7 +59,7 @@ public class LocoGenFrame extends javax.swing.JFrame implements LocoNetListener 
             sendButton.setVisible(true);
             sendButton.setToolTipText("Send packet");
 
-            packetTextField.setToolTipText("Enter packet as hex pairs, e.g. 82 7D");
+            packetTextField.setToolTipText("Enter packet as hex pairs, e.g. 82 7D; checksum should be present but is recalculated");
 
 
             pane1.add(jLabel1);
