@@ -16,7 +16,7 @@ import javax.swing.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author			Bob Jacobsen
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.9 $
  */
 public class LocoTools extends JPanel {
     public LocoTools() {
@@ -100,7 +100,7 @@ public class LocoTools extends JPanel {
         pane1.add(new JLabel(new ImageIcon(ClassLoader.getSystemResource("resources/logo.gif"),"Decoder Pro label"), JLabel.LEFT));
         JPanel pane2 = new JPanel();
         pane2.setLayout(new BoxLayout(pane2, BoxLayout.Y_AXIS));
-        pane2.add(new JLabel(" LocoTools "+jmri.Version.name()+", part of the JRMI project "));
+        pane2.add(new JLabel(" LocoTools "+jmri.Version.name()+", part of the JMRI project "));
         pane2.add(new JLabel("   http://jmri.sf.net/LocoTools "));
         pane2.add(new JLabel(" "));
         pane2.add(new JLabel(" Connected via "+prefs.getCurrentProtocolName()));

@@ -13,7 +13,7 @@ import jmri.util.oreilly.*;
  * DecoderPro application.
  *
  * @author                      Bob Jacobsen
- * @version                     $Revision: 1.24 $
+ * @version                     $Revision: 1.25 $
  */
 public class DecoderPro extends JPanel {
     public DecoderPro() {
@@ -77,7 +77,7 @@ public class DecoderPro extends JPanel {
         pane1.add(new JLabel(new ImageIcon(ClassLoader.getSystemResource("resources/decoderpro.gif"),"Decoder Pro label"), JLabel.LEFT));
         JPanel pane2 = new JPanel();
         pane2.setLayout(new BoxLayout(pane2, BoxLayout.Y_AXIS));
-        pane2.add(new JLabel(" Decoder Pro "+jmri.Version.name()+", part of the JRMI project "));
+        pane2.add(new JLabel(" Decoder Pro "+jmri.Version.name()+", part of the JMRI project "));
         pane2.add(new JLabel("   http://jmri.sf.net/DecoderPro "));
         pane2.add(new JLabel(" "));
         pane2.add(new JLabel(" Connected via "+prefs.getCurrentProtocolName()));
