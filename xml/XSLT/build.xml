@@ -1,0 +1,95 @@
+<!-- ugly first attempt at an ANT build.xml file for JMRI development -->
+<!-- Bob Jacobsen, April 2002 -->
+<!-- Revision $Revision: 1.1 $ -->
+
+<project name="JMRI" default="compile" basedir=".">
+<!-- basedir="." means all paths are relative to the "java" subdir -->
+<!-- in the project.  We expect that lib et al will be present in -->
+<!-- .. from there -->
+
+  <description>
+  Provides build services for JMRI web pages
+  </description>
+
+  <!-- set global properties for this build -->
+  <property name="xml" value=".."/>
+  <property name="dtd" value="../DTD"/>
+  <property name="decoders" value="../decoders"/>
+  <property name="target" value="pages"/>
+  <property name="jartarget" value=".."/>
+
+  <path id="project.class.path">
+    <pathelement location="../lib/collections.jar" />
+    <pathelement location="../lib/crimson.jar" />
+    <pathelement location="../lib/comm.jar" />
+    <pathelement location="../lib/jdom-jdk11.jar" />
+    <pathelement location="../lib/log4j.jar" />
+    <pathelement location="../lib/Serialio.jar" />
+    <pathelement location="../lib/junit.jar" />
+    <pathelement location="../lib/jython.jar" />
+    <pathelement location="classes/" />
+  </path>
+
+  <target name="init" description="create needed directories">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${target}"/>
+  </target>
+
+  <target name="clean" description="remove compilation results to force rebuild">
+    <delete includeEmptyDirs="true">
+      <fileset dir="classes"/>
+    </delete>
+  </target>
+
+  <target name="copyDTD" description="ensure local file copies present where needed for processing">
+	<copy todir="${target}" >
+    	<fileset dir="${dtd}" >
+      		<include name="*.dtd"/>
+    	</fileset>
+  	</copy> 
+  </target>
+  
+  <target name="index" depends="init, copyDTD" description="create a decoder index page">
+	<copy file="${xml}/decoderIndex.xml" todir="${target}" />
+
+    <style  basedir="${target}"
+    		destdir="${target}"
+    		extension=".html"
+    		style="DecoderModelIndex.xsl"
+    		includes="decoderIndex.xml"
+    	>
+	</style>
+
+	<delete file="${target}/decoderIndex.xml" />
+  </target>
+  
+  <target name="models" depends="init, copyDTD" description="tranform definitions into web pages">
+	<copy todir="${target}" >
+    	<fileset dir="${decoders}" >
+      		<include name="*.xml"/>
+    	</fileset>
+  	</copy> 
+
+    <style  basedir="${target}"
+    		destdir="${target}"
+    		extension=".xml.html"
+    		style="DecoderModelList.xsl"
+    		includes="*.xml"
+    	>
+	</style>
+
+	<delete>
+    	<fileset dir="${target}" >
+      		<include name="*.xml"/>
+    	</fileset>
+    </delete>
+  </target>
+  
+  <target name="xslt" depends="init, copyDTD, models, index"
+  		description="run the whole sequence of processing" />
+  		
+</project>
+
+
