@@ -12,18 +12,18 @@ import java.beans.PropertyChangeListener;
  * <LI>Ops Mode, e.g. "programming on the main"
  * </UL>
  * depending on which type you have, only certain modes can
- * be set.  
+ * be set.
  * <P>
- * You get a Programmer object from a ProgrammerManager, 
+ * You get a Programmer object from a ProgrammerManager,
  * which in turn can be located from the InstanceManager.
- * @see             jmri.ProgrammerManager
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.13 $
+ * @see         jmri.ProgrammerManager
+ * @author	Bob Jacobsen Copyright (C) 2001
+ * @version	$Revision: 1.14 $
  */
 public interface Programmer  {
 
     // mode e.g. register, direct, paged
-    public static final int NONE			=  0;
+    public static final int NONE	    =  0;
     public static final int REGISTERMODE    = 11;
     public static final int PAGEMODE        = 21;
     public static final int DIRECTBITMODE   = 31;
