@@ -12,7 +12,7 @@ import org.jdom.output.*;
 /**
  * Tests for the jmri.jmrix.easydcc package
  * @author			Bob Jacobsen
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class EasyDccTest extends TestCase {
 
@@ -21,6 +21,11 @@ public class EasyDccTest extends TestCase {
 	public EasyDccTest(String s) {
 		super(s);
 	}
+
+    // The minimal setup is for log4J
+    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
+    protected void setUp() { log4jfixtureInst.setUp(); }
+    protected void tearDown() { log4jfixtureInst.tearDown(); }
 
 	// a dummy test to avoid JUnit warning
 	public void testDemo() {
@@ -36,7 +41,7 @@ public class EasyDccTest extends TestCase {
 	// test suite from all defined tests
 	public static Test suite() {
 		apps.tests.AllTest.initLogging();
-		TestSuite suite = new TestSuite("jmri.jmrix.nce.EasyDccTest");
+		TestSuite suite = new TestSuite("jmri.jmrix.easydcc.EasyDccTest");
 		suite.addTest(jmri.jmrix.easydcc.EasyDccTurnoutTest.suite());
 		suite.addTest(jmri.jmrix.easydcc.EasyDccTurnoutManagerTest.suite());
 		suite.addTest(jmri.jmrix.easydcc.easydccmon.EasyDccMonFrameTest.suite());
