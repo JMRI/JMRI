@@ -3,61 +3,56 @@
 <decoderIndex-config>
   <decoderIndex>
     <mfgList>
-      <manufacturer mfgID="151" mfg="Electronic Solutions Ulm GmbH" />
-      <manufacturer mfgID="119" mfg="W.S. Ataras Engineering" />
-      <manufacturer mfgID="117" mfg="cT Elektronik" />
-      <manufacturer mfgID="115" mfg="Dietz Modellbahntechnik" />
-      <manufacturer mfgID="149" mfg="Rock Junction Controls" />
-      <manufacturer mfgID="147" mfg="Umelec Ing Buero" />
-      <manufacturer mfgID="85" mfg="Uhlenbrock" />
-      <manufacturer mfgID="145" mfg="Zimo" />
-      <manufacturer mfgID="143" mfg="MRC" />
-      <manufacturer mfgID="141" mfg="Throttle-Up" />
-      <manufacturer mfgID="173" mfg="Arnold" />
-      <manufacturer mfgID="170" mfg="AuroTrains" />
-      <manufacturer mfgID="15" mfg="RamFixx Technologies (Wangrow)" />
-      <manufacturer mfgID="14" mfg="PSI-Dynatrol" />
-      <manufacturer mfgID="13" mfg="Public-domain and DIY" />
-      <manufacturer mfgID="12" mfg="Wangrow" />
-      <manufacturer mfgID="11" mfg="North Coast Engineering" />
-      <manufacturer mfgID="139" mfg="RealRail Effects" />
-      <manufacturer mfgID="137" mfg="A-Train Electronics" />
-      <manufacturer mfgID="135" mfg="CVP Products" />
-      <manufacturer mfgID="133" mfg="Intelligent Command Control" />
-      <manufacturer mfgID="132" mfg="ZTC" />
-      <manufacturer mfgID="131" mfg="Trix Modelleisenbahn" />
-      <manufacturer mfgID="161" mfg="Roco Modelspielwaren" />
-      <manufacturer mfgID="129" mfg="Digitrax" />
-      <manufacturer mfgID="127" mfg="Atlas" />
-      <manufacturer mfgID="125" mfg="ProfiLok Modellbahntechnik GmbH" />
-      <manufacturer mfgID="123" mfg="Computer Dialysis France" />
-      <manufacturer mfgID="99" mfg="Lenz" />
-      <manufacturer mfgID="159" mfg="LGB" />
-      <manufacturer mfgID="157" mfg="Kuehn Ing." />
-      <manufacturer mfgID="155" mfg="Gebr. Fleishmann GmbH Co." />
-      <manufacturer mfgID="153" mfg="Train Control Systems" />
+      <manufacturer mfg="NMRA" mfgID="999" />
+      <manufacturer mfg="A-Train Electronics" mfgID="137" />
+      <manufacturer mfg="Arnold" mfgID="173" />
+      <manufacturer mfg="Atlas" mfgID="127" />
+      <manufacturer mfg="AuroTrains" mfgID="170" />
+      <manufacturer mfg="CT Elektronik" mfgID="117" />
+      <manufacturer mfg="CVP Products" mfgID="135" />
+      <manufacturer mfg="Computer Dialysis France" mfgID="123" />
+      <manufacturer mfg="Dietz Modellbahntechnik" mfgID="115" />
+      <manufacturer mfg="Digitrax" mfgID="129" />
+      <manufacturer mfg="Electronic Solutions Ulm GmbH" mfgID="151" />
+      <manufacturer mfg="Gebr. Fleishmann GmbH Co." mfgID="155" />
+      <manufacturer mfg="Intelligent Command Control" mfgID="133" />
+      <manufacturer mfg="Kuehn Ing." mfgID="157" />
+      <manufacturer mfg="LGB" mfgID="159" />
+      <manufacturer mfg="Lenz" mfgID="99" />
+      <manufacturer mfg="MRC" mfgID="143" />
+      <manufacturer mfg="North Coast Engineering" mfgID="11" />
+      <manufacturer mfg="PSI-Dynatrol" mfgID="14" />
+      <manufacturer mfg="ProfiLok Modellbahntechnik GmbH" mfgID="125" />
+      <manufacturer mfg="Public-domain and DIY" mfgID="13" />
+      <manufacturer mfg="RamFixx Technologies (Wangrow)" mfgID="15" />
+      <manufacturer mfg="RealRail Effects" mfgID="139" />
+      <manufacturer mfg="Rock Junction Controls" mfgID="149" />
+      <manufacturer mfg="Roco Modelspielwaren" mfgID="161" />
+      <manufacturer mfg="Throttle-Up" mfgID="141" />
+      <manufacturer mfg="Train Control Systems" mfgID="153" />
+      <manufacturer mfg="Trix Modelleisenbahn" mfgID="131" />
+      <manufacturer mfg="Uhlenbrock" mfgID="85" />
+      <manufacturer mfg="Umelec Ing Buero" mfgID="147" />
+      <manufacturer mfg="W.S. Ataras Engineering" mfgID="119" />
+      <manufacturer mfg="Wangrow" mfgID="12" />
+      <manufacturer mfg="ZTC" mfgID="132" />
+      <manufacturer mfg="Zimo" mfgID="145" />
     </mfgList>
     <familyList>
-      <family name="NMRA All CVs" mfg="NMRA" type="locomotive" file="NMRA.xml">
-        <model model="All CVs" comment="List is from RP 9.2.2" />
-      </family>
-      <family name="NMRA Registers" mfg="NMRA" type="locomotive" file="NMRA_registers.xml">
-        <model model="Registers" comment="List is from RP 9.2.2" />
-      </family>
-      <family name="Atlas" mfg="Atlas" type="locomotive" file="Atlas_DualMode.xml">
-        <model model="Dual Mode" numOuts="2" numFns="0" />
-      </family>
-      <family name="Digitrax 120" mfg="Digitrax" lowVersionID="33" highVersionID="45" type="locomotive" file="Digitrax_120.xml">
+      <family name="NMRA standard CV definitions" mfg="NMRA" type="locomotive" file="0NMRA.xml" />
+      <family name="NMRA standard register definitions" mfg="NMRA" type="locomotive" file="0NMRA_registers.xml" />
+      <family name="Atlas Dual Mode" mfg="Atlas" type="locomotive" file="Atlas_DualMode.xml" />
+      <family name="Digitrax early decoders" mfg="Digitrax" lowVersionID="33" highVersionID="45" type="locomotive" file="Digitrax_120.xml">
         <model model="DH120" numOuts="2" numFns="2" />
       </family>
-      <family name="Digitrax 150" mfg="Digitrax" lowVersionID="107" type="locomotive" file="Digitrax_150.xml">
+      <family name="Digitrax 150-series decoders" mfg="Digitrax" lowVersionID="107" type="locomotive" file="Digitrax_150.xml">
         <model model="DH150" numOuts="5" numFns="3" />
       </family>
-      <family name="Digitrax 1x1" mfg="Digitrax" lowVersionID="33" highVersionID="45" type="locomotive" file="Digitrax_1x1.xml">
+      <family name="Digitrax STD decoders" mfg="Digitrax" lowVersionID="33" highVersionID="45" type="locomotive" file="Digitrax_1x1.xml">
         <model model="DH121" numOuts="2" numFns="2" />
         <model model="DN140" numOuts="4" numFns="2" />
       </family>
-      <family name="Digitrax 1x2" mfg="Digitrax" lowVersionID="240" highVersionID="242" type="locomotive" file="Digitrax_1x2.xml">
+      <family name="Digitrax FX decoders with BEMF" mfg="Digitrax" lowVersionID="240" highVersionID="242" type="locomotive" file="Digitrax_1x2.xml">
         <model model="DH142" numOuts="4" numFns="2">
           <output name="4" label="Violet" />
         </model>
@@ -69,7 +64,7 @@
           <output name="5" label="Pad" />
         </model>
       </family>
-      <family name="Lenz 5.4" mfg="Lenz" lowVersionID="54" type="locomotive" file="Lenz_54.xml">
+      <family name="Lenz 5th gen BEMF decoders" mfg="Lenz" lowVersionID="54" type="locomotive" file="Lenz_54.xml">
         <model model="LE010XF" numOuts="2">
           <output name="1" label="A - White" />
           <output name="2" label="B - Yellow" />
@@ -115,7 +110,7 @@
           <output name="2" label="B - Yellow" />
         </model>
       </family>
-      <family name="Lenz LE077XF" mfg="Lenz" lowVersionID="44" highVersionID="45" type="locomotive" file="Lenz_LE077XF.xml">
+      <family name="Lenz XF, precision glide decoders" mfg="Lenz" lowVersionID="44" highVersionID="45" type="locomotive" file="Lenz_LE077XF.xml">
         <model model="LE062XF" numOuts="2">
           <output name="1" label="A - White" />
           <output name="2" label="B - Yellow" />
@@ -147,23 +142,23 @@
           <output name="4" label="D - Violet" />
         </model>
       </family>
-      <family name="MRC 14/28 step" mfg="MRC" type="locomotive" file="MRC_1428step.xml">
+      <family name="MRC 14/28 step decoders" mfg="MRC" type="locomotive" file="MRC_1428step.xml">
         <model model="AD310" />
       </family>
-      <family name="MRC 14 step" mfg="MRC" type="locomotive" file="MRC_14step.xml">
+      <family name="MRC 14 step decoders" mfg="MRC" type="locomotive" file="MRC_14step.xml">
         <model model="AD305" comment="14 step only" />
       </family>
-      <family name="D13SR Family" mfg="North Coast Engineering" type="locomotive" file="NCE_D13SR.xml">
-        <model model="D15SR" lowVersionID="32" numOuts="5" numFns="5" />
-        <model model="D14SRP" lowVersionID="32" numOuts="4" numFns="5" />
-        <model model="D13SR" lowVersionID="32" numOuts="3" numFns="5" />
+      <family name="NCE Silent Drive decoders" mfg="North Coast Engineering" type="locomotive" file="NCE_D13SR.xml">
+        <model model="D15SR" lowVersionID="32" numOuts="5" numFns="6" />
+        <model model="D14SRP" lowVersionID="32" numOuts="4" numFns="6" />
+        <model model="D13SR" lowVersionID="32" numOuts="3" numFns="6" />
         <model model="DA-SR" lowVersionID="32" numOuts="4" numFns="8" />
         <model model="P2K-SR" lowVersionID="32" numOuts="4" numFns="8" />
         <model model="KRS-SR" lowVersionID="32" numOuts="4" numFns="8" />
         <model model="SW9-SR" lowVersionID="32" numOuts="4" numFns="8" />
         <model model="D408SR" lowVersionID="32" numOuts="7" numFns="12" />
       </family>
-      <family name="LC Diesel" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_100LC_Diesel.xml">
+      <family name="Soundtraxx LC diesel decoders" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_100LC_Diesel.xml">
         <model model="100LC Diesel" numOuts="2" numFns="8">
           <versionCV lowVersionID="34" />
           <output name="Horn" />
@@ -179,7 +174,7 @@
           <!-- headlight, FX1, FX2 -->
         </model>
       </family>
-      <family name="LC Steam" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_100LC_Steam.xml">
+      <family name="Soundtraxx LC steam decoders" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_100LC_Steam.xml">
         <model model="100LC Steam" numOuts="2" numFns="8">
           <versionCV lowVersionID="32" />
           <output name="Whistle" />
@@ -192,7 +187,7 @@
           <!-- headlight-->
         </model>
       </family>
-      <family name="DSD Diesel" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_DSD_Diesel.xml">
+      <family name="Soundtrax DSD diesel decoders" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_DSD_Diesel.xml">
         <model model="DSD Diesel" numOuts="4" numFns="8">
           <versionCV lowVersionID="9" highVersionID="14" />
           <versionCV lowVersionID="21" />
@@ -210,7 +205,7 @@
           <!-- headlight, F5, F6 -->
         </model>
       </family>
-      <family name="DSD Steam" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_DSD_Steam.xml">
+      <family name="Soundtrax DSD steam decoders" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_DSD_Steam.xml">
         <model model="DSD Steam" numOuts="4" numFns="8">
           <versionCV lowVersionID="6" highVersionID="7" />
           <versionCV lowVersionID="15" highVersionID="16" />
@@ -227,7 +222,7 @@
           <!-- headlight, F1, F5 -->
         </model>
       </family>
-      <family name="DSX Diesel" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_DSX_Diesel.xml">
+      <family name="Soundtraxx DSX diesel decoders" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_DSX_Diesel.xml">
         <model model="DSX Diesel" numOuts="0" numFns="8">
           <versionCV lowVersionID="18" highVersionID="19" />
           <output name="Bell" />
@@ -244,7 +239,7 @@
           <!-- for the DSX version -->
         </model>
       </family>
-      <family name="DSX Steam" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_DSX_Steam.xml">
+      <family name="Soundtraxx DSX steam decoders" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_DSX_Steam.xml">
         <model model="DSX Steam" numOuts="0" numFns="8">
           <versionCV lowVersionID="17" />
           <!--output name="3" label="F1/grn" /-->
@@ -259,7 +254,7 @@
           <!-- for the DSX version -->
         </model>
       </family>
-      <family name="LC Diesel" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_pnpLC_Diesel.xml">
+      <family name="SoundTrax Plug&amp;Play LC diesel decoders" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_pnpLC_Diesel.xml">
         <model model="C628LC Diesel" numOuts="4" numFns="8">
           <versionCV lowVersionID="37" />
           <output name="Horn" />
@@ -298,7 +293,7 @@
           <output name="Mute" />
         </model>
       </family>
-      <family name="LC Steam" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_pnpLC_Steam.xml">
+      <family name="SoundTrax Plug&amp;Play LC steam decoders" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_pnpLC_Steam.xml">
         <model model="B280LC Steam" numOuts="2" numFns="8">
           <versionCV lowVersionID="33" />
           <output name="Whistle" />
@@ -311,7 +306,7 @@
           <!-- headlight-->
         </model>
       </family>
-      <family name="TCS 150" mfg="Train Control Systems" type="locomotive" file="TCS_TH150DP.xml">
+      <family name="TCS 150 series decoders" mfg="Train Control Systems" type="locomotive" file="TCS_TH150DP.xml">
         <model model="TH150DP" numOuts="5" numFns="6">
           <output name="4" label="Violet" />
         </model>
@@ -322,7 +317,7 @@
           <output name="4" label="Violet" />
         </model>
       </family>
-      <family name="TCS Tx" mfg="Train Control Systems" lowVersionID="16" type="locomotive" file="TCS_Tx.xml">
+      <family name="TCS Tx series decoders" mfg="Train Control Systems" lowVersionID="16" type="locomotive" file="TCS_Tx.xml">
         <model model="T1" numOuts="2" numFns="2" />
         <model model="T2" numOuts="5" numFns="5">
           <output name="4" label="Violet" />
