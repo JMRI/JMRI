@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_150.xml,v 1.5 2001-12-18 07:16:37 jacobsen Exp $ -->
+<!-- $Id: Digitrax_150.xml,v 1.6 2001-12-18 16:44:41 jacobsen Exp $ -->
 <decoder-config>
 		<version author="" version="" lastUpdated=""/>
 
@@ -109,7 +109,7 @@
 				<enumChoice choice="28/128"/>
 				</enumVal>
 			</variable>
-		<variable name="Analog conversion mode" CV="29" mask="XXXXXVXX" stdName="FL Location">
+		<variable name="Analog conversion mode" CV="29" mask="XXXXXVXX" stdName="Analog (DC) Operation">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
