@@ -1,22 +1,15 @@
-/**
- * LnSensorManagerTest.java
- *
- * Description:	    tests for the jmri.jmrix.loconet.LnSensorManagerTurnout class
- * @author			Bob Jacobsen
- * @version
- */
+// LnSensorManagerTest.java
 
 package jmri.jmrix.loconet;
 
-import java.io.*;
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import jmri.jmrix.loconet.*;
 import jmri.*;
+import junit.framework.*;
 
+/**
+ * tests for the jmri.jmrix.loconet.LnSensorManagerTurnout class
+ * @author	Bob Jacobsen  Copyright 2001
+ * @version     $Revision: 1.3 $
+ */
 public class LnSensorManagerTest extends TestCase  {
 
 	public void testLnSensorCreate() {
