@@ -9,7 +9,8 @@ jbuilder2 -d java/src &jmri &apps
 jbuilder3 -d java &test
 jbuilder4 -d java &xml
 
-auto -a a1 a2 a3 a4 a5
+auto -a a1
+# a2 a3 a4 a5
 a1 -d . site index.html
 a2 &xml
 a3 &test
