@@ -13,13 +13,22 @@ import jmri.jmrix.loconet.*;
  *
  * Description:	    tests for the jmri.jmrix.loconet.LocoNetMessage class
  * @author			Bob Jacobsen
- * @version         $Id: LocoNetMessageTest.java,v 1.3 2002-04-29 15:57:55 jacobsen Exp $
+ * @version         $Id: LocoNetMessageTest.java,v 1.4 2003-01-05 08:53:49 jacobsen Exp $
  */
 public class LocoNetMessageTest extends TestCase {
 
     public void testCtor() {
         LocoNetMessage m = new LocoNetMessage(3);
         Assert.assertEquals("length", 3, m.getNumDataElements());
+    }
+
+    public void testArrayCtor() {
+        LocoNetMessage m = new LocoNetMessage(new int[]{11,12,13,14});
+        Assert.assertEquals("length", 4, m.getNumDataElements());
+        Assert.assertEquals("first value", 11, m.getElement(0));
+        Assert.assertEquals("second value", 12, m.getElement(1));
+        Assert.assertEquals("third value", 13, m.getElement(2));
+        Assert.assertEquals("fourth value", 14, m.getElement(3));
     }
 
     public void testGetPeerXfr() {

@@ -26,7 +26,7 @@ import java.io.Serializable;
  * <P>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  * @see             jmri.jmrix.nce.NceMessage
  *
  */
@@ -41,6 +41,17 @@ public class LocoNetMessage implements Serializable {
 		_nDataBytes = len;
 		_dataBytes = new int[len];
 	}
+
+        /**
+         * Create a message with specified contents
+         * @param contents The array of contents for the message. The error
+         * check word must be present, e.g. a 4-byte message must have
+         * four values in the array
+         */
+        public LocoNetMessage(int[] contents) {
+            this(contents.length);
+            for (int i=0; i<contents.length; i++) this.setElement(i, contents[i]);
+        }
 
 	public void setOpCode(int i) { _dataBytes[0]=i;}
 	public int getOpCode() {return _dataBytes[0];}
