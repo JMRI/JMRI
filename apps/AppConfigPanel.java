@@ -29,7 +29,7 @@ import com.sun.java.util.collections.ArrayList;
  * Basic configuration GUI infrastructure.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class AppConfigPanel extends JPanel {
 
@@ -120,6 +120,14 @@ public class AppConfigPanel extends JPanel {
         action.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutStartupActions")));
         advancedPane.add(action);
         clist.add(action);
+
+        log.debug("start button");
+        if (Apps.buttonSpace()!=null) {
+            CreateButtonPanel buttons = new CreateButtonPanel();
+            buttons.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutCreateButton")));
+            advancedPane.add(buttons);
+            clist.add(buttons);
+        }
 
         log.debug("start file");
         PerformFilePanel files = new PerformFilePanel();
