@@ -8,7 +8,7 @@ import jmri.Sensor;
 /**
  * Extend jmri.AbstractSensor for LocoNet layouts
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class LnSensor extends AbstractSensor implements LocoNetListener {
 
@@ -44,19 +44,19 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
      * @param s
      * @throws JmriException
      */
-	public void setKnownState(int s) throws jmri.JmriException {
-		// send OPC_INPUT_REP with new state to this address
-		LocoNetMessage l = new LocoNetMessage(4);
-		l.setOpCode(LnConstants.OPC_INPUT_REP);
+    public void setKnownState(int s) throws jmri.JmriException {
+        // send OPC_INPUT_REP with new state to this address
+        LocoNetMessage l = new LocoNetMessage(4);
+        l.setOpCode(LnConstants.OPC_INPUT_REP);
         a.insertAddress(l);
-		// set state
+        // set state
         if (s==Sensor.ACTIVE) {
             l.setElement(2, l.getElement(2)|0x10);
         } // otherwise is already OK
-
+        l.setElement(2, l.getElement(2)|0x40);
         // send
-		LnTrafficController.instance().sendLocoNetMessage(l);
-	}
+        LnTrafficController.instance().sendLocoNetMessage(l);
+    }
 
 	// implementing classes will typically have a function/listener to get
 	// updates from the layout, which will then call
