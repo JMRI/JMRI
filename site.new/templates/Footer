@@ -2,12 +2,12 @@
     <hr class="hide">
     <div id="footer">
 	<ul id="bn">
-	<li><a href="${docroot}/sitemap/">Site Map</a></li>
-	<li><a href="${docroot}/contact/">Contact Us</a></li>
+	<li><a href="${docroot}sitemap/">Site Map</a></li>
+	<li><a href="${docroot}contact/">Contact Us</a></li>
 	</ul>
 
 	<p>Thanks and congratulations to
-	   <A href="${docroot}/community/" title="Who is JMRI">
+	   <A href="${docroot}community/" title="Who is JMRI">
 	   	all who contributed</A>! </p>
 
 	<p>Copyright &copy; 2003,2004 JMRI Community</p>

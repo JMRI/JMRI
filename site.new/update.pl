@@ -6,10 +6,10 @@ $DEBUG=0;
 $dir=".";	# start in current directory...
 
 # $docroot="/trains/JMRI/site.new";
-$docroot="/site.new";
+$docroot="/";
 $logoalt = "\"JMRI Logo\"";
-# absolute path from docroot...
-$logo = "/images/logo-jmri.gif";
+# absolute path from docroot, without the leading slash...
+$logo = "images/logo-jmri.gif";
 
 $TDIR="./templates";
 

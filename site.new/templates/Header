@@ -1,16 +1,16 @@
 <!-- Header -->
     <div id="header">
 	<!-- Logo -->
-	<a href="${docroot}/" title="Return to home page" accesskey="1">
-	    <img src="${docroot}/${logo}" width="160" height="135" alt=${logoalt}> </a>
+	<a href="${docroot}" title="Return to home page" accesskey="1">
+	    <img src="${docroot}${logo}" width="160" height="135" alt=${logoalt}> </a>
 	<!-- /Logo -->
 	<ul id="mainNav"> <!-- Top tool bar -->
-	   <li><a href="${docroot}/download/"  title="Get the latest software">Download</a></li>
-	   <li><a href="${docroot}/apps/"      title="Learn about JMRI applications">Applications</a></li>
-	   <li><a href="${docroot}/hardware/"  title="What hardware does JMRI support">Hardware</a></li>
-	   <li><a href="${docroot}/doc/Manual/"   title="Trouble-shooting, and FAQs">Manual</a></li>
-	   <li><a href="${docroot}/doc/Technical/" title="Developing and extending JMRI">Developers</a></li>
-	   <li><A href="${docroot}/community/" title="Who is JMRI">Acknowledgements</a></li>
+	   <li><a href="${docroot}download/"  title="Get the latest software">Download</a></li>
+	   <li><a href="${docroot}apps/"      title="Learn about JMRI applications">Applications</a></li>
+	   <li><a href="${docroot}hardware/"  title="What hardware does JMRI support">Hardware</a></li>
+	   <li><a href="${docroot}doc/Manual/"   title="Trouble-shooting, and FAQs">Manual</a></li>
+	   <li><a href="${docroot}doc/Technical/" title="Developing and extending JMRI">Developers</a></li>
+	   <li><A href="${docroot}community/" title="Who is JMRI">Acknowledgements</a></li>
 	</ul>
 
 	<div id="searchform"> <!--  Search Form -->
