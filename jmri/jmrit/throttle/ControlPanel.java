@@ -34,7 +34,7 @@ import org.jdom.Element;
  *  TODO: fix speed increments (14, 28)
  *
  * @author     glen
- * @version    $Revision: 1.30 $
+ * @version    $Revision: 1.31 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener
 {
@@ -67,6 +67,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	{
 		speedSlider = new JSlider(0, MAX_SPEED);
 		speedSlider.setValue(0);
+		speedSlider.setFocusable(false);
 		forwardButton = new JRadioButton("Forward");
 		reverseButton = new JRadioButton("Reverse");
 		initGUI();
@@ -316,7 +317,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	 *  A KeyAdapter that listens for the keys that work the control pad buttons
 	 *
 	 * @author     glen
-         * @version    $Revision: 1.30 $
+         * @version    $Revision: 1.31 $
 	 */
 	class ControlPadKeyListener extends KeyAdapter
 	{
@@ -351,14 +352,14 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 			{
 				if (forwardButton.isEnabled())
 				{
-					forwardButton.setSelected(true);
+					forwardButton.doClick();
 				}
 			}
 			else if (e.getKeyCode() == reverseKey)
 			{
 				if (reverseButton.isEnabled())
 				{
-					reverseButton.setSelected(true);
+					reverseButton.doClick();
 				}
 			}
 			else if (e.getKeyCode() == stopKey)
@@ -384,7 +385,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 		if (e.getPropertyName().equals("SpeedSetting")) {
 	           internalAdjust=true;
 		   float speed=((Float) e.getNewValue()).floatValue();
-                    // multiply by MAX_SPEED, and round to find the new 
+                    // multiply by MAX_SPEED, and round to find the new
                     //slider setting.
                    int newSliderSetting = java.lang.Math.round(speed * MAX_SPEED) ;
                    log.debug( "propertyChange: new speed float: " + speed + " slider pos: " + newSliderSetting ) ;
