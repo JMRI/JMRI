@@ -1,9 +1,9 @@
-/** 
+/**
  * JmritTest.java
  *
  * Description:	    tests for the Jmrit package
  * @author			Bob Jacobsen
- * @version			
+ * @version
  */
 
 package jmri.jmrit;
@@ -17,7 +17,7 @@ import org.jdom.output.*;
 
 public class JmritTest extends TestCase {
 
-	// from here down is testing infrastructure	
+	// from here down is testing infrastructure
 	public JmritTest(String s) {
 		super(s);
 	}
@@ -27,10 +27,11 @@ public class JmritTest extends TestCase {
 		String[] testCaseName = {JmritTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
-	
+
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite("jmri.jmrit.JmritTest");   // no tests in this class itself
+		suite.addTest(jmri.jmrit.display.DisplayTest.suite());
 		suite.addTest(jmri.jmrit.AbstractIdentifyTest.suite());
 		suite.addTest(jmri.jmrit.decoderdefn.DecoderDefnTest.suite());
 		suite.addTest(jmri.jmrit.XmlFileTest.suite());
@@ -39,5 +40,5 @@ public class JmritTest extends TestCase {
 		suite.addTest(jmri.jmrit.roster.RosterTest.suite());
 		return suite;
 	}
-	
+
 }
