@@ -6,7 +6,7 @@ import jmri.Sensor;
 /**
  * Abstract class providing the basic logic of the Sensor interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.9 $
  */
 public abstract class AbstractSensor extends AbstractNamedBean implements Sensor, java.io.Serializable {
 
@@ -49,6 +49,24 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
             firePropertyChange("KnownState", new Integer(oldState), new Integer(_knownState));
         }
     }
+
+    /**
+     * Implement a shorter name for setKnownState.
+     *<P>
+     * This generally shouldn't be used by Java code; use 
+     * setKnownState instead.  The is provided to make Jython
+     * script access easier to read.  
+     */
+    public void setState(int s) throws jmri.JmriException { setKnownState(s); }
+    
+    /**
+     * Implement a shorter name for getKnownState.
+     *<P>
+     * This generally shouldn't be used by Java code; use 
+     * getKnownState instead.  The is provided to make Jython
+     * script access easier to read.  
+     */
+    public int getState() { return getKnownState(); }
 
     // internal data members
     private String _id;

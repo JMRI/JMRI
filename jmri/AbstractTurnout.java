@@ -17,7 +17,7 @@ package jmri;
  *
  * Description:		Abstract class providing the basic logic of the Turnout interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean implements Turnout, java.io.Serializable {
 
@@ -82,6 +82,24 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements Turno
         }
     }
 
+    /**
+     * Implement a shorter name for setCommandedState.
+     *<P>
+     * This generally shouldn't be used by Java code; use 
+     * setCommandedState instead.  The is provided to make Jython
+     * script access easier to read.  
+     */
+    public void setState(int s) { setCommandedState(s); }
+    
+    /**
+     * Implement a shorter name for getCommandedState.
+     *<P>
+     * This generally shouldn't be used by Java code; use 
+     * getCommandedState instead.  The is provided to make Jython
+     * script access easier to read.  
+     */
+    public int getState() { return getCommandedState(); }
+    
     // internal data members
     private int _feedbackType   = NONE;
     private int _knownState     = UNKNOWN;
