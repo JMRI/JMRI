@@ -2,17 +2,20 @@
 
 package jmri.jmrix.loconet.se8;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-
-import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LnTrafficController;
+import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.*;
+
 /**
- * Frame displaying and programming a SE8c configuration.
- * <P>The read and write require a sequence of operations, which
+ * Display and modify an SE8c configuration.
+ * <P>
+ * The read and write require a sequence of operations, which
  * we handle with a state variable.
  * <P>
  * Programming of the SE8c is done via configuration messages, so
@@ -29,7 +32,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * contact Digitrax Inc for separate permission.
  *
  * @author  Bob Jacobsen   Copyright (C) 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SE8Frame extends JFrame implements LocoNetListener {
 
@@ -43,29 +46,38 @@ public class SE8Frame extends JFrame implements LocoNetListener {
             pane0.add(addrField);
             pane0.add(readAllButton);
             pane0.add(writeAllButton);
-        getContentPane().add(pane0);
+        appendLine(pane0);
 
-        JPanel pane1 = new JPanel();
-        pane1.setLayout(new GridLayout(15, 1));
-            pane1.add(fullmode);
-            pane1.add(twoaspects);
-            pane1.add(section1to4mode);
-            pane1.add(section1to4mode);
-            pane1.add(fourthAspect);
-            pane1.add(semaphore);
-            pane1.add(pulsed);
-            pane1.add(disableDS);
-            pane1.add(fromloconet);
-            pane1.add(disablelocal);
-            pane1.add(sigaddress);
-            pane1.add(bcastaddress);
-            pane1.add(semaddress);
-            pane1.add(setdefault);
-            pane1.add(exercise);
-         getContentPane().add(pane1);
+        JPanel panel2;
+        appendLine(fullmode);
+        appendLine(twoaspects);
+            panel2 = new JPanel();
+            panel2.setLayout(new FlowLayout());
+            panel2.add(new JLabel("Cables 1-4 are "));
+            panel2.add(section1to4mode);
+        appendLine(panel2);
+            panel2 = new JPanel();
+            panel2.setLayout(new FlowLayout());
+            panel2.add(new JLabel("Cables 1-4 are "));
+            panel2.add(section5to8mode);
+        appendLine(panel2);
+            panel2 = new JPanel();
+            panel2.setLayout(new FlowLayout());
+            panel2.add(new JLabel("4th aspect is "));
+            panel2.add(fourthAspect);
+        appendLine(panel2);
+        appendLine(semaphore);
+        appendLine(pulsed);
+        appendLine(disableDS);
+        appendLine(fromloconet);
+        appendLine(disablelocal);
+        appendLine(sigaddress);
+        appendLine(bcastaddress);
+        appendLine(semaddress);
+        appendLine(setdefault);
+        appendLine(exercise);
 
-        status.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
-        getContentPane().add(status);
+        appendLine(status);
 
         // install read all, write all button handlers
         readAllButton.addActionListener( new ActionListener() {
@@ -100,6 +112,16 @@ public class SE8Frame extends JFrame implements LocoNetListener {
         // and prep for display
         pack();
         addrField.setText("1");
+    }
+
+    /**
+     * Handle layout details during construction.
+     * <P>
+     * @param c component to put on a single line
+     */
+    void appendLine(JComponent c) {
+        c.setAlignmentX(0.f);
+        getContentPane().add(c);
     }
 
     boolean read = false;
@@ -293,45 +315,51 @@ public class SE8Frame extends JFrame implements LocoNetListener {
     JTextField addrField = new JTextField(4);
 
 
-    JCheckBox fullmode            = new JCheckBox("reserved for SE8 full mode");  // opsw 01
-    JCheckBox twoaspects          = new JCheckBox("two aspects (one turnout address) per head");  // opsw 02
+    JCheckBox fullmode            = new JCheckBox("Reserved (OpSw 1)");  // opsw 01
+    JCheckBox twoaspects          = new JCheckBox("Two aspects (one turnout address) per head");  // opsw 02
     JComboBox section1to4mode     = new JComboBox(new String[] {
                                               "3 LEDs common anode","3 LEDs common cathode",
                                               "3-wire searchlight common anode","3-wire searchlight common cathode",
-                                              "2-wire searchlight common anode","2-wire searchlight common cathode"
+                                              "2-wire searchlight common anode","2-wire searchlight common cathode",
+                                              "Reserved (6)", "Reserved (7)"
                                               });  // opsw 3, 4, 5
     JComboBox section5to8mode     = new JComboBox(new String[] {
                                               "3 LEDs common anode","3 LEDs common anode",
                                               "3-wire searchlight common anode","3-wire searchlight common cathode",
-                                              "2-wire searchlight common anode","2-wire searchlight common cathode"
+                                              "2-wire searchlight common anode","2-wire searchlight common cathode",
+                                              "Reserved (6)", "Reserved (7)"
                                               });  // opsw 6, 7, 8
     JComboBox fourthAspect        = new JComboBox(new String[] {
                                               "flashing yellow", "flashing red",
                                               "dark","flashing green"
                                               });  // opsw 9, 10
-    JCheckBox semaphore           = new JCheckBox("semaphore mode");  // opsw 11
-    JCheckBox pulsed              = new JCheckBox("pulsed switch outputs");  // opsw 12
-    JCheckBox disableDS           = new JCheckBox("disable DS input");  // opsw 13
-    JCheckBox fromloconet         = new JCheckBox("enable switch command from loconet");  // opsw 14
-    JCheckBox disablelocal        = new JCheckBox("disable local switch control");  // opsw 15
-    JCheckBox sigaddress          = new JCheckBox("next switch command sets signal address");  // opsw 17
-    JCheckBox bcastaddress        = new JCheckBox("next switch command sets broadcast address");  // opsw 18
-    JCheckBox semaddress          = new JCheckBox("next switch command sets semaphore address");  // opsw 19
-    JCheckBox setdefault          = new JCheckBox("restore factory default, including address");  // opsw 20
-    JCheckBox exercise            = new JCheckBox("LED exercise pattern");  // opsw 21
+    JCheckBox semaphore           = new JCheckBox("Semaphore mode");  // opsw 11
+    JCheckBox pulsed              = new JCheckBox("Pulsed switch outputs");  // opsw 12
+    JCheckBox disableDS           = new JCheckBox("Disable DS input");  // opsw 13
+    JCheckBox fromloconet         = new JCheckBox("Enable switch command from loconet");  // opsw 14
+    JCheckBox disablelocal        = new JCheckBox("Disable local switch control");  // opsw 15
+    JCheckBox sigaddress          = new JCheckBox("Next switch command sets signal address");  // opsw 17
+    JCheckBox bcastaddress        = new JCheckBox("Next switch command sets broadcast address");  // opsw 18
+    JCheckBox semaddress          = new JCheckBox("Next switch command sets semaphore address");  // opsw 19
+    JCheckBox setdefault          = new JCheckBox("Restore factory default, including address");  // opsw 20
+    JCheckBox exercise            = new JCheckBox("Show LED exercise pattern");  // opsw 21
 
-    JLabel status = new JLabel("The SE8 should be on and in normal mode (Don't push the buttons on the SE8)");
+    JLabel status = new JLabel("The SE8 should be in normal mode (Don't push the buttons on the SE8!)");
 
     JToggleButton readAllButton  = new JToggleButton("Read from SE8");
     JToggleButton writeAllButton = new JToggleButton("Write to SE8");
 
-    // Close the window when the close box is clicked
+    // Destroy the window when the close box is clicked, as there is no
+    // way to get it to show again
     void thisWindowClosing(java.awt.event.WindowEvent e) {
         setVisible(false);
         dispose();
     }
 
     public void dispose() {
+        // Drop loconet connection
+        if (LnTrafficController.instance()!=null)
+            LnTrafficController.instance().removeLocoNetListener(~0, this);
         // take apart the JFrame
         super.dispose();
     }
