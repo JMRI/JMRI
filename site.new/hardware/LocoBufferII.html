@@ -86,7 +86,7 @@ The LocoBuffer-II input circuit and code actually reads from the LocoNet
 output jack, so if you install the LocoNet terminator 
 (the small circuit that was shipped with the LocoBuffer II) 
 and set SW7-8 to 
-OFF (up) so that the input circuitry gets it's power from the 
+ON (down) so that the input circuitry gets it's power from the 
 wall-wart, then you have created a loop back test. The only thing that is not 
 tested is the LocoNet jack itself.
 </p>
@@ -96,7 +96,7 @@ tested is the LocoNet jack itself.
 Steps:
 <OL>
 <LI>Unplug The LocoNet cable
-<LI>Open case
+<LI>Open case (use a small screw driver to work open the latches at the small slots on the sides)
 <LI>Install terminator
 <LI>Set Sw 7-8 ON, all other switches OFF
 <LI>Set the JMRI LocoBuffer options to 19,200 baud and hardware 
@@ -105,6 +105,8 @@ handshaking enabled
 <LI>Using JMRI send some commands (e.g. switch commands)
 <LI>The commands should appear in the LocoNet monitor window and the 
 LocoBuffer-II activity LED should blink
+<li>Remove the terminator (unless your application requires it)
+<LI>Restore the LocoBuffer-II option switches to their normal settings for your application
 </OL>
 </p>
 
