@@ -16,7 +16,7 @@ import com.sun.java.util.collections.List;
  * Extends VariableValue to represent a enumerated variable.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
@@ -141,7 +141,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         for (int i = 0; i<_valueArray.length; i++)
             if (_valueArray[i]==value) {
                 //found it, select it
-                _value.setSelectedIndex(value);
+                _value.setSelectedIndex(i);
                 return;
             }
 
@@ -156,11 +156,11 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         for (int i = 0; i<oldArray.length; i++) _valueArray[i] = oldArray[i];
         _valueArray[oldArray.length] = value;
 
-        _value.setSelectedIndex(oldArray.length);
+        _value.setSelectedItem("Reserved value "+value);
     }
 
     public int getIntValue() {
-        if (_value.getSelectedIndex()>=_valueArray.length)
+        if (_value.getSelectedIndex()>=_valueArray.length || _value.getSelectedIndex()<0)
             log.error("trying to get value "+_value.getSelectedIndex()+" too large"
                     +" for array length "+_valueArray.length);
         return _valueArray[_value.getSelectedIndex()];
@@ -262,7 +262,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * model between this object and the real JComboBox value.
      *
      * @author			Bob Jacobsen   Copyright (C) 2001
-     * @version         $Revision: 1.9 $
+     * @version         $Revision: 1.10 $
      */
     public class VarComboBox extends JComboBox {
 
