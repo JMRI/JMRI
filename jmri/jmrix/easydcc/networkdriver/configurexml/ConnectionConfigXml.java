@@ -21,7 +21,7 @@ import javax.swing.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -47,7 +47,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     }
     /**
      * Port name carries the hostname for the network connection
-     * @param element Top level Element to unpack.
+     * @param e Top level Element to unpack.
       */
     public void load(Element e) {
         // configure port name

@@ -27,7 +27,7 @@ package jmri.jmrix.loconet;
  * @author			Bob Jacobsen Copyright (C) 2001
  * @see jmri.jmrix.loconet.LocoNetListener
  * @see jmri.jmrix.loconet.LnTrafficController
- * @version  $Revision: 1.3 $
+ * @version  $Revision: 1.4 $
  */
 public interface LocoNetInterface {
 
@@ -57,7 +57,7 @@ public interface LocoNetInterface {
 	 * @param listener Object to be notified of new messages as they arrive.
 	 *
 	 */
-	void addLocoNetListener(int mask, LocoNetListener l);
+	void addLocoNetListener(int mask, LocoNetListener listener);
 
 	/*
 	 * Stop notification of things happening on the LocoNet. Note that mask and LocoNetListener

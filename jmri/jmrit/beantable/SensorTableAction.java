@@ -23,7 +23,7 @@ import javax.swing.JTextField;
  * SensorTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 
 public class SensorTableAction extends AbstractTableAction {
@@ -33,7 +33,7 @@ public class SensorTableAction extends AbstractTableAction {
      * <P>
      * Note that the argument is the Action title, not the title of the
      * resulting frame.  Perhaps this should be changed?
-     * @param s
+     * @param actionName
      */
     public SensorTableAction(String actionName) {
         super(actionName);

@@ -11,8 +11,8 @@ import org.jdom.Element;
  * Handle XML persistance of PerformScriptModel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.1 $
- * @see apps.PerforScriptPanel
+ * @version $Revision: 1.2 $
+ * @see apps.PerformScriptPanel
  */
 public class PerformScriptModelXml implements XmlAdapter {
 
@@ -36,7 +36,7 @@ public class PerformScriptModelXml implements XmlAdapter {
 
     /**
      * Create object from XML file
-     * @param element Top level Element to unpack.
+     * @param e Top level Element to unpack.
       */
     public void load(Element e) {
         String fileName = e.getAttribute("name").getValue();

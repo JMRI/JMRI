@@ -26,7 +26,7 @@ package jmri.jmrix.loconet;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class LnSensorAddress {
 
@@ -102,7 +102,7 @@ public class LnSensorAddress {
 
     /**
      * Update a LocoNet message to have this address.
-     * @param msg
+     * @param m
      */
     public void insertAddress(LocoNetMessage m) {
         m.setElement(1, getLowBits());

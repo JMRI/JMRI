@@ -60,7 +60,7 @@ public interface Mx1Interface {
 	 * @param listener Object to be notified of new messages as they arrive.
 	 *
 	 */
-	void addMx1Listener(int mask, Mx1Listener l);
+	void addMx1Listener(int mask, Mx1Listener listener);
 
 	/*
 	 * Stop notification of things happening on the MX-1. Note that mask and Mx1Listener

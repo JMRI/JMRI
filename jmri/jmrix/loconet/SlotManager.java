@@ -33,7 +33,7 @@ import java.util.Vector;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.23 $
+ * @version     $Revision: 1.24 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
@@ -457,12 +457,12 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     public boolean getProgPowersOff() { return mProgPowersOff; }
 
     /**
-     * Configure whether this Programmer implementation is capable of
-     * reading decoder contents. <P>
+     * Configure whether this Programmer owers off the
+     * main track after a service track programming operation.<P>
      * This is not part of the Programmer interface, but is used
      * as part of the startup sequence for the LocoNet objects.
      *
-     * @param pCanRead True if reads are possible
+     * @param pProgPowersOff True if power is off afterward
      */
     public void setProgPowersOff(boolean pProgPowersOff) {
         log.debug("set progPowersOff to "+pProgPowersOff);

@@ -27,7 +27,7 @@ import org.jdom.Element;
 /**
  * Frame providing a command station programmer from decoder definition files.
  * @author			Bob Jacobsen   Copyright (C) 2001; D Miller Copyright 2003
- * @version			$Revision: 1.41 $
+ * @version			$Revision: 1.42 $
  */
 abstract public class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
@@ -202,7 +202,7 @@ abstract public class PaneProgFrame extends javax.swing.JFrame
      * <LI> Fill CV values from the roster entry
      * <LI> Create the programmer panes
      * </UL>
-     * @param decoderFile       XML file defining the decoder contents
+     * @param pDecoderFile       XML file defining the decoder contents
      * @param pRosterEntry      RosterEntry for information on this locomotive
      * @param pFrameTitle       Name/title for the frame
      * @param pProgrammerFile   Name of the programmer file to use

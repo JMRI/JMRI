@@ -18,7 +18,7 @@ import org.jdom.Element;
  * and the default Locale.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @see jmri.GuiLafConfigPane
  */
 public class GuiLafConfigPaneXml implements XmlAdapter {
@@ -48,7 +48,7 @@ public class GuiLafConfigPaneXml implements XmlAdapter {
 
     /**
      * Update static data from XML file
-     * @param element Top level Element to unpack.
+     * @param e Top level Element to unpack.
       */
     public void load(Element e) {
         UIManager.LookAndFeelInfo[] plafs = UIManager.getInstalledLookAndFeels();

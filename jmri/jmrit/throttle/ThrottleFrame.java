@@ -34,7 +34,7 @@ import org.jdom.Element;
  *  directed by the interface.
  *
  * @author     Glen Oberhauser
- * @version    $Revision: 1.19 $
+ * @version    $Revision: 1.20 $
  */
 public class ThrottleFrame extends JFrame implements AddressListener, ThrottleListener
 {
@@ -82,7 +82,7 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 
     /**
      * Receive notification that a new address has been selected.
-     * @param newAddress The address that is now selected.
+     * @param address The address that is now selected.
      */
     public void notifyAddressChosen(int address)
 	{

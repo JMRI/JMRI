@@ -21,7 +21,7 @@ import javax.swing.table.TableColumnModel;
 /**
  * Table data model for display of slot manager contents
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version		$Revision: 1.12 $
+ * @version		$Revision: 1.13 $
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener  {
 
@@ -63,7 +63,6 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
      * <P>
      * This should probably use a local cache instead
      * of counting/searching each time.
-     * @param row Row number in the displayed table
      */
     public int getRowCount() {
         if (_allSlots) {
@@ -303,7 +302,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
      * Configure a table to have our standard rows and columns.
      * This is optional, in that other table formats can use this table model.
      * But we put it here to help keep it consistent.
-     * @param s
+     * @param slotTable
      */
     public void configureTable(JTable slotTable) {
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)

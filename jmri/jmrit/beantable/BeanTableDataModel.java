@@ -19,7 +19,7 @@ import com.sun.java.util.collections.List;
 /**
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
- * @version		$Revision: 1.6 $
+ * @version		$Revision: 1.7 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -154,7 +154,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
      * Configure a table to have our standard rows and columns.
      * This is optional, in that other table formats can use this table model.
      * But we put it here to help keep it consistent.
-     * @param s
+     * @param table
      */
     public void configureTable(JTable table) {
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)

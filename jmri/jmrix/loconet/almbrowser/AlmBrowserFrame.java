@@ -22,7 +22,7 @@ import jmri.jmrix.loconet.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class AlmBrowserFrame extends javax.swing.JFrame implements LocoNetListener {
 
@@ -168,7 +168,7 @@ public class AlmBrowserFrame extends javax.swing.JFrame implements LocoNetListen
     /**
      * Process the incoming message to look for the response
      * to a read request
-     * @param m
+     * @param msg
      */
     public void message(LocoNetMessage msg) {
         if (!reading) return;

@@ -20,7 +20,7 @@ import org.jdom.Element;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -45,7 +45,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     }
     /**
      * Port name carries the hostname for the RMI connection
-     * @param element Top level Element to unpack.
+     * @param e Top level Element to unpack.
       */
     public void load(Element e) {
         // configure port name

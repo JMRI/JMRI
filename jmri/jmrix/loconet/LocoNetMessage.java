@@ -26,7 +26,7 @@ import java.io.Serializable;
  * <P>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  * @see             jmri.jmrix.nce.NceMessage
  *
  */
@@ -135,7 +135,7 @@ public class LocoNetMessage implements Serializable {
      * Two messages are the same if their entire data content
      * is the same.  We ignore the error-check byte to ease
      * comparisons before a message is transmitted.
-     * @param obj
+     * @param m
      * @return true if objects contain the same message contents
      */
     public boolean equals(LocoNetMessage m) {

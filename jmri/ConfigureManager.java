@@ -29,7 +29,7 @@ import java.io.File;
  *<P>
  *The original implementation was via the {@link jmri.configurexml} package.
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  * @see jmri.InstanceManager
  * @see jmri.configurexml.ConfigXmlManager
  */
@@ -48,43 +48,43 @@ public interface ConfigureManager {
 
     /**
      * Stores prefs, config, tools and user information.
-     * @param file
+     * @param file Output file
      */
-    public void storeAll(File f);
+    public void storeAll(File file);
 
     /**
      * Stores just preferences information.
-     * @param file
+     * @param file Output file
      */
-    public void storePrefs(File f);
+    public void storePrefs(File file);
 
     /**
      * Stores just configuration information.
-     * @param file
+     * @param file Output file
      */
-    public void storeConfig(File f);
+    public void storeConfig(File file);
 
     /**
      * Stores just user information.
-     * @param file
+     * @param file Output file
      */
-    public void storeUser(File f);
+    public void storeUser(File file);
 
     /**
      * Create the objects defined in a particular configuration
      * file
-     * @param f
+     * @param file Input file
      * @return true if succeeded
      */
-    public boolean load(File f);
+    public boolean load(File file);
 
     /**
      * Provide a method-specific way of locating a file to be
      * loaded from a name.
-     * @param f Local filename, perhaps without path information
+     * @param filename Local filename, perhaps without path information
      * @return Corresponding File object
      */
-    public File find(String f);
+    public File find(String filename);
 
 }
 

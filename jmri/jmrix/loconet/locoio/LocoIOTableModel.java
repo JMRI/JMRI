@@ -32,7 +32,7 @@ import javax.swing.JTextField;
  * though there are significant modifications.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
     implements LocoNetListener {
@@ -126,7 +126,7 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
 
     /**
      * Primary constructor.  Initializes all the arrays.
-     * @param addr Address for this LocoIO unit.  Provided here,
+     * @param unitAddr Address for this LocoIO unit.  Provided here,
      * but may also be changed later with setUnitAddress.
      */
     public LocoIOTableModel(int unitAddr, JTextField status) {

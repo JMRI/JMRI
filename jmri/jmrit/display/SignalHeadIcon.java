@@ -19,7 +19,7 @@ import javax.swing.JPopupMenu;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -38,8 +38,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
 
     /**
      * Attached a numbered element to this display item
-     * @param name Used as a number to lookup the AspectGenerator object
-     * @param number Number of the head on the generator
+     * @param pName Used as a system/user name to lookup the SignalHead object
      */
     public void setSignalHead(String pName) {
         mHead = InstanceManager.signalHeadManagerInstance().getBySystemName(pName);

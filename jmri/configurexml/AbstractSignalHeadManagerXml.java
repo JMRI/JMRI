@@ -20,7 +20,7 @@ import org.jdom.Element;
  * Based on AbstractTurnoutManagerConfigXML
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class AbstractSignalHeadManagerXml implements XmlAdapter {
 
@@ -71,7 +71,7 @@ public class AbstractSignalHeadManagerXml implements XmlAdapter {
     /**
      * Create a SignalHeadManager object of the correct class, then
      * register and fill it.
-     * @param turnouts Top level Element to unpack.
+     * @param signalheads Top level Element to unpack.
      */
     public void load(Element signalheads) {
         // create the master object
@@ -91,7 +91,7 @@ public class AbstractSignalHeadManagerXml implements XmlAdapter {
      * Utility method to load the individual SignalHead objects.
      * If there's no additional info needed for a specific signal head type,
      * invoke this with the parent of the set of SignalHead elements.
-     * @param turnouts Element containing the SignalHead elements to load.
+     * @param signalheads Element containing the SignalHead elements to load.
      */
     public void loadSignalHeads(Element signalheads) {
         SignalHeadManager sm = InstanceManager.signalHeadManagerInstance();

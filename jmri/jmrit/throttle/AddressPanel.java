@@ -92,7 +92,6 @@ public class AddressPanel extends JInternalFrame
 
 	/**
 	 * Receive notification that an address has been release or dispatched.
-	 * @param address The address released/dispatched
 	 */
 	public void notifyThrottleDisposed()
 	{
@@ -336,7 +335,7 @@ public class AddressPanel extends JInternalFrame
 
      /**
       * Use the Element passed to initialize based on user prefs.
-      * @param The Element containing prefs as defined
+      * @param e The Element containing prefs as defined
       * in DTD/throttle-config
       */
      public void setXml(Element e)

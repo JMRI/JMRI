@@ -10,7 +10,7 @@ import org.jdom.Element;
  * classes persisting the status of serial port adapters.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 abstract public class AbstractConnectionConfigXml implements XmlAdapter {
 
@@ -57,7 +57,7 @@ abstract public class AbstractConnectionConfigXml implements XmlAdapter {
 
     /**
      * Update static data from XML file
-     * @param element Top level Element to unpack.
+     * @param e Top level Element to unpack.
       */
     public void load(Element e) {
 
@@ -87,7 +87,7 @@ abstract public class AbstractConnectionConfigXml implements XmlAdapter {
      * Update static data from XML file
      * @param element Top level Element to unpack.
       */
-    public void load(Element e, Object o) {
+    public void load(Element element, Object o) {
         log.error("method with two args invoked");
     }
 

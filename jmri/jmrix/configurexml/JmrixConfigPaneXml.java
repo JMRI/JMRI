@@ -20,7 +20,7 @@ import org.jdom.Element;
  * e.g. jmrix.easydcc.serialdriver.configurexml
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class JmrixConfigPaneXml implements XmlAdapter {
 
@@ -47,7 +47,7 @@ public class JmrixConfigPaneXml implements XmlAdapter {
 
     /**
      * Update static data from XML file
-     * @param element Top level Element to unpack.
+     * @param e Top level Element to unpack.
       */
     public void load(Element e) {
         UIManager.LookAndFeelInfo[] plafs = UIManager.getInstalledLookAndFeels();

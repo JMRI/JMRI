@@ -10,7 +10,7 @@ import java.util.Vector;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author  Bob Jacobsen  Copyright (C) 2001
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 abstract public class AbstractThrottle implements DccThrottle {
     protected float speedSetting;
@@ -138,7 +138,6 @@ abstract public class AbstractThrottle implements DccThrottle {
 
     /**
      * Trigger the notification of all PropertyChangeListeners
-     * @param s The changed slot to notify.
      */
     protected void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
         if (oldValue.equals(newValue)) log.error("notifyPropertyChangeListener without change");

@@ -19,7 +19,7 @@ import jmri.Sensor;
  * that node is polled.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SerialNode {
 
@@ -51,8 +51,8 @@ public class SerialNode {
     int[] sensorLastSetting;
 
     /**
-     *
-     * @param bits int value of response from poll command
+     * Use the contents of the poll reply to mark changes
+     * @param l Reply to a poll operation
      */
     public void markChanges(SerialReply l) {
         try {
