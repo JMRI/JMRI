@@ -21,7 +21,7 @@ import jmri.jmrit.catalog.*;
  * Modified by Dennis Miller for resizing Nov, 2004
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class NixieClockFrame extends javax.swing.JFrame implements java.beans.PropertyChangeListener {
 
@@ -49,14 +49,20 @@ public class NixieClockFrame extends javax.swing.JFrame implements java.beans.Pr
 
         clock = InstanceManager.timebaseInstance();
 
-        //Load the images
+        //Load the images (these are now the larger version of the original gifs
         for (int i = 0; i < 10; i++) {
-          baseTubes[i] = new NamedIcon("resources/icons/misc/Nixie/M" + i + ".gif", "resources/icons/misc/Nixie/M" + i + ".gif");
-          tubes[i] = new NamedIcon("resources/icons/misc/Nixie/M" + i + ".gif", "resources/icons/misc/Nixie/M" + i + ".gif");
+          baseTubes[i] = new NamedIcon("resources/icons/misc/Nixie/M" + i + "B.gif", "resources/icons/misc/Nixie/M" + i + "B.gif");
+          tubes[i] = new NamedIcon("resources/icons/misc/Nixie/M" + i + "B.gif", "resources/icons/misc/Nixie/M" + i + "B.gif");
         }
-        colonIcon = new NamedIcon("resources/icons/misc/Nixie/colon.gif", "resources/icons/misc/Nixie/colon.gif");
-        baseColon = new NamedIcon("resources/icons/misc/Nixie/colon.gif", "resources/icons/misc/Nixie/colon.gif");
-
+        colonIcon = new NamedIcon("resources/icons/misc/Nixie/colonB.gif", "resources/icons/misc/Nixie/colonB.gif");
+        baseColon = new NamedIcon("resources/icons/misc/Nixie/colonB.gif", "resources/icons/misc/Nixie/colonB.gif");
+        // set initial size the same as the original gifs
+        for (int i = 0; i < 10; i++) {
+          Image scaledImage = baseTubes[i].getImage().getScaledInstance(23,32,Image.SCALE_SMOOTH);
+          tubes[i].setImage(scaledImage);
+        }
+        Image scaledImage = baseColon.getImage().getScaledInstance(12,32,Image.SCALE_SMOOTH);
+        colonIcon.setImage(scaledImage);
 
         // determine aspect ratio of a single digit graphic
         iconAspect = 24./32.;
@@ -135,12 +141,10 @@ public class NixieClockFrame extends javax.swing.JFrame implements java.beans.Pr
         iconHeight = (int) (iconWidth/iconAspect);
       }
       for (int i = 0; i < 10; i++) {
-        Image baseImage = baseTubes[i].getImage();
-        Image scaledImage = baseImage.getScaledInstance(iconWidth,iconHeight,Image.SCALE_SMOOTH);
+        Image scaledImage = baseTubes[i].getImage().getScaledInstance(iconWidth,iconHeight,Image.SCALE_SMOOTH);
         tubes[i].setImage(scaledImage);
       }
-      Image baseImage = baseColon.getImage();
-      Image scaledImage = baseImage.getScaledInstance(iconWidth/2,iconHeight,Image.SCALE_SMOOTH);
+      Image scaledImage = baseColon.getImage().getScaledInstance(iconWidth/2,iconHeight,Image.SCALE_SMOOTH);
       colonIcon.setImage(scaledImage);
 
 //      Ugly hack to force frame to redo the layout.
