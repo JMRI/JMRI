@@ -12,12 +12,16 @@ import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.catalog.*;
 
 /**
- * Frame providing a simple clock showing Nixie tubes
+ * Frame providing a simple clock showing Nixie tubes.
+ * <P>
+ * A Run/Stop button is built into this, but because I 
+ * don't like the way it looks, it's not currently 
+ * displayed in the GUI.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
-public class NixieClockFrame extends javax.swing.JFrame {
+public class NixieClockFrame extends javax.swing.JFrame implements java.beans.PropertyChangeListener {
 
     // GUI member declarations
     JLabel h1;  // msb of hours
@@ -48,7 +52,11 @@ public class NixieClockFrame extends javax.swing.JFrame {
 
         // set time to now
         clock.setTime(new Date());
-
+        try { clock.setRate(4.); } catch (Exception e) {}
+        
+        // listen for changes to the timebase parameters
+        clock.addPropertyChangeListener(this);
+        
         // init GUI
         m1 = new JLabel(tubes[0]);
         m2 = new JLabel(tubes[0]);
@@ -61,6 +69,11 @@ public class NixieClockFrame extends javax.swing.JFrame {
         getContentPane().add(new JLabel(":"));  // need a better way to do this!
         getContentPane().add(m1);
         getContentPane().add(m2);
+
+        getContentPane().add(b = new JButton("Stop")); 
+        b.addActionListener( new ButtonListener());
+        // since Run/Stop button looks crummy, don't display for now
+        b.setVisible(false);
 
         update();
         pack();
@@ -97,5 +110,24 @@ public class NixieClockFrame extends javax.swing.JFrame {
         timer.stop();
         dispose();
     }
+    
+    /**
+     * Handle a change to clock properties
+     */
+    public void propertyChange(java.beans.PropertyChangeEvent e) {
+		boolean now = clock.getRun();
+		if (now) b.setText("Stop");
+		else b.setText("Run");
+    }
 
+    JButton b;
+
+	private class ButtonListener implements ActionListener {
+		public void actionPerformed(ActionEvent a) {
+			boolean next = !clock.getRun();
+			clock.setRun(next);
+			if (next) b.setText("Stop");
+			else b.setText("Run ");
+		}
+	}
 }
