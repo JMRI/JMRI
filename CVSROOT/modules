@@ -1,7 +1,7 @@
 jbuilder1 -d java/src &jmri &apps
 jbuilder2 &xml
 jbuilder3 -d java &test
-jbuilder4 -d java site/index.html
+jbuilder4 -d java site index.html
 
 jbuilder -a xml jbuilder4 jbuilder1 jbuilder3
 
