@@ -18,7 +18,7 @@ import javax.swing.border.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author			Bob Jacobsen   Copyright 2002
- * @version         $Revision: 1.25 $
+ * @version         $Revision: 1.26 $
  */
 public class JMRIdemo extends JPanel {
 	public JMRIdemo() {
@@ -128,6 +128,7 @@ public class JMRIdemo extends JPanel {
 	        devMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.ProgCheckAction("Check programmer names", this));
 	        devMenu.add(new jmri.jmrit.decoderdefn.DecoderIndexCreateAction("Create decoder index"));
             devMenu.add(new JSeparator());
+          	devMenu.add(new jmri.jmrit.speedometer.SpeedometerAction( "Speedometer" ));
           	devMenu.add(new jmri.jmrix.loconet.locormi.LnMessageClientAction( "Start LocoNet Client" ));
 	        devMenu.add(new jmri.jmrit.symbolicprog.symbolicframe.SymbolicProgAction("Table Programmer"));
 
