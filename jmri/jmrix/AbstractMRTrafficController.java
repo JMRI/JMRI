@@ -16,6 +16,9 @@ import com.sun.java.util.collections.LinkedList;
  * the mode.  The "Receive" thread converts characters from the input
  * stream into replies.
  * <P>
+ * A third thread is registered by the constructor as a shutdown hook.  
+ * It triggers the necessary cleanup code
+ * <P>
  * "Mode" refers to the state of the command station communications.<br>
  * "State" refers to the internal state machine used to control the mode,
  * e.g. to send commands to change mode.<br>
@@ -23,7 +26,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 abstract public class AbstractMRTrafficController {
 
@@ -34,6 +37,7 @@ abstract public class AbstractMRTrafficController {
 	allowUnexpectedReply=false;
         setInstance();
         self = this;
+	java.lang.Runtime.getRuntime().addShutdownHook(new Thread(new cleanupHook(this)));
     }
 
     AbstractMRTrafficController self;  // this is needed for synchronization
@@ -630,6 +634,25 @@ abstract public class AbstractMRTrafficController {
         public void run() {
             log.debug("Delayed xmt notify starts");
             mTC.notifyMessage(mMsg, mDest);
+        }
+    }
+
+    /**
+     * Internal class to handle traffic controller cleanup.
+     * the primary task of this thread is to make sure the DCC system has 
+     * exited service mode when the program exits.
+     */
+    class cleanupHook implements Runnable {
+        AbstractMRTrafficController mTC;
+
+        cleanupHook(AbstractMRTrafficController pTC) {
+            mTC = pTC;
+        }
+        public void run() {
+            log.debug("Cleanup Starts");
+        	AbstractMRMessage modeMsg=mTC.enterNormalMode();
+		if(modeMsg!=null)
+                   mTC.forwardToPort(modeMsg, null);	
         }
     }
 
