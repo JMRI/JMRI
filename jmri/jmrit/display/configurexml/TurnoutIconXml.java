@@ -1,22 +1,15 @@
 package jmri.jmrit.display.configurexml;
 
-import org.jdom.Element;
-
-import jmri.InstanceManager;
-import jmri.jmrit.display.PositionableLabel;
-import jmri.configurexml.XmlAdapter;
-
-import jmri.jmrit.display.TurnoutIcon;
-import jmri.jmrit.display.PanelEditor;
-import jmri.jmrit.catalog.NamedIcon;
-
-import javax.swing.*;
+import jmri.configurexml.*;
+import jmri.jmrit.catalog.*;
+import jmri.jmrit.display.*;
+import org.jdom.*;
 
 /**
  * Handle configuration for display.TurnoutIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class TurnoutIconXml implements XmlAdapter {
 
@@ -41,6 +34,7 @@ public class TurnoutIconXml implements XmlAdapter {
         element.addAttribute("thrown", p.getThrownIcon().getName());
         element.addAttribute("unknown", p.getUnknownIcon().getName());
         element.addAttribute("inconsistent", p.getInconsistentIcon().getName());
+        element.addAttribute("rotate", String.valueOf(p.getClosedIcon().getRotation()));
 
         element.addAttribute("class", "jmri.jmrit.display.configurexml.TurnoutIconXml");
 
@@ -64,22 +58,36 @@ public class TurnoutIconXml implements XmlAdapter {
 
         TurnoutIcon l = new TurnoutIcon();
 
-        NamedIcon result;
+        NamedIcon closed;
         name = element.getAttribute("closed").getValue();
-        l.setClosedIcon(result = p.catalog.getIconByName(name));
-        if (result == null) log.warn("did not locate closed icon file "+name);
+        l.setClosedIcon(closed = p.catalog.getIconByName(name));
+        if (closed == null) log.warn("did not locate closed icon file "+name);
 
+        NamedIcon thrown;
         name = element.getAttribute("thrown").getValue();
-        l.setThrownIcon(result = p.catalog.getIconByName(name));
-        if (result == null) log.warn("did not locate thrown icon file "+name);
+        l.setThrownIcon(thrown = p.catalog.getIconByName(name));
+        if (thrown == null) log.warn("did not locate thrown icon file "+name);
 
+        NamedIcon unknown;
         name = element.getAttribute("unknown").getValue();
-        l.setUnknownIcon(result = p.catalog.getIconByName(name));
-        if (result == null) log.warn("did not locate unknown icon file "+name);
+        l.setUnknownIcon(unknown = p.catalog.getIconByName(name));
+        if (unknown == null) log.warn("did not locate unknown icon file "+name);
 
+        NamedIcon inconsistent;
         name = element.getAttribute("inconsistent").getValue();
-        l.setInconsistentIcon(result = p.catalog.getIconByName(name));
-        if (result == null) log.warn("did not locate inconsistent icon file "+name);
+        l.setInconsistentIcon(inconsistent = p.catalog.getIconByName(name));
+        if (inconsistent == null) log.warn("did not locate inconsistent icon file "+name);
+
+        try {
+            Attribute a = element.getAttribute("rotate");
+            if (a!=null) {
+                int rotation = element.getAttribute("rotate").getIntValue();
+                closed.setRotation(rotation, l);
+                thrown.setRotation(rotation, l);
+                inconsistent.setRotation(rotation, l);
+                unknown.setRotation(rotation, l);
+            }
+        } catch (org.jdom.DataConversionException e) {}
 
         l.setTurnout(element.getAttribute("turnout").getValue(), null);
 

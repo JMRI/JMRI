@@ -1,21 +1,15 @@
 package jmri.jmrit.display.configurexml;
 
-import org.jdom.Element;
-
-import jmri.InstanceManager;
-import jmri.jmrit.display.PositionableLabel;
-import jmri.configurexml.XmlAdapter;
-
-import jmri.jmrit.display.SignalHeadIcon;
-import jmri.jmrit.display.PanelEditor;
-
-import javax.swing.*;
+import jmri.configurexml.*;
+import jmri.jmrit.catalog.*;
+import jmri.jmrit.display.*;
+import org.jdom.*;
 
 /**
  * Handle configuration for display.SignalHeadIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class SignalHeadIconXml implements XmlAdapter {
 
@@ -41,6 +35,7 @@ public class SignalHeadIconXml implements XmlAdapter {
         element.addAttribute("yellow", p.getYellowIcon().getName());
         element.addAttribute("flashyellow", p.getFlashYellowIcon().getName());
         element.addAttribute("green", p.getGreenIcon().getName());
+        element.addAttribute("rotate", String.valueOf(p.getGreenIcon().getRotation()));
 
         element.addAttribute("class", "jmri.jmrit.display.configurexml.SignalHeadIconXml");
 
@@ -67,17 +62,32 @@ public class SignalHeadIconXml implements XmlAdapter {
                     Integer.parseInt(element.getAttribute("head").getValue())
                     );
 
+        NamedIcon red;
         name = element.getAttribute("red").getValue();
-        l.setRedIcon(p.catalog.getIconByName(name));
+        l.setRedIcon(red = p.catalog.getIconByName(name));
 
+        NamedIcon yellow;
         name = element.getAttribute("yellow").getValue();
-        l.setYellowIcon(p.catalog.getIconByName(name));
+        l.setYellowIcon(yellow = p.catalog.getIconByName(name));
 
+        NamedIcon flashyellow;
         name = element.getAttribute("flashyellow").getValue();
-        l.setFlashYellowIcon(p.catalog.getIconByName(name));
+        l.setFlashYellowIcon(flashyellow = p.catalog.getIconByName(name));
 
+        NamedIcon green;
         name = element.getAttribute("green").getValue();
-        l.setGreenIcon(p.catalog.getIconByName(name));
+        l.setGreenIcon(green = p.catalog.getIconByName(name));
+
+        try {
+            Attribute a = element.getAttribute("rotate");
+            if (a!=null) {
+                int rotation = element.getAttribute("rotate").getIntValue();
+                red.setRotation(rotation, l);
+                yellow.setRotation(rotation, l);
+                flashyellow.setRotation(rotation, l);
+                green.setRotation(rotation, l);
+            }
+        } catch (org.jdom.DataConversionException e) {}
 
         l.displayState(l.headState());
 

@@ -1,16 +1,14 @@
 package jmri.jmrit.display;
 
-import java.awt.event.MouseEvent;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import jmri.InstanceManager;
-import jmri.Sensor;
-import jmri.jmrit.catalog.NamedIcon;
+import java.awt.event.*;
+import javax.swing.*;
+import jmri.*;
+import jmri.jmrit.catalog.*;
 
 /**
  * SensorIcon provides a small icon to display a status of a Sensor.</p>
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -106,6 +104,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
 	}
 
     JPopupMenu popup = null;
+    SensorIcon ours = this;
     /**
      * Pop-up just displays the sensor name
      */
@@ -115,6 +114,16 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             name = sensor.getID();
             popup = new JPopupMenu();
             popup.add(new JMenuItem(name));
+            if (showIcon) popup.add(new AbstractAction("Rotate") {
+                public void actionPerformed(ActionEvent e) {
+                    active.setRotation(active.getRotation()+1, ours);
+                    inactive.setRotation(inactive.getRotation()+1, ours);
+                    unknown.setRotation(unknown.getRotation()+1, ours);
+                    inconsistent.setRotation(inconsistent.getRotation()+1, ours);
+                    displayState(sensorState());
+                    ours.setSize(ours.getPreferredSize().width, ours.getPreferredSize().height);
+                }
+            });
         }
         popup.show(e.getComponent(), e.getX(), e.getY());
     }

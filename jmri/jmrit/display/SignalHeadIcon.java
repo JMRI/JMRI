@@ -12,7 +12,7 @@ import jmri.jmrix.loconet.AspectGenerator;
  * AspectGenerator, so is tied very closely to that class.  This needs to
  * be fixed in the longer term.
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -103,6 +103,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
 	}
 
     JPopupMenu popup = null;
+    SignalHeadIcon ours = this;
     /**
      * Pop-up just displays the name
      */
@@ -112,6 +113,16 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
             name = "AG"+mGenerator.getSEName()+" head "+this.mHead;
             popup = new JPopupMenu();
             popup.add(new JMenuItem(name));
+            if (showIcon) popup.add(new AbstractAction("Rotate") {
+                public void actionPerformed(ActionEvent e) {
+                    green.setRotation(green.getRotation()+1, ours);
+                    red.setRotation(red.getRotation()+1, ours);
+                    yellow.setRotation(yellow.getRotation()+1, ours);
+                    flashYellow.setRotation(flashYellow.getRotation()+1, ours);
+                    displayState(headState());
+                    ours.setSize(ours.getPreferredSize().width, ours.getPreferredSize().height);
+                }
+            });
         }
         popup.show(e.getComponent(), e.getX(), e.getY());
     }

@@ -1,21 +1,15 @@
 package jmri.jmrit.display.configurexml;
 
-import org.jdom.Element;
-
-import jmri.InstanceManager;
-import jmri.jmrit.display.PositionableLabel;
-import jmri.configurexml.XmlAdapter;
-
-import jmri.jmrit.display.SensorIcon;
-import jmri.jmrit.display.PanelEditor;
-
-import javax.swing.*;
+import jmri.configurexml.*;
+import jmri.jmrit.catalog.*;
+import jmri.jmrit.display.*;
+import org.jdom.*;
 
 /**
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class SensorIconXml implements XmlAdapter {
 
@@ -40,6 +34,7 @@ public class SensorIconXml implements XmlAdapter {
         element.addAttribute("inactive", p.getInactiveIcon().getName());
         element.addAttribute("unknown", p.getUnknownIcon().getName());
         element.addAttribute("inconsistent", p.getInconsistentIcon().getName());
+        element.addAttribute("rotate", String.valueOf(p.getActiveIcon().getRotation()));
 
         element.addAttribute("class", "jmri.jmrit.display.configurexml.SensorIconXml");
 
@@ -63,17 +58,32 @@ public class SensorIconXml implements XmlAdapter {
 
         SensorIcon l = new SensorIcon();
 
+        NamedIcon active;
         name = element.getAttribute("active").getValue();
-        l.setActiveIcon(p.catalog.getIconByName(name));
+        l.setActiveIcon(active = p.catalog.getIconByName(name));
 
+        NamedIcon inactive;
         name = element.getAttribute("inactive").getValue();
-        l.setInactiveIcon(p.catalog.getIconByName(name));
+        l.setInactiveIcon(inactive = p.catalog.getIconByName(name));
 
+        NamedIcon unknown;
         name = element.getAttribute("unknown").getValue();
-        l.setUnknownIcon(p.catalog.getIconByName(name));
+        l.setUnknownIcon(unknown = p.catalog.getIconByName(name));
 
+        NamedIcon inconsistent;
         name = element.getAttribute("inconsistent").getValue();
-        l.setInconsistentIcon(p.catalog.getIconByName(name));
+        l.setInconsistentIcon(inconsistent = p.catalog.getIconByName(name));
+
+        try {
+            Attribute a = element.getAttribute("rotate");
+            if (a!=null) {
+                int rotation = element.getAttribute("rotate").getIntValue();
+                active.setRotation(rotation, l);
+                inactive.setRotation(rotation, l);
+                inconsistent.setRotation(rotation, l);
+                unknown.setRotation(rotation, l);
+            }
+        } catch (org.jdom.DataConversionException e) {}
 
         l.setSensor(element.getAttribute("sensor").getValue(), "");
 
