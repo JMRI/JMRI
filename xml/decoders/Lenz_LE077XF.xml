@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Lenz_LE077XF.xml,v 1.9 2002-07-11 14:14:33 jacobsen Exp $ -->
+<!-- $Id: Lenz_LE077XF.xml,v 1.10 2002-08-08 06:51:48 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Joe Ellis filker@mindspring.com"
 			version="4" lastUpdated="20020703" />
@@ -73,13 +73,13 @@
 			</variable>
 
 		<variable label="Manufacturer ID" CV="8" readOnly="yes"
-				item="Manufacturer">
-			<decVal default="99"/>
+				item="Manufacturer" default="99">
+			<decVal/>
 			</variable>
 
 
-		<variable label="Manufacturer ID - Reset" CV="8">
-			<decVal default="99"/>
+		<variable label="Manufacturer ID - Reset" CV="8" default="99">
+			<decVal/>
 			</variable>
 
 <!-- Deleted all CV 13 references-->
@@ -95,16 +95,16 @@
 			<decVal/>
 			</variable>
 
-		<variable label="Acceleration Trim (range 0-255)" CV="23"
+		<variable label="Acceleration Trim (range 0-255)" CV="23" default="255"
 				item="Consist Acceleration Adjustment"
 		        comment="Additional Acceleration rate info for fine-tuning. (Range 0-255)">
-			<decVal default="255" min="0" max="255"/>
+			<decVal min="0" max="255"/>
 			</variable>
 
 		<variable label="Deceleration Trim (range 0-255)" CV="24"
-				item="Consist Deceleration Adjustment"
+				default="255" item="Consist Deceleration Adjustment"
 		        comment="Additional Deceleration (braking) rate info for fine-tuning. (Range 0-255)">
-			<decVal default="255" min="0" max="255"/>
+			<decVal min="0" max="255"/>
 			</variable>
 
 		<variable label="Normal direction of motion" CV="29"
