@@ -7,6 +7,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
+import org.jdom.Element;
+import org.jdom.Attribute;
 
 /** 
  * DecoderProConfigFrame provides startup configuration, a GUI for setting 
@@ -19,7 +21,7 @@ import javax.swing.*;
  * stored in local variables.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecoderProConfigFrame.java,v 1.1.1.1 2001-12-02 05:51:21 jacobsen Exp $
+ * @version			$Id: DecoderProConfigFrame.java,v 1.2 2001-12-05 23:31:15 jacobsen Exp $
  */
 public class DecoderProConfigFrame extends JFrame {
 		
@@ -50,7 +52,10 @@ public class DecoderProConfigFrame extends JFrame {
 	 * Returns true if
 	 * a configuration file was found and loaded OK.
 	 */
-	public boolean readConfig() {
+	public boolean configure(DecoderProConfigFile file) throws jmri.JmriException {
+		configureConnection(file.getConnectionElement());
+		configureGUI(file.getGuiElement());
+		configureProgrammer(file.getProgrammerElement());
 		return true;
 	}
 	
@@ -59,14 +64,17 @@ public class DecoderProConfigFrame extends JFrame {
 	 * Returns true if
 	 * a configuration file was found and loaded OK.
 	 */
-	public boolean writeConfig() {
-		return true;
-	}
+	//public boolean writeConfig() {
+	//	return true;
+	//}
 	
 	/**
 	 * Handle the Save button:  Backup the file, write a new one, close the frame.
 	 */
 	public void savePressed() {
+		DecoderProConfigFile f = new DecoderProConfigFile();
+		f.makeBackupFile();
+		f.writeFile(DecoderProConfigFile.defaultConfigFilename(), this);
 	}
 	
 	JComboBox protocolBox;
@@ -93,6 +101,11 @@ public class DecoderProConfigFrame extends JFrame {
 		j.add(protocolBox);
 		
 		portBox = new JComboBox(new String[] {"(select a connection method first)"});
+		portBox.addActionListener( new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				portSelected();
+			}
+		});
 		portBox.setToolTipText("This is disabled until you select a connection method");
 		portBox.setEnabled(false);
 		
@@ -111,36 +124,39 @@ public class DecoderProConfigFrame extends JFrame {
 		portBox.setToolTipText("Select a communications port");
 		
 		// create the eventual serial driver object, and ask it for available comm ports
-		String name = (String) protocolBox.getSelectedItem();
+		protocolName = (String) protocolBox.getSelectedItem();
 		portBox.removeAllItems();  // start over
-		log.debug("Connection selected: "+name);
-		if (name.equals("LocoNet LocoBuffer")) {
+		log.debug("Connection selected: "+protocolName);
+		if (protocolName.equals("LocoNet LocoBuffer")) {
 			//
 			jmri.jmrix.loconet.locobuffer.LocoBufferAdapter a 
 					= new jmri.jmrix.loconet.locobuffer.LocoBufferAdapter();
 			Vector v = a.getPortNames();
-			log.debug("Found "+v.size()+" ports");
+			log.debug("Found "+v.size()+"LocoBuffer ports");
 			for (int i=0; i<v.size(); i++) {
+				if (i==0) portName = (String) v.elementAt(i);
 				portBox.addItem(v.elementAt(i));
 			}
 			
-		} else if (name.equals("LocoNet MS100")) {
+		} else if (protocolName.equals("LocoNet MS100")) {
 			//
-			jmri.jmrix.loconet.locobuffer.LocoBufferAdapter a 
-					= new jmri.jmrix.loconet.locobuffer.LocoBufferAdapter();
+			jmri.jmrix.loconet.ms100.MS100Adapter a 
+					= new jmri.jmrix.loconet.ms100.MS100Adapter();
 			Vector v = a.getPortNames();
-			log.debug("Found "+v.size()+" ports");
+			log.debug("Found "+v.size()+" MS100 ports");
 			for (int i=0; i<v.size(); i++) {
+				if (i==0) portName = (String) v.elementAt(i);
 				portBox.addItem(v.elementAt(i));
 			}
 			
-		} else if (name.equals("NCE")) {
+		} else if (protocolName.equals("NCE")) {
 			//
-			jmri.jmrix.loconet.locobuffer.LocoBufferAdapter a 
-					= new jmri.jmrix.loconet.locobuffer.LocoBufferAdapter();
+			jmri.jmrix.nce.serialdriver.SerialDriverAdapter a 
+					= new jmri.jmrix.nce.serialdriver.SerialDriverAdapter();
 			Vector v = a.getPortNames();
-			log.debug("Found "+v.size()+" ports");
+			log.debug("Found "+v.size()+" NCE ports");
 			for (int i=0; i<v.size(); i++) {
+				if (i==0) portName = (String) v.elementAt(i);
 				portBox.addItem(v.elementAt(i));
 			}
 			
@@ -151,9 +167,56 @@ public class DecoderProConfigFrame extends JFrame {
 				portBox.setEnabled(false);
 		}
 	}
+	/*
+	 * Port name has been selected; store
+	 */
+	void portSelected() {
+		portName = (String) portBox.getSelectedItem();
+	}
+
 	jmri.jmrix.SerialDriverAdapter port = null;
+	String protocolName = "(None selected)";
+	String portName = "(None selected)";
 	
-	boolean configureConnection() {
+	Element getConnection() {
+		Element e = new Element("connection");
+		e.addAttribute("class", protocolName);
+		e.addAttribute("port", portName);
+		return e;
+	}
+	
+	boolean configureConnection(Element e) throws jmri.JmriException {
+		protocolName = e.getAttribute("class").getValue();
+		portName = e.getAttribute("port").getValue();
+		
+		protocolBox.setSelectedItem(protocolName);
+		portBox.setSelectedItem(portName);
+		
+		// handle the specific case (a good use for reflection!)
+		log.debug("Configuring connection with "+protocolName+" "+portName);
+		if (protocolName.equals("LocoNet LocoBuffer")) {
+			//
+			jmri.jmrix.loconet.locobuffer.LocoBufferAdapter a 
+					= new jmri.jmrix.loconet.locobuffer.LocoBufferAdapter();
+			a.openPort(portName, "DecoderPro");
+			
+		} else if (protocolName.equals("LocoNet MS100")) {
+			//
+			jmri.jmrix.loconet.ms100.MS100Adapter a 
+					= new jmri.jmrix.loconet.ms100.MS100Adapter();
+			a.openPort(portName, "DecoderPro");
+			
+		} else if (protocolName.equals("NCE")) {
+			//
+			jmri.jmrix.nce.serialdriver.SerialDriverAdapter a 
+					= new jmri.jmrix.nce.serialdriver.SerialDriverAdapter();
+			a.openPort(portName, "DecoderPro");
+			
+		} else {
+			// selected no match, so throw an error
+			throw new jmri.JmriException();
+		}
+		
 		return true;
 	}
 	
@@ -178,10 +241,10 @@ public class DecoderProConfigFrame extends JFrame {
             JRadioButton jmi = new JRadioButton(name);
             c.add(jmi);
             LAFGroup.add(jmi);
-            jmi.setActionCommand(name);
+           	jmi.setActionCommand(name);
             jmi.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					log.info("LAF set to "+e.getActionCommand());
+					log.info("LAF class set to "+e.getActionCommand());
 					selectedLAF = e.getActionCommand();
 				}
             });
@@ -196,17 +259,72 @@ public class DecoderProConfigFrame extends JFrame {
 	ButtonGroup LAFGroup;
 	String selectedLAF;
 	
-	boolean configureGUI() {
+	Element getGUI() {
+		Element e = new Element("gui");
+		String lafClassName = LAFGroup.getSelection().getActionCommand();
+		
+		e.addAttribute("LAFclass", lafClassName);
+		return e;
+	}
+
+	boolean configureGUI(Element e) {
+		String name = e.getAttribute("LAFclass").getValue();
+        String className = (String) installedLAFs.get(name);
+		log.debug("GUI selection: "+name+" class name: "+className);
+		// show on button
+		Enumeration enum = LAFGroup.getElements();
+		while (enum.hasMoreElements()) {
+			JRadioButton b = (JRadioButton)enum.nextElement();
+			if (b.getLabel().equals(name)) b.setSelected(true);
+		}
+		// set the GUI
+		log.debug("setting GUI");
+        if (className != null) {
+            try {
+                updateLookAndFeel(name, className);
+            } catch (Exception ex) {
+                log.error("Exception while setting GUI look & feel: "+ex);
+            }
+        }
 		return true;
 	}
 
+    /** 
+     *  Change the look-and-feel to the specified class.
+     *  Alert the user if there were problems loading the PLAF.
+     *  @param name (String) the presentable name for the class
+     *  @param className (String) the className to be fed to the UIManager
+     *  @see javax.swing.UIManager#setLookAndFeel
+     *  @see javax.swing.SwingUtilities#updateComponentTreeUI
+     */ 
+    public void updateLookAndFeel(String name, String className) {
+	try {
+            // Set the new look and feel, and update the sample message to reflect it.
+	    	UIManager.setLookAndFeel(className);
+            // Call for a UI refresh to the new LAF starting at the highest level
+            SwingUtilities.updateComponentTreeUI(getContentPane());
+        } catch (Exception e) {
+            String errMsg = "The " + name + " look-and-feel ";
+            if (e instanceof UnsupportedLookAndFeelException){
+                errMsg += "is not supported on this platform.";
+            } else if (e instanceof ClassNotFoundException){
+                errMsg += "could not be found.";
+            } else {
+                errMsg += "could not be loaded.";
+            }
+            
+            log.error(errMsg);
+            
+        }
+    }
+                
 	JPanel createProgrammerPane() {
 		JPanel j = new JPanel();
 		j.setLayout(new BoxLayout(j, BoxLayout.Y_AXIS));
 		return j;
 	}
 	
-	boolean configureProgrammer() {
+	boolean configureProgrammer(Element e) {
 		return true;
 	}
 

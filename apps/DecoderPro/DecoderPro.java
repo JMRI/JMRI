@@ -12,7 +12,7 @@ import BasicWindowMonitor;
  * DecoderPro application. 
  *
  * @author			Bob Jacobsen
- * @version			$Id: DecoderPro.java,v 1.1.1.1 2001-12-02 05:51:21 jacobsen Exp $
+ * @version			$Id: DecoderPro.java,v 1.2 2001-12-05 23:31:15 jacobsen Exp $
  */
 public class DecoderPro extends JPanel {
 	public DecoderPro() {
@@ -24,6 +24,10 @@ public class DecoderPro extends JPanel {
         // Create a menu bar and give it a bevel border
         menuBar = new JMenuBar();
         menuBar.setBorder(new BevelBorder(BevelBorder.RAISED));
+    
+    // load preferences
+    	jmri.apps.DecoderProConfigAction prefs 
+    				= new jmri.apps.DecoderProConfigAction("Preferences...");
         
 	// populate GUI
 			
@@ -34,13 +38,14 @@ public class DecoderPro extends JPanel {
 
         JMenu editMenu = new JMenu("Edit");
         menuBar.add(editMenu);
-	        editMenu.add(new jmri.apps.DecoderProConfigAction("Preferences..."));
+	        editMenu.add(prefs);
 
         JMenu debugMenu = new JMenu("Debug");
         menuBar.add(debugMenu);
 	        debugMenu.add(new jmri.jmrix.loconet.locomon.LocoMonAction("LocoNet Monitor"));
 	        debugMenu.add(new jmri.jmrix.nce.ncemon.NceMonAction("Nce Command Monitor"));
 	        debugMenu.add(new jmri.jmrit.MemoryFrameAction("Memory usage monitor"));
+	        debugMenu.add(new jmri.jmrit.XmlFileCheckAction("Check XML File", this));
 
 	}
 

@@ -40,7 +40,7 @@ import com.sun.java.util.collections.ArrayList;
  *<P>
  * Description:		Extends VariableValue to represent a NMRA long address
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: SpeedTableVarValue.java,v 1.3 2001-11-27 03:27:15 jacobsen Exp $
+ * @version			$Id: SpeedTableVarValue.java,v 1.4 2001-12-05 23:28:10 jacobsen Exp $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -59,16 +59,22 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 		
 		// create the set of models 
 		for (int i=0; i<nValues; i++) {
+			// create each model
 			DefaultBoundedRangeModel j = new DefaultBoundedRangeModel(255*i/nValues, 0, 0, 255);
 			models[i] = j;
+			// connect each model to CV for notification
+			// the connection is to cvNum through cvNum+27 (28 values total)
+			// The invoking code (e.g. VariableTableModel) must ensure the CVs exist
+			// Note that the default values in the CVs are zero, but are the ramp
+			// values here.  We leave that as work item 177, and move on to set the
+			// CV states to "FromFile"
+			CvValue c = (CvValue)_cvVector.elementAt(getCvNum()+i);
+			c.setValue(255*i/nValues);
+			c.addPropertyChangeListener(this);
+			c.setState(CvValue.FROMFILE);
 		}
-		_defaultColor = (new JSlider()).getBackground();
 
-		// connect for notification
-		// the connection is to cvNum through cvNum+27 (28 values total)
-		for (int i=0; i<nValues; i++) {
-			((CvValue)_cvVector.elementAt(getCvNum()+i)).addPropertyChangeListener(this);
-		}
+		_defaultColor = (new JSlider()).getBackground();
 	}
 	
   	/** 
@@ -151,8 +157,6 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 	Color _defaultColor;
 	// implement an abstract member to set colors
 	void setColor(Color c) {
-		// if (c != null) _value.setBackground(c);
-		// else _value.setBackground(_defaultColor);
 		prop.firePropertyChange("Value", null, null);
 	}
 	
