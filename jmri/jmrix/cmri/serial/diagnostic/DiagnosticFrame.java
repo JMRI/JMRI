@@ -6,6 +6,7 @@ import jmri.util.StringUtil;
 import jmri.jmrix.cmri.serial.SerialMessage;
 import jmri.jmrix.cmri.serial.SerialReply;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
+import jmri.jmrix.cmri.serial.SerialNode;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -18,8 +19,8 @@ import java.lang.Integer;
 
 /**
  * Frame for running CMRI diagnostics
- * @author	Dave Duchamp   Copyright (C) 2004
- * @version	$Revision: 1.2 $
+ * @author	 Dave Duchamp   Copyright (C) 2004
+ * @version	 $Revision: 1.3 $
  */
 public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cmri.serial.SerialListener {
 
@@ -28,10 +29,12 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
     protected boolean wrapTest = false;
     protected boolean isSMINI = false;
     protected boolean isUSIC_SUSIC = true;
+// Here add other node types
     protected int numOutputCards = 2;
     protected int numInputCards = 1;
     protected int numCards = 3;
     protected int ua = 0;
+    protected SerialNode node;
     protected int outCardNum = 0;
     protected int obsDelay = 2000;     
     protected int inCardNum = 2;
@@ -202,15 +205,6 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
         pack();
     }
 
-//    public void pollButtonActionPerformed(java.awt.event.ActionEvent e) {
-//        SerialMessage msg = SerialMessage.getPoll(Integer.valueOf(uaAddrField.getText()).intValue());
-//        SerialTrafficController.instance().sendSerialMessage(msg, this);
-//    }
-
-//    public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-//        SerialTrafficController.instance().sendSerialMessage(createPacket(packetTextField.getText()), this);
-//    }
-
     /**
      * Method to handle run button in Diagnostic Frame
      */        
@@ -264,9 +258,20 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
             statusText1.setVisible(true);
             return (false);
         }
-        // determine if node is SMINI
-// here insert code to find the node and the node type and
-//    initialize numInputCards, numOutputCards, and numCards
+        // get the SerialNode corresponding to this node address
+//      node = SerialNode.getNodeFromAddress(ua);
+// the above routine doesn't work yet -- temporarily create a node to get one to work with
+        node = new SerialNode();
+// end temporary
+        // determine if node is SMINI, USIC_SUSIC, or 
+        int type = node.getNodeType();
+        isSMINI = (type==SerialNode.SMINI);
+        isUSIC_SUSIC = (type==SerialNode.USIC_SUSIC);
+// Here insert code for other type nodes
+        // initialize numInputCards, numOutputCards, and numCards
+        numOutputCards = node.numOutputCards();
+        numInputCards = node.numInputCards();
+        numCards = numOutputCards + numInputCards;
 
         // read setup data - Out Card field
         try 
@@ -279,6 +284,7 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
             statusText1.setVisible(true);
             return (false);
         }
+        // Check for consistency with Node definition
         if ( isUSIC_SUSIC ) {
             if ( (outCardNum < 0) || (outCardNum >= numCards) ) {
                 statusText1.setText("Error - Out Card is not between 0 and "+Integer.toString(numCards-1)+
@@ -286,7 +292,12 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
                 statusText1.setVisible(true);
                 return (false);
             }
-// Here insert test to make sure outCardNum refers to an output card
+            if (!node.isOutputCard(outCardNum)) {
+                statusText1.setText("Error - Out Card is not an Output Card in your Node definition, "+
+                                                                            "please try again.");
+                statusText1.setVisible(true);
+                return (false);
+            }
         }
         if (isSMINI && ( (outCardNum < 0) || (outCardNum > 1) ) ) {
             statusText1.setText("Error - Out Card is not 0 or 1, please try again.");
@@ -320,6 +331,7 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
                 statusText1.setVisible(true);
                 return (false);
             }
+            // Check for consistency with Node definition
             if (isUSIC_SUSIC) {
                 if ( (inCardNum < 0) || (inCardNum >= numCards) )  {
                     statusText1.setText("Error - In Card is not between 0 and "+
@@ -327,7 +339,12 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
                     statusText1.setVisible(true);
                     return (false);
                 }
-// Here add test if inCardNum is a defined input card for node
+                if (!node.isInputCard(inCardNum)) {
+                    statusText1.setText("Error - In Card is not an Input Card in your Node definition, "+
+                                                                            "please try again.");
+                    statusText1.setVisible(true);
+                    return (false);
+                }
             }
             if (isSMINI && (inCardNum != 2) ) {
                 statusText1.setText("Error - In Card not 2 for SMINI, assumed 2 and continued.");
@@ -347,6 +364,18 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
                 return (false);
             }
         }
+        
+        // complete initialization of output card
+       int portsPerCard = (node.getNumBitsPerCard())/8;
+       begOutByte = (node.getOutputCardIndex(outCardNum)) * portsPerCard;
+       endOutByte = begOutByte + portsPerCard - 1;
+       nOutBytes = numOutputCards * portsPerCard;
+       // if wraparound test, complete initialization of the input card
+       if (wrapTest) {
+           begInByte = (node.getInputCardIndex(inCardNum)) * portsPerCard;
+           endInByte = begInByte + portsPerCard - 1;
+           nInBytes = numInputCards * portsPerCard;
+       }
         
 // debugging
         if (outTest) {
@@ -410,13 +439,11 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
         // check the entered delay--if too short an overrun could occur
         //     where the computer program is ahead of buffered serial output
         if (obsDelay<2000) obsDelay = 2000;
-        // determine the beginning and ending output bytes for this output card
-    
         // Set up beginning LED on position
         curOutByte = begOutByte;
         curOutBit = 0;
         // Send initialization message                
-//        SerialTrafficController.instance().sendSerialMessage(createInitPacket(),curFrame);
+        SerialTrafficController.instance().sendSerialMessage(node.createInitPacket(),curFrame);
         try {
             // Wait for initialization to complete
             wait (1000);    
@@ -621,7 +648,7 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
     /**
      * Message notification method to implement SerialListener interface
      */
-    public void  message(SerialMessage m) {}  // Ignore for now
+    public void  message(SerialMessage m) {}  // Ignore for now 
 
     /**
      * Reply notification method to implement SerialListener interface

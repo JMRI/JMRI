@@ -4,7 +4,7 @@
  * Description:		Swing action to create and register a
  *       			DiagnosticFrame object
  *
- * @author			Dave Duchamp Copyright (C) 2004
+ * @author                  Dave Duchamp Copyright (C) 2004
  * @version
  */
 
