@@ -1,11 +1,4 @@
-/**
- * DecVariableValue.java
- *
- * Description:		Extends VariableValue to represent a decimal variable
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.3 $
- *
- */
+// DecVariableValue.java
 
 package jmri.jmrit.symbolicprog;
 
@@ -23,6 +16,13 @@ import javax.swing.event.*;
 import javax.swing.text.*;
 import com.sun.java.util.collections.ArrayList;
 
+/**
+ * Decimal representation of a value.
+ *
+ * @author			Bob Jacobsen   Copyright (C) 2001
+ * @version             $Revision: 1.4 $
+ *
+ */
 public class DecVariableValue extends VariableValue
 		implements ActionListener, PropertyChangeListener, FocusListener {
 
@@ -157,10 +157,11 @@ public class DecVariableValue extends VariableValue
             oldVal = Integer.valueOf(_value.getText()).intValue();
         } catch (java.lang.NumberFormatException ex) { oldVal = -999; }
         if (log.isDebugEnabled()) log.debug("setValue with new value "+value+" old value "+oldVal);
+        if (oldVal != value) {
             _value.setText(""+value);
-        if (oldVal != value || getState() == VariableValue.UNKNOWN)
             updatedTextField();
-        prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value));
+            prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value));
+        }
     }
 
     Color _defaultColor;
@@ -170,7 +171,7 @@ public class DecVariableValue extends VariableValue
 	void setColor(Color c) {
 		if (c != null) _value.setBackground(c);
 		else _value.setBackground(_defaultColor);
-		prop.firePropertyChange("Value", null, null);
+		// prop.firePropertyChange("Value", null, null);
 	}
 
 	public void read() {
