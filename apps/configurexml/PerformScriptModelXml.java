@@ -11,7 +11,7 @@ import org.jdom.Element;
  * Handle XML persistance of PerformScriptModel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @see apps.PerformScriptPanel
  */
 public class PerformScriptModelXml implements XmlAdapter {
@@ -43,7 +43,7 @@ public class PerformScriptModelXml implements XmlAdapter {
         log.debug("Run file "+fileName);
 
         // run the script
-        jmri.jmrit.jython.RunJythonScript.runScript(fileName);
+        jmri.util.PythonInterp.runScript(fileName);
 
         // leave an updated object around
         PerformScriptModel m = new PerformScriptModel();
