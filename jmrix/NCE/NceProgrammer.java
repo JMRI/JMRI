@@ -126,7 +126,7 @@ public class NceProgrammer implements NceListener, Programmer {
 		}
 	}
 	
-	// internal method to create the LocoNetMessage for programmer task start
+	// internal method to create the NceMessage for programmer task start
 	protected NceMessage progTaskStart(int mode, int val, int cvnum) throws jmri.ProgrammerException {
 	
 		int addr = cvnum-1;    // cvnum is in human readable form; addr is what's sent over loconet
