@@ -12,15 +12,12 @@
 <P>
 This is the README file for version 0.9 of "DecoderPro". 
 
-<P><B>Note that
-there have been some changes in the Windows packaging since the
-earlier version; if you're using DecoderPro on Windows you should
-read the Windows sections again.</B>
-
 <P>
 DecoderPro provides a simple yet powerful tool for programming
 DCC decoders and managing a locomotive roster.
-It works with Digitrax LocoNet and NCE-equipped layouts. It provides
+It works with layouts equipped with Digitrax LocoNet, NCE, Wangrow, and
+EasyDCC systems. 
+It provides
 tools for layout control and monitoring, and for programming decoders.
 <P>
 <B>This is an early release. It is not yet ready for 
@@ -40,6 +37,7 @@ Content sections:
 <LI><A HREF="#Windows">Windows installation instructions</a>
 <LI><A HREF="#LocoNet">LocoNet hardware connection</a>
 <LI><A HREF="#NCE">NCE system hardware connection</a>
+<LI><A HREF="#EasyDCC">EasyDCC system hardware connection</a>
 <LI><A HREF="#Ops">Operating DecoderPro</a>
 <LI><A HREF="#Info">For more information</a>
 </UL>
@@ -53,6 +51,8 @@ or contact Bob Jacobsen
 DecoderPro is based on the JMRI libraries, which are
 described at 
 <A HREF="http://jmri.sourceforge.net/">http://jmri.sourceforge.net/</a>.
+You can ask questions in the JMRI discussion group at Yahoo, 
+<A HREF="http://groups.yahoo.com/group/jmriusers/">http://groups.yahoo.com/group/jmriusers/</a>.
 
 <P>
 Note that there are three distributions for DecoderPro.
@@ -75,6 +75,12 @@ The specific download files are:
 <A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.0.9.tar.gz">http://prdownloads.sourceforge.net/jmri/JMRI.0.9.tar.gz</A>
 
 </dL>
+
+In between major revisions, we also publish occasional updates to fix bugs, add
+new features, etc.  The updates install over the most recent revision. 
+More information on the most recent update can be found at
+
+<A HREF="Recent.update.README.html">Recent.update.README.html</a>
 
 <h3><a id="Mac8">Macintosh MacOS 8 and 9 instructions:</a></h3>
 
@@ -141,8 +147,8 @@ Note that MacOS X 10.1.1 is required for this to work. Further, MacOS X does
 not yet support the LocoNet baud rate, so you must use a LocoBuffer to
 access a LocoNet; a MS100 will not yet work.  We're working 
 to get this fixed, but don't expect it to happen soon.
-The NCE direct connection
-does work fine. 
+The direct connections for NCE, EasyDCC, C/MRI do 
+work fine. 
 
 <h3><a id="OS2">OS/2 installation instructions:</a></h3>
 
@@ -165,35 +171,73 @@ script from this directory with
 
 <h3><a id="Linux">Linux installation instructions:</a></h3>
 
-You need to have Java 1.2 or later installed on your machine, including Swing. 
-You can get this from Sun at
-  <a href="http://java.sun.com/j2se/">http://java.sun.com/j2se/</a>.
-For information on installing Java, please see 
-  <a href="http://jmri.sourceforge.net/Java/InstallJava.html">http://jmri.sourceforge.net/Java/InstallJava.html</a>.
-<P>
-To communicate with a LocoNet, you need to have a version of the javax.comm 
-package installed on your computer.  One is available at 
-  <a href="http://www.interstice.com/kevinh/linuxcomm.html">http://www.interstice.com/kevinh/linuxcomm.html</a>
-with additional information at
-  <a href="http://www.rxtx.org/">http://www.rxtx.org/</a>.  
- <P>
-Download the 
-<A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.0.9.tar.gz">http://prdownloads.sourceforge.net/jmri/JMRI.0.9.tar.gz</A>
-file, then unpack it with
+These steps outline how to install DecoderPro on Linux. These steps
+were tested on a system running Red Hat 7.2, but should work with all
+recent Linux distributions. These steps need to be performed with superuser
+priviledges.
+
+<UL>
+<LI>Install Java Runtime Environment (JRE).  To do this, download
+the Java 1.4 "Linux Red Hat RPM shell script" 
+from 
+<A href="http://java.sun.com/j2se/">http://java.sun.com/j2se/</A>.
+This should give you a file named "j2re-1_4_0-fcs-linux-i386.rpm".
+Install that with:
 <PRE>
-   gunzip JMRI.0.9.tar.gz
-   tar xf JMRI.0.9.tar
-</PRE>      
+   rpm -i j2re-1_4_0-fcs-linux-i386.rpm
+</PRE>
+
+<LI>Download the DecoderPro distribution
+from 
+<A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.0.9.tar.gz">http://prdownloads.sourceforge.net/jmri/JMRI.0.9.tar.gz</A>
+and install it with
+<PRE>
+   tar xfz JMRI.0.9.tar.gz
+</PRE>
+You might also want to download and install the latest update;
+see 
+<A HREF="Recent.update.README.html">Recent.update.README.html</a>.
+
+<LI>Install portions of Java Communications API.
+Download the file "javacomm20-x86" from
+<A HREF="http://java.sun.com/products/javacomm/index.html">http://java.sun.com/products/javacomm/index.html</A>
+Then install it with
+<PRE>          
+   cp comm.jar /usr/java/j2re1.4.0/lib/ext/
+   echo Driver=gnu.io.RXTXCommDriver > /usr/java/j2re1.4.0/lib/javax.comm.properties
+</PRE>
+<LI>Install Rxtx.
+Download the file "rxtx-bins.1" from
+<A HREF="http://www.rxtx.org">http://www.rxtx.org</A>
+and install it with
+<PRE>
+    cp rxtx/1.4/jcl.jar /usr/java/j2re1.4.0/lib/ext
+    cp -d rxtx/1.4/i386-pc-linux/lib* /usr/java/j2re1.4.0/lib/i386/
+</PRE>
+
+NOTE: edit DecoderPro.csh to include the -noverify option to 
+the java command. It appears that RXTX was developed with an
+earlier version of Sun's JRE/JDK. Alternately, there's a new version
+of this file in the most recent JMRI update.
+
+<LI>Give user-level application access to serial ports
+<PRE>
+   chmod 666 /dev/ttyS0
+   chmod 666 /dev/ttyS1
+</PRE>
+
+<LI>Give user access to lock files (required on Red Hat).
+   Edit /etc/groups & /etc/gshadow to add user to 'uucp' and 'lock' groups.
+
+</UL>
+
+The install is complete.    
 Switch to the demo directory and run the demo using
 
 <Pre>
   ./DecoderPro.csh
 </pre>
   
-<P>
-We really need better Linux instructions, esp. the part about the javax.comm
-package. It would be great if you were interested in helping with this.
-
 <h3><a id="Windows">Windows installation instructions:</a></h3>
 
 To run Decoder Pro under Windows, we recommend you have at least 40MB of 
@@ -228,7 +272,7 @@ for this, for example
   C:\Program Files\JavaSoft\JRE\1.3.1
 </pre>
 <P>
-To communicate with a LocoNet or NCE system, you need to have a version 
+You also need to have a version 
 of the javax.comm package installed on your computer.  The one from 
   <a href="http://java.sun.com/products/javacomm/">http://java.sun.com/products/javacomm/</a>
 is included with the DecoderPro distribution, but you have to copy some files
@@ -340,6 +384,22 @@ For more information on the MS100, please see
 
 <h3><a id="NCE">NCE system hardware connection:</a></H3>
 
+Connect your computer's serial port to the 9-pin connector on the command station.
+Depending on what type of serial port you have, you might need an 
+adapter cable.
+<P>
+We believe that the NCE protocol support in the program will also
+work with Wangrow SystemOne command stations.  You connect them the same way.
+<P>
+DecoderPro is tested on a USB Macintosh using a Keyspan PDA Adapter to 
+provide the serial port. A standard Macintosh RS422 serial port will also work.
+
+<h3><a id="EasyDCC">EasyDCC system hardware connection:</a></H3>
+
+Connect your computer's serial port to the 9-pin connector on the command station.
+Depending on what type of serial port you have, you might need an 
+adapter cable.
+<P>
 DecoderPro is tested on a USB Macintosh using a Keyspan PDA Adapter to 
 provide the serial port. A standard Macintosh RS422 serial port will also work.
 
@@ -468,7 +528,8 @@ allow you to display raw data in addition to the interpreted packets, to clear t
 listing, and to write output to a log file.
 
 <P>
-If you are using an NCE command station, select "NCE Command Monitor" to open 
+If you are using an NCE or EasyDCC command station, select 
+"NCE Command Monitor" or "EasyDCC Command Monitor" to open 
 a monitor frame.  You won't see any traffic on this until you use one of the
 other panels to do something. The controls at the bottom 
 allow you to display raw data in addition to the interpreted packets, to clear the 
@@ -487,6 +548,8 @@ Feedback is greatly appreciated!  We especially welcome suggestions of what
 you'd like to see this program do.  If you encounter a problem, please let use 
 know so we can fix it.  You can send email to 
 <a href="mailto:jake@physics.berkeley.edu">jake@physics.berkeley.edu</a>, 
+ask questions in our Yahoo discussion group at
+<A HREF="http://groups.yahoo.com/group/jmriusers/">http://groups.yahoo.com/group/jmriusers/</a>,
 or use the web forms to 
 
 <DL>
