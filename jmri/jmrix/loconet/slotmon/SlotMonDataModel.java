@@ -21,7 +21,7 @@ import javax.swing.table.TableColumnModel;
 /**
  * Table data model for display of slot manager contents
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version		$Revision: 1.15 $
+ * @version		$Revision: 1.16 $
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener  {
 
@@ -367,8 +367,11 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         // update model from this slot
 
         int slotNum = -1;
-        if (_allSlots) slotNum=s.getSlot();		// this will be row until we show only active slots
-
+        if (_allSlots) {        // this will be row until we show only active slots
+          slotNum=s.getSlot();  // and we are displaying the System slots otherwise
+          if( !_systemSlots )   // we need to subtract 1 as slot 0 will not be displayed
+            slotNum-- ;
+        }
         // notify the JTable object that a row has changed; do that in the Swing thread!
         Runnable r = new Notify(slotNum, this);   // -1 in first arg means all
         javax.swing.SwingUtilities.invokeLater(r);
