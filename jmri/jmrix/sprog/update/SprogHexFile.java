@@ -220,7 +220,7 @@ public class SprogHexFile extends JFrame {
   /**
    * Write a line to the hex file
    *
-   * @param address int
+   * @param addr int
    * @param type byte
    * @param data byte[]
    */
