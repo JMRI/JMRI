@@ -18,9 +18,49 @@ import javax.swing.*;
  * Base class for Jmri Apps
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class Apps extends JPanel {
+
+    public Apps(JFrame frame) {
+
+        super(true);
+
+        // load preference file
+        if (configFilename != null) {
+            log.debug("configure from specified file "+configFilename);
+        } else {
+            configFilename = "jmriprefs.xml";
+            log.debug("configure from default file "+configFilename);
+        }
+        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+        File file = new File(XmlFile.prefsDir()+configFilename);
+        InstanceManager.setConfigureManager(new jmri.configurexml.ConfigXmlManager());
+        configOK = InstanceManager.configureManagerInstance().load(file);
+
+	// populate GUI
+        rb = ResourceBundle.getBundle("apps.AppsBundle");
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        // Create a menu bar
+        menuBar = new JMenuBar();
+
+        // Create menu categories and add to the menu bar, add actions to menus
+        createMenus(menuBar, frame);
+
+        add(statusPanel());
+
+    }
+
+    protected void createMenus(JMenuBar menuBar, JFrame frame) {
+        fileMenu(menuBar, frame);
+        editMenu(menuBar, frame);
+        toolsMenu(menuBar, frame);
+        rosterMenu(menuBar, frame);
+        panelMenu(menuBar, frame);
+        systemsMenu(menuBar, frame);
+        debugMenu(menuBar, frame);
+        developmentMenu(menuBar, frame);
+    }
 
     protected void fileMenu(JMenuBar menuBar, JFrame frame) {
         JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
@@ -89,48 +129,6 @@ public class Apps extends JPanel {
         devMenu.add(new jmri.jmrit.automat.JythonAutomatonAction("Jython automaton"));
         devMenu.add(new JSeparator());
         devMenu.add(new jmri.jmrix.serialsensor.SerialSensorAction("Serial port sensors"));
-    }
-
-    protected void createMenus(JMenuBar menuBar, JFrame frame) {
-        fileMenu(menuBar, frame);
-        editMenu(menuBar, frame);
-        toolsMenu(menuBar, frame);
-        rosterMenu(menuBar, frame);
-        panelMenu(menuBar, frame);
-        systemsMenu(menuBar, frame);
-        debugMenu(menuBar, frame);
-        developmentMenu(menuBar, frame);
-    }
-
-    public Apps(JFrame frame) {
-
-        super(true);
-        rb = ResourceBundle.getBundle("apps.AppsBundle");
-
-	// create basic GUI
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        // Create a menu bar
-        menuBar = new JMenuBar();
-
-        // load preference file
-        if (configFilename != null) {
-            log.debug("configure from specified file "+configFilename);
-        } else {
-            configFilename = "jmriprefs.xml";
-            log.debug("configure from default file "+configFilename);
-        }
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-        File file = new File(XmlFile.prefsDir()+configFilename);
-        InstanceManager.setConfigureManager(new jmri.configurexml.ConfigXmlManager());
-        configOK = InstanceManager.configureManagerInstance().load(file);
-
-	// populate GUI
-
-        // Create menu categories and add to the menu bar, add actions to menus
-        createMenus(menuBar, frame);
-
-        add(statusPanel());
-
     }
 
     protected String line1() {
