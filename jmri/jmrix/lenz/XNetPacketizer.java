@@ -30,7 +30,7 @@ import java.util.Vector;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.1 $
+ * @version 		$Revision: 1.2 $
  *
  */
 public class XNetPacketizer extends XNetTrafficController {
@@ -87,7 +87,7 @@ public class XNetPacketizer extends XNetTrafficController {
 	public void sendXNetMessage(XNetMessage m) {
 		// set the error correcting code byte
 		int len = m.getNumDataElements();
-		int chksum = 0xff;  /* the seed */
+		int chksum = 0x00;  /* the seed */
    		int loop;
 
     	for(loop = 0; loop < len-1; loop++) {  // calculate contents for data part
@@ -100,7 +100,7 @@ public class XNetPacketizer extends XNetTrafficController {
 		for (int i=0; i< len; i++)
 			msg[i] = (byte) m.getElement(i);
 
-		if (log.isDebugEnabled()) log.debug("queue LocoNet packet: "+m.toString());
+		if (log.isDebugEnabled()) log.debug("queue outgoing packet: "+m.toString());
 		// in an atomic operation, queue the request and wake the xmit thread
 		synchronized(xmtHandler) {
 			xmtList.addLast(msg);
@@ -170,66 +170,20 @@ public class XNetPacketizer extends XNetTrafficController {
 		int opCode;
 		while (true) {   // loop permanently, program close will exit
 			try {
-				// start by looking for command -  skip if bit not set
-				while ( ((opCode = (istream.readByte()&0xFF)) & 0x80) == 0 )  {
-					//log.debug("Skipping: "+Integer.toHexString(opCode));
-				}
-				// here opCode is OK. Create output message
-				// log.debug("Start message with opcode: "+Integer.toHexString(opCode));
-				XNetMessage msg = null;
-				while (msg == null) {
-					try {
-						// Capture 2nd byte, always present
-						int byte2 = istream.readByte()&0xFF;
-						//log.debug("Byte2: "+Integer.toHexString(byte2));
-						// Decide length
-						switch((opCode & 0x60) >> 5)
-                    		{
-                        		case 0:     /* 2 byte message */
-                            		msg = new XNetMessage(2);
-                            		break;
+				// start by looking for command
+				opCode = istream.readByte()&0xFF;
+                // Create output message
+				log.debug("Run: Start message with opcode: "+Integer.toHexString(opCode));
+                int len = (opCode&0x0f)+2;  // opCode+Nbytes+ECC
+				XNetMessage msg = new XNetMessage(len);
+                msg.setElement(0, opCode);
 
-                       			case 1:     /* 4 byte message */
-                            		msg = new XNetMessage(4);
-                            		break;
-
-	                        	case 2:     /* 6 byte message */
-    	                        	msg = new XNetMessage(6);
-         		                   	break;
-
-    	                    	case 3:     /* N byte message */
-    	                    		if (byte2<2) log.error("LocoNet message length invalid: "+byte2
-    	                    						+" opcode: "+Integer.toHexString(opCode));
-        	                    	msg = new XNetMessage(byte2);
-            	                	break;
-                	    	}
-             			// message exists, now fill it
-             			msg.setOpCode(opCode);
-             			msg.setElement(1, byte2);
-             			int len = msg.getNumDataElements();
-						//log.debug("len: "+len);
-             			for (int i = 2; i < len; i++)  {
-             				// check for message-blocking error
-             				int b = istream.readByte()&0xFF;
- 							//log.debug("char "+i+" is: "+Integer.toHexString(b));
-            				if ( (b&0x80) != 0) {
-             					log.warn("LocoNet message with opCode: "
-             							+Integer.toHexString(opCode)
-             							+" ended early. Expected length: "+len
-             							+" seen length: "+i
-             							+" unexpected byte: "
-             							+Integer.toHexString(b));
-             					opCode = b;
-             					throw new XNetMessageException();
-             				}
-             				msg.setElement(i, b);
-             			}
- 					}
- 					catch (XNetMessageException e) {
- 						// retry by destroying the existing message
- 						// opCode is set for the newly-started packet
- 						msg = null;
- 					}
+                // message exists, now fill it
+                //log.debug("len: "+len);
+                for (int i = 1; i < len; i++)  {
+                    int b = istream.readByte()&0xFF;
+                    //log.debug("char "+i+" is: "+Integer.toHexString(b));
+             		msg.setElement(i, b);
  				}
 				// check parity
 				if (!msg.checkParity()) {
@@ -287,117 +241,67 @@ public class XNetPacketizer extends XNetTrafficController {
 			trafficController = lt;
 		}
 
-		public void run() {
-			boolean debug = log.isDebugEnabled();
+	    public void run() {
+		    int opCode;
+		    while (true) {   // loop permanently, program close will exit
+			    try {
+				    // start by looking for command
+				    opCode = istream.readByte()&0xFF;
+                    // Create output message
+				    log.debug("RcvHandler: Start message with opcode: "+Integer.toHexString(opCode));
+                    int len = (opCode&0x0f)+2;  // opCode+Nbytes+ECC
+				    XNetMessage msg = new XNetMessage(len);
+                    msg.setElement(0, opCode);
 
-			int opCode;
-			while (true) {   // loop permanently, program close will exit
-				try {
-					// start by looking for command -  skip if bit not set
-					while ( ((opCode = (istream.readByte()&0xFF)) & 0x80) == 0 )  {
-						if (debug) log.debug("Skipping: "+Integer.toHexString(opCode));
-					}
-					// here opCode is OK. Create output message
-					if (debug) log.debug("Start message with opcode: "+Integer.toHexString(opCode));
-					XNetMessage msg = null;
-					while (msg == null) {
-						try {
-							// Capture 2nd byte, always present
-							int byte2 = istream.readByte()&0xFF;
-							//log.debug("Byte2: "+Integer.toHexString(byte2));
-							// Decide length
-							switch((opCode & 0x60) >> 5) {
-   	                     		case 0:     /* 2 byte message */
-    	                        	msg = new XNetMessage(2);
-   		                         	break;
+                    // message exists, now fill it
+                    //log.debug("len: "+len);
+                    for (int i = 1; i < len; i++)  {
+                        int b = istream.readByte()&0xFF;
+                        log.debug("char "+i+" of "+len+" is: "+Integer.toHexString(b));
+             		    msg.setElement(i, b);
+ 				    }
+				    // check parity
+				    if (!msg.checkParity()) {
+					    log.warn("Ignore packet with bad checksum: "+msg.toString());
+					    throw new XNetMessageException();
+				    }
+             	    // message is complete, dispatch it !!
+             	    {
+             		    final XNetMessage thisMsg = msg;
+             		    final XNetPacketizer thisTC = trafficController;
+ 					    // return a notification via the queue to ensure end
+					    Runnable r = new Runnable() {
+						    XNetMessage msgForLater = thisMsg;
+						    XNetPacketizer myTC = thisTC;
+						    public void run() {
+           					    myTC.notify(msgForLater);
+						    }
+					    };
+                        log.debug("schedule notify of incoming packet");
+					    javax.swing.SwingUtilities.invokeLater(r);
+				    }
 
-                       			case 1:     /* 4 byte message */
-                            		msg = new XNetMessage(4);
-                            		break;
-
-	                        	case 2:     /* 6 byte message */
-    	                        	msg = new XNetMessage(6);
-         		                   	break;
-
-    	                    	case 3:     /* N byte message */
-    	                    		if (byte2<2) log.error("LocoNet message length invalid: "+byte2
-    	                    						+" opcode: "+Integer.toHexString(opCode));
-        	                    	msg = new XNetMessage(byte2);
-            	                	break;
-                	    		}
-             				// message exists, now fill it
-             				msg.setOpCode(opCode);
-             				msg.setElement(1, byte2);
-             				int len = msg.getNumDataElements();
-							//log.debug("len: "+len);
-             				for (int i = 2; i < len; i++)  {
-             					// check for message-blocking error
-             					int b = istream.readByte()&0xFF;
- 								//log.debug("char "+i+" is: "+Integer.toHexString(b));
-            					if ( (b&0x80) != 0) {
-             						log.warn("LocoNet message with opCode: "
-             							+Integer.toHexString(opCode)
-             							+" ended early. Expected length: "+len
-             							+" seen length: "+i
-             							+" unexpected byte: "
-             							+Integer.toHexString(b));
-             						opCode = b;
-             						throw new XNetMessageException();
-             					}
-             					msg.setElement(i, b);
-             				}
- 						}
- 						catch (XNetMessageException e) {
- 							// retry by destroying the existing message
- 							// opCode is set for the newly-started packet
- 							msg = null;
- 						}
- 					}
-					// check parity
-					if (!msg.checkParity()) {
-						log.warn("Ignore packet with bad checksum: "+msg.toString());
-						throw new XNetMessageException();
-					}
-             		// message is complete, dispatch it !!
-             		{
-             			if (log.isDebugEnabled()) log.debug("queue message for notification");
-             			final XNetMessage thisMsg = msg;
-             			final XNetPacketizer thisTC = trafficController;
- 						// return a notification via the queue to ensure end
-						Runnable r = new Runnable() {
-							XNetMessage msgForLater = thisMsg;
-							XNetPacketizer myTC = thisTC;
-							public void run() {
-           						myTC.notify(msgForLater);
-							}
-						};
-						javax.swing.SwingUtilities.invokeLater(r);
-					}
-
-             		// done with this one
-            	}
- 				catch (XNetMessageException e) {
-					// just let it ride for now
-					log.warn("run: unexpected MessageException: "+e);
-				}
- 				catch (java.io.EOFException e) {
-					// posted from idle port when enableReceiveTimeout used
-					if (debug) log.debug("EOFException, is serial I/O using timeouts?");
-				}
- 				catch (java.io.IOException e) {
-					// fired when write-end of HexFile reaches end
-					if (debug) log.debug("IOException, should only happen with HexFIle: "+e);
-					log.info("End of file");
-					disconnectPort(controller);
-					return;
-				}
- 				// normally, we don't catch the unnamed Exception, but in this
- 				// permanently running loop it seems wise.
- 				catch (Exception e) {
-					log.warn("run: unexpected Exception: "+e);
-				}
-			} // end of permanent loop
-		}
+             	    // done with this one
+                }
+ 			    catch (XNetMessageException e) {
+				    // just let it ride for now
+			    }
+ 			    catch (java.io.EOFException e) {
+				    // posted from idle port when enableReceiveTimeout used
+				    log.debug("EOFException, is serial I/O using timeouts?");
+			    }
+ 			    catch (java.io.IOException e) {
+				    // fired when write-end of HexFile reaches end
+				    log.debug("IOException, should only happen with HexFIle: "+e);
+				    log.info("End of file");
+				    disconnectPort(controller);
+				    return;
+			    }
+ 			    catch (Exception e) {
+				    log.warn("run: unexpected exception: "+e);
+			    }
+		    } // end of permanent loop
+	    }
 	}
 
 	/**

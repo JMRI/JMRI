@@ -3,7 +3,7 @@
  *
  * Description:		Implement turnout manager
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 // System names are "XTnnn", where nnn is the turnout number without padding.
@@ -63,6 +63,7 @@ public class XNetTurnoutManager extends jmri.AbstractTurnoutManager implements X
 		// parse message type
 		int addr = XNetTrafficController.instance()
                     .getCommandStation().getTurnoutMsgAddr(l);
+        if (log.isDebugEnabled()) log.debug("message had address: "+addr);
         if (addr<=0)  return; // indicates no message
 		// reach here for switch command; make sure we know about this one
 		String s = "XT"+addr;
