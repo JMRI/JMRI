@@ -28,7 +28,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class PM4Frame extends JFrame implements LocoNetListener {
 
@@ -110,7 +110,10 @@ public class PM4Frame extends JFrame implements LocoNetListener {
         });
 
         // listen for PM4 traffic
-        LnTrafficController.instance().addLocoNetListener(~0, this);
+        if (LnTrafficController.instance()!=null)
+            LnTrafficController.instance().addLocoNetListener(~0, this);
+        else
+            log.error("No LocoNet connection available, can't function");
 
         // and prep for display
         pack();
