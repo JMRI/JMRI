@@ -37,7 +37,7 @@ import jmri.jmrit.catalog.NamedIcon;
  *
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class PanelEditor extends JFrame {
@@ -173,7 +173,7 @@ public class PanelEditor extends JFrame {
             inconsistentR = new NamedIcon("resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif",
                             "resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif");
             unknownR = new NamedIcon("resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif",
-                            "resources/icons/smallschematics/tracksegments/os-rightthand-west-unknown.gif");
+                            "resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif");
 
             closedIconR = new NamedIcon("resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif",
                             "resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif");
