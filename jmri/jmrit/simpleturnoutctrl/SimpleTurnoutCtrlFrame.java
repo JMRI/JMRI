@@ -1,10 +1,4 @@
-/**
- * SimpleTurnoutCtrlFrame.java
- *
- * Description:		Frame controlling a single turnout
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version         $Revision: 1.3 $
- */
+// SimpleTurnoutCtrlFrame.java
 
 package jmri.jmrit.simpleturnoutctrl;
 
@@ -15,6 +9,11 @@ import javax.swing.*;
 import jmri.Turnout;
 import jmri.InstanceManager;
 
+/**
+ * Frame controlling a single turnout
+ * @author		Bob Jacobsen   Copyright (C) 2001
+ * @version         $Revision: 1.4 $
+ */
 public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.beans.PropertyChangeListener {
 
 	// GUI member declarations
@@ -104,13 +103,27 @@ public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.b
 		dispose();
 	}
 
+    /**
+     * Find the system name for this turnout.  If
+     * it's a number, add the default prefix
+     * @return
+     */
+    String systemName() {
+        try {
+            int addr = Integer.valueOf(adrTextField.getText()).intValue();
+            return ""+InstanceManager.turnoutManagerInstance().systemLetter()+"T"+addr;
+        } catch ( java.lang.NumberFormatException ex ) {
+            return adrTextField.getText();
+        }
+    }
+
 
 	public void closeButtonActionPerformed(java.awt.event.ActionEvent e) {
 		// load address from switchAddrTextField
 		try {
 			if (turnout != null) turnout.removePropertyChangeListener(this);
 			turnout = InstanceManager.turnoutManagerInstance().
-						newTurnout(null,adrTextField.getText());
+						newTurnout(systemName(),null);
 			turnout.addPropertyChangeListener(this);
 			if (log.isDebugEnabled()) log.debug("about to command CLOSED");
 			// and set commanded state to CLOSED
@@ -118,6 +131,7 @@ public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.b
 		}
 		catch (Exception ex) {
 				log.error("closeButtonActionPerformed, exception: "+ex.toString());
+                                ex.printStackTrace();
 				return;
 			}
 		return;
@@ -128,7 +142,7 @@ public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.b
 		try {
 			if (turnout != null) turnout.removePropertyChangeListener(this);
 			turnout = InstanceManager.turnoutManagerInstance().
-						newTurnout(null,adrTextField.getText());
+						newTurnout(systemName(),null);
 			turnout.addPropertyChangeListener(this);
 			if (log.isDebugEnabled()) log.debug("about to command THROWN");
 			// and set commanded state to THROWN
@@ -137,6 +151,7 @@ public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.b
 		catch (Exception ex)
 			{
 				log.error("throwButtonActionPerformed, exception: "+ex.toString());
+                                ex.printStackTrace();
 				return;
 			}
 		return;
