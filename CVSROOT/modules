@@ -13,7 +13,8 @@ java1 -d java/src &jmri &apps &resources
 java2 -d java &test
 java3 -d java &lib
 
-# check target - all, plus the Java 1.1.8 libraries
+# check target - The Java 1.1.8 libraries and needed build files
+# use 'all' or 'ant' target with this
 check -a check1 check2 check3 lib118
 check1 -d java scripts check.xml
 check2 -d java scripts synchlist.csh
