@@ -30,16 +30,19 @@ import org.jdom.output.*;
  * <P>
  * The only bound property is the list of RoterEntrys; a PropertyChangedEvent
  * is fired every time that changes.
+ * <P>
+ * The entries are stored in an ArrayList, sorted alphabetically.  That
+ * sort is done manually each time an entry is added.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  * @see             jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
-    
+
     /** record the single instance of Roster **/
     private static Roster _instance = null;
-    
+
     /**
      * Locate the single instance of Roster, loading it if need be
      * @return The valid Roster object
@@ -58,18 +61,23 @@ public class Roster extends XmlFile {
         if (log.isDebugEnabled()) log.debug("Roster returns instance "+_instance);
         return _instance;
     }
-    
+
     /**
      * Add a RosterEntry object to the in-memory Roster.
      * @param e Entry to add
      */
     public void addEntry(RosterEntry e) {
         if (log.isDebugEnabled()) log.debug("Add entry "+e);
-        _list.add(_list.size(), e);
+        int i;
+        for (i=0; i<_list.size(); i++) {
+            if (e.getId().compareTo(((RosterEntry)_list.get(i)).getId()) < 0 )
+                break; // I can never remember whether I want break or continue here
+        }
+        _list.add(i, e);
         setDirty(true);
         firePropertyChange("add", null, e);
     }
-    
+
     /**
      * Remove a RosterEntry object from the in-memory Roster.  This
      * does not delete the file for the RosterEntry!
@@ -81,12 +89,12 @@ public class Roster extends XmlFile {
         setDirty(true);
         firePropertyChange("remove", null, e);
     }
-    
+
     /**
      * @return Number of entries in the Roster
      */
     public int numEntries() { return _list.size(); }
-    
+
     /**
      * Get a JComboBox representing the choices that match
      * some information
@@ -101,7 +109,7 @@ public class Roster extends XmlFile {
         }
         return b;
     }
-    
+
     public void updateComboBox(JComboBox box) {
         List l = matchingList(null, null, null, null, null, null, null );
         box.removeAllItems();
@@ -110,7 +118,7 @@ public class Roster extends XmlFile {
             box.addItem(r.titleString());
         }
     }
-    
+
     /**
      * Return RosterEntry from a "title" string, ala selection in matchingComboBox
      */
@@ -121,7 +129,7 @@ public class Roster extends XmlFile {
         }
         return null;
     }
-    
+
     /**
      * Return filename from a "title" string, ala selection in matchingComboBox
      * @return The filename matching this "title", or null if none exists
@@ -131,12 +139,12 @@ public class Roster extends XmlFile {
         if (r != null) return r.getFileName();
         return null;
     }
-    
+
     /**
      * List of contained RosterEntry elements.
      */
     protected List _list = new ArrayList();
-    
+
     /**
      *	Get a List of entries matching some information. The list may have
      *  null contents.
@@ -150,7 +158,7 @@ public class Roster extends XmlFile {
         }
         return l;
     }
-    
+
     /**
      * Check if an entry consistent with specific properties. A null String entry
      * always matches. Strings are used for convenience in GUI building.
@@ -169,7 +177,7 @@ public class Roster extends XmlFile {
         if (decoderFamily != null && !decoderFamily.equals(r.getDecoderFamily())) return false;
         return true;
     }
-    
+
     /**
      * Write the entire roster to a file. This does not do backup; that has
      * to be done separately. See writeRosterFile() for a function that
@@ -181,12 +189,12 @@ public class Roster extends XmlFile {
         if (log.isDebugEnabled()) log.debug("writeFile "+name);
         // This is taken in large part from "Java and XML" page 368
         File file = new File(prefsDir()+name);
-        
+
         // create root element
         Element root = new Element("roster-config");
         Document doc = new Document(root);
         doc.setDocType(new DocType("roster-config","roster-config.dtd"));
-        
+
         // add top-level elements
         Element values;
         root.addContent(values = new Element("roster"));
@@ -200,11 +208,11 @@ public class Roster extends XmlFile {
         fmt.setNewlines(true);   // pretty printing
         fmt.setIndent(true);
         fmt.output(doc, o);
-        
+
         // done - roster now stored, so can't be dirty
         setDirty(false);
     }
-    
+
     /**
      * Read the contents of a roster XML file into this object. Note that this does not
      * clear any existing entries.
@@ -217,7 +225,7 @@ public class Roster extends XmlFile {
             return;
         }
         if (log.isDebugEnabled()) XmlFile.dumpElement(root);
-        
+
         // decode type, invoke proper processing routine if a decoder file
         if (root.getChild("roster") != null) {
             List l = root.getChild("roster").getChildren("locomotive");
@@ -230,16 +238,16 @@ public class Roster extends XmlFile {
             log.error("Unrecognized roster file contents in file: "+name);
         }
     }
-    
+
     private boolean dirty = false;
     void setDirty(boolean b) {dirty = b;}
     boolean isDirty() {return dirty;}
-    
+
     public void dispose() {
         if (log.isDebugEnabled()) log.debug("dispose");
         if (dirty) log.error("Dispose invoked on dirty Roster");
     }
-    
+
     /**
      * Store the roster in the default place, including making a backup if needed
      */
@@ -251,12 +259,12 @@ public class Roster extends XmlFile {
             log.error("Exception while writing the new roster file, may not be complete: "+e);
         }
     }
-    
+
     /**
      * update the in-memory Roster to be consistent with
      * the current roster file.  This removes the existing roster entries!
      */
-    
+
     public void reloadRosterFile() {
         // clear existing
         _list.clear();
@@ -267,33 +275,33 @@ public class Roster extends XmlFile {
             log.error("Exception during roster reading: "+e);
         }
     }
-    
-    
+
+
     /**
      * Return the filename String for the default roster file, including location.
      * This is here to allow easy override in tests.
      */
     protected static String defaultRosterFilename() { return fileLocation+rosterFileName;}
-    
+
     static protected String fileLocation  = "";
     static final protected String rosterFileName = "roster.xml";
-    
+
     // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
     // reflect to it.
     // Note that dispose() doesn't act on these.  Its not clear whether it should...
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-    
+
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
-    
+
     protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
-    
+
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
-    
+
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Roster.class.getName());
-    
+
 }
