@@ -34,7 +34,7 @@ import org.jdom.Element;
  *  TODO: fix speed increments (14, 28)
  *
  * @author     glen
- * @version    $Revision: 1.27 $
+ * @version    $Revision: 1.28 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener
 {
@@ -47,6 +47,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	private JButton idleButton;
 	private JPanel buttonPanel;
 	private int speedIncrement;
+        private boolean internalAdjust = false;
 
 	public int accelerateKey = 107; // numpad +;
 	public int decelerateKey = 109; // numpad -;
@@ -185,10 +186,14 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 			{
 				public void stateChanged(ChangeEvent e)
 				{
+                                    if ( !internalAdjust) {
 					if (!speedSlider.getValueIsAdjusting())
 					{
 						throttle.setSpeedSetting(speedSlider.getValue() / (MAX_SPEED*1.0f));
 					}
+				   } else {
+					internalAdjust=false;
+				   }
 				}
 			});
 
@@ -310,7 +315,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	 *  A KeyAdapter that listens for the keys that work the control pad buttons
 	 *
 	 * @author     glen
-         * @version    $Revision: 1.27 $
+         * @version    $Revision: 1.28 $
 	 */
 	class ControlPadKeyListener extends KeyAdapter
 	{
@@ -376,10 +381,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	// update the state of this panel if any of the properties change
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (e.getPropertyName().equals("SpeedSetting")) {
-		   speedSlider.setValueIsAdjusting(true);
+	           internalAdjust=true;
 		   float speed=((Float) e.getNewValue()).floatValue();
 		   speedSlider.setValue((int)(speed * MAX_SPEED));
-		   speedSlider.setValueIsAdjusting(false);
 		} else if (e.getPropertyName().equals("IsForward")) {
 		   boolean Forward=((Boolean) e.getNewValue()).booleanValue();
 	           setIsForward(Forward);
