@@ -1,7 +1,7 @@
 package jmri.jmrit.throttle;
 
 import jmri.InstanceManager;
-import javax.swing.JButton;
+import javax.swing.JToggleButton;
 import javax.swing.JPopupMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JCheckBoxMenuItem;
@@ -24,7 +24,7 @@ import org.jdom.Element;
  * <li> Set function number identity
  * </ul>
  */
-public class FunctionButton extends JButton implements ActionListener
+public class FunctionButton extends JToggleButton implements ActionListener
 {
     private FunctionListener listener;
     private int identity; // F0, F1, etc?
@@ -52,6 +52,7 @@ public class FunctionButton extends JButton implements ActionListener
         this.setMargin(new Insets(2,2,2,2));
     }
 
+	
     /**
      * Set the function number this button will operate
      * @param id An integer from 0 to 9.
@@ -77,6 +78,7 @@ public class FunctionButton extends JButton implements ActionListener
     public void setState(boolean isOn)
     {
         this.isOn = isOn;
+		this.setSelected(isOn);
     }
 
     /**
@@ -122,6 +124,7 @@ public class FunctionButton extends JButton implements ActionListener
     private void changeState(boolean newState)
     {
         isOn = newState;
+		this.setSelected(isOn);
         if (listener != null)
         {
             listener.notifyFunctionStateChanged(identity, isOn);
@@ -154,7 +157,7 @@ public class FunctionButton extends JButton implements ActionListener
          */
         public void mousePressed(MouseEvent e)
         {
-            JButton button = (JButton)e.getSource();
+            JToggleButton button = (JToggleButton)e.getSource();
             if (e.isPopupTrigger())
             {
                 popup.show(e.getComponent(),
@@ -179,7 +182,7 @@ public class FunctionButton extends JButton implements ActionListener
          */
         public void mouseReleased(MouseEvent e)
         {
-            JButton button = (JButton)e.getSource();
+            JToggleButton button = (JToggleButton)e.getSource();
             if (e.isPopupTrigger())
             {
                 popup.show(e.getComponent(),
