@@ -1,12 +1,9 @@
 package jmri.layout;
 
 /**
- * Title:
- * Description:
- * Copyright:    Copyright (c) 2002
- * Company:
- * @author
- * @version $Revision: 1.1 $
+ * Define an address consisting of a layout name, a type, and an offset number.
+ * @author   Alex Shepherd Copyright (c) 2002
+ * @version $Revision: 1.2 $
  */
 
 public class LayoutAddress implements Comparable
