@@ -13,7 +13,7 @@ import com.sun.java.util.collections.List;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class MemoryIconXml implements XmlAdapter {
 
@@ -38,6 +38,7 @@ public class MemoryIconXml implements XmlAdapter {
         element.addAttribute("y", ""+p.getY());
 
         element.addAttribute("class", "jmri.jmrit.display.configurexml.MemoryIconXml");
+        element.addAttribute("defaulticon", p.getDefaultIcon().getName());
 
 		// include contents
 		com.sun.java.util.collections.HashMap map = p.getMap();
@@ -60,7 +61,8 @@ public class MemoryIconXml implements XmlAdapter {
     }
 
     /**
-     * Create a PositionableLabel, then add to a target JLayeredPane
+     * Load, starting with the memoryicon element, then
+     * all the value-icon pairs
      * @param element Top level Element to unpack.
      * @param o  PanelEditor as an Object
      */
@@ -71,6 +73,9 @@ public class MemoryIconXml implements XmlAdapter {
         MemoryIcon l = new MemoryIcon();
 
         l.setMemory(element.getAttribute("memory").getValue());
+
+        Attribute a = element.getAttribute("defaulticon");
+        if (a!=null) l.setDefaultIcon(CatalogPane.getIconByName(a.getValue()));
         
         // get the icon pairs
         List items = element.getChildren();
