@@ -25,7 +25,7 @@ import javax.swing.*;
  * Base class for Jmri applications.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 public class Apps extends JPanel {
 
@@ -66,6 +66,14 @@ public class Apps extends JPanel {
         _buttonSpace.setLayout(new FlowLayout());
     }
 
+    /**
+     * Create default menubar.
+     * <P>
+     * This does not include the development menu.
+     *
+     * @param menuBar
+     * @param frame
+     */
     protected void createMenus(JMenuBar menuBar, JFrame frame) {
         // the debugging statements in the following are
         // for testing startup time
@@ -76,10 +84,10 @@ public class Apps extends JPanel {
         rosterMenu(menuBar, frame);
         panelMenu(menuBar, frame);
         systemsMenu(menuBar, frame);
+        scriptMenu(menuBar, frame);
         debugMenu(menuBar, frame);
-        developmentMenu(menuBar, frame);
         helpMenu(menuBar, frame);
-        windowMenu(menuBar, frame);
+        // windowMenu(menuBar, frame);
         log.debug("end building menus");
     }
 
@@ -133,12 +141,29 @@ public class Apps extends JPanel {
         menuBar.add(new jmri.jmrit.display.PanelMenu());
     }
 
+    /**
+     * Show only active systems in the menu bar.
+     * <P>
+     * Alternately, you might want to do
+     * <PRE>
+     *    menuBar.add(new jmri.jmrix.SystemsMenu());
+     * </PRE>
+     * @param menuBar
+     * @param frame
+     */
     protected void systemsMenu(JMenuBar menuBar, JFrame frame) {
-        menuBar.add(new jmri.jmrix.SystemsMenu());
+        jmri.jmrix.ActiveSystemsMenu.addItems(menuBar);
     }
 
     protected void debugMenu(JMenuBar menuBar, JFrame frame) {
         menuBar.add(new jmri.jmrit.DebugMenu(this));
+    }
+
+    protected void scriptMenu(JMenuBar menuBar, JFrame frame) {
+        JMenu menu = new JMenu("Scripts");
+        menuBar.add(menu);
+        menu.add(new jmri.jmrit.automat.JythonAutomatonAction("Jython script", this));
+        menu.add(new jmri.jmrit.automat.JythonSigletAction("Jython siglet", this));
     }
 
     protected void developmentMenu(JMenuBar menuBar, JFrame frame) {
@@ -149,7 +174,6 @@ public class Apps extends JPanel {
         devMenu.add(new jmri.jmrit.automat.SampleAutomatonAction( "Sample automaton 1"));
         devMenu.add(new jmri.jmrit.automat.SampleAutomaton2Action("Sample automaton 2"));
         devMenu.add(new jmri.jmrit.automat.SampleAutomaton3Action("Sample automaton 3"));
-        devMenu.add(new jmri.jmrit.automat.JythonAutomatonAction("Jython automaton"));
         devMenu.add(new JSeparator());
         devMenu.add(new jmri.jmrix.serialsensor.SerialSensorAction("Serial port sensors"));
     }
@@ -189,13 +213,13 @@ public class Apps extends JPanel {
                 return;
             }
             globalHelpBroker = globalHelpSet.createHelpBroker();
-            
+
             JMenu helpMenu = new JMenu("Help");
             menuBar.add(helpMenu);
             JMenuItem menuItem = new JMenuItem("Help");
             helpMenu.add(menuItem);
             menuItem.addActionListener(new CSH.DisplayHelpFromSource(globalHelpBroker));
-            
+
             // start help to see what happend
             log.debug("help: "+globalHelpSet.getHomeID()+":"+globalHelpSet.getTitle()
                                +":"+globalHelpSet.getHelpSetURL());
