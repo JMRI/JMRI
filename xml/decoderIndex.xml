@@ -110,6 +110,7 @@
       </family>
       <family name="Basic CS" mfg="Digitrax" type="locomotive" file="Digitrax_CS.xml">
         <model model="DZ121" numOuts="5" numFns="3" />
+        <model model="DN122K2" numOuts="5" numFns="3" />
       </family>
       <family name="Basic STD" mfg="Digitrax" lowVersionID="33" highVersionID="45" type="locomotive" file="Digitrax_STD.xml">
         <model model="DH121" numOuts="2" numFns="2" />
@@ -117,10 +118,11 @@
       </family>
       <family name="Basic STD*" mfg="Digitrax" type="locomotive" file="Digitrax_STDstar.xml">
         <model model="DN121" numOuts="2" numFns="2" />
-        <model model="DN122" numOuts="2" numFns="2" />
+        <model model="DN93" numOuts="3" numFns="4" />
       </family>
       <family name="Early decoders" mfg="Digitrax" lowVersionID="33" highVersionID="45" type="locomotive" file="Digitrax_xearly.xml">
         <model model="DH120" numOuts="2" numFns="2" />
+        <model model="DZ120" numOuts="2" numFns="2" />
       </family>
       <family name="Lenz 5th gen BEMF decoders" mfg="Lenz" lowVersionID="54" type="locomotive" file="Lenz_54.xml">
         <model model="LE010XF" numOuts="2">
@@ -170,6 +172,7 @@
       </family>
       <family name="Lenz Drive-Select decoders" mfg="Lenz" lowVersionID="46" highVersionID="46" type="locomotive" file="Lenz_DriveSelect.xml">
         <model model="LE0511" numOuts="2" />
+        <model model="LE1014" numOuts="7" />
       </family>
       <family name="Lenz XF, precision glide decoders" mfg="Lenz" lowVersionID="44" highVersionID="45" type="locomotive" file="Lenz_LE077XF.xml">
         <model model="LE062XF" numOuts="2">
