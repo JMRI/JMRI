@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: FAQ.html,v 1.11 2005-02-02 05:06:47 jacobsen Exp $ -->
+<!-- $Id: FAQ.html,v 1.12 2005-04-06 17:17:59 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -154,7 +154,8 @@
             "class" means "start the definition of a group of things that go 
             together"  (all you other experts, please don't jump on me about 
             this; I understand both intrinsic/extrinsic polymorphism, I'm just 
-            trying to get the general idea across).  T
+            trying to get the general idea across).  
+            <P>
             For example, in the SigletExample.py file is a description of a 
             "class" called SigletExample, which contains two 
             routines/functions/members:  A subroutine called "defineIO", and one 
@@ -170,7 +171,7 @@
             pre-existing structure is very powerful, and lets you do all sorts of 
             things, but also provides this method to try to keep it simpler.
             <P>
-            OK, at this point most people's eyes are  fully glazed over.  Your 
+            OK, at this point most people's eyes are fully glazed over.  Your 
             best bet when starting with this stuff is to use the "copy and 
             modify" approach to software development.  It's good to try to 
             understand the entire content of the file, but don't worry about 
@@ -186,7 +187,7 @@
 		    <div class=para>
             In many of the sample files, turnouts are referred to by the name "toxx", signals by "sixx",
             and sensors by "boxx". These conventions grew out of how some older code was
-            written, and then can make the code clearer.  But they are in no way required; the
+            written, and they can make the code clearer.  But they are in no way required; the
             program doesn't care what you call variables.
             <P>
             For example, "self.to12" is just the name of a variable.  You can call it anything 
@@ -204,6 +205,63 @@
             Note that turnouts, etc, do have "System Names" that look like 
             "LT12".  You'll see those occasionally, but that's something 
             different from the variable names in a script file.		   
+            </div>
+
+		</div>
+		<div class=baseclasses>
+		    <h2>What's the difference between the "Siglet" and "AbstractAutomaton" classes?</h2>
+
+		    <div class=para>
+
+            Some examples use the 
+            <A HREF="../../JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">AbstractAutomaton</a>
+            class as a base, while
+            others use the 
+            <A HREF="../../JavaDoc/doc/jmri/jmrit/automat/Siglet.html">Siglet</a>
+            class. This is because those are intended for two different 
+            purposes.
+            <P>
+            "Siglet" is meant to be used for driving signals.  You
+            provide two pieces of code:
+            </dl>
+            <dt>defineIO<DD>which defines the various sensors, turnouts
+            and signals that the output signal depends on as input when
+            calculating the appearance of the signal.
+            <dt>setOutout<dd>which recalculates the signal appearance
+            from the defined inputs.
+            </dl>
+            <P>The Siglet base class then handles all of the listening
+            for changes, setting up for parallel execution, etc. Your
+            defineIO routine will be called once at the beginning, and 
+            after than any time one or more of the inputs changes, your setOutput
+            routine will be called to recalculate the signal appearance.
+            <P>
+            Of course, you can use this class to calculate other things than
+            signal appearances.  But the key element is that the calculation
+            is redone when the inputs change, and only when the inputs change.
+            <P>
+            AbstractAutomaton is a more general class that's intended
+            to allow more powerful operations (and Siglet actually
+            uses that more powerful base).  You define two functions:
+            <DL>
+            <DT>init<DD>which is called exactly once to do any one-time
+            setup you need
+            <DT>handle<DD>which is called over and over and over again
+            until it returns FALSE.
+            </DL>
+            
+            Using AbstractAutomoton provides you with a number of 
+            tools:  you can wait for a particular sensor to go
+            active, do something, then wait for a different sensor
+            to go inactive, etc.  This allows you much more freedom to
+            create complicated &amp; powerful sequences than the Siglet class,
+            because Siglets are limited to doing just one thing (they aren't
+            intended to do sequences of operations).
+            <P>
+            For more info on the routines that AbstractAutomaton provides
+            to help you, see the 
+            <A HREF="../../JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html#method_summary">JavaDocs</a>
+            for the class. (Scroll down to the section called "Method Summary")
             </div>
 
 		</div>
