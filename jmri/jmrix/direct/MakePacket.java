@@ -3,7 +3,7 @@
  *
  * Description:		<describe the MakePacket class here>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version  $Revision: 1.4 $
+ * @version  $Revision: 1.5 $
  */
 package jmri.jmrix.direct;
 
@@ -148,7 +148,7 @@ public class MakePacket {
    * an them into NMRA'1','0' representation, in preparation to be sent over
    * a serial link.
    * @param Packet byte[] - NRMA packet in a array of bytes
-   * @return int[] - first byte is length - 0 lenght indicates failed to do
+   * @return int[] - first byte is length - 0 length indicates failed to do
    */
   public static int[] createStream(byte[] packet) {
     int i, j = 0;
