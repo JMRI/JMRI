@@ -12,7 +12,7 @@ import jmri.jmrit.decoderdefn.*;
  * Display memory usage on request
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: MemoryFrameAction.java,v 1.1 2002-02-28 21:48:27 jacobsen Exp $
+ * @version			$Id: MemoryFrameAction.java,v 1.2 2002-04-29 16:42:34 mdavison Exp $
  */
 public class MemoryFrameAction extends AbstractAction {
 		
@@ -63,18 +63,18 @@ public class MemoryFrameAction extends AbstractAction {
 		p.add(testButton);
 		
 		updateButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent event) {
 				updateDisplay();
 			}
 		});
 		gcButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent event) {
 				Runtime.getRuntime().gc();
 				updateDisplay();
 			}
 		});
 		testButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent event) {
 				Roster.instance();
 				DecoderIndexFile.instance();
 				updateDisplay();
