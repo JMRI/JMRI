@@ -27,7 +27,7 @@ import javax.swing.UIManager;
  * GUI (and perhaps LAF) configuration item.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class GuiLafConfigPane extends JPanel {
 
@@ -72,18 +72,42 @@ public class GuiLafConfigPane extends JPanel {
 
     }
 
+    /**
+     * Create and return a JPanel for configuring default local.
+     * <P>
+     * Most of the action is handled in a separate thread, which
+     * replaces the contents of a JComboBox when the list of
+     * Locales is available.
+     * @return the panel
+     */
     public JPanel doLocale() {
         JPanel panel = new JPanel();
         // add JComboBoxen for language and country
         panel.setLayout(new FlowLayout());
-        locales = jmri.util.LocaleUtil.getAvailableLocales();
-        localeNames = new String[locales.length];
-        for (int i = 0; i<locales.length; i++) {
-            localeNames[i] = locales[i].getDisplayName();
-        }
-        localeBox = new JComboBox(localeNames);
-        localeBox.setSelectedItem(Locale.getDefault().getDisplayName());
+        locales = null;
+        localeBox = new JComboBox(new String[]{
+                        Locale.getDefault().getDisplayName(),
+                        "(Please Wait)"});
         panel.add(localeBox);
+
+        // create object to find locales in new Thread
+        Runnable r  = new Runnable() {
+            public void run() {
+                locales = jmri.util.LocaleUtil.getAvailableLocales();
+                localeNames = new String[locales.length];
+                for (int i = 0; i<locales.length; i++) {
+                    localeNames[i] = locales[i].getDisplayName();
+                }
+                Runnable update = new Runnable() {
+                    public void run() {
+                        localeBox.setModel(new javax.swing.DefaultComboBoxModel(localeNames));
+                        localeBox.setSelectedItem(Locale.getDefault().getDisplayName());
+                    }
+                };
+                javax.swing.SwingUtilities.invokeLater(update);
+            }
+        };
+        new Thread(r).start();
         return panel;
     }
 
