@@ -6,7 +6,6 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.Date;
 
 import com.sun.java.util.collections.List;
 import org.jdom.Document;
@@ -17,7 +16,7 @@ import org.jdom.input.SAXBuilder;
  * XmlFile contains various member implementations for handling aspects of XML files.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001, 2002
- * @version		$Revision: 1.6 $
+ * @version		$Revision: 1.7 $
  */
 public abstract class XmlFile {
 
@@ -175,8 +174,7 @@ public abstract class XmlFile {
      */
     public String backupFileName(String name) {
         // File.createTempFile is not available in java 1, so use millisecond time as unique string
-        String f = prefsDir()+name+"-"
-            +((new Date()).getTime());
+        String f = prefsDir()+name+".bak";
         if (log.isDebugEnabled()) log.debug("backup file name is "+f);
         return f;
     }
