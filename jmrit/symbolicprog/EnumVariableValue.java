@@ -24,8 +24,8 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 
 	public EnumVariableValue(String name, String comment, boolean readOnly,
 							int cvNum, String mask, int minVal, int maxVal,
-							Vector v, JLabel status) {
-		super(name, comment, readOnly, cvNum, mask, v, status);
+							Vector v, JLabel status, String stdname) {
+		super(name, comment, readOnly, cvNum, mask, v, status, stdname);
 		_maxVal = maxVal;
 		_minVal = minVal;
 		_value = new JComboBox();

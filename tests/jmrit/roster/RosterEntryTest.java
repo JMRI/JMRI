@@ -21,8 +21,8 @@ public class RosterEntryTest extends TestCase {
 		Assert.assertEquals("road name ", null, r.getRoadName());
 		Assert.assertEquals("road number ", null, r.getRoadNumber());
 		Assert.assertEquals("manufacturer ", null, r.getMfg());
-		Assert.assertEquals("mfg ID ", null, r.getDecoderMfgID());
-		Assert.assertEquals("version ID ", null, r.getDecoderVersionID());
+		Assert.assertEquals("model ", null, r.getDecoderModel());
+		Assert.assertEquals("family ", null, r.getDecoderFamily());
 	}
 
 	public void testPartialLoad() {
@@ -43,8 +43,8 @@ public class RosterEntryTest extends TestCase {
 		Assert.assertEquals("road name ", "SP", r.getRoadName());
 		Assert.assertEquals("road number ", "431", r.getRoadNumber());
 		Assert.assertEquals("manufacturer ", "Athearn", r.getMfg());
-		Assert.assertEquals("mfg ID ", null, r.getDecoderMfgID());
-		Assert.assertEquals("mfg ID ", null, r.getDecoderVersionID());
+		Assert.assertEquals("model ", null, r.getDecoderModel());
+		Assert.assertEquals("family ", null, r.getDecoderFamily());
 	}
 
 	public void testEmptyLoad() {
@@ -61,8 +61,8 @@ public class RosterEntryTest extends TestCase {
 		Assert.assertEquals("road name ", null, r.getRoadName());
 		Assert.assertEquals("road number ", null, r.getRoadNumber());
 		Assert.assertEquals("manufacturer ", null, r.getMfg());
-		Assert.assertEquals("mfg ID ", null, r.getDecoderMfgID());
-		Assert.assertEquals("version ID ", null, r.getDecoderVersionID());
+		Assert.assertEquals("model ", null, r.getDecoderModel());
+		Assert.assertEquals("family ", null, r.getDecoderFamily());
 	}
 	
 	public void testFullLoad() {
@@ -75,8 +75,8 @@ public class RosterEntryTest extends TestCase {
 									.addAttribute("mfg","Athearn")
 									.addAttribute("address","1234")
 									.addContent(new org.jdom.Element("decoder", ns)
-										.addAttribute("versionID","91")
-										.addAttribute("mfgID","33")
+										.addAttribute("family","91")
+										.addAttribute("model","33")
 												)
 				; // end create element
 				
@@ -87,8 +87,8 @@ public class RosterEntryTest extends TestCase {
 		Assert.assertEquals("road name ", "SP", r.getRoadName());
 		Assert.assertEquals("road number ", "431", r.getRoadNumber());
 		Assert.assertEquals("manufacturer ", "Athearn", r.getMfg());
-		Assert.assertEquals("mfg ID ", "33", r.getDecoderMfgID());
-		Assert.assertEquals("version ID ", "91", r.getDecoderVersionID());
+		Assert.assertEquals("model ", "33", r.getDecoderModel());
+		Assert.assertEquals("family ", "91", r.getDecoderFamily());
 	}
 
 	public void testStore() {
@@ -101,8 +101,8 @@ public class RosterEntryTest extends TestCase {
 									.addAttribute("mfg","Athearn")
 									.addAttribute("address","1234")
 									.addContent(new org.jdom.Element("decoder", ns)
-										.addAttribute("versionID","91")
-										.addAttribute("mfgID","33")
+										.addAttribute("family","91")
+										.addAttribute("model","33")
 												)
 				; // end create element
 				
@@ -110,8 +110,8 @@ public class RosterEntryTest extends TestCase {
 		org.jdom.Element o = r.store(ns);
 		// check
 		Assert.assertEquals("XML Element ", e.toString(), o.toString());
-		Assert.assertEquals("versionID ","91", o.getChild("decoder",ns).getAttribute("mfgID").getValue());
-		Assert.assertEquals("mfgID ","33", o.getChild("decoder",ns).getAttribute("versionID").getValue());
+		Assert.assertEquals("family ","91", o.getChild("decoder",ns).getAttribute("family").getValue());
+		Assert.assertEquals("model ","33", o.getChild("decoder",ns).getAttribute("model").getValue());
 	}
 
 	// from here down is testing infrastructure

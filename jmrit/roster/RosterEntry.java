@@ -7,7 +7,7 @@ package jmri.jmrit.roster;
  * information on how to locate it from decoder information.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: RosterEntry.java,v 1.1 2001-11-10 21:38:32 jacobsen Exp $
+ * @version			$Id: RosterEntry.java,v 1.2 2001-11-12 21:53:27 jacobsen Exp $
  */
 public class RosterEntry {
 
@@ -30,11 +30,11 @@ public class RosterEntry {
 	public void   setMfg(String s) { _mfg = s; }
 	public String getMfg() { return _mfg; }
 	
-	public void   setDecoderMfgID(String s) { _decoderMfgID = s; }
-	public String getDecoderMfgID() { return _decoderMfgID; }
+	public void   setDecoderModel(String s) { _decoderModel = s; }
+	public String getDecoderModel() { return _decoderModel; }
 	
-	public void   setDecoderVersionID(String s) { _decoderVersionID = s; }
-	public String getDecoderVersionID() { return _decoderVersionID; }
+	public void   setDecoderFamily(String s) { _decoderFamily = s; }
+	public String getDecoderFamily() { return _decoderFamily; }
 	
 	/**
 	 * Construct this Entry from XML. This member has to remain synchronized with the
@@ -56,11 +56,11 @@ public class RosterEntry {
 		_dccAddress = null;
 		if ((a = e.getAttribute("address")) != null )  _dccAddress = a.getValue();		
 		org.jdom.Element d = e.getChild("decoder", ns);
-		_decoderMfgID = null;
-		_decoderVersionID = null;
+		_decoderModel = null;
+		_decoderFamily = null;
 		if (d != null) {
-			if ((a = d.getAttribute("mfgID")) != null )  _decoderMfgID = a.getValue();
-			if ((a = d.getAttribute("versionID")) != null )  _decoderVersionID = a.getValue();
+			if ((a = d.getAttribute("model")) != null )  _decoderModel = a.getValue();
+			if ((a = d.getAttribute("family")) != null )  _decoderFamily = a.getValue();
 		}
 	}
 	
@@ -76,8 +76,8 @@ public class RosterEntry {
 		if (getMfg() != null) e.addAttribute("mfg",getMfg());
 
 		org.jdom.Element d = new org.jdom.Element("decoder", ns);
-		if (getDecoderMfgID() != null) d.addAttribute("versionID",getDecoderMfgID());
-		if (getDecoderVersionID() != null) d.addAttribute("mfgID",getDecoderVersionID());
+		if (getDecoderModel() != null) d.addAttribute("model",getDecoderModel());
+		if (getDecoderFamily() != null) d.addAttribute("family",getDecoderFamily());
 		e.addContent(d);
 		
 		return e;
@@ -93,8 +93,8 @@ public class RosterEntry {
 			+( (_roadNumber!=null) ? " "+_roadNumber : " <null>")
 			+( (_dccAddress!=null) ? " "+_dccAddress : " <null>")
 			+( (_mfg!=null) ? " "+_mfg : " <null>")
-			+( (_decoderMfgID!=null) ? " "+_decoderMfgID : " <null>")
-			+( (_decoderVersionID!=null) ? " "+_decoderVersionID : " <null>")
+			+( (_decoderModel!=null) ? " "+_decoderModel : " <null>")
+			+( (_decoderFamily!=null) ? " "+_decoderFamily : " <null>")
 			+"]";
 		return out;
 	}
@@ -105,8 +105,8 @@ public class RosterEntry {
 	protected String _roadNumber = null;
 	protected String _dccAddress = null;
 	protected String _mfg = null;
-	protected String _decoderMfgID = null;
-	protected String _decoderVersionID = null;
+	protected String _decoderModel = null;
+	protected String _decoderFamily = null;
 
 	// initialize logging	
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RosterEntry.class.getName());

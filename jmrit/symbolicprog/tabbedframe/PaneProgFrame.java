@@ -13,8 +13,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.*;
 import com.sun.java.util.collections.List;
 
 import jmri.Programmer;
@@ -45,12 +44,15 @@ public class PaneProgFrame extends javax.swing.JFrame  {
 
 	// GUI member declarations
 	JTabbedPane tabPane = new JTabbedPane();
-
-	// ctor
-	public PaneProgFrame() {
-
+	JButton readAll = new JButton("Read all");
+	JButton writeAll = new JButton("Write all");
+	JButton confirmAll = new JButton("Confirm all");
+	
+	protected void installComponents() {
 		// configure GUI elements
-
+		confirmAll.setEnabled(false);
+		confirmAll.setToolTipText("disabled because not yet implemented");
+		
 		// general GUI config
 		setTitle("Pane Programmer");
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -62,15 +64,79 @@ public class PaneProgFrame extends javax.swing.JFrame  {
 		// add buttons
 		JPanel bottom = new JPanel();
 		bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
-		bottom.add(new JButton("Read all"));
-		bottom.add(new JButton("Confirm all"));
-		bottom.add(new JButton("Write all"));
+		bottom.add(readAll);
+		bottom.add(confirmAll);
+		bottom.add(writeAll);
 		getContentPane().add(bottom);
 		
 		// pack  - this should be done again later after config
 		pack();
 	}
+	
+	// ctors
+	public PaneProgFrame() {
+		super();
+		installComponents();
+	}
   		
+	public PaneProgFrame(DecoderFile decoderFile, String locoFile) {
+		super();
+		installComponents();
+		loadDecoderFile(decoderFile);
+		loadLocoFile(locoFile);
+		loadProgrammerFile();
+	}
+  	
+  	protected void loadLocoFile(String locoFile) {
+  		if (locoFile == null) {
+  			log.info("loadLocoFile file invoked with null filename");
+  			return;
+  		}
+		LocoFile lf = new LocoFile();  // used as a temporary
+		Namespace lns = lf.getNamespace();
+		Element lroot = null;
+		try {
+			lroot = lf.rootFromFile(lf.fileLocation+File.separator+locoFile, true);
+		} catch (Exception e) { log.error("Exception while loading loco XML file: "+e); }
+		// load CVs from the loco file tree
+		LocoFile.loadCvModel(lroot.getChild("locomotive", lns), lns, cvModel);
+  	}
+  	
+  	protected void loadDecoderFile(DecoderFile df) {
+  		if (df == null) {
+  			log.warn("loadDecoder file invoked with null object");
+  			return;
+  		}
+		
+		Namespace dns = df.getNamespace();
+		Element droot = null;
+		try {
+			droot = df.rootFromFile(df.fileLocation+File.separator+df.getFilename(), true);
+		} catch (Exception e) { log.error("Exception while loading decoder XML file: "+e); }
+		// load variables from decoder tree
+		df.loadVariableModel(droot.getChild("decoder", dns), dns, variableModel);
+  	}
+  	
+  	protected void loadProgrammerFile() {
+		// Open and parse programmer file
+		File pfile = new File("xml"+File.separator+"programmers"+File.separator+"MultiPane.xml");
+		Namespace pns = Namespace.getNamespace("programmer",
+										"http://jmri.sourceforge.net/xml/programmer");
+		SAXBuilder pbuilder = new SAXBuilder(true);  // argument controls validation, on for now
+		Document pdoc = null;
+		try {
+			pdoc = pbuilder.build(new FileInputStream(pfile),"xml"+File.separator);
+		}
+		catch (Exception e) {
+			log.error("Exception in programmer SAXBuilder "+e);
+		}
+		// find root
+		Element proot = pdoc.getRootElement();
+					
+		// load programmer config from programmer tree
+		readConfig(proot, pns);
+  	}
+  	
 	// handle resizing when first shown
   	private boolean mShown = false;
 	public void addNotify() {
@@ -283,15 +349,13 @@ public class PaneProgFrame extends javax.swing.JFrame  {
 		return rep;
 	}
 
-	public void loadVariables(Element decoder, Namespace ns) {
-		DecoderFile.loadVariableModel(decoder, ns, variableModel);
-	}
-	
 	JComponent getRep(int i, String format) {
 		return (JComponent)(variableModel.getRep(i, format));
 	}
 	
 	int findVarIndex(String name) {
+		for (int i=0; i<variableModel.getRowCount(); i++) 
+			if (name.equals(variableModel.getStdName(i))) return i;
 		for (int i=0; i<variableModel.getRowCount(); i++) 
 			if (name.equals(variableModel.getName(i))) return i;
 		return -1;

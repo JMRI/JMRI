@@ -4,9 +4,12 @@ package jmri.jmrit.decoderdefn;
 
 import jmri.jmrit.XmlFile;
 import java.io.File;
+import javax.swing.JComboBox;
 import com.sun.java.util.collections.List;
 import com.sun.java.util.collections.ArrayList;
+import com.sun.java.util.collections.Hashtable;
 
+import org.jdom.Attribute;
 import org.jdom.Element;
 import org.jdom.Namespace;
 
@@ -17,7 +20,7 @@ import org.jdom.Namespace;
  *
  * Description:		Manipulates the index of decoder definitions.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecoderIndexFile.java,v 1.2 2001-11-10 21:46:55 jacobsen Exp $
+ * @version			$Id: DecoderIndexFile.java,v 1.3 2001-11-12 21:53:27 jacobsen Exp $
  *
  * DecoderIndex represents a decoderIndex.xml file in memory, allowing a program
  * to navigate to various decoder descriptions without having to 
@@ -39,37 +42,75 @@ public class DecoderIndexFile extends XmlFile {
 										"http://jmri.sourceforge.net/xml/decoderIndex");
 	}
 	
-	protected List _list = new ArrayList();
-	public int numEntries() { return _list.size(); }
+	protected List decoderList = new ArrayList();
+	public int numDecoders() { return decoderList.size(); }
+	
+	// map mfg ID numbers from & to mfg names	
+	protected Hashtable _mfgIdFromNameHash = new Hashtable(); 
+	protected Hashtable _mfgNameFromIdHash = new Hashtable(); 
+	
+	public String mfgIdFromName(String name) {
+		return (String)_mfgIdFromNameHash.get(name);
+	}
+	
+	public String mfgNameFromId(String name) {
+		return (String)_mfgNameFromIdHash.get(name);
+	}
 	
 	/**
 	 *	Get a List of decoders matching some information
 	 */
-	public List matchingList(String mfg, String family, String decoderMfgID, String decoderVersionID ) {
+	public List matchingDecoderList(String mfg, String family, String decoderMfgID, String decoderVersionID, String model ) {
 		List l = new ArrayList();
-		for (int i = 0; i < numEntries(); i++) {
-			if ( checkEntry(i, mfg, family, decoderMfgID, decoderVersionID ))
-				l.add(_list.get(i));
+		for (int i = 0; i < numDecoders(); i++) {
+			if ( checkEntry(i, mfg, family, decoderMfgID, decoderVersionID, model ))
+				l.add(decoderList.get(i));
 		}
 		return l;
 	}
 	
+	/** 
+	 * Get a JComboBox representing the choices that match 
+	 * some information
+	 */
+	public JComboBox matchingComboBox(String mfg, String family, String decoderMfgID, String decoderVersionID, String model ) {
+		List l = matchingDecoderList(mfg, family, decoderMfgID, decoderVersionID, model );
+		JComboBox b = new JComboBox();
+		for (int i = 0; i < l.size(); i++) {
+			DecoderFile r = (DecoderFile)decoderList.get(i);
+			b.addItem(r.titleString());
+		}
+		return b;
+	}
+
+	/** 
+	 * Return DecoderFile from a "title" string, ala selection in matchingComboBox
+	 */
+	public DecoderFile fileFromTitle(String title ) {
+		for (int i = 0; i < numDecoders(); i++) {
+			DecoderFile r = (DecoderFile)decoderList.get(i);
+			if (r.titleString().equals(title)) return r;
+		}
+		return null;
+	}
+
 	/** 
 	* Check if an entry consistent with specific properties. A null String entry
 	* always matches. Strings are used for convenience in GUI building.
 	* Don't bother asking about the model number...
 	* 
 	*/
-	public boolean checkEntry(int i, String mfgName, String family, String mfgID, String decoderVersionID) {
-		DecoderFile r = (DecoderFile)_list.get(i);
-		//if (mfgName != null && !mfgName.equals(r.getMfgName())) return false;
-		//if (family != null && !family.equals(r.getFamily())) return false;
-		//if (mfgID != null && !mfgID.equals(r.getMfgID())) return false;
-		//if (decoderVersionID != null && !decoderVersionID.equals(r.getDecoderVersionID())) return false;
+	public boolean checkEntry(int i, String mfgName, String family, String mfgID, String decoderVersionID, String model) {
+		DecoderFile r = (DecoderFile)decoderList.get(i);
+		if (mfgName != null && !mfgName.equals(r.getMfg())) return false;
+		if (family != null && !family.equals(r.getFamily())) return false;
+		if (mfgID != null && !mfgID.equals(r.getMfgID())) return false;
+		if (decoderVersionID != null && !decoderVersionID.equals(r.getVersionID())) return false;
+		if (model != null && !model.equals(r.getModel())) return false;
 		return true;
 	}
 
-	private static DecoderIndexFile _instance = null;
+	static DecoderIndexFile _instance = null;
 	public static DecoderIndexFile instance() {
 		if (_instance == null) {
 			// create and load
@@ -95,18 +136,72 @@ public class DecoderIndexFile extends XmlFile {
 		Element root = rootFromFile(name, true);
 			
 		// decode type, invoke proper processing routine if a decoder file
-		if (root.getChild("roster", ns) != null) {
-			List l = root.getChild("roster", ns).getChildren("locomotive",ns);
-			if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" children");
-			for (int i=0; i<l.size(); i++) {
-				// handle each entry
-			}
+		if (root.getChild("decoderIndex", ns) != null) {
+			readMfgSection(root.getChild("decoderIndex", ns), ns);
+			readFamilySection(root.getChild("decoderIndex", ns), ns);
 		}
 		else {
-			log.error("Unrecognized roster file contents in file: "+name);
+			log.error("Unrecognized decoderIndex file contents in file: "+name);
 		}
 	}
 
+	void readMfgSection(Element decoderIndex, Namespace ns) {
+		Element mfgList = decoderIndex.getChild("mfgList", ns);
+		if (mfgList != null) {
+		
+			List l = mfgList.getChildren("manufacturer",ns);
+			if (log.isDebugEnabled()) log.debug("readMfgSection sees "+l.size()+" children");
+			for (int i=0; i<l.size(); i++) {
+				// handle each entry
+				Element el = (Element)l.get(i);
+				String mfg = el.getAttribute("mfg").getValue();
+				Attribute attr = el.getAttribute("mfgID");
+				if (attr != null) {
+					_mfgIdFromNameHash.put(mfg, attr.getValue());
+					_mfgNameFromIdHash.put(attr.getValue(), mfg);
+				}
+			}
+		} else log.warn("no mfgList found in decoderIndexFile");
+	}
+	
+	void readFamilySection(Element decoderIndex, Namespace ns) {
+		Element familyList = decoderIndex.getChild("familyList", ns);
+		if (familyList != null) {
+		
+			List l = familyList.getChildren("family",ns);
+			if (log.isDebugEnabled()) log.debug("readFamilySection sees "+l.size()+" children");
+			for (int i=0; i<l.size(); i++) {
+				// handle each entry
+				Element el = (Element)l.get(i);
+				readFamily(el, ns);
+			}
+		} else log.warn("no familyList found in decoderIndexFile");
+	}
+
+	void readFamily(Element family, Namespace ns) {
+		Attribute attr;
+		String filename = family.getAttribute("file").getValue();
+		String parentVersID = ((attr = family.getAttribute("versionID"))     != null ? attr.getValue() : null );
+		String familyName   = ((attr = family.getAttribute("name"))     != null ? attr.getValue() : null );
+		String mfg   = ((attr = family.getAttribute("mfg"))     != null ? attr.getValue() : null );
+		String mfgID   = mfgIdFromName(mfg);
+
+		// record the decoders
+		List l = family.getChildren("decoder",ns);
+		if (log.isDebugEnabled()) log.debug("readFamily sees "+l.size()+" children");
+		for (int i=0; i<l.size(); i++) {
+			// handle each entry by creating a DecoderFile object containing all it knows
+			Element decoder = (Element)l.get(i);
+			String versID = ( (attr = decoder.getAttribute("versionID"))     != null ? attr.getValue() : parentVersID); 
+			int numFns   = ((attr = decoder.getAttribute("numFns"))     != null ? Integer.valueOf(attr.getValue()).intValue() : -1 );
+			DecoderFile df = new DecoderFile( mfg, mfgID,
+									( (attr = decoder.getAttribute("model"))     != null ? attr.getValue() : null ), 
+									versID, familyName, filename, numFns); 
+			// and store it
+			decoderList.add(df);
+		}
+	}
+	
 	/** 
 	* Return the filename String for the default decoder index file, including location.
 	* This is here to allow easy override in tests.

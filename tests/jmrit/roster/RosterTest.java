@@ -49,8 +49,8 @@ public class RosterTest extends TestCase {
 		e = new RosterEntry("file name Bill");
 		e.setRoadNumber("123");
 		e.setRoadName("ATSF");
-		e.setDecoderVersionID("81");
-		e.setDecoderMfgID("33");
+		e.setDecoderModel("81");
+		e.setDecoderFamily("33");
 		r.addEntry(e);
 		e = new RosterEntry("file name Ben");
 		e.setRoadNumber("123");
@@ -104,8 +104,8 @@ public class RosterTest extends TestCase {
 		e = new RosterEntry("file name Bill");
 		e.setRoadNumber("123");
 		e.setRoadName("ATSF");
-		e.setDecoderVersionID("81");
-		e.setDecoderMfgID("33");
+		e.setDecoderModel("81");
+		e.setDecoderFamily("33");
 		r.addEntry(e);
 		e = new RosterEntry("file name Ben");
 		e.setRoadNumber("123");
@@ -118,9 +118,6 @@ public class RosterTest extends TestCase {
 		// create new roster & read
 		Roster t = new Roster();
 		t.readFile("temp"+File.separator+"roster.xml");
-		System.out.println(" 0 "+t._list.get(0));
-		System.out.println(" 1 "+t._list.get(1));
-		System.out.println(" 2 "+t._list.get(2));
 		
 		// check contents
 		Assert.assertEquals("search for 0 ", 0, t.matchingList(null, "321", null, null, null, null).size());

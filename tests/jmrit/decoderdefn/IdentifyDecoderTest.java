@@ -18,7 +18,7 @@ public class IdentifyDecoderTest extends TestCase {
 
 	static int cvRead = -1;
 	
-	public void testShort() {
+	public void testIdentify() {
 		// initialize the system
 		jmri.progdebugger.ProgDebugger p = new jmri.progdebugger.ProgDebugger() {
 			public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
@@ -28,7 +28,9 @@ public class IdentifyDecoderTest extends TestCase {
 		jmri.InstanceManager.setProgrammer(p);
 
 		// create our test object
-		IdentifyDecoder i = new IdentifyDecoder();
+		IdentifyDecoder i = new IdentifyDecoder() {
+			public void done(int mfgID, int modelID) {}
+		};
 		
 		i.start();
 		Assert.assertEquals("step 1 reads CV ", 8, cvRead);

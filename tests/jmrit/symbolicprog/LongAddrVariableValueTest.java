@@ -26,12 +26,12 @@ public class LongAddrVariableValueTest extends VariableValueTest {
 	// abstract members invoked by tests in parent VariableValueTest class
 	VariableValue makeVar(String name, String comment, boolean readOnly,
 							int cvNum, String mask, int minVal, int maxVal,
-							Vector v, JLabel status) {
+							Vector v, JLabel status, String stdName) {
 		// make sure next CV exists
 		CvValue cvNext = new CvValue(cvNum+1);
 		cvNext.setValue(0);
 		v.setElementAt(cvNext, cvNum+1);
-		return new LongAddrVariableValue(name, comment, readOnly, cvNum, mask, minVal, maxVal, v, status);
+		return new LongAddrVariableValue(name, comment, readOnly, cvNum, mask, minVal, maxVal, v, status, stdName);
 	}
 
 
@@ -72,7 +72,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
 		v.setElementAt(cv17, 17);
 		v.setElementAt(cv18, 18);
 		// create a variable pointed at CV 17&18, check name
-		LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "VVVVVVVV", 0, 255, v, null);
+		LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "VVVVVVVV", 0, 255, v, null, null);
 		assert(var.name() == "name");
 		// pretend you've editted the value, check its in same object
 		((JTextField)var.getValue()).setText("4797");
@@ -94,7 +94,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
 		v.setElementAt(cv17, 17);
 		v.setElementAt(cv18, 18);
 		// create a variable pointed at CV 17 & 18
-		LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "VVVVVVVV", 0, 255, v, null);
+		LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "VVVVVVVV", 0, 255, v, null, null);
 		((JTextField)var.getValue()).setText("1029");
 		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 
@@ -118,7 +118,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
 		v.setElementAt(cv17, 17);
 		v.setElementAt(cv18, 18);
 
-		LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "XXVVVVXX", 0, 255, v, null);
+		LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "XXVVVVXX", 0, 255, v, null, null);
 		// set to specific value
 		((JTextField)var.getValue()).setText("5");
 		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
@@ -154,7 +154,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
 		v.setElementAt(cv17, 17);
 		v.setElementAt(cv18, 18);
 
-		LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "XXVVVVXX", 0, 255, v, null);
+		LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "XXVVVVXX", 0, 255, v, null, null);
 		((JTextField)var.getValue()).setText("4797");
 		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 

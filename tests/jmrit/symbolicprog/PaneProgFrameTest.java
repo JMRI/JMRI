@@ -80,7 +80,8 @@ public class PaneProgFrameTest extends TestCase {
 		// ugly, temporary way to load the decoder info
 		jmri.jmrit.decoderdefn.DecoderFileTest t = new jmri.jmrit.decoderdefn.DecoderFileTest("");
 		t.setupDecoder();
-		p.loadVariables(t.decoder, t.ns);
+		DecoderFile df = new DecoderFile();  // used as a temporary
+		df.loadVariableModel(t.decoder, t.ns, p.variableModel);
 		
 		p.readConfig(root, ns);
 		p.pack();
@@ -128,7 +129,8 @@ public class PaneProgFrameTest extends TestCase {
 			
 		// load its variables from decoder tree
 		System.out.println("decoder object "+droot.getChild("decoder", dns));
-		p.loadVariables(droot.getChild("decoder", dns), dns);
+		DecoderFile df = new DecoderFile();  // used as a temporary
+		df.loadVariableModel(droot.getChild("decoder", dns), dns, p.variableModel);
 		
 		// load its programmer config from programmer tree
 		System.out.println("programmer object "+proot);

@@ -20,10 +20,6 @@ import org.jdom.output.*;
 import jmri.jmrit.symbolicprog.*;
 
 public class DecoderFileTest extends TestCase {
-
-	public void testStart() {
-		new DecoderFile();
-	}
 	
 	public void testMfgName() {
 		setupDecoder();
@@ -45,7 +41,7 @@ public class DecoderFileTest extends TestCase {
 					new String[]  {"Name", "Value"},
 					cvModel);
 		
-		DecoderFile.loadVariableModel(decoder, ns, variableModel);
+		DecoderFile.loadVariableModel(decoder, ns, variableModel, 999);
 		Assert.assertEquals("read rows ", 3, variableModel.getRowCount());
 		Assert.assertEquals("first row name ", "Address", variableModel.getName(0));
 		Assert.assertEquals("third row name ", "Normal direction of motion", variableModel.getName(2));

@@ -19,7 +19,7 @@ import org.jdom.input.*;
  * XmlFile contains various member implementations for handling aspects of XML files.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version		$Id: XmlFile.java,v 1.1 2001-11-11 06:56:43 jacobsen Exp $	
+ * @version		$Id: XmlFile.java,v 1.2 2001-11-12 21:53:25 jacobsen Exp $	
  */
 public abstract class XmlFile {
 	
@@ -28,7 +28,7 @@ public abstract class XmlFile {
 	/**
 	 * Read the contents of an XML file, using the abstract service routines.
 	 */
-	protected Element rootFromFile(String name, boolean verify) throws org.jdom.JDOMException, java.io.FileNotFoundException {
+	public Element rootFromFile(String name, boolean verify) throws org.jdom.JDOMException, java.io.FileNotFoundException {
 		if (log.isInfoEnabled()) log.info("readFile "+name);
 		// This is taken in large part from "Java and XML" page 354
 			

@@ -24,8 +24,8 @@ public class DecVariableValueTest extends VariableValueTest {
 	// abstract members invoked by tests in parent VariableValueTest class
 	VariableValue makeVar(String name, String comment, boolean readOnly,
 							int cvNum, String mask, int minVal, int maxVal,
-							Vector v, JLabel status) {
-		return new DecVariableValue(name, comment, readOnly, cvNum, mask, minVal, maxVal, v, status);
+							Vector v, JLabel status, String stdName) {
+		return new DecVariableValue(name, comment, readOnly, cvNum, mask, minVal, maxVal, v, status, stdName);
 	}
 
 

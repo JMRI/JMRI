@@ -316,7 +316,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 			decoderModel.setText(DecoderFile.getModelName(decoderElem, ns));
 			
 			// load variables to table
-			DecoderFile.loadVariableModel(decoderElem, ns, variableModel);
+			//DecoderFile.loadVariableModel(decoderElem, ns, variableModel);
 	}
 
 	void processLocoFile(Element loco) {

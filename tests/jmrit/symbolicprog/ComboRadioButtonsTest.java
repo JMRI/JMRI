@@ -27,7 +27,7 @@ public class ComboRadioButtonsTest extends TestCase {
 		CvValue cv = new CvValue(81);
 		cv.setValue(3);
 		v.setElementAt(cv, 81);
-		EnumVariableValue var = new EnumVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null);
+		EnumVariableValue var = new EnumVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
 		var.addItem("Value0");
 		var.addItem("Value1");
 		var.addItem("Value2");
@@ -46,7 +46,7 @@ public class ComboRadioButtonsTest extends TestCase {
 		CvValue cv = new CvValue(81);
 		cv.setValue(3);
 		v.setElementAt(cv, 81);
-		EnumVariableValue var = new EnumVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null);
+		EnumVariableValue var = new EnumVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
 		var.addItem("Value0");
 		var.addItem("Value1");
 		var.addItem("Value2");
@@ -84,7 +84,7 @@ public class ComboRadioButtonsTest extends TestCase {
 		CvValue cv = new CvValue(81);
 		cv.setValue(3);
 		v.setElementAt(cv, 81);
-		EnumVariableValue var = new EnumVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null);
+		EnumVariableValue var = new EnumVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
 		var.addItem("Value0");
 		var.addItem("Value1");
 		var.addItem("Value2");

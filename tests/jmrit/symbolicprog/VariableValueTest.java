@@ -24,7 +24,7 @@ public abstract class VariableValueTest extends TestCase {
 
 	abstract VariableValue makeVar(String name, String comment, boolean readOnly,
 							int cvNum, String mask, int minVal, int maxVal,
-							Vector v, JLabel status);
+							Vector v, JLabel status, String stdName);
 	
 	abstract void setValue(VariableValue var, String value);
 	abstract void checkValue(VariableValue var, String comment, String value);
@@ -35,6 +35,18 @@ public abstract class VariableValueTest extends TestCase {
 	
 	// start of base tests
 	
+	// check name, stdName from ctor
+	public void testVariableNaming() {
+		Vector v = createCvVector();
+		CvValue cv = new CvValue(81);
+		cv.setValue(3);
+		v.setElementAt(cv, 81);
+		// create a variable pointed at CV 81, check name
+		VariableValue variable = makeVar("name check", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, "stdName check");
+		Assert.assertEquals("name", "name check", variable.name() );
+		Assert.assertEquals("stdName", "stdName check", variable.stdName() );
+	}
+
 	// can we create one, then manipulate the variable to change the CV?
 	public void testVariableValueCreate() {
 		Vector v = createCvVector();
@@ -42,7 +54,7 @@ public abstract class VariableValueTest extends TestCase {
 		cv.setValue(3);
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, check name
-		VariableValue variable = makeVar("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null);
+		VariableValue variable = makeVar("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
 		Assert.assertEquals("name", "name", variable.name() );
 
 		// pretend you've editted the value & manually notify
@@ -62,7 +74,7 @@ public abstract class VariableValueTest extends TestCase {
 		cv.setValue(3);
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, loaded as 5
-		VariableValue variable = makeVar("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null);
+		VariableValue variable = makeVar("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
 		assert( variable.getValue() != null);
 		setValue(variable, "5");
 		checkValue(variable, "variable value", "5");
@@ -80,7 +92,7 @@ public abstract class VariableValueTest extends TestCase {
 		cv.setValue(3);
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, loaded as 5
-		VariableValue variable = makeVar("name", "comment", true, 81, "XXVVVVXX", 0, 255, v, null);
+		VariableValue variable = makeVar("name", "comment", true, 81, "XXVVVVXX", 0, 255, v, null, null);
 		assert( variable.getValue() != null);
 		setReadOnlyValue(variable, "5");
 		checkReadOnlyValue(variable, "value", "5");
@@ -96,7 +108,7 @@ public abstract class VariableValueTest extends TestCase {
 		CvValue cv = new CvValue(81);
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, loaded as 5, manually notified
-		VariableValue variable = makeVar("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null);
+		VariableValue variable = makeVar("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
 		setValue(variable, "5");
 
 		variable.read();
@@ -128,7 +140,7 @@ public abstract class VariableValueTest extends TestCase {
 		CvValue cv = new CvValue(81);
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, loaded as 5, manually notified
-		VariableValue variable = makeVar("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null);
+		VariableValue variable = makeVar("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
 		setValue(variable, "5");
 
 		variable.write(); 
@@ -161,7 +173,7 @@ public abstract class VariableValueTest extends TestCase {
 		CvValue cv = new CvValue(81);
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, loaded as 5, manually notified
-		VariableValue variable = makeVar("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null);
+		VariableValue variable = makeVar("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
 		setValue(variable, "5");
 
 		JLabel statusLabel = new JLabel("nothing");
@@ -196,7 +208,7 @@ public abstract class VariableValueTest extends TestCase {
 		CvValue cv = new CvValue(81);
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, loaded as 5, manually notified
-		VariableValue variable = makeVar("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null);
+		VariableValue variable = makeVar("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
 		assert(variable.getState() == VariableValue.UNKNOWN);
 		setValue(variable, "5");
 		assert(variable.getState() == VariableValue.EDITTED);
@@ -212,7 +224,7 @@ public abstract class VariableValueTest extends TestCase {
 		CvValue cv = new CvValue(81);
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, loaded as 5, manually notified
-		VariableValue variable = makeVar("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null);
+		VariableValue variable = makeVar("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
 		Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, variable.getValue().getBackground() );
 		setValue(variable, "5");
 		Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, variable.getValue().getBackground() );
@@ -228,7 +240,7 @@ public abstract class VariableValueTest extends TestCase {
 		CvValue cv = new CvValue(81);
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, loaded as 5, manually notified
-		VariableValue variable = makeVar("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null);
+		VariableValue variable = makeVar("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
 		// get a representation
 		JTextField rep = (JTextField)variable.getRep("");
 		
@@ -250,7 +262,7 @@ public abstract class VariableValueTest extends TestCase {
 		CvValue cv = new CvValue(81);
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, loaded as 5, manually notified
-		VariableValue variable = makeVar("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null);
+		VariableValue variable = makeVar("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
 		// get a representation
 		JTextField rep = (JTextField)variable.getRep("");
 		
@@ -273,7 +285,7 @@ public abstract class VariableValueTest extends TestCase {
 		CvValue cv = new CvValue(81);
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, loaded as 5, manually notified
-		VariableValue variable = makeVar("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null);
+		VariableValue variable = makeVar("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
 		setValue(variable, "5");
 
 		// now get value, check
@@ -316,8 +328,8 @@ public abstract class VariableValueTest extends TestCase {
 		CvValue cv = new CvValue(81);
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, loaded as 5, manually notified
-		VariableValue var1 = makeVar("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null);
-		VariableValue var2 = makeVar("alternate", "comment", false, 81, "XXVVVVXX", 0, 255, v, null);
+		VariableValue var1 = makeVar("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
+		VariableValue var2 = makeVar("alternate", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
 		setValue(var1, "5");
 
 		var1.write(); 
@@ -351,7 +363,7 @@ public abstract class VariableValueTest extends TestCase {
 		cv.setValue(3);
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, loaded as 5
-		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null);
+		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
 		System.out.println("free, total memory at start = "+Runtime.getRuntime().freeMemory()
 							+" "+Runtime.getRuntime().totalMemory());
 		Runtime.getRuntime().gc();

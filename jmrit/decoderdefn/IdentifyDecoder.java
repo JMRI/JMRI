@@ -16,7 +16,7 @@ import com.sun.java.util.collections.List;
  * it works through the identification progress.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: IdentifyDecoder.java,v 1.2 2001-11-10 21:46:55 jacobsen Exp $
+ * @version			$Id: IdentifyDecoder.java,v 1.3 2001-11-12 21:53:27 jacobsen Exp $
  * @see             jmri.jmrit.roster.RosterEntry
  */
 public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
@@ -67,7 +67,14 @@ public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
 		return true;
 	}
 	
-	protected void statusUpdate(String s) {};
+	protected void statusUpdate(String s) {
+		if (s.equals("Done")) done(mfgID, modelID);
+		else if (log.isInfoEnabled()) log.info("received status: "+s);
+	}
+	
+	protected void done(int mfgID, int modelID) {
+		log.error("Identify decoder done() should have been overridden");
+	}
 	
 	// initialize logging	
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(IdentifyDecoder.class.getName());

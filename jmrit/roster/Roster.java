@@ -25,9 +25,12 @@ import org.jdom.output.*;
  *<P>
  * Multiple Roster objects don't make sense, so we use an "instance" member
  * to navigate to a single one.
+ *<P>
+ * This predates the "XmlFile" base class, so doesn't use it.  Not sure
+ * whether it should...
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: Roster.java,v 1.1 2001-11-10 21:38:32 jacobsen Exp $
+ * @version			$Id: Roster.java,v 1.2 2001-11-12 21:53:27 jacobsen Exp $
  * @see             jmri.jmrit.roster.RosterEntry
  */
 public class Roster {
@@ -68,13 +71,33 @@ public class Roster {
 									String mfg, String decoderMfgID, String decoderVersionID ) {
 		List l = matchingList(roadName, roadNumber, dccAddress, mfg, decoderMfgID, decoderVersionID );
 		JComboBox b = new JComboBox();
-		for (int i = 0; i < numEntries(); i++) {
+		for (int i = 0; i < l.size(); i++) {
 			RosterEntry r = (RosterEntry)_list.get(i);
 			b.addItem(r.titleString());
 		}
 		return b;
 	}
 	 
+	/** 
+	 * Return RosterEntry from a "title" string, ala selection in matchingComboBox
+	 */
+	public RosterEntry entryFromTitle(String title ) {
+		for (int i = 0; i < numEntries(); i++) {
+			RosterEntry r = (RosterEntry)_list.get(i);
+			if (r.titleString().equals(title)) return r;
+		}
+		return null;
+	}
+
+	/** 
+	 * Return filename from a "title" string, ala selection in matchingComboBox
+	 */
+	public String fileFromTitle(String title ) {
+		RosterEntry r = entryFromTitle(title);
+		if (r != null) return r.getFileName();
+		return null;
+	}
+
 	protected List _list = new ArrayList();
 
 	/**
@@ -96,14 +119,14 @@ public class Roster {
 	* 
 	*/
 	public boolean checkEntry(int i, String roadName, String roadNumber, String dccAddress,
-									String mfg, String decoderMfgID, String decoderVersionID ) {
+									String mfg, String decoderModel, String decoderFamily ) {
 		RosterEntry r = (RosterEntry)_list.get(i);
 		if (roadName != null && !roadName.equals(r.getRoadName())) return false;
 		if (roadNumber != null && !roadNumber.equals(r.getRoadNumber())) return false;
 		if (dccAddress != null && !dccAddress.equals(r.getDccAddress())) return false;
 		if (mfg != null && !mfg.equals(r.getMfg())) return false;
-		if (decoderMfgID != null && !decoderMfgID.equals(r.getDecoderMfgID())) return false;
-		if (decoderVersionID != null && !decoderVersionID.equals(r.getDecoderVersionID())) return false;
+		if (decoderModel != null && !decoderModel.equals(r.getDecoderModel())) return false;
+		if (decoderFamily != null && !decoderFamily.equals(r.getDecoderFamily())) return false;
 		return true;
 	}
 	

@@ -66,6 +66,7 @@ public class VariableTableModelTest extends TestCase {
 									.addContent(el0 = new Element("variable", ns)
 												.addAttribute("CV","1")
 												.addAttribute("name","one")
+												.addAttribute("stdName", "really two")
 												.addAttribute("readOnly","no")
 												.addContent( new Element("decVal", ns)
 														.addAttribute("max","31")
@@ -100,6 +101,10 @@ public class VariableTableModelTest extends TestCase {
 		t.setRow(0, el0, ns);
 		assert(t.getValueAt(0,0).equals("1"));
 		assert(t.getValueAt(0,1).equals("one"));
+		
+		// check that the variable names were set right
+		Assert.assertEquals("check loaded name ", "one", t.getName(0));
+		Assert.assertEquals("check loaded stdName ", "really two", t.getStdName(0));
 
 		t.setRow(1, el1, ns);
 		assert(t.getValueAt(1,0).equals("4"));

@@ -83,6 +83,10 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		return ((VariableValue)rowVector.elementAt(row)).name();
 	}
 	
+	public String getStdName(int row) {  // name is text number
+		return ((VariableValue)rowVector.elementAt(row)).stdName();
+	}
+	
 	public String getValString(int row) {
 		return ((VariableValue)rowVector.elementAt(row)).getValueString();
 	}
@@ -149,6 +153,9 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		// get the values for the VariableValue ctor
 		if (log.isDebugEnabled()) log.debug("Starting to setRow");
 		String name = e.getAttribute("name").getValue();
+		String stdname = ( e.getAttribute("stdName")!=null ?
+						 e.getAttribute("stdName").getValue() :
+						 null);
 		String comment = null;
 		if (e.getAttribute("comment") != null)
 			comment = e.getAttribute("comment").getValue();
@@ -203,7 +210,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 			if ( (a = child.getAttribute("max")) != null)
 				maxVal = Integer.valueOf(a.getValue()).intValue();
 			v = new DecVariableValue(name, comment, readOnly, 
-								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status);
+								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, stdname);
 								
 		} else if ( (child = e.getChild("hexVal", ns)) != null) {
 			Attribute a;
@@ -212,12 +219,12 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 			if ( (a = child.getAttribute("max")) != null)
 				maxVal = Integer.valueOf(a.getValue(),16).intValue();
 			v = new HexVariableValue(name, comment, readOnly, 
-								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status);
+								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, stdname);
 								
 		} else if ( (child = e.getChild("enumVal", ns)) != null) {
 			List l = child.getChildren("enumChoice", ns);
 			EnumVariableValue v1 = new EnumVariableValue(name, comment, readOnly, 
-								CV, mask, 0, l.size()-1, _cvModel.allCvVector(), _status);
+								CV, mask, 0, l.size()-1, _cvModel.allCvVector(), _status, stdname);
 			v = v1;
 			for (int k=0; k< l.size(); k++)
 				v1.addItem(((Element)l.get(k)).getAttribute("choice").getValue());
@@ -228,7 +235,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		} else if ( (child = e.getChild("longAddressVal", ns)) != null) {
 			_cvModel.addCV(""+(CV+1));  // ensure 2nd CV exists
 			v = new LongAddrVariableValue(name, comment, readOnly, 
-								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status);
+								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, stdname);
 		} else {
 			log.error("Did not find a valid variable type");
 			return;
@@ -263,7 +270,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		_readButtons.addElement(br);
 
 		VariableValue v = new DecVariableValue(name, comment, readOnly, 
-								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status);
+								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, null);
 		rowVector.addElement(v);
 		v.addPropertyChangeListener(this);
 	}
