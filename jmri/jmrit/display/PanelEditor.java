@@ -37,7 +37,7 @@ import jmri.jmrit.catalog.NamedIcon;
  *
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class PanelEditor extends JFrame {
@@ -168,11 +168,13 @@ public class PanelEditor extends JFrame {
             panel.add(turnoutAddR);
             TurnoutIcon to = new TurnoutIcon();
 
-            closedIconR = to.getClosedIcon();
+            closedIconR = new NamedIcon("resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif",
+                            "resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif");
             closedIconButtonR = new JButton(closedIconR);
             closedIconButtonR.setToolTipText("Icon for turnout closed. Click to select new icon");
 
-            thrownIconR = to.getThrownIcon();
+            thrownIconR = new NamedIcon("resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif",
+                            "resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif");
             thrownIconButtonR = new JButton(thrownIconR);
             thrownIconButtonR.setToolTipText("Icon for turnout thrown. Click to select new icon");
 
@@ -200,7 +202,7 @@ public class PanelEditor extends JFrame {
             this.getContentPane().add(panel);
         }
 
-        // Add a turnout indicator for left-bound
+        // Add a turnout indicator for left-hand
         {
             JPanel panel = new JPanel();
             panel.setLayout(new FlowLayout());
@@ -208,12 +210,12 @@ public class PanelEditor extends JFrame {
             TurnoutIcon to = new TurnoutIcon();
 
             closedIconL = new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif",
-                            "resources/icons/smallschematics/tracksegments/os-upper-right-closed.gif");
+                            "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif");
             closedIconButtonL = new JButton(closedIconL);
             closedIconButtonL.setToolTipText("Icon for turnout closed. Click to select new icon");
 
             thrownIconL = new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif",
-                            "resources/icons/smallschematics/tracksegments/os-upper-right-closed.gif");
+                            "resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif");
             thrownIconButtonL = new JButton(thrownIconL);
             thrownIconButtonL.setToolTipText("Icon for turnout thrown. Click to select new icon");
 
