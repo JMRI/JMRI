@@ -7,7 +7,7 @@ package jmri.jmrix.loconet.locormi;
  * Copyright:    Copyright (c) 2002
  * Company:
  * @author  Bob Jacobsen
- * @version $Id: LnMessageClientAction.java,v 1.1 2002-03-28 04:21:19 jacobsen Exp $
+ * @version $Id: LnMessageClientAction.java,v 1.2 2002-03-30 00:38:06 kiwi64ajs Exp $
  */
 
 import javax.swing.*;
@@ -27,6 +27,7 @@ public class LnMessageClientAction extends AbstractAction
 
   public void actionPerformed( ActionEvent e)
   {
+    try{
     // get the portname and timeout
         String remoteHostName = JOptionPane.showInputDialog("Remote host name?");
 
@@ -42,5 +43,9 @@ public class LnMessageClientAction extends AbstractAction
 
     // configure the other instance objects
         client.configureLocalServices();
+    }
+    catch( LocoNetException ex ){
+        log.warn( "Exception: " + ex );
+    }
   }
 }

@@ -6,13 +6,14 @@ package jmri.jmrix.loconet.locormi;
  * Copyright:    Copyright (c) 2002
  * Company:
  * @author
- * @version $Id: LnMessageBufferInterface.java,v 1.2 2002-03-28 02:25:24 jacobsen Exp $
+ * @version $Id: LnMessageBufferInterface.java,v 1.3 2002-03-30 00:38:06 kiwi64ajs Exp $
  */
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import jmri.jmrix.loconet.*;
 
-public interface LnMessageBufferInterface
+public interface LnMessageBufferInterface extends Remote
 {
   public void enable( int mask ) throws RemoteException ;
 
@@ -20,5 +21,7 @@ public interface LnMessageBufferInterface
 
   public void clear() throws RemoteException ;
 
-  public LocoNetMessage[] getMessages( long timeout ) throws RemoteException ;
+  public Object[] getMessages( long timeout ) throws RemoteException ;
+
+  public void sendLocoNetMessage(LocoNetMessage m) throws RemoteException ;
 }

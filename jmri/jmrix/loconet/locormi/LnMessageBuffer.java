@@ -5,7 +5,7 @@ package jmri.jmrix.loconet.locormi;
  * Description:
  * Copyright:    Copyright (c) 2002
  * @author   Alex Shepherd
- * @version $Id: LnMessageBuffer.java,v 1.3 2002-03-28 04:21:19 jacobsen Exp $
+ * @version $Id: LnMessageBuffer.java,v 1.4 2002-03-30 00:38:06 kiwi64ajs Exp $
  */
 
 import com.sun.java.util.collections.LinkedList;
@@ -49,9 +49,9 @@ public class LnMessageBuffer extends UnicastRemoteObject implements LnMessageBuf
     }
   }
 
-  public LocoNetMessage[] getMessages( long timeout )
+  public Object[] getMessages( long timeout )
   {
-    LocoNetMessage[] messageArray = null ;
+    Object[] messagesArray = null ;
 
     synchronized( messageList )
     {
@@ -66,11 +66,15 @@ public class LnMessageBuffer extends UnicastRemoteObject implements LnMessageBuf
 
       if( messageList.size() > 0 )
       {
-        messageArray = (LocoNetMessage[])messageList.toArray() ;
+        messagesArray = messageList.toArray() ;
         messageList.clear();
       }
     }
 
-    return messageArray ;
+    return messagesArray ;
+  }
+
+  public void sendLocoNetMessage(LocoNetMessage m){
+      LnTrafficController.instance().sendLocoNetMessage( m );
   }
 }

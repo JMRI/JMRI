@@ -1,15 +1,22 @@
 package jmri.jmrix.loconet.locormi;
 
 import jmri.jmrix.loconet.*;
+import com.sun.java.util.collections.LinkedList;
 
 /**
  * Client for the RMI LocoNet server.
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Id: LnMessageClient.java,v 1.1 2002-03-28 04:21:19 jacobsen Exp $
+ * @version $Id: LnMessageClient.java,v 1.2 2002-03-30 00:38:06 kiwi64ajs Exp $
  */
 
 public class LnMessageClient extends LnTrafficRouter {
+
+    String                      serverName = null ;
+    int                         pollTimeout ;
+    LnMessageServerInterface    lnServer = null ;
+    LnMessageBufferInterface    lnMessageBuffer = null ;
+    LnMessageClientPollThread   pollThread = null ;
 
     public LnMessageClient() {
         super();
@@ -19,8 +26,6 @@ public class LnMessageClient extends LnTrafficRouter {
      * Forward messages to the server.
      */
 	public void sendLocoNetMessage(LocoNetMessage m) {
-        // Implement this with code to forward m
-        // to the server.
 	}
 
     // messages that are received from the server should
@@ -30,9 +35,27 @@ public class LnMessageClient extends LnTrafficRouter {
      * Start the connection to the server. This is invoked
      * once.
      */
-    void configureRemoteConnection(String remoteHostName, int timeoutSec) {
+    void configureRemoteConnection(String remoteHostName, int timeoutSec) throws LocoNetException {
+        serverName = remoteHostName ;
+        pollTimeout = timeoutSec * 1000 ;  // convert to ms
+
         if (log.isDebugEnabled()) log.debug("configureRemoteConnection: "
                                             +remoteHostName+" "+timeoutSec);
+
+        try{
+            System.setSecurityManager(new java.rmi.RMISecurityManager());
+
+            LnMessageServerInterface lnServer = (LnMessageServerInterface) java.rmi.Naming.lookup(
+                "//" + serverName + "/" + LnMessageServer.serviceName );
+
+            lnMessageBuffer = lnServer.getMessageBuffer() ;
+            lnMessageBuffer.enable( 0 );
+            pollThread = new LnMessageClientPollThread( this ) ;
+        }
+        catch( Exception ex ){
+          System.out.println( "Exception: " + ex ) ;
+          throw new LocoNetException( "Failed to Connect to Server: " + serverName ) ;
+        }
     }
 
     /**
@@ -62,6 +85,31 @@ public class LnMessageClient extends LnTrafficRouter {
             // various threads here.
 	}
 
+    public static void main( String[] args ){
+    	String logFile = "default.lcf";
+    	try {
+	    	if (new java.io.File(logFile).canRead()) {
+	   	 		org.apache.log4j.PropertyConfigurator.configure("default.lcf");
+	    	} else {
+		    	org.apache.log4j.BasicConfigurator.configure();
+	    	}
+	    }
+		catch (java.lang.NoSuchMethodError e) { System.out.println("Exception starting logging: "+e); }
+
+        try{
+            String serverName = java.net.InetAddress.getLocalHost().getHostName();
+            LnMessageClient lnClient = new LnMessageClient() ;
+            lnClient.configureRemoteConnection( serverName, 60 );
+
+                // Now just site and wait for the Thread to read
+            synchronized( lnClient ){
+                lnClient.wait() ;
+            }
+        }
+        catch( Exception ex ){
+          System.out.println( "Exception: " + ex ) ;
+        }
+    }
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnMessageClient.class.getName());
 }

@@ -6,8 +6,10 @@ package jmri.jmrix.loconet.locormi;
  * Copyright:    Copyright (c) 2002
  * Company:
  * @author
- * @version $Id: LnMessageServer.java,v 1.2 2002-03-28 02:25:24 jacobsen Exp $
+ * @version $Id: LnMessageServer.java,v 1.3 2002-03-30 00:38:06 kiwi64ajs Exp $
  */
+
+ // -Djava.security.policy=lib/security.policy
 
 import java.rmi.server.UnicastRemoteObject;
 import java.rmi.RemoteException ;
