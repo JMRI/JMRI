@@ -8,11 +8,13 @@ import jmri.jmrix.loconet.AspectGenerator;
 
 /**
  * SignalHeadIcon provides a small icon to display a status of a SignalHead.
- * <P>In this implementation, it takes its information straight from an
- * AspectGenerator, so is tied very closely to that class.  This needs to
- * be fixed in the longer term.
+ * <P>
+ * SignalHeads are located via the SignalHeadManager, which in turn is located
+ * via the InstanceManager
+ * @see jmri.SignalHeadManager
+ * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
