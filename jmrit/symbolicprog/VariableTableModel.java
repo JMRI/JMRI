@@ -232,9 +232,11 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 			EnumVariableValue v1 = new EnumVariableValue(name, comment, readOnly, 
 								CV, mask, 0, l.size()-1, _cvModel.allCvVector(), _status, stdname);
 			v = v1;
+			v1.nItems(l.size());
 			for (int k=0; k< l.size(); k++)
 				v1.addItem(((Element)l.get(k)).getAttribute("choice").getValue());
-
+			v1.lastItem();
+			
 		} else if ( (child = e.getChild("speedTableVal")) != null) {
 			log.warn("Speed tables are still experimental!");
 			// ensure all 28 CVs exist

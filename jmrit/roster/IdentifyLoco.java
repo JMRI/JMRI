@@ -10,16 +10,17 @@ import com.sun.java.util.collections.List;
  * on the programming track.
  *
  * This is a class (instead of a Roster member function) to simplify use of 
- * ProgListener callbacks.
+ * ProgListener callbacks. It is abstract as we expect that local classes
+ * will define the message and done members.
  *
  * Once started, this maintains a List of possible RosterEntrys as
  * it works through the identification progress.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: IdentifyLoco.java,v 1.3 2001-11-19 04:51:39 jacobsen Exp $
+ * @version			$Id: IdentifyLoco.java,v 1.4 2001-12-02 05:46:42 jacobsen Exp $
  * @see             jmri.jmrit.roster.RosterEntry
  */
-public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
+abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
 
 	private boolean shortAddr;
 	private int cv17val;
@@ -29,6 +30,7 @@ public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
 	// steps of the identification state machine
 	public boolean test1() {
 		// request contents of CV 29
+		statusUpdate("Read CV 29");
 		readCV(29);
 		return false;
 	}
@@ -38,10 +40,12 @@ public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
 		if ( (value&0x20) != 0 ) {
 			// long
 			shortAddr = false;
+			statusUpdate("Long address - read CV 17");
 			readCV(17);			
 		} else {
 			// short - read address
 			shortAddr = true;
+			statusUpdate("Short address - read CV 1");
 			readCV(1);
 		}
 		return false;
@@ -56,6 +60,7 @@ public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
 		} else {
 			// long - need CV18 also
 			cv17val = value;
+			statusUpdate("Long address - read CV 18");
 			readCV(18);
 			return false;
 		}
@@ -92,13 +97,14 @@ public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
 	}
 	
 	protected void statusUpdate(String s) {
+		message(s);
 		if (s.equals("Done")) done(address);
 		else if (log.isInfoEnabled()) log.info("received status: "+s);
 	}
+
+	abstract protected void done(int address);
 	
-	protected void done(int address) {
-		log.error("Identify loco done() should have been overridden");
-	}
+	abstract protected void message(String m);
 	
 	// initialize logging	
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(IdentifyLoco.class.getName());

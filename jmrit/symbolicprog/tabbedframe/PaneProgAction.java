@@ -26,10 +26,13 @@ import org.jdom.input.*;
 public class PaneProgAction 			extends AbstractAction {
 
 	Object o1, o2, o3, o4;
+	JLabel statusLabel;
 	
 	public PaneProgAction(String s) { 
 		super(s);
 
+		statusLabel = new JLabel("idle");
+		
 		// start a low priority request for the Roster & DecoderInstance
 		Thread xmlThread = new Thread( new Runnable() {
 			public void run() { 
@@ -62,13 +65,14 @@ public class PaneProgAction 			extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
 
 		if (log.isInfoEnabled()) log.info("Pane programmer requested");
+		
 		// create the initial frame that steers
 		JFrame f = new JFrame("Tab-Programmer Setup");
 		f.getContentPane().setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
 
 		// new Loco on programming track
 		JLabel last;
-		JPanel pane1 = new NewLocoSelPane(){
+		JPanel pane1 = new NewLocoSelPane(statusLabel){
 			protected void startProgrammer(DecoderFile decoderFile, String locoFile, RosterEntry re) {
 				JFrame p = new PaneProgFrame(decoderFile, locoFile, re, "Program New Locomotive");
 				p.pack();
@@ -77,7 +81,7 @@ public class PaneProgAction 			extends AbstractAction {
 		};
 		
 		// Known loco on programming track
-		JPanel pane2 = new KnownLocoSelPane(){
+		JPanel pane2 = new KnownLocoSelPane(statusLabel){
 			protected void startProgrammer(DecoderFile decoderFile, String locoFile, RosterEntry re) {
 				String title = "Program "+re.getId();
 				JFrame p = new PaneProgFrame(decoderFile, locoFile, re, title);
@@ -101,6 +105,7 @@ public class PaneProgAction 			extends AbstractAction {
 		f.getContentPane().add(pane2);
 		f.getContentPane().add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
 		f.getContentPane().add(pane4);
+		f.getContentPane().add(statusLabel);
 		
 		f.pack();
 		if (log.isInfoEnabled()) log.info("Tab-Programmer setup created");

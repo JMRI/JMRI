@@ -20,11 +20,20 @@ import com.sun.java.util.collections.List;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: KnownLocoSelPane.java,v 1.4 2001-11-23 22:23:54 jacobsen Exp $
+ * @version			$Id: KnownLocoSelPane.java,v 1.5 2001-12-02 05:46:42 jacobsen Exp $
  */
 public class KnownLocoSelPane extends javax.swing.JPanel  {
 		
+	public KnownLocoSelPane(JLabel s) {
+		_statusLabel = s;
+		init();
+	}
+
 	public KnownLocoSelPane() {
+		init();
+	}
+	
+	protected void init() {
 		JLabel last;
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		JLabel l2 = new JLabel("Known locomotive on programming track");
@@ -58,6 +67,8 @@ public class KnownLocoSelPane extends javax.swing.JPanel  {
 		setBorder(new EmptyBorder(6,6,6,6));
 	}
 	
+	JLabel _statusLabel = null;
+
 	private void startIdentify() {
 		// start identifying a loco
 		final KnownLocoSelPane me = this;
@@ -66,6 +77,9 @@ public class KnownLocoSelPane extends javax.swing.JPanel  {
 			protected void done(int dccAddress) {
 				// if Done, updated the selected decoder
 				who.selectLoco(dccAddress);
+			}
+			protected void message(String m) {
+				if (_statusLabel != null) _statusLabel.setText(m);
 			}
 		};
 		id.start();

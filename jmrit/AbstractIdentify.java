@@ -11,7 +11,7 @@ import com.sun.java.util.collections.List;
  * programming track.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: AbstractIdentify.java,v 1.2 2001-11-12 21:53:25 jacobsen Exp $
+ * @version			$Id: AbstractIdentify.java,v 1.3 2001-12-02 05:46:42 jacobsen Exp $
  * @see             jmri.jmrit.roster.IdentifyDecoder
  * @see             jmri.jmrit.roster.IdentifyLoco
  */
@@ -32,7 +32,7 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
 	abstract public boolean test7(int value);
 	
 	abstract public boolean test8(int value);
-	
+		
 	/**
 	 * Update the status field (if any). Invoked with "Done" when
 	 * the results are in.
@@ -133,14 +133,13 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
 			statusUpdate("No programmer connected");
 		} else {
 			try {
-				statusUpdate("programming...");
 				p.readCV(cv, this);
 			} catch (jmri.ProgrammerException ex) {
 				statusUpdate(""+ex);
 			}
 		}
 	}
-
+	
 	// initialize logging	
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractIdentify.class.getName());
 		

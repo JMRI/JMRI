@@ -126,6 +126,7 @@ public class PaneProgFrame extends javax.swing.JFrame
 				thisWindowClosing(e);
 			}
 		});
+
 		pack();
 		if (log.isInfoEnabled()) log.info("PaneProgFrame \""+name+"\" constructed for file "+locoFile);
 	}

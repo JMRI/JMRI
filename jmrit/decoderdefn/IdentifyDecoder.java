@@ -16,10 +16,10 @@ import com.sun.java.util.collections.List;
  * it works through the identification progress.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: IdentifyDecoder.java,v 1.3 2001-11-12 21:53:27 jacobsen Exp $
+ * @version			$Id: IdentifyDecoder.java,v 1.4 2001-12-02 05:46:42 jacobsen Exp $
  * @see             jmri.jmrit.roster.RosterEntry
  */
-public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
+abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
 
 	int mfgID = -1; 	// cv8
 	int modelID = -1;	// cv7
@@ -27,12 +27,14 @@ public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
 	// steps of the identification state machine
 	public boolean test1() {
 		// read cv8
+		statusUpdate("Read MFG ID - CV 18");
 		readCV(8);
 		return false;
 	}
 	
 	public boolean test2(int value) {
 		mfgID = value;
+		statusUpdate("Read MFG version - CV 17");
 		readCV(7);
 		return false;
 	}
@@ -68,13 +70,14 @@ public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
 	}
 	
 	protected void statusUpdate(String s) {
+		message(s);
 		if (s.equals("Done")) done(mfgID, modelID);
 		else if (log.isInfoEnabled()) log.info("received status: "+s);
 	}
 	
-	protected void done(int mfgID, int modelID) {
-		log.error("Identify decoder done() should have been overridden");
-	}
+	abstract protected void done(int mfgID, int modelID);
+	
+	abstract protected void message(String m);
 	
 	// initialize logging	
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(IdentifyDecoder.class.getName());

@@ -29,7 +29,7 @@ import org.jdom.Attribute;
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: PaneProgPane.java,v 1.5 2001-11-27 03:27:15 jacobsen Exp $
+ * @version			$Id: PaneProgPane.java,v 1.6 2001-12-02 05:46:42 jacobsen Exp $
  */
 public class PaneProgPane extends javax.swing.JPanel 
 							implements java.beans.PropertyChangeListener  {
@@ -271,6 +271,7 @@ public class PaneProgPane extends javax.swing.JPanel
 				cs.gridwidth = 1;
 			}
 			else if (name.equals("cvtable")) {
+				log.info("starting to build CvTable pane");
 				// this is copied from SymbolicProgFrame
 				JTable			cvTable		= new JTable(_cvModel);
 				JScrollPane 	cvScroll	= new JScrollPane(cvTable);
@@ -286,6 +287,7 @@ public class PaneProgPane extends javax.swing.JPanel
 				g.setConstraints(cvScroll, cs);
 				c.add(cvScroll);
 				cs.gridwidth = 1;
+				log.info("end of building CvTable pane");
 				
 			}
 			else if (name.equals("fnmapping")) {

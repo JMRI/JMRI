@@ -21,7 +21,7 @@ import com.sun.java.util.collections.ArrayList;
  * Extends VariableValue to represent a enumerated variable.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: EnumVariableValue.java,v 1.8 2001-11-27 03:27:15 jacobsen Exp $
+ * @version			$Id: EnumVariableValue.java,v 1.9 2001-12-02 05:46:42 jacobsen Exp $
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
@@ -32,6 +32,25 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 		super(name, comment, readOnly, cvNum, mask, v, status, stdname);
 		_maxVal = maxVal;
 		_minVal = minVal;
+	}
+	
+  	/** 
+  	 * Create a null object.  Normally only used for tests and to pre-load classes.
+  	 */ 
+   	public EnumVariableValue() {}
+  	
+	public void nItems(int n) {
+		_itemArray = new String[n];
+		_nstored = 0;
+	}
+	
+	public void addItem(String s) {
+		_itemArray[_nstored++] = s;
+	}
+	
+	public void lastItem() {
+		_value = new JComboBox(_itemArray);
+		// finish initialization
 		_value.setActionCommand("");
 		_defaultColor = _value.getBackground();
 		_value.setBackground(COLOR_UNKNOWN);
@@ -40,15 +59,13 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 		((CvValue)_cvVector.elementAt(getCvNum())).addPropertyChangeListener(this);
 	}
 	
-  	/** 
-  	 * Create a null object.  Normally only used for tests and to pre-load classes.
-  	 */ 
-   	public EnumVariableValue() {}
-  	
-	public void addItem(String s) {
-		_value.addItem(s);
-	}
+	// stored value
+	JComboBox _value = null;
 	
+	// place to keep the items
+	String[] _itemArray = null;
+	int _nstored;
+
 	private int _maxVal;
 	private int _minVal;
 	Color _defaultColor;
@@ -156,9 +173,6 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 			setValue(newVal);  // check for duplicate done inside setVal
 		}
 	}
-
-	// stored value
-	JComboBox _value = new JComboBox();
 
 	/* Internal class extends a JComboBox so that its color is consistent with 
 	 * an underlying variable; we return one of these in getRep.

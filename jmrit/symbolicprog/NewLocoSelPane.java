@@ -22,11 +22,20 @@ import com.sun.java.util.collections.List;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: NewLocoSelPane.java,v 1.6 2001-11-23 22:23:54 jacobsen Exp $
+ * @version			$Id: NewLocoSelPane.java,v 1.7 2001-12-02 05:46:42 jacobsen Exp $
  */
 public class NewLocoSelPane extends javax.swing.JPanel  {
 			
+	public NewLocoSelPane(JLabel s) {
+		_statusLabel = s;
+		init();
+	}
+	
 	public NewLocoSelPane() {
+		init();
+	}
+
+	public void init() {
 		JLabel last;
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		add(last = new JLabel("New locomotive on programming track"));
@@ -74,6 +83,8 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
 		setBorder(new EmptyBorder(6,6,6,6));
 	}
 
+	JLabel _statusLabel = null;
+	
 	private void startIdentify() {
 		// start identifying a decoder
 		final NewLocoSelPane me = this;
@@ -82,6 +93,9 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
 			protected void done(int mfg, int model) {
 				// if Done, updated the selected decoder
 				who.selectDecoder(mfg, model);
+			}
+			protected void message(String m) {
+				if (_statusLabel != null) _statusLabel.setText(m);
 			}
 		};
 		id.start();

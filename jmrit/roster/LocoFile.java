@@ -20,7 +20,7 @@ import org.jdom.output.*;
  * in memory.  The interal storage is a JDOM tree. See locomotive-config.dtd
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version		 	$Id: LocoFile.java,v 1.4 2001-11-27 03:27:15 jacobsen Exp $
+ * @version		 	$Id: LocoFile.java,v 1.5 2001-12-02 05:46:42 jacobsen Exp $
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
@@ -139,8 +139,8 @@ public class LocoFile extends XmlFile {
 	*/
 	static public File backupFileName(String name) {
 		// File.createTempFile is not available in java 1, so use millisecond time as unique string
-		File f =  new File(fileLocation+File.separator+"b-"
-							+((new Date()).getTime())+"-"+name);
+		File f =  new File(fileLocation+File.separator+name+"-"
+							+((new Date()).getTime()));
 		if (log.isDebugEnabled()) log.debug("backup file name is "+f.getAbsolutePath());
 		return f;
 	}
