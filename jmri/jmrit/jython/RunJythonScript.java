@@ -19,7 +19,7 @@ import java.io.File;
  * read the code, the "non-reflection" statements are in the comments.
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class RunJythonScript extends AbstractAction {
 
@@ -89,7 +89,8 @@ public class RunJythonScript extends AbstractAction {
         } catch (NoSuchMethodException e1) {
             log.error("NoSuchMethod error while invoking script "+filename);
         } catch (java.lang.reflect.InvocationTargetException e2) {
-            log.error("InvocationTargetException while invoking script "+filename);
+            log.error("InvocationTargetException while invoking script "+filename+": "+e2.getCause()
+                    +": "+e2.getTargetException());
         } catch (IllegalAccessException e) {
             log.error("IllegalAccessException error while invoking script "+filename);
         }
