@@ -11,7 +11,7 @@ import org.jdom.Element;
  * Handle XML persistance of Simple Signal Logic objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class BlockBossLogicXml implements XmlAdapter {
 
@@ -40,15 +40,18 @@ public class BlockBossLogicXml implements XmlAdapter {
             BlockBossLogic p = (BlockBossLogic) e.nextElement();
             Element block = new Element("block");
             block.addAttribute("signal", p.getDrivenSignal());
+            block.addAttribute("mode", ""+p.getMode());
             if (p.getSensor()!=null) block.addAttribute("watchedsensor", p.getSensor());
             if (p.getTurnout()!=null) {
                 block.addAttribute("watchedturnout", p.getTurnout());
-                block.addAttribute("watchedturnoutstate", ""+p.getTurnoutState());
             }
-            if (p.getWatchedSignal()!=null) {
-                block.addAttribute("watchedsignal", p.getWatchedSignal());
-                block.addAttribute("useflashyellow", ""+p.getUseFlash());
+            if (p.getWatchedSignal1()!=null) {
+                block.addAttribute("watchedsignal1", p.getWatchedSignal1());
             }
+            if (p.getWatchedSignal2()!=null) {
+                block.addAttribute("watchedsignal2", p.getWatchedSignal2());
+            }
+            block.addAttribute("useflashyellow", ""+p.getUseFlash());
             blocks.addContent(block);
 
         }
@@ -68,12 +71,14 @@ public class BlockBossLogicXml implements XmlAdapter {
             if (block.getAttribute("watchedsensor")!=null)
                 bb.setSensor(block.getAttributeValue("watchedsensor"));
             try {
+                bb.setMode(block.getAttribute("mode").getIntValue());
                 if (block.getAttribute("watchedturnout")!=null)
-                    bb.setTurnout(block.getAttributeValue("watchedturnout"),
-                                  block.getAttribute("watchedturnoutstate").getIntValue());
-                if (block.getAttribute("watchedsignal")!=null)
-                    bb.setWatchedSignal(block.getAttributeValue("watchedsignal"),
+                    bb.setTurnout(block.getAttributeValue("watchedturnout"));
+                if (block.getAttribute("watchedsignal1")!=null)
+                    bb.setWatchedSignal1(block.getAttributeValue("watchedsignal1"),
                                         block.getAttribute("useflashyellow").getBooleanValue());
+                if (block.getAttribute("watchedsignal2")!=null)
+                    bb.setWatchedSignal2(block.getAttributeValue("watchedsignal2"));
             } catch (org.jdom.DataConversionException e) {
                 log.warn("error reading blocks from file"+e);
             }
