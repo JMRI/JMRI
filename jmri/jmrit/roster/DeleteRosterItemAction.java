@@ -21,7 +21,7 @@ import com.sun.java.util.collections.List;
  * an "are you sure" dialog box before acting.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  * @see             jmri.jmrit.XmlFile
  */
 public class DeleteRosterItemAction extends AbstractAction {
@@ -48,7 +48,7 @@ public class DeleteRosterItemAction extends AbstractAction {
 
 		// create a dialog to select the roster entry
         JComboBox selections = roster.matchingComboBox(null,null, null, null, null,null,null);
-        int retval = JOptionPane.showOptionDialog(null,
+        int retval = JOptionPane.showOptionDialog(_who,
                         "Select one roster entry", "Select roster entry",
                         0, JOptionPane.INFORMATION_MESSAGE, null,
                         new Object[]{"Cancel", "OK", selections}, null );
@@ -95,7 +95,7 @@ public class DeleteRosterItemAction extends AbstractAction {
      */
     boolean userOK(String entry, String filename, String fullFileName) {
         return ( JOptionPane.YES_OPTION ==
-                    JOptionPane.showConfirmDialog(null,
+                    JOptionPane.showConfirmDialog(_who,
                     "Delete entry "+entry+" and file "+fullFileName+"?",
                     "Delete entry "+entry+"?", JOptionPane.YES_NO_OPTION));
     }
