@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE programmer:programmer-config SYSTEM "DTD/programmer-config.dtd">
+<programmer:decoprogrammerder-config xmlns:programmer="http://jmri.sourceforge.net/xml/programmer">
+<programmer:programmer>
+
+	<programmer:pane name="Basic">
+		<programmer:column>
+			<programmer:label>Address:</programmer:label>
+			<programmer:variable name="Address">
+			<programmer:label>Address:</programmer:label>
+			<programmer:variable name="Address">
+
+			<programmer:separator/>
+			
+			<programmer:label>Address:</programmer:label>
+			<programmer:variable name="Address">
+		</programmer:column>
+
+		<programmer:column>
+		</programmer:column>
+	</programmer:pane>
+	
+	<programmer:pane name="Motor">
+		<programmer:column>
+		</programmer:column>
+
+		<programmer:column>
+		</programmer:column>
+	</programmer:pane>
+	
+	<programmer:pane name="Consist">
+		<programmer:column>
+		</programmer:column>
+
+		<programmer:column>
+		</programmer:column>
+	</programmer:pane>
+	
+</programmer:programmer>
+</programmer:programmer-config>
