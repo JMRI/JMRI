@@ -1,0 +1,4 @@
+The jmrit.display package provides tools for displaying JMRI objects
+on a screen.  For example, it provides a widget for displaying turnout
+state as part of a layout display or CTC panel.
+
