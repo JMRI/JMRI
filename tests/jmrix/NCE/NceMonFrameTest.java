@@ -38,8 +38,8 @@ public class NceMonFrameTest extends TestCase {
 
 		f.message(m);
 
-		Assert.assertEquals("length ", "L0A\n".length(), f.getFrameText().length());
-		Assert.assertEquals("display", "L0A\n", f.getFrameText());
+		Assert.assertEquals("length ", "cmd: \"L0A\"\n".length(), f.getFrameText().length());
+		Assert.assertEquals("display", "cmd: \"L0A\"\n", f.getFrameText());
 	}
 			
 	public void testReply() {
@@ -53,8 +53,8 @@ public class NceMonFrameTest extends TestCase {
 
 		f.reply(m);
 
-		Assert.assertEquals("display", ">> Co:\n", f.getFrameText());
-		Assert.assertEquals("length ", ">> Co:\n".length(), f.getFrameText().length());
+		Assert.assertEquals("display", "rep: \"Co:\"\n", f.getFrameText());
+		Assert.assertEquals("length ", "rep: \"Co:\"\n".length(), f.getFrameText().length());
 	}
 			
 	public void testWrite() throws JmriException {

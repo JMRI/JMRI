@@ -34,7 +34,8 @@ public abstract class AbstractMonFrame extends javax.swing.JFrame  {
 	protected javax.swing.JTextPane monTextPane = new javax.swing.JTextPane();
 	protected javax.swing.JButton startLogButton = new javax.swing.JButton();
 	protected javax.swing.JButton stopLogButton = new javax.swing.JButton();
-	protected javax.swing.JCheckBox hexCheckBox = new javax.swing.JCheckBox();
+	protected javax.swing.JCheckBox rawCheckBox = new javax.swing.JCheckBox();
+	protected javax.swing.JCheckBox timeCheckBox = new javax.swing.JCheckBox();
 	protected javax.swing.JButton openFileChooserButton = new javax.swing.JButton();
 	
 	// to find and remember the log file
@@ -73,19 +74,26 @@ public abstract class AbstractMonFrame extends javax.swing.JFrame  {
 		stopLogButton.setVisible(true);
 		stopLogButton.setToolTipText("Stop logging to file");
 
-		hexCheckBox.setText("Show raw data");
-		hexCheckBox.setVisible(true);
-		hexCheckBox.setToolTipText("If checked, show the raw LocoNet packets in hex");
+		rawCheckBox.setText("Show raw data");
+		rawCheckBox.setVisible(true);
+		rawCheckBox.setToolTipText("If checked, show the raw traffic in hex");
+
+		timeCheckBox.setText("Show timestamps");
+		timeCheckBox.setVisible(true);
+		timeCheckBox.setToolTipText("If checked, show timestamps before each message");
 
 		openFileChooserButton.setText("Choose log file");
 		openFileChooserButton.setVisible(true);
 		openFileChooserButton.setToolTipText("Click here to select a new output log file");
 
-		// set sizes to same
-		clearButton.setMaximumSize(openFileChooserButton.getMaximumSize());
-		hexCheckBox.setMaximumSize(openFileChooserButton.getMaximumSize());
-		startLogButton.setMaximumSize(openFileChooserButton.getMaximumSize());
-		stopLogButton.setMaximumSize(openFileChooserButton.getMaximumSize());
+		// set sizes to same as largest
+		Dimension big = openFileChooserButton.getMaximumSize();
+		if (timeCheckBox.getMaximumSize().width > big.width) big.width = timeCheckBox.getMaximumSize().width;
+		clearButton.setMaximumSize(big);
+		timeCheckBox.setMaximumSize(big);
+		rawCheckBox.setMaximumSize(big);
+		startLogButton.setMaximumSize(big);
+		stopLogButton.setMaximumSize(big);
 		
 		setTitle(title());
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -98,7 +106,8 @@ public abstract class AbstractMonFrame extends javax.swing.JFrame  {
 			JPanel pane1 = new JPanel();
 				pane1.setLayout(new BoxLayout(pane1, BoxLayout.Y_AXIS));
 				pane1.add(clearButton);
-				pane1.add(hexCheckBox);
+				pane1.add(rawCheckBox);
+				pane1.add(timeCheckBox);
 			paneA.add(pane1);
 		
 			JPanel pane2 = new JPanel();
@@ -173,7 +182,9 @@ public abstract class AbstractMonFrame extends javax.swing.JFrame  {
 	}
 	
 	protected void nextLine(String line, String raw) {
-		// handle display of a new line of info
+		// handle display of traffic
+		// line is the traffic in 'normal form', raw is the "raw form"
+		// Both should be one or more well-formed lines, e.g. end with \n
 		
 		// !! limit length; without that, Swing eventually 
 		// slows down	
@@ -200,9 +211,17 @@ public abstract class AbstractMonFrame extends javax.swing.JFrame  {
 		s2 = s1;
 		s1 = "";
 		
+		// space if multipart form
+		if ( timeCheckBox.isSelected() || rawCheckBox.isSelected()) s1+="\n";
+		
+		// display the timestamp if requested
+		if ( timeCheckBox.isSelected() ) {
+			s1 += "time: "+df.format(new Date())+"\n";
+		}
+
 		// display the raw data if requested
-		if ( hexCheckBox.isSelected() ) {
-			s1 = "time: "+df.format(new Date())+"\tpacket: "+raw+"\n";
+		if ( rawCheckBox.isSelected() ) {
+			s1 += raw;
 		}
 
 		// display decoded data

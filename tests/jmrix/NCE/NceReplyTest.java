@@ -140,6 +140,12 @@ public class NceReplyTest extends TestCase {
 		Assert.assertEquals("value ", 27, m.value());
 	}
 
+	public void testMatch() {
+		NceReply m = new NceReply("**** PROGRAMMING MODE - MAIN TRACK NOW DISCONNECTED ****");
+		Assert.assertEquals("find ", 5, m.match("PROGRAMMING"));
+		Assert.assertEquals("not find ", -1, m.match("foo"));
+	}
+	
 	// from here down is testing infrastructure
 	
 	public NceReplyTest(String s) {

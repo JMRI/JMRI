@@ -37,16 +37,20 @@ public class NcePacketGenFrame extends javax.swing.JFrame implements jmri.jmrix.
 		sendButton.setVisible(true);
 		sendButton.setToolTipText("Send packet");
 		
-		packetTextField.setText("                   ");
-		packetTextField.setToolTipText("Enter command as hex pairs, e.g. 03 0A 12 3F");
-		
+		packetTextField.setText("");
+		packetTextField.setToolTipText("Enter command as ASCII string (hex not yet available)");
+		packetTextField.setMaximumSize(
+			new Dimension(packetTextField.getMaximumSize().width,
+						  packetTextField.getPreferredSize().height
+				)
+			);
+				
 		setTitle("Send NCE command");
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
 		getContentPane().add(jLabel1);
 		getContentPane().add(packetTextField);
 		getContentPane().add(sendButton);
-		getContentPane().add(Box.createVerticalGlue());
 
 
 		sendButton.addActionListener(new java.awt.event.ActionListener() {
@@ -60,6 +64,8 @@ public class NcePacketGenFrame extends javax.swing.JFrame implements jmri.jmrix.
 			}
 		});
 
+		// pack for display
+		pack();
 	}
   
   	public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {

@@ -152,6 +152,10 @@ public class NceProgrammer implements NceListener, Programmer {
 			// we get the complete set of replies now, so ignore these
 			return;
 		} else if (progState == MODESENT) {
+			// see if reply is the acknowledge of program mode; if not, wait
+			if ( (m.match("PROGRAMMING MODE") == -1) && 
+				 (m.match("COMMAND NOT UNDERSTOOD") == -1)  // indicates already in program mode
+					) return;
 			// here ready to send the read/write command
 			progState = COMMANDSENT;
 			// see why waiting
@@ -172,12 +176,21 @@ public class NceProgrammer implements NceListener, Programmer {
 		} else if (progState == COMMANDSENT) {
 			// operation done, capture result, then have to leave programming mode
 			progState = RETURNSENT;
-			// see why waiting
-			if (_progRead) {
-				// read was in progress - get return value
-				_val = m.value();
+			// check for errors
+			if (m.match("NO FEEDBACK DETECTED") >= 0) {
+				// perhaps no loco present? Fail back to end of programming
+				progState = NOTPROGRAMMING;
+				controller().sendNceMessage(NceMessage.getExitProgMode(), this);
+				notifyProgListenerEnd(_val, jmri.ProgListener.NoLocoDetected);
 			}
-			controller().sendNceMessage(NceMessage.getExitProgMode(), this);
+			else {
+				// see why waiting
+				if (_progRead) {
+					// read was in progress - get return value
+					_val = m.value();
+				}
+				controller().sendNceMessage(NceMessage.getExitProgMode(), this);
+			}
 		} else if (progState == RETURNSENT) {
 			// all done, notify listeners of completion
 			progState = NOTPROGRAMMING;

@@ -60,6 +60,8 @@ public class LocoGenFrame extends javax.swing.JFrame {
 			}
 		});
 
+		// pack to cause display
+		pack();
 	}
   
   	public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {

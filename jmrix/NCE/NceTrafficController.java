@@ -183,7 +183,7 @@ public class NceTrafficController implements NceInterface, Runnable {
 	public void run() {
 		try {
 			while (true) {   // loop permanently, stream close will exit via exception
-				handleOneReply();
+				handleOneIncomingReply();
 			}            
 		} // end of try
 		catch (Exception e) {
@@ -191,7 +191,10 @@ public class NceTrafficController implements NceInterface, Runnable {
 		}
 	}
 
-	void handleOneReply() throws Exception {
+	void handleOneIncomingReply() throws Exception {
+		// we sit in this until the message is complete, relying on
+		// threading to let other stuff happen
+		
 		// Create output message
 		NceReply msg = new NceReply();
         // message exists, now fill it
@@ -199,13 +202,27 @@ public class NceTrafficController implements NceInterface, Runnable {
         for (i = 0; i < NceReply.maxSize; i++) {
         	byte char1 = istream.readByte();
             msg.setElement(i, char1);
-        	if (char1 == 0x0d) break;
+        	if (endCOMMAND(msg)) break;
         }
               	
         // message is complete, dispatch it !!
         if (log.isDebugEnabled()) log.debug("dispatch reply of length "+i);
         notifyReply(msg);
-   }
+	}
+	
+	boolean endCOMMAND(NceReply msg) {
+		// detect that the reply buffer ends with "COMMAND: " (note ending space)
+		int num = msg.getNumDataElements();
+		if ( num >= 9) {
+			// ptr is offset of last element in NceReply
+			int ptr = num-1;
+			if (msg.getElement(ptr-1) != ':') return false;
+			if (msg.getElement(ptr)   != ' ') return false;
+			if (msg.getElement(ptr-2) != 'D') return false;
+			return true;
+		} 
+		else return false;
+	}
 	
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceTrafficController.class.getName());
 }

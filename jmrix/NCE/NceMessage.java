@@ -22,6 +22,15 @@ public class NceMessage {
 		_dataChars = new int[i];
 	}
 
+	// copy one
+	public  NceMessage(NceMessage m) {
+		if (m == null)
+			log.error("copy ctor of null message");
+		_nDataChars = m._nDataChars;
+		_dataChars = new int[_nDataChars];
+		for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
+	}
+
 	public void setOpCode(int i) { _dataChars[0]=i;}
 	public int getOpCode() {return _dataChars[0];}
 	public String getOpCodeHex() { return "0x"+Integer.toHexString(getOpCode()); }

@@ -40,10 +40,14 @@ public class NceMonFrame extends jmri.jmrix.AbstractMonFrame implements NceListe
 	}
 			
 	public synchronized void message(NceMessage l) {  // receive a message and log it
-		nextLine(l.toString()+"\n", "\n");
+		// NceMessage rawMsg = new NceMessage(l);
+		// rawMsg.setBinary();
+		nextLine("cmd: \""+l.toString()+"\"\n", "");
 	}
 	public synchronized void reply(NceReply l) {  // receive a reply message and log it
-		nextLine(">> "+l.toString()+"\n", "\n");
+		NceReply rawMsg = new NceReply(l);
+		rawMsg.setBinary(true);
+		nextLine("rep: \""+l.toString()+"\"\n", "raw: \""+rawMsg.toString()+"\"\n");
 	}
 	
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceMonFrame.class.getName());

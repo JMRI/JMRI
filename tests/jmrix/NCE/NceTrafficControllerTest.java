@@ -126,8 +126,18 @@ public class NceTrafficControllerTest extends TestCase {
 		// now send reply
 		tistream.write('R');
 		tistream.write(0x0d);
+		tistream.write('C');
+		tistream.write('O');
+		tistream.write('M');
+		tistream.write('M');
+		tistream.write('A');
+		tistream.write('N');
+		tistream.write('D');
+		tistream.write(':');
+		tistream.write(' ');
+		
 		// drive the mechanism
-		c.handleOneReply();
+		c.handleOneIncomingReply();
 		Assert.assertTrue("reply received ", waitForReply());
 		Assert.assertEquals("first char of reply ", 'R', rcvdReply.getOpCode());
 	}

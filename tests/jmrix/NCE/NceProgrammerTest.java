@@ -35,7 +35,7 @@ public class NceProgrammerTest extends TestCase {
 		Assert.assertEquals("mode message contents", "M", 
 			((NceMessage)(t.outbound.elementAt(0))).toString());
 		// reply from programmer arrives
-		NceReply r = new NceReply();
+		NceReply r = new NceReply("**** PROGRAMMING MODE - MAIN TRACK NOW DISCONNECTED ****");
 		t.sendTestReply(r);
 		Assert.assertEquals(" programmer listener not invoked", 0, rcvdInvoked);		
 
@@ -74,7 +74,7 @@ public class NceProgrammerTest extends TestCase {
 		Assert.assertEquals("mode message contents", "M", 
 			((NceMessage)(t.outbound.elementAt(0))).toString());
 		// reply from programmer arrives
-		NceReply r = new NceReply();
+		NceReply r = new NceReply("**** PROGRAMMING MODE - MAIN TRACK NOW DISCONNECTED ****");
 		t.sendTestReply(r);
 		Assert.assertEquals(" programmer listener not invoked", 0, rcvdInvoked);		
 		

@@ -18,14 +18,29 @@ public class NceReply {
 	public  NceReply() {
 	}
 
-	public void setOpCode(int i) { _dataChars[0]=i;}
+	// copy one
+	public  NceReply(NceReply m) {
+		if (m == null)
+			log.error("copy ctor of null message");
+		_nDataChars = m._nDataChars;
+		for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
+	}
+
+	// from String
+	public NceReply(String s) {
+		_nDataChars = s.length();
+		for (int i = 0; i<_nDataChars; i++)
+			_dataChars[i] = s.charAt(i);
+	}
+	
+	public void setOpCode(int i) { _dataChars[0]= (char)i;}
 	public int getOpCode() {return _dataChars[0];}
 
 	// accessors to the bulk data
 	public int getNumDataElements() {return _nDataChars;}
 	public int getElement(int n) {return _dataChars[n];}
 	public void setElement(int n, int v) { 
-		_dataChars[n] = v;
+		_dataChars[n] = (char) v;
 		_nDataChars = Math.max(_nDataChars, n+1);	
 	}
 
@@ -65,6 +80,12 @@ public class NceReply {
 		return val;
 	}
 	
+	int match(String s) {
+		// find a specific string in the reply
+		String rep = new String(_dataChars, 0, _nDataChars);
+		return rep.indexOf(s);
+	}
+	
 	int skipWhiteSpace(int index) {
 		// start at index, passing any whitespace & control characters at the start of the buffer
 		while (index < getNumDataElements()-1 && 
@@ -95,7 +116,7 @@ public class NceReply {
 		
 	// contents (private)
 	private int _nDataChars;
-	private int _dataChars[] = new int[maxSize];
+	private char _dataChars[] = new char[maxSize];
 
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceReply.class.getName());
 
