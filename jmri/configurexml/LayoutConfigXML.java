@@ -10,11 +10,10 @@ import jmri.*;
  * Provides the mechanisms for storing an entire layout configuration
  * to XML.  "Layout" refers to the hardware:  Specific communcation
  * systems, etc.
- * <p>Copyright: Copyright (c) 2002</p>
- * @author Bob Jacobsen
- * @version $Revision: 1.2 $
+ * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
+ * @author Bob Jacobsen Copyright: Copyright (c) 2002
+ * @version $Revision: 1.3 $
  */
-
 public class LayoutConfigXML extends jmri.jmrit.XmlFile {
 
     public LayoutConfigXML() {
