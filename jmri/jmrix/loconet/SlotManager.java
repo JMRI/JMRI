@@ -33,7 +33,7 @@ import java.util.Vector;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.27 $
+ * @version     $Revision: 1.28 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
@@ -51,6 +51,18 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
         // listen to the LocoNet
         LnTrafficController.instance().addLocoNetListener(~0, this);
+
+          // We will scan the slot table every 10 s for in-use slots that are stale
+        staleSlotCheckTimer = new javax.swing.Timer(10000, new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+              checkStaleSlots();
+            }
+          }
+        );
+
+      staleSlotCheckTimer.setRepeats(true);
+      staleSlotCheckTimer.setInitialDelay( 30000 );
+      staleSlotCheckTimer.start();
     }
 
     /**
@@ -129,6 +141,30 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         m.setElement(1, (i/128)&0x7F);
         m.setElement(2, i&0x7F);
         LnTrafficController.instance().sendLocoNetMessage(m);
+    }
+
+    /**
+     * method to scan the slot array looking for slots that are in-use but have
+     * not had any updates in over 90s and issue a read slot request to update
+     * their state as the command station may have purged or stopped updating
+     * the slot without telling us via a LocoNet message.
+     *
+     * This is intended to be called from the staleSlotCheckTimer
+     */
+
+    javax.swing.Timer staleSlotCheckTimer = null ;
+
+    private void checkStaleSlots() {
+      long staleTimeout = System.currentTimeMillis() - 90000;
+      LocoNetSlot slot;
+
+        // We will just check the normal loco slots 1 to 120
+      for (int i = 1; i <= 120; i++) {
+        slot = _slots[i];
+        if ( (slot.slotStatus() == LnConstants.LOCO_IN_USE) &&
+            (slot.getLastUpdateTime() <= staleTimeout))
+          sendReadSlot(i);
+      }
     }
 
     /**
@@ -241,7 +277,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 // in programming state
                 // check status byte
                 if ((m.getElement(2) == 1) // task accepted
-                    || (m.getElement(2) == 0x7F)) { 
+                    || (m.getElement(2) == 0x7F)) {
                     // 'not implemented' (op on main)
                     // but BDL16 and other devices can eventually reply, so
                     // move to commandExecuting state
@@ -521,7 +557,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             // perhaps no communications present? Fail back to end of programming
             progState = 0;
             // and send the notification; error code depends on state
-            if (progState == 2 && !mServiceMode) // ops mode command executing, 
+            if (progState == 2 && !mServiceMode) // ops mode command executing,
                 // so did talk to command station at first
                 notifyProgListenerEnd(_slots[124].cvval(), jmri.ProgListener.NoAck);
             else // all others

@@ -17,7 +17,7 @@ import java.util.Vector;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.12 $
+ * @version         $Revision: 1.13 $
  */
 public class LocoNetSlot {
 
@@ -73,8 +73,9 @@ public class LocoNetSlot {
     public void setSlot(LocoNetMessage l) throws LocoNetException { // exception if message can't be parsed
         // sort out valid messages, handle
         switch (l.getOpCode()) {
-        case LnConstants.OPC_WR_SL_DATA:
-        case LnConstants.OPC_SL_RD_DATA: {
+        case LnConstants.OPC_SL_RD_DATA:
+          lastUpdateTime = System.currentTimeMillis() ;
+        case LnConstants.OPC_WR_SL_DATA: {
             if ( l.getElement(1) != 0x0E ) return;  // not an appropriate reply
             // valid, so fill contents
             if (slot != l.getElement(2)) log.error("Asked to handle message not for this slot ("
@@ -97,6 +98,7 @@ public class LocoNetSlot {
             if (slot != l.getElement(1)) log.error("Asked to handle message not for this slot "+l);
             stat = l.getElement(2);
             notifySlotListeners();
+            lastUpdateTime = System.currentTimeMillis() ;
             return;
         case LnConstants.OPC_LOCO_SND: {
             // set sound functions in slot - first, clear bits
@@ -106,6 +108,7 @@ public class LocoNetSlot {
             snd |= ((LnConstants.SND_F5 | LnConstants.SND_F6
                      | LnConstants.SND_F7 | LnConstants.SND_F8) & l.getElement(2));
             notifySlotListeners();
+            lastUpdateTime = System.currentTimeMillis() ;
             return;
         }
         case  LnConstants.OPC_LOCO_DIRF: {
@@ -118,17 +121,20 @@ public class LocoNetSlot {
                       | LnConstants.DIRF_F1 | LnConstants.DIRF_F2
                       | LnConstants.DIRF_F3 | LnConstants.DIRF_F4) & l.getElement(2));
             notifySlotListeners();
+            lastUpdateTime = System.currentTimeMillis() ;
             return;
         }
         case LnConstants.OPC_MOVE_SLOTS: {
             // change in slot status will be reported by the reply,
             // so don't need to do anything here (but could)
+            lastUpdateTime = System.currentTimeMillis() ;
             return;
         }
         case LnConstants.OPC_LOCO_SPD: {
             // set speed
             spd  = l.getElement(2);
             notifySlotListeners();
+            lastUpdateTime = System.currentTimeMillis() ;
             return;
         }
         }
@@ -188,6 +194,8 @@ public class LocoNetSlot {
 
     private int _pcmd;  // hold pcmd and pstat for programmer
 
+    private long lastUpdateTime ; // Time of last update for detecting stale slots
+
     // data members to hold contact with the slot listeners
     final private Vector slotListeners = new Vector();
 
@@ -203,6 +211,8 @@ public class LocoNetSlot {
             slotListeners.removeElement(l);
         }
     }
+
+    public long getLastUpdateTime() { return lastUpdateTime ; }
 
     protected void notifySlotListeners() {
         // make a copy of the listener vector to synchronized not needed for transmit
