@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_01x3.xml,v 1.10 2003-06-01 16:16:55 jacobsen Exp $ -->
+<!-- $Id: Digitrax_01x3.xml,v 1.11 2003-06-01 16:25:24 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Simon.Ginsburg@freesurf.ch" 
 					version="8" lastUpdated="20030601"/>
@@ -12,7 +12,7 @@
 		<!-- V5: advanced consist options and parameters added -->
 		<!-- V6: BEMF defaults updated - jake -->
 		<!-- V7: decoder lock feature - jake -->
-		<!-- V8: Function Output Map, CV's 33 to 46, defaults updated by Bob Blackwell -->
+		<!-- V8: Function Output Map, CV's 33 to 46, defaults updated by Bob Blackwell, CV9 added -->
 		
 <decoder>
 	<family name="Series 3 with FX3, silent, readback" 
@@ -121,6 +121,11 @@
 				<decVal/>
 			</variable>
 		<variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer">
+				<decVal/>
+			</variable>
+
+		<variable label="Motor Drive Frequency" CV="9" item="Total PWM Period" default="0"
+					comment="00 is fastest, 255 is slowest">
 				<decVal/>
 			</variable>
 
