@@ -4,9 +4,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.beans.*;
 
 import org.jdom.Element;
 
+/**
+ * A JInternalFrame that provides a way for the user to enter a
+ * decoder address. This class also store AddressListeners and
+ * notifies them when the user enters a new address.
+ */
 public class AddressPanel extends JInternalFrame
 {
 
@@ -14,6 +20,9 @@ public class AddressPanel extends JInternalFrame
     private JTextField addressField;
     private int previousAddress;
     private int currentAddress;
+
+    /** The longest 4 character string. Used for resizing. */
+    private static final String LONGEST_STRING = "mmmm";
 
     /**
      * Constructor
@@ -23,6 +32,11 @@ public class AddressPanel extends JInternalFrame
         initGUI();
     }
 
+    /**
+     * Add an AddressListener. AddressListeners are notified when the
+     * user selects a new address.
+     * @param l
+     */
     public void addAddressListener(AddressListener l)
     {
         if (listeners == null)
@@ -35,6 +49,10 @@ public class AddressPanel extends JInternalFrame
         }
     }
 
+
+    /**
+     * Create, initialize and place the GUI objects.
+     */
     private void initGUI()
      {
          JPanel mainPanel = new JPanel();
@@ -43,7 +61,7 @@ public class AddressPanel extends JInternalFrame
          mainPanel.setLayout(new GridBagLayout());
          GridBagConstraints constraints = new GridBagConstraints();
          constraints.anchor = GridBagConstraints.CENTER;
-         constraints.fill = GridBagConstraints.NONE;
+         constraints.fill = GridBagConstraints.HORIZONTAL;
          constraints.gridheight = 1;
          constraints.gridwidth = 1;
          constraints.ipadx = 0;
@@ -62,6 +80,7 @@ public class AddressPanel extends JInternalFrame
 
          JButton setButton = new JButton("Set");
          constraints.gridx = 1;
+         constraints.fill = GridBagConstraints.NONE;
          mainPanel.add(setButton, constraints);
 
          setButton.addActionListener(
@@ -73,8 +92,54 @@ public class AddressPanel extends JInternalFrame
              }
          });
 
+         this.addComponentListener(
+                 new ComponentAdapter()
+         {
+             public void componentResized(ComponentEvent e)
+             {
+                 changeFontSizes();
+             }
+         });
     }
 
+    /**
+     * A resizing has occurred, so determine the optimum font size
+     * for the addressField.
+     */
+    private void changeFontSizes()
+    {
+        double fieldWidth = addressField.getSize().getWidth();
+        int stringWidth = addressField.getFontMetrics(addressField.getFont()).
+                          stringWidth(LONGEST_STRING);
+        int fontSize = addressField.getFont().getSize();
+        if (stringWidth > fieldWidth) // component has shrunk.
+        {
+            while (stringWidth > fieldWidth)
+            {
+                fontSize -= 2;
+                Font f = new Font("", Font.PLAIN, fontSize);
+                addressField.setFont(f);
+                stringWidth = addressField.getFontMetrics(addressField.getFont()).
+                              stringWidth(LONGEST_STRING);
+            }
+        }
+        else // component has grown
+        {
+            while (fieldWidth - stringWidth > 10)
+            {
+                fontSize += 2;
+                Font f = new Font("", Font.PLAIN, fontSize);
+                addressField.setFont(f);
+                stringWidth = addressField.getFontMetrics(addressField.getFont()).
+                              stringWidth(LONGEST_STRING);
+            }
+        }
+
+    }
+
+    /**
+     * The user has selected a new address. Notify all listeners.
+     */
      public void changeOfAddress()
      {
          try
@@ -101,6 +166,16 @@ public class AddressPanel extends JInternalFrame
 
      }
 
+     /**
+      * Create an Element of this object's preferences.
+      * <ul>
+      * <li> Window Preferences
+      * <li> Address value
+      * </ul>
+      *
+      * @return org.jdom.Element for this objects preferences. Defined
+      * in DTD/throttle-config
+      */
      public Element getXml()
      {
          Element me = new Element("AddressPanel");
@@ -116,6 +191,11 @@ public class AddressPanel extends JInternalFrame
          return me;
      }
 
+     /**
+      * Use the Element passed to initialize based on user prefs.
+      * @param The Element containing prefs as defined
+      * in DTD/throttle-config
+      */
      public void setXml(Element e)
      {
          Element window = e.getChild("window");
