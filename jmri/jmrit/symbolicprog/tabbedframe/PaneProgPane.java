@@ -25,6 +25,8 @@ import java.awt.Color;
 
 import org.jdom.Attribute;
 import org.jdom.Element;
+import com.sun.java.util.collections.Set;
+import com.sun.java.util.collections.HashSet;
 import com.sun.java.util.collections.ArrayList;
 import com.sun.java.util.collections.List;   // resolve ambiguity with package-level import
 
@@ -37,7 +39,7 @@ import com.sun.java.util.collections.List;   // resolve ambiguity with package-l
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2003, 2004; D Miller Copyright 2003
- * @version			$Revision: 1.35 $
+ * @version			$Revision: 1.36 $
  */
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
@@ -179,7 +181,64 @@ public class PaneProgPane extends javax.swing.JPanel
     JToggleButton writeChangesButton    = new JToggleButton("Write changes on sheet");
     JToggleButton writeAllButton  = new JToggleButton("Write full sheet");
 
+    /**
+     * Estimate the number of CVs that will be accessed when
+     * reading or writing the contents of this pane.
+     *
+     * @param read true if counting for read, false for write
+     * @param changes true if counting for a *Changes operation; 
+     *          false, if counting for a *All operation
+     * @return the total number of CV reads/writes needed for this pane
+     */
+
+    public int countOpsNeeded(boolean read, boolean changes) {
+        Set set = new HashSet(cvList.size()+varList.size()+50);
+        return makeOpsNeededSet(read, changes, set).size();
+    }
+    
+    /**
+     * Produce a set of CVs that will be accessed when
+     * reading or writing the contents of this pane.
+     *
+     * @param read true if counting for read, false for write
+     * @param changes true if counting for a *Changes operation; 
+     *          false, if counting for a *All operation
+     * @param set The set to fill.  Any CVs already in here will
+     *      not be duplicated, which provides a way to aggregate
+     *      a set of CVs across multiple panes.
+     * @return the same set as the parameter, for convenient
+     *      chaining of operations.
+     */
+    public Set makeOpsNeededSet(boolean read, boolean changes, Set set) {
+        int retval = 0;
+        
+        
+        // scan the variable list
+        for (int i =0; i<varList.size(); i++) {
+
+            int varNum = ((Integer)varList.get(i)).intValue();
+            VariableValue var = _varModel.getVariable( varNum );
+
+            // must decide whether this one should be counted
+            
+            if ( !changes ||
+                    ( changes && var.isChanged()) ) {
+
+                CvValue[] cvs = var.usesCVs();
+                for (int j = 0; j<cvs.length; j++) {
+                    // always of interest
+                    CvValue cv = cvs[j];
+                    if (!changes || VariableValue.considerChanged(cv))
+                        set.add( new Integer(cv.number()));
+                }
+            }
+        }
+        
+        return set;
+    }
+    
     boolean justChanges;
+    
     /**
      * invoked by "Read changes on sheet" button, this sets in motion a
      * continuing sequence of "read" operations on the
