@@ -135,6 +135,29 @@ being built by several people.  We use JUnit for that; see the section
 below.
 </UL>
 
+<h3>Threading model</h3>
+The initial threading model for JMRI is quite simple: Everything happens in 
+the GUI thread.  For example, once a 'message', e.g. a LocoNet packet, 
+is accumulated in a separate thread, the message is processed in the 
+GUI thread via:
+<PRE>
+	// message is complete, dispatch it !!
+	{ 
+	final LocoNetMessage thisMsg = msg;
+	final LnTrafficController thisTC = this;
+	// return a notification via the queue to ensure end
+	Runnable r = new Runnable() {
+		LocoNetMessage msgForLater = thisMsg;
+		LnTrafficController myTC = thisTC;
+		public void run() { 
+				log.debug("Delayed notify starts");
+           		myTC.notify(msgForLater);
+			}
+		};
+		javax.swing.SwingUtilities.invokeLater(r);
+	}
+</PRE>
+
 <h3>Jar files</h3>
 The various .jar files used in building the demos are available from the
 <A HREF="JARfiles">JARfiles subdirectory</A>. Note that up to the 0.5 demo,

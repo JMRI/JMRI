@@ -77,7 +77,7 @@ at the top (the examples are from the <A HREF="../xml/Digitrax_1x2.xml">Digitrax
 	<PRE>
 	&lt;?xml version="1.0"?&gt;
 	&lt;!DOCTYPE decoder-config SYSTEM "decoder-config.dtd"&gt;
-	&lt;!-- $Id: ConfigFile.html,v 1.6 2002-01-01 01:52:59 jacobsen Exp $ --&gt;
+	&lt;!-- $Id: ConfigFile.html,v 1.7 2002-01-02 23:46:03 jacobsen Exp $ --&gt;
 	&lt;decoder-config&gt;
 	</PRE>
 Don't mess with these lines; they describe the format of the file.
@@ -339,6 +339,60 @@ makes it easier to read:
 </PRE>
 
 <a id="decoderDetails"><h3>More details of decoder configuration</h3></a>
+
+<h4>Decoder families</h4>
+
+There are a lot of decoder models being produced!  Within a 
+manufacturer's product line, decoder models can vary due to
+hardware or software changes.  For example, the same program
+can be used with hardware that handles 2, 3 or 4 functions.
+
+<P>
+To reduce the number of decoder definition files needed,
+we group decoders into 'families'.  The decoders in a 
+family share the same variables, and are probably based on the
+same software.
+They can differ in the number of output
+wires and/or functions they support.
+<P>
+For example, a decoder file might contain variables that
+control functions F(f), F(r), and F1 through F8, and 
+also output wires 1 through 10.  But a specific model
+decoder might have only four output lines, and only
+respond to functions F(f), F(r), F1 and F2.  Another
+member of the family has all of the wires present, and
+responds to all of the functions.
+<P>
+The decoder definitions in the decoderIndex.xml file
+contain two attributes that describe each model within
+the family:
+<UL>
+<LI>numOuts - the number of output wires.  This includes
+the wires that drive the forward and reverse headlights,
+F(f) and F(r), plus any other function outputs.
+<LI>numFns - the number of functions.  This is the
+highest numbered function that the decoder responds
+to. For example, if F4 is the highest, set numFns="4".
+</UL>
+
+Within each decoder definition file, two attributes
+describe whether a variable is associated with a
+specific function or output:
+<UL>
+<LI>minOut - What is the minimum number of
+outputs for this variable to be useful?  For example, 
+a variable with minOut="4" would not be displayed for
+a decoder model with numOuts="3", but would be 
+displayed for one with numOuts="4" or higher.
+<LI>minFn - What function needs to be present for
+this variable to be useful?  For example,
+a variable with minFn="3" would be associated with 
+F3, and would be only useful for a decoder
+with numFns="3" or larger.  Note that F(f) 
+and F(r) aren't counted in this; the number
+really is the number labeling the function
+on the throttle.
+</UL>
 
 <h4>Variable names</h4>
 
