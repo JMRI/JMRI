@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Java118.html,v 1.5 2004-11-12 02:56:40 jacobsen Exp $ -->
+<!-- $Id: Java118.html,v 1.6 2005-01-24 05:12:03 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -139,7 +139,8 @@ Things to consider:
 <LI>Use the Swing 1.1 member names
 <LI>Use the 1.1 collections.  In particular:
 	<UL>
-	<LI>getElement, not get
+	<li><code>import com.sun.java.util.collections.*;</code>
+	<LI>Use <code>elementAt(int)</code>, not <code>get(int)</code>
 	</UL>
 <LI>Some functions that are not available are
 handled in the jmri.util package.
