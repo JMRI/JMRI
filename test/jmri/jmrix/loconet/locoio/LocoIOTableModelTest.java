@@ -13,6 +13,8 @@ import junit.framework.TestSuite;
 
 import jmri.jmrix.loconet.*;
 
+import apps.tests.Log4JFixture;
+
 /**
  * LocoIOTableModelTest.java
  * Description:	    tests for the Jmri package
@@ -46,11 +48,12 @@ public class LocoIOTableModelTest extends TestCase {
 		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
 		LocoIOTableModel m = new LocoIOTableModel(0x1051, null);
+        m.setPICversion(LocoIOTableModel.PRE133);
 
         int channel = 2;
 		m.setValueAt(null, channel, LocoIOTableModel.READCOLUMN);
 
-        read3Sequence(channel, 0x0F, 0x1C, 0x10,lnis );
+        read3Sequence(channel, 0x0F, 0x1C, 0x10,lnis, true );
 
         Assert.assertEquals("mode", LocoIOTableModel.TOGGLESWITCH,
                             m.getValueAt(channel, m.ONMODECOLUMN));
@@ -63,11 +66,12 @@ public class LocoIOTableModelTest extends TestCase {
 		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
 		LocoIOTableModel m = new LocoIOTableModel(0x1051, null);
+        m.setPICversion(LocoIOTableModel.PRE133);
 
         int channel = 5;
 		m.setValueAt(null, channel, LocoIOTableModel.READCOLUMN);
 
-        read3Sequence(channel, 0x2F, 0x1C, 0x10,lnis );
+        read3Sequence(channel, 0x2F, 0x1C, 0x10,lnis, true);
 
         Assert.assertEquals("mode", LocoIOTableModel.PUSHBUTTONLO,
                             m.getValueAt(channel, m.ONMODECOLUMN));
@@ -80,11 +84,12 @@ public class LocoIOTableModelTest extends TestCase {
 		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
 		LocoIOTableModel m = new LocoIOTableModel(0x1051, null);
+        m.setPICversion(LocoIOTableModel.PRE133);
 
         int channel = 5;
 		m.setValueAt(null, channel, LocoIOTableModel.READCOLUMN);
 
-        read3Sequence(channel, 0x6F, 0x1C, 0x10,lnis );
+        read3Sequence(channel, 0x6F, 0x1C, 0x10,lnis, true );
 
         Assert.assertEquals("mode", LocoIOTableModel.PUSHBUTTONHI,
                             m.getValueAt(channel, m.ONMODECOLUMN));
@@ -97,11 +102,12 @@ public class LocoIOTableModelTest extends TestCase {
 		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
 		LocoIOTableModel m = new LocoIOTableModel(0x1051, null);
+        m.setPICversion(LocoIOTableModel.PRE133);
 
         int channel = 5;
 		m.setValueAt(null, channel, LocoIOTableModel.READCOLUMN);
 
-        read3Sequence(channel, 0xC0, 0xFF, 0xFF,lnis );
+        read3Sequence(channel, 0xC0, 0xFF, 0xFF,lnis, true );
 
         Assert.assertEquals("mode", LocoIOTableModel.STATUSMESSAGE,
                             m.getValueAt(channel, m.ONMODECOLUMN));
@@ -114,6 +120,7 @@ public class LocoIOTableModelTest extends TestCase {
 		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
 		LocoIOTableModel m = new LocoIOTableModel(0x1051, null);
+        m.setPICversion(LocoIOTableModel.PRE133);
 
         int channel = 5;
 		m.setValueAt(null, channel, LocoIOTableModel.CAPTURECOLUMN);
@@ -142,9 +149,11 @@ public class LocoIOTableModelTest extends TestCase {
      * @param lnis Test interface for loconet i/o
      */
     void read3Sequence(int channel, int cv, int addrlow, int addrhigh,
-                        LocoNetInterfaceScaffold lnis ) {
+                        LocoNetInterfaceScaffold lnis, boolean pre133 ) {
         int src;
         int dst;
+        int readcv = 12;  // which byte contains the readCV info?
+        if (pre133) readcv = 14;
         // check transmitted message
         Assert.assertEquals("One message sent", 1, lnis.outbound.size());
         LocoNetMessage msg = (LocoNetMessage)lnis.outbound.get(0);
@@ -165,10 +174,12 @@ public class LocoIOTableModelTest extends TestCase {
         msg.setElement(2, dst);
         msg.setElement(3, src);
         msg.setElement(4, 0x01);  // seems to be fixed PC address high
-        msg.setElement(6,0);
-        msg.setElement(7,0);
-        msg.setElement(10, 0x10+((addrlow&0x80)!=0?8:0));
-        msg.setElement(14,addrlow&0x7f); // low addr
+        msg.setElement(8,(pre133?0:10));
+        int flagbits = 0x10;
+        if (pre133) flagbits+=((addrlow&0x80)!=0?8:0);
+        else flagbits+=((addrlow&0x80)!=0?2:0);
+        msg.setElement(10,flagbits);
+        msg.setElement(readcv,addrlow&0x7f); // low addr
  		lnis.sendTestMessage(msg);
 
         // 2nd read
@@ -186,10 +197,12 @@ public class LocoIOTableModelTest extends TestCase {
         msg.setElement(2, dst);
         msg.setElement(3, src);
         msg.setElement(4, 0x01);  // seems to be fixed PC address high
-        msg.setElement(6,0);
-        msg.setElement(7,0);
-        msg.setElement(10, 0x10+((addrhigh&0x80)!=0?8:0));
-        msg.setElement(14,addrhigh&0x7f);
+        msg.setElement(8,(pre133?0:10));
+        flagbits = 0x10;
+        if (pre133) flagbits+=((addrhigh&0x80)!=0?8:0);
+        else flagbits+=((addrhigh&0x80)!=0?2:0);
+        msg.setElement(10,flagbits);
+        msg.setElement(readcv,addrhigh&0x7f);
  		lnis.sendTestMessage(msg);
 
         // 3rd read
@@ -207,10 +220,12 @@ public class LocoIOTableModelTest extends TestCase {
         msg.setElement(2, dst);
         msg.setElement(3, src);
         msg.setElement(4, 0x01);  // seems to be fixed PC address high
-        msg.setElement(6,0);
-        msg.setElement(7,0);
-        msg.setElement(10, 0x10+((cv&0x80)!=0?8:0));
-        msg.setElement(14,cv&0x7f);
+        msg.setElement(8,(pre133?0:10));
+        flagbits = 0x10;
+        if (pre133) flagbits+=((cv&0x80)!=0?8:0);
+        else flagbits+=((cv&0x80)!=0?2:0);
+        msg.setElement(10, flagbits);
+        msg.setElement(readcv,cv&0x7f);
  		lnis.sendTestMessage(msg);
 
         Assert.assertEquals("reply does no more messages", 3, lnis.outbound.size());
@@ -253,6 +268,7 @@ public class LocoIOTableModelTest extends TestCase {
 		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
 		LocoIOTableModel m = new LocoIOTableModel(0x1051, null);
+        m.setPICversion(LocoIOTableModel.PRE133);
 
         int channel = 5;
         m.setValueAt("1c10", channel, LocoIOTableModel.ADDRCOLUMN);
@@ -267,14 +283,15 @@ public class LocoIOTableModelTest extends TestCase {
 	}
 
 	// test write with high bits
-	public void testWriteOperationHighBits() {
+	public void testWriteOperationHighBitsOld() {
 		// prepare an interface
 		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
 		LocoIOTableModel m = new LocoIOTableModel(0x1051, null);
+        m.setPICversion(LocoIOTableModel.PRE133);
 
         int channel = 5;
-        m.setValueAt("FFFF", channel, LocoIOTableModel.ADDRCOLUMN);
+        m.setValueAt("ffff", channel, LocoIOTableModel.ADDRCOLUMN);
         m.setValueAt(LocoIOTableModel.STATUSMESSAGE, channel, LocoIOTableModel.ONMODECOLUMN);
 		m.setValueAt(null, channel, LocoIOTableModel.WRITECOLUMN);
 
@@ -320,13 +337,12 @@ public class LocoIOTableModelTest extends TestCase {
         msg.setElement(2, dst);
         msg.setElement(3, src);
         msg.setElement(4, 0x01);  // seems to be fixed PC address high
-        msg.setElement(6,0);
-        msg.setElement(7,0);
+        msg.setElement(8,0);
         msg.setElement(10, 0x10+((val1&0x80)!=0?8:0));
         msg.setElement(14,val1&0x7f);
  		lnis.sendTestMessage(msg);
 
-        // 2nd read
+        // 2nd write
         Assert.assertEquals("reply does 2nd read", 2, lnis.outbound.size());
         msg = (LocoNetMessage)lnis.outbound.get(1);
         // CV11 for read high address
@@ -337,14 +353,13 @@ public class LocoIOTableModelTest extends TestCase {
                             +Integer.toHexString(channel*3+5)+" 0 "
                             +Integer.toHexString(val2&0x7f)+" 10 0 0 0 0 0 ", msg.toString());
 
-        // turn around as the reply to the read high
+        // turn around as the reply to the write high
         src = msg.getElement(2);
         dst = msg.getElement(3);
         msg.setElement(2, dst);
         msg.setElement(3, src);
         msg.setElement(4, 0x01);  // seems to be fixed PC address high
-        msg.setElement(6,0);
-        msg.setElement(7,0);
+        msg.setElement(8,0);
         msg.setElement(10, 0x10+((val2&0x80)!=0?8:0));
         msg.setElement(14,val2&0x7f);
  		lnis.sendTestMessage(msg);
@@ -366,8 +381,7 @@ public class LocoIOTableModelTest extends TestCase {
         msg.setElement(2, dst);
         msg.setElement(3, src);
         msg.setElement(4, 0x01);  // seems to be fixed PC address high
-        msg.setElement(6,0);
-        msg.setElement(7,0);
+        msg.setElement(8,0);
         msg.setElement(10, 0x10+((cv&0x80)!=0?8:0));
         msg.setElement(14,cv&0x7f);
  		lnis.sendTestMessage(msg);
@@ -381,6 +395,7 @@ public class LocoIOTableModelTest extends TestCase {
 		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
 		LocoIOTableModel m = new LocoIOTableModel(0x1051, null);
+        m.setPICversion(LocoIOTableModel.PRE133);
 
 		m.sendReadCommand(1);
 
@@ -398,6 +413,7 @@ public class LocoIOTableModelTest extends TestCase {
 		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
 		LocoIOTableModel m = new LocoIOTableModel(0x1051, null);
+        m.setPICversion(LocoIOTableModel.PRE133);
 
 		m.sendWriteCommand(1, 0x31);
 
@@ -409,12 +425,13 @@ public class LocoIOTableModelTest extends TestCase {
         Assert.assertEquals("message bytes", "e5 10 50 51 10 0 1 1 0 31 10 0 0 0 0 0 ", msg.toString());
 	}
 
-	// test Alex Shepherd's sequence
-	public void testAlexsSequence() {
+	// test Alex Shepherd's sequence with pre1.3.7.1 microcode
+	public void testAlexsSequenceOld() {
 		// prepare an interface
 		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
 		LocoIOTableModel m = new LocoIOTableModel(0x1051, null);
+        m.setPICversion(LocoIOTableModel.PRE133);
 
         // do the channel write
         int channel = 2;
@@ -432,7 +449,39 @@ public class LocoIOTableModelTest extends TestCase {
 
         // and read back
         m.setValueAt(null, channel, LocoIOTableModel.READCOLUMN);
-        read3Sequence(channel, 0xC0, 0x00, 0x00, lnis );
+        read3Sequence(channel, 0xC0, 0x00, 0x00, lnis, true );
+
+        Assert.assertEquals("mode", LocoIOTableModel.STATUSMESSAGE,
+                            m.getValueAt(channel, m.ONMODECOLUMN));
+        Assert.assertEquals("addr", "0", m.getValueAt(channel, m.ADDRCOLUMN));
+
+	}
+
+	// test Alex Shepherd's sequence with post 1.3.7.1 microcode
+	public void testAlexsSequenceNew() {
+		// prepare an interface
+		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
+
+		LocoIOTableModel m = new LocoIOTableModel(0x1051, null);
+        m.setPICversion(LocoIOTableModel.ATLEAST133);
+
+        // do the channel write
+        int channel = 2;
+        m.setValueAt("0000", channel, LocoIOTableModel.ADDRCOLUMN);
+        m.setValueAt(LocoIOTableModel.STATUSMESSAGE, channel, LocoIOTableModel.ONMODECOLUMN);
+		m.setValueAt(null, channel, LocoIOTableModel.WRITECOLUMN);
+
+        write3Sequence(channel, 0xC0, 0x00, 0x00,lnis );
+
+		// clear the test interface
+		lnis.outbound.clear();
+
+        // change the mode value to confirm
+        m.setValueAt(LocoIOTableModel.TURNOUTTHROW, channel, LocoIOTableModel.ONMODECOLUMN);
+
+        // and read back
+        m.setValueAt(null, channel, LocoIOTableModel.READCOLUMN);
+        read3Sequence(channel, 0xC0, 0x00, 0x00, lnis, false );
 
         Assert.assertEquals("mode", LocoIOTableModel.STATUSMESSAGE,
                             m.getValueAt(channel, m.ONMODECOLUMN));
@@ -457,6 +506,16 @@ public class LocoIOTableModelTest extends TestCase {
 		TestSuite suite = new TestSuite(LocoIOTableModelTest.class);
 		return suite;
 	}
+
+	Log4JFixture log4jfixtureInst = new Log4JFixture(this);
+
+    protected void setUp() {
+    	log4jfixtureInst.setUp();
+    }
+
+    protected void tearDown() {
+    	log4jfixtureInst.tearDown();
+    }
 
 	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoIOTableModelTest.class.getName());
 

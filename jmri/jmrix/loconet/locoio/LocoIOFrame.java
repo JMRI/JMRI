@@ -16,9 +16,9 @@ import jmri.jmrix.loconet.LocoNetMessage;
  *
  * Description:		Frame displaying and programming a LocoIO configuration
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Id: LocoIOFrame.java,v 1.5 2002-03-15 14:35:03 jacobsen Exp $
+ * @version			$Id: LocoIOFrame.java,v 1.6 2002-04-01 03:51:35 jacobsen Exp $
  */
-public class LocoIOFrame extends JFrame {
+public class LocoIOFrame extends JFrame implements ActionListener {
 
 	public LocoIOFrame() {
 		super("LocoIO programmer");
@@ -69,16 +69,18 @@ public class LocoIOFrame extends JFrame {
 		// add the other buttons in a separate pane
 		JPanel p1 = new JPanel();
 		p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
-			p1.add(new JLabel("LocoIO unit address (hex):"));
+			p1.add(new JLabel("LocoIO address (hex):"));
 			addrField.setMaximumSize(addrField.getPreferredSize());
 			p1.add(addrField);
-			p1.add(new JLabel("   "));
-
             addrSetButton = new JButton("Set address");
             addrSetButton.setEnabled(false);
 			p1.add(addrSetButton);
+            p1.add(new JSeparator(JSeparator.VERTICAL));
 
-			p1.add(new JLabel("   "));
+			p1.add(new JLabel(" PIC version:"));
+            p1.add(version);
+            version.addActionListener(this);
+            p1.add(new JSeparator(JSeparator.VERTICAL));
 
 			readAllButton = new JButton("Read All");
 			p1.add(readAllButton);
@@ -135,9 +137,17 @@ public class LocoIOFrame extends JFrame {
         pack();
 	}
 
+    /**
+     * The PIC version JComboBox has changed mode
+     */
+    public void actionPerformed(ActionEvent e) {
+        model.setPICversion(version.getSelectedIndex());
+    }
+
 	JTextField addrField = new JTextField("0151");
     JTextField status = null;
 
+    JComboBox version = new JComboBox(new String[]{"1.3.3 or later", "before 1.3.3"});
     JButton addrSetButton = null;
 
 	JButton readAllButton = null;

@@ -29,7 +29,7 @@ import jmri.jmrix.loconet.*;
  * though there are significant modifications.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: LocoIOTableModel.java,v 1.10 2002-03-11 02:46:39 jacobsen Exp $
+ * @version			$Id: LocoIOTableModel.java,v 1.11 2002-04-01 03:51:35 jacobsen Exp $
  */
 public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
             implements LocoNetListener {
@@ -42,6 +42,15 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
         unitAddress = unit&0x7F7F;  // protect against high bits set
     }
 
+    // define the LocoIO PIC code versions
+    public static final int ATLEAST133 = 0;
+    public static final int PRE133 = 1;
+
+    int picVersion = 0;
+    void setPICversion(int pv) {
+        picVersion = pv;
+        if (log.isDebugEnabled()) log.debug("set PIC version to "+pv);
+    }
 
     /**
      * Define the number of rows in the table, which is also
@@ -139,7 +148,10 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
             capture[i] = false;
         }
         // for now, we're always listening to LocoNet
-		LnTrafficController.instance().addLocoNetListener(~0, this);
+        if (LnTrafficController.instance() != null)
+    		LnTrafficController.instance().addLocoNetListener(~0, this);
+        else
+            log.error("No LocoNet interface available");
 	}
 
 	// basic methods for AbstractTableModel implementation
@@ -388,32 +400,43 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
                     // yes, we assume this is a reply to us
                     stopTimer();
                     replyReceived(); // advance state
-                    // get data and store
-                    if (lastOpCv<0 || lastOpCv>50)
-                        log.error("last CV recorded is invalid: "+lastOpCv);
                     int[] contents = m.getPeerXfrData();
-                    int data = contents[7];
-                    int channel = (lastOpCv/3)-1;
-                    if (channel<0) log.warn("channel is less than zero");
-                    int type = lastOpCv - (channel*3+3);
-                        // type = 0 for Mode, 1 for value 1, 2 for value 2
-                    if (type==0) {
-                        // mode
-                        onMode[channel] = modeFromValues(data, addrFieldAsInt(channel));
-                    } else if (type==2) {
-                        // value 2 - can't entirely replace anything that's there,
-                        // as this happens on write, and high part not written yet
-                        int oldAddr = addrFieldAsInt(channel);
-                        int newAddr = highPart(oldAddr)*256+data;
-                        addr[channel]=Integer.toHexString(newAddr);
-                    } else {
-                        // value 1
-                        int oldAddr = addrFieldAsInt(channel);
-                        int newAddr = lowPart(oldAddr)+256*data;
-                        addr[channel]=Integer.toHexString(newAddr);
-                    }
-                    // tell the table to update
-    				fireTableRowsUpdated(channel,channel);
+                    if (contents[0] == 2) {  // read command
+                        // get data and store
+                        if (lastOpCv<0 || lastOpCv>50)
+                            log.error("last CV recorded is invalid: "+lastOpCv);
+
+                        // there are two formats of the return packet...
+                        int data = 0;
+                        if (contents[2] != 0)
+                            data = contents[5];
+                        else if (contents[2] == 0)
+                            data = contents[7];
+                        else
+                            log.error("PIC version flag unrecognized: "+picVersion);
+                        int channel = (lastOpCv/3)-1;
+                        if (channel<0) log.warn("channel is less than zero");
+                        int type = lastOpCv - (channel*3+3);
+                            // type = 0 for Mode, 1 for value 1, 2 for value 2
+                        if (type==0) {
+                            // mode
+                            onMode[channel] = modeFromValues(data, addrFieldAsInt(channel));
+                        } else if (type==2) {
+                            // value 2 - can't entirely replace anything that's there,
+                            // as this happens on write, and high part not written yet
+                            int oldAddr = addrFieldAsInt(channel);
+                            int newAddr = highPart(oldAddr)*256+data;
+                            addr[channel]=Integer.toHexString(newAddr);
+                        } else {
+                            // value 1
+                            int oldAddr = addrFieldAsInt(channel);
+                            int newAddr = lowPart(oldAddr)+256*data;
+                            addr[channel]=Integer.toHexString(newAddr);
+                        }
+                        // tell the table to update
+    				    fireTableRowsUpdated(channel,channel);
+
+                    }  // end of read processing
 
                     // check for anything else to do
                     issueNextOperation();
