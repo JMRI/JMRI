@@ -1,15 +1,17 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: ESU_LokSound2_21.xml,v 1.6 2004-03-06 18:37:00 jacobsen Exp $ -->
+<!-- $Id: ESU_LokSound2_21.xml,v 1.7 2005-01-23 20:58:48 jacobsen Exp $ -->
 <decoder-config>
-		<version author="sip@euronet.nl"
-			version="4" lastUpdated="20040205"/>
+		<version author="wsthompson@earthlink.netl"
+			version="5" lastUpdated="20041116"/>
 			<!-- Based on the contribution of many others -->
 
 		<!-- version 2 - add consist direction - jake -->
 
 		<!-- version 3 - Change LowVersionID to "22" to match my decoder - Ian -->
 		<!-- version 4 - fix mfg name - jake -->
+		<!-- version 5 - Changed max values of CV2 thru 6 to 63, this matches the 
+		Factory specs for max,also ESU pane with Factory Reset - walt -->
 
 <decoder>
 	<family name="ESU LokSound2 Silent BEMF/Sound decoders" 
@@ -40,13 +42,12 @@
 						item="Short Address"  default="03">
 			<shortAddressVal/></variable>
 		
-		<variable label="Vstart" CV="2" default="3"
-			comment="A value of 255 corresponds to 100%">
-			<decVal/>
+		<variable label="Vstart" CV="2" default="3"> 
+			<decVal max="63"/>
 		</variable>
 		
 		<variable label="Acceleration" CV="3" default="4"
-			item="Acceleration" >
+			item="Accel" >
 			<decVal max="63"/>
 		</variable>
 		
@@ -55,14 +56,12 @@
 			<decVal max="63"/>
 		</variable>
 		
-		<variable label="Vhigh" CV="5" default="63"
-			comment="Range 0-255">
-			<decVal/>
+		<variable label="Vhigh" CV="5" default="63">
+			<decVal max="63"/>
 		</variable>
 		
-		<variable label="Vmid" CV="6" default="25"
-			comment="Range 0-255">
-			<decVal/>
+		<variable label="Vmid" CV="6" default="25">
+			<decVal max="63"/>
 		</variable>
 		
 		<variable label="Decoder Version  " CV="7" readOnly="yes"
@@ -639,10 +638,21 @@
 		<variable label="Blink Rate" CV="121" default="0"
 	          	comment="Controls Blink Interval">
 			<decVal/>
+			</variable>
+			
+			<variable label="Factory Reset DANGER" CV="8">
+			<enumVal>
+			<enumChoice choice="due nothing" value="0"/>
+			<enumChoice choice="Factory Reset" value="8"/>
+			</enumVal>
 		</variable>
-
 	</variables>
 </decoder>
+<pane name="ESU">
+	<column>
+		<display item="Factory Reset DANGER" />
+	</column>
+</pane>
 </decoder-config>
 
 
