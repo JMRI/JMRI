@@ -2,12 +2,15 @@
 
 package jmri.jmrix.loconet;
 
-import junit.framework.*;
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
- * Tests for the jmri.jmrix.loconet.LnSensorAddress class
+ * Tests for the jmri.jmrix.loconet.LnSensorAddress class.
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class LnSensorAddressTest extends TestCase {
 
@@ -63,16 +66,16 @@ public class LnSensorAddressTest extends TestCase {
     public void testLnSensorAddressBDL16Mode() {
     	LnSensorAddress a;
 
-        a = new LnSensorAddress("LS130");
+        a = new LnSensorAddress("LS131");
         Assert.assertTrue(a.getLowBits() == 65);
         Assert.assertTrue(a.getHighBits() == 0);
         Assert.assertTrue(a.getASBit() == 0x00);
         Assert.assertTrue(a.isValid());
 
-        a = new LnSensorAddress("LS257");
+        a = new LnSensorAddress("LS258");
         Assert.assertTrue(a.getLowBits() == 0);
         Assert.assertTrue(a.getHighBits() == 1);
-        assertEquals("AS bit from LS257", 0x20, a.getASBit());
+        assertEquals("AS bit from LS258", 0x20, a.getASBit());
         Assert.assertTrue(a.isValid());
 
     }
@@ -80,10 +83,10 @@ public class LnSensorAddressTest extends TestCase {
     public void testLnSensorAddressFromPacket() {
     	LnSensorAddress a;
 
-        a = new LnSensorAddress(0x15, 0x60); // LS043
+        a = new LnSensorAddress(0x15, 0x60); // LS044
         log.debug("0x15, 0x60 shows as "+a.getNumericAddress()+" "+
                             a.getDS54Address()+" "+a.getBDL16Address());
-        Assert.assertTrue(a.getNumericAddress().equals("LS43"));
+        Assert.assertTrue(a.getNumericAddress().equals("LS44"));
         Assert.assertTrue(a.getDS54Address().equals("LS21A"));
         Assert.assertTrue(a.getBDL16Address().equals("LS2C3"));
 

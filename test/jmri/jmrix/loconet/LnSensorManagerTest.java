@@ -2,13 +2,17 @@
 
 package jmri.jmrix.loconet;
 
-import jmri.*;
-import junit.framework.*;
+import jmri.Sensor;
+import jmri.SensorManager;
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
- * tests for the jmri.jmrix.loconet.LnSensorManagerTurnout class
+ * Tests for the jmri.jmrix.loconet.LnSensorManagerTurnout class.
  * @author	Bob Jacobsen  Copyright 2001
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class LnSensorManagerTest extends TestCase  {
 
