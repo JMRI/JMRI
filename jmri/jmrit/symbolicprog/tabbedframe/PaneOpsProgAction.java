@@ -33,7 +33,7 @@ import javax.swing.JPanel;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class PaneOpsProgAction 	extends AbstractAction {
 
@@ -49,6 +49,8 @@ public class PaneOpsProgAction 	extends AbstractAction {
         if (jmri.InstanceManager.programmerManagerInstance()==null ||
             !jmri.InstanceManager.programmerManagerInstance().isOpsModePossible()) {
             setEnabled(false);
+            // This needs to return so the xmlThread is not started;
+	    return;
         }
 
         // start a low priority request for the Roster & DecoderInstance
