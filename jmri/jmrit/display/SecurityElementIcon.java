@@ -15,7 +15,7 @@ import javax.swing.*;
  * explicitly add the code for Positionable
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class SecurityElementIcon extends JPanel
@@ -151,10 +151,10 @@ public class SecurityElementIcon extends JPanel
         }
     }
     public void mouseExited(MouseEvent e) {
-        if (debug) log.debug("Exited:  "+where(e));
+        // if (debug) log.debug("Exited:  "+where(e));
     }
     public void mouseEntered(MouseEvent e) {
-        if (debug) log.debug("Entered: "+where(e));
+        // if (debug) log.debug("Entered: "+where(e));
     }
 
     public void mouseMoved(MouseEvent e) {
@@ -481,6 +481,15 @@ public class SecurityElementIcon extends JPanel
             }
                   );
 
+        popup.add(new JSeparator(JSeparator.HORIZONTAL));
+
+        // show some debugging state
+        popup.add(new JLabel(" Occupancies: "+element.showOccupancy()));
+        popup.add(new JLabel(" Speed input: "+element.showInputSpeeds()));
+        popup.add(new JLabel(" Reservations: "+element.showReservations()));
+
+        // and include remove at the bottom
+        popup.add(new JSeparator(JSeparator.HORIZONTAL));
         popup.add(new AbstractAction("Remove") {
             public void actionPerformed(ActionEvent e) {
                 remove();
