@@ -10,13 +10,13 @@ import jmri.*;
  * Based on Crr0029.bas
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class CrrSection15A extends CrrSection {
 
     void defineIO() {
         sig  = InstanceManager.signalHeadManagerInstance().getByUserName("Signal 15A");
-        inputs = new NamedBean[]{ tu[17], tu[18], tu[19], bo[24], bo[25], bo[26],
+        inputs = new NamedBean[]{ tu[17], tu[18], tu[19], bo[24], bo[25], bo[26], bo[34],
                                 si[99], si[102], si[105] };
     }
 
@@ -31,6 +31,7 @@ public class CrrSection15A extends CrrSection {
         boolean bo24  = ( bo[24].getKnownState() == Sensor.ACTIVE);
         boolean bo25  = ( bo[25].getKnownState() == Sensor.ACTIVE);
         boolean bo26  = ( bo[26].getKnownState() == Sensor.ACTIVE);
+        boolean bo34  = ( bo[34].getKnownState() == Sensor.ACTIVE);
 
         boolean si99  = ( si[99].getCommandedState() == THROWN);
         boolean si102 = ( si[102].getCommandedState() == THROWN);
@@ -38,6 +39,8 @@ public class CrrSection15A extends CrrSection {
 
         int value = GREEN;
         if ( !tu17 && tu18 )
+            value = RED;
+        else if ( !tu17 && bo34 )
             value = RED;
         else if ( !tu17 && !tu18 && bo24 )
             value = RED;

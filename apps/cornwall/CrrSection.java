@@ -8,7 +8,7 @@ import jmri.*;
  * Abstract base class for Cornwall RR automation.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public abstract class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
     static final int RED    = SignalHead.RED;
@@ -171,10 +171,11 @@ public abstract class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
                 tm.getByUserName("Relay Track 1 bo(30)"),
                 tm.getByUserName("Lickdale Interchange Track 2 bo(31)"),
                 tm.getByUserName("Lickdale Interchange Track 1 bo(32)"),
-                tm.getByUserName("Conewago Interlocking bo(33)")
+                tm.getByUserName("Conewago Interlocking bo(33)"),
+                tm.getByUserName("Conewago Pocket bo(34)")
             };
             // check for error!
-            if (bo.length != 33+1) log.error("Unexpected bo[] length: "+bo.length);
+            if (bo.length != 34+1) log.error("Unexpected bo[] length: "+bo.length);
             for (int i = 1; i<bo.length; i++)
                 if (bo[i]==null) log.error("bo["+i+"] unexpectedly null");
 
