@@ -11,19 +11,19 @@ import javax.swing.*;
 import javax.swing.border.*;
 import com.sun.java.util.collections.List;
 
-/** 
+/**
  * Provide GUI controls to select a known loco via the Roster.
  * <P>
- * When the "open programmer" button is pushed, i.e. the user is ready to 
+ * When the "open programmer" button is pushed, i.e. the user is ready to
  * continue, the startProgrammer method is invoked.  This should be
  * overridden (e.g. in a local anonymous class) to create the programmer frame
  * you're interested in.
  *
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: KnownLocoSelPane.java,v 1.1 2002-02-28 20:30:16 jacobsen Exp $
+ * @author			Bob Jacobsen   Copyright (C) 2001, 2002
+ * @version			$Revision: 1.2 $
  */
 public class KnownLocoSelPane extends javax.swing.JPanel  {
-		
+
 	public KnownLocoSelPane(JLabel s) {
 		_statusLabel = s;
 		init();
@@ -32,7 +32,7 @@ public class KnownLocoSelPane extends javax.swing.JPanel  {
 	public KnownLocoSelPane() {
 		init();
 	}
-	
+
 	protected void init() {
 		JLabel last;
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -50,12 +50,12 @@ public class KnownLocoSelPane extends javax.swing.JPanel  {
 				}
 			});
 			pane2a.add(idloco);
-			pane2a.setAlignmentX(JLabel.LEFT_ALIGNMENT);				
+			pane2a.setAlignmentX(JLabel.LEFT_ALIGNMENT);
 		add(pane2a);
-			
+
 		locoBox = Roster.instance().matchingComboBox(null, null, null, null, null, null, null);
 		add(locoBox);
-		
+
 		JButton go2 = new JButton("Open programmer");
 		go2.addActionListener( new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -66,7 +66,7 @@ public class KnownLocoSelPane extends javax.swing.JPanel  {
 		add(go2);
 		setBorder(new EmptyBorder(6,6,6,6));
 	}
-	
+
 	JLabel _statusLabel = null;
 
 	private void startIdentify() {
@@ -88,7 +88,7 @@ public class KnownLocoSelPane extends javax.swing.JPanel  {
 
 	private void selectLoco(int dccAddress) {
 		// locate that loco
-		List l = Roster.instance().matchingList(null, null, Integer.toString(dccAddress), 
+		List l = Roster.instance().matchingList(null, null, Integer.toString(dccAddress),
 												null, null, null, null);
 		if (log.isDebugEnabled()) log.debug("selectLoco found "+l.size()+" matches");
 		if (l.size() > 0) {
@@ -102,26 +102,23 @@ public class KnownLocoSelPane extends javax.swing.JPanel  {
 			log.warn("Read address "+dccAddress+", but no such loco in roster");
 		}
 	}
-			
+
 	private JComboBox locoBox = null;
-	
+
 	/** handle pushing the open programmer button by finding names, then calling a template method */
 	protected void openButton() {
 
 		RosterEntry re = Roster.instance().entryFromTitle((String)locoBox.getSelectedItem());
 		if (re == null) log.error("RosterEntry is null during open; that shouldnt be possible");
-		
-		String locoFile = Roster.instance().fileFromTitle((String)locoBox.getSelectedItem());
-		if (log.isDebugEnabled()) log.debug("loco file: "+locoFile);
-		
-		startProgrammer(null, locoFile, re);
+
+		startProgrammer(null, re);
 	}
-	
+
 	/** meant to be overridden to start the desired type of programmer */
-	protected void startProgrammer(DecoderFile decoderFile, String locoFile, RosterEntry r) {
+	protected void startProgrammer(DecoderFile decoderFile, RosterEntry r) {
 		log.error("startProgrammer method in NewLocoSelPane should have been overridden");
 	}
-	
+
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(KnownLocoSelPane.class.getName());
 
 }

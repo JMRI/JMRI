@@ -22,7 +22,7 @@ import com.sun.java.util.collections.List;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  * @see             jmri.jmrit.decoderdefn.IdentifyDecoder
  * @see             jmri.jmrit.roster.IdentifyLoco
  */
@@ -144,14 +144,6 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
      * Handle pushing the open programmer button by finding names, then calling a template method
      */
 	protected void openButton() {
-		String locoFile = null;
-
-		// find the loco file
-		if ( ! ((String)locoBox.getSelectedItem()).equals("<none>")) {
-
-			locoFile = Roster.instance().fileFromTitle((String)locoBox.getSelectedItem());
-			if (log.isDebugEnabled()) log.debug("loco file: "+locoFile);
-		}
 
 		// find the decoderFile object
 		DecoderFile decoderFile = DecoderIndexFile.instance().fileFromTitle((String)decoderBox.getSelectedItem());
@@ -162,19 +154,19 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
 		re.setDecoderFamily(decoderFile.getFamily());
 		re.setDecoderModel(decoderFile.getModel());
 		re.setId("<new loco>");
+        // note we're leaving the filename information as null
 		// add the new roster entry to the in-memory roster
 		Roster.instance().addEntry(re);
 
-		startProgrammer(decoderFile, locoFile, re);
+		startProgrammer(decoderFile, re);
 	}
 
 	/**
      * Meant to be overridden to start the desired type of programmer
      *  @param decoderFile selected file, passed to eventual implementation
-     *  @param locoFile name of selected locomotive definition file
      *  @param r RosterEntry defining this locomotive, to be filled in later
      */
-	protected void startProgrammer(DecoderFile decoderFile, String locoFile, RosterEntry r) {
+	protected void startProgrammer(DecoderFile decoderFile, RosterEntry r) {
 		log.error("startProgrammer method in NewLocoSelPane should have been overridden");
 	}
 

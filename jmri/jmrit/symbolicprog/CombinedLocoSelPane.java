@@ -21,8 +21,8 @@ import com.sun.java.util.collections.List;
  * overridden (e.g. in a local anonymous class) to create the programmer frame
  * you're interested in.
  *
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @author			Bob Jacobsen   Copyright (C) 2001, 2002
+ * @version			$Revision: 1.4 $
  */
 public class CombinedLocoSelPane extends javax.swing.JPanel  {
 
@@ -243,27 +243,26 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 		}
 	}
 
+    /**
+     * Start with a locomotive selected, so we're opening an existing
+     * RosterEntry.
+     */
 	protected void openKnownLoco() {
 
 		RosterEntry re = Roster.instance().entryFromTitle((String)locoBox.getSelectedItem());
 		if (re == null) log.error("RosterEntry is null during open; that shouldnt be possible");
 
-		String locoFile = Roster.instance().fileFromTitle((String)locoBox.getSelectedItem());
-		if (log.isDebugEnabled()) log.debug("loco file: "+locoFile);
+		if (log.isDebugEnabled()) log.debug("loco file: "
+                                    +Roster.instance().fileFromTitle((String)locoBox.getSelectedItem()));
 
-		startProgrammer(null, locoFile, re, (String)programmerBox.getSelectedItem());
+		startProgrammer(null, re, (String)programmerBox.getSelectedItem());
 	}
 
+    /**
+     * Start with a decoder selected, so we're going to create a new
+     * RosterEntry.
+     */
 	protected void openNewLoco() {
-		String locoFile = null;
-
-		// find the loco file
-		if ( ! ((String)locoBox.getSelectedItem()).equals("<none>")) {
-
-			locoFile = Roster.instance().fileFromTitle((String)locoBox.getSelectedItem());
-			if (log.isDebugEnabled()) log.debug("loco file: "+locoFile);
-		}
-
 		// find the decoderFile object
 		DecoderFile decoderFile = DecoderIndexFile.instance().fileFromTitle((String)decoderBox.getSelectedItem());
 		if (log.isDebugEnabled()) log.debug("decoder file: "+decoderFile.getFilename());
@@ -273,14 +272,15 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 		re.setDecoderFamily(decoderFile.getFamily());
 		re.setDecoderModel(decoderFile.getModel());
 		re.setId("<new loco>");
+        // note that we're leaving the filename null
 		// add the new roster entry to the in-memory roster
 		Roster.instance().addEntry(re);
 
-		startProgrammer(decoderFile, locoFile, re, (String)programmerBox.getSelectedItem());
+		startProgrammer(decoderFile, re, (String)programmerBox.getSelectedItem());
 	}
 
 	/** meant to be overridden to start the desired type of programmer */
-	protected void startProgrammer(DecoderFile decoderFile, String locoFile, RosterEntry r, String progName) {
+	protected void startProgrammer(DecoderFile decoderFile, RosterEntry r, String progName) {
 		log.error("startProgrammer method in CombinedLocoSelPane should have been overridden");
 	}
 

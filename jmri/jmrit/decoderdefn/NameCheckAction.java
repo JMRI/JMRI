@@ -17,7 +17,7 @@ import com.sun.java.util.collections.List;
  * Check the names in an XML decoder file against the names.xml definitions
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: NameCheckAction.java,v 1.1 2002-02-28 21:47:08 jacobsen Exp $
+ * @version			$Revision: 1.2 $
  * @see             jmri.jmrit.XmlFile
  */
 public class NameCheckAction extends AbstractAction {
@@ -37,11 +37,11 @@ public class NameCheckAction extends AbstractAction {
 		// handle selection or cancel
 		if (retVal == JFileChooser.APPROVE_OPTION) {
 			File file = fci.getSelectedFile();
-			if (log.isInfoEnabled()) log.info("located file "+file+" for XML processing");
+			if (log.isDebugEnabled()) log.debug("located file "+file+" for XML processing");
 			// handle the file (later should be outside this thread?)
 			try {
 				Element root = readFile(file);
-				if (log.isInfoEnabled()) log.info("parsing complete");
+				if (log.isDebugEnabled()) log.debug("parsing complete");
 
 				// check to see if there's a decoder element
 				if (root.getChild("decoder")==null) {
@@ -88,7 +88,7 @@ public class NameCheckAction extends AbstractAction {
 			}
 
 		}
-		else log.info("XmlFileCheckAction cancelled in open dialog");
+		else log.debug("XmlFileCheckAction cancelled in open dialog");
 	}
 
 	/**

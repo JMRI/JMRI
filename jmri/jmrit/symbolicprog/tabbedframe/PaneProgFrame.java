@@ -29,7 +29,7 @@ import org.jdom.JDOMException;
 /**
  * Frame providing a command station programmer from decoder definition files
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
@@ -139,26 +139,30 @@ public class PaneProgFrame extends javax.swing.JFrame
   	/**
   	 * Initialization sequence:
   	 * <UL>
-  	 * <LI> If the locoFile is specified, open it
+  	 * <LI> Ask the RosterEntry to read its contents
   	 * <LI> If the decoder file is specified, open and load it, otherwise
   	 *		get the decoder filename from the RosterEntry and load that.
   	 *		Note that we're assuming the roster entry has the right decoder,
   	 *		at least w.r.t. the loco file.
-  	 * <LI> Fill CV values from the locoFile
+  	 * <LI> Fill CV values from the roster entry
   	 * <LI> Create the programmer panes
   	 * </UL>
      * @param decoderFile XML file defining the decoder contents
-     * @param locoFile filename defining locomotive contents
      * @param r RosterEntry for information on this locomotive
      * @param name
      * @param file
   	 */
-	public PaneProgFrame(DecoderFile decoderFile, String locoFile, RosterEntry r, String name, String file) {
+	public PaneProgFrame(DecoderFile decoderFile, RosterEntry r, String name, String file) {
 		super(name);
+        _rosterEntry =  r;
+        if (_rosterEntry == null) log.error("null RosterEntry pointer");
 		filename = file;
 		installComponents();
 
-		if (locoFile != null) readLocoFile(locoFile);  // read, but don't process
+		if (_rosterEntry.getFileName() != null) {
+            // set the loco file name in the roster entry
+            _rosterEntry.readFile();  // read, but don't yet process
+        }
 
 		if (decoderFile != null) loadDecoderFile(decoderFile);
 		else					 loadDecoderFromLoco(r);
@@ -167,7 +171,7 @@ public class PaneProgFrame extends javax.swing.JFrame
 		saveDefaults();
 
 		// finally fill the CV values from the specific loco file
-		if (locoFile != null) loadLocoFile();
+		if (_rosterEntry.getFileName() != null) _rosterEntry.loadCvModel(cvModel);
 
 		// mark file state as consistent
 		variableModel.setFileDirty(false);
@@ -233,34 +237,16 @@ public class PaneProgFrame extends javax.swing.JFrame
 
 		pack();
 
-		if (log.isDebugEnabled()) log.debug("PaneProgFrame \""+name+"\" constructed for file "+locoFile
+		if (log.isDebugEnabled()) log.debug("PaneProgFrame \""+name
+                                            +"\" constructed for file "+_rosterEntry.getFileName()
 											+", unconstrained size is "+super.getPreferredSize()
                                             +", constrained to "+getPreferredSize());
 	}
-
-	Element lroot = null;
 
 	/**
 	 * Data element holding the 'model' element representing the decoder type
 	 */
 	Element modelElem = null;
-
-  	protected void readLocoFile(String locoFile) {
-  		if (locoFile == null) {
-  			log.debug("loadLocoFile file invoked with null filename");
-  			return;
-  		}
-		LocoFile lf = new LocoFile();  // used as a temporary
-		lroot = null;
-		try {
-			lroot = lf.rootFromName(lf.fileLocation+File.separator+locoFile);
-		} catch (Exception e) { log.error("Exception while loading loco XML file: "+locoFile+" exception: "+e); }
-  	}
-
-  	protected void loadLocoFile() {
-		// load CVs from the loco file tree
-		LocoFile.loadCvModel(lroot.getChild("locomotive"), cvModel);
-  	}
 
 	Element decoderRoot = null;
 
@@ -425,7 +411,6 @@ public class PaneProgFrame extends javax.swing.JFrame
 
 		// add roster info
 		_rPane = new RosterEntryPane(r);
-		_rosterEntry = r;
 		_rPane.setMaximumSize(_rPane.getPreferredSize());
 		body.add(_rPane);
 
@@ -609,7 +594,7 @@ public class PaneProgFrame extends javax.swing.JFrame
 	}
 
 	/**
-	 * Write everything to a file.
+	 * Store the locomotives information in the roster (and a RosterEntry file).
 	 */
 	public void storeFile() {
 		log.info("storeFile starts");
@@ -625,31 +610,11 @@ public class PaneProgFrame extends javax.swing.JFrame
 			return;
 		}
 		// if there isn't a filename, store using the id
-		if (_rosterEntry.getFileName().equals("")) {
-			String newFilename = _rosterEntry.getId().replace(' ','_')+".xml";
-			_rosterEntry.setFileName(newFilename);
-			log.debug("new filename: "+_rosterEntry.getFileName());
-		}
+        _rosterEntry.ensureFilenameExists();
 		String filename = _rosterEntry.getFileName();
 
-		// create a DecoderFile to represent this
-		LocoFile df = new LocoFile();
-
-		// do I/O
-		XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+LocoFile.fileLocation);
-
-		try {
-			String fullFilename = XmlFile.prefsDir()+LocoFile.fileLocation+filename;
-			File f = new File(fullFilename);
-			// do backup
-			df.makeBackupFile(LocoFile.fileLocation+filename);
-
-			// and finally write the file
-			df.writeFile(f, cvModel, variableModel, _rosterEntry);
-
-		} catch (Exception e) {
-			log.error("error during locomotive file output: "+e);
-		}
+		// create the RosterEntry to its file
+		_rosterEntry.writeFile(cvModel, variableModel );
 
 		// mark this as a success
 		variableModel.setFileDirty(false);
@@ -697,7 +662,6 @@ public class PaneProgFrame extends javax.swing.JFrame
 		paneList = null;
 		_programmingPane = null;
 
-		lroot = null;
 		tabPane = null;
 		readAllButton = null;
 		writeAllButton = null;

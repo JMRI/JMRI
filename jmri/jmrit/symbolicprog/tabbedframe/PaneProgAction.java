@@ -12,8 +12,8 @@ import java.awt.*;
 import java.io.*;
 import javax.swing.*;
 import javax.swing.border.*;
-import org.jdom.*;
-import org.jdom.input.*;
+//import org.jdom.*;
+//import org.jdom.input.*;
 
 /**
  * Swing action to create and register a
@@ -21,7 +21,7 @@ import org.jdom.input.*;
  * is constructed on the fly here, and has no specific type.
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class PaneProgAction 			extends AbstractAction {
 
@@ -74,10 +74,10 @@ public class PaneProgAction 			extends AbstractAction {
 		// new Loco on programming track
 		JLabel last;
 		JPanel pane1 = new CombinedLocoSelPane(statusLabel){
-			protected void startProgrammer(DecoderFile decoderFile, String locoFile, RosterEntry re, String filename) {
+			protected void startProgrammer(DecoderFile decoderFile, RosterEntry re, String filename) {
 				String title = "Program new decoder";
 				if (re!=null) title = "Program "+re.getId();
-				JFrame p = new PaneProgFrame(decoderFile, locoFile, re,
+				JFrame p = new PaneProgFrame(decoderFile, re,
 												title, "programmers"+File.separator+filename+".xml");
 				p.pack();
 				p.show();
