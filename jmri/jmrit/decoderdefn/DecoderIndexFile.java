@@ -33,7 +33,7 @@ import com.sun.java.util.collections.List;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -426,7 +426,7 @@ public class DecoderIndexFile extends XmlFile {
         while (keys.hasMoreElements()) {
             l.add((String)keys.nextElement());
         }
-        String[] s = (String[])l.toArray();
+        Object[] s = l.toArray();
         // all of the above mess was to get something we can sort into alpha order
         jmri.util.StringUtil.sort(s);
         for (int i=0; i<s.length; i++) {
