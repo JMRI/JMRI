@@ -17,7 +17,7 @@ import javax.swing.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author			Bob Jacobsen   Copyright 2002
- * @version         $Revision: 1.38 $
+ * @version         $Revision: 1.39 $
  */
 public class JMRIdemo extends JPanel {
     public JMRIdemo() {
@@ -97,9 +97,10 @@ public class JMRIdemo extends JPanel {
         locoMenu.add(new jmri.jmrix.loconet.locomon.LocoMonAction("LocoNet Monitor"));
         locoMenu.add(new jmri.jmrix.loconet.slotmon.SlotMonAction("Slot Monitor"));
         locoMenu.add(new jmri.jmrix.loconet.locogen.LocoGenAction("Send Packet"));
-        locoMenu.add(new jmri.jmrix.loconet.locoio.LocoIOAction("LocoIO programmer"));
+        locoMenu.add(new jmri.jmrix.loconet.locoio.LocoIOAction("LocoIO Programmer"));
         locoMenu.add(new jmri.jmrix.loconet.pm4.PM4Action("PM4 Programmer"));
         locoMenu.add(new jmri.jmrix.loconet.bdl16.BDL16Action("BDL16 Programmer"));
+        locoMenu.add(new jmri.jmrit.messager.MessageFrameAction( "Throttle Messages" ));
         locoMenu.add(new jmri.jmrix.loconet.locormi.LnMessageServerAction( "Start LocoNet Server" ));
 
         JMenu throttleMenu = new JMenu("Throttles");
@@ -112,7 +113,7 @@ public class JMRIdemo extends JPanel {
         menuBar.add(nceMenu);
         nceMenu.add(new jmri.jmrix.nce.ncemon.NceMonAction("Command Monitor"));
         nceMenu.add(new jmri.jmrix.nce.packetgen.NcePacketGenAction("Send Command"));
-        nceMenu.add(new jmri.jmrix.ncemonitor.NcePacketMonitorAction("Track packet monitor"));
+        nceMenu.add(new jmri.jmrix.ncemonitor.NcePacketMonitorAction("Track Packet Monitor"));
 
         JMenu easydccMenu = new JMenu("EasyDcc");
         menuBar.add(easydccMenu);
