@@ -3,7 +3,7 @@
  *
  * Description:		extend jmri.AbstractTurnout for XNet layouts
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 
 package jmri.jmrix.lenz;
@@ -61,11 +61,20 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
            // This is a feedback message, we need to check and see if it
            // indicates this turnout is to change state or if it is for 
            // another turnout.
-    		int state = parseFeedbackMessage(l);
+		  parseFeedbackMessage(l);
+		newKnownState(getCommandedState());
            }
 	} else if(XNetTrafficController.instance().getCommandStation()
                                                   .isFeedbackMessage(l)) {
-    		int state = parseFeedbackMessage(l);
+           // XNetMessage msg =  XNetTrafficController.instance()
+           //                                     .getCommandStation()
+	   //					  .getTurnoutCommandMsg(mNumber,
+           //                                     getCommandedState()!=CLOSED,
+           //                                     getCommandedState()!=THROWN,
+           //                                       false );
+           //     XNetTrafficController.instance().sendXNetMessage(msg, this);
+		  parseFeedbackMessage(l);
+		newKnownState(getCommandedState());
 
 	  // The first case is that we recieve a message for this turnout
           // and this turnout provides feedback.
@@ -90,55 +99,36 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         if (mNumber%2==1 && (XNetTrafficController.instance()
             .getCommandStation()
             .getTurnoutMsgAddr(l) == mNumber)) {
+            // is for this object, parse the message
+            if (log.isDebugEnabled()) log.debug("Message for turnout" + mNumber);
+            if(XNetTrafficController.instance()
+                                    .getCommandStation()
+                                    .getTurnoutStatus(l,1)==THROWN) {
+               newCommandedState(THROWN);
+            } else if(XNetTrafficController.instance()
+                                    .getCommandStation()
+                                    .getTurnoutStatus(l,1)==CLOSED) { 
+               newCommandedState(CLOSED);
+            } else return -1;
+            newKnownState(getCommandedState());
+        } else if (((mNumber%2)==0) && 
+                   (XNetTrafficController.instance()
+                                 .getCommandStation()
+                                 .getTurnoutMsgAddr(l) == mNumber-1)) {
             // is for this object, parse message type
             if (log.isDebugEnabled()) log.debug("Message for turnout" + mNumber);
-            int turnout_type=l.getElement(2) & 0x60;
-            if(turnout_type==0x00 || turnout_type==0x20) {
-		/* this is a turnout response */
-                if((l.getElement(2) & 0x03)!=0) {
-                    /* this is for the First turnout in the nibble */
-                    int state=l.getElement(2) & 0x03;
-                if(state==0x01) { newCommandedState(CLOSED);
-                } else { newCommandedState(THROWN);
-                }
-		newKnownState(getCommandedState());
-                 /*   XNetMessage msg =  XNetTrafficController.instance()
-                                               .getCommandStation()
-					      .getTurnoutCommandMsg(mNumber,
-                                                  (state & CLOSED)!=0,
-                                                  (state & THROWN)!=0,
-                                                  false );                    */
-                // XNetTrafficController.instance().sendXNetMessage(msg, this);
-                }
-             }    
-            } else if ( ((mNumber%2)==0) && 
-                        (XNetTrafficController.instance()
-                                   .getCommandStation()
-                                   .getTurnoutMsgAddr(l) == mNumber-1)) {
-            // is for this object, parse message type
-            if (log.isDebugEnabled()) log.debug("Message for turnout" + mNumber);
-            int turnout_type=l.getElement(2) & 0x60;
-            if(turnout_type==0x00 || turnout_type==0x20)
-            {
-		/* this is a turnout response */
-                if((l.getElement(2) & 0x0C)!=0) {
-                    /* this is for the upper half of the nibble */
-                int state=l.getElement(2) & 0x0C;
-                if(state==0x04) { newCommandedState(CLOSED);
-                } else { newCommandedState(THROWN);
-                }
-		newKnownState(getCommandedState());
-                XNetMessage msg =  XNetTrafficController.instance()
-                                                .getCommandStation()
-						.getTurnoutCommandMsg(mNumber,
-                                                  (state & CLOSED)!=0,
-                                                  (state & THROWN)!=0,
-                                                  false );
-                //XNetTrafficController.instance().sendXNetMessage(msg, this);
-                }                 
-            }
-         }
-         return(-1);
+            if(XNetTrafficController.instance()
+                                    .getCommandStation()
+                                    .getTurnoutStatus(l,0)==THROWN) {
+               newCommandedState(THROWN);
+            } else if(XNetTrafficController.instance()
+                                    .getCommandStation()
+                                    .getTurnoutStatus(l,0)==CLOSED) { 
+               newCommandedState(CLOSED);
+            } else return -1;
+            newKnownState(getCommandedState());
+        }    
+       return(-1);
     }
 
     public void dispose() {

@@ -9,7 +9,7 @@ package jmri.jmrix.lenz;
  * Defines standard operations for Dcc command stations.
  *
  * @author			Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
     
@@ -35,6 +35,12 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
      **/
     boolean mInServiceMode = false;
     
+    /* The next group of routines are used by Feedback and/or turnout 
+     * control code.  These are used in multiple places within the code, 
+     * so they appear here. 
+     */
+
+
     /**
      * Generate a message to change turnout state
      */
@@ -68,10 +74,10 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
     }
     
     /**
-     * If this is a feedback response message, 
-     * return the GROUP address.  Otherwise return -1.
+     * If this is a feedback response message for a turnout, 
+     * return the address.  Otherwise return -1.
      * Note we only identify the command here; the reponse to a
-     * request for status seen here.
+     * request for status is not interpreted here.
      */
     public int getTurnoutMsgAddr(XNetMessage pMsg) {
         if (isFeedbackMessage(pMsg)) {
@@ -100,16 +106,83 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
     }
 
     /**
-     * Is this an accessory decoder response message?
+     * Parse the feedback message for a turnout, and return the status 
+     * for the even or odd half of the nibble (upper or lower part)
+     *
+     * the turnout is identified by sending a 0 for even turnouts (the 
+     * upper part of the nibble) or 1 for odd turnouts (the lower part of 
+     * the nibble
+     **/
+     public int getTurnoutStatus(XNetMessage pMsg,int turnout) {
+        if (isFeedbackMessage(pMsg)) {
+            int a1 = pMsg.getElement(1);
+            int a2 = pMsg.getElement(2);
+            int messagetype=getFeedbackMessageType(pMsg);
+	    if ( messagetype == 0 || messagetype == 1) {
+ 	       if (turnout==1) {
+                  // we want the lower half of the nibble
+                  if((a2 & 0x03)!=0) {
+                     /* this is for the First turnout in the nibble */
+                     int state=pMsg.getElement(2) & 0x03;
+                     if(state==0x01) { 
+                         return(jmri.Turnout.CLOSED);
+                     } else if(state==0x02) { 
+                         return(jmri.Turnout.THROWN);
+                     } else return -1; /* the state is invalid */
+                  }
+               } else if (turnout==0) {
+                  /* we want the upper half of the nibble */
+                  if((a2 & 0x0C)!=0) {
+                     /* this is for the upper half of the nibble */
+                     int state=pMsg.getElement(2) & 0x0C;
+                     if(state==0x04) { 
+                         return(jmri.Turnout.CLOSED);  
+                     } else if(state==0x08) { 
+                         return (jmri.Turnout.THROWN);
+                     } else return -1; /* the state is invalid */
+                  }
+               }
+            }
+         } 
+         return(-1);
+     }
+
+
+    /**
+     * If this is a feedback response message for a feedback encoder, 
+     * return the address.  Otherwise return -1.
+     * Note we only identify the command here; the reponse to a
+     * request for status is not interpreted here.
+     */
+    public int getFeedbackEncoderMsgAddr(XNetMessage pMsg) {
+        if (isFeedbackMessage(pMsg)) {
+            int a1 = pMsg.getElement(1);
+            int messagetype=getFeedbackMessageType(pMsg);
+	    if ( messagetype == 2 )
+            {
+               // This is a feedback encoder message
+               int address=(a1 & 0xff);
+               return(address);
+            } else return -1;
+        } else return -1;
+    }
+
+    /**
+     * Is this a feedback response message?
      */
     public boolean isFeedbackMessage(XNetMessage pMsg) {
         return (pMsg.getElement(0)==XNetConstants.ACC_INFO_RESPONSE);
     }
 
+
     /**
      * Extract the feedback message type from a feedback message
      * this is the middle two bits of the upper byte of the second data 
      * byte.  returned values are 0-3.
+     * 0 for a turnout with no feedback
+     * 1 for a turnout with feedback
+     * 2 for a feedback encoder
+     * 3 is reserved by Lenz for future use.
      */ 
     public int getFeedbackMessageType(XNetMessage pMsg) {
         if (isFeedbackMessage(pMsg)) {
