@@ -12,7 +12,7 @@ import javax.swing.*;
  * Handle configuration for display.PanelEditor panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class PanelEditorXml implements XmlAdapter {
 
@@ -30,6 +30,7 @@ public class PanelEditorXml implements XmlAdapter {
         Element panel = new Element("paneleditor");
 
         panel.addAttribute("class", "jmri.jmrit.display.configurexml.PanelEditorXml");
+        panel.addAttribute("name", ""+p.getFrame().getName());
         panel.addAttribute("x", ""+p.getFrame().getX());
         panel.addAttribute("y", ""+p.getFrame().getY());
         panel.addAttribute("height", ""+p.getFrame().getHeight());
@@ -76,19 +77,21 @@ public class PanelEditorXml implements XmlAdapter {
         } catch ( org.jdom.DataConversionException e) {
             log.error("failed to convert PanelEditor's attribute");
         }
+        // find the name
+        String name = "Panel";
+        if (element.getAttribute("name")!=null)
+            name = element.getAttribute("name").getValue();
         // create the objects
-        JFrame targetFrame = new JFrame("Panel");
+        JFrame targetFrame = new JFrame(name);
         JLayeredPane targetPanel = new JLayeredPane();
         targetFrame.setSize(width, height);
         targetFrame.setLocation(x,y);
 
         targetFrame.getContentPane().add(targetPanel);
         targetPanel.setLayout(null);
-        PanelEditor panel = new PanelEditor();
+        PanelEditor panel = new PanelEditor(name+" Editor");
         panel.setFrame(targetFrame);
         panel.setTarget(targetPanel);
-        JFrame editFrame = new JFrame("PanelEditor");
-        editFrame.getContentPane().add(panel);
 
         // load the contents
         List items = element.getChildren();
@@ -109,8 +112,8 @@ public class PanelEditorXml implements XmlAdapter {
 
         // display the results
         targetFrame.show();
-        editFrame.pack();
-        editFrame.show();
+        panel.pack();
+        panel.show();
 
         // register the result for later configuration
         InstanceManager.configureManagerInstance().register(panel);
