@@ -6,12 +6,13 @@
  * @version			
  */
 
-package jmri.tests.jmrit.powerpanel;
+package jmri.jmrit.powerpanel;
 
-import jmri.jmrit.powerpanel.*;
+//import jmri.jmrit.powerpanel.*;
 import jmri.*;
 
 import java.io.*;
+import java.beans.PropertyChangeListener;
 import junit.framework.Test;
 import junit.framework.Assert;
 import junit.framework.TestCase;
@@ -22,17 +23,20 @@ public class PowerPaneTest extends TestCase {
 	// setup a default PowerManager interface
 	public void setUp() {
 		manager = new jmri.PowerManager() {
-				public String s = "";
-				public void 	setPowerOff() 	throws JmriException {}
-				public void 	setPowerOn()  	throws JmriException {}
-				public boolean 	isPowerOn()  	throws JmriException { return false;}
-	
-				public void		setTrackStopped()  throws JmriException {}
-				public void		setTrackStarted()  throws JmriException {}
-				public boolean	isTrackStarted()   throws JmriException { return false;}
-
-				// to free resources when no longer used
+				boolean on = false;
+				boolean start = false;
+				PropertyChangeListener prop = null;
+				
+				public void 	setPowerOff() 	throws JmriException { on = false; tell();}
+				public void 	setPowerOn()  	throws JmriException { on = true; tell();}
+				public boolean 	isPowerOn()  	throws JmriException { return on;}
+				public void		setTrackStopped()  throws JmriException { start = false; tell();}
+				public void		setTrackStarted()  throws JmriException {start = true; tell();}
+				public boolean	isTrackStarted()   throws JmriException { return start;}
 				public void dispose() throws JmriException {}
+				public void addPropertyChangeListener(PropertyChangeListener p) { prop = p; }
+				public void removePropertyChangeListener(PropertyChangeListener p) {}
+				void tell() { prop.propertyChange(null);}
 			}; // end of anonymous PowerManager class new()
 		// store dummy power manager object for retrieval
 		InstanceManager.setPowerManager(manager);
@@ -43,20 +47,25 @@ public class PowerPaneTest extends TestCase {
 		PowerPane p = new PowerPane();
 	}
 
-	// push on button
+	// test on button routine
 	public void testPushOn() {
 		PowerPane p = new PowerPane();
 		p.onButtonPushed();
-		Assert.assertEquals("Testing shown on/off", "On", p.shownOnOffState());
+		Assert.assertEquals("Testing shown on/off", "On", p.onOffStatus.getText());
 	}
 
-	// push off button
+	// test off button routine
 	public void testPushOff() {
 		PowerPane p = new PowerPane();
 		p.offButtonPushed();
-		Assert.assertEquals("Testing shown on/off", "Off", p.shownOnOffState());
+		Assert.assertEquals("Testing shown on/off", "Off", p.onOffStatus.getText());
 	}
 	
+	// click on button
+	public void testOnClicked() {
+		PowerPane p = new PowerPane();
+		p.onButton.clickPerformed();
+	}
 	
 	jmri.PowerManager manager;  // holds dummy for testing
 

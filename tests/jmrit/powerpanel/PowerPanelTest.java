@@ -30,7 +30,7 @@ public class PowerPanelTest extends TestCase {
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite("jmri.tests.jmrit.powerpanel.PowerPanelTest"); // no tests in class itself
-		suite.addTest(jmri.tests.jmrit.powerpanel.PowerPaneTest.suite());
+		suite.addTest(jmri.jmrit.powerpanel.PowerPaneTest.suite());
 		return suite;
 	}
 	

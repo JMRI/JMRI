@@ -17,15 +17,17 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class PowerPane extends javax.swing.JPanel {
+public class PowerPane extends javax.swing.JPanel implements java.beans.PropertyChangeListener {
 
 	// define GUI elements
-	JLabel onStatus = new JLabel();
+	JLabel onOffStatus = new JLabel();
 	JButton onButton = new JButton("on");
 	JButton offButton = new JButton("off");
 	
 	public PowerPane() {
 		p = InstanceManager.powerManagerInstance();
+		if (p == null) log.error("No power manager instance found, panel not active");
+		else p.addPropertyChangeListener(this);
 	}
 
 	public void onButtonPushed() {
@@ -46,10 +48,15 @@ public class PowerPane extends javax.swing.JPanel {
 			}
 	}
 	
-	public String shownOnOffState() {
-		return onStatus.getText();
+	public void propertyChange(java.beans.PropertyChangeEvent ev) {
+		try {
+			if (p.isPowerOn()) onOffStatus.setText("On");
+			else onOffStatus.setText("Off");
+		} catch (JmriException ex) {
+			onOffStatus.setText("unknown");
+		}
 	}
-
+	
 	PowerManager p = null;
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PowerPane.class.getName());
 
