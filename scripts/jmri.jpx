@@ -4,7 +4,7 @@
   <property category="debug.0" name="SmartStepRedefineClasses" value="0"/>
   <property category="editor.general" name="line_ending.style" value="3"/>
   <property category="idl" name="ProcessIDL" value="false"/>
-  <property category="runtime" name="ConfigurationCount" value="8"/>
+  <property category="runtime" name="ConfigurationCount" value="9"/>
   <property category="runtime.0" name="BuildTargetOnRun" value="com.borland.jbuilder.build.ProjectBuilder$ProjectBuildAction;make"/>
   <property category="runtime.0" name="ConfigurationName" value="jmri"/>
   <property category="runtime.0" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
@@ -19,7 +19,7 @@
   <property category="runtime.1" name="ConfigurationName" value="JMRI Demo"/>
   <property category="runtime.1" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
   <property category="runtime.1" name="application.class" value="apps.JmriDemo.JMRIdemo"/>
-  <property category="runtime.1" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw -Duser.region=UK"/>
+  <property category="runtime.1" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw"/>
   <property category="runtime.1" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.1" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
   <property category="runtime.1" name="appserver.servername" value="standard"/>
@@ -97,6 +97,16 @@
   <property category="runtime.8" name="appserver.vmparameters" value="-Dvbroker.agent.port=14000 -Djava.library.path=/BorlandEnterpriseServer/lib;/BorlandEnterpriseServer/bin -Dborland.enterprise.licenseDir=/BorlandEnterpriseServer/var/servers/tom/adm -Dejb.module_preload=true"/>
   <property category="runtime.8" name="jsprunner.launchuri" value="/"/>
   <property category="runtime.8" name="test.harness" value="junit.textui.TestRunner"/>
+  <property category="runtime.9" name="ConfigurationName" value="Decoder Pro DE"/>
+  <property category="runtime.9" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
+  <property category="runtime.9" name="application.class" value="apps.DecoderPro.DecoderPro"/>
+  <property category="runtime.9" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw -Duser.language=de"/>
+  <property category="runtime.9" name="appserver.ejbJarsSaved" value="1"/>
+  <property category="runtime.9" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
+  <property category="runtime.9" name="appserver.servername" value="standard"/>
+  <property category="runtime.9" name="appserver.vmparameters" value="-Dvbroker.agent.port=14000 -Djava.library.path=/BorlandEnterpriseServer/lib;/BorlandEnterpriseServer/bin -Dborland.enterprise.licenseDir=/BorlandEnterpriseServer/var/servers/tom/adm -Dejb.module_preload=true"/>
+  <property category="runtime.9" name="jsprunner.launchuri" value="/"/>
+  <property category="runtime.9" name="test.harness" value="junit.textui.TestRunner"/>
   <property category="sys" name="AuthorLabel" value="@author"/>
   <property category="sys" name="BackupPath" value="bak"/>
   <property category="sys" name="BeansInstantiate" value="false"/>
@@ -127,7 +137,7 @@
   <property category="sys" name="TestPath" value="test"/>
   <property category="sys" name="Title" value=""/>
   <property category="sys" name="TitleLabel" value=""/>
-  <property category="sys" name="Version" value="$Revision: 1.25 $"/>
+  <property category="sys" name="Version" value="$Revision: 1.26 $"/>
   <property category="sys" name="VersionLabel" value="@version"/>
   <property category="sys" name="WorkingDirectory" value="../"/>
   <property category="sys" name="max.package.levels" value="2"/>
