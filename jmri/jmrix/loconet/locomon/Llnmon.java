@@ -32,7 +32,7 @@ import jmri.jmrix.loconet.*;
  * Reverse engineering of OPC_MULTI_SENSE was provided by Al Silverstein.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class Llnmon {
 
@@ -1255,6 +1255,29 @@ public class Llnmon {
                 return logString;
             }
 
+        case 0xEE:
+        case 0xE6:
+            // ALM read and write messages
+            {
+                if (l.getElement(1)!=0x10) return "ALM message with unexpected length "+l.getElement(1)+"\n";
+                String message;
+                if (l.getElement(0)==0xEE) message = "Write ALM ";
+                else message = "Read ALM ";
+                message = message+l.getElement(2)+" ATASK="+l.getElement(3);
+                message = message+" BLKL="+l.getElement(4)+" BLKH="+l.getElement(5);
+                message = message+" LOGIC="+l.getElement(6)+"\n      ";
+                message = message+" ARG1L=0x"+Integer.toHexString(l.getElement(7))
+                                 +" ARG1H=0x"+Integer.toHexString(l.getElement(8));
+                message = message+" ARG2L=0x"+Integer.toHexString(l.getElement(9))
+                                 +" ARG2H=0x"+Integer.toHexString(l.getElement(10))
+                         +"\n      ";
+                message = message+" ARG3L=0x"+Integer.toHexString(l.getElement(11))
+                                 +" ARG3H=0x"+Integer.toHexString(l.getElement(12));
+                message = message+" ARG4L=0x"+Integer.toHexString(l.getElement(13))
+                                 +" ARG4H=0x"+Integer.toHexString(l.getElement(14))+"\n";
+
+                return message;
+            }
         case 0xE5:
             // there are several different formats for 0xE5 messages, with
             // the length apparently the distinquishing item.
