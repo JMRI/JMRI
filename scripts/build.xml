@@ -1,6 +1,6 @@
 <!-- ugly first attempt at an ANT build.xml file for JMRI development -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.1 $ -->
+<!-- Revision $Revision: 1.2 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 
@@ -22,6 +22,14 @@
 	   classpath="../lib/collections.jar:../lib/crimson.jar:../lib/junit.jar:../lib/comm.jar:../lib/jdom-jdk11.jar:../lib/log4j.jar"
     />
   </target>
+
+  <target name="decoderpro" depends="compile">
+    <java classname="apps.DecoderPro.DecoderPro"
+          dir=".."
+	  fork="yes"
+	   classpath="../lib/collections.jar:../lib/crimson.jar:../lib/junit.jar:../lib/comm.jar:../lib/jdom-jdk11.jar:../lib/log4j.jar:classes/"
+    />
+ </target>
 
   <target name="jmridemo" depends="compile">
     <java classname="apps.JmriDemo.JMRIdemo"
