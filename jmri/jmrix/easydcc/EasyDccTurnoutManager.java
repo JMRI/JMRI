@@ -10,7 +10,7 @@ import jmri.Turnout;
  * System names are "ETnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 
 public class EasyDccTurnoutManager extends jmri.AbstractTurnoutManager {
@@ -26,7 +26,6 @@ public class EasyDccTurnoutManager extends jmri.AbstractTurnoutManager {
         int addr = Integer.valueOf(systemName.substring(2)).intValue();
         t = new EasyDccTurnout(addr);
         t.setUserName(userName);
-        t.addPropertyChangeListener(this);
 
         return t;
     }

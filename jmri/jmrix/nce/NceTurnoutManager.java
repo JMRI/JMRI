@@ -11,7 +11,7 @@ import jmri.Turnout;
  * System names are "NTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class NceTurnoutManager extends jmri.AbstractTurnoutManager {
 
@@ -25,8 +25,6 @@ public class NceTurnoutManager extends jmri.AbstractTurnoutManager {
         int addr = Integer.valueOf(systemName.substring(2)).intValue();
         Turnout t = new NceTurnout(addr);
         t.setUserName(userName);
-
-        t.addPropertyChangeListener(this);
 
         return t;
     }

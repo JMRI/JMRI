@@ -11,7 +11,7 @@ import jmri.Turnout;
  * System names are "STnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class SprogTurnoutManager extends jmri.AbstractTurnoutManager {
 
@@ -27,8 +27,6 @@ public class SprogTurnoutManager extends jmri.AbstractTurnoutManager {
         int addr = Integer.valueOf(systemName.substring(2)).intValue();
         Turnout t = new SprogTurnout(addr);
         t.setUserName(userName);
-
-        t.addPropertyChangeListener(this);
         return t;
     }
 

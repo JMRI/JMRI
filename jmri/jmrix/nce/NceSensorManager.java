@@ -15,7 +15,7 @@ import jmri.Sensor;
  * see nextAiuPoll()
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class NceSensorManager extends jmri.AbstractSensorManager
                             implements NceListener {
@@ -43,6 +43,7 @@ public class NceSensorManager extends jmri.AbstractSensorManager
         int number = Integer.parseInt(systemName.substring(2));
 
         Sensor s = new NceSensor(systemName);
+        s.setUserName(userName);
 
         // ensure the AIU exists
         int index = (number/16)+1;

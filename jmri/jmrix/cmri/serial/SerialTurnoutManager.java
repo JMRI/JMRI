@@ -11,7 +11,7 @@ import jmri.Turnout;
  * System names are "CTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
@@ -26,9 +26,6 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         int addr = Integer.valueOf(systemName.substring(2)).intValue();
         t = new SerialTurnout(addr);
         t.setUserName(userName);
-
-        t.addPropertyChangeListener(this);
-
         return t;
     }
 

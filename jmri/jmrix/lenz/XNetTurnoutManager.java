@@ -11,7 +11,7 @@ import jmri.Turnout;
  * System names are "XTnnn", where nnn is the turnout number without padding.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class XNetTurnoutManager extends jmri.AbstractTurnoutManager implements XNetListener {
 
@@ -29,9 +29,6 @@ public class XNetTurnoutManager extends jmri.AbstractTurnoutManager implements X
         int addr = Integer.valueOf(systemName.substring(2)).intValue();
         Turnout t = new XNetTurnout(addr);
         t.setUserName(userName);
-
-        t.addPropertyChangeListener(this);
-
         return t;
     }
 
