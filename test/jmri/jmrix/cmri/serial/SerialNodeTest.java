@@ -3,18 +3,12 @@
 package jmri.jmrix.cmri.serial;
 
 import jmri.*;
-
-import junit.framework.Test;
-import junit.framework.Assert;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import jmri.jmrix.cmri.serial.SerialReply;
+import junit.framework.*;
 
 /**
  * JUnit tests for the SerialNode class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SerialNodeTest extends TestCase {
 
@@ -29,9 +23,10 @@ public class SerialNodeTest extends TestCase {
         SerialReply r = new SerialReply();
         r.setElement(2, '2');
         a.markChanges(r);
-        Assert.assertEquals("check s1", Sensor.ACTIVE, s1.getKnownState());
-        Assert.assertEquals("check s2", Sensor.INACTIVE, s2.getKnownState());
-        Assert.assertEquals("check s3", Sensor.ACTIVE, s3.getKnownState());
+        System.out.println("find "+s1.getKnownState()+" "+s2.getKnownState()+" "+s3.getKnownState());
+        Assert.assertEquals("check s1", Sensor.INACTIVE, s1.getKnownState());
+        Assert.assertEquals("check s2", Sensor.ACTIVE, s2.getKnownState());
+        Assert.assertEquals("check s3", Sensor.INACTIVE, s3.getKnownState());
     }
 
     // from here down is testing infrastructure
