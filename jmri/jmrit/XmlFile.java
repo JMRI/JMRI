@@ -16,7 +16,7 @@ import org.jdom.input.SAXBuilder;
  * Handle common aspects of XML files.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public abstract class XmlFile {
 
@@ -73,7 +73,7 @@ public abstract class XmlFile {
 
         // Open and parse file
 
-        SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation, on for now
+        SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation
         Document doc = builder.build(new BufferedInputStream(stream),dtdUrl);
 
         // find root
