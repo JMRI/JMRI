@@ -37,7 +37,7 @@ import com.sun.java.util.collections.List;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
 
@@ -127,10 +127,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
         dTree.setRootVisible(false);
         dTree.setShowsRootHandles(true);
         dTree.setScrollsOnExpand(true);
-        try {   // following might not be present on Mac Classic, but
-                //doesn't have a big effect
-            dTree.setExpandsSelectedPaths(true);
-        } catch (java.lang.NoSuchMethodError e) {}
+        jmri.util.JTreeUtil.setExpandsSelectedPaths(dTree,true);
 
         dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
         // tree listener
