@@ -39,7 +39,7 @@ import jmri.*;
  * a warning will be logged if they are used before the thread starts.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 abstract public class AbstractAutomaton implements Runnable {
 
@@ -429,7 +429,7 @@ abstract public class AbstractAutomaton implements Runnable {
      * Internal class to show a Frame
      * @param message
      */
-    protected class MsgFrame implements Runnable {
+    public class MsgFrame implements Runnable {
         String mMessage;
         boolean mPause;
         boolean mShow;
