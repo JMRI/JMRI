@@ -19,7 +19,7 @@ public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.b
 
 	// GUI member declarations
 	javax.swing.JLabel textAdrLabel = new javax.swing.JLabel();
-	javax.swing.JTextField adrTextField = new javax.swing.JTextField();
+	javax.swing.JTextField adrTextField = new javax.swing.JTextField(3);
 		
 	javax.swing.JButton throwButton = new javax.swing.JButton();
 	javax.swing.JButton closeButton = new javax.swing.JButton();

@@ -17,6 +17,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.jdom.*;
 import org.jdom.output.*;
+import org.jdom.input.*;
 
 import jmri.*;
 import jmri.progdebugger.*;
@@ -52,7 +53,7 @@ public class PaneProgFrameTest extends TestCase {
 		// invoke
 		colCount = 0;
 		p.readConfig(root, ns);
-		assertEquals("column count", 2, colCount);
+		assertEquals("column count", 3, colCount);
 	}
 
 	// test specifying variables in columns
@@ -67,10 +68,10 @@ public class PaneProgFrameTest extends TestCase {
 		// invoke
 		varCount = 0;
 		p.readConfig(root, ns);
-		assertEquals("variable count", 3, varCount);
+		assertEquals("variable defn count", 9, varCount);
 	}
 
-	// show me the frame
+	// show me the specially-created frame
 	public void testFrame() {
 		setupDoc();
 		PaneProgFrame p = new PaneProgFrame();
@@ -85,6 +86,57 @@ public class PaneProgFrameTest extends TestCase {
 		p.show();
 	}
 	
+	// show me a frame made from files
+	public void testFileFrame() {
+		// Open and parse decoder file
+		System.out.println("start decoder file");
+		File dfile = new File("xml/decoders/NMRA_All.xml");
+		Namespace dns = Namespace.getNamespace("decoder",
+										"http://jmri.sourceforge.net/xml/decoder");
+		SAXBuilder dbuilder = new SAXBuilder(true);  // argument controls validation, on for now
+		Document ddoc = null;
+		System.out.println("ctors done, do build");
+		try {
+			ddoc = dbuilder.build(new BufferedInputStream(new FileInputStream(dfile), 40000),"xml"+File.separator);
+		}
+		catch (Exception e) {
+			log.error("Exception in SAXBuilder "+e);
+		}
+		// find root
+		System.out.println("get root");
+		Element droot = ddoc.getRootElement();
+
+		// Open and parse programmer file
+		System.out.println("start programmer file");
+		File pfile = new File("xml/programmers/MultiPane.xml");
+		Namespace pns = Namespace.getNamespace("programmer",
+										"http://jmri.sourceforge.net/xml/programmer");
+		SAXBuilder pbuilder = new SAXBuilder(true);  // argument controls validation, on for now
+		Document pdoc = null;
+		try {
+			pdoc = pbuilder.build(new FileInputStream(pfile),"xml"+File.separator);
+		}
+		catch (Exception e) {
+			log.error("Exception in programmer SAXBuilder "+e);
+		}
+		// find root
+		Element proot = pdoc.getRootElement();
+
+		// create the pane programmer
+		PaneProgFrame p = new PaneProgFrame();
+			
+		// load its variables from decoder tree
+		System.out.println("decoder object "+droot.getChild("decoder", dns));
+		p.loadVariables(droot.getChild("decoder", dns), dns);
+		
+		// load its programmer config from programmer tree
+		System.out.println("programmer object "+proot);
+		p.readConfig(proot, pns);
+		
+		p.pack();
+		p.show();
+	}
+
 	// static variables for internal classes to report their interpretations
 	static String result = null;
 	static int colCount = -1;
@@ -114,15 +166,37 @@ public class PaneProgFrameTest extends TestCase {
 										.addContent(new Element("variable", ns)
 													.addAttribute("name", "Start voltage")
 													)
+										.addContent(new Element("variable", ns)
+													.addAttribute("name", "Normal direction of motion")
+													)
 												)
 									.addContent(new Element("column", ns)
 										.addContent(new Element("variable", ns)
 													.addAttribute("name", "Address")
 													)
+										.addContent(new Element("variable", ns)
+													.addAttribute("name", "Normal direction of motion")
+													)
+										.addContent(new Element("variable", ns)
+													.addAttribute("name", "Normal direction of motion")
+													.addAttribute("format","checkbox")
+													)
+										.addContent(new Element("variable", ns)
+													.addAttribute("name", "Normal direction of motion")
+													.addAttribute("format","radiobuttons")
+													)
 												)
 								)
 					.addContent(new Element("pane",ns)
 									.addAttribute("name", "Other")
+									.addContent(new Element("column", ns)
+										.addContent(new Element("variable", ns)
+													.addAttribute("name", "Address")
+													)
+										.addContent(new Element("variable", ns)
+													.addAttribute("name", "Normal direction of motion")
+													)
+												)
 								)
 						)
 			; // end of adding contents
@@ -148,6 +222,6 @@ public class PaneProgFrameTest extends TestCase {
 		return suite;
 	}
 	
-	// static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PaneProgFrameTest.class.getName());
+	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PaneProgFrameTest.class.getName());
 
 }

@@ -29,7 +29,7 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 		super(name, comment, readOnly, cvNum, mask, v, status);
 		_maxVal = maxVal;
 		_minVal = minVal;
-		_value = new JTextField();
+		_value = new JTextField(5);
 		// connect to the JTextField value, cv
 		_value.addActionListener(this);
 		// connect for notification
@@ -82,6 +82,9 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 		_value.setText(""+value);
 	}
 
+	public Component getRep(String format)  { 
+		return new JTextField(_value.getDocument(),_value.getText(), 5);
+	}
 	private int _progState = 0;
 	private static final int IDLE = 0;
 	private static final int READING_FIRST = 1;
@@ -194,7 +197,7 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 
 	// clean up connections when done
 	public void dispose() {
-		_value.removeActionListener(this);
+		if (_value != null) _value.removeActionListener(this);
 		((CvValue)_cvVector.elementAt(getCvNum())).removePropertyChangeListener(this);
 	}
 	

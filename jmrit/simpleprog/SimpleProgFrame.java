@@ -21,8 +21,8 @@ public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgList
 	// GUI member declarations
 	javax.swing.JToggleButton readButton 	= new javax.swing.JToggleButton();
 	javax.swing.JToggleButton writeButton 	= new javax.swing.JToggleButton();
-	javax.swing.JTextField  addrField       = new javax.swing.JTextField();
-	javax.swing.JTextField  valField        = new javax.swing.JTextField();
+	javax.swing.JTextField  addrField       = new javax.swing.JTextField(4);
+	javax.swing.JTextField  valField        = new javax.swing.JTextField(4);
 	
 	jmri.ProgModePane       modePane        = new jmri.ProgModePane(BoxLayout.Y_AXIS);
 	
@@ -44,8 +44,6 @@ public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgList
 		hexButton.setText("Hexadecimal");
 		decButton.setText("Decimal");
 		decButton.setSelected(true);
-		
-		resultsField.setText("                 ");  // reserve space
 		
 		// add the actions to the buttons
 		readButton.addActionListener(new java.awt.event.ActionListener() {

@@ -61,7 +61,7 @@ public class NceTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 	
 	// test suite from all defined tests
 	public static Test suite() {
-		jmri.AllTest.initLogging();
+		jmri.tests.AllTest.initLogging();
 		TestSuite suite = new TestSuite(NceTurnoutManagerTest.class);
 		return suite;
 	}

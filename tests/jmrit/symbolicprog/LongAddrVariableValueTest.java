@@ -23,6 +23,28 @@ import jmri.progdebugger.*;
 
 public class LongAddrVariableValueTest extends TestCase {
 
+	// can we create long address , then manipulate the variable to change the CV?
+	public void testLongAddressCreate() {
+		Vector v = createCvVector();
+		CvValue cv17 = new CvValue(17);
+		CvValue cv18 = new CvValue(18);
+		cv17.setValue(2);
+		cv18.setValue(3);
+		v.setElementAt(cv17, 17);
+		v.setElementAt(cv18, 18);
+		// create a variable pointed at CV 17&18, check name
+		LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "VVVVVVVV", 0, 255, v, null);
+		assert(var.name() == "name");
+		// pretend you've editted the value, check its in same object
+		((JTextField)var.getValue()).setText("4797");
+		assert( ((JTextField)var.getValue()).getText().equals("4797") );
+		// manually notify
+		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
+		// see if the CV was updated
+		assert(cv17.getValue() == 210);
+		assert(cv18.getValue() == 189);
+	}
+	
 	// can we change the CV and see the result in the Variable?
 	public void testLongAddressFromCV() {
 		Vector v = createCvVector();

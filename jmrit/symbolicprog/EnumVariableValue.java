@@ -18,8 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Vector;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
+import javax.swing.*;
 
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
 
@@ -30,6 +29,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 		_maxVal = maxVal;
 		_minVal = minVal;
 		_value = new JComboBox();
+		_value.setActionCommand("");
 		// connect to the JTextField value, cv
 		_value.addActionListener(this);
 		((CvValue)_cvVector.elementAt(getCvNum())).addPropertyChangeListener(this);
@@ -47,6 +47,12 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 	}
 	
 	public void actionPerformed(ActionEvent e) {
+		// see if this is from _value itself, or from an alternate rep.
+		// if from an alternate rep, it will contain the value to select
+		if (!(e.getActionCommand().equals(""))) {
+			// is from alternate rep
+			_value.setSelectedItem(e.getActionCommand());
+		}
 		if (log.isDebugEnabled()) log.debug("action event: "+e);
 		// called for new values - set the CV as needed
 		CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
@@ -76,6 +82,26 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 		_value.setSelectedIndex(value);
 	}
 
+	public Component getRep(String format) {
+		// sort on format type
+		if (format.equals("checkbox")) {
+			// this only makes sense if there are exactly two options
+
+			return new ComboCheckBox(_value);
+			//box.setActionCommand( ((String)(_value.getItemAt(1))) ); // set to name of "1" item
+			//box.addActionListener(this);
+		}
+		else if (format.equals("radiobuttons")) {
+			return new ComboRadioButtons(_value);
+		}
+		else 
+		// return a new JComboBox representing the same model
+		return new JComboBox(_value.getModel());
+	}
+	
+	// data members, member functions and inner classes to handle alternate representations
+	
+	// member functions to control reading/writing the variables
 	public void read() {
  		setBusy(true);  // will be reset when value changes
 		super.setState(READ);
@@ -115,7 +141,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 
 	// clean up connections when done
 	public void dispose() {
-		_value.removeActionListener(this);
+		if (_value != null) _value.removeActionListener(this);
 		((CvValue)_cvVector.elementAt(getCvNum())).removePropertyChangeListener(this);
 	}
 	

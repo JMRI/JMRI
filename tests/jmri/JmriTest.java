@@ -31,7 +31,7 @@ public class JmriTest extends TestCase {
 	
 	// test suite from all defined tests
 	public static Test suite() {
-		AllTest.initLogging();
+		jmri.tests.AllTest.initLogging();
 		TestSuite suite = new TestSuite("jmri.JmriTest");  // no tests in this class itself
 		suite.addTest(jmri.NmraPacketTest.suite());
 		return suite;

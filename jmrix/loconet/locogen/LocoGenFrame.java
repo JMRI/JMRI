@@ -22,7 +22,7 @@ public class LocoGenFrame extends javax.swing.JFrame {
 	// member declarations
 	javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
 	javax.swing.JButton sendButton = new javax.swing.JButton();
-	javax.swing.JTextField packetTextField = new javax.swing.JTextField();
+	javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
 
 	public LocoGenFrame() {
 	}
@@ -37,7 +37,6 @@ public class LocoGenFrame extends javax.swing.JFrame {
 		sendButton.setVisible(true);
 		sendButton.setToolTipText("Send packet");
 		
-		packetTextField.setText("                   ");
 		packetTextField.setToolTipText("Enter packet as hex pairs, e.g. 82 7D");
 		
 		setTitle("Send LocoNet Packet");

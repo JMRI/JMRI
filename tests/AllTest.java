@@ -6,7 +6,7 @@
  * @version			
  */
 
-package jmri;
+package jmri.tests;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -32,7 +32,7 @@ public class AllTest extends TestCase  {
 		// all tests from other classes
 		suite.addTest(jmri.jmrit.JmritTest.suite());
 		suite.addTest(jmri.jmrix.JmrixTest.suite());
-		suite.addTest(JmriTest.suite());
+		suite.addTest(jmri.JmriTest.suite());
 		
 		return suite;
 	}

@@ -36,10 +36,10 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 
 	// GUI member declarations
 
-	JTextField locoRoadName 	= new JTextField();
-	JTextField locoRoadNumber 	= new JTextField();
-	JTextField locoMfg 			= new JTextField();
-	JTextField locoModel 		= new JTextField();
+	JTextField locoRoadName 	= new JTextField(12);
+	JTextField locoRoadNumber 	= new JTextField(5);
+	JTextField locoMfg 			= new JTextField(12);
+	JTextField locoModel 		= new JTextField(12);
 	
 	JLabel progStatus       	= new JLabel(" OK ");
 	
@@ -58,15 +58,15 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 	
 	JButton  newCvButton 		= new JButton();
 	JLabel   newCvLabel  		= new JLabel();
-	JTextField newCvNum  		= new JTextField();
+	JTextField newCvNum  		= new JTextField(4);
 
 	JButton  	newVarButton 	= new JButton();
 	JLabel   	newVarNameLabel = new JLabel();
-	JTextField 	newVarName  	= new JTextField();
+	JTextField 	newVarName  	= new JTextField(4);
 	JLabel   	newVarCvLabel 	= new JLabel();
-	JTextField 	newVarCv  		= new JTextField();
+	JTextField 	newVarCv  		= new JTextField(4);
 	JLabel   	newVarMaskLabel = new JLabel();
-	JTextField 	newVarMask  	= new JTextField();
+	JTextField 	newVarMask  	= new JTextField(9);
 
 	ProgModePane   modePane 	= new ProgModePane(BoxLayout.X_AXIS);
 			

@@ -89,6 +89,15 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		((VariableValue)rowVector.elementAt(row)).setState(val);
 	}
 	
+	/*
+	 * Request a "unique representation", e.g. something we can show
+	 * for the row-th variable.
+	 */
+	public Object getRep(int row, String format) {
+		VariableValue v = (VariableValue)rowVector.elementAt(row);
+		return v.getRep(format);
+	}
+	
 	public Object getValueAt(int row, int col) { 
 		VariableValue v = (VariableValue)rowVector.elementAt(row);
 		if (headers[col].equals("Value"))

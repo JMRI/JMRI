@@ -25,6 +25,7 @@ import jmri.jmrit.symbolicprog.*;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.Namespace;
+import org.jdom.Attribute;
 import org.jdom.DocType;
 import org.jdom.output.XMLOutputter;
 import org.jdom.JDOMException;
@@ -33,6 +34,13 @@ import org.jdom.input.SAXBuilder;
 import org.xml.sax.InputSource;
 
 public class PaneProgFrame extends javax.swing.JFrame  {
+
+	// members to contain working variable, CV values
+	JLabel 				progStatus     	= new JLabel("idle");
+	CvTableModel		cvModel			= new CvTableModel(progStatus);
+	VariableTableModel  variableModel	= new VariableTableModel(progStatus,
+														new String[]  {"Name", "Value"},
+														cvModel);
 
 	// GUI member declarations
 	JTabbedPane tabPane = new JTabbedPane();
@@ -127,38 +135,104 @@ public class PaneProgFrame extends javax.swing.JFrame  {
 		pane.add(c);
 		
 		// handle the xml definition
-		// for all "variable" elements ...
-		List varList = column.getChildren("variable",ns);
+		// for all elements in the column
+		List varList = column.getChildren();
 		for (int i=0; i<varList.size(); i++) {
-			// load each variable
-			newVariable( ((Element)(varList.get(i))), ns, c );
+			Element e = (Element)(varList.get(i));
+			String name = e.getName();
+			// decode the type
+			if (name.equals("variable")) { // its a variable
+				// load the variable
+				newVariable( e, ns, c );
+			}
+			else if (name.equals("separator")) { // its a separator
+				c.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
+			}
+			else if (name.equals("label")) { // its  a label
+				c.add(new JLabel(e.getAttribute("label").getValue()));
+			} else { // its a mistake
+				log.error("No code to handle element of type "+e.getName());
+			}
 		}
-		// add glue to the bototm to allow resize
+		// add glue to the bottom to allow resize
 		c.add(Box.createVerticalGlue());
 	}
 	
 	public void newVariable( Element var, Namespace ns, JComponent col) {
 		// create a panel to add as a new variable
 		JPanel v = new JPanel();
-		v.setLayout(new BoxLayout(v, BoxLayout.X_AXIS));
+		
+		// check label orientation
+		int orient = BoxLayout.X_AXIS;
+		Attribute attr;
+		String layout ="left";
+		if ( (attr = var.getAttribute("layout")) != null 
+				&& (layout = attr.getValue()) != null
+				&& (layout.equals("above") || layout.equals("below"))) 
+			orient = BoxLayout.Y_AXIS;		
+		v.setLayout(new BoxLayout(v, orient));
 		
 		// get the name, load it up
-		v.add(Box.createHorizontalGlue());  // meant to right-justify, but isn't working?
-		v.add(new JLabel(var.getAttribute("name").getValue()));
+		String name = var.getAttribute("name").getValue();
 		
-		// include the representation
-		addRepresentation(v, var, ns);
+		// if label right or below, include the represenation first
+		if (layout.equals("right") || layout.equals("below")) {
+			addRepresentation(name, v, var, ns);
+		} else {
+			v.add(Box.createHorizontalGlue());  // meant to justify, but isn't working?
+		}
+
+		// load label if specified, else use name
+		String label = name;
+		String temp ="";
+		if ( (attr = var.getAttribute("label")) != null 
+				&& (temp = attr.getValue()) != null
+				&& !(temp.equals("")))   // "" is the default
+			label = temp;
+		v.add(new JLabel(label));
+
+		// otherwise, include the representation here
+		if (! (layout.equals("right") || layout.equals("below")) ) {
+			addRepresentation(name, v, var, ns);
+		} else {
+			v.add(Box.createHorizontalGlue());  // meant to justify, but isn't working?
+		}
 		
 		// add to column
 		col.add(v);
 		
 	}
 
-	public void addRepresentation(JComponent v, Element	var, Namespace ns) {
-		// put in the temporary representation
-		v.add(new JTextArea("   "));		
+	public void addRepresentation(String name, JComponent v, Element var, Namespace ns) {
+		int i = findVarIndex(name);
+
+		String format = "default";
+		Attribute attr;
+		if ( (attr = var.getAttribute("format")) != null && attr.getValue() != null) format = attr.getValue();
+
+		if (i>= 0) {
+			JComponent rep = getRep(i, format);
+			rep.setMaximumSize(rep.getPreferredSize());
+			v.add(rep);
+			// set tooltip if specified
+			if ( (attr = var.getAttribute("tooltip")) != null && attr.getValue() != null) rep.setToolTipText(attr.getValue());
+		}
+	}
+
+	public void loadVariables(Element decoder, Namespace ns) {
+		DecoderFile.loadVariableModel(decoder, ns, variableModel);
 	}
 	
+	JComponent getRep(int i, String format) {
+		return (JComponent)(variableModel.getRep(i, format));
+	}
+	
+	int findVarIndex(String name) {
+		for (int i=0; i<variableModel.getRowCount(); i++) 
+			if (name.equals(variableModel.getName(i))) return i;
+		return -1;
+	}
+			
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PaneProgFrame.class.getName());
 
 }

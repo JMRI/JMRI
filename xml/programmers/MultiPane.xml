@@ -1,19 +1,15 @@
 <?xml version="1.0"?>
 <!DOCTYPE programmer:programmer-config SYSTEM "DTD/programmer-config.dtd">
-<programmer:decoprogrammerder-config xmlns:programmer="http://jmri.sourceforge.net/xml/programmer">
+<programmer:programmer-config xmlns:programmer="http://jmri.sourceforge.net/xml/programmer">
 <programmer:programmer>
 
 	<programmer:pane name="Basic">
 		<programmer:column>
-			<programmer:label>Address:</programmer:label>
-			<programmer:variable name="Address">
-			<programmer:label>Address:</programmer:label>
-			<programmer:variable name="Acceleration rate">
-
-			<programmer:separator/>
-			
-			<programmer:label>Address:</programmer:label>
-			<programmer:variable name="Start voltage">
+			<programmer:variable name="Primary Address"/>
+			<programmer:variable name="Primary Address" label="Short address" tooltip="aka Primary Address"/>
+			<programmer:label label="simple label"/>
+			<programmer:separator/>		
+			<programmer:label label="label data"/>
 		</programmer:column>
 
 		<programmer:column>
@@ -22,19 +18,39 @@
 	
 	<programmer:pane name="Motor">
 		<programmer:column>
-		</programmer:column>
-
-		<programmer:column>
+			<programmer:variable name="Vstart"/>
+			<programmer:variable name="Vmid"/>
+			<programmer:variable name="Vhigh"/>
+			<programmer:variable name="Acceleration Rate"/>
+			<programmer:variable name="Deceleration Rate"/>
+			<programmer:variable name="Kick Start"/>
+			<programmer:variable name="Forward Trim"/>
+			<programmer:variable name="Reverse Trim"/>
 		</programmer:column>
 	</programmer:pane>
 	
 	<programmer:pane name="Consist">
 		<programmer:column>
-		</programmer:column>
-
-		<programmer:column>
+			<programmer:label label="F1 in consist"/>
+			<programmer:variable name="Consist Address Active For F1"  label=" "/>
 		</programmer:column>
 	</programmer:pane>
 	
+	<programmer:pane name="Layout">
+		<programmer:column>
+			<programmer:variable name="Vstart" layout="above"/>
+			<programmer:variable name="Vmid" layout="below"/>
+			<programmer:variable name="Vhigh" layout="left"/>
+			<programmer:variable name="Acceleration Rate" layout="right"/>
+			<programmer:variable name="Deceleration Rate"/>
+			<programmer:variable name="Kick Start"/>
+			<programmer:variable name="Forward Trim"/>
+			<programmer:variable name="Reverse Trim"/>
+			<programmer:variable name="Consist Address Active For F1"/>
+			<programmer:variable name="Consist Address Active For F1" format="checkbox"/>
+			<programmer:variable name="Consist Address Active For F1" format="radiobuttons"/>
+		</programmer:column>
+	</programmer:pane>
+
 </programmer:programmer>
 </programmer:programmer-config>

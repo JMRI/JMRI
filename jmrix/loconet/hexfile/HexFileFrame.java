@@ -26,7 +26,7 @@ public class HexFileFrame extends javax.swing.JFrame {
 	javax.swing.JButton openHexFileButton = new javax.swing.JButton();
 	javax.swing.JButton filePauseButton = new javax.swing.JButton();
 	javax.swing.JButton jButton1 = new javax.swing.JButton();
-	javax.swing.JTextField delayField = new javax.swing.JTextField();
+	javax.swing.JTextField delayField = new javax.swing.JTextField(5);
 	javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
 
 	// to find and remember the log file

@@ -22,7 +22,7 @@ public class NcePacketGenFrame extends javax.swing.JFrame implements jmri.jmrix.
 	// member declarations
 	javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
 	javax.swing.JButton sendButton = new javax.swing.JButton();
-	javax.swing.JTextField packetTextField = new javax.swing.JTextField();
+	javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
 
 	public NcePacketGenFrame() {
 	}

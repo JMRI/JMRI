@@ -56,7 +56,7 @@ public abstract class AbstractMonFrame extends javax.swing.JFrame  {
 		monTextPane.setEditable(false);
 
 		// fix a width for current character set
-		JTextField t = new JTextField("                                                  ");		
+		JTextField t = new JTextField(40);		
 		// force a minimum size - 5 is just an arbitrary constant!
 		int x = jScrollPane1.getPreferredSize().width+t.getPreferredSize().width;
 		int y = jScrollPane1.getPreferredSize().height+5*t.getPreferredSize().height;	

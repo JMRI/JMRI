@@ -31,14 +31,17 @@ public class VariableValueTest extends TestCase {
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, check name
 		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null);
-		assert(var.name() == "name");
-		// pretend you've editted the value, check its in same object
+		Assert.assertEquals("name", "name", var.name() );
+
+		// pretend you've editted the value & manually notify
 		((JTextField)var.getValue()).setText("5");
-		assert( ((JTextField)var.getValue()).getText().equals("5") );
-		// manually notify
-		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
+		((JTextField)var.getValue()).postActionEvent();
+		
+		// check value
+		Assert.assertEquals("value object contains ", "5", ((JTextField)var.getValue()).getText() );
+
 		// see if the CV was updated
-		assert(cv.getValue() == 5*4+3);
+		Assert.assertEquals("cv value", 5*4+3, cv.getValue());
 	}
 
 	// can we change the CV and see the result in the Variable?
@@ -85,7 +88,7 @@ public class VariableValueTest extends TestCase {
 		// create a variable pointed at CV 81, loaded as 5, manually notified
 		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null);
 		((JTextField)var.getValue()).setText("5");
-		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
+		((JTextField)var.getValue()).postActionEvent();
 
 		var.read();
 		// wait for reply (normally, done by callback; will check that later)
@@ -99,10 +102,10 @@ public class VariableValueTest extends TestCase {
 		if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+var.getValue()+" state="+var.getState());
 		if (i==0) log.warn("textVariableValueRead saw an immediate return from isBusy");
 
-		assert(i<100);
-		assert( ((JTextField)var.getValue()).getText().equals("14") );
-		assert(var.getState() == CvValue.READ);
-		assert(cv.getValue() == 123);
+		Assert.assertTrue("wait time for message",i<100);
+		Assert.assertEquals("text var value ", "14", ((JTextField)var.getValue()).getText());
+		Assert.assertEquals("state ", CvValue.READ, var.getState());
+		Assert.assertEquals("cv value", 123, cv.getValue());
 	}
 
 	// check a write operation
@@ -117,7 +120,7 @@ public class VariableValueTest extends TestCase {
 		// create a variable pointed at CV 81, loaded as 5, manually notified
 		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null);
 		((JTextField)var.getValue()).setText("5");
-		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
+		((JTextField)var.getValue()).postActionEvent();
 
 		var.write(); 
 		// wait for reply (normally, done by callback; will check that later)
@@ -150,30 +153,85 @@ public class VariableValueTest extends TestCase {
 		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null);
 		assert(var.getState() == VariableValue.UNKNOWN);
 		((JTextField)var.getValue()).setText("5");
-		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
+		((JTextField)var.getValue()).postActionEvent();
 		assert(var.getState() == VariableValue.EDITTED);
 	}
 
-	// can we create long address , then manipulate the variable to change the CV?
-	public void testLongAddressCreate() {
+	// check synchonization of value, representations
+	public void testVariableSynch() {
+		// initialize the system
+		ProgDebugger p = new ProgDebugger();
+		InstanceManager.setProgrammer(p);
+		
 		Vector v = createCvVector();
-		CvValue cv17 = new CvValue(17);
-		CvValue cv18 = new CvValue(18);
-		cv17.setValue(2);
-		cv18.setValue(3);
-		v.setElementAt(cv17, 17);
-		v.setElementAt(cv18, 18);
-		// create a variable pointed at CV 17&18, check name
-		LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "VVVVVVVV", 0, 255, v, null);
-		assert(var.name() == "name");
-		// pretend you've editted the value, check its in same object
-		((JTextField)var.getValue()).setText("4797");
-		assert( ((JTextField)var.getValue()).getText().equals("4797") );
-		// manually notify
-		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
-		// see if the CV was updated
-		assert(cv17.getValue() == 210);
-		assert(cv18.getValue() == 189);
+		CvValue cv = new CvValue(81);
+		v.setElementAt(cv, 81);
+		// create a variable pointed at CV 81, loaded as 5, manually notified
+		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null);
+		((JTextField)var.getValue()).setText("5");
+		((JTextField)var.getValue()).postActionEvent();
+		// now get value, check
+		JTextField val1 = (JTextField) var.getValue();
+		Assert.assertEquals("initial value ", "5", val1.getText());
+		// now get rep, check
+		JTextField rep1 = (JTextField) var.getRep("");
+		Assert.assertEquals("initial rep ", "5", rep1.getText());
+		
+		// update via value
+		((JTextField)var.getValue()).setText("12");
+		((JTextField)var.getValue()).postActionEvent();
+		
+		// check again with existing references
+		Assert.assertEquals("1 saved value ", "12", val1.getText());
+		Assert.assertEquals("1 saved rep ", "12", rep1.getText());
+		// pick up new references and check
+		Assert.assertEquals("1 new value ", "12", ((JTextField) var.getValue()).getText());
+		Assert.assertEquals("1 new rep ", "12", ((JTextField) var.getRep("")).getText());
+		
+		// update via rep
+		rep1.setText("201");
+		rep1.postActionEvent();
+		
+		// check again with existing references
+		Assert.assertEquals("2 saved value ", "201", val1.getText());
+		Assert.assertEquals("2 saved rep ", "201", rep1.getText());
+		// pick up new references and check
+		Assert.assertEquals("2 new value ", "201", ((JTextField) var.getValue()).getText());
+		Assert.assertEquals("2 new rep ", "201", ((JTextField) var.getRep("")).getText());
+	}
+	
+	// test that you're not using too much space when you call for a value
+	public void XtestSpaceUsage() {  // leading X prevents test from being called
+		Vector v = createCvVector();
+		CvValue cv = new CvValue(81);
+		cv.setValue(3);
+		v.setElementAt(cv, 81);
+		// create a variable pointed at CV 81, loaded as 5
+		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null);
+		System.out.println("free, total memory at start = "+Runtime.getRuntime().freeMemory()
+							+" "+Runtime.getRuntime().totalMemory());
+		Runtime.getRuntime().gc();
+		long usedStart = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
+		System.out.println("free, total memory after gc = "+Runtime.getRuntime().freeMemory()
+							+" "+Runtime.getRuntime().totalMemory());
+		JTextField master = new JTextField(3);
+		javax.swing.text.Document doc = master.getDocument();
+		// loop to repeat getting value
+		for (int i = 0; i<10; i++) {
+			JTextField j = new JTextField(doc,"",3);
+			//JTextField temp = ((JTextField)var.getValue());
+			//Assert.assertTrue(temp != null);
+		}
+		long freeAfter = Runtime.getRuntime().freeMemory();
+		System.out.println("free, total memory after loop = "+Runtime.getRuntime().freeMemory()
+							+" "+Runtime.getRuntime().totalMemory());
+		long usedAfter = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
+		
+		Runtime.getRuntime().gc();
+		long usedAfterGC = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
+		System.out.println("free, total memory after gc = "+Runtime.getRuntime().freeMemory()
+							+" "+Runtime.getRuntime().totalMemory());
+		System.out.println("used & kept = "+(usedAfterGC-usedStart)+" used before reclaim = "+(usedAfter-usedStart));
 	}
 	
 	protected Vector createCvVector() {

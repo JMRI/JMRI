@@ -29,7 +29,7 @@ public class HexVariableValue extends VariableValue implements ActionListener, P
 		super(name, comment, readOnly, cvNum, mask, v, status);
 		_maxVal = maxVal;
 		_minVal = minVal;
-		_value = new JTextField();
+		_value = new JTextField(4);
 		// connect to the JTextField value, cv
 		_value.addActionListener(this);
 		((CvValue)_cvVector.elementAt(getCvNum())).addPropertyChangeListener(this);
@@ -73,6 +73,15 @@ public class HexVariableValue extends VariableValue implements ActionListener, P
 		_value.setText(Integer.toHexString(value));
 	}
 
+	public Component getRep(String format)  { 
+		if (getReadOnly())  //
+			return new JLabel(_value.getText());
+		else {
+			JTextField value = new JTextField(_value.getDocument(),_value.getText(), 3);
+			return value; 
+		}
+	}
+
 	public void read() {
  		setBusy(true);  // will be reset when value changes
 		super.setState(READ);
@@ -112,7 +121,7 @@ public class HexVariableValue extends VariableValue implements ActionListener, P
 
 	// clean up connections when done
 	public void dispose() {
-		_value.removeActionListener(this);
+		if (_value != null) _value.removeActionListener(this);
 		((CvValue)_cvVector.elementAt(getCvNum())).removePropertyChangeListener(this);
 	}
 	

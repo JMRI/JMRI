@@ -79,7 +79,7 @@ public class NmraPacketTest extends TestCase {
 	
 	// test suite from all defined tests
 	public static Test suite() {
-		AllTest.initLogging();
+		jmri.tests.AllTest.initLogging();
 		TestSuite suite = new TestSuite(NmraPacketTest.class);
 		return suite;
 	}

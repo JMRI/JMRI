@@ -45,8 +45,9 @@ public class DecoderFileTest extends TestCase {
 					cvModel);
 		
 		DecoderFile.loadVariableModel(decoder, ns, variableModel);
-		Assert.assertEquals("read rows ", 1, variableModel.getRowCount());
+		Assert.assertEquals("read rows ", 3, variableModel.getRowCount());
 		Assert.assertEquals("first row name ", "Address", variableModel.getName(0));
+		Assert.assertEquals("third row name ", "Normal direction of motion", variableModel.getName(2));
 	}
 	
 	// static variables for the test XML structures
@@ -86,6 +87,29 @@ public class DecoderFileTest extends TestCase {
 										.addAttribute("readOnly", "no")
 										.addContent(new Element("decVal", ns)
 											.addAttribute("max", "127")
+													)
+												)
+									.addContent(new Element("variable", ns)
+										.addAttribute("name", "Acceleration rate")
+										.addAttribute("CV", "3")
+										.addAttribute("mask", "VVVVVVVV")
+										.addAttribute("readOnly", "no")
+										.addContent(new Element("decVal", ns)
+											.addAttribute("max", "127")
+													)
+												)
+									.addContent(new Element("variable", ns)
+										.addAttribute("name", "Normal direction of motion")
+										.addAttribute("CV", "29")
+										.addAttribute("mask", "XXXXXXXV")
+										.addAttribute("readOnly", "no")
+										.addContent(new Element("enumVal", ns)
+											.addContent(new Element("enumChoice", ns)
+													.addAttribute("choice", "forward")
+														)
+											.addContent(new Element("enumChoice", ns)
+													.addAttribute("choice", "reverse")
+														)
 													)
 												)
 								)
