@@ -9,11 +9,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.JLabel;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.TreePath;
+import jmri.jmrit.display.MultiIconEditor;
 
 /**
  * Create a JPanel containing a tree of resources.
@@ -25,9 +27,10 @@ import javax.swing.tree.TreePath;
  * files in the distribution directory are _not_ included.
  *
  * @author			Bob Jacobsen  Copyright 2002
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class CatalogPane extends JPanel {
+    JLabel preview = new JLabel();
     public CatalogPane() {
 
         super(true);
@@ -45,6 +48,16 @@ public class CatalogPane extends JPanel {
 
         dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
 
+        dTree.addTreeSelectionListener(new TreeSelectionListener() {
+            public void valueChanged(TreeSelectionEvent e) {
+                if (!dTree.isSelectionEmpty() && dTree.getSelectionPath()!=null ) {
+                        // somebody has been selected
+                       preview.setIcon(getSelectedIcon());
+                    }
+                else preview.setIcon(null);
+            }
+        });
+
         // add a listener for debugging
         if (log.isDebugEnabled()) dTree.addTreeSelectionListener(new TreeSelectionListener() {
                 public void valueChanged(TreeSelectionEvent e) {
@@ -55,7 +68,11 @@ public class CatalogPane extends JPanel {
                     }
                 }
             });
-
+        JPanel previewPanel = new JPanel();
+        previewPanel.setLayout(new BoxLayout(previewPanel,BoxLayout.X_AXIS));
+        previewPanel.add(new JLabel("File Preview:   "));
+        previewPanel.add(preview);
+        add(previewPanel);
     }
 
     public NamedIcon getSelectedIcon() {
