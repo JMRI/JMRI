@@ -24,7 +24,7 @@ import com.sun.java.util.collections.List;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class CombinedLocoSelPane extends javax.swing.JPanel
                                 implements PropertyChangeListener  {
@@ -178,6 +178,8 @@ public class CombinedLocoSelPane extends javax.swing.JPanel
 
     public void propertyChange(PropertyChangeEvent ev) {
         Roster.instance().updateComboBox(locoBox);
+        locoBox.insertItemAt("<none - new loco>",0);
+        locoBox.setSelectedIndex(0);
     }
 
 	private void selectLoco(int dccAddress) {
