@@ -3,7 +3,8 @@
 package jmri.jmrit;
 
 import java.io.BufferedInputStream;
-import java.io.File;
+import java.io.*;
+import java.net.*;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
@@ -16,7 +17,7 @@ import org.jdom.input.SAXBuilder;
  * Handle common aspects of XML files.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public abstract class XmlFile {
 
@@ -64,19 +65,22 @@ public abstract class XmlFile {
      */
     public Element rootFromStream(InputStream stream) throws org.jdom.JDOMException, java.io.FileNotFoundException {
         // get full pathname to the DTD directory (apath is an absolute path)
-        String apath = "xml"+File.separator+"DTD"+File.separator;
-        if( File.separatorChar != '/' )
-          apath = apath.replace(File.separatorChar, '/');
+        String dtdpath = "xml"+File.separator+"DTD"+File.separator;
+        File dtdFile = new File(dtdpath);
+        String dtdUrl;
+        try {
+            dtdUrl = dtdFile.toURI().toURL().toString();
+        } catch (Exception e) {
+            dtdUrl = "file:"+dtdFile.getAbsolutePath();
+        }
 
-        String path = "file:"+apath;
-
-        if (log.isDebugEnabled()) log.debug("readFile from stream, search path:"+path);
+        if (log.isDebugEnabled()) log.debug("readFile from stream, DTD URL:"+dtdUrl);
         // This is taken in large part from "Java and XML" page 354
 
         // Open and parse file
 
         SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation, on for now
-        Document doc = builder.build(new BufferedInputStream(stream),path);
+        Document doc = builder.build(new BufferedInputStream(stream),dtdUrl);
 
         // find root
         return doc.getRootElement();
