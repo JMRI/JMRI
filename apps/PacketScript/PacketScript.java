@@ -5,13 +5,12 @@
 package apps.PacketScript;
 
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import apps.*;
-import java.util.*;
-import java.text.*;
-import javax.swing.*;
+import apps.Apps;
+
+import java.text.MessageFormat;
+
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
 
 /**
  * Main program for the NMRA PacketScript program based on JMRI.
@@ -21,7 +20,7 @@ import javax.swing.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2002
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class PacketScript extends Apps {
 
@@ -47,7 +46,7 @@ public class PacketScript extends Apps {
     public static void main(String args[]) {
 
         // show splash screen early
-        SplashWindow sp = new SplashWindow();
+        splash(true);
 
         initLog4J();
         log.info("program starts");
@@ -56,6 +55,7 @@ public class PacketScript extends Apps {
         createFrame(new PacketScript(f), f);
 
         log.info("main initialization done");
+        splash(false);
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PacketScript.class.getName());

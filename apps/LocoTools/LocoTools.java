@@ -4,7 +4,6 @@ package apps.LocoTools;
 
 import apps.AppConfigPanel;
 import apps.Apps;
-import apps.SplashWindow;
 
 import java.text.MessageFormat;
 
@@ -19,13 +18,13 @@ import javax.swing.JMenuBar;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 public class LocoTools extends Apps {
 
     LocoTools(JFrame p) {
         super(p);
-        }
+    }
 
     protected AppConfigPanel newPrefs() {
         return new AppConfigPanel(configFilename, 1);
@@ -53,7 +52,7 @@ public class LocoTools extends Apps {
     public static void main(String args[]) {
 
         // show splash screen early
-        SplashWindow sp = new SplashWindow();
+        splash(true);
 
         initLog4J();
         log.info("program starts");
@@ -62,6 +61,7 @@ public class LocoTools extends Apps {
         createFrame(new LocoTools(f), f);
 
         log.info("main initialization done");
+        splash(true);
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoTools.class.getName());
