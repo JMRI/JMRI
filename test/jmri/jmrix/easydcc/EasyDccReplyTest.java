@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the EasyDccReplyclass
  * @author			Bob Jacobsen
- * @version
+ * @version         $Revision: 1.5 $
  */
 
 package jmri.jmrix.easydcc;
@@ -62,32 +62,28 @@ public class EasyDccReplyTest extends TestCase {
 	public void testValue1() {
 		// value when just the string comes back
 		EasyDccReply m = new EasyDccReply();
-		m.setElement(0, 'C');
-		m.setElement(1, 'V');
-		m.setElement(2, ' ');
-		m.setElement(3, '0');
-		m.setElement(4, '0');
-		m.setElement(5, '1');
-		m.setElement(6, ' ');
-		m.setElement(7, '2');
-		m.setElement(8, '7');
-		m.setElement(9, ' ');
+        int i= 0;
+		m.setElement(i++, 'C');
+		m.setElement(i++, 'V');
+		m.setElement(i++, '0');
+		m.setElement(i++, '0');
+		m.setElement(i++, '1');
+		m.setElement(i++, '2');
+		m.setElement(i++, '7');
 		Assert.assertEquals("value ", 39, m.value());
 	}
 
 	public void testValue2() {
-		// value when just the string comes back
+		// value when a hex string comes back
 		EasyDccReply m = new EasyDccReply();
-		m.setElement(0, 'C');
-		m.setElement(1, 'V');
-		m.setElement(2, ' ');
-		m.setElement(3, '0');
-		m.setElement(4, '0');
-		m.setElement(5, '1');
-		m.setElement(6, ' ');
-		m.setElement(7, 'A');
-		m.setElement(8, 'B');
-		m.setElement(9, ' ');
+        int i= 0;
+		m.setElement(i++, 'C');
+		m.setElement(i++, 'V');
+		m.setElement(i++, '0');
+		m.setElement(i++, '0');
+		m.setElement(i++, '1');
+		m.setElement(i++, 'A');
+		m.setElement(i++, 'B');
 		Assert.assertEquals("value ", 10*16+11, m.value());
 	}
 

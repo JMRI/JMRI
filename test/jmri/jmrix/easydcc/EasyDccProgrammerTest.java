@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the EasyDccProgrammer class
  * @author			Bob Jacobsen
- * @version
+ * @version         $Revision: 1.4 $
  */
 
 package jmri.jmrix.easydcc;
@@ -106,6 +106,11 @@ public class EasyDccProgrammerTest extends TestCase {
 		Assert.assertEquals(" value read", 20, rcvdValue);
 	}
 
+    /**
+     * The command station will return a CV001-- format message if
+     * programming fails. Test handling of that.
+     * @throws JmriException
+     */
 	public void testReadFailSequence() throws JmriException {
 		log.error("expect next message: ERROR - Creating too many EasyDccProgrammer objects");
 		// infrastructure objects
@@ -140,7 +145,9 @@ public class EasyDccProgrammerTest extends TestCase {
 		r.setElement(5, '-');
 		r.setElement(6, '-');
 		t.sendTestReply(r);
-		Assert.assertEquals(" programmer listener not invoked", 0, rcvdInvoked);
+		Assert.assertEquals(" programmer listener told of faliure", 1, rcvdInvoked);
+		Assert.assertEquals(" value read", -1, rcvdValue);
+		Assert.assertEquals(" status read", jmri.ProgListener.NoLocoDetected, rcvdStatus);
 
 		// check "leave prog mode" message sent
 		Assert.assertEquals("normal mode message sent", 3, t.outbound.size());
@@ -149,8 +156,7 @@ public class EasyDccProgrammerTest extends TestCase {
 		// reply from programmer arrives
 		r = new EasyDccReply();
 		t.sendTestReply(r);
-		Assert.assertEquals(" programmer listener invoked", 1, rcvdInvoked);
-		Assert.assertEquals(" value read", 23, rcvdValue);
+		Assert.assertEquals(" programmer listener not invoked again", 1, rcvdInvoked);
 	}
 
 	// internal class to simulate a EasyDccListener

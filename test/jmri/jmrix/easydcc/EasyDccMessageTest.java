@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the EasyDccMessage class
  * @author			Bob Jacobsen
- * @version
+ * @version         $Revision: 1.5 $
  */
 
 package jmri.jmrix.easydcc;

@@ -1,9 +1,8 @@
 /**
  * EasyDccProgrammer.java
  *
- * Description:		<describe the EasyDccProgrammer class here>
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Id: EasyDccProgrammer.java,v 1.2 2002-03-30 19:22:53 jacobsen Exp $
+ * @version			$Revision: 1.3 $
  */
 
  // Convert the jmri.Programmer interface into commands for the EasyDcc powerstation
@@ -16,6 +15,9 @@ import java.util.Vector;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
+/**
+ * Implements the Programmer interface for the EasyDCC system.
+ */
 public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccListener {
 
 	public EasyDccProgrammer() {
@@ -182,12 +184,12 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
 			// operation done, capture result, then have to leave programming mode
 			progState = RETURNSENT;
 			// check for errors
-			if (m.match("NO FEEDBACK DETECTED") >= 0) {
-				if (log.isDebugEnabled()) log.debug("handle NO FEEDBACK DETECTED");
+			if (m.match("--") >= 0) {
+				if (log.isDebugEnabled()) log.debug("handle error reply "+m);
 				// perhaps no loco present? Fail back to end of programming
 				progState = NOTPROGRAMMING;
 				controller().sendEasyDccMessage(EasyDccMessage.getExitProgMode(), this);
-				notifyProgListenerEnd(_val, jmri.ProgListener.NoLocoDetected);
+				notifyProgListenerEnd(-1, jmri.ProgListener.NoLocoDetected);
 			}
 			else {
 				// see why waiting

@@ -3,7 +3,7 @@
  *
  * Description:		<describe the EasyDccMessage class here>
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Id: EasyDccMessage.java,v 1.3 2002-04-05 07:16:56 jacobsen Exp $
+ * @version			$Revision: 1.4 $
  */
 
 package jmri.jmrix.easydcc;

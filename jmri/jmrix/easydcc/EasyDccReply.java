@@ -3,7 +3,7 @@
  *
  * Description:		Carries the reply to an EasyDccMessage
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Id: EasyDccReply.java,v 1.4 2002-04-05 07:16:56 jacobsen Exp $
+ * @version			$Revision: 1.5 $
  */
 
 package jmri.jmrix.easydcc;
@@ -53,9 +53,13 @@ public class EasyDccReply {
 		return s;
 	}
 
-	public int value() {  // integer value of 8 and 9th digits
-		int index = 7;  // 8th position is index 7
-		//index = skipWhiteSpace(index);
+    /**
+     * Extracts Read-CV returned value from a message.  Returns
+     * -1 if message can't be parsed. Expects a message of the
+     * formnat "CVnnnvv" where vv is the hexadecimal value.
+     */
+	public int value() {  // integer value of 6th, 7th digits in hex
+		int index = 5;  // 5th position is index 5
 		String s1 = ""+(char)getElement(index);
         String s2 = ""+(char)getElement(index+1);
 		int val = -1;
