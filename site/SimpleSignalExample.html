@@ -1,5 +1,5 @@
 <!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
-<!-- $Id: SimpleSignalExample.html,v 1.3 2003-09-21 05:03:49 jacobsen Exp $ -->
+<!-- $Id: SimpleSignalExample.html,v 1.4 2004-03-10 23:18:39 jacobsen Exp $ -->
 <html>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -16,7 +16,9 @@
 <h2>Example of JMRI Simple Signal Logic</h2>
 
 This page provides an example of using the JMRI "Simple Signal Logic"
-to control signals on a Digitrax SE8c.
+to control signals on a Digitrax SE8c.  This also works for 
+other types of signals, including LEDs connected to stationary decoders, C/MRI
+systems, etc.
 <P>
 Modeling railroad signalling on a layout can be done many different ways,
 ranging from "stoplights" to complete emulation of a particular prototype's
@@ -203,8 +205,28 @@ tell the program about those turnouts also.  (SE8c users skip this step)
 	<UL>
 	<LI>Open the tool from the "Tools" menu.  You should get a frame
 	with a number of fields:
-	<A href="images/SigAdd.gif"><IMG SRC="images/SigAdd.gif" ALIGN=RIGHT WIDTH="220" HEIGHT="132" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
+	<A HREF="images/SE8cExampleLogic.gif"><IMG SRC="images/SE8cExampleLogic.gif" ALIGN=RIGHT WIDTH="345" HEIGHT="225" HSPACE="0" VSPACE="0" ALT="Demo screen with two trains"></a>
 	<LI>In the top box, enter the name of the signal you want to control.
+	<LI>The radio buttons below that select one of four possible uses
+	for this signal:
+		<UL>
+		<LI>"On Single Block" - this signal protects one end of a straight
+		through block, with no signalled turnouts
+		<LI>"On Main Leg of Trailing-Point Turnout" - this signal is along
+		 the main route through a turnout, which is defined as the direction
+		 taken by trains when the turnout is closed.  It's protecting the
+		 frog of the turnout so that trains will stop before running 
+		 through a turnout set against them.
+		<LI>"On Diverging Leg of Trailing-Point Turnout" - this signal is along
+		 the diverging route through a turnout, which is defined as the direction
+		 taken by trains when the turnout is set to "thrown".  It's protecting the
+		 frog of the turnout so that trains will stop before running 
+		 through a turnout set against them.
+		<LI>"On Facing-Point Turnout" - this signal is protecting the 
+		points-end of a turnout. Depending on whether the turnout is
+		thrown or closed, the train will take two different routes, and the
+		signal will protect different next blocks.
+		</UL>
 	<LI>If you want the signal to go red when a block detector shows
 	occupied (sensor active), enter the sensor name in the next box.
 	<LI>If this signal is protecting travel in the trailing point
