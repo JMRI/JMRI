@@ -15,7 +15,7 @@ import jmri.jmrix.loconet.SecurityElement;
  * explicitly add the code for Positionable
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class SecurityElementIcon extends JPanel
@@ -180,11 +180,6 @@ public class SecurityElementIcon extends JPanel
     protected void showPopUp(MouseEvent e) {
         popup = new JPopupMenu();
         popup.add(new JMenuItem("SE "+element.getNumber()));
-        String mode = "?? "+element.mLogic;
-        if (element.mLogic==SecurityElement.ABS) mode="ABS";
-        else if (element.mLogic==SecurityElement.APB) mode="APB";
-        else if (element.mLogic==SecurityElement.HEADBLOCK) mode="headblock";
-        popup.add(new JMenuItem("mode: "+mode));
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
         popup.add(new AbstractAction("to: "+element.turnout) {
                 public void actionPerformed(ActionEvent e) {

@@ -32,7 +32,7 @@ import jmri.*;
  * and Bob Jacobsen.  Some of the message formats are copyright Digitrax, Inc.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.8 $
  */
 public class SecurityElement implements LocoNetListener {
 
@@ -52,10 +52,10 @@ public class SecurityElement implements LocoNetListener {
     // configuration information
     public int mNumber;     // own SE number
 
-    public int mLogic = -1;      // logic executed by this element
-    public static final int ABS = 0;
-    public static final int APB = 1;
-    public static final int HEADBLOCK = 2;
+    //public int mLogic = -1;      // logic executed by this element
+    //public static final int ABS = 0;
+    //public static final int APB = 1;
+    //public static final int HEADBLOCK = 2;
 
     public int onAXReservation;  // for reservation from A leg attachment
     public int onXAReservation;  // for reservation from B/C leg attachment
@@ -233,7 +233,7 @@ public class SecurityElement implements LocoNetListener {
         case LnConstants.OPC_SW_REQ: {               /* page 9 of Loconet PE */
             int sw2 = l.getElement(2);
             if (l.turnoutAddr()==turnout) {
-                if (log.isDebugEnabled()) log.debug("SW_REQ received with valid address");
+                if (debug) log.debug("SW_REQ received with valid address");
                 if ((sw2 & LnConstants.OPC_SW_REQ_DIR)!=0) {
                     setTurnoutState(Turnout.CLOSED);
                 } else {
@@ -246,7 +246,7 @@ public class SecurityElement implements LocoNetListener {
         case LnConstants.OPC_SW_REP: {               /* page 9 of Loconet PE */
             int sw2 = l.getElement(2);
             if (l.turnoutAddr()==turnout) {
-                if (log.isDebugEnabled()) log.debug("SW_REP received with valid address");
+                if (debug) log.debug("SW_REP received with valid address");
                 if ((sw2 & LnConstants.OPC_SW_REQ_DIR)!=0) {
                     setTurnoutState(Turnout.CLOSED);
                 } else {
@@ -306,12 +306,13 @@ public class SecurityElement implements LocoNetListener {
      * This OPC_SE message is from the SE attached to
      * a leg, find whether its asserting a reservation toward us
      * @param l Se message
-     * @param leg Leg on this SE which the message-sending SE is
+     * @param leg Leg on the message-sending SE which this SE is
      * attached to.
      */
     boolean getReservedFromMsg(LocoNetMessage l, int leg) {
         // figure out which leg is interesting
         int m5 = l.getElement(5);
+        log.debug("check reserved in "+getNumber()+" m5="+Integer.toHexString(m5)+" leg="+leg);
         switch (leg) {
         case A:
             return (m5&0x20)==0x20;  // checking XA as toward us
@@ -351,106 +352,68 @@ public class SecurityElement implements LocoNetListener {
      * This is the real core of the class, which does
      * the entire computation when anything changes.
      *<P>
-     * The decision whether to update is deferred to the individual update
-     * modes, as they can make better decisions about it.
+     * The decision whether to send an update message is
+     * based on differences between the previous (current) and new
+     * output values.  See sendUpdate and firePropertyChange.
      */
     void doUpdate() {
-        if (debug) log.debug("SE "+mNumber+" starts: "
+        if (debug) log.debug("SE "+mNumber+" starts. Speeds: "
                              +newSpeedLimitFromA+","+newSpeedLimitFromB
-                             +","+newSpeedLimitFromC);
-        switch (mLogic) {
-        case ABS:
-            doUpdateABS();
-            return;
-        case APB:
-            doUpdateAPB();
-            return;
-        case HEADBLOCK:
-            doUpdateHeadBlock();
-            return;
-        default:
-            log.error("Cannot update for mode "+mLogic);
-            return;
-        }
-    }
+                             +","+newSpeedLimitFromC
+                             +" res: "+newDirection);
 
-    void makeReservationsFromOcc() {
-        // reservation requires this block has just become occupied
-        if (newDsStateHere==Sensor.ACTIVE && currentDsStateHere==Sensor.INACTIVE) {
-            // check possible input blocks, and mark direction
-            newDirection = NONE;
-            if (makeAReservation && newDsStateOnA==Sensor.ACTIVE)
-                newDirection = AX;
-            if (makeBReservation && newDsStateOnB==Sensor.ACTIVE && newTurnoutState==Turnout.CLOSED)
-                newDirection |= XA;
-            if (makeCReservation && newDsStateOnC==Sensor.ACTIVE && newTurnoutState==Turnout.THROWN)
-                newDirection |= XA;
-        }
-        // if we're not occupied, we're only propagating direction
-        // reservations.  But if we are occupied, we hold our existing
-        // reservations until the train is gone.
-        else if (newDsStateHere==Sensor.INACTIVE) newDirection = NONE;
-    }
-
-    void doUpdateAPB() {
-        // very similar to ABS, with the proviso that facing a
-        // zero speed (red signal) with a direction reservation
-        // will result in a red & set direction
-
-        // if we're not occupied, we're only propagating direction
-        // reservations.  But if we are occupied, we hold our existing
-        // reservations until the train is gone.
-        if (newDsStateHere==Sensor.INACTIVE) newDirection = NONE;
-
-        // calculate speed for XA
-        // Speed is the minumum of:
-        //    zero if occupied
-        //    zero if facing a reserved red
-        //    mechanical speed limit for BA or CA
-        //    entry speed on the leg attached to A + decrement BA or CA
-        // Start by seeing if this is B or C
-        if (newTurnoutState==Turnout.CLOSED || turnout == 0 ) {
-            // This is BA
-            newSpeedXA = Math.min(maxSpeedBA, newSpeedLimitFromA+maxBrakingBA);
-        } else {
-            // this is CA
-            newSpeedXA = Math.min(maxSpeedCA, newSpeedLimitFromA+maxBrakingCA);
-        }
-        if (newSpeedLimitFromA==0 && newReservedFromA) {
-            newSpeedXA = 0;
-            newDirection |= AX;  // reserved for a train coming into us from A
-        }
-        if (newDsStateHere==Sensor.ACTIVE) newSpeedXA = 0;
-
-        // calculate speed for AX
-        // Speed is the minumum of:
-        //    zero if occupied
-        //    mechanical speed limit for AB or AC
-        //    entry speed on the leg attached to B, C + decrement AB or AC
-        // Start by seeing if this is B or C
-        if (newTurnoutState==Turnout.CLOSED || turnout == 0) {
-            // This is AB
-            newSpeedAX = Math.min(maxSpeedAB, newSpeedLimitFromB+maxBrakingAB);
-            if (newSpeedLimitFromB==0 && newReservedFromB) {
-                newSpeedAX = 0;
-                newDirection |= XA;  // reserved for a train coming into us from B
-            }
-        } else {
-            // this is AC
-            newSpeedAX = Math.min(maxSpeedAC, newSpeedLimitFromC+maxBrakingAC);
-            if (newSpeedLimitFromC==0 && newReservedFromC) {
-                newSpeedAX = 0;
-                newDirection |= XA;  // reserved for a train coming into us from C
-            }
-        }
-        if (newDsStateHere==Sensor.ACTIVE) newSpeedAX = 0;
+        // update the current reservation state
+        makeReservationsHere();
+        // calculate the effect on speed of geometry and braking
+        doCalculateBaseSpeed();
+        // adjust speed for reservations
+        adjustForReservations();
 
         // and propagate as needed
         sendUpdate();
         firePropertyChange("SecurityElement", null, this);
     }
 
-    void doUpdateABS() {
+    void makeReservationsHere() {
+        // First, calculate any new reservations based on occupancy here.
+        // A new reservation requires this block has just become occupied
+        if (newDsStateHere==Sensor.ACTIVE && currentDsStateHere==Sensor.INACTIVE) {
+            log.debug("went occupied, new states are A="+(newDsStateOnA==Sensor.ACTIVE)
+                        +" B="+(newDsStateOnB==Sensor.ACTIVE)
+                        +" C="+(newDsStateOnC==Sensor.ACTIVE) );
+            // check possible input blocks, and add direction setting if needed
+            if (makeAReservation && newDsStateOnA==Sensor.ACTIVE)
+                newDirection |= AX;
+            if (makeBReservation && newDsStateOnB==Sensor.ACTIVE && newTurnoutState==Turnout.CLOSED)
+                newDirection |= XA;
+            if (makeCReservation && newDsStateOnC==Sensor.ACTIVE && newTurnoutState==Turnout.THROWN)
+                newDirection |= XA;
+        }
+        // if we're not occupied, we're only propagating direction
+        // reservations, so we will recalculate them later based on
+        // current input information.
+        // But if we are occupied, we hold our existing
+        // reservations until the train is gone.
+        else if (newDsStateHere==Sensor.INACTIVE) newDirection = NONE;
+
+        // now include the effect of the reservations on either side.
+        if (newSpeedLimitFromA==0 && newReservedFromA) {
+            newDirection |= AX;  // reserved for a train coming into us from A
+        }
+        if (newTurnoutState==Turnout.CLOSED || turnout == 0) {
+            // This is AB
+            if (newSpeedLimitFromB==0 && newReservedFromB) {
+                newDirection |= XA;  // reserved for a train coming into us from B
+            }
+        } else {
+            // this is AC
+            if (newSpeedLimitFromC==0 && newReservedFromC) {
+                newDirection |= XA;  // reserved for a train coming into us from C
+            }
+        }
+    }
+
+    void doCalculateBaseSpeed() {
         // calculate speed for XA
         // Speed is the minumum of:
         //    zero if occupied
@@ -480,61 +443,33 @@ public class SecurityElement implements LocoNetListener {
             newSpeedAX = Math.min(maxSpeedAC, newSpeedLimitFromC+maxBrakingAC);
         }
         if (newDsStateHere==Sensor.ACTIVE) newSpeedAX = 0;
-
-        // and propagate as needed
-        sendUpdate();
-        firePropertyChange("SecurityElement", null, this);
-
     }
 
-    void doUpdateHeadBlock() {
-        // first set your own reservations; we don't propagate them
-        // through a head block.
-        // direction of reservation is out the A leg if newly occupied
-        // and an incoming train on the B leg
-        if (newDsStateHere==Sensor.ACTIVE && currentDsStateHere==Sensor.INACTIVE
-            && newDsStateOnB==Sensor.ACTIVE)
-            newDirection = XA;
-        else if (newDsStateHere==Sensor.INACTIVE) newDirection = NONE;
+    /**
+     * Adjust the speed values for the effect of any reservations in
+     * effect.
+     */
+    void adjustForReservations() {
 
-        // now calculate ABS speeds for B and C, and the APB speed for A
-
-        // calculate speed for XA
-        // Speed is the minumum of:
-        //    zero if occupied
-        //    mechanical speed limit for BA or CA
-        //    entry speed on the leg attached to A + decrement BA or CA
-        // Start by seeing if this is B or C
-        if (newTurnoutState==Turnout.CLOSED || turnout == 0 ) {
-            // This is BA
-            newSpeedXA = Math.min(maxSpeedBA, newSpeedLimitFromA+maxBrakingBA);
-        } else {
-            // this is CA
-            newSpeedXA = Math.min(maxSpeedCA, newSpeedLimitFromA+maxBrakingCA);
+        switch (onAXReservation) {
+        case STOPOPPOSITE:
+            if ( (newDirection&AX) == AX) newSpeedXA = 0;
+            break;
+        case STOPUNRESERVED:
+            if ( (newDirection&AX) != AX) newSpeedAX = 0;
+            break;
+        default:
         }
-        if (newSpeedLimitFromA==0 && newReservedFromA) {
-            newSpeedXA = 0;
-        }
-        if (newDsStateHere==Sensor.ACTIVE) newSpeedXA = 0;
 
-        // calculate speed for AX
-        // Speed is the minumum of:
-        //    zero if occupied
-        //    mechanical speed limit for AB or AC
-        //    entry speed on the leg attached to B, C + decrement AB or AC
-        // Start by seeing if this is B or C
-        if (newTurnoutState==Turnout.CLOSED || turnout == 0) {
-            // This is AB
-            newSpeedAX = Math.min(maxSpeedAB, newSpeedLimitFromB+maxBrakingAB);
-        } else {
-            // this is AC
-            newSpeedAX = Math.min(maxSpeedAC, newSpeedLimitFromC+maxBrakingAC);
+        switch (onXAReservation) {
+        case STOPOPPOSITE:
+            if ( (newDirection&XA) == XA) newSpeedAX = 0;
+            break;
+        case STOPUNRESERVED:
+            if ( (newDirection&XA) != XA) newSpeedXA = 0;
+            break;
+        default:
         }
-        if (newDsStateHere==Sensor.ACTIVE) newSpeedAX = 0;
-
-        // and propagate as needed
-        sendUpdate();
-        firePropertyChange("SecurityElement", null, this);
     }
 
     /**
@@ -607,6 +542,5 @@ public class SecurityElement implements LocoNetListener {
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SecurityElement.class.getName());
 
 }
-
 
 /* @(#)SecurityElement.java */

@@ -12,7 +12,7 @@ import com.sun.java.util.collections.List;
  * configuring LnSecurityElementManager.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class LnSecurityElementManagerXml implements XmlAdapter {
 
@@ -38,10 +38,6 @@ public class LnSecurityElementManagerXml implements XmlAdapter {
                 elem.addAttribute("turnout", String.valueOf(se.turnout));
                 elem.addAttribute("auxInput", String.valueOf(se.auxInput));
 
-                if (se.mLogic==SecurityElement.ABS) elem.addAttribute("mode", "ABS");
-                else if (se.mLogic==SecurityElement.APB) elem.addAttribute("mode", "APB");
-                else if (se.mLogic==SecurityElement.HEADBLOCK) elem.addAttribute("mode", "head");
-                // specifics, which replace the mode (eventually)
                 String makeReservation = "";
                 if (se.makeAReservation) makeReservation+="A";
                 if (se.makeBReservation) makeReservation+="B";
@@ -192,10 +188,20 @@ public class LnSecurityElementManagerXml implements XmlAdapter {
 
             // do mode last, as it overwrites the specific details
             if ((a= current.getAttribute("mode")) !=null) {
+                log.warn("SE definition uses deprecated 'mode' attribute");
                 String mode = a.getValue();
-                if (mode.equals("ABS")) se.mLogic=SecurityElement.ABS;
-                else if (mode.equals("APB")) se.mLogic=SecurityElement.APB;
-                else if (mode.equals("head")) se.mLogic=SecurityElement.HEADBLOCK;
+                if (mode.equals("ABS")) { /* nothing needed */ }
+                else if (mode.equals("APB")) {
+                    se.onXAReservation = SecurityElement.STOPOPPOSITE;
+                    se.onAXReservation = SecurityElement.STOPOPPOSITE;
+                    se.makeBReservation = true;
+                    se.makeAReservation = true;
+                }
+                else if (mode.equals("head")) {
+                    se.onXAReservation = SecurityElement.STOPOPPOSITE;
+                    se.onAXReservation = SecurityElement.STOPOPPOSITE;
+                    se.makeBReservation = true;
+                }
                 else log.error("Unrecognized mode: "+mode);
             }
         }
