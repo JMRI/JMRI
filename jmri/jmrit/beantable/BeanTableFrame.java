@@ -11,11 +11,13 @@ import java.util.*;
 import javax.swing.JScrollPane;
 import javax.swing.*;
 
+import jmri.util.com.sun.TableSorter;
+
 /**
  * Frame providing a table of NamedBeans.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class BeanTableFrame extends javax.swing.JFrame {
 
@@ -29,8 +31,10 @@ public class BeanTableFrame extends javax.swing.JFrame {
 
         super();
         dataModel 	= model;
-        dataTable	= new JTable(dataModel);
+        TableSorter sorter = new TableSorter(dataModel);
+        dataTable	= new JTable(sorter);
         dataScroll	= new JScrollPane(dataTable);
+        sorter.setTableHeader(dataTable.getTableHeader());
 
         // configure items for GUI
 

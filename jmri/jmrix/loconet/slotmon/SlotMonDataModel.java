@@ -21,7 +21,7 @@ import javax.swing.table.TableColumnModel;
 /**
  * Table data model for display of slot manager contents
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version		$Revision: 1.13 $
+ * @version		$Revision: 1.14 $
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener  {
 
@@ -33,17 +33,17 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     static public final int STATCOLUMN = 5;  // status: free, common, etc
     static public final int DISPCOLUMN = 6;  // originally "dispatch" button, now "free"
     static public final int CONSCOLUMN = 7;  // consist state
-    static public final int DIRCOLUMN  = 8;
-    static public final int F0COLUMN   = 9;
-    static public final int F1COLUMN   = 10;
-    static public final int F2COLUMN   = 11;
-    static public final int F3COLUMN   = 12;
-    static public final int F4COLUMN   = 13;
-    static public final int F5COLUMN   = 14;
-    static public final int F6COLUMN   = 15;
-    static public final int F7COLUMN   = 16;
-    static public final int F8COLUMN   = 17;
-    static public final int THROTCOLUMN = 18;
+    static public final int THROTCOLUMN = 8;
+    static public final int DIRCOLUMN  = 9;
+    static public final int F0COLUMN   = 10;
+    static public final int F1COLUMN   = 11;
+    static public final int F2COLUMN   = 12;
+    static public final int F3COLUMN   = 13;
+    static public final int F4COLUMN   = 14;
+    static public final int F5COLUMN   = 15;
+    static public final int F6COLUMN   = 16;
+    static public final int F7COLUMN   = 17;
+    static public final int F8COLUMN   = 18;
 
     static public final int NUMCOLUMN = 19;
     SlotMonDataModel(int row, int column) {
@@ -99,7 +99,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         case TYPECOLUMN: return "Status";
         case STATCOLUMN: return "Use";
         case CONSCOLUMN: return "Consisted";
-        case DIRCOLUMN: return "Direction";
+        case DIRCOLUMN: return "Dir";
         case DISPCOLUMN: return "";     // no heading, as button is clear
         case F0COLUMN: return "F0";
         case F1COLUMN: return "F1";
@@ -124,6 +124,11 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         case STATCOLUMN:
         case CONSCOLUMN:
         case DIRCOLUMN:
+        case THROTCOLUMN:
+            return String.class;
+        case ESTOPCOLUMN:
+        case DISPCOLUMN:
+            return JButton.class;
         case F0COLUMN:
         case F1COLUMN:
         case F2COLUMN:
@@ -133,11 +138,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         case F6COLUMN:
         case F7COLUMN:
         case F8COLUMN:
-        case THROTCOLUMN:
-            return String.class;
-        case ESTOPCOLUMN:
-        case DISPCOLUMN:
-            return JButton.class;
+            return Boolean.class;
         default:
             return null;
         }
@@ -153,20 +154,23 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
+    static final Boolean True = new Boolean(true);
+    static final Boolean False = new Boolean(false);
+
     public Object getValueAt(int row, int col) {
         LocoNetSlot s = SlotManager.instance().slot(slotNum(row));
         if (s == null) log.error("slot pointer was null for slot row: "+row+" col: "+col);
 
         switch (col) {
         case SLOTCOLUMN:  // slot number
-            return new Integer(slotNum(row));
+            return ""+slotNum(row);
         case ESTOPCOLUMN:  //
             return "E Stop";          // will be name of button in default GUI
         case ADDRCOLUMN:  //
-            return new Integer(s.locoAddr());
+            return ""+s.locoAddr();
         case SPDCOLUMN:  //
             if (s.speed() == 1) return "1 (estop)";
-            else return new Integer(s.speed());
+            else return ""+s.speed();
         case TYPECOLUMN:  //
             switch (s.decoderType()) {
             case LnConstants.DEC_MODE_128A:	return "128 step advanced";
@@ -198,23 +202,23 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         case DIRCOLUMN:  //
             return (s.isForward() ? "F" : "R");
         case F0COLUMN:  //
-            return (s.isF0() ? "On" : "Off");
+            return (s.isF0() ? True : False);
         case F1COLUMN:  //
-            return (s.isF1() ? "On" : "Off");
+            return (s.isF1() ? True : False);
         case F2COLUMN:  //
-            return (s.isF2() ? "On" : "Off");
+            return (s.isF2() ? True : False);
         case F3COLUMN:  //
-            return (s.isF3() ? "On" : "Off");
+            return (s.isF3() ? True : False);
         case F4COLUMN:  //
-            return (s.isF4() ? "On" : "Off");
+            return (s.isF4() ? True : False);
         case F5COLUMN:  //
-            return (s.isF5() ? "On" : "Off");
+            return (s.isF5() ? True : False);
         case F6COLUMN:  //
-            return (s.isF6() ? "On" : "Off");
+            return (s.isF6() ? True : False);
         case F7COLUMN:  //
-            return (s.isF7() ? "On" : "Off");
+            return (s.isF7() ? True : False);
         case F8COLUMN:  //
-            return (s.isF8() ? "On" : "Off");
+            return (s.isF8() ? True : False);
         case THROTCOLUMN:
             return new Integer(s.id());
 
@@ -227,23 +231,25 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     public int getPreferredWidth(int col) {
         switch (col) {
         case SLOTCOLUMN:
-            return new JLabel(" 123 ").getPreferredSize().width;
+            return new JTextField(3).getPreferredSize().width;
         case ESTOPCOLUMN:
-            return new JButton(" E Stop ").getPreferredSize().width;
+            return new JButton("E Stop").getPreferredSize().width;
         case ADDRCOLUMN:
-            return new JLabel(" 1234 ").getPreferredSize().width;
+            return new JTextField(5).getPreferredSize().width;
         case SPDCOLUMN:
-            return new JLabel(" 100 ").getPreferredSize().width;
+            return new JTextField(5).getPreferredSize().width;
         case TYPECOLUMN:
-            return new JLabel(" 128 step advanced ").getPreferredSize().width;
+            return new JTextField(15).getPreferredSize().width;
         case STATCOLUMN:
-            return new JLabel(" Common ").getPreferredSize().width;
+            return new JTextField(6).getPreferredSize().width;
         case CONSCOLUMN:
-            return new JLabel("<error>").getPreferredSize().width;
+            return new JTextField(6).getPreferredSize().width;
         case DIRCOLUMN:
-            return new JLabel(" R ").getPreferredSize().width;
+            return new JTextField(3).getPreferredSize().width;
         case DISPCOLUMN:
-            return new JButton(" Free ").getPreferredSize().width;
+            return new JButton("Free").getPreferredSize().width;
+        case THROTCOLUMN:
+            return new JTextField(7).getPreferredSize().width;
         case F0COLUMN:
         case F1COLUMN:
         case F2COLUMN:
@@ -254,8 +260,6 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         case F7COLUMN:
         case F8COLUMN:
             return new JLabel(" off ").getPreferredSize().width;
-        case THROTCOLUMN:
-            return new JLabel(" 78187 ").getPreferredSize().width;
         default:
             return new JLabel(" <unknown> ").getPreferredSize().width;
         }
@@ -305,8 +309,18 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
      * @param slotTable
      */
     public void configureTable(JTable slotTable) {
-        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
+        // allow reordering of the columns
+        slotTable.getTableHeader().setReorderingAllowed(true);
+
+        // shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         slotTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+        // resize columns as requested
+        for (int i=0; i<slotTable.getColumnCount(); i++) {
+            int width = getPreferredWidth(i);
+            slotTable.getColumnModel().getColumn(i).setPreferredWidth(width);
+        }
+        slotTable.sizeColumnsToFit(-1);
 
         // install a button renderer & editor in the "DISP" column for freeing a slot
         setColumnToHoldButton(slotTable, SlotMonDataModel.DISPCOLUMN);

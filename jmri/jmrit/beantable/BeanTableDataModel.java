@@ -10,6 +10,7 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
@@ -19,7 +20,7 @@ import com.sun.java.util.collections.List;
 /**
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
- * @version		$Revision: 1.8 $
+ * @version		$Revision: 1.9 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -74,7 +75,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
 	boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
 		return (e.getPropertyName().indexOf("State")>=0 || e.getPropertyName().indexOf("Appearance")>=0);
 	}
-	
+
     public int getRowCount() {
         return sysNameList.size();
     }
@@ -130,13 +131,13 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
     public int getPreferredWidth(int col) {
         switch (col) {
         case SYSNAMECOL:
-            return new JLabel(" 123 ").getPreferredSize().width;
+            return new JTextField(5).getPreferredSize().width;
         case USERNAMECOL:
-            return new JLabel(" 12345678 ").getPreferredSize().width;
+            return new JTextField(10).getPreferredSize().width;
         case VALUECOL:
-            return new JLabel(" CLOSED ").getPreferredSize().width;
+            return new JTextField(8).getPreferredSize().width;
         default:
-            return new JLabel(" <unknown> ").getPreferredSize().width;
+            return new JTextField(8).getPreferredSize().width;
         }
     }
 
@@ -166,8 +167,18 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
      * @param table
      */
     public void configureTable(JTable table) {
+        // allow reordering of the columns
+        table.getTableHeader().setReorderingAllowed(true);
+
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+        // resize columns as requested
+        for (int i=0; i<table.getColumnCount(); i++) {
+            int width = getPreferredWidth(i);
+            table.getColumnModel().getColumn(i).setPreferredWidth(width);
+        }
+        table.sizeColumnsToFit(-1);
 
         // have the value column hold a button
         setColumnToHoldButton(table, VALUECOL, configureButton());
