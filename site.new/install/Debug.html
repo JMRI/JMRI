@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Debug.html,v 1.1 2004-08-23 17:08:09 jacobsen Exp $ -->
+<!-- $Id: Debug.html,v 1.2 2004-08-23 17:19:45 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -14,7 +14,7 @@
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 
-    <META content="Bob Jacobsen, LBL" name=Author>
+    <META content="Bob Jacobsen" name=Author>
     <META name="keywords" content="java model railroad JMRI install debug">
 </head>
 
@@ -154,6 +154,30 @@
     hardware for communications to be possible.
     
     <h2>Step 5: Can the program talk to the layout?</h2>
+    
+    The method to check whether the program can talk to the
+    hardware of your layout depends a little bit on what you 
+    have installed.  Basically, you want to command the system
+    to do something that you can see.  See if each of the 
+    following works:
+    
+    <UL>
+    <LI>With most DCC systems, you can use the "Power Control"
+    in the "Tools" menu to turn layout power on and off.  
+    By doing that and seeing if the layout actually does as
+    commanded (e.g. locomotive lights go on and off), you
+    can check that the communication is working.  
+    <P>If this tool
+    is unavailable (e.g. grayed-out in the menu), your 
+    DCC system doesn't have this option, and you should try something
+    else.
+    <LI>If you have turnouts connected to accessory decoders, 
+    you can command them to flip via the "Turnout Control"
+    in the "Tools Menu".
+    <LI>If you're using a C/MRI system, all of the LEDs on the 
+    controller cards (SMINI, etc) should be flashing rapidly once
+    the program has started polling.  
+	</ul>
 
     <h2>Step 6: Can decoders be programmed?</h2>
 
