@@ -22,7 +22,7 @@ import jmri.jmrix.easydcc.*;
  * not use any other options at configuration time.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Id: SerialDriverAdapter.java,v 1.4 2002-07-29 06:13:50 jacobsen Exp $
+ * @version			$Id: SerialDriverAdapter.java,v 1.5 2002-09-15 17:21:48 jacobsen Exp $
  */
 public class SerialDriverAdapter extends EasyDccPortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -120,7 +120,7 @@ public class SerialDriverAdapter extends EasyDccPortController  implements jmri.
 
 			// If a jmri.Programmer instance doesn't exist, create a
 			// EasyDccProgrammer to do that
-			if (jmri.InstanceManager.programmerInstance() == null)
+			if (jmri.InstanceManager.programmerManagerInstance() == null)
 				jmri.jmrix.easydcc.EasyDccProgrammer.instance();
 
 			// If a jmri.PowerManager instance doesn't exist, create a

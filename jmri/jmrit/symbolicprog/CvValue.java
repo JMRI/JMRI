@@ -22,7 +22,7 @@ import javax.swing.JTextField;
  *
  * Description:		Represents a single CV value
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: CvValue.java,v 1.2 2002-05-06 04:13:59 jacobsen Exp $
+ * @version			$Id: CvValue.java,v 1.3 2002-09-15 17:21:48 jacobsen Exp $
  */
 public class CvValue extends AbstractValue implements ProgListener {
 
@@ -127,7 +127,7 @@ public class CvValue extends AbstractValue implements ProgListener {
 		// get a programmer reference and write
 		_status = status;
 		if (status != null) status.setText("Reading CV"+_num+"...");
-		Programmer p = InstanceManager.programmerInstance();
+		Programmer p = InstanceManager.programmerManagerInstance().getServiceModeProgrammer();
 		if (p != null) {
 			setBusy(true);
 			_reading = true;
@@ -150,7 +150,7 @@ public class CvValue extends AbstractValue implements ProgListener {
 		// get a programmer reference and write
 		_status = status;
 		if (status != null) status.setText("Confirming CV"+_num+"...");
-		Programmer p = InstanceManager.programmerInstance();
+		Programmer p = InstanceManager.programmerManagerInstance().getServiceModeProgrammer();
 		if (p != null) {
 			setBusy(true);
 			_reading = false;
@@ -173,7 +173,7 @@ public class CvValue extends AbstractValue implements ProgListener {
 		// get a programmer reference and write
 		_status = status;
 		if (status != null) status.setText("Writing CV"+_num+"...");
-		Programmer p = InstanceManager.programmerInstance();
+		Programmer p = InstanceManager.programmerManagerInstance().getServiceModeProgrammer();
 		if (p != null) {
 			setBusy(true);
 			_reading = false;
@@ -225,7 +225,8 @@ public class CvValue extends AbstractValue implements ProgListener {
 			}
 		} else {
 			if (_status != null) _status.setText("Programmer error: "
-											+InstanceManager.programmerInstance().decodeErrorCode(retval));
+                            +InstanceManager.programmerManagerInstance()
+                                .getServiceModeProgrammer().decodeErrorCode(retval));
 
 			// delay to ensure that the message appears!
 			javax.swing.Timer timer = new javax.swing.Timer(1000, new java.awt.event.ActionListener() {

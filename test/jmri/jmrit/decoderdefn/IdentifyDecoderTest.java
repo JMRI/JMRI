@@ -12,7 +12,7 @@ import java.io.*;
  *
  * Description:	    tests for the jmrit.roster.IdentifyDecoder class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class IdentifyDecoderTest extends TestCase {
 
@@ -25,7 +25,7 @@ public class IdentifyDecoderTest extends TestCase {
 				cvRead = CV;
 			}
 		};
-		jmri.InstanceManager.setProgrammer(p);
+		jmri.InstanceManager.setProgrammerManager(new jmri.DefaultProgrammerManager(p));
 
 		// create our test object
 		IdentifyDecoder i = new IdentifyDecoder() {

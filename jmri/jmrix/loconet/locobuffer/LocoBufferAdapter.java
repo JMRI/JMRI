@@ -5,7 +5,7 @@
  * Description:		Provide access to LocoNet via a LocoBuffer attached to a serial comm port.
  *					Normally controlled by the LocoBufferFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 
 package jmri.jmrix.loconet.locobuffer;
@@ -178,160 +178,160 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 	 * set up all of the other objects to operate with a LocoBuffer
 	 * connected to this port
 	 */
-	public void configure() {
-			// connect to a packetizing traffic controller
-            LnPacketizer packets = new LnPacketizer();
-			packets.connectPort(this);
+    public void configure() {
+        // connect to a packetizing traffic controller
+        LnPacketizer packets = new LnPacketizer();
+        packets.connectPort(this);
 
-			// If a jmri.Programmer instance doesn't exist, create a
-			// loconet.SlotManager to do that
-			if (jmri.InstanceManager.programmerInstance() == null)
-				jmri.jmrix.loconet.SlotManager.instance();
-            // set slot manager's read capability
-            jmri.jmrix.loconet.SlotManager.instance().setCanRead(mCanRead);
+        // If a jmri.Programmer instance doesn't exist, create a
+        // loconet.SlotManager to do that
+        if (jmri.InstanceManager.programmerManagerInstance() == null)
+            jmri.jmrix.loconet.SlotManager.instance();
+        // set slot manager's read capability
+        jmri.jmrix.loconet.SlotManager.instance().setCanRead(mCanRead);
 
-			// If a jmri.PowerManager instance doesn't exist, create a
-			// loconet.LnPowerManager to do that
-			if (jmri.InstanceManager.powerManagerInstance() == null)
-				jmri.InstanceManager.setPowerManager(new jmri.jmrix.loconet.LnPowerManager());
+        // If a jmri.PowerManager instance doesn't exist, create a
+        // loconet.LnPowerManager to do that
+        if (jmri.InstanceManager.powerManagerInstance() == null)
+            jmri.InstanceManager.setPowerManager(new jmri.jmrix.loconet.LnPowerManager());
 
-			// If a jmri.TurnoutManager instance doesn't exist, create a
-			// loconet.LnTurnoutManager to do that
-			if (jmri.InstanceManager.turnoutManagerInstance() == null)
-				jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager());
+        // If a jmri.TurnoutManager instance doesn't exist, create a
+        // loconet.LnTurnoutManager to do that
+        if (jmri.InstanceManager.turnoutManagerInstance() == null)
+            jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager());
 
-    		// If a jmri.SensorManager instance doesn't exist, create a
-	    	// loconet.LnSensorManager to do that
-		    if (jmri.InstanceManager.sensorManagerInstance() == null)
-			    jmri.InstanceManager.setSensorManager(new jmri.jmrix.loconet.LnSensorManager());
+        // If a jmri.SensorManager instance doesn't exist, create a
+        // loconet.LnSensorManager to do that
+        if (jmri.InstanceManager.sensorManagerInstance() == null)
+            jmri.InstanceManager.setSensorManager(new jmri.jmrix.loconet.LnSensorManager());
 
-			// start operation
-			packets.startThreads();
-	}
+        // start operation
+        packets.startThreads();
+    }
 
-	private Thread sinkThread;
+    private Thread sinkThread;
 
-// base class methods for the LnPortController interface
-	public DataInputStream getInputStream() {
-		if (!opened) {
-			log.error("getInputStream called before load(), stream not available");
-			return null;
-		}
-		return new DataInputStream(serialStream);
-	}
+    // base class methods for the LnPortController interface
+    public DataInputStream getInputStream() {
+        if (!opened) {
+            log.error("getInputStream called before load(), stream not available");
+            return null;
+        }
+        return new DataInputStream(serialStream);
+    }
 
-	public DataOutputStream getOutputStream() {
-		if (!opened) log.error("getOutputStream called before load(), stream not available");
-		try {
-     		return new DataOutputStream(activeSerialPort.getOutputStream());
-     		}
+    public DataOutputStream getOutputStream() {
+        if (!opened) log.error("getOutputStream called before load(), stream not available");
+        try {
+            return new DataOutputStream(activeSerialPort.getOutputStream());
+        }
      	catch (java.io.IOException e) {
-     		log.error("getOutputStream exception: "+e.getMessage());
+            log.error("getOutputStream exception: "+e.getMessage());
      	}
      	return null;
-	}
+    }
 
-	public boolean status() {return opened;}
+    public boolean status() {return opened;}
 
-	/**
-	 * Local method to do specific configuration, overridden in the LocoBufferHSAdapter class
-	 */
-	protected void setSerialPort() throws javax.comm.UnsupportedCommOperationException {
-		// find the baud rate value, configure comm options
-		int baud = 19200;  // default, but also defaulted in the initial value of selectedSpeed
-		for (int i = 0; i<validSpeeds.length; i++ )
-			if (validSpeeds[i].equals(selectedSpeed))
-				baud = validSpeedValues[i];
-		activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
+    /**
+     * Local method to do specific configuration, overridden in the LocoBufferHSAdapter class
+     */
+    protected void setSerialPort() throws javax.comm.UnsupportedCommOperationException {
+        // find the baud rate value, configure comm options
+        int baud = 19200;  // default, but also defaulted in the initial value of selectedSpeed
+        for (int i = 0; i<validSpeeds.length; i++ )
+            if (validSpeeds[i].equals(selectedSpeed))
+                baud = validSpeedValues[i];
+        activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                                             SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
-		// set RTS high, DTR high - done early, so flow control can be configured after
-		activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-		activeSerialPort.setDTR(true);		// pin 1 in Mac DIN8; on main connector, this is DTR
+        // set RTS high, DTR high - done early, so flow control can be configured after
+        activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
+        activeSerialPort.setDTR(true);		// pin 1 in Mac DIN8; on main connector, this is DTR
 
-		// find and configure flow control
-		int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also defaults in selectedOption1
-		if (selectedOption1.equals(validOption1[1]))
-			flow = 0;
-		activeSerialPort.setFlowControlMode(flow);
+        // find and configure flow control
+        int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also defaults in selectedOption1
+        if (selectedOption1.equals(validOption1[1]))
+            flow = 0;
+        activeSerialPort.setFlowControlMode(flow);
         log.debug("Found flow control "+activeSerialPort.getFlowControlMode()
                     +" RTSCTS_OUT="+SerialPort.FLOWCONTROL_RTSCTS_OUT
                     +" RTSCTS_IN= "+SerialPort.FLOWCONTROL_RTSCTS_IN);
-	}
-
-	/**
-	 * Get an array of valid baud rates. This is currently just a message
-	 * saying its fixed
-	 */
-	public String[] validBaudRates() {
-		return validSpeeds;
-	}
-
-	/**
-	 * Set the baud rate.  This currently does nothing, as there's
-	 * only one possible value
-	 */
-	public void configureBaudRate(String rate) {
-		log.debug("configureBaudRate: "+rate);
-		selectedSpeed = rate;
-	}
-
-	/**
-	 * Since option 1 is not used for this, return an empty array.
-	 */
-	public String[] validOption1() { return validOption1; }
-
-	/**
-	 * Option 1 controls flow control option
-	 */
-	public String option1Name() { return "LocoBuffer connections uses "; }
-
-	/**
-	 * The first port option isn't used, so just ignore this call.
-	 */
-	public void configureOption1(String value) {
-		log.debug("configureOption1: "+value);
-		selectedOption1 = value;
-	}
+    }
 
     /**
-	 * Get an array of valid values for "option 2"; used to display valid options.
-	 * May not be null, but may have zero entries
-	 */
-	public String[] validOption2() { return new String[]{"DCS100 (Chief)",
+     * Get an array of valid baud rates. This is currently just a message
+     * saying its fixed
+     */
+    public String[] validBaudRates() {
+        return validSpeeds;
+    }
+
+    /**
+     * Set the baud rate.  This currently does nothing, as there's
+     * only one possible value
+     */
+    public void configureBaudRate(String rate) {
+        log.debug("configureBaudRate: "+rate);
+        selectedSpeed = rate;
+    }
+
+    /**
+     * Since option 1 is not used for this, return an empty array.
+     */
+    public String[] validOption1() { return validOption1; }
+
+    /**
+     * Option 1 controls flow control option
+     */
+    public String option1Name() { return "LocoBuffer connections uses "; }
+
+    /**
+     * The first port option isn't used, so just ignore this call.
+     */
+    public void configureOption1(String value) {
+    	log.debug("configureOption1: "+value);
+    	selectedOption1 = value;
+    }
+
+    /**
+     * Get an array of valid values for "option 2"; used to display valid options.
+     * May not be null, but may have zero entries
+     */
+    public String[] validOption2() { return new String[]{"DCS100 (Chief)",
                                                     "DB150 (Empire Builder)",
                                                     "DB50 (Zephyr)"}; }
 
-	/**
-	 * Get a String that says what Option 2 represents
-	 * May be an empty string, but will not be null
-	 */
-	public String option2Name() { return "Command station type: "; }
+    /**
+     * Get a String that says what Option 2 represents
+     * May be an empty string, but will not be null
+     */
+    public String option2Name() { return "Command station type: "; }
 
-	/**
-	 * Set the second port option.  Only to be used after construction, but
-	 * before the openPort call
-	 */
-	public void configureOption2(String value) throws jmri.jmrix.SerialConfigException {
-		log.debug("configureOption2: "+value);
+    /**
+     * Set the second port option.  Only to be used after construction, but
+     * before the openPort call
+     */
+    public void configureOption2(String value) throws jmri.jmrix.SerialConfigException {
+    	log.debug("configureOption2: "+value);
         if (value.equals("DB150 (Empire Builder)")) mCanRead = false;
         else mCanRead = true;
     }
 
     boolean mCanRead = true;
 
-	protected String [] validSpeeds = new String[]{"19,200 baud (J1 on 1&2)", "57,600 baud (J1 on 2&3)"};
-	protected int [] validSpeedValues = new int[]{19200, 57600};
-	protected String selectedSpeed=validSpeeds[0];
+    protected String [] validSpeeds = new String[]{"19,200 baud (J1 on 1&2)", "57,600 baud (J1 on 2&3)"};
+    protected int [] validSpeedValues = new int[]{19200, 57600};
+    protected String selectedSpeed=validSpeeds[0];
 
-	// meanings are assigned to these above, so make sure the order is consistent
-	protected String [] validOption1 = new String[]{"hardware flow control (recommended)", "no flow control"};
-	protected String selectedOption1=validOption1[0];
+    // meanings are assigned to these above, so make sure the order is consistent
+    protected String [] validOption1 = new String[]{"hardware flow control (recommended)", "no flow control"};
+    protected String selectedOption1=validOption1[0];
 
-// private control members
-	private boolean opened = false;
-	InputStream serialStream = null;
+    // private control members
+    private boolean opened = false;
+    InputStream serialStream = null;
 
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoBufferAdapter.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoBufferAdapter.class.getName());
 
 }

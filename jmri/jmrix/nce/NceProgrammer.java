@@ -25,7 +25,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
 
 		// register this as the default, register as the Programmer
 		self = this;
-		jmri.InstanceManager.setProgrammer(this);
+		jmri.InstanceManager.setProgrammerManager(new jmri.DefaultProgrammerManager(this));
 
 		}
 

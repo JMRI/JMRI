@@ -17,7 +17,7 @@ import jmri.progdebugger.*;
  * Test CvValue class
  *
  * @author			Bob Jacobsen
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class CvValueTest extends TestCase {
 
@@ -37,7 +37,7 @@ public class CvValueTest extends TestCase {
 	public void testCvValRead() {
 		// initialize the system
 		ProgDebugger p = new ProgDebugger();
-		InstanceManager.setProgrammer(p);
+		InstanceManager.setProgrammerManager(new DefaultProgrammerManager(p));
 
 		// create the CV value
 		CvValue cv = new CvValue(91);
@@ -62,7 +62,7 @@ public class CvValueTest extends TestCase {
 	public void testCvValConfirmFail() {
 		// initialize the system
 		ProgDebugger p = new ProgDebugger();
-		InstanceManager.setProgrammer(p);
+		InstanceManager.setProgrammerManager(new DefaultProgrammerManager(p));
 		p._confirmOK = false;
 
 		// create the CV value
@@ -91,7 +91,7 @@ public class CvValueTest extends TestCase {
 		// initialize the system
 		ProgDebugger p = new ProgDebugger();
 		p._confirmOK = true;
-		InstanceManager.setProgrammer(p);
+		InstanceManager.setProgrammerManager(new DefaultProgrammerManager(p));
 
 		// create the CV value
 		CvValue cv = new CvValue(66);
@@ -119,7 +119,7 @@ public class CvValueTest extends TestCase {
 		// initialize the system
         log.debug("start testCvValWrite");
 		ProgDebugger p = new ProgDebugger();
-		InstanceManager.setProgrammer(p);
+		InstanceManager.setProgrammerManager(new DefaultProgrammerManager(p));
 
 		// create the CV value
 		CvValue cv = new CvValue(91);

@@ -15,7 +15,7 @@ import java.beans.PropertyChangeEvent;
  * counter-part of a LocoNet command station.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 
@@ -33,7 +33,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 
 		// register this as the default, register as the Programmer
 		self = this;
-		jmri.InstanceManager.setProgrammer(this);
+		jmri.InstanceManager.setProgrammerManager(new jmri.DefaultProgrammerManager(this));
 
 		// listen to the LocoNet
 		LnTrafficController.instance().addLocoNetListener(~0, this);
@@ -308,19 +308,38 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 	boolean _progConfirm = false;
 	int _confirmVal;
 
-	public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
-		if (log.isDebugEnabled()) log.debug("writeCV: "+CV);
-		useProgrammer(p);
-		_progRead = false;
-		_progConfirm = false;
-		// set commandPending state
-		progState = 1;
+    public void writeCVOpsMode(int CV, int val, jmri.ProgListener p,
+                                int addr, boolean longAddr) throws jmri.ProgrammerException {
+        lopsa = addr&0x7f;
+        hopsa = (addr/128)&0x7f;
+        if (!longAddr) hopsa|=0xC0;
+        doWrite(CV, val, p, 0x2C);
+    }
+    public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+        lopsa = 0;
+        hopsa = 0;
+        // parse the programming command
+        int pcmd = 0x40;  // write command
+        if (getMode() == jmri.Programmer.PAGEMODE) pcmd = pcmd | 0x20;
+        else if (getMode() == jmri.Programmer.DIRECTBYTEMODE) pcmd = pcmd | 0x28;
+        else if (getMode() == jmri.Programmer.REGISTERMODE
+                    || getMode() == jmri.Programmer.ADDRESSMODE) pcmd = pcmd | 0x10;
+        else throw new jmri.ProgrammerException("mode not supported");
 
-		// format and send message
-		startShortTimer();
-		LnTrafficController.instance().sendLocoNetMessage(progTaskStart(getMode(), val, CV, true));
+        doWrite(CV, val, p, pcmd);
+    }
+    public void doWrite(int CV, int val, jmri.ProgListener p, int pcmd) throws jmri.ProgrammerException {
+        if (log.isDebugEnabled()) log.debug("writeCV: "+CV);
+        useProgrammer(p);
+        _progRead = false;
+        _progConfirm = false;
+        // set commandPending state
+        progState = 1;
 
-		}
+        // format and send message
+        startShortTimer();
+        LnTrafficController.instance().sendLocoNetMessage(progTaskStart(pcmd, val, CV, true));
+    }
 
 	public void confirmCV(int CV, int val, ProgListener p) throws jmri.ProgrammerException {
 		if (log.isDebugEnabled()) log.debug("confirmCV: "+CV);
@@ -337,18 +356,49 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 		LnTrafficController.instance().sendLocoNetMessage(progTaskStart(getMode(), -1, CV, false));
 	}
 
-	public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
-		if (log.isDebugEnabled()) log.debug("readCV: "+CV);
-		useProgrammer(p);
-		_progRead = true;
-		_progConfirm = false;
-		// set commandPending state
-		progState = 1;
+    int hopsa; // high address for CV read/write
+    int lopsa; // low address for CV read/write
+    /**
+     * Invoked by LnOpsModeProgrammer to start an ops-mode
+     * read operation.
+     * @param CV Which CV to read
+     * @param p Who to notify on complete
+     * @param addr Address of the locomotive
+     * @param longAddr true if a long address, false if short address
+     * @throws ProgrammerException
+     */
+    public void readCVOpsMode(int CV, jmri.ProgListener p, int addr, boolean longAddr) throws jmri.ProgrammerException {
+        lopsa = addr&0x7f;
+        hopsa = (addr/128)&0x7f;
+        if (!longAddr) hopsa|=0xC0;
+        doRead(CV, p, 0x2C);
+    }
+    public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+        lopsa = 0;
+        hopsa = 0;
+        // parse the programming command
+        int pcmd = 0;
+        //if (write) pcmd = pcmd | 0x40;  // write command
+        if (getMode() == jmri.Programmer.PAGEMODE) pcmd = pcmd | 0x20;
+        else if (getMode() == jmri.Programmer.DIRECTBYTEMODE) pcmd = pcmd | 0x28;
+        else if (getMode() == jmri.Programmer.REGISTERMODE
+                    || getMode() == jmri.Programmer.ADDRESSMODE) pcmd = pcmd | 0x10;
+        else throw new jmri.ProgrammerException("mode not supported");
 
-		// format and send message
-		startShortTimer();
-		LnTrafficController.instance().sendLocoNetMessage(progTaskStart(getMode(), -1, CV, false));
-	}
+        doRead(CV, p, pcmd);
+    }
+    void doRead(int CV, jmri.ProgListener p, int progByte) throws jmri.ProgrammerException {
+        if (log.isDebugEnabled()) log.debug("readCV: "+CV);
+        useProgrammer(p);
+        _progRead = true;
+        _progConfirm = false;
+        // set commandPending state
+        progState = 1;
+
+        // format and send message
+        startShortTimer();
+        LnTrafficController.instance().sendLocoNetMessage(progTaskStart(progByte, -1, CV, false));
+    }
 
 	private jmri.ProgListener _usingProgrammer = null;
 
@@ -366,7 +416,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 	}
 
 	// internal method to create the LocoNetMessage for programmer task start
-	protected LocoNetMessage progTaskStart(int mode, int val, int cvnum, boolean write) throws jmri.ProgrammerException {
+	protected LocoNetMessage progTaskStart(int pcmd, int val, int cvnum, boolean write) throws jmri.ProgrammerException {
 
 		int addr = cvnum-1;    // cvnum is in human readable form; addr is what's sent over loconet
 
@@ -376,20 +426,12 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 		m.setElement(1, 0x0E);
 		m.setElement(2, 0x7C);
 
-		// parse the programming command
-		int pcmd = 0;
-		if (write) pcmd = pcmd | 0x40;  // write command
-		if (mode == jmri.Programmer.PAGEMODE) pcmd = pcmd | 0x20;
-		else if (mode == jmri.Programmer.DIRECTBYTEMODE) pcmd = pcmd | 0x28;
-		else if (mode == jmri.Programmer.REGISTERMODE
-                    || mode == jmri.Programmer.ADDRESSMODE) pcmd = pcmd | 0x10;
-		else throw new jmri.ProgrammerException("mode not supported");
 		m.setElement(3, pcmd);
 
-		// set zero, then zero HOPSA, LOPSA, TRK
+		// set zero, then HOPSA, LOPSA, zero TRK
 		m.setElement(4, 0);
-		m.setElement(5, 0);
-		m.setElement(6, 0);
+		m.setElement(5, hopsa);
+		m.setElement(6, lopsa);
 		m.setElement(7, 0);
 
 		// store address in CVH, CVL. Note CVH format is truely wierd...

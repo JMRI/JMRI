@@ -12,7 +12,7 @@ import java.io.*;
  *
  * Description:	    tests for the jmrit.roster.IdentifyLoco class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class IdentifyLocoTest extends TestCase {
 
@@ -25,7 +25,7 @@ public class IdentifyLocoTest extends TestCase {
 				cvRead = CV;
 			}
 		};
-		jmri.InstanceManager.setProgrammer(p);
+		jmri.InstanceManager.setProgrammerManager(new jmri.DefaultProgrammerManager(p));
 
 		// create our test object
 		IdentifyLoco i = new IdentifyLoco() {
@@ -57,7 +57,7 @@ public class IdentifyLocoTest extends TestCase {
 				cvRead = CV;
 			}
 		};
-		jmri.InstanceManager.setProgrammer(p);
+		jmri.InstanceManager.setProgrammerManager(new jmri.DefaultProgrammerManager(p));
 
 		// create our test object
 		IdentifyLoco i = new IdentifyLoco() {

@@ -2,24 +2,22 @@
 
 package jmri.jmrit.symbolicprog;
 
+import java.util.Vector;
+
+import javax.swing.*;
+
 import com.sun.java.util.collections.ArrayList;
 import com.sun.java.util.collections.List;
-import java.util.Vector;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import jmri.InstanceManager;
-import jmri.Programmer;
-import jmri.progdebugger.ProgDebugger;
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import jmri.*;
+import jmri.progdebugger.*;
+import junit.framework.*;
 
 /**
  * SplitVariableValueTest.java
  *
  * @todo need a check of the MIXED state model for long address
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 
@@ -122,7 +120,7 @@ public class SplitVariableValueTest extends VariableValueTest {
 		log.debug("testSplitAddressRead starts");
 		// initialize the system
 		Programmer p = new ProgDebugger();
-		InstanceManager.setProgrammer(p);
+		InstanceManager.setProgrammerManager(new DefaultProgrammerManager(p));
 
 		Vector v = createCvVector();
 		CvValue cv1 = new CvValue(lowCV);
@@ -180,7 +178,7 @@ public class SplitVariableValueTest extends VariableValueTest {
 	public void testSplitAddressWrite() {
 		// initialize the system
 		ProgDebugger p = new ProgDebugger();
-		InstanceManager.setProgrammer(p);
+		InstanceManager.setProgrammerManager(new DefaultProgrammerManager(p));
 
 		Vector v = createCvVector();
 		CvValue cv1 = new CvValue(lowCV);

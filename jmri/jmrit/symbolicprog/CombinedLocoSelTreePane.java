@@ -32,7 +32,7 @@ import java.util.Enumeration;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
 
@@ -148,8 +148,9 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
         // add button
         iddecoder= new JToggleButton("Ident");
         iddecoder.setToolTipText("Read the decoders mfg and version, then attempt to select it's type");
-            if (jmri.InstanceManager.programmerInstance()!= null
-                    && !jmri.InstanceManager.programmerInstance().getCanRead()) {
+            if (jmri.InstanceManager.programmerManagerInstance()!= null
+                    && jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer()!=null
+                    && !jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer().getCanRead()) {
             // can't read, disable the button
             iddecoder.setEnabled(false);
             iddecoder.setToolTipText("Button disabled because configured command station can't read CVs");

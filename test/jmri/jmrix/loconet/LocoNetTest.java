@@ -3,7 +3,7 @@
  *
  * Description:	    tests for the jmri.jmrix.loconet package
  * @author			Bob Jacobsen Copyright 2001
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 
 package jmri.jmrix.loconet;
@@ -35,6 +35,8 @@ public class LocoNetTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.loconet.LocoNetTest");  // no tests in this class itself
         suite.addTest(jmri.jmrix.loconet.locoio.LocoIOTest.suite());
+        suite.addTest(new TestSuite(SlotManagerTest.class));
+        suite.addTest(new TestSuite(LnOpsModeProgrammerTest.class));
         suite.addTest(new TestSuite(LocoNetMessageTest.class));
         suite.addTest(new TestSuite(LnTrafficControllerTest.class));
         suite.addTest(new TestSuite(LnTrafficRouterTest.class));

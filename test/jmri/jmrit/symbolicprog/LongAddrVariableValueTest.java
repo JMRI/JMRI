@@ -2,24 +2,22 @@
 
 package jmri.jmrit.symbolicprog;
 
+import java.util.Vector;
+
+import javax.swing.*;
+
 import com.sun.java.util.collections.ArrayList;
 import com.sun.java.util.collections.List;
-import java.util.Vector;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import jmri.InstanceManager;
-import jmri.Programmer;
-import jmri.progdebugger.ProgDebugger;
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import jmri.*;
+import jmri.progdebugger.*;
+import junit.framework.*;
 
 /**
  * LongAddrVariableValueTest.java
  *
  * @todo need a check of the MIXED state model for long address
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class LongAddrVariableValueTest extends VariableValueTest {
 
@@ -113,7 +111,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
 		log.debug("testLongAddressRead starts");
 		// initialize the system
 		Programmer p = new ProgDebugger();
-		InstanceManager.setProgrammer(p);
+		InstanceManager.setProgrammerManager(new jmri.DefaultProgrammerManager(p));
 
 		Vector v = createCvVector();
 		CvValue cv17 = new CvValue(17);
@@ -169,7 +167,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
 	public void testLongAddressWrite() {
 		// initialize the system
 		ProgDebugger p = new ProgDebugger();
-		InstanceManager.setProgrammer(p);
+		InstanceManager.setProgrammerManager(new jmri.DefaultProgrammerManager(p));
 
 		Vector v = createCvVector();
 		CvValue cv17 = new CvValue(17);

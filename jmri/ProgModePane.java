@@ -3,7 +3,7 @@
  *
  * Description:		Pane to select programming mode
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 
 package jmri;
@@ -48,8 +48,9 @@ public class ProgModePane extends javax.swing.JPanel implements java.beans.Prope
 		modeGroup.add(addressButton);
 
         // if a programmer is available, disable buttons for unavailable modes
-        if (InstanceManager.programmerInstance()!=null) {
-            Programmer p = InstanceManager.programmerInstance();
+        if (InstanceManager.programmerManagerInstance()!=null
+            && InstanceManager.programmerManagerInstance().getServiceModeProgrammer()!=null) {
+            Programmer p = InstanceManager.programmerManagerInstance().getServiceModeProgrammer();
             if (!p.hasMode(Programmer.PAGEMODE)) pagedButton.setEnabled(false);
             if (!p.hasMode(Programmer.DIRECTBYTEMODE)) directByteButton.setEnabled(false);
             if (!p.hasMode(Programmer.DIRECTBITMODE)) directBitButton.setEnabled(false);
@@ -99,9 +100,9 @@ public class ProgModePane extends javax.swing.JPanel implements java.beans.Prope
 		// load the state if a programmer exists
 		connect();
 		if (connected) {
-			int mode = InstanceManager.programmerInstance().getMode();
+			int mode = InstanceManager.programmerManagerInstance().getServiceModeProgrammer().getMode();
 			if (log.isDebugEnabled()) log.debug("setting mode at startup: "+mode);
-			InstanceManager.programmerInstance().setMode(mode);
+			InstanceManager.programmerManagerInstance().getServiceModeProgrammer().setMode(mode);
 			setMode(mode);
 		}
 		else {
@@ -170,8 +171,10 @@ public class ProgModePane extends javax.swing.JPanel implements java.beans.Prope
 
 	private void connect() {
 		if (!connected) {
-			if (InstanceManager.programmerInstance() != null) {
-				InstanceManager.programmerInstance().addPropertyChangeListener(this);
+			if (InstanceManager.programmerManagerInstance() != null
+                            && InstanceManager.programmerManagerInstance().getServiceModeProgrammer() != null) {
+				InstanceManager.programmerManagerInstance()
+                                    .getServiceModeProgrammer().addPropertyChangeListener(this);
 				connected = true;
 				log.debug("Connecting to programmer");
 			} else {
@@ -183,14 +186,17 @@ public class ProgModePane extends javax.swing.JPanel implements java.beans.Prope
 	// set the programmer to the current mode
 	private void setProgrammerMode(int mode) {
 			log.debug("Setting programmer to mode "+mode);
-			if (InstanceManager.programmerInstance() != null) InstanceManager.programmerInstance().setMode(mode);
+			if (InstanceManager.programmerManagerInstance() != null
+                                && InstanceManager.programmerManagerInstance().getServiceModeProgrammer() != null)
+                            InstanceManager.programmerManagerInstance().getServiceModeProgrammer().setMode(mode);
 	}
 
 	// no longer needed, disconnect if still connected
 	public void dispose() {
 		if (connected) {
-			if (InstanceManager.programmerInstance() != null)
-				InstanceManager.programmerInstance().removePropertyChangeListener(this);
+			if (InstanceManager.programmerManagerInstance() != null
+                                && InstanceManager.programmerManagerInstance().getServiceModeProgrammer() != null)
+				InstanceManager.programmerManagerInstance().getServiceModeProgrammer().removePropertyChangeListener(this);
 			connected = false;
 		}
 	}

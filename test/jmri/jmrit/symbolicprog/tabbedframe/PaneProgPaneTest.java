@@ -3,7 +3,7 @@
  *
  * Description:
  * @author			Bob Jacobsen
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 
 package jmri.jmrit.symbolicprog.tabbedframe;
@@ -103,7 +103,7 @@ public class PaneProgPaneTest extends TestCase {
 		if (log.isDebugEnabled()) log.debug("testPaneRead starts");
 		// initialize the system
 		ProgDebugger pr = new ProgDebugger();
-		InstanceManager.setProgrammer(pr);
+		InstanceManager.setProgrammerManager(new DefaultProgrammerManager(pr));
 		setupDoc();  // make sure XML document is ready
 
 		CvTableModel cvModel = new CvTableModel(new JLabel());
@@ -153,7 +153,7 @@ public class PaneProgPaneTest extends TestCase {
 		if (log.isDebugEnabled()) log.debug("testPaneWrite starts");
 		// initialize the system
 		ProgDebugger pr = new ProgDebugger();
-		InstanceManager.setProgrammer(pr);
+		InstanceManager.setProgrammerManager(new DefaultProgrammerManager(pr));
 		setupDoc();  // make sure XML document is ready
 
 		CvTableModel cvModel = new CvTableModel(new JLabel());

@@ -18,7 +18,7 @@ import jmri.progdebugger.*;
 /**
  * Base for tests of classes inheriting from VariableValue abstract class
  * @author	Bob Jacobsen, Copyright 2002
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public abstract class VariableValueTest extends TestCase {
 
@@ -104,7 +104,7 @@ public abstract class VariableValueTest extends TestCase {
 		log.debug("testVariableValueRead base starts");
 		// initialize the system
 		Programmer p = new ProgDebugger();
-		InstanceManager.setProgrammer(p);
+		InstanceManager.setProgrammerManager(new DefaultProgrammerManager(p));
 
 		Vector v = createCvVector();
 		CvValue cv = new CvValue(81);
@@ -137,7 +137,7 @@ public abstract class VariableValueTest extends TestCase {
 		log.debug("testVariableValueWrite base starts");
 		// initialize the system
 		ProgDebugger p = new ProgDebugger();
-		InstanceManager.setProgrammer(p);
+		InstanceManager.setProgrammerManager(new DefaultProgrammerManager(p));
 
 		Vector v = createCvVector();
 		CvValue cv = new CvValue(81);
@@ -170,7 +170,7 @@ public abstract class VariableValueTest extends TestCase {
 		if (log.isDebugEnabled()) log.debug("start testVariableCvWrite test");
 		// initialize the system
 		ProgDebugger p = new ProgDebugger();
-		InstanceManager.setProgrammer(p);
+		InstanceManager.setProgrammerManager(new DefaultProgrammerManager(p));
 
 		Vector v = createCvVector();
 		CvValue cv = new CvValue(81);
@@ -205,7 +205,7 @@ public abstract class VariableValueTest extends TestCase {
 	public void testVariableValueStates() {
 		// initialize the system
 		Programmer p = new ProgDebugger();
-		InstanceManager.setProgrammer(p);
+		InstanceManager.setProgrammerManager(new DefaultProgrammerManager(p));
 
 		Vector v = createCvVector();
 		CvValue cv = new CvValue(81);
@@ -223,7 +223,7 @@ public abstract class VariableValueTest extends TestCase {
 	public void testVariableValueStateColor() {
 		// initialize the system
 		Programmer p = new ProgDebugger();
-		InstanceManager.setProgrammer(p);
+		InstanceManager.setProgrammerManager(new DefaultProgrammerManager(p));
 
 		Vector v = createCvVector();
 		CvValue cv = new CvValue(81);
@@ -240,7 +240,7 @@ public abstract class VariableValueTest extends TestCase {
 	public void testVariableRepStateColor() {
 		// initialize the system
 		Programmer p = new ProgDebugger();
-		InstanceManager.setProgrammer(p);
+		InstanceManager.setProgrammerManager(new DefaultProgrammerManager(p));
 
 		Vector v = createCvVector();
 		CvValue cv = new CvValue(81);
@@ -268,7 +268,7 @@ public abstract class VariableValueTest extends TestCase {
 	public void testVariableVarChangeColorRep() {
 		// initialize the system
 		Programmer p = new ProgDebugger();
-		InstanceManager.setProgrammer(p);
+		InstanceManager.setProgrammerManager(new DefaultProgrammerManager(p));
 
 		Vector v = createCvVector();
 		CvValue cv = new CvValue(81);
@@ -295,7 +295,7 @@ public abstract class VariableValueTest extends TestCase {
 	public void testVariableSynch() {
 		// initialize the system
 		ProgDebugger p = new ProgDebugger();
-		InstanceManager.setProgrammer(p);
+		InstanceManager.setProgrammerManager(new DefaultProgrammerManager(p));
 
 		Vector v = createCvVector();
 		CvValue cv = new CvValue(81);
@@ -338,7 +338,7 @@ public abstract class VariableValueTest extends TestCase {
 		if (log.isDebugEnabled()) log.debug("start testWriteSynch2 test");
 		// initialize the system
 		ProgDebugger p = new ProgDebugger();
-		InstanceManager.setProgrammer(p);
+		InstanceManager.setProgrammerManager(new DefaultProgrammerManager(p));
 
 		Vector v = createCvVector();
 		CvValue cv = new CvValue(81);

@@ -26,7 +26,7 @@ import java.beans.PropertyChangeEvent;
  * <LI>Wait for Normal Operations Resumed broadcast
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -37,7 +37,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
 		// register this as the default, register as the Programmer
 		self = this;
-		jmri.InstanceManager.setProgrammer(this);
+		jmri.InstanceManager.setProgrammerManager(new jmri.DefaultProgrammerManager(this));
 
         // connect to listen
         controller().addXNetListener(~0, this);

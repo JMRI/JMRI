@@ -13,7 +13,7 @@ import jmri.ProgModePane;
 /**
  * Frame providing a simple command station programmer
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgListener {
 
@@ -162,7 +162,7 @@ public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgList
 
 	// handle the buttons being pushed
 	public void readPushed(java.awt.event.ActionEvent e) {
-		Programmer p = jmri.InstanceManager.programmerInstance();
+		Programmer p = jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer();
 		if (p == null) {
 			resultsField.setText("No programmer connected");
 			readButton.setSelected(false);
@@ -177,7 +177,7 @@ public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgList
 		}
 	}
 	public void writePushed(java.awt.event.ActionEvent e) {
-		Programmer p = jmri.InstanceManager.programmerInstance();
+		Programmer p = jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer();
 		if (p == null) {
 			resultsField.setText("No programmer connected");
 			writeButton.setSelected(false);

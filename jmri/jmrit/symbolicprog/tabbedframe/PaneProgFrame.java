@@ -29,7 +29,7 @@ import org.jdom.JDOMException;
 /**
  * Frame providing a command station programmer from decoder definition files
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
@@ -71,8 +71,9 @@ public class PaneProgFrame extends javax.swing.JFrame
         confirmAllButton.setToolTipText("disabled because not yet implemented");
 
         readAllButton.setToolTipText("Read current values from decoder. Warning: may take a long time!");
-        if (jmri.InstanceManager.programmerInstance()!= null
-                    && !jmri.InstanceManager.programmerInstance().getCanRead()) {
+        if (jmri.InstanceManager.programmerManagerInstance()!= null
+                    && jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer()!= null
+                    && !jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer().getCanRead()) {
             // can't read, disable the button
             readAllButton.setEnabled(false);
             readAllButton.setToolTipText("Button disabled because configured command station can't read CVs");
@@ -186,7 +187,7 @@ public class PaneProgFrame extends javax.swing.JFrame
         loadProgrammerFile(r);
 
         // set the programming mode
-        if (jmri.InstanceManager.programmerInstance() != null) {
+        if (jmri.InstanceManager.programmerManagerInstance() != null) {
             // go through in preference order, trying to find a mode
             // that exists in both the programmer and decoder.
             // First, get attributes. If not present, assume that
@@ -206,7 +207,7 @@ public class PaneProgFrame extends javax.swing.JFrame
                     if (a.getValue().equals("no")) register = false;
             }
 
-            jmri.Programmer p = jmri.InstanceManager.programmerInstance();
+            jmri.Programmer p = jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer();
             if (p.hasMode(Programmer.PAGEMODE)&&paged)
                 p.setMode(jmri.Programmer.PAGEMODE);
             else if (p.hasMode(Programmer.DIRECTBYTEMODE)&&direct)

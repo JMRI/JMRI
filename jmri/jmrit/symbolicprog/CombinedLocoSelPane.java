@@ -36,7 +36,7 @@ import com.sun.java.util.collections.List;
  * </UL>
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class CombinedLocoSelPane extends javax.swing.JPanel
                                 implements PropertyChangeListener  {
@@ -77,7 +77,7 @@ public class CombinedLocoSelPane extends javax.swing.JPanel
         pane1a.add(decoderBox);
         iddecoder= new JToggleButton("Ident");
         iddecoder.setToolTipText("Read the decoders mfg and version, then attempt to select it's type");
-        if (!jmri.InstanceManager.programmerInstance().getCanRead()) {
+        if (!jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer().getCanRead()) {
             // can't read, disable the button
             iddecoder.setEnabled(false);
             iddecoder.setToolTipText("Button disabled because configured command station can't read CVs");
@@ -148,8 +148,9 @@ public class CombinedLocoSelPane extends javax.swing.JPanel
 			});
 			idloco = new JToggleButton("Ident");
 			idloco.setToolTipText("Read the locomotive's address and attempt to select the right settings");
-            if (jmri.InstanceManager.programmerInstance()!= null
-                    && !jmri.InstanceManager.programmerInstance().getCanRead()) {
+            if (jmri.InstanceManager.programmerManagerInstance() != null &&
+                    jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer()!= null
+                    && !jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer().getCanRead()) {
                 // can't read, disable the button
                 idloco.setEnabled(false);
                 idloco.setToolTipText("Button disabled because configured command station can't read CVs");

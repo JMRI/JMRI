@@ -1,11 +1,12 @@
 
 package jmri.jmrit.symbolicprog;
 
-import junit.framework.*;
 import javax.swing.*;
-import javax.swing.event.*;
 
-// Revision: $Revision: 1.5 $
+import jmri.*;
+import junit.framework.*;
+
+// Revision: $Revision: 1.6 $
 
 public class CombinedLocoSelListPaneTest extends TestCase {
 
@@ -14,7 +15,7 @@ public class CombinedLocoSelListPaneTest extends TestCase {
   }
 
   public void testIsDecoderSelected() {
-    jmri.InstanceManager.setProgrammer(new jmri.progdebugger.ProgDebugger());
+    jmri.InstanceManager.setProgrammerManager(new DefaultProgrammerManager(new jmri.progdebugger.ProgDebugger()));
     JLabel val1=  new JLabel();
     // ensure a valid DecoderIndexFile
     jmri.jmrit.decoderdefn.DecoderIndexFile.resetInstance();
@@ -26,7 +27,7 @@ public class CombinedLocoSelListPaneTest extends TestCase {
 
   public void testSelectedDecoderType() {
     JLabel val1=  new JLabel();
-    jmri.InstanceManager.setProgrammer(new jmri.progdebugger.ProgDebugger());
+    jmri.InstanceManager.setProgrammerManager(new DefaultProgrammerManager(new jmri.progdebugger.ProgDebugger()));
     // ensure a valid DecoderIndexFile
     jmri.jmrit.decoderdefn.DecoderIndexFile.resetInstance();
 

@@ -11,7 +11,7 @@ import com.sun.java.util.collections.List;
  * programming track.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  * @see             jmri.jmrit.decoderdefn.IdentifyDecoder
  * @see             jmri.jmrit.roster.IdentifyLoco
  */
@@ -74,9 +74,9 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
 		// we abort if the status isn't normal
 		if (status != jmri.ProgListener.OK) {
 			log.warn("Stopping due to error: "
-					+jmri.InstanceManager.programmerInstance().decodeErrorCode(status));
+					+jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer().decodeErrorCode(status));
 			statusUpdate("Stopping due to error: "
-					+jmri.InstanceManager.programmerInstance().decodeErrorCode(status));
+					+jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer().decodeErrorCode(status));
 			state = 0;
 			error();
 			return;
@@ -137,7 +137,7 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
 	 * Access a single CV for the next step
 	 */
 	protected void readCV(int cv) {
-		jmri.Programmer p = jmri.InstanceManager.programmerInstance();
+		jmri.Programmer p = jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer();
 		if (p == null) {
 			statusUpdate("No programmer connected");
 		} else {
