@@ -24,43 +24,43 @@ import org.jdom.Attribute;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002. AC 11/09/2002 Added SPROG support
- * @version			$Revision: 1.22 $
+ * @version			$Revision: 1.23 $
  */
 abstract public class AbstractConfigFrame extends JFrame {
 
     public AbstractConfigFrame(String name) {
         super(name);
-
+        
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         // create the GUI in steps
         addCommPane();
         getContentPane().add(createGUIPane());
         getContentPane().add(createProgrammerPane());
-
+        
         JButton save = new JButton("Save");
         getContentPane().add(save);
         save.addActionListener( new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                savePressed();
-            }
-        });
-
+                public void actionPerformed(ActionEvent e) {
+                    savePressed();
+                }
+            });
+        
         // add some space at the bottom
         getContentPane().add(new JLabel(" "));
-
+        
         // show is deferred to some action somewhere else
         pack();
     }
-
+    
     protected void addCommPane() {
         commPane = new DefaultCommConfigPane(availableProtocols());
         getContentPane().add(commPane);
     }
-
+    
     protected DefaultCommConfigPane commPane;
-
+    
     public DefaultCommConfigPane getCommPane() { return commPane; }
-
+    
     /**
      * Overload this to subset the list of available protocols
      * The supported list is:<UL>
@@ -82,16 +82,16 @@ abstract public class AbstractConfigFrame extends JFrame {
      */
     public String[] availableProtocols() {
         return  new String[] {"(None selected)",
-                            "CMRI serial",
-                            "EasyDCC",
-                            "Lenz XPressNet",
-                            "LocoNet LocoBuffer","LocoNet MS100",
-                            "LocoNet Server", "LocoNet HexFile",
-                            "NCE",
-                            "SPROG"
-                        };
+                              "CMRI serial",
+                              "EasyDCC",
+                              "Lenz XPressNet",
+                              "LocoNet LocoBuffer","LocoNet MS100",
+                              "LocoNet Server", "LocoNet HexFile",
+                              "NCE",
+                              "SPROG"
+        };
     }
-
+    
     /**
      * Command reading the configuration, and setting it into the application.
      * Returns true if
@@ -104,14 +104,18 @@ abstract public class AbstractConfigFrame extends JFrame {
         boolean connected = commPane.configureConnection(file.getConnectionElement());
         boolean gui = configureGUI(file.getGuiElement());
         boolean programmer = configureProgrammer(file.getProgrammerElement());
+        
+        // invoke an action (if element exists, etc) only if succeeded so far
+        if (connected&&gui&&programmer) invokeAction();
+        
         return connected&&gui&&programmer;
     }
-
+    
     /**
      * Abstract method to save the data
      */
     public abstract void saveContents();
-
+    
     /**
      * Handle the Save button:  Backup the file, write a new one, prompt for
      * what to do next.  To do that, the last step is to present a dialog
@@ -119,13 +123,13 @@ abstract public class AbstractConfigFrame extends JFrame {
      */
     public void savePressed() {
         jmri.jmrit.XmlFile.ensurePrefsPresent(jmri.jmrit.XmlFile.prefsDir());
-
+        
         saveContents();
-
+        
         if (JOptionPane.showConfirmDialog(null,
-                "Your updated preferences will take effect when the program is restarted. Quit now?",
-                "Quit now?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-
+                                          "Your updated preferences will take effect when the program is restarted. Quit now?",
+                                          "Quit now?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            
             // end the program
             setVisible(false);
             dispose();
@@ -134,14 +138,14 @@ abstract public class AbstractConfigFrame extends JFrame {
         // don't end the program, just close the window
         setVisible(false);
     }
-
+    
     /*
      * Create a panel showing the valid Swing Look&Feels and allowing selection
      */
     JPanel createGUIPane() {
         JPanel c = new JPanel();
         c.setLayout(new FlowLayout());
-
+        
         c.add(new JLabel("GUI style: "));
         // find L&F definitions
         UIManager.LookAndFeelInfo[] plafs = UIManager.getInstalledLookAndFeels();
@@ -159,11 +163,11 @@ abstract public class AbstractConfigFrame extends JFrame {
             LAFGroup.add(jmi);
             jmi.setActionCommand(name);
             jmi.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    log.info("LAF class set to "+e.getActionCommand());
-                    selectedLAF = e.getActionCommand();
-                }
-            });
+                    public void actionPerformed(ActionEvent e) {
+                        log.info("LAF class set to "+e.getActionCommand());
+                        selectedLAF = e.getActionCommand();
+                    }
+                });
             if (installedLAFs.get(name).equals(UIManager.getLookAndFeel().getClass().getName())) {
                 jmi.setSelected(true);
                 selectedLAF = name;
@@ -171,19 +175,19 @@ abstract public class AbstractConfigFrame extends JFrame {
         }
         return c;
     }
-
+    
     java.util.Hashtable installedLAFs;
     ButtonGroup LAFGroup;
     String selectedLAF;
-
+    
     public Element getGUI() {
         Element e = new Element("gui");
         String lafClassName = LAFGroup.getSelection().getActionCommand();
-
+        
         e.addAttribute("LAFclass", lafClassName);
         return e;
     }
-
+    
     protected boolean configureGUI(Element e) {
         String name = e.getAttribute("LAFclass").getValue();
         String className = (String) installedLAFs.get(name);
@@ -208,7 +212,7 @@ abstract public class AbstractConfigFrame extends JFrame {
         }
         return true;
     }
-
+    
     /**
      *  Change the look-and-feel to the specified class.
      *  Alert the user if there were problems loading the PLAF.
@@ -218,7 +222,7 @@ abstract public class AbstractConfigFrame extends JFrame {
     public void updateLookAndFeel(String name, String className) {
 	try {
             // Set the new look and feel, and update the sample message to reflect it.
-	    	UIManager.setLookAndFeel(className);
+            UIManager.setLookAndFeel(className);
             // Call for a UI refresh to the new LAF starting at the highest level
             SwingUtilities.updateComponentTreeUI(getContentPane());
         } catch (Exception e) {
@@ -230,38 +234,40 @@ abstract public class AbstractConfigFrame extends JFrame {
             } else {
                 errMsg += "could not be loaded.";
             }
-
+            
             log.error(errMsg);
-
+            
         }
     }
-
+    
     JComboBox programmerBox = null;
-
-	JPanel createProgrammerPane() {
-		JPanel j = new JPanel();
-		j.setLayout(new BoxLayout(j, BoxLayout.X_AXIS));
-		j.add(new JLabel("Default programmer format: "));
-		j.add(programmerBox = new JComboBox(jmri.jmrit.symbolicprog.CombinedLocoSelPane.findListOfProgFiles()));
-		return j;
-	}
-
-	public Element getProgrammer() {
-		Element programmer = new Element("programmer");
-		programmer.addAttribute("defaultFile", (String)programmerBox.getSelectedItem());
-		programmer.addAttribute("verifyBeforeWrite", "no");
-		return programmer;
-	}
-
-	protected boolean configureProgrammer(Element e) {
-		jmri.jmrit.symbolicprog.CombinedLocoSelPane.setDefaultProgFile(e.getAttribute("defaultFile").getValue());
-		programmerBox.setSelectedItem(e.getAttribute("defaultFile").getValue());
-		return true;
-	}
-
-
-	// initialize logging
+    
+    JPanel createProgrammerPane() {
+        JPanel j = new JPanel();
+        j.setLayout(new BoxLayout(j, BoxLayout.X_AXIS));
+        j.add(new JLabel("Default programmer format: "));
+        j.add(programmerBox = new JComboBox(jmri.jmrit.symbolicprog.CombinedLocoSelPane.findListOfProgFiles()));
+        return j;
+    }
+    
+    public Element getProgrammer() {
+        Element programmer = new Element("programmer");
+        programmer.addAttribute("defaultFile", (String)programmerBox.getSelectedItem());
+        programmer.addAttribute("verifyBeforeWrite", "no");
+        return programmer;
+    }
+    
+    protected boolean configureProgrammer(Element e) {
+        jmri.jmrit.symbolicprog.CombinedLocoSelPane.setDefaultProgFile(e.getAttribute("defaultFile").getValue());
+        programmerBox.setSelectedItem(e.getAttribute("defaultFile").getValue());
+        return true;
+    }
+    
+    protected void invokeAction() {
+    }
+    
+    // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractConfigFrame.class.getName());
-
+    
 }
 
