@@ -2,14 +2,14 @@
 
  package jmri.jmrit.powerpanel;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.Dimension;
+
+import javax.swing.JMenuBar;
 
 /**
  * Frame for user input of LocoNet messages
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class PowerPanelFrame extends javax.swing.JFrame {
 
