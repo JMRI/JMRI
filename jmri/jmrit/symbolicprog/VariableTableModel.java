@@ -19,7 +19,7 @@ import org.jdom.Element;
  * Table data model for display of variables in symbolic programmer.
  * Also responsible for loading from the XML file...
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version      $Revision: 1.9 $
+ * @version      $Revision: 1.10 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -254,8 +254,18 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             v = new LongAddrVariableValue(name, comment, readOnly,
                                           CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item);
         } else if ( (child = e.getChild("shortAddressVal")) != null) {
-            v = new ShortAddrVariableValue(name, comment, readOnly,
-                                     CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item);
+            ShortAddrVariableValue v1 = new ShortAddrVariableValue(name, comment, readOnly,
+                                     CV, mask, _cvModel.allCvVector(), _status, item);
+            v = v1;
+            // get specifics if any
+            List l = child.getChildren("shortAddressChanges");
+            for (int k=0; k< l.size(); k++)
+                try {
+                    v1.setModifiedCV(((Element)l.get(k)).getAttribute("cv").getIntValue());
+                }
+                catch (org.jdom.DataConversionException e1) {
+                    log.error("invalid cv attribute in short address element of decoder file");
+                }
 
         } else if ( (child = e.getChild("splitVal")) != null) {
             if ( (a = child.getAttribute("min")) != null)
