@@ -2,11 +2,15 @@
 
 package jmri.jmrix.loconet;
 
-import jmri.*;
-import jmri.jmrix.*;
+import jmri.CommandStation;
+import jmri.ProgListener;
+import jmri.Programmer;
+import jmri.jmrix.AbstractProgrammer;
 
-import java.beans.*;
-import java.util.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Hashtable;
+import java.util.Vector;
 
 /**
  * Controls a collection of slots, acting as the
@@ -29,7 +33,7 @@ import java.util.*;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.22 $
+ * @version     $Revision: 1.23 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
@@ -790,14 +794,22 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         readNextSlot();
     }
 
+    /**
+     * Send a message requesting the data from a particular slot.
+     * @param slot Slot number
+     */
+    public void sendReadSlot(int slot) {
+        LocoNetMessage m = new LocoNetMessage(4);
+        m.setOpCode(0xBB);  // OPC_RQ_SL_DATA
+        m.setElement(1, slot&0x7F);
+        m.setElement(2, 0);
+        LnTrafficController.instance().sendLocoNetMessage(m);
+    }
+
     protected int nextReadSlot = 0;
     synchronized protected void readNextSlot() {
         // send info request
-        LocoNetMessage m = new LocoNetMessage(4);
-        m.setOpCode(0xBB);  // OPC_RQ_SL_DATA
-        m.setElement(1, (nextReadSlot++)&0x7F);
-        m.setElement(2, 0);
-        LnTrafficController.instance().sendLocoNetMessage(m);
+        sendReadSlot(nextReadSlot++);
 
         // schedule next read if needed
         if (nextReadSlot < 127) {
