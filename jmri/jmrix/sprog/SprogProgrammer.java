@@ -12,7 +12,7 @@ import java.beans.PropertyChangeEvent;
  * Implements the jmri.Programmer interface via commands for the Sprog programmer
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SprogProgrammer extends AbstractProgrammer implements SprogListener {
 
@@ -49,12 +49,14 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         public void setMode(int mode) {
           int oldMode = _mode;  // preserve this in case we need to go back
           if (mode != _mode) {
+            log.debug("change to mode "+mode);
             notifyPropertyChange("Mode", _mode, mode);
             _mode = mode;
           }
           if (_mode != Programmer.DIRECTBITMODE && _mode != Programmer.PAGEMODE) {
             // attempt to switch to unsupported mode, switch back to previous
             _mode = oldMode;
+            log.debug("switching back to old supported mode "+_mode);
             notifyPropertyChange("Mode", mode, _mode);
           }
         }
@@ -70,7 +72,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
             log.debug("hasMode request on mode "+mode+" returns true");
             return true;
           }
-          log.debug("hasMode returns false on mode "+mode);
+          log.debug("hasMode request on mode "+mode+" returns false");
           return false;
         }
         public int getMode() { return _mode; }
