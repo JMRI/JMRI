@@ -5,7 +5,7 @@
  *                        system specific consist managers can be built.
  *
  * @author                Paul Bender Copyright (C) 2004
- * @version               $Revision 1.0 $
+ * @version               $Revision: 1.3 $
  */
 
 
