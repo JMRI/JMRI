@@ -34,7 +34,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * used with permission.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2003
- * @version			$Revision: 1.29 $
+ * @version			$Revision: 1.30 $
  */
 public class Llnmon {
 
@@ -1199,8 +1199,8 @@ public class Llnmon {
                                     logString += "\tStatus = Failed, Service Mode programming track empty\n";
                                 }
                                 if ((pstat & 0xF0) != 0) {
-                                    logString += "Warning: reserved bit set. Message may be invalid. PSTAT = 0x"
-                                        +Integer.toHexString(pstat);
+                                    logString += "\tUnexpected PSTAT value = 0x"
+                                        +Integer.toHexString(pstat)+"\n";
                                 }
                             } else {
                                 logString += "\tStatus = Success\n";
