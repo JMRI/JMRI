@@ -18,13 +18,15 @@ import javax.swing.*;
  * Base class for Jmri Apps
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class Apps extends JPanel {
 
     public Apps(JFrame frame) {
 
         super(true);
+
+        setButtonSpace();
 
         // load preference file
         if (configFilename != null) {
@@ -48,7 +50,13 @@ public class Apps extends JPanel {
         createMenus(menuBar, frame);
 
         add(statusPanel());
+        add(buttonSpace());
 
+    }
+
+    void setButtonSpace() {
+        _buttonSpace = new JPanel();
+        _buttonSpace.setLayout(new FlowLayout());
     }
 
     protected void createMenus(JMenuBar menuBar, JFrame frame) {
@@ -199,6 +207,18 @@ public class Apps extends JPanel {
         pane1.add(pane2);
         return pane1;
     }
+
+    /**
+     * Provide access to a place where applications
+     * can expect the configurion code to build run-time
+     * buttons.
+     * @see apps.CreateButtonPanel
+     * @return null if no such space exists
+     */
+    static public JComponent buttonSpace() {
+        return _buttonSpace;
+    }
+    static JComponent _buttonSpace = null;
 
     protected JFrame prefsFrame = null;
     protected ResourceBundle rb;
