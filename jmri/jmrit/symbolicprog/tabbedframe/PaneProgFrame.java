@@ -27,7 +27,7 @@ import org.jdom.Element;
 /**
  * Frame providing a command station programmer from decoder definition files.
  * @author			Bob Jacobsen   Copyright (C) 2001; D Miller Copyright 2003
- * @version			$Revision: 1.37 $
+ * @version			$Revision: 1.38 $
  */
 abstract public class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
@@ -255,7 +255,7 @@ abstract public class PaneProgFrame extends javax.swing.JFrame
 		for (int i=0; i<paneList.size(); i++) {
 		    // load each pane
                     String pname = ((Element)(paneList.get(i))).getAttribute("name").getValue();
-                    newPane( pname, ((Element)(paneList.get(i))), modelElem);
+                    newPane( pname, ((Element)(paneList.get(i))), modelElem, true);  // show even if empty
                 }
             }
         }
@@ -408,13 +408,13 @@ abstract public class PaneProgFrame extends javax.swing.JFrame
         // add the Info tab
         tabPane.addTab("Roster Entry", makeInfoPane(r));
 
-        // for all "pane" elements ...
+        // for all "pane" elements in the programmer
         List paneList = base.getChildren("pane");
         if (log.isDebugEnabled()) log.debug("will process "+paneList.size()+" pane definitions");
         for (int i=0; i<paneList.size(); i++) {
             // load each pane
             String name = ((Element)(paneList.get(i))).getAttribute("name").getValue();
-            newPane( name, ((Element)(paneList.get(i))), modelElem);
+            newPane( name, ((Element)(paneList.get(i))), modelElem, false);  // dont force showing if empty
         }
 
     }
@@ -537,13 +537,13 @@ abstract public class PaneProgFrame extends javax.swing.JFrame
         if (newAddr!=null) _rPane.setDccAddress(newAddr);
     }
 
-    public void newPane(String name, Element pane, Element modelElem) {
+    public void newPane(String name, Element pane, Element modelElem, boolean enableEmpty) {
 
         // create a panel to hold columns
         PaneProgPane p = new PaneProgPane(name, pane, cvModel, variableModel, modelElem);
 
         // how to handle the tab depends on whether it has contents and option setting
-        if ( (p.cvList.size()!=0) || (p.varList.size()!=0) ) {
+        if ( enableEmpty || (p.cvList.size()!=0) || (p.varList.size()!=0) ) {
             tabPane.addTab(name, p);  // always add if not empty
         } else if (getShowEmptyPanes()) {
             // here empty, but showing anyway as disabled
