@@ -36,7 +36,7 @@ import javax.swing.JToggleButton;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class BDL16Frame extends JFrame implements LocoNetListener {
 
@@ -67,9 +67,11 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
         appendLine(drivefromswitch);
         appendLine(decodefromloconet);
         appendLine(reserved36);
-        appendLine(reserved37);
-        appendLine(reserved38);
-        appendLine(reserved39);
+        appendLine(longdelay);
+        appendLine(extralongdelay);
+        appendLine(transpondtrack);
+        appendLine(antichatfilt);
+        appendLine(antichatsens);
         appendLine(setdefault);
 
         appendLine(status);
@@ -173,9 +175,11 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
         opsw[25] = drivefromswitch.isSelected();
         opsw[26] = decodefromloconet.isSelected();
         opsw[36] = reserved36.isSelected();
-        opsw[37] = reserved37.isSelected();
-        opsw[38] = reserved38.isSelected();
-        opsw[39] = reserved39.isSelected();
+        opsw[37] = longdelay.isSelected();
+        opsw[38] = extralongdelay.isSelected();
+        opsw[39] = transpondtrack.isSelected();
+        opsw[43] = antichatfilt.isSelected();
+        opsw[44] = antichatsens.isSelected();
         opsw[40] = setdefault.isSelected();
 
         // Start the first operation
@@ -241,9 +245,11 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
         drivefromswitch.setSelected(opsw[25]);
         decodefromloconet.setSelected(opsw[26]);
         reserved36.setSelected(opsw[36]);
-        reserved37.setSelected(opsw[37]);
-        reserved38.setSelected(opsw[38]);
-        reserved39.setSelected(opsw[39]);
+        longdelay.setSelected(opsw[37]);
+        extralongdelay.setSelected(opsw[38]);
+        transpondtrack.setSelected(opsw[39]);
+        antichatfilt.setSelected(opsw[43]);
+        antichatsens.setSelected(opsw[44]);
         setdefault.setSelected(opsw[40]);
     }
 
@@ -266,7 +272,9 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
             case 37: return 38;
             case 38: return 39;
             case 39: return 40;
-            case 40: return  0;   // done!
+            case 40: return 43;
+            case 43: return 44;
+            case 44: return  0;   // done!
             default:
                 log.error("unexpected state "+state);
                 return 0;
@@ -290,9 +298,11 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
     JCheckBox drivefromswitch       = new JCheckBox("Drive LEDs from switch commands, not occupancy");  // opsw 25
     JCheckBox decodefromloconet     = new JCheckBox("Decode switch commands from LocoNet");  // opsw 26
     JCheckBox reserved36            = new JCheckBox("OpSw 36 (Reserved)");  // opsw 36
-    JCheckBox reserved37            = new JCheckBox("OpSw 37 (Reserved)");  // opsw 37
-    JCheckBox reserved38            = new JCheckBox("OpSw 38 (Reserved)");  // opsw 38
-    JCheckBox reserved39            = new JCheckBox("OpSw 39 (Reserved)");  // opsw 39
+    JCheckBox longdelay             = new JCheckBox("Long detection delay (BDL168 only)");  // opsw 37
+    JCheckBox extralongdelay        = new JCheckBox("Extra long detection delay (BDL168 only)OpSw 38 (Reserved)");  // opsw 38
+    JCheckBox transpondtrack        = new JCheckBox("Transponder Tracking (BDL168 only)");  // opsw 39
+    JCheckBox antichatfilt          = new JCheckBox("Anti-chatter filtering (BDL168 only)");  // opsw 39
+    JCheckBox antichatsens          = new JCheckBox("Anti-chatter filter sensitivity (BDL168 only)");  // opsw 39
     JCheckBox setdefault            = new JCheckBox("Restore factory default, including address");  // opsw 40
 
     JLabel status = new JLabel("The BDL16 should be in normal mode (Don't push the buttons on the BDL16)");
