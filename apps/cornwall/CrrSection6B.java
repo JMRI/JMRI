@@ -10,7 +10,7 @@ import jmri.*;
  * Based on Crr0029.bas
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class CrrSection6B extends CrrSection {
 
@@ -18,7 +18,7 @@ public class CrrSection6B extends CrrSection {
         sig  = InstanceManager.signalHeadManagerInstance().getByUserName("Signal 6B");
         inputs = new NamedBean[]{ tu[11],tu[24],tu[26],
                                 bo[9], bo[10], bo[28], bo[29], bo[31], bo[32],
-                                gate, si[108], si[111] };
+                                gate, si[108], si[111], si[114], si[117] };
     }
 
     /**
@@ -36,13 +36,15 @@ public class CrrSection6B extends CrrSection {
         boolean tu24 = ( tu[24].getKnownState() == Sensor.ACTIVE);
         boolean tu26 = ( tu[26].getKnownState() == Sensor.ACTIVE);
 
-        boolean si108 = ( si[111].getCommandedState() == THROWN);
-        boolean si111 = ( si[108].getCommandedState() == THROWN);
+        boolean si108 = ( si[108].getCommandedState() == THROWN);
+        boolean si111 = ( si[111].getCommandedState() == THROWN);
+        boolean si114 = ( si[114].getCommandedState() == THROWN);
+        boolean si117 = ( si[117].getCommandedState() == THROWN);
 
         int value = GREEN;
         if (
                ( tu11 && bo9 )
-            || ( tu11 && !tu24 && bo28  )   // is the bo28/bo29 selection backwards here?
+            || ( tu11 && !tu24 && bo28  )
             || ( tu11 && tu24 && bo29  )
             || ( !tu11 && bo10 )
             || ( !tu11 && !tu26 && bo31  )
@@ -51,9 +53,12 @@ public class CrrSection6B extends CrrSection {
            )
             value = RED;
 
-        if (value == GREEN && !tu24 && si108)
-            value = YELLOW;
-        else if (value == GREEN && tu24 && si111)
+        if (value == GREEN && (
+                   ( tu11 && !tu24 && si108 )
+                || ( tu11 && tu24 && si111  )
+                || ( !tu11 && !tu26 && si114  )
+                || ( !tu11 && tu26 && si117  )
+            ))
             value = YELLOW;
 
         sig.setAppearance(value);
