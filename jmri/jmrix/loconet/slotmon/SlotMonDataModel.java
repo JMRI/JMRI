@@ -11,7 +11,7 @@ import jmri.jmrix.loconet.locoio.*;
 /**
  * Table data model for display of slot manager contents
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version		$Revision: 1.7 $
+ * @version		$Revision: 1.8 $
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener  {
 
@@ -144,7 +144,8 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         case ADDRCOLUMN:  //
             return new Integer(s.locoAddr());
         case SPDCOLUMN:  //
-            return new Integer(s.speed());
+            if (s.speed() == 1) return "1 (estop)";
+            else return new Integer(s.speed());
         case TYPECOLUMN:  //
             switch (s.decoderType()) {
             case LnConstants.DEC_MODE_128A:	return "128 step advanced";
@@ -351,8 +352,11 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         return n;
     }
 
-    public int ithActiveSlot(int i) {   // turns slot number for ith active slot, counting from 0
-        // intended to be called with a row number
+    /**
+     * Returns slot number for ith active slot, counting from 0.
+     * Intended to be called with a row number
+     */
+    public int ithActiveSlot(int i) {
         int slotNum;
         int n = -1;   // need to find a used slot to have the 0th one!
         for (slotNum=0; slotNum<128; slotNum++) {
@@ -361,6 +365,25 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             if (n == i) break;
         }
         return slotNum;
+    }
+
+    /**
+     * This is a convenience method that makes it easier for classes
+     * using this model to set all in-use slots to emergency stop
+     */
+    public void estopAll() {
+        for (int slotNum=0; slotNum<120; slotNum++) {
+            LocoNetSlot s = SlotManager.instance().slot(slotNum);
+            if (s.slotStatus() != LnConstants.LOCO_FREE &&
+                s.speed() != 1) {
+                // send message to estop this loco
+                LocoNetMessage msg = new LocoNetMessage(4);
+                msg.setOpCode(LnConstants.OPC_LOCO_SPD);
+                msg.setElement(1, s.getSlot());
+                msg.setElement(2, 1);  // emergency stop
+                LnTrafficController.instance().sendLocoNetMessage(msg);
+            }
+        }
     }
 
     public void dispose() {
