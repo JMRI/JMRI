@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_01x3.xml,v 1.7 2003-05-29 19:35:31 jacobsen Exp $ -->
+<!-- $Id: Digitrax_01x3.xml,v 1.8 2003-05-31 04:53:54 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Simon.Ginsburg@freesurf.ch" 
-					version="6" lastUpdated="20030118"/>
+					version="" lastUpdated="20030118"/>
 
 		<!-- Created from version 5 of the 1x2 file -->
 		<!-- V2: fix default values for CV56, 57 BEMF -->
@@ -11,6 +11,7 @@
 		<!-- V4: change to yet another name, add decoders -->
 		<!-- V5: advanced consist options and parameters added -->
 		<!-- V6: BEMF defaults updated - jake -->
+		<!-- V7: decoder lock feature - jake -->
 		
 <decoder>
 	<family name="Series 3 with FX3, silent, readback" 
@@ -664,6 +665,12 @@
 				<enumChoice choice="Disabled"/>
 				</enumVal>
 			</variable>
+		<variable label="Decoder Lock Feature" CV="54" mask="XVXXXXXX" default="0">
+			<enumVal>
+				<enumChoice choice="Enabled"/>
+				<enumChoice choice="Disabled"/>
+				</enumVal>
+			</variable>
 
 		<variable label="Kick Start" CV="65">
 			<decVal/>
@@ -939,6 +946,8 @@
 		<display item="Short-circuit protection" />
 		<display item="Switching speed enabled by F6" />
 		<display item="Torque compensation" />
+		<display item="Decoder Lock Feature" />
+		
 	</column>
 </pane>
 
