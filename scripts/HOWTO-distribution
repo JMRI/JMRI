@@ -26,6 +26,8 @@ Making a distribution (substitute the release-name for 0.N throughout):
 
 ( ) Update the xml subdirectory, removing the CVS subdirs
 
+( ) Make sure there's a clean pref's directory.
+
 ( ) Any new jar files that need to be put in the lib area? If so, the app
 	will have to change (next step).  Move them into the distribution lib
 	area now.
