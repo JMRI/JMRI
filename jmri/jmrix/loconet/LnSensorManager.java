@@ -11,7 +11,7 @@ import jmri.Sensor;
  * System names are "LSnnn", where nnn is the sensor number without padding.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class LnSensorManager extends jmri.AbstractSensorManager implements LocoNetListener {
 
@@ -24,6 +24,10 @@ public class LnSensorManager extends jmri.AbstractSensorManager implements LocoN
 	// LocoNet-specific methods
 
 	public Sensor newSensor(String systemName, String userName) {
+                if (log.isDebugEnabled()) log.debug("newSensor:"
+                                            +( (systemName==null) ? "null" : systemName)
+                                            +";"+( (userName==null) ? "null" : userName));
+
 		// if system name is null, supply one from the number in userName
 		if (systemName == null) systemName = "LS"+userName;
 
@@ -32,10 +36,17 @@ public class LnSensorManager extends jmri.AbstractSensorManager implements LocoN
 			log.error("Invalid system name for LocoNet turnout: "+systemName);
 			return null;
 		}
-		LnSensor s = new LnSensor(systemName);
+
+                // return existing if there is one
+                Sensor s;
+                if ( (userName!=null) && ((s = getByUserName(userName)) != null)) return s;
+                if ( (systemName!=null) && ((s = getBySystemName(systemName)) != null)) return s;
+
+                // doesn't exist, make a new one
+		s = new LnSensor(systemName);
 
 		_tsys.put(systemName, s);
-		_tuser.put(userName, s);
+		if (userName!=null) _tuser.put(userName, s);
 		return s;
 	}
 
