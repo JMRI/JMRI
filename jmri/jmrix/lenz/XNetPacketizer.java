@@ -30,7 +30,7 @@ import java.util.Vector;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.3 $
+ * @version 		$Revision: 1.4 $
  *
  */
 public class XNetPacketizer extends XNetTrafficController {
@@ -112,7 +112,7 @@ public class XNetPacketizer extends XNetTrafficController {
 		}
 
 	/**
-	 * Break connection to existing LnPortController object. Once broken,
+	 * Break connection to existing XNetPortController object. Once broken,
 	 * attempts to send via "message" member will fail.
      * @param p previously connected port
 	 */
@@ -199,7 +199,7 @@ public class XNetPacketizer extends XNetTrafficController {
 	/**
 	 * Captive class to handle incoming characters.  This is a permanent loop,
 	 * looking for input messages in character form on the
-	 * stream connected to the LnPortController via <code>connectPort</code>.
+	 * stream connected to the XNetPortController via <code>connectPort</code>.
 	 */
 	class RcvHandler implements Runnable {
 		/**
@@ -293,7 +293,7 @@ public class XNetPacketizer extends XNetTrafficController {
 					// input - now send
 					try {
 						if (ostream != null) {
-							if (!controller.okToSend()) log.warn("LocoNet port not ready to receive");
+							if (!controller.okToSend()) log.warn("XPressNet port not ready to receive");
 							if (debug) log.debug("start write to stream");
 							ostream.write(msg);
 							if (debug) log.debug("end write to stream");
