@@ -24,7 +24,7 @@ import javax.swing.JTextField;
  * SignalHeadTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -51,6 +51,37 @@ public class SignalHeadTableAction extends AbstractTableAction {
      */
     void createModel() {
         m = new BeanTableDataModel() {
+		    static public final int LITCOL = 3;
+    		public int getColumnCount( ){ return NUMCOLUMN+1;}
+    		public String getColumnName(int col) {
+    			if (col==LITCOL) return "Lit";
+    			else return super.getColumnName(col);
+		    }
+    		public Class getColumnClass(int col) {
+    			if (col==LITCOL) return Boolean.class;
+    			else return super.getColumnClass(col);
+		    }
+    		public boolean isCellEditable(int row, int col) {
+    			if (col==LITCOL) return true;
+    			else return super.isCellEditable(row,col);
+			}    		
+    		public Object getValueAt(int row, int col) {
+    			if (col==LITCOL) {
+    				String name = (String)sysNameList.get(row);
+    				boolean val = InstanceManager.signalHeadManagerInstance().getBySystemName(name).getLit();
+					return new Boolean(val);
+    			}
+				else return super.getValueAt(row, col);
+			}    		
+    		public void setValueAt(Object value, int row, int col) {
+    			if (col==LITCOL) {
+    				String name = (String)sysNameList.get(row);
+    				boolean b = ((Boolean)value).booleanValue();
+    				InstanceManager.signalHeadManagerInstance().getBySystemName(name).setLit(b);
+    			}
+    			else super.setValueAt(value, row, col);
+    		}
+    		
             public String getValue(String name) {
                 int val = InstanceManager.signalHeadManagerInstance().getBySystemName(name).getAppearance();
                 switch (val) {
@@ -104,12 +135,14 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
     String SE8c4Aspect = rb.getString("StringSE8c4aspect");
     String TripleTurnout = rb.getString("StringTripleTurnout");
+    String DoubleTurnout = rb.getString("StringDoubleTurnout");
+    
     void addPressed(ActionEvent e) {
         if (addFrame==null) {
             addFrame = new JFrame(rb.getString("TitleAddSignal"));
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             addFrame.getContentPane().add(typeBox = new JComboBox(new String[]{
-                SE8c4Aspect, TripleTurnout
+                SE8c4Aspect, TripleTurnout, DoubleTurnout
             }));
             typeBox.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
@@ -163,6 +196,14 @@ public class SignalHeadTableAction extends AbstractTableAction {
             to2.setVisible(true);
             v3Label.setText(rb.getString("LabelRedTurnoutNumber"));
             to3.setVisible(true);
+            
+        } else if (DoubleTurnout.equals(typeBox.getSelectedItem())) {
+            nameLabel.setText(rb.getString("LabelSystemName"));
+            v1Label.setText(rb.getString("LabelGreenTurnoutNumber"));
+            v2Label.setText(rb.getString("LabelRedTurnoutNumber"));
+            to2.setVisible(true);
+            v3Label.setVisible(false);
+            to3.setVisible(false);
         } else log.error("Unexpected type in typeChanged: "+typeBox.getSelectedItem());
     }
 
@@ -183,6 +224,17 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 return;
             }
             s = new jmri.TripleTurnoutSignalHead(name.getText(),t1, t2, t3);
+            InstanceManager.signalHeadManagerInstance().register(s);
+        } else if (DoubleTurnout.equals(typeBox.getSelectedItem())) {
+            Turnout t1 = InstanceManager.turnoutManagerInstance().provideTurnout(to1.getText());
+            Turnout t2 = InstanceManager.turnoutManagerInstance().provideTurnout(to2.getText());
+            if (t1==null) log.warn("Could not provide turnout "+to1.getText());
+            if (t2==null) log.warn("Could not provide turnout "+to2.getText());
+            if (t2==null || t1==null) {
+                log.warn("skipping creation of signal "+name.getText()+" due to error");
+                return;
+            }
+            s = new jmri.DoubleTurnoutSignalHead(name.getText(),t1, t2);
             InstanceManager.signalHeadManagerInstance().register(s);
         } else log.error("Unexpected type: "+typeBox.getSelectedItem());
     }
