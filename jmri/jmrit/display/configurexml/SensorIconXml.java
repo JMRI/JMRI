@@ -15,7 +15,7 @@ import javax.swing.*;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class SensorIconXml implements XmlAdapter {
 
@@ -30,19 +30,18 @@ public class SensorIconXml implements XmlAdapter {
      */
     public Element store(Object o) {
         Element element = new Element("sensoricon");
-        element.addAttribute("class", "jmri.jmrit.display.configurexml.SensorIconXml");
 
         // include contents
         SensorIcon p = (SensorIcon)o;
+        element.addAttribute("sensor", p.getSensor().getID());
         element.addAttribute("x", ""+p.getX());
         element.addAttribute("y", ""+p.getY());
-        element.addAttribute("height", ""+p.getHeight());
-        element.addAttribute("width", ""+p.getWidth());
         element.addAttribute("active", p.getActiveIcon().getName());
         element.addAttribute("inactive", p.getInactiveIcon().getName());
         element.addAttribute("unknown", p.getUnknownIcon().getName());
         element.addAttribute("inconsistent", p.getInconsistentIcon().getName());
-        element.addAttribute("sensor", p.getSensor().getID());
+
+        element.addAttribute("class", "jmri.jmrit.display.configurexml.SensorIconXml");
 
         return element;
     }
