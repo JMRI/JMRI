@@ -1,5 +1,8 @@
 <!-- Defines XML for configuring the JMRIdemo and DecoderPro programs -->
-<!-- $Id: preferences-config.dtd,v 1.3 2003-05-11 01:56:49 jacobsen Exp $ -->
+<!-- $Id: preferences-config.dtd,v 1.4 2003-08-03 21:40:01 jacobsen Exp $ -->
+
+<!-- This file is obsolete! Preferences are now stored -->
+<!-- via the general layout-config DTD -->
 
 <!ELEMENT preferences-config (connection*, gui, programmer, perform*)>
 <!ATTLIST preferences-config>
