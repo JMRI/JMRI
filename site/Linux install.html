@@ -1,0 +1,94 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Bob Jacobsen, LBL">
+   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>Installing on Linux</title>
+</head>
+<body>
+
+<P>
+<h3><a id="Linux">Linux installation instructions:</a></h3>
+
+These steps outline how to install DecoderPro on Linux. These steps
+were tested on a system running Red Hat 7.2, but should work with all
+recent Linux distributions. These steps need to be performed with superuser
+priviledges.
+
+<UL>
+<LI>Install Java Runtime Environment (JRE).  To do this, download
+the Java 1.4 "Linux Red Hat RPM shell script" 
+from 
+<A href="http://java.sun.com/j2se/">http://java.sun.com/j2se/</A>.
+(There is also a copy of the .bin for the file in this directory
+on the CD)
+This should give you a file named "j2re-1_4_0-fcs-linux-i386.rpm".
+Install that with:
+<PRE>
+   rpm -i j2re-1_4_0-fcs-linux-i386.rpm
+</PRE>
+
+<LI>Copy the JMRI directory to your local disk.
+
+<LI>Install portions of Java Communications API.
+Download the file "javacomm20-x86" from
+<A HREF="http://java.sun.com/products/javacomm/index.html">http://java.sun.com/products/javacomm/index.html</A>
+(Licensing restrictions prevent us from putting a copy of this on the CD)
+Then install it with
+<PRE>          
+   cp comm.jar /usr/java/j2re1.4.0/lib/ext/
+   echo Driver=gnu.io.RXTXCommDriver > /usr/java/j2re1.4.0/lib/javax.comm.properties
+</PRE>
+<LI>Install Rxtx.
+Download the file "rxtx-bins.1" from
+<A HREF="http://www.rxtx.org">http://www.rxtx.org</A>.
+(There is also a copy on the CD).
+Install it with
+<PRE>
+    cp rxtx/1.4/jcl.jar /usr/java/j2re1.4.0/lib/ext
+    cp -d rxtx/1.4/i386-pc-linux/lib* /usr/java/j2re1.4.0/lib/i386/
+</PRE>
+
+<LI>Give user-level application access to serial ports
+<PRE>
+   chmod 666 /dev/ttyS0
+   chmod 666 /dev/ttyS1
+</PRE>
+
+<LI>Give user access to lock files (required on Red Hat).
+   Edit /etc/groups & /etc/gshadow to add user to 'uucp' and 'lock' groups.
+
+</UL>
+
+The install is complete.    
+Switch to the JMRI directory and run the programs using one of 
+
+<Pre>
+  ./DecoderPro.csh
+  ./LocoTools.csh
+  ./JmriDemo.csh
+</pre>
+  
+
+<h3>Connecting your layout to the computer</h3>
+To connect your layout to the computer, follow one of these links:
+<UL>
+<LI><A HREF="../site/connectAtlas.html">Atlas Commander via Lenz LI100</a>
+<LI><A HREF="../site/connectEasyDCC.html">EasyDCC</a>
+<LI><A HREF="../site/connectDigitrax.html">Digitrax</a>
+<LI><A HREF="../site/connectNCE.html">NCE</a>
+<LI><A HREF="../site/connectLenz.html">Lenz XPressNet via LI100</a>
+</UL>
+
+<P>You can also go directly to the pages describing how to
+<A HREF="../site/PaneProg/index.html">use the DecoderPro program</A>,
+<A HREF="../site/LocoTools.html">use the LocoTools program</A>, and 
+<A HREF="../site/index.html">the Jmri libraries and JmriDemo program</A>.
+
+<hr>
+Bob Jacobsen<BR>
+jake@physics.berkeley.edu
+</body>
+</html>
