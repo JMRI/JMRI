@@ -2,8 +2,8 @@
 <!DOCTYPE decoder:decoder-config SYSTEM "DTD/decoder-config.dtd">
 <decoder:decoder-config xmlns:decoder="http://jmri.sourceforge.net/xml/decoder">
 <decoder:decoder>
-	<decoder:id model="Dual-Mode" mfg="Atlas" mfgID="127"
-				comment="Item #340"></decoder:id>
+	<decoder:id model="D13SR" mfg="NCE" mfgID="11"
+				comment="From decoder version 3.1 documentation"></decoder:id>
 
 	<decoder:programming direct="yes" paged="yes" 
 	                     register="yes" ops="yes"></decoder:programming>
@@ -13,19 +13,60 @@
 			<decoder:decVal min="1" max="127"></decoder:decVal>
 			</decoder:variable>
 		<decoder:variable name="Start voltage" CV="2"
-						comment="A value of 255 corresponds to 100%">
+						comment="Useful range 0-100">
 			<decoder:decVal></decoder:decVal>
 			</decoder:variable>
-		<decoder:variable name="Acceleration momentum" CV="3">
-			<decoder:decVal max="31"></decoder:decVal>
-			</decoder:variable>
-		<decoder:variable name="Brake momentum" CV="4">
-			<decoder:decVal max="31"></decoder:decVal>
-			</decoder:variable>
-		<decoder:variable name="Acceleration trim" CV="23">
+		<decoder:variable name="Acceleration rate" CV="3"
+						comment="each unit = 7ms between speed steps">
 			<decoder:decVal></decoder:decVal>
 			</decoder:variable>
-		<decoder:variable name="Deceleration trim" CV="24">
+		<decoder:variable name="Deceleration rate" CV="4"
+						comment="each unit = 7ms between speed steps">
+			<decoder:decVal></decoder:decVal>
+			</decoder:variable>
+		<decoder:variable name="Vmax" CV="5"
+						comment="speed at highest speed step">
+			<decoder:decVal></decoder:decVal>
+			</decoder:variable>
+		<decoder:variable name="Vmid" CV="6"
+						comment="speed (on a scaled of 1-255) at speed step 7, 14 or 63. 0 = use default of 128">
+			<decoder:decVal></decoder:decVal>
+			</decoder:variable>
+		<decoder:variable name="Motor drive frequency" CV="9"
+						comment="1-255 PWM drive freq in 128us increments; 0 = frequency is 15,625 Hz">
+			<decoder:decVal></decoder:decVal>
+			</decoder:variable>
+		<decoder:variable name="Consist Address" CV="23" mode="XVVVVVVV" comment="0 means no consist active">
+			<decoder:decVal></decoder:decVal>
+			</decoder:variable>
+		<decoder:variable name="Consist direction" CV="23" mode="VXXXXXXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="direction is normal"></decoder:enumChoice>
+				<decoder:enumChoice choice="direction is reversed"></decoder:enumChoice>
+				</decoder:enumVal>			
+		<decoder:variable name="F1 active in consist mode" CV="21" mask="XXXXXXXV">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="F1 no consist control"></decoder:enumChoice>
+				<decoder:enumChoice choice="F1 can be controlled at consist address"></decoder:enumChoice>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="FLF active in consist mode" CV="22" mask="XXXXXXXV">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="FLF no consist control"></decoder:enumChoice>
+				<decoder:enumChoice choice="FLF can be controlled at consist address"></decoder:enumChoice>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="FLR active in consist mode" CV="22" mask="XXXXXXVX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="FLR no consist control"></decoder:enumChoice>
+				<decoder:enumChoice choice="FLR can be controlled at consist address"></decoder:enumChoice>
+				</decoder:enumVal>
+			</decoder:variable>
+			
+		<decoder:variable name="Acceleration rate adjust" CV="23"
+			<decoder:decVal></decoder:decVal>
+			</decoder:variable>
+		<decoder:variable name="Deceleration rate adjust" CV="24" mask="VVVVVVVV">
 			<decoder:decVal></decoder:decVal>
 			</decoder:variable>
 		<decoder:variable name="Locomotive direction" CV="29" mask="XXXXXXXV">
@@ -90,13 +131,13 @@
 				</decoder:binaryVal phrasing="NoYes">
 			</decoder:variable>
 			</decoder:variable>
-		<decoder:variable name="Dimming value (CV52)" CV="52">
+		<decoder:variable name="Dimming value (CV52)" CV="52" mask="VVVVVVVV">
 			<decoder:decVal></decoder:decVal>
 			</decoder:variable>
-		<decoder:variable name="User private ID #1" CV="105">
+		<decoder:variable name="User private ID #1" CV="105" mask="VVVVVVVV">
 			<decoder:decVal></decoder:decVal>
 			</decoder:variable>
-		<decoder:variable name="User private ID #2" CV="106">
+		<decoder:variable name="User private ID #2" CV="106" mask="VVVVVVVV">
 			<decoder:decVal></decoder:decVal>
 			</decoder:variable>
 		<decoder:variable name="Speed Table" CV="67">

@@ -33,10 +33,11 @@
 
 <!ELEMENT decoder:variables (decoder:variable*)>
 
-<!ELEMENT decoder:variable  (decoder:enumVal | decoder:binaryVal | decoder:decVal | decoder:hexVal) >
+<!ELEMENT decoder:variable  (decoder:enumVal | decoder:binaryVal | 
+                             decoder:decVal | decoder:hexVal | decoder:speedTableVal ) >
 <!ATTLIST decoder:variable name CDATA #REQUIRED>  <!-- Name used for identification -->
 <!ATTLIST decoder:variable CV CDATA #REQUIRED>    <!-- CV number containing value -->
-<!ATTLIST decoder:variable mask CDATA #REQUIRED>    <!-- mask of bits within CV -->
+<!ATTLIST decoder:variable mask CDATA "VVVVVVVV">    <!-- mask of bits within CV -->
                                            <!-- mask is up to 16 characters long, each -->
                                            <!-- representing one bit in the result -->
                                            <!-- valid chars: -->
@@ -60,10 +61,17 @@
 <!ATTLIST decoder:hexVal max CDATA #REQUIRED>  <!-- if decimal/hex, largest acceptable value -->
 <!ATTLIST decoder:hexVal default CDATA #IMPLIED>
 
-<!ELEMENT decoder:enumVal (enumChoice*) >
+<!ELEMENT decoder:enumVal (decoder:enumChoice*) >
 <!ATTLIST decoder:enumVal default CDATA #IMPLIED>
 <!ATTLIST decoder:enumVal comment CDATA #IMPLIED>
 
 <!ELEMENT decoder:enumChoice EMPTY>
 <!ATTLIST decoder:enumChoice choice CDATA #REQUIRED >
 <!ATTLIST decoder:enumChoice comment CDATA #IMPLIED >
+
+<!ELEMENT decoder:speedTableVal (decoder:speedTableEntry*) >
+<!ATTLIST decoder:speedTableVal comment CDATA #IMPLIED>
+
+<!ELEMENT decoder:speedTableEntry EMPTY>
+<!ATTLIST decoder:speedTableEntry step  CDATA #REQUIRED >
+<!ATTLIST decoder:speedTableEntry value CDATA #REQUIRED >

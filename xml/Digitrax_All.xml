@@ -10,65 +10,68 @@
 
 	<decoder:variables>
 		<decoder:variable name="Address" CV="1" mask="VVVVVVVV" comment="Short address">
-			<decoder:decVal min="1" max="127"></decoder:decVal>
+			<decoder:decVal min="1" max="127"/>
 			</decoder:variable>
-		<decoder:variable name="Start voltage" CV="2" mask="VVVVVVVV"
+		<decoder:variable name="Start voltage" CV="2"
 						comment="A value of 255 corresponds to 100%">
 			<decoder:decVal></decoder:decVal>
 			</decoder:variable>
-		<decoder:variable name="Acceleration rate" CV="3" mask="VVVVVVVV">
-			<decoder:decVal max="31"></decoder:decVal>
+		<decoder:variable name="Acceleration rate" CV="3">
+			<decoder:decVal max="31"/>
 			</decoder:variable>
-		<decoder:variable name="Deceleration rate" CV="4" mask="VVVVVVVV">
-			<decoder:decVal max="31"></decoder:decVal>
+		<decoder:variable name="Deceleration rate" CV="4">
+			<decoder:decVal max="31"/>
 			</decoder:variable>
-		<decoder:variable name="Maximum voltage" CV="5" mask="VVVVVVVV">
-			<decoder:decVal></decoder:decVal>
+		<decoder:variable name="Maximum voltage" CV="5">
+			<decoder:decVal/>
 			</decoder:variable>
-		<decoder:variable name="Midpoint voltage" CV="6" mask="VVVVVVVV">
-			<decoder:decVal></decoder:decVal>
+		<decoder:variable name="Midpoint voltage" CV="6">
+			<decoder:decVal/>
 			</decoder:variable>
 		<decoder:variable name="Normal direction of motion" CV="29" mask="XXXXXXXV">
 			<decoder:enumVal>
-				<decoder:enumChoice choice="forward"></decoder:enumChoice>
-				<decoder:enumChoice choice="reverse"></decoder:enumChoice>
+				<decoder:enumChoice choice="forward"/>
+				<decoder:enumChoice choice="reverse"/>
 				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="Speed steps" CV="29" mask="XXXXXXVX">
 			<decoder:enumVal>
-				<decoder:enumChoice choice="14"></decoder:enumChoice>
-				<decoder:enumChoice choice="28/128"></decoder:enumChoice>
+				<decoder:enumChoice choice="14"/>
+				<decoder:enumChoice choice="28/128">
 				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="Analog conversion mode" CV="29" mask="XXXXXVXX">
-			<decoder:binaryVal phrasing="OffOn"></decoder:binaryVal>
+			<decoder:binaryVal phrasing="OffOn"/>
 			</decoder:variable>
 		<decoder:variable name="Speed table" CV="29" mask="XXXVXXXX">
-			<decoder:binaryVal phrasing="OffOn"></decoder:binaryVal>
+			<decoder:binaryVal phrasing="OffOn"/>
 			</decoder:variable>
 		<decoder:variable name="Addressing mode" CV="29" mask="XXVXXXXX">
 			<decoder:enumVal>
-				<decoder:enumChoice choice="2 digit addressing"></decoder:enumChoice>
-				<decoder:enumChoice choice="4 digit addressing"></decoder:enumChoice>
+				<decoder:enumChoice choice="2 digit addressing"/>
+				<decoder:enumChoice choice="4 digit addressing"/>
 				</decoder:enumVal>
 			</decoder:variable>
-		<decoder:variable name="Kick start value" CV="65" mask="VVVVVVVV">
+		<decoder:variable name="Kick start value" CV="65">
+			<decoder:decVal/>
+			</decoder:variable>
+		<decoder:variable name="Forward trim" CV="66">
 			<decoder:decVal></decoder:decVal>
 			</decoder:variable>
-		<decoder:variable name="Forward trim" CV="66" mask="VVVVVVVV">
+		<decoder:variable name="Maximum speed table step" CV="94">
 			<decoder:decVal></decoder:decVal>
 			</decoder:variable>
-		<decoder:variable name="Maximum speed table step" CV="94" mask="VVVVVVVV">
+		<decoder:variable name="Reverse trim" CV="95">
 			<decoder:decVal></decoder:decVal>
 			</decoder:variable>
-		<decoder:variable name="Reverse trim" CV="95" mask="VVVVVVVV">
+		<decoder:variable name="User private ID #1" CV="105">
 			<decoder:decVal></decoder:decVal>
 			</decoder:variable>
-		<decoder:variable name="User private ID #1" CV="105" mask="VVVVVVVV">
+		<decoder:variable name="User private ID #2" CV="106">
 			<decoder:decVal></decoder:decVal>
 			</decoder:variable>
-		<decoder:variable name="User private ID #2" CV="106" mask="VVVVVVVV">
-			<decoder:decVal></decoder:decVal>
+		<decoder:variable name="Speed Table" CV="67">
+			<decoder:speedTableVal></decoder:speedTableVal>
 			</decoder:variable>
 	</decoder:variables>
 	
