@@ -263,10 +263,10 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 	public void dispose()
 	{
 		// check for any special disposing in InternalFrames
-		controlPanel.dispose();
-		functionPanel.dispose();
+		controlPanel.destroy();
+		functionPanel.destroy();
 		// dispose of this last because it will release and destroy throttle.
-		addressPanel.dispose();
+		addressPanel.destroy();
 		
 		// Handle disposing of the throttle
 		if (throttle != null)
