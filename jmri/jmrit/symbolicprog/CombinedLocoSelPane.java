@@ -22,7 +22,7 @@ import com.sun.java.util.collections.List;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class CombinedLocoSelPane extends javax.swing.JPanel  {
 
@@ -209,6 +209,15 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 			String msg = "Found mfg "+mfgID+" ("+mfg+") version "+modelID+"; no such decoder defined";
 			log.warn(msg);
 			_statusLabel.setText(msg);
+            // try to select all decoders from that MFG
+		    temp = DecoderIndexFile.instance().matchingComboBox(null, null, Integer.toString(mfgID), null, null);
+		    if (log.isDebugEnabled()) log.debug("mfg-only selectDecoder found "+temp.getItemCount()+" matches");
+		    // install all those in the JComboBox in place of the longer, original list
+		    if (temp.getItemCount() > 0) {
+			    decoderBox.setModel(temp.getModel());
+			    decoderBox.insertItemAt("<from locomotive settings>",0);
+			    decoderBox.setSelectedIndex(1);
+		    }
 		}
 	}
 
