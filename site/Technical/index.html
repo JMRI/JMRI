@@ -174,6 +174,40 @@ jmri.jpx file you'll find there.
 JBuilder can become confused, in which case you'll have problems with seemingly
 missing files, wrong class names, etc.  When that happens, remove the "classes"
 folder from the project's "java" directory.
+
+<P>The Personal Edition of JBuilder does not come with the ability to make
+.jar files. (A .jar file is a "Java Archive", essentially a machine-readable
+library. For example, the JMRI code is compiled into the jmri.jar file for execution.)
+You can run the program from within JBuilder, but if you want to make a new jmri.jar
+file to update a stand-alone copy, you need to:
+
+<UL>
+<LI>Change to the java/classes directory
+
+<LI>From a Windows command prompt, execute the command
+<PRE>
+      jar cf ..\jmri.jar jmri resources apps
+</PRE>
+  (That 3rd item would be ../jmri.jar on Linux or MacOS X)
+<LI>
+This created a new "jmri.jar" file in the "java" directory of the project.  
+Copy or move it to an existing JMRI directory and start the program, which should 
+then be using your new code.
+</UL><P>
+Note 1:  The "jar" command is installed as part of a Java Software Development Kit (SDK), 
+including the one installed with JBuilder.  If the jar command isn't found, search for 
+a jar.exe file (any one will do, they're all the same for this purpose) and enter the 
+entire pathname, e.g.
+<PRE>
+   C:\jdk1.3.1_04\bin\jar ..\jmri.jar jmri resources apps
+</PRE>
+Note 2:  If you leave a "jmri.jar" file in the java\classes directory by accident, 
+it will be used instead of the class outputs of JBuilder.  This will have the effect 
+of "I compiled my change, but it's not being used!" because the older version of a class 
+in that jmri.jar file will be used instead of the new .class file you created by recompiling.  
+Hence the recommendation that you create the new jmri.jar file one level up by 
+specifying "..\jmri.jar" in the command.
+
 <H3>Using ant to build JMRI</h3>
 <A id="ant">
 Those of you who prefer a command line approach might want to investigate "ant", a
