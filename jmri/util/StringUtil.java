@@ -11,10 +11,20 @@ package jmri.util;
  * information.
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class StringUtil {
+
+    /**
+     * Convert an int to a exactly two hexadecimal characters
+     * @param n
+     * @return String exactly two characters long
+     */
+    static public String twoHexFromInt(int n) {
+        if ((n&0xFF) < 16) return "0"+Integer.toHexString(n&0xFF);
+        else return Integer.toHexString(n&0xFF);
+    }
 
     /**
      * Create a byte[] from a String containing hexadecimal values.
