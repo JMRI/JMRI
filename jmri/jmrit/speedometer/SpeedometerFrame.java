@@ -3,13 +3,16 @@
 package jmri.jmrit.speedometer;
 
 import java.awt.*;
+
 import javax.swing.*;
+
 import jmri.*;
+import jmri.jmrit.display.*;
 
 /**
  * Frame providing access to a speedometer
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SpeedometerFrame extends javax.swing.JFrame {
 
@@ -17,28 +20,31 @@ public class SpeedometerFrame extends javax.swing.JFrame {
     javax.swing.ButtonGroup startGroup 		= new javax.swing.ButtonGroup();
     javax.swing.JRadioButton startOnEntry  	= new javax.swing.JRadioButton("On entry");
     javax.swing.JRadioButton startOnExit    = new javax.swing.JRadioButton("On exit");
-    
+
     JTextField stopSensor = new JTextField(5);
     javax.swing.ButtonGroup stopGroup 		= new javax.swing.ButtonGroup();
     javax.swing.JRadioButton stopOnEntry  	= new javax.swing.JRadioButton("On entry");
     javax.swing.JRadioButton stopOnExit    = new javax.swing.JRadioButton("On exit");
-    
+
     JTextField distance = new JTextField(5);
-    
+
     JButton startButton = new JButton("Start");
     JLabel result = new JLabel("    ");
-    
+
+    SensorIcon startSensorIcon;
+    SensorIcon stopSensorIcon;
+
     public SpeedometerFrame() {
-        
+
         startGroup.add(startOnEntry);
         startGroup.add(startOnExit);
         stopGroup.add(stopOnEntry);
         stopGroup.add(stopOnExit);
-        
+
         // general GUI config
         setTitle("Speedometer");
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-        
+
         // add items to GUI
         JPanel pane1 = new JPanel();
         pane1.setLayout(new FlowLayout());
@@ -47,8 +53,10 @@ public class SpeedometerFrame extends javax.swing.JFrame {
         pane1.add(startSensor);
         pane1.add(startOnEntry);
         pane1.add(startOnExit);
+        startSensorIcon = new SensorIcon();
+        pane1.add(startSensorIcon);
         getContentPane().add(pane1);
-        
+
         JPanel pane2 = new JPanel();
         pane2.setLayout(new FlowLayout());
         pane2.add(new JLabel("2nd sensor:"));
@@ -56,35 +64,50 @@ public class SpeedometerFrame extends javax.swing.JFrame {
         pane2.add(stopSensor);
         pane2.add(stopOnEntry);
         pane2.add(stopOnExit);
+        stopSensorIcon = new SensorIcon();
+        pane2.add(stopSensorIcon);
         getContentPane().add(pane2);
-        
+
         JPanel pane3 = new JPanel();
         pane3.setLayout(new FlowLayout());
         pane3.add(new JLabel("Distance (scale feet):"));
         pane3.add(distance);
         getContentPane().add(pane3);
-        
+
         getContentPane().add(startButton);
-        
+
         JPanel pane4 = new JPanel();
         pane4.setLayout(new FlowLayout());
         pane4.add(new JLabel("Speed (scale MPH):"));
         pane4.add(result);
         getContentPane().add(pane4);
-        
-        // add the actions to the buttons
+
+        // add the actions to the config button
         startButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     setup();
                 }
             });
-        
+
+        // start displaying the sensor status when the number is entered
+        startSensor.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    startSensorIcon.setSensor(null, startSensor.getText());
+                }
+            });
+        stopSensor.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    stopSensorIcon.setSensor(null, stopSensor.getText());
+                }
+            });
+
+        // and get ready to display
         pack();
     }
-    
+
     long startTime = 0;
     long stopTime = 0;
-    
+
     void setup() {
         startButton.setEnabled(false);
         startButton.setToolTipText("You can only configure this once");
@@ -104,6 +127,7 @@ public class SpeedometerFrame extends javax.swing.JFrame {
                     }
                 }
             });
+        startSensorIcon.setSensor(null, startSensor.getText());
         // set stop sensor
         s = InstanceManager.sensorManagerInstance().
             newSensor(null, stopSensor.getText());
@@ -126,14 +150,14 @@ public class SpeedometerFrame extends javax.swing.JFrame {
                     }
                 }
             });
-        
+        stopSensorIcon.setSensor(null, stopSensor.getText());
     }
     // Close the window when the close box is clicked
     void thisWindowClosing(java.awt.event.WindowEvent e) {
         setVisible(false);
         // dispose();
     }
-    
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SpeedometerFrame.class.getName());
 }
 
