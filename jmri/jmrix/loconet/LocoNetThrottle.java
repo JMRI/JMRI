@@ -11,7 +11,7 @@ public class LocoNetThrottle implements DccThrottle
     private float speedIncrement;
     private int address;
     private boolean isForward;
-    private boolean f0, f1, f2, f3, f4, f5, f6, f7, f8, f9;
+    private boolean f0, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10 , f11, f12;
 
     private LocoNetSlot slot;
     private LocoNetInterface network;
@@ -41,6 +41,14 @@ public class LocoNetThrottle implements DccThrottle
         this.f6           = slot.isF6();
         this.f7           = slot.isF7();
         this.f8           = slot.isF8();
+
+        // f9 through 12 are not in the slot; we have to maintain them
+        // locally
+
+        this.f9  = false;
+        this.f10 = false;
+        this.f11 = false;
+        this.f12 = false;
         this.address      = slot.locoAddr();
         this.isForward    = slot.isForward();
 
@@ -248,16 +256,49 @@ public class LocoNetThrottle implements DccThrottle
 
     public boolean getF9()
     {
-        return f8;
+        return f9;
     }
 
     public void setF9(boolean f9)
     {
-        this.f8 = f8;
-		// No f9 in loconet
+        this.f9 = f9;
+		// No f9 in loconet slot
     }
 
-	
+    public boolean getF10()
+    {
+        return f10;
+    }
+
+    public void setF10(boolean f10)
+    {
+        this.f10 = f10;
+		// No f10 in loconet slot
+    }
+
+    public boolean getF11()
+    {
+        return f11;
+    }
+
+    public void setF11(boolean f11)
+    {
+        this.f11 = f11;
+		// No f11 in loconet slot
+    }
+
+    public boolean getF12()
+    {
+        return f12;
+    }
+
+    public void setF12(boolean f12)
+    {
+        this.f12 = f12;
+		// No f9 in loconet slot
+    }
+
+
     /**
      * Locomotive identification.  The exact format is defined by the
      * specific implementation, but its intended that this is a user-specified
