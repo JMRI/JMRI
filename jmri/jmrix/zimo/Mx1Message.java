@@ -12,7 +12,7 @@ import java.io.Serializable;
  * actually a variable number of bytes in Unicode.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  *
  * Adapted by Sip Bosch for use with zimo MX-1
  *
@@ -20,7 +20,7 @@ import java.io.Serializable;
 public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
 
 	/** Create a new object, representing a specific-length message.
-	 * @parameter len Total bytes in message, including opcode and error-detection byte.
+	 * @param len Total bytes in message, including opcode and error-detection byte.
 	 */
 	public Mx1Message(int len) {
         super(len);
