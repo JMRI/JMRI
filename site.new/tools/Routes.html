@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: Routes.html,v 1.1 2004-09-02 10:44:50 jacobsen Exp $ -->
+<!-- $Id: Routes.html,v 1.2 2005-01-02 00:32:15 jacobsen Exp $ -->
 <html>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -11,7 +11,7 @@
 <body>
 
 <A href="index.html">
-<IMG SRC="images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
+<IMG SRC="../images/logo-jmri.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
 </a>
 
 <h1>Route Documentation</h1>
@@ -27,12 +27,43 @@ First make sure the Turnout Table contains all Turnouts involved in the Routes t
 <h3>To add a new Route:</h3>
 
 <ol>
-	<li>Enter a System Name, such as 'IR100'--any short name can be used provided it is different from the System Name of other Routes.</li>
-	<li>Enter a User Name, any string of characters that is different from the User Name of other Routes will be accepted, but it's wise to use a string that describes the intended use of the Route.</li>
-	<li>Select Turnouts to be included in the new Route in the list of all defined Turnouts, by clicking on the checkbox in the Include column.  For each included Turnout, use the combo box in the Set State column to select whether that Turnout is to be THROWN or CLOSED when the Route is 'Set'.  Don't worry if everything isn't perfect.  It's easy to edit this information later.  Note that the Add/Edit Route window allows you to display 'All' Turnouts or 'Included' Turnouts.  This is only for your convenience in checking that all desired Turnouts have been included; it does not affect entered information.</li>
-	<li>If you want the setting of the Route to be controlled by one or more fascia push buttons, enter the Sensor System Names of the push buttons--up to three in the current implementation.  This is optional. </li>
-	<li>Also optional, if you want to enable setting of the Route from a physical throttle that JMRI monitors, enter a Turnout System Name and select the state, closed or thrown, that will trigger the setting of the Route.  This Turnout can be a real physical Turnout or a 'phantom' Turnout (a Turnout number with no corresponding physical Turnout).  A phantom Turnout is most often used, but there are situations where a real Turnout may be advantageous.</li>
-	<li>Select the Add Route button at the bottom of the window.  If everything is fine, a message stating "New Route added ... " will be displayed in the notes box near the bottom of the window.  If there is trouble with anything, a message will be displayed in the notes box.</li>
+	<li>Enter a System Name, such as 'IR100'--any short name can be used provided it is 
+	different from the System Name of other Routes.
+	<P>
+	By convention, these usually start with "IR" for Internal Route. 
+	</li>
+	<li>Enter a User Name, any string of characters that is different from 
+	the User Name of other Routes will be accepted, but it's wise to use a string 
+	that describes the intended use of the Route.
+	<P>
+	Note that before JMRI version 1.5.6, there was a bug that prevented you from
+	having more than one blank User Name.  In more recent versions, you can have 
+	as many Routes with blank User Names as you'd like; these have to be referenced via
+	their System Names, of course.
+	</li>
+	<li>Select Turnouts to be included in the new Route in the list of all defined 
+	Turnouts, by clicking on the checkbox in the Include column.  For each included 
+	Turnout, use the combo box in the Set State column to select whether that 
+	Turnout is to be THROWN or CLOSED when the Route is 'Set'.  Don't worry 
+	if everything isn't perfect.  It's easy to edit this information later.  
+	Note that the Add/Edit Route window allows you to display 'All' Turnouts 
+	or 'Included' Turnouts.  This is only for your convenience in checking that 
+	all desired Turnouts have been included; it does not affect entered information.</li>
+	<li>If you want the setting of the Route to be controlled by one or more 
+	input Sensors, enter their names and select what kind of logic they'll
+	obey.  This is described in more detail
+	<A HREF="#sensorlogic">below</a>.
+	
+	<li>Also optional, if you want to enable setting of the Route from a physical 
+	throttle that JMRI monitors, enter a Turnout System Name and select the 
+	state, closed or thrown, that will trigger the setting of the Route.  This Turnout 
+	can be a real physical Turnout or a 'phantom' Turnout (a Turnout number with no 
+	corresponding physical Turnout).  A phantom Turnout is most often used, but there are 
+	situations where a real Turnout may be advantageous.</li>
+	<li>Select the Add Route button at the bottom of the window.  If everything is fine, 
+	a message stating "New Route added ... " will be displayed in the notes box near
+	the bottom of the window.  If there is trouble with anything, a message will be 
+	displayed in the notes box.</li>
 </ol>
 
 <h3>To edit an existing Route:</h3>
@@ -52,6 +83,45 @@ Routes may be 'set' by clicking the Set button in the State column of the Route 
 <h3>To save Routes to disk:</h3>
 
 Routes are saved in your layout configuration file, along with Turnouts, Sensors, Signal Heads, Lights, etc.  To store this information on disk, use Store Configuration... in the File menu at the top of the Route Table (or other tables from the Tools menu), or select Store Panel... in the Panel menu.
+
+<A ID="sensorlogic">
+<H3>Controlling Routes from Sensors</H3></a>
+
+The operation of a route can be controlled by up to three
+sensors.  These can be connected to occupancy detectors or switches on the
+layout, or even just used to operate the route from a control
+panel on the computer.
+<P>
+By default, when any one of 
+the defined Sensors goes to the Active state, the route will be set.  This 
+could be used to e.g. set a route when a block became occupied, or 
+when a button was pushed.
+<P>
+More powerful logic can also do things like "define 
+routes to have the position of a turnout follow the position of a 
+panel switch".  For this, each of the three Sensors has a "mode" 
+associated with it, which can be:
+<DL>
+<DT>"On Active"</DT><DD>The older method, the route sets when the sensor goes 
+active, e.g. "Throw turnout 12 when sensor 12 goes active"</DD>
+
+<DT>"On Inactive"</DT><DD>The route sets when the sensor goes inactive.   For 
+example, using the route above, plus a second route "Close turnout 12 
+when sensor 12 goes inactive" will have turnout 12 follow a panel 
+switch connected to sensor 12 as it is flipped back and forth.</DD>
+
+<DT>"Veto Active"</DT><DD>If this sensor is active, other sensors set to "On 
+Active" or "On Inactive" will be ignored.  This is used e.g. to 
+prevent throwing a turnout under a train when the block shows 
+occupied.</DD>
+
+<DT>"Veto Inactive"</DT><DD>Like veto active, but the other polarity logic.</DD>
+
+</DL>
+Note that there is an implied "and/or" here.  All of the 'veto' 
+signals must be in their non-veto state _and_ at least one of the "on 
+active/inactive" sensors must see the appropriate change for the 
+route to be set.
 
 <HR>
 <BR>Site hosted by: <BR>
