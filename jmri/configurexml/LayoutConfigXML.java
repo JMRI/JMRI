@@ -13,7 +13,7 @@ import org.jdom.output.*;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class LayoutConfigXML extends jmri.jmrit.XmlFile {
 
@@ -59,6 +59,7 @@ public class LayoutConfigXML extends jmri.jmrit.XmlFile {
             fmt.setNewlines(true);   // pretty printing
             fmt.setIndent(true);
             fmt.output(doc, o);
+            o.close();
         }
         catch (Exception e) {
             log.error(e);

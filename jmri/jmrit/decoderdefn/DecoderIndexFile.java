@@ -28,7 +28,7 @@ import org.jdom.output.*;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -462,6 +462,7 @@ public class DecoderIndexFile extends XmlFile {
         fmt.setNewlines(true);   // pretty printing
         fmt.setIndent(true);
         fmt.output(doc, o);
+        o.close();
 
         // force a read of the new file next time
         _instance = null;
