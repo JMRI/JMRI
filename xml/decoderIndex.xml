@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
+<!-- $Id: decoderIndex.xml,v 1.32 2002-10-17 12:40:49 jacobsen Exp $ -->
 <decoderIndex-config>
-  <decoderIndex version="39">
+  <decoderIndex version="40">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -42,10 +43,10 @@
     <familyList>
       <family name="NMRA standard CV definitions" mfg="NMRA" type="locomotive" file="0NMRA.xml" />
       <family name="NMRA standard register definitions" mfg="NMRA" type="locomotive" file="0NMRA_registers.xml" />
-      <family name="Dual Mode" mfg="Atlas" type="locomotive" file="Atlas_DualMode.xml">
+      <family name="Dual Mode" mfg="Atlas" lowVersionID="1" highVersionID="255" type="locomotive" file="Atlas_DualMode.xml">
         <model model="Dual Mode" numOuts="4" numFns="8" />
       </family>
-      <family name="AD4" mfg="CVP Products" lowVersionID="40" highVersionID="62" type="stationary" file="CVProducts_AD4.xml" />
+      <family name="AD4" mfg="CVP Products" lowVersionID="40" highVersionID="65" type="stationary" file="CVProducts_AD4.xml" />
       <family name="Series 3 with FX3, silent, readback" mfg="Digitrax" lowVersionID="49" highVersionID="49" type="locomotive" file="Digitrax_01x3.xml">
         <model model="DH163P" numOuts="6" numFns="12">
           <output name="4" label="Violet" />
@@ -73,7 +74,7 @@
           <output name="5" label="Pad" />
         </model>
       </family>
-      <family name="Premium FX with BEMF" mfg="Digitrax" lowVersionID="240" highVersionID="249" type="locomotive" file="Digitrax_1x2.xml">
+      <family name="Premium FX with BEMF" mfg="Digitrax" lowVersionID="240" highVersionID="250" type="locomotive" file="Digitrax_1x2.xml">
         <model model="DH142" numOuts="4" numFns="2">
           <output name="4" label="Violet" />
         </model>
@@ -93,33 +94,33 @@
           <output name="4" label="Violet" />
         </model>
       </family>
-      <family name="Basic FX" mfg="Digitrax" lowVersionID="107" type="locomotive" file="Digitrax_Basic.xml">
+      <family name="Basic FX" mfg="Digitrax" lowVersionID="91" highVersionID="111" type="locomotive" file="Digitrax_Basic.xml">
         <model model="DH083" numOuts="5" numFns="3" />
         <model model="DH140" numOuts="4" numFns="2" />
         <model model="DH150" numOuts="5" numFns="3" />
         <model model="DH380" numOuts="8" numFns="12" />
         <model model="DH580" numOuts="8" numFns="12" />
-        <model model="DG380" numOuts="8" numFns="12" />
+        <model model="DG380" numOuts="8" numFns="12" lowVersionID="63" highVersionID="63" />
         <model model="DG580" numOuts="8" numFns="12" />
         <model model="DN140" numOuts="4" numFns="2" />
         <model model="DN144" numOuts="4" numFns="3" />
         <model model="DN145" numOuts="4" numFns="3" />
-        <model model="DN146" numOuts="4" numFns="3" lowVersionID="105" highVersionID="106" />
+        <model model="DN146" numOuts="4" numFns="3" />
         <model model="DN147" numOuts="4" numFns="3" />
         <model model="DN148" numOuts="4" numFns="3" />
       </family>
-      <family name="Basic CS" mfg="Digitrax" type="locomotive" file="Digitrax_CS.xml">
+      <family name="Basic CS" mfg="Digitrax" lowVersionID="225" highVersionID="239" type="locomotive" file="Digitrax_CS.xml">
         <model model="DZ121" numOuts="5" numFns="3" />
         <model model="DN122K2" numOuts="5" numFns="3" />
       </family>
       <family name="Basic STD" mfg="Digitrax" lowVersionID="33" highVersionID="45" type="locomotive" file="Digitrax_STD.xml">
         <model model="DH121" numOuts="2" numFns="2" />
       </family>
-      <family name="Basic STD*" mfg="Digitrax" type="locomotive" file="Digitrax_STDstar.xml">
+      <family name="Basic STD*" mfg="Digitrax" lowVersionID="1" highVersionID="1" type="locomotive" file="Digitrax_STDstar.xml">
         <model model="DN121" numOuts="2" numFns="2" />
         <model model="DN93" numOuts="3" numFns="4" />
       </family>
-      <family name="Early decoders" mfg="Digitrax" lowVersionID="33" highVersionID="45" type="locomotive" file="Digitrax_xearly.xml">
+      <family name="Early decoders" mfg="Digitrax" lowVersionID="34" highVersionID="45" type="locomotive" file="Digitrax_xearly.xml">
         <model model="DH120" numOuts="2" numFns="2" />
         <model model="DZ120" numOuts="2" numFns="2" />
       </family>
@@ -232,15 +233,15 @@
       <family name="MRC 14 step decoders" mfg="MRC" type="locomotive" file="MRC_14step.xml">
         <model model="AD305" comment="14 step only" />
       </family>
-      <family name="Silent Drive decoders" mfg="North Coast Engineering" type="locomotive" file="NCE_D13SR.xml">
-        <model model="D15SR" lowVersionID="32" numOuts="5" numFns="6" />
-        <model model="D14SRP" lowVersionID="32" numOuts="4" numFns="6" />
-        <model model="D13SR" lowVersionID="32" numOuts="3" numFns="6" />
-        <model model="DA-SR" lowVersionID="32" numOuts="4" numFns="8" />
-        <model model="P2K-SR" lowVersionID="32" numOuts="4" numFns="8" />
-        <model model="KRS-SR" lowVersionID="32" numOuts="4" numFns="8" />
-        <model model="SW9-SR" lowVersionID="32" numOuts="4" numFns="8" />
-        <model model="D408SR" lowVersionID="32" numOuts="7" numFns="12" />
+      <family name="Silent Drive decoders" mfg="North Coast Engineering" lowVersionID="31" highVersionID="33" type="locomotive" file="NCE_D13SR.xml">
+        <model model="D15SR" numOuts="5" numFns="6" />
+        <model model="D14SRP" numOuts="4" numFns="6" />
+        <model model="D13SR" numOuts="3" numFns="6" />
+        <model model="DA-SR" numOuts="4" numFns="8" />
+        <model model="P2K-SR" numOuts="4" numFns="8" />
+        <model model="KRS-SR" numOuts="4" numFns="8" />
+        <model model="SW9-SR" numOuts="4" numFns="8" />
+        <model model="D408SR" numOuts="7" numFns="12" />
       </family>
       <family name="DSD diesel" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_DSD_Diesel.xml">
         <model model="DSD diesel" numOuts="4" numFns="8">
@@ -462,12 +463,12 @@
           <output name="4" label="Violet" />
         </model>
       </family>
-      <family name="TCS Tx series decoders" mfg="Train Control Systems" lowVersionID="16" type="locomotive" file="TCS_Tx.xml">
-        <model model="T1" numOuts="2" numFns="2" />
+      <family name="TCS Tx series decoders" mfg="Train Control Systems" type="locomotive" file="TCS_Tx.xml">
+        <model model="T1" numOuts="2" numFns="2" lowVersionID="16" highVersionID="16" />
         <model model="T2" numOuts="5" numFns="5">
           <output name="4" label="Violet" />
         </model>
-        <model model="TH141" numOuts="4" numFns="2">
+        <model model="TH141" numOuts="4" numFns="2" lowVersionID="8" highVersionID="9">
           <output name="4" label="Violet" />
         </model>
       </family>
