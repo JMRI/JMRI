@@ -15,7 +15,7 @@ import org.jdom.output.*;
  * application. Works with the AbstractConfigFrame
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version		 	$Revision: 1.8 $
+ * @version		 	$Revision: 1.9 $
  * @see apps.AbstractConfigFrame
  */
 abstract public class AbstractConfigFile extends XmlFile {
@@ -25,13 +25,14 @@ abstract public class AbstractConfigFile extends XmlFile {
         readConnection(root);
         _gui = root.getChild("gui");
         _programmer = root.getChild("programmer");
+        _perform = root.getChild("perform");
     }
 
     protected void readConnection(Element root) {
         _connection = root.getChild("connection");
     }
 
-    // access to the three elements
+    // access to the four elements
     public Element getConnectionElement() {
         return _connection;
     }
@@ -44,9 +45,14 @@ abstract public class AbstractConfigFile extends XmlFile {
         return _programmer;
     }
 
+    public Element getPerformElement() {
+        return _perform;
+    }
+
     protected Element _connection;
     protected Element _gui;
     protected Element _programmer;
+    protected Element _perform;
 
     public void writeFile(String name, AbstractConfigFrame f) {
         try {
