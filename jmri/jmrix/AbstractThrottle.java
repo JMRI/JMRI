@@ -1,15 +1,16 @@
 package jmri.jmrix;
 
 import jmri.DccThrottle;
-import java.util.*;
-import java.beans.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Vector;
 
 /**
  * An abstract implementation of DccThrottle.
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author  Bob Jacobsen  Copyright (C) 2001
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 abstract public class AbstractThrottle implements DccThrottle {
     protected float speedSetting;
@@ -27,7 +28,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     public AbstractThrottle() {
 		active = true;
     }
-	
+
     /** speed - expressed as a value 0.0 -> 1.0. Negative means emergency stop.
      * This is an bound parameter.
      */
