@@ -30,7 +30,7 @@ import jmri.*;
  *  Red is less than 15
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class AspectGenerator implements java.beans.PropertyChangeListener{
 
@@ -78,8 +78,11 @@ public class AspectGenerator implements java.beans.PropertyChangeListener{
         boolean update = true;  // no suppression logic yet
         if (log.isDebugEnabled()) log.debug("updating");
         int speed;
+
+        // Head A, in two parts
         speed = mSE.newSpeedAX;
         updateSpeed(heads[0], speed);
+        updateDiverging(heads[3]);
 
         if (mSE.newTurnoutState==Turnout.CLOSED) speed = mSE.newSpeedXA;
         else speed = 0;
@@ -93,12 +96,30 @@ public class AspectGenerator implements java.beans.PropertyChangeListener{
         if (update) firePropertyChange("Aspects", null, this);
     }
 
+    /**
+     * Set a specific head to represent a specific speed.
+     */
     void updateSpeed(SignalHead h, int speed) {
         if (speed>=55) h.setAppearance(SignalHead.GREEN);
         else if (speed>=35) h.setAppearance(SignalHead.FLASHYELLOW);
         else if (speed>=15) h.setAppearance(SignalHead.YELLOW);
         else h.setAppearance(SignalHead.RED);
     }
+
+    /**
+     * Set a SignalHead to represent the "diverging" status
+     * of a AX route
+     * @param h lower (secondary) signal head on an A end
+     */
+    void updateDiverging(SignalHead h) {
+        if (mSE.newTurnoutState==Turnout.CLOSED)
+            h.setAppearance(SignalHead.GREEN);
+        else if (mSE.newTurnoutState==Turnout.THROWN)
+            h.setAppearance(SignalHead.YELLOW);
+        else
+            h.setAppearance(SignalHead.RED);
+    }
+
     // to hear of changes
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
