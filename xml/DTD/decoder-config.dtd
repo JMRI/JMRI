@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a DCC decoder as a component, esp. information -->
 <!-- on how to program it. -->
-<!-- $Revision: 1.31 $ -->
+<!-- $Revision: 1.32 $ -->
 
 <!-- This DTD is Copyright 2001, 2003 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -36,7 +36,7 @@
 <!ATTLIST family lowVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
 <!ATTLIST family highVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
 
-<!ELEMENT model (versionCV*, output*, size?) >
+<!ELEMENT model (versionCV*, output*, size?)* >
 <!ATTLIST model model     	CDATA #REQUIRED>  <!-- model name used for identification -->
 <!ATTLIST model options   	CDATA #IMPLIED>   <!-- comma-sep list of included options, but default is all on -->
 <!ATTLIST model comment   	CDATA #IMPLIED>
