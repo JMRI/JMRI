@@ -10,6 +10,7 @@ import org.jdom.Element;
 import org.jdom.Attribute;
 import apps.*;
 import jmri.*;
+import jmri.configurexml.*;
 
 /**
  * CornwallConfigFrame provides startup configuration, a GUI for setting
@@ -22,7 +23,7 @@ import jmri.*;
  * stored in local variables.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class CornwallConfigFrame extends AbstractConfigFrame {
 
@@ -68,6 +69,10 @@ public class CornwallConfigFrame extends AbstractConfigFrame {
         boolean connected2 = commPane2.configureConnection(((CornwallConfigFile)file).getConnectionElement2());
         boolean gui = configureGUI(file.getGuiElement());
         boolean programmer = configureProgrammer(file.getProgrammerElement());
+
+        // ensure that an XML config manager exists
+        if (InstanceManager.configureManagerInstance()==null)
+            InstanceManager.setConfigureManager(new ConfigXmlManager());
 
         // install custom TurnoutManager
         InstanceManager.setTurnoutManager(new DoubleTurnoutManager());
