@@ -12,7 +12,7 @@ import jmri.JmriException;
  * Import CV values from a "PR1" file written by PR1DOS or PR1WIN
  *
  * @author			Alex Shepherd   Copyright (C) 2003
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class Pr1Importer {
   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Pr1Importer.class.getName());
@@ -86,12 +86,7 @@ public class Pr1Importer {
           if( cvNum <= CvTableModel.MAXCVNUM ){   // MAXCVNUM is the highest number, so is included
             try {
               CvValue cv = pCvTable.getCvByNumber( cvNum ) ;
-              if( cv == null ){
-                pCvTable.addCV( Integer.toString( cvNum ) ) ;
-                cv = pCvTable.getCvByNumber( cvNum ) ;
-              }
-
-              cv.setValue( getCV( cvNum ) ) ;
+              if (cv!=null) cv.setValue( getCV( cvNum ) ) ;
             }
             catch (JmriException ex) {
               log.error( "failed to getCV() " + cvNum );
