@@ -5,7 +5,7 @@ package jmri.jmrix.loconet.locormi;
  * use the LocoNet connection on this machine.
  * Copyright:    Copyright (c) 2002
  * @author      Alex Shepherd
- * @version $Id: LnMessageServerAction.java,v 1.3 2002-03-28 04:21:19 jacobsen Exp $
+ * @version $Revision: 1.4 $
  */
 
 import javax.swing.AbstractAction;
