@@ -20,25 +20,25 @@ import org.jdom.Attribute;
  * stored in local variables.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class JmriDemoConfigFrame extends apps.AbstractConfigFrame {
-
-	public JmriDemoConfigFrame(String name) {
-		super(name);
-	}
-
-	/**
-	 * Abstract method to save the data
-	 */
-	public void saveContents() {
-		JmriDemoConfigFile f = new JmriDemoConfigFile();
-		f.makeBackupFile(f.defaultConfigFilename());
-		f.writeFile(f.defaultConfigFilename(), this);
-	}
-
-
-	// initialize logging
+    
+    public JmriDemoConfigFrame(String name) {
+        super(name);
+    }
+    
+    /**
+     * Abstract method to save the data
+     */
+    public void saveContents() {
+        JmriDemoConfigFile f = new JmriDemoConfigFile();
+        f.makeBackupFile(f.defaultConfigFilename());
+        f.writeFile(f.defaultConfigFilename(), this);
+    }
+    
+    
+    // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(JmriDemoConfigFrame.class.getName());
-
+    
 }
