@@ -2,16 +2,15 @@
 
 package jmri.jmrix.lenz;
 
-import jmri.JmriException;
 import jmri.Turnout;
 
 /**
- * Implement turnout manager
+ * Implement turnout manager.
  * <P>
  * System names are "XTnnn", where nnn is the turnout number without padding.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class XNetTurnoutManager extends jmri.AbstractTurnoutManager implements XNetListener {
 
