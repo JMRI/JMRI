@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.roster.RosterEntryPane class.
  * @author	Bob Jacobsen     Copyright (C) 2001, 2002
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class CopyRosterItemActionTest extends TestCase {
 
@@ -26,9 +26,6 @@ public class CopyRosterItemActionTest extends TestCase {
         // copy the item
         CopyRosterItemAction a = new CopyRosterItemAction("copy", null){
             boolean selectFrom() {
-                System.out.println("find "+Roster.instance().defaultRosterFilename());
-                System.out.println("contains "+Roster.instance().numEntries());
-                System.out.println("name "+Roster.instance().entryFromTitle("Bill").getFileName());
                 return false;  // aborts operation
             }
         };
