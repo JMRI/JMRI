@@ -3,7 +3,9 @@
 package jmri.jmrix.loconet.clockmon;
 
 import jmri.jmrix.loconet.*;
+import jmri.*;
 
+import java.util.Date;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -18,8 +20,8 @@ import javax.swing.*;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  *
- * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.1 $
+ * @author			Bob Jacobsen   Copyright (C) 2003, 2004
+ * @version			$Revision: 1.2 $
  */
 public class ClockMonFrame extends JFrame implements SlotListener {
 
@@ -50,6 +52,8 @@ public class ClockMonFrame extends JFrame implements SlotListener {
         getContentPane().add(setButton);
         getContentPane().add(panel);
 
+        getContentPane().add(setInternal);
+        
         // Load GUI element contents with current slot contents
         notifyChangedSlot(SlotManager.instance().slot(LnConstants.FC_SLOT));
 
@@ -98,8 +102,35 @@ public class ClockMonFrame extends JFrame implements SlotListener {
         hours.setText(""+s.getFcHours());
         minutes.setText(""+s.getFcMinutes());
         rate.setText(""+s.getFcRate());
+        
+        // if needed, update internal clock & rate
+        if (setInternal.isSelected()) {
+            // set the internal timebase
+            // we calculate a new msec value for a specific hour/minute
+            // in the current day, then set that.
+            long mSecPerHour = 3600000;
+            long mSecPerMinute = 60000;
+            Date tem = InstanceManager.timebaseInstance().getTime();
+            int cHours = tem.getHours();
+            long cNumMSec = tem.getTime();
+            
+            long nNumMSec = ((cNumMSec/mSecPerHour)*mSecPerHour) - (cHours*mSecPerHour) +
+                    (s.getFcHours()*mSecPerHour) + (s.getFcMinutes()*mSecPerMinute);
+            
+            InstanceManager.timebaseInstance().setTime(new Date(nNumMSec));
+            try {
+                InstanceManager.timebaseInstance().setRate(s.getFcRate());
+            } catch (TimebaseRateException e) { 
+                if (!timebaseErrorReported) {
+                    timebaseErrorReported = true;
+                    log.warn("Time base exception on setting rate from LocoNet");
+                }
+            }          
+        }
     }
 
+    static boolean timebaseErrorReported = false;
+    
     /**
      * Push GUI contents out to LocoNet slot.
      */
@@ -136,6 +167,8 @@ public class ClockMonFrame extends JFrame implements SlotListener {
 
     JTextField rate = new JTextField(4);
 
+    JCheckBox setInternal = new JCheckBox("LocoNet clock sets internal clock");
+    
     JButton setButton = new JButton("Set");
     JButton readButton = new JButton("Read");
 
