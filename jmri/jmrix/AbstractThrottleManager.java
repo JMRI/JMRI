@@ -12,7 +12,7 @@ import com.sun.java.util.collections.ArrayList;
  * Based on Glen Oberhauser's original LnThrottleManager implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 abstract public class AbstractThrottleManager implements ThrottleManager {
 	
@@ -28,7 +28,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 	 * Does this DCC system allow a Throttle (e.g. an address) to be used
 	 * by only one user at a time?
 	 */
-	boolean singleUse() { return true; }
+	protected boolean singleUse() { return true; }
 
     /**
      * Request a throttle, given a decoder address. When the decoder address

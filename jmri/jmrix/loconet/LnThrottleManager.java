@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractThrottleManager;
  *
  * @see SlotManager
  * @author		Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.16 $
+ * @version 		$Revision: 1.17 $
  */
 public class LnThrottleManager extends AbstractThrottleManager implements ThrottleManager, SlotListener {
     private SlotManager slotManager;
@@ -32,7 +32,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
 	/**
 	 * LocoNet allows multiple throttles for the same device
      */
-	boolean singleUse() { return false; }
+	protected boolean singleUse() { return false; }
 
 
 	/** 
