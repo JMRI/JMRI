@@ -1,6 +1,6 @@
 <!-- ugly first attempt at an ANT build.xml file for JMRI development -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.22 $ -->
+<!-- Revision $Revision: 1.23 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -16,9 +16,6 @@
   <property name="test" value="test"/>
   <property name="target" value="classes"/>
   <property name="jartarget" value=".."/>
-
-  <property name="dist" value="NODISTNAME" />
-  <property name="distdir" value="../${dist}" />
 
   <path id="project.class.path">
     <pathelement location="../lib/collections.jar" />
@@ -185,37 +182,121 @@
  <target name="dist" depends="clean, init, compile, rmic, jar"
  					 description="create a distribution jar file"/>
 
- <!-- items below here are obsolete, kept only as examples -->
+ <property name="release" value="NO_RELEASE_SPECIFIED" />
+ <property name="number"  value="NO_NUMBER_SPECIFIED"  />
+ <target name="release1" depends=""
+ 					description="part 1 of build a release; useage is ant -Drelease=R1.2.3 -Dnumber=1.2.3 release1">
+ 	<echo message="Building ${release} numbers ${NO_NUMBER_SPECIFIED}" />
+    <delete dir="${release}" />
+    <mkdir dir="${release}"/>
+    <echo message="cvs checkout" />
+    <cvs package="ant" dest="${release}" tag="${release}"/>
 
-  <!-- make update distribution .zip file -->
-  <target name="makeupdate" depends="compile, jar">
-    <echo message="Building ${dist} update into ${distdir}" />
+    <echo message="test" />
+    <ant dir="${release}/java" target="alltest" />
+    
+    <echo message="make distribution jar" />
+    <ant dir="${release}/java" target="dist" />
+    
+    <echo message="update files in master Windows directory" />
+    <copy todir="Windows/JMRI">
+      <fileset dir="${release}" includes="jmri.jar"  /> 
+    </copy>
+    <delete dir="Windows/JMRI/xml" />
+    <cvs command="export" package="xml" dest="Windows/JMRI" tag="${release}"/>
+    <delete dir="Windows/JMRI/resources" />
+    <cvs command="export" package="resources" dest="Windows/JMRI" tag="${release}"/>
 
-    <delete dir="${distdir}" />
-    <mkdir dir="${distdir}" />
+    <echo message="update files in master MacOSX directory" />
+    <copy todir="MacOSX/JMRI">
+      <fileset dir="${release}" includes="jmri.jar"  /> 
+    </copy>
+    <delete dir="MacOSX/JMRI/xml" />
+    <cvs command="export" package="xml" dest="MacOSX/JMRI" tag="${release}"/>
+    <delete dir="MacOSX/JMRI/resources" />
+    <cvs command="export" package="resources" dest="MacOSX/JMRI" tag="${release}"/>
 
-    <!-- make a new xml directory, then remove the CVS directories -->
-    <cvs package="xml" dest="${distdir}" />
-    <!-- Ant default excludes will keep the zip action -->
-    <!-- from including the CVS directories  -->
+    <echo message="update files in master Linux directory" />
+    <copy todir="Linux/JMRI">
+      <fileset dir="${release}" includes="jmri.jar"  /> 
+    </copy>
+    <delete dir="Linux/JMRI/xml" />
+    <cvs command="export" package="xml" dest="Linux/JMRI" tag="${release}"/>
+    <delete dir="Linux/JMRI/resources" />
+    <cvs command="export" package="resources" dest="Linux/JMRI" tag="${release}"/>
 
-    <!-- zip it! -->
-    <zip zipfile="../${dist}.zip"  >
-        <zipfileset dir="${distdir}" prefix="${dist}"/>
-    </zip>
+    <echo message="update files in master MacClassic directory" />
+    <copy todir="MacClassic/JMRI">
+      <fileset dir="${release}" includes="jmri.jar"  /> 
+    </copy>
+    <delete dir="MacClassic/JMRI/xml" />
+    <cvs command="export" package="xml" dest="MacClassic/JMRI" tag="${release}"/>
+    <delete dir="MacClassic/JMRI/resources" />
+    <cvs command="export" package="resources" dest="MacClassic/JMRI" tag="${release}"/>
 
-    <!-- and remove working directory -->
-    <delete dir="${distdir}" />
-  </target>
+    <echo message="update files in master OS2 directory" />
+    <copy todir="OS2/JMRI">
+      <fileset dir="${release}" includes="jmri.jar"  /> 
+    </copy>
+    <delete dir="OS2/JMRI/xml" />
+    <cvs command="export" package="xml" dest="OS2/JMRI" tag="${release}"/>
+    <delete dir="OS2/JMRI/resources" />
+    <cvs command="export" package="resources" dest="OS2/JMRI" tag="${release}"/>
 
-  <target name="uploadupdate">
+    
+	<!-- The following steps build the distribution archives -->
+    <!-- using MacOSX tools -->
+    <echo message="build archives"/>
+    <exec executable="open">
+    	<arg line="-a /Applications/Utilities/StuffItLite6.5.1/DropStuff MacOSX/JMRI"/>
+    </exec>
+    <exec executable="open">
+    	<arg line="-a /Applications/Utilities/StuffItLite6.5.1/DropTar Linux/JMRI"/>
+    </exec>
+    <exec executable="open">
+    	<arg line="-a /Applications/Utilities/StuffItLite6.5.1/DropZip OS2/JMRI"/>
+    </exec>
+
+	<echo message="build the Windows .exe now"/>
+	<echo message="end of part 1; do part 2 after MacOSX, Linux, OS2 uploads completely built"/>
+ </target>
+ 
+ <target name="release2" depends=""
+ 					description="part 2 of build a release; useage is ant -Drelease=R1.2.3 -Dnumber=1.2.3 release2">
+    <exec executable="open">
+    	<arg line="-a /Applications/Utilities/StuffItLite6.5.1/DropStuff MacClassic/JMRI"/>
+    </exec>
+    <move file="MacOSX/JMRI.hqx" tofile="JMRI.${number}.hqx" />
+    <move file="Linux/JMRI.tgz" tofile="JMRI.${number}.tgz" />
+    <move file="OS2/JMRI.zip" tofile="JMRI.${number}.zip" />
+	<echo message="end of part 2; do part 3 after MacClassic, Windows uploads completely built"/>
+	<echo message="Copy Windows upload here manually!" />
+ </target>
+
+ <target name="release3" depends=""
+ 					description="part 3 of build a release; useage is ant -Drelease=R1.2.3 -Dnumber=1.2.3 release3">
+
+
+    <move file="MacClassic/JMRI.hqx" tofile="JMRI.${number}.Classic.hqx" />
+
+	<echo message="end of part 3; part 4 will do the upload when ready"/>
+
+ </target>
+ 
+ <target name="release4" depends=""
+ 					description="part 4 of build a release; useage is ant -Drelease=R1.2.3 -Dnumber=1.2.3 release4">
+	<echo message="upload files"/>
     <ftp server="upload.sourceforge.net"
          userid="ftp" password="jake@physics.berkeley.edu"
          action="put"
          verbose="yes" remotedir="incoming" >
-      <fileset dir=".." includes="${dist}.zip" />
+      <fileset dir="." includes="JMRI.${number}.hqx, JMRI.${number}.exe, JMRI.${number}.tgz, JMRI.${number}.Classic.hqx, JMRI.${number}.zip" />
     </ftp>
-  </target>
+ 
+ 	<echo message="upload javadocs"/>
+    <ant dir="${release}/java" target="uploadjavadoc" />
+ </target>
+ 				
 
 </project>
 
