@@ -12,7 +12,7 @@ package jmri;
  * non-system-specific code.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 public class InstanceManager {
 
@@ -35,6 +35,8 @@ public class InstanceManager {
         instance().signalHeadManager = new AbstractSignalHeadManager();
         return instance().signalHeadManager;
     }
+
+    static public ConsistManager consistManagerInstance() { return instance().consistManager; }
 
     static public CommandStation commandStationInstance()  { return instance().commandStation; }
 
@@ -72,6 +74,12 @@ public class InstanceManager {
         if (p!=programmerManager && programmerManager!=null && log.isDebugEnabled()) log.debug("ProgrammerManager instance is being replaced: "+p);
         if (p!=programmerManager && programmerManager==null && log.isDebugEnabled()) log.debug("ProgrammerManager instance is being installed: "+p);
         programmerManager = p;
+	// Now that we have a programmer manager, install the default 
+        // Consist manager if Ops mode is possible, and there isn't a 
+        // consist manager already.
+	if(programmerManager.isOpsModePossible() && consistManager == null) {
+   		 setConsistManager(new DccConsistManager());	
+	}
     }
 
     private SensorManager sensorManager = null;
@@ -118,6 +126,18 @@ public class InstanceManager {
         if (p!=signalHeadManager && signalHeadManager!=null && log.isDebugEnabled()) log.debug("SignalHeadManager instance is being replaced: "+p);
         if (p!=signalHeadManager && signalHeadManager==null && log.isDebugEnabled()) log.debug("SignalHeadManager instance is being installed: "+p);
         signalHeadManager = p;
+    }
+
+    private ConsistManager consistManager = null;
+
+    static public void setConsistManager(ConsistManager p) {
+        instance().addConsistManager(p);
+    }
+
+    protected void addConsistManager(ConsistManager p) {
+        if (p!=consistManager && consistManager!=null && log.isDebugEnabled()) log.debug("ConsistManager instance is being replaced: "+p);
+        if (p!=consistManager && consistManager==null && log.isDebugEnabled()) log.debug("consistManager instance is being installed: "+p);
+        consistManager = p;
     }
 
     private CommandStation commandStation = null;

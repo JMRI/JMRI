@@ -1,0 +1,19 @@
+Todo as of 12/24/2003
+
+   Should we ask if the consist should be cleared when the consist is 
+     deleted or the window is closed?
+
+   Need to build a method to recall a consist, both between sessions and 
+     durring a single sesion of the program.
+     (should this be stored in XML, or recalled from the Command Station
+     if possible?)
+
+   To go along with above, we need to find a way to insert a consist into 
+     the roster for the throttle commands.
+
+   The selection buttons for Advanced/CS Consist is present, but does not
+     do anything yet
+
+   The Current Tool has a limit of 4 locomotives in the consist.  This is 
+     artificial, since the back end does not have a limit.
+

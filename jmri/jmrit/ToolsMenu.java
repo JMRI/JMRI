@@ -11,7 +11,7 @@ import java.util.*;
  * Create a "Tools" menu containing the Jmri system-independent tools
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class ToolsMenu extends JMenu {
     public ToolsMenu(String name) {
@@ -55,7 +55,7 @@ public class ToolsMenu extends JMenu {
             throttleMenu.setEnabled(false);
         }
 
-
+        add(new jmri.jmrit.consisttool.ConsistToolAction(rb.getString("MenuItemConsistTool")));
         add(new jmri.jmrit.sendpacket.SendPacketAction( rb.getString("MenuItemSendDCCPacket") ));
 
     }
