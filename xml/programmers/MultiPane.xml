@@ -47,6 +47,7 @@
 
 	<programmer:pane name="Function Map">
 		<programmer:column>
+			<programmer:fnmapping/>
 		</programmer:column>
 	</programmer:pane>
 
@@ -65,6 +66,7 @@
 			<programmer:variable name="Consist Address Active For F5"  format="checkbox"/>
 			<programmer:variable name="Consist Address Active For F6"  format="checkbox"/>
 			<programmer:variable name="Consist Address Active For F7"  format="checkbox"/>
+			<programmer:variable name="Consist Address Active For F8"  format="checkbox"/>
 			<programmer:variable name="Consist Address Active For FL in Forward"  format="checkbox"/>
 			<programmer:variable name="Consist Address Active For FL in Reverse"  format="checkbox"/>
 		</programmer:column>
