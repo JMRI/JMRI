@@ -2,7 +2,7 @@ The xml/ directory contains DTDs defining various model railroad constructs,
 XML files describing various types of model railroad equipment, and
 some sample XML files. 
 
-Currently, these are defined via DTDs. We intend to move to schema quite soon,
+Currently, these are defined via DTDs. We intend to move to schema eventually,
 particularly to pick up validity checking.
 
 Subdirectories:
@@ -24,7 +24,8 @@ Certain configuration files appear in the top-level directory:
 
 The JMRI web page is located at http://jmri.sourceforge.net/
 
-More information on these 
+More information on these configuration file is available at
+  http://jmri.sourceforge.net/PaneProg/ConfigFile.html
 
 See the COPYING file for the license.
 

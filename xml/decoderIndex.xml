@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-<!-- $Id: decoderIndex.xml,v 1.6 2001-12-18 07:16:34 jacobsen Exp $ -->
+<!-- $Id: decoderIndex.xml,v 1.7 2001-12-30 09:41:51 jacobsen Exp $ -->
 <decoderIndex>
 
 <mfgList>
@@ -74,9 +74,14 @@
 		<decoder model="DH150" numOuts="2" />
 	</family>
 
+	<family name="Lenz LE077XF" file="Lenz_LE077XF.xml" mfg="Lenz">
+		<decoder model="LE077XF" numOuts="3" />
+	</family>
+
 	<family name="D13SR Family" file="NCE_D13SR.xml" mfg="North Coast Engineering">
 		<decoder model="D13SR" numOuts="3" />
 	</family>
+
 
 </familyList>
 
