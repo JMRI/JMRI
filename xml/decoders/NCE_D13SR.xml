@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: NCE_D13SR.xml,v 1.17 2003-05-31 04:36:57 jacobsen Exp $ -->
+<!-- $Id: NCE_D13SR.xml,v 1.18 2003-07-06 16:43:04 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Bob Jacobsen" version="6" lastUpdated="20021016"/>
-
+		<version author="Bob Jacobsen" version="8" lastUpdated="20030702"/>
 	<!-- version 4 added D15, D14, DA-SR, P2K, KRS, SW9, D408 and more functions -->
 	<!-- version 6 changed the versionID range -->
 	<!-- version 7 added N12 series decoders -->
+    <!-- version 8 Some mods by Michael Mosher 7/2/03 -->
 	
 <decoder>
   <family name="Silent Drive decoders" mfg="North Coast Engineering" 
@@ -445,8 +445,17 @@
 				<enumChoice choice="Only in reverse"/>
 				</enumVal>
 			</variable>
-			
-		<variable label="Output 4 connected to" CV="123" mask="VXXXXXXX" minOut="3"
+<!-- added out 3 options -->			
+		<variable label="Output 3 connected to" CV="122" mask="VXXXXXXX" minOut="3"
+					item="Output 3 options">
+			<enumVal>
+				<enumChoice choice="30-40mA incandescent bulb"/>
+				<enumChoice choice="LED and limiting resistor"/>
+				</enumVal>
+			</variable>
+	
+<!--		<variable label="Output 4 connected to" CV="123" mask="VXXXXXXX" minOut="3"    -->
+		<variable label="Output 4 connected to" CV="123" mask="VXXXXXXX" minOut="4"
 					item="Output 4 options">
 			<enumVal>
 				<enumChoice choice="30-40mA incandescent bulb"/>
@@ -475,7 +484,7 @@
 				</enumVal>
 			</variable>
 		<variable label="Output 4 active" CV="123" mask="XXXXXXVV" minOut="4"
-					item="Output 3 behaviour">
+					item="Output 4 behaviour">
 			<enumVal>
 				<enumChoice choice="Both directions"/>
 				<enumChoice choice="Only in forward"/>
@@ -483,7 +492,8 @@
 				</enumVal>
 			</variable>
 			
-		<variable label="Output 5 connected to" CV="124" mask="VXXXXXXX" minOut="4"
+<!--		<variable label="Output 5 connected to" CV="124" mask="VXXXXXXX" minOut="4"   -->
+		<variable label="Output 5 connected to" CV="124" mask="VXXXXXXX" minOut="5"
 					item="Output 5 options">
 			<enumVal>
 				<enumChoice choice="30-40mA incandescent bulb"/>
@@ -603,3 +613,4 @@
 </decoder>
 
 </decoder-config>
+
