@@ -17,10 +17,10 @@ import jmri.util.JmriJFrame;
 import javax.swing.*;
 
 /**
- * Base class for Jmri Apps
+ * Base class for Jmri applications.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public class Apps extends JPanel {
 
