@@ -11,6 +11,13 @@ import jmri.InstanceManager;
 
 import org.jdom.Element;
 
+/**
+ * A JInternalFrame that contains a JSlider to control loco speed,
+ * and buttons for forward, reverse and STOP.
+ * TODO: fix speed increments (14, 28)
+ * TODO: fix EMERGENCY STOP = 1
+ * TODO: match physical throttle.
+ */
 public class ControlPanel extends JInternalFrame
         implements AddressListener, ThrottleListener
 {
@@ -19,12 +26,17 @@ public class ControlPanel extends JInternalFrame
     private int requestedAddress;
 
     private JSlider speedSlider;
+    private GridBagConstraints sliderConstraints;
     private JRadioButton forwardButton, reverseButton;
     private JButton stopButton;
+    private JPanel buttonPanel;
     private int speedIncrement;
 
-    private static int MAX_SPEED = 127; //TODO: correct always?
+    private static int MAX_SPEED = 128; //TODO: correct always?
 
+    /**
+     * Constructor.
+     */
     public ControlPanel()
     {
         speedSlider = new JSlider(0, MAX_SPEED);
@@ -51,6 +63,9 @@ public class ControlPanel extends JInternalFrame
         this.setEnabled(false);
     }
 
+    /**
+     * Cancel throttle request with ThrottleManager.
+     */
     public void dispose()
     {
         if (throttleManager != null)
@@ -73,38 +88,58 @@ public class ControlPanel extends JInternalFrame
         this.setEnabled(true);
     }
 
-
+    /**
+     * Enable/Disable all buttons and slider.
+     * @param isEnabled True if the buttons/slider should be enabled,
+     * false otherwise.
+     */
     public void setEnabled(boolean isEnabled)
     {
-        super.setEnabled(isEnabled);
+        //super.setEnabled(isEnabled);
         forwardButton.setEnabled(isEnabled);
         reverseButton.setEnabled(isEnabled);
         stopButton.setEnabled(isEnabled);
         speedSlider.setEnabled(isEnabled);
     }
 
+    /**
+     * Set the GUI to match that the loco is set to forward.
+     * @param isForward True if the loco is set to forward,
+     * false otherwise.
+     */
     public void setIsForward(boolean isForward)
     {
         forwardButton.setSelected(isForward);
         reverseButton.setSelected(!isForward);
     }
 
+    /**
+     * Set the GUI to match that the loco speed.
+     * @param speedIncrement : TODO
+     * @param speed The speed value of the loco.
+     */
     public void setSpeedValues(int speedIncrement, int speed)
     {
         this.speedIncrement = speedIncrement;
         speedSlider.setValue(speed*speedIncrement);
     }
 
+    /**
+     * Create, initialize and place GUI components.
+     */
     private void initGUI()
     {
         JPanel mainPanel = new JPanel();
         this.setContentPane(mainPanel);
-        mainPanel.setLayout(new GridBagLayout());
+        mainPanel.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+        JPanel sliderPanel = new JPanel();
+        sliderPanel.setLayout(new GridBagLayout());
 
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.anchor = GridBagConstraints.CENTER;
-        constraints.fill = GridBagConstraints.VERTICAL;
+        constraints.fill = GridBagConstraints.BOTH;
         constraints.gridheight = 1;
         constraints.gridwidth = 1;
         constraints.ipadx = 0;
@@ -116,8 +151,19 @@ public class ControlPanel extends JInternalFrame
         constraints.gridx = 0;
         constraints.gridy = 0;
 
-        this.getContentPane().add(speedSlider, constraints);
+        sliderPanel.add(speedSlider, constraints);
+        this.getContentPane().add(sliderPanel, BorderLayout.CENTER);
         speedSlider.setOrientation(JSlider.VERTICAL);
+        speedSlider.setMajorTickSpacing(32);
+        speedSlider.setMinorTickSpacing(8);
+        java.util.Hashtable labelTable = new java.util.Hashtable();
+        labelTable.put( new Integer( 31 ), new JLabel("25%") );
+        labelTable.put( new Integer( 63 ), new JLabel("50%") );
+        labelTable.put( new Integer( 95 ), new JLabel("75%") );
+        labelTable.put( new Integer( 127 ), new JLabel("100%") );
+        speedSlider.setLabelTable( labelTable );
+        speedSlider.setPaintTicks(true);
+        speedSlider.setPaintLabels(true);
         speedSlider.addChangeListener(
                 new ChangeListener()
                 {
@@ -130,13 +176,18 @@ public class ControlPanel extends JInternalFrame
                    }
                 });
 
+        buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridBagLayout());
+        this.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+
         ButtonGroup directionButtons = new ButtonGroup();
         directionButtons.add(forwardButton);
         directionButtons.add(reverseButton);
+        constraints.fill = GridBagConstraints.NONE;
         constraints.gridy = 1;
-        this.getContentPane().add(forwardButton, constraints);
+        buttonPanel.add(forwardButton, constraints);
         constraints.gridy = 2;
-        this.getContentPane().add(reverseButton, constraints);
+        buttonPanel.add(reverseButton, constraints);
 
         forwardButton.addActionListener(
                 new ActionListener()
@@ -158,7 +209,7 @@ public class ControlPanel extends JInternalFrame
 
         stopButton = new JButton("STOP!");
         constraints.gridy = 3;
-        this.getContentPane().add(stopButton, constraints);
+        buttonPanel.add(stopButton, constraints);
         stopButton.addActionListener(
                  new ActionListener()
                  {
@@ -167,10 +218,45 @@ public class ControlPanel extends JInternalFrame
                         speedSlider.setValue(0);
                     }
                  });
-     }
+        this.addComponentListener(
+                new ComponentAdapter()
+        {
+            public void componentResized(ComponentEvent e)
+            {
+                changeOrientation();
+            }
+        });
+    }
 
-     public Element getXml()
-     {
+    /**
+     * The user has resized the Frame. Possibly change from
+     * Horizontal to Vertical layout.
+     */
+    private void changeOrientation()
+    {
+        if (this.getWidth() > this.getHeight())
+        {
+            speedSlider.setOrientation(JSlider.HORIZONTAL);
+            this.remove(buttonPanel);
+            this.getContentPane().add(buttonPanel, BorderLayout.EAST);
+        }
+        else
+        {
+            speedSlider.setOrientation(JSlider.VERTICAL);
+            this.remove(buttonPanel);
+            this.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+        }
+    }
+
+    /**
+     * Collect the prefs of this object into XML Element
+     * <ul>
+     * <li> Window prefs
+     * </ul>
+     * @return the XML of this object.
+     */
+    public Element getXml()
+    {
          Element me = new Element("ControlPanel");
          Element window = new Element("window");
          WindowPreferences wp = new WindowPreferences();
@@ -181,6 +267,13 @@ public class ControlPanel extends JInternalFrame
          return me;
      }
 
+     /**
+      * Set the preferences based on the XML Element.
+      * <ul>
+      * <li> Window prefs
+      * </ul>
+      * @param e The Element for this object.
+      */
      public void setXml(Element e)
      {
          Element window = e.getChild("window");
