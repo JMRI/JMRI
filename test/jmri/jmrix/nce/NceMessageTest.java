@@ -1,10 +1,4 @@
-/**
- * NceMessageTest.java
- *
- * Description:	    JUnit tests for the NceMessage class
- * @author			Bob Jacobsen
- * @version			$Revision: 1.3 $
- */
+// NceMessageTest.java
 
 package jmri.jmrix.nce;
 
@@ -14,6 +8,12 @@ import junit.framework.Test;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+/**
+ * JUnit tests for the NceMessage class
+ * @author			Bob Jacobsen Copyright 2002-2004
+ * @version			$Revision: 1.4 $
+ */
 
 public class NceMessageTest extends TestCase {
 
@@ -72,6 +72,11 @@ public class NceMessageTest extends TestCase {
 	public void testWriteRegister() {
 		NceMessage m = NceMessage.getWriteRegister(2, 251);
 		Assert.assertEquals("string compare ", "S2 251", m.toString());
+	}
+
+	public void testCheckPacketMessage1() {
+		NceMessage m = NceMessage.sendPacketMessage(new byte[]{(byte)0x81,(byte)0xff,(byte)0x7e});
+		Assert.assertEquals("content", "S C02 81 FF 7E", m.toString());
 	}
 
 	// from here down is testing infrastructure
