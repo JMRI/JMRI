@@ -8,28 +8,28 @@
  * @version			
  */
 
-package slotmon;
+package simpleprog;
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import ErrLoggerJ.ErrLog;
 import loconet.SlotManager;
 
-public class SlotMonAction 			extends AbstractAction {
+public class SimpleProgAction 			extends AbstractAction {
 
-	public SlotMonAction(String s) { super(s);}
+	public SimpleProgAction(String s) { super(s);}
 	
     public void actionPerformed(ActionEvent e) {
 
 		// create SlotManager if it doesn't exist
 		SlotManager.instance();
 
-		// create a SlotMonFrame
-		SlotMonFrame f = new SlotMonFrame();
+		// create a SimpleProgFrame
+		SimpleProgFrame f = new SimpleProgFrame();
 		f.show();	
 		
 	}
 }
 
 
-/* @(#)SlotMonAction.java */
+/* @(#)SimpleProgAction.java */

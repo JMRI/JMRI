@@ -13,6 +13,8 @@ package jmri;
 
 
 public class ProgReadException extends ProgrammerException {
+	public ProgReadException(String s) { super(s); }
+	public ProgReadException() {}
 	
 }
 

@@ -16,8 +16,6 @@ import loconet.SlotListener;
 import loconet.LocoNetSlot;
 import loconet.LnConstants;
 
-import slotmon.SlotMonFrame;
-
 import ErrLoggerJ.ErrLog;
 
 public class SlotMonFrame extends javax.swing.JFrame {

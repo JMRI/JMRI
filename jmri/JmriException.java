@@ -10,7 +10,9 @@ package jmri;
 
 
 public class JmriException extends Exception {
-	
+	public JmriException(String s) { super(s); }
+	public JmriException() {}
+
 }
 
 

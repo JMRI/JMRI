@@ -16,7 +16,7 @@ public class LocoNetSlot {
 // accessors to specific information
 	public int getSlot() { return slot;}  // cannot modify the slot number once created
 	
-// status bits
+// status accessors
 	// decoder mode
 	// possible values are  DEC_MODE_128A, DEC_MODE_28A, DEC_MODE_128, 
 	//						DEC_MODE_14, DEC_MODE_28TRI, DEC_MODE_28  
@@ -48,6 +48,10 @@ public class LocoNetSlot {
 	
 	public int id()			{ return id; }
 	
+	// programmer track special case accessors
+	public int pcmd()          	{ return _pcmd; }
+	public int cvval()          { return snd+(ss2&2)*64; }
+	
 	// global track status should be reference through SlotManager
 	
 // create a specific slot
@@ -67,6 +71,7 @@ public class LocoNetSlot {
 				// valid, so fill contents
 				slot = l.getElement(2);
 				stat = l.getElement(3);
+				_pcmd = l.getElement(4);
 				addr = l.getElement(4)+128*l.getElement(9);
 				spd =  l.getElement(5);
 				dirf = l.getElement(6);
@@ -144,6 +149,8 @@ public class LocoNetSlot {
 	private int snd; 	// <SND> is the settings for functions F5-F8
 	private int id;		// throttle id, made from 
 						//     <ID1> and <ID2> normally identify the throttle controlling the loco
+						
+	private int _pcmd;  // hold pcmd and pstat for programmer
 }
 
 

@@ -15,7 +15,9 @@ package jmri;
 
 
 public class ProgWriteException extends ProgrammerException {
-	
+	public ProgWriteException(String s) { super(s); }
+	public ProgWriteException() {}
+
 }
 
 

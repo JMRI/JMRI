@@ -14,6 +14,8 @@ package jmri;
 
 
 public class ProgModeException extends ProgrammerException {
+	public ProgModeException(String s) { super(s); }
+	public ProgModeException() {}
 	
 }
 

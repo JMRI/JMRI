@@ -18,49 +18,35 @@ import ErrLoggerJ.ErrLog;
 
 public class MS100Frame extends javax.swing.JFrame {
 
-// IMPORTANT: Source code between BEGIN/END comment pair will be regenerated
-// every time the form is saved. All manual changes will be overwritten.
-// BEGIN GENERATED CODE
-	// member declarations
 	javax.swing.JButton getNamesButton = new javax.swing.JButton();
 	javax.swing.JList portList = new javax.swing.JList();
 	javax.swing.JButton openPortButton = new javax.swing.JButton();
-// END GENERATED CODE
 
 	public MS100Frame() {
 	}
 
 	public void initComponents() throws Exception {
-// IMPORTANT: Source code between BEGIN/END comment pair will be regenerated
-// every time the form is saved. All manual changes will be overwritten.
-// BEGIN GENERATED CODE
 		// the following code sets the frame's initial state
 
 		getNamesButton.setText("Get port names");
-		getNamesButton.setLocation(new java.awt.Point(10, 10));
 		getNamesButton.setVisible(true);
-		getNamesButton.setSize(new java.awt.Dimension(180, 40));
 
-		portList.setLocation(new java.awt.Point(10, 60));
 		portList.setVisible(true);
 		portList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		portList.setToolTipText("Select the primary serial port");
-		portList.setSize(new java.awt.Dimension(180, 80));
-
+		portList.setListData(adapter.getPortNames());
+		
 		openPortButton.setText("Open LocoNet port");
-		openPortButton.setLocation(new java.awt.Point(10, 150));
 		openPortButton.setVisible(true);
-		openPortButton.setToolTipText("Use this open button if your MS100 is connected to one port");
-		openPortButton.setSize(new java.awt.Dimension(180, 40));
 
 		setLocation(new java.awt.Point(5, 40));
-		setTitle("LocoNet Monitor startup");
-		getContentPane().setLayout(null);
-		setSize(new java.awt.Dimension(442, 257));
+		setTitle("MS100 connection");
+		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		getContentPane().add(getNamesButton);
 		getContentPane().add(portList);
 		getContentPane().add(openPortButton);
-
+		
+		pack();
 
 		getNamesButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -77,8 +63,6 @@ public class MS100Frame extends javax.swing.JFrame {
 				thisWindowClosing(e);
 			}
 		});
-
-// END GENERATED CODE
 	}
   
   	private boolean mShown = false;

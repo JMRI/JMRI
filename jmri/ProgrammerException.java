@@ -10,6 +10,8 @@ package jmri;
 
 
 public class ProgrammerException extends JmriException {
+	public ProgrammerException(String s) { super(s); }
+	public ProgrammerException() {}
 	
 }
 
