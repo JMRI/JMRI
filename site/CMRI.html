@@ -13,8 +13,46 @@
 <IMG SRC="images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
 </a>
 
-<H2>JMRI and C/MRI together</H2>
+<H1>JMRI and C/MRI together</H1>
 
+The JMRI libraries have built-in support for C/MRI serial hardware.
+C/MRI inputs can be used as sensors, and outputs can be driven as
+turnouts.
+
+<h2>Use with an SMINI board</h2>
+
+It's easiest to try JMRI with a SMINI board, as there's no options to 
+be configured for the C/MRI hardware.
+<OL>
+<LI>Start the JMRIdemo program
+<LI>From the edit menu, select preferences and configure:
+   <UL>
+   <LI>Protocol as "C/MRI serial"
+   <LI>For serial port, select the one your hardware is attached to.
+   <LI>Select the baud rate your C/MRI system uses
+   <LI>Select "SMINI" from the initialization box
+   <LI>Click save, and say yes when it asks if you want to quit.
+   </UL>
+<LI>Restart the JMRIdemo program. Your SMINI's red and yellow LEDs should now
+be flashing, indicating that the computer and SMINI are talking.
+<LI>To check that everything is working, select "Turnout Control" from the tools
+menu.  This will open a small window in which you can select a turnout number
+(<a href="#numbers">see below</a>), then click closed/thrown to change the state
+of that output.
+</OL>
+
+
+<h2>Use with other C/MRI hardware</h2>
+
+To send the initialization string...
+
+<A id="numbers"><h2>Numbering</h2></a>
+
+
+<h2>More info</h2>
+For more information on C/MRI, please see the 
+<A HREF="http://www.jlcenterprises.net/">JLC Enterprises web site</a> and the
+<A HREF="http://groups.yahoo.com/group/CMRI_Users/">C/MRI yahoo users group</a>.
 
 <HR>
 <BR>Site hosted by: <BR>
