@@ -125,7 +125,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener
         }
     }
 
-	
+
     /**
      * Place and initialize all the buttons.
      */
@@ -139,7 +139,9 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener
         for (int i=0; i<NUM_FUNCTION_BUTTONS; i++)
         {
             functionButton[i] = new FunctionButton();
-			functionButton[i].setActionMap(new ActionMap());			
+            try {   // not present in old JVMs
+                functionButton[i].setActionMap(new ActionMap());
+            } catch (NoClassDefFoundError ec) {}
             functionButton[i].setIdentity(i);
             functionButton[i].setFunctionListener(this);
             functionButton[i].setText("F"+String.valueOf(i));
@@ -149,7 +151,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener
             }
         }
         mainPanel.add(functionButton[0]);
-		
+
 		functionButton[0].setKeyCode(KeyEvent.VK_NUMPAD0);
 		functionButton[1].setKeyCode(KeyEvent.VK_NUMPAD1);
 		functionButton[2].setKeyCode(KeyEvent.VK_NUMPAD2);
@@ -177,7 +179,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener
 	class FunctionButtonKeyListener extends KeyAdapter
 	{
 		private boolean keyReleased = true;
-		
+
 		/**
 		 *  Description of the Method
 		 *
@@ -200,10 +202,10 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener
 		}
 
 		public void keyTyped(KeyEvent e)
-		{		
+		{
 			System.out.println("Typed");
 		}
-		
+
 		public void keyReleased(KeyEvent e)
 		{
 			System.out.println("Released");

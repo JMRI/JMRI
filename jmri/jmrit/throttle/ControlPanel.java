@@ -62,7 +62,7 @@ public class ControlPanel extends JInternalFrame
 			throttle.setSpeedSetting(0);
 		}
 	}
-	
+
 	/**
 	 *  Get notification that a throttle has been found as we requested.
 	 *
@@ -148,7 +148,7 @@ public class ControlPanel extends JInternalFrame
 		speedSlider.setOrientation(JSlider.VERTICAL);
 		speedSlider.setMajorTickSpacing(32);
 		speedSlider.setMinorTickSpacing(8);
-		java.util.Hashtable labelTable = new java.util.Hashtable();
+		com.sun.java.util.collections.Hashtable labelTable = new com.sun.java.util.collections.Hashtable();
 		labelTable.put(new Integer(31), new JLabel("25%"));
 		labelTable.put(new Integer(63), new JLabel("50%"));
 		labelTable.put(new Integer(95), new JLabel("75%"));
@@ -156,7 +156,9 @@ public class ControlPanel extends JInternalFrame
 		speedSlider.setLabelTable(labelTable);
 		speedSlider.setPaintTicks(true);
 		speedSlider.setPaintLabels(true);
-		speedSlider.setActionMap(new ActionMap());
+                try { // not present in original Swing
+		    speedSlider.setActionMap(new ActionMap());
+                } catch (NoClassDefFoundError ec) {}
 		// remove old actions
 		speedSlider.addChangeListener(
 			new ChangeListener()
