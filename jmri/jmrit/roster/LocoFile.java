@@ -21,7 +21,7 @@ import org.jdom.output.*;
  * directly. That's why it's not a public class.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version		 	$Revision: 1.2 $
+ * @version		 	$Revision: 1.3 $
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
@@ -150,6 +150,43 @@ class LocoFile extends XmlFile {
 			// mark file as OK
 			variableModel.setFileDirty(false);
 			}
+		catch (Exception e) {
+			log.error(e);
+		}
+	}
+
+    /**
+     * Write an XML version of this object, including also the RosterEntry
+     * information.  Does not do an automatic backup of the file, so that
+     * should be done elsewhere. This is intended for copy and import
+     * operations, where the tree has been read from an existing file.
+     * Hence, only the "ID" information in the roster entry is updated.
+     *
+     * @param pFile Destination file. This file is overwritten if it exists.
+     * @param pRootElement Root element of the JDOM tree to write.
+     *                      This should be of type "locomotive-config", and
+     *                      should not be in use elsewhere (clone it first!)
+     * @param pEntry RosterEntry providing name, etc, information
+     */
+	public void writeFile(File pFile, Element pRootElement, RosterEntry pEntry) {
+		try {
+			// This is taken in large part from "Java and XML" page 368
+
+			// create root element
+			Document doc = new Document(pRootElement);
+			doc.setDocType(new DocType("locomotive-config","locomotive-config.dtd"));
+
+			// Update the locomotive.id element
+            pRootElement.getChild("locomotive").getAttribute("id").setValue(pEntry.getId());
+
+			// write the result to selected file
+			java.io.FileOutputStream o = new java.io.FileOutputStream(pFile);
+			XMLOutputter fmt = new XMLOutputter();
+			fmt.setNewlines(true);   // pretty printing
+			fmt.setIndent(true);
+			fmt.output(doc, o);
+
+        }
 		catch (Exception e) {
 			log.error(e);
 		}
