@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a DCC decoder as a component, esp. information -->
 <!-- on how to program it. -->
-<!-- $Revision: 1.26 $ -->
+<!-- $Revision: 1.27 $ -->
 
 <!ELEMENT decoder-config (version, decoder, pane*)>
 
@@ -115,7 +115,7 @@
 
 <!ELEMENT enumChoice EMPTY>
 <!ATTLIST enumChoice choice CDATA #REQUIRED >
-<!ATTLIST enumChoice value CDATA "" >
+<!ATTLIST enumChoice value CDATA #IMPLIED >  <!-- if present, must be numeric -->
 <!ATTLIST enumChoice comment CDATA #IMPLIED >
 
 <!ELEMENT speedTableVal (speedTableEntry*) >
