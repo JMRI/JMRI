@@ -20,7 +20,7 @@ import javax.swing.*;
 public class PowerPane extends javax.swing.JPanel implements java.beans.PropertyChangeListener {
 
 	// GUI member declarations
-	JLabel onOffStatus 	= new JLabel();
+	JLabel onOffStatus 	= new JLabel("Unknown");
 	JButton onButton 	= new JButton("on");
 	JButton offButton 	= new JButton("off");
 	
@@ -63,7 +63,7 @@ public class PowerPane extends javax.swing.JPanel implements java.beans.Property
 	public void onButtonPushed() {
 		if (mgrOK())
 			try {
-				p.setPowerOn();
+				p.setPower(PowerManager.ON);
 				}
 			catch (JmriException e) {
 				log.error("Exception trying to turn power on " +e);
@@ -73,7 +73,7 @@ public class PowerPane extends javax.swing.JPanel implements java.beans.Property
 	public void offButtonPushed() {
 		if (mgrOK())
 			try {
-				p.setPowerOff();
+				p.setPower(PowerManager.OFF);
 				}
 			catch (JmriException e) {
 				log.error("Exception trying to turn power off " +e);
@@ -82,8 +82,13 @@ public class PowerPane extends javax.swing.JPanel implements java.beans.Property
 	
 	public void propertyChange(java.beans.PropertyChangeEvent ev) {
 		try {
-			if (p.isPowerOn()) onOffStatus.setText("On");
-			else onOffStatus.setText("Off");
+			if (p.getPower()==PowerManager.ON) onOffStatus.setText("On");
+			else if (p.getPower()==PowerManager.OFF) onOffStatus.setText("Off");
+			else if (p.getPower()==PowerManager.UNKNOWN) onOffStatus.setText("Unknown");
+			else {
+				onOffStatus.setText("Unknown");
+				log.error("Unexpected state value: +"+p.getPower());
+			}
 		} catch (JmriException ex) {
 			onOffStatus.setText("unknown");
 		}

@@ -21,14 +21,13 @@ import java.beans.PropertyChangeListener;
 
 public interface PowerManager {
 
-	public void 	setPowerOff() 	throws JmriException;
-	public void 	setPowerOn()  	throws JmriException;
-	public boolean 	isPowerOn()  	throws JmriException;
+	static final int UNKNOWN = 0;
+	static final int ON      = 2;
+	static final int OFF     = 4;
 	
-	public void		setTrackStopped()  throws JmriException;
-	public void		setTrackStarted()  throws JmriException;
-	public boolean	isTrackStarted()   throws JmriException;
-
+	public void 	setPower(int v) 	throws JmriException;
+	public int	 	getPower()  	throws JmriException;
+	
 	// to free resources when no longer used
 	public void dispose() throws JmriException;
 
