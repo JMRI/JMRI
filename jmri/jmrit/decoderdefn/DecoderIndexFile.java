@@ -26,7 +26,7 @@ import org.jdom.output.XMLOutputter;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -201,7 +201,7 @@ public class DecoderIndexFile extends XmlFile {
 		if (userRoot!=null && masterVersion.equals(userVersion)) return false;
 
         // force the update, with the version number located earlier
-        _instance.fileVersion = Integer.parseInt(masterVersion);
+        instance().fileVersion = Integer.parseInt(masterVersion);
 
         forceCreationOfNewIndex();
         // and force it's use
@@ -223,7 +223,8 @@ public class DecoderIndexFile extends XmlFile {
 		if (fp.exists()) {
 			sp = fp.list();
 			for (i=0; i<sp.length; i++) {
-				if (sp[i].endsWith(".xml")) np++;
+				if (sp[i].endsWith(".xml") || sp[i].endsWith(".XML"))
+                                    np++;
 			}
 		} else {
 			log.warn(XmlFile.prefsDir()+"decoders was missing, though tried to create it");
@@ -232,7 +233,9 @@ public class DecoderIndexFile extends XmlFile {
 		String[] sx = (new File(XmlFile.xmlDir()+DecoderFile.fileLocation)).list();
 		int nx = 0;
 		for (i=0; i<sx.length; i++) {
-			if (sx[i].endsWith(".xml")) nx++;
+			if (sx[i].endsWith(".xml") || sx[i].endsWith(".XML")) {
+                                nx++;
+			}
 		}
 		// copy the decoder entries to the final array
 		// note: this results in duplicate entries if the same name is also local.
@@ -241,15 +244,17 @@ public class DecoderIndexFile extends XmlFile {
 		int n=0;
 		if (sp != null && np> 0)
 			for (i=0; i<sp.length; i++) {
-				if (sp[i].endsWith(".xml")) sbox[n++] = sp[i];
+				if (sp[i].endsWith(".xml") || sp[i].endsWith(".XML"))
+                                    sbox[n++] = sp[i];
 			}
 		for (i=0; i<sx.length; i++) {
-			if (sx[i].endsWith(".xml")) sbox[n++] = sx[i];
+			if (sx[i].endsWith(".xml") || sx[i].endsWith(".XML"))
+                            sbox[n++] = sx[i];
 		}
 
 		// create a new decoderIndex
 		DecoderIndexFile index = new DecoderIndexFile();
-                index.fileVersion = _instance.fileVersion;
+                index.fileVersion = instance().fileVersion;
 
 		// write it out
 		try {
