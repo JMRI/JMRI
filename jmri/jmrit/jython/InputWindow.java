@@ -16,7 +16,7 @@ import jmri.util.PythonInterp;
  * global jython interpreter
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class InputWindow extends JPanel {
 
@@ -57,7 +57,7 @@ public class InputWindow extends JPanel {
         // intermediate \n characters need to be prefixed
         echo = jmri.util.StringUtil.replaceAll(echo,"\n", "\n... ");
         echo = echo.substring(0, echo.length()-4);
-        PythonInterp.outputlog.append(echo);
+        PythonInterp.getOutputArea().append(echo);
 
         // and execute
         PythonInterp.execCommand(cmd);
