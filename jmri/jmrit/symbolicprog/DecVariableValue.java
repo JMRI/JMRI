@@ -2,21 +2,27 @@
 
 package jmri.jmrit.symbolicprog;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.beans.PropertyChangeListener;
 import java.util.Vector;
 
-import javax.swing.*;
-import javax.swing.text.*;
+import javax.swing.JLabel;
+import javax.swing.JSlider;
+import javax.swing.JTextField;
+import javax.swing.text.Document;
 
 import com.sun.java.util.collections.ArrayList;
 
 /**
  * Decimal representation of a value.
  *
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.7 $
+ * @author		Bob Jacobsen   Copyright (C) 2001
+ * @version             $Revision: 1.8 $
  *
  */
 public class DecVariableValue extends VariableValue
