@@ -14,14 +14,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ResourceBundle;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.*;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
 
 import com.sun.java.util.collections.ArrayList;
 
@@ -29,7 +22,7 @@ import com.sun.java.util.collections.ArrayList;
  * Basic configuration GUI infrastructure.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class AppConfigPanel extends JPanel {
 
