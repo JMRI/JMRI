@@ -92,6 +92,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 		variableTable.setDefaultRenderer(JButton.class, new ValueRenderer());
 		variableTable.setDefaultEditor(JTextField.class, new ValueEditor());
 		variableTable.setDefaultEditor(JButton.class, new ValueEditor());
+		variableTable.setRowHeight(new JButton("X").getPreferredSize().height);
 		variableScroll.setColumnHeaderView(variableTable.getTableHeader());
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
 		// instead of forcing the columns to fill the frame (and only fill)
@@ -101,6 +102,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 		cvTable.setDefaultRenderer(JButton.class, new ValueRenderer());
 		cvTable.setDefaultEditor(JTextField.class, new ValueEditor());
 		cvTable.setDefaultEditor(JButton.class, new ValueEditor());
+		cvTable.setRowHeight(new JButton("X").getPreferredSize().height);
 		cvScroll.setColumnHeaderView(cvTable.getTableHeader());
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
 		// instead of forcing the columns to fill the frame (and only fill)

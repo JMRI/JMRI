@@ -68,44 +68,37 @@ public class PaneProgAction 			extends AbstractAction {
 		if (log.isInfoEnabled()) log.info("Pane programmer requested");
 		
 		// create the initial frame that steers
-		JFrame f = new JFrame("Tab-Programmer Setup");
+		final JFrame f = new JFrame("Tab-Programmer Setup");
 		f.getContentPane().setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
 
 		// new Loco on programming track
 		JLabel last;
-		JPanel pane1 = new NewLocoSelPane(statusLabel){
+		JPanel pane1 = new CombinedLocoSelPane(statusLabel){
 			protected void startProgrammer(DecoderFile decoderFile, String locoFile, RosterEntry re) {
-				JFrame p = new PaneProgFrame(decoderFile, locoFile, re, "Program New Locomotive");
-				p.pack();
-				p.show();
-			}
-		};
-		
-		// Known loco on programming track
-		JPanel pane2 = new KnownLocoSelPane(statusLabel){
-			protected void startProgrammer(DecoderFile decoderFile, String locoFile, RosterEntry re) {
-				String title = "Program "+re.getId();
+				String title = "Program new decoder";
+				if (re!=null) title = "Program "+re.getId();
 				JFrame p = new PaneProgFrame(decoderFile, locoFile, re, title);
 				p.pack();
 				p.show();
+				f.setVisible(false);
+				f.dispose();
 			}
 		};
-			
+					
 		// update roster button
 		JPanel pane4 = new JPanel();
 			JButton updateRoster;
 			pane4.add(updateRoster = new JButton("Update Roster"));
 			pane4.setBorder(new EmptyBorder(6,6,6,6));
-			pane4.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+			pane4.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
 			updateRoster.setEnabled(false);
 			updateRoster.setToolTipText("disable because not yet implemented");
 			
 		// load primary frame
 		f.getContentPane().add(pane1);
 		f.getContentPane().add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
-		f.getContentPane().add(pane2);
-		f.getContentPane().add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
 		f.getContentPane().add(pane4);
+		statusLabel.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
 		f.getContentPane().add(statusLabel);
 		
 		f.pack();

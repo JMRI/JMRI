@@ -17,9 +17,9 @@ import java.util.Vector;
 import java.io.DataOutputStream;
 import java.io.DataInputStream;
 
-import jmri.jmrix.loconet.LnPortController;
+import jmri.jmrix.loconet.*;
 
-public class LocoBufferAdapter extends LnPortController  {
+public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
 	Vector portNameVector = null;
 	SerialPort activeSerialPort = null;
@@ -64,10 +64,40 @@ public class LocoBufferAdapter extends LnPortController  {
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-		}
-		
-		
+		}		
 	}
+
+	/**
+	 * set up all of the other objects to operate with a LocoBuffer
+	 * connected to this port
+	 */
+	public void configure() {
+			// connect to the traffic controller
+			LnTrafficController.instance().connectPort(this);
+		
+			// If a jmri.Programmer instance doesn't exist, create a 
+			// loconet.SlotManager to do that
+			if (jmri.InstanceManager.programmerInstance() == null) 
+				jmri.jmrix.loconet.SlotManager.instance();
+				
+			// If a jmri.PowerManager instance doesn't exist, create a 
+			// loconet.LnPowerManager to do that
+			if (jmri.InstanceManager.powerManagerInstance() == null) 
+				jmri.InstanceManager.setPowerManager(new jmri.jmrix.loconet.LnPowerManager());
+
+			// If a jmri.TurnoutManager instance doesn't exist, create a 
+			// loconet.LnTurnoutManager to do that
+			if (jmri.InstanceManager.turnoutManagerInstance() == null) 
+				jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager());
+
+			// start operation
+			// sourceThread = new Thread(p);
+			// sourceThread.start();
+			sinkThread = new Thread(LnTrafficController.instance());
+			sinkThread.start();
+	}
+	
+	private Thread sinkThread;
 
 // base class methods for the LnPortController interface
 	public DataInputStream getInputStream() {

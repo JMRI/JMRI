@@ -36,7 +36,9 @@ public class HexVariableValue extends VariableValue implements ActionListener, P
 		_value.setBackground(COLOR_UNKNOWN);
 		// connect to the JTextField value, cv
 		_value.addActionListener(this);
-		((CvValue)_cvVector.elementAt(getCvNum())).addPropertyChangeListener(this);
+		CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()));
+		cv.addPropertyChangeListener(this);
+		cv.setState(CvValue.FROMFILE);
 	}
 	
 	int _maxVal;

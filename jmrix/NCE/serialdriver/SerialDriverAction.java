@@ -13,7 +13,7 @@ package jmri.jmrix.nce.serialdriver;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
-public class SerialDriverAction 			extends AbstractAction {
+public class SerialDriverAction extends AbstractAction  {
 
 	public SerialDriverAction(String s) { super(s);}
 	

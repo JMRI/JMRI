@@ -21,7 +21,7 @@ import org.jdom.Attribute;
  * stored in local variables.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecoderProConfigFrame.java,v 1.2 2001-12-05 23:31:15 jacobsen Exp $
+ * @version			$Id: DecoderProConfigFrame.java,v 1.3 2001-12-06 16:16:24 jacobsen Exp $
  */
 public class DecoderProConfigFrame extends JFrame {
 		
@@ -174,7 +174,7 @@ public class DecoderProConfigFrame extends JFrame {
 		portName = (String) portBox.getSelectedItem();
 	}
 
-	jmri.jmrix.SerialDriverAdapter port = null;
+	jmri.jmrix.SerialPortAdapter port = null;
 	String protocolName = "(None selected)";
 	String portName = "(None selected)";
 	
@@ -199,18 +199,21 @@ public class DecoderProConfigFrame extends JFrame {
 			jmri.jmrix.loconet.locobuffer.LocoBufferAdapter a 
 					= new jmri.jmrix.loconet.locobuffer.LocoBufferAdapter();
 			a.openPort(portName, "DecoderPro");
+			a.configure();
 			
 		} else if (protocolName.equals("LocoNet MS100")) {
 			//
 			jmri.jmrix.loconet.ms100.MS100Adapter a 
 					= new jmri.jmrix.loconet.ms100.MS100Adapter();
 			a.openPort(portName, "DecoderPro");
+			a.configure();
 			
 		} else if (protocolName.equals("NCE")) {
 			//
 			jmri.jmrix.nce.serialdriver.SerialDriverAdapter a 
 					= new jmri.jmrix.nce.serialdriver.SerialDriverAdapter();
 			a.openPort(portName, "DecoderPro");
+			a.configure();
 			
 		} else {
 			// selected no match, so throw an error

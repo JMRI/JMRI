@@ -29,7 +29,7 @@ import org.jdom.Attribute;
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: PaneProgPane.java,v 1.6 2001-12-02 05:46:42 jacobsen Exp $
+ * @version			$Id: PaneProgPane.java,v 1.7 2001-12-06 16:16:27 jacobsen Exp $
  */
 public class PaneProgPane extends javax.swing.JPanel 
 							implements java.beans.PropertyChangeListener  {
@@ -279,6 +279,7 @@ public class PaneProgPane extends javax.swing.JPanel
 				cvTable.setDefaultRenderer(JButton.class, new ValueRenderer());
 				cvTable.setDefaultEditor(JTextField.class, new ValueEditor());
 				cvTable.setDefaultEditor(JButton.class, new ValueEditor());
+				cvTable.setRowHeight(new JButton("X").getPreferredSize().height);
 				cvScroll.setColumnHeaderView(cvTable.getTableHeader());
 				// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
 				// instead of forcing the columns to fill the frame (and only fill)

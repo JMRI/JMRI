@@ -101,31 +101,9 @@ public class MS100Frame extends javax.swing.JFrame {
 		if ((String) portList.getSelectedValue() != null) {
 			// connect to the port
 			adapter.openPort((String) portList.getSelectedValue(),"MS100Frame");
-				
-			// connect to the traffic controller
-			LnTrafficController.instance().connectPort(adapter);
-		
-			// If a jmri.Programmer instance doesn't exist, create a 
-			// loconet.SlotManager to do that
-			if (jmri.InstanceManager.programmerInstance() == null) 
-				jmri.jmrix.loconet.SlotManager.instance();
-				
-			// If a jmri.PowerManager instance doesn't exist, create a 
-			// loconet.LnPowerManager to do that
-			if (jmri.InstanceManager.powerManagerInstance() == null) 
-				jmri.InstanceManager.setPowerManager(new jmri.jmrix.loconet.LnPowerManager());
-
-			// If a jmri.TurnoutManager instance doesn't exist, create a 
-			// loconet.LnTurnoutManager to do that
-			if (jmri.InstanceManager.turnoutManagerInstance() == null) 
-				jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager());
-
-			// start operation
-			// sourceThread = new Thread(p);
-			// sourceThread.start();
-			sinkThread = new Thread(LnTrafficController.instance());
-			sinkThread.start();
 			
+			adapter.configure();
+						
 			// hide this frame, since we're done
 			hide();
 		} else {

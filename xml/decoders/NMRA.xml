@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: NMRA.xml,v 1.4 2001-12-04 19:44:37 jacobsen Exp $ -->
+<!-- $Id: NMRA.xml,v 1.5 2001-12-06 16:17:06 jacobsen Exp $ -->
 <decoder-config xmlns:decoder="http://jmri.sourceforge.net/xml/decoder">
 <decoder>
 	<id family="NMRA" mfg="NMRA" mfgID="" defnVersion="0"
@@ -11,7 +11,7 @@
 
 	<variables>
 		<variable name="Primary Address" CV="1" comment="Short address"
-						stdName="Short Address">
+						stdName="Short Address"  default="03">
 			<decVal min="1" max="127"/>
 			</variable>
 		<variable name="Vstart" CV="2"
@@ -512,10 +512,10 @@
 		<variable name="Reverse Trim" CV="95">
 			<decVal/>
 			</variable>
-		<variable name="User Identification #1" CV="105">
+		<variable name="User Id #1" CV="105">
 			<decVal/>
 			</variable>
-		<variable name="User Identification #2" CV="106">
+		<variable name="User Id #2" CV="106">
 			<decVal/>
 			</variable>
 	</variables>

@@ -115,30 +115,8 @@ public class SerialDriverFrame extends javax.swing.JFrame {
 			// connect to the port
 			adapter.openPort((String) portList.getSelectedValue(),"SerialDriverFrame");
 				
-			// connect to the traffic controller
-			NceTrafficController.instance().connectPort(adapter);
-		
-			// If a jmri.Programmer instance doesn't exist, create a 
-			// nce.NceProgrammer to do that
-			if (jmri.InstanceManager.programmerInstance() == null) 
-				jmri.jmrix.nce.NceProgrammer.instance();
-
-			// If a jmri.PowerManager instance doesn't exist, create a 
-			// nce.NcePowerManager to do that
-			if (jmri.InstanceManager.powerManagerInstance() == null) 
-				jmri.InstanceManager.setPowerManager(new jmri.jmrix.nce.NcePowerManager());
-				
-			// If a jmri.TurnoutManager instance doesn't exist, create a 
-			// nce.NcePowerManager to do that
-			if (jmri.InstanceManager.turnoutManagerInstance() == null) 
-				jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.nce.NceTurnoutManager());
-				
-			// start operation
-			// sourceThread = new Thread(p);
-			// sourceThread.start();
-			sinkThread = new Thread(NceTrafficController.instance());
-			sinkThread.start();
-			
+			adapter.configure();
+						
 			// hide this frame, since we're done
 			hide();
 		} else {
@@ -146,9 +124,8 @@ public class SerialDriverFrame extends javax.swing.JFrame {
 			JOptionPane.showMessageDialog(this, "Please select a port name first");
 		}
 	}
-	
+
 // Data members
 	private SerialDriverAdapter adapter = new SerialDriverAdapter();
-	// private Thread sourceThread;
-	private Thread sinkThread;
+
 }

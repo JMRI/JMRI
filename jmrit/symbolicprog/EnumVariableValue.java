@@ -21,7 +21,7 @@ import com.sun.java.util.collections.ArrayList;
  * Extends VariableValue to represent a enumerated variable.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: EnumVariableValue.java,v 1.11 2001-12-06 06:16:13 jacobsen Exp $
+ * @version			$Id: EnumVariableValue.java,v 1.12 2001-12-06 16:16:26 jacobsen Exp $
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
@@ -56,7 +56,9 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 		_value.setBackground(COLOR_UNKNOWN);
 		// connect to the JComboBox model and the CV so we'll see changes.
 		_value.addActionListener(this);
-		((CvValue)_cvVector.elementAt(getCvNum())).addPropertyChangeListener(this);
+		CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()));
+		cv.addPropertyChangeListener(this);
+		cv.setState(CvValue.FROMFILE);
 	}
 	
 	// stored value
@@ -82,6 +84,9 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 			_value.setSelectedItem(e.getActionCommand());
 		}
 		if (log.isDebugEnabled()) log.debug("action event: "+e);
+
+		// notify
+		prop.firePropertyChange("Value", null, new Integer(getIntValue()));
 		// called for new values - set the CV as needed
 		CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
 		// compute new cv value by combining old and request
@@ -101,13 +106,16 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 	public void setIntValue(int i) {
 		_value.setSelectedIndex(i);  // automatically fires a change event
 	}
+	public int getIntValue() {
+		return _value.getSelectedIndex();
+	}
 	
 	public Component getValue()  { return _value; }
 	public void setValue(int value) { 
 		int oldVal = _value.getSelectedIndex();
+		_value.setSelectedIndex(value);
 		if (oldVal != value || getState() == VariableValue.UNKNOWN) 
 			prop.firePropertyChange("Value", null, new Integer(value));
-		_value.setSelectedIndex(value);
 	}
 
 	public Component getRep(String format) {

@@ -22,7 +22,7 @@ import com.sun.java.util.collections.List;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: NewLocoSelPane.java,v 1.7 2001-12-02 05:46:42 jacobsen Exp $
+ * @version			$Id: NewLocoSelPane.java,v 1.8 2001-12-06 16:16:26 jacobsen Exp $
  */
 public class NewLocoSelPane extends javax.swing.JPanel  {
 			
@@ -67,7 +67,6 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
 			pane1a.setAlignmentX(JLabel.LEFT_ALIGNMENT);				
 		add(pane1a);
 		
-		DecoderIndexFile.instance();
 		decoderBox = DecoderIndexFile.instance().matchingComboBox(null, null, null, null, null);
 		add(decoderBox);
 		
@@ -103,15 +102,12 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
 		
 	private void selectDecoder(int mfgID, int modelID) {
 		// locate a decoder like that.
-		List l = DecoderIndexFile.instance().matchingDecoderList(null, null, Integer.toString(mfgID), Integer.toString(modelID), null);
-		if (log.isDebugEnabled()) log.debug("selectDecoder found "+l.size()+" matches");
-		if (l.size() > 0) {
-			DecoderFile d = (DecoderFile)l.get(0);
-			String title = d.titleString();
-			if (log.isDebugEnabled()) log.debug("Decoder file title "+title);
-			for (int i = 0; i<decoderBox.getItemCount(); i++) {
-				if (title.equals((String)decoderBox.getItemAt(i))) decoderBox.setSelectedIndex(i);
-			}
+		JComboBox temp = DecoderIndexFile.instance().matchingComboBox(null, null, Integer.toString(mfgID), Integer.toString(modelID), null);
+		if (log.isDebugEnabled()) log.debug("selectDecoder found "+temp.getItemCount()+" matches");
+		// install all those in the JComboBox in place of the longer, original list
+		if (temp.getItemCount() > 0) {
+			decoderBox.setModel(temp.getModel());
+			decoderBox.setSelectedIndex(0);
 		} else {
 			log.warn("Decoder says "+mfgID+" "+modelID+" decoder, but no such decoder defined");
 		}

@@ -103,7 +103,19 @@ public class PaneProgFrame extends javax.swing.JFrame
 		pack();
 		if (log.isInfoEnabled()) log.info("PaneProgFrame contructed with no args");
 	}
-  		
+  	
+  	/**
+  	 * Initialization sequence:
+  	 * <UL>
+  	 * <LI> If the locoFile is specified, open it
+  	 * <LI> If the decoder file is specified, open and load it, otherwise
+  	 *		get the decoder filename from the RosterEntry and load that.
+  	 *		Note that we're assuming the roster entry has the right decoder, 
+  	 *		at least w.r.t. the loco file.
+  	 * <LI> Fill CV values from the locoFile
+  	 * <LI> Create the programmer panes
+  	 * </UL>
+  	 */
 	public PaneProgFrame(DecoderFile decoderFile, String locoFile, RosterEntry r, String name) {
 		super(name);
 		installComponents();

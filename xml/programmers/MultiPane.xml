@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
 <programmer-config xmlns:programmer="http://jmri.sourceforge.net/xml/programmer">
-<!-- $Id: MultiPane.xml,v 1.10 2001-12-06 06:15:45 jacobsen Exp $ -->
+<!-- $Id: MultiPane.xml,v 1.11 2001-12-06 16:17:06 jacobsen Exp $ -->
 <programmer>
 
 	<pane name="Basic">
@@ -39,7 +39,7 @@
 	
 	<pane name="Speed Control">
 		<column>
-			<variable name="Speed Table Definition" format="offradiobutton" />
+			<variable name="Speed Table Definition" format="offradiobutton" layout="above"/>
 			<variable name="Vstart"/>
 			<variable name="Vmid"/>
 			<variable name="Vhigh"/>
@@ -47,7 +47,7 @@
 			<variable name="Reverse Trim"/>
 		</column>
 		<column>
-			<variable name="Speed Table Definition" format="onradiobutton" />
+			<variable name="Speed Table Definition" format="onradiobutton" layout="above"/>
 			<variable name="Speed Table"/>
 		</column>
 	</pane>

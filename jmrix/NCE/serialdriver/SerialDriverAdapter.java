@@ -17,9 +17,9 @@ import java.util.Vector;
 import java.io.DataOutputStream;
 import java.io.DataInputStream;
 
-import jmri.jmrix.nce.NcePortController;
+import jmri.jmrix.nce.*;
 
-public class SerialDriverAdapter extends NcePortController  {
+public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
 	Vector portNameVector = null;
 	SerialPort activeSerialPort = null;
@@ -68,6 +68,38 @@ public class SerialDriverAdapter extends NcePortController  {
 		
 		
 	}
+
+	/**
+	 * set up all of the other objects to operate with an NCE command 
+	 * station connected to this port
+	 */
+	public void configure() {
+			// connect to the traffic controller
+			NceTrafficController.instance().connectPort(this);
+		
+			// If a jmri.Programmer instance doesn't exist, create a 
+			// nce.NceProgrammer to do that
+			if (jmri.InstanceManager.programmerInstance() == null) 
+				jmri.jmrix.nce.NceProgrammer.instance();
+
+			// If a jmri.PowerManager instance doesn't exist, create a 
+			// nce.NcePowerManager to do that
+			if (jmri.InstanceManager.powerManagerInstance() == null) 
+				jmri.InstanceManager.setPowerManager(new jmri.jmrix.nce.NcePowerManager());
+				
+			// If a jmri.TurnoutManager instance doesn't exist, create a 
+			// nce.NcePowerManager to do that
+			if (jmri.InstanceManager.turnoutManagerInstance() == null) 
+				jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.nce.NceTurnoutManager());
+				
+			// start operation
+			// sourceThread = new Thread(p);
+			// sourceThread.start();
+			sinkThread = new Thread(NceTrafficController.instance());
+			sinkThread.start();
+	}
+	
+	private Thread sinkThread;
 
 // base class methods for the NcePortController interface
 	public DataInputStream getInputStream() {

@@ -22,13 +22,13 @@ import javax.swing.JTextField;
  *
  * Description:		Represents a single CV value
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: CvValue.java,v 1.7 2001-11-23 22:23:54 jacobsen Exp $
+ * @version			$Id: CvValue.java,v 1.8 2001-12-06 16:16:26 jacobsen Exp $
  */
 public class CvValue extends AbstractValue implements ProgListener {
 
 	public CvValue(int num) { 
 		_num = num;
-		_tableEntry = new JTextField(3);
+		_tableEntry = new JTextField("0", 3);
 		_defaultColor = _tableEntry.getBackground();
 		_tableEntry.setBackground(COLOR_UNKNOWN);
 	}

@@ -76,14 +76,14 @@ public abstract class VariableValueTest extends TestCase {
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, loaded as 5
 		VariableValue variable = makeVar("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
-		assert( variable.getValue() != null);
+		Assert.assertTrue("getValue not null ", variable.getValue() != null);
 		setValue(variable, "5");
 		checkValue(variable, "variable value", "5");
 		
 		// change the CV, expect to see a change in the variable value
 		cv.setValue(7*4+1);
 		checkValue(variable, "value after CV set", "7");
-		assert(cv.getValue() == 7*4+1);
+		Assert.assertEquals("cv after CV set ", 7*4+1, cv.getValue());
 	}
 	
 	// Do we get the right return from a readOnly == true DecVariable?
@@ -212,9 +212,11 @@ public abstract class VariableValueTest extends TestCase {
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, loaded as 5, manually notified
 		VariableValue variable = makeVar("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
-		assert(variable.getState() == VariableValue.UNKNOWN);
+		Assert.assertEquals("initial state", VariableValue.FROMFILE, variable.getState());
+		cv.setState(CvValue.UNKNOWN);
+		Assert.assertEquals("after CV set unknown", VariableValue.UNKNOWN, variable.getState());
 		setValue(variable, "5");
-		assert(variable.getState() == VariableValue.EDITTED);
+		Assert.assertEquals("state after setValue", VariableValue.EDITTED, variable.getState());
 	}
 
 	// check the state <-> color connection for value
@@ -228,9 +230,10 @@ public abstract class VariableValueTest extends TestCase {
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, loaded as 5, manually notified
 		VariableValue variable = makeVar("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
-		Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, variable.getValue().getBackground() );
-		setValue(variable, "5");
 		Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, variable.getValue().getBackground() );
+
+		cv.setState(CvValue.UNKNOWN);
+		Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, variable.getValue().getBackground() );
 	}
 	
 	// check the state <-> color connection for rep when var changes
@@ -247,10 +250,16 @@ public abstract class VariableValueTest extends TestCase {
 		// get a representation
 		JTextField rep = (JTextField)variable.getRep("");
 		
+		Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, variable.getValue().getBackground() );
+		Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, rep.getBackground() );
+
+		cv.setState(CvValue.UNKNOWN);
+
 		Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, variable.getValue().getBackground() );
 		Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, rep.getBackground() );
-		
+
 		setValue(variable, "5");
+
 		Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, variable.getValue().getBackground() );
 		Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, rep.getBackground() );
 	}
@@ -269,6 +278,10 @@ public abstract class VariableValueTest extends TestCase {
 		// get a representation
 		JTextField rep = (JTextField)variable.getRep("");
 		
+		Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, variable.getValue().getBackground() );
+		Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, rep.getBackground() );
+
+		cv.setState(CvValue.UNKNOWN);
 		Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, variable.getValue().getBackground() );
 		Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, rep.getBackground() );
 		

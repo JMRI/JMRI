@@ -37,8 +37,12 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 		// connect to the JTextField value, cv
 		_value.addActionListener(this);
 		// connect for notification
-		((CvValue)_cvVector.elementAt(getCvNum())).addPropertyChangeListener(this);
-		((CvValue)_cvVector.elementAt(getCvNum()+1)).addPropertyChangeListener(this);
+		CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()));
+		cv.addPropertyChangeListener(this);
+		cv.setState(CvValue.FROMFILE);
+		CvValue cv1 = ((CvValue)_cvVector.elementAt(getCvNum()+1));
+		cv1.addPropertyChangeListener(this);
+		cv1.setState(CvValue.FROMFILE);
 	}
 	
 	// the connection is to cvNum and cvNum+1
