@@ -24,7 +24,7 @@ import jmri.Sensor;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public class SerialNode {
 
@@ -38,7 +38,10 @@ public class SerialNode {
      * {@link SerialSensorManager#SENSORSPERUA}
      */
     static final int MAXSENSORS = 999;
-
+    
+    static public final int MAXSEARCHLIGHTBYTES = 48;
+    static public final int MAXCARDLOCATIONBYTES = 64;
+    
     // class constants
     public static final int SMINI = 1;          // SMINI node type
     public static final int USIC_SUSIC = 2;     // USIC/SUSIC node type
@@ -51,9 +54,9 @@ public class SerialNode {
     protected int bitsPerCard = 24;             // 24 for SMINI and USIC, 24 or 32 for SUSIC
     protected int transmissionDelay = 0;        // DL, delay between bytes on Receive (units of 10 microsec.)
     protected int num2LSearchLights = 0;        // SMINI only, 'NS' number of two lead bicolor signals
-    protected byte[] locSearchLightBits = new byte[48]; // SMINI only, 0 = not searchlight LED,
+    protected byte[] locSearchLightBits = new byte[MAXSEARCHLIGHTBYTES]; // SMINI only, 0 = not searchlight LED,
                                                 //   1 = searchlight LED, 2*NS bits must be set to 1
-    protected byte[] cardTypeLocation = new byte[64]; // Varys on USIC/SUSIC. There must numInputCards bytes set to
+    protected byte[] cardTypeLocation = new byte[MAXCARDLOCATIONBYTES]; // Varys on USIC/SUSIC. There must numInputCards bytes set to
     						//   INPUT_CARD, and numOutputCards set to OUTPUT_CARD, with
                                                 //   the remaining locations set to NO_CARD.  All
                                                 //   NO_CARD locations must be at the end of the array.  The
@@ -90,7 +93,7 @@ public class SerialNode {
         bitsPerCard = 24;
         transmissionDelay = 0;
         num2LSearchLights = 0;
-        for (int i = 0; i<48; i++) {
+        for (int i = 0; i<MAXSEARCHLIGHTBYTES; i++) {
             locSearchLightBits[i] = 0;
         }
         // note: setNodeType initialized cardTypeLocation[];
@@ -111,6 +114,30 @@ public class SerialNode {
         SerialTrafficController.instance().registerSerialNode(this);
     }
 
+    public int getNum2LSearchLights() {
+    	return num2LSearchLights;
+    }
+    	
+    public void setNum2LSearchLights(int n) {
+    	num2LSearchLights = n;
+    }
+    	
+    public byte[] getLocSearchLightBits() {
+    	return locSearchLightBits;
+    }
+    	
+    public void setLocSearchLightBits(int num, int value) {
+    	locSearchLightBits[num] = (byte)(value&0xFF);
+    }
+    	
+    public byte[] getCardTypeLocation() {
+    	return cardTypeLocation;
+    }
+
+    public void setCardTypeLocation(int num, int value) {
+    	cardTypeLocation[num] = (byte)(value&0xFF);
+    }
+    	
     /**
      * Public method setting an output bit.
      *    Note:  state = 'true' for 0, 'false' for 1
@@ -162,7 +189,7 @@ public class SerialNode {
     	// check consistency
     	if (nodeType==SMINI && result!=1)
     		warn("C/MRI SMINI node with "+result+" input cards");
-    	if (nodeType==USIC_SUSIC && result>=64)
+    	if (nodeType==USIC_SUSIC && result>=MAXCARDLOCATIONBYTES)
     		warn("C/MRI USIC/SUSIC node with "+result+" input cards");
 
     	return result;
@@ -179,7 +206,7 @@ public class SerialNode {
     	// check consistency
     	if (nodeType==SMINI && result!=2)
     		warn("C/MRI SMINI node with "+result+" output cards");
-    	if (nodeType==USIC_SUSIC && result>=64)
+    	if (nodeType==USIC_SUSIC && result>=MAXCARDLOCATIONBYTES)
     		warn("C/MRI USIC/SUSIC node with "+result+" output cards");
 
     	return result;
@@ -209,14 +236,14 @@ public class SerialNode {
             cardTypeLocation[0] = OUTPUT_CARD;
             cardTypeLocation[1] = OUTPUT_CARD;
             cardTypeLocation[2] = INPUT_CARD;
-            for (int i=3;i<64;i++) {
+            for (int i=3;i<MAXCARDLOCATIONBYTES;i++) {
                 cardTypeLocation[i] = NO_CARD;
             }
         }
         else if (type == USIC_SUSIC) {
             nodeType = type;
             // clear cardTypeLocations
-            for (int i=0;i<64;i++) {
+            for (int i=0;i<MAXCARDLOCATIONBYTES;i++) {
                 cardTypeLocation[i] = NO_CARD;
             }
         }
