@@ -18,13 +18,13 @@ import javax.swing.JMenuBar;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class PanelPro extends Apps {
 
     PanelPro(JFrame p) {
         super(p);
-        }
+    }
 
     protected void createMenus(JMenuBar menuBar, JFrame frame) {
         fileMenu(menuBar, frame);
@@ -43,6 +43,10 @@ public class PanelPro extends Apps {
     protected String line1() {
         return MessageFormat.format(rb.getString("PanelProVersionCredit"),
                                 new String[]{jmri.Version.name()});
+    }
+
+    protected String line2() {
+        return "http://jmri.sf.net/PanelPro.html ";
     }
 
     // Main entry point

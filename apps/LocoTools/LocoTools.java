@@ -18,7 +18,7 @@ import javax.swing.JMenuBar;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.22 $
+ * @version     $Revision: 1.23 $
  */
 public class LocoTools extends Apps {
 
@@ -48,6 +48,11 @@ public class LocoTools extends Apps {
         return MessageFormat.format(rb.getString("LocoToolsVersionCredit"),
                                 new String[]{jmri.Version.name()});
     }
+
+    protected String line2() {
+        return "http://jmri.sf.net/LocoTools.html ";
+    }
+
     // Main entry point
     public static void main(String args[]) {
 

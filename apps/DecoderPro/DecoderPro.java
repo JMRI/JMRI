@@ -25,13 +25,13 @@ import javax.swing.JPanel;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.39 $
+ * @version     $Revision: 1.40 $
  */
 public class DecoderPro extends Apps {
 
     DecoderPro(JFrame p) {
         super(p);
-        }
+    }
 
     protected AppConfigPanel newPrefs() {
         return new AppConfigPanel(configFilename, 1);
@@ -57,6 +57,10 @@ public class DecoderPro extends Apps {
     protected String line1() {
         return MessageFormat.format(rb.getString("DecoderProVersionCredit"),
                                 new String[]{jmri.Version.name()});
+    }
+
+    protected String line2() {
+        return "http://jmri.sf.net/DecoderPro";
     }
 
     protected JPanel statusPanel() {

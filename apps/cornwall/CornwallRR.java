@@ -17,7 +17,7 @@ import javax.swing.JMenuBar;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 public class CornwallRR extends Apps {
 
@@ -39,6 +39,9 @@ public class CornwallRR extends Apps {
     protected String line1() {
         return MessageFormat.format("Cornwall RR, based on JMRI {0}",
                                 new String[]{jmri.Version.name()});
+    }
+    protected String line2() {
+        return "http://jmri.sf.net/Panels/Cornwall.html";
     }
     protected String logo() {
         return "resources/icons/cornwall/cornwall_logo.gif";
