@@ -24,7 +24,7 @@ import org.jdom.Attribute;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 abstract public class AbstractConfigFrame extends JFrame {
 
@@ -61,6 +61,7 @@ abstract public class AbstractConfigFrame extends JFrame {
      * <LI>"LocoNet Server"
      * <LI>"CMRI serial"
      * <LI>"EasyDCC"
+     * <LI>"Lenz XPressNet"
      * </UL>
      * DecoderPro and JmriDemo are known to overload, hence may have to
      * be editted when this is changed.
@@ -71,7 +72,7 @@ abstract public class AbstractConfigFrame extends JFrame {
     public String[] availableProtocols() {
         return  new String[] {"(None selected)","NCE","LocoNet LocoBuffer","LocoNet MS100",
                             "LocoNet Server",
-                            "CMRI serial", "EasyDCC"};
+                            "CMRI serial", "EasyDCC", "Lenz XPressNet"};
     }
 
 	/**
@@ -129,6 +130,7 @@ abstract public class AbstractConfigFrame extends JFrame {
 	JComboBox portBox;
 	JComboBox baudBox;
 	JComboBox opt1Box;
+	JComboBox opt2Box;
 	/*
 	 * Create a panel showing the valid connection methods and port names
 	 */
@@ -137,7 +139,7 @@ abstract public class AbstractConfigFrame extends JFrame {
 
 		JLabel l;
 
-		j.setLayout(new GridLayout(4,2));
+		j.setLayout(new GridLayout(5,2));
 		protocolBox = new JComboBox(availableProtocols());
 		protocolBox.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -188,6 +190,19 @@ abstract public class AbstractConfigFrame extends JFrame {
 		j.add(l);
 		j.add(opt1Box);
 
+		opt2Box = new JComboBox(new String[] {"(select a connection method first)"});
+		opt2Box.addActionListener( new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				opt2Selected();
+			}
+		});
+		opt2Box.setToolTipText("This is disabled until you select a connection method");
+		opt2Box.setEnabled(false);
+
+		l = new JLabel("Command station option: ");
+		j.add(l);
+		j.add(opt2Box);
+
 		return j;
 	}
 
@@ -204,6 +219,7 @@ abstract public class AbstractConfigFrame extends JFrame {
 		portBox.removeAllItems();  // start over
 		baudBox.removeAllItems();  // start over
 		opt1Box.removeAllItems();  // start over
+		opt2Box.removeAllItems();  // start over
 
 		log.debug("Connection selected: "+protocolName);
 		if (protocolName.equals("LocoNet LocoBuffer")) {
@@ -218,8 +234,10 @@ abstract public class AbstractConfigFrame extends JFrame {
 			}
 			String[] baudList = a.validBaudRates();
 			for (int i=0; i<baudList.length; i++) baudBox.addItem(baudList[i]);
-			String[] optList = a.validOption1();
-			for (int i=0; i<optList.length; i++) opt1Box.addItem(optList[i]);
+			String[] opt1List = a.validOption1();
+			for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
+			String[] opt2List = a.validOption2();
+			for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
 
 			if (baudList.length>1) {
 				baudBox.setToolTipText("Must match the baud rate setting of your hardware");
@@ -228,12 +246,19 @@ abstract public class AbstractConfigFrame extends JFrame {
 				baudBox.setToolTipText("The baud rate is fixed for this protocol");
 				baudBox.setEnabled(false);
 			}
-			if (optList.length>1) {
+			if (opt1List.length>1) {
 				opt1Box.setToolTipText("The first option is strongly recommended. See README for more info.");
 				opt1Box.setEnabled(true);
 			} else {
 				opt1Box.setToolTipText("There are no options for this protocol");
 				opt1Box.setEnabled(false);
+			}
+			if (opt2List.length>1) {
+				opt2Box.setToolTipText("");
+				opt2Box.setEnabled(true);
+			} else {
+				opt2Box.setToolTipText("There are no options for this protocol");
+				opt2Box.setEnabled(false);
 			}
 
 		} else if (protocolName.equals("LocoNet MS100")) {
@@ -248,8 +273,10 @@ abstract public class AbstractConfigFrame extends JFrame {
 			}
 			String[] baudList = a.validBaudRates();
 			for (int i=0; i<baudList.length; i++) baudBox.addItem(baudList[i]);
-			String[] optList = a.validOption1();
-			for (int i=0; i<optList.length; i++) opt1Box.addItem(optList[i]);
+			String[] opt1List = a.validOption1();
+			for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
+			String[] opt2List = a.validOption2();
+			for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
 
 			if (baudList.length>1) {
 				baudBox.setToolTipText("Must match the baud rate setting of your hardware");
@@ -258,12 +285,19 @@ abstract public class AbstractConfigFrame extends JFrame {
 				baudBox.setToolTipText("The baud rate is fixed for this protocol");
 				baudBox.setEnabled(false);
 			}
-			if (optList.length>1) {
+			if (opt1List.length>1) {
 				opt1Box.setToolTipText("The first option is strongly recommended. See README for more info.");
 				opt1Box.setEnabled(true);
 			} else {
 				opt1Box.setToolTipText("There are no options for this protocol");
 				opt1Box.setEnabled(false);
+			}
+			if (opt2List.length>1) {
+				opt2Box.setToolTipText("");
+				opt2Box.setEnabled(true);
+			} else {
+				opt2Box.setToolTipText("There are no options for this protocol");
+				opt2Box.setEnabled(false);
 			}
 
 		} else if (protocolName.equals("LocoNet Server")) {
@@ -277,6 +311,8 @@ abstract public class AbstractConfigFrame extends JFrame {
 
     		opt1Box.setToolTipText("There are no options for this protocol");
     		opt1Box.setEnabled(false);
+    		opt2Box.setToolTipText("There are no options for this protocol");
+    		opt2Box.setEnabled(false);
 
 		} else if (protocolName.equals("NCE")) {
 			//
@@ -290,8 +326,10 @@ abstract public class AbstractConfigFrame extends JFrame {
 			}
 			String[] baudList = a.validBaudRates();
 			for (int i=0; i<baudList.length; i++) baudBox.addItem(baudList[i]);
-			String[] optList = a.validOption1();
-			for (int i=0; i<optList.length; i++) opt1Box.addItem(optList[i]);
+			String[] opt1List = a.validOption1();
+			for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
+			String[] opt2List = a.validOption2();
+			for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
 
 			if (baudList.length>1) {
 				baudBox.setToolTipText("Must match the baud rate setting of your hardware");
@@ -300,12 +338,19 @@ abstract public class AbstractConfigFrame extends JFrame {
 				baudBox.setToolTipText("The baud rate is fixed for this protocol");
 				baudBox.setEnabled(false);
 			}
-			if (optList.length>1) {
+			if (opt1List.length>1) {
 				opt1Box.setToolTipText("The first option is strongly recommended. See README for more info.");
 				opt1Box.setEnabled(true);
 			} else {
 				opt1Box.setToolTipText("There are no options for this protocol");
 				opt1Box.setEnabled(false);
+			}
+			if (opt2List.length>1) {
+				opt2Box.setToolTipText("");
+				opt2Box.setEnabled(true);
+			} else {
+				opt2Box.setToolTipText("There are no options for this protocol");
+				opt2Box.setEnabled(false);
 			}
 		} else if (protocolName.equals("EasyDCC")) {
 			//
@@ -319,8 +364,10 @@ abstract public class AbstractConfigFrame extends JFrame {
 			}
 			String[] baudList = a.validBaudRates();
 			for (int i=0; i<baudList.length; i++) baudBox.addItem(baudList[i]);
-			String[] optList = a.validOption1();
-			for (int i=0; i<optList.length; i++) opt1Box.addItem(optList[i]);
+			String[] opt1List = a.validOption1();
+			for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
+			String[] opt2List = a.validOption2();
+			for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
 
 			if (baudList.length>1) {
 				baudBox.setToolTipText("Must match the baud rate setting of your hardware");
@@ -329,13 +376,59 @@ abstract public class AbstractConfigFrame extends JFrame {
 				baudBox.setToolTipText("The baud rate is fixed for this protocol");
 				baudBox.setEnabled(false);
 			}
-			if (optList.length>1) {
+			if (opt1List.length>1) {
 				opt1Box.setToolTipText("The first option is strongly recommended. See README for more info.");
 				opt1Box.setEnabled(true);
 			} else {
 				opt1Box.setToolTipText("There are no options for this protocol");
 				opt1Box.setEnabled(false);
 			}
+			if (opt2List.length>1) {
+				opt2Box.setToolTipText("");
+				opt2Box.setEnabled(true);
+			} else {
+				opt2Box.setToolTipText("There are no options for this protocol");
+				opt2Box.setEnabled(false);
+			}
+		} else if (protocolName.equals("Lenz XPressNet")) {
+			//
+			jmri.jmrix.lenz.li100.LI100Adapter a
+					= new jmri.jmrix.lenz.li100.LI100Adapter();
+			Vector v = a.getPortNames();
+			log.debug("Found "+v.size()+" XPressNet ports");
+			for (int i=0; i<v.size(); i++) {
+				if (i==0) portName = (String) v.elementAt(i);
+				portBox.addItem(v.elementAt(i));
+			}
+			String[] baudList = a.validBaudRates();
+			for (int i=0; i<baudList.length; i++) baudBox.addItem(baudList[i]);
+			String[] opt1List = a.validOption1();
+			for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
+			String[] opt2List = a.validOption2();
+			for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
+
+			if (baudList.length>1) {
+				baudBox.setToolTipText("Must match the baud rate setting of your hardware");
+				baudBox.setEnabled(true);
+			} else {
+				baudBox.setToolTipText("The baud rate is fixed for this protocol");
+				baudBox.setEnabled(false);
+			}
+			if (opt1List.length>1) {
+				opt1Box.setToolTipText("The first option is strongly recommended. See README for more info.");
+				opt1Box.setEnabled(true);
+			} else {
+				opt1Box.setToolTipText("There are no options for this protocol");
+				opt1Box.setEnabled(false);
+			}
+			if (opt2List.length>1) {
+				opt2Box.setToolTipText("");
+				opt2Box.setEnabled(true);
+			} else {
+				opt2Box.setToolTipText("There are no options for this protocol");
+				opt2Box.setEnabled(false);
+			}
+
 		} else if (protocolName.equals("CMRI serial")) {
 			//
 			jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter a
@@ -348,8 +441,10 @@ abstract public class AbstractConfigFrame extends JFrame {
 			}
 			String[] baudList = a.validBaudRates();
 			for (int i=0; i<baudList.length; i++) baudBox.addItem(baudList[i]);
-			String[] optList = a.validOption1();
-			for (int i=0; i<optList.length; i++) opt1Box.addItem(optList[i]);
+			String[] opt1List = a.validOption1();
+			for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
+			String[] opt2List = a.validOption2();
+			for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
 
 			if (baudList.length>1) {
 				baudBox.setToolTipText("Must match the baud rate setting of your hardware");
@@ -358,12 +453,19 @@ abstract public class AbstractConfigFrame extends JFrame {
 				baudBox.setToolTipText("The baud rate is fixed for this protocol");
 				baudBox.setEnabled(false);
 			}
-			if (optList.length>1) {
+			if (opt1List.length>1) {
 				opt1Box.setToolTipText("The first option is strongly recommended. See README for more info.");
 				opt1Box.setEnabled(true);
 			} else {
 				opt1Box.setToolTipText("There are no options for this protocol");
 				opt1Box.setEnabled(false);
+			}
+			if (opt2List.length>1) {
+				opt2Box.setToolTipText("");
+				opt2Box.setEnabled(true);
+			} else {
+				opt2Box.setToolTipText("There are no options for this protocol");
+				opt2Box.setEnabled(false);
 			}
 		} else {
 			// selected nothing, so put it back as it was
@@ -376,6 +478,9 @@ abstract public class AbstractConfigFrame extends JFrame {
 				opt1Box.addItem("(select a connection method first)");
 				opt1Box.setToolTipText("This is disabled until you select a connection method");
 				opt1Box.setEnabled(false);
+				opt2Box.addItem("(select a connection method first)");
+				opt2Box.setToolTipText("This is disabled until you select a connection method");
+				opt2Box.setEnabled(false);
 		}
 	}
 
@@ -400,11 +505,19 @@ abstract public class AbstractConfigFrame extends JFrame {
 		option1Setting = (String) opt1Box.getSelectedItem();
 	}
 
+	/*
+	 * Option2 value has been selected; store
+	 */
+	void opt2Selected() {
+		option2Setting = (String) opt2Box.getSelectedItem();
+	}
+
 	jmri.jmrix.SerialPortAdapter port = null;
 	String protocolName = "(None selected)";
 	String portName = "(None selected)";
 	String baudRate = "(None selected)";
 	String option1Setting = "(None selected)";
+	String option2Setting = "(None selected)";
 
 	public Element getConnection() {
 		Element e = new Element("connection");
@@ -414,6 +527,8 @@ abstract public class AbstractConfigFrame extends JFrame {
 			e.addAttribute("speed", getCurrentBaudRate());
 		if (getCurrentOption1Setting()!=null)
 			e.addAttribute("option1", getCurrentOption1Setting());
+		if (getCurrentOption2Setting()!=null)
+			e.addAttribute("option2", getCurrentOption2Setting());
 		return e;
 	}
 
@@ -421,6 +536,7 @@ abstract public class AbstractConfigFrame extends JFrame {
 	public String getCurrentPortName() { return portName; }
 	public String getCurrentBaudRate() { return baudRate; }
 	public String getCurrentOption1Setting() { return option1Setting; }
+	public String getCurrentOption2Setting() { return option2Setting; }
 
 	boolean configureConnection(Element e) throws jmri.JmriException {
 		protocolName = e.getAttribute("class").getValue();
@@ -464,11 +580,23 @@ abstract public class AbstractConfigFrame extends JFrame {
 			// check that the specified setting exists
 			if (!e.getAttribute("option1").getValue().equals(opt1Box.getSelectedItem())) {
 				// can't set non-existant option value!
-				log.error("Configured option value \""+option1Setting+"\" doesn't exist, no connection to layout made");
+				log.error("Configured option1 value \""+option1Setting+"\" doesn't exist, no connection to layout made");
 				return false;
 			}
 		}
 
+		// configure option2 - an optional attribute
+		if (e.getAttribute("option2")!=null) {
+			option2Setting = e.getAttribute("option2").getValue();
+			opt2Box.setSelectedItem(option2Setting);
+			option2Setting = e.getAttribute("option2").getValue();  // may have been changed by prior line
+			// check that the specified setting exists
+			if (!e.getAttribute("option2").getValue().equals(opt2Box.getSelectedItem())) {
+				// can't set non-existant option value!
+				log.error("Configured option2 value \""+option1Setting+"\" doesn't exist, no connection to layout made");
+				return false;
+			}
+		}
 		// handle the specific case (a good use for reflection!)
 		log.info("Configuring connection with "+protocolName+" "+portName);
 		if (protocolName.equals("LocoNet LocoBuffer")) {
@@ -477,6 +605,7 @@ abstract public class AbstractConfigFrame extends JFrame {
 					= new jmri.jmrix.loconet.locobuffer.LocoBufferAdapter();
 			a.configureBaudRate(getCurrentBaudRate());
 			a.configureOption1(getCurrentOption1Setting());
+			a.configureOption2(getCurrentOption1Setting());
 			a.openPort(portName, "JMRI/DecoderPro");
 			a.configure();
 			if (!a.okToSend()) {
@@ -496,6 +625,7 @@ abstract public class AbstractConfigFrame extends JFrame {
 					= new jmri.jmrix.loconet.ms100.MS100Adapter();
 			a.openPort(portName, "JMRI/DecoderPro");
 			a.configure();
+			a.configureOption2(getCurrentOption1Setting());
 
 		} else if (protocolName.equals("LocoNet Server")) {
 			// slightly different, as not based on a serial port...
@@ -519,6 +649,13 @@ abstract public class AbstractConfigFrame extends JFrame {
 			//
 			jmri.jmrix.easydcc.serialdriver.SerialDriverAdapter a
 					= new jmri.jmrix.easydcc.serialdriver.SerialDriverAdapter();
+			a.openPort(portName, "JMRI/DecoderPro");
+			a.configure();
+
+		} else if (protocolName.equals("Lenz XPressNet")) {
+			//
+			jmri.jmrix.lenz.li100.LI100Adapter a
+					= new jmri.jmrix.lenz.li100.LI100Adapter();
 			a.openPort(portName, "JMRI/DecoderPro");
 			a.configure();
 
