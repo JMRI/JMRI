@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: USBtoSerial.html,v 1.1 2004-12-26 00:39:14 jacobsen Exp $ -->
+<!-- $Id: USBtoSerial.html,v 1.2 2004-12-26 00:45:48 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -61,7 +61,7 @@
 <p>
 
 If your model railroad hardware is supposed to connect
-to you a computer via
+to a computer via
 a traditional RS232 serial connection, but your computer doesn't
 have any RS232 ports, what do you do?  This is becoming more common
 as new computers are sold with USB ports instead of RS232 serial ports.
@@ -72,7 +72,7 @@ A typical unit is one of the ones made by Keyspan, e.g. one of their
 <A HREF="http://keyspan.com/products/usb/USA19HS/">their USA19 series of adapters</a>.
 Note that we recommend the Keyspan adapters; we use a Keyspan
 19-series adapter during the release testing, and have found them to 
-work reliably in all cases.
+work reliably in all cases so far.
 
 <p>Other companies, such as 
 <A HREF="http://www.belkin.com">Belkin</a>,
@@ -90,7 +90,7 @@ MacOS 8/9 and MacOS X drivers are different, and can't be interchanged.
 <P>
 Many DCC systems don't require very much of their serial ports, and in that
 case any adapter will probably work. But some DCC systems require either special
-baud rates and/or RS232 control leads that nto all adapters can provide.  The
+baud rates and/or RS232 control leads that not all adapters can provide.  The
 rest of this page addresses those special cases.
 
 <A ID="MS100"/>
@@ -104,12 +104,18 @@ RS232 control leads.
 The Keyspan 19HS adapters are known to work with the MS100.  We've
 gotten reports of success from Windows 98, Windows XP, and MacOS 9 users.  
 (Note that the MS100 doesn't work with MacOS X; this is not a 
-USB adapter issue)  You'll have to get a cable to adapter the 9-pin
+USB adapter issue)  You'll have to get a special cable to connect the 9-pin
 connector on the Keyspan adapter to the 25-pin connector on the MS100.
 
 <P>
-Note that using a LocoBuffer is highly recommended over trying to get
+Note that using a LocoBuffer is highly recommended instead of trying to get
 a MS100 to work!
+
+<P>
+Users have reported that a Belkin adapter wouldn't work 
+with a MS100
+because it could not
+provide the special baud rate needed.
 
 <A ID="LocoBuffer"/>
 <h2>LocoNet via LocoButter, LocoBuffer-II</h2>
@@ -131,7 +137,7 @@ The Keyspan adapters are also known to work with the LocoBuffer.  We've
 gotten reports of success from Windows 98, Windows ME, 
 Windows XP, MacOS 9 and
 MacOS X users.
-You'll have to get a cable to adapter the 9-pin
+You'll have to get a special cable to connect the 9-pin
 connector on the Keyspan adapter to the 25-pin connector on the 
 original LocoBuffer; later models have a 9-pin serial connector.
 
