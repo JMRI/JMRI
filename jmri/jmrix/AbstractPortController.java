@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 abstract public class AbstractPortController implements SerialPortAdapter {
 
@@ -46,7 +46,7 @@ abstract public class AbstractPortController implements SerialPortAdapter {
     public void setPort(String port) { mPort= port;}
     protected String mPort = null;
     public String getCurrentPortName() {
-        if (mPort == null) return (String)getPortNames().get(0);
+        if (mPort == null) return (String)getPortNames().elementAt(0);
         return mPort;
     }
 
