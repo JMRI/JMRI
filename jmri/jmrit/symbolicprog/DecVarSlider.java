@@ -15,12 +15,12 @@ import java.beans.PropertyChangeListener;
  * an underlying variable; we return one of these in DecValVariable.getRep.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecVarSlider.java,v 1.2 2002-10-16 16:01:37 jacobsen Exp $
+ * @version			$Id: DecVarSlider.java,v 1.3 2003-06-05 23:36:08 jacobsen Exp $
  */
 public class DecVarSlider extends JSlider implements ChangeListener {
 
 	DecVarSlider(DecVariableValue var, int min, int max) {
-		super(new DefaultBoundedRangeModel(0, 0, min, max));
+		super(new DefaultBoundedRangeModel(min, 0, min, max));
 		_var = var;
 		// get the original color right
 		setBackground(_var.getColor());
