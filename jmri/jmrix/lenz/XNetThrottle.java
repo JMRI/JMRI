@@ -6,7 +6,7 @@ import jmri.jmrix.AbstractThrottle;
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
  * @author     Paul Bender (C) 2002,2003
- * @version    $Revision: 1.17 $
+ * @version    $Revision: 1.18 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -38,7 +38,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
        super();
        this.address=address;
        this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;
-       this.isForward=true;
+//       this.isForward=true;
        this.isAvailable=false;
        XNetTrafficController.instance().addXNetListener(~0, this);
        sendStatusInformationRequest();
@@ -436,16 +436,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         return "";
     }
 
-
-    // register for notification if any of the properties change
-//    public void removePropertyChangeListener(java.beans.PropertyChangeListener p)
-//    {
-//    }
-
-//    public void addPropertyChangeListener(java.beans.PropertyChangeListener p)
-//    {
-//    }
-
     /**
      * Dispose when finished with this object.  After this, further usage of
      * this Throttle object will result in a JmriException.
@@ -470,38 +460,16 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 
     private int getDccAddressHigh()
     {
-        /* this isn't actually the high byte, For addresses below 100, we
-	just return 0, otherwise, we need to return the upper byte of the
-	address after we add the offset 0xC000 The first address used for
-        addresses over 99 is 0xC064*/
-	if(this.address < 100)
-	{
-		return(0x00);
-	}
-	else
-	{
-		int temp=address + 0xC000;
-		temp=temp & 0xFF00;
-		temp=temp/256;
-		return temp;
-	}
+	return XNetTrafficController.instance()
+                                    .getCommandStation()
+                                    .getDCCAddressHigh(this.address);
     }
 
     private int getDccAddressLow()
     {
-        /* For addresses below 100, we just return the address, otherwise,
-	we need to return the upper byte of the address after we add the
-	offset 0xC000. The first address used for addresses over 99 is 0xC064*/
-	if(this.address < 100)
-	{
-		return(this.address);
-	}
-	else
-	{
-		int temp=this.address + 0xC000;
-		temp=temp & 0x00FF;
-		return temp;
-	}
+	return XNetTrafficController.instance()
+                                    .getCommandStation()
+                                    .getDCCAddressLow(this.address);
     }
 
     // getStatusInformation sends a request to get the status

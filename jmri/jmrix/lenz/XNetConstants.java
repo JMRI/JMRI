@@ -117,11 +117,11 @@ public final static int LOCO_NOT_AVAILABLE     = 0x40;
 public final static int LOCO_FUNCTION_STATUS  = 0x50;
 
 /* responses for stack/database searches */
-public final static int LOCO_SEARCH_RESPONSE_N  = 0x40; /*Normal Loco */
-public final static int LOCO_SEARCH_RESPONSE_DH = 0x41; /* in DH */
-public final static int LOCO_SEARCH_RESPONSE_MU_BASE = 0x42; /*MU base address */
-public final static int LOCO_SEARCH_RESPONSE_MU = 0x43; /* MUED Loco */
-public final static int LOCO_SEARCH_NO_RESULT   = 0x44; /* No address found */
+public final static int LOCO_SEARCH_RESPONSE_N  = 0x30; /*Normal Loco */
+public final static int LOCO_SEARCH_RESPONSE_DH = 0x31; /* in DH */
+public final static int LOCO_SEARCH_RESPONSE_MU_BASE = 0x32; /*MU base address */
+public final static int LOCO_SEARCH_RESPONSE_MU = 0x33; /* MUED Loco */
+public final static int LOCO_SEARCH_NO_RESULT   = 0x34; /* No address found */
 
 /* Double Header Info for XNet V1 and V2 */
 public final static int LOCO_DH_INFO_V1         = 0xC5; /* Byte 1 for XNET V1 */
@@ -202,6 +202,8 @@ public final static int LOCO_STACK_SEARCH_FWD = 0x05; /* search forward in
 		    		the command station stack for this unit */
 public final static int LOCO_STACK_SEARCH_BKWD = 0x06; /* search backward in 
 		    		the command station stack for this unit */
+public final static int LOCO_STACK_DELETE = 0x44; /* Delete a unit from
+                                                  the command station stack */
 
 /* Locomotive Operations for XNet  (see XNet docs for more info */
 public final static int LOCO_OPER_REQ_V1 = 0xB3;  /* for XNet V1 */
@@ -241,7 +243,10 @@ public final static int LOCO_REM_MULTI_UNIT_REQ = 0x42;
 
 /* find out if a unit is part of a specifc multi-unit set These are 
 followed by the 1 byte consist address, and the 2 byte consist 
-address (Forward and Backward refer to search direction */
+address (Forward and Backward refer to search direction) */
+public final static int LOCO_IN_MULTI_UNIT_SEARCH_REQ = 0xE4; //This is the opcode
+
+/* These are byte 2 of the message */
 public final static int LOCO_IN_MULTI_UNIT_REQ_FORWARD = 0x01;
 public final static int LOCO_IN_MULTI_UNIT_REQ_BACKWARD = 0x02;
 
@@ -264,10 +269,11 @@ public final static int OPS_MODE_PROG_REQ = 0xE6;
 /* Write requests (second byte for above) */
 public final static int OPS_MODE_PROG_WRITE_REQ = 0x30;
 
-/* Address inquiry Multi Unit Request */
-public final static int CS_MULTI_UNIT_REQ = 0xE2;
-
-/* Address inquiry Multi Unit Request directions (second byte for above) */
+/* Address inquiry Multi Unit Request 
+   this is used to find the next Multi Unit address known to the 
+   command station.  FWD and BKWD refer to search direction */
+public final static int CS_MULTI_UNIT_REQ     = 0xE2;  // This is the OpCode
+/* These are byte 2 of the message */
 public final static int CS_MULTI_UNIT_REQ_FWD = 0x03;
 public final static int CS_MULTI_UNIT_REQ_BKWD = 0x04;
 

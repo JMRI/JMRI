@@ -13,7 +13,7 @@ import jmri.*;
  *
  * @see            jmri.Programmer
  * @author         Paul Bender Copyright (C) 2003
- * @version        $Revision: 1.4 $
+ * @version        $Revision: 1.5 $
  */
 
 public class XNetOpsModeProgrammer implements Programmer,XNetListener 
@@ -26,24 +26,15 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
     jmri.ProgListener progListener = null;
 
     public XNetOpsModeProgrammer(int pAddress) {
-        if(pAddress < 100)
-        {
-                mAddressHigh=0x00;
-                mAddressLow=pAddress;
-        }
-        else
-        {
-                int temp=pAddress + 0xC000;
-                temp=temp & 0xFF00;
-                temp=temp/256;
-                mAddressHigh=temp;
-                temp=pAddress+0xC000;
-                temp = temp &0x00FF;
-                mAddressLow=temp;
-        }
-      
-      // register as a listener
-      XNetTrafficController.instance().addXNetListener(~0,this);
+	mAddressLow=XNetTrafficController.instance()
+                             .getCommandStation()
+                             .getDCCAddressLow(pAddress);
+	mAddressHigh=XNetTrafficController.instance()
+                             .getCommandStation()
+                             .getDCCAddressHigh(pAddress);
+
+        // register as a listener
+        XNetTrafficController.instance().addXNetListener(~0,this);
 
     }
 

@@ -6,12 +6,16 @@ package jmri.jmrix.lenz;
 
 
 /**
- * Defines standard operations for Dcc command stations.
+ * Defines the standard/common routines used in multiple classes related 
+ * to the a Lenz Command Station, on an XPressNet network.
  *
  * @author			Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  */
 public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
+
+    /* The First group of routines is for obtaining the Software and
+       hardware version of the Command station */
 
     /**
      *  We need to add a few data members for saving the version 
@@ -82,6 +86,17 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
      } 
 
     /**
+     * Provides the version string returned during the initial check.
+     * This function is not yet implemented...
+     **/
+    public String getVersionString() { return "<unknown>"; }
+    
+    /* 
+     * The next group of messages has to do with determining if the
+     * command station has, and is currently in service mode 
+     */
+
+    /**
      * Lenz does use a service mode
      */
     public boolean getHasServiceMode() {return true;}
@@ -94,21 +109,15 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
     public boolean getInServiceMode() { return mInServiceMode; }
     
     /**
-     * Provides the version string returned during the initial check.
-     * This function is not yet implemented...
-     **/
-    public String getVersionString() { return "<unknown>"; }
-    
-    /**
      * Remember whether or not in service mode
      **/
     boolean mInServiceMode = false;
     
-    /* The next group of routines are used by Feedback and/or turnout 
+    /* 
+     * The next group of routines are used by Feedback and/or turnout 
      * control code.  These are used in multiple places within the code, 
      * so they appear here. 
      */
-
 
     /**
      * Generate a message to change turnout state
@@ -281,6 +290,10 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
         else return -1;
     }
 
+    /* 
+     * Next we have a few throttle related messages
+     */
+
     /**
      * If this is a throttle-type message, return address. Otherwise
      * return -1.
@@ -307,7 +320,54 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
         return false;
     }
     
-    // start of programming messages
+    /**
+     * Get the Lower byte of a locomotive address from the decimal 
+     * locomotive address 
+     */
+     int getDCCAddressLow(int address) {
+        /* For addresses below 100, we just return the address, otherwise,
+        we need to return the upper byte of the address after we add the
+        offset 0xC000. The first address used for addresses over 99 is 0xC064*/
+        if(address < 100)
+        {
+                return(address);
+        }
+        else
+        {
+                int temp=address + 0xC000;
+                temp=temp & 0x00FF;
+                return temp;
+        }
+     }
+
+    /**
+     * Get the Upper byte of a locomotive address from the decimal 
+     * locomotive address 
+     */
+     int getDCCAddressHigh(int address) {
+        /* this isn't actually the high byte, For addresses below 100, we
+        just return 0, otherwise, we need to return the upper byte of the
+        address after we add the offset 0xC000 The first address used for
+        addresses over 99 is 0xC064*/
+        if(address < 100)
+        {
+                return(0x00);
+        }
+        else
+        {
+                int temp=address + 0xC000;
+                temp=temp & 0xFF00;
+                temp=temp/256;
+                return temp;
+        }
+
+     }
+
+
+
+    /* 
+     * Next, we have some messages related to sending programing commands.
+     */
     public XNetMessage getServiceModeResultsMsg() {
         XNetMessage m = new XNetMessage(3);
         m.setElement(0, XNetConstants.CS_REQUEST);
@@ -393,6 +453,174 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
         return m;
     }
 
+   /*
+    * Next, we have routines to generate XPressNet Messages for building 
+    * and tearing down a consist or a double header.
+    */
+
+    /*
+     * Build a Double Header
+     *
+     * @parm address1 is the first address in the consist
+     * @parm address2 is the second address in the consist.
+     */
+    XNetMessage getBuildDoubleHeaderMsg(int address1,int address2){
+	XNetMessage msg=new XNetMessage(7);
+	msg.setElement(0,XNetConstants.LOCO_DOUBLEHEAD);
+        msg.setElement(1,XNetConstants.LOCO_DOUBLEHEAD_BYTE2);
+        msg.setElement(2,getDCCAddressHigh(address1));
+        msg.setElement(3,getDCCAddressLow(address1));
+        msg.setElement(4,getDCCAddressHigh(address2));
+        msg.setElement(5,getDCCAddressLow(address2));
+        msg.setParity();
+        return(msg);
+    }
+
+    /*
+     * Dissolve a Double Header
+     *
+     * @parm address is one of the two addresses in the Double Header 
+     */
+    XNetMessage getDisolveDoubleHeaderMsg(int address){
+        // All we have to do is call getBuildDoubleHeaderMsg with the 
+        // second address as a zero
+        return(getBuildDoubleHeaderMsg(address,0));
+    }
+   
+    /*
+     * Add a Single address to a specified Advanced consist
+     *
+     * @parm consist is the consist address (1-99)
+     * @parm address is the locomotive address to add.
+     * @parm isNormalDir tells us if the locomotive is going forward when 
+     * the consist is going forward.
+     */
+    XNetMessage getAddLocoToConsistMsg(int consist,int address,
+                                       boolean isNormalDir){
+	XNetMessage msg=new XNetMessage(6);
+	msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
+        if(isNormalDir) {
+           msg.setElement(1,XNetConstants.LOCO_ADD_MULTI_UNIT_REQ);
+        } else {
+           msg.setElement(1,XNetConstants.LOCO_ADD_MULTI_UNIT_REQ | 0x01);
+        }
+        msg.setElement(2,getDCCAddressHigh(address));
+        msg.setElement(3,getDCCAddressLow(address));
+        msg.setElement(4,consist);
+        msg.setParity();
+        return(msg);
+    }
+
+    /*
+     * Remove a Single address to a specified Advanced consist
+     *
+     * @parm consist is the consist address (1-99)
+     * @parm address is the locomotive address to remove
+     */
+    XNetMessage getRemoveLocoFromConsistMsg(int consist,int address){
+	XNetMessage msg=new XNetMessage(6);
+	msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
+        msg.setElement(1,XNetConstants.LOCO_REM_MULTI_UNIT_REQ);
+        msg.setElement(2,getDCCAddressHigh(address));
+        msg.setElement(3,getDCCAddressLow(address));
+        msg.setElement(4,consist);
+        msg.setParity();
+        return(msg);
+    }
+   
+
+   /*
+    * Next, we have routines to generate XPressNet Messages for search
+    * and manipulation of the Command Station Database
+    */
+
+    /*
+     * Given a locomotive address, search the database for the next 
+     * member. (if the Address is zero start at the begining of the 
+     * database)
+     * @parm address is the locomotive address
+     * @parm searchForward indicates to search the database Forward if 
+     * true, or backwards if False 
+     */
+    XNetMessage getNextAddressOnStackMsg(int address,boolean searchForward){
+	XNetMessage msg=new XNetMessage(5);
+	msg.setElement(0,XNetConstants.LOCO_STATUS_REQ);
+        if(searchForward) {
+           msg.setElement(1,XNetConstants.LOCO_STACK_SEARCH_FWD);
+        } else {
+           msg.setElement(1,XNetConstants.LOCO_STACK_SEARCH_BKWD);
+        }
+        msg.setElement(2,getDCCAddressHigh(address));
+        msg.setElement(3,getDCCAddressLow(address));
+        msg.setParity();
+        return(msg);
+    }
+
+    /*
+     * Given a consist address, search the database for the next Consist 
+     * address.
+     * @parm address is the consist address (in the range 1-99)
+     * If the Address is zero start at the begining of the database
+     * @parm searchForward indicates to search the database Forward if 
+     * true, or backwards if False 
+     */
+    XNetMessage getDBSearchMsgConsistAddress(int address,boolean searchForward){
+	XNetMessage msg=new XNetMessage(4);
+	msg.setElement(0,XNetConstants.CS_MULTI_UNIT_REQ);
+        if(searchForward) {
+           msg.setElement(1,XNetConstants.CS_MULTI_UNIT_REQ_FWD);
+        } else {
+           msg.setElement(1,XNetConstants.CS_MULTI_UNIT_REQ_BKWD);
+        }
+        msg.setElement(2,address);
+        msg.setParity();
+        return(msg);
+    }
+
+    /*
+     * Given a consist and a locomotive address, search the database for 
+     * the next Locomotive in the consist.
+     * @parm consist is the consist address (1-99)
+     * If the Consist Address is zero start at the begining of the database
+     * @parm address is the locomotive address
+     * If the Address is zero start at the begining of the consist
+     * @parm searchForward indicates to search the database Forward if 
+     * true, or backwards if False 
+     */
+    XNetMessage getDBSearchMsgNextMULoco(int consist,int address,boolean searchForward){
+	XNetMessage msg=new XNetMessage(6);
+	msg.setElement(0,XNetConstants.LOCO_IN_MULTI_UNIT_SEARCH_REQ);
+        if(searchForward) {
+           msg.setElement(1,XNetConstants.LOCO_IN_MULTI_UNIT_REQ_FORWARD);
+        } else {
+           msg.setElement(1,XNetConstants.LOCO_IN_MULTI_UNIT_REQ_BACKWARD);
+        }
+        msg.setElement(2,consist);
+        msg.setElement(3,getDCCAddressHigh(address));
+        msg.setElement(4,getDCCAddressLow(address));
+        msg.setParity();
+        return(msg);
+    }
+
+    /*
+     * Given a locomotive address, delete it from the database 
+     * @parm address is the locomotive address
+     */
+    XNetMessage getDeleteAddressOnStackMsg(int address){
+	XNetMessage msg=new XNetMessage(5);
+	msg.setElement(0,XNetConstants.LOCO_STATUS_REQ);
+        msg.setElement(1,XNetConstants.LOCO_STACK_DELETE);
+        msg.setElement(2,getDCCAddressHigh(address));
+        msg.setElement(3,getDCCAddressLow(address));
+        msg.setParity();
+        return(msg);
+    }
+
+    /* 
+     * Finally, we have some commonly used routines that are used for 
+     * checking specific, generic, response messages.
+     */
+
     /* 
      * In the interest of code reuse, The following function checks to see 
      * if an XPressNet Message is the OK message (01 04 05)
@@ -402,6 +630,10 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
                 m.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_SEND_SUCCESS);
     }	
 
+
+    /*
+     * We need to register for logging
+     */
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LenzCommandStation.class.getName());
     
 }
