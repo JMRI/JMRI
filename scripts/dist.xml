@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.6 $ -->
+<!-- Revision $Revision: 1.7 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -91,21 +91,19 @@
 <target name="x-rel-create-windows" depends=""
  					description="update files in master Windows directory">
 
-    <echo message="update files in master Windows directory" />
+    <echo message="create files in master Windows directory" />
+    <delete dir="Windows"/>
+    <mkdir dir="Windows"/> <!-- insures no old files around -->
     <copy todir="Windows/JMRI">
       <fileset dir="${release}" includes="jmri.jar"  /> 
     </copy>
-    <delete dir="Windows/JMRI/lib" />
     <cvs command="export" quiet="true" package="lib" dest="Windows/JMRI" tag="${release}"/>
     <move todir="Windows/JMRI" file="Windows/JMRI/lib/Serialio.jar"/>
     <delete file="Windows/JMRI/lib/junit.jar" />
-    <delete dir="Windows/JMRI/xml" />
+    <delete file="Windows/JMRI/lib/jh.1.1.2.jar" />
     <cvs command="export" quiet="true" package="xml" dest="Windows/JMRI" tag="${release}"/>
-    <delete dir="Windows/JMRI/resources" />
     <cvs command="export" quiet="true" package="resources" dest="Windows/JMRI" tag="${release}"/>
-    <delete dir="Windows/JMRI/help" />
     <cvs command="export" quiet="true" package="help" dest="Windows/JMRI" tag="${release}"/>
-    <delete dir="Windows/JMRI/jython" />
     <cvs command="export" quiet="true" package="jython" dest="Windows/JMRI" tag="${release}"/>
     <cvs command="export" quiet="true" package="scripts" dest="Windows/JMRI" tag="${release}"/>
     <move todir="Windows/JMRI">

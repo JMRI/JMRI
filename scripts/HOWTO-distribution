@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.40 $)
+distribution.  ($Revision: 1.41 $)
 
 Start with a directory, typically called "Distributions", that
 contains:
@@ -29,6 +29,7 @@ Make sure everything is up-to-date:
     If so, remake the decoder index. 
     Copy the new file from preferences into the CVS tree.
     Update the version number by hand.
+    Make sure file is saved with Unix line ends.
     Commit.
     
 ( ) Check if the help has changed since the previous tag
@@ -62,7 +63,6 @@ To actually create the distribution:
 
 ( ) Come back to Distributions and 
     cd scripts
-    cvs update -A
 	(be sure that's the default.lcf you want!)
 	cvs tag Release-1-2-3
     cd ..
@@ -111,7 +111,8 @@ To actually create the distribution:
 	and then retry.
 	
 ( ) Create and upload the XSLT pages. This can be done at any time after now,
-    but doing it now works well in parallel with the rest of the Windows build.
+    but doing it now works well in parallel with the rest of the Windows build
+    if that's going slowly in VPC.
     
     cd Release-1-2-3/xml/XLST
     ant xslt
@@ -157,8 +158,6 @@ To actually create the distribution:
 		a file, then add it later.  This prevents the original uploads from
 		being erased, so you don't have to upload them twice.
 
-( ) Mail announcement to jmriusers@yahoogroups.com
-
 ( ) Commit announcement file to the web site CVS directory
 
 ( ) For a test version, update the web site downloads page
@@ -176,13 +175,15 @@ To actually create the distribution:
 		
 ( ) Commit site and update on server
 	
-( ) News item from JMRI sourceforge page
-
-	Title is of the form "JMRI M.N is available"
+( ) Mail announcement to jmriusers@yahoogroups.com
 
 ( ) Mail announcement to jmri-announce@lists.sourceforge.net
 
     You'll get a moderation message via email; handle it.
+
+( ) News item from JMRI sourceforge page
+
+	Title is of the form "JMRI M.N is available"
 
 ( ) Decide if worth announcing elsewhere (production version or 
 	big system-specific fix/feature):
