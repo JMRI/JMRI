@@ -1,9 +1,9 @@
-/** 
+/**
  * MS100Frame.java
  *
  * Description:		Frame to control and connect LocoNet via MS100 interface and comm port
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			
+ * @version
  */
 
 package jmri.jmrix.loconet.ms100;
@@ -24,6 +24,7 @@ public class MS100Frame extends jmri.jmrix.SerialPortFrame {
 	public void openPortButtonActionPerformed(java.awt.event.ActionEvent e) throws jmri.jmrix.SerialConfigException {
 		if ((String) portBox.getSelectedItem() != null) {
 			// connect to the port
+			adapter.configureOption2((String)opt2Box.getSelectedItem());
 			adapter.openPort((String) portBox.getSelectedItem(),"MS100Frame");
 			adapter.configure();
 			// hide this frame, since we're done
@@ -33,7 +34,7 @@ public class MS100Frame extends jmri.jmrix.SerialPortFrame {
 			JOptionPane.showMessageDialog(this, "Please select a port name first");
 		}
 	}
-	
+
 // Data members
 
 }
