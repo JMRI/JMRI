@@ -1,6 +1,6 @@
 <!-- Defines XML documenting on a locomotive, esp. information -->
 <!-- on how it is programmed. -->
-<!-- $Id: locomotive-config.dtd,v 1.13 2003-03-18 03:07:35 jacobsen Exp $ -->
+<!-- $Id: locomotive-config.dtd,v 1.14 2003-05-31 05:15:26 jacobsen Exp $ -->
 
 <!ELEMENT locomotive-config (locomotive)>
 <!ATTLIST locomotive-config>
@@ -8,8 +8,6 @@
 <!-- The identification attributes in locomotive and -->
 <!-- decoder must be kept the same as the ones in the roster DTD -->
 <!-- This copy is used if we have to import an existing file into a roster -->
-
-<!-- The identification attributes must be kept the same as the ones in the roster DTD -->
 
 <!ELEMENT locomotive (decoder, values*) >
 <!ATTLIST locomotive id		CDATA #REQUIRED>          
