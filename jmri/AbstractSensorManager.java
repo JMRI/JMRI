@@ -2,11 +2,10 @@
 
 package jmri;
 
-
 /**
- * Abstract base implementation of the SensorManager interface
+ * Abstract base implementation of the SensorManager interface.
  * @author			Bob Jacobsen Copyright (C) 2001, 2003
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public abstract class AbstractSensorManager extends AbstractManager implements SensorManager {
 
@@ -57,7 +56,7 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
             return s;
         }
         if ( (s = getBySystemName(systemName)) != null) {
-            if (userName != null) log.warn("Found turnout via system name ("+systemName
+            if (userName != null) log.warn("Found sensor via system name ("+systemName
                                     +") with non-null user name ("+userName+")");
             return s;
         }
@@ -81,4 +80,4 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractSensorManager.class.getName());
 }
 
-/* @(#)AbstractTurnoutManager.java */
+/* @(#)AbstractSensorManager.java */

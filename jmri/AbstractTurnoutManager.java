@@ -2,13 +2,11 @@
 
 package jmri;
 
-
-
 /**
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
     implements TurnoutManager {
