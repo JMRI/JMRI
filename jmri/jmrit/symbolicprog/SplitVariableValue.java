@@ -16,7 +16,7 @@ import javax.swing.text.Document;
  * split across two CVs. The original use is for addresses of stationary (accessory)
  * decoders
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  *
  */
 public class SplitVariableValue extends VariableValue
@@ -25,13 +25,16 @@ public class SplitVariableValue extends VariableValue
 	public SplitVariableValue(String name, String comment, boolean readOnly,
 							int cvNum, String mask, int minVal, int maxVal,
 							Vector v, JLabel status, String stdname,
-                                                        int pSecondCV) {
+                                                        int pSecondCV,
+                                                        int pFactor, int pOffset) {
 		super(name, comment, readOnly, cvNum, mask, v, status, stdname);
 		_maxVal = maxVal;
 		_minVal = minVal;
 		_value = new JTextField("0", 5);
 		_defaultColor = _value.getBackground();
 		_value.setBackground(COLOR_UNKNOWN);
+                mFactor = pFactor;
+                mOffset = pOffset;
 		// connect to the JTextField value, cv
 		_value.addActionListener(this);
 		_value.addFocusListener(this);
@@ -53,6 +56,9 @@ public class SplitVariableValue extends VariableValue
 	}
 
         int mSecondCV;
+        int mFactor;
+        int mOffset;
+
         public int getSecondCvNum() { return mSecondCV;}
         int mShift;
 
@@ -67,17 +73,18 @@ public class SplitVariableValue extends VariableValue
 
 	String oldContents = "";
 
-	void enterField() {
-		oldContents = _value.getText();
-	}
-	void exitField() {
-		if (!oldContents.equals(_value.getText())) {
-			int newVal = Integer.valueOf(_value.getText()).intValue();
-			int oldVal = Integer.valueOf(oldContents).intValue();
-			updatedTextField();
-			prop.firePropertyChange("Value", new Integer(oldVal), new Integer(newVal));
-		}
-	}
+    void enterField() {
+        oldContents = _value.getText();
+    }
+
+    void exitField() {
+        if (!oldContents.equals(_value.getText())) {
+            int newVal = ((Integer.valueOf(_value.getText()).intValue())-mOffset)/mFactor;
+            int oldVal = ((Integer.valueOf(oldContents).intValue())-mOffset)/mFactor;
+            updatedTextField();
+            prop.firePropertyChange("Value", new Integer(oldVal), new Integer(newVal));
+        }
+    }
 
 	void updatedTextField() {
 		if (log.isDebugEnabled()) log.debug("actionPerformed");
@@ -85,9 +92,12 @@ public class SplitVariableValue extends VariableValue
 		CvValue cv1 = (CvValue)_cvVector.elementAt(getCvNum());
 		CvValue cv2 = (CvValue)_cvVector.elementAt(getSecondCvNum());
 		// no masking involved for long address
-		int newVal;
-		try { newVal = Integer.valueOf(_value.getText()).intValue(); }
-			catch (java.lang.NumberFormatException ex) { newVal = 0; }
+		int newEntry;  // entered value
+		try { newEntry = Integer.valueOf(_value.getText()).intValue(); }
+			catch (java.lang.NumberFormatException ex) { newEntry = 0; }
+
+                // calculate resulting number
+                int newVal = (newEntry-mOffset)/mFactor;
 
 		// no masked combining of old value required, as this fills the two CVs
 		int newCv1 = newVal& ((1<<mShift)-1);
@@ -97,13 +107,13 @@ public class SplitVariableValue extends VariableValue
 		if (log.isDebugEnabled()) log.debug("new value "+newVal+" gives first="+newCv1+" second="+newCv2);
 	}
 
-	/** ActionListener implementations */
-	public void actionPerformed(ActionEvent e) {
-		if (log.isDebugEnabled()) log.debug("actionPerformed");
-		int newVal = Integer.valueOf(_value.getText()).intValue();
-		updatedTextField();
-		prop.firePropertyChange("Value", null, new Integer(newVal));
-	}
+    /** ActionListener implementations */
+    public void actionPerformed(ActionEvent e) {
+        if (log.isDebugEnabled()) log.debug("actionPerformed");
+        int newVal = ((Integer.valueOf(_value.getText()).intValue())-mOffset)/mFactor;
+        updatedTextField();
+        prop.firePropertyChange("Value", null, new Integer(newVal));
+    }
 
 	/** FocusListener implementations */
 	public void focusGained(FocusEvent e) {
@@ -119,10 +129,11 @@ public class SplitVariableValue extends VariableValue
 	// to complete this class, fill in the routines to handle "Value" parameter
 	// and to read/write/hear parameter changes.
 	public String getValueString() {
-		return _value.getText();
+                int newVal = ((Integer.valueOf(_value.getText()).intValue())-mOffset)/mFactor;
+		return String.valueOf(newVal);
 	}
 	public void setIntValue(int i) {
-		setValue(i);
+		setValue((i-mOffset)/mFactor);
 	}
 
 	public Component getValue()  {
@@ -132,19 +143,21 @@ public class SplitVariableValue extends VariableValue
 	 		return _value;
 	}
 
-	public void setValue(int value) {
-		int oldVal;
-		try { oldVal = Integer.valueOf(_value.getText()).intValue(); }
-			catch (java.lang.NumberFormatException ex) { oldVal = -999; }
-		if (log.isDebugEnabled()) log.debug("setValue with new value "+value+" old value "+oldVal);
-		_value.setText(""+value);
-		if (oldVal != value || getState() == VariableValue.UNKNOWN)
-			actionPerformed(null);
-			prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value));
-	}
+    public void setValue(int value) {
+        int oldVal;
+        try {
+            oldVal = (Integer.valueOf(_value.getText()).intValue()-mOffset)/mFactor;
+        } catch (java.lang.NumberFormatException ex) { oldVal = -999; }
+        if (log.isDebugEnabled()) log.debug("setValue with new value "+value+" old value "+oldVal);
+        _value.setText(String.valueOf( value*mFactor + mOffset));
+        if (oldVal != value || getState() == VariableValue.UNKNOWN)
+            actionPerformed(null);
+        prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value*mFactor + mOffset));
+    }
 
-	Color _defaultColor;
-	// implement an abstract member to set colors
+    Color _defaultColor;
+
+    // implement an abstract member to set colors
 	void setColor(Color c) {
 		if (c != null) _value.setBackground(c);
 		else _value.setBackground(_defaultColor);
@@ -264,7 +277,7 @@ public class SplitVariableValue extends VariableValue
 	 * an underlying variable
 	 *
 	 * @author	Bob Jacobsen   Copyright (C) 2001
-	 * @version     $Revision: 1.1 $
+	 * @version     $Revision: 1.2 $
 	 */
 	public class VarTextField extends JTextField {
 

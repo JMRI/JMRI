@@ -19,7 +19,7 @@ import org.jdom.Element;
  * Table data model for display of variables in symbolic programmer.
  * Also responsible for loading from the XML file...
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version      $Revision: 1.3 $
+ * @version      $Revision: 1.4 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -255,10 +255,18 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
                         int highCV = CV+1;
 			if ( (a = child.getAttribute("highCV")) != null)
 				highCV = Integer.valueOf(a.getValue()).intValue();
+                        int factor = 1;
+			if ( (a = child.getAttribute("factor")) != null)
+				factor = Integer.valueOf(a.getValue()).intValue();
+                        int offset = 0;
+			if ( (a = child.getAttribute("offset")) != null)
+				offset = Integer.valueOf(a.getValue()).intValue();
 
 			_cvModel.addCV(""+(highCV));  // ensure 2nd CV exists
 			v = new SplitVariableValue(name, comment, readOnly,
-								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item, highCV);
+					CV, mask, minVal, maxVal, _cvModel.allCvVector(),
+                                        _status, item,
+                                        highCV, factor, offset);
 		} else {
 			log.error("Did not find a valid variable type");
 			return;
