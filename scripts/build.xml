@@ -1,6 +1,6 @@
 <!-- ugly first attempt at an ANT build.xml file for JMRI development -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.19 $ -->
+<!-- Revision $Revision: 1.20 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -140,16 +140,21 @@
   <target name="javadoc" depends="init" description="create JavaDocs">
     <javadoc packagenames="jmri.*, apps.*"
            sourcepath="src"
+           overview="src/jmri/overview.html"
            defaultexcludes="yes"
            destdir="doc"
-           author="true"
+           author="false"
            additionalparam="-breakiterator"
-           version="true"
+           version="false"
            use="true"
            windowtitle="JMRI API">
       <classpath refid="project.class.path"    />
-      <doctitle><![CDATA[<h1>Test</h1>]]></doctitle>
-      <bottom><![CDATA[<i>Copyright &#169; 2003 JMRI; All Rights Reserved.</i>]]></bottom>
+      <doctitle><![CDATA[<h1>JMRI Library API</h1>]]></doctitle>
+      <bottom><![CDATA[<i>Copyright &#169; 2003 JMRI; All Rights Reserved.</i>
+                       Site hosted by: 
+                       <A href="http://sourceforge.net"> 
+                       <IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A>
+                ]]></bottom>
       <link href="http://developer.java.sun.com/developer/products/xml/docs/api/"/>
     </javadoc>
   </target>
