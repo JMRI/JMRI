@@ -26,7 +26,7 @@
  * Reverse engineering of OPC_MULTI_SENSE was provided by Al Silverstein.
  *
  * @author			Bob Jacobsen
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 
 package jmri.jmrix.loconet.locomon;
@@ -439,9 +439,12 @@ protected String format(LocoNetMessage l) {
 			else if ( ((in1 & 1) ==0) && ((in2 & LnConstants.OPC_INPUT_REP_SW)!=0) ) bdl=bdl+"2)";
 			else bdl=bdl+"1)";
 
-            return "General sensor input report: "+
-                    SENSOR_ADR(in1,in2)+
-                    ((in2 & LnConstants.OPC_INPUT_REP_SW)!=0 ? " Sw  input" : " Aux input")+
+                        String ds = " (DS54 "+(SENSOR_ADR(in1,in2)/4)+" ch"+((SENSOR_ADR(in1, in2)&3)+1)
+                            +((in2 & LnConstants.OPC_INPUT_REP_SW)!=0 ? " Sw  input)" : " Aux input)");
+
+            return "General sensor input report: contact "+
+                    (SENSOR_ADR(in1, in2)*2+((in2 & LnConstants.OPC_INPUT_REP_SW)!=0?1:0))
+                    +ds+
                      bdl+
                     " is "+
                     ((in2 & LnConstants.OPC_INPUT_REP_HI)!=0 ? "Hi" : "Lo")+" "+
@@ -635,33 +638,41 @@ protected String format(LocoNetMessage l) {
 
 	/************************************************************************
 	* OPC_MULTI_SENSE     0xD0 messages about power management              *
-    *                          and transponding                             *
-    *                                                                       *
-    *  If byte 1 high nibble is 0x20 or 0x00 this is a transponding message *
+        *                          and transponding                             *
+        *                                                                       *
+        *  If byte 1 high nibble is 0x20 or 0x00 this is a transponding message *
 	*************************************************************************/
         case LnConstants.OPC_MULTI_SENSE:     {         // definition courtesy Al Silverstein
             	int type = l.getElement(1)&LnConstants.OPC_MULTI_SENSE_MSG;
                 forceHex = true;
                 String m;
+
+                String zone;
+                if      ((l.getElement(2)&0x0F) == 0x00) zone = "A";
+                else if ((l.getElement(2)&0x0F) == 0x02) zone = "B";
+                else if ((l.getElement(2)&0x0F) == 0x04) zone = "C";
+                else if ((l.getElement(2)&0x0F) == 0x06) zone = "D";
+                else zone="<unknown "+(l.getElement(2)&0x0F)+">";
+
                 switch (type) {
                     case LnConstants.OPC_MULTI_SENSE_POWER:
                         return "OPC_MULTI_SENSE power message PM4 "
                                 +l.getElement(2)+" ";
-                    case LnConstants.OPC_MULTI_SENSE_PRESENT:
+                    case LnConstants.OPC_MULTI_SENSE_PRESENT:  // from transponding app note
                         m =  "OPC_MULTI_SENSE transponder present zone "
-                                +l.getElement(2)+" decoder address ";
+                                +zone+" decoder address ";
                         if (l.getElement(3)==0x7D)
                             m+=l.getElement(4)+" (short) ";
                         else
-                            m+=l.getElement(3)*256+l.getElement(4)+" (long) ";
+                            m+=l.getElement(3)*128+l.getElement(4)+" (long) ";
                         return m;
                     case LnConstants.OPC_MULTI_SENSE_ABSENT:
                         m =  "OPC_MULTI_SENSE transponder absent zone "
-                                +l.getElement(2)+" decoder address ";
+                                +zone+" decoder address ";
                         if (l.getElement(3)==0x7D)
                             m+=l.getElement(4)+" (short) ";
                         else
-                            m+=l.getElement(3)*256+l.getElement(4)+" (long) ";
+                            m+=l.getElement(3)*128+l.getElement(4)+" (long) ";
                         return m;
                     default:
                         return "OPC_MULTI_SENSE unknown format ";
