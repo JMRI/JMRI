@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: TCS_zMx.xml,v 1.1 2003-06-24 05:59:06 jacobsen Exp $ -->
+<!-- $Id: TCS_zMx.xml,v 1.2 2003-08-03 20:40:00 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
-					version="1" lastUpdated="20030623"/>
+					version="2" lastUpdated="20030803"/>
 
 		<!-- Version 1 - made from TCS_Tx -->
+		<!-- Version 2 - fix "rule 17" typos -->
 
 <decoder>
 	<family name="TCS Mx series decoders" mfg="Train Control Systems">
@@ -101,7 +102,7 @@
 				<enumChoice choice="Double pulse strobe"/>
 				<enumChoice choice="Rotary beacon"/>
 				<enumChoice choice="Gyra lite"/>
-				<enumChoice choice="Run 17"/>
+				<enumChoice choice="Rule 17"/>
 				<enumChoice choice="Reserved (0x09)"/>
 				<enumChoice choice="Reserved (0x0A)"/>
 				<enumChoice choice="Reserved (0x0B)"/>
@@ -143,7 +144,7 @@
 				<enumChoice choice="Double pulse strobe"/>
 				<enumChoice choice="Rotary beacon"/>
 				<enumChoice choice="Gyra lite"/>
-				<enumChoice choice="Run 17"/>
+				<enumChoice choice="Rule 17"/>
 				<enumChoice choice="Reserved (0x09)"/>
 				<enumChoice choice="Reserved (0x0A)"/>
 				<enumChoice choice="Reserved (0x0B)"/>
@@ -186,7 +187,7 @@
 				<enumChoice choice="Double pulse strobe"/>
 				<enumChoice choice="Rotary beacon"/>
 				<enumChoice choice="Gyra lite"/>
-				<enumChoice choice="Run 17"/>
+				<enumChoice choice="Rule 17"/>
 				<enumChoice choice="Reserved (0x09)"/>
 				<enumChoice choice="Reserved (0x0A)"/>
 				<enumChoice choice="Reserved (0x0B)"/>
@@ -228,7 +229,7 @@
 				<enumChoice choice="Double pulse strobe"/>
 				<enumChoice choice="Rotary beacon"/>
 				<enumChoice choice="Gyra lite"/>
-				<enumChoice choice="Run 17"/>
+				<enumChoice choice="Rule 17"/>
 				<enumChoice choice="Reserved (0x09)"/>
 				<enumChoice choice="Reserved (0x0A)"/>
 				<enumChoice choice="Reserved (0x0B)"/>
@@ -270,7 +271,7 @@
 				<enumChoice choice="Double pulse strobe"/>
 				<enumChoice choice="Rotary beacon"/>
 				<enumChoice choice="Gyra lite"/>
-				<enumChoice choice="Run 17"/>
+				<enumChoice choice="Rule 17"/>
 				<enumChoice choice="Reserved (0x09)"/>
 				<enumChoice choice="Reserved (0x0A)"/>
 				<enumChoice choice="Reserved (0x0B)"/>

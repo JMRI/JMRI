@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: TCS_TH150DP.xml,v 1.6 2003-05-27 21:51:54 jacobsen Exp $ -->
+<!-- $Id: TCS_TH150DP.xml,v 1.7 2003-08-03 20:40:00 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
-					version="2" lastUpdated="20020805"/>
+					version="3" lastUpdated="20030803"/>
 
 		<!-- Version 1 - made from NMRA & Digitrax examples -->
 		<!-- Version 2 - moved 141 to T1 file, add function map -->
+		<!-- Version 3 - fix "rule 17" typos -->
 		
 <decoder>
 	<family name="TCS 150 series decoders" mfg="Train Control Systems">
@@ -97,7 +98,7 @@
 				<enumChoice choice="Double pulse strobe"/>
 				<enumChoice choice="Rotary beacon"/>
 				<enumChoice choice="Gyra lite"/>
-				<enumChoice choice="Run 17"/>
+				<enumChoice choice="Rule 17"/>
 				<enumChoice choice="Normal on/off control"/>
 				<enumChoice choice="Blinking ditch light A"/>
 				<enumChoice choice="Blinking ditch light B"/>
@@ -139,7 +140,7 @@
 				<enumChoice choice="Double pulse strobe"/>
 				<enumChoice choice="Rotary beacon"/>
 				<enumChoice choice="Gyra lite"/>
-				<enumChoice choice="Run 17"/>
+				<enumChoice choice="Rule 17"/>
 				<enumChoice choice="Normal on/off control"/>
 				<enumChoice choice="Blinking ditch light A"/>
 				<enumChoice choice="Blinking ditch light B"/>
@@ -181,7 +182,7 @@
 				<enumChoice choice="Double pulse strobe"/>
 				<enumChoice choice="Rotary beacon"/>
 				<enumChoice choice="Gyra lite"/>
-				<enumChoice choice="Run 17"/>
+				<enumChoice choice="Rule 17"/>
 				<enumChoice choice="Normal on/off control"/>
 				<enumChoice choice="Blinking ditch light A"/>
 				<enumChoice choice="Blinking ditch light B"/>
@@ -221,7 +222,7 @@
 				<enumChoice choice="Double pulse strobe"/>
 				<enumChoice choice="Rotary beacon"/>
 				<enumChoice choice="Gyra lite"/>
-				<enumChoice choice="Run 17"/>
+				<enumChoice choice="Rule 17"/>
 				<enumChoice choice="Normal on/off control"/>
 				<enumChoice choice="Blinking ditch light A"/>
 				<enumChoice choice="Blinking ditch light B"/>
@@ -261,7 +262,7 @@
 				<enumChoice choice="Double pulse strobe"/>
 				<enumChoice choice="Rotary beacon"/>
 				<enumChoice choice="Gyra lite"/>
-				<enumChoice choice="Run 17"/>
+				<enumChoice choice="Rule 17"/>
 				<enumChoice choice="Normal on/off control"/>
 				<enumChoice choice="Blinking ditch light A"/>
 				<enumChoice choice="Blinking ditch light B"/>

@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_01x3.xml,v 1.12 2003-07-09 18:48:05 jacobsen Exp $ -->
+<!-- $Id: Digitrax_01x3.xml,v 1.13 2003-08-03 20:40:00 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Simon.Ginsburg@freesurf.ch" 
-					version="8" lastUpdated="20030601"/>
+					version="9" lastUpdated="20030805"/>
 
 		<!-- Created from version 5 of the 1x2 file -->
 		<!-- V2: fix default values for CV56, 57 BEMF -->
@@ -13,7 +13,8 @@
 		<!-- V6: BEMF defaults updated - jake -->
 		<!-- V7: decoder lock feature - jake -->
 		<!-- V8: Function Output Map, CV's 33 to 46, defaults updated by Bob Blackwell, CV9 added -->
-		
+		<!-- Version 9 - fix "rule 17" typos -->
+	
 <decoder>
 	<family name="Series 3 with FX3, silent, readback" 
 			mfg="Digitrax" lowVersionID="49" highVersionID="49">
@@ -269,7 +270,7 @@
 				<enumChoice choice="Double pulse strobe"/>
 				<enumChoice choice="Rotary beacon simulation"/>
 				<enumChoice choice="Gyralite"/>
-				<enumChoice choice="Run 17 dimmable headlight"/>
+				<enumChoice choice="Rule 17 dimmable headlight"/>
 				<enumChoice choice="FRED end of train light"/>
 				<enumChoice choice="Right ditch light; when F2 on, flashes alternately"/>
 				<enumChoice choice="Left ditch light; when F2 on, flashes alternately"/>
@@ -311,7 +312,7 @@
 				<enumChoice choice="Double pulse strobe"/>
 				<enumChoice choice="Rotary beacon simulation"/>
 				<enumChoice choice="Gyralite"/>
-				<enumChoice choice="Run 17 dimmable headlight"/>
+				<enumChoice choice="Rule 17 dimmable headlight"/>
 				<enumChoice choice="FRED end of train light"/>
 				<enumChoice choice="Right ditch light; when F2 on, flashes alternately"/>
 				<enumChoice choice="Left ditch light; when F2 on, flashes alternately"/>
@@ -352,7 +353,7 @@
 				<enumChoice choice="Double pulse strobe"/>
 				<enumChoice choice="Rotary beacon simulation"/>
 				<enumChoice choice="Gyralite"/>
-				<enumChoice choice="Run 17 dimmable headlight"/>
+				<enumChoice choice="Rule 17 dimmable headlight"/>
 				<enumChoice choice="FRED end of train light"/>
 				<enumChoice choice="Right ditch light; when F2 on, flashes alternately"/>
 				<enumChoice choice="Left ditch light; when F2 on, flashes alternately"/>
@@ -392,7 +393,7 @@
 				<enumChoice choice="Double pulse strobe"/>
 				<enumChoice choice="Rotary beacon simulation"/>
 				<enumChoice choice="Gyralite"/>
-				<enumChoice choice="Run 17 dimmable headlight"/>
+				<enumChoice choice="Rule 17 dimmable headlight"/>
 				<enumChoice choice="FRED end of train light"/>
 				<enumChoice choice="Right ditch light; when F2 on, flashes alternately"/>
 				<enumChoice choice="Left ditch light; when F2 on, flashes alternately"/>
@@ -432,7 +433,7 @@
 				<enumChoice choice="Double pulse strobe"/>
 				<enumChoice choice="Rotary beacon simulation"/>
 				<enumChoice choice="Gyralite"/>
-				<enumChoice choice="Run 17 dimmable headlight"/>
+				<enumChoice choice="Rule 17 dimmable headlight"/>
 				<enumChoice choice="FRED end of train light"/>
 				<enumChoice choice="Right ditch light; when F2 on, flashes alternately"/>
 				<enumChoice choice="Left ditch light; when F2 on, flashes alternately"/>
@@ -472,7 +473,7 @@
 				<enumChoice choice="Double pulse strobe"/>
 				<enumChoice choice="Rotary beacon simulation"/>
 				<enumChoice choice="Gyralite"/>
-				<enumChoice choice="Run 17 dimmable headlight"/>
+				<enumChoice choice="Rule 17 dimmable headlight"/>
 				<enumChoice choice="FRED end of train light"/>
 				<enumChoice choice="Right ditch light; when F2 on, flashes alternately"/>
 				<enumChoice choice="Left ditch light; when F2 on, flashes alternately"/>
@@ -513,7 +514,7 @@
 				<enumChoice choice="Double pulse strobe"/>
 				<enumChoice choice="Rotary beacon simulation"/>
 				<enumChoice choice="Gyralite"/>
-				<enumChoice choice="Run 17 dimmable headlight"/>
+				<enumChoice choice="Rule 17 dimmable headlight"/>
 				<enumChoice choice="FRED end of train light"/>
 				<enumChoice choice="Right ditch light; when F2 on, flashes alternately"/>
 				<enumChoice choice="Left ditch light; when F2 on, flashes alternately"/>
@@ -554,7 +555,7 @@
 				<enumChoice choice="Double pulse strobe"/>
 				<enumChoice choice="Rotary beacon simulation"/>
 				<enumChoice choice="Gyralite"/>
-				<enumChoice choice="Run 17 dimmable headlight"/>
+				<enumChoice choice="Rule 17 dimmable headlight"/>
 				<enumChoice choice="FRED end of train light"/>
 				<enumChoice choice="Right ditch light; when F2 on, flashes alternately"/>
 				<enumChoice choice="Left ditch light; when F2 on, flashes alternately"/>
