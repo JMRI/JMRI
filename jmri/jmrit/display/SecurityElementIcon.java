@@ -15,19 +15,19 @@ import jmri.jmrix.loconet.SecurityElement;
  * explicitly add the code for Positionable
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class SecurityElementIcon extends JPanel
     implements java.beans.PropertyChangeListener,
                MouseListener, MouseMotionListener {
-    
+
     JLabel rlspeed;  // speed from right to left, on the top
     JLabel dir;      // direction bits
     JLabel lrspeed;  // speed from left to right, on the bottom
-    
+
     boolean debug;
-    
+
     /**
      * The standard display assumes that AX is left to right (rightbound), and
      * AX is right to left. Set this false if the reverse is correct.
@@ -35,20 +35,20 @@ public class SecurityElementIcon extends JPanel
     boolean rightboundIsAX = true;
     public void setRightBoundAX(boolean mVal) { rightboundIsAX = mVal; }
     public boolean getRightBoundAX() { return rightboundIsAX; }
-    
+
     public SecurityElementIcon() {
         // super ctor call to make sure this is an icon label
-        
+
         super();
-        
+
         debug = log.isDebugEnabled();
-        
+
         // show the starting state
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(rlspeed = new JLabel("????"));
         add(dir =     new JLabel("<??>"));
         add(lrspeed = new JLabel("????"));
-        
+
         // set the labels to a smaller font
         try {
             float newsize = lrspeed.getFont().getSize() * 0.8f;
@@ -56,16 +56,16 @@ public class SecurityElementIcon extends JPanel
             lrspeed.setFont(lrspeed.getFont().deriveFont(newsize));
             dir.setFont(lrspeed.getFont().deriveFont(newsize));
         } catch (NoSuchMethodError e) {}  // just carry on with larger fonts
-        
+
         // and make movable
         connect();
     }
-    
+
     // the associated SecurityElement object
     SecurityElement element = null;
-    
+
     public SecurityElement getSecurityElement() { return element; }
-    
+
     /**
      * Attached a numbered element to this display item
      * @param name Used as a number to lookup the sensor object
@@ -75,7 +75,7 @@ public class SecurityElementIcon extends JPanel
             .getSecurityElement(name);
         element.addPropertyChangeListener(this);
     }
-    
+
     // update as state of turnout changes
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (rightboundIsAX) {
@@ -85,7 +85,7 @@ public class SecurityElementIcon extends JPanel
             rlspeed.setText(String.valueOf(element.currentSpeedAX));
             lrspeed.setText(String.valueOf(element.currentSpeedXA));
         }
-        
+
         if (getRightBoundAX()) {
             String direction;
             if ((element.currentDirection&SecurityElement.XA)!=0)
@@ -108,9 +108,9 @@ public class SecurityElementIcon extends JPanel
                 dir.setText(direction+" ");
         }
     }
-    
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SecurityElementIcon.class.getName());
-    
+
     // below here is copied from PositionableLabel
     /**
      * Connect listeners
@@ -119,11 +119,11 @@ public class SecurityElementIcon extends JPanel
         addMouseMotionListener(this);
         addMouseListener(this);
     }
-    
+
     // cursor location reference for this move (relative to object)
     int xClick = 0;
     int yClick = 0;
-    
+
     public void mousePressed(MouseEvent e) {
         // remember where we are
         xClick = e.getX();
@@ -156,7 +156,7 @@ public class SecurityElementIcon extends JPanel
     public void mouseEntered(MouseEvent e) {
         if (debug) log.debug("Entered: "+where(e));
     }
-    
+
     public void mouseMoved(MouseEvent e) {
         //if (debug) log.debug("Moved:   "+where(e));
     }
@@ -171,9 +171,9 @@ public class SecurityElementIcon extends JPanel
             this.repaint();
         }
     }
-    
+
     JPopupMenu popup = null;
-    
+
     /**
      * Pop-up displays the config
      */
@@ -199,7 +199,7 @@ public class SecurityElementIcon extends JPanel
                 }
             }
                   );
-        
+
         popup.add(new AbstractAction("ds: "+element.dsSensor) {
                 public void actionPerformed(ActionEvent e) {
                     String newVal =
@@ -213,9 +213,9 @@ public class SecurityElementIcon extends JPanel
                 }
             }
                   );
-        
+
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
-        
+
         String attach = "?";
         if (element.attachAleg==SecurityElement.A) attach = "A";
         if (element.attachAleg==SecurityElement.B) attach = "B";
@@ -242,7 +242,7 @@ public class SecurityElementIcon extends JPanel
                 }
             }
                   );
-        
+
         if (element.attachBleg==SecurityElement.A) attach = "A";
         if (element.attachBleg==SecurityElement.B) attach = "B";
         if (element.attachBleg==SecurityElement.C) attach = "C";
@@ -268,7 +268,7 @@ public class SecurityElementIcon extends JPanel
                 }
             }
                   );
-        
+
         if (element.attachCleg==SecurityElement.A) attach = "A";
         if (element.attachCleg==SecurityElement.B) attach = "B";
         if (element.attachCleg==SecurityElement.C) attach = "C";
@@ -294,9 +294,21 @@ public class SecurityElementIcon extends JPanel
                 }
             }
                   );
-        
+
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
-        popup.add(new JMenuItem("maxAB: "+element.maxSpeedAB));
+        popup.add(new AbstractAction("maxAB: "+element.maxSpeedAB) {
+                public void actionPerformed(ActionEvent e) {
+                    String newVal =
+                        javax.swing.JOptionPane.showInputDialog(popup,
+                                                                "Set max A->B speed:",
+                                                                "Max AB speed "+element.maxSpeedAB,
+                                                                javax.swing.JOptionPane.OK_CANCEL_OPTION);
+                    if (newVal!=null) {
+                        element.maxSpeedAB=Integer.parseInt(newVal);
+                    }
+                }
+            }
+                  );
         popup.add(new JMenuItem("maxBA: "+element.maxSpeedBA));
         popup.add(new JMenuItem("maxAC: "+element.maxSpeedAC));
         popup.add(new JMenuItem("maxCA: "+element.maxSpeedCA));
@@ -305,12 +317,12 @@ public class SecurityElementIcon extends JPanel
         popup.add(new JMenuItem("brakeBA:"+element.maxBrakingBA));
         popup.add(new JMenuItem("brakeAC:"+element.maxBrakingAC));
         popup.add(new JMenuItem("brakeCA:"+element.maxBrakingCA));
-        
+
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
-    
+
     String where(MouseEvent e) {
         return ""+e.getX()+","+e.getY();
     }
-    
+
 }
