@@ -38,8 +38,8 @@ import com.sun.java.util.collections.ArrayList;
  *Read reads any that aren't READ or WRITTEN.
  *<P>
  * Description:		Extends VariableValue to represent a NMRA long address
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @author			Bob Jacobsen, Alex Shepherd   Copyright (C) 2001
+ * @version			$Revision: 1.6 $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -192,7 +192,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 
             g.setConstraints(v, cs);
 
-            if (i==0) log.info("Font size "+v.getFont().getSize());
+            if (i==0) log.debug("Font size "+v.getFont().getSize());
             float newSize = v.getFont().getSize() * 0.8f;
             v.setFont(v.getFont().deriveFont(newSize));
 
@@ -223,6 +223,13 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 		});
         k.add(b = new JButton("Constant ratio curve"));
         k.setToolTipText("Insert a constant ratio curve between existing endpoints");
+		b.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				doRatioCurve(e);
+			}
+		});
+        k.add(b = new JButton("Log curve"));
+        k.setToolTipText("Insert a logarithmic curve between existing endpoints");
 		b.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				doLogCurve(e);
@@ -265,21 +272,44 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     }
 
     /**
-     * Bump up the existing values by a logarithmic value
+     * Set a constant ratio curve
      */
-    void doLogCurve(java.awt.event.ActionEvent e) {
+    void doRatioCurve(java.awt.event.ActionEvent e) {
         double first = ((CvValue)_cvVector.elementAt(getCvNum()+0)).getValue();
-        if (first<1) first=1;
+        if (first<1.) first=1.;
         double last = ((CvValue)_cvVector.elementAt(getCvNum()+nValues-1)).getValue();
         if (last<first+1) last = first+1.;
         double step = Math.log(last/first)/(nValues-1);
-        log.debug("log step is "+step);
+        log.debug("log ratio step is "+step);
         // to avoid repeatedly bumping up later values, push the first one
         // all the way up now
         ((CvValue)_cvVector.elementAt(getCvNum()+0)).setValue((int)Math.round(last));
         // and push each one down
         for (int i = 0; i<nValues; i++) {
             int value = (int)(Math.floor(first*Math.exp(step*i)));
+            ((CvValue)_cvVector.elementAt(getCvNum()+i)).setValue(value);
+        }
+    }
+
+    /**
+     * Set a log curve
+     */
+    void doLogCurve(java.awt.event.ActionEvent e) {
+        double first = ((CvValue)_cvVector.elementAt(getCvNum()+0)).getValue();
+        double last = ((CvValue)_cvVector.elementAt(getCvNum()+nValues-1)).getValue();
+        if (last<first+1.) last = first+1.;
+        double factor = 1./10.;
+        // to avoid repeatedly bumping up later values, push the second one
+        // all the way up now
+        ((CvValue)_cvVector.elementAt(getCvNum()+1)).setValue((int)Math.round(last));
+        // and push each one down (except the first, left as it was)
+        double previous = first;
+        double ratio = Math.pow(1.-factor, nValues-1.);
+        double limit = last+(last-first)*ratio;
+        for (int i = 1; i<nValues; i++) {
+            previous = limit-(limit-first)*ratio/Math.pow(1.-factor, nValues-1.-i);
+            int value = (int)(Math.floor(previous));
+            System.out.println("step "+i+" "+previous);
             ((CvValue)_cvVector.elementAt(getCvNum()+i)).setValue(value);
         }
     }
