@@ -1,22 +1,22 @@
 // DecoderProConfigAction.java
 
-/** 
- * 
+/**
+ *
  *
  * Description:		Swing action to create DecoderProConfigFrame
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Id: DecoderProConfigAction.java,v 1.1 2002-02-20 07:33:46 jacobsen Exp $
+ * @version			$Id: DecoderProConfigAction.java,v 1.2 2002-02-28 17:24:16 jacobsen Exp $
  */
 
-package jmri.apps;
+package apps.DecoderPro;
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
-import jmri.apps.AbstractConfigFrame;
-import jmri.apps.AbstractConfigFile;
+import apps.AbstractConfigFrame;
+import apps.AbstractConfigFile;
 
-public class DecoderProConfigAction 			extends jmri.apps.AbstractConfigAction {
+public class DecoderProConfigAction 			extends apps.AbstractConfigAction {
 
 	protected AbstractConfigFile readFile() throws org.jdom.JDOMException, java.io.FileNotFoundException {
 		DecoderProConfigFile file = new DecoderProConfigFile();
@@ -27,9 +27,9 @@ public class DecoderProConfigAction 			extends jmri.apps.AbstractConfigAction {
 		return new DecoderProConfigFrame(name);
 	}
 
-	public DecoderProConfigAction(String s) { 
+	public DecoderProConfigAction(String s) {
 		super(s);
 	}
-		
+
 }
 

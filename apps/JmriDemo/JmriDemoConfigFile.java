@@ -1,11 +1,11 @@
-// DecoderProConfigFile.java
+// JmriDemoConfigFile.java
 
-package apps.DecoderPro;
+package apps.JmriDemo;
 
 import com.sun.java.util.collections.List;
 import java.io.*;
-import apps.*;
 import jmri.jmrit.XmlFile;
+import apps.*;
 import org.jdom.*;
 import org.jdom.output.*;
 
@@ -13,13 +13,13 @@ import org.jdom.output.*;
 
 /**
  * Represents and manipulates the preferences information for the
- * DecoderPro application. Works with the DecoderProConfigFrame
+ * JmriDemo application. Works with the JmriDemoConfigFrame
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version		 	$Id: DecoderProConfigFile.java,v 1.6 2002-02-28 17:24:16 jacobsen Exp $
- * @see apps.DecodeProConfigFrame
+ * @version		 	$Id: JmriDemoConfigFile.java,v 1.1 2002-02-28 17:24:20 jacobsen Exp $
+ * @see apps.AbstractConfigFrame
  */
-public class DecoderProConfigFile extends apps.AbstractConfigFile {
+public class JmriDemoConfigFile extends apps.AbstractConfigFile {
 
 	public void writeFile(String name, AbstractConfigFrame f) {
 		try {
@@ -58,10 +58,11 @@ public class DecoderProConfigFile extends apps.AbstractConfigFile {
 		}
 	}
 
-	protected String configFileName() { return "DecoderProConfig.xml";}
+	protected String configFileName() { return "JmriDemoConfig.xml";}
 
 	public String defaultConfigFilename() { return configFileName();}
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DecoderProConfigFile.class.getName());
+	// initialize logging
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(JmriDemoConfigFile.class.getName());
 
 }
