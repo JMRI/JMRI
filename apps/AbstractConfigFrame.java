@@ -23,8 +23,8 @@ import org.jdom.Attribute;
  * (2) Updating options when the name is selected (3) Actually connecting to the port.
  *
  *
- * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.18 $
+ * @author			Bob Jacobsen   Copyright (C) 2001, 2002. AC 11/09/2002 Added SPROG support
+ * @version			$Revision: 1.19 $
  */
 abstract public class AbstractConfigFrame extends JFrame {
 
@@ -63,6 +63,7 @@ abstract public class AbstractConfigFrame extends JFrame {
      * <LI>"CMRI serial"
      * <LI>"EasyDCC"
      * <LI>"Lenz XPressNet"
+     * <LI>"SPROG"
      * </UL>
      * DecoderPro and JmriDemo are known to overload, hence may have to
      * be edited when this is changed.
@@ -77,7 +78,8 @@ abstract public class AbstractConfigFrame extends JFrame {
                             "Lenz XPressNet",
                             "LocoNet LocoBuffer","LocoNet MS100",
                             "LocoNet Server", "LocoNet HexFile",
-                            "NCE"
+                            "NCE",
+                            "SPROG"
                         };
     }
 
@@ -403,6 +405,47 @@ abstract public class AbstractConfigFrame extends JFrame {
     				opt2Box.setToolTipText("There are no options for this protocol");
     				opt2Box.setEnabled(false);
     			}
+
+    		} else if (protocolName.equals("SPROG")) {
+    			//
+    			jmri.jmrix.sprog.serialdriver.SerialDriverAdapter a
+    					= new jmri.jmrix.sprog.serialdriver.SerialDriverAdapter();
+    			Vector v = a.getPortNames();
+    			log.debug("Found "+v.size()+" SPROG ports");
+    			for (int i=0; i<v.size(); i++) {
+    				if (i==0) portName = (String) v.elementAt(i);
+    				portBox.addItem(v.elementAt(i));
+    			}
+    			String[] baudList = a.validBaudRates();
+    			for (int i=0; i<baudList.length; i++) baudBox.addItem(baudList[i]);
+    			String[] opt1List = a.validOption1();
+    			for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
+    			String[] opt2List = a.validOption2();
+    			for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
+
+    			if (baudList.length>1) {
+    				baudBox.setToolTipText("Must match the baud rate setting of your hardware");
+    				baudBox.setEnabled(true);
+    			} else {
+    				baudBox.setToolTipText("The baud rate is fixed for this protocol");
+    				baudBox.setEnabled(false);
+    			}
+    			if (opt1List.length>1) {
+    				opt1Box.setToolTipText("The first option is strongly recommended. See README for more info.");
+    				opt1Box.setEnabled(true);
+    			} else {
+    				opt1Box.setToolTipText("There are no options for this protocol");
+    				opt1Box.setEnabled(false);
+    			}
+    			if (opt2List.length>1) {
+    				opt2Box.setToolTipText("");
+    				opt2Box.setEnabled(true);
+    			} else {
+    				opt2Box.setToolTipText("There are no options for this protocol");
+    				opt2Box.setEnabled(false);
+    			}
+
+
     		} else if (protocolName.equals("Lenz XPressNet")) {
     			//
     			jmri.jmrix.lenz.li100.LI100Adapter a
@@ -710,6 +753,13 @@ abstract public class AbstractConfigFrame extends JFrame {
             a.openPort(portName, "JMRI/DecoderPro");
             a.configure();
 
+        } else if (protocolName.equals("SPROG")) {
+            //
+            jmri.jmrix.sprog.serialdriver.SerialDriverAdapter a
+                = new jmri.jmrix.sprog.serialdriver.SerialDriverAdapter();
+            a.openPort(portName, "JMRI/DecoderPro");
+            a.configure();
+
         } else if (protocolName.equals("Lenz XPressNet")) {
             //
             jmri.jmrix.lenz.li100.LI100Adapter a
@@ -863,3 +913,4 @@ abstract public class AbstractConfigFrame extends JFrame {
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractConfigFrame.class.getName());
 
 }
+

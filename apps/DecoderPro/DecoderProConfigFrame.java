@@ -21,7 +21,7 @@ import org.jdom.Attribute;
  * stored in local variables.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 public class DecoderProConfigFrame extends apps.AbstractConfigFrame {
 
@@ -36,7 +36,7 @@ public class DecoderProConfigFrame extends apps.AbstractConfigFrame {
         return  new String[] {"(None selected)",
                                 "EasyDCC", "Lenz XPressNet",
                                 "LocoNet LocoBuffer","LocoNet MS100",
-                                "NCE"
+                                "NCE", "SPROG"
                                 };
     }
 	/**
