@@ -10,7 +10,7 @@ import jmri.*;
  * Based on Crr0024.bas
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
 
@@ -48,19 +48,21 @@ public class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
                                             tm.newTurnout("CT2","1a yellow"),
                                             tm.newTurnout("CT3","1a red"));
         InstanceManager.signalHeadManagerInstance().register(si1a);
+        si1a.setAppearance(SignalHead.RED);
 
         si1b  = new TripleTurnoutSignalHead("si1b", "Signal 1B",
                                             tm.newTurnout("CT4","1b green"),
                                             tm.newTurnout("CT5","1b yellow"),
                                             tm.newTurnout("CT6","1b red"));
         InstanceManager.signalHeadManagerInstance().register(si1b);
+        si1b.setAppearance(SignalHead.RED);
 
-        bo4  = sm.newSensor("CS7","RDG block 1");
-        bo16 = sm.newSensor("CS27","PRR/Lebanon entrance (under bridge)");
+        bo4  = sm.newSensor("CS7", "Reading Relay track 2 bo(04)");
+        bo16 = sm.newSensor("CS27","Cornwall Relay 1 bo(17)");
 
-        tu1  = sm.newSensor("CS1", "Cornwall Junction switch 1");
-        tu3  = sm.newSensor("CS6", "Cornwall Junction switch 2");
-        tu12 = sm.newSensor("CS29","Cornwall Junction switch 3");
+        tu1  = sm.newSensor("CS1", "Q Curve bo(01)");
+        tu3  = sm.newSensor("CS6", "unused tu(03)");
+        tu12 = sm.newSensor("CS29","Cornwall Mine lead tu(13)");
 
         // set up the initial correlation
         setOutput();
