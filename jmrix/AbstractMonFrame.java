@@ -31,7 +31,7 @@ public abstract class AbstractMonFrame extends javax.swing.JFrame  {
 	// member declarations
 	protected javax.swing.JButton clearButton = new javax.swing.JButton();
 	protected javax.swing.JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
-	public    javax.swing.JTextPane monTextPane = new javax.swing.JTextPane();
+	protected javax.swing.JTextPane monTextPane = new javax.swing.JTextPane();
 	protected javax.swing.JButton startLogButton = new javax.swing.JButton();
 	protected javax.swing.JButton stopLogButton = new javax.swing.JButton();
 	protected javax.swing.JCheckBox hexCheckBox = new javax.swing.JCheckBox();
