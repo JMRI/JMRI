@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: NCE_D13SR.xml,v 1.14 2002-10-17 12:38:05 jacobsen Exp $ -->
+<!-- $Id: NCE_D13SR.xml,v 1.15 2003-05-27 00:15:31 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen" version="6" lastUpdated="20021016"/>
 
@@ -18,6 +18,9 @@
     <model model="KRS-SR" numOuts="4" numFns="8" />
     <model model="SW9-SR" numOuts="4" numFns="8" />
     <model model="D408SR" numOuts="7" numFns="12" />
+    <model model="NIMFT-A" numOuts="2" numFns="3" />
+    <model model="NIMFT-B" numOuts="2" numFns="3" />
+    
   </family>
 
 	<programming direct="yes" paged="yes" 
