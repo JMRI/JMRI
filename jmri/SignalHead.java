@@ -12,16 +12,18 @@ package jmri;
  * of several heads.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public interface SignalHead {
 
     // states are parameters; both closed and thrown is possible!
     public static final int NONE        = 0x00;
-    public static final int RED         = 0x02;
-    public static final int YELLOW      = 0x08;
-    public static final int FLASHYELLOW = 0x10;
-    public static final int GREEN       = 0x40;
+    public static final int RED         = 0x01;
+    public static final int FLASHRED    = 0x02;
+    public static final int YELLOW      = 0x04;
+    public static final int FLASHYELLOW = 0x08;
+    public static final int GREEN       = 0x10;
+    public static final int FLASHGREEN  = 0x20;
 
     /**
      * Appearance is a bound parameter. Value values are the
