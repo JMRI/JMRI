@@ -35,7 +35,7 @@ import org.jdom.output.*;
  * sort is done manually each time an entry is added.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  * @see             jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -70,8 +70,14 @@ public class Roster extends XmlFile {
         if (log.isDebugEnabled()) log.debug("Add entry "+e);
         int i;
         for (i=0; i<_list.size(); i++) {
-            if (e.getId().compareToIgnoreCase(((RosterEntry)_list.get(i)).getId()) < 0 )
-                break; // I can never remember whether I want break or continue here
+            // compareToIgnoreCase not present in Java 1.1.8
+            try {
+                if (e.getId().compareToIgnoreCase(((RosterEntry)_list.get(i)).getId()) < 0 )
+                    break; // I can never remember whether I want break or continue here
+            } catch (NoSuchMethodError ex) {
+                if (e.getId().toUpperCase().compareTo(((RosterEntry)_list.get(i)).getId().toUpperCase()) < 0 )
+                    break; // I can never remember whether I want break or continue here
+            }
         }
         _list.add(i, e);
         setDirty(true);
