@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.beans.*;
 
 import jmri.DccThrottle;
-import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.*;
 import org.jdom.Element;
 
 /**
@@ -78,7 +78,7 @@ public class AddressPanel extends JInternalFrame
         dispatchButton.setEnabled(true);
 		setButton.setEnabled(false);
 		addressField.setEditable(false);
-		
+		rosterBox.setEnabled(false);
     }
 
 
@@ -92,6 +92,7 @@ public class AddressPanel extends JInternalFrame
 		releaseButton.setEnabled(false);
 		setButton.setEnabled(true);
 		addressField.setEditable(true);
+		rosterBox.setEnabled(true);
 		throttle = null;
 	}
 
@@ -199,11 +200,12 @@ public class AddressPanel extends JInternalFrame
 
 	private void rosterItemSelected()
 	{
-		if (rosterBox.getSelectedItem() instanceof NullComboBoxItem)
+		if (!(rosterBox.getSelectedItem() instanceof NullComboBoxItem))
 		{
-		}
-		else
-		{
+			String rosterEntryTitle = rosterBox.getSelectedItem().toString();
+			RosterEntry entry = Roster.instance().entryFromTitle(rosterEntryTitle);
+			addressField.setText(entry.getDccAddress());
+			changeOfAddress();
 		}
 	}
 	
