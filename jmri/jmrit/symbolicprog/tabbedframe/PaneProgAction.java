@@ -25,13 +25,13 @@ import jmri.jmrit.symbolicprog.*;
  * @see  jmri.jmrit.symbolicprog.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class PaneProgAction 			extends AbstractAction {
 
     Object o1, o2, o3, o4;
     JLabel statusLabel;
-    jmri.ProgServiceModePane   modePane    = new jmri.ProgServiceModePane(BoxLayout.X_AXIS);
+    jmri.ProgModeSelector  modePane    = new jmri.ProgDeferredServiceModePane();
 
     public PaneProgAction(String s) {
         super(s);
@@ -84,11 +84,12 @@ public class PaneProgAction 			extends AbstractAction {
             };
 
         // load primary frame
-        pane1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        f.getContentPane().add(pane1);
+        modePane.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+        f.getContentPane().add(modePane);
         f.getContentPane().add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
 
-        f.getContentPane().add(modePane);
+        pane1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        f.getContentPane().add(pane1);
         f.getContentPane().add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
 
         statusLabel.setAlignmentX(JLabel.CENTER_ALIGNMENT);

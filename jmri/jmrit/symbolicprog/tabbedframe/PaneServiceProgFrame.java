@@ -30,12 +30,12 @@ import org.jdom.JDOMException;
  * Extend the PaneProgFrame to handle service mode operations
  *
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class PaneServiceProgFrame extends PaneProgFrame
 							implements java.beans.PropertyChangeListener  {
 
-    jmri.ProgServiceModePane   modePane;
+    jmri.ProgModeSelector  modePane;
 
 
     /**
@@ -43,7 +43,7 @@ public class PaneServiceProgFrame extends PaneProgFrame
      */
     JPanel getModePane() {
         // ensure initialization, even if invoked in ctor
-        if (modePane== null) modePane = new jmri.ProgServiceModePane(BoxLayout.X_AXIS);
+        if (modePane== null) modePane = new jmri.ProgDeferredServiceModePane();
         log.debug("invoked getModePane");
         return modePane;
     }
