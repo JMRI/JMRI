@@ -12,7 +12,7 @@ import java.io.Serializable;
  * actually a variable number of bytes in Unicode.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  *
  */
 public class XNetMessage extends jmri.jmrix.NetMessage implements Serializable {
@@ -65,6 +65,9 @@ public class XNetMessage extends jmri.jmrix.NetMessage implements Serializable {
         }
 		setElement(len-1, chksum&0xFF);
     }
+
+    /** Get an integer representation of a BCD value */
+	public Integer getElementBCD(int n) { return Integer.decode(Integer.toHexString(getElement(n))); }
 
     // decode messages of a particular form
 

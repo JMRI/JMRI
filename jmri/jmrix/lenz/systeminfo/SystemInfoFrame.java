@@ -9,59 +9,42 @@ import jmri.jmrix.lenz.*;
 
 /**
  * Frame displaying Version information for Xpressnet hardware.
- *
- * Need to add documentation on how this works
+ * <P>
+ * This is a utility for reading the software version and type of 
+ * the command station, and, the Hardware and software versions of your 
+ * XPressNet Computer Interface.
+ * <P>
+ * Some of this code may be moved to facilitate automatic enabling of 
+ * features that are not available on all XPressNet Command Stations
+ * (as an example, the fact that you can't program using the computer on a
+ * Commander or Compact)
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SystemInfoFrame extends JFrame implements XNetListener {
 
     public SystemInfoFrame() {
-        super("XPressNetSystemInformation");
-        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        super("XPressNet System Information");
+        getContentPane().setLayout(new GridLayout(0,2));
 
-        JPanel pane0 = new JPanel();
-        pane0.setLayout(new FlowLayout());
-        pane0.add(new JLabel("Command Station: "));
-        pane0.add(CSType);
-        pane0.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
-        getContentPane().add(pane0);
+          getContentPane().add(new JLabel("Command Station: "));
+          getContentPane().add(CSType);
 
-        JPanel pane1 = new JPanel();
-        pane1.add(new JLabel("Hardware Version:"));
-        pane1.add(CSHardwareVersion);
-        pane1.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
-        getContentPane().add(pane1);
+          getContentPane().add(new JLabel("Software Version:"));
+          getContentPane().add(CSSoftwareVersion);
 
-        JPanel pane2 = new JPanel();
-        pane2.add(new JLabel("Software Version:"));
-        pane2.add(CSSoftwareVersion);
-        pane2.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
-        getContentPane().add(pane2);
+          getContentPane().add(new JLabel("Interface: "));
+          getContentPane().add(LIType);
 
-        JPanel pane3 = new JPanel();
-        pane3.add(new JLabel("Interface: "));
-        pane3.add(LIType);
-        pane3.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
-        getContentPane().add(pane3);
+          getContentPane().add(new JLabel("Hardware Version:"));
+          getContentPane().add(LIHardwareVersion);
 
-        JPanel pane4 = new JPanel();
-        pane4.add(new JLabel("Hardware Version:"));
-        pane4.add(LIHardwareVersion);
-        pane4.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
-        getContentPane().add(pane4);
+          getContentPane().add(new JLabel("Software Version:"));
+          getContentPane().add(LISoftwareVersion);
 
-        JPanel pane5 = new JPanel();
-        pane5.add(new JLabel("Software Version:"));
-        pane5.add(LISoftwareVersion);
-        pane5.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
-        getContentPane().add(pane5);
-
-        JPanel pane6 = new JPanel();
-        pane6.add(getSystemInfoButton);
-        pane6.add(closeButton);
-        getContentPane().add(pane6);
+          getContentPane().add(getSystemInfoButton);
+          getContentPane().add(closeButton);
 
         // and prep for display
         pack();
@@ -96,10 +79,9 @@ public class SystemInfoFrame extends JFrame implements XNetListener {
 
     boolean read = false;
 
-    JLabel CSType = new JLabel("");
-    JLabel CSHardwareVersion = new JLabel("");
+    JLabel CSType = new JLabel("                ");
     JLabel CSSoftwareVersion = new JLabel("");
-    JLabel LIType = new JLabel("");
+    JLabel LIType = new JLabel("       ");
     JLabel LIHardwareVersion = new JLabel("");
     JLabel LISoftwareVersion = new JLabel("");
 
@@ -134,15 +116,15 @@ public class SystemInfoFrame extends JFrame implements XNetListener {
        if (l.getElement(0)==XNetConstants.LI_VERSION_RESPONCE)
        {
               // This is an Interface responce
-              LIHardwareVersion.setText("" + Integer.toHexString(l.getElement(1)) );
-              LISoftwareVersion.setText("" + Integer.toHexString(l.getElement(2)) );
+              LIHardwareVersion.setText("" + (l.getElementBCD(1).floatValue()/10) );
+              LISoftwareVersion.setText("" + (l.getElementBCD(2)) );
        }
        else if(l.getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONCE)
        {
               // This is the Command Station Software Version Responce
               if(l.getElement(1)==XNetConstants.CS_SOFTWARE_VERSION)
 	      {
-		CSSoftwareVersion.setText("" + Integer.toHexString(l.getElement(2)));
+		CSSoftwareVersion.setText("" + (l.getElementBCD(2).floatValue())/10);
                 int cs_type=l.getElement(3);
                 if(cs_type==0x00) {
 			CSType.setText("LZ100/LZV100");
