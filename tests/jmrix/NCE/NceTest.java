@@ -36,7 +36,10 @@ public class NceTest extends TestCase {
 	
 	// test suite from all defined tests
 	public static Test suite() {
+		jmri.tests.AllTest.initLogging();
 		TestSuite suite = new TestSuite("jmri.tests.jmrix.nce.NceTest");
+		suite.addTest(jmri.tests.jmrix.nce.NceTurnoutTest.suite());
+		suite.addTest(jmri.tests.jmrix.nce.NceTurnoutManagerTest.suite());
 		suite.addTest(jmri.jmrix.nce.ncemon.NceMonFrameTest.suite());
 		suite.addTest(jmri.jmrix.nce.NceProgrammerTest.suite());
 		suite.addTest(jmri.jmrix.nce.packetgen.NcePacketGenFrameTest.suite());

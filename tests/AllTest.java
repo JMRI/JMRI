@@ -30,7 +30,19 @@ public class AllTest extends TestCase  {
 		
 	// test suite
 	public static Test suite() {
-		boolean log4jinit = true;
+		initLogging();
+		// all tests from here down in heirarchy
+		TestSuite suite = new TestSuite("AllTest");  // no tests in this class itself
+		// all tests from other classes
+		suite.addTest(jmri.tests.jmrix.JmrixTest.suite());
+		suite.addTest(jmri.tests.jmrit.JmritTest.suite());
+		suite.addTest(JmriTest.suite());
+		
+		return suite;
+	}
+	
+	static boolean log4jinit = true;
+	public static void initLogging() {
 		if (log4jinit) {
 			log4jinit = false;
     		// initialize log4j - from logging control file (lcf) if you can find it
@@ -45,16 +57,8 @@ public class AllTest extends TestCase  {
 	   			org.apache.log4j.Category.getRoot().setPriority(org.apache.log4j.Priority.INFO);
      		}
 		}
-		// all tests from here down in heirarchy
-		TestSuite suite = new TestSuite("AllTest");  // no tests in this class itself
-		// all tests from other classes
-		suite.addTest(jmri.tests.jmrix.JmrixTest.suite());
-		suite.addTest(jmri.tests.jmrit.JmritTest.suite());
-		suite.addTest(JmriTest.suite());
-		
-		return suite;
 	}
-	
-  static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance("jmri");
+		
+  	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance("jmri");
 
 }

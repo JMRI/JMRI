@@ -134,7 +134,7 @@ public class NceProgrammerTest extends TestCase {
 	 	*/
 		public Vector outbound = new Vector();  // public OK here, so long as this is a test class
 		public void sendNceMessage(NceMessage m, jmri.jmrix.nce.NceListener l) {
-			if (this.log.isDebugEnabled()) this.log.debug("sendLocoNetMessage ["+m+"]");
+			if (this.log.isDebugEnabled()) this.log.debug("sendNceMessage ["+m+"]");
 			// save a copy
 			outbound.addElement(m);
 			lastSender = l;

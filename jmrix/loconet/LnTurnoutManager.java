@@ -1,7 +1,7 @@
 /** 
  * LnTurnoutManager.java
  *
- * Description:		Interface for controlling layout power
+ * Description:		Implement turnout manager for loconet
  * @author			Bob Jacobsen Copyright (C) 2001
  * @version			
  */
