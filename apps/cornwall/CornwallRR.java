@@ -18,7 +18,7 @@ import apps.JmriDemo.JmriDemoConfigAction;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class CornwallRR extends JPanel {
     public CornwallRR() {
@@ -112,7 +112,7 @@ public class CornwallRR extends JPanel {
         // Label & text
         JPanel pane1 = new JPanel();
         pane1.setLayout(new FlowLayout());
-        pane1.add(new JLabel(new ImageIcon(ClassLoader.getSystemResource("resources/cornwall_logo.gif"),"Decoder Pro label"), JLabel.LEFT));
+        pane1.add(new JLabel(new ImageIcon(ClassLoader.getSystemResource("resources/icons/cornwall/cornwall_logo.gif"),"Decoder Pro label"), JLabel.LEFT));
         JPanel pane2 = new JPanel();
         pane2.setLayout(new BoxLayout(pane2, BoxLayout.Y_AXIS));
         pane2.add(new JLabel(" Cornwall Railroad "));
