@@ -14,14 +14,18 @@ public class LnOpsModeProgrammerTest extends TestCase {
     
     public void testSetMode() {
 	SlotManager val1=  new SlotManager();
-	LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1);
-	int mode1=  0;
-	lnopsmodeprogrammer.setMode(mode1);
-	/** @todo:  Insert test code here.  Use assertEquals(), for example. */
+	LnOpsModeProgrammer lops = new LnOpsModeProgrammer(val1, 1, true);
+	lops.setMode(Programmer.PAGEMODE);
+	Assert.assertEquals("did not go to page mode", 0, lops.getMode());
+	lops.setMode(Programmer.REGISTERMODE);
+	Assert.assertEquals("did not go to register mode", 0, lops.getMode());
+	//lops.setMode(Programmer.OPSMODE);
+	//Assert.assertEquals("did go to ops mode", 0, lops.getMode());
+	
     }
     public void testWriteCV() {
 	SlotManager val1=  null  /** @todo fill in non-null value */;
-	LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1);
+	LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1, 1, true);
 	int CV1=  0;
 	int val2=  0;
 	ProgListener p3=  null  /** @todo fill in non-null value */;
@@ -35,7 +39,7 @@ public class LnOpsModeProgrammerTest extends TestCase {
     }
     public void testReadCV() {
 	SlotManager val1=  null  /** @todo fill in non-null value */;
-	LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1);
+	LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1,1, true);
 	int CV1=  0;
 	ProgListener p2=  null  /** @todo fill in non-null value */;
 	try {
@@ -48,19 +52,19 @@ public class LnOpsModeProgrammerTest extends TestCase {
     }
     public void testGetMode() {
 	SlotManager val1=  null  /** @todo fill in non-null value */;
-	LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1);
+	LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1, 1, true);
 	int intRet = lnopsmodeprogrammer.getMode();
 	/** @todo:  Insert test code here.  Use assertEquals(), for example. */
     }
     public void testGetCanRead() {
-	SlotManager val1=  null  /** @todo fill in non-null value */;
-	LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1);
-	boolean booleanRet = lnopsmodeprogrammer.getCanRead();
-	/** @todo:  Insert test code here.  Use assertEquals(), for example. */
+	SlotManager val1=  new SlotManager();
+	LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1,1, true);
+	Assert.assertEquals("ops mode cant yet read", false, 
+			    lnopsmodeprogrammer.getCanRead());
     }
     public void testConfirmCV() {
 	SlotManager val1=  null  /** @todo fill in non-null value */;
-	LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1);
+	LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1,1, true);
 	int CV1=  0;
 	int val2=  0;
 	ProgListener p3=  null  /** @todo fill in non-null value */;
@@ -74,7 +78,7 @@ public class LnOpsModeProgrammerTest extends TestCase {
     }
     public void testHasMode() {
 	SlotManager val1=  null  /** @todo fill in non-null value */;
-	LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1);
+	LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1,1,true);
 	int mode1=  0;
 	boolean booleanRet = lnopsmodeprogrammer.hasMode(mode1);
 	/** @todo:  Insert test code here.  Use assertEquals(), for example. */
