@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.37 $)
+distribution.  ($Revision: 1.38 $)
 
 Start with a directory, typically called "Distributions", that
 contains:
@@ -61,7 +61,7 @@ To actually create the distribution:
 
 ( ) Come back to Distributions and 
     cd scripts
-    cvs update
+    cvs update -A
 	(be sure that's the default.lcf you want!)
 	cvs tag Release-1-2-3
     cd ..
