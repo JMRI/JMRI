@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.31 2004-06-11 18:07:44 djduchamp Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.32 2004-06-17 19:24:30 djduchamp Exp $ -->
 
 <!-- This DTD is Copyright 2001, 2003 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -105,6 +105,8 @@
   <!ELEMENT route (routeTurnout*, routeSensor*) >
     <!ATTLIST route systemName		CDATA #REQUIRED>  <!-- defines system type -->
     <!ATTLIST route userName		CDATA #IMPLIED>
+    <!ATTLIST route controlTurnout	CDATA #IMPLIED>
+    <!ATTLIST route controlTurnoutState	CDATA #IMPLIED>
 
    <!ELEMENT routeTurnout EMPTY >
     <!ATTLIST routeTurnout systemName	CDATA #REQUIRED>  <!-- defines route turnout -->

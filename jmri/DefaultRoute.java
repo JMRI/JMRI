@@ -6,7 +6,7 @@ package jmri;
  * Class providing the basic logic of the Route interface.
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class DefaultRoute extends AbstractNamedBean
     implements Route, java.io.Serializable {
@@ -25,6 +25,8 @@ public class DefaultRoute extends AbstractNamedBean
     protected String[] mRouteTurnout = new String[MAX_TURNOUTS_PER_ROUTE];
     protected int[] mRouteTurnoutState = new int[MAX_TURNOUTS_PER_ROUTE];
     protected String[] mControlSensors = new String[MAX_CONTROL_SENSORS];
+    protected String mControlTurnout = "";
+    protected int mControlTurnoutState = jmri.Turnout.THROWN;
 
     /**
      *  Operational instance variables (not saved between runs)
@@ -34,6 +36,8 @@ public class DefaultRoute extends AbstractNamedBean
     protected Sensor[] mSensors = new Sensor[MAX_CONTROL_SENSORS];
     protected java.beans.PropertyChangeListener[] mSensorListener = 
                     new java.beans.PropertyChangeListener[MAX_CONTROL_SENSORS];
+    protected Turnout mTurnout = null;
+    protected java.beans.PropertyChangeListener mTurnoutListener = null;
      
     /**
      * Method to add a Turnout to the list of Turnouts in this Route
@@ -138,6 +142,41 @@ public class DefaultRoute extends AbstractNamedBean
     }
 
     /**
+     * Method to set the SystemName of a control Turnout for this Route
+     */
+    public void setControlTurnout(String turnoutSystemName) {
+        mControlTurnout = turnoutSystemName;
+        if (mControlTurnout.length()<=2) mControlTurnout = null;
+    }
+
+    /**
+     * Method to get the SystemName of a control Turnout for this Route
+     */
+    public String getControlTurnout() {
+        return mControlTurnout;
+    }
+
+    /**
+     * Method to set the State of control Turnout that fires this Route
+     */
+    public void setControlTurnoutState(int turnoutState) {
+        if ( (turnoutState == Turnout.THROWN) || 
+                                        (turnoutState == Turnout.CLOSED) ) {
+            mControlTurnoutState = turnoutState;
+        }
+        else {
+            log.error("Attempt to set invalid control Turnout state for Route.");
+        }
+    }
+
+    /**
+     * Method to get the State of control Turnout that fires this Route
+     */
+    public int getControlTurnoutState() {
+        return (mControlTurnoutState);
+    }
+
+    /**
      * Method to set the Route
      * Sets all Route Turnouts to the state shown in the Route definition
      */
@@ -159,8 +198,8 @@ public class DefaultRoute extends AbstractNamedBean
     }
 
     /**
-     * Method to activate the Route via Sensors
-     * Sets up for Route activation based on a list of Sensors
+     * Method to activate the Route via Sensors and control Turnout
+     * Sets up for Route activation based on a list of Sensors and a control Turnout
      */
     public void activateRoute() {
         if (mNumSensors>0) {
@@ -187,11 +226,33 @@ public class DefaultRoute extends AbstractNamedBean
                 }
             }
         }
+        if (mControlTurnout.length() > 2) {
+            mTurnout = InstanceManager.turnoutManagerInstance().
+                                            getBySystemName(mControlTurnout);
+            if (mTurnout!=null) {
+                mTurnout.addPropertyChangeListener(mTurnoutListener =
+                                                new java.beans.PropertyChangeListener() {
+                        public void propertyChange(java.beans.PropertyChangeEvent e) {
+                            if (e.getPropertyName().equals("KnownState")) {
+                                int now = ((Integer) e.getNewValue()).intValue();
+                                if (now==mControlTurnoutState) { 
+                                    setRoute();
+                                }
+                            }
+                        }
+                    });
+            }
+            else {
+                // control turnout does not exist
+                log.error("Route "+getSystemName()+" is linked to a Turnout that does not exist: "+
+                                             mControlTurnout);
+            }
+        }
     }
 
     /**
-     * Method to deactivate the Route via Sensors
-     * Deactivates Route based on a list of Sensors
+     * Method to deactivate the Route 
+     * Deactivates Route based on a list of Sensors and a control Turnout
      */
     public void deActivateRoute() {
         if (mNumSensors > 0) {
@@ -201,6 +262,10 @@ public class DefaultRoute extends AbstractNamedBean
                     mSensorListener[k] = null;
                 }
             }
+        }
+        if (mTurnoutListener!=null) {
+            mTurnout.removePropertyChangeListener(mTurnoutListener);
+            mTurnoutListener = null;
         }
     }
     

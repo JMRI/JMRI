@@ -29,7 +29,7 @@ import com.sun.java.util.collections.List;
  * Based in part on SignalHeadTableAction.java by Bob Jacobson
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -83,6 +83,11 @@ public class RouteTableAction extends AbstractTableAction {
     JTextField sensor1 = new JTextField(8);
     JTextField sensor2 = new JTextField(8);
     JTextField sensor3 = new JTextField(8);
+    JTextField cTurnout = new JTextField(8);
+
+    JComboBox cTurnoutStateBox = new JComboBox();
+    int turnoutClosedIndex = 0;
+    int turnoutThrownIndex = 1;
     
     ButtonGroup selGroup = null;
     JRadioButton allButton = null;   
@@ -135,6 +140,7 @@ public class RouteTableAction extends AbstractTableAction {
             ps.setLayout(new FlowLayout());
             ps.add(nameLabel);
             ps.add(name);
+            name.setToolTipText("Enter system name for new Route, e.g. R12.");
             ps.add(fixedSystemName);
             fixedSystemName.setVisible(false);
             contentPane.add(ps);
@@ -143,6 +149,7 @@ public class RouteTableAction extends AbstractTableAction {
             p.setLayout(new FlowLayout());
             p.add(userLabel);
             p.add(userName);
+            userName.setToolTipText("Enter user name for new Route, e.g. Clear Mainline.");
             contentPane.add(p);
             // add Turnout Display Choice
             JPanel py = new JPanel();
@@ -231,13 +238,37 @@ public class RouteTableAction extends AbstractTableAction {
             p31.add(new JLabel("Enter Sensors that trigger this Route (optional)"));
             p3.add(p31);
             JPanel p32 = new JPanel();
+            p32.add(new JLabel("Sensors: "));
             p32.add(sensor1);
             p32.add(sensor2);
             p32.add(sensor3);
             sensor1.setText("");
             sensor2.setText("");
             sensor3.setText("");
+            String sensorHint = "Enter a Sensor system name or nothing.";
+            sensor1.setToolTipText(sensorHint);
+            sensor2.setToolTipText(sensorHint);
+            sensor3.setToolTipText(sensorHint);
             p3.add(p32);
+            // add control turnout
+            JPanel p33 = new JPanel();
+            p33.add(new JLabel("Enter a Turnout that triggers this Route (optional)"));
+            p3.add(p33);
+            JPanel p34 = new JPanel();
+            p34.add(new JLabel("Turnout: "));
+            p34.add(cTurnout);
+            cTurnout.setText("");
+            cTurnout.setToolTipText("Enter a Turnout system name (real or phantom) for throttle control.");
+            p34.add(new JLabel("   Turnout State: "));
+            cTurnoutStateBox.addItem( rbean.getString("TurnoutStateClosed") );
+            turnoutClosedIndex = 0;
+            cTurnoutStateBox.addItem( rbean.getString("TurnoutStateThrown") );
+            turnoutThrownIndex = 1;
+            cTurnoutStateBox.setToolTipText("Setting control Turnout to selected state will trigger Route.");
+            p34.add(cTurnoutStateBox);
+            p3.add(p34);
+            Border p3Border = BorderFactory.createEtchedBorder();
+            p3.setBorder(p3Border);
             contentPane.add(p3);
             // add notes panel
             JPanel pa = new JPanel();
@@ -374,8 +405,8 @@ public class RouteTableAction extends AbstractTableAction {
         }
         // Set Turnout information 
         int numIncluded = setTurnoutInformation(g);
-        // Set optional Sensor information
-        setSensorInformation(g);
+        // Set optional control Sensor and control Turnout information
+        setControlInformation(g);
         // Provide feedback to user
         status1.setText("New Route created: "+sName+", "+uName+", "+
                                                         numIncluded+" Turnouts");
@@ -405,42 +436,62 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * Sets the Sensor information for adding or editting if there is any
+     * Sets the Sensor and Turnout control information for adding or editting if any
      */
-    void setSensorInformation(Route g) {
-        // Get sensor control information
+    void setControlInformation(Route g) {
+        // Get sensor control information if any
         String sensorSystemName = sensor1.getText();
         if (sensorSystemName.length() > 2) {
             Sensor s1 = InstanceManager.sensorManagerInstance().
                             provideSensor(sensorSystemName);
-            if (s1!=null) {
-                if (!g.addSensorToRoute(s1.getSystemName())) {
-                    log.error("Unexpected failure to add Sensor '"+s1.getSystemName()+
+            if ( (s1==null) || (!g.addSensorToRoute(s1.getSystemName())) ) {
+                log.error("Unexpected failure to add Sensor '"+sensorSystemName+
                                             "' to Route '"+g.getSystemName()+"'.");
-                }
             }
         }
         sensorSystemName = sensor2.getText();
         if (sensorSystemName.length() > 2) {
             Sensor s2 = InstanceManager.sensorManagerInstance().
                             provideSensor(sensorSystemName);
-            if (s2!=null) {
-                if (!g.addSensorToRoute(s2.getSystemName())) {
-                    log.error("Unexpected failure to add Sensor '"+s2.getSystemName()+
+            if ( (s2==null) || (!g.addSensorToRoute(s2.getSystemName())) ) {
+                log.error("Unexpected failure to add Sensor '"+sensorSystemName+
                                             "' to Route '"+g.getSystemName()+"'.");
-                }
             }
         }
         sensorSystemName = sensor3.getText();
         if (sensorSystemName.length() > 2) {
             Sensor s3 = InstanceManager.sensorManagerInstance().
                             provideSensor(sensorSystemName);
-            if (s3!=null) {
-                if (!g.addSensorToRoute(s3.getSystemName())) {
-                    log.error("Unexpected failure to add Sensor '"+s3.getSystemName()+
+            if ( (s3==null) || (!g.addSensorToRoute(s3.getSystemName())) ) {
+                log.error("Unexpected failure to add Sensor '"+sensorSystemName+
                                             "' to Route '"+g.getSystemName()+"'.");
-                }
             }
+        }
+        // Set turnout information if there is any
+        String turnoutSystemName = cTurnout.getText();
+        if (turnoutSystemName.length() > 2) {
+            Turnout t = InstanceManager.turnoutManagerInstance().
+                                    provideTurnout(turnoutSystemName);
+            if (t!=null) {
+                g.setControlTurnout(t.getSystemName());
+            }
+            else {
+                g.setControlTurnout("");
+                log.error("Unexpected failure to add control Turnout '"+
+                        t.getSystemName()+"' to Route '"+g.getSystemName()+"'.");
+            }
+            // set up control turnout state
+            if ( cTurnoutStateBox.getSelectedItem().equals(rbean.getString
+                                                    ("TurnoutStateThrown")) ) {
+                g.setControlTurnoutState(jmri.Turnout.THROWN);
+            }
+            else {
+                g.setControlTurnoutState(jmri.Turnout.CLOSED);
+            }
+        }
+        else {
+            // No control Turnout was entered
+            g.setControlTurnout("");
         }
     }
         
@@ -490,7 +541,13 @@ public class RouteTableAction extends AbstractTableAction {
         }
         sensor1.setText(temNames[0]);
         sensor2.setText(temNames[1]);
-        sensor3.setText(temNames[2]); 
+        sensor3.setText(temNames[2]);
+        // set up control Turnout if there is one
+        cTurnout.setText(g.getControlTurnout()); 
+        cTurnoutStateBox.setSelectedIndex(turnoutClosedIndex);
+        if (g.getControlTurnoutState()==Turnout.THROWN) {
+            cTurnoutStateBox.setSelectedIndex(turnoutThrownIndex);
+        }
         // begin with showing all Turnouts   
         cancelIncludedOnly();
         // set up buttons and notes
@@ -540,8 +597,8 @@ public class RouteTableAction extends AbstractTableAction {
         int numIncluded = setTurnoutInformation(g);
         // clear the current Sensor information for this Route
         g.clearRouteSensors();
-        // add those Sensors entered in the window if any
-        setSensorInformation(g);
+        // add control Sensors and a control Turnout if entered in the window
+        setControlInformation(g);
         // move to show all turnouts if not there
         cancelIncludedOnly();
         // Provide feedback to user

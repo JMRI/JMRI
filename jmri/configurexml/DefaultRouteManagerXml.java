@@ -15,7 +15,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class DefaultRouteManagerXml implements XmlAdapter {
 
@@ -42,9 +42,20 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                 log.debug("system name is "+sname);
                 Route r = tm.getBySystemName(sname);
                 String uname = r.getUserName();
+                String cTurnout = r.getControlTurnout();
                 Element elem = new Element("route")
                             .addAttribute("systemName", sname);
                 if (uname!=null) elem.addAttribute("userName", uname);
+                if (cTurnout!=null) {
+                    elem.addAttribute("controlTurnout", cTurnout);
+                    int state = r.getControlTurnoutState();
+                    if (state == jmri.Turnout.THROWN) {
+                        elem.addAttribute("controlTurnoutState","THROWN");
+                    }
+                    else {
+                        elem.addAttribute("controlTurnoutState","CLOSED");
+                    }
+                }
                 // add route Turnouts, if any
                 int index = 0;
                 String rTurnout = null;
@@ -121,12 +132,28 @@ public class DefaultRouteManagerXml implements XmlAdapter {
             }
             String sysName = ((Element)(routeList.get(i))).getAttribute("systemName").getValue();
             String userName = null;
+            String cTurnout = null;
+            String cTurnoutState = null;
             if ( ((Element)(routeList.get(i))).getAttribute("userName") != null)
                 userName = ((Element)(routeList.get(i))).getAttribute("userName").getValue();
+            if ( ((Element)(routeList.get(i))).getAttribute("controlTurnout") != null)
+                cTurnout = ((Element)(routeList.get(i))).getAttribute("controlTurnout").getValue();
+            if ( ((Element)(routeList.get(i))).getAttribute("controlTurnoutState") != null)
+                cTurnoutState = ((Element)(routeList.get(i))).getAttribute("controlTurnoutState").getValue();
             if (log.isDebugEnabled()) log.debug("create route: ("+sysName+")("+
                                                             (userName==null?"<null>":userName)+")");
             Route r = tm.createNewRoute(sysName, userName);
             if (r!=null) {
+                // add control turnout if there is one
+                if (cTurnout != null) {
+                    r.setControlTurnout(cTurnout);
+                    if ( cTurnoutState.equals("THROWN") ) {
+                        r.setControlTurnoutState(jmri.Turnout.THROWN);
+                    }
+                    else {
+                        r.setControlTurnoutState(jmri.Turnout.CLOSED);
+                    }
+                }
                 // load route turnouts if there are any
                 List routeTurnoutList = ((Element)(routeList.get(i))).getChildren("routeTurnout");
                 if (routeTurnoutList.size() > 0) {

@@ -16,7 +16,7 @@ package jmri;
  * invoked by one or more Sensors (up to the maximum allowed).
  *
  * @author			Dave Duchamp Copyright (C) 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public interface Route extends NamedBean {
 
@@ -70,6 +70,26 @@ public interface Route extends NamedBean {
      *      is not in the range 0 thru MAX_SENSORS-1, null is returned.
      */
     public String getRouteSensor(int index);
+
+    /**
+     * Method to set the SystemName of a control Turnout for this Route
+     */
+    public void setControlTurnout(String turnoutSystemName);
+
+    /**
+     * Method to get the SystemName of a control Turnout for this Route
+     */
+    public String getControlTurnout();
+
+    /**
+     * Method to set the State of control Turnout that fires this Route
+     */
+    public void setControlTurnoutState(int turnoutState);
+
+    /**
+     * Method to get the State of control Turnout that fires this Route
+     */
+    public int getControlTurnoutState();
 
     /**
      * Method to set the Route
