@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.20 2003-08-30 15:15:05 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.21 2003-08-30 15:17:27 jacobsen Exp $ -->
 
 <!-- This DTD is Copyright 2001, 2003 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -49,7 +49,7 @@
 <!--  Section identifies items to invoke at startup -->
 <!ELEMENT perform EMPTY>
   <!ATTLIST perform class CDATA #REQUIRED> <!-- selects XML class that will handle -->
-  <!ATTLIST perform type (Action | Automat | Siglet | XmlFile) "Action" >
+  <!ATTLIST perform type (Action | Automat | Siglet | XmlFile | Button) "Action" >
   <!ATTLIST perform name CDATA #REQUIRED> <!-- name of item to invoke -->
 
 <!ELEMENT sensors (sensor*) >
