@@ -1,0 +1,146 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Bob Jacobsen, LBL">
+   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>JMRI LocoNet tools</title>
+</head>
+<body>
+
+
+<IMG SRC="../images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
+
+<h2>JMRI LocoNet tools</h2>
+
+The 
+<A HREF="../index.html">JMRI libraries</a>
+contain a number of LocoNet tools.  This page introduces
+them, describes how to use them, and points you to installation and
+other information.
+<UL>
+<LI><A HREF="#locomon"><dfn>LocoNet monitor</dfn></a> - Display and log
+the traffic on the LocoNet, in either hex or human readable form.
+<LI><A HREF="#slotmon"><dfn>Slot monitor</dfn></a> - Watch the contents
+of the command station's slots as they're changed.
+<LI><A HREF="#sendpkt"><dfn>Packet source</dfn></a> - A tool to let you type 
+and send packets to the LocoNet
+</UL>
+The libraries also contain utilities for controlling your layout (operating
+turnouts and signals, responding to inputs and block occupancy, etc), for 
+programming decoders, and others.  These are not LocoNet specific, so
+are described in the 
+<A HREF="../index.html">main JMRI pages</a>.
+
+<BR>
+
+<A id="locomon"><h3>LocoNet monitor</h3></a>
+<IMG SRC="../images/LocoMonFrame.gif" ALT="Screen shot of LocoNet monitor" WIDTH="804" HEIGHT="320" HSPACE="0" VSPACE="0"><P>
+The LocoNet Monitor tool displays LocoNet traffic in a human-readable form.
+The last 20 messages are available in a scrolling window.  Optionally, 
+you can include the time the message was received, and/or the raw
+packet bytes.  The log information can also be stored in a text file.
+
+<A id="slotmon"><h3>Command station slot monitor</h3></a>
+<IMG SRC="../images/SlotMon.gif" ALT="Screen shot of slot monitor" WIDTH="630" HEIGHT="297" HSPACE="0" VSPACE="0"><P>
+The Slot Monitor tool displays a table of the "command station
+slots'" contents.  Slots are used to control individual locomotives and
+consists. The display includes the decoder's speed step format, current speed
+and function settings, consist information and status. You can choose to show
+either all slots or just the ones being actively used.
+
+<A id="sendpkt"><h3>Sending packets</h3></a>
+<IMG SRC="../images/SendPkt.gif" ALT="Screen shot of packet tool" WIDTH="347" HEIGHT="103" HSPACE="0" VSPACE="0"><P>
+The Send Packet tool lets you type in a LocoNet packet and send it to the layout.
+You type the packet in hexadecimal as pairs of characters, in the same
+way its displayed in the LocoNet monitor.
+
+<h2>Demos</h2>
+
+A complete demo of these tools is available.  It will work on many 
+Macintosh, Windows, Linux and OS/2 computers.  The JMRI libraries
+will work with NCE or Digitrax equipment, but of course the LocoNet
+tools only work with a Digitrax LocoNet.
+We call it a "demo" because 
+<UL>
+<LI>JMRI is a work in progress, and the demo program should not be considered complete
+<LI>The project is creating libraries, which we hope people will use to 
+create their own layout automation programs.  This program is just a demo
+of the tools and capabilities
+</UL>
+Note that JMRI is free software, and there is no "pay" version to go with the
+demo!
+<P>
+For more information on
+how to install the demo, whether it will run on your computer, etc, please see the 
+<A HREF="./demoFiles/README.html">README file</A>.
+
+JMRI is an open-source project, so you can get the entire source code at any time
+via the <A HREF="http://sourceforge.net/projects/jmri/">Project page</A>. For more
+information, please see the
+<A HREF="../index.html">main JMRI page<a/>.
+
+<h2>Running the tools</h2>
+<UL>
+<LI><A HREF="./demoFiles/README.html">Download and install</a> the program.
+<LI>Start the program.
+<LI>From the input menu, select either "MS100" or "LocoBuffer", depending on 
+how your layout is connected.  Then select the serial port, and click "open".
+<li>Select a tool from the "LocoNet" menu.
+<LI><A HREF="mailto:jake@physics.berkeley.edu">Send us feedback</a>
+on how to make this better.
+</UL>
+<h3>Digitrax-specific information</h3>
+As a convenience for people using JRMI with Digitrax systems, we've got a directory of 
+<A HREF="DigiTrax/">Digitrax-specific information</A>:
+<UL>
+<LI><A HREF="DigiTrax/KeyspanAdapters/KeyspanUSB.html">Using a Keyspan USB adapter for LocoNet</A>: 
+Notes on connecting Macintosh
+computers with USB ports to the MS100 Loconet interface.
+<LI><A HREF="DigiTrax/DigitraxPower/DigitraxPower.html">Notes on power wiring for Digitrax components</A>:
+Some information on why Digitrax wants you to use different power transformers for the different types of cards
+</UL>
+
+<h2>Acknowledgements</h2>
+
+<A HREF="../Acknowledgements.html">Many people</a>
+have contributed, and we thank 
+<A HREF="../Acknowledgements.html">all of them</a>.
+
+<HR>
+<BR>Site hosted by: <BR>
+<A href="http://sourceforge.net"> 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A>
+
+<!-- Begin Small Box -->
+<form method="POST" action="http://mindit.netmind.com/mindit.shtml">
+<input type="hidden" name="FORM" value="C">
+<table border="0" cellpadding="5" cellspacing="0" bgcolor="#666666"><tr><td align="center">
+<font face="arial,helvetica" size="-1" color="#ffffff"><b>Click to receive email <br>when this page changes</b></font></td>
+</tr><tr><td align="center">
+<input type="image" src="http://mindit.netmind.com/images/mindit.gif" border="0"></td>
+</tr><tr bgcolor="#FFFFCC"><td align="center">
+<font face="arial,helvetica" size="-2">&#149;<b> Powered by <a href="http://www.netmind.com"><font color="#000000">NetMind</font></a> </b>&#149;</font>
+</td></tr></table>
+<input type=hidden value="http://jmri.sourceforge.net/index.html" name="REDIRECT"> 
+</form>
+<!-- End Small Box -->
+ 
+
+<script language=javascript 
+src="http://ss.webring.com/navbar?f=j;y=bob_jacobsen15;u=100088115910095949">
+</script><noscript><center>
+<table bgcolor=gray cellspacing=0 border=2 bordercolor=red><tr>
+<td><table cellpadding=2 cellspacing=0 border=0><tr><td align=center>
+<font face=arial size=-1>This site is a member of WebRing. 
+<br>To browse visit <a href="http://ss.webring.com/navbar?f=l;y=bob_jacobsen15;u=100088115910095949">
+Here</a>.</font></td></tr></table></td></tr></table>
+</center></noscript>
+
+<hr>
+Bob Jacobsen<BR>
+jake@physics.berkeley.edu
+
+</body>
+</html>
