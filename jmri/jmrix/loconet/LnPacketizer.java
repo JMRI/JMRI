@@ -37,7 +37,7 @@ import java.util.Vector;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.4 $
+ * @version 		$Revision: 1.5 $
  *
  */
 public class LnPacketizer extends LnTrafficController {
@@ -472,11 +472,13 @@ public class LnPacketizer extends LnTrafficController {
 		// start the XmtHandler in a thread of its own
 		Thread xmtThread = new Thread(xmtHandler, "LocoNet transmit handler");
 		log.debug("Xmt thread starts at priority "+xmtpriority);
+                xmtThread.setDaemon(true);
 		xmtThread.setPriority(Thread.MAX_PRIORITY-1);
 		xmtThread.start();
 
 		// start the RcvHandler in a thread of its own
 		Thread rcvThread = new Thread(rcvHandler, "LocoNet receive handler");
+                rcvThread.setDaemon(true);
 		rcvThread.setPriority(Thread.MAX_PRIORITY);
 		rcvThread.start();
 
