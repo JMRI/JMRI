@@ -2,14 +2,17 @@
 
 package apps.PanelPro;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import java.io.*;
-import jmri.configurexml.*;
-import jmri.jmrit.*;
-import jmri.*;
+import jmri.InstanceManager;
+import jmri.jmrit.XmlFile;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.text.MessageFormat;
+import java.util.Locale;
 import java.util.ResourceBundle;
+import apps.*;
+import javax.swing.*;
 
 /**
  * The JMRI program for creating control panels
@@ -19,20 +22,18 @@ import java.util.ResourceBundle;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class PanelPro extends JPanel {
     public PanelPro(JFrame frame) {
 
         super(true);
-
         ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
 
 	// create basic GUI
-        setLayout(new BorderLayout());
-        // Create a menu bar and give it a bevel border
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        // Create a menu bar
         menuBar = new JMenuBar();
-        // menuBar.setBorder(new BevelBorder(BevelBorder.RAISED));
 
         // load preference file
         if (configFilename != null) {
@@ -43,32 +44,33 @@ public class PanelPro extends JPanel {
         }
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
         File file = new File(XmlFile.prefsDir()+configFilename);
-        System.out.println(file.getAbsolutePath());
         InstanceManager.setConfigureManager(new jmri.configurexml.ConfigXmlManager());
         boolean configOK = InstanceManager.configureManagerInstance().load(file);
 
 	// populate GUI
 
         // Create menu categories and add to the menu bar, add actions to menus
-        JMenu fileMenu = new JMenu("File");
+        JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
         menuBar.add(fileMenu);
         fileMenu.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(frame));
-        fileMenu.add(new AbstractAction("Quit"){
+        fileMenu.add(new AbstractAction(rb.getString("MenuItemQuit")){
                 public void actionPerformed(ActionEvent e) {
                     System.exit(0);
                 }
             });
 
-        prefsFrame = new JFrame("Preferences");
-        prefsFrame.getContentPane().add(new PanelProConfigPane(configFilename));
-        AbstractAction prefsAction = new AbstractAction("Preferences...") {
+        prefsFrame = new JFrame(rb.getString("MenuItemPreferences"));
+        prefsFrame.getContentPane().setLayout(new BoxLayout(prefsFrame.getContentPane(), BoxLayout.X_AXIS));
+        PanelProConfigPanel prefs = new PanelProConfigPanel(configFilename);
+        prefsFrame.getContentPane().add(prefs);
+        prefsFrame.pack();
+        AbstractAction prefsAction = new AbstractAction(rb.getString("MenuItemPreferences")) {
             public void actionPerformed(ActionEvent e) {
-                prefsFrame.pack();
                 prefsFrame.show();
             }
         };
 
-        JMenu editMenu = new JMenu("Edit");
+        JMenu editMenu = new JMenu(rb.getString("MenuEdit"));
         menuBar.add(editMenu);
         editMenu.add(prefsAction); // argument is filename, not action name
 
@@ -76,15 +78,11 @@ public class PanelPro extends JPanel {
         log.debug("Config go OK? "+configOK);
         if (!configOK) prefsAction.actionPerformed(null);
 
-        menuBar.add(new jmri.jmrit.ToolsMenu("Tools"));
+        menuBar.add(new jmri.jmrit.ToolsMenu(rb.getString("MenuTools")));
 
-        menuBar.add(new jmri.jmrit.roster.RosterMenu("Roster", jmri.jmrit.roster.RosterMenu.MAINMENU, this));
+        menuBar.add(new jmri.jmrit.roster.RosterMenu(rb.getString("MenuRoster"), jmri.jmrit.roster.RosterMenu.MAINMENU, this));
 
-        JMenu diagMenu = new JMenu("Panels");
-        menuBar.add(diagMenu);
-        diagMenu.add(new jmri.jmrit.display.PanelEditorAction( "New panel" ));
-        diagMenu.add(new jmri.configurexml.LoadXmlConfigAction("Load panels..."));
-        diagMenu.add(new jmri.configurexml.StoreXmlConfigAction("Store panels..."));
+        menuBar.add(new jmri.jmrit.display.PanelMenu());
 
         menuBar.add(new jmri.jmrix.SystemsMenu());
 
@@ -105,33 +103,43 @@ public class PanelPro extends JPanel {
         JPanel pane1 = new JPanel();
         pane1.setLayout(new FlowLayout());
         pane1.add(new JLabel(new ImageIcon(ClassLoader.getSystemResource("resources/logo.gif"),"JMRI logo"), JLabel.LEFT));
+
         JPanel pane2 = new JPanel();
         pane2.setLayout(new BoxLayout(pane2, BoxLayout.Y_AXIS));
-        pane2.add(new JLabel(" PanelPro "+jmri.Version.name()+", part of the JMRI project "));
-        pane2.add(new JLabel("   http://jmri.sf.net/ "));
+        pane2.add(new JLabel(MessageFormat.format(rb.getString("PanelProVersionCredit"),
+                                new String[]{jmri.Version.name()}
+                            )));
+        pane2.add(new JLabel("http://jmri.sf.net/PanelPro "));
         pane2.add(new JLabel(" "));
-        addStatusInfo(pane2);
+        pane2.add(new JLabel(MessageFormat.format(rb.getString("ConnectionCredit"),
+                                new String[]{prefs.getConnection1(), prefs.getPort1()}
+                            )));
+
+        if (!prefs.getConnection2().equals("(none)")) {
+            pane2.add(new JLabel(" "));
+            pane2.add(new JLabel(MessageFormat.format(rb.getString("ConnectionCredit"),
+                                new String[]{prefs.getConnection2(), prefs.getPort2()}
+                            )));
+        }
+
         pane2.add(new JLabel(" "));
-        pane2.add(new JLabel(" Java version "+System.getProperty("java.version","<unknown>")));
+        pane2.add(new JLabel(MessageFormat.format(rb.getString("JavaVersionCredit"),
+                                new String[]{System.getProperty("java.version","<unknown>"),
+                                            Locale.getDefault().toString()}
+                            )));
         pane1.add(pane2);
         add(pane1);
 
     }
-
-    void addStatusInfo(JPanel pane) {
-        pane.add(new JLabel("(Status info missing)"));
-        //pane.add(new JLabel(" Connected via "+prefs.getCurrentProtocolName()));
-        //pane.add(new JLabel(" on port "+prefs.getCurrentPortName()));
-        //pane.add(new JLabel(" "));
-        //pane.add(new JLabel(" and via "+prefs.getCurrentProtocol2Name()));
-        //pane.add(new JLabel(" on port "+prefs.getCurrentPort2Name()));
-   }
 
     boolean configOK;
     JFrame prefsFrame;
 
     // Main entry point
     public static void main(String args[]) {
+
+        // show splash screen early
+        SplashWindow sp = new SplashWindow();
 
         // initialize log4j - from logging control file (lcf) only
         // if can find it!
@@ -160,8 +168,14 @@ public class PanelPro extends JPanel {
         frame.addWindowListener(new jmri.util.oreilly.BasicWindowMonitor());
         frame.setJMenuBar(containedPane.menuBar);
         frame.getContentPane().add(containedPane);
+
+        // pack and center this frame
         frame.pack();
+        Dimension screen = frame.getToolkit().getScreenSize();
+        Dimension size = frame.getSize();
+        frame.setLocation((screen.width-size.width)/2,(screen.height-size.height)/2);
         frame.setVisible(true);
+
         log.info("main initialization done");
     }
 
