@@ -29,7 +29,7 @@ import org.jdom.Attribute;
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class PaneProgPane extends javax.swing.JPanel
 							implements java.beans.PropertyChangeListener  {
@@ -100,7 +100,8 @@ public class PaneProgPane extends javax.swing.JPanel
 		panelList.add(p);
 		bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
 		readButton.setToolTipText("Read current values from decoder. Warning: may take a long time!");
-        if (!jmri.InstanceManager.programmerInstance().getCanRead()) {
+        if (jmri.InstanceManager.programmerInstance()!= null
+                && !jmri.InstanceManager.programmerInstance().getCanRead()) {
             // can't read, disable the button
             readButton.setEnabled(false);
             readButton.setToolTipText("Button disabled because configured command station can't read CVs");
