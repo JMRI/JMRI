@@ -17,7 +17,7 @@ import javax.swing.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2002
- * @version     $Revision: 1.50 $
+ * @version     $Revision: 1.51 $
  */
 public class JMRIdemo extends JPanel {
     public JMRIdemo(JFrame frame) {
@@ -41,36 +41,15 @@ public class JMRIdemo extends JPanel {
         }
 
 	// populate GUI
-        // create text box for advice
-        JLabel helpLabel1 = new JLabel();
-        add(helpLabel1, BorderLayout.NORTH);
-        helpLabel1.setText("Pick an input source from the input menu first");
-
-        // Create menu categories and add to the menu bar, add actions to menus
-        JMenu inputMenu = new JMenu("Input");
-        menuBar.add(inputMenu);
-        inputMenu.add(new jmri.jmrix.loconet.hexfile.LnHexFileAction("Loconet Hex File"));
-        inputMenu.add(new jmri.jmrix.loconet.ms100.MS100Action("MS100"));
-        inputMenu.add(new jmri.jmrix.loconet.locobuffer.LocoBufferAction("LocoBuffer"));
-        inputMenu.add(new JSeparator());
-        inputMenu.add(new jmri.jmrix.nce.serialdriver.SerialDriverAction("NCE Serial"));
-        inputMenu.add(new jmri.jmrix.easydcc.serialdriver.SerialDriverAction("EasyDcc Serial"));
-        inputMenu.add(new jmri.jmrix.cmri.serial.serialdriver.SerialDriverAction("CMRI Serial"));
-        inputMenu.add(new jmri.jmrix.lenz.li100.LI100Action("XPressNet LI100"));
-
-	  // AC 11/09/2002 Added SPROG support
-        inputMenu.add(new jmri.jmrix.sprog.serialdriver.SerialDriverAction("SPROG Serial"));
-
-        inputMenu.add(new JSeparator());
-        inputMenu.add(new AbstractAction("Quit"){
-                public void actionPerformed(ActionEvent e) {
-                    System.exit(0);
-                }
-            });
 
         JMenu fileMenu = new JMenu("File");
         menuBar.add(fileMenu);
         fileMenu.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(frame));
+        fileMenu.add(new AbstractAction("Quit"){
+                public void actionPerformed(ActionEvent e) {
+                    System.exit(0);
+                }
+            });
 
         JMenu editMenu = new JMenu("Edit");
         menuBar.add(editMenu);
@@ -78,10 +57,6 @@ public class JMRIdemo extends JPanel {
 
         // if the configuration completed OK, the input menu is made inactive
         log.debug("Find configOK is "+prefs.configOK);
-        if (prefs.configOK) {
-            inputMenu.setEnabled(false);
-            helpLabel1.setText("Configured by preferences, input menu disabled");
-        }
 
         JMenu funcMenu = new JMenu("Tools");
         menuBar.add(funcMenu);
@@ -165,6 +140,7 @@ public class JMRIdemo extends JPanel {
         devMenu.add(new jmri.jmrit.automat.SampleAutomatonAction( "Sample automaton 1"));
         devMenu.add(new jmri.jmrit.automat.SampleAutomaton2Action("Sample automaton 2"));
         devMenu.add(new jmri.jmrit.automat.SampleAutomaton3Action("Sample automaton 3"));
+        devMenu.add(new jmri.jmrit.automat.JythonAutomatonAction("Jython automaton"));
         devMenu.add(new JSeparator());
         devMenu.add(new jmri.jmrix.serialsensor.SerialSensorAction("Serial port sensors"));
 
