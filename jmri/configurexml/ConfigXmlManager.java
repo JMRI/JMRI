@@ -13,7 +13,7 @@ import jmri.*;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -165,10 +165,12 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     /**
      * Find a file by looking
      * <UL>
-     * <LI> in layout/ in the preferences directory, if that exists
-     * <LI> in layout/ in the application directory, if that exists
-     * <LI> at top level in the preferences directory
+     * <LI> in xml/layout/ in the preferences directory, if that exists
+     * <LI> in xml/layout/ in the application directory, if that exists
+     * <LI> in xml/ in the preferences directory, if that exists
+     * <LI> in xml/ in the application directory, if that exists
      * <LI> at top level in the application directory
+     * <LI>
      * </ul>
      * @param f Local filename, perhaps without path information
      * @return Corresponding File object
@@ -180,6 +182,9 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             log.debug("found at "+result.getAbsolutePath());
             return result;
         } else if ( null != (result = findFile(fileLocation+f) )) {
+            log.debug("found at "+result.getAbsolutePath());
+            return result;
+        } else if ( (null != (result = new File(f)) ) && result.exists() ) {
             log.debug("found at "+result.getAbsolutePath());
             return result;
         } else {
