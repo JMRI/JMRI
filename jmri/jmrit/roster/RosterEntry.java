@@ -25,7 +25,7 @@ import org.jdom.Element;
  * this entry.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  * @see jmri.jmrit.roster.LocoFile
  *
  */
@@ -34,14 +34,14 @@ public class RosterEntry {
     public RosterEntry(String fileName) {
         _fileName = fileName;
     }
-    
+
     public RosterEntry(RosterEntry pEntry, String pID) {
         // The ID is different for this element
         _id = pID;
-        
+
         // The filename is not set here, rather later
         _fileName = null;
-        
+
         // All other items are copied
         _roadName =     pEntry._roadName;
         _roadNumber =   pEntry._roadNumber;
@@ -54,65 +54,72 @@ public class RosterEntry {
         _decoderComment = pEntry._decoderComment;
         _owner = pEntry._owner;
     }
-    
+
     public void   setId(String s) { _id = s; }
     public String getId() { return _id; }
-    
+
     public void   setFileName(String s) { _fileName = s; }
     public String getFileName() { return _fileName; }
     /**
      * Ensure the entry has a valid filename. If none
      * exists, create one based on the ID string. Does _not_
      * enforce any particular naming; you have to check separately
-     * for "<none>" or whatever your convention is.
+     * for "&lt.none&gt." or whatever your convention is for indicating
+     * an invalid name.  Does replace the space, period, colon, slash and
+     * backslash characters so that the filename will be generally usable.
      */
     public void ensureFilenameExists() {
         // if there isn't a filename, store using the id
         if (getFileName()==null||getFileName().equals("")) {
-            String newFilename = getId().replace(' ','_')+".xml";
+            String nameWithoutSpecialChars = getId().replace(' ','_')
+                                            .replace('.', '_')
+                                            .replace('/', '-')
+                                            .replace('\\', '-')
+                                            .replace(':', '-');
+            String newFilename = nameWithoutSpecialChars+".xml";
             setFileName(newFilename);
             log.debug("new filename: "+getFileName());
         }
     }
-    
+
     public void   setRoadName(String s) { _roadName = s; }
     public String getRoadName() { return _roadName; }
-    
+
     public void   setRoadNumber(String s) { _roadNumber = s; }
     public String getRoadNumber() { return _roadNumber; }
-    
+
     public void   setMfg(String s) { _mfg = s; }
     public String getMfg() { return _mfg; }
-    
+
     public void   setModel(String s) { _model = s; }
     public String getModel() { return _model; }
-    
+
     public void   setOwner(String s) { _owner = s; }
     public String getOwner() { return _owner; }
-    
+
     public void   setDccAddress(String s) { _dccAddress = s; }
     public String getDccAddress() { return _dccAddress; }
-    
+
     public void   setComment(String s) { _comment = s; }
     public String getComment() { return _comment; }
-    
+
     public void   setDecoderModel(String s) { _decoderModel = s; }
     public String getDecoderModel() { return _decoderModel; }
-    
+
     public void   setDecoderFamily(String s) { _decoderFamily = s; }
     public String getDecoderFamily() { return _decoderFamily; }
-    
+
     public void   setDecoderComment(String s) { _decoderComment = s; }
     public String getDecoderComment() { return _decoderComment; }
-    
-    
+
+
     /**
      * Construct a blank object.
      *
      */
     public RosterEntry() {
     }
-    
+
     /**
      * Construct this Entry from XML. This member has to remain synchronized with the
      * detailed DTD in roster-config.xml
@@ -139,7 +146,7 @@ public class RosterEntry {
             if ((a = d.getAttribute("comment")) != null )  _decoderComment = a.getValue();
         }
     }
-    
+
     /**
      * Create an XML element to represent this Entry. This member has to remain synchronized with the
      * detailed DTD in roster-config.xml.
@@ -156,21 +163,21 @@ public class RosterEntry {
         e.addAttribute("model",getModel());
         e.addAttribute("dccAddress",getDccAddress());
         e.addAttribute("comment",getComment());
-        
+
         org.jdom.Element d = new org.jdom.Element("decoder");
         d.addAttribute("model",getDecoderModel());
         d.addAttribute("family",getDecoderFamily());
         d.addAttribute("comment",getDecoderComment());
-        
+
         e.addContent(d);
-        
+
         return e;
     }
-    
+
     public String titleString() {
         return getId();
     }
-    
+
     public String toString() {
         String out = "[RosterEntry: "+_id+" "
             +(_fileName!=null?_fileName:"<null>")
@@ -187,7 +194,7 @@ public class RosterEntry {
             +"]";
         return out;
     }
-    
+
     /**
      * Write the contents of this RosterEntry to a file.
      * Information
@@ -200,30 +207,30 @@ public class RosterEntry {
      */
     public void writeFile(CvTableModel cvModel, VariableTableModel variableModel) {
         LocoFile df = new LocoFile();
-        
+
         // do I/O
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+LocoFile.fileLocation);
-        
+
         try {
             String fullFilename = XmlFile.prefsDir()+LocoFile.fileLocation+getFileName();
             File f = new File(fullFilename);
             // do backup
             df.makeBackupFile(LocoFile.fileLocation+getFileName());
-            
+
             // and finally write the file
             df.writeFile(f, cvModel, variableModel, this);
-            
+
         } catch (Exception e) {
             log.error("error during locomotive file output: "+e);
         }
     }
-    
+
     /**
      * Store the root element of the JDOM tree representing this
      * RosterEntry.
      */
     private Element mRootElement = null;
-    
+
     /**
      * Load a pre-existing CvTableModel object with the CV contents
      * of this entry
@@ -234,7 +241,7 @@ public class RosterEntry {
         if (mRootElement == null) log.error("loadCvModel called before readFile() succeeded");
         LocoFile.loadCvModel(mRootElement.getChild("locomotive"), cvModel);
     }
-    
+
     /**
      * Read a file containing the contents of this RosterEntry.
      * This has to be done before a call to loadCvModel, for example.
@@ -245,16 +252,16 @@ public class RosterEntry {
             return;
         }
         else if (log.isDebugEnabled()) log.debug("readFile invoked with filename "+getFileName());
-        
+
         LocoFile lf = new LocoFile();  // used as a temporary
         try {
             mRootElement = lf.rootFromName(lf.fileLocation+File.separator+getFileName());
         } catch (Exception e) { log.error("Exception while loading loco XML file: "+getFileName()+" exception: "+e); }
     }
-    
+
     // members to remember all the info
     protected String _fileName = null;
-    
+
     protected String _id = "";
     protected String _roadName = "";
     protected String _roadNumber = "";
@@ -266,8 +273,8 @@ public class RosterEntry {
     protected String _decoderModel = "";
     protected String _decoderFamily = "";
     protected String _decoderComment = "";
-    
+
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RosterEntry.class.getName());
-    
+
 }
