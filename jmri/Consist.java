@@ -9,7 +9,7 @@
 
 package jmri;
 
-import com.sun.java.util.collections.List;
+import com.sun.java.util.collections.ArrayList;
 
 /*
  * This is the interface for consist classes.
@@ -37,7 +37,7 @@ public interface Consist {
 	public int getConsistAddress();
 
 	// get a list of the locomotives in the consist
-	public List getConsistList();
+	public ArrayList getConsistList();
 	
 	// does the consist contain the specified locomotive address?
 	public boolean contains(int address);

@@ -16,12 +16,12 @@ package jmri;
 import java.util.Enumeration;
 
 import com.sun.java.util.collections.Hashtable;
-import com.sun.java.util.collections.List;
+import com.sun.java.util.collections.ArrayList;
 
 
 public class DccConsist implements Consist, ProgListener{
 
-	protected List ConsistList; // A List of Addresses in the consist
+	protected ArrayList ConsistList = null; // A List of Addresses in the consist
 
 	protected Hashtable ConsistDir = null; // A Hash table 
                                         // containing the directions of 
@@ -37,6 +37,7 @@ public class DccConsist implements Consist, ProgListener{
 	public DccConsist(int address) {
 		ConsistAddress = address;
 		ConsistDir = new Hashtable();
+		ConsistList = new ArrayList();
 	}
 
 	// Clean Up local Storage.
@@ -65,7 +66,7 @@ public class DccConsist implements Consist, ProgListener{
 	}
 
 	// get a list of the locomotives in the consist
-        public List getConsistList() { return ConsistList; }
+        public ArrayList getConsistList() { return ConsistList; }
 
 	// does the consist contain the specified address?
 	public boolean contains(int address) {
@@ -101,6 +102,7 @@ public class DccConsist implements Consist, ProgListener{
 	      if(ConsistType==ADVANCED_CONSIST) {
 		 String Address= Integer.toString(LocoAddress);
 	         Boolean Direction = new Boolean(directionNormal);
+		 if(!(ConsistList.contains(Address))) ConsistList.add(Address);
 		 ConsistDir.put(Address,Direction);
 	         addToAdvancedConsist(LocoAddress, directionNormal);		
 	      }
@@ -117,6 +119,7 @@ public class DccConsist implements Consist, ProgListener{
 	      if(ConsistType==ADVANCED_CONSIST) {
 		 String Address= Integer.toString(LocoAddress);
 		 ConsistDir.remove(Address);
+		 ConsistList.remove(Address);
 	         removeFromAdvancedConsist(LocoAddress);		
 	      }
 	      else {
