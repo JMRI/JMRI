@@ -21,16 +21,18 @@ import jmri.AbstractSignalHead;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */public class SE8cSignalHead extends AbstractSignalHead implements LocoNetListener {
 
-    public SE8cSignalHead(int pNumber, String sys) {
-        super(""+pNumber, sys);
+    public SE8cSignalHead(int pNumber, String userName) {
+        // create systemname
+        super("LH"+pNumber, userName);
         init(pNumber);
     }
 
     public SE8cSignalHead(int pNumber) {
-        super(""+pNumber);
+        // create systemname
+        super("LH"+pNumber);
         init(pNumber);
     }
 
