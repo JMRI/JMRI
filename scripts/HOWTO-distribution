@@ -172,7 +172,7 @@ and the application name for App):
 ( ) Update CVS copy
 
     cd cvs
-    cvs -d cvs.jmri.sourceforge.net:/cvsroot/jmri update -r Release-0-N
+    cvs -d cvs.jmri.sourceforge.net:/cvsroot/jmri update -d -r Release-0-N
     
 ( ) Create a snapshot in zip format
 
@@ -188,6 +188,8 @@ and the application name for App):
 
 	Upload the Development Project:Docs folder to htdocs/Technical/
 
+( ) Update the XML area
+
 ( ) Wait for the files to appear in the upload area
 
 ( ) News item from JMRI sourceforge page
@@ -200,6 +202,7 @@ and the application name for App):
 		MAC_DCC@yahoogroups.com
 		loconet_hackers@yahoogroups.com
 		digitrax@yahoogroups.com
+		NCE groups?
 		
 ( ) Take a break!
 

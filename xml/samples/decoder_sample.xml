@@ -1,99 +1,131 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE locomotive:locomotive-config SYSTEM "DTD/locomotive-config.dtd">
-<locomotive:locomotive-config xmlns:locomotive="http://jmri.sourceforge.net/xml/locomotive">
-  <locomotive:locomotive roadNumber="b" roadName="a" mfg="c" model="d">
-    <locomotive:decoder model="All" mfg="Digitrax" versionID="" mfgID="" />
-    <locomotive:values>
-      <locomotive:decoderDef>
-        <locomotive:varValue name="Address" value="1" />
-        <locomotive:varValue name="Start voltage" value="2" />
-        <locomotive:varValue name="Acceleration rate" value="3" />
-        <locomotive:varValue name="Deceleration rate" value="" />
-        <locomotive:varValue name="Maximum voltage" value="" />
-        <locomotive:varValue name="Midpoint voltage" value="" />
-        <locomotive:varValue name="Version ID" value="17" />
-        <locomotive:varValue name="Manufacturer ID" value="" />
-        <locomotive:varValue name="F0 Forward during DC operation" value="1" />
-        <locomotive:varValue name="F0 Reverse during DC operation" value="0" />
-        <locomotive:varValue name="F1 during DC operation" value="0" />
-        <locomotive:varValue name="F2 during DC operation" value="0" />
-        <locomotive:varValue name="F3 during DC operation" value="0" />
-        <locomotive:varValue name="F4 during DC operation" value="0" />
-        <locomotive:varValue name="F5 during DC operation" value="0" />
-        <locomotive:varValue name="F6 during DC operation" value="0" />
-        <locomotive:varValue name="Long Address" value="" />
-        <locomotive:varValue name="Advanced Consist address" value="" />
-        <locomotive:varValue name="Normal direction of motion" value="0" />
-        <locomotive:varValue name="Speed steps" value="0" />
-        <locomotive:varValue name="Analog conversion mode" value="0" />
-        <locomotive:varValue name="Speed table" value="0" />
-        <locomotive:varValue name="Addressing mode" value="0" />
-        <locomotive:varValue name="Forward light F0F effect generated" value="0" />
-        <locomotive:varValue name="Forward light F0F behaviour" value="0" />
-        <locomotive:varValue name="Reverse light F0R effect generated" value="0" />
-        <locomotive:varValue name="Reverse light F0R behaviour" value="0" />
-        <locomotive:varValue name="Function 1 effect generated" value="0" />
-        <locomotive:varValue name="Function 1 behaviour" value="0" />
-        <locomotive:varValue name="Function 2 effect generated" value="0" />
-        <locomotive:varValue name="Function 2 behaviour" value="0" />
-        <locomotive:varValue name="Function 3 effect generated" value="0" />
-        <locomotive:varValue name="Function 3 behaviour" value="0" />
-        <locomotive:varValue name="Function 4 effect generated" value="0" />
-        <locomotive:varValue name="Function 4 behaviour" value="0" />
-        <locomotive:varValue name="F0 Forward Configurable strobe effect" value="0" />
-        <locomotive:varValue name="F0 Forward Configurable Strobes control" value="0" />
-        <locomotive:varValue name="F0 Reverse Configurable strobe effect" value="0" />
-        <locomotive:varValue name="F0 Reverse Configurable Strobes control" value="0" />
-        <locomotive:varValue name="Static compensation for speed stabilization" value="" />
-        <locomotive:varValue name="Dynamic compensation for speed stabilization" value="" />
-        <locomotive:varValue name="Solo operation droop compensation for speed stabilization" value="" />
-        <locomotive:varValue name="Advanced consist droop compensation for speed stabilization" value="" />
-        <locomotive:varValue name="Speed compensation" value="0" />
-        <locomotive:varValue name="Transponding" value="0" />
-        <locomotive:varValue name="Split field motor" value="0" />
-        <locomotive:varValue name="Directional headlight" value="0" />
-        <locomotive:varValue name="Vstart/Vmid/Vfull in 128 step mode" value="0" />
-        <locomotive:varValue name="Short-circuit protection" value="0" />
-        <locomotive:varValue name="Lamp keep-alive voltage" value="" />
-        <locomotive:varValue name="FX rate and keep alive adjust" value="" />
-        <locomotive:varValue name="Ditch light hold-over time" value="" />
-        <locomotive:varValue name="Kick start value" value="" />
-        <locomotive:varValue name="Forward trim" value="" />
-        <locomotive:varValue name="Reverse trim" value="" />
-        <locomotive:varValue name="User private ID #1" value="" />
-        <locomotive:varValue name="User private ID #2" value="" />
-      </locomotive:decoderDef>
-      <locomotive:CVvalue name="1" value="1" />
-      <locomotive:CVvalue name="2" value="2" />
-      <locomotive:CVvalue name="3" value="3" />
-      <locomotive:CVvalue name="4" value="0" />
-      <locomotive:CVvalue name="5" value="0" />
-      <locomotive:CVvalue name="6" value="0" />
-      <locomotive:CVvalue name="7" value="17" />
-      <locomotive:CVvalue name="8" value="0" />
-      <locomotive:CVvalue name="13" value="64" />
-      <locomotive:CVvalue name="17" value="0" />
-      <locomotive:CVvalue name="18" value="0" />
-      <locomotive:CVvalue name="19" value="0" />
-      <locomotive:CVvalue name="29" value="0" />
-      <locomotive:CVvalue name="49" value="0" />
-      <locomotive:CVvalue name="50" value="0" />
-      <locomotive:CVvalue name="52" value="0" />
-      <locomotive:CVvalue name="53" value="0" />
-      <locomotive:CVvalue name="54" value="0" />
-      <locomotive:CVvalue name="55" value="0" />
-      <locomotive:CVvalue name="56" value="0" />
-      <locomotive:CVvalue name="57" value="0" />
-      <locomotive:CVvalue name="61" value="0" />
-      <locomotive:CVvalue name="62" value="0" />
-      <locomotive:CVvalue name="63" value="0" />
-      <locomotive:CVvalue name="65" value="0" />
-      <locomotive:CVvalue name="66" value="0" />
-      <locomotive:CVvalue name="95" value="0" />
-      <locomotive:CVvalue name="105" value="0" />
-      <locomotive:CVvalue name="106" value="0" />
-      <locomotive:CVvalue name="67" value="0" />
-    </locomotive:values>
-  </locomotive:locomotive>
-</locomotive:locomotive-config>
+<!DOCTYPE locomotive-config SYSTEM "locomotive-config.dtd">
+<locomotive-config>
+  <locomotive id="Athearn F7" roadNumber="4797" roadName="" mfg="" model="F7" dccAddress="97" comment="">
+    <decoder model="DH142" family="Digitrax 1x2" comment="" />
+    <values>
+      <decoderDef>
+        <varValue name="Short Address" value="97" />
+        <varValue name="Start voltage" value="0" />
+        <varValue name="Acceleration Rate" value="0" />
+        <varValue name="Deceleration Rate" value="0" />
+        <varValue name="Maximum Voltage" value="0" />
+        <varValue name="Midpoint Voltage" value="0" />
+        <varValue name="Version ID" value="0" />
+        <varValue name="Manufacturer ID" value="0" />
+        <varValue name="F1 during DC operation" value="0" />
+        <varValue name="F2 during DC operation" value="0" />
+        <varValue name="F3 during DC operation" value="0" />
+        <varValue name="F4 during DC operation" value="0" />
+        <varValue name="F5 during DC operation" value="0" />
+        <varValue name="F6 during DC operation" value="0" />
+        <varValue name="F0 Forward during DC operation" value="0" />
+        <varValue name="F0 Reverse during DC operation" value="0" />
+        <varValue name="Long Address" value="4797" />
+        <varValue name="Advanced Consist address" value="0" />
+        <varValue name="Normal direction of motion" value="0" />
+        <varValue name="Speed steps" value="1" />
+        <varValue name="Analog conversion mode" value="0" />
+        <varValue name="Use Speed Table" value="0" />
+        <varValue name="Addressing Mode" value="0" />
+        <varValue name="Forward light F0F effect generated" value="0" />
+        <varValue name="Forward light F0F behaviour" value="0" />
+        <varValue name="Reverse light F0R effect generated" value="0" />
+        <varValue name="Reverse light F0R behaviour" value="0" />
+        <varValue name="Function 1 effect generated" value="0" />
+        <varValue name="Function 1 behaviour" value="0" />
+        <varValue name="Function 2 effect generated" value="0" />
+        <varValue name="Function 2 behaviour" value="0" />
+        <varValue name="Function 3 effect generated" value="0" />
+        <varValue name="Function 3 behaviour" value="0" />
+        <varValue name="Function 4 effect generated" value="0" />
+        <varValue name="Function 4 behaviour" value="0" />
+        <varValue name="F0 Forward Configurable strobe effect" value="0" />
+        <varValue name="F0 Forward Configurable Strobes control" value="0" />
+        <varValue name="F0 Reverse Configurable strobe effect" value="0" />
+        <varValue name="F0 Reverse Configurable Strobes control" value="0" />
+        <varValue name="Static compensation for speed stabilization" value="0" />
+        <varValue name="Dynamic compensation for speed stabilization" value="0" />
+        <varValue name="Solo operation droop compensation for speed stabilization" value="0" />
+        <varValue name="Advanced consist droop compensation for speed stabilization" value="0" />
+        <varValue name="Speed compensation" value="0" />
+        <varValue name="Transponding" value="0" />
+        <varValue name="Split field motor" value="0" />
+        <varValue name="Directional Headlight" value="0" />
+        <varValue name="Vstart/Vmid/Vfull in 128 step mode" value="0" />
+        <varValue name="Short-circuit protection" value="0" />
+        <varValue name="Lamp keep-alive voltage" value="0" />
+        <varValue name="FX rate and keep alive adjust" value="0" />
+        <varValue name="Ditch light hold-over time" value="0" />
+        <varValue name="Kick Start" value="0" />
+        <varValue name="Forward Trim" value="0" />
+        <varValue name="Reverse Trim" value="0" />
+        <varValue name="User Private ID #1" value="0" />
+        <varValue name="User Private ID #2" value="0" />
+        <varValue name="Speed Table" value="0,9,18,27,36,45,54,63,72,81,91,100,109,118,127,136,145,154,163,173,182,191,200,209,218,227,236,245" />
+        <varValue name="FL(f) controls output 1" value="0" />
+        <varValue name="FL(r) controls output 2" value="0" />
+        <varValue name="F1 controls output 3" value="0" />
+        <varValue name="F2 controls output 4" value="0" />
+      </decoderDef>
+      <CVvalue name="1" value="97" />
+      <CVvalue name="2" value="0" />
+      <CVvalue name="3" value="0" />
+      <CVvalue name="4" value="0" />
+      <CVvalue name="5" value="0" />
+      <CVvalue name="6" value="0" />
+      <CVvalue name="7" value="0" />
+      <CVvalue name="8" value="0" />
+      <CVvalue name="13" value="0" />
+      <CVvalue name="17" value="210" />
+      <CVvalue name="18" value="189" />
+      <CVvalue name="19" value="0" />
+      <CVvalue name="29" value="2" />
+      <CVvalue name="49" value="0" />
+      <CVvalue name="50" value="0" />
+      <CVvalue name="52" value="0" />
+      <CVvalue name="53" value="0" />
+      <CVvalue name="54" value="0" />
+      <CVvalue name="55" value="0" />
+      <CVvalue name="56" value="0" />
+      <CVvalue name="57" value="0" />
+      <CVvalue name="61" value="0" />
+      <CVvalue name="62" value="0" />
+      <CVvalue name="63" value="0" />
+      <CVvalue name="65" value="0" />
+      <CVvalue name="66" value="0" />
+      <CVvalue name="95" value="0" />
+      <CVvalue name="105" value="0" />
+      <CVvalue name="106" value="0" />
+      <CVvalue name="67" value="0" />
+      <CVvalue name="68" value="9" />
+      <CVvalue name="69" value="18" />
+      <CVvalue name="70" value="27" />
+      <CVvalue name="71" value="36" />
+      <CVvalue name="72" value="45" />
+      <CVvalue name="73" value="54" />
+      <CVvalue name="74" value="63" />
+      <CVvalue name="75" value="72" />
+      <CVvalue name="76" value="81" />
+      <CVvalue name="77" value="91" />
+      <CVvalue name="78" value="100" />
+      <CVvalue name="79" value="109" />
+      <CVvalue name="80" value="118" />
+      <CVvalue name="81" value="127" />
+      <CVvalue name="82" value="136" />
+      <CVvalue name="83" value="145" />
+      <CVvalue name="84" value="154" />
+      <CVvalue name="85" value="163" />
+      <CVvalue name="86" value="173" />
+      <CVvalue name="87" value="182" />
+      <CVvalue name="88" value="191" />
+      <CVvalue name="89" value="200" />
+      <CVvalue name="90" value="209" />
+      <CVvalue name="91" value="218" />
+      <CVvalue name="92" value="227" />
+      <CVvalue name="93" value="236" />
+      <CVvalue name="94" value="245" />
+    </values>
+  </locomotive>
+</locomotive-config>
 

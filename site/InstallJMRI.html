@@ -18,18 +18,27 @@ join the effort.<P>
 
 <h2>Installing JMRI</h2>
 
-This page describes the installation options for the JMRI demo application.
+This page describes the installation options for JMRI-based applications
+and gives some background on why they are structured this way.  The 
+detailed installation instructions are in the README file for each application:
+<UL>
+<LI>
+</UL>
 
-<P><A HREF="#SimpleMac9">Simple Macintosh MacOS 8/9 install</A>
-<P><A HREF="#SimpleMacX">Simple Macintosh MacOS X install</A>
-<P><A HREF="#SimpleWin">Simple Windows install</A>
-<P><A HREF="#SimpleOS2">Simple OS/2 install</A>
-<P><A HREF="#SimpleLinux">Simple Linux install</A>
+The sections of this page are:
 
-<P>
+<UL>
+<LI><A HREF="#SimpleMac9">Simple Macintosh MacOS 8/9 install</A>
+<LI><A HREF="#SimpleMacX">Simple Macintosh MacOS X install</A>
+<LI><A HREF="#SimpleWin">Simple Windows install</A>
+<LI><A HREF="#SimpleOS2">Simple OS/2 install</A>
+<LI><A HREF="#SimpleLinux">Simple Linux install</A>
+</UL>
+
 For information on Java, see the 
 <A HREF="Java/InstallJava.html">Java installation</A> page.
-Why would you want anything other than a simple installation?
+
+<P>Why would you want anything other than a simple installation?
 The simple installs download several large files, and you might not need
 all of it.  Particularly if you already have JMRI or other
 Java applications installed on your machine, you might want to update
@@ -38,36 +47,60 @@ In that case, you should read the
 <A HREF="background">background information</A>
 then the specifics for your system:
 
-<P><A HREF="#MacDetails">Macintosh details</A>
-<P><A HREF="#WinDetails">Windows details</A>
-<P><A HREF="#OS2Details">OS/2 details</A>
-<P><A HREF="#LinuxDetails">Linux details</A>
+<UL>
+<LI><A HREF="#MacDetails">Macintosh details</A>
+<LI><A HREF="#WinDetails">Windows details</A>
+<LI><A HREF="#OS2Details">OS/2 details</A>
+<LI><A HREF="#LinuxDetails">Linux details</A>
+</UL>
 
 <h3><A NAME="SimpleMac9"></A>Simple Macintosh MacOS 8/9 install</h3>
 A Macintosh self-extracting archive is available.  When you
 download and run it, it creates a folder containing the 
 double-clickable application
 and various support files.  
+<P>
+Unfortunately, certain older versions of MacOS did not come 
+with Java preinstalled.  In that case, you need a 
+"Macintosh Runtime for Java" (MRJ) installed.  Its
+available for download via 
+<a href="http://developer.apple.com/java/download.html">http://developer.apple.com/java/download.html</a>
+<P>
+Even more unfortunately, the MacOS 8/9 Java installations are
+somewhat old, and don't contain the "Swing" GUI components
+that are present on other machines.  Early versions of the
+JMRI libraries distributed these with every Macintosh-packaged
+distribution.  This made every distribution large, hence inconvenient
+to download, even though the Swing libraries needed to be installed only 
+once.  Starting with the *.9 versions, the Swing libraries are installed
+by a separate download that only needs to be run once. 
+Its available at 
+<a href="http://prdownloads.sourceforge.net/jmri/JavaLibsInstaller-2.hqx">http://prdownloads.sourceforge.net/jmri/JavaLibsInstaller-2.hqx</a>.
+<P>
+The sequence to install "from scratch" is:
 <UL>
-<LI><A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.demo.0.8.hqx">Download the archive</A>
-<LI>Find the "JMRI.demo.0.8.sea" file and double-click it to 
-expand the folder.
-<LI>You should now have a "JMRI.demo.0.8" folder.  
-The installation is complete.
+<LI>Install an MRJ
+<LI>Install the Swing libraries
+<LI>Run your JMRI-based application
+<LI>Relax and have fun
 </UL>
-To run the program, open the JMRI.demo.0.8 folder and double-click
-on the "JMRI demo" icon.
 
 <h4>Possible problems</h4>
-If after the download you're left with a "JMRI.demo.0.8.hqx"
-file, rather than a "JMRI.demo.0.8.sea" file, your browser is not 
+If after the download you're left with a ".hqx"
+file, rather than a folder your browser is not 
 configured to expand files in "binhex" format.  You'll need a program 
 like StuffIt Expander, UnStuff or similar to convert this file to 
-a self-expanding archive.  Drag the JMRI.demo.0.8.hqx file to the 
+a self-expanding archive.  Drag the .hqx file to the 
 icon for one of those programs, which should convert it to 
-a JMRI.demo.0.8.sea file.
+a folder.
+<P>You might also be left with a .sea file, instead of a folder.
+This is an intermediate format, made from the .hqx file and then
+expanded.  Just drag it to StuffIt Expander or similar. 
+<P>
+Once the folder exists, you can through out the related .hqx and .sea
+files.
 
-<h4>Hardware requirements</h4>
+<h4>LocoNet hardware requirements</h4>
 
 There are two hardware adapters available to connect to a LocoNet.  The
 LocoBuffer is the strongly preferred alternative, as it reduces the load 
@@ -111,23 +144,18 @@ A Macintosh self-extracting archive is available.  When you
 download and run it, it creates a folder containing the 
 double-clickable application
 and various support files.  
-<UL>
-<LI><A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.demo.0.8.hqx">Download the archive</A>
-<LI>Find the "JMRI.demo.0.8.sea" file and double-click it to 
-expand the folder.
-<LI>You should now have a "JMRI.demo.0.8" folder.  
-<LI>You will need drivers for the serial hardware you're using.  We test
+
+<P>
+You will need drivers for the serial hardware you're using.  We test
 using a Keyspan PDA Adapter; those drivers are available at 
 <A HREF="http://www.keyspan.com/support/macosx">http://www.keyspan.com/support/macosx</A>. 
 Download the most
 recent version for your hardware and run the installer.
-<LI>You will need to install the javax.comm package to get access to the serial ports.
+
+<P>You will need to install the javax.comm package to get access to the serial ports.
 An installer is available at
 <A HREF="http://prdownloads.sourceforge.net/jmri/JavaCommInstaller04.hqx">http://prdownloads.sourceforge.net/jmri/JavaCommInstaller04.hqx</A>. 
 Download and run that installer.
-</UL>
-To run the program, open the JMRI.demo.0.8 folder and double-click
-on the "JMRI MacOSX" icon.
 
 <P>
 The listings of available ports may show several
@@ -135,22 +163,13 @@ different types for each port, with names
 that start with "/dev/tty" or "/dev/cu".  In that case, select the "/dev/tty" 
 version for best performance.
 
-<h4>Possible problems</h4>
-If after the download you're left with a "JMRI.demo.0.8.hqx"
-file, rather than a "JMRI.demo.0.8.sea" file, your browser is not 
-configured to expand files in "binhex" format.  You'll need a program 
-like StuffIt Expander, UnStuff or similar to convert this file to 
-a self-expanding archive.  Drag the JMRI.demo.0.8.hqx file to the 
-icon for one of those programs, which should convert it to 
-a JMRI.demo.0.8.sea file.
+<P>The JMRI-based application can be run by opening its folder
+and clicking on the application icon.  If there are two, one
+which looks right and one which looks really small, click the
+one that looks right.  The "really small" one is the Classic
+application, which will run under Classic instead of natively.
 
 <h4>Hardware requirements</h4>
-
-JMRI is primarily developed on a PowerBook 400MHz. 
-We test that it
-runs on a PowerMac 7200/90  (90MHz) with 40MB of memory. Performance on that
-machine is poor, but usable: Some windows take several seconds to open, and certain file
-operations take too long.
 
 We use a USB Macintosh connected to a Keyspan PDA Adapter to 
 provide the serial port; for information please see 
@@ -256,15 +275,17 @@ To start the program, type:
 from the JMRI.demo.0.8 directory.
 
 <h3><A NAME="background"></A>background information</h3>
-Note that this structure described here
-is for the 0.8 release of JMRI.  If you have
+Note that this structure described in this section
+is for the 0.9 release of JMRI.  If you have
 something earlier than that installed, you'd be better off just erasing the
 old version and starting with a simple install.
 When we create later releases of JMRI, we'll provide the links to
 download just the changed parts.
 <P>
 The JMRI-specific code is in a Java archive file called "jmri.jar".
-This file changes from one JMRI release to the next. 
+This file changes from one JMRI release to the next. The Decoder Pro
+JMRI-based application distributes its code, plus the JMRI code,
+in DecoderPro.jar.
 <P>There are also several .jar files in the lib subdirectory that
 provide libraries needed by the JMRI demo program. When you do a 
 simple install, these are included. 
@@ -279,27 +300,17 @@ your system, you might not need dedicated copies of these:
 			information, see the 
 			<A HREF="http://jakarta.apache.org/log4j/docs/index.html">log4j home page</A>.
 	<LI>jdom-jdk11.jar - Lightweight toolkit for reading and writing XML files.
-			In release 0.7, this is only needed by the symbolic programmer
-			tool, but its so useful that other tools will be using it soon.
 			For more information, see the
 			<A HREF="http://www.jdom.org">JDOM home page</A>.
-	<LI>xerces.jar - An XML parser used for our configuration files.
+			We are currently using the "b6" version.
+	<LI>crimson.jar - An XML parser used for our configuration files.
 			This is a commonly used utility. If you have other Java
 			programs installed, you might already have this.
 	<LI>collections.jar - Part of recent versions of Java, this file
-			provides a powerful set of collection classes.  You might
-			not need this file if you have Java 1.3 or later installed.
+			provides a powerful set of collection classes. 
+			This is a commonly used utility. If you have other Java
+			programs installed, you might already have this.
 			Its small, so we include it in our distributions.
-	<LI>swingall.jar - Part of recent versions of Java, this file
-			provides the Swing graphical user interface.  You might 
-			have this (or the equivalent swingnew.jar) file
-			already installed as part of Java, in which case you don't
-			need this one. Macintosh systems before MacOS X don't generally
-			have this, so we include it in the Macintosh (.hqx) distribution.
-			Unfortunately, swingall.jar is a 4MB file.
-	<LI>javax.comm.MRJ.jar - A Macintosh-specific implementation of 
-			the Java communications classes. Only Macintosh computers
-			use this file. Other distributions don't have it.
 	<LI>junit.jar - Part of the development tests, we will send you this
 			file if needed for debugging.  Most distributions don't have it.
 	</UL>
@@ -309,20 +320,29 @@ Windows distributions, so they won't appear separately.  We do this
 because we don't have a consistent way of handling the classpath 
 across the various Windows variants.
 
+<P>XML files created while you run the program are stored in the
+"prefs" folder or its subfolders.  You might want to preserve
+that when you update to a newer version of the libraries.  To
+do that, just move your old prefs folder to the new distribution folder,
+replacing the default one that was supplied.
+
 <P>The "xml" subdirectory is also updated from one JMRI release to the
 next.  To pick up the most recent decoder configurations, etc, you
 need to update this directory. Be careful to preserve any files you've
 modified (and that you've not contributed, so that they appear in the
-distribution).
+distribution). In general, the "prefs" directory is a better place to
+put JMRI files you modify.  Its searched first, so your modified versions
+will be picked up from there.
 
-<P>To summarize, to update to a new JMRI release, you need to:
+<P>For future releases, we plan to provide "updaters" with just the changed files.
+The minimal steps to update to a new JMRI release are:
 <UL>
 <LI>Get a new jmri.jar or JmriWin95.jar file and drop it into the distribution directory.
 This updates the program itself.
 <LI>Update the contents of the xml folder/directory.  This updates data files
 used by the program.
 </UL>
-<P>For future releases, we plan to provide "updaters" with just the changed files.
+<P>
 
 <h3><A NAME="MacDetails"></A>Macintosh details</h3>
 
@@ -338,8 +358,7 @@ inside a set of folders:
           MRJClasses
 </PRE>
 A single swingall.jar file in that folder, for example, will serve 
-all applications that need it. You can then remove it from the lib
-folder of the JMRI distribution.
+all applications that need it. 
 
 <h4>MacOS X</h4>
 

@@ -6,10 +6,25 @@ Currently, these are defined via DTDs. We intend to move to schema quite soon,
 particularly to pick up validity checking.
 
 Subdirectories:
-	programmers - 
-	decoders -
+
+	decoders - Files describing specific families of DCC decoders
+
+	programmers - Files describing specific displays for the DecoderPro
+	              symbolic decoder programmer
+	              
+	DTD - contains DTD definitions for all XML files
 	
+Certain configuration files appear in the top-level directory:
+
+	decoderIndex.xml - associations between manufacturers, mfg codes,
+		decoder models and families
+		
+	names.xml - definition of standard names for use in 
+		the programmer files
+
 The JMRI web page is located at http://jmri.sourceforge.net/
+
+More information on these 
 
 See the COPYING file for the license.
 
