@@ -16,7 +16,7 @@ package jmri;
  * invoked by one or more Sensors (up to the maximum allowed).
  *
  * @author			Dave Duchamp Copyright (C) 2004
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public interface Route extends NamedBean {
 
@@ -55,8 +55,13 @@ public interface Route extends NamedBean {
     /**
      * Method to add a Sensor to the list of control Sensors for this Route
      */
-    public boolean addSensorToRoute(String sensorSystemName);
+    public boolean addSensorToRoute(String sensorSystemName, int mode);
 
+    static final int ONACTIVE = 0;    // route fires if sensor goes active
+    static final int ONINACTIVE = 1;  // route fires if sensor goes inactive
+    static final int VETOACTIVE = 2;  // sensor must be active for route to fire
+    static final int VETOINACTIVE = 3;  // sensor must be inactive for route to fire
+    
     /**
      * Method to delete all control Sensors from this Route
      */
@@ -69,7 +74,16 @@ public interface Route extends NamedBean {
      *  If there is no Sensor with that 'index', or if 'index'
      *      is not in the range 0 thru MAX_SENSORS-1, null is returned.
      */
-    public String getRouteSensor(int index);
+    public String getRouteSensorName(int index);
+    
+    /**
+     * Method to get the mode of a particular Sensor in this Route
+     *  'index' is the index in the Sensor array of the requested 
+     *      Sensor.  
+     *  If there is no Sensor with that 'index', or if 'index'
+     *      is not in the range 0 thru MAX_SENSORS-1, ONACTIVE is returned.
+     */
+    public int getRouteSensorMode(int index);
 
     /**
      * Method to set the SystemName of a control Turnout for this Route
