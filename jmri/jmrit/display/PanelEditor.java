@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import jmri.jmrit.catalog.CatalogPane;
+import com.sun.java.util.collections.ArrayList;
 
 /**
  * Provides a simple editor for adding jmri.jmrit.display items
@@ -16,9 +17,13 @@ import jmri.jmrit.catalog.CatalogPane;
  * All created objects are put at the "front", ahead of everything that
  * is already there, except the background, which clearly has to be put at
  * the back.
+ * <P>
+ * The "contents" List keeps track of all the objects added to the target
+ * frame for later manipulation.
+ *
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Id: PanelEditor.java,v 1.5 2002-07-19 12:20:08 jacobsen Exp $
+ * @version $Revision: 1.6 $
  */
 
 public class PanelEditor extends JPanel {
@@ -33,19 +38,37 @@ public class PanelEditor extends JPanel {
     JButton pickIcon = new JButton("pick");
     JLabel nextIconLabel = new JLabel();
     Icon labelIcon = null;
+    String labelIconName;
 
     JButton turnoutAdd = new JButton("add");
     JTextField nextTurnout = new JTextField(10);
+
     JButton closedIconButton = new JButton("Pick closed icon");
     Icon closedIcon;
+    String closedIconName;
     JLabel closedIconLabel;
+
     JButton thrownIconButton = new JButton("Pick thrown icon");
     Icon thrownIcon;
+    String thrownIconName;
     JLabel thrownIconLabel;
+
+    JButton sensorAdd = new JButton("add");
+    JTextField nextSensor = new JTextField(10);
+
+    JButton activeIconButton = new JButton("Pick active icon");
+    Icon activeIcon;
+    String activeIconName;
+    JLabel activeIconLabel;
+
+    JButton inactiveIconButton = new JButton("Pick inactive icon");
+    Icon inactiveIcon;
+    String inactiveIconName;
+    JLabel inactiveIconLabel;
 
     JButton backgroundAddButton = new JButton("Pick image");
 
-    CatalogPane catalog = new CatalogPane();
+    public CatalogPane catalog = new CatalogPane();
 
     public PanelEditor() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -95,7 +118,7 @@ public class PanelEditor extends JPanel {
 
         this.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
 
-        // add an icon
+        // add an icon label
         {
             JPanel panel = new JPanel();
             panel.setLayout(new FlowLayout());
@@ -159,6 +182,45 @@ public class PanelEditor extends JPanel {
             this.add(panel);
         }
 
+        // Add a sensor indicator
+        {
+            JPanel panel = new JPanel();
+            panel.setLayout(new FlowLayout());
+
+            SensorIcon to = new SensorIcon();
+            activeIcon = to.getActiveIcon();
+            inactiveIcon = to.getInactiveIcon();
+            activeIconLabel = new JLabel(activeIcon);
+            inactiveIconLabel = new JLabel(inactiveIcon);
+
+            panel.add(new JLabel("indicate sensor: "));
+            panel.add(nextSensor);
+            panel.add(activeIconLabel);
+            panel.add(activeIconButton);
+            activeIconButton.addActionListener( new ActionListener() {
+                    public void actionPerformed(ActionEvent a) {
+                        pickActiveIcon();
+                    }
+                }
+            );
+            panel.add(inactiveIconLabel);
+            panel.add(inactiveIconButton);
+            inactiveIconButton.addActionListener( new ActionListener() {
+                    public void actionPerformed(ActionEvent a) {
+                        pickInactiveIcon();
+                    }
+                }
+            );
+            panel.add(sensorAdd);
+            sensorAdd.addActionListener( new ActionListener() {
+                    public void actionPerformed(ActionEvent a) {
+                        addSensor();
+                    }
+                }
+            );
+            this.add(panel);
+        }
+
         // allow for selection of icons
         add(catalog);
 
@@ -169,6 +231,7 @@ public class PanelEditor extends JPanel {
      */
     void pickLabelIcon() {
         labelIcon = pickIcon();
+        labelIconName = pickIconName();
         nextIconLabel.setIcon(labelIcon);
     }
 
@@ -177,6 +240,7 @@ public class PanelEditor extends JPanel {
      */
     void pickThrownIcon() {
         thrownIcon = pickIcon();
+        thrownIconName = pickIconName();
         thrownIconLabel.setIcon(thrownIcon);
     }
 
@@ -185,7 +249,26 @@ public class PanelEditor extends JPanel {
      */
     void pickClosedIcon() {
         closedIcon = pickIcon();
+        closedIconName = pickIconName();
         closedIconLabel.setIcon(closedIcon);
+    }
+
+    /**
+     * Select the icon for "active"
+     */
+    void pickActiveIcon() {
+        activeIcon = pickIcon();
+        activeIconName = pickIconName();
+        activeIconLabel.setIcon(activeIcon);
+    }
+
+    /**
+     * Select the image for "inactive"
+     */
+    void pickInactiveIcon() {
+        inactiveIcon = pickIcon();
+        inactiveIconName = pickIconName();
+        inactiveIconLabel.setIcon(inactiveIcon);
     }
 
     /**
@@ -193,6 +276,10 @@ public class PanelEditor extends JPanel {
      */
     Icon pickIcon() {
         return catalog.getSelectedIcon();
+    }
+
+    String pickIconName() {
+        return catalog.getSelectedIconName();
     }
 
     /**
@@ -204,9 +291,10 @@ public class PanelEditor extends JPanel {
 		if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
         log.debug("Open image file: "+inputFileChooser.getSelectedFile().getPath());
 		ImageIcon icon = new ImageIcon(inputFileChooser.getSelectedFile().getPath());
-        JLabel l = new PositionableLabel(icon);
+        JLabel l = new PositionableLabel(icon, "another sensor icon name");
         l.setSize(icon.getIconWidth(), icon.getIconHeight());
         target.add(l);
+        contents.add(l);
         backgroundAddButton.setEnabled(false);   // theres only one
         target.moveToBack(l);
         target.revalidate();
@@ -225,6 +313,27 @@ public class PanelEditor extends JPanel {
         setNextLocation(l);
         l.invalidate();
         target.add(l);
+        contents.add(l);
+        target.moveToFront(l);
+
+        // reshow the panel
+        target.validate();
+    }
+
+    /**
+     * Add a turnout indicator to the target
+     */
+    void addSensor() {
+        SensorIcon l = new SensorIcon();
+        if (activeIcon!=null) l.setActiveIcon(activeIcon);
+        if (inactiveIcon!=null) l.setInactiveIcon(inactiveIcon);
+        l.setSensor(nextSensor.getText());
+
+        log.debug("sensor height, width: "+l.getHeight()+" "+l.getWidth());
+        setNextLocation(l);
+        l.invalidate();
+        target.add(l);
+        contents.add(l);
         target.moveToFront(l);
 
         // reshow the panel
@@ -239,6 +348,7 @@ public class PanelEditor extends JPanel {
         setNextLocation(l);
         l.invalidate();
         target.add(l);
+        contents.add(l);
         target.moveToFront(l);
 
         // reshow the panel
@@ -250,11 +360,11 @@ public class PanelEditor extends JPanel {
      * Add an icon to the target
      */
     void addIcon() {
-        PositionableLabel l = new PositionableLabel(labelIcon);
-        //setNextLocation(l, labelIcon.getIconHeight(), labelIcon.getIconWidth());
+        PositionableLabel l = new PositionableLabel(labelIcon, labelIconName );
         setNextLocation(l);
         l.invalidate();
         target.add(l);
+        contents.add(l);
         target.moveToFront(l);
 
         // reshow the panel
@@ -273,13 +383,24 @@ public class PanelEditor extends JPanel {
     }
 
     /**
-     * Set the frame to be editted.
+     * Set the JLayeredPane containing the objects to be editted.
      */
     public void setTarget(JLayeredPane f) {
         target = f;
     }
-
+    public JLayeredPane getTarget() { return target;}
     JLayeredPane target;
+
+    /**
+     * Get the frame containing the results
+     */
+    public JFrame getFrame() { return frame; }
+    public void setFrame(JFrame f) {
+        frame = f;
+    }
+    JFrame frame;
+
+    public ArrayList contents = new ArrayList();
 
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PanelEditor.class.getName());
