@@ -5,6 +5,7 @@ package jmri.jmrix.lenz.li100;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetPacketizer;
 import jmri.jmrix.lenz.XNetPortController;
+import jmri.jmrix.lenz.XNetInitilizationManager;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -22,7 +23,7 @@ import javax.comm.SerialPortEventListener;
  * Provide access to XPressNet via a LI100 on an attached serial comm port.
  *					Normally controlled by the lenz.li100.LI100Frame class.
  * @author			Bob Jacobsen   Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 
 public class LI100Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -201,14 +202,10 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
             XNetPacketizer packets = new XNetPacketizer(new LenzCommandStation());
             packets.connectPort(this);
 
-            jmri.InstanceManager.setPowerManager(new jmri.jmrix.lenz.XNetPowerManager());
-            jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager());
-            jmri.InstanceManager.setThrottleManager(new jmri.jmrix.lenz.XNetThrottleManager());
-            jmri.InstanceManager.setProgrammerManager(new jmri.jmrix.lenz.XNetProgrammerManager(jmri.jmrix.lenz.XNetProgrammer.instance()));
-           
-
             // start operation
             packets.startThreads();
+
+            new XNetInitilizationManager();
 
             jmri.jmrix.lenz.ActiveFlag.setActive();
 	}

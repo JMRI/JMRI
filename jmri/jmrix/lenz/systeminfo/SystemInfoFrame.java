@@ -20,7 +20,7 @@ import jmri.jmrix.lenz.*;
  * Commander or Compact)
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class SystemInfoFrame extends JFrame implements XNetListener {
 
@@ -49,6 +49,10 @@ public class SystemInfoFrame extends JFrame implements XNetListener {
         // and prep for display
         pack();
 
+        // initilize the display values with what the LenzCommandStation 
+        // class already knows.
+        setCSVersionDisplay();
+
         // Add Get SystemInfo button handler
         getSystemInfoButton.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
@@ -72,7 +76,7 @@ public class SystemInfoFrame extends JFrame implements XNetListener {
                 thisWindowClosing(e);
             }
         });
-
+       
         if (XNetTrafficController.instance()!=null)
 	    XNetTrafficController.instance().addXNetListener(~0, this);
         else
@@ -93,12 +97,11 @@ public class SystemInfoFrame extends JFrame implements XNetListener {
 
     //Send Information request to LI100/LI101
     void getSystemInfo() {
-	XNetMessage msg=new XNetMessage(3);
         /* First, we need to send a request for the Command Station
         hardware and software version */
-	msg.setElement(0,XNetConstants.CS_REQUEST);
-	msg.setElement(1,XNetConstants.CS_VERSION);
-        msg.setParity(); // Set the parity bit
+	XNetMessage msg=XNetTrafficController.instance()
+                                             .getCommandStation()
+                                             .getCSVersionRequestMessage();
         //Then send to the controller
         XNetTrafficController.instance().sendXNetMessage(msg,this);
        	XNetMessage msg2=new XNetMessage(2);
@@ -108,7 +111,6 @@ public class SystemInfoFrame extends JFrame implements XNetListener {
         msg2.setParity(); // Set the parity bit
         //Then send to the controller
         XNetTrafficController.instance().sendXNetMessage(msg2,this);
-
     }
 
     // listen for responses from the LI101
@@ -126,8 +128,28 @@ public class SystemInfoFrame extends JFrame implements XNetListener {
               // This is the Command Station Software Version Response
               if(l.getElement(1)==XNetConstants.CS_SOFTWARE_VERSION)
 	      {
-		CSSoftwareVersion.setText("" + (l.getElementBCD(2).floatValue())/10);
-                int cs_type=l.getElement(3);
+   	        XNetTrafficController.instance()
+                                     .getCommandStation()
+                                     .setCommandStationSoftwareVersion(l);
+  	        XNetTrafficController.instance()
+                                     .getCommandStation()
+                                     .setCommandStationType(l);
+                setCSVersionDisplay();
+              }
+       }
+    }
+   
+    /**
+     * This just displays the currently known version information from the 
+     * LenzCommandStation class.
+     **/
+    private void setCSVersionDisplay() {
+		CSSoftwareVersion.setText("" + XNetTrafficController.instance()
+                                                 .getCommandStation()
+                                                 .getCommandStationSoftwareVersion());
+                int cs_type=XNetTrafficController.instance()
+                                                 .getCommandStation()
+                                                 .getCommandStationType();
                 if(cs_type==0x00) {
 			CSType.setText("LZ100/LZV100");
 		}
@@ -137,9 +159,8 @@ public class SystemInfoFrame extends JFrame implements XNetListener {
 		else if(cs_type==0x02) {
 			CSType.setText("Compact or Other");
 		     }
-              }
-       }
-    }
+                else CSType.setText("<unknown>");
+	}
 
     // Close the window when the close box is clicked
     void thisWindowClosing(java.awt.event.WindowEvent e) {

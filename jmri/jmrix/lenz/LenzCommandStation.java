@@ -9,15 +9,84 @@ package jmri.jmrix.lenz;
  * Defines standard operations for Dcc command stations.
  *
  * @author			Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
-    
+
+    /**
+     *  We need to add a few data members for saving the version 
+     *  information we get from the layout.
+     **/
+
+     private int cmdStationType = -1;
+     private float cmdStationSoftwareVersion = -1;
+
+    /**
+     * return the CS Type
+     **/
+     public int getCommandStationType() { return cmdStationType; }
+
+    /**
+     * set the CS Type
+     **/
+     public void setCommandStationType(int t) { cmdStationType = t; }
+
+    /**
+     * Set the CS type based on an XPressNet Message
+     **/
+     public void setCommandStationType(XNetMessage l) {
+       if(l.getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONSE)
+       {
+              // This is the Command Station Software Version Response
+              if(l.getElement(1)==XNetConstants.CS_SOFTWARE_VERSION)
+              {
+                cmdStationType=l.getElement(3);
+              }
+       }
+    }
+
+    /**
+     * return the CS Software Version
+     **/
+     public float getCommandStationSoftwareVersion() { return cmdStationSoftwareVersion; }
+
+    /**
+     * set the CS Software Version
+     **/
+     public void setCommandStationSoftwareVersion(float v) { cmdStationSoftwareVersion = v; }
+
+    /**
+     * Set the CS Software Version based on an XPressNet Message
+     **/
+     public void setCommandStationSoftwareVersion(XNetMessage l) {
+       if(l.getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONSE)
+       {
+              // This is the Command Station Software Version Response
+              if(l.getElement(1)==XNetConstants.CS_SOFTWARE_VERSION)
+              {
+                cmdStationSoftwareVersion=(l.getElementBCD(2).floatValue())/10;
+              }
+       }
+    }
+
+    /**
+     * Generate the message to request the Command Station 
+     * Hardware/Software Version
+     **/
+     public XNetMessage getCSVersionRequestMessage() {
+	XNetMessage msg=new XNetMessage(3);   
+        msg.setElement(0,XNetConstants.CS_REQUEST);
+        msg.setElement(1,XNetConstants.CS_VERSION);
+        msg.setParity(); // Set the parity bit
+        return msg;
+     } 
+
     /**
      * Lenz does use a service mode
      */
     public boolean getHasServiceMode() {return true;}
-    
+
+
     /**
      * If this command station has a service mode, is the command
      * station currently in that mode?

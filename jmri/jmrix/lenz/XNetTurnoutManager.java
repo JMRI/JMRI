@@ -10,7 +10,7 @@ import jmri.Turnout;
  * System names are "XTnnn", where nnn is the turnout number without padding.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class XNetTurnoutManager extends jmri.AbstractTurnoutManager implements XNetListener {
 
@@ -43,6 +43,18 @@ public class XNetTurnoutManager extends jmri.AbstractTurnoutManager implements X
         if (null == getBySystemName(s)) {
             // need to create a new one
             provideTurnout(s);
+        }
+        if (addr%2==1) {
+           // If the address we got was odd, we need to check to see if
+           // the even address should be added as well.
+           int a2=l.getElement(2);
+           if((a2 & 0x0c)==0) return;
+           // reach here for switch command; make sure we know about this one
+           s = "XT"+(addr+1);
+           if (null == getBySystemName(s)) {
+             // need to create a new one
+             provideTurnout(s);
+        }
         }
     }
 
