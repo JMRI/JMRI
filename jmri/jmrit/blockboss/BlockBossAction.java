@@ -11,12 +11,13 @@ import javax.swing.*;
  * "Simple Signal Logic" GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class BlockBossAction extends AbstractAction {
 
     public BlockBossAction(String s) { super(s);}
+    public BlockBossAction() { super();}
 
     public void actionPerformed(ActionEvent e) {
 
@@ -28,19 +29,19 @@ public class BlockBossAction extends AbstractAction {
         // add lines of GUI
         JPanel line = new JPanel();
         line.add(new JLabel("Signal name: "));
-        line.add(new JTextField());
+        line.add(new JTextField(5));
         f.getContentPane().add(line);
 
         f.getContentPane().add(new JSeparator(JSeparator.HORIZONTAL));
 
         line = new JPanel();
         line.add(new JLabel("Protects sensor: "));
-        line.add(new JTextField());
+        line.add(new JTextField(5));
         f.getContentPane().add(line);
 
         line = new JPanel();
         line.add(new JLabel("Protects turnout: "));
-        line.add(new JTextField());
+        line.add(new JTextField(5));
         line.add(new JLabel("when "));
         line.add(new JRadioButton("Closed"));
         line.add(new JRadioButton("Thrown"));
@@ -48,9 +49,11 @@ public class BlockBossAction extends AbstractAction {
 
         line = new JPanel();
         line.add(new JLabel("Protects signal: "));
-        line.add(new JTextField());
+        line.add(new JTextField(5));
         line.add(new JCheckBox("with flashing yellow"));
         f.getContentPane().add(line);
+
+        f.getContentPane().add(new JButton("OK"));
 
         f.pack();
         f.show();
