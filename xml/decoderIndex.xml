@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <decoderIndex version="35">
+  <decoderIndex version="37">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -122,6 +122,23 @@
       <family name="Early decoders" mfg="Digitrax" lowVersionID="33" highVersionID="45" type="locomotive" file="Digitrax_xearly.xml">
         <model model="DH120" numOuts="2" numFns="2" />
         <model model="DZ120" numOuts="2" numFns="2" />
+      </family>
+      <family name="ESU LokSound2 Silent BEMF/Sound decoders" mfg="ESU" lowVersionID="21" type="locomotive" file="ESU_LokSound2_21.xml">
+        <model model="ESU_LokSound2" numOuts="13" numFns="12">
+          <output name="1" label="Front Lights" />
+          <output name="2" label="Back Lights" />
+          <output name="3" label="Aux" />
+          <output name="4" label="Accel/Decel off" />
+          <output name="5" label="Riding Noise" />
+          <output name="6" label="Soundslot 1" />
+          <output name="7" label="Soundslot 2" />
+          <output name="8" label="Soundslot 3" />
+          <output name="9" label="Soundslot 4" />
+          <output name="10" label="Soundslot 5" />
+          <output name="11" label="Soundslot 6" />
+          <output name="12" label="Soundslot 7" />
+          <output name="13" label="Soundslot 8" />
+        </model>
       </family>
       <family name="Lenz 5th gen BEMF decoders" mfg="Lenz" lowVersionID="54" type="locomotive" file="Lenz_54.xml">
         <model model="LE010XF" numOuts="2">
@@ -452,6 +469,34 @@
         </model>
         <model model="TH141" numOuts="4" numFns="2">
           <output name="4" label="Violet" />
+        </model>
+      </family>
+      <family name="Zimo Silent BEMF decoders, late model" mfg="Zimo" type="locomotive" file="Zimo_MX61_2000_11.xml">
+        <model model="MX61_2000" numOuts="6" numFns="6">
+          <versionCV lowVersionID="11" highVersionID="15" />
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Brown" />
+          <output name="4" label="Green" />
+          <output name="5" label="NC - Logic Level" />
+          <output name="6" label="NC - Logic Level" />
+        </model>
+        <model model="MX62_2000" numOuts="4" numFns="6">
+          <versionCV lowVersionID="3" />
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="NC - Logic Level" />
+          <output name="4" label="NC - Logic Level" />
+        </model>
+      </family>
+      <family name="Zimo Silent BEMF decoders, early model" mfg="Zimo" lowVersionID="8" type="locomotive" file="Zimo_MX61_2000_8.xml">
+        <model model="MX61_2000_8" numOuts="6" numFns="6">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Brown" />
+          <output name="4" label="Brown" />
+          <output name="5" label="NC - Logic Level" />
+          <output name="6" label="NC - Logic Level" />
         </model>
       </family>
     </familyList>
