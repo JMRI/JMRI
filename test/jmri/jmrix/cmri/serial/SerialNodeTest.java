@@ -14,7 +14,7 @@ import jmri.jmrix.cmri.serial.SerialReply;
 /**
  * JUnit tests for the SerialNode class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialNodeTest extends TestCase {
 
@@ -27,6 +27,7 @@ public class SerialNodeTest extends TestCase {
         a.registerSensor(s2, 1);
         a.registerSensor(s3, 2);
         SerialReply r = new SerialReply();
+        r.setElement(2, '2');
         a.markChanges(r);
         Assert.assertEquals("check s1", Sensor.ACTIVE, s1.getKnownState());
         Assert.assertEquals("check s2", Sensor.INACTIVE, s2.getKnownState());
