@@ -1,10 +1,4 @@
-/**
- * AllTest.java
- *
- * Description:	    Driver for JMRI project test classes
- * @author			Bob Jacobsen
- * @version			$Revision: 1.2 $
- */
+// AllTest.java
 
 package apps.tests;
 
@@ -12,6 +6,12 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+/**
+ * Invoke all the JMRI project JUnit tests via a GUI interface
+ *
+ * @author			Bob Jacobsen
+ * @version			$Revision: 1.3 $
+ */
 public class AllTest extends TestCase  {
 	public AllTest(String s) {
 		super(s);
@@ -37,8 +37,6 @@ public class AllTest extends TestCase  {
 		// all tests from here down in heirarchy
 		TestSuite suite = new TestSuite("AllTest");  // no tests in this class itself
 		// all tests from other classes
-		suite.addTest(jmri.jmrit.JmritTest.suite());
-		suite.addTest(jmri.jmrix.JmrixTest.suite());
 		suite.addTest(jmri.JmriTest.suite());
 
 		return suite;

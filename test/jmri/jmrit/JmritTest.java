@@ -1,10 +1,4 @@
-/**
- * JmritTest.java
- *
- * Description:	    tests for the Jmrit package
- * @author			Bob Jacobsen
- * @version         $Revision: 1.3 $
- */
+// JmritTest.java
 
 package jmri.jmrit;
 
@@ -13,12 +7,14 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+/**
+ * Invokes complete set of tests in the jmri.jmrit tree
+ *
+ * Description:	    tests for the Jmrit package
+ * @author			Bob Jacobsen
+ * @version         $Revision: 1.4 $
+ */
 public class JmritTest extends TestCase {
-
-    // The minimal setup is for log4J
-    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
-    protected void setUp() { log4jfixtureInst.setUp(); }
-    protected void tearDown() { log4jfixtureInst.tearDown(); }
 
 	// from here down is testing infrastructure
 	public JmritTest(String s) {
@@ -43,5 +39,10 @@ public class JmritTest extends TestCase {
 		suite.addTest(jmri.jmrit.roster.RosterTest.suite());
 		return suite;
 	}
+
+    // The minimal setup for log4J
+    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
+    protected void setUp() { log4jfixtureInst.setUp(); }
+    protected void tearDown() { log4jfixtureInst.tearDown(); }
 
 }

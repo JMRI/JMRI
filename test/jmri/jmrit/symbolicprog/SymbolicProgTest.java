@@ -1,10 +1,4 @@
-/**
- * SymbolicProgTest.java
- *
- * Description:
- * @author			Bob Jacobsen
- * @version         $Id: SymbolicProgTest.java,v 1.2 2002-03-09 23:33:24 jacobsen Exp $
- */
+// SymbolicProgTest.java
 
 package jmri.jmrit.symbolicprog;
 
@@ -20,6 +14,11 @@ import org.jdom.output.*;
 import jmri.*;
 import jmri.progdebugger.*;
 
+/**
+ * Test the jmri.jmrix.symbolicprog package.
+ * @author			Bob Jacobsen
+ * @version         $Revision: 1.3 $
+ */
 public class SymbolicProgTest extends TestCase {
 
 	// check configuring the programmer
@@ -59,5 +58,9 @@ public class SymbolicProgTest extends TestCase {
 	}
 
 	// static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SymbolicProgTest.class.getName());
+    // The minimal setup for log4J
+    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
+    protected void setUp() { log4jfixtureInst.setUp(); }
+    protected void tearDown() { log4jfixtureInst.tearDown(); }
 
 }
