@@ -18,7 +18,7 @@ import jmri.Turnout;
  * <P>
  * Description:		Implement turnout manager for loconet
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.12 $
+ * @version         $Revision: 1.13 $
  */
 
 public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements LocoNetListener {
@@ -59,6 +59,8 @@ public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements Loc
             int sw1 = l.getElement(1);
             int sw2 = l.getElement(2);
             addr = address(sw1, sw2);
+            // Loconet spec says 0x10 of SW2 must be 1, but we observe 0
+            if ( ((sw1&0xFC)==0x78) && ((sw2&0xCF)==0x07) ) return;  // turnout interrogate msg
             if (log.isDebugEnabled()) log.debug("SW_REQ received with address "+addr);
             break;
         }
