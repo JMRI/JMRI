@@ -9,7 +9,7 @@ package jmri;
  *
  * @see             jmri.ProgrammerManager
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class DefaultProgrammerManager implements ProgrammerManager {
 
@@ -37,6 +37,13 @@ public class DefaultProgrammerManager implements ProgrammerManager {
         return null;
     };
     public void releaseOopsModeProgrammer(Programmer p) {}
+
+    /**
+     * Default programmer does not provide Ops Mode
+     * @returns false if there's no chance of getting one
+     */
+    public boolean isOpsModePossible() {return false;}
+
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DefaultProgrammerManager.class.getName());
 }

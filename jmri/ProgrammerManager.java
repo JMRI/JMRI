@@ -17,7 +17,7 @@ package jmri;
  * be using the reserve/release interface.
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public interface ProgrammerManager  {
 
@@ -59,6 +59,14 @@ public interface ProgrammerManager  {
      * be used elsewhere.
      */
     public void releaseOopsModeProgrammer(Programmer p);
+
+    /**
+     * Convenience method to check whether you'll be able to get
+     * an Ops Mode programmer.
+     * @returns false if there's no chance of getting one
+     */
+    public boolean isOpsModePossible();
+
 }
 
 
