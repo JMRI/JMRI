@@ -18,7 +18,7 @@ import jmri.TurnoutManager;
  * specific Turnout or AbstractTurnout subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
 
@@ -97,10 +97,14 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
 
     /**
      * Replace the current turnout manager, if there is one, with
-     * one newly created during a load operation.
+     * one newly created during a load operation. This is skipped
+     * if they are of the same absolute type.
      * @param pManager
      */
     protected void replaceTurnoutManager(TurnoutManager pManager) {
+        if (InstanceManager.turnoutManagerInstance().getClass().getName()
+                .equals(mgr.getClass().getName()))
+            return;
         // if old manager exists, remove it from configuration process
         if (InstanceManager.turnoutManagerInstance() != null)
             InstanceManager.configureManagerInstance().deregister(
