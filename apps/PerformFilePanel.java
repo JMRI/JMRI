@@ -25,7 +25,7 @@ import javax.swing.JPanel;
  *
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @see apps.PerformFileModel
  */
 public class PerformFilePanel extends JPanel {
@@ -83,7 +83,8 @@ public class PerformFilePanel extends JPanel {
             removeButton.addActionListener(this);
             // get the filename
             fc.showOpenDialog(null);
-            if (fc.getSelectedFile()!=null) selected = new JLabel(fc.getSelectedFile().getAbsolutePath());
+            if (fc.getSelectedFile()==null) return; // cancelled
+            selected = new JLabel(fc.getSelectedFile().getAbsolutePath());
             model.setFileName(fc.getSelectedFile().getAbsolutePath());
             add(selected);
         }
