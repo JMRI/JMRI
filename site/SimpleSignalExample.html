@@ -1,5 +1,5 @@
 <!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
-<!-- $Id: SimpleSignalExample.html,v 1.1 2003-08-16 14:10:56 jacobsen Exp $ -->
+<!-- $Id: SimpleSignalExample.html,v 1.2 2003-09-03 03:28:41 jacobsen Exp $ -->
 <html>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -26,7 +26,29 @@ please see the
 <P>
 
 <h2>Overview</h2>
-The basic steps involved are:
+
+<h2>Predefined example</H2>
+
+A predefined example configuration is provided in the JMRI downloads.
+To use it:
+<UL>
+<LI>Start the PanelPro program, and select Prefs from the Edit menu.
+On the panel that opens, select "LocoNet Hexfile" as the protocol.
+Save, and quit the program.  This will let you use the example (which
+uses LocoNet addresses for signals, turnouts and sensors) even when 
+your computer is not connected to a layout of any kind.
+<LI>Restart the program.
+<LI>From the "Panels" menu, select "Load" and navigate to 
+the file "SignalExample.xml" in the xml/layouts directory.
+Note that you may have to look around for this file; it's in the
+same place that you installed the program.
+<LI>You should now get a simple schematic panel with just a couple of
+blocks on it.  You can click on the icons to change the occupancy and
+turnout status, or use another top (e.g. the "turnout table") to do that.
+</UL>
+
+<h2>Setting up your own example</2>
+The complete set of steps involved in configuring this are:
 <OL>
 <LI>Launch and configure the PanelPro application. Restart it to 
 have your preferences take effect.
