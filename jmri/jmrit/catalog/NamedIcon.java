@@ -9,7 +9,7 @@ import javax.swing.*;
  * Extend an ImageIcon to remember the name from which it was created,
  * and to provide rotation services
  * @author Bob Jacobsen  Copyright 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class NamedIcon extends ImageIcon {
@@ -57,7 +57,7 @@ public class NamedIcon extends ImageIcon {
      * @param pImage
      * @param pComponent
      * @param pRotation
-     * @return
+     * @return new Image object containing the rotated input
      */
     public Image createRotatedImage(Image pImage, Component pComponent, int pRotation) {
 

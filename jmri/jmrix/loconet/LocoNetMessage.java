@@ -19,7 +19,7 @@ import java.io.Serializable;
  * ideas being tested there will eventually be moved back to here.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  * @see             jmri.jmrix.nce.NceMessage
  *
  */
@@ -187,7 +187,7 @@ public class LocoNetMessage implements Serializable {
 
     /**
      * Sensor-format 0-n address
-     * @return
+     * @return 0 to n-1 address
      */
     public int sensorAddr() {
         int sw1 = getElement(1);
@@ -200,7 +200,7 @@ public class LocoNetMessage implements Serializable {
 
     /**
      * If this is an OPC_INPUT_REP, return the 0-n address, else -1
-     * @return
+     * @return 0 to n-1 address
      */
     public int inputRepAddr() {
         if (getOpCode()==LnConstants.OPC_INPUT_REP) {
@@ -210,7 +210,7 @@ public class LocoNetMessage implements Serializable {
 
     /**
      * Return the 1-N turnout address
-     * @return
+     * @return 1-N address
      */
     public int turnoutAddr() {
         int a1 = getElement(1);
