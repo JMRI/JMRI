@@ -1,101 +1,112 @@
-/*
-   Start Java application, after optionally extending ClassPath
+/* ================================================================
 
-   Author: Rob Hamerling (r.hamerling@planet.nl)
+   Start Java application after optionally extending CLASSPATH.
 
-   To be started in the directory with application, unless
-   the application is in a Classpath directory
+   Author: Rob Hamerling (email r.hamerling@planet.nl)
+
+   Version: 0.7
+
+   To be started in directory with application, unless
+   application is in a CLASSPATH directory.
 
    Expects max 2 parameters:
-     first:  name of application
-             default: JMRIdemo.
-     second: library (jar-file) for application
-             default: AppClasses.jar
+     First:  Name of application.
+             Default: see variable 'DefaultApplication' below.
+     Second: Library (jar-file) needed by application.
+             Multiple libraries may be specified as a single string
+             with a semicolon between individual libraries.
+             Default: see variable 'DefaultClassPath' below
 
-   Parameters are checked and modified if appropriate as follows:
-   - '.class' removed from application specification
+   Parameters are checked and modified when appropriate as follows:
+   - '.class' extension removed from application specification
    - explicit path removed from application specification
-   - '.jar' added to library specification
-*/
+   - '.jar' added to library specifications
+
+   Notes:
+   - Libraries will be prepended to current CLASSPATH.
+
+   ================================================================ */
 
 DefaultApplication = "JMRIdemo"         /* default application */
 
-j1 = "JMRI.jar;"
+j1 = "JMRI.jar;"                        /* JMRI files */
 j2 = "lib\log4j.jar;lib\collections.jar;"
-j3 = "lib/xerces.jar; lib/jdom-jdk11.jar;"  /* default Classpath prepend */
-DefaultClassPath = j1||j2||j3
+j3 = "lib\xerces.jar;lib\jdom-jdk11.jar;"
+DefaultClassPath = j1||j2||j3           /* Default classpath prepend */
 
-parse arg app lib .                     /* scan commandline (max 2 tokens) */
+parse arg app lib .                     /* scan commandline (max 2 parms) */
 
-if app \= "" then do                    /* application is specified */
-  off = lastpos(".class", app)          /* check on .class extension */
-  if off > 0 then do                    /* string '.class' found */
-    app = substr(app,1,off-1)           /* strip this extension */
-  end
-  app = filespec('name', app)           /* leave only filename.ext */
-end
-else do                                 /* application not specified */
+if app = "" then do                     /* no application specified */
   app = DefaultApplication              /* take default application */
 end
-
-if lib = "" then do                     /* no class lib(s) parameter spec'd */
-  lib = DefaultClassSpec                /* take default */
-end
-lib = libpath(lib)                      /* parse lib spec */
-if lib = "" then do                     /* one or more libs not found */
-  return 1
-end
-
-cls = value(classpath,,"OS2ENVIRONMENT")   /* obtain current classpath */
-off = pos(lib,cls)                      /* check if added before */
-if off = 0 then do                      /* string not found */
-  lib = lib||cls                        /* prepend classpath with lib */
-  cls = value(classpath,lib,"OS2ENVIRONMENT")   /* set new classpath */
-  say "New classpath:" value(classpath,,"OS2ENVIRONMENT")
-end
-
-say "Starting" app ". . ."
-'@java' app
-
-return 0
-
-
-
-
-/* -----------------------------------------
-   Parse classlib string.
-   For every individual lib:
-     - add '.jar' extension if not present
-     - check existence of every lib in string
-
-   Input: library string to be added to ClassPath
-
-   Parsing: For every individual lib:
-     - add '.jar' extension if not present
-     - check existence of every lib in string
-
-   Return - lib string (possibly modified), or
-          - empty string to indicate any lib not found
-*/
-
-libpath: procedure
-
-parse arg libs .                                /* one parameter expected */
-libpath = ""                                    /* initial return string */
-do while length(libs) > 0                       /* still lib in string */
-  parse value libs with lib ";" libs            /* extract first lib */
-  off = lastpos(".jar",lib)                     /* search '.jar' */
-  if off = 0 then do                            /* missing */
-    lib = lib".jar"                             /* add '.jar' extension */
-  end
-  path = stream(lib, 'c', 'query exists')       /* check and add path */
-  if path = "" then do                          /* not found */
-    say "Library" lib "not found"
-    return ""                                   /* empty: signal problem! */
-  end
-  else do                                       /* lib found */
-    libpath = libpath||lib';'                   /* add to returnstring */
+else do                                 /* application is specified */
+  app = filespec("Name", app)           /* strip possible path spec */
+  parse upper var app uapp              /* to uppercase for compare */
+  offset = lastpos(".CLASS", uapp)      /* search for '.class' extension */
+  if offset > 0 then do                 /* when found */
+    app = substr(app,1,offset-1)        /* strip it (leaves name only) */
   end
 end
 
-return libpath                                  /* return lib spec */
+if lib = "" then do                     /* no classlib(s) spec'd */
+  lib = DefaultClassPath                /* take default */
+end
+lib = ParseClassLib(lib)                /* parse (/modify) library string */
+if lib = "Error!" then do               /* 'Error!' result */
+  return 2                              /* lib not found */
+end
+if lib <> "" then do                    /* non-empty string returned */
+  ccp = value(CLASSPATH,,"OS2ENVIRONMENT")   /* obtain current classpath */
+  ccp = value(CLASSPATH,lib||ccp,"OS2ENVIRONMENT")  /* set new classpath */
+  say "New classpath:" value(CLASSPATH,,"OS2ENVIRONMENT")  /* inform user */
+end
+
+say "Starting" app ". . ."              /* inform user */
+'@java' app                             /* start java application */
+
+return rc                               /* result of java command */
+
+
+/* ======== end of mainline procedure =============================== */
+
+
+
+/* -------------------------------------------------------------
+   Parse ClassPath prepend string.
+
+   Input:   Library string to be prepended to current CLASSPATH
+
+   Parsing: For every individual library in library-string:
+            - add '.jar' extension if not present
+            - check existence of jar-file
+
+   Returns: - String of prepended libraries.
+              Libraries which are already in current CLASSPATH will be
+              skipped, so a shorter or even empty string may be returned.
+            - String "Error!" when any library not found.
+   ------------------------------------------------------------- */
+
+ParseClassLib: procedure
+
+parse arg libstring .                           /* single string expected */
+prepend = ""                                    /* empty prepend */
+do while length(libstring) > 0                  /* still lib in string */
+  parse value libstring with lib ';' libstring  /* separate first lib */
+  parse upper var lib ulib                      /* to uppercase for compare */
+  if lastpos(".JAR",ulib) = 0 then do           /* no '.jar' extension */
+    lib = lib".jar"                             /* add it */
+  end
+  path = stream(lib, 'c', "query exists")       /* determine existence */
+  if path = "" then do                          /* library file not found */
+    say "Library" lib "not found"               /* inform user */
+    return "Error!"                             /* return string 'Error!' */
+  end
+  ccp = value(CLASSPATH,,"OS2ENVIRONMENT")      /* obtain current classpath */
+  if pos(lib,ccp) = 0 then do                   /* when not already in */
+    prepend = prepend||lib';'                   /* add lib to prepend */
+  end
+end
+
+return prepend                                  /* return prepend string */
+
+/* ------------ end of procedure ParseClassLib ------------------------ */
