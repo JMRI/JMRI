@@ -7,7 +7,7 @@ package jmri.jmrix.nce;
  * class handles the response from the command station.
  *
  * @author	        Bob Jacobsen  Copyright (C) 2001
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -67,6 +67,8 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     static public NceMessage getReadPagedCV(int cv) { //Rxxx
         NceMessage m = new NceMessage(4);
         m.setBinary(false);
+        m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
+        m.setTimeout(LONG_TIMEOUT);
         m.setOpCode('R');
         m.addIntAsThree(cv, 1);
         return m;
@@ -75,6 +77,8 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     static public NceMessage getWritePagedCV(int cv, int val) { //Pxxx xxx
         NceMessage m = new NceMessage(8);
         m.setBinary(false);
+        m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
+        m.setTimeout(LONG_TIMEOUT);
         m.setOpCode('P');
         m.addIntAsThree(cv, 1);
         m.setElement(4,' ');
@@ -86,6 +90,8 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         if (reg>8) log.error("register number too large: "+reg);
         NceMessage m = new NceMessage(2);
         m.setBinary(false);
+        m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
+        m.setTimeout(LONG_TIMEOUT);
         m.setOpCode('V');
         String s = ""+reg;
         m.setElement(1, s.charAt(s.length()-1));
@@ -96,6 +102,8 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         if (reg>8) log.error("register number too large: "+reg);
         NceMessage m = new NceMessage(6);
         m.setBinary(false);
+        m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
+        m.setTimeout(LONG_TIMEOUT);
         m.setOpCode('S');
         String s = ""+reg;
         m.setElement(1, s.charAt(s.length()-1));

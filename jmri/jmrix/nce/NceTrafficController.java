@@ -21,7 +21,7 @@ import java.util.Vector;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface {
 
@@ -54,12 +54,28 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         ((NceListener)client).reply((NceReply)m);
     }
 
+    protected AbstractMRMessage pollMessage() {
+        NceMessage m = new NceMessage(4);
+        m.setBinary(false);
+        m.setOpCode('I');
+        m.setElement(1, ' ');
+        m.setElement(2, '1');
+        m.setElement(3, '2');
+        return m;
+    }
 
     /**
      * Forward a preformatted message to the actual interface.
      */
     public void sendNceMessage(NceMessage m, NceListener reply) {
         sendMessage(m, reply);
+    }
+
+    protected AbstractMRMessage enterProgMode() {
+        return NceMessage.getProgMode();
+    }
+    protected AbstractMRMessage enterNormalMode() {
+        return NceMessage.getExitProgMode();
     }
 
     /**

@@ -8,9 +8,12 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
 /**
- * Convert the jmri.Programmer interface into commands for the NCE powerstation
+ * Convert the jmri.Programmer interface into commands for the NCE powerstation.
+ * <P>
+ * This has two states:  NOTPROGRAMMING, and COMMANDSENT.  The transistions
+ * to and from programming mode are now handled in the TrafficController code.
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class NceProgrammer extends AbstractProgrammer implements NceListener {
 
@@ -40,7 +43,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
             notifyPropertyChange("Mode", mode, _mode);
         }
     }
-    
+
     /**
      * Signifies mode's available
      * @param mode
@@ -55,13 +58,13 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         log.debug("hasMode returns false on mode "+mode);
         return false;
     }
-    
+
     public int getMode() { return _mode; }
-    
+
     public boolean getCanRead() { return true; }
-    
+
     // notify property listeners - see AbstractProgrammer for more
-    
+
     protected void notifyPropertyChange(String name, int oldval, int newval) {
         // make a copy of the listener vector to synchronized not needed for transmit
         Vector v;
@@ -75,58 +78,65 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
             client.propertyChange(new PropertyChangeEvent(this, name, new Integer(oldval), new Integer(newval)));
         }
     }
-    
+
     // members for handling the programmer interface
-    
+
     int progState = 0;
     static final int NOTPROGRAMMING = 0;// is notProgramming
-    static final int MODESENT = 1; 		// waiting reply to command to go into programming mode
     static final int COMMANDSENT = 2; 	// read/write command sent, waiting reply
-    static final int RETURNSENT = 4; 	// waiting reply to go back to ops mode
     boolean  _progRead = false;
     int _val;	// remember the value being read/written for confirmative reply
     int _cv;	// remember the cv being read/written
-    
+
     // programming interface
     public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) log.debug("writeCV "+CV+" listens "+p);
         useProgrammer(p);
         _progRead = false;
-        // set commandPending state
-        progState = MODESENT;
+        // set state
+        progState = COMMANDSENT;
         _val = val;
         _cv = CV;
-        
-        // start the error timer
-        startShortTimer();
-        
-        // format and send message to go to program mode
-        controller().sendNceMessage(NceMessage.getProgMode(), this);
+
+        try {
+            // start the error timer
+            startLongTimer();
+
+            // format and send the write message
+            controller().sendNceMessage(progTaskStart(getMode(), _val, _cv), this);
+        } catch (jmri.ProgrammerException e) {
+            progState = NOTPROGRAMMING;
+            throw e;
+        }
     }
-    
+
     public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
-    
+
     public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) log.debug("readCV "+CV+" listens "+p);
         useProgrammer(p);
         _progRead = true;
-        
+
         // set commandPending state
-        progState = MODESENT;
+        progState = COMMANDSENT;
         _cv = CV;
-        
-        // start the error timer
-        startShortTimer();
-        
-        // format and send message to go to program mode
-        controller().sendNceMessage(NceMessage.getProgMode(), this);
-        
+
+        try {
+            // start the error timer
+            startLongTimer();
+
+            // format and send the write message
+            controller().sendNceMessage(progTaskStart(getMode(), -1, _cv), this);
+        } catch (jmri.ProgrammerException e) {
+            progState = NOTPROGRAMMING;
+            throw e;
+        }
     }
-    
+
     private jmri.ProgListener _usingProgrammer = null;
-    
+
     // internal method to remember who's using the programmer
     protected void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
         // test for only one!
@@ -139,7 +149,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
             return;
         }
     }
-    
+
     // internal method to create the NceMessage for programmer task start
     protected NceMessage progTaskStart(int mode, int val, int cvnum) throws jmri.ProgrammerException {
         // val = -1 for read command; mode is direct, etc
@@ -157,50 +167,24 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
                 return NceMessage.getWriteRegister(registerFromCV(cvnum), val);
         }
     }
-    
+
     public void message(NceMessage m) {
         log.error("message received unexpectedly: "+m.toString());
     }
-    
+
     synchronized public void reply(NceReply m) {
         if (progState == NOTPROGRAMMING) {
             // we get the complete set of replies now, so ignore these
             if (log.isDebugEnabled()) log.debug("reply in NOTPROGRAMMING state");
             return;
-        } else if (progState == MODESENT) {
-            if (log.isDebugEnabled()) log.debug("reply in MODESENT state");
-            // see if reply is the acknowledge of program mode; if not, wait
-            if ( (m.match("PROGRAMMING MODE") == -1) &&
-                 (m.match("COMMAND NOT UNDERSTOOD") == -1)  // indicates already in program mode
-                 ) return;
-            // here ready to send the read/write command
-            progState = COMMANDSENT;
-            // see why waiting
-            try {
-                startLongTimer();
-                if (_progRead) {
-                    // read was in progress - send read command
-                    controller().sendNceMessage(progTaskStart(getMode(), -1, _cv), this);
-                } else {
-                    // write was in progress - send write command
-                    controller().sendNceMessage(progTaskStart(getMode(), _val, _cv), this);
-                }
-            } catch (Exception e) {
-                // program op failed, go straight to end
-                log.error("program operation failed, exception "+e);
-                progState = RETURNSENT;
-                controller().sendNceMessage(NceMessage.getExitProgMode(), this);
-            }
         } else if (progState == COMMANDSENT) {
             if (log.isDebugEnabled()) log.debug("reply in COMMANDSENT state");
-            // operation done, capture result, then have to leave programming mode
-            progState = RETURNSENT;
+            // operation done, capture result, then post response
+            progState = NOTPROGRAMMING;
             // check for errors
             if (m.match("NO FEEDBACK DETECTED") >= 0) {
                 if (log.isDebugEnabled()) log.debug("handle NO FEEDBACK DETECTED");
                 // perhaps no loco present? Fail back to end of programming
-                progState = NOTPROGRAMMING;
-                controller().sendNceMessage(NceMessage.getExitProgMode(), this);
                 notifyProgListenerEnd(_val, jmri.ProgListener.NoLocoDetected);
             }
             else {
@@ -209,22 +193,15 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
                     // read was in progress - get return value
                     _val = m.value();
                 }
-                startShortTimer();
-                controller().sendNceMessage(NceMessage.getExitProgMode(), this);
+                // if this was a read, we retreived the value above.  If its a
+                // write, we're to return the original write value
+                notifyProgListenerEnd(_val, jmri.ProgListener.OK);
             }
-        } else if (progState == RETURNSENT) {
-            if (log.isDebugEnabled()) log.debug("reply in RETURNSENT state");
-            // all done, notify listeners of completion
-            progState = NOTPROGRAMMING;
-            stopTimer();
-            // if this was a read, we cached the value earlier.  If its a
-            // write, we're to return the original write value
-            notifyProgListenerEnd(_val, jmri.ProgListener.OK);
         } else {
             if (log.isDebugEnabled()) log.debug("reply in un-decoded state");
         }
     }
-    
+
     /**
      * Internal routine to handle a timeout
      */
@@ -238,11 +215,10 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
             notifyProgListenerEnd(_val, jmri.ProgListener.FailedTimeout);
         }
     }
-    
+
     // Internal method to cleanup in case of a timeout. Separate routine
     // so it can be changed in subclasses.
     void cleanup() {
-        controller().sendNceMessage(NceMessage.getExitProgMode(), this);
     }
     // internal method to notify of the final result
     protected void notifyProgListenerEnd(int value, int status) {
@@ -253,9 +229,9 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         _usingProgrammer = null;
         temp.programmingOpReply(value, status);
     }
-    
+
     NceTrafficController _controller = null;
-    
+
     protected NceTrafficController controller() {
         // connect the first time
         if (_controller == null) {
@@ -263,9 +239,9 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         }
         return _controller;
     }
-    
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceProgrammer.class.getName());
-    
+
 }
 
 

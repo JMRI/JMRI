@@ -14,7 +14,7 @@ import jmri.*;
  *
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class NceOpsModeProgrammer extends NceProgrammer  {
 
@@ -43,14 +43,14 @@ public class NceOpsModeProgrammer extends NceProgrammer  {
         int j = 5;
         for (int i=0; i<contents.length; i++) {
             msg.setElement(j++, ' ');
-            NceMessage.addIntAsTwoHex(((int)contents[i])&0xFF, msg, j);
+            msg.addIntAsTwoHex(((int)contents[i])&0xFF, j);
             j = j+2;
         }
 
-        // record state.  RETURNSENT is just waiting for a reply...
+        // record state.  COMMANDSENT is just waiting for a reply...
         useProgrammer(p);
         _progRead = false;
-        progState = RETURNSENT;
+        progState = COMMANDSENT;
         _val = val;
         _cv = CV;
 
