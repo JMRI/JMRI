@@ -6,10 +6,10 @@ import jmri.JmriException;
 import jmri.Sensor;
 
 /**
- * Model a serial C/MRI node
+ * Models a serial C/MRI node, consisting of a (S)USIC and attached cards.
  * <P>
- * These are numbered ala the UA number, from 1 to 63.
- * Node number 1 carries sensors 1 to 128, etc.
+ * Nodes are numbered ala the UA number, from 1 to 63.
+ * Node number 1 carries sensors 1 to 999, node 2 1001 to 1999 etc.
  * <P>
  * The array of sensor states is used to update sensor known state
  * only when there's a change on the serial bus.  This allows for the
@@ -19,22 +19,36 @@ import jmri.Sensor;
  * that node is polled.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SerialNode {
 
-    final int MAXSENSORS = 24*8;  // assume a full traditional motherboard
-    int LASTUSEDSENSOR = 1;
+    /**
+     * Maximum number of sensors a node can carry.
+     * <P>
+     * Note this is more than a traditional motherboard,
+     * and should perhaps be smaller.  But it only sizes
+     * int arrays, and doesn't effect runtime, so we're
+     * leaving it for now.
+     * <P>
+     * Must be less than, and is general one less than,
+     * {@link SerialSensorManager#SENSORSPERUA}
+     */
+    static final int MAXSENSORS = 999;
+    protected int LASTUSEDSENSOR = 1;  // grows as sensors defined
 
     public SerialNode() {
-        for (int i = 0; i<=MAXSENSORS; i++) {
+        sensorArray = new Sensor[MAXSENSORS+1];
+        sensorLastSetting = new int[MAXSENSORS+1];
+
+        for (int i = 0; i<MAXSENSORS+1; i++) {
             sensorArray[i] = null;
             sensorLastSetting[i] = Sensor.UNKNOWN;
         }
     }
 
-    Sensor[] sensorArray = new Sensor[MAXSENSORS+1];
-    int[] sensorLastSetting = new int[MAXSENSORS+1];
+    Sensor[] sensorArray;
+    int[] sensorLastSetting;
 
     /**
      *
@@ -67,11 +81,12 @@ public class SerialNode {
     }
 
     /**
-     * The numbers here are 0 to 127, not 1 to 128
+     * The numbers here are 0 to MAXSENSORS-1, not 1 to MAXSENSORS.
      * @param s
-     * @param i 0 to 127 number of sensor on unit
+     * @param i 0 to MAXSENSORS-1 number of sensor on unit
      */
     public void registerSensor(Sensor s, int i) {
+        if (i<0 || i> (MAXSENSORS-1)) log.warn("Unexpected sensor ordinal: "+i);
         log.debug("registerSensor "+i);
         sensorArray[i] = s;
         if (LASTUSEDSENSOR<i) LASTUSEDSENSOR=i;
