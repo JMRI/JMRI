@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a layout config, esp. information -->
 <!-- on hardware connections -->
-<!-- $Id: layout-config.dtd,v 1.9 2003-05-09 05:46:04 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.10 2003-05-12 05:11:27 jacobsen Exp $ -->
 
 <!ELEMENT layout-config (turnouts | sensors | blocks | signals | 
 						securityelements | aspectgenerator | paneleditor |
@@ -144,6 +144,10 @@
     <!ATTLIST signalheadicon yellow		CDATA #IMPLIED>
     <!ATTLIST signalheadicon flashyellow	CDATA #IMPLIED>
     <!ATTLIST signalheadicon green		CDATA #IMPLIED>
+    <!ATTLIST signalheadicon signalhead		CDATA #IMPLIED>
+    
+    <!-- the next two (aspectgenerator and head) are obsolete, and -->
+    <!-- are only retained until JMRI 3 so that old files can be read -->
     <!ATTLIST signalheadicon aspectgenerator		CDATA #IMPLIED>
     <!ATTLIST signalheadicon head		CDATA #IMPLIED>
 
