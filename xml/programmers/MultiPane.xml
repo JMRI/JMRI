@@ -6,49 +6,83 @@
 	<programmer:pane name="Basic">
 		<programmer:column>
 			<programmer:variable name="Primary Address"/>
-			<programmer:variable name="Primary Address" label="Short address" tooltip="aka Primary Address"/>
-			<programmer:label label="simple label"/>
-			<programmer:separator/>		
-			<programmer:label label="label data"/>
-		</programmer:column>
-
-		<programmer:column>
+			<programmer:variable name="Extended Address"/>
+			<programmer:variable name="Address format"/>
+			<programmer:variable name="Power source conversion" format="radiobuttons"/>
+			<programmer:variable name="Locomotive Direction" format ="radiobuttons"/>
+			<programmer:variable name="User identification #1"/>
+			<programmer:variable name="User identification #2"/>
+			<programmer:variable name="FL Location" layout="above"/>
 		</programmer:column>
 	</programmer:pane>
 	
 	<programmer:pane name="Motor">
 		<programmer:column>
+			<programmer:variable name="Kick Start"/>
+			<programmer:variable name="Acceleration Rate"/>
+			<programmer:variable name="Deceleration Rate"/>
+			<programmer:variable name="Total PWM Period"/>
+		</programmer:column>
+		<programmer:column>
+			<programmer:variable name="EMF Static Config"/>  <!-- Not an NMRA S&RP term -->
+			<programmer:variable name="EMF Dynamic Config"/>  <!-- Not an NMRA S&RP term -->
+			<programmer:variable name="EMF Droop Config"/>  <!-- Not an NMRA S&RP term -->
+			<programmer:variable name="EMF Feedback Cutout"/>
+			<programmer:variable name="DC Mode"/>  <!-- Not an NMRA S&RP term -->
+		</programmer:column>
+	</programmer:pane>
+	
+	<programmer:pane name="Speed Control">
+		<programmer:column>
+			<programmer:variable name="Speed table"/>
 			<programmer:variable name="Vstart"/>
 			<programmer:variable name="Vmid"/>
 			<programmer:variable name="Vhigh"/>
-			<programmer:variable name="Acceleration Rate"/>
-			<programmer:variable name="Deceleration Rate"/>
-			<programmer:variable name="Kick Start"/>
+		</programmer:column>
+		<programmer:column>
 			<programmer:variable name="Forward Trim"/>
 			<programmer:variable name="Reverse Trim"/>
 		</programmer:column>
 	</programmer:pane>
-	
+
+	<programmer:pane name="Function Map">
+		<programmer:column>
+		</programmer:column>
+	</programmer:pane>
+
+	<programmer:pane name="Light FX">
+		<programmer:column>
+		</programmer:column>
+	</programmer:pane>
+
 	<programmer:pane name="Consist">
 		<programmer:column>
-			<programmer:label label="F1 in consist"/>
-			<programmer:variable name="Consist Address Active For F1"  label=" "/>
+			<programmer:label label="Will decoder respond to function requests at consist address?"/>
+			<programmer:variable name="Consist Address Active For F1"  format="checkbox"/>
+			<programmer:variable name="Consist Address Active For F2"  format="checkbox"/>
+			<programmer:variable name="Consist Address Active For F3"  format="checkbox"/>
+			<programmer:variable name="Consist Address Active For F4"  format="checkbox"/>
+			<programmer:variable name="Consist Address Active For F5"  format="checkbox"/>
+			<programmer:variable name="Consist Address Active For F6"  format="checkbox"/>
+			<programmer:variable name="Consist Address Active For F7"  format="checkbox"/>
+			<programmer:variable name="Consist Address Active For FL in Forward"  format="checkbox"/>
+			<programmer:variable name="Consist Address Active For FL in Reverse"  format="checkbox"/>
 		</programmer:column>
 	</programmer:pane>
 	
-	<programmer:pane name="Layout">
+	<programmer:pane name="Sound">
 		<programmer:column>
-			<programmer:variable name="Vstart" layout="above"/>
-			<programmer:variable name="Vmid" layout="below"/>
-			<programmer:variable name="Vhigh" layout="left"/>
-			<programmer:variable name="Acceleration Rate" layout="right"/>
-			<programmer:variable name="Deceleration Rate"/>
-			<programmer:variable name="Kick Start"/>
-			<programmer:variable name="Forward Trim"/>
-			<programmer:variable name="Reverse Trim"/>
-			<programmer:variable name="Consist Address Active For F1"/>
-			<programmer:variable name="Consist Address Active For F1" format="checkbox"/>
-			<programmer:variable name="Consist Address Active For F1" format="radiobuttons"/>
+		</programmer:column>
+	</programmer:pane>
+
+	<programmer:pane name="Sound Levels">
+		<programmer:column>
+		</programmer:column>
+	</programmer:pane>
+
+	<programmer:pane name="CVs">
+		<programmer:column>
+			<programmer:cvtable/>
 		</programmer:column>
 	</programmer:pane>
 

@@ -94,12 +94,6 @@
 				<decoder:enumChoice choice="on"/>
 				</decoder:enumVal>
 			</decoder:variable>
-		<decoder:variable name="Normal direction of motion" CV="29" mask="XXXXXXXV">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="forward"/>
-				<decoder:enumChoice choice="reverse"/>
-				</decoder:enumVal>
-			</decoder:variable>
 		<decoder:variable name="Extended Address" CV="17">
 			<decoder:longAddressVal/>
 			</decoder:variable>
@@ -196,7 +190,7 @@
 			</decoder:variable>
 		<decoder:variable name="FL Location" CV="29" mask="XXXXXXVX">
 			<decoder:enumVal>
-				<decoder:enumChoice choice="Bit 4 in speed and sirection instructions controls FL (14 speed steps)"/>
+				<decoder:enumChoice choice="Bit 4 in speed and direction instructions controls FL (14 speed steps)"/>
 				<decoder:enumChoice choice="Bit 4 in function group 1 instruction controls FL (28 or 128 speed steps)"/>
 				</decoder:enumVal>
 			</decoder:variable>
@@ -218,6 +212,12 @@
 				<decoder:enumChoice choice="Set by CVs 66 through 95"/>
 				</decoder:enumVal>
 			</decoder:variable>
+		<decoder:variable name="Address format" CV="29" mask="XXVXXXXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="One byte addressing"/>
+				<decoder:enumChoice choice="Two byte (extended) addressing"/>
+				</decoder:enumVal>
+			</decoder:variable>
 		<decoder:variable name="Kick Start" CV="65">
 			<decoder:decVal/>
 			</decoder:variable>
@@ -230,7 +230,7 @@
 		<decoder:variable name="User identification #1" CV="105">
 			<decoder:decVal/>
 			</decoder:variable>
-		<decoder:variable name="User identification ID #2" CV="106">
+		<decoder:variable name="User identification #2" CV="106">
 			<decoder:decVal/>
 			</decoder:variable>
 		<decoder:variable name="Speed Table" CV="67">
