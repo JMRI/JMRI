@@ -1,0 +1,69 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Bob Jacobsen, LBL">
+   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>JMRI Configuration</title>
+</head>
+<body>
+
+<A href="../index.html">
+<IMG SRC="../images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
+</a>
+
+<h1>JMRI Configuration</h1>
+
+This is a "technical" page of the JMRI website.  Eventually we have to organize it better!
+<P>
+This page discusses the Spring 2002 effort to add configuration persistance to JMRI.
+<P>
+See also the 
+<A HREF="index.html">base page</a> for technical documentation.
+
+<h2>Introduction</h2>
+
+We want to be able to:
+<UL>
+<LI>Save and restore program configuration information
+<LI>Have the stored info be in a human readable format so that people
+can check that it's correct
+<LI>Have reasonable possibility for manual edits of the configuration info
+<LI>Keep the effort to write configuration code reasonable
+<LI>Preserve some possibility of changing the storage method and format
+</UL>
+<P>
+XML seems the clear choice for readability, edits, and future flexibility.  
+We previously used XML for the storage of decoder and programmer definitions, and that
+went OK.  We'll therefore build on that, changing as needed.
+
+<H2>Scheme</H2>
+
+<h2>Constraints and Notes in Progress</h2>
+
+<HR>
+<BR>Site hosted by: <BR>
+<A href="http://sourceforge.net"> 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
+
+<!-- Begin Small Box -->
+<form method="POST" action="http://mindit.netmind.com/mindit.shtml">
+<input type="hidden" name="FORM" value="C">
+<table border="0" cellpadding="5" cellspacing="0" bgcolor="#666666"><tr><td align="center">
+<font face="arial,helvetica" size="-1" color="#ffffff"><b>Click to receive email <br>when this page changes</b></font></td>
+</tr><tr><td align="center">
+<input type="image" src="http://mindit.netmind.com/images/mindit.gif" border="0"></td>
+</tr><tr bgcolor="#FFFFCC"><td align="center">
+<font face="arial,helvetica" size="-2">&#149;<b> Powered by <a href="http://www.netmind.com"><font color="#000000">NetMind</font></a> </b>&#149;</font>
+</td></tr></table>
+<input type=hidden value="http://jmri.sourceforge.net/Technical/configuration.html" name="REDIRECT"> 
+</form>
+<!-- End Small Box -->
+
+<hr>
+Bob Jacobsen<BR>
+jake@physics.berkeley.edu
+
+</body>
+</html>

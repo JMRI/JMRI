@@ -1,0 +1,115 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Bob Jacobsen, LBL">
+   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>JMRI Names and Naming</title>
+</head>
+<body>
+
+<A href="../index.html">
+<IMG SRC="../images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
+</a>
+<H1>JMRI Names and Naming</H1>
+
+This page discusses how JMRI objects are named, how those names are
+used to reference the objects (hardware and software), and 
+how user-readable names are used.
+
+<h2>What's in a name?</h2>
+
+Why do we need names at all, rather than pointers?
+There are several uses that seem important:
+<OL>
+<LI>When working with user input, e.g. typing a number in a field, 
+the code will need to find how to map the user-provided info
+onto objects. Sometimes the user will want to name objects
+with arbitary user names, e.g. "East Lockport Turnout". 
+These can't be known until their mapping to hardware has been made. 
+But other times these will be de-novo indentifications that the 
+code must understand, e.g. "LocoNet Turnout 23".
+
+<LI>We imagine that configurations will be stored in XML files,
+in a symbolic form. Names are a convenient way to connect objects
+and object references in that kind of configuration.
+</OL>
+
+<H2>Items with names</h2>
+In general, all hardware-related objects get names:
+
+<UL>
+<LI>Aspects for signals
+<LI>Blocks
+<LI>Inputs (A general type of input, as opposed to a block-occupancy detector)
+<LI>Locomotive Decoders (which includes "virtual" addresses like consists)
+<LI>Outputs
+<LI>Power districts and subdistricts
+<LI>Signal heads
+<LI>Turnouts
+</UL>
+
+<P>
+Unique names also carry an indication of which hardware system they are bound to:
+<UL>
+<LI>C/MRI
+<LI>Direct drive of the rail signal from the computer
+<LI>Internal objects with no hardware equivalent
+<LI>LocoNet (Digitrax)
+<LI>NCE System One and similar
+<LI>XpressNet (Lenz)
+</UL>
+
+<H2>System names</h2>
+
+A system-name is formed from a single letter representing the hardware system, 
+followed by a single letter indicating the type, 
+followed by system- and type-specific string. 
+The string is meant to be related to the hardware addressing, but
+is otherwise unconstrained.
+<P>
+Examples:
+<UL>
+<LI>LT23 - LocoNet Turnout 23.  
+<LI>CB134 - C/MRI input block 134
+</ul>
+
+Note that there is no assumption of pattern to the names; they don't have
+to be assigned monotonically, nor are there restricted to a single system.
+
+<HR>
+<BR>Site hosted by: <BR>
+<A href="http://sourceforge.net"> 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
+
+<!-- Begin Small Box -->
+<form method="POST" action="http://mindit.netmind.com/mindit.shtml">
+<input type="hidden" name="FORM" value="C">
+<table border="0" cellpadding="5" cellspacing="0" bgcolor="#666666"><tr><td align="center">
+<font face="arial,helvetica" size="-1" color="#ffffff"><b>Click to receive email <br>when this page changes</b></font></td>
+</tr><tr><td align="center">
+<input type="image" src="http://mindit.netmind.com/images/mindit.gif" border="0"></td>
+</tr><tr bgcolor="#FFFFCC"><td align="center">
+<font face="arial,helvetica" size="-2">&#149;<b> Powered by <a href="http://www.netmind.com"><font color="#000000">NetMind</font></a> </b>&#149;</font>
+</td></tr></table>
+<input type=hidden value="http://jmri.sourceforge.net/Technical/Packaging.html" name="REDIRECT"> 
+</form>
+<!-- End Small Box -->
+
+<script language=javascript 
+src="http://ss.webring.com/navbar?f=j;y=bob_jacobsen15;u=100088115910095949">
+</script><noscript><center>
+<table bgcolor=gray cellspacing=0 border=2 bordercolor=red><tr>
+<td><table cellpadding=2 cellspacing=0 border=0><tr><td align=center>
+<font face=arial size=-1>This site is a member of WebRing. 
+<br>To browse visit <a href="http://ss.webring.com/navbar?f=l;y=bob_jacobsen15;u=100088115910095949">
+Here</a>.</font></td></tr></table></td></tr></table>
+</center></noscript>
+
+<hr>
+Bob Jacobsen<BR>
+jake@physics.berkeley.edu
+
+</body>
+</html>
