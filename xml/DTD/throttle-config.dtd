@@ -25,5 +25,6 @@
 <!ATTLIST FunctionButton id CDATA #REQUIRED>
 <!ATTLIST FunctionButton text CDATA #REQUIRED>
 <!ATTLIST FunctionButton isLockable CDATA #REQUIRED>
-
+<!ATTLIST FunctionButton isVisible CDATA #REQUIRED>
+<!ATTLIST FunctionButton fontSize CDATA #REQUIRED>
 
