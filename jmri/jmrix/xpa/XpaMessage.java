@@ -6,7 +6,7 @@ package jmri.jmrix.xpa;
  * Encodes a message to an XPressNet command station via an XPA and a modem.
  *
  * @author	Paul Bender  Copyright (C) 2004
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class XpaMessage {
 
@@ -126,7 +126,7 @@ public class XpaMessage {
        to a specific locomotive on the layout.
     */
     static XpaMessage getDirForwardMsg(int Address){
-	XpaMessage m=new XpaMessage("ATDT#" + Address +"*02;");
+	XpaMessage m=new XpaMessage("ATDT#" + Address +"*52;");
 	return m;
     }
 
@@ -135,7 +135,7 @@ public class XpaMessage {
        to a specific locomotive on the layout.
     */
     static XpaMessage getDirReverseMsg(int Address){
-	XpaMessage m=new XpaMessage("ATDT#" + Address +"*08;");
+	XpaMessage m=new XpaMessage("ATDT#" + Address +"*58;");
 	return m;
     }
 
