@@ -19,7 +19,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Alex Shepherd   Copyright (C) 2003
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class LocoBufferStatsFrame extends JFrame implements LocoNetListener {
 
@@ -49,6 +49,7 @@ public class LocoBufferStatsFrame extends JFrame implements LocoNetListener {
                   LocoNetMessage msg = new LocoNetMessage( 2 ) ;
                   msg.setOpCode( LnConstants.OPC_GPBUSY );
                   LnTrafficController.instance().sendLocoNetMessage(msg);
+                  updatePending = true ;
                 }
             }
         );
@@ -71,15 +72,20 @@ public class LocoBufferStatsFrame extends JFrame implements LocoNetListener {
     }
 
     public void message(LocoNetMessage msg){
-      if( ( msg.getOpCode() == LnConstants.OPC_PEER_XFER ) &&
+      if( updatePending &&
+          ( msg.getOpCode() == LnConstants.OPC_PEER_XFER ) &&
           ( msg.getElement( 1 ) == 0x10 ) &&
           ( msg.getElement( 2 ) == 0x50 ) &&
-          ( msg.getElement( 3 ) == 0x50 ) )
+          ( msg.getElement( 3 ) == 0x50 ) &&
+          ( msg.getElement( 4 ) == 0x01 ) &&
+          ( ( msg.getElement( 5 ) & 0xF0 ) == 0x0 ) &&
+          ( ( msg.getElement( 10 ) & 0xF0 ) == 0x0 ) )
       {
         int[] data = msg.getPeerXfrData() ;
         version.setText( Integer.toHexString( ( data[0] << 8 ) + data[4] ) );
         breaks.setText( Integer.toString( (data[5] << 16) + (data[6] << 8) + data[7] ) );
         errors.setText( Integer.toString( (data[1] << 16) + (data[2] << 8) + data[3] ) );
+        updatePending = false ;
       }
     }
 
@@ -103,6 +109,7 @@ public class LocoBufferStatsFrame extends JFrame implements LocoNetListener {
     JTextField version = new JTextField("  XXXX");
     JTextField breaks = new JTextField("     0");
     JTextField errors = new JTextField("     0");
+    boolean updatePending = false ;
 
     JButton updateButton = new JButton("Update");
 
