@@ -1,0 +1,71 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<!-- $Id: Java118.html,v 1.1 2003-08-29 12:03:57 jacobsen Exp $ -->
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Bob Jacobsen, LBL">
+   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>JMRI and Java 1.1.8</title>
+</head>
+<body>
+
+<A href="../index.html">
+<IMG SRC="../images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
+</a>
+
+This page talks about technical aspects of Java version 1.1.8 and
+JMRI.
+
+<P>
+Macintosh computers running MacOS versions less than MacOS X (e.g.
+MacOS 8.6, MacOS 9) have only Java version 1.1.8 available.  We therefore
+keep the JMRI libraries as consistent as possible with that version of
+Java.  This page talks about what that means.
+
+<h2>Achieving compatibility</h2>
+
+"Some code is born compatible, some achieve compatibility, 
+and some have compatibility thrust upon them"
+<P>
+Things to consider:
+<OL>
+<LI>Use the Swing 1.1 member names
+<LI>Use the 1.1 collections.  In particular:
+	<UL>
+	<LI>getElement, not get
+	</UL>
+<LI>Some functions that are not available are
+handled in the jmri.util package.
+</OL>
+
+<h2>Testing compatibility</h2>
+The Ant "check1.1.8" target does several things:
+<OL>
+<LI>Compile all files that are expected to be 1.1.8 compatible
+using those Java libraries.  This will catch compile time errors, 
+which typically consist of using a method that's not in 1.1.8.
+<LI>Run "alltest" on that code to ensure that it runs OK.
+</ol>
+
+<HR>
+<BR>Site hosted by: <BR>
+<A href="http://sourceforge.net"> 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
+
+<script language=javascript 
+src="http://ss.webring.com/navbar?f=j;y=bob_jacobsen15;u=100088115910095949">
+</script><noscript><center>
+<table bgcolor=gray cellspacing=0 border=2 bordercolor=red><tr>
+<td><table cellpadding=2 cellspacing=0 border=0><tr><td align=center>
+<font face=arial size=-1>This site is a member of WebRing. 
+<br>To browse visit <a href="http://ss.webring.com/navbar?f=l;y=bob_jacobsen15;u=100088115910095949">
+Here</a>.</font></td></tr></table></td></tr></table>
+</center></noscript>
+
+<hr>
+Bob Jacobsen<BR>
+jake@physics.berkeley.edu
+
+</body>
+</html>
