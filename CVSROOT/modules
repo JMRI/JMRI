@@ -1,4 +1,4 @@
-jbuilder -a jmri apps xml
+jbuilder -a &jmri &apps &xml
 
 # Three different line formats are valid:
 #	key	-a    aliases...
