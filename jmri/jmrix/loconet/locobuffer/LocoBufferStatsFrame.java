@@ -19,7 +19,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Alex Shepherd   Copyright (C) 2003
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class LocoBufferStatsFrame extends JFrame implements LocoNetListener {
 
@@ -46,10 +46,7 @@ public class LocoBufferStatsFrame extends JFrame implements LocoNetListener {
         // install "update" button handler
         updateButton.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
-                  LocoNetMessage msg = new LocoNetMessage( 2 ) ;
-                  msg.setOpCode( LnConstants.OPC_GPBUSY );
-                  LnTrafficController.instance().sendLocoNetMessage(msg);
-                  updatePending = true ;
+                    requestUpdate();
                 }
             }
         );
@@ -89,6 +86,13 @@ public class LocoBufferStatsFrame extends JFrame implements LocoNetListener {
       }
     }
 
+    public void requestUpdate() {
+        LocoNetMessage msg = new LocoNetMessage( 2 ) ;
+        msg.setOpCode( LnConstants.OPC_GPBUSY );
+        updatePending = true ;
+        LnTrafficController.instance().sendLocoNetMessage(msg);
+    }
+    
     /**
      * Destroy the window when the close box is clicked, as there is no
      * way to get it to show again.
@@ -107,8 +111,8 @@ public class LocoBufferStatsFrame extends JFrame implements LocoNetListener {
     }
 
     JTextField version = new JTextField("  XXXX");
-    JTextField breaks = new JTextField("     0");
-    JTextField errors = new JTextField("     0");
+    public JTextField breaks = new JTextField("     0");
+    public JTextField errors = new JTextField("     0");
     boolean updatePending = false ;
 
     JButton updateButton = new JButton("Update");
