@@ -21,11 +21,12 @@ import jmri.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */public class SE8cSignalHead extends AbstractSignalHead implements LocoNetListener {
 
 
      public SE8cSignalHead(int pNumber) {
+        super(""+pNumber);
          mNumber = pNumber;
          mAppearance = RED;  // start turned off
          // At construction, register for messages
