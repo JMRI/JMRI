@@ -19,7 +19,7 @@ import jmri.jmrit.catalog.*;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -29,11 +29,9 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         super(new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif",
                             "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif"));
         displayState(turnoutState());
+        icon = true;
+        text = false;
     }
-
-    // what to display - at least one should be true!
-    boolean showText = false;
-    boolean showIcon = true;
 
     // the associated Turnout object
     Turnout turnout = null;
@@ -67,29 +65,48 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
                                       "resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif");
 
     public NamedIcon getClosedIcon() { return closed; }
-    public void setClosedIcon(NamedIcon i) { closed = i; displayState(turnoutState()); }
-
-    public NamedIcon getThrownIcon() { return thrown; }
-    public void setThrownIcon(NamedIcon i) { thrown = i; displayState(turnoutState()); }
-
-    public NamedIcon getInconsistentIcon() { return inconsistent; }
-    public void setInconsistentIcon(NamedIcon i) { inconsistent = i; displayState(turnoutState()); }
-
-    public NamedIcon getUnknownIcon() { return unknown; }
-    public void setUnknownIcon(NamedIcon i) { unknown = i; displayState(turnoutState()); }
-
-    public int getHeight() {
-        return Math.max(
-                        Math.max(closed.getIconHeight(), thrown.getIconHeight()),
-                        Math.max(inconsistent.getIconHeight(), unknown.getIconHeight())
-                        );
+    public void setClosedIcon(NamedIcon i) {
+        closed = i;
+        updateSize();
+        displayState(turnoutState());
     }
 
-    public int getWidth() {
+    public NamedIcon getThrownIcon() { return thrown; }
+    public void setThrownIcon(NamedIcon i) {
+        thrown = i;
+        updateSize();
+        displayState(turnoutState());
+    }
+
+    public NamedIcon getInconsistentIcon() { return inconsistent; }
+    public void setInconsistentIcon(NamedIcon i) {
+        inconsistent = i;
+        updateSize();
+        displayState(turnoutState());
+    }
+
+    public NamedIcon getUnknownIcon() { return unknown; }
+    public void setUnknownIcon(NamedIcon i) {
+        unknown = i;
+        updateSize();
+        displayState(turnoutState());
+    }
+
+    protected int maxHeight() {
         return Math.max(
-                        Math.max(closed.getIconWidth(), thrown.getIconWidth()),
-                        Math.max(inconsistent.getIconWidth(), unknown.getIconWidth())
-                        );
+                Math.max( (closed!=null) ? closed.getIconHeight() : 0,
+                        (thrown!=null) ? thrown.getIconHeight() : 0),
+                Math.max((unknown!=null) ? unknown.getIconHeight() : 0,
+                        (inconsistent!=null) ? inconsistent.getIconHeight() : 0)
+            );
+    }
+    protected int maxWidth() {
+        return Math.max(
+                Math.max((closed!=null) ? closed.getIconWidth() : 0,
+                        (thrown!=null) ? thrown.getIconWidth() : 0),
+                Math.max((unknown!=null) ? unknown.getIconWidth() : 0,
+                        (inconsistent!=null) ? inconsistent.getIconWidth() : 0)
+            );
     }
 
     /**
@@ -124,7 +141,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
             else
                 name = turnout.getSystemName();
             popup.add(new JMenuItem(name));
-            if (showIcon) popup.add(new AbstractAction("Rotate") {
+            if (icon) popup.add(new AbstractAction("Rotate") {
                     public void actionPerformed(ActionEvent e) {
                         closed.setRotation(closed.getRotation()+1, ours);
                         thrown.setRotation(thrown.getRotation()+1, ours);
@@ -154,22 +171,24 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         log.debug("displayState "+state);
         switch (state) {
         case Turnout.UNKNOWN:
-            if (showText) super.setText("<unknown>");
-            if (showIcon) super.setIcon(unknown);
-            return;
+            if (text) super.setText("<unknown>");
+            if (icon) super.setIcon(unknown);
+            break;
         case Turnout.CLOSED:
-            if (showText) super.setText("Closed");
-            if (showIcon) super.setIcon(closed);
-            return;
+            if (text) super.setText("Closed");
+            if (icon) super.setIcon(closed);
+            break;
         case Turnout.THROWN:
-            if (showText) super.setText("Thrown");
-            if (showIcon) super.setIcon(thrown);
-            return;
+            if (text) super.setText("Thrown");
+            if (icon) super.setIcon(thrown);
+            break;
         default:
-            if (showText) super.setText("<inconsistent>");
-            if (showIcon) super.setIcon(inconsistent);
-            return;
+            if (text) super.setText("<inconsistent>");
+            if (icon) super.setIcon(inconsistent);
+            break;
         }
+
+        return;
     }
 
     /**
@@ -199,7 +218,6 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
 
         super.dispose();
     }
-
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TurnoutIcon.class.getName());
 }

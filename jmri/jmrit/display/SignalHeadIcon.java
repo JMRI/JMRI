@@ -14,7 +14,7 @@ import jmri.jmrix.loconet.AspectGenerator;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -23,12 +23,11 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         // super ctor call to make sure this is an icon label
         super(new NamedIcon("resources/icons/smallschematics/searchlights/left-red-marker.gif",
                             "resources/icons/smallschematics/searchlights/left-red-marker.gif"));
+        icon = true;
+        text = false;
+
         displayState(SignalHead.RED);
     }
-
-    // what to display - at least one should be true!
-    boolean showText = false;
-    boolean showIcon = true;
 
     // the associated AspectGenerator object
     AspectGenerator mGenerator;
@@ -64,29 +63,48 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
     NamedIcon green = new NamedIcon(greenName, greenName);
 
     public NamedIcon getRedIcon() { return red; }
-    public void setRedIcon(NamedIcon i) { red = i; displayState(headState()); }
-
-    public NamedIcon getYellowIcon() { return yellow; }
-    public void setYellowIcon(NamedIcon i) { yellow = i; displayState(headState()); }
-
-    public NamedIcon getFlashYellowIcon() { return flashYellow; }
-    public void setFlashYellowIcon(NamedIcon i) { flashYellow = i; displayState(headState()); }
-
-    public NamedIcon getGreenIcon() { return green; }
-    public void setGreenIcon(NamedIcon i) { green = i; displayState(headState()); }
-
-    public int getHeight() {
-        return Math.max(
-                        Math.max(red.getIconHeight(), yellow.getIconHeight()),
-                        Math.max(flashYellow.getIconHeight(), green.getIconHeight())
-                        );
+    public void setRedIcon(NamedIcon i) {
+        red = i;
+        updateSize();
+        displayState(headState());
     }
 
-    public int getWidth() {
+    public NamedIcon getYellowIcon() { return yellow; }
+    public void setYellowIcon(NamedIcon i) {
+        yellow = i;
+        updateSize();
+        displayState(headState());
+    }
+
+    public NamedIcon getFlashYellowIcon() { return flashYellow; }
+    public void setFlashYellowIcon(NamedIcon i) {
+        flashYellow = i;
+        updateSize();
+        displayState(headState());
+    }
+
+    public NamedIcon getGreenIcon() { return green; }
+    public void setGreenIcon(NamedIcon i) {
+        green = i;
+        updateSize();
+        displayState(headState());
+    }
+
+    protected int maxHeight() {
         return Math.max(
-                        Math.max(red.getIconWidth(), yellow.getIconWidth()),
-                        Math.max(flashYellow.getIconWidth(), green.getIconWidth())
-                        );
+                Math.max( (red!=null) ? red.getIconHeight() : 0,
+                        (green!=null) ? green.getIconHeight() : 0),
+                Math.max((yellow!=null) ? yellow.getIconHeight() : 0,
+                        (flashYellow!=null) ? flashYellow.getIconHeight() : 0)
+            );
+    }
+    protected int maxWidth() {
+        return Math.max(
+                Math.max((red!=null) ? red.getIconWidth() : 0,
+                        (green!=null) ? green.getIconWidth() : 0),
+                Math.max((yellow!=null) ? yellow.getIconWidth() : 0,
+                        (flashYellow!=null) ? flashYellow.getIconWidth() : 0)
+            );
     }
 
     /**
@@ -114,7 +132,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
             name = "AG"+mGenerator.getSEName()+" head "+this.mHead;
             popup = new JPopupMenu();
             popup.add(new JMenuItem(name));
-            if (showIcon) popup.add(new AbstractAction("Rotate") {
+            if (icon) popup.add(new AbstractAction("Rotate") {
                     public void actionPerformed(ActionEvent e) {
                         green.setRotation(green.getRotation()+1, ours);
                         red.setRotation(red.getRotation()+1, ours);
@@ -143,24 +161,26 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
     public void displayState(int state) {
         switch (state) {
         case SignalHead.RED:
-            if (showText) super.setText("<red>");
-            if (showIcon) super.setIcon(red);
-            return;
+            if (text) super.setText("<red>");
+            if (icon) super.setIcon(red);
+            break;
         case SignalHead.YELLOW:
-            if (showText) super.setText("<yellow>");
-            if (showIcon) super.setIcon(yellow);
-            return;
+            if (text) super.setText("<yellow>");
+            if (icon) super.setIcon(yellow);
+            break;
         case SignalHead.FLASHYELLOW:
-            if (showText) super.setText("<flash yellow>");
-            if (showIcon) super.setIcon(flashYellow);
-            return;
+            if (text) super.setText("<flash yellow>");
+            if (icon) super.setIcon(flashYellow);
+            break;
         case SignalHead.GREEN:
-            if (showText) super.setText("<green>");
-            if (showIcon) super.setIcon(green);
-            return;
+            if (text) super.setText("<green>");
+            if (icon) super.setIcon(green);
+            break;
         default:
             log.error("unexpected state during display: "+state);
         }
+
+        return;
     }
 
     public void dispose() {
