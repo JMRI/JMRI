@@ -19,7 +19,7 @@ import javax.swing.JTextField;
  *
  * Description:		Represents a single CV value
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: AbstractValue.java,v 1.3 2001-11-23 22:23:54 jacobsen Exp $
+ * @version			$Id: AbstractValue.java,v 1.4 2002-01-16 07:39:45 jacobsen Exp $
  */
 public abstract class AbstractValue {
 	
@@ -45,10 +45,12 @@ public abstract class AbstractValue {
 	public static final int FROMFILE = 256;
 	
 	/** Define color to denote UNKNOWN state.  null means to use default for the component */
-	static final Color COLOR_UNKNOWN  = new Color(255, 128, 128); // lighter red, was Color.red
+	static final Color COLOR_UNKNOWN  = Color.red.brighter();
+			// new Color(255, 128, 128); // lighter red, was Color.red
 	
 	/** Define color to denote EDITTED state.  null means to use default for the component */
-	static final Color COLOR_EDITTED  = new Color(255, 255, 128); // lighter yellow, was Color.yellow
+	static final Color COLOR_EDITTED  = Color.yellow.brighter();
+			// new Color(255, 255, 128); // lighter yellow, was Color.yellow
 	
 	/** Define color to denote READ state.  null means to use default for the component */
 	static final Color COLOR_READ     = null;

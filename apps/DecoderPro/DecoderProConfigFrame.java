@@ -21,7 +21,7 @@ import org.jdom.Attribute;
  * stored in local variables.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecoderProConfigFrame.java,v 1.7 2002-01-12 22:11:30 jacobsen Exp $
+ * @version			$Id: DecoderProConfigFrame.java,v 1.8 2002-01-16 07:39:45 jacobsen Exp $
  */
 public class DecoderProConfigFrame extends JFrame {
 		
@@ -104,8 +104,8 @@ public class DecoderProConfigFrame extends JFrame {
 		JLabel l;
 		
 		j.setLayout(new GridLayout(2,2));
-		protocolBox = new JComboBox(new String[] {"(None selected)", "LocoNet MS100", 
-													"LocoNet LocoBuffer", "NCE"});
+		protocolBox = new JComboBox(new String[] {"(None selected)",  "NCE", "LocoNet LocoBuffer 57600bps", 
+													"LocoNet LocoBuffer 9600bps","LocoNet MS100"});
 		protocolBox.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				protocolSelected();
@@ -143,7 +143,18 @@ public class DecoderProConfigFrame extends JFrame {
 		protocolName = (String) protocolBox.getSelectedItem();
 		portBox.removeAllItems();  // start over
 		log.debug("Connection selected: "+protocolName);
-		if (protocolName.equals("LocoNet LocoBuffer")) {
+		if (protocolName.equals("LocoNet LocoBuffer 57600bps")) {
+			//
+			jmri.jmrix.loconet.locobuffer.LocoBufferAdapter a 
+					= new jmri.jmrix.loconet.locobuffer.LocoBufferHSAdapter();
+			Vector v = a.getPortNames();
+			log.debug("Found "+v.size()+" LocoBuffer HS ports");
+			for (int i=0; i<v.size(); i++) {
+				if (i==0) portName = (String) v.elementAt(i);
+				portBox.addItem(v.elementAt(i));
+			}
+			
+		} else if (protocolName.equals("LocoNet LocoBuffer 9600bps")) {
 			//
 			jmri.jmrix.loconet.locobuffer.LocoBufferAdapter a 
 					= new jmri.jmrix.loconet.locobuffer.LocoBufferAdapter();
@@ -220,7 +231,14 @@ public class DecoderProConfigFrame extends JFrame {
 		
 		// handle the specific case (a good use for reflection!)
 		log.info("Configuring connection with "+protocolName+" "+portName);
-		if (protocolName.equals("LocoNet LocoBuffer")) {
+		if (protocolName.equals("LocoNet LocoBuffer 57600bps")) {
+			//
+			jmri.jmrix.loconet.locobuffer.LocoBufferAdapter a 
+					= new jmri.jmrix.loconet.locobuffer.LocoBufferAdapter();
+			a.openPort(portName, "DecoderPro");
+			a.configure();
+			
+		} else if (protocolName.equals("LocoNet LocoBuffer 9600bps")) {
 			//
 			jmri.jmrix.loconet.locobuffer.LocoBufferAdapter a 
 					= new jmri.jmrix.loconet.locobuffer.LocoBufferAdapter();

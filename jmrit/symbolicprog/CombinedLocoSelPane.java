@@ -22,7 +22,7 @@ import com.sun.java.util.collections.List;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: CombinedLocoSelPane.java,v 1.7 2002-01-08 04:09:24 jacobsen Exp $
+ * @version			$Id: CombinedLocoSelPane.java,v 1.8 2002-01-16 07:39:45 jacobsen Exp $
  */
 public class CombinedLocoSelPane extends javax.swing.JPanel  {
 		
@@ -237,8 +237,11 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 			decoderBox.insertItemAt("<from locomotive settings>",0);
 			decoderBox.setSelectedIndex(1);
 		} else {
-			log.warn("Decoder says "+mfgID+","+modelID+" but no such decoder defined");
-			_statusLabel.setText("Decoder says "+mfgID+","+modelID+" but no such decoder defined");
+			String mfg = DecoderIndexFile.instance().mfgNameFromId(Integer.toString(mfgID));
+			if (mfg==null) mfg="<unknown>";
+			String msg = "Found mfg "+mfgID+" ("+mfg+") version "+modelID+"; no such decoder defined";
+			log.warn(msg);
+			_statusLabel.setText(msg);
 		}
 	}
 
