@@ -3,8 +3,6 @@
 package jmri.util.davidflanagan;
 
 import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.*;
 import java.io.*;
 import java.text.*;
 import java.util.*;
@@ -14,7 +12,7 @@ import java.util.*;
  * David Flanagan with the alligator on the front.
  *
  * @author		David Flanagan
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class HardcopyWriter extends Writer {
 
@@ -259,7 +257,7 @@ public class HardcopyWriter extends Writer {
     public int getCurrentLineNumber(){
         return this.linenum;
     }
-    
+
     public static class PrintCanceledException extends Exception {
         public PrintCanceledException(String msg) { super(msg); }
     }
