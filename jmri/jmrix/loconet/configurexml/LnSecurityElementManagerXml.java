@@ -15,7 +15,7 @@ import org.jdom.Element;
  * configuring LnSecurityElementManager.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class LnSecurityElementManagerXml implements XmlAdapter {
 
@@ -36,6 +36,8 @@ public class LnSecurityElementManagerXml implements XmlAdapter {
                 // we do a brute force store here eventually
                 Element elem = new Element("securityelement");
                 elem.addAttribute("number", String.valueOf(se.mNumber));     // own SE number
+
+                elem.addAttribute("calculates", (se.calculates ? "yes" : "no" ));
 
                 elem.addAttribute("dsSensor", String.valueOf(se.dsSensor));
                 elem.addAttribute("turnout", String.valueOf(se.turnout));
@@ -121,6 +123,11 @@ public class LnSecurityElementManagerXml implements XmlAdapter {
 
             // brute force the parameters
             Attribute a;
+            if ((a = current.getAttribute("calculates")) != null) {
+                if (a.getValue().equals("no")) se.calculates = false;
+                else se.calculates = true;
+            }
+
             if ((a = current.getAttribute("attachAnum")) != null)
                 se.attachAnum = getIntValue(a);
             if ((a = current.getAttribute("attachAleg")) != null)
