@@ -14,7 +14,9 @@ java2 -d java &test
 java3 -d java &lib
 
 # runtime target - top level project runtime contents
-runtime -a xml lib resources
+runtime -a xml lib resources run1 run2
+run1 -d . scripts default.lcf
+run2 -d . scripts DecoderPro.csh cornwall.csh
 
 # ant target - Ant directory in standard form, includes jbuilder
 ant -a runtime antfiles java
