@@ -37,7 +37,7 @@ import javax.swing.*;
  * a warning will be logged if they are used before the thread starts.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 abstract public class AbstractAutomaton implements Runnable {
 
@@ -166,11 +166,48 @@ abstract public class AbstractAutomaton implements Runnable {
             }
         });
 
-        while (Sensor.INACTIVE != mSensor.getKnownState()) {
+        while (Sensor.ACTIVE != mSensor.getKnownState()) {
             try {
                 super.wait(10000);
             } catch (InterruptedException e) {
                 log.warn("waitSensorActive interrupted; this is unexpected");
+            }
+        }
+
+        // remove the listener & report new state
+        mSensor.removePropertyChangeListener(l);
+
+        return;
+    }
+
+    /**
+     * Wait for a sensor to become inactive.
+     * <P>
+     * This works by registering a listener, which is likely to
+     * run in another thread.  That listener then interrupts the automaton's
+     * thread, who confirms the change.
+     *
+     * @param mSensor Sensor to watch
+     */
+    public synchronized void waitSensorInactive(Sensor mSensor){
+        if (!inThread) log.warn("waitSensorInactive invoked from invalid context");
+        if (mSensor.getKnownState() == Sensor.INACTIVE) return;
+        if (log.isDebugEnabled()) log.debug("waitSensorInactive starts: "+mSensor.getID());
+        // register a listener
+        java.beans.PropertyChangeListener l;
+        mSensor.addPropertyChangeListener(l = new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                synchronized (self) {
+                    self.notify();
+                }
+            }
+        });
+
+        while (Sensor.INACTIVE != mSensor.getKnownState()) {
+            try {
+                super.wait(10000);
+            } catch (InterruptedException e) {
+                log.warn("waitSensorInactive interrupted; this is unexpected");
             }
         }
 
