@@ -17,7 +17,7 @@ import org.jdom.output.*;
 /**
  * Frame providing a table-organized command station programmer from decoder definition files
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class SymbolicProgFrame extends javax.swing.JFrame  {
 
@@ -406,8 +406,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 
             // create root element
             Element root = new Element("locomotive-config");
-            Document doc = new Document(root);
-            doc.setDocType(new DocType("locomotive:locomotive-config","locomotive-config.dtd"));
+            Document doc = jmri.jmrit.XmlFile.newDocument(root, "locomotive-config.dtd");
 
             // add top-level elements
             Element values;

@@ -14,7 +14,7 @@ import org.jdom.output.*;
  * Save throttles to XML
  *
  * @author			Glen Oberhauser
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class StoreXmlThrottleAction extends AbstractAction {
 
@@ -47,8 +47,7 @@ public class StoreXmlThrottleAction extends AbstractAction {
         try
         {
             Element root = new Element("throttle-config");
-            Document doc = new Document(root);
-            doc.setDocType(new DocType("throttle-config", "throttle-config.dtd"));
+            Document doc = XmlFile.newDocument(root, "throttle-config.dtd");
 
             com.sun.java.util.collections.ArrayList children =
                     new com.sun.java.util.collections.ArrayList(5);

@@ -22,7 +22,7 @@ import org.jdom.output.XMLOutputter;
  * directly. That's why this is not a public class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002;  Dennis Miller Copyright 2004
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  * @see         jmri.jmrit.roster.RosterEntry
  * @see         jmri.jmrit.roster.Roster
  */
@@ -102,8 +102,7 @@ class LocoFile extends XmlFile {
 
             // create root element
             Element root = new Element("locomotive-config");
-            Document doc = new Document(root);
-            doc.setDocType(new DocType("locomotive-config","locomotive-config.dtd"));
+            Document doc = newDocument(root, "locomotive-config.dtd");
 
 
             //Before adding the roster locomotive values, scan the Comment and
@@ -215,8 +214,7 @@ class LocoFile extends XmlFile {
             // This is taken in large part from "Java and XML" page 368
 
             // create root element
-            Document doc = new Document(pRootElement);
-            doc.setDocType(new DocType("locomotive-config","locomotive-config.dtd"));
+            Document doc = newDocument(pRootElement, "locomotive-config.dtd");
 
             // Update the locomotive.id element
             pRootElement.getChild("locomotive").getAttribute("id").setValue(pEntry.getId());

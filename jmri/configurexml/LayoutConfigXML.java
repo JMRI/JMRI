@@ -16,7 +16,7 @@ import org.jdom.output.XMLOutputter;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class LayoutConfigXML extends jmri.jmrit.XmlFile {
 
@@ -29,8 +29,7 @@ public class LayoutConfigXML extends jmri.jmrit.XmlFile {
 
             // create root element
             Element root = new Element("layout-config");
-            Document doc = new Document(root);
-            doc.setDocType(new DocType("layout-config","layout-config.dtd"));
+            Document doc = newDocument(root, "layout-config.dtd");
 
             // add top-level elements
             Element turnouts;  // will fill this with turnout info

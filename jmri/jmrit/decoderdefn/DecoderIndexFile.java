@@ -33,7 +33,7 @@ import com.sun.java.util.collections.List;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.22 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -402,8 +402,7 @@ public class DecoderIndexFile extends XmlFile {
 
         // create root element
         Element root = new Element("decoderIndex-config");
-        Document doc = new Document(root);
-        doc.setDocType(new DocType("decoderIndex-config","decoderIndex-config.dtd"));
+        Document doc = newDocument(root, "decoderIndex-config.dtd");
 
         // add top-level elements
         Element index;

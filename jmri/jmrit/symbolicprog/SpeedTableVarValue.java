@@ -22,13 +22,17 @@ import javax.swing.event.ChangeListener;
 
 /**
  * Represent an entire speed table as a single Variable.
+ * <P>
+ * This presents as a set of vertically oriented sliders, with numeric values above them.
+ * That it turn is done using VarSlider and DecVariableValue objects respectively.
+ * VarSlider is an interior class to color a JSlider by state. The respective VarSlider
+ * and DecVariableValue communicate through their underlying CV objects. Changes to
+ * CV Values are listened to by this class, which updates the model objects for the
+ * VarSliders; the DecVariableValues listen directly.
  *<P>
- * _value is a holdover from the LongAddrVariableValue, which this was copied from; it should
- * be removed. 
- *
- *<P> Color (hence state) of individual sliders (hence CVs) are directly coupled to the
+ * Color (hence state) of individual sliders (hence CVs) are directly coupled to the
  * state of those CVs.
- *<P> The state of this variable has to be a composite of all the sliders, hence CVs.
+ *<P> The state of the entire variable has to be a composite of all the sliders, hence CVs.
  * The mapping is (in order):
  *<UL>
  *<LI>If any CVs are UNKNOWN, its UNKNOWN..
@@ -42,9 +46,19 @@ import javax.swing.event.ChangeListener;
  * Read reads any that aren't READ or WRITTEN.
  *<P>
  * Speed tables can have different numbers of entries; 28 is the default, and also the maximum.
+ * <P>
+ * The NMRA specification says that speed table entries cannot be non-monotonic (e.g. cannot
+ * decrease when moving from lower to higher CV numbers). In earlier versions of the code,
+ * this was enforced any time a value was changed (for any reason).  This caused a problem
+ * when CVs were read that were non-monotonic:  That value was read, causing lower CVs to be made
+ * consistent, a change in their value which changed their state, so they were read again.  To
+ * avoid this, the class now only enforces non-monotonicity when the slider is adjusted.
+ *<P>
+ * _value is a holdover from the LongAddrVariableValue, which this was copied from; it should
+ * be removed.
  *<P>
  * @author	Bob Jacobsen, Alex Shepherd   Copyright (C) 2001, 2004
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -67,7 +81,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         _min = minVal;
         _max = maxVal;
         _range = maxVal-minVal;
-        
+
         models = new BoundedRangeModel[nValues];
 
         // create the set of models
@@ -129,8 +143,18 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         ((CvValue)_cvVector.elementAt(getCvNum()+i)).setValue(value);
         // if programming, that's it
         if (isReading || isWriting) return;
+        else adjust(i, value);
+    }
 
-        // otherwise check the neighbors, and force them if needed
+    /**
+     * Check entries on either side to see if they are set monotonically.
+     * If not, adjust.
+     *
+     * @param i number (index) of the entry
+     * @param value  new value
+     */
+	void adjust(int i, int value) {
+	    // check the neighbors, and force them if needed
         if (i>0) {
             // left neighbour
             if (models[i-1].getValue() > value)  {
@@ -143,7 +167,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
                 setModel(i+1, value);
             }
         }
-    }
+	}
 
     public int getState()  {
         int i;

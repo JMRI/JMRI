@@ -8,7 +8,9 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 import com.sun.java.util.collections.List;
+import org.jdom.Comment;
 import org.jdom.Document;
+import org.jdom.DocType;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
 
@@ -16,7 +18,7 @@ import org.jdom.input.SAXBuilder;
  * Handle common aspects of XML files.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public abstract class XmlFile {
 
@@ -187,6 +189,42 @@ public abstract class XmlFile {
             log.warn("Creating a missing preferences directory: "+name);
             f.mkdirs();
         }
+    }
+
+    /**
+     * Create the Document object to store a particular root Element.
+     *
+     * @param root Root element of the final document
+     * @param dtd name of an external DTD
+     * @return
+     */
+    static public Document newDocument(Element root, String dtd) {
+        Document doc = new Document(root);
+        doc.setDocType(new DocType(root.getName(),dtd));
+        addDefaultInfo(root);
+        return doc;
+    }
+
+    /**
+     * Add default information to the XML before writing it out.
+     * <P>
+     * Currently, this is identification information as an XML comment. This includes:
+     * <UL>
+     * <LI>The JMRI version used
+     * <LI>Date of writing
+     * <LI>A CVS id string, in case the file gets checked in or out
+     * </UL>
+     * <P>
+     * It may be necessary to extend this to check whether the info is
+     * already present, e.g. if re-writing a file.
+     * @param root The root element of the document that will be written.
+     */
+    static public void addDefaultInfo(Element root) {
+        String content = "Written by JMRI version "+jmri.Version.name()
+                        +" on "+(new java.util.Date()).toString()
+                        +" $Id: XmlFile.java,v 1.15 2004-07-24 04:30:08 jacobsen Exp $";
+        Comment comment = new Comment(content);
+        root.addContent(comment);
     }
 
     static public String xmlDir() {return "xml"+File.separator;}

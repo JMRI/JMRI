@@ -40,7 +40,7 @@ import org.jdom.output.XMLOutputter;
  * sort is done manually each time an entry is added.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001;  Dennis Miller Copyright 2004
- * @version	$Revision: 1.20 $
+ * @version	$Revision: 1.21 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -202,8 +202,7 @@ public class Roster extends XmlFile {
         }
         // create root element
         Element root = new Element("roster-config");
-        Document doc = new Document(root);
-        doc.setDocType(new DocType("roster-config","roster-config.dtd"));
+        Document doc = newDocument(root, "roster-config.dtd");
 
         //Check the Comment and Decoder Comment fields for line breaks and
         //convert them to a processor directive for storage in XML

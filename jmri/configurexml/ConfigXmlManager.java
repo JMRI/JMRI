@@ -15,7 +15,7 @@ import org.jdom.output.XMLOutputter;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -192,8 +192,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
     protected void finalStore(Element root, File file) {
         try {
-            Document doc = new Document(root);
-            doc.setDocType(new DocType("layout-config","layout-config.dtd"));
+            Document doc = newDocument(root, "layout-config.dtd");
             // write the result to selected file
             java.io.FileOutputStream o = new java.io.FileOutputStream(file);
             XMLOutputter fmt = new XMLOutputter();
