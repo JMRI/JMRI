@@ -30,7 +30,7 @@ import java.util.Vector;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.5 $
+ * @version 		$Revision: 1.6 $
  *
  */
 public class XNetPacketizer extends XNetTrafficController {
@@ -302,6 +302,7 @@ public class XNetPacketizer extends XNetTrafficController {
                                                         log.debug("Ready to send to XPressNet port");
                                                         }
 							if (debug) log.debug("start write to stream");
+                                                        controller.setOutputBufferEmpty(false);
 							ostream.write(msg);
 							if (debug) log.debug("end write to stream");
 						} else {

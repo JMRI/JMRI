@@ -3,7 +3,7 @@
  *
  * Description:		Abstract base for classes representing a XNet communications port
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 package jmri.jmrix.lenz;
@@ -33,6 +33,12 @@ public abstract class XNetPortController extends jmri.jmrix.AbstractPortControll
 	 * off if something goes wrong.
 	 */
 	public abstract boolean okToSend();
+
+        /**
+         * We need a way to say if the output buffer is empty or not
+         */
+        public abstract void setOutputBufferEmpty(boolean s);
+
 }
 
 

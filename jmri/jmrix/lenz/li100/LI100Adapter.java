@@ -22,13 +22,15 @@ import javax.comm.SerialPortEventListener;
  * Provide access to XPressNet via a LI100 on an attached serial comm port.
  *					Normally controlled by the lenz.li100.LI100Frame class.
  * @author			Bob Jacobsen   Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 
 public class LI100Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
 
 	Vector portNameVector = null;
 	SerialPort activeSerialPort = null;
+
+        private boolean OutputBufferEmpty = true;
 
 	public Vector getPortNames() {
 		// first, check that the comm package can be opened and ports seen
@@ -95,7 +97,7 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
 				log.debug(" port flow control shows "+
 							(activeSerialPort.getFlowControlMode()==SerialPort.FLOWCONTROL_RTSCTS_OUT?"hardware flow control":"no flow control"));
 			}
-			if (log.isDebugEnabled()) {
+			//if (log.isDebugEnabled()) {
 				// arrange to notify later
 				activeSerialPort.addEventListener(new SerialPortEventListener(){
 						public void serialEvent(SerialPortEvent e) {
@@ -106,6 +108,7 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
 									return;
 								case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
 									log.info("SerialEvent: OUTPUT_BUFFER_EMPTY is "+e.getNewValue());
+                                                                        setOutputBufferEmpty(true);
 									return;
 								case SerialPortEvent.CTS:
 									log.info("SerialEvent: CTS is "+e.getNewValue());
@@ -147,10 +150,13 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
 				try { activeSerialPort.notifyOnParityError(true); }
 					catch (Exception e) { log.debug("Could not notifyOnParityError: "+e); }
 
+				try { activeSerialPort.notifyOnOutputEmpty(true); }
+					catch (Exception e) { log.debug("Could not notifyOnOutputEmpty: "+e); }
+
 				try { activeSerialPort.notifyOnOverrunError(true); }
 					catch (Exception e) { log.debug("Could not notifyOnOverrunError: "+e); }
 
-			}
+			//}  // this is the end of the if
 
 			opened = true;
 
@@ -165,6 +171,15 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
 		return null; // normal operation
 	}
 
+        /**
+         * we need a way to say if the output buffer is empty or full
+         * this should only be set to false by external processes
+         **/         
+        synchronized public void setOutputBufferEmpty(boolean s)
+        {
+		OutputBufferEmpty = s;
+        }
+
 	/**
 	 * Can the port accept additional characters?
 	 * The state of CTS determines this, as there seems to
@@ -174,7 +189,7 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
 	 * off if something goes wrong.
 	 */
 	public boolean okToSend() {
-		return activeSerialPort.isCTS();
+		return (activeSerialPort.isCTS() && OutputBufferEmpty);
 	}
 
 	/**
