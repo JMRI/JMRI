@@ -30,6 +30,7 @@ public class FunctionButton extends JToggleButton implements ActionListener
     private int identity; // F0, F1, etc?
     private boolean isOn;
     private boolean isLockable = true;
+	
 
     private JPopupMenu popup;
 
@@ -48,7 +49,7 @@ public class FunctionButton extends JToggleButton implements ActionListener
         MouseListener popupListener = new PopupListener();
         this.addMouseListener(popupListener);
 
-        this.setPreferredSize(new Dimension(54,36));
+        this.setPreferredSize(new Dimension(54,30));
         this.setMargin(new Insets(2,2,2,2));
     }
 

@@ -24,9 +24,19 @@ import org.jdom.Element;
  * @created    March 25, 2003
  * @version
  */
-public class ThrottleFrame extends JFrame 
+public class ThrottleFrame extends JFrame implements AddressListener, ThrottleListener
 {
 	private final Integer PANEL_LAYER = new Integer(1);
+	private static int NEXT_FRAME_KEY = KeyEvent.VK_RIGHT;
+	private static int PREV_FRAME_KEY = KeyEvent.VK_LEFT;
+
+	private static int ADDRESS_PANEL_INDEX = 0;
+	private static int CONTROL_PANEL_INDEX = 1;
+	private static int FUNCTION_PANEL_INDEX = 2;
+	private static int NUM_FRAMES = 3;
+
+	private JInternalFrame[] frameList;
+	private int activeFrame;
 
 	private ControlPanel controlPanel;
 	private FunctionPanel functionPanel;
@@ -44,6 +54,38 @@ public class ThrottleFrame extends JFrame
 		initGUI();
 	}
 
+    /**
+     * Get notification that a throttle has been found as you requested.
+     * @param t An instantiation of the DccThrottle with the address requested.
+     */
+    public void notifyThrottleFound(DccThrottle t)
+	{
+		addressPanel.notifyThrottleFound(t);
+		controlPanel.notifyThrottleFound(t);
+		functionPanel.notifyThrottleFound(t);
+	}
+
+    /**
+     * Receive notification that a new address has been selected.
+     * @param newAddress The address that is now selected.
+     */
+    public void notifyAddressChosen(int address)
+	{
+		InstanceManager.throttleManagerInstance().requestThrottle(address, this);
+	}
+	
+	/**
+	 * Receive notification that an address has been released or dispatched
+	 * @param address The address released/dispatched
+	 */
+	public void notifyAddressReleased(int address)
+	{
+		InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
+		controlPanel.notifyThrottleDisposed();
+		functionPanel.notifyThrottleDisposed();
+		addressPanel.notifyThrottleDisposed();
+	}
+	
 	/**
 	 *  Place and initialize the GUI elements.
 	 *  <ul>
@@ -70,16 +112,15 @@ public class ThrottleFrame extends JFrame
 			});
 
 		initializeMenu();
-			
+
 		FrameListener frameListener = new FrameListener();
-		FrameCyclingKeyListener frameCycler = new FrameCyclingKeyListener();
 
 		controlPanel = new ControlPanel();
 		controlPanel.setResizable(true);
 		controlPanel.setClosable(true);
 		controlPanel.setIconifiable(true);
 		controlPanel.setTitle("Control Panel");
-		controlPanel.setSize(100, 320);
+		controlPanel.setSize(100, 324);
 		controlPanel.setVisible(true);
 		controlPanel.setEnabled(false);
 		controlPanel.addInternalFrameListener(frameListener);
@@ -89,53 +130,55 @@ public class ThrottleFrame extends JFrame
 		functionPanel.setClosable(true);
 		functionPanel.setIconifiable(true);
 		functionPanel.setTitle("Function Panel");
-		functionPanel.setSize(200, 200);
+		functionPanel.setSize(200, 204);
 		functionPanel.setLocation(100, 0);
 		functionPanel.setVisible(true);
 		functionPanel.setEnabled(false);
 		functionPanel.addInternalFrameListener(frameListener);
-		functionPanel.addExternalKeyListener(frameCycler);
 
 		addressPanel = new AddressPanel();
 		addressPanel.setResizable(true);
 		addressPanel.setClosable(true);
 		addressPanel.setIconifiable(true);
 		addressPanel.setTitle("Address Panel");
-		addressPanel.addInternalFrameListener(frameListener);
-
 		addressPanel.setSize(200, 120);
-		addressPanel.setLocation(100, 200);
+		addressPanel.setLocation(100, 204);
 		addressPanel.setVisible(true);
-
-		/*
-		 *    Make controlPanel and functionPanel listen to addressPanel
-		 *    for address changes.
-		 */
-		addressPanel.addAddressListener(controlPanel);
-		addressPanel.addAddressListener(functionPanel);
-		addressPanel.addAddressListener(addressPanel);
+		addressPanel.addInternalFrameListener(frameListener);
+		addressPanel.addAddressListener(this);
 
 		desktop.add(controlPanel, PANEL_LAYER);
 		desktop.add(functionPanel, PANEL_LAYER);
 		desktop.add(addressPanel, PANEL_LAYER);
 
+		frameList = new JInternalFrame[3];
+		frameList[ADDRESS_PANEL_INDEX] = addressPanel;
+		frameList[CONTROL_PANEL_INDEX] = controlPanel;
+		frameList[FUNCTION_PANEL_INDEX] = functionPanel;
+		activeFrame = ADDRESS_PANEL_INDEX;
+
 		desktop.setPreferredSize(new Dimension(300, 340));
-		
-		this.addKeyListener(frameCycler);
+
+		KeyListenerInstaller.installKeyListenerOnAllComponents(
+						new FrameCyclingKeyListener(), this);
 
 		try
 		{
 			addressPanel.setSelected(true);
+
 		}
 		catch (java.beans.PropertyVetoException ex)
 		{
 			System.out.println(ex.getMessage());
+			//TODO log it.
 		}
 
 	}
 
-	
-	
+
+	/**
+	 *  Description of the Method
+	 */
 	private void initializeMenu()
 	{
 		JMenu viewMenu = new JMenu("View");
@@ -174,20 +217,21 @@ public class ThrottleFrame extends JFrame
 		viewMenu.add(viewAddressPanel);
 		viewMenu.add(viewControlPanel);
 		viewMenu.add(viewFunctionPanel);
-		
+
 		JMenu editMenu = new JMenu("Edit");
-		
+
 		this.setJMenuBar(new JMenuBar());
 		this.getJMenuBar().add(viewMenu);
-		this.getJMenuBar().add(editMenu);
+		//this.getJMenuBar().add(editMenu);
 	}
-	
-	
+
 	/**
 	 *  Handle my own destruction.
-	 * <ol><li> dispose of sub windows.
-	 * <li> notify my manager of my demise.
-	 * </ol>
+	 *  <ol>
+	 *    <li> dispose of sub windows.
+	 *    <li> notify my manager of my demise.
+	 *  </ol>
+	 *
 	 */
 	public void destroyThrottleFrame()
 	{
@@ -199,18 +243,58 @@ public class ThrottleFrame extends JFrame
 	}
 
 
+	/**
+	 *  A KeyAdapter that listens for the key that cycles through
+	 * the JInternalFrames.
+	 *
+	 * @author     glen
+	 * @created    March 30, 2003
+	 */
 	class FrameCyclingKeyListener extends KeyAdapter
 	{
-		public void keyTyped(KeyEvent e)
+		/**
+		 *  Description of the Method
+		 *
+		 * @param  e  Description of the Parameter
+		 */
+		public void keyPressed(KeyEvent e)
 		{
-			System.out.println("Typed:"+e.getKeyChar());
+			if (e.isControlDown() && e.getKeyCode() == NEXT_FRAME_KEY)
+			{
+				try
+				{
+					activeFrame = (activeFrame + 1) % NUM_FRAMES;
+					frameList[activeFrame].setSelected(true);
+				}
+				catch (java.beans.PropertyVetoException ex)
+				{
+					log.warn("Exception selecting internal frame:" + ex);
+				}
+
+			}
+			else if (e.isControlDown() && e.getKeyCode() == PREV_FRAME_KEY)
+			{
+				try
+				{
+					activeFrame--;
+					if (activeFrame < 0)
+					{
+						activeFrame = NUM_FRAMES - 1;
+					}
+					frameList[activeFrame].setSelected(true);
+				}
+				catch (java.beans.PropertyVetoException ex)
+				{
+					log.warn("Exception selecting internal frame:" + ex);
+				}
+			}
 		}
 	}
-	
-	
+
+
 	/**
-	 *  An extension of InternalFrameAdapter for listening to the closing of
-	 * of this frame's internal frames.
+	 *  An extension of InternalFrameAdapter for listening to the closing of of
+	 *  this frame's internal frames.
 	 *
 	 * @author     glen
 	 * @created    March 25, 2003
@@ -218,8 +302,8 @@ public class ThrottleFrame extends JFrame
 	class FrameListener extends InternalFrameAdapter
 	{
 		/**
-		 *  Listen for the closing of an internal frame and set the "View"
-		 * menu appropriately. Then hide the closing frame
+		 *  Listen for the closing of an internal frame and set the "View" menu
+		 *  appropriately. Then hide the closing frame
 		 *
 		 * @param  e  The InternalFrameEvent leading to this action
 		 */
@@ -241,6 +325,29 @@ public class ThrottleFrame extends JFrame
 				functionPanel.setVisible(false);
 			}
 		}
+
+		/**
+		 *  Listen for the activation of an internal frame record this property for
+		 *  coorect processing of the frame cycling key.
+		 *
+		 * @param  e  The InternalFrameEvent leading to this action
+		 */
+		public void internalFrameActivated(InternalFrameEvent e)
+		{
+			if (e.getSource() == controlPanel)
+			{
+				activeFrame = CONTROL_PANEL_INDEX;
+			}
+			else if (e.getSource() == addressPanel)
+			{
+				activeFrame = ADDRESS_PANEL_INDEX;
+			}
+			else if (e.getSource() == functionPanel)
+			{
+				activeFrame = FUNCTION_PANEL_INDEX;
+			}
+		}
+
 	}
 
 
@@ -296,4 +403,7 @@ public class ThrottleFrame extends JFrame
 		addressPanel.setXml(addressPanelElement);
 	}
 
+	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ThrottleFrame.class.getName());
+
 }
+

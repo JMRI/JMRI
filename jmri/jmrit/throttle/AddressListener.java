@@ -10,8 +10,14 @@ public interface AddressListener extends EventListener
 {
     /**
      * Receive notification that a new address has been selected.
-     * @param previousAddress The address that was selected.
      * @param newAddress The address that is now selected.
      */
-    public void notifyAddressChanged(int previousAddress, int newAddress);
+    public void notifyAddressChosen(int address);
+	
+	/**
+	 * Receive notification that an address has been released/dispatched
+	 * @param address The address released/dispatched
+	 */
+	public void notifyAddressReleased(int address);
+	
 }

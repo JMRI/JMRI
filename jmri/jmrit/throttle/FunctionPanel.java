@@ -4,22 +4,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
 import jmri.DccThrottle;
-import jmri.ThrottleListener;
-import jmri.ThrottleManager;
-import jmri.InstanceManager;
 
 import org.jdom.Element;
 
 /**
  * A JInternalFrame that contains buttons for each decoder function.
  */
-public class FunctionPanel extends JInternalFrame
-        implements ThrottleListener, AddressListener, FunctionListener
+public class FunctionPanel extends JInternalFrame implements FunctionListener
 {
-    public static final int NUM_FUNCTION_BUTTONS = 10;
-    private ThrottleManager throttleManager;
+    public static final int NUM_FUNCTION_BUTTONS = 13;
     private DccThrottle throttle;
-    private int requestedAddress;
 
     private FunctionButton functionButton[];
 
@@ -29,19 +23,6 @@ public class FunctionPanel extends JInternalFrame
     public FunctionPanel()
     {
         initGUI();
-    }
-
-    /**
-     * In addition to super.dispose() this method cancels any requests
-     * for throttles.
-     */
-    public void dispose()
-    {
-        if (throttleManager != null)
-        {
-            throttleManager.cancelThrottleRequest(requestedAddress, this);
-        }
-        super.dispose();
     }
 
     /**
@@ -80,22 +61,11 @@ public class FunctionPanel extends JInternalFrame
         this.setEnabled(true);
     }
 
-    /**
-     * Get notification that the decoder address value has changed.
-     * @param newAddress The new address.
-     */
-    public void notifyAddressChanged(int oldAddress, int newAddress)
-    {
-        if (throttleManager == null)
-        {
-            throttleManager = InstanceManager.throttleManagerInstance();
-        }
-        throttleManager.cancelThrottleRequest(oldAddress, this);
-        requestedAddress = newAddress;
-        this.setEnabled(false);
-        // has to be done last, as might come back immediately
-        throttleManager.requestThrottle(newAddress, this);
-    }
+	public void notifyThrottleDisposed()
+	{
+		this.setEnabled(false);
+		throttle = null;
+	}
 
     /**
      * Get notification that a function has changed state
@@ -115,6 +85,10 @@ public class FunctionPanel extends JInternalFrame
             case 6: throttle.setF6(isSet); break;
             case 7: throttle.setF7(isSet); break;
             case 8: throttle.setF8(isSet); break;
+            case 9: throttle.setF9(isSet); break;
+            case 10: throttle.setF10(isSet); break;
+            case 11: throttle.setF11(isSet); break;
+            case 12: throttle.setF12(isSet); break;
         }
     }
 
@@ -130,15 +104,6 @@ public class FunctionPanel extends JInternalFrame
         }
     }
 
-	public void addExternalKeyListener(KeyListener k)
-	{
-		this.addKeyListener(k);
-		this.getContentPane().addKeyListener(k);
-		for (int i=0; i<NUM_FUNCTION_BUTTONS; i++)
-		{
-			functionButton[i].addKeyListener(k);
-		}
-	}
 	
     /**
      * Place and initialize all the buttons.

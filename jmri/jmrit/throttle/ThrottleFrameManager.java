@@ -1,6 +1,8 @@
 package jmri.jmrit.throttle;
-import java.util.ArrayList;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -9,28 +11,44 @@ import java.util.Iterator;
  *
  * @author     Glen Oberhauser
  * @created    March 25, 2003
- * @version    $Revision: 1.4 $
+ * @version    $Revision: 1.5 $
  */
 public class ThrottleFrameManager
 {
+	private static int NEXT_THROTTLE_KEY = KeyEvent.VK_RIGHT;
+	private static int PREV_THROTTLE_KEY = KeyEvent.VK_LEFT;
+
+	private int activeThrottle;
+	private ThrottleCyclingKeyListener throttleCycler;
+
 	private ArrayList throttleFrames;
 	private FunctionButtonPropertyEditor functionButtonEditor;
+
+
+	/**
+	 *  Constructor for the ThrottleFrameManager object
+	 */
+	public ThrottleFrameManager()
+	{
+		throttleCycler = new ThrottleCyclingKeyListener();
+	}
 
 	/**
 	 *  Tell this manager that a new ThrottleFrame was created.
 	 *
-	 * @param  tf  The new ThrottleFrame.
 	 */
 	public void createThrottleFrame()
 	{
-        ThrottleFrame tf = new ThrottleFrame();
-        tf.pack();
-        tf.setVisible(true);
+		ThrottleFrame tf = new ThrottleFrame();
+		tf.pack();
+		tf.setVisible(true);
+		KeyListenerInstaller.installKeyListenerOnAllComponents(throttleCycler, tf);
 		if (throttleFrames == null)
 		{
 			throttleFrames = new ArrayList(2);
 		}
 		throttleFrames.add(tf);
+		activeThrottle = throttleFrames.indexOf(tf);
 	}
 
 	/**
@@ -66,6 +84,40 @@ public class ThrottleFrameManager
 			functionButtonEditor = new FunctionButtonPropertyEditor();
 		}
 		return functionButtonEditor;
+	}
+
+	/**
+	 *  Description of the Class
+	 *
+	 * @author     glen
+	 * @created    March 29, 2003
+	 */
+	class ThrottleCyclingKeyListener extends KeyAdapter
+	{
+		/**
+		 *  Description of the Method
+		 *
+		 * @param  e  Description of the Parameter
+		 */
+		public void keyPressed(KeyEvent e)
+		{
+			if (e.isShiftDown() && e.getKeyCode() == NEXT_THROTTLE_KEY)
+			{
+				activeThrottle = (activeThrottle + 1) % throttleFrames.size();
+				ThrottleFrame tf = (ThrottleFrame) throttleFrames.get(activeThrottle);
+				tf.requestFocus();
+			}
+			else if (e.isShiftDown() && e.getKeyCode() == PREV_THROTTLE_KEY)
+			{
+				activeThrottle--;
+				if (activeThrottle < 0)
+				{
+					activeThrottle = throttleFrames.size() - 1;
+				}
+				ThrottleFrame tf = (ThrottleFrame) throttleFrames.get(activeThrottle);
+				tf.requestFocus();
+			}
+		}
 	}
 
 }

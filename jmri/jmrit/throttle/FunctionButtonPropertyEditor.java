@@ -174,11 +174,11 @@ public class FunctionButtonPropertyEditor extends JDialog
     {
         StringBuffer errors = new StringBuffer();
         int errorNumber = 0;
-        /* ID >=0 && ID <= 9 */
+        /* ID >=0 && ID <= 12 */
         try
         {
             int id = Integer.parseInt(idField.getText());
-            if ((id < 0) || id > 9)
+            if ((id < 0) || id > 12)
             {
                 throw new NumberFormatException("");
             }
@@ -186,7 +186,7 @@ public class FunctionButtonPropertyEditor extends JDialog
         catch (NumberFormatException ex)
         {
             errors.append(String.valueOf(++errorNumber));
-            errors.append(". Function number must integer between 0 and 9\n");
+            errors.append(". Function number must integer between 0 and 12\n");
         }
 
         /* font > 0 */

@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.beans.*;
 
 import jmri.DccThrottle;
-import jmri.ThrottleListener;
-import jmri.ThrottleManager;
-import jmri.InstanceManager;
 import org.jdom.Element;
 
 /**
@@ -18,20 +15,17 @@ import org.jdom.Element;
  * notifies them when the user enters a new address.
  */
 public class AddressPanel extends JInternalFrame
-						implements AddressListener, ThrottleListener
 {
 
-    private ThrottleManager throttleManager;
     private DccThrottle throttle;
 
     private ArrayList listeners;
     private JTextField addressField;
-    private int previousAddress;
     private int currentAddress;
-    private int requestedAddress;
 
-    private JButton releaseButton;
-    private JButton dispatchButton;
+	private JButton releaseButton;
+	private JButton dispatchButton;
+	private JButton setButton;
 
     /** The longest 4 character string. Used for resizing. */
     private static final String LONGEST_STRING = "mmmm";
@@ -42,18 +36,6 @@ public class AddressPanel extends JInternalFrame
     public AddressPanel()
     {
         initGUI();
-    }
-
-    /**
-     * Cancel throttle request with ThrottleManager.
-     */
-    public void dispose()
-    {
-        if (throttleManager != null)
-        {
-            throttleManager.cancelThrottleRequest(requestedAddress, this);
-        }
-        super.dispose();
     }
 
     /**
@@ -73,6 +55,7 @@ public class AddressPanel extends JInternalFrame
         }
     }
 
+
     /**
      * Get notification that a throttle has been found as we requested.
      * @param t An instantiation of the DccThrottle with the address requested.
@@ -82,24 +65,25 @@ public class AddressPanel extends JInternalFrame
         this.throttle = t;
         releaseButton.setEnabled(true);
         dispatchButton.setEnabled(true);
+		setButton.setEnabled(false);
+		addressField.setEditable(false);
+		
     }
 
-    /**
-     * Get notification that the decoder address value has changed.
-     * @param newAddress The new address.
-     */
-    public void notifyAddressChanged(int oldAddress, int newAddress)
-    {
-        if (throttleManager == null)
-        {
-            throttleManager = InstanceManager.throttleManagerInstance();
-        }
-        throttleManager.cancelThrottleRequest(oldAddress, this);
-        dispatchButton.setEnabled(false);
+
+	/**
+	 * Receive notification that an address has been release or dispatched.
+	 * @param address The address released/dispatched
+	 */
+	public void notifyThrottleDisposed()
+	{
+		dispatchButton.setEnabled(false);
 		releaseButton.setEnabled(false);
-        // this has to be done last, as it might come back immediately
-        throttleManager.requestThrottle(newAddress, this);
-    }
+		setButton.setEnabled(true);
+		addressField.setEditable(true);
+		throttle = null;
+	}
+
 
     /**
      * Create, initialize and place the GUI objects.
@@ -108,7 +92,7 @@ public class AddressPanel extends JInternalFrame
      {
          JPanel mainPanel = new JPanel();
          this.setContentPane(mainPanel);
-        this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		 this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
          mainPanel.setLayout(new GridBagLayout());
          GridBagConstraints constraints = new GridBagConstraints();
@@ -130,7 +114,7 @@ public class AddressPanel extends JInternalFrame
          addressField.setFont(new Font("", Font.PLAIN, 32));
          mainPanel.add(addressField, constraints);
 
-         JButton setButton = new JButton("Set");
+         setButton = new JButton("Set");
          constraints.gridx = 1;
          constraints.fill = GridBagConstraints.NONE;
          mainPanel.add(setButton, constraints);
@@ -227,20 +211,17 @@ public class AddressPanel extends JInternalFrame
          try
          {
              Integer value = new Integer(addressField.getText());
-             previousAddress = currentAddress;
-             currentAddress = value.intValue();
-             if (currentAddress != previousAddress){
-                 // send notification of new address
-                 if (listeners != null)
-                 {
-                     for (int i=0; i<listeners.size(); i++)
-                     {
-                         AddressListener l = (AddressListener)listeners.get(i);
-                         log.debug("Notify address listener "+l);
-                         l.notifyAddressChanged(previousAddress, currentAddress);
-                     }
-                 }
-             }
+			 // send notification of new address
+			 if (listeners != null)
+			 {
+				 for (int i=0; i<listeners.size(); i++)
+				 {
+					 AddressListener l = (AddressListener)listeners.get(i);
+					 log.debug("Notify address listener "+l);
+					 currentAddress = value.intValue();
+					 l.notifyAddressChosen(currentAddress);
+				 }
+			 }
          }
          catch (NumberFormatException ex)
          {
@@ -253,19 +234,32 @@ public class AddressPanel extends JInternalFrame
 	  */
 	 private void dispatchAddress()
 	 {
-		 // dispatch currentAddress
-                 throttle.dispatch();
+		throttle.dispatch();
+		notifyListenersOfThrottleRelease();
 	 }
-
+	 
 	 /**
 	  * Release the current address.
 	  */
 	 private void releaseAddress()
 	 {
-		 // release currentAddress
-                 throttle.release();
+		 throttle.release();
+		 notifyListenersOfThrottleRelease();
 	 }
-
+	 
+	 private void notifyListenersOfThrottleRelease()
+	 {
+		if (listeners != null)
+		 {
+			 for (int i=0; i<listeners.size(); i++)
+			 {
+				 AddressListener l = (AddressListener)listeners.get(i);
+				 log.debug("Notify address listener "+l);
+				 l.notifyAddressReleased(currentAddress);
+			 }
+		 }
+	 }
+	 
      /**
       * Create an Element of this object's preferences.
       * <ul>
