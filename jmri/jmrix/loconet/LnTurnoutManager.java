@@ -18,7 +18,7 @@ import jmri.Turnout;
  * <P>
  * Description:		Implement turnout manager for loconet
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.10 $
+ * @version         $Revision: 1.11 $
  */
 
 public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements LocoNetListener {
@@ -53,7 +53,11 @@ public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements Loc
         // return existing if there is one
         Turnout t;
         if ( (userName!=null) && ((t = getByUserName(userName)) != null)) return t;
-        if ( (t = getBySystemName(systemName)) != null) return t;
+        if ( (t = getBySystemName(systemName)) != null) {
+            if (userName != null) log.warn("Found turnout via system name ("+systemName
+                                    +") with non-null user name ("+userName+")");
+            return t;
+        }
 
         // get number from name
         if (!systemName.startsWith(prefix)) {
