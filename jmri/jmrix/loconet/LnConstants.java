@@ -54,10 +54,10 @@ public final static int OPC_SW_REQ_OUT    = 0x10;  /* output On/Off             
 
 public final static int OPC_LOCO_SPD_ESTOP = 0x01; /* emergency stop command               */
 
-public final static int OPC_MULTI_SENSE_MSG     = 0x30; // byte 1
-public final static int OPC_MULTI_SENSE_PRESENT = 0x00; // MSG field: transponder seen
-public final static int OPC_MULTI_SENSE_ABSENT  = 0x20; // MSG field: transponder lost
-public final static int OPC_MULTI_SENSE_POWER   = 0x30; // MSG field: Power message
+public final static int OPC_MULTI_SENSE_MSG     = 0x60; // byte 1
+public final static int OPC_MULTI_SENSE_PRESENT = 0x20; // MSG field: transponder seen
+public final static int OPC_MULTI_SENSE_ABSENT  = 0x00; // MSG field: transponder lost
+public final static int OPC_MULTI_SENSE_POWER   = 0x60; // MSG field: Power message
 
 /* Slot Status byte definitions and macros */
 /***********************************************************************************
