@@ -1,22 +1,23 @@
-Making a distribution (substitute the release-number for M.N and M-N throughout
-and the application name for App):
+Making a combined JMRI/DecoderPro distribution (substitute the 
+release-number for M.N and M-N throughout):
 
 ( ) Copy and rename the last distribution
 
-( ) update the specific README in site section in cvs to include any changes, esp. 
-    including updating the release name and URLs. 
+( ) update the specific README files in site section in cvs to include 
+    any changes, esp. including updating the release name and URLs. 
 
-( ) apps.App.App have a version number in it?  If so, update
+( ) apps.DecoderPro.DecoderPro needs to have the version number updated.
 
 ( ) Commit all cvs source and tag "Release-App-M-N"
 
-( ) Make the App.jar file with the App release target.
+( ) Make the jmri.jar file - there's some flux in how to do this, but for
+    now use CodeWarrior and ClassBrowser
 
-( ) Move the App.jar file to the distribution folder
+( ) Move the jmri.jar file to the distribution folder
 
 ( ) Update the various text files from the CVS scripts module. 
 
-( ) Create a text README file from the site area. Change the
+( ) Create the two text README files from the site area. Change the
 	creator code of README to ttxt (SimpleText)
 
 ( ) Update the xml subdirectory, removing the CVS subdirs
@@ -51,7 +52,7 @@ and the application name for App):
 ( ) Create the Macintosh distribution
 	( ) Create a clean copy of the folder on the desktop, with the same name
 	
-	( ) Drag folder onto DropStuff, which will create a file App.M.N.hqx
+	( ) Drag folder onto DropStuff, which will create a file JMRI.M.N.hqx
 		(Preferences should be set for Macintosh, include linefeeds, remote .sit
 		suffix)
 
@@ -65,9 +66,11 @@ and the application name for App):
 	
 	( ) Remove the Macintosh Apps and Mac-only jar files:
 
-    	cd App.M.N
-    	rm App
-    	rm -rf App\ MacOSX.app
+    	cd JMRI.M.N
+    	rm Decoder\ Pro
+    	rm JmriDemo
+    	rm -rf DecoderProX.app
+    	rm -rf JmriDemoX.app
  
    	At this point, lib should contain only:
      	collections.jar  crimson.jar  jdom-jdk11.jar  log4j.jar
@@ -77,8 +80,8 @@ and the application name for App):
     	cd ..
     	# now above the distribution directory
     
-    	zip -rl App.zip App.M.N
-		zip App.zip App.M.N/*.jar App.M.N/win32com.dll App.M.N/lib/*.jar
+    	zip -rl JMRI.M.N.zip JMRI.M.N
+		zip JMRI.M.N.zip JMRI.M.N/*.jar JMRI.M.N/win32com.dll JMRI.M.N/lib/*.jar
 	
 		# the first line adds CR's, and the second replaces the .jar files so they
 		# don't have CR inserted
@@ -87,12 +90,12 @@ and the application name for App):
 
 	( ) Update permissions
 
-    	chmod 755 App.csh
+    	chmod 755 JmriDemo.csh DecoderPro.csh
     
 	( ) Make a .tar.gz
 
-		tar cf App.M.N.tar App.M.N
-		gzip App.M.N.tar
+		tar cf JMRI.M.N.tar JMRI.M.N
+		gzip JMRI.M.N.tar
 	
 ( ) Move to distribution site via SourceForge release:
 
@@ -101,13 +104,13 @@ and the application name for App):
 		password: me@myself.org 
 		cd incoming 
 		bin 
-		put App.M.N.zip
-		put App.M.N.tar.gz
-		put App.M.N.hqx
+		put JMRI.M.N.zip
+		put JMRI.M.N.tar.gz
+		put JMRI.M.N.hqx
 		
 	Login to SourceForge web 
 	Go to the project home page, then admin page
-	Click on Edit/Release Files  & release each of the four files
+	Click on Edit/Release Files  & release each of the three files
 	in the order:
 	
 		linux
@@ -116,14 +119,15 @@ and the application name for App):
 		
 	Be sure to update the top of the release note paragraph.
 	
-	The release name convention is "App M.N (demo | development release) for XXX"
+	The release name convention is "JMRI M.N (demo | development release) for XXX"
 	
 	Be sure to select "preserve preformatted text"
 
 ( ) Update web page source:
 	site/index.html - download links, demo release name
 	site/InstallJMRI.html - download instructions
-	site/demoFiles/README.html - new README contents
+	site/demoFiles/DecoderPro.README.html - new README contents
+	site/demoFiles/JmriDemo.README.html - new README contents
 	
 ( ) commit site and update on server
 	
@@ -135,8 +139,8 @@ and the application name for App):
 ( ) Create a snapshot in zip format
 
 	cd
-	zip -rl snapshot-App-M-N.zip cvs
-	mv snapshot-App-M-N.zip htdocs/Technical/snapshots/
+	zip -rl snapshot-JMRI-M-N.zip cvs
+	mv snapshot-JMRI-M-N.zip htdocs/Technical/snapshots/
 	
 ( ) Create JavaDoc
 	Ensure that CW JavaDoc target has JavaDoc selected as prelinker
@@ -152,7 +156,7 @@ and the application name for App):
 
 ( ) News item from JMRI sourceforge page
 
-	Title is of the form "App M.N is available"
+	Title is of the form "JMRI M.N is available"
 
 ( ) mail announcement to jmri-announce@lists.sourceforge.net
 
