@@ -12,7 +12,7 @@ import javax.swing.*;
  * Handle configuration for display.PanelEditor panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class PanelEditorXml implements XmlAdapter {
 
@@ -110,10 +110,10 @@ public class PanelEditorXml implements XmlAdapter {
             }
         }
 
-        // display the results
-        targetFrame.show();
+        // display the results, with the editorin back
         panel.pack();
         panel.show();
+        targetFrame.show();
 
         // register the result for later configuration
         InstanceManager.configureManagerInstance().register(panel);
