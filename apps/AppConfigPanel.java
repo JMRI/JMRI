@@ -8,47 +8,101 @@ import jmri.jmrit.XmlFile;
 import jmri.jmrix.JmrixConfigPane;
 
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ResourceBundle;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 
 import com.sun.java.util.collections.ArrayList;
 
 /**
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class AppConfigPanel extends JPanel {
+
+    protected ResourceBundle rb;
 
     public AppConfigPanel(String filename, int nConnections) {
         super();
         mConfigFilename = filename;
 
+        rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // Communications
         p1 = JmrixConfigPane.instance(1);
-        add(p1);
-        if (nConnections>1) {
-            p2 = JmrixConfigPane.instance(2);
-            add(p2);
-        }
+        p1.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutConnection")));
+        addAndRemember(p1);
 
         // Swing GUI LAF
-        add(new GuiLafConfigPane());
+        JPanel p3;
+        addAndRemember(p3 = new GuiLafConfigPane());
+        p3.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutGUI")));
 
         // default programmer configuration
-        add(new jmri.jmrit.symbolicprog.ProgrammerConfigPane());
+        JPanel p4;
+        addAndRemember(p4 = new jmri.jmrit.symbolicprog.ProgrammerConfigPane());
+        p4.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutProgrammer")));
+
+        // add button to show advanced section
+        add(new JSeparator(JSeparator.HORIZONTAL));
+        showAdvanced = new JCheckBox(rb.getString("ButtonShowAdv"));
+        JPanel p5 = new JPanel();
+        p5.setLayout(new FlowLayout());
+        p5.add(showAdvanced);
+        add(p5);
+
+        // add advanced section itself
+	advancedPane = new JPanel();
+        advancedPane.setLayout(new BoxLayout(advancedPane, BoxLayout.Y_AXIS));
+        advancedPane.setVisible(false);  // have to click first
+        add(advancedPane);
+        showAdvanced.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (showAdvanced.isSelected()) {
+                    advancedPane.setVisible(true);
+                    advancedPane.validate();
+                    if (getTopLevelAncestor()!=null) ((JFrame)getTopLevelAncestor()).pack();
+                    advancedPane.repaint();
+                }
+                else {
+                    advancedPane.setVisible(false);
+                    advancedPane.validate();
+                    if (getTopLevelAncestor()!=null) ((JFrame)getTopLevelAncestor()).pack();
+                    advancedPane.repaint();
+                }
+            }
+        });
+
+        // fill advanced section
+        if (nConnections>1) {
+            p2 = JmrixConfigPane.instance(2);
+            p2.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutAuxConnection")));
+            advancedPane.add(p2);
+            clist.add(p2);
+        }
+
+        PerformActionPanel action = new PerformActionPanel();
+        action.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutStartupActions")));
+        advancedPane.add(action);
+        clist.add(action);
 
         // put the "Save" button at the bottom
-        JButton save = new JButton("Save");
-        super.add(save);  // don't want to persist the button!
+        JButton save = new JButton(rb.getString("ButtonSave"));
+        add(save);  // don't want to persist the button!
         save.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     savePressed();
@@ -57,10 +111,13 @@ public class AppConfigPanel extends JPanel {
 
     }
 
+    JCheckBox showAdvanced;
+    JPanel advancedPane;
+
     JmrixConfigPane p1;
     JmrixConfigPane p2;
 
-    public Component add(Component c) {
+    public Component addAndRemember(Component c) {
         clist.add(c);
         super.add(c);
         return c;
@@ -115,16 +172,16 @@ public class AppConfigPanel extends JPanel {
         saveContents();
 
         if (JOptionPane.showConfirmDialog(null,
-                                          "Your updated preferences will take effect when the program is restarted. Quit now?",
-                                          "Quit now?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                                          rb.getString("MessageLongQuitWarning"),
+                                          rb.getString("MessageShortQuitWarning"),
+                                          JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 
             // end the program
-            setVisible(false);
             dispose();
             System.exit(0);
         }
         // don't end the program, just close the window
-        setVisible(false);
+        if (getTopLevelAncestor()!=null) ((JFrame)getTopLevelAncestor()).setVisible(false);
     }
 
     // initialize logging
