@@ -36,7 +36,7 @@ import javax.swing.JToggleButton;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class BDL16Frame extends JFrame implements LocoNetListener {
 
@@ -70,6 +70,7 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
         appendLine(longdelay);
         appendLine(extralongdelay);
         appendLine(transpondtrack);
+        appendLine(poweronmsg);
         appendLine(antichatfilt);
         appendLine(antichatsens);
         appendLine(setdefault);
@@ -178,6 +179,7 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
         opsw[37] = longdelay.isSelected();
         opsw[38] = extralongdelay.isSelected();
         opsw[39] = transpondtrack.isSelected();
+        opsw[42] = poweronmsg.isSelected();
         opsw[43] = antichatfilt.isSelected();
         opsw[44] = antichatsens.isSelected();
         opsw[40] = setdefault.isSelected();
@@ -248,6 +250,7 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
         longdelay.setSelected(opsw[37]);
         extralongdelay.setSelected(opsw[38]);
         transpondtrack.setSelected(opsw[39]);
+        poweronmsg.setSelected(opsw[42]);
         antichatfilt.setSelected(opsw[43]);
         antichatsens.setSelected(opsw[44]);
         setdefault.setSelected(opsw[40]);
@@ -271,10 +274,11 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
             case 36: return 37;
             case 37: return 38;
             case 38: return 39;
-            case 39: return 40;
-            case 40: return 43;
+            case 39: return 42;
+            case 42: return 43;
             case 43: return 44;
-            case 44: return  0;   // done!
+            case 44: return 40;    // have to do 40 last
+            case 40: return 0;    // done!
             default:
                 log.error("unexpected state "+state);
                 return 0;
@@ -297,10 +301,11 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
     JCheckBox highthreshold         = new JCheckBox("OpSw 19: High threshold sense (10kohms)");  // opsw 19
     JCheckBox drivefromswitch       = new JCheckBox("OpSw 25: Drive LEDs from switch commands, not occupancy");  // opsw 25
     JCheckBox decodefromloconet     = new JCheckBox("OpSw 26: Decode switch commands from LocoNet");  // opsw 26
-    JCheckBox reserved36            = new JCheckBox("OpSw 36: Reserved");  // opsw 36
+    JCheckBox reserved36            = new JCheckBox("OpSw 36: Ignore GPON messages, only reply to interrogate");  // opsw 36
     JCheckBox longdelay             = new JCheckBox("OpSw 37: Long detection delay (BDL168 only)");  // opsw 37
     JCheckBox extralongdelay        = new JCheckBox("OpSw 38: Extra long detection delay (BDL168 only)");  // opsw 38
     JCheckBox transpondtrack        = new JCheckBox("OpSw 39: Transponder Tracking (BDL168 only)");  // opsw 39
+    JCheckBox poweronmsg            = new JCheckBox("OpSw 42: Turn off power-on interogate (BDL168 only)");  // opsw 43
     JCheckBox antichatfilt          = new JCheckBox("OpSw 43: Anti-chatter filtering (BDL168 only)");  // opsw 43
     JCheckBox antichatsens          = new JCheckBox("OpSw 44: Anti-chatter filter sensitivity (BDL168 only)");  // opsw 44
     JCheckBox setdefault            = new JCheckBox("OpSw 40: Restore factory default, including address");  // opsw 40
