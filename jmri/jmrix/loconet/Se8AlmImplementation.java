@@ -8,9 +8,10 @@ package jmri.jmrix.loconet;
  * Similarly, the addresses are "addresses" in the ALM, based on zero, and
  * "entries" in the throttle, based on 1.
  * <P>
- * This provides 'MAXPAGES' pages,
- * accessed through entries 1, 17, etc. The page number appears as
- * throttle value of 1 through 8.
+ * Internally, this stores data as a single address-space vector
+ * from 0 to some maximum value, addressed by (block)*4+item or
+ * by (SE_NUM)*ENTRYSIZE+item. The item index is 0,1,2,3 for blocks,
+ * or 0,1,2,...ENTRYSIZE-1 for addressing with an SE.
  * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project.  That permission
@@ -19,13 +20,12 @@ package jmri.jmrix.loconet;
  * contact Digitrax Inc for separate permission.
  *
  * @author Bob Jacobsen     Copyright 2002
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class Se8AlmImplementation extends AbstractAlmImplementation {
 
-    final int MAXPAGES = 8;  // number of accessible pages
-    final int ENTRYSIZE = 64; // number of arguments per entry, must be power of two
+    public static final int ENTRYSIZE = 64; // number of arguments per entry, must be power of two
 
     /**
      * Create an object representing the ALM entries for a single SE8 unit
@@ -38,6 +38,36 @@ public class Se8AlmImplementation extends AbstractAlmImplementation {
 	LnTrafficController.instance().addLocoNetListener(~0, this);
     }
 
+    // offsets in the ALM for various things
+    static final int ACon = 0;
+    static final int BCon = 1;
+    static final int CCon = 2;
+    static final int ALeg = 3;
+    static final int BLeg = 4;
+    static final int CLeg = 5;
+    static final int TO   = 6;
+    static final int DS   = 7;
+    
+    public int getACon(int se) {return retrieveBySE(se, ACon);}
+    public int getBCon(int se) {return retrieveBySE(se, BCon);}
+    public int getCCon(int se) {return retrieveBySE(se, CCon);}
+    public int getALeg(int se) {return retrieveBySE(se, ALeg);}
+    public int getBLeg(int se) {return retrieveBySE(se, BLeg);}
+    public int getCLeg(int se) {return retrieveBySE(se, CLeg);}
+    public int getTO(int se) {return retrieveBySE(se, TO);}
+    public int getDS(int se) {return retrieveBySE(se, DS);}
+    
+    public void setACon(int se, int value) {storeBySE(se, ACon, value);};
+    public void setBCon(int se, int value) {storeBySE(se, BCon, value);};
+    public void setCCon(int se, int value) {storeBySE(se, CCon, value);};
+    
+    public void setALeg(int se, int value) {storeBySE(se, ALeg, value);};
+    public void setBLeg(int se, int value) {storeBySE(se, BLeg, value);};
+    public void setCLeg(int se, int value) {storeBySE(se, CLeg, value);};
+    
+    public void setTO(int se, int value) {storeBySE(se, TO, value);};
+    public void setDS(int se, int value) {storeBySE(se, DS, value);};
+    
     /**
      * Internal method to save a new value
      * <P>
@@ -48,15 +78,13 @@ public class Se8AlmImplementation extends AbstractAlmImplementation {
      * @param value The integer argument value to store
      */
     void store(int block, int item, int value) {
-        contents[page(block, item)][block*4+item] = value;
+        contents[block*4+item] = value;
 
-        // message the throttle if this is a write to the menu number
-        if (item == 0 && (block&(ENTRYSIZE-1))==0)
-            LnMessageManager.instance().sendMessage("ABCDdcba");
     }
-
+    
     /**
      * Internal method to retrieve a value
+     * using block index
      * <P>
      * block*4+item is the ALM address
      *
@@ -65,43 +93,103 @@ public class Se8AlmImplementation extends AbstractAlmImplementation {
      * @return The integer argument value
      */
     int retrieve(int block, int item) {
-        return contents[page(block, item)][block*4+item];
+        return contents[block*4+item];
     }
+
+    /**
+     * Retrieve using SE index. Note that SEs are numbered
+     * starting from 1, not 0.
+     */
+    public int retrieveBySE(int SE, int item) {
+        return contents[(SE-1)*ENTRYSIZE+item];
+    }
+    
+    /**
+     * Store using SE index.  Note that SEs are numbered 
+     * starting from 1, not 0.
+     */
+    public void storeBySE(int SE, int item, int value) {
+        contents[(SE-1)*ENTRYSIZE+item] = value;
+    }
+    
+    boolean keepReading = false;
+    boolean keepWriting = false;
+    
+    /**
+     * Keep a read going if needed
+     */
+    public void noteRead(int block) {
+        // check to see if we're doing a read of an entire SE
+        int section = block % (ENTRYSIZE/4);
+        if (keepReading && (section < (ENTRYSIZE/4-1))) {
+            sendRead(block+1);
+        } else {
+            keepReading = false;
+        }
+    }
+
+    void sendRead(int block) {
+        LocoNetMessage l = new LocoNetMessage(16);
+        l.setElement( 0, 0xEE);
+        l.setElement( 1, 0x10);
+        l.setElement( 2, mNumber);
+        l.setElement( 3, 2);    // read
+        l.setElement( 4, block&0x7F);    // blockl
+        l.setElement( 5, block/128);    // blockh
+        l.setElement( 6, 0x03);
+        l.setElement( 7, 0x02);
+        l.setElement( 8, 0x08);
+        l.setElement( 9, 0x7F);
+        l.setElement(10, 0x00);
+        l.setElement(11, 0x00);
+        l.setElement(12, 0x00);
+        l.setElement(13, 0x00);
+        l.setElement(14, 0x00);
+        l.setElement(15, 0x00);
+        LnTrafficController.instance().sendLocoNetMessage(l);
+    }
+    
+    /**
+     * Start the process of reading the values for an SE
+     */
+    public void triggerRead(int se) {
+        if (!mImage)
+            log.error("Doesn't make sense to trigger a read if not image");
+        // mark so reads all blocks
+        keepReading = true;
+        // format up and send the read command
+        int block = se*(ENTRYSIZE/4);
+        sendRead(block);
+    }
+    
+    /**
+     * Start the process of writing the values for an SE
+     */
+    public void triggerWrite(int se) {
+        if (!mImage)
+            log.error("Doesn't make sense to trigger a write if not image");
+        // mark so writes all blocks
+        keepWriting = true;
+        // format up and send the read command
+        int block = se*(ENTRYSIZE/4);
+        sendWrite(block);
+    }
+    
 
     /**
      * Local storage for the values in this ALM
      */
-    int contents[][];
+    int contents[];
 
     /**
      * Initialize the local storage
      */
     void initData() {
-        final int length = 512*4;
-        contents = new int[MAXPAGES][length];
-        for (int i=0; i<length; i++)
-            for (int j=0; j<MAXPAGES; j++)
-                contents[j][i]=0x3FFF;
-    }
-
-    /**
-     * Figure out the page index for a particular request.
-     * <P>
-     * Note that access to the arguments setting the page numbers
-     * (1, 17, 33, etc) always go to page 0.
-     * Pages are numbered 0 to MAXPAGE-1 internally, are are stored
-     * in the array that way, but because of the way the throttle-resident
-     * editor works, are visible to the user as the human-readable 1 to MAXPAGE.
-     * @return 0-7
-     */
-    int page(int block, int item) {
-        // if you're accessing the page value, it's on internal page 0
-        if (item==0 && (block&(ENTRYSIZE-1))==0) return 0;
-        // else find the right page
-        int page = contents[0][(block&(~(ENTRYSIZE-1)))*4+0];
-        if (page < 0) return 0;
-        if (page >= MAXPAGES) return 0;   // puts default value as page 1
-        return page;
+        final int MAX_SE = 1024;
+        final int length = MAX_SE*ENTRYSIZE;
+        contents = new int[length];
+        for (int j=0; j<length; j++)
+            contents[j]=0x3FFF;
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Se8AlmImplementation.class.getName());
