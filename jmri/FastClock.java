@@ -3,7 +3,7 @@
  *
  * Description:		<describe the FastClock interface here>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			
+ * @version			$Revision: 1.2 $
  */
 
 package jmri;
