@@ -16,7 +16,7 @@ package jmri;
  * non-system-specific code.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class InstanceManager {
 
@@ -32,15 +32,15 @@ public class InstanceManager {
 
     static public ThrottleManager throttleManagerInstance()  { return mThrottleManager; }
 
-	static public jmri.jmrit.throttle.ThrottleFrameManager throttleFrameManagerInstance() 
-	{ 
-		if (mThrottleFrameManager == null)
-		{
-			mThrottleFrameManager = new jmri.jmrit.throttle.ThrottleFrameManager();
-		}
-		return mThrottleFrameManager; 
-	}
-	
+    static public jmri.jmrit.throttle.ThrottleFrameManager throttleFrameManagerInstance() {
+        if (mThrottleFrameManager == null) {
+            mThrottleFrameManager = new jmri.jmrit.throttle.ThrottleFrameManager();
+        }
+        return mThrottleFrameManager;
+    }
+
+    static public SignalHeadManager signalHeadManagerInstance()  { return mSignalHeadManager; }
+
     static private PowerManager _powerManager = null;
     static public void setPowerManager(PowerManager p) {
         if (p!=_powerManager && p!=null && log.isDebugEnabled()) log.debug("PowerManager instance is being replaced: "+p);
@@ -75,6 +75,12 @@ public class InstanceManager {
     static public void setThrottleManager(ThrottleManager p) {
         if (p!=mThrottleManager && p!=null && log.isDebugEnabled()) log.debug("ThrottleManager instance is being replaced: "+p);
         mThrottleManager = p;
+    }
+
+    static private SignalHeadManager mSignalHeadManager = null;
+    static public void setSignalHeadManager(SignalHeadManager p) {
+        if (p!=mSignalHeadManager && p!=null && log.isDebugEnabled()) log.debug("SignalHeadManager instance is being replaced: "+p);
+        mSignalHeadManager = p;
     }
 
     static private jmri.jmrit.throttle.ThrottleFrameManager mThrottleFrameManager = null;
