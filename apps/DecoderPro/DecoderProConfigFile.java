@@ -4,7 +4,6 @@ package jmri.apps;
 
 import com.sun.java.util.collections.List;
 import java.io.*;
-import java.util.Date;
 import jmri.jmrit.XmlFile;
 import org.jdom.*;
 import org.jdom.output.*;
@@ -16,13 +15,13 @@ import org.jdom.output.*;
  * DecoderPro application. Works with the DecoderProConfigFrame
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version		 	$Id: DecoderProConfigFile.java,v 1.2 2001-12-05 23:31:15 jacobsen Exp $
+ * @version		 	$Id: DecoderProConfigFile.java,v 1.3 2001-12-18 07:21:33 jacobsen Exp $
  * @see jmri.apps.DecodeProConfigFrame
  */
 public class DecoderProConfigFile extends XmlFile {
 	
 	public void readFile(String name) throws java.io.FileNotFoundException, org.jdom.JDOMException {
-		Element root = rootFromFile(name);
+		Element root = rootFromName(name);
 		_connection = root.getChild("connection");
 		_gui = root.getChild("gui");
 		_programmer = root.getChild("programmer");
@@ -50,7 +49,7 @@ public class DecoderProConfigFile extends XmlFile {
 			// This is taken in large part from "Java and XML" page 368 
 
 			// create file Object
-			File file = new File(name);
+			File file = new File(prefsDir()+name);
 			
 			// create root element
 			Element root = new Element("DecoderPro-config");
@@ -85,33 +84,9 @@ public class DecoderProConfigFile extends XmlFile {
 		}
 	}
 
-	/** 
-	* Move original file to a backup. Use this before writing out a new version of the file
-	*/
-	protected void makeBackupFile() {
-		File file = new File(defaultConfigFilename());
-		if (file.exists()) {
-			file.renameTo(backupFileName(configFileName));
-		}
-		else log.warn("No DecoderPro configuration file to backup");
-	}
-
-	/** 
-	* Return a File reference to a new, unique backup file. This is here so it can 
-	* be overridden during tests.
-	*/
-	static public File backupFileName(String name) {
-		// File.createTempFile is not available in java 1, so use millisecond time as unique string
-		File f =  new File(fileLocation+File.separator+name+"-"
-							+((new Date()).getTime()));
-		if (log.isDebugEnabled()) log.debug("backup file name is "+f.getAbsolutePath());
-		return f;
-	}
-
-	static protected String fileLocation  = "prefs";
 	static protected String configFileName = "DecoderProConfig.xml";
 
-	public static String defaultConfigFilename() { return fileLocation+File.separator+configFileName;}
+	public static String defaultConfigFilename() { return configFileName;}
 
 	// initialize logging	
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DecoderProConfigFile.class.getName());

@@ -21,7 +21,7 @@ import org.jdom.Attribute;
  * stored in local variables.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecoderProConfigFrame.java,v 1.4 2001-12-09 17:59:43 jacobsen Exp $
+ * @version			$Id: DecoderProConfigFrame.java,v 1.5 2001-12-18 07:21:33 jacobsen Exp $
  */
 public class DecoderProConfigFrame extends JFrame {
 		
@@ -73,7 +73,7 @@ public class DecoderProConfigFrame extends JFrame {
 	 */
 	public void savePressed() {
 		DecoderProConfigFile f = new DecoderProConfigFile();
-		f.makeBackupFile();
+		f.makeBackupFile(DecoderProConfigFile.defaultConfigFilename());
 		f.writeFile(DecoderProConfigFile.defaultConfigFilename(), this);
 	}
 	
