@@ -1,3 +1,5 @@
+jbuilder -a &jmri &apps
+
 # Three different line formats are valid:
 #	key	-a    aliases...
 #	key [options] directory
