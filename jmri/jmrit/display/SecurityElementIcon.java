@@ -15,7 +15,7 @@ import jmri.jmrix.loconet.SecurityElement;
  * explicitly add the code for Positionable
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class SecurityElementIcon extends JPanel
@@ -296,6 +296,7 @@ public class SecurityElementIcon extends JPanel
                   );
 
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
+
         popup.add(new AbstractAction("maxAB: "+element.maxSpeedAB) {
                 public void actionPerformed(ActionEvent e) {
                     String newVal =
@@ -309,14 +310,100 @@ public class SecurityElementIcon extends JPanel
                 }
             }
                   );
-        popup.add(new JMenuItem("maxBA: "+element.maxSpeedBA));
-        popup.add(new JMenuItem("maxAC: "+element.maxSpeedAC));
-        popup.add(new JMenuItem("maxCA: "+element.maxSpeedCA));
+        popup.add(new AbstractAction("maxBA: "+element.maxSpeedBA) {
+                public void actionPerformed(ActionEvent e) {
+                    String newVal =
+                        javax.swing.JOptionPane.showInputDialog(popup,
+                                                                "Set max B->A speed:",
+                                                                "Max BA speed "+element.maxSpeedBA,
+                                                                javax.swing.JOptionPane.OK_CANCEL_OPTION);
+                    if (newVal!=null) {
+                        element.maxSpeedBA=Integer.parseInt(newVal);
+                    }
+                }
+            }
+                  );
+        popup.add(new AbstractAction("maxAC: "+element.maxSpeedAC) {
+                public void actionPerformed(ActionEvent e) {
+                    String newVal =
+                        javax.swing.JOptionPane.showInputDialog(popup,
+                                                                "Set max A->C speed:",
+                                                                "Max AC speed "+element.maxSpeedAC,
+                                                                javax.swing.JOptionPane.OK_CANCEL_OPTION);
+                    if (newVal!=null) {
+                        element.maxSpeedAC=Integer.parseInt(newVal);
+                    }
+                }
+            }
+                  );
+        popup.add(new AbstractAction("maxCA: "+element.maxSpeedCA) {
+                public void actionPerformed(ActionEvent e) {
+                    String newVal =
+                        javax.swing.JOptionPane.showInputDialog(popup,
+                                                                "Set max C->A speed:",
+                                                                "Max CA speed "+element.maxSpeedCA,
+                                                                javax.swing.JOptionPane.OK_CANCEL_OPTION);
+                    if (newVal!=null) {
+                        element.maxSpeedCA=Integer.parseInt(newVal);
+                    }
+                }
+            }
+                  );
+
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
-        popup.add(new JMenuItem("brakeAB:"+element.maxBrakingAB));
-        popup.add(new JMenuItem("brakeBA:"+element.maxBrakingBA));
-        popup.add(new JMenuItem("brakeAC:"+element.maxBrakingAC));
-        popup.add(new JMenuItem("brakeCA:"+element.maxBrakingCA));
+
+        popup.add(new AbstractAction("brakeAB: "+element.maxBrakingAB) {
+                public void actionPerformed(ActionEvent e) {
+                    String newVal =
+                        javax.swing.JOptionPane.showInputDialog(popup,
+                                                                "Set A->B braking:",
+                                                                "AB braking "+element.maxBrakingAB,
+                                                                javax.swing.JOptionPane.OK_CANCEL_OPTION);
+                    if (newVal!=null) {
+                        element.maxBrakingAB=Integer.parseInt(newVal);
+                    }
+                }
+            }
+                  );
+        popup.add(new AbstractAction("brakeBA: "+element.maxBrakingBA) {
+                public void actionPerformed(ActionEvent e) {
+                    String newVal =
+                        javax.swing.JOptionPane.showInputDialog(popup,
+                                                                "Set B->A braking:",
+                                                                "BA braking "+element.maxBrakingBA,
+                                                                javax.swing.JOptionPane.OK_CANCEL_OPTION);
+                    if (newVal!=null) {
+                        element.maxBrakingBA=Integer.parseInt(newVal);
+                    }
+                }
+            }
+                  );
+        popup.add(new AbstractAction("brakeAC: "+element.maxBrakingAC) {
+                public void actionPerformed(ActionEvent e) {
+                    String newVal =
+                        javax.swing.JOptionPane.showInputDialog(popup,
+                                                                "Set A->C braking:",
+                                                                "AC braking "+element.maxBrakingAC,
+                                                                javax.swing.JOptionPane.OK_CANCEL_OPTION);
+                    if (newVal!=null) {
+                        element.maxBrakingAC=Integer.parseInt(newVal);
+                    }
+                }
+            }
+                  );
+        popup.add(new AbstractAction("brakeCA: "+element.maxBrakingCA) {
+                public void actionPerformed(ActionEvent e) {
+                    String newVal =
+                        javax.swing.JOptionPane.showInputDialog(popup,
+                                                                "Set C->A braking:",
+                                                                "CA braking "+element.maxBrakingCA,
+                                                                javax.swing.JOptionPane.OK_CANCEL_OPTION);
+                    if (newVal!=null) {
+                        element.maxBrakingCA=Integer.parseInt(newVal);
+                    }
+                }
+            }
+                  );
 
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
