@@ -5,3 +5,8 @@ JHelpDev (http:jhelpdev.sf.net), a tool for maintaining index,
 table of contents and map files.  These files may also be manually
 maintained in this directory.
 
+Note that the HelpSet definition file (JmriHelp.hs or similar)
+lives in the directory above this.  The .cvsignore file here
+has been set to ignore it, so that copies created automatically
+here don't cause confusion.
+
