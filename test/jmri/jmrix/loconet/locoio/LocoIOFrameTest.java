@@ -2,14 +2,18 @@
 
 package jmri.jmrix.loconet.locoio;
 
-import jmri.jmrix.loconet.*;
+import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
+import jmri.jmrix.loconet.LocoNetMessage;
 
-import junit.framework.*;
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.jmrix.loconet.locoio.LocoIOFrame class
  * @author	    Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class LocoIOFrameTest extends TestCase {
 
@@ -64,6 +68,31 @@ public class LocoIOFrameTest extends TestCase {
         Assert.assertEquals("message length", 16, msg.getNumDataElements());
         Assert.assertEquals("message opCode", 0xE5, msg.getOpCode());
         Assert.assertEquals("message bytes", "e5 10 50 34 12 0 2 4 0 0 10 0 0 0 0 0 ", msg.toString());
+
+        // dispose and end operation
+        f.dispose();
+    }
+
+    public void testSetAddr() {
+        // prepare an interface
+        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
+
+        // skip the warning dialog box
+        LocoIOFrame f = new LocoIOFrame(){
+            protected int cautionAddrSet() { return 1;}
+        };
+
+        f.addrField.setText("1234");
+
+        // click button
+        f.addrSetButton.doClick();
+
+        // check first message of readAll
+        Assert.assertEquals("One message sent", 1, lnis.outbound.size());
+        LocoNetMessage msg = (LocoNetMessage)lnis.outbound.get(0);
+        Assert.assertEquals("message length", 16, msg.getNumDataElements());
+        Assert.assertEquals("message opCode", 0xE5, msg.getOpCode());
+        Assert.assertEquals("message bytes", "e5 10 50 0 10 0 1 1 0 34 10 0 0 0 0 0 ", msg.toString());
 
         // dispose and end operation
         f.dispose();
