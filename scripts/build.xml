@@ -1,6 +1,6 @@
 <!-- ugly first attempt at an ANT build.xml file for JMRI development -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.25 $ -->
+<!-- Revision $Revision: 1.26 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -272,17 +272,23 @@
     <move file="MacOSX/JMRI.hqx" tofile="JMRI.${number}.hqx" />
     <move file="Linux/JMRI.tgz" tofile="JMRI.${number}.tgz" />
     <move file="OS2/JMRI.zip" tofile="JMRI.${number}.zip" />
-	<echo message="end of part 2; do part 3 after MacClassic, Windows uploads completely built"/>
-	<echo message="Copy Windows upload here manually!" />
- </target>
+	<echo message="end of part 2; do part 3 after MacClassic upload completely built"/>
+</target>
 
  <target name="release3" depends=""
  					description="part 3 of build a release; useage is ant -Drelease=R1.2.3 -Dnumber=1.2.3 release3">
 
 
     <move file="MacClassic/JMRI.hqx" tofile="JMRI.${number}.Classic.hqx" />
+	<echo message="upload Mac (2), OS2, Linux files"/>
+    <ftp server="upload.sourceforge.net"
+         userid="ftp" password="jake@physics.berkeley.edu"
+         action="put"
+         verbose="yes" remotedir="incoming" >
+      <fileset dir="." includes="JMRI.${number}.hqx, JMRI.${number}.tgz, JMRI.${number}.Classic.hqx, JMRI.${number}.zip" />
+    </ftp>
 
-	<echo message="end of part 3; part 4 will do the upload when ready"/>
+	<echo message="end of part 3; part 4 will do the windows upload when ready"/>
 	<echo message="make sure Release.${number}.exe is present"/>
 
  </target>
@@ -294,7 +300,7 @@
          userid="ftp" password="jake@physics.berkeley.edu"
          action="put"
          verbose="yes" remotedir="incoming" >
-      <fileset dir="." includes="JMRI.${number}.hqx, JMRI.${number}.exe, JMRI.${number}.tgz, JMRI.${number}.Classic.hqx, JMRI.${number}.zip" />
+      <fileset dir="." includes="JMRI.${number}.exe" />
     </ftp>
  
  	<echo message="upload javadocs"/>
