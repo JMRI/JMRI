@@ -11,10 +11,16 @@ import javax.swing.border.*;
 import javax.swing.event.*;
 
 /**
- * Create a JPanel containing a tree of resources
+ * Create a JPanel containing a tree of resources.
+ * <P>
+ * The tree has two top-level visible nodes.  One, "icons", represents
+ * the contents of the icons directory in the resources tree in the .jar
+ * file.  The other, "files", is all files found in the "resources"
+ * filetree in the preferences directory.  Note that this means that
+ * files in the distribution directory are _not_ included.
  *
- * @author			Bob Jacobsen
- * @version			$Revision: 1.3 $
+ * @author			Bob Jacobsen  Copyright 2002
+ * @version			$Revision: 1.4 $
  */
 public class CatalogPane extends JPanel {
 	public CatalogPane() {
@@ -29,7 +35,7 @@ public class CatalogPane extends JPanel {
 
         // we manually create the first node, rather than use
         // the routine, so we can name it.
-        insertResourceNodes("resources", resourceRoot, dRoot);
+        insertResourceNodes("icons", resourceRoot, dRoot);
         insertFileNodes("files", fileRoot, dRoot);
 
         // build the tree GUI
@@ -61,22 +67,25 @@ public class CatalogPane extends JPanel {
     /**
      * Recursively add a representation of the resources
      * below a particular resource
-     * @param name Name of the resource to be scanned
-     * @param parent Node for the parent of the resource to be scanned
+     * @param pName Name of the resource to be scanned; this
+     *              is only used for the human-readable tree
+     * @param pPath Path to this resource, including the pName part
+     * @param pParent Node for the parent of the resource to be scanned, e.g.
+     *              where in the tree to insert it.
      */
-    void insertResourceNodes(String name, String path, DefaultMutableTreeNode parent) {
+    void insertResourceNodes(String pName, String pPath, DefaultMutableTreeNode pParent) {
         // first, represent this one
-        DefaultMutableTreeNode newElement = new DefaultMutableTreeNode(name);
-        dModel.insertNodeInto(newElement, parent, parent.getChildCount());
+        DefaultMutableTreeNode newElement = new DefaultMutableTreeNode(pName);
+        dModel.insertNodeInto(newElement, pParent, pParent.getChildCount());
         // then look for childrent and recurse
         // getSystemResource is a URL, getFile is the filename string
-        File fp = new File(ClassLoader.getSystemResource(path).getFile());
+        File fp = new File(ClassLoader.getSystemResource(pPath).getFile());
         if (fp.isDirectory()) {
             // work on the kids
             String[] sp = fp.list();
  			for (int i=0; i<sp.length; i++) {
 				if (log.isDebugEnabled()) log.debug("Descend into resource: "+sp[i]);
-                insertResourceNodes(sp[i],path+"/"+sp[i],newElement);
+                insertResourceNodes(sp[i],pPath+"/"+sp[i],newElement);
  			}
        }
     }
@@ -112,15 +121,15 @@ public class CatalogPane extends JPanel {
             TreePath path = dTree.getSelectionPath();
             int level = path.getPathCount();
             if (level < 3) return null;
-            if (((DefaultMutableTreeNode)path.getPathComponent(1)).getUserObject().equals("resources")) {
-                // process a file
+            if (((DefaultMutableTreeNode)path.getPathComponent(1)).getUserObject().equals("icons")) {
+                // process a .jar icon
                 String name = resourceRoot;
                 for (int i=2; i<level; i++) {
                     name = name+"/"
                             +(String)((DefaultMutableTreeNode)path.getPathComponent(i)).getUserObject();
                 }
                 log.debug("attempt to load resource from "+name);
-                return new NamedIcon(ClassLoader.getSystemResource(name), name);
+                return new NamedIcon(ClassLoader.getSystemResource(name), "resource:"+name);
             } else if (((DefaultMutableTreeNode)path.getPathComponent(1)).getUserObject().equals("files")) {
                 // process a file
                 String name = fileRoot;
@@ -129,51 +138,42 @@ public class CatalogPane extends JPanel {
                             +(String)((DefaultMutableTreeNode)path.getPathComponent(i)).getUserObject();
                 }
                 log.debug("attempt to load file from "+name);
-                return new NamedIcon(name, name);
+                return new NamedIcon(name, "file:"+name);
             } else log.error("unexpected first element on getSelectedIcon: "+path.getPathComponent(1));
         }
         return null;
     }
 
-    public String getSelectedIconName() {
-        if (!dTree.isSelectionEmpty() && dTree.getSelectionPath()!=null ) {
-            // somebody has been selected
-            log.debug("getSelectedIconName with "+dTree.getSelectionPath().toString());
-            TreePath path = dTree.getSelectionPath();
-            int level = path.getPathCount();
-            if (level < 3) return null;
-            if (((DefaultMutableTreeNode)path.getPathComponent(1)).getUserObject().equals("resources")) {
-                // process a file
-                String name = resourceRoot;
-                for (int i=2; i<level; i++) {
-                    name = name+"/"
-                            +(String)((DefaultMutableTreeNode)path.getPathComponent(i)).getUserObject();
-                }
-                log.debug("attempt to load resource from "+name);
-                return name;
-            } else if (((DefaultMutableTreeNode)path.getPathComponent(1)).getUserObject().equals("files")) {
-                // process a file
-                String name = fileRoot;
-                for (int i=2; i<level; i++) {
-                    name = name+File.separator
-                            +(String)((DefaultMutableTreeNode)path.getPathComponent(i)).getUserObject();
-                }
-                log.debug("attempt to load file from "+name);
-                return name;
-            } else log.error("unexpected first element on getSelectedIcon: "+path.getPathComponent(1));
+    /**
+     * Find the icon corresponding to a name. There are three cases:
+     * <UL>
+     * <LI> Starts with "resource:", treat the rest as a resource pathname
+     *                  in the .jar file
+     * <LI> Starts with "file:", treat the rest as an absolute file pathname
+     * <LI> Otherwise, treat the name as a resource pathname in the .jar file
+     * </UL>
+     * @param pName The name string, possibly starting with file: or resource:
+     * @return the desired icon with this same pName as its name.
+     */
+    public NamedIcon getIconByName(String pName) {
+        if (pName.startsWith("resource:"))
+            return new NamedIcon(ClassLoader.getSystemResource(pName.substring(9)), pName);
+        else if (pName.startsWith("file:")) {
+            String fileName = pName.substring(5);
+            log.debug("load from file: "+fileName);
+            return new NamedIcon(fileName, pName);
         }
-        return null;
-    }
-
-    public NamedIcon getIconByName(String name) {
-        return new NamedIcon(ClassLoader.getSystemResource(name), name);
+        else return new NamedIcon(ClassLoader.getSystemResource(pName), pName);
     }
 
     JTree dTree;
     DefaultTreeModel dModel;
     DefaultMutableTreeNode dRoot;
 
-    private final String resourceRoot = "resources";
+    /**
+     * Starting point in the .jar file for the "icons" part of the tree
+     */
+    private final String resourceRoot = "resources/icons";
     private final String fileRoot = jmri.jmrit.XmlFile.prefsDir()+"resources";
 
 	// Main entry point
