@@ -129,7 +129,7 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 		controlPanel.setClosable(true);
 		controlPanel.setIconifiable(true);
 		controlPanel.setTitle("Control Panel");
-		controlPanel.setSize(100, 324);
+		controlPanel.setSize(100, 330);
 		controlPanel.setVisible(true);
 		controlPanel.setEnabled(false);
 		controlPanel.addInternalFrameListener(frameListener);
@@ -150,7 +150,7 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 		addressPanel.setClosable(true);
 		addressPanel.setIconifiable(true);
 		addressPanel.setTitle("Address Panel");
-		addressPanel.setSize(200, 120);
+		addressPanel.setSize(200, 126);
 		addressPanel.setLocation(100, 204);
 		addressPanel.setVisible(true);
 		addressPanel.addInternalFrameListener(frameListener);
