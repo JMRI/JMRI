@@ -1,6 +1,6 @@
 <!-- Special build file for doing Java 1.1.8 compatibility tests -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.6 $ -->
+<!-- Revision $Revision: 1.7 $ -->
 
 <project name="JMRI" default="check" basedir=".">
 
@@ -89,7 +89,7 @@
                  jmri/util/com/sun/TableSorter.java,
                  jmri/util/PythonInterp.java"
            target="1.1" 
-           debug="no" >
+           debug="yes" >
        <classpath refid="project.class.path"    />
     </javac>
   </target>
@@ -113,7 +113,7 @@
     <javac srcdir="${source}" 
            destdir="${target}" 
            target="1.1" 
-           debug="no" >
+           debug="yes" >
        <bootclasspath refid="compile1.1.8.path" />
        <classpath refid="project.class.path"    />
     </javac>
