@@ -38,7 +38,7 @@ import com.sun.java.util.collections.*;
  *
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 
 public class PanelEditor extends JFrame {
@@ -417,6 +417,8 @@ public class PanelEditor extends JFrame {
     void addLabel() {
         JComponent l = new PositionableLabel(nextLabel.getText());
         setNextLocation(l);
+        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+
         putLabel(l);
     }
     public void putLabel(JComponent l) {
