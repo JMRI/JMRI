@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: Automat.html,v 1.3 2003-07-24 21:26:28 jacobsen Exp $ -->
+<!-- $Id: Automat.html,v 1.4 2003-09-02 20:06:00 jacobsen Exp $ -->
 <html>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -24,9 +24,31 @@ The "Automat" class provides an easy way to write automation for your layout
 using JMRI.
 
 <P>
+The key class is
+<A HREF="doc/jmri/jmrit/automat/AbstractAutomaton.html">AbstractAutomaton</a>,
+which provides threading support to simplify custom automation code.
+<P>
 Key aspect: These run in a separate thread, so they can wait for something
 to happen while the rest of the program proceeds. Effectively, each Automat
 is a separate program running when it needs to.
+
+<P>
+There are several examples:
+<UL>
+<LI>SampleAutomaton - watches a Sensor, and adjusts the 
+state of a Turnout so that it matches the Sensor's state.
+<LI>SampleAutomaton2 - watches a Sensor, and adjusts
+the momentum of a locomotive decoder using ops-mode programming
+when the sensor state changes.
+<LI>SampleAutomaton3 - runs a locomotive back and forth
+on a piece of track by watching two sensors, reversing the locomotive
+when they change state.
+</UL>
+<br>
+These can be started from the "Development" Menu of the JmriDemo application.
+Note that they may not do anything useful on your railroad, as they
+have block and locomotive numbers hard-coded.  They're meant to be examples
+for your own programming, not useful tools.
 
 <h3>Throttles</h3>
 there's a line like:
