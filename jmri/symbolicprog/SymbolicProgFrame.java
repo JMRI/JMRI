@@ -72,7 +72,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
   	
   	void selectFileButtonActionPerformed(java.awt.event.ActionEvent e) {
 		// show dialog
-		int retVal = fc.showSaveDialog(this);
+		int retVal = fc.showOpenDialog(this);
 
 		// handle selection or cancel
 		if (retVal == JFileChooser.APPROVE_OPTION) {
