@@ -3,8 +3,7 @@
 package jmri.jmrit;
 
 import java.io.BufferedInputStream;
-import java.io.*;
-import java.net.*;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
@@ -17,7 +16,7 @@ import org.jdom.input.SAXBuilder;
  * Handle common aspects of XML files.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public abstract class XmlFile {
 
@@ -67,12 +66,7 @@ public abstract class XmlFile {
         // get full pathname to the DTD directory (apath is an absolute path)
         String dtdpath = "xml"+File.separator+"DTD"+File.separator;
         File dtdFile = new File(dtdpath);
-        String dtdUrl;
-        try {
-            dtdUrl = dtdFile.toURI().toURL().toString();
-        } catch (Exception e) {
-            dtdUrl = "file:"+dtdFile.getAbsolutePath();
-        }
+        String dtdUrl = jmri.util.FileUtil.getUrl(dtdFile);
 
         if (log.isDebugEnabled()) log.debug("readFile from stream, DTD URL:"+dtdUrl);
         // This is taken in large part from "Java and XML" page 354
