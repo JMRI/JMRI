@@ -11,7 +11,7 @@ import jmri.*;
  * SlotManager object.
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class LnOpsModeProgrammer implements Programmer  {
 
@@ -41,7 +41,8 @@ public class LnOpsModeProgrammer implements Programmer  {
     }
 
     public void setMode(int mode) {
-        mSlotMgr.setMode(mode);
+        if (mode!=Programmer.OPSBYTEMODE)
+            log.error("Can't switch to mode "+mode);
     }
 
     public int  getMode() {
@@ -71,6 +72,8 @@ public class LnOpsModeProgrammer implements Programmer  {
     public String decodeErrorCode(int i) {
         return mSlotMgr.decodeErrorCode(i);
     }
+    // initialize logging
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnOpsModeProgrammer.class.getName());
 
 }
 
