@@ -48,8 +48,8 @@ public class SymbolicProgTest extends TestCase {
 		suite.addTest(jmri.jmrit.symbolicprog.ComboCheckBoxTest.suite());
 		suite.addTest(jmri.jmrit.symbolicprog.ComboRadioButtonsTest.suite());
 		suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrameTest.suite());
+		suite.addTest(jmri.jmrit.symbolicprog.DecVariableValueTest.suite());
 		suite.addTest(jmri.jmrit.symbolicprog.LongAddrVariableValueTest.suite());
-		suite.addTest(jmri.jmrit.symbolicprog.VariableValueTest.suite());
 		suite.addTest(jmri.jmrit.symbolicprog.CvValueTest.suite());
 		suite.addTest(jmri.jmrit.symbolicprog.DecoderFileTest.suite());
 		suite.addTest(jmri.jmrit.symbolicprog.CvTableModelTest.suite());

@@ -35,8 +35,10 @@ public class CvValue implements ProgListener {
 	
 	public int getState()  { return _state; }
 	public void setState(int state) {
+		if (log.isDebugEnabled()) log.debug("set state from "+_state+" to "+state);
+		int oldstate = _state;
 		_state = state;
-		if (_state != state) prop.firePropertyChange("State", new Integer(_state), new Integer(state));
+		if (oldstate != state) prop.firePropertyChange("State", new Integer(oldstate), new Integer(state));
 	}
 	private int _state = 0;
 	
@@ -50,6 +52,7 @@ public class CvValue implements ProgListener {
 	// read, write operations
 	public boolean isBusy() { return _busy; }
 	private void setBusy(boolean busy) {
+		if (log.isDebugEnabled()) log.debug("set busy from "+_busy+" to "+busy+" state "+_state);
 		if (_busy != busy) prop.firePropertyChange("Busy", new Boolean(_busy), new Boolean(busy));
 		_busy = busy;
 	}

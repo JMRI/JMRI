@@ -18,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Vector;
+import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -30,6 +31,8 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 		_maxVal = maxVal;
 		_minVal = minVal;
 		_value = new JTextField(4);
+		_defaultColor = _value.getBackground();
+		_value.setBackground(COLOR_UNKNOWN);
 		// connect to the JTextField value, cv
 		_value.addActionListener(this);
 		((CvValue)_cvVector.elementAt(getCvNum())).addPropertyChangeListener(this);
@@ -92,6 +95,14 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 		if (oldVal != value || getState() == VariableValue.UNKNOWN) 
 			prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value));
 		_value.setText(""+value);
+	}
+
+	Color _defaultColor;
+	// implement an abstract member to set colors
+	void setColor(Color c) {
+		if (c != null) _value.setBackground(c);
+		else _value.setBackground(_defaultColor);
+		prop.firePropertyChange("Value", null, null);
 	}
 
 	public void read() {

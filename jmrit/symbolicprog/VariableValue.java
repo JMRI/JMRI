@@ -16,6 +16,7 @@ import jmri.ProgListener;
 import java.util.Vector;
 import java.awt.Component;
 import javax.swing.JLabel;
+import java.awt.Color;
 
 public abstract class VariableValue implements java.beans.PropertyChangeListener {
 
@@ -39,6 +40,10 @@ public abstract class VariableValue implements java.beans.PropertyChangeListener
 	abstract public void propertyChange(java.beans.PropertyChangeEvent e);
 
 	abstract public Object rangeVal();
+	
+	// method to handle color changes for states
+	// make abstract!
+	void setColor(Color c) {}
 
 	// methods implemented here:
 	public VariableValue(String name, String comment, boolean readOnly,
@@ -81,9 +86,23 @@ public abstract class VariableValue implements java.beans.PropertyChangeListener
 	public void setState(int state) {
 		if (_state != state || _state == UNKNOWN) prop.firePropertyChange("State", new Integer(_state), new Integer(state));
 		_state = state;
+		switch (_state) {
+			case UNKNOWN : setColor(COLOR_UNKNOWN ); break;
+			case EDITTED : setColor(COLOR_EDITTED ); break;
+			case READ    : setColor(COLOR_READ    ); break;
+			case STORED  : setColor(COLOR_STORED  ); break;
+			case FROMFILE: setColor(COLOR_FROMFILE); break;
+			default:      log.error("Inconsistent state: "+_state);
+		}
 	}
-	private int _state = 0;
+	private int _state = UNKNOWN;
 	
+	// color management - null means to use default for the component; where do we store that?
+	static final Color COLOR_UNKNOWN  = Color.red;
+	static final Color COLOR_EDITTED  = Color.yellow;
+	static final Color COLOR_READ     = null;
+	static final Color COLOR_STORED   = null;
+	static final Color COLOR_FROMFILE = Color.yellow;
 	
 	// busy during read, write operations
 	public boolean isBusy() { return _busy; }

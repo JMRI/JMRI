@@ -79,10 +79,10 @@ public class CvValueTest extends TestCase {
 		if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+cv.getValue()+" state="+cv.getState());
 		if (i==0) log.warn("textCvValWrite saw an immediate return from isBusy");
 
-		assert(i<100);
-		assert(cv.getValue() == 12);
-		assert(cv.getState() == CvValue.STORED);
-		assert(p.lastWrite() == 12);
+		Assert.assertTrue("iterations ", i<100);
+		Assert.assertEquals("cv value ", 12, cv.getValue());
+		Assert.assertEquals("cv state ", CvValue.STORED, cv.getState());
+		Assert.assertEquals("last value written ", 12, p.lastWrite());
 	}
 	
 	// check the state diagram

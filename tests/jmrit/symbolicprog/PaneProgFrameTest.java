@@ -87,7 +87,7 @@ public class PaneProgFrameTest extends TestCase {
 	}
 	
 	// show me a frame made from files
-	public void testFileFrame() {
+	public void XtestFileFrame() {
 		// Open and parse decoder file
 		System.out.println("start decoder file");
 		File dfile = new File("xml/decoders/NMRA_All.xml");

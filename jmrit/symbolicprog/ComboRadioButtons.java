@@ -46,7 +46,6 @@ public class ComboRadioButtons extends JPanel {
 
 	void thisActionPerformed(java.awt.event.ActionEvent e) {
 		// update original state to selected button
-		System.out.println("command "+e.getActionCommand());
 		_box.setSelectedItem(e.getActionCommand());
 	}
 
