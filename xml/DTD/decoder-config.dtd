@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a DCC decoder as a component, esp. information -->
 <!-- on how to program it. -->
-<!-- $Revision: 1.21 $ -->
+<!-- $Revision: 1.22 $ -->
 
 <!ELEMENT decoder-config (version, decoder, pane*)>
 
@@ -74,7 +74,7 @@
 
 <!ELEMENT variable  (enumVal |
                              decVal | hexVal | 
-                             speedTableVal | longAddressVal ) >
+                             speedTableVal | longAddressVal | splitVal ) >
 <!ATTLIST variable label CDATA #REQUIRED>  <!-- manufacturere name used for identification -->
 <!ATTLIST variable CV CDATA #REQUIRED>    <!-- CV number containing value -->
 <!ATTLIST variable mask CDATA "VVVVVVVV">    <!-- mask of bits within CV -->
@@ -91,22 +91,19 @@
 <!ATTLIST variable minOut		CDATA #IMPLIED>  <!-- min number of fns in decoder for this to be valid -->
 <!ATTLIST variable inOptions 	CDATA #IMPLIED>  <!-- variable present if any of the options are present -->
 
-<!-- enumVal, decVal, hexval, speedTableVal, lognAddressVal are constraints on possible values -->
+<!-- enumVal, decVal, hexval, speedTableVal, longAddressVal are constraints on possible values -->
 
 <!ELEMENT decVal EMPTY>
-<!ATTLIST decVal min CDATA "0" >    <!-- if decimal/hex, smallest acceptable value -->
-<!ATTLIST decVal max CDATA "255" >  <!-- if decimal/hex, largest acceptable value -->
-<!ATTLIST decVal default CDATA #IMPLIED>
+<!ATTLIST decVal min CDATA "0" >    <!-- smallest acceptable value -->
+<!ATTLIST decVal max CDATA "255" >  <!-- largest acceptable value -->
 <!ATTLIST decVal comment CDATA #IMPLIED>
 
 <!ELEMENT hexVal EMPTY>
-<!ATTLIST hexVal min CDATA "0" >    <!-- if decimal/hex, smallest acceptable value -->
-<!ATTLIST hexVal max CDATA "ff" >  <!-- if decimal/hex, largest acceptable value -->
-<!ATTLIST hexVal default CDATA #IMPLIED>
+<!ATTLIST hexVal min CDATA "0" >    <!-- smallest acceptable value -->
+<!ATTLIST hexVal max CDATA "ff" >  <!-- largest acceptable value -->
 <!ATTLIST hexVal comment CDATA #IMPLIED>
 
 <!ELEMENT enumVal (enumChoice*) >
-<!ATTLIST enumVal default CDATA #IMPLIED>
 <!ATTLIST enumVal comment CDATA #IMPLIED>
 
 <!ELEMENT enumChoice EMPTY>
@@ -126,6 +123,12 @@
 <!ELEMENT longAddressVal EMPTY >
 <!ATTLIST longAddressVal comment CDATA #IMPLIED>
 
+<!ELEMENT splitVal EMPTY >
+<!ATTLIST splitVal highCV  	CDATA #REQUIRED>	<!-- CV to hold high-order bits -->
+<!ATTLIST splitVal min CDATA "0" >				<!-- smallest acceptable value -->
+<!ATTLIST splitVal max CDATA "255" >			<!-- largest acceptable value -->
+<!ATTLIST splitVal default CDATA #IMPLIED>
+<!ATTLIST splitVal comment CDATA #IMPLIED>
 
 
 <!-- A constant represents a fixed value, but is treated -->
