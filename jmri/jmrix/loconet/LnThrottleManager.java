@@ -4,8 +4,6 @@ import jmri.ThrottleManager;
 import jmri.ThrottleListener;
 import jmri.DccThrottle;
 import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * LocoNet implementation of a ThrottleManager
@@ -14,7 +12,6 @@ public class LnThrottleManager implements ThrottleManager, SlotListener
 {
     private SlotManager slotManager;
     private HashMap throttleListeners;
-    private HashMap throttleMap;
 
     /**
      * Constructor. Gets a reference to the LocoNet SlotManager.
@@ -23,7 +20,6 @@ public class LnThrottleManager implements ThrottleManager, SlotListener
     {
         slotManager = SlotManager.instance();
     }
-
 
     /**
      * Request a throttle, given a decoder address. When the decoder address
@@ -40,21 +36,9 @@ public class LnThrottleManager implements ThrottleManager, SlotListener
         }
 
         Integer addressKey = new Integer(address);
-        ArrayList list = (ArrayList)throttleListeners.get(addressKey);
-        if (list == null)
-        {
-            list = new ArrayList(2);
-        }
-        if (!list.contains(l))
-        {
-            list.add(l);
-        }
-        throttleListeners.put(addressKey, list);
-        if (list.size() == 1)
-        {
-            // Only need to do this once per address.
-            slotManager.slotFromLocoAddress(address, this);
-        }
+        throttleListeners.put(addressKey, l);
+
+        slotManager.slotFromLocoAddress(address, this);
     }
 
     /**
@@ -67,16 +51,10 @@ public class LnThrottleManager implements ThrottleManager, SlotListener
         if (throttleListeners != null)
         {
             Integer addressKey = new Integer(address);
-            ArrayList list = (ArrayList)throttleListeners.get(addressKey);
-            if (list != null)
-            {
-                list.remove(l);
-                throttleListeners.put(addressKey, list);
-            }
+            throttleListeners.remove(addressKey);
         }
 
     }
-
     /**
      * SlotListener contract. Get notification that an address has changed slot.
      * This method creates a throttle for all ThrottleListeners of that address
@@ -85,24 +63,11 @@ public class LnThrottleManager implements ThrottleManager, SlotListener
     public void notifyChangedSlot(LocoNetSlot s)
     {
         Integer address = new Integer(s.locoAddr());
-        ArrayList list = (ArrayList)throttleListeners.get(address);
-        if (list != null)
+        ThrottleListener l = (ThrottleListener)throttleListeners.get(address);
+        if (l != null)
         {
-            if (throttleMap == null)
-            {
-                throttleMap = new HashMap();
-            }
-            LocoNetThrottle throttle = (LocoNetThrottle)throttleMap.get(address);
-            if (throttle == null)
-            {
-                throttle = new LocoNetThrottle(s);
-                throttleMap.put(address, throttle);
-            }
-            for (int i=0; i<list.size(); i++)
-            {
-                ThrottleListener listener = (ThrottleListener)list.get(i);
-                listener.notifyThrottleFound(throttle);
-            }
+ 	        DccThrottle throttle = new LocoNetThrottle(s);
+			l.notifyThrottleFound(throttle);
         }
     }
 
