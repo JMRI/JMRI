@@ -2,11 +2,6 @@
 
 package jmri;
 
-import jmri.Programmer;
-import jmri.PowerManager;
-import jmri.SensorManager;
-import jmri.TurnoutManager;
-
 /**
  * Provides static members for locating various interface implementations.
  *<P>
@@ -21,7 +16,7 @@ import jmri.TurnoutManager;
  * non-system-specific code.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class InstanceManager {
 
@@ -34,6 +29,8 @@ public class InstanceManager {
     static public TurnoutManager turnoutManagerInstance()  { return _turnoutManager; }
 
     static public ConfigureManager configureManagerInstance()  { return mConfigureManager; }
+
+    static public ThrottleManager throttleManagerInstance()  { return mThrottleManager; }
 
     static private PowerManager _powerManager = null;
     static public void setPowerManager(PowerManager p) {
@@ -63,6 +60,12 @@ public class InstanceManager {
     static public void setConfigureManager(ConfigureManager p) {
         if (p!=mConfigureManager && p!=null && log.isDebugEnabled()) log.debug("ConfigureManager instance is being replaced: "+p);
         mConfigureManager = p;
+    }
+
+    static private ThrottleManager mThrottleManager = null;
+    static public void setThrottleManager(ThrottleManager p) {
+        if (p!=mThrottleManager && p!=null && log.isDebugEnabled()) log.debug("ThrottleManager instance is being replaced: "+p);
+        mThrottleManager = p;
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(InstanceManager.class.getName());
