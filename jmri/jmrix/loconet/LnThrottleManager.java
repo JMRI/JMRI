@@ -14,7 +14,7 @@ import com.sun.java.util.collections.HashMap;
  *
  * @see SlotManager
  * @author		Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.14 $
+ * @version 		$Revision: 1.15 $
  */
 public class LnThrottleManager implements ThrottleManager, SlotListener {
     private SlotManager slotManager;
@@ -66,6 +66,12 @@ public class LnThrottleManager implements ThrottleManager, SlotListener {
         }
 
     }
+
+    /**
+     * LocoNet does have a Dispatch function
+     **/
+    public boolean hasDispatchFunction(){ return true; }     
+
     /**
      * SlotListener contract. Get notification that an address has changed slot.
      * This method creates a throttle for all ThrottleListeners of that address
