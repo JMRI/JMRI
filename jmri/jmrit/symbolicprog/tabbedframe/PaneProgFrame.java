@@ -27,7 +27,7 @@ import org.jdom.Element;
 /**
  * Frame providing a command station programmer from decoder definition files.
  * @author			Bob Jacobsen   Copyright (C) 2001; D Miller Copyright 2003
- * @version			$Revision: 1.34 $
+ * @version			$Revision: 1.35 $
  */
 abstract public class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
@@ -188,7 +188,7 @@ abstract public class PaneProgFrame extends javax.swing.JFrame
 
     public Dimension getMaximumSize() {
         Dimension screen = getToolkit().getScreenSize();
-        return new Dimension(screen.width, screen.height-25);
+        return new Dimension(screen.width, screen.height-35);
     }
 
     /**
