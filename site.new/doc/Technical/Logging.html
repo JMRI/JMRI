@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Logging.html,v 1.4 2004-07-19 01:48:16 jacobsen Exp $ -->
+<!-- $Id: Logging.html,v 1.5 2004-07-25 05:58:30 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -102,12 +102,34 @@ to
 </PRE>
 log entries will be written to both the "console"
 by "A1", and a file by "R". 
+<P>
+To log messages
+from a class named MyClass, add this to the bottom of the class file:
+<code>
+<PRE>
+	static org.apache.log4j.Category log 
+	        = org.apache.log4j.Category.getInstance(MyClass.class.getName());
+</PRE>
+</code>
+Then for each message to log insert a line like:
 
-<HR>
-<BR>Site hosted by: <BR>
-<A href="http://sourceforge.net"> 
-<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A>
- 
+<code>
+<PRE>
+	log.debug("message");
+</PRE>
+</code>
+
+<P>
+If the message is not just an explicit string, you should use
+this form instead:
+<code>
+<PRE>
+	if (log.isInfoDebug()) log.debug("Found "+numberEntrie());
+</PRE>
+</code>
+so the program doesn't waste time forming the message string (in this
+case, calling numberEntries() and concatenating the strings) if
+the log.debug call isn't going to store it anyway.
 
 <!-- Footer -->
     <hr class="hide">
