@@ -23,8 +23,9 @@ public class LnPowerManager implements PowerManager, LocoNetListener {
 
 	int power = UNKNOWN;
 	
-	public void setPower(int v) {
-		power = v;
+	public void setPower(int v) throws JmriException {
+		power = UNKNOWN;
+		checkTC();
 		if (v==ON) {
 			// send GPON
 			LocoNetMessage l = new LocoNetMessage(2);
@@ -36,6 +37,7 @@ public class LnPowerManager implements PowerManager, LocoNetListener {
 			l.setOpCode(LnConstants.OPC_GPOFF);
 			tc.sendLocoNetMessage(l);
 		}
+		firePropertyChange("Power", null, null);
 	}
 	
 	public int getPower() { return power;}
@@ -44,6 +46,10 @@ public class LnPowerManager implements PowerManager, LocoNetListener {
 	public void dispose() throws JmriException {
 		tc.removeLocoNetListener(~0, this);
 		tc = null;
+	}
+
+	private void checkTC() throws JmriException {
+		if (tc == null) throw new JmriException("attempt to use LnPowerManager after dispose");
 	}
 
 	// to hear of changes

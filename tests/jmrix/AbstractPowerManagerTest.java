@@ -113,9 +113,15 @@ public abstract class AbstractPowerManagerTest extends TestCase {
 		p.setPower(PowerManager.ON);
 		sendOnReply();
 		p.dispose();
-		p.setPower(PowerManager.OFF);
-		sendOffReply();
-		Assert.assertEquals("Should still be ON", PowerManager.ON, p.getPower());
+		try {
+			p.setPower(PowerManager.OFF);
+			}
+		catch (JmriException e) {
+			// this is OK branch, check message not sent
+			Assert.assertEquals("messages sent", 1, outboundSize()); // just the first
+			return;
+			}
+		Assert.fail("Should have thrown exception after dispose()");
 	}
 
 }

@@ -26,27 +26,28 @@ public class NcePowerManager implements PowerManager, NceListener {
 	boolean waiting = false;
 	int onReply = UNKNOWN;
 		
-	public void setPower(int v) {
-		power = v;
+	public void setPower(int v) throws JmriException {
+		power = UNKNOWN; // while waiting for reply
+		checkTC();
 		if (v==ON) {
+			// configure to wait for reply
+			waiting = true;
+			onReply = PowerManager.ON;
 			// send "Enable main track"
 			NceMessage l = new NceMessage(1);
 			l.setOpCode('E');
 			tc.sendNceMessage(l);
+		} else if (v==OFF) {
 			// configure to wait for reply
 			waiting = true;
-			onReply = PowerManager.ON;
+			onReply = PowerManager.OFF;
 			firePropertyChange("Power", null, null);
-		} else if (v==OFF) {
 			// send "Kill main track"
 			NceMessage l = new NceMessage(1);
 			l.setOpCode('K');
 			tc.sendNceMessage(l);
-			// configure to wait for reply
-			waiting = true;
-			onReply = PowerManager.ON;
-			firePropertyChange("Power", null, null);
 		}
+		firePropertyChange("Power", null, null);
 	}
 	
 	public int getPower() { return power;}
@@ -57,6 +58,10 @@ public class NcePowerManager implements PowerManager, NceListener {
 		tc = null;
 	}
 
+	private void checkTC() throws JmriException {
+		if (tc == null) throw new JmriException("attempt to use NcePowerManager after dispose");
+	}
+	
 	// to hear of changes
 	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 	public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) { 
