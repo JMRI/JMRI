@@ -29,7 +29,7 @@ onto objects. Sometimes the user will want to name objects
 with arbitary user names, e.g. "East Lockport Turnout". 
 These can't be known until their mapping to hardware has been made. 
 But other times these will be de-novo indentifications that the 
-code must understand, e.g. "LocoNet Turnout 23".
+code must understand, e.g. something that means "LocoNet Turnout 23".
 
 <LI>We imagine that configurations will be stored in XML files,
 in a symbolic form. Names are a convenient way to connect objects
@@ -37,8 +37,7 @@ and object references in that kind of configuration.
 </OL>
 
 <H2>Items with names</h2>
-In general, all hardware-related objects get names:
-
+There are lots of things that might need names:
 <UL>
 <LI>Aspects for signals
 <LI>Blocks
@@ -50,18 +49,23 @@ In general, all hardware-related objects get names:
 <LI>Turnouts
 </UL>
 
-<P>
-Unique names also carry an indication of which hardware system they are bound to:
-<UL>
-<LI>C/MRI
-<LI>Direct drive of the rail signal from the computer
-<LI>Internal objects with no hardware equivalent
-<LI>LocoNet (Digitrax)
-<LI>NCE System One and similar
-<LI>XpressNet (Lenz)
-</UL>
+Some of these are associated with a specific hardware device, e.g. a particular
+turnout.  Others are more virtual, e.g. a signal aspect.
 
-<H2>System names</h2>
+<P>
+In all cases, we want users to be able to call things what they want.
+Names like "p(24,23)*" are not useful.  Every named item will therefore
+have a "user name", which is an entirely free-form string.
+
+<P>
+At the same time, we need a shorthand name, really a unique identifier, 
+to talk about specific objects.  This doesn't have to be convenient, but
+does have to have a clear mapping from name to object and back.  For example,
+we need a very specific way to identify "LocoNet Turnout 23".  We call these
+"system names".  JMRI code will map these to and form whatever information
+the hardware may need, so we can specify them here.
+
+<H2>Hardware names</h2>
 
 A system-name is formed from a single letter representing the hardware system, 
 followed by a single letter indicating the type, 
@@ -72,11 +76,68 @@ is otherwise unconstrained.
 Examples:
 <UL>
 <LI>LT23 - LocoNet Turnout 23.  
-<LI>CB134 - C/MRI input block 134
+<LI>CD134 - C/MRI input block detector at location 34 of serial board 1.
 </ul>
 
 Note that there is no assumption of pattern to the names; they don't have
-to be assigned monotonically, nor are there restricted to a single system.
+to be assigned monotonically, nor are they restricted to a single system.
+
+<H3>Hardware system letters</h3>
+Note that some of these are placeholders, and have no underlying implementation. 
+
+<ul>
+<LI>C C/MRI serial
+<LI>D Direct-packet-drive
+<LI>E EasyDCC
+<LI>I Internal, debugging objects with no associated hardware
+<LI>L LocoNet
+<LI>N NCE (also Wangrow currently)
+<LI>T Train-Brain
+<LI>X XpressNet via LI100
+</ul>
+
+<H3>Device type letters</h3>
+Note that some of these are placeholders, and have no underlying implementation. Also, 
+there is no guarantee that any given hardware system will every implement all of them.
+
+<ul>
+
+<LI>D Occupancy detector (e.g. track circuit)
+
+<LI>I Input - general purpose. It's not clear whether this includes, i.e. is a superset of, 
+other specific inputs like occupancy detectors.
+
+<LI>L DCC Locomotive decoder - generally, a specific DCC address
+
+<LI>O Output - general purpose. It's not clear whether this includes, i.e. is a 
+superset of, other specific outputs like turnouts.
+
+<LI>P Power manager i.e. layout, district, subdistrict; not all systems 
+distinguish between these,
+so the device type letter doesn't either.  The system-specific part of the name
+can. For example, the system specific part might be B for main layout power, e.g. 
+LPB or S42 for subdistrict channel 2 on card 4, e.g. LPS42.
+
+<LI>S Signal Head(s) - also interpreted to include indicators on control panels
+
+<LI>T Turnout
+</ul>
+
+
+<H2>To Do</h2>
+<UL>
+<LI>Some devices are not really named, as there's no idea of more than one yet.
+The DCC programmer is the first example, but there may be others.
+
+<LI>The system name convention doesn't provide an easy way to identify more
+than one adapter of a given type.  E.g. if you're connected to more than
+one LocoNet, or more than one command station of any type, that feed
+separate parts of a single layout, how do you address this? 
+
+<LI>Similarly, there's no provision for a single program to deal with more
+than one layout.  If that's needed, we'll have to understand what 
+the program is trying to do.
+</UL>
 
 <HR>
 <BR>Site hosted by: <BR>
