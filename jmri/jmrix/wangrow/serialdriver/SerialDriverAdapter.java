@@ -34,7 +34,7 @@ import javax.comm.SerialPort;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -77,7 +77,7 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
             activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
             activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
 
-            // disable flow control; hardware lines used for signalling, XON/XOFF might appear in data
+            // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
             activeSerialPort.setFlowControlMode(0);
 
             // set timeout

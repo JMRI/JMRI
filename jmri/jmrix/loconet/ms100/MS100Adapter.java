@@ -29,7 +29,7 @@ import Serialio.SerialPortLocal;
  * Neither the baud rate configuration nor the "option 1" option are used.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -157,7 +157,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
             activeSerialPort.setRTS(true);          // not connected in some serial ports and adapters
             activeSerialPort.setDTR(false);         // pin 1 in DIN8; on main connector, this is DTR
 
-            // disable flow control; hardware lines used for signalling, XON/XOFF might appear in data
+            // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
             activeSerialPort.setFlowControlMode(0);
 
             // activeSerialPort.enableReceiveTimeout(1000);

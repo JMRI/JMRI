@@ -3,7 +3,7 @@
 <head>
 <!--
 
-  $Id: package.html,v 1.1 2003-08-13 17:10:06 jacobsen Exp $
+  $Id: package.html,v 1.2 2004-07-09 03:33:19 jacobsen Exp $
 
   Made with permission from the Sun version at
   http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
@@ -22,7 +22,23 @@ for the system-specific code, and serves as the parent
 to the system-specific packages. 
 <P>
 We intend that this will still compile and run with
-any of the system-specific subpackages missing.
+any of the system-specific subpackages missing. And that
+might even work.
+
+<P>
+Most of the system specific code is organized as follows:
+<ul>
+<LI>PortController classes handle the connection to the serial
+port or other communications link.
+That code is usually in the "SsssPortController"
+class in the "ssss.serialdriver" package
+<LI>TrafficController classes handle the sequencing and scheduling
+of messages and replies through a port. The intention is that
+a particular system use one (or few) traffic controllers
+with perhaps multiple port controllers for different connections
+<LI>System-specific tools are generally given their own sub-package
+under the system package
+</ul>
 
 </body>
 </html>
