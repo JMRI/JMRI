@@ -13,7 +13,7 @@ import jmri.jmrix.loconet.*;
  *
  * Description:	    tests for the jmri.jmrix.loconet.LocoNetMessage class
  * @author			Bob Jacobsen
- * @version         $Id: LocoNetMessageTest.java,v 1.2 2002-03-11 02:03:32 jacobsen Exp $
+ * @version         $Id: LocoNetMessageTest.java,v 1.3 2002-04-29 15:57:55 jacobsen Exp $
  */
 public class LocoNetMessageTest extends TestCase {
 
@@ -123,7 +123,7 @@ public class LocoNetMessageTest extends TestCase {
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {LnTurnoutTest.class.getName()};
+		String[] testCaseName = {LocoNetMessageTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 
