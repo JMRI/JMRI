@@ -21,7 +21,7 @@ import com.sun.java.util.collections.ArrayList;
  * Extends VariableValue to represent a enumerated variable.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: EnumVariableValue.java,v 1.10 2001-12-04 19:41:12 jacobsen Exp $
+ * @version			$Id: EnumVariableValue.java,v 1.11 2001-12-06 06:16:13 jacobsen Exp $
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
@@ -120,6 +120,16 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 		}
 		else if (format.equals("radiobuttons")) {
 			ComboRadioButtons b = new ComboRadioButtons(_value, this);
+			comboRBs.add(b);
+			return b;
+		}
+		else if (format.equals("onradiobutton")) {
+			ComboRadioButtons b = new ComboOnRadioButton(_value, this);
+			comboRBs.add(b);
+			return b;
+		}
+		else if (format.equals("offradiobutton")) {
+			ComboRadioButtons b = new ComboOffRadioButton(_value, this);
 			comboRBs.add(b);
 			return b;
 		}

@@ -38,7 +38,7 @@ public class ComboRadioButtons extends JPanel {
 				}
 			});		
 			v.addElement(b);
-			add(b);
+			addToPanel(b, i);
 			g.add(b);
 		}
 		setColor();
@@ -60,6 +60,15 @@ public class ComboRadioButtons extends JPanel {
 		((JRadioButton)(v.elementAt(_box.getSelectedIndex()))).setSelected(true);
 	}
 
+	/**
+	 * Add a button to the panel if desired.  In this class,
+	 * its always added, but in the On and Off subclasses, its only
+	 * added for certain ones
+	 */
+	void addToPanel(JRadioButton b, int i) {
+		add(b);
+	}
+	
 	void thisActionPerformed(java.awt.event.ActionEvent e) {
 		// update original state to selected button
 		_box.setSelectedItem(e.getActionCommand());
@@ -105,6 +114,6 @@ public class ComboRadioButtons extends JPanel {
 	}
 	
 	// initialize logging	
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ComboCheckBox.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ComboRadioButtons.class.getName());
 
 }
