@@ -2,8 +2,8 @@
  * XNetTurnout.java
  *
  * Description:		extend jmri.AbstractTurnout for XNet layouts
- * @author			Bob Jacobsen Copyright (C) 2001, Portions by Paul Bender Copyright (C) 2003,2004 
- * @version			$Revision: 1.16 $
+ * @author			Bob Jacobsen Copyright (C) 2001, Portions by Paul Bender Copyright (C) 2003 
+ * @version			$Revision: 1.17 $
  */
 
 package jmri.jmrix.lenz;
@@ -11,10 +11,6 @@ package jmri.jmrix.lenz;
 import jmri.AbstractTurnout;
 
 public class XNetTurnout extends AbstractTurnout implements XNetListener {
-
-    static private int TimeoutValue = 500;  /* Default delay 1/2 seconds */
-
-    private javax.swing.Timer timer;
 
     public XNetTurnout(int pNumber) {  // a human-readable turnout number must be specified!
         super("XT"+pNumber);
@@ -31,7 +27,6 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 	forwardCommandChangeToLayout(s);
 	newCommandedState(s);
 	if( getKnownState()==UNKNOWN) newKnownState(s);
-		else newKnownState(INCONSISTENT);
     }
 
 
@@ -44,9 +39,8 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                                                   (s & CLOSED)!=0,
                                                   (s & THROWN)!=0,
                                                   true );
+
         XNetTrafficController.instance().sendXNetMessage(msg, this);
-	// Start the responce timeout timer
-        startTimer();
     }
 
 
@@ -90,7 +84,6 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
              } else {
                // If the motion is completed, behave as though this is a 
                // turnout without feedback.
-	       stopTimer();
 	       parseFeedbackMessage(l);
                // We need to tell the turnout to shut off the output.
                XNetMessage msg =  XNetTrafficController.instance()
@@ -109,7 +102,6 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
           // turnout, and this turnout does not provide feedback.
           // In this case, we want to check the contents of the message 
           // and act accordingly.
-	    stopTimer();
 	    parseFeedbackMessage(l);
             // We need to tell the turnout to shut off the output.
             XNetMessage msg =  XNetTrafficController.instance()
@@ -126,7 +118,19 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 	} else if (XNetTrafficController.instance()
                                         .getCommandStation().isOkMessage(l)) {
             // Finally, we may just recieve an OK message.
-	    // Code from this section was moved to the timeout routine.  
+            // We need to tell the turnout to shut off the output.
+            XNetMessage msg =  XNetTrafficController.instance()
+                                                .getCommandStation()
+	   					.getTurnoutCommandMsg(mNumber,
+                                                  getCommandedState()==CLOSED,
+                                                  getCommandedState()==THROWN,
+                                                  false );
+ 	    // We have to send this message twice for some reason, 
+            // otherwise, the turnout continues to throw.
+            XNetTrafficController.instance().sendXNetMessage(msg, this);
+            XNetTrafficController.instance().sendXNetMessage(msg, this);
+	    // Set the known state to the commanded state.
+	    newKnownState(getCommandedState());
 	} else { return; }
     }
 
@@ -216,51 +220,6 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         }    
        return(false);
     }
-
-   /*
-    * Start a Timer to make sure turnouts complete thier motion
-    */
-    private void startTimer() {
-	if(timer==null) {
-	   timer = new javax.swing.Timer(TimeoutValue,new java.awt.event.ActionListener() { public void 
-			actionPerformed(java.awt.event.ActionEvent e) {
-                           timeout();
-			}
-                    });
-	}
-	timer.stop();
-	timer.setInitialDelay(TimeoutValue);
-	timer.setRepeats(false);
-	timer.start();
-    }
-
-    /*
-     * Stop the timer after the turnout finishes it's motion
-     */
-    private void stopTimer() {
-	if(timer!=null) timer.stop();
-    }
-
-    /*
-     * If the timer times out, tell the turnout to stop moving,
-     * and set the state of the motion to completed 
-     */
-    private void timeout() {
-        // We need to tell the turnout to shut off the output.
-        XNetMessage msg =  XNetTrafficController.instance()
-                                                .getCommandStation()
-	    					.getTurnoutCommandMsg(mNumber,
-                                                  getCommandedState()==CLOSED,
-                                                  getCommandedState()==THROWN,
-                                                  false );
- 	 // We have to send this message twice for some reason, 
-         // otherwise, the turnout continues to throw.
-         XNetTrafficController.instance().sendXNetMessage(msg, this);
-         XNetTrafficController.instance().sendXNetMessage(msg, this);
-	 // Set the known state to the commanded state.
-	 newKnownState(getCommandedState());
-    }
-
 
     public void dispose() {
         XNetTrafficController.instance().removeXNetListener(~0, this);
