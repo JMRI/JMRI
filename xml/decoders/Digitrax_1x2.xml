@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_1x2.xml,v 1.9 2002-01-01 01:49:53 jacobsen Exp $ -->
+<!-- $Id: Digitrax_1x2.xml,v 1.10 2002-01-02 20:37:18 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" version="2" lastUpdated="20011221"/>
 
@@ -218,7 +218,7 @@
 				<enumChoice choice="Reserved (0xF)"/>
 				</enumVal>
 			</variable>
-		<variable name="Function 1 effect generated" CV="51" mask="XXXXVVVV">
+		<variable name="Function 1 effect generated" CV="51" mask="XXXXVVVV" minFn="1">
 			<enumVal>
 				<enumChoice choice="Normal function of lead"/>
 				<enumChoice choice="Random flicker"/>
@@ -238,7 +238,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable name="Function 1 behaviour" CV="51" mask="VVVVXXXX">
+		<variable name="Function 1 behaviour" CV="51" mask="VVVVXXXX" minFn="1">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -258,7 +258,7 @@
 				<enumChoice choice="Reserved (0xF)"/>
 				</enumVal>
 			</variable>
-		<variable name="Function 2 effect generated" CV="52" mask="XXXXVVVV">
+		<variable name="Function 2 effect generated" CV="52" mask="XXXXVVVV" minFn="2">
 			<enumVal>
 				<enumChoice choice="Normal function of lead"/>
 				<enumChoice choice="Random flicker"/>
@@ -278,7 +278,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable name="Function 2 behaviour" CV="52" mask="VVVVXXXX">
+		<variable name="Function 2 behaviour" CV="52" mask="VVVVXXXX" minFn="2">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -298,7 +298,7 @@
 				<enumChoice choice="Reserved (0xF)"/>
 				</enumVal>
 			</variable>
-		<variable name="Function 3 effect generated" CV="53" mask="XXXXVVVV">
+		<variable name="Function 3 effect generated" CV="53" mask="XXXXVVVV" minFn="3">
 			<enumVal>
 				<enumChoice choice="Normal function of lead"/>
 				<enumChoice choice="Random flicker"/>
@@ -318,7 +318,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable name="Function 3 behaviour" CV="53" mask="VVVVXXXX">
+		<variable name="Function 3 behaviour" CV="53" mask="VVVVXXXX" minFn="3">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -338,7 +338,7 @@
 				<enumChoice choice="Reserved (0xF)"/>
 				</enumVal>
 			</variable>
-		<variable name="Function 4 effect generated" CV="54" mask="XXXXVVVV">
+		<variable name="Function 4 effect generated" CV="54" mask="XXXXVVVV" minFn="4">
 			<enumVal>
 				<enumChoice choice="Normal function of lead"/>
 				<enumChoice choice="Random flicker"/>
@@ -358,7 +358,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable name="Function 4 behaviour" CV="54" mask="VVVVXXXX">
+		<variable name="Function 4 behaviour" CV="54" mask="VVVVXXXX" minFn="4">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -442,7 +442,7 @@
 				comment="0 is no keep-alive, use with LEDs">
 				<decVal max="15"/>
 			</variable>
-		<variable name="FX rate and keep alive adjust" CV="62" mask="XXXXVVVV"
+		<variable name="FX rate adjust" CV="62" mask="XXXXVVVV"
 				stdName="Global lighting option 2"
 				comment="0 is fast, 15 is slow, 4 is recommended for start">
 				<decVal max="15"/>
@@ -474,10 +474,16 @@
 			</variable>
 			
 	<!-- Define the fixed Function-Output mapping -->
-	<constant name="FL(f) controls output 1" minOut="1" minFn="0" default="1" /> 
-	<constant name="FL(r) controls output 2" minOut="2" minFn="0" default="1" /> 
+	<constant name="FL(f) controls output 1" minOut="1" default="1" /> 
+	<constant name="FL(r) controls output 2" minOut="2" default="1" /> 
 	<constant name="F1 controls output 3" minOut="3" minFn="1" default="1" /> 
 	<constant name="F2 controls output 4" minOut="4" minFn="2" default="1" /> 
+	<constant name="F3 controls output 5" minOut="5" minFn="3" default="1" /> 
+	<constant name="F4 controls output 6" minOut="6" minFn="4" default="1" /> 
+	<constant name="F5 controls output 7" minOut="7" minFn="5" default="1" /> 
+	<constant name="F6 controls output 8" minOut="8" minFn="6" default="1" /> 
+	<constant name="F7 controls output 9" minOut="9" minFn="7" default="1" /> 
+	<constant name="F8 controls output 10" minOut="10" minFn="8" default="1" /> 
 
 	</variables>
 

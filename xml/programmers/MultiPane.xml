@@ -2,7 +2,7 @@
 <!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
 
 <programmer-config>
-<!-- $Id: MultiPane.xml,v 1.17 2002-01-01 01:49:53 jacobsen Exp $ -->
+<!-- $Id: MultiPane.xml,v 1.18 2002-01-02 20:37:18 jacobsen Exp $ -->
 		<version author="Mark Gurries, Bob Jacobsen" 
 					version="2" lastUpdated="20011206"/>
 
@@ -209,6 +209,8 @@
 			<separator/>
 			
 			<label label="Will decoder respond to function requests at consist address?"/>
+			<display name="Consist Address Active For FL in Forward" />
+			<display name="Consist Address Active For FL in Reverse" />
 			<display name="Consist Address Active For F1" />
 			<display name="Consist Address Active For F2" />
 			<display name="Consist Address Active For F3" />
@@ -217,8 +219,6 @@
 			<display name="Consist Address Active For F6" />
 			<display name="Consist Address Active For F7" />
 			<display name="Consist Address Active For F8" />
-			<display name="Consist Address Active For FL in Forward" />
-			<display name="Consist Address Active For FL in Reverse" />
 		</column>
 	</pane>
 	

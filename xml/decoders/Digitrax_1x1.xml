@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_1x1.xml,v 1.9 2002-01-01 01:49:53 jacobsen Exp $ -->
+<!-- $Id: Digitrax_1x1.xml,v 1.10 2002-01-02 20:37:18 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen" version="1" lastUpdated="20011207"/>
 
@@ -139,10 +139,16 @@
 				</enumVal></variable>
 
 	<!-- Define the fixed Function-Output mapping -->
-	<constant name="FL(f) controls output 1" minOut="1" minFn="0" default="1" /> 
-	<constant name="FL(r) controls output 2" minOut="2" minFn="0" default="1" /> 
+	<constant name="FL(f) controls output 1" minOut="1" default="1" /> 
+	<constant name="FL(r) controls output 2" minOut="2" default="1" /> 
 	<constant name="F1 controls output 3" minOut="3" minFn="1" default="1" /> 
 	<constant name="F2 controls output 4" minOut="4" minFn="2" default="1" /> 
+	<constant name="F3 controls output 5" minOut="5" minFn="3" default="1" /> 
+	<constant name="F4 controls output 6" minOut="6" minFn="4" default="1" /> 
+	<constant name="F5 controls output 7" minOut="7" minFn="5" default="1" /> 
+	<constant name="F6 controls output 8" minOut="8" minFn="6" default="1" /> 
+	<constant name="F7 controls output 9" minOut="9" minFn="7" default="1" /> 
+	<constant name="F8 controls output 10" minOut="10" minFn="8" default="1" /> 
 
 	</variables>
 	

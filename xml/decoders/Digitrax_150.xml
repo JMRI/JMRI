@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_150.xml,v 1.8 2002-01-01 01:49:53 jacobsen Exp $ -->
+<!-- $Id: Digitrax_150.xml,v 1.9 2002-01-02 20:37:18 jacobsen Exp $ -->
 <decoder-config>
 		<version author="" version="" lastUpdated=""/>
 
@@ -119,11 +119,11 @@
 				<enumChoice choice="On"/>
 				</enumVal>
 			</variable>
-		<variable name="Speed Table" CV="29" mask="XXXVXXXX"
+		<variable name="Use Speed Table" CV="29" mask="XXXVXXXX"
 					stdName="Speed Table Definition">
 			<enumVal>
-				<enumChoice choice="Off"/>
-				<enumChoice choice="On"/>
+				<enumChoice choice="Use Vstart, Vmid, Vhigh"/>
+				<enumChoice choice="Use Table"/>
 				</enumVal>
 			</variable>
 		<variable name="Addressing Mode" CV="29" mask="XXVXXXXX"
@@ -293,92 +293,7 @@
 				<enumChoice choice="Reserved (0xF)"/>
 				</enumVal>
 			</variable>
-		<variable name="Function 3 effect generated" CV="53" mask="XXXXVVVV">
-			<enumVal>
-				<enumChoice choice="Normal function of lead"/>
-				<enumChoice choice="Random flicker"/>
-				<enumChoice choice="Mars light"/>
-				<enumChoice choice="Flashing head light"/>
-				<enumChoice choice="Single pulse strobe"/>
-				<enumChoice choice="Double pulse strobe"/>
-				<enumChoice choice="Rotary beacon simulation"/>
-				<enumChoice choice="Gyralite"/>
-				<enumChoice choice="Run 17 dimmable headlight"/>
-				<enumChoice choice="FRED end of train light"/>
-				<enumChoice choice="Right ditch light; when F2 on, flashes alternately"/>
-				<enumChoice choice="Left ditch light; when F2 on, flashes alternately"/>
-				<enumChoice choice="Reserved (0x0C)"/>
-				<enumChoice choice="Reserved (0x0D)"/>
-				<enumChoice choice="Reserved (0x0E)"/>
-				<enumChoice choice="Reserved (0x0F)"/>
-				</enumVal>
-			</variable>
-		<variable name="Function 3 behaviour" CV="53" mask="VVVVXXXX">
-			<enumVal>
-				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
-				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
-				<enumChoice choice="Non directional, ON with function ON, effect phase A"/>
-				<enumChoice choice="Non directional, ON with function ON, effect phase B"/>
-				<enumChoice choice="Forward direction, ON with F0 on &amp; function ON, phase A"/>
-				<enumChoice choice="Reverse direction, ON with F0 on &amp; function ON, phase B"/>
-				<enumChoice choice="Special logic for Fwd Ditch Light or Rule 17 dimming"/>
-				<enumChoice choice="Special logic for Rev Ditch Light or Rule 17 dimming"/>
-				<enumChoice choice="Reserved (0x8)"/>
-				<enumChoice choice="Reserved (0x9)"/>
-				<enumChoice choice="Reserved (0xA)"/>
-				<enumChoice choice="Reserved (0xB)"/>
-				<enumChoice choice="Reserved (0xC)"/>
-				<enumChoice choice="Reserved (0xD)"/>
-				<enumChoice choice="Reserved (0xE)"/>
-				<enumChoice choice="Reserved (0xF)"/>
-				</enumVal>
-			</variable>
-		<variable name="Function 4 effect generated" CV="54" mask="XXXXVVVV">
-			<enumVal>
-				<enumChoice choice="Normal function of lead"/>
-				<enumChoice choice="Random flicker"/>
-				<enumChoice choice="Mars light"/>
-				<enumChoice choice="Flashing head light"/>
-				<enumChoice choice="Single pulse strobe"/>
-				<enumChoice choice="Double pulse strobe"/>
-				<enumChoice choice="Rotary beacon simulation"/>
-				<enumChoice choice="Gyralite"/>
-				<enumChoice choice="Run 17 dimmable headlight"/>
-				<enumChoice choice="FRED end of train light"/>
-				<enumChoice choice="Right ditch light; when F2 on, flashes alternately"/>
-				<enumChoice choice="Left ditch light; when F2 on, flashes alternately"/>
-				<enumChoice choice="Reserved (0x0C)"/>
-				<enumChoice choice="Reserved (0x0D)"/>
-				<enumChoice choice="Reserved (0x0E)"/>
-				<enumChoice choice="Reserved (0x0F)"/>
-				</enumVal>
-			</variable>
-		<variable name="Function 4 behaviour" CV="54" mask="VVVVXXXX">
-			<enumVal>
-				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
-				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
-				<enumChoice choice="Non directional, ON with function ON, effect phase A"/>
-				<enumChoice choice="Non directional, ON with function ON, effect phase B"/>
-				<enumChoice choice="Forward direction, ON with F0 on &amp; function ON, phase A"/>
-				<enumChoice choice="Reverse direction, ON with F0 on &amp; function ON, phase B"/>
-				<enumChoice choice="Special logic for Fwd Ditch Light or Rule 17 dimming"/>
-				<enumChoice choice="Special logic for Rev Ditch Light or Rule 17 dimming"/>
-				<enumChoice choice="Reserved (0x8)"/>
-				<enumChoice choice="Reserved (0x9)"/>
-				<enumChoice choice="Reserved (0xA)"/>
-				<enumChoice choice="Reserved (0xB)"/>
-				<enumChoice choice="Reserved (0xC)"/>
-				<enumChoice choice="Reserved (0xD)"/>
-				<enumChoice choice="Reserved (0xE)"/>
-				<enumChoice choice="Reserved (0xF)"/>
-				</enumVal>
-			</variable>
-		<variable name="Split field motor" CV="61" mask="XXXXXVXX">
-			<enumVal>
-				<enumChoice choice="Normal DC motor"/>
-				<enumChoice choice="Split field/AC motor"/>
-				</enumVal>
-			</variable>
+
 		<variable name="Directional Headlights" CV="61" mask="XXXXXXXV">
 			<enumVal>
 				<enumChoice choice="Normal headlight operation"/>
@@ -403,7 +318,7 @@
 				comment="0 is no keep-alive, use with LEDs">
 				<decVal max="15"/>
 			</variable>
-		<variable name="FX rate and keep alive adjust" CV="62" mask="XXXXVVVV"
+		<variable name="FX rate adjust" CV="62" mask="XXXXVVVV"
 				stdName="Global lighting option 2"
 				comment="0 is fast, 15 is slow, 4 is recommended for start">
 				<decVal max="15"/>
@@ -433,6 +348,19 @@
 		<variable name="Speed Table" CV="67">
 			<speedTableVal/>
 			</variable>
+
+	<!-- Define the fixed Function-Output mapping -->
+	<constant name="FL(f) controls output 1" minOut="1" default="1" /> 
+	<constant name="FL(r) controls output 2" minOut="2" default="1" /> 
+	<constant name="F1 controls output 3" minOut="3" minFn="1" default="1" /> 
+	<constant name="F2 controls output 4" minOut="4" minFn="2" default="1" /> 
+	<constant name="F3 controls output 5" minOut="5" minFn="3" default="1" /> 
+	<constant name="F4 controls output 6" minOut="6" minFn="4" default="1" /> 
+	<constant name="F5 controls output 7" minOut="7" minFn="5" default="1" /> 
+	<constant name="F6 controls output 8" minOut="8" minFn="6" default="1" /> 
+	<constant name="F7 controls output 9" minOut="9" minFn="7" default="1" /> 
+	<constant name="F8 controls output 10" minOut="10" minFn="8" default="1" /> 
+
 	</variables>
 	
 </decoder>
