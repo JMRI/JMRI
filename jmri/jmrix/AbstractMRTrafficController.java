@@ -23,7 +23,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 abstract public class AbstractMRTrafficController {
 
@@ -219,8 +219,11 @@ abstract public class AbstractMRTrafficController {
                         xmtRunnable.wait(m.getTimeout());
                     }
                 } catch (InterruptedException e) { log.error("transmitLoop interrupted"); }
+                if (mCurrentState == WAITMSGREPLYSTATE)
+                    log.warn("Timeout on reply to message: "+m.toString());
             } else {
                 // nothing to do
+                if (mCurrentState!=IDLESTATE) log.debug("Setting IDLESTATE");
                 mCurrentState =IDLESTATE;
                 // wait for something to send
                 try {
@@ -249,6 +252,7 @@ abstract public class AbstractMRTrafficController {
                         AbstractMRMessage msg = pollMessage();
                         if (msg != null) {
                             // yes, send that
+                            log.debug("Sending poll");
                             mCurrentState = WAITMSGREPLYSTATE;
                             forwardToPort(msg, pollReplyHandler());
                             // wait for reply
@@ -424,11 +428,22 @@ abstract public class AbstractMRTrafficController {
     abstract protected boolean endOfMessage(AbstractMRReply r);
 
     /**
-     * Dummy routine, which can be filled by protocols that
-     * have to skip some start-of-message characters
+     * Dummy routine, to be filled by protocols that
+     * have to skip some start-of-message characters.
      */
     protected void waitForStartOfReply(DataInputStream istream) throws java.io.IOException {}
 
+    /**
+     * Get characters from the input source, and file a message.
+     * <P>
+     * Returns only when the message is complete.
+     * <P>
+     * Only used in the Receive thread.
+     *
+     * @param msg message to fill
+     * @param istream character source.
+     * @throws IOException when presented by the input source.
+     */
     protected void loadChars(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
         int i;
         for (i = 0; i < msg.maxSize; i++) {
@@ -441,7 +456,10 @@ abstract public class AbstractMRTrafficController {
     }
 
     /**
+     * Handle each reply when complete.
+     * <P>
      * (This is public for testing purposes)
+     * Runs in the "Receive" thread.
      * @throws IOException
      */
     public void handleOneIncomingReply() throws java.io.IOException {
@@ -463,11 +481,12 @@ abstract public class AbstractMRTrafficController {
 
         // forward the message to the registered recipients,
         // which includes the communications monitor
-        // return a notification via the Swing event queue to ensure end
+        // return a notification via the Swing event queue to ensure proper thread
         Runnable r = new RcvNotifier(msg, mLastSender, this);
         try {
             javax.swing.SwingUtilities.invokeAndWait(r);
-        } catch (Exception e) { log.error("Unexpected exception in invokeAndWait:" +e);
+        } catch (Exception e) {
+            log.error("Unexpected exception in invokeAndWait:" +e);
         }
 
         // effect on transmit:
