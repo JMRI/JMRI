@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
 /**
  * Pane for power control
  * @author	    Bob Jacobsen   Copyright (C) 2001
- * @version	    $Revision: 1.3 $
+ * @version	    $Revision: 1.4 $
  */
 public class PowerPane extends javax.swing.JPanel implements java.beans.PropertyChangeListener {
 
@@ -46,6 +46,20 @@ public class PowerPane extends javax.swing.JPanel implements java.beans.Property
         add(onButton);
         add(offButton);
 
+	// Check to see if the Power Manger has a current status
+        if(mgrOK()) {
+	        try {
+            		if (p.getPower()==PowerManager.ON) onOffStatus.setText(res.getString("StatusOn"));
+            		else if (p.getPower()==PowerManager.OFF) onOffStatus.setText(res.getString("StatusOff"));
+            		else if (p.getPower()==PowerManager.UNKNOWN) onOffStatus.setText(res.getString("StatusUnknown"));
+            		else {
+                		onOffStatus.setText(res.getString("StatusUnknown"));
+                		log.error("Unexpected state value: +"+p.getPower());
+            		}
+        	} catch (JmriException ex) {
+            		onOffStatus.setText(res.getString("StatusUnknown"));
+        	}
+	}
     }
 
     private boolean mgrOK() {
