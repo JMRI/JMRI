@@ -1,6 +1,6 @@
 <!-- Special build file for doing Java 1.1.8 compatibility tests -->
-<!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.10 $ -->
+<!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
+<!-- Revision $Revision: 1.11 $ -->
 
 <project name="JMRI" default="check" basedir=".">
 

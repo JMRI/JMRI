@@ -25,6 +25,7 @@
 # After this has been run, a "normal" compilation should be able to handle
 # everything else.
 #
+# Copyright 2004 Bob Jacobsen
 
 rm -f ClassicCompile.xml
 
