@@ -37,7 +37,7 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
 		return portNameVector;
 	}
 	
-	public void openPort(String portName, String appName)  {
+	public String openPort(String portName, String appName)  {
 		// open the port, check ability to set moderators
 		try {
 			// get and open the primary port
@@ -59,6 +59,18 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
 			activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
 			activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
 						
+			// report status?
+			if (log.isInfoEnabled()) {
+				log.info(portName+" port opened at "
+						+activeSerialPort.getBaudRate()+" baud, sees "
+						+" DTR: "+activeSerialPort.isDTR()
+						+" RTS: "+activeSerialPort.isRTS()
+						+" DSR: "+activeSerialPort.isDSR()
+						+" CTS: "+activeSerialPort.isCTS()
+						+"  CD: "+activeSerialPort.isCD()
+					);
+			}
+						
 			opened = true;
 			
 		}
@@ -66,6 +78,7 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
 			ex.printStackTrace();
 		}
 		
+		return null; // indicates OK return
 		
 	}
 
