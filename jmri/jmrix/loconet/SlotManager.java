@@ -15,7 +15,7 @@ import java.beans.PropertyChangeEvent;
  * counter-part of a LocoNet command station.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 
@@ -64,6 +64,13 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 		}
 	}
 	public int getMode() { return _mode; }
+
+    public boolean getCanRead() { return mCanRead; }
+    boolean mCanRead = true;
+    public void setCanRead(boolean pCanRead) {
+        log.debug("set canRead to "+pCanRead);
+        mCanRead = pCanRead;
+    }
 
     /**
      * Signifies mode's available
