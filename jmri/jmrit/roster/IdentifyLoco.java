@@ -16,7 +16,7 @@ import jmri.*;
  * it works through the identification progress.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
@@ -53,10 +53,10 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
                 originalMode==Programmer.DIRECTBYTEMODE) {
                 // yes, set to that original mode
                 p.setMode(originalMode);
-            } else if (p.hasMode(Programmer.PAGEMODE)) {
-                p.setMode(Programmer.PAGEMODE);
             } else if (p.hasMode(Programmer.DIRECTBITMODE)) {
                 p.setMode(Programmer.DIRECTBITMODE);
+            } else if (p.hasMode(Programmer.PAGEMODE)) {
+                p.setMode(Programmer.PAGEMODE);
             } else if (p.hasMode(Programmer.DIRECTBYTEMODE)) {
                 p.setMode(Programmer.DIRECTBYTEMODE);
             } else {
