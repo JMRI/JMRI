@@ -19,7 +19,7 @@ import jmri.jmrit.catalog.*;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -48,6 +48,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
             if (turnout != null) {
                 displayState(turnoutState());
                 turnout.addPropertyChangeListener(this);
+                setProperToolTip();
             } else {
                 log.error("Turnout '"+pSystemName+"' not available, icon won't see changes");
             }
@@ -133,6 +134,21 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         }
     }
 
+    public void setProperToolTip() {
+        setToolTipText(getNameString());
+    }
+
+    String getNameString() {
+        String name;
+        if (turnout == null) name = "<Not connected>";
+        else if (turnout.getUserName()!=null)
+            name = turnout.getUserName()+" ("+turnout.getSystemName()+")";
+        else
+            name = turnout.getSystemName();
+        return name;
+    }
+
+
     /**
      * Pop-up displays the turnout name, allows you to rotate the icons
      */
@@ -140,12 +156,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         ours = this;
         if (popup==null) {
             popup = new JPopupMenu();
-            String name;
-            if (turnout.getUserName()!=null)
-                name = turnout.getUserName()+" ("+turnout.getSystemName()+")";
-            else
-                name = turnout.getSystemName();
-            popup.add(new JMenuItem(name));
+            popup.add(new JMenuItem(getNameString()));
             if (icon) popup.add(new AbstractAction("Rotate") {
                     public void actionPerformed(ActionEvent e) {
                         closed.setRotation(closed.getRotation()+1, ours);

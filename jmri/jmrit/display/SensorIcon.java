@@ -9,7 +9,7 @@ import jmri.jmrit.catalog.*;
 /**
  * SensorIcon provides a small icon to display a status of a Sensor.</p>
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -39,6 +39,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             if (sensor != null) {
                 displayState(sensorState());
                 sensor.addPropertyChangeListener(this);
+                setProperToolTip();
             } else {
                 log.error("Sensor '"+pSystemName+"' not available, icon won't see changes");
             }
@@ -109,20 +110,29 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         }
     }
 
+    public void setProperToolTip() {
+        setToolTipText(getNameString());
+    }
+
+    String getNameString() {
+        String name;
+        if (sensor == null) name = "<Not connected>";
+        else if (sensor.getUserName()!=null) {
+            name = sensor.getUserName();
+            if (sensor.getSystemName()!=null) name = name+" ("+sensor.getSystemName()+")";
+        } else
+            name = sensor.getSystemName();
+        return name;
+    }
+
     /**
      * Pop-up just displays the sensor name
      */
     protected void showPopUp(MouseEvent e) {
         ours = this;
         if (popup==null) {
-            String name;
             popup = new JPopupMenu();
-            if (sensor.getUserName()!=null) {
-                name = sensor.getUserName();
-                if (sensor.getSystemName()!=null) name = name+" ("+sensor.getSystemName()+")";
-            } else
-                name = sensor.getSystemName();
-            popup.add(new JMenuItem(name));
+            popup.add(new JMenuItem(getNameString()));
             if (icon) popup.add(new AbstractAction("Rotate") {
                     public void actionPerformed(ActionEvent e) {
                         active.setRotation(active.getRotation()+1, ours);

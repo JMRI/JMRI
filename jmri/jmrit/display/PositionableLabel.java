@@ -11,7 +11,7 @@ import jmri.jmrit.catalog.NamedIcon;
  * PositionableLabel is a JLabel that can be dragged around the
  * inside of the enclosing Container using a right-drag.
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class PositionableLabel extends JLabel
@@ -22,7 +22,7 @@ public class PositionableLabel extends JLabel
         super(s);
         text = true;
         debug = log.isDebugEnabled();
-        setToolTipText("Alt-click to see menu, drag with meta key to move");
+        setProperToolTip();
         connect();
     }
     public PositionableLabel(NamedIcon s) {
@@ -31,8 +31,12 @@ public class PositionableLabel extends JLabel
         namedIcon = s;
         updateSize();
         debug = log.isDebugEnabled();
-        setToolTipText("Alt-click to see menu, drag with meta key to move");
+        setProperToolTip();
         connect();
+    }
+
+    public void setProperToolTip() {
+        setToolTipText("Alt-click to see menu, drag with meta key to move");
     }
 
     public boolean isIcon() { return icon; }

@@ -14,7 +14,7 @@ import jmri.jmrix.loconet.AspectGenerator;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -123,16 +123,26 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         displayState(headState());
     }
 
+    public void setProperToolTip() {
+        setToolTipText(getNameString());
+    }
+
+    String getNameString() {
+        String name;
+        if (mGenerator == null) name = "<Not connected>";
+        else
+            name = "AG"+mGenerator.getSEName()+" head "+this.mHead;
+        return name;
+    }
+
     /**
      * Pop-up just displays the name
      */
     protected void showPopUp(MouseEvent e) {
         ours = this;
         if (popup==null) {
-            String name;
-            name = "AG"+mGenerator.getSEName()+" head "+this.mHead;
             popup = new JPopupMenu();
-            popup.add(new JMenuItem(name));
+            popup.add(new JMenuItem(getNameString()));
             if (icon) popup.add(new AbstractAction("Rotate") {
                     public void actionPerformed(ActionEvent e) {
                         green.setRotation(green.getRotation()+1, ours);
