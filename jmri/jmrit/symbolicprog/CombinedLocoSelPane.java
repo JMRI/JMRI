@@ -11,6 +11,8 @@ import java.io.File;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 import com.sun.java.util.collections.List;
 
 /**
@@ -22,9 +24,10 @@ import com.sun.java.util.collections.List;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
-public class CombinedLocoSelPane extends javax.swing.JPanel  {
+public class CombinedLocoSelPane extends javax.swing.JPanel
+                                implements PropertyChangeListener  {
 
 	public CombinedLocoSelPane(JLabel s) {
 		_statusLabel = s;
@@ -43,6 +46,7 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 			pane2a.setLayout(new BoxLayout(pane2a, BoxLayout.X_AXIS));
 			pane2a.add(new JLabel("Use locomotive settings for: "));
 			locoBox = Roster.instance().matchingComboBox(null, null, null, null, null, null, null);
+            Roster.instance().addPropertyChangeListener(this);
 			locoBox.insertItemAt("<none - new loco>",0);
 			locoBox.setSelectedIndex(0);
 			pane2a.add(locoBox);
@@ -171,6 +175,10 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 		};
 		id.start();
 	}
+
+    public void propertyChange(PropertyChangeEvent ev) {
+        Roster.instance().updateComboBox(locoBox);
+    }
 
 	private void selectLoco(int dccAddress) {
 		// raise the button again
