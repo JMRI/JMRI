@@ -7,7 +7,7 @@ import com.sun.java.util.collections.LinkedList;
  * Client for the RMI LocoNet server.
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Alex Shepherd, Bob Jacobsen
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class LnMessageClient extends LnTrafficRouter {
@@ -92,6 +92,11 @@ public class LnMessageClient extends LnTrafficRouter {
 			// loconet.LnTurnoutManager to do that
 			if (jmri.InstanceManager.turnoutManagerInstance() == null)
 				jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager());
+
+    		// If a jmri.SensorManager instance doesn't exist, create a
+	    	// loconet.LnSensorManager to do that
+		    if (jmri.InstanceManager.sensorManagerInstance() == null)
+			    jmri.InstanceManager.setSensorManager(new jmri.jmrix.loconet.LnSensorManager());
 
             // the serial connections (LocoBuffer et al) start
             // various threads here.

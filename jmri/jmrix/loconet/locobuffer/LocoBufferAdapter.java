@@ -5,7 +5,7 @@
  * Description:		Provide access to LocoNet via a LocoBuffer attached to a serial comm port.
  *					Normally controlled by the LocoBufferFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: LocoBufferAdapter.java,v 1.5 2002-07-11 14:40:05 jacobsen Exp $
+ * @version			$Id: LocoBufferAdapter.java,v 1.6 2002-07-24 05:00:28 jacobsen Exp $
  */
 
 package jmri.jmrix.loconet.locobuffer;
@@ -200,6 +200,11 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 			// loconet.LnTurnoutManager to do that
 			if (jmri.InstanceManager.turnoutManagerInstance() == null)
 				jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager());
+
+    		// If a jmri.SensorManager instance doesn't exist, create a
+	    	// loconet.LnSensorManager to do that
+		    if (jmri.InstanceManager.sensorManagerInstance() == null)
+			    jmri.InstanceManager.setSensorManager(new jmri.jmrix.loconet.LnSensorManager());
 
 			// start operation
 			packets.startThreads();

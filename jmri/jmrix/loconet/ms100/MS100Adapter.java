@@ -24,7 +24,7 @@ import jmri.jmrix.loconet.*;
  * Neither the baud rate configuration nor the "option 1" option are used.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -253,6 +253,11 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
 			// loconet.LnTurnoutManager to do that
 			if (jmri.InstanceManager.turnoutManagerInstance() == null)
 				jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager());
+
+    		// If a jmri.SensorManager instance doesn't exist, create a
+	    	// loconet.LnSensorManager to do that
+		    if (jmri.InstanceManager.sensorManagerInstance() == null)
+			    jmri.InstanceManager.setSensorManager(new jmri.jmrix.loconet.LnSensorManager());
 
 			// start operation
 			packets.startThreads();

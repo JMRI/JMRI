@@ -1,15 +1,4 @@
-/**
- * HexFileFrame.java
- *
- * Title:			LocoMon application
- * Description:		Frame to inject LocoNet messages from a hex file
- * @author			Bob Jacobsen  Copyright 2001
- * @version
- */
-
-// This is a sample frame that drives a test App.  It controls reading from
-// a .hex file, feeding the information to a LocoMonFrame (monitor) and
-// connecting to a LocoGenFrame (for sending a few commands).
+// HexFileFrame.java
 
 package jmri.jmrix.loconet.hexfile;
 
@@ -20,6 +9,14 @@ import javax.swing.*;
 
 import jmri.jmrix.loconet.LnPacketizer;
 
+/**
+ * Frame to inject LocoNet messages from a hex file
+ * This is a sample frame that drives a test App.  It controls reading from
+ * a .hex file, feeding the information to a LocoMonFrame (monitor) and
+ * connecting to a LocoGenFrame (for sending a few commands).
+ * @author			Bob Jacobsen  Copyright 2001, 2002
+ * @version
+ */
 public class HexFileFrame extends javax.swing.JFrame {
 
 	// member declarations
@@ -177,6 +174,11 @@ public class HexFileFrame extends javax.swing.JFrame {
 		// loconet.LnTurnoutManager to do that
 		if (jmri.InstanceManager.turnoutManagerInstance() == null)
 			jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager());
+
+		// If a jmri.SensorManager instance doesn't exist, create a
+		// loconet.LnSensorManager to do that
+		if (jmri.InstanceManager.sensorManagerInstance() == null)
+			jmri.InstanceManager.setSensorManager(new jmri.jmrix.loconet.LnSensorManager());
 
 		// start operation
 		sourceThread = new Thread(port);
