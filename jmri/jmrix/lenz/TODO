@@ -1,16 +1,15 @@
-TODO List for Lenz code (as of 9/03/2003):
+TODO List for Lenz code (as of 9/28/2003):
 1) Need to add  listeners to all classes that SEND messages so they 
 recieve the apropriate responce messages.  On classes where more than 
 one instance may exists, need to syncronize the listeners for the messages
-that DO NOT include addresses (The Throttle is one of them).  Also, need 
-to make sure we can listen to the different type of messages for each 
-class, instead of listen for ALL messages (i.e. need to make the mask
-parameter to "addXpressnetListener" work properly)
+that DO NOT include addresses (The Throttle is one of them).  
 2) Need to write Feedback code
 3) Need to seperate constants for Xpressnet V1 from those for X-Bus V1 
 and V2.
-4) Clean up Ops Mode Programing - mainly make it respond to proper 
-messages instead of just assuming the CV was sent to the command station 
-OK (see task #1).
-5) Implement a browser for the Command Station Locomotive database 
+4) Implement a browser for the Command Station Locomotive database 
 (similar to the Digitrax "Slot Manager")
+5) Need to make sure we can listen to the different type of messages for 
+each class, instead of listen for ALL messages (i.e. need to make the mask
+parameter to "addXpressnetListener" work properly)
+6) Revise utility programs so they use a properties file for button 
+names/menu titles.

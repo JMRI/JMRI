@@ -9,7 +9,7 @@ package jmri.jmrix.lenz;
  * Defines standard operations for Dcc command stations.
  *
  * @author			Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
     
@@ -46,16 +46,20 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
         // compute address byte fields
         int hiadr = (pNumber-1)/4;
         int loadr = ((pNumber-1)-hiadr*4)*2;
-        
-        // load On/Off with on
-        loadr |= 0x10;
-        if (!pOn) loadr |= 0x40;
+        // Bit 4 of the upper nibble is required to be set on
+        // The rest of the upper nibble should be zeros.
+        // Bit 4 of the lower nibble says weather or not the
+        // accessory line should be "on" or of, we load with a default 
+        // of On, and turn it off later.
+        loadr |= 0x88;
+        if (!pOn) loadr |= 0x80;
+        // If we are sending a "throw" command, we set bit one of the 
+        // lower nibble on, otherwise, we leave it off.
         if (pThrow) loadr |= 0x01;
         
         // we don't know how to command both states right now!
         if (pClose & pThrow)
             log.error("XPressNet turnout logic can't handle both THROWN and CLOSED yet");
-        
         // store and send
         l.setElement(1,hiadr);
         l.setElement(2,loadr);
