@@ -29,15 +29,29 @@ public class NceReply {
 		_nDataChars = Math.max(_nDataChars, n+1);	
 	}
 
+	// mode accessors
+	boolean _isBinary;
+	public boolean isBinary() { return _isBinary; }
+	public void setBinary(boolean b) { _isBinary = b; }
+
 	// display format
 	public String toString() {
 		String s = "";
 		for (int i=0; i<_nDataChars; i++) {
-			if (i!=0) s+=" ";
-			if (_dataChars[i] < 16) s+="0";
-			s+=Integer.toHexString(_dataChars[i]);
+			if (_isBinary) {
+				if (i!=0) s+=" ";
+				if (_dataChars[i] < 16) s+="0";
+				s+=Integer.toHexString(_dataChars[i]);
+			} else {
+				s+=(char)_dataChars[i];
+			}
 		}
 		return s;
+	}
+
+	public int value() {  // integer value of 1st three digits
+		String s = ""+(char)getElement(0)+(char)getElement(1)+(char)getElement(2);
+		return Integer.parseInt(s);
 	}
 	
 	static public int maxSize = 120;

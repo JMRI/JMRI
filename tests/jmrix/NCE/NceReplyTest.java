@@ -23,13 +23,34 @@ public class NceReplyTest extends TestCase {
 		NceReply m = new NceReply();
 	}
 
-	public void testToString() {
+	public void testBinaryToString() {
 		NceReply m = new NceReply();
+		m.setBinary(true);
 		m.setOpCode(0x81);
 		m.setElement(1, 0x02);
 		m.setElement(2, 0xA2);
 		m.setElement(3, 0x00);
 		Assert.assertEquals("string compare ", "81 02 a2 00", m.toString());
+	}
+	
+	public void testAsciiToString() {
+		NceReply m = new NceReply();
+		m.setBinary(false);
+		m.setOpCode('C');
+		m.setElement(1, 'o');
+		m.setElement(2, 'm');
+		m.setElement(3, ':');
+		Assert.assertEquals("string compare ", "Com:", m.toString());
+	}
+
+	public void testValue() {
+		NceReply m = new NceReply();
+		m.setBinary(false);
+		m.setElement(0, '0');
+		m.setElement(1, '2');
+		m.setElement(2, '7');
+		m.setElement(3, ' ');
+		Assert.assertEquals("value ", 27, m.value());
 	}
 	
 	// from here down is testing infrastructure

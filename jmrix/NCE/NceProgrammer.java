@@ -84,7 +84,6 @@ public class NceProgrammer implements NceListener, Programmer {
 	
 	int progState = 0;
 		// 1 is commandPending
-		// 2 is commandExecuting
 		// 0 is notProgramming
 	boolean  _progRead = false;
 	
@@ -97,7 +96,7 @@ public class NceProgrammer implements NceListener, Programmer {
 		progState = 1;
 		
 		// format and send message
-		NceTrafficController.instance().sendNceMessage(progTaskStart(getMode(), val, CV), this);
+		controller().sendNceMessage(progTaskStart(getMode(), val, CV), this);
 	}
 		
 	public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
@@ -107,7 +106,7 @@ public class NceProgrammer implements NceListener, Programmer {
 		progState = 1;
 		
 		// format and send message
-		NceTrafficController.instance().sendNceMessage(progTaskStart(getMode(), -1, CV), this);
+		controller().sendNceMessage(progTaskStart(getMode(), -1, CV), this);
 	}
 
 	private jmri.ProgListener _usingProgrammer = null;
@@ -137,13 +136,42 @@ public class NceProgrammer implements NceListener, Programmer {
 		}
 	}
 	
-	public void message(NceMessage m) {}
-	public void reply(NceReply m) {}
+	public void message(NceMessage m) {
+		log.error("message received unexpectedly: "+m.toString());
+	}
+	
+	public void reply(NceReply m) {
+		if (progState == 0) {
+			log.error("reply received unexpectedly: "+m.toString());
+			return;
+		}
+		// here is expected, set ProgState back to not expected
+		progState = 0;
+		// see why waiting
+		if (_progRead) {
+			// read was in progress - get return value
+			notifyProgListenerEnd(m.value(), jmri.ProgListener.OK);
+		} else {
+			// write was in progress
+			notifyProgListenerEnd(200, jmri.ProgListener.OK);
+		}
+	}
 	
 	// internal method to notify of the final result
 	protected void notifyProgListenerEnd(int value, int status) {
 		_usingProgrammer.programmingOpReply(value, status);
 		_usingProgrammer = null;
+	}
+
+	NceTrafficController _controller = null;
+
+	protected NceTrafficController controller() {
+		// connect the first time
+		if (_controller == null) {
+			_controller = NceTrafficController.instance();
+			_controller.addNceListener(this);	
+		}
+		return _controller;
 	}
 
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceProgrammer.class.getName());
