@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the XNetProgrammer class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 2.0 $
  */
 
 package jmri.jmrix.lenz;
@@ -52,7 +52,7 @@ public class XNetProgrammerTest extends TestCase {
         Assert.assertEquals("write message contents", "23 12 5 c 0 ", t.outbound.elementAt(0).toString());
 
         // send reply
-        XNetMessage mr1 = new XNetMessage(3);
+        XNetReply mr1 = new XNetReply();
         mr1.setElement(0,0x61);
         mr1.setElement(1,0x02);
         mr1.setElement(2,0x63);

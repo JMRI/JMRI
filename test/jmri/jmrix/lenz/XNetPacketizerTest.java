@@ -10,7 +10,7 @@ import junit.framework.TestCase;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.7 $
+ * @version $Revision: 2.0 $
  */
 public class XNetPacketizerTest extends TestCase {
 

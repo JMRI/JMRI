@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the {@link jmri.jmrix.lenz.XNetTurnout} class.
  * @author	    Bob Jacobsen
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 2.0 $
  */
 public class XNetTurnoutTest extends jmri.AbstractTurnoutTest {
 
@@ -28,20 +28,20 @@ public class XNetTurnoutTest extends jmri.AbstractTurnoutTest {
 	XNetInterfaceScaffold lnis;
 
 	public void checkClosedMsgSent() {
-		Assert.assertEquals("closed message","52 5 88 0 ",
+		Assert.assertEquals("closed message","52 05 88 00",
                 lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
 		Assert.assertEquals("CLOSED state",jmri.Turnout.CLOSED,t.getCommandedState());
 	}
 
 	public void checkThrownMsgSent() {
-		Assert.assertEquals("thrown message","52 5 89 0 ",
+		Assert.assertEquals("thrown message","52 05 89 00",
                 lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
 		Assert.assertEquals("THROWN state",jmri.Turnout.THROWN,t.getCommandedState());
 	}
 
 	public void checkIncoming() {
 		// notify the object that somebody else changed it...
-		XNetMessage m = new XNetMessage(4);
+		XNetReply m = new XNetReply();
 		m.setOpCode(0xb0);
 		m.setElement(1, 0x14);     // set CLOSED
 		m.setElement(2, 0x30);
@@ -49,7 +49,7 @@ public class XNetTurnoutTest extends jmri.AbstractTurnoutTest {
 		lnis.sendTestMessage(m);
 		Assert.assertTrue(t.getCommandedState() == jmri.Turnout.CLOSED);
 
-		m = new XNetMessage(4);
+		m = new XNetReply();
 		m.setOpCode(0xb0);
 		m.setElement(1, 0x14);     // set THROWN
 		m.setElement(2, 0x10);
@@ -69,7 +69,7 @@ public class XNetTurnoutTest extends jmri.AbstractTurnoutTest {
 		Assert.assertTrue(t.getCommandedState() == jmri.Turnout.CLOSED);
 
 		// notify that somebody else changed it...
-		XNetMessage m = new XNetMessage(4);
+		XNetReply m = new XNetReply();
 		m.setOpCode(0x1);
 		m.setElement(1, 0x14);     // set CLOSED
 		m.setElement(2, 0x20);

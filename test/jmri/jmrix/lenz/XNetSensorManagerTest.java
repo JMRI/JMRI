@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.lenz.XNetSensorManager class.
  * @author	Paul Bender Copyright (c) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 2.0 $
  */
 public class XNetSensorManagerTest extends TestCase  {
 
@@ -62,7 +62,7 @@ public class XNetSensorManagerTest extends TestCase  {
 
 		// send messages for feedbak encoder 22
 		// notify the XPressNet that somebody else changed it...
-		XNetMessage m1 = new XNetMessage(4);
+		XNetReply m1 = new XNetReply();
 		m1.setElement(0, 0x42);     // Opcode for feedback response
 		m1.setElement(1, 0x03);     // The feedback encoder address
 		m1.setElement(2, 0x51);     // A bit pattern telling which 

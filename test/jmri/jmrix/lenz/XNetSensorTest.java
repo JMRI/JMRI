@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.lenz.XNetSensor class.
  * @author	    Paul Bender  Copyright 2004
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 2.0 $
  */
 public class XNetSensorTest extends TestCase {
 
@@ -24,14 +24,14 @@ public class XNetSensorTest extends TestCase {
         XNetInterfaceScaffold xnis = new XNetInterfaceScaffold(new LenzCommandStation());
 
         XNetSensor t = new XNetSensor("XS044");
-        XNetMessage m;
+        XNetReply m;
 
         // Verify this was created in UNKNOWN state
         Assert.assertTrue(t.getKnownState() == jmri.Sensor.UNKNOWN);
 
         // notify the XPressNet that somebody else changed it...
 
-        m = new XNetMessage(4);
+        m = new XNetReply();
 	m.setElement(0, 0x42);     // Opcode for feedback response
         m.setElement(1, 0x06);     // The feedback encoder address
         m.setElement(2, 0x48);     // A bit pattern telling which
@@ -41,7 +41,7 @@ public class XNetSensorTest extends TestCase {
         xnis.sendTestMessage(m);
         Assert.assertEquals("Known state after activate ", jmri.Sensor.ACTIVE, t.getKnownState());
 
-        m = new XNetMessage(4);
+        m = new XNetReply();
 	m.setElement(0, 0x42);     // Opcode for feedback response
         m.setElement(1, 0x06);     // The feedback encoder address
         m.setElement(2, 0x40);     // A bit pattern telling which

@@ -9,12 +9,12 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import jmri.jmrix.lenz.*;
-import jmri.jmrix.NetMessage;
+import jmri.jmrix.AbstractMRMessage;
 
 /**
  * Tests for the jmri.jmrix.lenz.packetgen.PacketGenFrame class
  * @author			Bob Jacobsen   Copyright (c) 2001, 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 2.0 $
  */
 public class PacketGenFrameTest extends TestCase {
 
@@ -30,7 +30,7 @@ public class PacketGenFrameTest extends TestCase {
 
     public void testPacketCreate() {
         PacketGenFrame t = new PacketGenFrame();
-        NetMessage m = t.createPacket("12 34 AB 3 19 6 B B1");
+        AbstractMRMessage m = t.createPacket("12 34 AB 3 19 6 B B1");
         Assert.assertEquals("length",8,m.getNumDataElements());
         Assert.assertEquals("0th byte",0x12,m.getElement(0)&0xFF);
         Assert.assertEquals("1st byte",0x34,m.getElement(1)&0xFF);

@@ -3,7 +3,7 @@
  *
  * Description:	    test implementation of XNetPortController
  * @author			Bob Jacobsen
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 2.0 $
  */
 
 package jmri.jmrix.lenz;
