@@ -15,7 +15,7 @@ import java.beans.PropertyChangeEvent;
  * counter-part of a LocoNet command station.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 
@@ -289,7 +289,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 	/**
 	 * Internal routine to handle a timeout
 	 */
-	synchronized protected void timeout() {
+    synchronized protected void timeout() {
 		if (progState != 0) {
 			// we're programming, time to stop
 			if (log.isDebugEnabled()) log.debug("timeout!");
@@ -312,7 +312,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
                                 int addr, boolean longAddr) throws jmri.ProgrammerException {
         lopsa = addr&0x7f;
         hopsa = (addr/128)&0x7f;
-        if (!longAddr) hopsa|=0xC0;
+        if (!longAddr) hopsa|=0x40;
         doWrite(CV, val, p, 0x2C);
     }
     public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
@@ -370,7 +370,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
     public void readCVOpsMode(int CV, jmri.ProgListener p, int addr, boolean longAddr) throws jmri.ProgrammerException {
         lopsa = addr&0x7f;
         hopsa = (addr/128)&0x7f;
-        if (!longAddr) hopsa|=0xC0;
+        if (!longAddr) hopsa|=0x40;
         doRead(CV, p, 0x2C);
     }
     public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
