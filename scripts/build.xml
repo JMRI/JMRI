@@ -1,6 +1,6 @@
 <!-- ugly first attempt at an ANT build.xml file for JMRI development -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.20 $ -->
+<!-- Revision $Revision: 1.21 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -143,11 +143,15 @@
            overview="src/jmri/overview.html"
            defaultexcludes="yes"
            destdir="doc"
-           author="false"
            additionalparam="-breakiterator"
+           author="false"
            version="false"
            use="true"
            windowtitle="JMRI API">
+      <group title="Core" packages="jmri"/>
+      <group title="Layout Connections" packages="jmri.jmrix:jmri.jmrix.*"/>
+      <group title="Cross-system Tools" packages="jmri.jmrit:jmri.jmrit.*"/>
+      <group title="Applications" packages="apps:apps.*"/>
       <classpath refid="project.class.path"    />
       <doctitle><![CDATA[<h1>JMRI Library API</h1>]]></doctitle>
       <bottom><![CDATA[<i>Copyright &#169; 2003 JMRI; All Rights Reserved.</i>
