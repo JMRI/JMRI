@@ -2,7 +2,9 @@
 
 package apps.cornwall;
 
-import jmri.*;
+import jmri.InstanceManager;
+import jmri.NamedBean;
+import jmri.Sensor;
 
 /**
  * Automate section 10A of the Cornwall RR.
@@ -10,7 +12,7 @@ import jmri.*;
  * Based on Crr0029.bas
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class CrrSection10A extends CrrSection {
 
