@@ -4,11 +4,11 @@ package jmri.jmrix.loconet.locobufferii;
 
 
 /**
- * Definition of objects to handle configuring an LocoBufferII layout connection
+ * Definition of objects to handle configuring an LocoBuffer-II layout connection
  * via a LocoBufferIIAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
@@ -26,7 +26,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
         super();
     }
 
-    public String name() { return "LocoNet LocoBufferII"; }
+    public String name() { return "LocoNet LocoBuffer-II"; }
 
     protected void setInstance() { adapter = jmri.jmrix.loconet.locobufferii.LocoBufferIIAdapter.instance(); }
 }

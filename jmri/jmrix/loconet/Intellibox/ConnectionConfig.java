@@ -4,11 +4,12 @@ package jmri.jmrix.loconet.Intellibox;
 
 
 /**
- * Definition of objects to handle configuring an LocoBufferII layout connection
- * via a LocoBufferIIAdapter object.
+ * Definition of objects to handle configuring an Intellibox serial port
+ * layout connection
+ * via an IntelliboxAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
