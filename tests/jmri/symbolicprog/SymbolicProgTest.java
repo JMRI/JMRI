@@ -252,13 +252,13 @@ public class SymbolicProgTest extends TestCase {
 		LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "VVVVVVVV", 0, 255, v, null);
 		assert(var.name() == "name");
 		// pretend you've editted the value, check its in same object
-		((JTextField)var.getValue()).setText("1029");
-		assert( ((JTextField)var.getValue()).getText().equals("1029") );
+		((JTextField)var.getValue()).setText("4797");
+		assert( ((JTextField)var.getValue()).getText().equals("4797") );
 		// manually notify
 		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 		// see if the CV was updated
-		assert(cv17.getValue() == 5);
-		assert(cv18.getValue() == 8);
+		assert(cv17.getValue() == 210);
+		assert(cv18.getValue() == 189);
 	}
 	
 	// can we change the CV and see the result in the Variable?
@@ -276,12 +276,11 @@ public class SymbolicProgTest extends TestCase {
 		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 
 		// change the CV, expect to see a change in the variable value
-		cv17.setValue(7);
-		assert( ((JTextField)var.getValue()).getText().equals("1031") );
-		assert(cv17.getValue() == 7);
-		cv18.setValue(9);
-		assert( ((JTextField)var.getValue()).getText().equals("1159") );
-		assert(cv18.getValue() == 9);
+		cv17.setValue(210);
+		assert(cv17.getValue() == 210);
+		cv18.setValue(189);
+		assert( ((JTextField)var.getValue()).getText().equals("4797") );
+		assert(cv18.getValue() == 189);
 	}
 	
 	// check a long address read operation
@@ -314,7 +313,7 @@ public class SymbolicProgTest extends TestCase {
 		if (i==0) log.warn("testLongAddressRead saw an immediate return from isBusy");
 
 		assert(i<100);
-		assert( ((JTextField)var.getValue()).getText().equals("15867") );
+		assert( ((JTextField)var.getValue()).getText().equals("15227") );  // 15227 = (1230x3f)*256+123
 		assert(var.getState() == CvValue.READ);
 		assert(cv17.getValue() == 123);
 		assert(cv18.getValue() == 123);
@@ -333,7 +332,7 @@ public class SymbolicProgTest extends TestCase {
 		v.setElementAt(cv18, 18);
 
 		LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "XXVVVVXX", 0, 255, v, null);
-		((JTextField)var.getValue()).setText("1029");
+		((JTextField)var.getValue()).setText("4797");
 		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 
 		var.write(); 
@@ -350,12 +349,12 @@ public class SymbolicProgTest extends TestCase {
 															+" last write: "+p.lastWrite());
 		if (i==0) log.warn("testLongAddressWrite saw an immediate return from isBusy");
 
-		assert(cv17.getValue() == 5);
-		assert(cv18.getValue() == 8);
+		assert(cv17.getValue() == 210);
+		assert(cv18.getValue() == 189);
 		assert(i<100);
-		assert( ((JTextField)var.getValue()).getText().equals("1029") );
+		assert( ((JTextField)var.getValue()).getText().equals("4797") );
 		assert(var.getState() == CvValue.STORED);
-		assert(p.lastWrite() == 8);
+		assert(p.lastWrite() == 189);
 		// how do you check separation of the two writes?  State model?
 	}
 	
