@@ -2,14 +2,18 @@
 
 package jmri.jmrit.symbolicprog;
 
-import jmri.*;
-import jmri.progdebugger.*;
-import junit.framework.*;
+import jmri.DefaultProgrammerManager;
+import jmri.InstanceManager;
+import jmri.Programmer;
+import jmri.progdebugger.ProgDebugger;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Test the jmri.jmrix.symbolicprog package.
  * @author			Bob Jacobsen
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.9 $
  */
 public class SymbolicProgTest extends TestCase {
 
@@ -36,6 +40,7 @@ public class SymbolicProgTest extends TestCase {
     // test suite from all defined tests, including others in the package
     public static Test suite() {
         TestSuite suite = new TestSuite(SymbolicProgTest.class);
+        suite.addTest(jmri.jmrit.symbolicprog.Pr1ImporterTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.PaneProgPaneTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.ComboCheckBoxTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.ComboRadioButtonsTest.suite());
