@@ -11,4 +11,8 @@
 #	[<whitespace>]<filename><whitespace><error message><end-of-line>
 #
 # comment lines begin with '#'
+
+# these are the same except for permissions
 syncmail
+synchmail
+
