@@ -3,7 +3,7 @@
  *
  * Description:		Frame providing a command station programmer from decoder definition files
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 package jmri.jmrit.symbolicprog.symbolicframe;
@@ -44,7 +44,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 	JButton selectFileButton 	= new JButton();
 	JButton storeFileButton 	= new JButton();
 
-	CvTableModel	cvModel		= new CvTableModel(progStatus);
+	CvTableModel	cvModel		= new CvTableModel(progStatus, null);
 	JTable			cvTable		= new JTable(cvModel);
 	JScrollPane 	cvScroll	= new JScrollPane(cvTable);
 

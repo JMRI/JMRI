@@ -13,34 +13,37 @@ import javax.swing.JTextField;
 
 /**
  * Encapsulate a single CV value and provide programming access to the decoder.
- *
+ *<P>Since this is a single CV in a single decoder, the Programmer used to get
+ * access is part of the state.  This allows us to specify a specific ops-mode
+ * programmer aimed at a particular decoder.
  *<P>There are three relevant parameters:  Busy, Value, State.  Busy == true means
  * that a read or write operation is going on.  When it transitions to "false", the
  * operation is complete, and the Value and State are stable.  During a read
  * operation, Value changes before State, so you can assume that Value is stable
  * if notified of a State change.
- *
- * Description:		Represents a single CV value
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: CvValue.java,v 1.4 2002-09-24 22:22:04 jacobsen Exp $
+ * @version			$Revision: 1.5 $
  */
 public class CvValue extends AbstractValue implements ProgListener {
-    
-    public CvValue(int num) {
+
+    public CvValue(int num, Programmer pProgrammer) {
         _num = num;
+        mProgrammer = pProgrammer;
         _tableEntry = new JTextField("0", 3);
         _defaultColor = _tableEntry.getBackground();
         _tableEntry.setBackground(COLOR_UNKNOWN);
     }
     public int number() { return _num; }
     private int _num;
-    
+
     private JLabel _status = null;
-    
+
+    private Programmer mProgrammer;
+
     public int getValue()  { return _value; }
-    
+
     Color getColor() { return _tableEntry.getBackground(); }
-    
+
     protected void notifyValueChange(int value) {
         prop.firePropertyChange("Value", null, new Integer(value));
     }
@@ -58,7 +61,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         }
     }
     private int _value = 0;
-    
+
     public int getState()  { return _state; }
     /**
      * Set state value and send notification.  Also sets GUI color as needed.
@@ -77,12 +80,12 @@ public class CvValue extends AbstractValue implements ProgListener {
         }
         if (oldstate != state) prop.firePropertyChange("State", new Integer(oldstate), new Integer(state));
     }
-    
+
     private int _state = 0;
-    
+
     // read, write operations
     public boolean isBusy() { return _busy; }
-    
+
     /**
      * set the busy state and send notification. Should be used _only_ if
      * this is the only thing changing
@@ -103,7 +106,7 @@ public class CvValue extends AbstractValue implements ProgListener {
                                                         newBusy ? Boolean.TRUE : Boolean.FALSE);
     }
     private boolean _busy = false;
-    
+
     // color management
     Color _defaultColor;
     void setColor(Color c) {
@@ -111,29 +114,28 @@ public class CvValue extends AbstractValue implements ProgListener {
         else _tableEntry.setBackground(_defaultColor);
         //prop.firePropertyChange("Value", null, null);
     }
-    
+
     // object for Table entry
     JTextField _tableEntry = null;
     JTextField getTableEntry() {
         return _tableEntry;
     }
-    
+
     // read, write support
     private boolean _reading = false;
     private boolean _confirm = false;
-    
+
     public void read(JLabel status) {
         if (log.isDebugEnabled()) log.debug("read call with Cv number "+_num);
         // get a programmer reference and write
         _status = status;
         if (status != null) status.setText("Reading CV"+_num+"...");
-        Programmer p = InstanceManager.programmerManagerInstance().getServiceModeProgrammer();
-        if (p != null) {
+        if (mProgrammer != null) {
             setBusy(true);
             _reading = true;
             _confirm = false;
             try {
-                p.readCV(_num, this);
+                mProgrammer.readCV(_num, this);
             } catch (Exception e) {
                 if (status != null) status.setText("Exception during CV read: "+e);
                 log.warn("Exception during CV read: "+e);
@@ -144,19 +146,18 @@ public class CvValue extends AbstractValue implements ProgListener {
             log.error("No programmer available!");
         }
     }
-    
+
     public void confirm(JLabel status) {
         if (log.isDebugEnabled()) log.debug("confirm call with Cv number "+_num);
         // get a programmer reference and write
         _status = status;
         if (status != null) status.setText("Confirming CV"+_num+"...");
-        Programmer p = InstanceManager.programmerManagerInstance().getServiceModeProgrammer();
-        if (p != null) {
+        if (mProgrammer != null) {
             setBusy(true);
             _reading = false;
             _confirm = true;
             try {
-                p.confirmCV(_num, _value, this);
+                mProgrammer.confirmCV(_num, _value, this);
             } catch (Exception e) {
                 if (status != null) status.setText("Exception during CV confirm: "+e);
                 log.warn("Exception during CV read: "+e);
@@ -167,20 +168,19 @@ public class CvValue extends AbstractValue implements ProgListener {
             log.error("No programmer available!");
         }
     }
-    
+
     public void write(JLabel status) {
         if (log.isDebugEnabled()) log.debug("write call with Cv number "+_num);
         // get a programmer reference and write
         _status = status;
         if (status != null) status.setText("Writing CV"+_num+"...");
-        Programmer p = InstanceManager.programmerManagerInstance().getServiceModeProgrammer();
-        if (p != null) {
+        if (mProgrammer != null) {
             setBusy(true);
             _reading = false;
             _confirm = false;
             try {
                 setState(UNKNOWN);
-                p.writeCV(_num, _value, this);
+                mProgrammer.writeCV(_num, _value, this);
             } catch (Exception e) {
                 setState(UNKNOWN);
                 if (status != null) status.setText("Exception during CV write: "+e);
@@ -192,7 +192,7 @@ public class CvValue extends AbstractValue implements ProgListener {
             log.error("No programmer available!");
         }
     }
-    
+
     public void programmingOpReply(int value, int retval) {
         if (log.isDebugEnabled()) log.debug("CV progOpReply for CV "+_num+" with retval "+retval
                                             +" during "
@@ -225,9 +225,8 @@ public class CvValue extends AbstractValue implements ProgListener {
             }
         } else {
             if (_status != null) _status.setText("Programmer error: "
-                                                 +InstanceManager.programmerManagerInstance()
-                                                 .getServiceModeProgrammer().decodeErrorCode(retval));
-            
+                                                 +mProgrammer.decodeErrorCode(retval));
+
             // delay to ensure that the message appears!
             javax.swing.Timer timer = new javax.swing.Timer(1000, new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -240,25 +239,25 @@ public class CvValue extends AbstractValue implements ProgListener {
         }
         if (log.isDebugEnabled()) log.debug("CV progOpReply end of handling CV "+_num);
 	}
-    
+
     void errorTimeout() {
         setState(UNKNOWN);
         if (log.isDebugEnabled()) log.debug("CV setting not busy on error reply");
         _busy = false;
         notifyBusyChange(true, _busy);
     }
-    
+
     // handle parameter notification
     java.beans.PropertyChangeSupport prop = new java.beans.PropertyChangeSupport(this);
     public void removePropertyChangeListener(java.beans.PropertyChangeListener p) { prop.removePropertyChangeListener(p); }
     public void addPropertyChangeListener(java.beans.PropertyChangeListener p) { prop.addPropertyChangeListener(p); }
-    
+
     // clean up connections when done
     public void dispose() {
         if (log.isDebugEnabled()) log.debug("dispose");
     }
-    
+
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CvValue.class.getName());
-    
+
 }
