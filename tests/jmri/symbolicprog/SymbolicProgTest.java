@@ -23,11 +23,6 @@ import jmri.progdebugger.*;
 
 public class SymbolicProgTest extends TestCase {
 
-	public void testLog4j() {
-		log.info("message from log4j");
-		System.out.println("log4j "+org.apache.log4j.Category.getRoot());
-	}
-
 // CvVal tests
 	// can we create one and manipulate info?
 	public void testCvValCreate() {
@@ -63,7 +58,6 @@ public class SymbolicProgTest extends TestCase {
 			}
 		}
 		if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+cv.getValue()+" state="+cv.getState());
-		System.out.println("readCV past loop, i="+i+" value="+cv.getValue()+" state="+cv.getState());
 		
 		assert(i>0);
 		assert(i<100);
@@ -172,7 +166,7 @@ public class SymbolicProgTest extends TestCase {
 			}
 		}
 		if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+var.getValue()+" state="+var.getState());
-		System.out.println("read: past loop, i="+i+" value="+((JTextField)(var.getValue())).getText()+" state="+var.getState()+" cv state "+cv.getState());
+
 		assert(i>0);
 		assert(i<100);
 		assert( ((JTextField)var.getValue()).getText().equals("14") );
@@ -203,7 +197,7 @@ public class SymbolicProgTest extends TestCase {
 			}
 		}
 		if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+var.getValue()+" state="+var.getState());
-		System.out.println("write: past loop, i="+i+" value="+((JTextField)(var.getValue())).getText()+" state="+var.getState());
+
 		assert(i>0);
 		assert(i<100);
 		assert( ((JTextField)var.getValue()).getText().equals("5") );
@@ -233,13 +227,13 @@ public class SymbolicProgTest extends TestCase {
 	// Can we create a table?
 	public void testVarTableCreate() {
 		String[] args = {"CV", "Name"};
-		VariableTableModel t = new VariableTableModel(args);
+		VariableTableModel t = new VariableTableModel(args, null);  // CvTableModel ref is null for this test
 	}
 
 	// Check column count member fn, column names
 	public void testVarTableColumnCount() {
 		String[] args = {"CV", "Name"};
-		VariableTableModel t = new VariableTableModel(args);
+		VariableTableModel t = new VariableTableModel(args, null);
 		assert(t.getColumnCount() == 2);
 		assert(t.getColumnName(1) == "Name");
 	}
@@ -247,9 +241,7 @@ public class SymbolicProgTest extends TestCase {
 	// Check loading two columns, three rows
 	public void testVarTableLoad_2_3() {
 		String[] args = {"CV", "Name"};
-		VariableTableModel t = new VariableTableModel(args);
-		t.setNumRows(3);
-		assert(t.getRowCount() == 3);
+		VariableTableModel t = new VariableTableModel(args, new CvTableModel());
 		
 		// create a JDOM tree with just some elements
 		Namespace ns = Namespace.getNamespace("decoder", "http://www.slac.stanford.edu/BFROOT/java/streamcalc");
@@ -266,13 +258,15 @@ public class SymbolicProgTest extends TestCase {
 												.addAttribute("name","one")
 												)
 									.addContent(el1 = new Element("variable", ns)
-												.addAttribute("CV","2")
+												.addAttribute("CV","4")
+												.addAttribute("mask","XXXVVVVX")
 												.addAttribute("name","two")
 												)
 										)	// variables element									
 						) // decoder element
 			; // end of adding contents
-		// print, to check
+
+		// print JDOM tree, to check
 		// OutputStream o = System.out;
 		// XMLOutputter fmt = new XMLOutputter();
 		// fmt.setNewlines(true);   // pretty printing
@@ -283,11 +277,14 @@ public class SymbolicProgTest extends TestCase {
 
 		// and test reading this
 		t.setRow(0, el0, ns);
-		assert(t.getValueAt(0,0) == "1");
-		assert(t.getValueAt(0,1) == "one");
+		assert(t.getValueAt(0,0).equals("1"));
+		assert(t.getValueAt(0,1).equals("one"));
+
 		t.setRow(1, el1, ns);
-		assert(t.getValueAt(1,0) == "2");
-		assert(t.getValueAt(1,1) == "two");
+		assert(t.getValueAt(1,0).equals("4"));
+		assert(t.getValueAt(1,1).equals("two"));
+
+		assert(t.getRowCount() == 2);
 		
 	}
 

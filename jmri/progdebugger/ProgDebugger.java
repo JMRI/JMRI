@@ -24,8 +24,7 @@ public class ProgDebugger implements Programmer  {
 	{
 		final ProgListener m = p;
 		// log out the request
-		log.info("write CV: "+CV+" to: "+val+" mode: "+getMode());
-		System.out.println("write CV: "+CV+" to: "+val+" mode: "+getMode());
+		log.debug("write CV: "+CV+" to: "+val+" mode: "+getMode());
 		_lastWrite = val;
 		// return a notification via the queue to ensure end
 		Runnable r = new Runnable() {
@@ -40,8 +39,7 @@ public class ProgDebugger implements Programmer  {
 	public void nextRead(int r) { _nextRead = r; }
 	public void readCV(int CV, ProgListener p) throws ProgrammerException {
 		final ProgListener m = p;
-		log.info("read CV: "+CV+" mode: "+getMode());
-		System.out.println("read CV: "+CV+" mode: "+getMode()+" will read "+_nextRead);
+		log.debug("read CV: "+CV+" mode: "+getMode()+" will read "+_nextRead);
 		// return a notification via the queue to ensure end
 		Runnable r = new Runnable() {
 			ProgListener l = m;

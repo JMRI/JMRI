@@ -22,7 +22,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 	private int _numRows = 0;                // must be zero until Vectors are initialized
 	private Vector _cvDisplayVector = new Vector();  // vector of CvValue objects, in display order
 	private Vector _cvAllVector = new Vector(512);  // vector of all 512 possible CV objects
-	
+	public Vector allCvVector() { return _cvAllVector; }
 	
 	// Defines the columns
 	private static final int NUMCOLUMN   = 0;
@@ -37,11 +37,8 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 		// initialize the 512-length _cvAllVector;
 		for (int i=0; i<512; i++) _cvAllVector.addElement(null);
 		
-		// define just most common CVs at start
+		// define just address CV at start, pending some variables
 		addCV("1");
-		addCV("18");
-		addCV("19");
-		addCV("29");
 		}
 	
 	// basic methods for AbstractTableModel implementation

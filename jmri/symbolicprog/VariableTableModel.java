@@ -19,20 +19,20 @@ public class VariableTableModel extends javax.swing.table.AbstractTableModel {
 
 	String headers[] = null;
 
-	
-	int numRows = 0;                // must be zero until Vectors are initialized
-	Vector rowVector = new Vector();  // vector of row vectors
+	Vector rowVector = new Vector();  // vector of Variable items
+	CvTableModel _cvModel = null;          // reference to external table model
 	
 	/** Defines the columns; values understood are: 	
-	 *  "Name", "Value", "Range", "Read", "Write", "Comment", "CV", "Mask"
+	 *  "Name", "Value", "Range", "Read", "Write", "Comment", "CV", "Mask", "State"
 	 */
-	public VariableTableModel(String h[]) {  
+	public VariableTableModel(String h[], CvTableModel cvModel) { 
+		_cvModel = cvModel; 
 		headers = h;
 		}
 	
 	// basic methods for AbstractTableModel implementation
 	public int getRowCount() { 
-		return numRows;
+		return rowVector.size();
 	}
 	
 	public int getColumnCount( ){ return headers.length;}
@@ -40,112 +40,100 @@ public class VariableTableModel extends javax.swing.table.AbstractTableModel {
 	public String getColumnName(int col) { return headers[col];}
 	
 	public Class getColumnClass(int col) { 
-		if (headers[col] == "Value")
-			return JComboBox.class;
+		if (headers[col].equals("Value"))
+			return JTextField.class;
+		else if (headers[col].equals("Read"))
+			return JButton.class;
+		else if (headers[col].equals("Write"))
+			return JButton.class;
 		else
 			return String.class;
 	}
 
 	public boolean isCellEditable(int row, int col) {
-		if (headers[col] == "Value")
+		if (headers[col].equals("Value"))
+			return true;
+		else if (headers[col].equals("Read"))
+			return true;
+		else if (headers[col].equals("Write"))
 			return true;
 		else
 			return false;
 	}
 			
 	public Object getValueAt(int row, int col) { 
-		return ((Vector)(rowVector.elementAt(row))).elementAt(col);	
+		VariableValue v = (VariableValue)rowVector.elementAt(row);
+		if (headers[col].equals("Value"))
+			return v.getValue();
+		else if (headers[col].equals("Read")) {
+			JButton br = new JButton("Read");
+			br.setActionCommand("R"+row);
+			// br.addActionListener(this);
+			return br;
+		} else if (headers[col].equals("Write")) {
+			JButton bw = new JButton("Write");
+			bw.setActionCommand("W"+row);
+			// bw.addActionListener(this);
+			return bw;
+		} else if (headers[col].equals("CV"))
+			return ""+v.getCvNum();
+		else if (headers[col].equals("Name"))
+			return ""+v.name();
+		else if (headers[col].equals("Comment"))
+			return v.getComment();
+		else if (headers[col].equals("Mask"))
+			return v.getMask();
+		else if (headers[col].equals("State")) {
+			int state = v.getState();
+			switch (state) {
+				case CvValue.UNKNOWN:  	return "Unknown";
+				case CvValue.READ:  	return "Read";
+				case CvValue.EDITTED:  	return "Editted";
+				case CvValue.STORED:  	return "Stored";
+				default: return "inconsistent";
+			}
+		} else
+			return "Later, dude";
 	}
 		
-	// for loading config:
-	public void setNumRows(int n) { 
-		rowVector = new Vector(n); 
-		for (int i=0; i<n; i++) rowVector.addElement(new Vector());
-		numRows = n;
+	public void setValueAt(Object value, int row, int col) { 
 	}
 	
+	// for loading config:	
 	// Read from an Element to configure the row
 	public void setRow(int i, Element e, Namespace ns) {
-		Vector row = (Vector)(rowVector.elementAt(i));
-		// initialize the row to be sure its got right number of elements
-		row.removeAllElements();
-		for (int j=0; j<getColumnCount(); j++) row.addElement(null);
+		// get the values for the VariableValue ctor
 
-		for (int j=0; j<getColumnCount(); j++) {
-			// j is column; headers[j] is desired variable
-			// would prefer switch, but have to switch on int
-			String var = headers[j];
-			if (var == "Name") {
-				row.setElementAt(e.getAttribute("name").getValue(), j);
-			} else if (var == "Value") {
-				// handle value entry
-				if (e.getChild("binaryVal", ns) != null )  {
-					String phrasing = e.getChild("binaryVal", ns).getAttribute("phrasing").getValue();
-					if (phrasing.equals("OffOn"))
-						row.setElementAt(new JCheckBox("On"), j);
-					else if (phrasing.equals("OnOff"))
-						row.setElementAt(new JCheckBox("Off"), j);
-					else if (phrasing.equals("NoYes"))
-						row.setElementAt(new JCheckBox("Yes"), j);
-					else if (phrasing.equals("YesNo"))
-						row.setElementAt(new JCheckBox("No"), j);
-					else row.setElementAt(new JCheckBox("Unknown phrasing "+phrasing), j);
-				} else if (e.getChild("decVal", ns) != null )  {
-					row.setElementAt(new JTextField(""), j);
-				} else if (e.getChild("hexVal", ns) != null )  {
-					row.setElementAt(new JTextField(""), j);
-				} else if (e.getChild("enumVal", ns) != null )  {
-					List l = e.getChild("enumVal", ns).getChildren("enumChoice", ns);
-					JComboBox c = new JComboBox();
-					System.out.println("length "+l.size());
-					for (int k=0; k< l.size(); k++)
-						c.addItem(((Element)l.get(k)).getAttribute("choice").getValue());
-					row.setElementAt(c, j);
-				} else if (e.getChild("speedTableVal", ns) != null )  {
-					row.setElementAt(new JLabel("speed table"), j);
-				} else if (e.getChild("longAddressVal", ns) != null )  {
-					row.setElementAt(new JLabel("long address"), j);
-				} else if (e.getChild("readOnlyVal", ns) != null )  {
-					row.setElementAt(new JLabel("read only value"), j);
-				} else
-				row.setElementAt("unrecognized data type!!!", j);
-			} else if (var == "Range") {
-				// list range for value
-				if (e.getChild("binaryVal", ns) != null )  {
-					row.setElementAt("binary: "+e.getChild("binaryVal", ns).getAttribute("phrasing").getValue(), j);
-				} else if (e.getChild("decVal", ns) != null )  {
-					row.setElementAt("decimal: "+e.getChild("decVal", ns).getAttribute("min").getValue()
-									 +"-"+e.getChild("decVal", ns).getAttribute("max").getValue(), j);
-				} else if (e.getChild("hexVal", ns) != null )  {
-					row.setElementAt("hex:", j);
-				} else if (e.getChild("enumVal", ns) != null )  {
-					row.setElementAt("pick one", j);
-				} else if (e.getChild("speedTableVal", ns) != null )  {
-					row.setElementAt("Speed table", j);
-				} else if (e.getChild("longAddressVal", ns) != null )  {
-					row.setElementAt("Long address", j);
-				} else if (e.getChild("readOnlyVal", ns) != null )  {
-					row.setElementAt("Read only value", j);
-				} else
-				row.setElementAt("unrecognized data type!!!", j);
-			} else if (var == "Read") {
-			} else if (var == "Write") {
-			} else if (var == "Comment") {
-				if (e.getAttribute("comment") != null)
-					row.setElementAt(e.getAttribute("comment").getValue(), j); 
-			} else if (var == "CV") {
-				row.setElementAt(e.getAttribute("CV").getValue(), j);
-			} else if (var == "Mask") {
-				row.setElementAt(e.getAttribute("mask").getValue(), j);
-			} else { // no match is an error
-				row.setElementAt("Unrecognized column name", j);
-			}
-		}  // end of loop over all columns
+		String name = e.getAttribute("name").getValue();
+		String comment = null;
+		if (e.getAttribute("comment") != null)
+			comment = e.getAttribute("comment").getValue();
+		int CV = Integer.valueOf(e.getAttribute("CV").getValue()).intValue();
+		String mask = null;
+		if (e.getAttribute("mask") != null) 
+			mask = e.getAttribute("mask").getValue();
+		else {
+			log.warn("Element missing mask attribute: "+name);
+			mask ="VVVVVVVV";
+		}
+
+		boolean readOnly = false;
+		
+		// have to handle various value types, see "snippet"
+
+		if (_cvModel == null) log.error("CvModel reference is null; cannot add variables");
+		_cvModel.addCV(""+CV);
+
+		// assume decimal type for now, and continue
+		VariableValue v = new DecVariableValue(name, comment, readOnly, 
+								CV, mask, _cvModel.allCvVector());
+		rowVector.addElement(v);
 	}
 	
 	public void configDone() {
 		fireTableDataChanged();	
 	}
 	
-	
+	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(VariableTableModel.class.getName());
+
 }

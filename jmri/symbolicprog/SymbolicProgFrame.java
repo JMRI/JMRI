@@ -35,14 +35,15 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 	// GUI member declarations
 	JButton selectFileButton = new javax.swing.JButton();
 
-	VariableTableModel		variableModel	= new VariableTableModel(
-					new String[]  {"Name", "Value", "Range", "Read", "Write", "CV", "Mask", "Comment" });
-	JTable					variableTable	= new JTable(variableModel);
-	JScrollPane 			variableScroll	= new JScrollPane(variableTable);
-
 	CvTableModel		cvModel	= new CvTableModel();
 	JTable					cvTable	= new JTable(cvModel);
 	JScrollPane 			cvScroll	= new JScrollPane(cvTable);
+
+	VariableTableModel		variableModel	= new VariableTableModel(
+					new String[]  {"Name", "Value", "Range", "State", "Read", "Write", "CV", "Mask", "Comment" },
+					cvModel);
+	JTable					variableTable	= new JTable(variableModel);
+	JScrollPane 			variableScroll	= new JScrollPane(variableTable);
 	
 	JButton  newCvButton = new JButton();
 	JTextField newCvNum  = new JTextField();
@@ -63,8 +64,10 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 		selectFileButton.setVisible(true);
 		selectFileButton.setToolTipText("Press to select configuration file");
 		
-		variableTable.setDefaultRenderer(JComboBox.class, new ValueRenderer());
-		variableTable.setDefaultEditor(JComboBox.class, new ValueEditor());
+		variableTable.setDefaultRenderer(JTextField.class, new ValueRenderer());
+		variableTable.setDefaultRenderer(JButton.class, new ValueRenderer());
+		variableTable.setDefaultEditor(JTextField.class, new ValueEditor());
+		variableTable.setDefaultEditor(JButton.class, new ValueEditor());
 		variableScroll.setColumnHeaderView(variableTable.getTableHeader());
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
 		// instead of forcing the columns to fill the frame (and only fill)
@@ -193,7 +196,6 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 			
 			// start loading variables to table
 			List varList = root.getChild("decoder", ns).getChild("variables",ns).getChildren("variable",ns);
-			variableModel.setNumRows(varList.size());
 			for (int i=0; i<varList.size(); i++) {
 				// load each row
 				variableModel.setRow(i, (Element)(varList.get(i)), ns);

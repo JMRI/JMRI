@@ -24,12 +24,7 @@ public class AllTest extends TestCase  {
 	// Main entry point
 	static public void main(String[] args) { 
 		String[] testCaseName = {AllTest.class.getName()};
-    	// initialize log4j
-    	System.out.println("Initialize log4j");
-    	org.apache.log4j.BasicConfigurator.configure();
-    	log.info("Test message");
-		System.out.println("log4j "+org.apache.log4j.Category.getRoot());
-		// initialize log4j
+		// initialize junit
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 	
@@ -40,6 +35,13 @@ public class AllTest extends TestCase  {
 	
 	// test suite
 	public static Test suite() {
+		boolean log4jinit = true;
+		if (log4jinit) {
+			log4jinit = false;
+	   		org.apache.log4j.BasicConfigurator.configure();
+	   		// only log warnings and above
+	   		org.apache.log4j.Category.getRoot().setPriority(org.apache.log4j.Priority.INFO);
+		}
 		// all tests from here
 		TestSuite suite = new TestSuite(AllTest.class);
 		// all tests from other classes
