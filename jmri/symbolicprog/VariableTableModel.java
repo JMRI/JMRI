@@ -16,6 +16,7 @@ import java.util.Vector;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import com.sun.java.util.collections.List;
 import org.jdom.Attribute;
 import org.jdom.Element;
@@ -62,7 +63,8 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 			return true;
 		else if (headers[col].equals("Read"))
 			return true;
-		else if (headers[col].equals("Write"))
+		else if (headers[col].equals("Write") 
+				&& !((VariableValue)(rowVector.elementAt(row))).getReadOnly())
 			return true;
 		else
 			return false;
@@ -78,10 +80,14 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 			br.addActionListener(this);
 			return br;
 		} else if (headers[col].equals("Write")) {
-			JButton bw = new JButton("Write");
-			bw.setActionCommand("W"+row);
-			bw.addActionListener(this);
-			return bw;
+			if (((VariableValue)(rowVector.elementAt(row))).getReadOnly() ) {
+				return new JButton();
+			} else {
+				JButton bw = new JButton("Write");
+				bw.setActionCommand("W"+row);
+				bw.addActionListener(this);
+				return bw;
+			}
 		} else if (headers[col].equals("CV"))
 			return ""+v.getCvNum();
 		else if (headers[col].equals("Name"))
@@ -131,6 +137,12 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		int maxVal = 255;
 		
 		boolean readOnly = false;
+		if (e.getAttribute("readOnly") != null) {
+			readOnly = e.getAttribute("readOnly").getValue().equals("yes") ? true : false;
+			if (log.isDebugEnabled()) log.debug("found readOnly "+e.getAttribute("readOnly").getValue());
+		} else {
+			log.warn("Element missing readOnly attribute: "+name);
+		}
 		
 		if (_cvModel == null) {
 			log.error("CvModel reference is null; cannot add variables");

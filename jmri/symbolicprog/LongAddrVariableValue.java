@@ -92,6 +92,7 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 	}
 	
  	public void write() {
+ 		if (getReadOnly()) log.error("unexpected write operation when readOnly is set");
  		setBusy(true);  // will be reset when value changes
  		super.setState(STORED);
 		if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in write()");

@@ -76,6 +76,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 	}
 	
  	public void write() {
+ 		if (getReadOnly()) log.error("unexpected write operation when readOnly is set");
  		setBusy(true);  // will be reset when value changes
  		super.setState(STORED);
  		((CvValue)_cvVector.elementAt(getCvNum())).write();

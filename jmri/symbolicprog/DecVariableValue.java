@@ -18,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Vector;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class DecVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
@@ -47,7 +48,9 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 		// compute new cv value by combining old and request
 		int oldCv = cv.getValue();
 		int newVal;
-		try { newVal = Integer.valueOf(_value.getText()).intValue(); }
+		try { 
+			newVal = Integer.valueOf(_value.getText()).intValue(); 
+			}
 			catch (java.lang.NumberFormatException ex) { newVal = 0; }
 		int newCv = newValue(oldCv, newVal, getMask());
 		cv.setValue(newCv);
@@ -55,10 +58,17 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 	
 	// to complete this class, fill in the routines to handle "Value" parameter
 	// and to read/write/hear parameter changes. 
-	public Component getValue()  { return _value; }
+	public Component getValue()  { 
+		if (getReadOnly())  //
+			return new JLabel(_value.getText());
+		else
+			return _value; 
+	}
 	public void setValue(int value) { 
 		int oldVal;
-		try { oldVal = Integer.valueOf(_value.getText()).intValue(); }
+		try { 
+			oldVal = Integer.valueOf(_value.getText()).intValue();
+			}
 			catch (java.lang.NumberFormatException ex) { oldVal = 0; }	
 		if (oldVal != value) 
 			prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value));
@@ -72,6 +82,7 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 	}
 	
  	public void write() {
+ 		if (getReadOnly()) log.error("unexpected write operation when readOnly is set");
  		setBusy(true);  // will be reset when value changes
  		super.setState(STORED);
  		((CvValue)_cvVector.elementAt(getCvNum())).write();
@@ -98,7 +109,7 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 		}
 	}
 
-	// stored value
+	// stored value, read-only Value
 	JTextField _value = null;
 
 	// clean up connections when done

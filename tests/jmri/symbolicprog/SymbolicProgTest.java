@@ -134,12 +134,28 @@ public class SymbolicProgTest extends TestCase {
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, loaded as 5
 		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v);
-		((JTextField)var.getValue()).setText("5");
-
+		assert( ((JTextField)var.getValue()) != null);
+		var.setValue(5);
+		assert( ((JTextField)var.getValue()).getText().equals("5"));
+		
 		// change the CV, expect to see a change in the variable value
 		cv.setValue(7*4+1);
 		assert( ((JTextField)var.getValue()).getText().equals("7") );
 		assert(cv.getValue() == 7*4+1);
+	}
+	
+	// Do we get the right return from a readOnly == true DecVariable?
+	public void testVariableDecReadOnly() {
+		Vector v = createCvVector();
+		CvValue cv = new CvValue(81);
+		cv.setValue(3);
+		v.setElementAt(cv, 81);
+		// create a variable pointed at CV 81, loaded as 5
+		DecVariableValue var = new DecVariableValue("name", "comment", true, 81, "XXVVVVXX", 0, 255, v);
+		// notice type cast in next line
+		assert( ((JLabel)var.getValue()) != null);
+		var.setValue(5);
+		assert( ((JLabel)var.getValue()).getText().equals("5"));
 	}
 	
 	// check a read operation
