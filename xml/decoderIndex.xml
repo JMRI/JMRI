@@ -51,11 +51,11 @@
         <model model="DH120" numOuts="2" numFns="2" />
       </family>
       <family name="Digitrax 150" mfg="Digitrax" lowVersionID="107" type="locomotive" file="Digitrax_150.xml">
-        <model model="DN140" numOuts="4" numFns="2" />
         <model model="DH150" numOuts="5" numFns="3" />
       </family>
       <family name="Digitrax 1x1" mfg="Digitrax" lowVersionID="33" highVersionID="45" type="locomotive" file="Digitrax_1x1.xml">
         <model model="DH121" numOuts="2" numFns="2" />
+        <model model="DN140" numOuts="4" numFns="2" />
       </family>
       <family name="Digitrax 1x2" mfg="Digitrax" lowVersionID="240" highVersionID="242" type="locomotive" file="Digitrax_1x2.xml">
         <model model="DH142" numOuts="4" numFns="2">
@@ -154,10 +154,18 @@
         <model model="AD305" comment="14 step only" />
       </family>
       <family name="D13SR Family" mfg="North Coast Engineering" type="locomotive" file="NCE_D13SR.xml">
-        <model model="D13SR" numOuts="3" numFns="3" />
+        <model model="D15SR" lowVersionID="32" numOuts="5" numFns="5" />
+        <model model="D14SRP" lowVersionID="32" numOuts="4" numFns="5" />
+        <model model="D13SR" lowVersionID="32" numOuts="3" numFns="5" />
+        <model model="DA-SR" lowVersionID="32" numOuts="4" numFns="8" />
+        <model model="P2K-SR" lowVersionID="32" numOuts="4" numFns="8" />
+        <model model="KRS-SR" lowVersionID="32" numOuts="4" numFns="8" />
+        <model model="SW9-SR" lowVersionID="32" numOuts="4" numFns="8" />
+        <model model="D408SR" lowVersionID="32" numOuts="7" numFns="12" />
       </family>
-      <family name="LC Diesel" mfg="Throttle-Up" lowVersionID="34" highVersionID="37" type="locomotive" file="SoundTraxx_100LC_Diesel.xml">
+      <family name="LC Diesel" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_100LC_Diesel.xml">
         <model model="100LC Diesel" numOuts="2" numFns="8">
+          <versionCV lowVersionID="34" />
           <output name="Horn" />
           <output name="Bell" />
           <!--output name="3" label="FX1/grn" /-->
@@ -171,8 +179,9 @@
           <!-- headlight, FX1, FX2 -->
         </model>
       </family>
-      <family name="LC Steam" mfg="Throttle-Up" lowVersionID="32" highVersionID="33" type="locomotive" file="SoundTraxx_100LC_Steam.xml">
+      <family name="LC Steam" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_100LC_Steam.xml">
         <model model="100LC Steam" numOuts="2" numFns="8">
+          <versionCV lowVersionID="32" />
           <output name="Whistle" />
           <output name="Bell" />
           <!--output name="3" label="FX1/grn" /-->
@@ -183,8 +192,10 @@
           <!-- headlight-->
         </model>
       </family>
-      <family name="DSD Diesel" mfg="Throttle-Up" lowVersionID="9" highVersionID="14" type="locomotive" file="SoundTraxx_DSD_Diesel.xml">
+      <family name="DSD Diesel" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_DSD_Diesel.xml">
         <model model="DSD Diesel" numOuts="4" numFns="8">
+          <versionCV lowVersionID="9" highVersionID="14" />
+          <versionCV lowVersionID="21" />
           <output name="Bell" />
           <output name="Horn" />
           <output name="RPM+" />
@@ -199,8 +210,11 @@
           <!-- headlight, F5, F6 -->
         </model>
       </family>
-      <family name="DSD Steam" mfg="Throttle-Up" lowVersionID="6" highVersionID="7" type="locomotive" file="SoundTraxx_DSD_Steam.xml">
+      <family name="DSD Steam" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_DSD_Steam.xml">
         <model model="DSD Steam" numOuts="4" numFns="8">
+          <versionCV lowVersionID="6" highVersionID="7" />
+          <versionCV lowVersionID="15" highVersionID="16" />
+          <versionCV lowVersionID="20" />
           <output name="3" label="F1/grn" />
           <output name="Whistle" />
           <output name="Bell" />
@@ -213,8 +227,9 @@
           <!-- headlight, F1, F5 -->
         </model>
       </family>
-      <family name="DSX Diesel" mfg="Throttle-Up" lowVersionID="9" highVersionID="14" type="locomotive" file="SoundTraxx_DSX_Diesel.xml">
+      <family name="DSX Diesel" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_DSX_Diesel.xml">
         <model model="DSX Diesel" numOuts="0" numFns="8">
+          <versionCV lowVersionID="18" highVersionID="19" />
           <output name="Bell" />
           <output name="Horn" />
           <output name="RPM+" />
@@ -229,8 +244,9 @@
           <!-- for the DSX version -->
         </model>
       </family>
-      <family name="DSX Steam" mfg="Throttle-Up" lowVersionID="6" highVersionID="7" type="locomotive" file="SoundTraxx_DSX_Steam.xml">
+      <family name="DSX Steam" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_DSX_Steam.xml">
         <model model="DSX Steam" numOuts="0" numFns="8">
+          <versionCV lowVersionID="17" />
           <!--output name="3" label="F1/grn" /-->
           <output name="Whistle" />
           <output name="Bell" />
@@ -243,8 +259,9 @@
           <!-- for the DSX version -->
         </model>
       </family>
-      <family name="LC Diesel" mfg="Throttle-Up" lowVersionID="34" highVersionID="37" type="locomotive" file="SoundTraxx_pnpLC_Diesel.xml">
+      <family name="LC Diesel" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_pnpLC_Diesel.xml">
         <model model="C628LC Diesel" numOuts="4" numFns="8">
+          <versionCV lowVersionID="37" />
           <output name="Horn" />
           <output name="Bell" />
           <output name="3" label="FX1/grn" />
@@ -255,18 +272,21 @@
           <output name="Dim" />
           <output name="Mute" />
         </model>
-        <model model="AT100LC Diesel" numOuts="2" numFns="8">
+        <model model="LL100LC Diesel" numOuts="4" numFns="8">
+          <!-- note: The LL100LC has an FX2 output but no FX1 output -->
+          <versionCV lowVersionID="36" />
           <output name="Horn" />
           <output name="Bell" />
-          <!--output name="3" label="FX1/grn" /-->
-          <!--output name="4" label="FX2/brwn" /-->
+          <output name="3" label="none" />
+          <output name="4" label="FX2/brwn" />
           <output name="DynBrake" />
           <output name="RPM+" />
           <output name="RPM-" />
           <output name="Dim" />
           <output name="Mute" />
         </model>
-        <model model="KT100LC Diesel" numOuts="2" numFns="8">
+        <model model="AT100LC/KT100LC Diesel" numOuts="2" numFns="8">
+          <versionCV lowVersionID="35" />
           <output name="Horn" />
           <output name="Bell" />
           <!--output name="3" label="FX1/grn" /-->
@@ -278,8 +298,9 @@
           <output name="Mute" />
         </model>
       </family>
-      <family name="LC Steam" mfg="Throttle-Up" lowVersionID="32" highVersionID="33" type="locomotive" file="SoundTraxx_pnpLC_Steam.xml">
+      <family name="LC Steam" mfg="Throttle-Up" type="locomotive" file="SoundTraxx_pnpLC_Steam.xml">
         <model model="B280LC Steam" numOuts="2" numFns="8">
+          <versionCV lowVersionID="33" />
           <output name="Whistle" />
           <output name="Bell" />
           <!--output name="3" label="FX1/grn" /-->
