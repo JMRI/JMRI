@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the EasyDccProgrammer class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 
 package jmri.jmrix.easydcc;
@@ -101,7 +101,6 @@ public class EasyDccProgrammerTest extends TestCase {
 	}
 
 	public void testReadSequence() throws JmriException {
-		log.error("expect next message: ERROR - Creating too many EasyDccProgrammer objects");
 		// infrastructure objects
 		EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
 		EasyDccListenerScaffold l = new EasyDccListenerScaffold();
@@ -148,7 +147,6 @@ public class EasyDccProgrammerTest extends TestCase {
 	}
 
 	public void testReadRegisterSequence() throws JmriException {
-		log.error("expect next message: ERROR - Creating too many NceProgrammer objects");
 		// infrastructure objects
 		EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
 		EasyDccListenerScaffold l = new EasyDccListenerScaffold();
@@ -200,7 +198,6 @@ public class EasyDccProgrammerTest extends TestCase {
      * @throws JmriException
      */
 	public void testReadFailSequence() throws JmriException {
-		log.error("expect next message: ERROR - Creating too many EasyDccProgrammer objects");
 		// infrastructure objects
 		EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
 		EasyDccListenerScaffold l = new EasyDccListenerScaffold();

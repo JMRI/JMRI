@@ -16,7 +16,7 @@ import jmri.jmrix.nce.NceProgrammer;
 /**
  * JUnit tests for the NceProgrammer class
  * @author			Bob Jacobsen
- * @version          $Revision: 1.6 $
+ * @version          $Revision: 1.7 $
  */
 public class NceProgrammerTest extends TestCase {
 
@@ -64,7 +64,6 @@ public class NceProgrammerTest extends TestCase {
     }
 
     public void testReadCvSequence() throws JmriException {
-        log.error("expect next message: ERROR - Creating too many NceProgrammer objects");
         // infrastructure objects
         NceInterfaceScaffold t = new NceInterfaceScaffold();
         NceListenerScaffold l = new NceListenerScaffold();
@@ -90,7 +89,6 @@ public class NceProgrammerTest extends TestCase {
     }
 
     public void testReadRegisterSequence() throws JmriException {
-        log.error("expect next message: ERROR - Creating too many NceProgrammer objects");
         // infrastructure objects
         NceInterfaceScaffold t = new NceInterfaceScaffold();
         NceListenerScaffold l = new NceListenerScaffold();
