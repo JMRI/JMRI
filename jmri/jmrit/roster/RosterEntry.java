@@ -25,7 +25,7 @@ import org.jdom.Element;
  * this entry.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  * @see jmri.jmrit.roster.LocoFile
  *
  */
@@ -34,6 +34,25 @@ public class RosterEntry {
 	public RosterEntry(String fileName) {
 		_fileName = fileName;
 	}
+
+    public RosterEntry(RosterEntry pEntry, String pID) {
+        // The ID is different for this element
+        _id = pID;
+
+        // The filename is not set here, rather later
+        _fileName = null;
+
+        // All other items are copied
+        _roadName =     pEntry._roadName;
+        _roadNumber =   pEntry._roadNumber;
+        _mfg =          pEntry._mfg;
+        _model =        pEntry._model;
+        _dccAddress =   pEntry._dccAddress;
+        _comment =      pEntry._comment;
+        _decoderModel = pEntry._decoderModel;
+        _decoderFamily = pEntry._decoderFamily;
+        _decoderComment = pEntry._decoderComment;
+    }
 
 	public void   setId(String s) { _id = s; }
 	public String getId() { return _id; }
