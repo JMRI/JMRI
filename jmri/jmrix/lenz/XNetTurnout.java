@@ -3,7 +3,7 @@
  *
  * Description:		extend jmri.AbstractTurnout for XNet layouts
  * @author			Bob Jacobsen Copyright (C) 2001, Portions by Paul Bender Copyright (C) 2003,2004 
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 
 package jmri.jmrix.lenz;
@@ -31,6 +31,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 	forwardCommandChangeToLayout(s);
 	newCommandedState(s);
 	if( getKnownState()==UNKNOWN) newKnownState(s);
+		else newKnownState(INCONSISTENT);
     }
 
 
