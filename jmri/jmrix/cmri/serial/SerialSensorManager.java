@@ -15,7 +15,7 @@ import jmri.Sensor;
  * see nextAiuPoll()
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SerialSensorManager extends jmri.AbstractSensorManager
                             implements SerialListener {
@@ -33,6 +33,25 @@ public class SerialSensorManager extends jmri.AbstractSensorManager
     public void dispose() throws JmriException {
     }
 
+    /**
+     * There are three possibilities for the arguments:
+     * <OL>
+     * <LI>systemName is non-null, and userName is null.
+     *   <P>This returns an existing object with that systemName,
+     *   if it exists.  If it doesn't exist, create and return
+     *   a new one with that systemName and no userName.
+     * <LI>systemName is non-null, and userName is non-null.
+     *   <P>This returns an existing object with that systemName,
+     *   if it exists.  If it doesn't exist, create and return
+     *   a new one with that systemName and userName.
+     * <LI>systemName is null, and userName is non-null.
+     *   <P>In this case _only_, the userName is considered as a number,
+     *   from which an appropriate systemName is constructed.
+     *   <P>This is somewhat confusing. If you want to look up an
+     *   existing object via just the userName this is not the member function
+     *   to use.
+     * </OL>
+     */
     public Sensor newSensor(String systemName, String userName) {
         if (log.isDebugEnabled()) log.debug("newSensor:"
                                             +( (systemName==null) ? "null" : systemName)
@@ -50,8 +69,16 @@ public class SerialSensorManager extends jmri.AbstractSensorManager
 
         // return existing if there is one
         Sensor s;
-        if ( (userName!=null) && ((s = getByUserName(userName)) != null)) return s;
-        if ( (systemName!=null) && ((s = getBySystemName(systemName)) != null)) return s;
+        if ( (userName!=null) && ((s = getByUserName(userName)) != null)) {
+            if (getBySystemName(systemName)!=s)
+                log.error("inconsistent user ("+userName+") and system name ("+systemName+") results; userName related to ("+s.getSystemName()+")");
+            return s;
+        }
+        if ( (s = getBySystemName(systemName)) != null) {
+            if (userName != null) log.warn("Found turnout via system name ("+systemName
+                                    +") with non-null user name ("+userName+")");
+            return s;
+        }
 
         // doesn't exist, make a new one
         if (userName == null)
