@@ -5,9 +5,12 @@
 <decoderList:decoderList>
 
 	<decoderList:definition mfg="Digitrax" 	model="All" 		file="Digitrax_All.xml" />
+	<decoderList:definition mfg="Digitrax" 	model="Generic" 	file="Digitrax_Generic.xml" />
 		
 	<decoderList:definition mfg="Atlas" 	model="DualMode" 	file="Atlas_DualMode.xml" />
 		
+	<decoderList:definition mfg="Lenz" 		model="LE320" 		file="Lenz_LE320.xml" />
+
 	<decoderList:definition mfg="NCE" 		model="D13SR" 		file="NCE_D13SR.xml" />
 		
 </decoderList:decoderList>
