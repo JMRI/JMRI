@@ -9,13 +9,21 @@ import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 
 /**
- * Load the JMRI config from an XML file.
+ * Load configuration information from an XML file.
+ * <P>
+ * This will load whatever information types are present in the file.
+ * See {@jmri.ConfigureManager} for information on the various
+ * types of information stored in configuration files.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2002
- * @version	    $Revision: 1.5 $
+ * @version	    $Revision: 1.6 $
  * @see             jmri.jmrit.XmlFile
  */
 public class LoadXmlConfigAction extends AbstractAction {
+
+    public LoadXmlConfigAction() {
+        super("Load ...");
+    }
 
     public LoadXmlConfigAction(String s) {
         super(s);
@@ -28,7 +36,7 @@ public class LoadXmlConfigAction extends AbstractAction {
         LoadStoreBase.fileChooser.rescanCurrentDirectory();
         int retVal = LoadStoreBase.fileChooser.showOpenDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
-        log.debug("Open config file: "+LoadStoreBase.fileChooser.getSelectedFile().getPath());
+        if (log.isDebugEnabled()) log.debug("Open config file: "+LoadStoreBase.fileChooser.getSelectedFile().getPath());
         InstanceManager.configureManagerInstance().load(LoadStoreBase.fileChooser.getSelectedFile());
     }
 

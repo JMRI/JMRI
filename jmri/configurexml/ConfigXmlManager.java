@@ -15,7 +15,7 @@ import org.jdom.output.XMLOutputter;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -207,10 +207,10 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
 
     /**
-     * Writes config, tools and user to a file
+     * Writes config, tools and user to a file.
      * @param file
      */
-    public void store(File file) {
+    public void storeAll(File file) {
         Element root = initStore();
         addConfigStore(root);
         addToolsStore(root);
@@ -218,12 +218,37 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         finalStore(root, file);
     }
     /**
-     * Writes prefs to a file
+     * Writes prefs to a file.
      * @param file
      */
     public void storePrefs(File file) {
         Element root = initStore();
         addPrefsStore(root);
+        finalStore(root, file);
+    }
+
+    /**
+     * Writes prefs to a file.
+     * @param file
+     */
+    public void storeConfig(File file) {
+        Element root = initStore();
+        addConfigStore(root);
+        finalStore(root, file);
+    }
+
+     /**
+     * Writes user and config info to a file.
+     * <P>
+     * Config is included here because it doesnt hurt to
+     * read it again, and the user data (typically a panel)
+     * requires it to be present first.
+     * @param file
+     */
+    public void storeUser(File file) {
+        Element root = initStore();
+        addConfigStore(root);
+        addUserStore(root);
         finalStore(root, file);
     }
 

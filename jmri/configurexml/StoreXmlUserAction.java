@@ -1,4 +1,4 @@
-// StoreXmlConfigAction.java
+// StoreXmlUserAction.java
 
 package jmri.configurexml;
 
@@ -9,24 +9,24 @@ import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 
 /**
- * Store the JMRI configuration information as XML.
+ * Store the JMRI user-level information as XML.
  * <P>
- * Note that this does not store preferences, tools or user information
+ * Note that this does not store preferences, configuration, or tool information
  * in the file.  This is not a complete store!
  * See {@jmri.ConfigureManager} for information on the various
  * types of information stored in configuration files.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.1 $
  * @see         jmri.jmrit.XmlFile
  */
-public class StoreXmlConfigAction extends AbstractAction {
+public class StoreXmlUserAction extends AbstractAction {
 
-    public StoreXmlConfigAction() {
-        super("Store configuration ...");
+    public StoreXmlUserAction() {
+        super("Store panels ...");
     }
 
-    public StoreXmlConfigAction(String s) {
+    public StoreXmlUserAction(String s) {
         super(s);
         // ensure that an XML config manager exists
         if (InstanceManager.configureManagerInstance()==null)
@@ -38,7 +38,7 @@ public class StoreXmlConfigAction extends AbstractAction {
         int retVal = LoadStoreBase.fileChooser.showSaveDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
         if (log.isDebugEnabled()) log.debug("Save file: "+LoadStoreBase.fileChooser.getSelectedFile().getPath());
-        InstanceManager.configureManagerInstance().storeConfig(LoadStoreBase.fileChooser.getSelectedFile());
+        InstanceManager.configureManagerInstance().storeUser(LoadStoreBase.fileChooser.getSelectedFile());
     }
 
     // initialize logging
