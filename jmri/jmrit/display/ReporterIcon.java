@@ -12,7 +12,7 @@ import javax.swing.*;
  * An icon to display info from a Reporter, e.g. transponder or RFID reader.<P>
  *
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class ReporterIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -106,7 +106,6 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
         	setText("<no report>");
 		}
 		updateSize();
-		System.out.println("size "+getHeight()+" "+getWidth());
         return;
     }
 
@@ -118,8 +117,6 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
     }
 
     protected int maxHeight() {
-    	System.out.println("height "+(new JLabel(this.getText())).getPreferredSize().height);
-    	System.out.println("text "+this.getText());
         return (new JLabel(this.getText())).getPreferredSize().height;
     }
     protected int maxWidth() {
