@@ -9,7 +9,7 @@ package jmri.jmrix.lenz;
  * based on the Command Station Type.
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 2.1 $
+ * @version			$Revision: 2.2 $
  */
 public class XNetInitilizationManager implements XNetListener {
 
@@ -61,6 +61,13 @@ public class XNetInitilizationManager implements XNetListener {
            jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager());
            jmri.InstanceManager.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager());
            jmri.InstanceManager.setProgrammerManager(new jmri.jmrix.lenz.XNetProgrammerManager(jmri.jmrix.lenz.XNetProgrammer.instance()));
+           /* the "raw" Command Station only works on systems that support   
+                 Ops Mode Programming */
+           /* jmri.InstanceManager.setCommandStation(XNetTrafficController.instance()
+                                             .getCommandStation());*/
+	   /* the consist manager has to be set up AFTER the programmer, to 
+	   prevent the default consist manager from being loaded on top of it */
+	   jmri.InstanceManager.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager());
         } else if(CSSoftwareVersion<3.0) {
            log.error("Command Station does not support XPressNet Version 3 Command Set");
         } else {
@@ -73,6 +80,9 @@ public class XNetInitilizationManager implements XNetListener {
             if(CSType==0x02) {
 	      if (log.isDebugEnabled()) log.debug("Command Station is Commpact/Commander/Other");
               jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager());
+	      /* the consist manager has to be set up AFTER the programmer, to 
+	      prevent the default consist manager from being loaded on top of it */
+	      jmri.InstanceManager.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager());
             } else if(CSType==0x01) {
 	      if (log.isDebugEnabled()) log.debug("Command Station is LH200");
             } else if(CSType==0x00) {
@@ -80,12 +90,26 @@ public class XNetInitilizationManager implements XNetListener {
               jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager());
               jmri.InstanceManager.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager());
               jmri.InstanceManager.setProgrammerManager(new jmri.jmrix.lenz.XNetProgrammerManager(jmri.jmrix.lenz.XNetProgrammer.instance()));
+              /* the "raw" Command Station only works on systems that support   
+                 Ops Mode Programming */
+              /* jmri.InstanceManager.setCommandStation(XNetTrafficController.instance()
+                                             .getCommandStation());*/
+	      /* the consist manager has to be set up AFTER the programmer, to 
+	      prevent the default consist manager from being loaded on top of it */
+	      jmri.InstanceManager.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager());
             } else {
               /* If we still don't  know what we have, load everything */
 	      if (log.isDebugEnabled()) log.debug("Command Station is Unknown type");
               jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager());
               jmri.InstanceManager.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager());
               jmri.InstanceManager.setProgrammerManager(new jmri.jmrix.lenz.XNetProgrammerManager(jmri.jmrix.lenz.XNetProgrammer.instance()));
+              /* the "raw" Command Station only works on systems that support   
+                 Ops Mode Programming */
+              /*jmri.InstanceManager.setCommandStation(XNetTrafficController.instance()
+                                             .getCommandStation());*/
+	      /* the consist manager has to be set up AFTER the programmer, to 
+	      prevent the default consist manager from being loaded on top of it */
+	      jmri.InstanceManager.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager());
             }
         }
         // After the Constructor runs, we can dispose of this class
