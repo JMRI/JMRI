@@ -1,757 +1,1529 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
 
+
+
 <!-- JMRI Throttle Documentation -->
+
 <!-- Creation date: 03.18.2004   -->
+
 <!-- Author: Paul Fraker         -->
+
 <!--    paul@frakers.com         -->
+
 <!--    www.frakers.com          -->
+
 <!--                             -->
-<!-- Last updated: 04.05.2004    -->
+
+<!-- Last updated: 04.06.2004    -->
+
+
 
 <HTML>
+
 <HEAD>
-	<TITLE>JMRI Throttle Documentation (Rev 2 - 04.05.2004)</TITLE>
+
+	<TITLE>JMRI Throttle Documentation (Rev 3 - 04.06.2004)</TITLE>
+
 	<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
 	<META NAME="Description" CONTENT="Throttle documentation for JMRI project">
+
 	<META NAME="Keywords" CONTENT="JMRI">
+
 	<META NAME="Author" CONTENT="Paul R. Fraker">
+
 	<META NAME="Generator" CONTENT="AceHTML 4 Pro">
+
 	<META NAME="Language" CONTENT="EN">
+
 	<META NAME="Robots" CONTENT="Index, Follow">
+
 	<META NAME="Revisit-After" CONTENT="7 Days">
+
 	<LINK REL="SHORTCUT ICON" HREF="Images/JMRIThrottle.ico">
+
 	<LINK REL=STYLESHEET HREF="JMRIThrottle.css">
+
 </HEAD>
+
+
 
 <BODY LINK="blue" VLINK="blue" BGCOLOR="#FFFFFF">
 
+
+
 <A NAME="NewThrottleWindow"></A>
 
-<H1>JMRI THROTTLE LAYOUT</H1>
-<H2>User Guide</H2>
+
+
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="0" CELLSPACING="0" BGCOLOR="#91BDFF">
+
+	<TR>
+
+		<TD WIDTH="100%" ALIGN="center" VALIGN="top">
+
+			<H1>JMRI THROTTLE LAYOUT</H1>
+
+			<H2>User Guide</H2>
+
+		</TD>
+
+	</TR>
+
+</TABLE>
+
+
+
 <H3>OPEN and CONFIGURE A NEW THROTTLE WINDOW</H3>
+
+
 
 <BR><BR><BR>
 
+
+
 <TABLE BORDER=0 WIDTH="100%" CELLPADDING=5 CELLSPACING=0>
+
 	<TR>
+
 		<TD align="left" valign="top">
+
 			<H4>Open a New Throttle Window</H4>
+
 			
+
 			<DIR>
+
 				<P>This chapter will walk you through the process of opening up a new throttle window
+
 				and then configuring it to run a locomotive on your layout.  For the purposes of this
+
 				user guide, we will be using a locomotive that has been equipped with a sound decoder.
+
 				The decoder's address in our examples here is <B>8251</B>.  If you are following along
+
 				with a locomotive of your own while you read this, simply replace your loco's decoder
+
 				address anywhere that "8251" is shown.</P>
+
 			
+
 				<P>So let's get started.</P>
+
 			
+
 				<BR><BR>
+
 			
+
 				<TABLE BORDER=0 WIDTH="95%" CELLPADDING=0 CELLSPACING=0>
+
 					<TR>
+
 						<TD WIDTH="10%" VALIGN="top" ALIGN="center">
+
 							<IMG WIDTH="163" HEIGHT="82" SRC="Images/jmri004.jpg" TITLE="New Throttle" BORDER="0"><BR>
+
 							<FONT SIZE="1">Figure 2-1: New Throttle Menu Option</FONT>
+
 						</TD>
+
+
 
 						<TD WIDTH="5%">
-							<IMG WIDTH="10" HEIGHT="20" SRC="Images/Spacer.gif" BORDER="0">
+
+							<IMG WIDTH="10" HEIGHT="20" SRC="Images/spacer.gif" BORDER="0">
+
 						</TD>
 
+
+
 						<TD WIDTH="85%" VALIGN="top" ALIGN="left">
+
 							<P>The first thing that we want to do is to open up a throttle window.  As outlined in the
+
 							<A HREF="ThrottleChapter1.html" TITLE="Go back to review Chapter 1">previous chapter</A>,
+
 							this is accomplished by selecting the following menu options from the primary main
+
 							window:</P>
 
+
+
 							<UL TYPE="square">
+
 								<LI><STRONG>Tools</STRONG>
+
 								<LI><STRONG>Throttles</STRONG>
+
 								<LI><STRONG>New Throttle</STRONG>
+
 							</UL>
+
 						</TD>
+
 					</TR>
+
 				</TABLE>
+
+
 
 				<BR><BR><BR>
+
 				
+
 				<A NAME="StructWin"></A>
+
 				<TABLE BORDER=0 WIDTH="95%" CELLPADDING=0 CELLSPACING=0>
+
 					<TR>
+
 						<TD WIDTH="85%" VALIGN="top" ALIGN="left">
+
 							<H5>Structure of a Throttle Window</H5>
+
 							<DIR>
+
 								<P>There are <I>three panels</I> (or sub-windows) associated with each Throttle window.  These
+
 								are identified as:</P>
+
 			
+
 								<UL>
+
 									<LI><B>Control Panel</B> — contains a throttle slider to control the speed of the loco,
+
 									a forward and reverse selector, an Emergency Stop action button, and an Idle action button
+
 									(mostly used for sound equipped decoders).<BR><BR>
+
 									<LI><B>Function Panel</B> — is used to associate the function buttons with the active
+
 									output functions of the decoder.<BR><BR>
+
 									<LI><B>Address Panel</B> — is used to identify the decoder's address, and to dispatch or
+
 									release the identified address.<BR><BR>
+
 								</UL>
 
+
+
 								<TABLE BORDER=1 CELLPADDING=4 CELLSPACING=2 BORDERCOLOR="red">
+
 									<TR>
+
 										<TD>
+
 											<DIV>
+
 											<B><FONT COLOR="red">Important!</FONT></B> &nbsp; These three panels are actually windows
+
 											defined within an overall window. Please note that each of these panels contain 
+
 											their own "minimize" and "close" buttons — as well as can also be resized.  
+
 											You can actually minimize one or more of these panels within the Throttle window.  
+
 											This is being pointed out in event that you accidentally click on one of the 
+
 											buttons and the panel disappears on you.
+
 											</DIV>
+
 										</TD>
+
 									</TR>
+
 								</TABLE>
+
 							</DIR>									
+
 						</TD>
+
 					
+
 						<TD WIDTH="5%">
-							<IMG WIDTH="15" HEIGHT="20" SRC="Images/Spacer.gif" BORDER="0">
+
+							<IMG WIDTH="15" HEIGHT="20" SRC="Images/spacer.gif" BORDER="0">
+
 						</TD>
+
 					
+
 						<TD WIDTH="10%" VALIGN="top" ALIGN="center">
+
 							<IMG WIDTH="308" HEIGHT="377" SRC="Images/jmri011.jpg" TITLE="JMRI Throttle New Default Window" BORDER="0"><BR>
+
 							<FONT SIZE=1>Figure 2-2:  New Throttle Window</FONT>
+
 						</TD>
+
 					</TR>
+
 				</TABLE>
+
 			</DIR>
+
 		</TD>
+
 	</TR>
+
 </TABLE>
+
+
 
 <BR><BR>
 
+
+
 <A NAME="WinConfig"></A>
+
 <TABLE BORDER=0 WIDTH="100%" CELLPADDING=5 CELLSPACING=0>
+
 	<TR>
+
 		<TD align="left" valign="top">
+
 			<H4>Configure The New Throttle</H4>
+
 			<DIR>
+
 				<P>Now that we have successfully opened up the throttle window, the next thing we need to do is
+
 				to configure the throttle for operation.  We'll do this in two steps.  The first will be to assign
+
 				a locomotive's decoder address.  Please note in Figure 2-2 above that all of the panels are pretty much
+
 				disabled.  This is because there is no address assigned yet.  After establishing an address, the
+
 				other options on the panels will become enabled.</P>
+
 				
+
 				<A NAME="AddressPanel"></A>
+
 				<TABLE BORDER=0 WIDTH="95%" CELLPADDING=0 CELLSPACING=0>
+
 					<TR>
+
 						<TD valign="top">
+
 							<H5>Assign a Decoder Address to a Throttle Window</H5>
+
 							<DIR>
+
 								<P>The first thing that needs to happen before any options or buttons in the window
+
 								become active, is to assign a decoder's address in the "<B>Address Panel</B>".
+
 								There are two ways that this can be accomplished.</P>
+
 								
+
 								<OL>
+
 									<LI>Manually enter the decoder's address in the large text box, then click on
+
 									the "<BIG>Set</BIG>" button.<BR><BR>
+
 									
+
 									<DIR>
+
 										<TABLE BORDER=1 CELLPADDING=4 CELLSPACING=2 BORDERCOLOR="red">
+
 											<TR>
+
 												<TD>
+
 													<DIV>
+
 													<FONT COLOR="red">Important!</FONT> &nbsp; when manually entering an address,
+
 													be sure to click on the <BIG>Set</BIG> button.  Without this step, all
+
 													throttle actions remain disabled.
+
 													</DIV>
+
 												</TD>
+
 											</TR>
+
 										</TABLE>
+
 									</DIR>
+
 									
+
 									<BR><BR>
+
 									
+
 									<LI>Or, use the drop down list to select from the roster list (as shown in the
+
 									figure on the right).<BR><BR>
+
 									Please note that when you select a loco from this list, 
+
 									it simply reads the decoders address from the roster file — it 
+
 									currently does <U>not</U> cross reference this to any
+
 									saved throttle layout files.
+
 								</OL>
+
 							</DIR>
+
 						</TD>
+
 							
+
 						<TD>
-							<IMG WIDTH="20" HEIGHT="40" SRC="Images/Spacer.gif" BORDER="0">
+
+							<IMG WIDTH="20" HEIGHT="40" SRC="Images/spacer.gif" BORDER="0">
+
 						</TD>
+
 							
+
 						<TD valign="top" align="center">
+
 							<IMG WIDTH="207" HEIGHT="228" SRC="Images/jmri015.jpg" BORDER="0" TITLE="Address Selection"><BR>
+
 							<FONT SIZE=1>Figure 2-3: Address Selection</FONT>
+
 						</TD>
+
 					</TR>
+
 					
+
 					<TR COLSPAN=3>
+
 						<TD>
-							<IMG WIDTH="40" HEIGHT="40" SRC="Images/Spacer.gif" BORDER="0">
+
+							<IMG WIDTH="40" HEIGHT="40" SRC="Images/spacer.gif" BORDER="0">
+
 						</TD>
+
 					</TR>
+
 					
+
 					<TR>
+
 						<TD width="85%" valign="top">
+
 							<DIR>
+
 								<P>After an address is selected, all other controls and options in the throttle window will
+
 								become enabled.  Two other option buttons also become active in the "<B>Address Panel</B>".
+
 								These are described as...</P>
 
+
+
 								<UL>
+
 									<LI><STRONG>Dispatch</STRONG> — releases the decoder address back to the command
+
 									station in a "dispatch" mode.  Usually, only one address can be in dispatch state at
+
 									the command station — all others are either "in use" or "idle" (released).  The
+
 									controls and options in the throttle window will become disabled until another address
+
 									is "<BIG>Set</BIG>".<BR><BR>
 
+
+
 									<LI><STRONG>Release</STRONG> — releases the decoder address back to the command
+
 									station as "no longer needed".  The controls and options in the throttle window will
+
 									become disabled until another address is "<BIG>Set</BIG>".<BR><BR>
+
 								</UL>
+
 							</DIR>
+
 						</TD>
+
 							
+
 						<TD WIDTH="5%">
-							<IMG WIDTH="20" HEIGHT="40" SRC="Images/Spacer.gif" BORDER="0">
+
+							<IMG WIDTH="20" HEIGHT="40" SRC="Images/spacer.gif" BORDER="0">
+
 						</TD>
+
 							
+
 						<TD width="10%" valign="top" align="center">
+
 							<IMG WIDTH="199" HEIGHT="129" SRC="Images/jmri032.jpg" BORDER="0" TITLE="Example of Address Panel option buttons"><BR>
+
 							<FONT SIZE=1>Figure 2-4: Address Panel<BR>(with an active address)</FONT>
+
 						</TD>						
+
 					</TR>
+
 				<TABLE>
+
+
 
 				<BR><BR>
 
+
+
 				<A NAME="ControlPanel"></A>
+
 				<TABLE BORDER=0 WIDTH="95%" CELLPADDING=0 CELLSPACING=0>
+
 					<TR>
+
 						<TD width="85%" valign="top" align="left">
+
 							<H5>Control Panel — Let's Run a Train</H5>
+
 							<DIR>
+
 								<P>Now that you have established an address for the throttle, you should be able
+
 								to run the train on your layout (if your layout is active and the address you
+
 								entered is valid to a locomotive on the track).  You do this using the
+
 								"<B>Control Panel</B>" (see Figure 2-5).  But here is where things get a
+
 								little sticky.</P>
+
 								
+
 								<P>There are multiple combinations of DCC systems and computer platforms that
+
 								make up for slight differences in the functionality of the throttles.
+
 								The programmers are working hard at trying to get these throttles to function
+
 								identically.  But because of the these differences, you may discover that not
+
 								everything noted in the following text will function as defined for your system.</P>
+
 								
+
 								<TABLE BORDER=1 CELLPADDING=4 CELLSPACING=2 BORDERCOLOR="red">
+
 									<TR>
+
 										<TD>
+
 											<DIV>
+
 											<FONT COLOR="red">Important!</FONT> &nbsp; 
+
 											The "Control Panel" must have the "focus" for it to become
+
 											active (and usable).  In other words, it's window bar must be active.  If
+
 											you are following along with this text with your own locomotive and just
+
 											entered an address in the Address Panel, you will discover that the Address
+
 											Panel is the window with the current focus.  None of the keyboard or mouse
+
 											actions described below will move the train until the Control Panel has the
+
 											focus.  To make the Control Panel the active window, use your mouse pointer
+
 											to click somewhere within the Control Panel.
+
 											</DIV>
+
 										</TD>
+
 									</TR>
+
 								</TABLE>
+
 								
+
 								<BR><BR>
+
 								
+
 								<TABLE BORDER=2 CELLPADDING=2 CELLSPACING=2>
+
 									<TR>
+
 										<TD>
+
 											<CENTER>
+
 											<B><FONT COLOR="red">Beware of where you click with your mouse 
+
 											pointer in the Control Panel.</FONT></B>
+
 											</CENTER>
+
 											
+
 											<BR><BR>
 
+
+
 											<UL>
+
 												<LI>If you click anywhere near the slider, your loco may take off on you
+
 												unexpectedly (more on this below).<BR><BR>
+
 												<LI>If you click anywhere on the words "Forward" or "Reverse", you will
+
 												activate that action — which isn't too bad — except if the loco
+
 												is running in the opposite direction from what action you clicked on.<BR><BR>
+
 												<LI>Depending on your screen resolution size, if you attempt to click on the
+
 												window bar itself, you may accidentally close down the Control Panel window or
+
 												minimize it.  This could of course immediately confuse any new user.<BR><BR>
+
 											</UL>
+
 					
+
 											<P>So when first clicking in the Control Panel to make it the "active" window
+
 											with the focus, and you know that your loco is stopped, it is suggested to click
+
 											on the "Idle" button (if you know for fact that your loco is stopped), or the
+
 											forward or reverse area (depending of course on the current direction of the
+
 											loco).  In other words, you want to click somewhere in within the border of the
+
 											Control Panel window — yet not cause your loco to do something that you
+
 											don't want it to do.</P>
+
 					
+
 											<P>After a little experimentation, you will discover what is comfortable for
+
 											your usage.  The only point we are trying to make here is that many new users
+
 											immediately get frustrated with the throttles because they can't get their loco
+
 											to move — not realizing that the Control Panel does not have the focus.
+
 											Or they have clicked on a function button (more on these below), which then
+
 											changes the "active" window to the Function Panel.</P>
+
 										</TD>
+
 									</TR>
+
 								</TABLE>
+
 							</DIR>
+
 						</TD>
+
 						
+
 						<TD width="5%">
-							<IMG WIDTH="20" HEIGHT="40" SRC="Images/Spacer.gif" BORDER="0">
+
+							<IMG WIDTH="20" HEIGHT="40" SRC="Images/spacer.gif" BORDER="0">
+
 						</TD>
+
 						
+
 						<TD width="10%" valign="top" align="center" NOWRAP>
+
 							<IMG WIDTH="99" HEIGHT="330" SRC="Images/jmri033.jpg" TITLE="Example of the Control Panel" BORDER="0"><BR>
+
 							<FONT SIZE=1>Figure 2-5: Control Panel</FONT>
+
 						</TD>
+
 					</TR>
+
 				</TABLE>
+
 				
+
 				<BR><BR><BR>
+
 				
+
 				<DIR>
+
 					<A NAME="StandardActions"></A>
+
 					<H6>Keyboard Control</H6>
+
 					<DIR>
+
 						<P>There is a group of keyboard action keys that have been defined as "<B>standard</B>"
+
 						across all DCC systems and computer platforms.  They are identified in the following table:</P>
 
+
+
 						<TABLE WIDTH="70%" BORDER="2" BGCOLOR="#CCCCFF" BORDERCOLOR="#003399" CELLPADDING="2" CELLSPACING="2">
+
 							<TR BGCOLOR="#6699FF">
+
 								<TD align="center">
+
 									<FONT SIZE=4>KEY*</FONT>
+
 								</TD>
+
 								<TD align="center">
+
 									<FONT SIZE=4>ACTION</FONT>
+
 								</TD>
+
 							</TR>
+
 							<TR>
+
 								<TD align="center">
+
 									<FONT SIZE=4><B>+</B></FONT>
+
 								</TD>
+
 								<TD>
+
 									Increase speed by 1 step of each press of the key
+
 								</TD>
+
 							</TR>
+
 							<TR>
+
 								<TD align="center">
+
 									<FONT SIZE=4><B>-</B></FONT>
+
 								</TD>
+
 								<TD>
+
 									Decrease speed by 1 step of each press of the key
+
 								</TD>
+
 							</TR>
+
 							<TR>
+
 								<TD align="center">
+
 									<FONT SIZE=4><B>*</B></FONT>
+
 								</TD>
+
 								<TD>
+
 									Idle (set speed to 0, any speed momentum is enabled)
+
 								</TD>
+
 							</TR>
+
 							<TR>
+
 								<TD align="center">
+
 									<FONT SIZE=4><B>/</B></FONT>
+
 								</TD>
+
 								<TD>
+
 									Emergency Stop! (instantly halts the locomotive)
+
 								</TD>
+
 							</TR>
+
 							<TR>
+
 								<TD align="center">
+
 									<FONT SIZE=4><B>Up arrow</B></FONT>
+
 								</TD>
+
 								<TD>
+
 									Forward direction
+
 								</TD>
+
 							</TR>
+
 							<TR>
+
 								<TD align="center">
+
 									<FONT SIZE=4><B>Down arrow</B></FONT>
+
 								</TD>
+
 								<TD>
+
 									Reverse direction
+
 								</TD>
+
 							</TR>
+
 							<TR>
+
 								<TD align="center">
+
 									<FONT SIZE=4><B>Left arrow</B></FONT>
+
 								</TD>
+
 								<TD>
+
 									Increases speed by 1 step for each press of the key
+
 								</TD>
+
 							</TR>
+
 							<TR>
+
 								<TD align="center">
+
 									<FONT SIZE=4><B>Right arrow</B></FONT>
+
 								</TD>
+
 								<TD>
+
 									Decreases speed by 1 step for each press of the key
+
 								</TD>
+
 							</TR>
+
 							<TR>
+
 								<TD align="center">
+
 									<FONT SIZE=4><B>Page Up</B></FONT>
+
 								</TD>
+
 								<TD>
+
 									Increases speed by approximately 10% for each press of the key
+
 								</TD>
+
 							</TR>
+
 							<TR>
+
 								<TD align="center">
+
 									<FONT SIZE=4><B>Page Down</B></FONT>
+
 								</TD>
+
 								<TD>
+
 									Decreases speed by approximately 10% for each press of the key
+
 								</TD>
+
 							</TR>
+
 						</TABLE>
+
 						
+
 						<BR><BR>
+
 						
+
 						<DIV>
+
 							Note:  *The implied keys noted above (with the exception of the
+
 							arrow keys) are those found on the numeric
+
 							keypad of the keyboard.  For laptops and other keyboards
+
 							that don't have a separate numeric keypad, experimentation on your part
+
 							may be needed to find the correct key combination.  The arrow keys
+
 							are usually found grouped in their own separate area.
+
 						</DIV>
+
 						
+
 						<P>Using the standard key actions are pretty easy.
+
 						After making the Control Panel have the active focus, each click of the
+
 						<B>+</B> on the numeric keypad should increase the speed on your locomotive.  Each
+
 						click of the <B>-</B> key on the numeric keypad should decrease the speed of your
+
 						locomotive.  To bring the locomotive to a stop, a single click of the <B>/</B>
+
 						key on the numeric keypad will set the speed of the locomotive to zero.</P>
+
 						
+
 						<P>Of course, in addition to the standard keyboard actions, what is the point
+
 						of having a mouse if you can't use the mouse to control your trains.  So
+
 						now let's discuss how to move your locomotive using the mouse on your
+
 						computer.</P>
+
 					</DIR>
+
+
 
 					<BR><BR><BR>
 
+
+
 					<A NAME="MouseControl"></A>
+
 					<H6>Mouse Control</H6>
+
 					<DIR>
+
 						<P>You can perform all of the keyboard actions noted above by using your
+
 						mouse pointer within the Control Panel window.  We'll start by defining
+
 						the Forward, Reverse, Stop and Idle controls.  They are pretty simple
+
 						to use.</P>
+
 						
+
 						<TABLE WIDTH="50%" BORDER="2" BGCOLOR="#CCCCFF" BORDERCOLOR="#003399" CELLPADDING="2" CELLSPACING="2">
+
 							<TR BGCOLOR="#6699FF">
+
 								<TD align="center">
+
 									<FONT SIZE=4>BUTTON</FONT>
+
 								</TD>
+
 								<TD align="center">
+
 									<FONT SIZE=4>ACTION</FONT>
+
 								</TD>
+
 							</TR>
+
 							<TR>
+
 								<TD align="center">
+
 									<FONT SIZE=4><B>Forward</B></FONT>
+
 								</TD>
+
 								<TD>
+
 									Changes the direction of the locomotive to forward.
+
 								</TD>
+
 							</TR>
+
 							<TR>
+
 								<TD align="center">
+
 									<FONT SIZE=4><B>Reverse</B></FONT>
+
 								</TD>
+
 								<TD>
+
 									Changes the direction of the locomotive to reverse.
+
 								</TD>
+
 							</TR>
+
 							<TR>
+
 								<TD align="center">
+
 									<FONT SIZE=4><B>STOP!</B></FONT>
+
 								</TD>
+
 								<TD>
+
 									Clicking on this button will perform an immediate physical stop of the
+
 									locomotive.  If any braking momentum feature is enabled for the decoder,
+
 									it will be ignored — halting the locomotive immediately.  When
+
 									using a sound decoder (such as a Soundtraxx DSD-150), and the decoder
+
 									has a "sound shutdown action" (like in the diesel decoders), the
+
 									associated engine shutdown sound will occur.
+
 								</TD>
+
 							</TR>
+
 							<TR>
+
 								<TD align="center">
+
 									<FONT SIZE=4><B>Idle</B></FONT>
+
 								</TD>
+
 								<TD>
+
 									Clicking on this button will set the speed of the locomotive to 0.
+
 									If any braking momentum feature is enabled for the decoder, it will
+
 									still be active — slowing the locomotive down to a stop.
+
 									When using a sound decoder (such as a Soundtraxx DSD-150), the
+
 									engine sound will remain in its "idle" state.
+
 								</TD>
+
 							</TR>
+
 						</TABLE>
+
 						
+
 						<BR><BR><BR><BR>
+
+
 
 						<A NAME="SliderBar"></A>
+
 						<B><FONT SIZE="3" COLOR="#FF9900" FACE="sans-serif,serif,Arial">THE SLIDER BAR</FONT></B>
+
 						<DIR>
+
 							<P>The slider bar can function differently for each user depending on several
+
 							factors.  This user guide is not going to try to identify all of the different
+
 							possibilities.  Instead, it is going to identify several of the primary ways
+
 							that the slider bar can work.  At least one of these methods should work for
+
 							you.  You may discover that your setup can utilize more than one of these.
+
 							A little experimentation on your part may be required.</P>
+
 							
+
 							<OL>
+
 								<LI><STRONG>Slider Method 1</STRONG>
+
 									<UL>
+
 										<LI>Clicking anywhere above the current slider pointer position will
+
 										INCREASE the loco speed by 1 speed step.  For example, if the
+
 										locomotive's current speed setting was 23, then a single click will
+
 										advance the speed to 24.  Another click will increase the speed to
+
 										25.  Another click...to speed step 26.  Another...to speed step 27.
+
 										And so on...until it reaches the maximum speed steps for your
+
 										system.  This action has the same effect as using the <B>+</B>
+
 										key on the numeric keypad.<BR><BR>
+
 										
+
 										<LI>Clicking anywhere below the current slider pointer position will
+
 										DECREASE the loco speed by 1 speed step.  For example, if the
+
 										locomotive's current speed setting is 21, then a single click will
+
 										decrease the speed to 20.  Another click will decrease the speed to
+
 										20.  Another click...to speed step 19.  And so on...until it reaches
+
 										speed step 0.  This action has the same effect as using the
+
 										<B>-</B> key on the numeric keypad.<BR><BR>
+
 									</UL>
+
 									
+
 									<DIR>
+
 									<DIV>
+
 										Note: Clicking too far below the slider (especially when close to the
+
 										bottom of the slider bar) may not have any effect because you are
+
 										actually clicking on the "Forward" option.  Therefore, it is
+
 										suggested that when decreasing speed with this method, that you
+
 										click on the word "Stop" — not the emergency stop button
+
 										(STOP!) — but the word "Stop" located at the lower end of
+
 										the speed slider.<BR><BR>
+
 									</DIV>
+
 									
+
 									<DIV>
+
 										Note: If the decoder has acceleration or braking rates enabled, the
+
 										loco will speed up or slow down accordingly.  If no momentum values
+
 										are enabled, the loco will speed up or slow down abruptly.<BR><BR><BR>
+
 									</DIV>
+
 									</DIR>
+
 									
+
 								<LI><STRONG>Slider Method 2</STRONG>
+
 									<UL>
+
 										<LI>Click and hold the left mouse button over the slider pointer
+
 										and then drag it to a speed that you wish, and release the mouse
+
 										button.  This will send a "set speed to" command to the decoder.<BR><BR>
+
 									</UL>
+
 									
+
 									<DIR>
+
 									<DIV>
+
 										Note: If the decoder has acceleration or braking rates enabled, the
+
 										loco will speed up or slow down accordingly.  If no momentum
+
 										values are enabled, the loco will speed up or slow down abruptly
+
 										to the speed set when the mouse button was released.<BR><BR><BR>
+
 									</DIV>
+
 									</DIR>
+
 									
+
 								<LI><STRONG>Slider Method 3</STRONG>
+
 									<UL>
+
 										<LI>Clicking anywhere above the current slider pointer position will
+
 										increase the slider pointer to the place where the mouse pointer
+
 										was clicked.  For example, if the locomotive's current speed setting
+
 										was around 25% of the slider bar, and the mouse pointer was
+
 										positioned near approximately the 75% point the slider bar when
+
 										clicked, then the speed of the locomotive would be changed to
+
 										approximately 75%.<BR><BR>
+
 										
+
 										<LI>Clicking anywhere below the current slider pointer position will
+
 										decrease the slider pointer to the place where the mouse pointer was
+
 										clicked.  For example, if the locomotive's current speed setting was
+
 										around 50% of the slider bar, and the mouse pointer was positioned
+
 										approximately around the 25% point on the slider bar when clicked,
+
 										then the speed of the locomotive would be changed to approximately
+
 										25%.<BR><BR>
+
 									</UL>
+
 									
+
 									<DIR>
+
 									<DIV>
+
 										Note: If the decoder has acceleration or braking rates enabled, the
+
 										loco will speed up or slow down accordingly.  If no momentum values
+
 										are enabled, the loco will speed up or slow down abruptly.<BR><BR>
+
 									</DIV>
+
 									
+
 									<DIV>
+
 										Note: Clicking too far below the slider (especially when close to
+
 										the bottom of the slider bar) may not have any effect because you
+
 										are actually clicking on the "Forward" option.  Therefore, it is
+
 										suggested that when decreasing speed with this method, that you
+
 										click on the word "Stop" — not the emergency stop button
+
 										(STOP!) — but the word "Stop" located at the lower end of the
+
 										speed slider.<BR><BR>
+
 									</DIV>
+
 									</DIR>
+
 							</OL>
+
 							
+
 							<BR><BR><BR>
+
 							
+
 							<CENTER>
+
 							<TABLE BORDER=2 WIDTH="50%" CELLPADDING=2 CELLSPACING=2>
+
 								<TR>
+
 									<TD>
+
 										<CENTER>
+
 										<B><FONT COLOR="red">Important!</FONT></B><BR>
+
 										</CENTER>
+
 										
+
 										<P align="justify">
+
 											The easiest way to stop a locomotive for any of the methods outlined
+
 											above is to simply click on the "<B>Idle</B>" button located at the bottom
+
 											of the Control Panel window.
+
 										</P>
+
 										
+
 										<P align="justify">
+
 											Or more abruptly, you can also click
+
 											on the emergency stop button: <B><FONT COLOR="red">STOP!</FONT></B>
+
 										</P>
+
 									</TD>
+
 								</TR>
+
 							</TABLE>
+
 							</CENTER>
+
 							
+
 							<BR><BR>
+
 							
+
 							<P>If you have discovered that your system works in some way different from any
+
 							of those shown above, then you have simply found yet another method.</P>
+
 							
+
 						</DIR>
+
 						
+
 												
+
 						<BR><BR><BR><BR>
+
+
 
 						<A NAME="Acquiring"></A>
+
 						<B><FONT SIZE="3" COLOR="#FF9900" FACE="sans-serif,serif,Arial">ACQUIRING A DISPATCHED LOCOMOTIVE</FONT></B>
+
 						<DIR>
+
 							<P>When the decoder address is first "<BIG>Set</BIG>", the software queries the current
+
 							status of the decoder.  This includes the current direction of the locomotive, its current
+
 							speed, and what function buttons are on or off.  The software will set the current
+
 							direction indicator and identify any functions that are "active" (in the "on" state).
+
 							But, if the loco is moving, the loco's speed is not established on the Speed Control
+
 							slider bar.</P>
+
 							
+
 							<DIV>
+
 								Note: At this time, the slider bar does <U>not</U> automatically correspond
+
 								to the actual speed.  This is important to understand because of what action you are
+
 								going to see when you first click on the speed slider bar.  When you first "<BIG>Set</BIG>"
+
 								a decoder address, the slider bar is set to the zero (0) position.  So if you acquired
+
 								a locomotive that is actually moving and you click on the slider bar, it is going to set
+
 								the speed to zero (or wherever you click and set the slider bar pointer).
+
 							</DIV>
 
+
+
 							<P>A future enhancement of the throttle feature will be to synchronize the slider bar pointer
+
 							accordingly.  Until then, just beware of this little reaction.</P>
+
 						</DIR>
+
 						
+
 						<BR><BR><BR><BR>
+
 						
+
 						<TABLE BORDER=0 WIDTH="85%" CELLPADDING=0 CELLSPACING=0>
+
 							<TR>
+
 								<TD valign="top">
+
 									<A NAME="FunctionPanel"></A>
+
 									<B><FONT SIZE="3" COLOR="#FF9900" FACE="sans-serif,serif,arial">THE FUNCTION PANEL</FONT></B>
+
 									<DIR>
+
 										<P>The Function Panel has 13 function buttons available for each throttle window.  Most
+
 										decoders currently don't handle 13 functions.  (If there are any, please let me know.)
+
 										But the software is prepared for the future.  Some of the more newer hand-held throttles
+
 										also have 13 function buttons (including the lights), so these electronic throttles follow
+
 										these newer hand-helds.</P>
+
 							
+
 										<P>Clicking on the function buttons correlate to pressing the same function button on a
+
 										hand-held throttle.  The F0 function is normally used for the lights.</P>
+
 							
+
 										<P>This is the basic functionality of the Function Panel.  All buttons function like an
+
 										on/off toggle — click once to turn "on"; click again to turn "off".</P>
+
 							
+
 										<P>The next chapter provides more advanced features for customizing the Function Panel
+
 										buttons.</P>
+
 									</DIR>
+
 								</TD>
+
 								
+
 								<TD>
-									<IMG WIDTH="20" HEIGHT="40" SRC="Images/Spacer.gif" BORDER="0">
+
+									<IMG WIDTH="20" HEIGHT="40" SRC="Images/spacer.gif" BORDER="0">
+
 								</TD>
+
 								
+
 								<TD valign="top" align="center">
+
 									<IMG WIDTH="201" HEIGHT="204" SRC="Images/jmri034.jpg" TITLE="Example of the Function Panel" BORDER="0"><BR>
+
 									<FONT SIZE=1>Figure 2-6: The Function Panel</FONT>
+
 								</TD>
+
 							</TR>
+
 						</TABLE>
+
 					</DIR>
+
 				</DIR>
+
+
 
 				<BR><BR><BR><BR>
 
+
+
 				<P>If you are reading this page from top to bottom as a training manual, at its conclusion you
+
 				should be able to...</P>
+
 				
+
 				<UL>
+
 					<LI>open a new throttle window
+
 					<LI>establish an active decoder address
+
 					<LI>run a locomotive through its paces
+
 					<LI>and activate the lights (and any other enabled functions for your decoder)
+
 				</UL>
+
 				
+
 				<P>The next chapter will identify throttle features that can be customized in order to make your
+
 				digital model railroading experience even more enjoyable.</P>
+
 			</DIR>
+
 		</TD>
+
 	</TR>
+
 </TABLE>
+
+
 
 <BR><BR><BR><BR>
 
+
+
 <TABLE BORDER="0" WIDTH="100%" BGCOLOR="#003399" CELLPADDING="0" CELLSPACING="0">
+
 	<TR>
+
 		<TD ALIGN="right" WIDTH="45%">
+
 			<B><A HREF="ThrottleChapter1.html" TITLE="Return to the previous chapter">Previous</A></B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
 		</TD>
+
 		<TD ALIGN="middle" WIDTH="10%">
+
 			<B><A HREF="ThrottleMain.html" TITLE="Jump to the main Throttle Layout page">Main</A><B>
+
 		</TD>
+
 		<TD ALIGN="left" WIDTH="45%">
+
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B><A HREF="ThrottleChapter3.html" TITLE="Advance to the next chapter">Next</A></B>
+
 		</TD>
+
 	</TR>
+
 </TABLE>
+
+
 
 <SCRIPT LANGUAGE="JavaScript" SRC="Revision.js"></SCRIPT>
 
+
+
 <BR><BR><BR><BR>
 
+
+
 <HR>Site hosted by: <BR>
+
 <A href="http://sourceforge.net"> 
+
 <IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A>
 
+
+
 </BODY>
+
 </HTML>
+
+
