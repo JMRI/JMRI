@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.html,v 1.11 2004-12-10 04:53:27 pbender Exp $ -->
+<!-- $Id: index.html,v 1.12 2004-12-16 00:29:54 jacobsen Exp $ -->
 <html lang="en">
 <head>
 <TITLE>
@@ -72,8 +72,8 @@ JMRI: XPressNet
 
 <H2>Overview</H2>
     <p>XPressNet is the Command Bus used by <a 
-	href="http://www.atlasrr.com">Atlas</a>,<a 
-	href="http://www.lenz.com">Lenz</a>,<a 
+	href="http://www.atlasrr.com">Atlas</a>, <a 
+	href="http://www.lenz.com">Lenz</a>, <a 
 	href="http://www.ztccontrols.com">ZTC Controls</a>, and <a 
 	href="http://www.roco.co.at">Roco</a>.
     It was developed by Lenz.  The XPressNet specification (available from
@@ -175,7 +175,8 @@ this page</p>
 	relatively slow, and it only allows controlling mobile and stationary
 	decoders, but it may be perfect for someone who is interested in trying
 	out the control functions of a computer before deciding to go with a
-	full fledged interface.
+	full fledged interface. Note that an XPA cannot be used to program decoders!
+	
 	</ul></p>
 
 <a name=Limitations>
@@ -193,7 +194,7 @@ this page</p>
 	<dd>
 	<p>The Atlas Commander provides support only for operation of 
 	equipment on a layout (running trains and throwing switches)
-	from JMRI.</p>
+	from JMRI. You cannot program decoders from a computer with the Commander.</p>
 
 	<p>If you have an Atlas Commander, and would like to use it 
         to control your layout from the computer, an XPA and Hayes 
@@ -216,11 +217,12 @@ this page</p>
 
 	<p>The LH200 provides support only for operating equipment on a layout 
 	(running trains and throwing switches) from JMRI.  The LH200 is the 
-	command station used in the Set-02</p>
+	command station used in the Set-02. You can't program decoders
+	from a computer with Set-02.</p>
 
 	<p>The Compact is the same device as the Atlas Commander, and 
 	has the same restrictions as the commander.  The Compact is not 
-	available in North America</p>
+	available in North America. </p>
 
 	<p>If you have either an LH200 or a Compact, and wish to add 
 	computer control to your layout, an XPA and Hayes Compatible 
@@ -245,8 +247,8 @@ this page</p>
 	<p>The ZTC Controls ZTC511 (with Command Station software 
 	version 4.0) has been shown to support operating equipment on a 
 	layout (running trains and throwing switches).  At least when 
-	using the Lenz LI10x as an interface, the ZTC511 does not, 
-	appear to support any programming operations</p>
+	using the Lenz LI10x as an interface, the ZTC511 does not
+	appear to support any programming operations.</p>
 
 	<p>The ZTC521 (with XBus V3.0 software) has yet to be tested, so 
 	the full extent of what is supported is not known at this time.</p>
@@ -263,16 +265,17 @@ this page</p>
 	<dd>
 	<p>If you choose to use an XPA and a Hayes Compatible Modem to 
 	control your XPressNet based system, you will be limited to 
-	control of locomotives and accessory decoders, regardless of what 
-	features your system supports if it is connected via an LI100, 
-	LI100F, or LI101F</p>
+	control of locomotives and accessory decoders.
+	You cannot program decoders from a computer using the XPA,
+	regardless of which system you have.
+	</p>
 	</dd>
 
     </dl>
 </div>
 
 
-<H2>Connectiong to an XPressNet based DCC System using a Lenz LI100 or LI101</H2>
+<H2>Connecting to an XPressNet based DCC System using a Lenz LI100 or LI101</H2>
 <ol>
     <li><p> To connect your computer to one of these XPressNet based DCC systems, you
     need a Lenz LI100 or LI101 interface unit.  Connect one of those units to your
@@ -317,7 +320,7 @@ this page</p>
 
 <p>We have developed an alternative method for connecting to an XPressNet based
    system which should prove to be more cost effective on XPressNet based
-   systems that do not support programming or feedback via the LI100,LI100F, or
+   systems that do not support programming or feedback via the LI100, LI100F, or
    LI101F computer interfaces, or for those who are interested in experimenting
    with computer control, but don't need all the features supported by the Lenz
    interfaces.</p>
