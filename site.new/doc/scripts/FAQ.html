@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: FAQ.html,v 1.8 2004-11-12 02:56:41 jacobsen Exp $ -->
+<!-- $Id: FAQ.html,v 1.9 2005-01-02 23:25:17 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -132,6 +132,29 @@
 		    <P>
 		    See also the 
 		    <a href="Examples.html">examples page</a>.
+		    </div>
+
+		</div>
+
+		<div class=section>
+		    <h2>How can I limit the priority of a script?</h2>
+
+		    <div class=para>
+            <P>If the script runs a loop that's supposed to update something, it 
+            can't be written to run continuously or else it will just suck up as 
+            much computer time as it can.  Rather, it should wait.
+
+            <P>The best thing to do is to wait for something to change.  For 
+            example, if your script looks at some sensors to decide what to do, 
+            wait for one of those sensors to change (see the sample scripts for 
+            examples)
+
+            <P>Simpler, but not as efficient, is to just wait for a little while 
+            before checking again. For example
+<PRE>
+    waitMsec(1000)
+</PRE>
+            waits for 1000 milliseconds (one second) before continuing.
 		    </div>
 
 		</div>
