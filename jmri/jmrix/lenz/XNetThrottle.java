@@ -6,7 +6,7 @@ import jmri.jmrix.AbstractThrottle;
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
  * @author     Paul Bender (C) 2002,2003
- * @version    $Revision: 1.10 $
+ * @version    $Revision: 1.11 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -36,7 +36,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
        super();
        this.address=address;
        this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;
-       //this.isForward=true;
+       this.isForward=true;
        this.isAvailable=false;
        XNetTrafficController.instance().addXNetListener(~0, this);
        sendStatusInformationRequest();
