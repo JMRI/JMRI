@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LocoFile.html,v 1.6 2004-07-19 01:48:13 jacobsen Exp $ -->
+<!-- $Id: LocoFile.html,v 1.7 2004-07-19 03:18:03 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -49,28 +49,31 @@
     </div> <!-- closes #header-->
 <!-- /Header -->
 
-
-
-
-
-
 <hr class="hide">
 
-<div class="nomenu" id="mBody">
-<div id="mainContent">
+    <div id="mBody">
 
-<H1>DecoderPro User Guide</H1>
-<dl class=toc>
-<dt><a href="./MoreInfo.html">DecoderPro - in depth details</A></li>
-<dt><a href="./Tour.html">A quick DecoderPro tour</A></li>
-<dt><a HREF="./IntroXML.html">A very short introduction to XML files</a></li>
-<dt><a HREF="./Files.html">What the configuration files contain and where they are located</a></li>
-<dt><a href="./CreateDecoder.html">DecoderPro - Create a custom decoder definition file</a></li>
-<dt><a href="./Programmer.html">DecoderPro - Create a custom programmer definition file</a></li>
-<dt><a HREF="./RosterFile.html">How the roster is stored; updating it by hand</a></li>
-<dt class=this><a HREF="./LocoFile.html">What's in a locomotive file?</a></li>
-<dt><a HREF="./Debug.html">Debugging</a></li>
-</dl>
+    <!-- Or, you can delete the entire div id=side block if you don't need a -->
+    <!-- side menu.  You should then add class=nomenu to the above div       -->
+    <!-- Example: <div class="nomenu" id="mBody">			     -->
+
+	<div id="side"> <!-- Block of text on left side of page -->
+	    <div style="text-align: center">DecoderPro User Guide</div>
+	    <dl>
+<dt><a href="./Tour.html">Quick tour</A></dt><dd/>
+<dt><a href="./MoreInfo.html">Details</A></dt><dd/>
+<dt><a HREF="./Files.html">Configuration files</a></dt><dd/>
+<dt><a HREF="./IntroXML.html">Intro to XML files</a></dt><dd/>
+<dt><a href="./CreateDecoder.html">Create your own decoder definition</a></dt><dd/>
+<dt><a href="./Programmer.html">Create a custom programmer definition</a></dt><dd/>
+<dt><a HREF="./Roster.html">Working with the roster</a></dt><dd/>
+<dt><a HREF="./RosterFile.html">How the roster is stored; updating it by hand</a></dt><dd/>
+<dt class=this><a HREF="./LocoFile.html">Locomotive (roster) files</a></dt><dd/>
+<dt><a HREF="./Debug.html">Debugging</a></dt><dd/>
+	    </dl>
+	</div>
+
+<div id="mainContent">
 
 <div class=list>
 <H1>DecoderPro User Guide - Locomotive Files</H1>
