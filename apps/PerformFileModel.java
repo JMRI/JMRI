@@ -10,13 +10,13 @@ import com.sun.java.util.collections.List;
  * when the program is started.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @see PerformFilePanel
  */
 public class PerformFileModel {
 
     public PerformFileModel() {
-        fileName="";
+        fileName=null;
     }
 
     String fileName;
