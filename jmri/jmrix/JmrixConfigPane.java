@@ -22,9 +22,13 @@ import javax.swing.JSeparator;
  * To add a new system package, add entries
  * to the list in {@link #availableProtocolClasses}.
  * <P>
+ * The classes referenced are the specific
+ * subclasses of {@link jmri.jmrix.AbstractConnectionConfig}
+ * which provides the methods providing data to the 
+ * configuration GUI, and responding to its changes.
  *
- * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.12 $
+ * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004
+ * @version	$Revision: 1.13 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -115,12 +119,16 @@ public class JmrixConfigPane extends JPanel {
                 selection();
             }
         });
-        selection();
+        selection();  // first time through, pretend we've selected a value
+        			  // to load the rest of the GUI
     }
 
     void selection() {
         int current = modeBox.getSelectedIndex();
         details.removeAll();
+        // first choice is -no- protocol chosen
+        if (log.isDebugEnabled()) log.debug("new selection is "+current
+        							+" "+modeBox.getSelectedItem());
         if (current!=0) classList[current].loadDetails(details);
         validate();
         if (getTopLevelAncestor()!=null) ((JFrame)getTopLevelAncestor()).pack();
