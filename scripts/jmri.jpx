@@ -4,7 +4,7 @@
   <property category="editor.general" name="line_ending.style" value="1"/>
   <property category="idl" name="ProcessIDL" value="false"/>
   <property category="runtime" name="ConfigurationCount" value="3"/>
-  <property category="runtime.0" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
+  <property category="runtime.0" name="RunnableType" value="com.borland.jbuilder.runtime.TestRunner"/>
   <property category="runtime.0" name="application.class" value="apps.JmriDemo.JMRIdemo"/>
   <property category="runtime.0" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.0" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
@@ -15,6 +15,7 @@
   <property category="runtime.1" name="ConfigurationName" value="JMRI Demo"/>
   <property category="runtime.1" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
   <property category="runtime.1" name="application.class" value="apps.JmriDemo.JMRIdemo"/>
+  <property category="runtime.1" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy"/>
   <property category="runtime.1" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.1" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
   <property category="runtime.1" name="appserver.servername" value="standard"/>
@@ -48,7 +49,11 @@
   <property category="sys" name="CompanyLabel" value="Company:"/>
   <property category="sys" name="Copyright" value="Copyright (c) 2002"/>
   <property category="sys" name="CopyrightLabel" value="Copyright:"/>
+  <property category="sys" name="DebugInfo" value="0"/>
+  <property category="sys" name="DebugLineInfo" value="0"/>
+  <property category="sys" name="DebugSourceInfo" value="0"/>
   <property category="sys" name="DefaultPath" value="src"/>
+  <property category="sys" name="Deprecations" value="0"/>
   <property category="sys" name="Description" value=""/>
   <property category="sys" name="DescriptionLabel" value="Description:"/>
   <property category="sys" name="DocPath" value="doc"/>
@@ -69,6 +74,14 @@
   <property category="sys" name="Version" value="1.0"/>
   <property category="sys" name="VersionLabel" value="@version"/>
   <property category="sys" name="WorkingDirectory" value="../"/>
+  <node name="Additional Settings" type="Folder">
+    <property category="sys" name="SettingsFolder" value="1"/>
+    <file path="src/jmri/jmrix/loconet/locormi/LnMessageServer.java">
+      <property category="generated" name="JavaSoft.rmic.0" value="jmri/jmrix/loconet/locormi/LnMessageServer_Skel.java"/>
+      <property category="generated" name="JavaSoft.rmic.1" value="jmri/jmrix/loconet/locormi/LnMessageServer_Stub.java"/>
+      <property category="idl" name="GenerateRMI" value="true"/>
+    </file>
+  </node>
   <node name="jmri" type="Package"/>
   <node name="org.apache" type="Package"/>
   <node name="jmri.jar file" type="Archive">
@@ -80,6 +93,18 @@
     <property category="archiving" name="targetCompressed" value="1"/>
     <property category="archiving" name="targetPath" value="/Volumes/Users/jake/Documents/Trains/JMRI/project/jmri.jar"/>
   </node>
+  <node name="Standard JavaDoc Doclet" type="Javadoc">
+    <property category="docletJavadoc" name="author" value="1"/>
+    <property category="docletJavadoc" name="use" value="1"/>
+    <property category="javadoc" name="scope" value="private"/>
+    <property category="nodeJavadoc" name="buildWithProject" value="0"/>
+    <property category="nodeJavadoc" name="directory" value="doc"/>
+    <property category="nodeJavadoc" name="displayAllOutput" value="1"/>
+  </node>
+  <file path="src/jmri/configureXML/AbstractTurnoutManagerConfigXML.java"/>
   <file path="../resources/decoderpro.gif"/>
+  <file path="src/jmri/configureXML/LayoutConfigXML.java"/>
+  <file path="src/jmri/jmrix/loconet/locormi/LnMessageClientAction.java"/>
+  <file path="src/jmri/configurexml/LoadLayoutAction.java"/>
   <file path="test/jmri/jmrix/loconet/LocoNetMessageTest.java"/>
 </project>
