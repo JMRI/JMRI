@@ -12,7 +12,7 @@ import jmri.JmriException;
  * Import CV values from a "PR1" file written by PR1DOS or PR1WIN
  *
  * @author			Alex Shepherd   Copyright (C) 2003
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class Pr1Importer {
   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Pr1Importer.class.getName());
@@ -62,10 +62,9 @@ public class Pr1Importer {
   }
 
   public void setCvTable( CvTableModel pCvTable ){
-    Set keys = m_CVs.keySet() ;
-    Iterator keyIterator = keys.iterator() ;
-    while( keyIterator.hasNext()){
-      String key = (String)keyIterator.next() ;
+    Enumeration keyIterator = m_CVs.keys();
+    while( keyIterator.hasMoreElements()){
+      String key = (String)keyIterator.nextElement() ;
       if( key.startsWith( CV_PREFIX ) )
       {
         int Index = Integer.parseInt( key.substring( CV_INDEX_OFFSET ) ) ;

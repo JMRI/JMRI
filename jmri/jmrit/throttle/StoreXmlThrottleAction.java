@@ -1,23 +1,14 @@
 package jmri.jmrit.throttle;
 
-import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
-import javax.swing.JFileChooser;
-import java.util.Iterator;
-import java.io.PrintWriter;
-import java.io.FileOutputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import jmri.jmrit.*;
+import java.awt.event.*;
+import java.io.*;
 
-import jmri.jmrit.throttle.ThrottleFrame;
-import jmri.InstanceManager;
-import jmri.ThrottleManager;
-import jmri.jmrit.XmlFile;
+import javax.swing.*;
 
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.DocType;
-import org.jdom.output.XMLOutputter;
+import com.sun.java.util.collections.*;
+import org.jdom.*;
+import org.jdom.output.*;
 
 /**
  * Save throttles to XML

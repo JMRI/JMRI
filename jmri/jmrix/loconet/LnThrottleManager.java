@@ -3,7 +3,8 @@ package jmri.jmrix.loconet;
 import jmri.ThrottleManager;
 import jmri.ThrottleListener;
 import jmri.DccThrottle;
-import java.util.HashMap;
+import com.sun.java.util.collections.*;
+
 
 /**
  * LocoNet implementation of a ThrottleManager

@@ -4,15 +4,13 @@ import jmri.ThrottleManager;
 import jmri.ThrottleListener;
 import jmri.DccThrottle;
 import jmri.JmriException;
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.Iterator;
+import com.sun.java.util.collections.*;
 
 /**
  * XNet implementation of a ThrottleManager
  * @author     Paul Bender Copyright (C) 2002,2003
  * @created    December 20,2002
- * @version    $Revision: 1.5 $
+ * @version    $Revision: 1.6 $
  */
 
 public class XNetThrottleManager implements ThrottleManager,XNetListener
@@ -35,7 +33,7 @@ public class XNetThrottleManager implements ThrottleManager,XNetListener
      * method.
      * @param address The decoder address desired.
      * @param l The ThrottleListener awaiting notification of a found throttle.
-     * @return True if the request will not continue, false if the request 
+     * @return True if the request will not continue, false if the request
      * will be made.  False may be returned if the throttle is already in use.
      */
     public boolean requestThrottle(int address, ThrottleListener l)
@@ -78,10 +76,10 @@ public class XNetThrottleManager implements ThrottleManager,XNetListener
     // updates from the layout, which will then call
     //          public void firePropertyChange(String propertyName,
     //
-    // 
+    //
     // _once_ if anything has changed state (or set the commanded state directly
     public void message(XNetMessage l) {
-        // check validity & addressing  
+        // check validity & addressing
         //if (XNetTrafficController.instance()
         //    .getCommandStation()
         //    .getThrottleMsgAddr(l) != address) return;

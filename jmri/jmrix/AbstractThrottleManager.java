@@ -3,7 +3,7 @@ package jmri.jmrix;
 import jmri.ThrottleManager;
 import jmri.ThrottleListener;
 import jmri.DccThrottle;
-import java.util.HashMap;
+import com.sun.java.util.collections.*;
 
 /**
  * Abstract implementation of a ThrottleManager.
@@ -12,7 +12,7 @@ import java.util.HashMap;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 abstract public class AbstractThrottleManager implements ThrottleManager {
     private HashMap throttleListeners;

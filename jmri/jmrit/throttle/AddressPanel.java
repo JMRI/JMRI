@@ -3,7 +3,7 @@ package jmri.jmrit.throttle;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
+import com.sun.java.util.collections.*;
 import java.beans.*;
 
 import jmri.DccThrottle;
@@ -47,7 +47,7 @@ public class AddressPanel extends JInternalFrame
 			throttle.release();
 		}
 	}
-	
+
     /**
      * Add an AddressListener. AddressListeners are notified when the
      * user selects a new address.
@@ -136,7 +136,7 @@ public class AddressPanel extends JInternalFrame
                  changeOfAddress();
              }
          });
-		 
+
 		 rosterBox = Roster.instance().matchingComboBox(null,null,null,null,null,null,null);
 		 rosterBox.insertItemAt(new NullComboBoxItem(), 0);
 		 rosterBox.setSelectedIndex(0);
@@ -153,7 +153,7 @@ public class AddressPanel extends JInternalFrame
 		 constraints.weightx = 1;
 		 constraints.weighty = 1;
 		 mainPanel.add(rosterBox, constraints);
-		 
+
 		 JPanel buttonPanel = new JPanel();
 		 buttonPanel.setLayout(new FlowLayout());
          dispatchButton = new JButton("Dispatch");
@@ -179,7 +179,7 @@ public class AddressPanel extends JInternalFrame
                  releaseAddress();
              }
          });
-		 
+
 		 constraints.gridx=0;
 		 constraints.gridy=GridBagConstraints.RELATIVE;
 		 constraints.gridwidth=2;
@@ -207,7 +207,7 @@ public class AddressPanel extends JInternalFrame
 			changeOfAddress();
 		}
 	}
-	
+
     /**
      * A resizing has occurred, so determine the optimum font size
      * for the addressField.
@@ -277,7 +277,7 @@ public class AddressPanel extends JInternalFrame
 		throttle.dispatch();
 		notifyListenersOfThrottleRelease();
 	 }
-	 
+
 	 /**
 	  * Release the current address.
 	  */
@@ -286,7 +286,7 @@ public class AddressPanel extends JInternalFrame
 		 throttle.release();
 		 notifyListenersOfThrottleRelease();
 	 }
-	 
+
 	 private void notifyListenersOfThrottleRelease()
 	 {
 		if (listeners != null)
@@ -299,7 +299,7 @@ public class AddressPanel extends JInternalFrame
 			 }
 		 }
 	 }
-	 
+
      /**
       * Create an Element of this object's preferences.
       * <ul>
@@ -341,7 +341,7 @@ public class AddressPanel extends JInternalFrame
          addressField.setText(address);
          changeOfAddress();
      }
-	 
+
 	 class NullComboBoxItem
 	 {
 		 public String toString()
@@ -349,7 +349,7 @@ public class AddressPanel extends JInternalFrame
 			 return "<No Item Selected>";
 		 }
 	 }
-	 
+
 	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AddressPanel.class.getName());
 
 }

@@ -2,8 +2,7 @@ package jmri.jmrit.throttle;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+import com.sun.java.util.collections.*;
 
 /**
  *  Interface for allocating and deallocating throttles frames. Not to be
@@ -11,7 +10,7 @@ import java.util.Iterator;
  *
  * @author     Glen Oberhauser
  * @created    March 25, 2003
- * @version    $Revision: 1.9 $
+ * @version    $Revision: 1.10 $
  */
 public class ThrottleFrameManager
 {
@@ -49,8 +48,8 @@ public class ThrottleFrameManager
 		}
 		return instance;
 	}
-		
-	
+
+
 	/**
 	 *  Tell this manager that a new ThrottleFrame was created.
 	 * @return The newly created ThrottleFrame
@@ -102,7 +101,7 @@ public class ThrottleFrameManager
 	{
 		frame.dispose();
 	}
-	
+
 	/**
 	 *  Retrieve an Iterator over all the ThrottleFrames in existence.
 	 *
@@ -145,7 +144,7 @@ public class ThrottleFrameManager
 		ThrottleFrame tf = (ThrottleFrame) throttleFrames.get(activeFrame);
 		tf.requestFocus();
 	}
-	
+
 	private void requestFocusForPreviousFrame()
 	{
 		activeFrame--;

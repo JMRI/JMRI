@@ -1,16 +1,16 @@
 package jmri.jmrit;
 
-import java.io.FileFilter;
-import java.io.File;
-import java.util.HashSet;
+import java.io.*;
+
+import com.sun.java.util.collections.*;
 
 /**
  * <p> </p>
  * <p> </p>
  * <p> </p>
  * <p> </p>
- * @author unascribed
- * @version $Revision: 1.1 $
+ * @author Alex Shepherd
+ * @version $Revision: 1.2 $
  */
 
 public class FileChooserFilter extends javax.swing.filechooser.FileFilter {

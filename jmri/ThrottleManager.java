@@ -1,7 +1,7 @@
 package jmri;
 
 import jmri.jmrit.throttle.ThrottleFrame;
-import java.util.Iterator;
+import com.sun.java.util.collections.*;
 
 /**
  * Interface for allocating and deallocating throttles.
@@ -10,7 +10,7 @@ import java.util.Iterator;
  * Different systems will distrinquish between short and long addresses
  * in different ways.
  * @author			Glen Oberhauser
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public interface ThrottleManager
 

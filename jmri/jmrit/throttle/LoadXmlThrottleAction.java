@@ -1,21 +1,13 @@
 package jmri.jmrit.throttle;
 
-import java.awt.event.ActionEvent;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
-import javax.swing.AbstractAction;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import com.sun.java.util.collections.List;
-import jmri.InstanceManager;
-import jmri.jmrit.XmlFile;
-import jmri.jmrit.throttle.ThrottleFrame;
-import jmri.jmrit.throttle.ThrottleFrameManager;
-import java.util.Iterator;
-import java.util.ArrayList;
+import jmri.jmrit.*;
+import java.awt.event.*;
+import java.io.*;
 
-import org.jdom.Element;
+import javax.swing.*;
+
+import com.sun.java.util.collections.*;
+import org.jdom.*;
 
 /**
  *  Load throttles from XML
@@ -59,7 +51,7 @@ public class LoadXmlThrottleAction extends AbstractAction
 			Object[] possibleValues = {"Merge", "Replace", "Cancel"};
 			int selectedValue = JOptionPane.showOptionDialog(null,
 					"Throttles are currently open.\nDo you wish to Merge "
-					 + "saved throttles with open throttles or\n" 
+					 + "saved throttles with open throttles or\n"
 					 + "Replace open throttles",
 					"Loading Throttles",
 					JOptionPane.YES_NO_CANCEL_OPTION,
