@@ -1,17 +1,18 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_DSD_Diesel.xml,v 1.11 2002-06-13 17:45:55 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_DSD_Diesel.xml,v 1.12 2002-07-11 14:14:33 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Robin Becker" version="6" lastUpdated="20020508"/>
+		<version author="Robin Becker" version="7" lastUpdated="20020711"/>
 
 		<!-- version 4: updates to minOut usage, function mapping -->
 		<!-- version 5: correct to CV 56 for some options -->
 		<!-- version 6: removed erroneous CV19 definition -->
 		<!--            corrected versionCVs -->
+		<!-- version 7: renamed to get best tree layout -->
 		
 <decoder>
-	<family name="Soundtrax DSD diesel decoders" mfg="Throttle-Up">
-		<model model="DSD Diesel" numOuts="4" numFns="8">
+	<family name="DSD diesel" mfg="Throttle-Up (SoundTraxx)">
+		<model model="DSD diesel" numOuts="4" numFns="8">
 			<versionCV lowVersionID="9" highVersionID="14"/>
 			<versionCV lowVersionID="21"/>
 			<output name="Bell"/> 

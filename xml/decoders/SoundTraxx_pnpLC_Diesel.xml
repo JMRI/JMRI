@@ -1,15 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_pnpLC_Diesel.xml,v 1.3 2002-06-13 17:45:55 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_pnpLC_Diesel.xml,v 1.4 2002-07-11 14:14:33 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Robin Becker" version="5" lastUpdated="20020508"/>
+		<version author="Robin Becker" version="6" lastUpdated="20020711"/>
 
 		<!-- version 4: updates to minOut usage, function mapping -->
 		<!-- version 5: added LL100LC -->
 		<!--            removed erroneous CV19 definition, corrected VersionID -->
+		<!-- version 6: redo family name for consistency -->
 
 <decoder>
-	<family name="SoundTrax Plug&amp;Play LC diesel decoders" mfg="Throttle-Up">
+	<family name="Plug&amp;Play LC diesel decoders" mfg="Throttle-Up (SoundTraxx)">
 
 		<model model="C628LC Diesel" numOuts="4" numFns="8">
 			<versionCV lowVersionID="37"/>

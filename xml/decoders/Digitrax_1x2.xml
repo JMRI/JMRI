@@ -1,17 +1,24 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_1x2.xml,v 1.15 2002-06-13 17:45:55 jacobsen Exp $ -->
+<!-- $Id: Digitrax_1x2.xml,v 1.16 2002-07-11 14:14:33 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
-					version="4" lastUpdated="20020216"/>
+					version="5" lastUpdated="20020703"/>
 
 		<!-- Version 4 - added wire colors -->
+		<!-- Version 5 - added some specific models, extended CV7 range to 249 -->
 		
 <decoder>
-	<family name="Digitrax FX decoders with BEMF" mfg="Digitrax" lowVersionID="240" highVersionID="242">
+	<family name="Digitrax FX decoders with BEMF" mfg="Digitrax" lowVersionID="240" highVersionID="249">
 		<model model="DH142" numOuts="4" numFns="2">
 			<output name="4" label="Violet"/> </model>
 		<model model="DN142" numOuts="4" numFns="2">
+			<output name="4" label="Violet"/> </model>
+		<model model="DN149K2" numOuts="4" numFns="2">
+			<output name="4" label="Violet"/> </model>
+		<model model="DN141K2" numOuts="4" numFns="2">
+			<output name="4" label="Violet"/> </model>
+		<model model="DN141E2" numOuts="4" numFns="2">
 			<output name="4" label="Violet"/> </model>
 		<model model="DH083" numOuts="5" numFns="2">
 			<output name="4" label="Violet"/> 

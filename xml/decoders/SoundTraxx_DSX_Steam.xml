@@ -1,14 +1,15 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_DSX_Steam.xml,v 1.4 2002-06-13 17:45:55 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_DSX_Steam.xml,v 1.5 2002-07-11 14:14:33 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Robin Becker" version="5" lastUpdated="20020508"/>
+		<version author="Robin Becker" version="6" lastUpdated="20020711"/>
 
 		<!-- version 4: updates to minOut usage, function mapping -->
 		<!-- version 5: removed erroneous CV19 definition, corrected VersionID -->
+		<!-- version 6: rename family for better tree shape -->
 
 <decoder>
-	<family name="Soundtraxx DSX steam decoders" mfg="Throttle-Up">
+	<family name="DSX Steam" mfg="Throttle-Up (SoundTraxx)">
 		<model model="DSX Steam" numOuts="0" numFns="8">
 			<versionCV lowVersionID="17"/>
 			<!--output name="3" label="F1/grn" /-->

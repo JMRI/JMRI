@@ -1,14 +1,15 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_100LC_Steam.xml,v 1.3 2002-06-13 17:45:55 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_100LC_Steam.xml,v 1.4 2002-07-11 14:14:33 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Robin Becker" version="5" lastUpdated="20020508"/>
+		<version author="Robin Becker" version="6" lastUpdated="20020711"/>
 
 		<!-- version 4: updates to minOut usage, function mapping -->
 		<!-- version 5: removed erroneous CV19 definition, corrected VersionID -->
+		<!-- version 6: rename for tree -->
 
 <decoder>
-	<family name="Soundtraxx LC steam decoders" mfg="Throttle-Up">
+	<family name="LC steam decoders" mfg="Throttle-Up (SoundTraxx)">
 		<model model="100LC Steam" numOuts="2" numFns="8">
 			<versionCV lowVersionID="32"/>
 			<output name="Whistle"/>

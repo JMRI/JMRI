@@ -1,25 +1,20 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_1x1.xml,v 1.15 2002-07-11 14:14:33 jacobsen Exp $ -->
+<!-- $Id: Digitrax_early.xml,v 1.1 2002-07-11 14:14:33 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
-					version="4" lastUpdated="20020703"/>
+					version="3" lastUpdated="20020215"/>
 
-<!-- Represent the 1*1 family of Digitrax decoders, e.g. DH121, e.g. xx121. -->
+<!-- Represent DH120 decoder, which is identical to -->
+<!-- the DH121 _except_ for consisting -->
 <!-- These have STD (not STD*) outputs. -->
 
 <!-- Version 3 - set ops mode programming to no -->
+<!-- This file used to be called Digitrax_120.xml before the family was renamed -->
 
 <decoder>
-	<family name="Digitrax STD decoders" mfg="Digitrax" lowVersionID="33" highVersionID="45">
-		<model model="DH121" numOuts="2" numFns="2"/>
-		<model model="DN140" numOuts="4" numFns="2"/>
-		<model model="DN144K" numOuts="4" numFns="2"/>
-		<model model="DN145K" numOuts="4" numFns="2"/>
-		<model model="DN146A" numOuts="4" numFns="2" lowVersionID="106" highVersionID="106" />
-		<model model="DN146" numOuts="4" numFns="2"/>
-		<model model="DN147A" numOuts="4" numFns="2"/>
-		<model model="DN148K" numOuts="4" numFns="2"/>
+	<family name="Digitrax early decoders" mfg="Digitrax" lowVersionID="33" highVersionID="45">
+		<model model="DH120" numOuts="2" numFns="2"/>
 	</family>
 
 	<programming direct="byteOnly" paged="yes" 
@@ -88,8 +83,6 @@
 		<variable label="Long Address" CV="17">
 			<longAddressVal/>
 			</variable>
-
-		<variable label="Consist Address" CV="19">			<decVal/></variable>
 
 		<variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" 
 					item="Locomotive Direction">
