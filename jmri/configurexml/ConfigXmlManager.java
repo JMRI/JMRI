@@ -16,7 +16,7 @@ import org.jdom.output.XMLOutputter;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -34,7 +34,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             try {
                 Class.forName(adapter);
             } catch (java.lang.ClassNotFoundException ex) {
-                locateFailed(ex, adapter, o);
+                locateClassFailed(ex, adapter, o);
             }
         // and add to list
         plist.add(o);
@@ -71,7 +71,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             try {
                 Class.forName(adapter);
             } catch (java.lang.ClassNotFoundException ex) {
-                locateFailed(ex, adapter, o);
+                locateClassFailed(ex, adapter, o);
             }
         // and add to list
         clist.add(o);
@@ -85,7 +85,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             try {
                 Class.forName(adapter);
             } catch (java.lang.ClassNotFoundException ex) {
-                locateFailed(ex, adapter, o);
+                locateClassFailed(ex, adapter, o);
             }
         // and add to list
         tlist.add(o);
@@ -105,7 +105,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             try {
                 Class.forName(adapter);
             } catch (java.lang.ClassNotFoundException ex) {
-                locateFailed(ex, adapter, o);
+                locateClassFailed(ex, adapter, o);
             }
         // and add to list
         ulist.add(o);
@@ -153,7 +153,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * Handle failure to load adapter class. Although only a
      * one-liner in this class, it is a separate member to facilitate testing.
      */
-    void locateFailed(java.lang.ClassNotFoundException ex, String adapterName, Object o) {
+    void locateClassFailed(java.lang.ClassNotFoundException ex, String adapterName, Object o) {
         log.error("could not load adapter class "+adapterName);
     }
 
@@ -321,9 +321,18 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             log.debug("found at "+result.getAbsolutePath());
             return result;
         } else {
-            log.warn("Could not locate file "+f);
+            locateFileFailed(f);
             return null;
         }
+    }
+
+    /**
+     * Report a failure to find a file.  This is a separate member
+     * to ease testing.
+     * @param f Name of file not located.
+     */
+    void locateFileFailed(String f) {
+        log.warn("Could not locate file "+f);
     }
 
     // initialize logging
