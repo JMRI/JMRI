@@ -15,7 +15,6 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.TreePath;
-import jmri.jmrit.display.MultiIconEditor;
 
 /**
  * Create a JPanel containing a tree of resources.
@@ -27,7 +26,7 @@ import jmri.jmrit.display.MultiIconEditor;
  * files in the distribution directory are _not_ included.
  *
  * @author			Bob Jacobsen  Copyright 2002
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class CatalogPane extends JPanel {
     JLabel preview = new JLabel();
