@@ -15,7 +15,7 @@ import javax.swing.*;
  * Macintosh MRJ
  *
  * @author		Bob Jacobsen   Copyright (C) 2003; D Miller Copyright 2003
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class PrintCvAction  extends AbstractAction {
 
@@ -44,7 +44,9 @@ public class PrintCvAction  extends AbstractAction {
             writer.write(s, 0, s.length());
 
             //Initialize some variables to define the CV table size
-            int tableLeft = 1, tableRight = 65, tableTopRow = 0, tableBottomRow = 0, tableHeight = 20;
+            int cvCount = mModel.getRowCount();
+            int tableLeft = 1, tableRight = 65, tableTopRow = 0, tableBottomRow = 0, tableHeight = cvCount/4;
+            if (cvCount%4 > 0) tableHeight++;
 
             /*Start drawing the table of CVs. Set up the table with 4 columns of CV/Value
              pairs and Draw the table borders and lines.  Each column width is
