@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE locomotive-config SYSTEM "locomotive-config.dtd">
+<!-- $Revision: -->
 <locomotive-config>
   <locomotive id="Athearn F7" roadNumber="4797" roadName="" mfg="" model="F7" dccAddress="97" comment="">
     <decoder model="DH142" family="Digitrax 1x2" comment="" />
@@ -29,17 +30,17 @@
         <varValue name="Use Speed Table" value="0" />
         <varValue name="Addressing Mode" value="0" />
         <varValue name="Forward light F0F effect generated" value="0" />
-        <varValue name="Forward light F0F behaviour" value="0" />
+        <varValue name="Forward light F0F behavior" value="0" />
         <varValue name="Reverse light F0R effect generated" value="0" />
-        <varValue name="Reverse light F0R behaviour" value="0" />
+        <varValue name="Reverse light F0R behavior" value="0" />
         <varValue name="Function 1 effect generated" value="0" />
-        <varValue name="Function 1 behaviour" value="0" />
+        <varValue name="Function 1 behavior" value="0" />
         <varValue name="Function 2 effect generated" value="0" />
-        <varValue name="Function 2 behaviour" value="0" />
+        <varValue name="Function 2 behavior" value="0" />
         <varValue name="Function 3 effect generated" value="0" />
-        <varValue name="Function 3 behaviour" value="0" />
+        <varValue name="Function 3 behavior" value="0" />
         <varValue name="Function 4 effect generated" value="0" />
-        <varValue name="Function 4 behaviour" value="0" />
+        <varValue name="Function 4 behavior" value="0" />
         <varValue name="F0 Forward Configurable strobe effect" value="0" />
         <varValue name="F0 Forward Configurable Strobes control" value="0" />
         <varValue name="F0 Reverse Configurable strobe effect" value="0" />

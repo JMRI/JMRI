@@ -1,9 +1,11 @@
 <?xml version="1.0"?>
 <!DOCTYPE names-config SYSTEM "names-config.dtd">
-<!-- $Id: names.xml,v 1.9 2002-07-13 02:55:12 jacobsen Exp $ -->
+<!-- $Id: names.xml,v 1.10 2003-10-18 18:24:54 jacobsen Exp $ -->
 <names-config>
 		<version author="jake@physics.berkeley.edu" 
-			version="7" lastUpdated="20020112"/>
+			version="7.1" lastUpdated="20031008"/>
+
+   <!-- Version 7.1 - changed spelling of "behavior" (Jack Shall) -->
 		
 	<!-- Note 1: NMRA-standard variables show a CV value -->
 	<!-- Note 2: The CV29 control bits are now spread to the relevant -->
@@ -161,85 +163,85 @@
 		<!-- Configuring what each function does: -->
 		<!-- There are three variables per function.  "Effect generated" -->
 		<!-- is intended for variables that control what the lights do,  -->
-		<!-- while "behaviour" is meant for when they are present, and   -->
+		<!-- while "behavior" is meant for when they are present, and   -->
 		<!-- "options" for anything else -->
 		
 		<definition item="Function F0F effect generated"/>
-		<definition item="Function F0F behaviour"/>
+		<definition item="Function F0F behavior"/>
 		<definition item="Function F0F options"/>
 
 		<definition item="Function F0R effect generated"/>
-		<definition item="Function F0R behaviour"/>
+		<definition item="Function F0R behavior"/>
 		<definition item="Function F0R options"/>
 
 		<definition item="Function 1 effect generated"/>
-		<definition item="Function 1 behaviour"/>
+		<definition item="Function 1 behavior"/>
 		<definition item="Function 1 options"/>
 
 		<definition item="Function 2 effect generated"/>
-		<definition item="Function 2 behaviour"/>
+		<definition item="Function 2 behavior"/>
 		<definition item="Function 2 options"/>
 
 		<definition item="Function 3 effect generated"/>
-		<definition item="Function 3 behaviour"/>
+		<definition item="Function 3 behavior"/>
 		<definition item="Function 3 options"/>
 
 		<definition item="Function 4 effect generated"/>
-		<definition item="Function 4 behaviour"/>
+		<definition item="Function 4 behavior"/>
 		<definition item="Function 4 options"/>
 
 		<definition item="Function 5 effect generated"/>
-		<definition item="Function 5 behaviour"/>
+		<definition item="Function 5 behavior"/>
 		<definition item="Function 5 options"/>
 
 		<definition item="Function 6 effect generated"/>
-		<definition item="Function 6 behaviour"/>
+		<definition item="Function 6 behavior"/>
 		<definition item="Function 6 options"/>
 
 		<definition item="Function 7 effect generated"/>
-		<definition item="Function 7 behaviour"/>
+		<definition item="Function 7 behavior"/>
 		<definition item="Function 7 options"/>
 
 		<definition item="Function 8 effect generated"/>
-		<definition item="Function 8 behaviour"/>
+		<definition item="Function 8 behavior"/>
 		<definition item="Function 8 options"/>
 
 
 		<!-- Configuring what each output does: -->
 		<!-- There are three variables per output.  "Effect generated" -->
 		<!-- is intended for variables that control what the lights do,  -->
-		<!-- while "behaviour" is meant for when they are present, and   -->
+		<!-- while "behavior" is meant for when they are present, and   -->
 		<!-- "options" for anything else -->
 		<definition item="Output 1 effect generated"/>
-		<definition item="Output 1 behaviour"/>
+		<definition item="Output 1 behavior"/>
 		<definition item="Output 1 options"/>
 
 		<definition item="Output 2 effect generated"/>
-		<definition item="Output 2 behaviour"/>
+		<definition item="Output 2 behavior"/>
 		<definition item="Output 2 options"/>
 
 		<definition item="Output 3 effect generated"/>
-		<definition item="Output 3 behaviour"/>
+		<definition item="Output 3 behavior"/>
 		<definition item="Output 3 options"/>
 
 		<definition item="Output 4 effect generated"/>
-		<definition item="Output 4 behaviour"/>
+		<definition item="Output 4 behavior"/>
 		<definition item="Output 4 options"/>
 
 		<definition item="Output 5 effect generated"/>
-		<definition item="Output 5 behaviour"/>
+		<definition item="Output 5 behavior"/>
 		<definition item="Output 5 options"/>
 
 		<definition item="Output 6 effect generated"/>
-		<definition item="Output 6 behaviour"/>
+		<definition item="Output 6 behavior"/>
 		<definition item="Output 6 options"/>
 
 		<definition item="Output 7 effect generated"/>
-		<definition item="Output 7 behaviour"/>
+		<definition item="Output 7 behavior"/>
 		<definition item="Output 7 options"/>
 
 		<definition item="Output 8 effect generated"/>
-		<definition item="Output 8 behaviour"/>
+		<definition item="Output 8 behavior"/>
 		<definition item="Output 8 options"/>
 
 
