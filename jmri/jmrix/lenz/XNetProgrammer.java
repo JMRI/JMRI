@@ -26,7 +26,7 @@ import java.beans.PropertyChangeEvent;
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Paul Bender  Copyright (c) 2003,2004
- * @version $Revision: 2.5 $
+ * @version $Revision: 2.6 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -55,7 +55,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 	static XNetProgrammer self = null;  // needs to be accessible from tests
 
 	// handle mode
-	protected int _mode = Programmer.PAGEMODE;
+	protected int _mode = Programmer.DIRECTBYTEMODE;
 
     /**
      * Switch to a new programming mode.  Lenz can now only
