@@ -1,0 +1,29 @@
+<!-- Defines XML for configuring the ThrottleFrames -->
+
+<!ELEMENT throttle-config (ThrottleFrame*)>
+<!ATTLIST throttle-config>
+
+<!--  Section identifies serial port info -->
+<!ELEMENT ThrottleFrame (window, ControlPanel, FunctionPanel, AddressPanel) >
+
+<!ELEMENT ControlPanel (window) >
+
+<!ELEMENT FunctionPanel (window, FunctionButton*) >
+
+<!ELEMENT AddressPanel (window, address) >
+
+<!ELEMENT window EMPTY >
+<!ATTLIST window x CDATA #REQUIRED>
+<!ATTLIST window y CDATA #REQUIRED>
+<!ATTLIST window width CDATA #REQUIRED>
+<!ATTLIST window height CDATA #REQUIRED>
+
+<!ELEMENT address EMPTY >
+<!ATTLIST address value CDATA #REQUIRED>
+
+<!ELEMENT FunctionButton EMPTY >
+<!ATTLIST FunctionButton id CDATA #REQUIRED>
+<!ATTLIST FunctionButton text CDATA #REQUIRED>
+<!ATTLIST FunctionButton isLockable CDATA #REQUIRED>
+
+

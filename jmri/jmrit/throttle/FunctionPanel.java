@@ -146,6 +146,8 @@ public class FunctionPanel extends JInternalFrame
             Element buttonElement = new Element("FunctionButton");
             buttonElement.addAttribute("id", String.valueOf(i));
             buttonElement.addAttribute("text", functionButton[i].getText());
+            buttonElement.addAttribute("isLockable",
+                                       String.valueOf(functionButton[i].getIsLockable()));
             children.add(buttonElement);
         }
         me.setChildren(children);
@@ -170,6 +172,8 @@ public class FunctionPanel extends JInternalFrame
                 int id = buttonElement.getAttribute("id").getIntValue();
                 String text = buttonElement.getAttribute("text").getValue();
                 functionButton[id].setText(text);
+                boolean isLockable = buttonElement.getAttribute("isLockable").getBooleanValue();
+                functionButton[id].setIsLockable(isLockable);
             }
 
         }
