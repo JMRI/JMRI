@@ -36,7 +36,7 @@ import javax.swing.JToggleButton;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class BDL16Frame extends JFrame implements LocoNetListener {
 
@@ -66,6 +66,10 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
         appendLine(highthreshold);
         appendLine(drivefromswitch);
         appendLine(decodefromloconet);
+        appendLine(reserved36);
+        appendLine(reserved37);
+        appendLine(reserved38);
+        appendLine(reserved39);
         appendLine(setdefault);
 
         appendLine(status);
@@ -168,6 +172,10 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
         opsw[19] = highthreshold.isSelected();
         opsw[25] = drivefromswitch.isSelected();
         opsw[26] = decodefromloconet.isSelected();
+        opsw[36] = reserved36.isSelected();
+        opsw[37] = reserved37.isSelected();
+        opsw[38] = reserved38.isSelected();
+        opsw[39] = reserved39.isSelected();
         opsw[40] = setdefault.isSelected();
 
         // Start the first operation
@@ -232,6 +240,10 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
         highthreshold.setSelected(opsw[19]);
         drivefromswitch.setSelected(opsw[25]);
         decodefromloconet.setSelected(opsw[26]);
+        reserved36.setSelected(opsw[36]);
+        reserved37.setSelected(opsw[37]);
+        reserved38.setSelected(opsw[38]);
+        reserved39.setSelected(opsw[39]);
         setdefault.setSelected(opsw[40]);
     }
 
@@ -249,7 +261,11 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
             case 13: return 19;
             case 19: return 25;
             case 25: return 26;
-            case 26: return 40;
+            case 26: return 36;
+            case 36: return 37;
+            case 37: return 38;
+            case 38: return 39;
+            case 39: return 40;
             case 40: return  0;   // done!
             default:
                 log.error("unexpected state "+state);
@@ -273,6 +289,10 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
     JCheckBox highthreshold         = new JCheckBox("High threshold sense (10kohms)");  // opsw 19
     JCheckBox drivefromswitch       = new JCheckBox("Drive LEDs from switch commands, not occupancy");  // opsw 25
     JCheckBox decodefromloconet     = new JCheckBox("Decode switch commands from LocoNet");  // opsw 26
+    JCheckBox reserved36            = new JCheckBox("OpSw 36 (Reserved)");  // opsw 36
+    JCheckBox reserved37            = new JCheckBox("OpSw 37 (Reserved)");  // opsw 37
+    JCheckBox reserved38            = new JCheckBox("OpSw 38 (Reserved)");  // opsw 38
+    JCheckBox reserved39            = new JCheckBox("OpSw 39 (Reserved)");  // opsw 39
     JCheckBox setdefault            = new JCheckBox("Restore factory default, including address");  // opsw 40
 
     JLabel status = new JLabel("The BDL16 should be in normal mode (Don't push the buttons on the BDL16)");
