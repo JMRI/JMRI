@@ -13,10 +13,20 @@ import jmri.*;
  * the same object, a related one (e.g. common config), or completely
  * separate.  This matter for both state and configuration!
  * <P>
- * At runtime, we reference everything through a
+ * At runtime, we reference everything through a SecurityElement referece,
+ * at least for now. Eventually, we can listen to messages to decouple this.
+ * <P>
+ * Head 0 guards entering the A leg, head 1 guards the B legt, head 2
+ * guards the C leg
+ * <P>
+ * Simple hard-coded aspect chart:
+ *  Green is 55MPH and up
+ *  Flashing yellow is 35 and up
+ *  Yellow is 15 and up
+ *  Red is less than 15
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class AspectGenerator implements java.beans.PropertyChangeListener{
 
@@ -41,7 +51,8 @@ public class AspectGenerator implements java.beans.PropertyChangeListener{
      * @return A SignalHead-defined constant
      */
     public int getHeadState(int num) {
-        if (log.isDebugEnabled()) log.debug("asked for state of "+num+", is "+heads[num].state);
+        if (log.isDebugEnabled()) log.debug("asked for state of "+getSEName()
+                                            +"/"+num+", is "+heads[num].state);
         return heads[num].state;
     }
 
