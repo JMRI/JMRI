@@ -2,6 +2,7 @@ package jmri.jmrit.display;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseMotionListener;
 import javax.swing.*;
 import jmri.jmrix.loconet.SecurityElement;
@@ -14,7 +15,7 @@ import jmri.jmrix.loconet.SecurityElement;
  * explicitly add the code for Positionable
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class SecurityElementIcon extends JPanel
@@ -164,11 +165,11 @@ public class SecurityElementIcon extends JPanel
     }
 
     JPopupMenu popup = null;
+
     /**
      * Pop-up displays the config
      */
     protected void showPopUp(MouseEvent e) {
-        if (popup==null) {
             popup = new JPopupMenu();
             popup.add(new JMenuItem("SE "+element.getNumber()));
             String mode = "?? "+element.mLogic;
@@ -177,12 +178,115 @@ public class SecurityElementIcon extends JPanel
             else if (element.mLogic==SecurityElement.HEADBLOCK) mode="headblock";
             popup.add(new JMenuItem("mode: "+mode));
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
-            popup.add(new JMenuItem("to: "+element.turnout));
-            popup.add(new JMenuItem("ds: "+element.dsSensor));
+            popup.add(new AbstractAction("to: "+element.turnout) {
+                public void actionPerformed(ActionEvent e) {
+                    String newVal =
+                        javax.swing.JOptionPane.showInputDialog(popup,
+                                                    "Set turnout number:",
+                                                    "SE "+element.getNumber()+" turnout number",
+                                                    javax.swing.JOptionPane.OK_CANCEL_OPTION);
+                    if (newVal!=null) {
+                        element.turnout=Integer.parseInt(newVal);
+                    }
+                }
+            }
+            );
+
+            popup.add(new AbstractAction("ds: "+element.dsSensor) {
+                public void actionPerformed(ActionEvent e) {
+                    String newVal =
+                        javax.swing.JOptionPane.showInputDialog(popup,
+                                                    "Set detection section number:",
+                                                    "SE "+element.getNumber()+" detection section",
+                                                    javax.swing.JOptionPane.OK_CANCEL_OPTION);
+                    if (newVal!=null) {
+                        element.dsSensor=Integer.parseInt(newVal);
+                    }
+                }
+            }
+            );
+
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
-            popup.add(new JMenuItem("A: "+element.attachAnum+":"+element.attachAleg));
-            popup.add(new JMenuItem("B: "+element.attachBnum+":"+element.attachBleg));
-            popup.add(new JMenuItem("C: "+element.attachCnum+":"+element.attachCleg));
+
+            String attach = "?";
+            if (element.attachAleg==SecurityElement.A) attach = "A";
+            if (element.attachAleg==SecurityElement.B) attach = "B";
+            if (element.attachAleg==SecurityElement.C) attach = "C";
+            popup.add(new AbstractAction("A: "+element.attachAnum+":"+attach) {
+                public void actionPerformed(ActionEvent e) {
+                    String newVal =
+                        javax.swing.JOptionPane.showInputDialog(popup,
+                                                    "Set A attachment number:",
+                                                    "SE "+element.getNumber()+" A attachment",
+                                                    javax.swing.JOptionPane.OK_CANCEL_OPTION);
+                    if (newVal!=null) {
+                        element.attachAnum=Integer.parseInt(newVal);
+                    }
+                    newVal =
+                        javax.swing.JOptionPane.showInputDialog(popup,
+                                                    "Set A attachment leg (A,B,C):",
+                                                    "SE "+element.getNumber()+" A attachment",
+                                                    javax.swing.JOptionPane.OK_CANCEL_OPTION);
+                    if (newVal.equals("A")) element.attachAleg=SecurityElement.A;
+                    else if (newVal.equals("B")) element.attachAleg=SecurityElement.B;
+                    else if (newVal.equals("C")) element.attachAleg=SecurityElement.C;
+                    else if (newVal!=null) log.warn("value needs to be A, B or C: "+newVal);
+                }
+            }
+            );
+
+            if (element.attachBleg==SecurityElement.A) attach = "A";
+            if (element.attachBleg==SecurityElement.B) attach = "B";
+            if (element.attachBleg==SecurityElement.C) attach = "C";
+            popup.add(new AbstractAction("B: "+element.attachBnum+":"+attach) {
+                public void actionPerformed(ActionEvent e) {
+                    String newVal =
+                        javax.swing.JOptionPane.showInputDialog(popup,
+                                                    "Set B attachment number:",
+                                                    "SE "+element.getNumber()+" B attachment",
+                                                    javax.swing.JOptionPane.OK_CANCEL_OPTION);
+                    if (newVal!=null) {
+                        element.attachBnum=Integer.parseInt(newVal);
+                    }
+                    newVal =
+                        javax.swing.JOptionPane.showInputDialog(popup,
+                                                    "Set B attachment leg (A,B,C):",
+                                                    "SE "+element.getNumber()+" B attachment",
+                                                    javax.swing.JOptionPane.OK_CANCEL_OPTION);
+                    if (newVal.equals("A")) element.attachBleg=SecurityElement.A;
+                    else if (newVal.equals("B")) element.attachBleg=SecurityElement.B;
+                    else if (newVal.equals("C")) element.attachBleg=SecurityElement.C;
+                    else if (newVal!=null) log.warn("value needs to be A, B or C: "+newVal);
+                }
+            }
+            );
+
+            if (element.attachCleg==SecurityElement.A) attach = "A";
+            if (element.attachCleg==SecurityElement.B) attach = "B";
+            if (element.attachCleg==SecurityElement.C) attach = "C";
+            popup.add(new AbstractAction("C: "+element.attachCnum+":"+attach) {
+                public void actionPerformed(ActionEvent e) {
+                    String newVal =
+                        javax.swing.JOptionPane.showInputDialog(popup,
+                                                    "Set C attachment number:",
+                                                    "SE "+element.getNumber()+" C attachment",
+                                                    javax.swing.JOptionPane.OK_CANCEL_OPTION);
+                    if (newVal!=null) {
+                        element.attachCnum=Integer.parseInt(newVal);
+                    }
+                    newVal =
+                        javax.swing.JOptionPane.showInputDialog(popup,
+                                                    "Set C attachment leg (A,B,C):",
+                                                    "SE "+element.getNumber()+" C attachment",
+                                                    javax.swing.JOptionPane.OK_CANCEL_OPTION);
+                    if (newVal.equals("A")) element.attachCleg=SecurityElement.A;
+                    else if (newVal.equals("B")) element.attachCleg=SecurityElement.B;
+                    else if (newVal.equals("C")) element.attachCleg=SecurityElement.C;
+                    else if (newVal!=null) log.warn("value needs to be A, B or C: "+newVal);
+                }
+            }
+            );
+
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
             popup.add(new JMenuItem("maxAB: "+element.maxSpeedAB));
             popup.add(new JMenuItem("maxBA: "+element.maxSpeedBA));
@@ -193,7 +297,7 @@ public class SecurityElementIcon extends JPanel
             popup.add(new JMenuItem("brakeBA:"+element.maxBrakingBA));
             popup.add(new JMenuItem("brakeAC:"+element.maxBrakingAC));
             popup.add(new JMenuItem("brakeCA:"+element.maxBrakingCA));
-        }
+
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
 
