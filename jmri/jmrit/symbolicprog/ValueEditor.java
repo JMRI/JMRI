@@ -30,42 +30,42 @@ import javax.swing.table.TableCellEditor;
  * </UL>
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 public class ValueEditor extends JComboBox implements TableCellEditor, FocusListener {
-
-	protected transient Vector listeners;
-	protected transient String originalValue=null;
-        protected Object mValue;
-
-	public ValueEditor() {
-		super();
-		listeners = new Vector();
-	}
-
-	public Component getTableCellEditorComponent(JTable table, Object value,
-                                               boolean isSelected,
-                                               int row,int column) {
-                mValue = value;
-		if (log.isDebugEnabled()) log.debug("getTableCellEditorComponent "+row+" "
-											+column+" "+isSelected+" "
-											+value.getClass());
-		table.setRowSelectionInterval(row, row);
-		table.setColumnSelectionInterval(column, column);
-			if (value instanceof Component) {
-                                if (value instanceof JTextField) {
-                                    JTextField tempField = (JTextField)value;
-                                    originalValue = tempField.getText();
-                                    tempField.addFocusListener(this);
-                                    return tempField;
-                                }
-				else return (Component) value;
-			} else if (value instanceof String)
-				return new JLabel((String)value);
-			else
-				return new JLabel("Unknown value type!");
-	}
-
+    
+    protected transient Vector listeners;
+    protected transient String originalValue=null;
+    protected Object mValue;
+    
+    public ValueEditor() {
+        super();
+        listeners = new Vector();
+    }
+    
+    public Component getTableCellEditorComponent(JTable table, Object value,
+                                                 boolean isSelected,
+                                                 int row,int column) {
+        mValue = value;
+        if (log.isDebugEnabled()) log.debug("getTableCellEditorComponent "+row+" "
+                                            +column+" "+isSelected+" "
+                                            +value.getClass());
+        table.setRowSelectionInterval(row, row);
+        table.setColumnSelectionInterval(column, column);
+        if (value instanceof Component) {
+            if (value instanceof JTextField) {
+                JTextField tempField = (JTextField)value;
+                originalValue = tempField.getText();
+                tempField.addFocusListener(this);
+                return tempField;
+            }
+            else return (Component) value;
+        } else if (value instanceof String)
+            return new JLabel((String)value);
+        else
+            return new JLabel("Unknown value type!");
+    }
+    
     /** FocusListener implementations */
     public void focusGained(FocusEvent e) {
         if (log.isDebugEnabled()) log.debug("focusGained");
@@ -74,14 +74,14 @@ public class ValueEditor extends JComboBox implements TableCellEditor, FocusList
             originalValue = tempField.getText();
         }
     }
-
+    
     public void focusLost(FocusEvent e) {
         if (log.isDebugEnabled()) log.debug("focusLost");
         if ( !(mValue instanceof JTextField)
-                || !(originalValue.equals(((JTextField)mValue).getText())) )
+             || !(originalValue.equals(((JTextField)mValue).getText())) )
             fireEditingStopped();
     }
-
+    
     void removeFocusListener() {
         if (mValue instanceof JTextField) {
             JTextField tempField = (JTextField)mValue;
@@ -89,65 +89,65 @@ public class ValueEditor extends JComboBox implements TableCellEditor, FocusList
             tempField.removeFocusListener(this);
         }
     }
-
+    
     // CellEditor methods
     public void cancelCellEditing() {
         if (log.isDebugEnabled()) log.debug("cancelCellEditing");
         removeFocusListener();
         fireEditingCanceled();
     }
-
-	public Object getCellEditorValue() {
-		if (log.isDebugEnabled()) {
-                    log.debug("getCellEditorValue with 'value' object of type "+mValue.getClass());
-		}
-                if (mValue instanceof JTextField) {
-                    // extract the string from the JTextField and return it
-		    return new Integer( ((JTextField)mValue).getText() );
-                } else {
-                    log.debug("getCellEditorValue unable to return a value from unknown type "
-                                +mValue.getClass());
-                    return null;
-                }
-	}
-
-	public boolean isCellEditable(EventObject eo) {return true;}
-
-	public boolean shouldSelectCell(EventObject eo) {
-		return true;
-	}
-
-	public boolean stopCellEditing() {
-		if (log.isDebugEnabled()) log.debug("stopCellEditing");
-                removeFocusListener();
-		fireEditingStopped();
-		return true;
-	}
-
-	public void addCellEditorListener(CellEditorListener cel) {
-		listeners.addElement(cel);
-	}
-
-	public void removeCellEditorListener(CellEditorListener cel) {
-		listeners.removeElement(cel);
-	}
-
-	protected void fireEditingCanceled() {
-		if (log.isDebugEnabled()) log.debug("fireEditingCancelled, but we are not setting back the old value");
-		ChangeEvent ce = new ChangeEvent(this);
-		for (int i = listeners.size(); i >= 0; i--) {
-			((CellEditorListener)listeners.elementAt(i)).editingCanceled(ce);
-		}
-	}
-
-	protected void fireEditingStopped() {
-		if (log.isDebugEnabled()) log.debug("fireEditingStopped");
-		ChangeEvent ce = new ChangeEvent(this);
-		for (int i = listeners.size() - 1; i >= 0; i--) {
-			((CellEditorListener)listeners.elementAt(i)).editingStopped(ce);
-		}
-	}
-
-	// initialize logging
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ValueEditor.class.getName());
+    
+    public Object getCellEditorValue() {
+        if (log.isDebugEnabled()) {
+            log.debug("getCellEditorValue with 'value' object of type "+mValue.getClass());
+        }
+        if (mValue instanceof JTextField) {
+            // extract the string from the JTextField and return it
+            return new Integer( ((JTextField)mValue).getText() );
+        } else {
+            log.debug("getCellEditorValue unable to return a value from unknown type "
+                      +mValue.getClass());
+            return null;
+        }
+    }
+    
+    public boolean isCellEditable(EventObject eo) {return true;}
+    
+    public boolean shouldSelectCell(EventObject eo) {
+        return true;
+    }
+    
+    public boolean stopCellEditing() {
+        if (log.isDebugEnabled()) log.debug("stopCellEditing");
+        removeFocusListener();
+        fireEditingStopped();
+        return true;
+    }
+    
+    public void addCellEditorListener(CellEditorListener cel) {
+        listeners.addElement(cel);
+    }
+    
+    public void removeCellEditorListener(CellEditorListener cel) {
+        listeners.removeElement(cel);
+    }
+    
+    protected void fireEditingCanceled() {
+        if (log.isDebugEnabled()) log.debug("fireEditingCancelled, but we are not setting back the old value");
+        ChangeEvent ce = new ChangeEvent(this);
+        for (int i = listeners.size(); i >= 0; i--) {
+            ((CellEditorListener)listeners.elementAt(i)).editingCanceled(ce);
+        }
+    }
+    
+    protected void fireEditingStopped() {
+        if (log.isDebugEnabled()) log.debug("fireEditingStopped");
+        ChangeEvent ce = new ChangeEvent(this);
+        for (int i = listeners.size() - 1; i >= 0; i--) {
+            ((CellEditorListener)listeners.elementAt(i)).editingStopped(ce);
+        }
+    }
+    
+    // initialize logging
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ValueEditor.class.getName());
 }
