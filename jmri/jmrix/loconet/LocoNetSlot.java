@@ -17,7 +17,7 @@ import java.util.Vector;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.11 $
+ * @version         $Revision: 1.12 $
  */
 public class LocoNetSlot {
 
@@ -269,6 +269,25 @@ public class LocoNetSlot {
     public void setFcMinutes(int val) {
         if (getSlot()!=LnConstants.FC_SLOT) log.error("setFcMinutes invalid for slot "+getSlot());
         dirf = (255-(60-val))&0x7F;
+    }
+
+    /**
+     * Only valid for fast-clock slot.
+     * @return Return frac_mins field which is the number of 65ms ticks until then
+     * next minute rollover. These ticks step at the current fast clock rate
+     */
+    public int getFcFracMins() {
+        if (getSlot()!=LnConstants.FC_SLOT) log.error("getFcMinutes invalid for slot "+getSlot());
+        return 0x3FFF - ( (addr & 0x7F) | ((spd & 0x7F ) << 7 ) ) ;
+    }
+    /**
+     * For fast-clock slot, set "frac_mins" value.
+     */
+    public void setFcFracMins(int val) {
+        if (getSlot()!=LnConstants.FC_SLOT) log.error("setFcMinutes invalid for slot "+getSlot());
+        int temp = 0x3FFF - val ;
+        addr = addr | (temp & 0x7F);
+        spd = ( temp >> 7 ) & 0x7F;
     }
 
     /**
