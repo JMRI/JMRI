@@ -26,13 +26,13 @@ import com.sun.java.util.collections.List;
  * class, which provides a simple GUI for controlling a single turnout.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  * @see             jmri.Turnout
  * @see             jmri.AbstractTurnoutManager
  * @see             jmri.InstanceManager
  * @see             jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
  */
-public interface TurnoutManager {
+public interface TurnoutManager extends Manager {
 
     /**
      * Locate an instance based on a system name.  Returns null if no
@@ -40,14 +40,14 @@ public interface TurnoutManager {
      * @return requested Turnout object or null if none exists
      */
     public Turnout getBySystemName(String systemName);
-    
+
     /**
      * Locate an instance based on a user name.  Returns null if no
      * instance already exists.
      * @return requested Turnout object or null if none exists
      */
     public Turnout getByUserName(String userName);
-    
+
     /**
      * Return an instance with the specified system and user names.
      * Note that two calls with the same arguments will get the same instance;
@@ -75,25 +75,19 @@ public interface TurnoutManager {
      * @return requested Turnout object (never null)
      */
     public Turnout newTurnout(String systemName, String userName);
-    
+
     /**
      * Get a list of all Turnouts' system names.
      */
     public List getSystemNameList();
-    
-    /**
-     * Free resources when no longer used. Specifically, remove all references
-     * to and from this object, so it can be garbage-collected.
-     */
-    public void dispose() throws JmriException;
-    
+
     /**
      * Deprecated!
      * Locate an instance based on a TurnoutAddress object.  Returns null if no
      * instance already exists.
      */
     public Turnout getByAddress(TurnoutAddress key);
-    
+
 }
 
 
