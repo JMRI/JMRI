@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-<!-- $Id: decoderIndex.xml,v 1.10 2002-01-13 20:33:30 jacobsen Exp $ -->
+<!-- $Id: decoderIndex.xml,v 1.11 2002-02-04 07:37:27 jacobsen Exp $ -->
 <decoderIndex>
 
 <mfgList>
@@ -74,6 +74,11 @@
 		<model model="DH150" numOuts="5" numFns="3"/>
 	</family>
 
+	<family name="Digitrax DH120" file="Digitrax_120.xml" mfg="Digitrax" 
+				lowVersionID="33" highVersionID="45">
+		<model model="DH120" numOuts="2" numFns="2"/>
+	</family>
+
 	<family name="Lenz LE077XF" file="Lenz_LE077XF.xml" mfg="Lenz">
 		<model model="LE077XF" numOuts="3" />
 	</family>
@@ -84,14 +89,48 @@
 
 	<family name="DSD/DSX Steam" file="SoundTraxx_DSD_Steam.xml" mfg="Throttle-Up"
 			lowVersionID="6" highVersionID="7">
-		<model model="DSD Steam" numOuts="1" />
-		<model model="DSX Steam" numOuts="1" />
+		<model model="DSD Steam" numOuts="4">
+			<output name="Whistle"/>
+			<output name="Bell"/> 
+			<output name="Hiss"/> 
+			<output name="Dynamo"/> 
+			<output name="Coupler"/> 
+			<output name="Mute"/> 
+			</model>
+		<model model="DSX Steam" numOuts="4">
+			<output name="Horn"/> 
+			<output name="Bell"/> 
+			<output name="Dim"/>
+			<output name="Mute"/> 
+			<output name="Dynamic Brake"/> 
+			<output name="Exhaust Notch Up"/> 
+			<output name="Exhaust Notch Down"/> 
+			<output name="Coupler"/> 
+			</model>
 	</family>
 
 	<family name="DSD/DSX Diesel" file="SoundTraxx_DSD_Diesel.xml" mfg="Throttle-Up"
 			lowVersionID="9" highVersionID="14">
-		<model model="DSD Diesel" numOuts="1" />
-		<model model="DSX Diesel" numOuts="1" />
+		<model model="DSD Diesel" numOuts="4">
+			<output name="Horn"/> 
+			<output name="Bell"/> 
+			<output name="Dim"/>
+			<output name="Mute"/> 
+			<output name="Dynamic Brake"/> 
+			<output name="Exhaust Notch Up"/> 
+			<output name="Exhaust Notch Down"/> 
+			<output name="Coupler"/> 
+			</model>
+		<model model="DSX Diesel" numOuts="4">
+			<output name="Horn"/> 
+			<output name="Bell"/> 
+			<output name="Dim"/>
+			<output name="Mute"/> 
+			<output name="Dynamic Brake"/> 
+			<output name="Exhaust Notch Up"/> 
+			<output name="Exhaust Notch Down"/> 
+			<output name="Coupler"/> 
+			</model>
 	</family>
 
 	<family name="LC Steam" file="SoundTraxx_LC_Steam.xml" mfg="Throttle-Up"

@@ -1,5 +1,5 @@
 <!-- Defines XML documenting the list of available decoder definitions -->
-<!-- $Id: decoderIndex-config.dtd,v 1.8 2002-01-13 20:33:33 jacobsen Exp $ -->
+<!-- $Id: decoderIndex-config.dtd,v 1.9 2002-02-04 07:37:27 jacobsen Exp $ -->
 
 <!ELEMENT decoderIndex-config (decoderIndex)>
 <!ATTLIST decoderIndex-config>
@@ -30,7 +30,7 @@
 <!ATTLIST family lowVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
 <!ATTLIST family highVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
 
-<!ELEMENT model EMPTY >
+<!ELEMENT model (output*) >
 <!ATTLIST model model     	CDATA #REQUIRED>  <!-- model name used for identification -->
 <!ATTLIST model options   	CDATA #IMPLIED>   <!-- comma-sep list of included options, but default is all on -->
 <!ATTLIST model comment   	CDATA #IMPLIED>
@@ -45,3 +45,6 @@
 <!-- If only one is specified, only that single value is acceptable -->
 <!ATTLIST model lowVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
 <!ATTLIST model highVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
+
+<!ELEMENT output EMPTY >
+<!ATTLIST output name     	CDATA #REQUIRED>  <!-- output name used for identification -->
