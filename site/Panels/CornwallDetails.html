@@ -10,7 +10,7 @@
 <body>
 
 
-<IMG SRC="images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
+<IMG SRC="../images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
 
 JMRI was used to create the dispatcher control panel for Nick Kulp's
 <A href="http://kc.pennsyrr.com/layouts/kulp/index.html">Cornwall RR</a>.
@@ -18,7 +18,38 @@ JMRI was used to create the dispatcher control panel for Nick Kulp's
 briefly describes how it was done.  
 This page includes additional detail on some topics.
 
-<h2>Control Panels</h2>
+<A ID="occ"><h2>Putting occupancy sensors on the panel</h2></a>
+
+<A ID="edit"><h2>Editing the configuration file</h2></a>
+
+The configuration file is in "XML". They look familiar to the HTML 
+codes used in web pages.  
+<a href="../PaneProg/ConfigFile.html#introXML">An introduction to this file format is available</a>
+if you'd like to read more about it, but it's pretty self-explanatory.
+Your favorite editor program should be able to work with these files, 
+as they are just text.
+
+<P>
+The files are stored in different places on different types of computers.
+It might be fastest to just search for the name you gave the file when you saved it.
+The usual locations for preference information (if you don't change directory when
+saving) is:
+<UL>
+<LI>Linux - in ~/.jmri/
+<LI>MacOS X - in the Library/Preferences/JMRI directory in your home directory
+<LI>Macintosh - in the JMRI folder within the Preferences folder within the System Folder
+<LI>Windows - in C:\Program Files\JMRI, or MyDocuments\JMRI
+</ul>
+
+<P>
+
+<A ID="turnout"><h2>Setting turnout icons</h2></a>
+
+<A ID="open"><h2>Opening a panel at program startup</h2></a>
+The CornwallRR program was modified to automatically open the dispatcher
+panel at startup.  This was an OK solution because that was a custom
+program anyway.  But it's also possible to edit the configuration file so 
+that a panel is automatically opened.
 
 <h2>Acknowledgements</h2>
 
