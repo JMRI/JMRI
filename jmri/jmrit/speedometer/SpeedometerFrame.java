@@ -10,9 +10,13 @@ import jmri.*;
 import jmri.jmrit.display.*;
 
 /**
- * Frame providing access to a speedometer
+ * Frame providing access to a speedometer.
+ * <P>
+ * The logic is actually here, so that this mixes the speedometer's model
+ * and presentation; that should be improved.
+ *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class SpeedometerFrame extends javax.swing.JFrame {
 
