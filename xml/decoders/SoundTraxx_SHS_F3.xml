@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_SHS_F3.xml,v 1.1 2004-03-24 02:08:28 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_SHS_F3.xml,v 1.2 2004-11-26 06:37:11 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Michael Greene - mgreene@cedarlane.com" 
-                          version="1" lastUpdated="20040311"/>
+		<version author="Michael Greene (mgreene@cedarlane.com)" 
+                          version="2" lastUpdated="20041016"/>
 
-		<!-- version 1: initial creation from SoundTraxx_SHS_F7.xml -->
+		<!-- version 2 (20041016): add default values for CV7 & 8 -->
+		<!-- version 1 (20040311): initial creation from SoundTraxx_SHS_F7.xml -->
 
 <decoder>
 	<family name="SHS Diesel decoders" mfg="Throttle-Up (SoundTraxx)">
@@ -46,12 +47,14 @@
 			<decVal/></variable>
 
 		<variable label="Manufacturer Version No" CV="7" readOnly="yes"
-						item="Decoder Version">
-                        <decVal/></variable>
+				item="Decoder Version" default="38">
+                   <decVal/>
+		</variable>
 
 		<variable label="Manufacturer ID" CV="8" readOnly="yes"
-						item="Manufacturer">
-			<decVal/></variable>
+				item="Manufacturer" default="141">
+			<decVal/>
+		</variable>
 
 		<variable label="Motor PWM Period" CV="9" item="Total PWM Period"
 					comment="52.2mS to 5.12 ms" default="180">
