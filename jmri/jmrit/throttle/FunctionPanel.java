@@ -9,11 +9,14 @@ import jmri.InstanceManager;
 
 import org.jdom.Element;
 
+/**
+ * A JInternalFrame that contains buttons for each decoder function.
+ */
 public class FunctionPanel extends JInternalFrame
         implements ThrottleListener, AddressListener, FunctionListener
 {
     public static final int NUM_FUNCTION_BUTTONS = 10;
-
+    private final Integer BUTTON_LAYER = new Integer(1);
     private ThrottleManager throttleManager;
     private DccThrottle throttle;
     private int requestedAddress;
@@ -28,6 +31,10 @@ public class FunctionPanel extends JInternalFrame
         initGUI();
     }
 
+    /**
+     * In addition to super.dispose() this method cancels any requests
+     * for throttles.
+     */
     public void dispose()
     {
         if (throttleManager != null)
@@ -44,8 +51,6 @@ public class FunctionPanel extends JInternalFrame
     public void notifyThrottleFound(DccThrottle t)
     {
         this.throttle = t;
-
-
         functionButton[0].setState(throttle.getF0());
         functionButton[1].setState(throttle.getF1());
         functionButton[2].setState(throttle.getF2());
@@ -56,7 +61,6 @@ public class FunctionPanel extends JInternalFrame
         functionButton[7].setState(throttle.getF7());
         functionButton[8].setState(throttle.getF8());
         functionButton[9].setState(false); // No F9?
-
         this.setEnabled(true);
     }
 
@@ -102,7 +106,7 @@ public class FunctionPanel extends JInternalFrame
      */
     public void setEnabled(boolean isEnabled)
     {
-        super.setEnabled(isEnabled);
+        //super.setEnabled(isEnabled);
         for (int i=0; i < NUM_FUNCTION_BUTTONS; i++)
         {
             functionButton[i].setEnabled(isEnabled);
@@ -117,22 +121,58 @@ public class FunctionPanel extends JInternalFrame
         JPanel mainPanel = new JPanel();
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        mainPanel.setLayout(new GridLayout(4, 3));
+        mainPanel.setLayout(new GridBagLayout());
         functionButton = new FunctionButton[NUM_FUNCTION_BUTTONS];
         for (int i=0; i<NUM_FUNCTION_BUTTONS; i++)
         {
             functionButton[i] = new FunctionButton(i, false);
             functionButton[i].setFunctionListener(this);
             functionButton[i].setText("F"+String.valueOf(i));
-            if (i > 0)
+        }
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.CENTER;
+        constraints.fill = GridBagConstraints.BOTH;
+        constraints.gridheight = 1;
+        constraints.gridwidth = 1;
+        constraints.ipadx = 0;
+        constraints.ipady = 0;
+        Insets insets = new Insets(0, 0, 0, 0);
+        constraints.insets = insets;
+        constraints.weightx = 1;
+        constraints.weighty = 1;
+
+        int i = 1;
+        for (int row = 0; row < 3; row++)
+        {
+            for (int col = 0; col < 3; col++)
             {
-                mainPanel.add(functionButton[i]);
+                constraints.gridx = col;
+                constraints.gridy = row;
+                mainPanel.add(functionButton[i++], constraints);
             }
         }
-        mainPanel.add(new JLabel(""));
-        mainPanel.add(functionButton[0]);
+        constraints.gridx = 1;
+        constraints.gridy = 3;
+        mainPanel.add(functionButton[0], constraints);
+
+/**
+        JMenuBar menuBar = new JMenuBar();
+        this.setJMenuBar(menuBar);
+        JMenu viewMenu = new JMenu("View");
+        JMenuItem arrangeItem = new JMenuItem(new Action(("Arrange Buttons")));
+        menuBar.add(viewMenu);
+        viewMenu.add(arrangeItem);
+ **/
     }
 
+    /**
+     * Collect the prefs of this object into XML Element
+     * <ul>
+     * <li> Window prefs
+     * <li> Each button has id, text, lock state.
+     * </ul>
+     * @return the XML of this object.
+     */
     public Element getXml()
     {
         Element me = new Element("FunctionPanel");
@@ -154,6 +194,14 @@ public class FunctionPanel extends JInternalFrame
         return me;
     }
 
+    /**
+     * Set the preferences based on the XML Element.
+     * <ul>
+     * <li> Window prefs
+     * <li> Each button has id, text, lock state.
+     * </ul>
+     * @param e The Element for this object.
+     */
     public void setXml(Element e)
     {
         try
