@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: Comp_Motor.html,v 1.1 2003-12-20 04:28:09 jacobsen Exp $ -->
+<!-- $Id: Comp_Motor.html,v 1.2 2003-12-28 08:21:21 millerdl Exp $ -->
 <html>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -12,7 +12,7 @@
 <body>
 <a NAME="Top"></a>
 <h1>
-<img SRC="Pix/Logo.JPG" ALT="JMRI DecoderPro Logo" BORDER=10 height=140 width=185 vspace="15"></h1>
+<img SRC="Pix/Logo.gif" ALT="JMRI DecoderPro Logo" BORDER=10 height=117 width=163 vspace="15"></h1>
 
 
 <h1>DecoderPro Comprehensive Programmer</h1>
@@ -28,7 +28,7 @@
 the performance of the locomotive's motor for slow speed starts and smoother
 running.
 
-<h1><img SRC="Pix/Comp_03_Motor.JPG" ALT="Comprehensive Programmer - Motor Control Pane" BORDER=5 height=597 width=832></h1>
+<h1><img SRC="Pix/Comp_03_Motor.png" ALT="Comprehensive Programmer - Motor Control Pane" BORDER=5 height=469 width=712></h1>
 
 <p>
 The contents of this pane will vary significantly between different
@@ -49,6 +49,7 @@ differently. See your decoder documentation for the best ways to implement
 these variables, and be prepared to do a lot of experimenting! However
 they do it and whatever they call it, you should find it here.
 
+
 <div class="BOXIT">
 <h3>Some suggestions on using the basic motor controls and programming on the main.</h3
 <br>
@@ -58,8 +59,8 @@ Unless you want to get into some precision speed matching, you probably won't ne
 <p>
 Start with the <b>Kick start</b> value, and <b>Programming on the main</b> rather than the programming track. Set the locomotive to be programmed on throttle step 1. If it moves <span class="ACCENT">at all</span>, don't change the <b>Kick start</b> value. If it doesn't move, slowly step up the throttle until it does. Then, turn the throttle down. If the locomotive stops at the same setting it started, you won't need to set the <b>Kick start</b> value. However, if it continues to run at a slower speed than it would start, then increase the <b>Kick start</b> value until it will start and run at its slowest possible speed.
 <p>
-Now, if the locomotive isn't running at throttle step 1, increase the <b>Start Volts</b> value without changing the throttle until the locomotive <span class="ACCENT">barely</span> crawls... you can usually get this down to a speed of a tie a minute or so if you like! Remember, you are doing this in "<b>ops mode</b>" or "<b>service mode</b>", so you can make these changes while the locomotive is actually running. Don't forget to write the value changes to the decoder - they won't take effect unless you do. 
-<p> 
+Now, if the locomotive isn't running at throttle step 1, increase the <b>Start Volts</b> value without changing the throttle until the locomotive <span class="ACCENT">barely</span> crawls... you can usually get this down to a speed of a tie a minute or so if you like! Remember, you are doing this in "<b>ops mode</b>" or "<b>service mode</b>", so you can make these changes while the locomotive is actually running. Don't forget to write the value changes to the decoder - they won't take effect unless you do.
+<p>
 Now, set the top speed of the locomotive. Run the throttle up to full, and lower the <b>Max Volts</b> value until the locomotive runs at the maximum speed you want it to reach, but don't forget that adding a train will slow it down!
 <p>
 Finally, set the <b>Mid Volts</b> value about half-way between <b>Start Volts</b> and <b>Max Volts</b>. Setting it above or below the median of the <b>Start Volts</b> and <b>Max Volts</b> values will give you a crude, three point speed table.
@@ -75,10 +76,10 @@ Finally, set the <b>Mid Volts</b> value about half-way between <b>Start Volts</b
 <p><a href="index.html#Advanced Programmer">Back to Index</a>
 </div>
 
-This site is hosted by 
+This site is hosted by
 <br>
 <a href="http://sourceforge.net">
-<IMG src="Pix/sflogo.JPG" width="88" height="31" border="0" alt="SourceForge Logo" hspace="10" vspace="5" align="top" align="left"></a>
+<IMG src="Pix/sflogo.png" width="88" height="31" border="0" alt="SourceForge Logo" hspace="10" vspace="5" align="top" align="left"></a>
 <br><a href="http://sourceforge.net">sourceforge.net</a>.
 
 </body>
