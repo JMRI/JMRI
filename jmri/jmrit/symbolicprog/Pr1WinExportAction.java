@@ -15,7 +15,7 @@ import javax.swing.*;
  * it's not clear they will interoperate.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class Pr1WinExportAction  extends AbstractAction {
 
@@ -58,14 +58,14 @@ public class Pr1WinExportAction  extends AbstractAction {
 
                 str.println("[DecoderData]");
                 for (int i=1; i<=256; i++) {
-                    int lowCvIndex = (i-1)*4+1;
-                    CvValue cv1 = (CvValue)mModel.allCvVector().get(lowCvIndex);
+                    int lowCvIndex = (i-1)*4;
+                    CvValue cv1 = (CvValue)mModel.allCvVector().get(lowCvIndex+1);
                     int value1 = (cv1!=null) ? cv1.getValue() : 0;
-                    CvValue cv2 = (CvValue)mModel.allCvVector().get(lowCvIndex+1);
+                    CvValue cv2 = (CvValue)mModel.allCvVector().get(lowCvIndex+2);
                     int value2 = (cv2!=null) ? cv2.getValue() : 0;
-                    CvValue cv3 = (CvValue)mModel.allCvVector().get(lowCvIndex+2);
+                    CvValue cv3 = (CvValue)mModel.allCvVector().get(lowCvIndex+3);
                     int value3 = (cv3!=null) ? cv3.getValue() : 0;
-                    CvValue cv4 = (CvValue)mModel.allCvVector().get(lowCvIndex+3);
+                    CvValue cv4 = (CvValue)mModel.allCvVector().get(lowCvIndex);
                     int value4 = (cv4!=null) ? cv4.getValue() : 0;
 
                     str.println("CV"+i+"="+(value1+value2*256+value3*256*256+value4*256*256*256));
