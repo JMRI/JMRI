@@ -16,7 +16,7 @@ import java.awt.Font;
  * Java 1.1.8 system, or at least try to fake it.
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class FontUtil {
@@ -28,9 +28,10 @@ public class FontUtil {
     static public Font deriveFont(Font f, int style) {
         try {
             return f.deriveFont(style);
-        } catch (NoSuchMethodError e) {
+        } catch (Exception e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
+            // just carry on with original fonts
             return f;
-        }  // just carry on with original fonts
+        }
     }
 
     static public boolean canResize() {
@@ -40,7 +41,7 @@ public class FontUtil {
     static public Font deriveFont(Font f, float size) {
         try {
             return f.deriveFont(size);
-        } catch (NoSuchMethodError e) {
+        } catch (Exception e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
             return f; // just carry on with original fonts
         }
     }

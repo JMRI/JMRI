@@ -14,7 +14,7 @@ package jmri.util;
  * back to an explicit implementation when running on Java 1.1
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class StringUtil {
@@ -85,18 +85,37 @@ public class StringUtil {
     static public void sort(String[] values) {
         try {
             java.util.Arrays.sort(values);
-        } catch (NoSuchMethodError e) {
-            // no Java sort, so ugly bubble sort
-            for (int i=0; i<=values.length-2; i++) { // stop sort early to save time!
-                for (int j=values.length-2; j>=i; j--) {
-                    // check that the jth value is smaller than j+1th,
-                    // else swap
-                    if (0 < values[j].compareTo(values[j+1])) {
-                        // swap
-                        String temp = values[j];
-                        values[j] = values[j+1];
-                        values[j+1] = temp;
-                    }
+        } catch (Exception e1) {  // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
+            bubblesort(values);
+        }
+    }
+
+    static void bubblesort(String[] values) {
+        // no Java sort, so ugly bubble sort
+        for (int i=0; i<=values.length-2; i++) { // stop sort early to save time!
+            for (int j=values.length-2; j>=i; j--) {
+                // check that the jth value is smaller than j+1th,
+                // else swap
+                if (0 < values[j].compareTo(values[j+1])) {
+                    // swap
+                    String temp = values[j];
+                    values[j] = values[j+1];
+                    values[j+1] = temp;
+                }
+            }
+        }
+    }
+
+    static void bubblesort(Object[] values) {
+        for (int i=0; i<=values.length-2; i++) { // stop sort early to save time!
+            for (int j=values.length-2; j>=i; j--) {
+                // check that the jth value is smaller than j+1th,
+                // else swap
+                if (0 < ((String)values[j]).compareTo((String)values[j+1])) {
+                    // swap
+                    Object temp = values[j];
+                    values[j] = values[j+1];
+                    values[j+1] = temp;
                 }
             }
         }
@@ -111,20 +130,9 @@ public class StringUtil {
     static public void sort(Object[] values) {
         try {
             java.util.Arrays.sort(values);
-        } catch (NoSuchMethodError e) {
+        } catch (Exception e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
             // no Java sort, so ugly bubble sort
-            for (int i=0; i<=values.length-2; i++) { // stop sort early to save time!
-                for (int j=values.length-2; j>=i; j--) {
-                    // check that the jth value is smaller than j+1th,
-                    // else swap
-                    if (0 < ((String)values[j]).compareTo((String)values[j+1])) {
-                        // swap
-                        Object temp = values[j];
-                        values[j] = values[j+1];
-                        values[j+1] = temp;
-                    }
-                }
-            }
+            bubblesort(values);
         }
     }
 
