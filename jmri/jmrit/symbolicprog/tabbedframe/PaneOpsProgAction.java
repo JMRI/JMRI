@@ -33,7 +33,7 @@ import javax.swing.JPanel;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class PaneOpsProgAction 	extends AbstractAction {
 
@@ -97,8 +97,9 @@ public class PaneOpsProgAction 	extends AbstractAction {
                                                  programmer);
                 p.pack();
                 p.show();
-                f.setVisible(false);
-                f.dispose();
+
+                // f.setVisible(false);
+                // f.dispose();
             }
         };
 

@@ -33,7 +33,7 @@ import javax.swing.JSeparator;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  */
 public class PaneProgAction 			extends AbstractAction {
 
@@ -93,8 +93,9 @@ public class PaneProgAction 			extends AbstractAction {
                                                  modePane.getProgrammer());
                     p.pack();
                     p.show();
-                    f.setVisible(false);
-                    f.dispose();
+
+                    // f.setVisible(false);
+                    // f.dispose();
                 }
             };
 
