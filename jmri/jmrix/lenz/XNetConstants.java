@@ -5,6 +5,16 @@
  * @author		Paul Bender  
  * @version             $ Revision: 1.0 $
  *
+ * Variable prefix abreviation keys:
+ * ACC_ is for accessory messages
+ * BC_ is for broadcast messages
+ * CS_ is for command station messages 
+ * PROG_ is for programing related messages
+ * LOCO_ is for locomotive related commands
+ * OPS_MODE_ is for operations mode programing commands
+ *
+ * A few variables don't have a prefix.  The name should be self 
+ * explanitory, but a prefix may be added later.
  */
 
 package jmri.jmrix.lenz;
@@ -13,6 +23,107 @@ public final class XNetConstants {
 
 /* Commands send from the command station to the computer*/
 
+/* Generic Information Messages */
+public final static int CS_INFO = 0x61;
+
+/* byte 2 commands for Information messages */
+
+/* broadcast messages */
+public final static int BC_NORMAL_OPERATIONS = 0x01; /* broadcast -normal 
+						     operations resumed */
+public final static int BC_EVERYTHING_OFF    = 0x00; /* broadcast emergency 
+						     off (short circuit) */
+public final static int BC_SERVICE_MODE_ENTRY = 0x02;/* enter service mode */
+
+/* program mode messages */
+public final static int PROG_SHORT_CIRCUIT    = 0x12; /* program mode short */
+public final static int PROG_BYTE_NOT_FOUND   = 0x13; /* requested data 
+                                                         byte not found */
+public final static int PROG_CS_BUSY          = 0x1f; /* command station busy */
+public final static int PROG_CS_READY         = 0x11; /* command station ready */
+
+/* standard responses */
+public final static int CS_BUSY               = 0x81; /* command station busy */
+public final static int CS_NOT_SUPPORTED      = 0x82; /* command not supported */
+
+/* double header errors. These are for Xnet V1 and V2 */  
+public final static int CS_DH_ERROR_NON_OP     = 0x83; /* unit not operated by 
+                                                       controler */
+public final static int CS_DH_ERROR_IN_USE     = 0x84; /* one unit in DH 
+                                                       controled by another device */
+public final static int CS_DH_ERROR_ALREADY_DH = 0x85; /* One locomotive in 
+                                                       Double header is already
+						       in a Double Header */
+public final static int CS_DH_ERROR_NONZERO_SPD= 0x86; /* One or both units 
+						       has a non-zero 
+ 						       speed setting */
+
+/* Service mode and Informational responces from the command station */
+public final static int CS_SERVICE_MODE_RESPONCE = 0x63;
+
+/* service mode sub commands for byte 2 */
+public final static int CS_SERVICE_DIRECT_RESPONCE = 0x14;  /* direct mode 
+							    responce */
+public final static int CS_SERVICE_REG_PAGE_RESPONCE =0x10; /* Register and
+							  paged mode responce */
+public final static int CS_SOFTWARE_VERSION          =0x21; /*software version 
+							    is included with 
+							    the 0x63 group.*/
+
+/* informational request responce */
+public final static int CS_REQUEST_RESPONCE = 0x62;
+/* information request responce sub messages for byte 2 */
+/* CS_SOFTWARE_VERSION (0x21) is a valid byte 2 command for 0x62 */
+public final static int CS_STATUS_RESPONCE  = 0x22; /* command station status */
+
+
+/* Emergency Stop */
+public final static int BC_EMERGENCY_STOP = 0x81;
+/* byte 2 commands for Emergecy Stop messages */
+public final static int BC_EVERYTHING_STOP = 0x02;   /* broadcast of 
+						     emergency stop */
+
+/* Feedback - this is basically a bitmask.  The second byte Indicates 
+how many address byte/data byte pairs follow the command */
+public final static int BC_FEEDBACK        =0x40;
+
+/* Accessory information responce */
+public final static int ACC_INFO_RESPONCE = 0x20;
+
+/* Locomotive Information for V1 & V2 */
+public final static int LOCO_AVAILABLE_V1 = 0x83; /* for XNet V1 */
+public final static int LOCO_NOT_AVAILABLE_V1 = 0xA3; /* for XNet V1 */
+public final static int LOCO_AVAILABLE_V2 = 0x84; /* for XNet V2 */
+public final static int LOCO_NOT_AVAILABLE_V2 = 0xA4; /* for XNet V2 */
+
+/* Locomotive Information for V3 */
+public final static int LOCO_INFO_NORMAL_UNIT = 0xE4;
+public final static int LOCO_INFO_MUED_UNIT   = 0xE5;
+public final static int LOCO_INFO_MU_ADDRESS  = 0xE2;
+public final static int LOCO_INFO_DH_UNIT     = 0xE6;
+public final static int LOCO_INFO_RESPONSE    = 0xE3;
+
+/* responce types for LOCO_INFO_RESPONCE (byte two commands */
+public final static int LOCO_NOT_AVAILABE     = 0x40;
+public final static int LOCO_FUNCTION_STATUS  = 0x50;
+
+/* responces for stack/database searches */
+public final static int LOCO_SEARCH_RESPONCE_N  = 0x40; /*Normal Loco */
+public final static int LOCO_SEARCH_RESPONCE_DH = 0x41; /* in DH */
+public final static int LOCO_SEARCH_RESPONCE_MU_BASE = 0x42; /*MU base address */
+public final static int LOCO_SEARCH_RESPONCE_MU = 0x43; /* MUED Loco */
+public final static int LOCO_SEARCH_NO_RESULT   = 0x44; /* No address found */
+
+/* Double Header Info for XNet V1 and V2 */
+public final static int LOCO_DH_INFO_V1         = 0xC5; /* Byte 1 for XNET V1 */
+public final static int LOCO_DH_INFO_V2         = 0xC6; /* Byte 1 for XNET V2 */
+
+/* byte 2 DH information for either V1 or V2 */
+public final static int LOCO_DH_AVAILABLE       = 0x04;
+public final static int LOCO_DH_NOT_AVAILABLE   = 0x05;
+
+/* Expressnet Error Message */
+public final static int CS_XpressNet_Error      = 0xE1;
 
 /* Commands send from the computer to the command station */
 
@@ -123,7 +234,6 @@ followed by the 1 byte consist address, and the 2 byte consist
 address (Forward and Backward refer to search direction */
 public final static int LOCO_IN_MULTI_UNIT_REQ_FORWARD = 0x01;
 public final static int LOCO_IN_MULTI_UNIT_REQ_BACKWARD = 0x02;
-
 
 /* double headers for XNet V1 and V2 */
 public final static int LOCO_DOUBLEHEAD_V1 = 0xC3;
