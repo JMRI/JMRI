@@ -1,6 +1,6 @@
 <!-- Special build file for doing Java 1.1.8 compatibility tests -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.11 $ -->
+<!-- Revision $Revision: 1.12 $ -->
 
 <project name="JMRI" default="check" basedir=".">
 
@@ -155,7 +155,7 @@
            target="1.1" 
            fork="yes"
            executable="${Env.JDK1}"
-           debug="no" >
+           debug="yes" >
        <bootclasspath refid="compile1.1.8.path" />
        <classpath refid="project.class.path"    />
     </javac>
