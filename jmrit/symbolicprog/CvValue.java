@@ -22,7 +22,7 @@ import javax.swing.JTextField;
  *
  * Description:		Represents a single CV value
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: CvValue.java,v 1.10 2001-12-18 07:31:07 jacobsen Exp $
+ * @version			$Id: CvValue.java,v 1.11 2002-01-02 23:48:57 jacobsen Exp $
  */
 public class CvValue extends AbstractValue implements ProgListener {
 
@@ -223,15 +223,29 @@ public class CvValue extends AbstractValue implements ProgListener {
 				notifyBusyChange(oldBusy, _busy);
 			}
 		} else {
-			if (_status != null) _status.setText("Programmer returned error status "+retval);
-			setState(UNKNOWN);
-			if (log.isDebugEnabled()) log.debug("CV setting not busy on error reply");
-			_busy = false;
-			notifyBusyChange(oldBusy, _busy);
+			if (_status != null) _status.setText("Programmer error: "
+											+InstanceManager.programmerInstance().decodeErrorCode(retval));
+			
+			// delay to ensure that the message appears!
+			javax.swing.Timer timer = new javax.swing.Timer(1000, new java.awt.event.ActionListener() {
+						public void actionPerformed(java.awt.event.ActionEvent e) {
+							errorTimeout();
+						}
+					});
+			timer.setInitialDelay(1000);
+			timer.setRepeats(false);
+			timer.start();
 		}
 		if (log.isDebugEnabled()) log.debug("CV progOpReply end of handling CV "+_num);
 	}
 
+	void errorTimeout() {
+		setState(UNKNOWN);
+		if (log.isDebugEnabled()) log.debug("CV setting not busy on error reply");
+		_busy = false;
+		notifyBusyChange(true, _busy);
+	}
+	
 	// handle parameter notification
 	java.beans.PropertyChangeSupport prop = new java.beans.PropertyChangeSupport(this);	
 	public void removePropertyChangeListener(java.beans.PropertyChangeListener p) { prop.removePropertyChangeListener(p); }

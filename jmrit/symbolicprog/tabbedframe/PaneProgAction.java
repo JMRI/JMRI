@@ -96,10 +96,12 @@ public class PaneProgAction 			extends AbstractAction {
 			updateRoster.setToolTipText("disable because not yet implemented");
 			
 		// load primary frame
+		pane1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 		f.getContentPane().add(pane1);
 		f.getContentPane().add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
+		pane4.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 		f.getContentPane().add(pane4);
-		statusLabel.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
+		statusLabel.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 		f.getContentPane().add(statusLabel);
 		
 		f.pack();

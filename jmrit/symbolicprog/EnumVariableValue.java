@@ -21,7 +21,7 @@ import com.sun.java.util.collections.ArrayList;
  * Extends VariableValue to represent a enumerated variable.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: EnumVariableValue.java,v 1.12 2001-12-06 16:16:26 jacobsen Exp $
+ * @version			$Id: EnumVariableValue.java,v 1.13 2002-01-02 23:48:57 jacobsen Exp $
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
@@ -163,14 +163,14 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 	// member functions to control reading/writing the variables
 	public void read() {
  		setBusy(true);  // will be reset when value changes
-		super.setState(READ);
+		//super.setState(READ);
 		((CvValue)_cvVector.elementAt(getCvNum())).read(_status);
 	}
 	
  	public void write() {
  		if (getReadOnly()) log.error("unexpected write operation when readOnly is set");
  		setBusy(true);  // will be reset when value changes
- 		super.setState(STORED);
+ 		//super.setState(STORED);
  		((CvValue)_cvVector.elementAt(getCvNum())).write(_status);
  	}
 

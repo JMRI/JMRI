@@ -11,7 +11,7 @@ import com.sun.java.util.collections.List;
  * programming track.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: AbstractIdentify.java,v 1.3 2001-12-02 05:46:42 jacobsen Exp $
+ * @version			$Id: AbstractIdentify.java,v 1.4 2002-01-02 23:48:57 jacobsen Exp $
  * @see             jmri.jmrit.roster.IdentifyDecoder
  * @see             jmri.jmrit.roster.IdentifyLoco
  */
@@ -73,8 +73,12 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
 	public void programmingOpReply(int value, int status) {
 		// we abort if the status isn't normal
 		if (status != jmri.ProgListener.OK) {
-			log.warn("identification ending early due to non-OK status: "+status+" in step "+state);
+			log.warn("Stopping due to error: "
+					+jmri.InstanceManager.programmerInstance().decodeErrorCode(status));
+			statusUpdate("Stopping due to error: "
+					+jmri.InstanceManager.programmerInstance().decodeErrorCode(status));
 			state = 0;
+			error();
 			return;
 		}
 		// continuing for normal operation
@@ -117,6 +121,11 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
 				return;
 			}
 	}
+	
+	/**
+	 * Abstract routine to notify of errors
+	 */
+	abstract protected void error();
 	
 	/** To check if running now */
 	public boolean isRunning() { return state != 0; }

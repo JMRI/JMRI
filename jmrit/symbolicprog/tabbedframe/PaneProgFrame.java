@@ -88,6 +88,7 @@ public class PaneProgFrame extends javax.swing.JFrame
 		bottom.add(writeAllButton);
 		getContentPane().add(bottom);
 		
+		progStatus.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 		getContentPane().add(progStatus);
 	}
 	
@@ -370,11 +371,11 @@ public class PaneProgFrame extends javax.swing.JFrame
 		java.beans.PropertyChangeListener dccNews = new java.beans.PropertyChangeListener() {
 			public void propertyChange(java.beans.PropertyChangeEvent e) { updateDccAddress(); }
 		};
-		primaryAddr = variableModel.findVar("Primary Address");
-		if (primaryAddr==null) log.warn("DCC Address monitor didnt find a Primary Address variable");
+		primaryAddr = variableModel.findVar("Short Address");
+		if (primaryAddr==null) log.warn("DCC Address monitor didnt find a Short Address variable");
 		else primaryAddr.addPropertyChangeListener(dccNews);
-		extendAddr = variableModel.findVar("Extended Address");
-		if (extendAddr==null) log.warn("DCC Address monitor didnt find an Extended Address variable");
+		extendAddr = variableModel.findVar("Long Address");
+		if (extendAddr==null) log.warn("DCC Address monitor didnt find an Long Address variable");
 		else extendAddr.addPropertyChangeListener(dccNews);
 		addMode = variableModel.findVar("Address Format");
 		if (addMode==null) log.warn("DCC Address monitor didnt find an Address Format variable");
@@ -390,8 +391,8 @@ public class PaneProgFrame extends javax.swing.JFrame
 		
 	void updateDccAddress() {
 		if (log.isDebugEnabled()) 
-			log.debug("updateDccAddress: primary "+(primaryAddr==null?"<null>":primaryAddr.getValueString())+
-						" extended "+(extendAddr==null?"<null>":extendAddr.getValueString())+
+			log.debug("updateDccAddress: short "+(primaryAddr==null?"<null>":primaryAddr.getValueString())+
+						" long "+(extendAddr==null?"<null>":extendAddr.getValueString())+
 						" mode "+(addMode==null?"<null>":addMode.getValueString()));
 		String newAddr = null;
 		if (addMode == null || extendAddr == null || !addMode.getValueString().equals("1")) {

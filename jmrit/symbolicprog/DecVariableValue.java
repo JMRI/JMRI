@@ -175,14 +175,14 @@ public class DecVariableValue extends VariableValue
 
 	public void read() {
  		setBusy(true);  // will be reset when value changes
-		super.setState(READ);
+		//super.setState(READ);
 		((CvValue)_cvVector.elementAt(getCvNum())).read(_status);
 	}
 	
  	public void write() {
  		if (getReadOnly()) log.error("unexpected write operation when readOnly is set");
  		setBusy(true);  // will be reset when value changes
- 		super.setState(STORED);
+ 		//super.setState(STORED);
  		((CvValue)_cvVector.elementAt(getCvNum())).write(_status);
  	}
 

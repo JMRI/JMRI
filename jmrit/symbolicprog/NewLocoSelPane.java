@@ -22,7 +22,7 @@ import com.sun.java.util.collections.List;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: NewLocoSelPane.java,v 1.8 2001-12-06 16:16:26 jacobsen Exp $
+ * @version			$Id: NewLocoSelPane.java,v 1.9 2002-01-02 23:48:57 jacobsen Exp $
  */
 public class NewLocoSelPane extends javax.swing.JPanel  {
 			
@@ -96,6 +96,7 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
 			protected void message(String m) {
 				if (_statusLabel != null) _statusLabel.setText(m);
 			}
+			public void error() {}
 		};
 		id.start();
 	}

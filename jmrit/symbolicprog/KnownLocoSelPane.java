@@ -20,7 +20,7 @@ import com.sun.java.util.collections.List;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: KnownLocoSelPane.java,v 1.5 2001-12-02 05:46:42 jacobsen Exp $
+ * @version			$Id: KnownLocoSelPane.java,v 1.6 2002-01-02 23:48:57 jacobsen Exp $
  */
 public class KnownLocoSelPane extends javax.swing.JPanel  {
 		
@@ -81,6 +81,7 @@ public class KnownLocoSelPane extends javax.swing.JPanel  {
 			protected void message(String m) {
 				if (_statusLabel != null) _statusLabel.setText(m);
 			}
+			public void error() {}
 		};
 		id.start();
 	}

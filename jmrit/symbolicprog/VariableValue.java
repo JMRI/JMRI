@@ -97,9 +97,10 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
 		
 	// busy during read, write operations
 	public boolean isBusy() { return _busy; }
-	protected void setBusy(boolean busy) {
-		if (_busy != busy) prop.firePropertyChange("Busy", new Boolean(_busy), new Boolean(busy));
-		_busy = busy;
+	protected void setBusy(boolean newBusy) {
+		boolean oldBusy = _busy;
+		_busy = newBusy;
+		if (newBusy != oldBusy) prop.firePropertyChange("Busy", new Boolean(oldBusy), new Boolean(newBusy));
 	}
 	private boolean _busy = false;
 	

@@ -155,7 +155,7 @@ public class LongAddrVariableValue extends VariableValue
 	public void read() {
 		if (log.isDebugEnabled()) log.debug("longAddr read() invoked");
  		setBusy(true);  // will be reset when value changes
-		super.setState(READ);
+		//super.setState(READ);
 		if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in read()");
 		_progState = READING_FIRST;
 		if (log.isDebugEnabled()) log.debug("invoke CV read");		
@@ -166,7 +166,7 @@ public class LongAddrVariableValue extends VariableValue
 		if (log.isDebugEnabled()) log.debug("write() invoked");
  		if (getReadOnly()) log.error("unexpected write operation when readOnly is set");
  		setBusy(true);  // will be reset when value changes
- 		super.setState(STORED);
+ 		//super.setState(STORED);
 		if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in write()");
 		_progState = WRITING_FIRST;
 		if (log.isDebugEnabled()) log.debug("invoke CV write");		

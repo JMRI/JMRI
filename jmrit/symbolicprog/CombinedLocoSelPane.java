@@ -22,7 +22,7 @@ import com.sun.java.util.collections.List;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: CombinedLocoSelPane.java,v 1.5 2001-12-18 07:31:07 jacobsen Exp $
+ * @version			$Id: CombinedLocoSelPane.java,v 1.6 2002-01-02 23:48:57 jacobsen Exp $
  */
 public class CombinedLocoSelPane extends javax.swing.JPanel  {
 		
@@ -169,6 +169,10 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 			protected void message(String m) {
 				if (_statusLabel != null) _statusLabel.setText(m);
 			}
+			protected void error() {
+				// raise the button again
+				idloco.setSelected(false);
+			}
 		};
 		id.start();
 	}
@@ -184,6 +188,10 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 			}
 			protected void message(String m) {
 				if (_statusLabel != null) _statusLabel.setText(m);
+			}
+			protected void error() {
+				// raise the button again
+				iddecoder.setSelected(false);
 			}
 		};
 		id.start();
@@ -205,6 +213,7 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 			}
 		} else {
 			log.warn("Read address "+dccAddress+", but no such loco in roster");
+			_statusLabel.setText("Read address "+dccAddress+", but no such loco in roster");
 		}
 	}
 			
@@ -215,14 +224,13 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 		JComboBox temp = DecoderIndexFile.instance().matchingComboBox(null, null, Integer.toString(mfgID), Integer.toString(modelID), null);
 		if (log.isDebugEnabled()) log.debug("selectDecoder found "+temp.getItemCount()+" matches");
 		// install all those in the JComboBox in place of the longer, original list
-		System.out.println((String)temp.getItemAt(0));
-		System.out.println((String)temp.getItemAt(1));
 		if (temp.getItemCount() > 0) {
 			decoderBox.setModel(temp.getModel());
 			decoderBox.insertItemAt("<from locomotive settings>",0);
 			decoderBox.setSelectedIndex(1);
 		} else {
-			log.warn("Decoder says "+mfgID+" "+modelID+" decoder, but no such decoder defined");
+			log.warn("Decoder says "+mfgID+","+modelID+" but no such decoder defined");
+			_statusLabel.setText("Decoder says "+mfgID+","+modelID+" but no such decoder defined");
 		}
 	}
 

@@ -13,7 +13,7 @@ import com.sun.java.util.collections.List;
  * Provide a graphical representation of the DCC address, either long or short
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DccAddressPanel.java,v 1.7 2001-12-18 20:35:42 jacobsen Exp $
+ * @version			$Id: DccAddressPanel.java,v 1.8 2002-01-02 23:48:57 jacobsen Exp $
  */
 public class DccAddressPanel extends JPanel {
 
@@ -40,12 +40,12 @@ public class DccAddressPanel extends JPanel {
 		};
 
 		// connect to variables
-		primaryAddr = variableModel.findVar("Primary Address");
-		if (primaryAddr==null) log.error("DCC Address monitor did not find a Primary Address variable");
+		primaryAddr = variableModel.findVar("Short Address");
+		if (primaryAddr==null) log.error("DCC Address monitor did not find a Short Address variable");
 		else primaryAddr.addPropertyChangeListener(dccNews);
 
-		extendAddr = variableModel.findVar("Extended Address");
-		if (extendAddr==null) log.warn("DCC Address monitor did not find an Extended Address variable");
+		extendAddr = variableModel.findVar("Long Address");
+		if (extendAddr==null) log.warn("DCC Address monitor did not find an Long Address variable");
 		else extendAddr.addPropertyChangeListener(dccNews);
 
 		addMode = (EnumVariableValue)variableModel.findVar("Address Format");
@@ -129,8 +129,8 @@ public class DccAddressPanel extends JPanel {
 
 	void updateDccAddress() {
 		if (log.isDebugEnabled()) 
-			log.debug("updateDccAddress: primary "+(primaryAddr==null?"<null>":primaryAddr.getValueString())+
-						" extended "+(extendAddr==null?"<null>":extendAddr.getValueString())+
+			log.debug("updateDccAddress: short "+(primaryAddr==null?"<null>":primaryAddr.getValueString())+
+						" long "+(extendAddr==null?"<null>":extendAddr.getValueString())+
 						" mode "+(addMode==null?"<null>":addMode.getValueString()));
 		if (addMode == null || extendAddr == null || !addMode.getValueString().equals("1")) {
 			if (primaryAddr!=null) {
