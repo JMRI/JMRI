@@ -23,7 +23,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 abstract public class AbstractMRTrafficController {
 
@@ -158,7 +158,9 @@ abstract public class AbstractMRTrafficController {
             AbstractMRListener client = (AbstractMRListener) v.elementAt(i);
             if (log.isDebugEnabled()) log.debug("notify client: "+client);
             try {
-                forwardReply(client, r);
+                //skip dest for now, we'll send the message to there last.
+		if(dest!=client)
+                    forwardReply(client, r);
             }
             catch (Exception e)
                 {
