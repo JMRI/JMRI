@@ -12,7 +12,7 @@ import jmri.jmrit.display.*;
 /**
  * Frame providing access to a speedometer
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class SpeedometerFrame extends javax.swing.JFrame {
 
@@ -45,6 +45,10 @@ public class SpeedometerFrame extends javax.swing.JFrame {
     SensorIcon stopSensorIcon2;
 
     public SpeedometerFrame() {
+
+        startOnEntry.setSelected(true);
+        stopOnEntry1.setSelected(true);
+        stopOnEntry2.setSelected(true);
 
         startGroup.add(startOnEntry);
         startGroup.add(startOnExit);
@@ -159,8 +163,18 @@ public class SpeedometerFrame extends javax.swing.JFrame {
         startButton.setEnabled(false);
         startButton.setToolTipText("You can only configure this once");
         // set start sensor
-        Sensor s = InstanceManager.sensorManagerInstance().
-            newSensor(null, startSensor.getText());
+        Sensor s;
+        try {
+            s = InstanceManager.sensorManagerInstance().
+                 newSensor(null, startSensor.getText());
+            if (s==null) throw new Exception();
+        }
+        catch (Exception e) {
+            // couldn't locate the sensor, that's an error
+            log.error("Start sensor NFG: "+startSensor.getText());
+            startButton.setEnabled(true);
+            return;
+        }
         s.addPropertyChangeListener(new java.beans.PropertyChangeListener(){
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     SpeedometerFrame.log.debug("start sensor fired");
@@ -175,9 +189,19 @@ public class SpeedometerFrame extends javax.swing.JFrame {
                 }
             });
         startSensorIcon.setSensor(null, startSensor.getText());
+
         // set stop sensor1
-        s = InstanceManager.sensorManagerInstance().
-            newSensor(null, stopSensor1.getText());
+        try {
+            s = InstanceManager.sensorManagerInstance().
+                 newSensor(null, stopSensor1.getText());
+            if (s==null) throw new Exception();
+        }
+        catch (Exception e) {
+            // couldn't locate the sensor, that's an error
+            log.error("Stop 1 sensor NFG: "+stopSensor1.getText());
+            startButton.setEnabled(true);
+            return;
+        }
         s.addPropertyChangeListener(new java.beans.PropertyChangeListener(){
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     SpeedometerFrame.log.debug("stop sensor fired");
@@ -206,8 +230,17 @@ public class SpeedometerFrame extends javax.swing.JFrame {
         stopSensorIcon1.setSensor(null, stopSensor1.getText());
 
         // set stop sensor2
-        s = InstanceManager.sensorManagerInstance().
-            newSensor(null, stopSensor2.getText());
+        try {
+            s = InstanceManager.sensorManagerInstance().
+                 newSensor(null, stopSensor2.getText());
+            if (s==null) throw new Exception();
+        }
+        catch (Exception e) {
+            // couldn't locate the sensor, that's an error, but for the second
+            // one it's no big deal
+            log.error("Stop 2 sensor NFG: "+stopSensor2.getText());
+            return;
+        }
         s.addPropertyChangeListener(new java.beans.PropertyChangeListener(){
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     SpeedometerFrame.log.debug("stop sensor fired");
@@ -234,6 +267,7 @@ public class SpeedometerFrame extends javax.swing.JFrame {
                 }
             });
         stopSensorIcon2.setSensor(null, stopSensor2.getText());
+
     }
 
     // Close the window when the close box is clicked
