@@ -15,7 +15,7 @@ import jmri.Sensor;
  * see nextAiuPoll()
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SerialSensorManager extends jmri.AbstractSensorManager
                             implements SerialListener {
@@ -24,6 +24,7 @@ public class SerialSensorManager extends jmri.AbstractSensorManager
         super();
         for (int i=MINNODE; i<=MAXNODE; i++)
             nodeArray[i] = null;
+        _instance = this;
     }
 
     // ABC implementations
@@ -106,6 +107,13 @@ public class SerialSensorManager extends jmri.AbstractSensorManager
     public void reply(SerialReply r) {
         nodeArray[mNextIndex].markChanges(r);
     }
+
+    static public SerialSensorManager instance() {
+        if (_instance == null) _instance = new SerialSensorManager();
+        return _instance;
+    }
+
+    static SerialSensorManager _instance = null;
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialSensorManager.class.getName());
 }
