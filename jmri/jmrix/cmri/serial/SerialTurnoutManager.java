@@ -2,8 +2,7 @@
 
 package jmri.jmrix.cmri.serial;
 
-import jmri.JmriException;
-import jmri.Turnout;
+import jmri.*;
 
 /**
  * Implement turnout manager for CMRI serial systems
@@ -11,12 +10,13 @@ import jmri.Turnout;
  * System names are "CTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
-public class SerialTurnoutManager extends jmri.AbstractTurnoutManager {
+public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     public SerialTurnoutManager() {
         prefix = "CT";
+        _instance = this;
     }
 
     // to free resources when no longer used
@@ -55,6 +55,12 @@ public class SerialTurnoutManager extends jmri.AbstractTurnoutManager {
 
         return t;
     }
+
+    static public SerialTurnoutManager instance() {
+        if (_instance == null) _instance = new SerialTurnoutManager();
+        return _instance;
+    }
+    static SerialTurnoutManager _instance = null;
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTurnoutManager.class.getName());
 

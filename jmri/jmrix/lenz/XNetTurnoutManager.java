@@ -3,7 +3,7 @@
  *
  * Description:		Implement turnout manager
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 
 // System names are "XTnnn", where nnn is the turnout number without padding.
@@ -13,11 +13,20 @@ package jmri.jmrix.lenz;
 import jmri.JmriException;
 import jmri.Turnout;
 
+/**
+ * Implement turnout manager
+ * <P>
+ * System names are "XTnnn", where nnn is the turnout number without padding.
+ *
+ * @author			Bob Jacobsen Copyright (C) 2001
+ * @version			$Revision: 1.5 $
+ */
 public class XNetTurnoutManager extends jmri.AbstractTurnoutManager implements XNetListener {
 
 	// ctor has to register for XNet events
 	public XNetTurnoutManager() {
             prefix = "XT";
+            _instance = this;
             XNetTrafficController.instance().addXNetListener(~0, this);
 	}
 
@@ -72,6 +81,12 @@ public class XNetTurnoutManager extends jmri.AbstractTurnoutManager implements X
 			putBySystemName(t);
 		}
 	}
+
+    static public XNetTurnoutManager instance() {
+        if (_instance == null) _instance = new XNetTurnoutManager();
+        return _instance;
+    }
+    static XNetTurnoutManager _instance = null;
 
 	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetTurnoutManager.class.getName());
 

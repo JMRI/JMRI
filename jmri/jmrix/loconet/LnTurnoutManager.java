@@ -18,7 +18,7 @@ import jmri.Turnout;
  * <P>
  * Description:		Implement turnout manager for loconet
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.9 $
+ * @version         $Revision: 1.10 $
  */
 
 public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements LocoNetListener {
@@ -26,6 +26,7 @@ public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements Loc
     // ctor has to register for LocoNet events
     public LnTurnoutManager() {
         prefix = "LT";
+        _instance = this;
         if (LnTrafficController.instance() != null)
             LnTrafficController.instance().addLocoNetListener(~0, this);
         else
@@ -106,9 +107,13 @@ public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements Loc
         return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1);
     }
 
+    static public LnTurnoutManager instance() {
+        if (_instance == null) _instance = new LnTurnoutManager();
+        return _instance;
+    }
+    static LnTurnoutManager _instance = null;
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnTurnoutManager.class.getName());
-
 }
-
 
 /* @(#)LnTurnoutManager.java */

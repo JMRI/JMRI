@@ -11,12 +11,13 @@ import jmri.Turnout;
  * System names are "STnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SprogTurnoutManager extends jmri.AbstractTurnoutManager {
 
     public SprogTurnoutManager() {
         prefix = "ST";
+        _instance = this;
     }
 
     // to free resources when no longer used
@@ -56,9 +57,14 @@ public class SprogTurnoutManager extends jmri.AbstractTurnoutManager {
         return t;
     }
 
+    static public SprogTurnoutManager instance() {
+        if (_instance == null) _instance = new SprogTurnoutManager();
+        return _instance;
+    }
+    static SprogTurnoutManager _instance = null;
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogTurnoutManager.class.getName());
 
 }
-
 
 /* @(#)SprogTurnoutManager.java */
