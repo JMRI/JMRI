@@ -41,6 +41,9 @@ public class ComboCheckBox extends JCheckBox {
 				originalPropertyChanged(e);
 			}
 		});		
+
+		// set initial value
+		if (_box.getSelectedIndex() == 1) setSelected(true);
 	}
 
 	void thisActionPerformed(java.awt.event.ActionEvent e) {

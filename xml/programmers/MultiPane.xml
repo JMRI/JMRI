@@ -1,54 +1,58 @@
 <?xml version="1.0"?>
 <!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
 <programmer-config xmlns:programmer="http://jmri.sourceforge.net/xml/programmer">
-<!-- $Id: MultiPane.xml,v 1.11 2001-12-06 16:17:06 jacobsen Exp $ -->
+<!-- $Id: MultiPane.xml,v 1.12 2001-12-07 07:16:28 jacobsen Exp $ -->
+		<version author="" version="" lastUpdated=""/>
+
 <programmer>
 
 	<pane name="Basic">
 		<column>
-			<variable name="Short Address"/>
-			<variable name="Long Address"/>
-			<variable name="Address Format"/>
+			<display name="Short Address"/>
+			<display name="Long Address"/>
+			<display name="Address Format"/>
 
 			<dccaddress/>
 			
-			<variable name="Locomotive Direction" format="radiobuttons" layout="left"/>
-			<variable name="User Id #1"/>
-			<variable name="User Id #2"/>
-			<variable name="Speed Step Mode" layout="above"/>
-			<variable name="Power Source Conversion" format="radiobuttons" layout="left"/>
-			<variable name="Analog (DC) Operation" format="checkbox"/>
+			<display name="Locomotive Direction" format="radiobuttons" layout="left"/>
+			<display name="User Id #1"/>
+			<display name="User Id #2"/>
+			<display name="Speed Step Mode" layout="above"/>
+			<display name="Power Source Conversion" format="radiobuttons" layout="left"/>
+			<display name="Analog (DC) Operation" format="checkbox"/>
 		</column>
 	</pane>
 	
 	<pane name="Motor">
 		<column>
-			<variable name="Kick Start"/>
-			<variable name="Accel"/>
-			<variable name="Decel"/>
+			<display name="Kick Start"/>
+			<display name="Accel"/>
+			<display name="Decel"/>
 			<label label=" "/>
-			<variable name="Total PWM Period"/>
+			<display name="Total PWM Period"/>
 		</column>
 		<column>
-			<variable name="EMF Static Config"/>  <!-- Not an NMRA S&RP term -->
-			<variable name="EMF Dynamic Config"/>  <!-- Not an NMRA S&RP term -->
-			<variable name="EMF Droop Config"/>  <!-- Not an NMRA S&RP term -->
-			<variable name="EMF Feedback Cutout"/>
+			<display name="EMF Static Config"/>  <!-- Not an NMRA S&RP term -->
+			<display name="EMF Dynamic Config"/>  <!-- Not an NMRA S&RP term -->
+			<display name="EMF Droop Config"/>  <!-- Not an NMRA S&RP term -->
+			<display name="EMF Feedback Cutout"/>
 		</column>
 	</pane>
 	
 	<pane name="Speed Control">
 		<column>
-			<variable name="Speed Table Definition" format="offradiobutton" layout="above"/>
-			<variable name="Vstart"/>
-			<variable name="Vmid"/>
-			<variable name="Vhigh"/>
-			<variable name="Forward Trim"/>
-			<variable name="Reverse Trim"/>
+			<display name="Speed Table Definition" 
+					format="offradiobutton" layout="above" label=""/>
+			<display name="Vstart"/>
+			<display name="Vmid"/>
+			<display name="Vhigh"/>
+			<display name="Forward Trim"/>
+			<display name="Reverse Trim"/>
 		</column>
 		<column>
-			<variable name="Speed Table Definition" format="onradiobutton" layout="above"/>
-			<variable name="Speed Table"/>
+			<display name="Speed Table Definition" 
+					format="onradiobutton" layout="above" label=""/>
+			<display name="Speed Table"/>
 		</column>
 	</pane>
 
@@ -60,74 +64,82 @@
 
 	<pane name="Light FX">
 		<column>
-			<variable name="Function F0F effect generated"/>
-			<variable name="Function F0F behaviour"/>
-			<separator/>
-			<variable name="Function F0R effect generated"/>
-			<variable name="Function F0R behaviour"/>
-			<separator/>
-			<variable name="Function 1 effect generated"/>
-			<variable name="Function 1 behaviour"/>
-			<separator/>
-			<variable name="Function 2 effect generated"/>
-			<variable name="Function 2 behaviour"/>
-			<separator/>
-			<variable name="Function 3 effect generated"/>
-			<variable name="Function 3 behaviour"/>
-			<separator/>
-			<variable name="Function 4 effect generated"/>
-			<variable name="Function 4 behaviour"/>
-			<separator/>
-			<variable name="Function 5 effect generated"/>
-			<variable name="Function 5 behaviour"/>
-			<separator/>
-			<variable name="Function 6 effect generated"/>
-			<variable name="Function 6 behaviour"/>
-			<separator/>
-			<variable name="Function 7 effect generated"/>
-			<variable name="Function 7 behaviour"/>
-			<separator/>
-			<variable name="Function 8 effect generated"/>
-			<variable name="Function 8 behaviour"/>
-			<separator/>
+			<display name="Function F0F effect generated"/>
+			<display name="Function F0F behaviour"/>
+			<label label=" "/>
+			
+			<display name="Function F0R effect generated"/>
+			<display name="Function F0R behaviour"/>
+			<label label=" "/>
+			
+			<display name="Function 1 effect generated"/>
+			<display name="Function 1 behaviour"/>
+			<label label=" "/>
+			
+			<display name="Function 2 effect generated"/>
+			<display name="Function 2 behaviour"/>
+			<label label=" "/>
+			
+			<display name="Function 3 effect generated"/>
+			<display name="Function 3 behaviour"/>
+			<label label=" "/>
+			
+			<display name="Function 4 effect generated"/>
+			<display name="Function 4 behaviour"/>
+			<label label=" "/>
+			
+			<display name="Function 5 effect generated"/>
+			<display name="Function 5 behaviour"/>
+			<label label=" "/>
+			
+			<display name="Function 6 effect generated"/>
+			<display name="Function 6 behaviour"/>
+			<label label=" "/>
+			
+			<display name="Function 7 effect generated"/>
+			<display name="Function 7 behaviour"/>
+			<label label=" "/>
+			
+			<display name="Function 8 effect generated"/>
+			<display name="Function 8 behaviour"/>
 		</column>
 		<column>
-			<variable name="Analog Mode Function Status - F1" format="checkbox"/>			
-			<variable name="Analog Mode Function Status - F2" format="checkbox"/>			
-			<variable name="Analog Mode Function Status - F3" format="checkbox"/>			
-			<variable name="Analog Mode Function Status - F4" format="checkbox"/>			
-			<variable name="Analog Mode Function Status - F5" format="checkbox"/>			
-			<variable name="Analog Mode Function Status - F6" format="checkbox"/>			
-			<variable name="Analog Mode Function Status - F7" format="checkbox"/>			
-			<variable name="Analog Mode Function Status - F8" format="checkbox"/>			
+			<display name="Analog Mode Function Status - F1" format="checkbox"/>			
+			<display name="Analog Mode Function Status - F2" format="checkbox"/>			
+			<display name="Analog Mode Function Status - F3" format="checkbox"/>			
+			<display name="Analog Mode Function Status - F4" format="checkbox"/>			
+			<display name="Analog Mode Function Status - F5" format="checkbox"/>			
+			<display name="Analog Mode Function Status - F6" format="checkbox"/>			
+			<display name="Analog Mode Function Status - F7" format="checkbox"/>			
+			<display name="Analog Mode Function Status - F8" format="checkbox"/>			
 		</column>
 	</pane>
 
 	<pane name="Consist">
 		<column>
-			<variable name="Consist Address" />
-			<variable name="Consist Acceleration Adjustment" />
-			<variable name="Consist Acceleration Adjustment Sign" />
-			<variable name="Consist Deceleration Adjustment" />
-			<variable name="Consist Deceleration Adjustment Sign" />
+			<display name="Consist Address" />
+			<display name="Consist Acceleration Adjustment" />
+			<display name="Consist Acceleration Adjustment Sign" />
+			<display name="Consist Deceleration Adjustment" />
+			<display name="Consist Deceleration Adjustment Sign" />
 			<separator/>
 			<label label="Will decoder respond to function requests at consist address?"/>
-			<variable name="Consist Address Active For F1"  format="checkbox"/>
-			<variable name="Consist Address Active For F2"  format="checkbox"/>
-			<variable name="Consist Address Active For F3"  format="checkbox"/>
-			<variable name="Consist Address Active For F4"  format="checkbox"/>
-			<variable name="Consist Address Active For F5"  format="checkbox"/>
-			<variable name="Consist Address Active For F6"  format="checkbox"/>
-			<variable name="Consist Address Active For F7"  format="checkbox"/>
-			<variable name="Consist Address Active For F8"  format="checkbox"/>
-			<variable name="Consist Address Active For FL in Forward"  format="checkbox"/>
-			<variable name="Consist Address Active For FL in Reverse"  format="checkbox"/>
+			<display name="Consist Address Active For F1"  format="checkbox"/>
+			<display name="Consist Address Active For F2"  format="checkbox"/>
+			<display name="Consist Address Active For F3"  format="checkbox"/>
+			<display name="Consist Address Active For F4"  format="checkbox"/>
+			<display name="Consist Address Active For F5"  format="checkbox"/>
+			<display name="Consist Address Active For F6"  format="checkbox"/>
+			<display name="Consist Address Active For F7"  format="checkbox"/>
+			<display name="Consist Address Active For F8"  format="checkbox"/>
+			<display name="Consist Address Active For FL in Forward"  format="checkbox"/>
+			<display name="Consist Address Active For FL in Reverse"  format="checkbox"/>
 		</column>
 	</pane>
 	
 	<pane name="Communications">
 		<column>
-			<variable name="Advanced Ack" />
+			<display name="Advanced Ack" />
 		</column>
 	</pane>
 

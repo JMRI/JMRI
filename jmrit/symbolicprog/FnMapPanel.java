@@ -28,7 +28,7 @@ import com.sun.java.util.collections.List;
  * Although support for the "CV label column" is still here, its turned off now.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: FnMapPanel.java,v 1.3 2001-12-04 19:41:12 jacobsen Exp $
+ * @version			$Id: FnMapPanel.java,v 1.4 2001-12-07 07:12:15 jacobsen Exp $
  */
 public class FnMapPanel extends JPanel {
 	// columns
@@ -51,7 +51,7 @@ public class FnMapPanel extends JPanel {
 	VariableTableModel _varModel;
 	
 	public FnMapPanel(VariableTableModel v, List varsUsed) {
-		if (log.isInfoEnabled()) log.info("Function map starts");
+		if (log.isDebugEnabled()) log.debug("Function map starts");
 		_varModel = v;
 		// initialize the layout
 		gl = new GridBagLayout();
@@ -136,7 +136,7 @@ public class FnMapPanel extends JPanel {
 				}
 			}
 		}
-		if (log.isInfoEnabled()) log.info("Function map complete");
+		if (log.isDebugEnabled()) log.debug("Function map complete");
 	}
 	
 	final String[] fnList = new String[] { "FL(f)", "FL(r)", "F1", "F2", "F3", "F4", "F5", "F6", "F7", 

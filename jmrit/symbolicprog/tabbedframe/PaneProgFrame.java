@@ -101,7 +101,7 @@ public class PaneProgFrame extends javax.swing.JFrame
 			}
 		});
 		pack();
-		if (log.isInfoEnabled()) log.info("PaneProgFrame contructed with no args");
+		if (log.isDebugEnabled()) log.debug("PaneProgFrame contructed with no args");
 	}
   	
   	/**
@@ -131,6 +131,17 @@ public class PaneProgFrame extends javax.swing.JFrame
 		// and build the GUI
 		loadProgrammerFile(r);
 
+		// add extra panes from the decoder file
+		if (decoderRoot != null) {
+			List paneList = decoderRoot.getChildren("pane");
+			if (log.isDebugEnabled()) log.debug("will process "+paneList.size()+" pane definitions from decoder file");
+			for (int i=0; i<paneList.size(); i++) {
+				// load each pane
+				String pname = ((Element)(paneList.get(i))).getAttribute("name").getValue();
+				newPane( pname, ((Element)(paneList.get(i))));
+			}
+		}
+			
 		// ensure cleanup at end
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new java.awt.event.WindowAdapter() {
@@ -140,14 +151,14 @@ public class PaneProgFrame extends javax.swing.JFrame
 		});
 
 		pack();
-		if (log.isInfoEnabled()) log.info("PaneProgFrame \""+name+"\" constructed for file "+locoFile);
+		if (log.isDebugEnabled()) log.debug("PaneProgFrame \""+name+"\" constructed for file "+locoFile);
 	}
   	
 	Element lroot = null;
 	
   	protected void readLocoFile(String locoFile) {
   		if (locoFile == null) {
-  			log.info("loadLocoFile file invoked with null filename");
+  			log.debug("loadLocoFile file invoked with null filename");
   			return;
   		}
 		LocoFile lf = new LocoFile();  // used as a temporary
@@ -162,6 +173,8 @@ public class PaneProgFrame extends javax.swing.JFrame
 		LocoFile.loadCvModel(lroot.getChild("locomotive"), cvModel);
   	}
   	
+	Element decoderRoot = null;
+	
   	protected void loadDecoderFromLoco(RosterEntry r) {
   		// get a DecoderFile from the locomotive xml
 		String decoderModel = r.getDecoderModel();
@@ -184,12 +197,11 @@ public class PaneProgFrame extends javax.swing.JFrame
   			return;
   		}
 		
-		Element droot = null;
 		try {
-			droot = df.rootFromFile(df.fileLocation+File.separator+df.getFilename());
+			decoderRoot = df.rootFromFile(df.fileLocation+File.separator+df.getFilename());
 		} catch (Exception e) { log.error("Exception while loading decoder XML file: "+e); }
 		// load variables from decoder tree
-		df.loadVariableModel(droot.getChild("decoder"), variableModel);
+		df.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
   	}
   	
   	protected void loadProgrammerFile(RosterEntry r) {
@@ -204,7 +216,7 @@ public class PaneProgFrame extends javax.swing.JFrame
         }
 		String path = "file::"+apath;
 
-		if (log.isInfoEnabled()) log.info("readFile: "+"MultiPane.xml"+" path: "); 
+		if (log.isInfoEnabled()) log.info("readFile: "+"MultiPane.xml"); 
 		File pfile = new File("xml"+File.separator+"programmers"+File.separator+"MultiPane.xml");
 		SAXBuilder pbuilder = new SAXBuilder(true);  // argument controls validation, on for now
 		Document pdoc = null;

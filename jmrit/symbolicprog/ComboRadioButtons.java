@@ -56,7 +56,7 @@ public class ComboRadioButtons extends JPanel {
 			}
 		});		
 
-		// set initial state
+		// set initial value
 		((JRadioButton)(v.elementAt(_box.getSelectedIndex()))).setSelected(true);
 	}
 

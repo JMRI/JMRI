@@ -12,7 +12,7 @@ import com.sun.java.util.collections.List;
  * Provide a graphical representation of the DCC address, either long or short
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DccAddressPanel.java,v 1.2 2001-12-06 16:16:26 jacobsen Exp $
+ * @version			$Id: DccAddressPanel.java,v 1.3 2001-12-07 07:12:15 jacobsen Exp $
  */
 public class DccAddressPanel extends JPanel {
 
@@ -29,7 +29,7 @@ public class DccAddressPanel extends JPanel {
 		
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
-		add(new JLabel("DCC address: "));
+		add(new JLabel("DCC Address: "));
 		add(val);
 		
 		// arrange for the field to be updated when any of the variables change
@@ -56,7 +56,7 @@ public class DccAddressPanel extends JPanel {
 		});
 		
 		// show the selection
-		add(new JLabel("  extended addressing: "));
+		add(new JLabel("  Extended Addressing: "));
 		add(addMode.getRep("checkbox"));
 		
 		// update initial contents & color

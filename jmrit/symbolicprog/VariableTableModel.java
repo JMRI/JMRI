@@ -262,8 +262,64 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		// set to default value if specified (CV load will later override this)
 		if ( (a = e.getAttribute("default")) != null) {
 			String val = a.getValue();
-			if (log.isInfoEnabled()) log.info("Found default value: "+val+" for "+name);
+			if (log.isDebugEnabled()) log.debug("Found default value: "+val+" for "+name);
 			v.setIntValue(Integer.valueOf(val).intValue());
+		}
+		
+	}
+	
+	/**
+	 * Configure from a constant.  This is like setRow (which processes
+	 * a variable Element).
+	 */
+	public void setConstant(Element e) {
+		// get the values for the VariableValue ctor
+		String name = e.getAttribute("name").getValue();
+		if (log.isDebugEnabled()) log.debug("Starting to setConstant \""+name+"\"");
+		String stdname = ( e.getAttribute("stdName")!=null ?
+						 e.getAttribute("stdName").getValue() :
+						 null);
+		String comment = null;
+		if (e.getAttribute("comment") != null)
+			comment = e.getAttribute("comment").getValue();
+		String mask = null;
+
+		// intrinsically readOnly, so use just that branch
+		JButton bw = new JButton();
+		_writeButtons.addElement(bw);
+		
+		// config read button as a dummy - there's really nothing to read
+		JButton br = new JButton("Read");
+		_readButtons.addElement(br);
+
+		// no CV references are added here
+				
+		// have to handle various value types, see "snippet"
+		Attribute a;
+
+		// set to default value if specified (CV load will later override this)
+		int defaultVal = 0;
+		if ( (a = e.getAttribute("default")) != null) {
+			String val = a.getValue();
+			if (log.isDebugEnabled()) log.debug("Found default value: "+val+" for "+name);
+			defaultVal = Integer.valueOf(val).intValue();
+		}
+
+		// create the specific object
+		
+		ConstantValue v = new ConstantValue(name, comment, true, 
+								0, mask, defaultVal, defaultVal, null, _status, stdname);
+							
+		// record new variable, update state, hook up listeners
+		rowVector.addElement(v);
+		v.setState(VariableValue.FROMFILE);
+		v.addPropertyChangeListener(this);
+		
+		// set to default value if specified (CV load will later override this)
+		if ( (a = e.getAttribute("default")) != null) {
+			String val = a.getValue();
+			if (log.isDebugEnabled()) log.debug("Found default value: "+val+" for "+name);
+			v.setIntValue(defaultVal);
 		}
 		
 	}

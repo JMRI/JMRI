@@ -18,7 +18,7 @@ import org.jdom.Element;
  * decoder identification info _before_ the actual decoder file is read.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecoderFile.java,v 1.7 2001-12-04 19:41:07 jacobsen Exp $
+ * @version			$Id: DecoderFile.java,v 1.8 2001-12-07 07:12:12 jacobsen Exp $
  * @see jmri.jmrit.decoderdefn.DecoderIndexFile	
  */
 public class DecoderFile extends XmlFile {
@@ -79,7 +79,7 @@ public class DecoderFile extends XmlFile {
 		// find decoder id, assuming first decoder is fine for now (e.g. one per file)
 		Element decoderID = decoderElement.getChild("id");
 			
-		// start loading variables to table
+		// load variables to table
 		List varList = decoderElement.getChild("variables").getChildren("variable");
 		for (int i=0; i<varList.size(); i++) {
 			Element e = (Element)(varList.get(i));
@@ -100,6 +100,28 @@ public class DecoderFile extends XmlFile {
 			}
 			// load each row
 			variableModel.setRow(i, e);
+		}
+		// load constants to table
+		List consList = decoderElement.getChild("variables").getChildren("constant");
+		for (int i=0; i<consList.size(); i++) {
+			Element e = (Element)(consList.get(i));
+			try {
+				// if its associated with an inconsistent number of functions,
+				// skip creating it
+				if (getNumFunctions() >= 0 && e.getAttribute("minFn") != null
+					&& getNumFunctions() < Integer.valueOf(e.getAttribute("minFn").getValue()).intValue() )
+						continue;
+				// if its associated with an inconsistent number of outputs,
+				// skip creating it
+				if (getNumOutputs() >= 0 && e.getAttribute("minOut") != null
+					&& getNumOutputs() < Integer.valueOf(e.getAttribute("minOut").getValue()).intValue() )
+						continue;
+			} catch (Exception ex) {
+				log.warn("Problem parsing minFn or minOut in decoder file, variable "+e.getAttribute("name")+
+							" exception: "+ex);
+			}
+			// load each row
+			variableModel.setConstant(e);
 		}
 		variableModel.configDone();
 	}

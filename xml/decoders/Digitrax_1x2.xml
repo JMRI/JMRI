@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_1x2.xml,v 1.4 2001-12-04 19:44:37 jacobsen Exp $ -->
+<!-- $Id: Digitrax_1x2.xml,v 1.5 2001-12-07 07:16:28 jacobsen Exp $ -->
 <decoder-config xmlns:decoder="http://jmri.sourceforge.net/xml/decoder">
+		<version author="" version="" lastUpdated=""/>
+
 <decoder>
 	<id family="Digitrax 1x2" mfg="Digitrax" mfgID="129" defnVersion="242"
 				comment="Digitrax DH142, etc"></id>
@@ -10,17 +12,17 @@
 	                     register="yes" ops="yes"></programming>
 
 	<variables>
-		<variable name="Address" CV="1" stdName="Primary Address" default="03">
+		<variable name="Short Address" CV="1" stdName="Primary Address" default="03">
 			<decVal min="1" max="127"/>
 			</variable>
 		<variable name="Start voltage" CV="2" stdName="Vstart"
 						comment="A value of 255 corresponds to 100%">
 			<decVal></decVal>
 			</variable>
-		<variable name="Acceleration Rate" CV="3">
+		<variable name="Acceleration Rate" CV="3" stdName="Accel">
 			<decVal max="31"/>
 			</variable>
-		<variable name="Deceleration Rate" CV="4">
+		<variable name="Deceleration Rate" CV="4" stdName="Decel">
 			<decVal max="31"/>
 			</variable>
 		<variable name="Maximum Voltage" CV="5" stdName="Vhigh">
@@ -29,10 +31,10 @@
 		<variable name="Midpoint Voltage" CV="6" stdName="Vmid">
 			<decVal/>
 			</variable>
-		<variable name="Version ID" CV="7" readOnly="yes" stdName="Manufacturer Version No">
+		<variable name="Version ID" CV="7" readOnly="yes" stdName="Decoder Version">
 				<decVal/>
 			</variable>
-		<variable name="Manufacturer ID" CV="8" readOnly="yes">
+		<variable name="Manufacturer ID" CV="8" readOnly="yes" stdName="Manufacturer">
 				<decVal/>
 			</variable>
 		<variable name="F1 during DC operation" CV="13" mask="XXXXXXXV"
@@ -101,7 +103,8 @@
 				<enumChoice choice="reverse"/>
 				</enumVal>
 			</variable>
-		<variable name="Speed steps" CV="29" mask="XXXXXXVX" stdName="FL Location" default="1">
+		<variable name="Speed steps" CV="29" mask="XXXXXXVX" 
+				stdName="Speed Step Mode" default="1">
 			<enumVal>
 				<enumChoice choice="14"/>
 				<enumChoice choice="28/128"/>
@@ -114,11 +117,11 @@
 				<enumChoice choice="On"/>
 				</enumVal>
 			</variable>
-		<variable name="Speed Table" CV="29" mask="XXXVXXXX"
+		<variable name="Use Speed Table" CV="29" mask="XXXVXXXX"
 					stdName="Speed Table Definition">
 			<enumVal>
-				<enumChoice choice="Off"/>
-				<enumChoice choice="On"/>
+				<enumChoice choice="Use Vstart, Vmid, Vhigh"/>
+				<enumChoice choice="Use Table"/>
 				</enumVal>
 			</variable>
 		<variable name="Addressing Mode" CV="29" mask="XXVXXXXX"
@@ -453,14 +456,17 @@
 				</enumVal>
 			</variable>
 		<variable name="Static compensation for speed stabilization" CV="55" default="128"
+				stdName="EMF Static Config"
 				comment="Factory default is 128, no effect until droop (CV57) set">
 			<decVal/>
 			</variable>
 		<variable name="Dynamic compensation for speed stabilization" CV="56" default="48"
+				stdName="EMF Dynamic Config"
 				comment="Factory default is 48, no effect until droop (CV57) set">
 			<decVal/>
 			</variable>
 		<variable name="Solo operation droop compensation for speed stabilization" CV="57" mask="VVVVXXXX"
+				stdName="EMF Droop Config"
 				comment="0 is compenstation off, 15 is full on, typical value is 5">
 			<decVal max="15"/>
 			</variable>
@@ -478,24 +484,24 @@
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
-				</enumVal>
-			</variable>
+				</enumVal></variable>
+				
 		<variable name="Split field motor" CV="61" mask="XXXXXVXX">
 			<enumVal>
 				<enumChoice choice="Normal DC motor"/>
 				<enumChoice choice="Split field/AC motor"/>
-				</enumVal>
-			</variable>
-		<variable name="Directional headlight" CV="61" mask="XXXXXXXV">
+				</enumVal></variable>
+				
+		<variable name="Directional Headlight" CV="61" mask="XXXXXXXV">
 			<enumVal>
 				<enumChoice choice="Normal headlight operation"/>
 				<enumChoice choice="Reverse light lead controlled by F4"/>
-				</enumVal>
-			</variable>
+				</enumVal></variable>
+				
 		<variable name="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXXVXXXX">
 			<enumVal>
-				<enumChoice choice="enabled"/>
-				<enumChoice choice="disabled"/>
+				<enumChoice choice="Enabled"/>
+				<enumChoice choice="Disabled"/>
 				</enumVal>
 			</variable>
 		<variable name="Short-circuit protection" CV="61" mask="XVXXXXXX"
@@ -527,17 +533,40 @@
 			<decVal/>
 			</variable>
 		<variable name="User Private ID #1" CV="105"
-					stdName="User Identification #1">
+					stdName="User Id #1">
 			<decVal/>
 			</variable>
 		<variable name="User Private ID #2" CV="106"
-					stdName="User Identification #2">
+					stdName="User Id #2">
 			<decVal/>
 			</variable>
 		<variable name="Speed Table" CV="67">
 			<speedTableVal/>
 			</variable>
+			
+	<!-- Define the fixed Function-Output mapping -->
+	<constant name="FL(f) controls output 1" minOut="1" minFn="0" default="1" /> 
+	<constant name="FL(r) controls output 2" minOut="2" minFn="0" default="1" /> 
+	<constant name="F1 controls output 3" minOut="3" minFn="1" default="1" /> 
+	<constant name="F2 controls output 4" minOut="4" minFn="2" default="1" /> 
+
 	</variables>
-	
+
 </decoder>
+
+<pane name="Digitrax">
+	<column>
+		<display name="Advanced consist droop compensation for speed stabilization" />
+		<display name="Speed compensation" />
+		<display name="Transponding" />
+		<display name="Split field motor" />		
+		<display name="Directional Headlight" />
+		<display name="Vstart/Vmid/Vfull in 128 step mode" />
+		<display name="Short-circuit protection" />
+		<display name="Lamp keep-alive voltage" />
+		<display name="FX rate and keep alive adjust" />
+		<display name="Ditch light hold-over time" />
+	</column>
+</pane>
+
 </decoder-config>
