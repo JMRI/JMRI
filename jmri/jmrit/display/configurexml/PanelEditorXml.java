@@ -16,7 +16,7 @@ import org.jdom.*;
  * Handle configuration for {@link PanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class PanelEditorXml implements XmlAdapter {
 
@@ -91,16 +91,10 @@ public class PanelEditorXml implements XmlAdapter {
         if (element.getAttribute("name")!=null)
             name = element.getAttribute("name").getValue();
         // create the objects
-        JFrame targetFrame = new JFrame(name);
-        JLayeredPane targetPanel = new JLayeredPane();
-        targetFrame.setSize(width, height);
-        targetFrame.setLocation(x,y);
-
-        targetFrame.getContentPane().add(targetPanel);
-        targetPanel.setLayout(null);
         PanelEditor panel = new PanelEditor();
-        panel.setFrame(targetFrame);
-        panel.setTarget(targetPanel);
+        panel.makeFrame(name, width, height);
+        panel.getFrame().setLocation(x,y);
+
         panel.setTitle();
 
         // load the contents
@@ -137,10 +131,11 @@ public class PanelEditorXml implements XmlAdapter {
             value = false;
         panel.setAllControlling(value);
 
-        // display the results, with the editorin back
+        // display the results, with the editor in back
         panel.pack();
         panel.show();
-        targetFrame.show();
+        panel.getFrame().pack();
+        panel.getFrame().show();
 
         // register the resulting panel for later configuration
         InstanceManager.configureManagerInstance().registerUser(panel);

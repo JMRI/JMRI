@@ -4,7 +4,7 @@ import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;
-import java.awt.FlowLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -43,7 +43,7 @@ import com.sun.java.util.collections.ArrayList;
  * consistent via the {#setTitle} method.
  *
  * @author Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
- * @version $Revision: 1.39 $
+ * @version $Revision: 1.40 $
  */
 
 public class PanelEditor extends JFrame {
@@ -614,6 +614,58 @@ public class PanelEditor extends JFrame {
     }
     public boolean isControlling() {
         return controllingBox.isSelected();
+    }
+
+    /**
+     * Create sequence of panels, etc, for layout:
+     * JFrame contains its ContentPane
+     *    which contains a JPanel with BoxLayout (p1)
+     *       which contains a JScollPane (js)
+     *            which contains the targetPane
+     *
+     */
+    public JFrame makeFrame(String name, int width, int height) {
+        JFrame targetFrame = new JFrame(name);
+
+        JLayeredPane targetPanel = new JLayeredPane(){
+            // provide size services, even though a null layout manager is used
+            public void setSize(int h, int w) {
+                this.h = h;
+                this.w = w;
+                super.setSize(h, w);
+            }
+            int h = 100;
+            int w = 100;
+            public Dimension getPreferredSize() {
+                return new Dimension(h,w);
+            }
+            public Dimension getMinimumSize() {
+                return getPreferredSize();
+            }
+            public Dimension getMaximumSize() {
+                return getPreferredSize();
+            }
+        };
+        targetPanel.setLayout(null);
+
+        JScrollPane js = new JScrollPane(targetPanel);
+        js.setHorizontalScrollBarPolicy(js.HORIZONTAL_SCROLLBAR_ALWAYS);
+        js.setVerticalScrollBarPolicy(js.VERTICAL_SCROLLBAR_ALWAYS);
+
+        JPanel p1 = new JPanel();
+        p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
+        p1.add(js);
+
+        targetFrame.getContentPane().add(p1);
+        targetFrame.getContentPane().setLayout(new BoxLayout(targetFrame.getContentPane(),BoxLayout.Y_AXIS));
+        this.setFrame(targetFrame);
+        this.setTarget(targetPanel);
+
+        targetPanel.setSize(width, height);
+        targetPanel.revalidate();
+
+        return targetFrame;
+
     }
 
     // initialize logging
