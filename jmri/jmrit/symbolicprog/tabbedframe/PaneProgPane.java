@@ -23,7 +23,7 @@ import org.jdom.*;
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
@@ -815,7 +815,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
     public void printPane(HardcopyWriter w) {
         // if pane is empty, don't print anything
-        if (varList.size() == 0) return;
+        if (varList.size() == 0 && cvList.size() == 0) return;
 
         try {
             // start with pane name in bold
