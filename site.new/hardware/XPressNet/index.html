@@ -69,19 +69,38 @@ JMRI: XPressNet
 	JMRI Hardware Guide: XPressNet
 </H1>
 
+<H2>Overview</H2>
+    <p>XPressNet is the Command Bus used by <a 
+	href="http://www.atlasrr.com">Atlas</a>,<a 
+	href="http://www.lenz.com">Lenz</a>,<a 
+	href="http://www.ztccontrols.com">ZTC Controls</a>, and <a 
+	href="http://www.roco.co.at">Roco</a>.
+    It was developed by Lenz.  The XPressNet specification (available from
+    the Lenz website) specifies the electrical communications standards and
+    command set needed for devices to communicate with the command station.
+    While the command stations support the same commands over the XPressNet
+    connection, they do not all use the same connectors.  It may be necessary
+    to build an adapter to plug a device into a command station from another
+    manufacturer.  </p> 
+
 <H2>Supported Hardware</H2>
 
-<p>The various DCC manufacturers that use XPressNet in their products all
-implement varying degrees of functionality, ranging from "supports all
-features" to "bare bones minimal".  Unfortunatly, this restricts the
-features you can access via JMRI - if the hardware doesn't support it,
-it isn't there to be used by JMRI.</p>
+<H3>Command Stations</H3>
 
-<p>In general, the features that JMRI cares about can be grouped into three
+<p>The XPressNet protocol allows the DCC manufacturers that use it to 
+select what functionality they wish to provide in thier command stations.
+This functionality ranges from "supports all features" to "bare bones 
+minimal".  Unfortunatly, this restricts the features you can access via 
+JMRI - if the hardware doesn't support it, it isn't there to be used by 
+JMRI.</p>
+
+<p>In general, the features that JMRI cares about can be grouped into four
 areas - operating locomotives and turnouts on the layout, programming decoders
 on a programming track or in ops mode, and getting feedback from the layout
 (the state of turnouts, ops-mode feedback, etc).  The following table tries to
-show what systems support these features.</p>
+show what systems support these features.  System specific limitations 
+are also expressed in the <a href=#Limitations>Limitations</a> section of 
+this page</p>
 
 <div class=list>
     <dl>
@@ -92,13 +111,9 @@ show what systems support these features.</p>
 	    <span class=supported>Feedback</span>
 	</H4>
 	<ul>
-	    <li> Lenz LZ100 + LH90 or LH100 (software version 3.x)</li>
-	    <li> Lenz LZV100 + LH90 or LH100 (software version 3.x)</li>
+	    <li> Lenz LZ100 based systems (software version 3.x)</li>
+	    <li> Lenz LZV100 based systems (software version 3.x)</li>
 	</ul>
-	<p>We have a pretty good handle on what instructions each Lenz Command
-	station should support. If you find that you cannot perform a function you
-	think you should be able to using a Lenz system and the LI100 or LI101F,
-	Please let us know.</p>
     </dd>
     <dt class=left>Partial</dt>
     <dd>
@@ -135,22 +150,9 @@ show what systems support these features.</p>
     </dl>
 </div>
 
-<H2>Overview</H2>
-    <p>XPressNet is the Command Bus used by <a 
-	href="http://www.atlasrr.com">Atlas</a>,<a 
-	href="http://www.lenz.com">Lenz</a>,<a 
-	href="http://www.ztccontrols.com">ZTC Controls</a>, and <a 
-	href="http://www.roco.co.at">Roco</a>.</p>
-	
-    <p> It was developed by Lenz.  The XPressNet specification (available from
-    the Lenz website) specifies the electrical communications standards and
-    command set needed for devices to communicate with the command station.
-    While the command stations support the same commands over the XPressNet
-    connection, they do not all use the same connectors.  It may be necessary
-    to build an adapter to plug a device into a command station from another
-    manufacturer.  </p> 
+<H3>Computer Interfaces</H3>
 
-    <p>There are Three computer interfaces that JMRI has been tested with, and
+    <p>There are four computer interfaces that JMRI has been tested with, and
     developed for
     	<ul>
 	<li>The Lenz LI100 is Lenz's original computer interface.  It is
@@ -165,7 +167,7 @@ show what systems support these features.</p>
 	Windows only.  We have included a configuration tool with JMRI that
 	will allow users of other operating systems to configure thier LI101 as
 	well.  The LI101 supports serial port speeds of 19,200, 38,400, 57,600,
-	and 115,200 baud.  The factory default is 19,200 baud</p>
+	and 115,200 baud.  The factory default is 19,200 baud
 	<li>In addition to the Lenz purpose built computer interfaces, we have
 	also included support for using an XPressNet Phone Adapter (XPA) as an
 	interface to the an XPressNet based DCC system.  This interface is
@@ -175,6 +177,7 @@ show what systems support these features.</p>
 	full fledged interface.
 	</ul></p>
 
+<a name=Limitations>
 <H2>Limitations</H2>
 <div class=list>
     <dl>
@@ -187,44 +190,77 @@ show what systems support these features.</p>
 
 	<dt class=left>Atlas</dt>
 	<dd>
-	<p>The Atlas Commander supports X-Bus - AKA XPressNet - a high-speed
-	digital network based upon the industry standard RS-485
-	protocol.  The Atlas Commander uses XpressNET to communicate
-	between its high-speed components such as the HandCommand.</p>
+	<p>The Atlas Commander provides support only for operation of 
+	equipment on a layout (running trains and throwing switches)
+	from JMRI.</p>
 
-	<p>Unfortunately, the Atlas Commander will not accept programming
-	commands via its XPressNet connection. This means that DecoderPro
-	can't program decoders via a LI100 and Atlas Commander.</p>
+	<p>If you have an Atlas Commander, and would like to use it 
+        to control your layout from the computer, an XPA and Hayes 
+        Compatible Modem may be a more cost effective solution than the 
+	LI100,LI100F, or LI101F</p>
 
-	<p>There doesn't appear to be anything we can do about this as it
-	is a limitation of the Atlas hardware.</p>
-
-	<p>You can still operate your layout via the JMRI libraries with an
-	Atlas Commander and LI100, but it's not a very cost-effective
-	approach.  See below for a lower-cost alternative.</p>
 	</dd>
 
 	<dt class=left>Lenz</dt>
 	<dd>
-	<p>The situation with connecting to a Lenz system is somewhat confusing.
-	The Lenz LI100 interface will allow your computer to talk to XPressNet,
-	but not all Lenz systems can use XPressNet communications for all
-	functions.  </p>
+	<p>We have a pretty good handle on what instructions each Lenz Command
+	station should support. If you find that you cannot perform a function you
+	think you should be able to using a Lenz system and the LI100 or LI101F,
+	Please let us know.</p>
 
-	<p>As far as we know only the LZ-100 in combination with the LH-90 or
-	LH-100 allows programming from the XPressNet. Note that the LZ-100 is
-	also integrated in the sets 01, 90 and 100.</p>
+	<p>LZ100 and LZV100 based systems support the full range of JMRI 
+        functionality.  The LZ100 is the command station used in the 
+	Set-01.  The LZV100 is the command station used in the Set-90,
+	Set-100, and Set-LI.</p>
 
-	<p>On the other hand, the LH200 handheld from Set 02 can make an
-	XPressNet connection with a computer via an LI100, but will not accept
-	programming instructions over that connection. This means that
-	DecoderPro cannot program decoders through a Lenz Set 02.</p>
+	<p>The LH200 provides support only for operating equipment on a layout 
+	(running trains and throwing switches) from JMRI.  The LH200 is the 
+	command station used in the Set-02</p>
 
-	<p>We don't actually know what the restrictions of the various Lenz
-	systems are with respect to XPressNet and the LI100. You should contact
-	Lenz or your local dealer for information before investing in an LI100.
-	</p>
+	<p>The Compact is the same device as the Atlas Commander, and 
+	has the same restrictions as the commander.  The Compact is not 
+	available in North America</p>
+
+	<p>If you have either an LH200 or a Compact, and wish to add 
+	computer control to your layout, an XPA and Hayes Compatible 
+	Modem may be a more cost effective solution than the LI100, 
+	LI100F, or LI101F</p>
+	
 	</dd>
+	<dt class=left>Roco</dt>
+	<dd>
+	<p>The Roco LocoMaus 2 (Roco Part number 10760) has been shown to 
+	support operating equipment on a layout (running trains and throwing 
+	switches) as well as programming locomotives on the programming 
+	track.</p>  
+	<p>It is not known at this point in time if the LocoMaus 2 
+	supports Operations Mode Programming.</p>
+
+	<p>The LocoMaus 2 does not support feedback.</p>
+	</dd>
+
+	<dt class=left>ZTC</dt>
+	<dd>
+	<p>The ZTC Controls ZTC511 and ZTC521 (both with XPressNet V3.0 
+	software) have yet to be tested, so the full extent of what is 
+	supported is not known at this time.</p>
+
+	<p>The onboard serial interface of the ZTC511 is not supported at 
+	this point in time.</p>
+
+	<p>You can use any of the interfaces listed above to connect to a 
+	ZTC system that supports the XPressNet V3.0 protocol.</p>
+
+	</dd>
+    	<dt class=left>XPA and Hayes Compatible Modem</dt>
+	<dd>
+	<p>If you choose to use an XPA and a Hayes Compatible Modem to 
+	control your XPressNet based system, you will be limited to 
+	control of locomotives and accessory decoders, regardless of what 
+	features your system supports if it is connected via an LI100, 
+	LI100F, or LI101F</p>
+	</dd>
+
     </dl>
 </div>
 
@@ -270,7 +306,7 @@ show what systems support these features.</p>
 </ol>
 
 
-<H2>Connectiong to an XPressNEt based DCC System using the XPA and a modem</H2>
+<H2>Connectiong to an XPressNet based DCC System using the XPA and a modem</H2>
 
 <p>We have developed an alternative method for connecting to an XPressNet based
    system which should prove to be more cost effective on XPressNet based
@@ -311,20 +347,25 @@ show what systems support these features.</p>
     <li>Restart the program. You should be up and running.
 </ol>
 
-<H3>Documentation</H3>
+<H2>Documentation</H2>
 <ul>
-    <li><a href="http://www.atlasrr.com/dcc/CommanderManual1.pdf">Atlas Commander Manual</a>
-        (pdf file; 363 kb)</li>
+    <li><H3>Off Site Documentation</H3>
+	<ul>
+    		<li><a href="http://www.atlasrr.com/dcc/CommanderManual1.pdf">Atlas Commander Manual</a>
+                (pdf file; 363 kb)</li>
 
-    <li><a href="http://www.atlasrr.com/dcc/Atlas_Commander_Consisting.doc">Atlas
-        Commander Consisting Instructions</a> (not included in the above manual; Word doc.)</li>
+    		<li><a href="http://www.atlasrr.com/dcc/Atlas_Commander_Consisting.doc">Atlas
+        	Commander Consisting Instructions</a> (not included in the above manual; Word doc.)</li>
 
-    <li><a href="http://www.lenz.com/manuals/index.htm">Lenz Product Manuals</a></li>
+    		<li><a href="http://www.lenz.com/manuals/index.htm">Lenz Product Manuals</a></li>
 
-    <li><a href="http://www.lenz.com/techinfo/index.htm">Lenz XpressNet Documentation</a></li>
-
-    <li><a href=XNetAddressing.html>Lenz Feedback bus Addresses</a> 
-    <li><a href=CreateXNetLogFile.html>How To Create an XPressNet Log file</a>
+    		<li><a href="http://www.lenz.com/techinfo/index.htm">Lenz XpressNet Documentation</a></li>
+	</ul></li><br>
+    <li><H3>JMRI Documentation</H3>
+	<ul>
+    		<li><a href=XNetAddressing.html>Lenz Feedback bus Addresses</a> 
+    		<li><a href=CreateXNetLogFile.html>How To Create an XPressNet Log file</a>
+	</ul>
 </ul>
 
     <h2>XPressNet Specific Tools</h2>
