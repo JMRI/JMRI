@@ -10,20 +10,22 @@ import com.sun.java.util.collections.List;
 
 /**
  * Abstract base implementation of the SensorManager interface
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @author			Bob Jacobsen Copyright (C) 2001, 2003
+ * @version			$Revision: 1.7 $
  */
-public abstract class AbstractSensorManager implements SensorManager{
+public abstract class AbstractSensorManager extends AbstractManager implements SensorManager {
 
     // abstract methods to be provided by subclasses
     public abstract Sensor newSensor(String systemName, String userName);
 
     // abstract methods to be extended by subclasses
     // to free resources when no longer used
-    public void dispose() throws JmriException {
+    public void dispose() {
         _tsys.clear();
         _tuser.clear();
     }
+
+    public char typeLetter() { return 'S'; }
 
     // implemented methods
     protected Hashtable _tsys = new Hashtable();   // stores known Sensor instances by system name
