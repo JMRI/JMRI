@@ -29,7 +29,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class PM4Frame extends JFrame implements LocoNetListener {
 
@@ -260,8 +260,8 @@ public class PM4Frame extends JFrame implements LocoNetListener {
 
     void setDisplaySpeed(int offset, JComboBox box) {
         int index = 0;
-        if (!opsw[index+2]) index++;
-        if (opsw[index]) index+=2;
+        if (!opsw[offset+2]) index++;
+        if (opsw[offset]) index+=2;
         box.setSelectedIndex(index);
     }
 
