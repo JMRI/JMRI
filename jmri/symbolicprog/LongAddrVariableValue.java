@@ -59,7 +59,6 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 		// no masked combining of old value required, as this fills the two CVs
 		int newCvH = newVal/128;
 		int newCvL = newVal - (newCvH*128);
-		System.out.println(" new values req, l, h: "+newVal+" "+newCvL+" "+newCvH);
 		cvl.setValue(newCvL);
 		cvh.setValue(newCvH);
 	}
@@ -129,12 +128,10 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 			}
 		}
 		else if (e.getPropertyName().equals("State")) {
-			System.out.println("state event");
 			CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
 			setState(cv.getState());
 		}
 		else if (e.getPropertyName().equals("Value")) {
-			System.out.println("Value event");
 			setBusy(false);
 			// update value of Variable
 			CvValue cvl = (CvValue)_cvVector.elementAt(getCvNum());
@@ -148,7 +145,7 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 				case IDLE:  // no, just a CV update
 						return;
 				case READING_FIRST:  // yes, now read second
-						 setBusy(true);  // will be reset when value changes
+						setBusy(true);  // will be reset when value changes
 						super.setState(READ);
 						_progState = READING_SECOND;
 						((CvValue)_cvVector.elementAt(getCvNum()+1)).read();
