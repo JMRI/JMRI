@@ -128,7 +128,15 @@ do that.
 Development is currently done using Borland's JBuilder.  The Personal Edition
 is available for free download at 
 <A HREF="http://www.borland.com/jbuilder/personal/">http://www.borland.com/jbuilder/personal/</A>.
-Once you have it installed, start it up once to go through the
+<P>
+You may have trouble running an existing copy of JMRI or DecoderPro after installing
+JBuilder.
+The JBuilder install adds another version of Java and sets it as current.  When a 
+Java program starts, e.g. DecoderPro, it looks for it's libraries in the current Java 
+install.  So the files (from the original DecoderPro install) are still there, but it's looking 
+in a different place now, and can't run.  Reinstalling DecoderPro will put the libraries 
+in the current Java install, and should fix this.Once you have it installed, start it up 
+once to go through the
 licensing procedure. 
 The steps to get a working project are then:
 <UL>
