@@ -1,9 +1,9 @@
-/** 
+/**
  * NceProgrammerTest.java
  *
  * Description:	    JUnit tests for the NceProgrammer class
  * @author			Bob Jacobsen
- * @version			
+ * @version
  */
 
 package jmri.jmrix.nce;
@@ -21,67 +21,108 @@ import jmri.jmrix.nce.NceProgrammer;
 
 public class NceProgrammerTest extends TestCase {
 
-	public void testWriteSequence() throws JmriException {
+	public void testWriteCvSequence() throws JmriException {
 		// infrastructure objects
 		NceInterfaceScaffold t = new NceInterfaceScaffold();
 		NceListenerScaffold l = new NceListenerScaffold();
-		
+
 		NceProgrammer p = new NceProgrammer();
-		
+
 		// and do the write
 		p.writeCV(10, 20, l);
 		// check "prog mode" message sent
 		Assert.assertEquals("mode message sent", 1, t.outbound.size());
-		Assert.assertEquals("mode message contents", "M", 
+		Assert.assertEquals("mode message contents", "M",
 			((NceMessage)(t.outbound.elementAt(0))).toString());
 		// reply from programmer arrives
 		NceReply r = new NceReply("**** PROGRAMMING MODE - MAIN TRACK NOW DISCONNECTED ****");
 		t.sendTestReply(r);
-		Assert.assertEquals(" programmer listener not invoked", 0, rcvdInvoked);		
+		Assert.assertEquals(" programmer listener not invoked", 0, rcvdInvoked);
 
 		// check write message sent
 		Assert.assertEquals("write message sent", 2, t.outbound.size());
-		Assert.assertEquals("write message contents", "P010 020", 
+		Assert.assertEquals("write message contents", "P010 020",
 			((NceMessage)(t.outbound.elementAt(1))).toString());
 		// reply from programmer arrives
 		r = new NceReply();
 		t.sendTestReply(r);
-		Assert.assertEquals(" programmer listener not invoked", 0, rcvdInvoked);		
-		
+		Assert.assertEquals(" programmer listener not invoked", 0, rcvdInvoked);
+
 		// check "leave prog mode" message sent
 		Assert.assertEquals("normal mode message sent", 3, t.outbound.size());
-		Assert.assertEquals("normal mode message contents", "X", 
+		Assert.assertEquals("normal mode message contents", "X",
 			((NceMessage)(t.outbound.elementAt(2))).toString());
 		// reply from programmer arrives
 		r = new NceReply();
 		t.sendTestReply(r);
-		Assert.assertEquals(" listener invoked", 1, rcvdInvoked);	
-		Assert.assertEquals(" got data value back", 20, rcvdValue);	
+		Assert.assertEquals(" listener invoked", 1, rcvdInvoked);
+		Assert.assertEquals(" got data value back", 20, rcvdValue);
 	}
-	
-	public void testReadSequence() throws JmriException {
-		log.error("expect next message: ERROR - Creating too many NceProgrammer objects");
+
+	public void testWriteRegisterSequence() throws JmriException {
 		// infrastructure objects
 		NceInterfaceScaffold t = new NceInterfaceScaffold();
 		NceListenerScaffold l = new NceListenerScaffold();
-		
+
 		NceProgrammer p = new NceProgrammer();
-		
-		// and do the read
-		p.readCV(10, l);
+
+        // set register mode
+        p.setMode(Programmer.REGISTERMODE);
+
+		// and do the write
+		p.writeCV(3, 12, l);
 		// check "prog mode" message sent
 		Assert.assertEquals("mode message sent", 1, t.outbound.size());
-		Assert.assertEquals("mode message contents", "M", 
+		Assert.assertEquals("mode message contents", "M",
 			((NceMessage)(t.outbound.elementAt(0))).toString());
 		// reply from programmer arrives
 		NceReply r = new NceReply("**** PROGRAMMING MODE - MAIN TRACK NOW DISCONNECTED ****");
 		t.sendTestReply(r);
-		Assert.assertEquals(" programmer listener not invoked", 0, rcvdInvoked);		
-		
-		
+		Assert.assertEquals(" programmer listener not invoked", 0, rcvdInvoked);
+
+		// check write message sent
+		Assert.assertEquals("write message sent", 2, t.outbound.size());
+		Assert.assertEquals("write message contents", "S3 012",
+			((NceMessage)(t.outbound.elementAt(1))).toString());
+		// reply from programmer arrives
+		r = new NceReply();
+		t.sendTestReply(r);
+		Assert.assertEquals(" programmer listener not invoked", 0, rcvdInvoked);
+
+		// check "leave prog mode" message sent
+		Assert.assertEquals("normal mode message sent", 3, t.outbound.size());
+		Assert.assertEquals("normal mode message contents", "X",
+			((NceMessage)(t.outbound.elementAt(2))).toString());
+		// reply from programmer arrives
+		r = new NceReply();
+		t.sendTestReply(r);
+		Assert.assertEquals(" listener invoked", 1, rcvdInvoked);
+		Assert.assertEquals(" got data value back", 12, rcvdValue);
+	}
+
+	public void testReadCvSequence() throws JmriException {
+		log.error("expect next message: ERROR - Creating too many NceProgrammer objects");
+		// infrastructure objects
+		NceInterfaceScaffold t = new NceInterfaceScaffold();
+		NceListenerScaffold l = new NceListenerScaffold();
+
+		NceProgrammer p = new NceProgrammer();
+
+		// and do the read
+		p.readCV(10, l);
+		// check "prog mode" message sent
+		Assert.assertEquals("mode message sent", 1, t.outbound.size());
+		Assert.assertEquals("mode message contents", "M",
+			((NceMessage)(t.outbound.elementAt(0))).toString());
+		// reply from programmer arrives
+		NceReply r = new NceReply("**** PROGRAMMING MODE - MAIN TRACK NOW DISCONNECTED ****");
+		t.sendTestReply(r);
+		Assert.assertEquals(" programmer listener not invoked", 0, rcvdInvoked);
+
+
 		// check "read command" message sent
 		Assert.assertEquals("read message sent", 2, t.outbound.size());
-		Assert.assertEquals("read message contents", "R010", 
+		Assert.assertEquals("read message contents", "R010",
 			((NceMessage)(t.outbound.elementAt(1))).toString());
 		// reply from programmer arrives
 		r = new NceReply();
@@ -89,17 +130,17 @@ public class NceProgrammerTest extends TestCase {
 		r.setElement(1, '2');
 		r.setElement(2, '0');
 		t.sendTestReply(r);
-		Assert.assertEquals(" programmer listener not invoked", 0, rcvdInvoked);		
-		
+		Assert.assertEquals(" programmer listener not invoked", 0, rcvdInvoked);
+
 		// check "leave prog mode" message sent
 		Assert.assertEquals("normal mode message sent", 3, t.outbound.size());
-		Assert.assertEquals("normal mode message contents", "X", 
+		Assert.assertEquals("normal mode message contents", "X",
 			((NceMessage)(t.outbound.elementAt(2))).toString());
 		// reply from programmer arrives
 		r = new NceReply();
 		t.sendTestReply(r);
-		Assert.assertEquals(" programmer listener invoked", 1, rcvdInvoked);		
-		Assert.assertEquals(" value read", 20, rcvdValue);		
+		Assert.assertEquals(" programmer listener invoked", 1, rcvdInvoked);
+		Assert.assertEquals(" value read", 20, rcvdValue);
 	}
 
 	// internal class to simulate a NceListener
@@ -110,7 +151,7 @@ public class NceProgrammerTest extends TestCase {
 			rcvdStatus = 0;
 		}
 		public void programmingOpReply(int value, int status) {
-			rcvdValue = value; 
+			rcvdValue = value;
 			rcvdStatus = status;
 			rcvdInvoked++;
 		}
@@ -119,14 +160,14 @@ public class NceProgrammerTest extends TestCase {
 	int rcvdStatus;
 	int rcvdInvoked;
 
-	// service internal class to handle transmit/receive for tests	
+	// service internal class to handle transmit/receive for tests
 	class NceInterfaceScaffold extends NceTrafficController {
 		public NceInterfaceScaffold() {
 		}
 
 		// override some NceInterfaceController methods for test purposes
-	
-		public boolean status() { return true; 
+
+		public boolean status() { return true;
 		}
 
 		/**
@@ -141,8 +182,8 @@ public class NceProgrammerTest extends TestCase {
 		}
 
 		// test control member functions
-	
-		/** 
+
+		/**
 		 * forward a message to the listeners, e.g. test receipt
 		 */
 		protected void sendTestMessage (NceMessage m) {
@@ -157,7 +198,7 @@ public class NceProgrammerTest extends TestCase {
 			notifyReply(m);
 			return;
 		}
-	
+
 		/*
 		* Check number of listeners, used for testing dispose()
 		*/
@@ -168,7 +209,7 @@ public class NceProgrammerTest extends TestCase {
 	}
 
 	// from here down is testing infrastructure
-	
+
 	public NceProgrammerTest(String s) {
 		super(s);
 	}
@@ -178,13 +219,18 @@ public class NceProgrammerTest extends TestCase {
 		String[] testCaseName = {NceProgrammerTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
-	
+
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite(NceProgrammerTest.class);
 		return suite;
 	}
 
+    // The minimal setup is for log4J
+    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
+    protected void setUp() { log4jfixtureInst.setUp(); }
+    protected void tearDown() { log4jfixtureInst.tearDown(); }
+
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceProgrammerTest.class.getName());
-	
+
 }
