@@ -16,7 +16,7 @@ import com.sun.java.util.collections.Collections;
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 abstract public class AbstractManager
     implements Manager, java.beans.PropertyChangeListener {
@@ -30,13 +30,14 @@ abstract public class AbstractManager
     }
 
     public String makeSystemName(String s) {
-        return systemLetter()+typeLetter()+s;
+        return ""+systemLetter()+typeLetter()+s;
     }
 
     // abstract methods to be extended by subclasses
     // to free resources when no longer used
     public void dispose() {
-        InstanceManager.configureManagerInstance().deregister(this);
+        if (InstanceManager.configureManagerInstance()!= null)
+            InstanceManager.configureManagerInstance().deregister(this);
         _tsys.clear();
         _tuser.clear();
     }

@@ -2,7 +2,7 @@
 
 package jmri;
 
-import java.util.*;
+import java.util.Enumeration;
 import java.util.Hashtable;
 
 import com.sun.java.util.collections.ArrayList;
@@ -11,44 +11,26 @@ import com.sun.java.util.collections.List;
 /**
  * Abstract base implementation of the SensorManager interface
  * @author			Bob Jacobsen Copyright (C) 2001, 2003
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public abstract class AbstractSensorManager extends AbstractManager implements SensorManager {
 
-    // abstract methods to be provided by subclasses
-    public abstract Sensor newSensor(String systemName, String userName);
-
-    // abstract methods to be extended by subclasses
-    // to free resources when no longer used
-    public void dispose() {
-        _tsys.clear();
-        _tuser.clear();
-    }
-
     public char typeLetter() { return 'S'; }
 
-    // implemented methods
-    protected Hashtable _tsys = new Hashtable();   // stores known Sensor instances by system name
-    protected Hashtable _tuser = new Hashtable();   // stores known Sensor instances by user name
+    public Sensor provideSensor(String name) {
+        Sensor t = getSensor(name);
+        if (t!=null) return t;
+        if (name.startsWith(""+systemLetter()+typeLetter()))
+            return newSensor(name, null);
+        else
+            return newSensor(makeSystemName(name), null);
+    }
 
-    /**
-     * Locate via user name, then system name if needed.
-     * If that fails, create a new sensor using this as a
-     * default name.
-     *
-     * @param name
-     * @return Never null under normal circumstances
-     */
     public Sensor getSensor(String name) {
         Sensor t = getByUserName(name);
         if (t!=null) return t;
 
-        t = getBySystemName(name);
-        if (t!=null) return t;
-
-        // did not exist under either name; create via a default
-        // of either a valid system name, or a number that can create one
-        return newSensor(null, name);
+        return getBySystemName(name);
     }
 
     public Sensor getBySystemName(String key) {
@@ -59,20 +41,50 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
         return (Sensor)_tuser.get(key);
     }
 
-    public List getSystemNameList() {
-        String[] arr = new String[_tsys.size()];
-        List out = new ArrayList();
-        Enumeration en = _tsys.elements();
-        int i=0;
-        while (en.hasMoreElements()) {
-            arr[i] = ((Sensor)en.nextElement()).getSystemName();
-            i++;
+    public Sensor newSensor(String systemName, String userName) {
+        if (log.isDebugEnabled()) log.debug("newSensor:"
+                                            +( (systemName==null) ? "null" : systemName)
+                                            +";"+( (userName==null) ? "null" : userName));
+        if (systemName == null) log.error("SystemName cannot be null. UserName was "
+                                        +( (userName==null) ? "null" : userName));
+        // is system name in correct format?
+        if (!systemName.startsWith(""+systemLetter()+typeLetter())) {
+            log.error("Invalid system name for sensor: "+systemName
+                            +" needed "+systemLetter()+typeLetter());
+            return null;
         }
-        java.util.Arrays.sort(arr);
-        for (i=0; i<arr.length; i++) out.add(arr[i]);
-        return out;
+
+        // return existing if there is one
+        Sensor s;
+        if ( (userName!=null) && ((s = getByUserName(userName)) != null)) {
+            if (getBySystemName(systemName)!=s)
+                log.error("inconsistent user ("+userName+") and system name ("+systemName+") results; userName related to ("+s.getSystemName()+")");
+            return s;
+        }
+        if ( (s = getBySystemName(systemName)) != null) {
+            if (userName != null) log.warn("Found turnout via system name ("+systemName
+                                    +") with non-null user name ("+userName+")");
+            return s;
+        }
+
+        // doesn't exist, make a new one
+        s = createNewSensor(systemName, userName);
+
+        // save in the maps
+        _tsys.put(systemName, s);
+        if (userName!=null) _tuser.put(userName, s);
+
+        return s;
     }
 
+    /**
+     * Internal method to invoke the factory, after all the
+     * logic for returning an existing method has been invoked.
+     * @return
+     */
+    abstract protected Sensor createNewSensor(String systemName, String userName);
+
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractSensorManager.class.getName());
 }
 
 /* @(#)AbstractTurnoutManager.java */

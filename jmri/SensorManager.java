@@ -7,7 +7,7 @@ import com.sun.java.util.collections.List;
 /**
  * Interface for controlling sensors
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public interface SensorManager extends Manager {
 
@@ -18,6 +18,15 @@ public interface SensorManager extends Manager {
      *
      * @param name
      * @return Never null under normal circumstances
+     */
+    public Sensor provideSensor(String name);
+
+    /**
+     * Locate via user name, then system name if needed.
+     * Does not create a new one if nothing found
+     *
+     * @param name
+     * @return null if no match found
      */
     public Sensor getSensor(String name);
 
