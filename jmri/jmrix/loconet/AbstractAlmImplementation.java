@@ -18,7 +18,7 @@ package jmri.jmrix.loconet;
  * contact Digitrax Inc for separate permission.
  *
  * @author Bob Jacobsen     Copyright 2002
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public abstract class AbstractAlmImplementation implements LocoNetListener {
@@ -147,8 +147,8 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
                 // send LACK
                 LocoNetMessage l = new LocoNetMessage(4);
                 l.setElement( 0, 0xB4);
-                l.setElement( 2, 0x66);  // E6 without high bit
-                l.setElement( 3, 0x7F);
+                l.setElement( 1, 0x66);  // E6 without high bit
+                l.setElement( 2, 0x7F);
                 LnTrafficController.instance().sendLocoNetMessage(l);
             }
             return;
