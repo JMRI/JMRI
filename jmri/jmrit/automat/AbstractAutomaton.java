@@ -2,10 +2,20 @@
 
 package jmri.jmrit.automat;
 
-import java.awt.*;
-import javax.swing.*;
+import jmri.DccThrottle;
+import jmri.InstanceManager;
+import jmri.NamedBean;
+import jmri.ProgListener;
+import jmri.Programmer;
+import jmri.ProgrammerException;
+import jmri.Sensor;
+import jmri.ThrottleListener;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 
-import jmri.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JTextArea;
 
 /**
  * Abstract base for user automaton classes, which provide
@@ -37,11 +47,14 @@ import jmri.*;
  * must be used in a delayable thread.  If invoked from the GUI thread,
  * for example, the program will appear to hang. To help ensure this,
  * a warning will be logged if they are used before the thread starts.
+ * <P>
+ * Although this is named an "Abstract" class, it's actually concrete
+ * so that Jython code can easily use some of the methods.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
-abstract public class AbstractAutomaton implements Runnable {
+public class AbstractAutomaton implements Runnable {
 
     public AbstractAutomaton() {}
 
@@ -59,7 +72,7 @@ abstract public class AbstractAutomaton implements Runnable {
     /**
      * User-provided initialization routine
      */
-    abstract protected void init();
+    protected void init() {}
 
     /**
      * User-provided main routine. This is run repeatedly until
@@ -68,7 +81,7 @@ abstract public class AbstractAutomaton implements Runnable {
      *
      * @return false to terminate the automaton, for example due to an error.
      */
-    abstract protected boolean handle();
+    protected boolean handle() { return false; }
 
     /**
      * Control optional debugging prompt.  If this is set true,
