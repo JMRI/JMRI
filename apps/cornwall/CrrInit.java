@@ -13,7 +13,7 @@ import com.sun.java.util.collections.List;
  * Based on Crr0024.bas
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class CrrInit extends jmri.jmrit.automat.AbstractAutomaton {
 
@@ -34,20 +34,41 @@ public class CrrInit extends jmri.jmrit.automat.AbstractAutomaton {
     protected boolean handle() {
         log.debug("CrrInit.handle");
 
-        // sequence initialization of all the DCC turnouts
-        TurnoutManager tm = LnTurnoutManager.instance();
-        List tos = tm.getSystemNameList();
-        for (int i = 0; i<tos.size(); i++) {
-            String name = ((String)tos.get(i));
-            tm.getBySystemName(name).setCommandedState(Turnout.CLOSED);
-            wait(250);
-        }
-
         // start an Automaton for each section that exists
         for (int i = 0; i<30; i++) {
             startSection("apps.cornwall.CrrSection"+i+"A");
             startSection("apps.cornwall.CrrSection"+i+"B");
             startSection("apps.cornwall.CrrSection"+i+"C");
+        }
+
+        // sequence initialization of all the LocoNet turnouts
+        SensorManager sm = InstanceManager.sensorManagerInstance();
+        List l = sm.getSystemNameList();
+
+        TurnoutManager tm = LnTurnoutManager.instance();
+        List tos = tm.getSystemNameList();
+        for (int i = 0; i<tos.size(); i++) {
+            String name = ((String)tos.get(i));
+            Turnout t = tm.getBySystemName(name);
+            // find the corresponding sensor
+            for (int j=0; j<l.size(); j++) {
+                if (sm.getBySystemName((String)l.get(j)).getUserName()
+                        .startsWith(t.getUserName())
+                        && sm.getBySystemName((String)l.get(j)).getUserName().indexOf("tu(")>0) {
+                    // here we've found a match, so command it
+                    Sensor s = sm.getBySystemName((String)l.get(j));
+                    while (s.getKnownState() == Sensor.UNKNOWN) wait(250); // spin until ready
+                    if (s.getKnownState() == Sensor.ACTIVE)
+                        t.setCommandedState(Turnout.THROWN);
+                    else if (s.getKnownState() == Sensor.INACTIVE)
+                        t.setCommandedState(Turnout.CLOSED);
+                    else
+                        log.error("Unexpected state: "+s.getKnownState()
+                                +" for "+s.getUserName());
+
+                }
+            }
+            wait(250);
         }
 
         return false;   // terminate after 1st pass
