@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
-<!-- $Id: InstallJava.html,v 1.9 2003-07-24 21:26:29 jacobsen Exp $ -->
+<!-- $Id: InstallJava.html,v 1.10 2003-12-27 03:31:13 jacobsen Exp $ -->
 <HTML>
 <HEAD>
 
@@ -33,25 +33,61 @@ allow software update to apply patches as they become available.
 
 <H2>Installing Java on Windows</H2>
 Start by making sure you have an appropriate version of Java on your system,
-a version number of 1.2 or greater.
+a version number of 1.3.1 or greater.
 You can check the version number by typing
 <PRE>
    java -version
 </PRE>
 <P>
 You can obtain the Windows version of Java free from
-Sun at <A HREF="http://java.sun.com/j2se">
-http://java.sun.com/j2se</A>
-We generally use the "1.3.1-1" version of the "Java Runtime Environment".
-This is currently most widely-used Java version.  Sun says its
-been installed on over 25 million machines.  The installer
-is a 5MB download, and can be gotten from 
-<a href="http://java.sun.com/j2se/1.3/jre/">http://java.sun.com/j2se/1.3/jre/</a>.
+Sun at <A HREF="http://java.sun.com/getjava">
+http://java.sun.com/getjava</A>
+We generally develop using the currently most widely-used Java version,
+which is now the
+"1.3.1-1" version of the "Java Runtime Environment".
+Sun says it has
+been installed on over 25 million machines.  
+<P>
+Sun offers both an "online" and an "offline" installer for
+the Java Runtime Engine (JRE). The online installer is about
+1.3MB, but needs an Internet connection to complete the install.
+The offine installer is about 14.5MB, but includes everything.
+<P>
+As the size of software you can download from the Internet has
+increased, distributors have looked for ways to decrease the time
+it takes to do this. Since a software package may include features
+a user doen't need or want, one way to decrease the time is to
+make the installation "live". You initially download a small program,
+which is an Internet installer. When you run the program you are asked
+what components of the package you want to install. Only those
+components are downloaded and installed.
+<P>
+Hers's what Sun has to say about this:
+<UL>
+<LI>Windows Installation
+<P>
+Saves download time if installing only some of the features. This 
+install first downloads and runs a small program that prompts the user 
+for options to download and install. The user must be connected to the 
+Internet in order to complete this installation. Includes support for 
+additional languages, fonts and media. This choice downloads and 
+installs Microsoft Windows Installer 2.0 if not already installed. If 
+you are behind an authenticated proxy server, you must use the Windows 
+Offline Installer instead. Before making this choice, turn off any 
+download managers, other than the Sun Download Manager, if you are using it.
 
+<LI>Windows Offline Installation
+<P>This downloaded file includes everything required to perform a complete 
+installation. It can be copied to a machine that is disconnected from 
+the network and executed to perform a complete or custom install. 
+Includes Microsoft Windows Installer 2.0 and support for additional 
+languages, fonts and media. Use this installer if the normal Windows 
+Installer does not work.
+</UL>
 
 <H2>Installing Java on Linux</H2>
 Start by making sure you have an appropriate version of Java on your system,
-a version number of 1.2 or greater.
+a version number of 1.3.1 or greater.
 You can check the version number by typing
 <PRE>
    java -version
@@ -65,8 +101,8 @@ the install is probably not complete.
 Check with the system manager or do a fresh Java installation.
 <P>
 You can obtain a Linux version of Java free from
-Sun at <A HREF="http://java.sun.com/j2se">
-http://java.sun.com/j2se</A>
+Sun at <A HREF="http://java.sun.com/getjava">
+http://java.sun.com/getjava</A>
 <P>
 The same page contains links to third party versions of Java for other platforms.
 
