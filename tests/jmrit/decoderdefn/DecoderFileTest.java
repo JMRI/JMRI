@@ -41,7 +41,7 @@ public class DecoderFileTest extends TestCase {
 					new String[]  {"Name", "Value"},
 					cvModel);
 		DecoderFile d = new DecoderFile("mfg", "mfgID", "model", "23", "24",
-										"family", "filename", 16, 16);
+										"family", "filename", 16, 16, null);
 		
 		d.loadVariableModel(decoder, variableModel);
 		Assert.assertEquals("read rows ", 3, variableModel.getRowCount());
@@ -59,7 +59,7 @@ public class DecoderFileTest extends TestCase {
 					new String[]  {"Name", "Value"},
 					cvModel);
 		DecoderFile d = new DecoderFile("mfg", "mfgID", "model", "23", "24",
-										"family", "filename", 16, 3);
+										"family", "filename", 16, 3, null);
 		
 		d.loadVariableModel(decoder, variableModel);
 		Assert.assertEquals("read rows ", 2, variableModel.getRowCount());
@@ -75,7 +75,7 @@ public class DecoderFileTest extends TestCase {
 					new String[]  {"Name", "Value"},
 					cvModel);
 		DecoderFile d = new DecoderFile("mfg", "mfgID", "model", "23", "24",
-										"family", "filename", 3, 16);
+										"family", "filename", 3, 16, null);
 		
 		d.loadVariableModel(decoder, variableModel);
 		Assert.assertEquals("read rows ", 2, variableModel.getRowCount());

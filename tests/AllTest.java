@@ -24,6 +24,7 @@ public class AllTest extends TestCase  {
 
 	// Main entry point
 	static public void main(String[] args) { 
+		System.out.println("AllTest starts");
 		String[] testCaseName = {AllTest.class.getName()};
   		log = org.apache.log4j.Category.getInstance("jmri");
 		//initLogging();

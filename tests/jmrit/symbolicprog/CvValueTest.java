@@ -74,7 +74,7 @@ public class CvValueTest extends TestCase {
 		int i = 0;
 		while ( cv.isBusy() && i++ < 100 )  {
 			try {
-				Thread.sleep(10);
+				Thread.sleep(20);
 			} catch (Exception e) {
 			}
 		}

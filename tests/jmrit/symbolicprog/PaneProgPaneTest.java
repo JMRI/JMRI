@@ -39,8 +39,8 @@ public class PaneProgPaneTest extends TestCase {
 		
 		// create test object with special implementation of the newColumn(String) operation
 		colCount = 0;
-		PaneProgPane p = new PaneProgPane("name", pane1, cvModel, varModel) {
-				public JPanel newColumn(Element e, boolean a) { colCount++; return new JPanel();}
+		PaneProgPane p = new PaneProgPane("name", pane1, cvModel, varModel, null) {
+				public JPanel newColumn(Element e, boolean a, Element el) { colCount++; return new JPanel();}
 			};
 	
 		assertEquals("column count", 2, colCount);
@@ -56,7 +56,7 @@ public class PaneProgPaneTest extends TestCase {
 		
 		// create test object with special implementation of the newVariable(String) operation
 		varCount = 0;
-		PaneProgPane p = new PaneProgPane("name", pane1, cvModel, varModel) {
+		PaneProgPane p = new PaneProgPane("name", pane1, cvModel, varModel, null) {
 				public void newVariable(Element e, JComponent p, GridBagLayout g, GridBagConstraints c, boolean a) 
 					{ varCount++; }
 			};
@@ -92,7 +92,7 @@ public class PaneProgPaneTest extends TestCase {
 		if (log.isInfoEnabled()) log.info("Two elements loaded");
 		
 		// test by invoking
-		PaneProgPane p = new PaneProgPane("name", pane1, cvModel, varModel);
+		PaneProgPane p = new PaneProgPane("name", pane1, cvModel, varModel, null);
 		assertEquals("variable list length", 2, p.varList.size());
 		assertEquals("1st variable index ", new Integer(1), p.varList.get(0));
 		assertEquals("2nd variable index ", new Integer(0), p.varList.get(1));
@@ -126,7 +126,7 @@ public class PaneProgPaneTest extends TestCase {
 												.addContent( new Element("decVal"));
 		varModel.setRow(1, el1);
 		
-		PaneProgPane p = new PaneProgPane("name", pane1, cvModel, varModel);
+		PaneProgPane p = new PaneProgPane("name", pane1, cvModel, varModel, null);
 
 		// test by invoking
 		p.readPane();
@@ -177,7 +177,7 @@ public class PaneProgPaneTest extends TestCase {
 		varModel.setRow(1, el1);
 		if (log.isInfoEnabled()) log.info("Two elements loaded");
 		
-		PaneProgPane p = new PaneProgPane("name", pane1, cvModel, varModel);
+		PaneProgPane p = new PaneProgPane("name", pane1, cvModel, varModel, null);
 
 		// test by invoking
 		p.writePane();
