@@ -3,13 +3,14 @@
  package jmri.jmrit.powerpanel;
 
 import java.awt.Dimension;
+import java.util.ResourceBundle;
 
 import javax.swing.JMenuBar;
-
 /**
- * Frame for user input of LocoNet messages
+ * Frame for controlling layout power via a PowerManager.
+ *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class PowerPanelFrame extends javax.swing.JFrame {
 
@@ -17,7 +18,7 @@ public class PowerPanelFrame extends javax.swing.JFrame {
     PowerPane pane	= new PowerPane();
 
     public PowerPanelFrame() {
-
+        super(ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle").getString("TitlePowerPanel"));
         // general GUI config
 
         // install items in GUI
