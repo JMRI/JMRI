@@ -52,7 +52,10 @@ it, and they weren't written with such "skins" in mind.
 <h3>Serial port configuration</h3>
 DecoderPro may encounter problems if the serial port used to
 connect to the layout shares an interrupt with another serial
-port.  In particular, some systems are unable to communicate
+port.  
+Typically COM1 and COM3 share an interrupt, as do COM2 and COM4.
+In particular, some systems are unable to communicate
+(and may experience a lockup)
 when the layout's serial port shares an interrupt with a port
 used for a serial mouse.  Please make sure that the serial port
 connected to your layout does not share an interrupt with
