@@ -36,7 +36,7 @@ import com.sun.java.util.collections.List;
  * </UL>
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class CombinedLocoSelPane extends javax.swing.JPanel
                                 implements PropertyChangeListener  {
@@ -357,12 +357,12 @@ public class CombinedLocoSelPane extends javax.swing.JPanel
 	/** handle pushing the open programmer button by finding names, then calling a template method */
 	protected void openButton() {
 		// figure out which we're dealing with
-		if (isDecoderSelected()) {
-			// new loco
-			openNewLoco();
-		} else if (locoBox.getSelectedIndex()!=0) {
+		if (locoBox.getSelectedIndex()!=0) {
 			// known loco
 			openKnownLoco();
+        } else if (isDecoderSelected()) {
+			// new loco
+			openNewLoco();
 		} else {
 			// should not happen, as the button should be disabled!
 			log.error("openButton with neither combobox nonzero");

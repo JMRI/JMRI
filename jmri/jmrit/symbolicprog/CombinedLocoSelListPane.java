@@ -32,7 +32,7 @@ import com.sun.java.util.collections.ArrayList;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
 
@@ -228,8 +228,10 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
      *  Set the decoder selection to a specific decoder from a selected Loco
      */
     void setDecoderSelectionFromLoco(String loco) {
-        // get the decoder type, it has to be there (assumption!),
+        // if there's a valid loco entry...
         RosterEntry locoEntry = Roster.instance().entryFromTitle(loco);
+        if ( locoEntry == null) return;
+        // get the decoder type, it has to be there (assumption!),
         String modelString = locoEntry.getDecoderModel();
         // find the decoder mfg
         String mfgString = DecoderIndexFile.instance().fileFromTitle(modelString)
