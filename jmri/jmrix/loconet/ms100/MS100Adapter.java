@@ -24,7 +24,7 @@ import jmri.jmrix.loconet.*;
  * Neither the baud rate configuration nor the "option 1" option are used.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -274,12 +274,6 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
     }
 
     /**
-     * Set the baud rate.  This currently does nothing, as there's
-     * only one possible value
-     */
-    public void configureBaudRate(String rate) {}
-
-    /**
      * Since option 1 is not used for this, return an array with one empty element
      */
     public String[] validOption1() { return new String[]{""}; }
@@ -288,11 +282,6 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
      * Option 1 not used, so return a null string.
      */
     public String option1Name() { return ""; }
-
-    /**
-     * The first port option isn't used, so just ignore this call.
-     */
-    public void configureOption1(String value) {}
 
     /**
      * Get an array of valid values for "option 2"; used to display valid options.
@@ -313,6 +302,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
      * @throws jmri.jmrix.SerialConfigException
      */
     public void configureOption2(String value) {
+        super.configureOption2(value);
         log.debug("configureOption2: "+value);
         if (value.equals("DB150 (Empire Builder)")) {
             mCanRead = false;
@@ -331,6 +321,12 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
     private boolean opened = false;
     InputStream serialInStream = null;
     OutputStream serialOutStream = null;
+
+    static public MS100Adapter instance() {
+        if (mInstance == null) mInstance = new MS100Adapter();
+        return mInstance;
+    }
+    static MS100Adapter mInstance = null;
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MS100Frame.class.getName());
 

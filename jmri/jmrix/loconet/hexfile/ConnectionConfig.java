@@ -1,15 +1,16 @@
 // ConnectionConfig.java
 
-package jmri.jmrix.cmri.serial.serialdriver;
+package jmri.jmrix.loconet.hexfile;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * Definition of objects to handle configuring an LocoBuffer layout connection
- * via an C/MRI SerialDriverAdapter object.
+ * Definition of objects to handle configuring a layout connection
+ * via a LocoNet hexfile emulator
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.1 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
@@ -27,13 +28,15 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
         super();
     }
 
+    public String name() { return "LocoNet Hexfile"; }
+
     public void loadDetails(JPanel details) {
-        super.loadDetails(details);
-        opt1Box.setEditable(true);
+        details.add(new JLabel("No options"));
     }
 
-    public String name() { return "C/MRI"; }
-
-    protected void setInstance() { adapter = SerialDriverAdapter.instance(); }
+    protected void setInstance() {
+        log.error("Unexpected call to setInstance");
+        new Exception().printStackTrace();
+    }
 }
 

@@ -2,12 +2,15 @@
 
 package jmri.jmrix.loconet.hexfile;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.File;
-import javax.swing.*;
-
 import jmri.jmrix.loconet.LnPacketizer;
+
+import java.awt.Dimension;
+import java.io.File;
+
+import javax.swing.BoxLayout;
+import javax.swing.JFileChooser;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
 
 /**
  * Frame to inject LocoNet messages from a hex file
@@ -15,7 +18,7 @@ import jmri.jmrix.loconet.LnPacketizer;
  * a .hex file, feeding the information to a LocoMonFrame (monitor) and
  * connecting to a LocoGenFrame (for sending a few commands).
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version                     $Revision: 1.12 $
+ * @version                     $Revision: 1.13 $
  */
 public class HexFileFrame extends javax.swing.JFrame {
 

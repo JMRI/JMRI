@@ -24,7 +24,7 @@ import javax.comm.SerialPort;
  * not use any other options at configuration time.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SerialDriverAdapter extends SprogPortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -165,12 +165,6 @@ public class SerialDriverAdapter extends SprogPortController  implements jmri.jm
 	}
 
 	/**
-	 * Set the baud rate.  This currently does nothing, as there's
-	 * only one possible value
-	 */
-	public void configureBaudRate(String rate) {}
-
-	/**
 	 * Since option 1 is not used for this, return an array with just a single string
 	 */
 	public String[] validOption1() { return new String[]{""}; }
@@ -180,12 +174,8 @@ public class SerialDriverAdapter extends SprogPortController  implements jmri.jm
 	 */
 	public String option1Name() { return ""; }
 
-	/**
-	 * The first port option isn't used, so just ignore this call.
-	 */
-	public void configureOption1(String value) {}
 
-    /**
+        /**
 	 * Get an array of valid values for "option 2"; used to display valid options.
 	 * May not be null, but may have zero entries
 	 */
@@ -197,16 +187,15 @@ public class SerialDriverAdapter extends SprogPortController  implements jmri.jm
 	 */
 	public String option2Name() { return ""; }
 
-	/**
-	 * Set the second port option.  Only to be used after construction, but
-	 * before the openPort call
-	 */
-	public void configureOption2(String value) {}
-
-// private control members
 	private boolean opened = false;
 	InputStream serialStream = null;
 
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialDriverAdapter.class.getName());
+    static public SerialDriverAdapter instance() {
+        if (mInstance == null) mInstance = new SerialDriverAdapter();
+        return mInstance;
+    }
+    static SerialDriverAdapter mInstance = null;
+
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialDriverAdapter.class.getName());
 
 }

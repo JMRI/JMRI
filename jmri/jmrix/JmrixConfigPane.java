@@ -2,11 +2,13 @@
 
 package jmri.jmrix;
 
+import jmri.InstanceManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import jmri.*;
+
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
@@ -17,7 +19,7 @@ import javax.swing.JSeparator;
  * <P>
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -107,7 +109,18 @@ public class JmrixConfigPane extends JPanel {
         int current = modeBox.getSelectedIndex();
         details.removeAll();
         if (current!=0) classList[current].loadDetails(details);
-        revalidate();
+        if (getTopLevelAncestor()!=null) ((JFrame)getTopLevelAncestor()).pack();
+    }
+
+    public String getCurrentProtocolName() {
+        int current = modeBox.getSelectedIndex();
+        if (current==0) return "(none)";
+        return classList[current].name();
+    }
+    public String getCurrentProtocolInfo() {
+        int current = modeBox.getSelectedIndex();
+        if (current==0) return "(none)";
+        return classList[current].getInfo();
     }
 
     public Object getCurrentObject() {

@@ -1,15 +1,14 @@
 // ConnectionConfig.java
 
-package jmri.jmrix.cmri.serial.serialdriver;
+package jmri.jmrix.loconet.ms100;
 
-import javax.swing.JPanel;
 
 /**
  * Definition of objects to handle configuring an LocoBuffer layout connection
- * via an C/MRI SerialDriverAdapter object.
+ * via an LocoNet MS100Adapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.1 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
@@ -27,13 +26,8 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
         super();
     }
 
-    public void loadDetails(JPanel details) {
-        super.loadDetails(details);
-        opt1Box.setEditable(true);
-    }
+    public String name() { return "LocoNet MS100"; }
 
-    public String name() { return "C/MRI"; }
-
-    protected void setInstance() { adapter = SerialDriverAdapter.instance(); }
+    protected void setInstance() { adapter = MS100Adapter.instance(); }
 }
 

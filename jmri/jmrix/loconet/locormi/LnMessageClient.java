@@ -1,13 +1,14 @@
 package jmri.jmrix.loconet.locormi;
 
-import jmri.jmrix.loconet.*;
-import com.sun.java.util.collections.LinkedList;
+import jmri.jmrix.loconet.LnTrafficRouter;
+import jmri.jmrix.loconet.LocoNetException;
+import jmri.jmrix.loconet.LocoNetMessage;
 
 /**
  * Client for the RMI LocoNet server.
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Alex Shepherd, Bob Jacobsen
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class LnMessageClient extends LnTrafficRouter {

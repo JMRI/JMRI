@@ -27,7 +27,7 @@ import java.io.PipedOutputStream;
  *	and separated by a space. Variable whitespace is not (yet) supported
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class LnHexFilePort 			extends LnPortController implements Runnable {
 
@@ -157,6 +157,12 @@ public class LnHexFilePort 			extends LnPortController implements Runnable {
         new Exception().printStackTrace();
         return null;
     }
+
+    static public LnHexFilePort instance() {
+        if (mInstance == null) mInstance = new LnHexFilePort();
+        return mInstance;
+    }
+    static LnHexFilePort mInstance = null;
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnHexFilePort.class.getName());
 }

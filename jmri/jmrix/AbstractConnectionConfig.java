@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 abstract public class AbstractConnectionConfig  implements jmri.jmrix.ConnectionConfig {
 
@@ -59,10 +59,10 @@ abstract public class AbstractConnectionConfig  implements jmri.jmrix.Connection
         });
     }
 
-    JComboBox portBox = new JComboBox();
-    JComboBox baudBox = new JComboBox();
-    JComboBox opt1Box = new JComboBox();
-    JComboBox opt2Box = new JComboBox();
+    protected JComboBox portBox = new JComboBox();
+    protected JComboBox baudBox = new JComboBox();
+    protected JComboBox opt1Box = new JComboBox();
+    protected JComboBox opt2Box = new JComboBox();
 
     protected jmri.jmrix.SerialPortAdapter adapter;
 
@@ -70,6 +70,12 @@ abstract public class AbstractConnectionConfig  implements jmri.jmrix.Connection
      * Load the adapter with an appropriate object
      */
     abstract protected void setInstance();
+
+    public String getInfo() {
+        String t = (String)portBox.getSelectedItem();
+        if (t!=null) return t;
+        else return "(none)";
+    }
 
     public void loadDetails(JPanel details) {
         setInstance();
@@ -136,7 +142,7 @@ abstract public class AbstractConnectionConfig  implements jmri.jmrix.Connection
         checkInitDone();
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractConnectionConfig.class.getName());
+    static protected org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractConnectionConfig.class.getName());
 
 }
 

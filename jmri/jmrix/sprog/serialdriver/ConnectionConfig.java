@@ -1,15 +1,14 @@
 // ConnectionConfig.java
 
-package jmri.jmrix.cmri.serial.serialdriver;
+package jmri.jmrix.sprog.serialdriver;
 
-import javax.swing.JPanel;
 
 /**
  * Definition of objects to handle configuring an LocoBuffer layout connection
- * via an C/MRI SerialDriverAdapter object.
+ * via an SPROG SerialDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.1 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
@@ -27,12 +26,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
         super();
     }
 
-    public void loadDetails(JPanel details) {
-        super.loadDetails(details);
-        opt1Box.setEditable(true);
-    }
-
-    public String name() { return "C/MRI"; }
+    public String name() { return "SPROG"; }
 
     protected void setInstance() { adapter = SerialDriverAdapter.instance(); }
 }
