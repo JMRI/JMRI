@@ -2,7 +2,8 @@
 
 package jmri;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
 
 /**
  * Method for invoking user code at startup time.
@@ -12,7 +13,7 @@ import javax.swing.*;
  * etc at startup time.
  *
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class JmriPlugin {
      public static void start(JFrame mainFrame, JMenuBar menuBar) {}
