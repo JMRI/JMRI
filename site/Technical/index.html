@@ -106,6 +106,16 @@ project files if you'd like to use CW.
 <h3>Recommended Tools</h3>
 <UL>
 <LI>
+We use CVS for code control. Linux and MacOS X systems come with an installed
+version that will work well.
+<P>
+If you're using MacOS X, CVS may give you messages about ".DS_Store" files. These
+are used to keep track of window layouts, etc.  To suppress these messages,
+just create a file in your home directory called ".cvsignore" and add a line 
+of ".DS_Store" to it (no quotes). CVS will then ignore all .DS_Store files in 
+all of your checked-out directory trees.
+
+<LI>
 We use Java Swing for our GUI development.  It's a lot more powerful
 than the original AWT, and the price is right. In particular, we
 try to use the "Bean format" of setting and getting members, call-backs to
