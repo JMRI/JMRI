@@ -1,7 +1,7 @@
 /** 
  * LnTrafficController.java
  *
- * Description:		Converts Stream-based I/O to LocoNet messages
+ * Description:		Converts Stream-based I/O to/from LocoNet messages
  * @author			Bob Jacobsen  Copyright (C) 2001
  * @version			
  */
@@ -15,6 +15,15 @@ import java.util.Vector;
 
 import ErrLoggerJ.ErrLog;
 
+/** 
+ * Converts Stream-based I/O to/from LocoNet messages.  The "LocoNetInterface"
+ * side sends/receives LocoNetMessage objects.  The connection to 
+ * a LnPortController is via a pair of *Streams, which then carry sequences
+ * of characters for transmission.     Note that this processing is 
+ * handled in an independent thread.
+ *
+ * @author			Bob Jacobsen  Copyright (C) 2001
+ */
 public class LnTrafficController implements LocoNetInterface, Runnable {
 
 	public LnTrafficController() {self=this;}
@@ -41,6 +50,11 @@ public class LnTrafficController implements LocoNetInterface, Runnable {
 				}
 		}
 
+	/**
+	 * Forward a preformatted LocoNetMessage to the actual interface.
+	 *
+	 * Checksum is computed and overwritten here.
+	 */
 	public void sendLocoNetMessage(LocoNetMessage m) {
 		// set the error correcting code byte
 		int len = m.getNumDataElements();
@@ -72,6 +86,9 @@ public class LnTrafficController implements LocoNetInterface, Runnable {
 // methods to connect/disconnect to a source of data in a LnPortController
 	private LnPortController controller = null;
 	
+	/**
+	 * Make connection to existing LnPortController object.
+	 */
 	public void connectPort(LnPortController p) {
 			istream = p.getInputStream();
 			ostream = p.getOutputStream();
@@ -80,6 +97,11 @@ public class LnTrafficController implements LocoNetInterface, Runnable {
 							"connect called while connected");
 			controller = p;
 		}
+		
+	/**
+	 * Break connection to existing LnPortController object. Once broken,
+	 * attempts to send via "message" member will fail.
+	 */
 	public void disconnectPort(LnPortController p) {
 			istream = null;
 			ostream = null;
@@ -88,25 +110,23 @@ public class LnTrafficController implements LocoNetInterface, Runnable {
 							"disconnect called from non-connected LnPortController");
 			controller = null;
 		}
-		
-// the methods to connect to the streams from a port
-	//void setInputStream(InputStream s) { 
-	//		istream = new DataInputStream(s);
-	//	}
-		
-	//void setOutputStream(OutputStream o) { 
-	//		ostream = o;
-	//	}
-		
-// static function to find object
+				
+	/**
+	 * static function returning the LnTrafficController instance to use.
+	 * @return The registered LnTrafficController instance for general use
+	 *         or null if none exist yet.
+	 */
 	static public LnTrafficController instance() { return self;}
+	
 	static private LnTrafficController self = null;
 	
 // data members to hold the streams
 	DataInputStream istream = null;
 	OutputStream ostream = null;
 
-// data members to hold contact with the listeners
+	/**
+	 * Forward a LocoNetMessage to all registered listeners.
+	 */
 	protected void notify(LocoNetMessage m) {
 		// make a copy of the listener vector to synchronized not needed for transmit
 		Vector v;
@@ -129,7 +149,12 @@ public class LnTrafficController implements LocoNetInterface, Runnable {
 			}
 	}
 	
-// main running member function
+	/**
+	 * Handle incoming characters.  This is a permanent loop,
+	 * looking for input messages in character form on the 
+	 * stream connected to the LnPortController via <code>connectPort</code>.
+	 * Terminates with the input stream breaking out of the try block.
+	 */
 	public void run() {
 			int opCode;
 			try {
@@ -165,7 +190,6 @@ public class LnTrafficController implements LocoNetInterface, Runnable {
              	int len = msg.getNumDataElements();
              	for (int i = 2; i < len; i++) msg.setElement(i, istream.readByte()&0xFF);
              	// confirm you've got the message right...
-             	// ErrLog.msg(ErrLog.debugging,"LnTrafficController", "dispatch msg:", msg.toString());
              	
              	// message is complete, dispatch it !!
              	notify(msg);
