@@ -7,15 +7,15 @@ import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
 import javax.swing.JMenuBar;
-import javax.swing.JPanel;
+import java.util.*;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
 
 /**
- * Frame providing a table of NamedBeans
+ * Frame providing a table of NamedBeans.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class BeanTableFrame extends javax.swing.JFrame {
 
@@ -38,6 +38,14 @@ public class BeanTableFrame extends javax.swing.JFrame {
 
         // general GUI config
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+
+        // add save menu item
+        JMenuBar menuBar = new JMenuBar();
+        ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
+        JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
+        menuBar.add(fileMenu);
+        fileMenu.add(new jmri.configurexml.StoreXmlConfigAction());
+        setJMenuBar(menuBar);
 
         // install items in GUI
         JPanel pane1 = new JPanel();
