@@ -23,7 +23,7 @@ import jmri.Sensor;
  * created and invoked by a SampleAutomaton2Action.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  * @see         jmri.jmrit.automat.SampleAutomaton2Action
  */
 public class SampleAutomaton2 extends AbstractAutomaton {
@@ -38,6 +38,17 @@ public class SampleAutomaton2 extends AbstractAutomaton {
     Sensor sensor;
 
     /**
+     * By default, monitors sensor "31"
+     */
+    String sensorName = "31";
+
+    /**
+     * By default, controls locomotive 1234(long).
+     */
+    int locoNumber = 1234;
+    boolean locoLong = true;
+
+    /**
      * By default, monitors sensor "32" and controls locomotive 1234(long).
      *
      */
@@ -45,10 +56,10 @@ public class SampleAutomaton2 extends AbstractAutomaton {
         // get references to sample layout objects
 
         sensor = InstanceManager.sensorManagerInstance().
-                    provideSensor("32");
+                    provideSensor(sensorName);
 
         programmer = InstanceManager.programmerManagerInstance()
-                        .getOpsModeProgrammer(true, 4321);
+                        .getOpsModeProgrammer(locoLong, locoNumber);
 
         // set up the initial correlation
         now = sensor.getKnownState();

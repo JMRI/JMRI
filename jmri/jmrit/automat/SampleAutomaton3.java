@@ -21,7 +21,7 @@ import jmri.Sensor;
  * created and invoked by a SampleAutomaton3Action.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  * @see         jmri.jmrit.automat.SampleAutomaton3Action
  */
 public class SampleAutomaton3 extends AbstractAutomaton {
@@ -44,20 +44,31 @@ public class SampleAutomaton3 extends AbstractAutomaton {
     Sensor revSensor;
 
     /**
-     * By default, monitors sensor "182" forward, "178" backward
-     * and controls locomotive 77(short).
-     *
+     * By default, monitors sensor "182" for the forward end of the track
      */
+    String fwdSensorName = "182";
+
+    /**
+     * By default, monitors sensor "178" for the reverse end of the track
+     */
+    String revSensorName = "178";
+
+    /**
+     * By default, controls locomotive 77(short).
+     */
+    int locoNumber = 77;
+    boolean locoLong = false;
+
     protected void init() {
         // get references to sample layout objects
 
         fwdSensor = InstanceManager.sensorManagerInstance().
-                    provideSensor("182");
+                    provideSensor(fwdSensorName);
 
         revSensor = InstanceManager.sensorManagerInstance().
-                    provideSensor("178");
+                    provideSensor(revSensorName);
 
-        throttle = getThrottle(77, false);
+        throttle = getThrottle(locoNumber, locoLong);
     }
 
     boolean moveFwd;
