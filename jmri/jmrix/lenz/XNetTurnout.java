@@ -3,7 +3,7 @@
  *
  * Description:		extend jmri.AbstractTurnout for XNet layouts
  * @author			Bob Jacobsen Copyright (C) 2001, Portions by Paul Bender Copyright (C) 2003 
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 
 package jmri.jmrix.lenz;
@@ -30,8 +30,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     public void setCommandedState(int s){
 	forwardCommandChangeToLayout(s);
 	newCommandedState(s);
-	if( getKnownState()==UNKNOWN) newKnownState(s);
-	   else newKnownState(INCONSISTENT);
+	newKnownState(INCONSISTENT);
     }
 
 
@@ -139,9 +138,6 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                                                   getCommandedState()==CLOSED,
                                                   getCommandedState()==THROWN,
                                                   false );
- 	    // We have to send this message twice for some reason, 
-            // otherwise, the turnout continues to throw.
-            // XNetTrafficController.instance().sendXNetMessage(msg, this);
             XNetTrafficController.instance().sendXNetMessage(msg, this);
 	    // Set the known state to the commanded state.
 	    newKnownState(getCommandedState());
