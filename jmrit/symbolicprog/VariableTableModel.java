@@ -443,10 +443,18 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		}
 
 		headers = null;
+
+		rowVector.removeAllElements();
 		rowVector = null;
+
 		_cvModel = null;
+
+		_writeButtons.removeAllElements();
 		_writeButtons = null;
+
+		_readButtons.removeAllElements();
 		_readButtons = null;
+
 		_status = null;
 	}
 	

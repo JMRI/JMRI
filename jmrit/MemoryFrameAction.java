@@ -12,7 +12,7 @@ import jmri.jmrit.decoderdefn.*;
  * Display memory usage on request
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: MemoryFrameAction.java,v 1.1 2001-11-23 22:22:30 jacobsen Exp $
+ * @version			$Id: MemoryFrameAction.java,v 1.2 2002-01-13 20:38:32 jacobsen Exp $
  */
 public class MemoryFrameAction extends AbstractAction {
 		
@@ -22,12 +22,15 @@ public class MemoryFrameAction extends AbstractAction {
 	
 	JTextField used1 = new JTextField(15);
 	JTextField used2 = new JTextField(15);
+	JTextField used3 = new JTextField(15);
 	
 	JTextField free1 = new JTextField(15);
 	JTextField free2 = new JTextField(15);
+	JTextField free3 = new JTextField(15);
 	
 	JTextField total1 = new JTextField(15);
 	JTextField total2 = new JTextField(15);
+	JTextField total3 = new JTextField(15);
 	
 	JButton updateButton = new JButton("Update");
 	JButton gcButton = new JButton("Collect memory");
@@ -37,11 +40,15 @@ public class MemoryFrameAction extends AbstractAction {
 		JFrame f = new JFrame("Memory usage");
 		
 		Container p = f.getContentPane();
-		p.setLayout(new GridLayout(4,3));
+		p.setLayout(new GridLayout(5,3));
 		
 		p.add(new JLabel("used (kB)"));
 		p.add(new JLabel("free (kB)"));
 		p.add(new JLabel("total (kB)"));
+
+		p.add(used3);
+		p.add(free3);
+		p.add(total3);
 
 		p.add(used2);
 		p.add(free2);
@@ -79,14 +86,19 @@ public class MemoryFrameAction extends AbstractAction {
 	}
 		
 	void updateDisplay() {
+		used3.setText(used2.getText());
+		free3.setText(free2.getText());
+		total3.setText(total2.getText());
+
 		used2.setText(used1.getText());
 		free2.setText(free1.getText());
 		total2.setText(total1.getText());
-		long free  = Runtime.getRuntime().freeMemory()/1000;
-		long total = Runtime.getRuntime().totalMemory()/1000;
-		used1.setText(""+(total-free));
-		free1.setText(""+free);
-		total1.setText(""+total);
+
+		long free  = Runtime.getRuntime().freeMemory()/1024;
+		long total = Runtime.getRuntime().totalMemory()/1024;
+		used1.setText(Long.toString(total-free));
+		free1.setText(Long.toString(free));
+		total1.setText(Long.toString(total));
 	}
 	
 	// initialize logging	

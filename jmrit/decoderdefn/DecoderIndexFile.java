@@ -4,6 +4,8 @@ package jmri.jmrit.decoderdefn;
 
 import jmri.jmrit.XmlFile;
 import java.io.File;
+import java.util.Enumeration;
+
 import javax.swing.JComboBox;
 import com.sun.java.util.collections.List;
 import com.sun.java.util.collections.ArrayList;
@@ -11,6 +13,9 @@ import com.sun.java.util.collections.Hashtable;
 
 import org.jdom.Attribute;
 import org.jdom.Element;
+import org.jdom.Document;
+import org.jdom.DocType;
+import org.jdom.output.XMLOutputter;
 
 // try to limit the JDOM to this class, so that others can manipulate...
 
@@ -26,7 +31,7 @@ import org.jdom.Element;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecoderIndexFile.java,v 1.7 2001-12-18 07:31:07 jacobsen Exp $
+ * @version			$Id: DecoderIndexFile.java,v 1.8 2002-01-13 20:38:33 jacobsen Exp $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -205,7 +210,7 @@ public class DecoderIndexFile extends XmlFile {
 		String mfgID   = mfgIdFromName(mfg);
 
 		// record the decoders
-		List l = family.getChildren("decoder");
+		List l = family.getChildren("model");
 		if (log.isDebugEnabled()) log.debug("readFamily sees "+l.size()+" children");
 		for (int i=0; i<l.size(); i++) {
 			// handle each entry by creating a DecoderFile object containing all it knows
@@ -222,6 +227,60 @@ public class DecoderIndexFile extends XmlFile {
 		}
 	}
 	
+	public void writeFile(String name, DecoderIndexFile oldIndex, String files[]) throws java.io.IOException {
+		if (log.isInfoEnabled()) log.info("writeFile "+name);
+		// This is taken in large part from "Java and XML" page 368 
+		File file = new File(prefsDir()+name);
+
+		// create root element
+		Element root = new Element("decoderIndex-config");
+		Document doc = new Document(root);
+		doc.setDocType(new DocType("decoderIndex-config","decoderIndex-config.dtd"));
+		
+		// add top-level elements
+		Element index;
+		root.addContent(index = new Element("decoderIndex"));
+		
+		// add mfg list from existing DecoderIndexFile item
+		Element mfgList = new Element("mfgList");
+		Enumeration keys = oldIndex._mfgNameFromIdHash.keys();
+		while (keys.hasMoreElements()) {
+			String num = (String)keys.nextElement();
+			Element mfg = new Element("manufacturer");
+			mfg.addAttribute("mfgID",num);
+			mfg.addAttribute("mfg",(String)oldIndex._mfgNameFromIdHash.get(num));
+			mfgList.addContent(mfg);
+		}
+		
+		// add family list by scanning files
+		Element familyList = new Element("familyList");
+		for (int i=0; i<files.length; i++) {
+			DecoderFile d = new DecoderFile();
+			try {
+				Element droot = d.rootFromName(DecoderFile.fileLocation+files[i]);
+				Element family = droot.getChild("decoder").getChild("family").getCopy("family");
+				family.addAttribute("file",files[i]);
+				familyList.addContent(family);
+			}
+			catch (org.jdom.JDOMException exj) {log.error("could not parse "+files[i]+": "+exj.getMessage());}
+			catch (java.io.FileNotFoundException exj) {log.error("could not read "+files[i]+": "+exj.getMessage());}
+		}		
+		
+		index.addContent(mfgList);
+		index.addContent(familyList);
+		
+		// write the result to selected file
+		java.io.FileOutputStream o = new java.io.FileOutputStream(file);
+		XMLOutputter fmt = new XMLOutputter();
+		fmt.setNewlines(true);   // pretty printing
+		fmt.setIndent(true);
+		fmt.output(doc, o);
+		
+		// force a read of the new file next time
+		_instance = null;
+	}
+	
+
 	/** 
 	* Return the filename String for the default decoder index file, including location.
 	* This is here to allow easy override in tests.

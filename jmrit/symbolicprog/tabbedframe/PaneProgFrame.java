@@ -58,12 +58,19 @@ public class PaneProgFrame extends javax.swing.JFrame
 	ActionListener l2;
 	
 	protected void installComponents() {
+		// to control size, we need to insert a single
+		// JPanel, then have it laid out with BoxLayout
+		JPanel pane = new JPanel();
+		
+		// general GUI config		
+		pane.setMaximumSize(getToolkit().getScreenSize());
+
+		pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
+		
 		// configure GUI elements
 		confirmAllButton.setEnabled(false);
 		confirmAllButton.setToolTipText("disabled because not yet implemented");
 		
-		// general GUI config
-		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		readAllButton.setToolTipText("Read current values from decoder. Warning: may take a long time!");
 		readAllButton.addActionListener( l1 = new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -78,7 +85,8 @@ public class PaneProgFrame extends javax.swing.JFrame
 		});
 
 		// most of the GUI is done from XML in readConfig() function
-		getContentPane().add(tabPane);
+		// which configures the tabPane
+		pane.add(tabPane);
 		
 		// add buttons
 		JPanel bottom = new JPanel();
@@ -86,10 +94,24 @@ public class PaneProgFrame extends javax.swing.JFrame
 		bottom.add(readAllButton);
 		bottom.add(confirmAllButton);
 		bottom.add(writeAllButton);
-		getContentPane().add(bottom);
+		pane.add(bottom);
 		
 		progStatus.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-		getContentPane().add(progStatus);
+		pane.add(progStatus);
+		
+		// and put that pane into the JFrame
+		getContentPane().add(pane);
+	}
+	
+	public Dimension getPreferredSize() {
+		Dimension screen = getToolkit().getScreenSize();
+		int width = Math.min(super.getPreferredSize().width, screen.width);
+		int height = Math.min(super.getPreferredSize().height, screen.height);
+		return new Dimension(width, height);
+	}
+
+	public Dimension getMaximumSize() {
+		return getToolkit().getScreenSize();
 	}
 	
 	// ctors
@@ -102,13 +124,15 @@ public class PaneProgFrame extends javax.swing.JFrame
 			public void windowClosing(java.awt.event.WindowEvent e) {
 				thisWindowClosing(e);
 			}
-		});
-		pack();
+		}); 
+
+ 		pack();
+
 		if (log.isDebugEnabled()) log.debug("PaneProgFrame contructed with no args, size is "+getPreferredSize());
 		if (getPreferredSize().width>800 || getPreferredSize().height>600) 
-				log.info("Frame larger than 800x600, is "+getPreferredSize());
+				log.info("Frame prefers larger than 800x600, is "+getPreferredSize());
 	}
-  	
+   	
   	/**
   	 * Initialization sequence:
   	 * <UL>
@@ -167,6 +191,7 @@ public class PaneProgFrame extends javax.swing.JFrame
 		});
 
 		pack();
+
 		if (log.isDebugEnabled()) log.debug("PaneProgFrame \""+name+"\" constructed for file "+locoFile
 											+", size is "+getPreferredSize());
 		if (getPreferredSize().width>800 || getPreferredSize().height>600) 
@@ -598,11 +623,12 @@ public class PaneProgFrame extends javax.swing.JFrame
 			PaneProgPane p = (PaneProgPane) paneList.get(i);
 			p.dispose();
 		}
+		paneList.clear();
 		
-		// dispose of things we owned
-		cvModel.dispose();
-		variableModel.dispose();
+		// dispose of things we owned, in order of dependence
 		_rPane.dispose();
+		variableModel.dispose();
+		cvModel.dispose();
 		
 		// remove references to everything we remember
 		progStatus = null;
@@ -610,8 +636,11 @@ public class PaneProgFrame extends javax.swing.JFrame
 		variableModel = null;
 		_rosterEntry = null;
 		_rPane = null;
+
+		paneList.clear();
 		paneList = null;
 		_programmingPane = null;
+
 		lroot = null;
 		tabPane = null;
 		readAllButton = null;

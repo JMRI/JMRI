@@ -197,10 +197,18 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 		}
 		
 		// null references, so that they can be gc'd even if this isn't.				
+		_cvDisplayVector.removeAllElements();
 		_cvDisplayVector = null;
+
+		_cvAllVector.removeAllElements();
 		_cvAllVector = null;
+		
+		_writeButtons.removeAllElements();
 		_writeButtons = null;
+		
+		_readButtons.removeAllElements();
 		_readButtons = null;
+
 		_status = null;
 	}
 	

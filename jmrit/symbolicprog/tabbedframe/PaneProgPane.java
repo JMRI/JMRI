@@ -29,7 +29,7 @@ import org.jdom.Attribute;
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: PaneProgPane.java,v 1.15 2002-01-13 03:38:31 jacobsen Exp $
+ * @version			$Id: PaneProgPane.java,v 1.16 2002-01-13 20:38:33 jacobsen Exp $
  */
 public class PaneProgPane extends javax.swing.JPanel 
 							implements java.beans.PropertyChangeListener  {
@@ -59,6 +59,8 @@ public class PaneProgPane extends javax.swing.JPanel
 		_cvModel = cvModel;
 		_varModel = varModel;
 		
+		// This is a JPanel containing a JScrollPane, containing a 
+		// laid-out JPanel
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		
 		// find out whether to display "label" (false) or "item" (true)
@@ -89,7 +91,7 @@ public class PaneProgPane extends javax.swing.JPanel
 		// add glue to the right to allow resize - but this isn't working as expected? Alignment?
 		add(Box.createHorizontalGlue());
 
-		add(p);
+		add(new JScrollPane(p));
 		
 		// add buttons in a new panel
 		JPanel bottom = new JPanel();
@@ -585,7 +587,10 @@ public class PaneProgPane extends javax.swing.JPanel
 
 		prop = null;
 		_programmingVar = null;
+		
+		varList.clear();
 		varList = null;
+		
 		readButton = null;
 		confButton = null;
 		writeButton = null;

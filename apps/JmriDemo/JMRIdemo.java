@@ -51,6 +51,7 @@ public class JMRIdemo extends JPanel {
 	        funcMenu.add(new jmri.jmrit.XmlFileCheckAction("Check XML File", this));
 	        funcMenu.add(new jmri.jmrit.NameCheckAction("Check decoder names", this));
 	        funcMenu.add(new jmri.jmrit.tabbedframe.ProgCheckAction("Check programmer names", this));
+	        funcMenu.add(new jmri.jmrit.decoderdefn.DecoderIndexCreateAction("Create decoder index"));
 
         JMenu locoMenu = new JMenu("LocoNet");
         menuBar.add(locoMenu);

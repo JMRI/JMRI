@@ -40,7 +40,7 @@ import com.sun.java.util.collections.ArrayList;
  *<P>
  * Description:		Extends VariableValue to represent a NMRA long address
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: SpeedTableVarValue.java,v 1.5 2001-12-18 07:31:07 jacobsen Exp $
+ * @version			$Id: SpeedTableVarValue.java,v 1.6 2002-01-13 20:38:33 jacobsen Exp $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -164,7 +164,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 	}
 	
 	public Component getRep(String format)  { 
-		// put together a new panel
+		// put together a new panel in scroll pane
 		JPanel j = new JPanel();
 		j.setLayout(new BoxLayout(j, BoxLayout.X_AXIS));
 
@@ -174,7 +174,6 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 			s.addChangeListener(this);
 			j.add(s);
 		}
-		
 		return j;
 	}
 	

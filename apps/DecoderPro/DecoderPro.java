@@ -12,7 +12,7 @@ import BasicWindowMonitor;
  * DecoderPro application. 
  *
  * @author			Bob Jacobsen
- * @version			$Id: DecoderPro.java,v 1.5 2002-01-12 22:26:00 jacobsen Exp $
+ * @version			$Id: DecoderPro.java,v 1.6 2002-01-13 20:38:32 jacobsen Exp $
  */
 public class DecoderPro extends JPanel {
 	public DecoderPro() {
@@ -51,6 +51,7 @@ public class DecoderPro extends JPanel {
 	        toolMenu.add(new jmri.jmrit.XmlFileCheckAction("Check XML File", this));
 	        toolMenu.add(new jmri.jmrit.NameCheckAction("Check decoder names", this));
 	        toolMenu.add(new jmri.jmrit.tabbedframe.ProgCheckAction("Check programmer names", this));
+	        toolMenu.add(new jmri.jmrit.decoderdefn.DecoderIndexCreateAction("Create decoder index"));
 
         JMenu debugMenu = new JMenu("Debug");
         menuBar.add(debugMenu);
