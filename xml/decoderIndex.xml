@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
-<!-- $Id: decoderIndex.xml,v 1.32 2002-10-17 12:40:49 jacobsen Exp $ -->
+<!-- $Id: decoderIndex.xml,v 1.33 2002-10-25 16:06:38 jacobsen Exp $ -->
+
 <decoderIndex-config>
-  <decoderIndex version="40">
+  <decoderIndex version="41">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -43,6 +44,7 @@
     <familyList>
       <family name="NMRA standard CV definitions" mfg="NMRA" type="locomotive" file="0NMRA.xml" />
       <family name="NMRA standard register definitions" mfg="NMRA" type="locomotive" file="0NMRA_registers.xml" />
+      <family name="Raw CVs 1-255" mfg="NMRA" type="locomotive" file="0NMRA_test.xml" />
       <family name="Dual Mode" mfg="Atlas" lowVersionID="1" highVersionID="255" type="locomotive" file="Atlas_DualMode.xml">
         <model model="Dual Mode" numOuts="4" numFns="8" />
       </family>
@@ -124,6 +126,7 @@
         <model model="DH120" numOuts="2" numFns="2" />
         <model model="DZ120" numOuts="2" numFns="2" />
       </family>
+      <family name="DS54" mfg="Digitrax" comment="DS54 is a stationary decoder, but it can be programmed in the usual way" type="locomotive" file="Digitrax_yDS54.xml" />
       <family name="ESU LokSound2 Silent BEMF/Sound decoders" mfg="ESU" lowVersionID="21" type="locomotive" file="ESU_LokSound2_21.xml">
         <model model="ESU_LokSound2" numOuts="13" numFns="12">
           <output name="1" label="Front Lights" />
