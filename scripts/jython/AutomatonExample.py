@@ -5,7 +5,7 @@
 # detects the engine
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.5 $
+# $Revision: 1.6 $
 
 import jarray
 import jmri
@@ -20,6 +20,8 @@ class AutomatExample(jmri.jmrit.automat.AbstractAutomaton) :
 		self.fwdSensor = sensors.provideSensor("12")
 		self.revSensor = sensors.provideSensor("13")
 		self.throttle = self.getThrottle(1234, True)  # long address 1234
+		if (self.throttle == None) :
+			print "Couldn't assign throttle!"
 		 		
 		return
 
@@ -37,6 +39,10 @@ class AutomatExample(jmri.jmrit.automat.AbstractAutomaton) :
 		# set loco to reverse
 		self.throttle.setIsForward(False)
 		
+		# wait for sensor inactive, meaning loco has reversed out
+		# (prevent infinite loop if both sensors go active in the overlap)
+		self.waitSensorInactive(self.fwdSensor)
+
 		# wait for sensor in reverse direction to trigger
 		self.waitSensorActive(self.revSensor)
 		
