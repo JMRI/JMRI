@@ -12,12 +12,12 @@ import jmri.jmrix.AbstractThrottle;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class NceThrottle extends AbstractThrottle
 {
     /**
-     * Constructor
+     * Constructor.
      */
     public NceThrottle(int address)
     {
@@ -46,7 +46,7 @@ public class NceThrottle extends AbstractThrottle
 
 
     /**
-     * Send the message to set the state of functions F0, F1, F2, F3, F4
+     * Send the message to set the state of functions F0, F1, F2, F3, F4.
      */
     protected void sendFunctionGroup1() {
         byte[] result = jmri.NmraPacket.function0Through4Packet(address, (address>=100),
@@ -71,7 +71,7 @@ public class NceThrottle extends AbstractThrottle
 
     /**
      * Send the message to set the state of
-     * functions F5, F6, F7, F8
+     * functions F5, F6, F7, F8.
      */
     protected void sendFunctionGroup2() {
 
@@ -97,7 +97,7 @@ public class NceThrottle extends AbstractThrottle
 
     /**
      * Send the message to set the state of
-     * functions F9, F10, F11, F12
+     * functions F9, F10, F11, F12.
      */
     protected void sendFunctionGroup3() {
 
@@ -122,7 +122,7 @@ public class NceThrottle extends AbstractThrottle
     }
 
     /**
-     * Set the speed & direction
+     * Set the speed & direction.
      * <P>
      * This intentionally skips the emergency stop value of 1.
      * @param speed Number from 0 to 1; less than zero is emergency stop

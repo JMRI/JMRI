@@ -3,11 +3,13 @@
 package jmri.jmrix.nce;
 
 /**
- * Encodes a message to an NCE command station.  The NceReply
+ * Encodes a message to an NCE command station.
+ * <P>
+ * The {@link NceReply}
  * class handles the response from the command station.
  *
- * @author	        Bob Jacobsen  Copyright (C) 2001
- * @version             $Revision: 1.9 $
+ * @author	Bob Jacobsen  Copyright (C) 2001
+ * @version     $Revision: 1.10 $
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
