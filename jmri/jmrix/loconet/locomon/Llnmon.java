@@ -2,7 +2,8 @@
 
 package jmri.jmrix.loconet.locomon;
 
-import jmri.jmrix.loconet.*;
+import jmri.jmrix.loconet.LnConstants;
+import jmri.jmrix.loconet.LocoNetMessage;
 
  /**
  * A utility class for formatting LocoNet packets
@@ -32,7 +33,7 @@ import jmri.jmrix.loconet.*;
  * Reverse engineering of OPC_MULTI_SENSE was provided by Al Silverstein.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 public class Llnmon {
 
@@ -1362,31 +1363,32 @@ public class Llnmon {
              *                         ; <0xE4>,<0x09>,...                                      *
              ***********************************************************************************/
         case 0XE4:
-            if (l.getElement(1)!=0x09) {
+            if (l.getElement(1)!=0x0A) {
                 forceHex = true;
                 return "Unrecognized command varient\n";
             }
 
             // OK, format
             int element = l.getElement(2)*128+l.getElement(3);
-            int stat = l.getElement(5);
+            int stat1 = l.getElement(5);
+            int stat2 = l.getElement(6);
             String status;
-            if ( (stat&0x10) !=0 )
-                if ( (stat&0x20) !=0 )
+            if ( (stat1&0x10) !=0 )
+                if ( (stat1&0x20) !=0 )
                     status = " AX, XA reserved; ";
                 else
                     status = " AX reserved; ";
             else
-                if ( (stat&0x20) !=0 )
+                if ( (stat1&0x20) !=0 )
                     status = " XA reserved; ";
                 else
                     status = " no reservation; ";
-            if ( (stat&0x01) !=0 ) status+="Turnout normal; ";
-            else status+="Turnout reversed; ";
-            if ( (stat&0x04) !=0 ) status+="Occupied";
+            if ( (stat2&0x01) !=0 ) status+="Turnout thrown; ";
+            else status+="Turnout closed; ";
+            if ( (stat1&0x01) !=0 ) status+="Occupied";
             else status+="Not occupied";
-            return "SE"+element+" reports AX:"+l.getElement(6)*4
-                +" XA:"+l.getElement(7)*4
+            return "SE"+(element+1)+" ("+element+") reports AX:"+l.getElement(7)
+                +" XA:"+l.getElement(8)
                 +status+"\n";
 
             /**************************************************************************
