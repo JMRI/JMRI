@@ -19,7 +19,7 @@ import jmri.jmrit.catalog.*;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -43,10 +43,10 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
      * @param pUserName Used as a user name to lookup the turnout object
      * @param pSystemName Used as a system name to lookup the turnout object
      */
-    public void setTurnout(String pUserName, String pSystemName) {
+    public void setTurnout(String pSystemName, String pUserName) {
         if (InstanceManager.turnoutManagerInstance()!=null) {
             turnout = InstanceManager.turnoutManagerInstance().
-                newTurnout(pUserName, pSystemName);
+                newTurnout(pSystemName, pUserName);
             displayState(turnoutState());
             turnout.addPropertyChangeListener(this);
         } else {
@@ -146,6 +146,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
      * turnout.
      */
     void displayState(int state) {
+        log.debug("displayState "+state);
         switch (state) {
         case Turnout.UNKNOWN:
             if (showText) super.setText("<unknown>");
@@ -176,14 +177,10 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
             log.error("No turnout connection, can't process click");
             return;
         }
-        try {
-            if (turnout.getKnownState()==jmri.Turnout.CLOSED)
-                turnout.setCommandedState(jmri.Turnout.THROWN);
-            else
-                turnout.setCommandedState(jmri.Turnout.CLOSED);
-        } catch (jmri.JmriException reason) {
-            log.warn("Exception changing turnout: "+reason);
-        }
+        if (turnout.getKnownState()==jmri.Turnout.CLOSED)
+            turnout.setCommandedState(jmri.Turnout.THROWN);
+        else
+            turnout.setCommandedState(jmri.Turnout.CLOSED);
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TurnoutIcon.class.getName());

@@ -9,7 +9,7 @@ import org.jdom.*;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class SensorIconXml implements XmlAdapter {
 
@@ -85,7 +85,7 @@ public class SensorIconXml implements XmlAdapter {
             }
         } catch (org.jdom.DataConversionException e) {}
 
-        l.setSensor(element.getAttribute("sensor").getValue(), "");
+        l.setSensor(element.getAttribute("sensor").getValue(), null);
 
         // find coordinates
         int x = 0;
