@@ -1,1 +1,125 @@
-<?xml version="1.0"?><!DOCTYPE decoder-config SYSTEM "decoder-config.dtd"><!-- $Id: Digitrax_yfunction.xml,v 1.1 2003-02-28 04:32:30 jacobsen Exp $ --><decoder-config>		<version author="rickcstone@cox.net" 					version="1" lastUpdated="20030205"/>		<!-- Created from version 4 of the 1x3 file -->				<decoder>	<family name="Function Only, with transponding" 			mfg="Digitrax" lowVersionID="244">		<model model="TL1" numOuts="1" numFns="4">			<output name="1" label="White"/> 			</model>			</family>	<programming direct="byteOnly" paged="yes" 	                     register="yes" ops="no"></programming>	<variables>		<variable label="Primary Address" CV="1" comment="Short address"						item="Short Address"  default="03">			<shortAddressVal/>			</variable>		<variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">				<decVal/>			</variable>		<variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer">				<decVal/>			</variable>		<variable label="Long Address" CV="17" item="Extended Address">			<longAddressVal/>			</variable>		<variable label="Addressing Mode" CV="29" mask="XXVXXXXX"					item="Address Format">			<enumVal>				<enumChoice choice="2 digit addressing"/>				<enumChoice choice="4 digit addressing"/>				</enumVal>			</variable>		<variable label="Forward light F0F effect generated" CV="49" mask="XXXXXVVV"					item="White lead effect generated">			<enumVal>				<enumChoice choice="Normal function of lead"/>				<enumChoice choice="Simulated FRED"/>				<enumChoice choice="Simulated Mars light"/>				<enumChoice choice="Slow Strobe"/>				<enumChoice choice="Single pulse"/>				<enumChoice choice="Double pulse"/>				<enumChoice choice="Medium pulse"/>				<enumChoice choice="Mostly on blinking off"/>				</enumVal>			</variable>		<variable label="FL(f) controls output 1" CV="61" mask="XXXXXXXV"minOut="1">			<enumVal>				<enumChoice choice="No"/>				<enumChoice choice="Yes"/>				</enumVal>			</variable>		<variable label="F1 controls output 1" CV="61" mask="XXXXXXXV"minOut="1" minFn="1">			<enumVal>				<enumChoice choice="Yes"/>				<enumChoice choice="No"/>				</enumVal>			</variable>		<variable label="F2 Controls Output 1" CV="64" mask="XXXXXXXV"minOut="1" minFn="2">			<enumVal>				<enumChoice choice="No"/>				<enumChoice choice="Yes"/>				</enumVal>			</variable>		<variable label="F3 controls Output 1" CV="64" mask="XXXXXXVV"			minOut="1" minFn="3">			<enumVal>				<enumChoice choice="No"/>				<enumChoice choice="No"/>				<enumChoice choice="Yes"/>				<enumChoice choice="No"/>				</enumVal>			</variable>		<variable label="F4 controls Output 1" CV="64" mask="XXXXXXVV"			minOut="1" minFn="4">			<enumVal>				<enumChoice choice="No"/>				<enumChoice choice="No"/>				<enumChoice choice="No"/>				<enumChoice choice="Yes"/>				</enumVal>			</variable>		<variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX"			item="Advanced Ack">			<enumVal>				<enumChoice choice="Off"/>				<enumChoice choice="On"/>				</enumVal>			</variable>						<variable label="White lead effect rate" CV="62" mask="XXXXXVVV"				item="Global lighting option 1"	comment="0 is slowest">				<decVal max="7"/>			</variable>		</variables></decoder></decoder-config>
+<?xml version="1.0"?>
+<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<!-- $Id: Digitrax_yfunction.xml,v 1.2 2003-07-06 17:05:29 jacobsen Exp $ -->
+<decoder-config>
+		<version author="rickcstone@cox.net" 
+					version="1" lastUpdated="20030205"/>
+
+		<!-- Created from version 4 of the 1x3 file -->
+				
+<decoder>
+	<family name="Function Only, with transponding" 
+			mfg="Digitrax" lowVersionID="244">
+		<model model="TL1" numOuts="1" numFns="4">
+			<output name="1" label="White"/> 
+			</model>
+		
+	</family>
+
+	<programming direct="byteOnly" paged="yes" 
+	                     register="yes" ops="no"></programming>
+
+	<variables>
+		<variable label="Primary Address" CV="1" comment="Short address"
+						item="Short Address"  default="03">
+			<shortAddressVal/>
+			</variable>
+
+		<variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
+				<decVal/>
+			</variable>
+
+		<variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer">
+				<decVal/>
+			</variable>
+
+		<variable label="Long Address" CV="17" item="Extended Address">
+			<longAddressVal/>
+			</variable>
+
+		<variable label="Addressing Mode" CV="29" mask="XXVXXXXX"
+					item="Address Format">
+			<enumVal>
+				<enumChoice choice="2 digit addressing"/>
+				<enumChoice choice="4 digit addressing"/>
+				</enumVal>
+			</variable>
+
+		<variable label="Forward light F0F effect generated" CV="49" mask="XXXXXVVV"
+					item="White lead effect generated">
+			<enumVal>
+				<enumChoice choice="Normal function of lead"/>
+				<enumChoice choice="Simulated FRED"/>
+				<enumChoice choice="Simulated Mars light"/>
+				<enumChoice choice="Slow Strobe"/>
+				<enumChoice choice="Single pulse"/>
+				<enumChoice choice="Double pulse"/>
+				<enumChoice choice="Medium pulse"/>
+				<enumChoice choice="Mostly on blinking off"/>
+				</enumVal>
+			</variable>
+
+		<variable label="FL(f) controls output 1" CV="61" mask="XXXXXXXV"
+minOut="1">
+			<enumVal>
+				<enumChoice choice="No"/>
+				<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+
+		<variable label="F1 controls output 1" CV="61" mask="XXXXXXXV"
+minOut="1" minFn="1">
+			<enumVal>
+				<enumChoice choice="Yes"/>
+				<enumChoice choice="No"/>
+				</enumVal>
+			</variable>
+
+		<variable label="F2 Controls Output 1" CV="64" mask="XXXXXXXV"
+minOut="1" minFn="2">
+			<enumVal>
+				<enumChoice choice="No"/>
+				<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+
+		<variable label="F3 controls Output 1" CV="64" mask="XXXXXXVV"
+			minOut="1" minFn="3">
+			<enumVal>
+				<enumChoice choice="No"/>
+				<enumChoice choice="No"/>
+				<enumChoice choice="Yes"/>
+				<enumChoice choice="No"/>
+				</enumVal>
+			</variable>
+
+		<variable label="F4 controls Output 1" CV="64" mask="XXXXXXVV"
+			minOut="1" minFn="4">
+			<enumVal>
+				<enumChoice choice="No"/>
+				<enumChoice choice="No"/>
+				<enumChoice choice="No"/>
+				<enumChoice choice="Yes"/>
+				</enumVal>
+			</variable>
+
+		<variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX"
+			item="Advanced Ack">
+			<enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+				</enumVal>
+			</variable>
+				
+		<variable label="White lead effect rate" CV="62" mask="XXXXXVVV"
+				item="Global lighting option 1"	comment="0 is slowest">
+				<decVal max="7"/>
+			</variable>
+
+		</variables>
+
+</decoder>
+
+</decoder-config>
+
+

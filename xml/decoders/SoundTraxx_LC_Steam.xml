@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_LC_Steam.xml,v 1.8 2002-10-16 17:33:10 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_LC_Steam.xml,v 1.9 2003-07-06 17:06:29 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Robin Becker" version="6" lastUpdated="20020711"/>
 

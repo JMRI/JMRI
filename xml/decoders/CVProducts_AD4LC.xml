@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: CVProducts_AD4LC.xml,v 1.1 2003-05-27 03:00:02 jacobsen Exp $ -->
+<!-- $Id: CVProducts_AD4LC.xml,v 1.2 2003-07-06 17:04:37 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
 					version="4" lastUpdated="20030525"/>

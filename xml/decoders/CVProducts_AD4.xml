@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: CVProducts_AD4.xml,v 1.8 2003-02-17 20:02:01 jacobsen Exp $ -->
+<!-- $Id: CVProducts_AD4.xml,v 1.9 2003-07-06 17:04:29 jacobsen Exp $ -->
 <decoder-config>
 		<version author="afticarr@sympatico.ca" 
 					version="4" lastUpdated="20030209"/>
