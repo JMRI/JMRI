@@ -12,6 +12,11 @@ import jmri.jmrix.*;
  * Controls a collection of slots, acting as the
  * counter-part of a LocoNet command station.
  * <P>
+ * A SlotListener can register to hear changes. By registering here, the SlotListener
+ * is saying that it wants to be notified of a change in any slot.  Alternately,
+ * the SlotListener can register with some specific slot, done via the LocoNetSlot
+ * object itself.
+ * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project.  That permission
  * does not extend to uses in other software products.  If you wish to
@@ -19,25 +24,9 @@ import jmri.jmrix.*;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.13 $
+ * @version         $Revision: 1.14 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener {
-
-    /**
-     * Information on slot state is stored in an array of LocoNetSlot objects.
-     * This is declared final because we never need to modify the array itself,
-     * just its contents.
-     */
-    final private LocoNetSlot _slots[] = new LocoNetSlot[128];
-
-    /**
-     * Access the information in a specific slot.  Note that this is a
-     * mutable access, so that the information in the LocoNetSlot object
-     * can be changed.
-     * @param i  Specific slot, counted starting from zero.
-     * @return   The Slot object
-     */
-    public LocoNetSlot slot(int i) {return _slots[i];}
 
     public SlotManager() {
         // error if more than one constructed?
@@ -56,23 +45,58 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
     }
 
     /**
+     * Information on slot state is stored in an array of LocoNetSlot objects.
+     * This is declared final because we never need to modify the array itself,
+     * just its contents.
+     */
+    final private LocoNetSlot _slots[] = new LocoNetSlot[128];
+
+    /**
+     * Access the information in a specific slot.  Note that this is a
+     * mutable access, so that the information in the LocoNetSlot object
+     * can be changed.
+     * @param i  Specific slot, counted starting from zero.
+     * @return   The Slot object
+     */
+    public LocoNetSlot slot(int i) {return _slots[i];}
+
+    /**
      * Obtain a slot for a particular loco address.
      * <P>This requires access to the command station, even if the
      * locomotive address appears in the current contents of the slot
      * array, to ensure that our local image is up-to-date.
      * <P>
      * This method sends an info request.  When the echo of this is
-     * returned from the LocoNet, a status bit is sent so that the
-     * next slot-read-will be recognized as the response.
+     * returned from the LocoNet, the
+     * next slot-read is recognized as the response.
      * <P>
      * The object that's looking for this information must provide
      * a SlotListener to notify when the slot ID becomes available.
+     * <P>
+     * The SlotListener is not subscribed for slot notifications; it can
+     * do that later if it wants.  We don't currently think that's a race
+     * condition.
      * @param i  Specific slot, counted starting from zero.
      * @param l  The SlotListener to notify of the answer.
      */
-    public void slotFromLocoAddress(int i, SlotListener l) { return; }
+    public void slotFromLocoAddress(int i, SlotListener l) {
+        LocoNetMessage m = new LocoNetMessage(4);
+        m.setOpCode(0xBF);  // OPC_LOCO_ADR
+        m.setElement(1, (i/128)&0x7F);
+        m.setElement(2, i&0x7F);
+        LnTrafficController.instance().sendLocoNetMessage(m);
 
-    /*
+        // store connection between this address and listener for later
+        mLocoAddrHash.put(new Integer(i), l);
+    }
+
+    /**
+     * Provide a mapping between locomotive addresses and the
+     * SlotListener that's interested in them
+     */
+    Hashtable mLocoAddrHash = new Hashtable();
+
+    /**
      * method to find the existing SlotManager object, if need be creating one
      */
     static public final SlotManager instance() {
@@ -81,45 +105,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
     }
     static private SlotManager self = null;
 
-    // handle mode
-    protected int _mode = Programmer.PAGEMODE;
-
-    public void setMode(int mode) {
-        if (mode == jmri.Programmer.DIRECTBITMODE)
-            mode = jmri.Programmer.DIRECTBYTEMODE;
-        if (mode != _mode) {
-            notifyPropertyChange("Mode", _mode, mode);
-            _mode = mode;
-        }
-    }
-    public int getMode() { return _mode; }
-
-    public boolean getCanRead() { return mCanRead; }
-    boolean mCanRead = true;
-    public void setCanRead(boolean pCanRead) {
-        log.debug("set canRead to "+pCanRead);
-        mCanRead = pCanRead;
-    }
-
-    /**
-     * Signifies mode's available
-     * @param mode
-     * @return True if paged or register mode
-     */
-    public boolean hasMode(int mode) {
-        if ( mode == Programmer.PAGEMODE ||
-             mode == Programmer.ADDRESSMODE ||
-             mode == Programmer.DIRECTBYTEMODE ||
-             mode == Programmer.REGISTERMODE ) {
-            log.debug("hasMode request on mode "+mode+" returns true");
-            return true;
-        }
-        log.debug("hasMode returns false on mode "+mode);
-        return false;
-    }
-
     // data members to hold contact with the slot listeners
-    private Vector slotListeners = new Vector();
+    final private Vector slotListeners = new Vector();
 
     public synchronized void addSlotListener(SlotListener l) {
         // add only if not already registered
@@ -134,6 +121,10 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
         }
     }
 
+    /**
+     * Trigger the notification of all SlotListeners.
+     * @param s The changed slot to notify.
+     */
     protected void notify(LocoNetSlot s) {
         // make a copy of the listener vector to synchronized not needed for transmit
         Vector v;
@@ -152,27 +143,33 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
         }
     }
 
-    protected void notifyPropertyChange(String name, int oldval, int newval) {
-        // make a copy of the listener vector to synchronized not needed for transmit
-        Vector v;
-        synchronized(this)
-            {
-                v = (Vector) propListeners.clone();
-            }
-        if (log.isDebugEnabled()) log.debug("notify "+v.size()
-                                            +"listeners of property change name: "
-                                            +name+" oldval: "+oldval+" newval: "+newval);
-        // forward to all listeners
-        int cnt = v.size();
-        for (int i=0; i < cnt; i++) {
-            PropertyChangeListener client = (PropertyChangeListener) v.elementAt(i);
-            client.propertyChange(new PropertyChangeEvent(this, name, new Integer(oldval), new Integer(newval)));
+    /**
+     * Stores the opcode of the previously-processed message for context.
+     * This is needed to know whether a SLOT DATA READ is a response to
+     * a REQ LOCO ADDR, for example.
+     */
+    int lastMessage = -1;
+
+    /**
+     * Listen to the LocoNet. This is just a steering routine, which invokes
+     * others for the various processing steps.
+     * @param m incoming message
+     */
+    public void message(LocoNetMessage m) {
+        int i = findSlotFromMessage(m);
+        if (i != -1) {
+            forwardMessageToSlot(m,i);
+            respondToAddrRequest(m,i);
+            programmerOpMessage(m,i);
         }
+
+        // save this message for context next time
+        lastMessage = m.getOpCode();
     }
 
-    // listen to the LocoNet
-    public void message(LocoNetMessage m) {
-        int i = 0;
+    public int findSlotFromMessage(LocoNetMessage m) {
+
+        int i = -1;  // find the slot index in the message and store here
 
         // decode the specific message type and hence slot number
         switch (m.getOpCode()) {
@@ -189,7 +186,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
             break;
 
         case LnConstants.OPC_MOVE_SLOTS:  // handle the follow-on message when it comes
-            return; // need to cope with that!!
+            return i; // need to cope with that!!
 
         case LnConstants.OPC_LONG_ACK:
             // handle if reply to slot. There's no slot number in the LACK, unfortunately.
@@ -206,7 +203,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
                     else
                         startShortTimer();
                     progState = 2;
-                    return;
+                    return i;
                 }
                 else if (m.getElement(2) == 0) { // task aborted as busy
                     // move to not programming state
@@ -214,7 +211,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
                     // notify user ProgListener
                     stopTimer();
                     notifyProgListenerLack(jmri.ProgListener.ProgrammerBusy);
-                    return;
+                    return i;
                 }
                 else if (m.getElement(2) == 0x7F) { // not implemented
                     // move to not programming state
@@ -222,7 +219,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
                     // notify user ProgListener
                     stopTimer();
                     notifyProgListenerLack(jmri.ProgListener.NotImplemented);
-                    return;
+                    return i;
                 }
                 else if (m.getElement(2) == 0x40) { // task accepted blind
                     // move to not programming state
@@ -230,7 +227,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
                     // notify user ProgListener
                     stopTimer();
                     notifyProgListenerEnd(-1, 0);  // no value (e.g. -1), no error status (e.g.0)
-                    return;
+                    return i;
                 }
                 else { // not sure how to cope, so complain
                     log.warn("unexpected LACK reply code "+m.getElement(2));
@@ -239,15 +236,20 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
                     // notify user ProgListener
                     stopTimer();
                     notifyProgListenerLack(jmri.ProgListener.UnknownError);
-                    return;
+                    return i;
                 }
             }
-            else return;
+            else return i;
 
         default:
 				// nothing here for us
-            return;
+            return i;
         }
+        // break gets to here
+        return i;
+    }
+
+    public void forwardMessageToSlot(LocoNetMessage m, int i) {
 
         // if here, i holds the slot number, and we expect to be able to parse
         // and have the slot handle the message
@@ -262,10 +264,34 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
             log.error("slot rejected LocoNetMessage"+m);
             return;
         }
-        // notify listeners that slots may have changed
+        // notify listeners that slot may have changed
         notify(_slots[i]);
+    }
 
-        // start checking for programming operations
+    protected void respondToAddrRequest(LocoNetMessage m, int i) {
+        // if the last was a OPC_LOCO_ADR and this was OPC_SL_RD_DATA
+        if ( (lastMessage==0xBF) && (m.getOpCode()==0xE7)) {
+            // yes, see if request exists
+            // note that slot has already been told, so
+            // slot i has the address of this request
+            int addr = _slots[i].locoAddr();
+            if (log.isDebugEnabled()) log.debug("LOCO_ADR resp of slot "+i+" loco "+addr);
+            SlotListener l = (SlotListener)mLocoAddrHash.get(new Integer(addr));
+            if (l!=null) {
+                // only notify once per request
+                mLocoAddrHash.remove(new Integer(addr));
+                // and send the notification
+                if (log.isDebugEnabled()) log.debug("notify listener");
+                l.notifyChangedSlot(_slots[i]);
+            } else {
+                if (log.isDebugEnabled()) log.debug("no request for this");
+            }
+        }
+    }
+
+    protected void programmerOpMessage(LocoNetMessage m, int i) {
+
+        // start checking for programming operations in slot 124
         if (i == 124) {
             // here its an operation on the programmer slot
             if (log.isDebugEnabled())
@@ -319,6 +345,102 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
     }
 
     // members for handling the programmer interface
+
+    /**
+     * Set the mode of the Programmer implementation.
+     * @param mode A mode constant from the Programmer interface
+     */
+    public void setMode(int mode) {
+        if (mode == jmri.Programmer.DIRECTBITMODE)
+            mode = jmri.Programmer.DIRECTBYTEMODE;
+        if (mode != _mode) {
+            notifyPropertyChange("Mode", _mode, mode);
+            _mode = mode;
+        }
+    }
+
+    /**
+     * Get the current mode of the Programmer implementation.
+     * @return A mode constant from the Programmer interface
+     */
+    public int getMode() { return _mode; }
+
+    /**
+     * Records the current mode of the Programmer implementation.
+    */
+    protected int _mode = Programmer.PAGEMODE;
+
+    /**
+     * Determine whether this Programmer implementation is capable of
+     * reading decoder contents. This is entirely determined by
+     * the attached command station, not the code here, so it
+     * refers to the mCanRead member variable which is recording
+     * the known state of that.
+     * @return True if reads are possible
+     */
+    public boolean getCanRead() { return mCanRead; }
+
+    /**
+     * Trigger notification of PropertyChangeListeners. The only bound
+     * property is Mode from the Programmer interface. It is not clear
+     * why this is not in AbstractProgrammer...
+     * @param name Changed property
+     * @param oldval
+     * @param newval
+     */
+    protected void notifyPropertyChange(String name, int oldval, int newval) {
+        // make a copy of the listener vector to synchronized not needed for transmit
+        Vector v;
+        synchronized(this)
+            {
+                v = (Vector) propListeners.clone();
+            }
+        if (log.isDebugEnabled()) log.debug("notify "+v.size()
+                                            +"listeners of property change name: "
+                                            +name+" oldval: "+oldval+" newval: "+newval);
+        // forward to all listeners
+        int cnt = v.size();
+        for (int i=0; i < cnt; i++) {
+            PropertyChangeListener client = (PropertyChangeListener) v.elementAt(i);
+            client.propertyChange(new PropertyChangeEvent(this, name, new Integer(oldval), new Integer(newval)));
+        }
+    }
+
+    /**
+     * Remember whether the attached command station can read from
+     * Decoders.
+     */
+    private boolean mCanRead = true;
+
+    /**
+     * Configure whether this Programmer implementation is capable of
+     * reading decoder contents. <P>
+     * This is not part of the Programmer interface, but is used
+     * as part of the startup sequence for the LocoNet objects.
+     *
+     * @param pCanRead True if reads are possible
+     */
+    public void setCanRead(boolean pCanRead) {
+        log.debug("set canRead to "+pCanRead);
+        mCanRead = pCanRead;
+    }
+
+    /**
+     * Determine is a mode is available for this Programmer implementation
+     * @param mode A mode constant from the Programmer interface
+     * @return True if paged or register mode
+     */
+    public boolean hasMode(int mode) {
+        if ( mode == Programmer.PAGEMODE ||
+             mode == Programmer.ADDRESSMODE ||
+             mode == Programmer.DIRECTBYTEMODE ||
+             mode == Programmer.REGISTERMODE ) {
+            log.debug("hasMode request on mode "+mode+" returns true");
+            return true;
+        }
+        log.debug("hasMode returns false on mode "+mode);
+        return false;
+    }
 
     /**
      * Internal routine to handle a timeout
