@@ -16,7 +16,7 @@ import jmri.*;
  * Programmer used to access it is a data member.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class CvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -51,7 +51,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         for (int i=0; i<=MAXCVNUM; i++) _cvAllVector.addElement(null);
 
         // define just address CV at start, pending some variables
-        addCV("1");
+        addCV("1", false);
     }
 
     /**
@@ -164,7 +164,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         fireTableDataChanged();
     }
 
-    public void addCV(String s) {
+    public void addCV(String s, boolean readOnly) {
         int num = Integer.valueOf(s).intValue();
         if (_cvAllVector.elementAt(num) == null) {
             JButton bw = new JButton("Write");
@@ -177,12 +177,16 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
             _readButtons.addElement(br);
             _numRows++;
             CvValue cv = new CvValue(num, mProgrammer);
+            cv.setReadOnly(readOnly);
             _cvAllVector.setElementAt(cv, num);
             _cvDisplayVector.addElement(cv);
             // connect to this CV to ensure the table display updates
             cv.addPropertyChangeListener(this);
             fireTableDataChanged();
         }
+        // make sure readonly set true if required
+        CvValue cv = (CvValue) _cvAllVector.elementAt(num);
+        if (readOnly) cv.setReadOnly(readOnly);
     }
 
     public boolean decoderDirty() {

@@ -22,7 +22,7 @@ import javax.swing.JTextField;
  * operation, Value changes before State, so you can assume that Value is stable
  * if notified of a State change.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class CvValue extends AbstractValue implements ProgListener {
     
@@ -121,6 +121,24 @@ public class CvValue extends AbstractValue implements ProgListener {
         return _tableEntry;
     }
 
+    /**
+     * Set bean keeping track of whether this CV is intended to be
+     * read-only.  Does not otherwise affect behaviour! 
+     * Default is "false".
+     */    public void setReadOnly(boolean is) {
+        _readOnly = is;
+    }
+    
+    private boolean _readOnly = false;
+    /**
+     * Retrieve bean keeping track of whether this CV is intended to be
+     * read-only.  Does not otherwise affect behaviour! 
+     * Default is "false".
+     */
+    public boolean getReadOnly() {
+        return _readOnly;
+    }
+    
     // read, write support
     private boolean _reading = false;
     private boolean _confirm = false;

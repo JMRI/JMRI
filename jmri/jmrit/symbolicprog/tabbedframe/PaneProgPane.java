@@ -37,7 +37,7 @@ import com.sun.java.util.collections.List;   // resolve ambiguity with package-l
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001; D Miller Copyright 2003
- * @version			$Revision: 1.30 $
+ * @version			$Revision: 1.31 $
  */
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
@@ -325,9 +325,10 @@ public class PaneProgPane extends javax.swing.JPanel
             int varNum = ((Integer)varList.get(i)).intValue();
             int vState = _varModel.getState( varNum );
             if (log.isDebugEnabled()) log.debug("nextWrite var index "+varNum+" state "+vState);
-            if (vState == VariableValue.UNKNOWN ||
+            VariableValue var = _varModel.getVariable(varNum);
+            if ( !var.getReadOnly() && (vState == VariableValue.UNKNOWN ||
                 vState == VariableValue.EDITED ||
-                vState == VariableValue.FROMFILE )  {
+                vState == VariableValue.FROMFILE ))  {
                 if (log.isDebugEnabled()) log.debug("start write of variable "+_varModel.getLabel(varNum));
                 setBusy(true);
                 if (_programmingVar != null) log.error("listener already set at write start");
@@ -344,11 +345,12 @@ public class PaneProgPane extends javax.swing.JPanel
         // check for CVs to handle (e.g. for CV table)
         for (int i=0; i<cvList.size(); i++) {
             int cvNum = ((Integer)cvList.get(i)).intValue();
-            int cState = _cvModel.getCvByRow( cvNum ).getState();
+            CvValue cv = _cvModel.getCvByRow( cvNum );
+            int cState = cv.getState();
             if (log.isDebugEnabled()) log.debug("nextWrite cv index "+cvNum+" state "+cState);
-            if (cState == CvValue.UNKNOWN ||
+            if ( !cv.getReadOnly() && ( cState == CvValue.UNKNOWN ||
                 cState == CvValue.EDITED ||
-                cState == CvValue.FROMFILE )  {
+                cState == CvValue.FROMFILE ) ) {
                 if (log.isDebugEnabled()) log.debug("start write of cv index "+cvNum);
                 setBusy(true);
                 if (_programmingCV != null) log.error("listener already set at write start");

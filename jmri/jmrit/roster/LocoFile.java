@@ -22,7 +22,7 @@ import org.jdom.output.XMLOutputter;
  * directly. That's why this is not a public class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002;  Dennis Miller Copyright 2004
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  * @see         jmri.jmrit.roster.RosterEntry
  * @see         jmri.jmrit.roster.Roster
  */
@@ -70,7 +70,7 @@ class LocoFile extends XmlFile {
                 cvObject = (CvValue)(cvModel.allCvVector().elementAt(cv));
                 if (cvObject == null) {
                     log.warn("CV "+cv+" was in loco file, but not defined by the decoder definition");
-                    cvModel.addCV(name);
+                    cvModel.addCV(name, false);
                     cvObject = (CvValue)(cvModel.allCvVector().elementAt(cv));
                 }
                 cvObject.setValue(Integer.valueOf(value).intValue());

@@ -22,7 +22,7 @@ import com.sun.java.util.collections.ArrayList;
  * Decimal representation of a value.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.9 $
+ * @version             $Revision: 1.10 $
  *
  */
 public class DecVariableValue extends VariableValue
@@ -201,7 +201,9 @@ public class DecVariableValue extends VariableValue
     }
 
     public void write() {
-        if (getReadOnly()) log.error("unexpected write operation when readOnly is set");
+        if (getReadOnly()) {
+            log.error("unexpected write operation when readOnly is set");
+        }
         setBusy(true);  // will be reset when value changes
         //super.setState(STORED);
         ((CvValue)_cvVector.elementAt(getCvNum())).write(_status);

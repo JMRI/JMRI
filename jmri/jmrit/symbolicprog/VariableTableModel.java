@@ -19,7 +19,7 @@ import org.jdom.Element;
  * Table data model for display of variables in symbolic programmer.
  * Also responsible for loading from the XML file...
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version      $Revision: 1.16 $
+ * @version      $Revision: 1.17 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -204,7 +204,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             log.error("CvModel reference is null; cannot add variables");
             return;
         }
-        _cvModel.addCV(""+CV);
+        _cvModel.addCV(""+CV, readOnly);
 
         // have to handle various value types, see "snippet"
         Attribute a;
@@ -257,13 +257,13 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             } catch (org.jdom.DataConversionException e1) {}
 
             // ensure all CVs exist
-            for (int i=0; i<entries; i++) { _cvModel.addCV(""+(CV+i)); }
+            for (int i=0; i<entries; i++) { _cvModel.addCV(""+(CV+i), readOnly); }
 
             v = new SpeedTableVarValue(name, comment, readOnly,
                                        CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item, entries);
 
         } else if ( (child = e.getChild("longAddressVal")) != null) {
-            _cvModel.addCV(""+(CV+1));  // ensure 2nd CV exists
+            _cvModel.addCV(""+(CV+1), readOnly);  // ensure 2nd CV exists
             v = new LongAddrVariableValue(name, comment, readOnly,
                                           CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item);
         } else if ( (child = e.getChild("shortAddressVal")) != null) {
@@ -295,7 +295,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             if ( (a = child.getAttribute("offset")) != null)
                 offset = Integer.valueOf(a.getValue()).intValue();
 
-            _cvModel.addCV(""+(highCV));  // ensure 2nd CV exists
+            _cvModel.addCV(""+(highCV), readOnly);  // ensure 2nd CV exists
             v = new SplitVariableValue(name, comment, readOnly,
                                        CV, mask, minVal, maxVal, _cvModel.allCvVector(),
                                        _status, item,
@@ -386,13 +386,12 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
     }
 
-    public void newDecVariableValue(String name, int CV, String mask) {
+    public void newDecVariableValue(String name, int CV, String mask, boolean readOnly) {
         setFileDirty(true);
         String comment = "";
-        boolean readOnly = false;
         int minVal = 0;
         int maxVal = 255;
-        _cvModel.addCV(""+CV);
+        _cvModel.addCV(""+CV, readOnly);
 
         int row = getRowCount();
 
