@@ -2,6 +2,7 @@ package jmri.jmrit.throttle;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyListener;
 import jmri.DccThrottle;
 import jmri.ThrottleListener;
 import jmri.ThrottleManager;
@@ -129,6 +130,16 @@ public class FunctionPanel extends JInternalFrame
         }
     }
 
+	public void addExternalKeyListener(KeyListener k)
+	{
+		this.addKeyListener(k);
+		this.getContentPane().addKeyListener(k);
+		for (int i=0; i<NUM_FUNCTION_BUTTONS; i++)
+		{
+			functionButton[i].addKeyListener(k);
+		}
+	}
+	
     /**
      * Place and initialize all the buttons.
      */
