@@ -20,12 +20,12 @@ import javax.comm.SerialPort;
  * <P>
  * Normally controlled by the SerialDriverFrame class.
  * <P>
- * The current implementation only handles the 9,600 baud rate, and does
+ * The current implementation only handles the 19,200 baud rate, and does
  * not use any other options at configuration time.
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002, 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialDriverAdapter extends PortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -157,7 +157,7 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
      * Get an array of valid baud rates. This is currently only 19,200 bps
      */
     public String[] validBaudRates() {
-        return new String[]{"9,600 bps"};
+        return new String[]{"19,200 bps"};
     }
 
     // private control members
