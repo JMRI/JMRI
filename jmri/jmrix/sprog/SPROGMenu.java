@@ -12,7 +12,7 @@ import javax.swing.JMenu;
  * Create a "Systems" menu containing the Jmri SPROG-specific tools
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SPROGMenu extends JMenu {
     public SPROGMenu(String name) {
@@ -31,6 +31,8 @@ public class SPROGMenu extends JMenu {
 
         add(new jmri.jmrix.sprog.sprogmon.SprogMonAction(rb.getString("MenuItemCommandMonitor")));
         add(new jmri.jmrix.sprog.packetgen.SprogPacketGenAction(rb.getString("MenuItemSendCommand")));
+        add(new jmri.jmrix.sprog.update.Sprogv4UpdateAction("SPROG v3/v4 Firmware Update"));
+        add(new jmri.jmrix.sprog.update.SprogIIUpdateAction("SPROG II Firmware Update"));
 
     }
 
