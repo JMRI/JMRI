@@ -14,7 +14,7 @@ import java.awt.Color;
 /**
  * Represents a single Variable value; abstract base class.
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  *
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
@@ -159,6 +159,12 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
         return mask;
     }
 
+    /**
+     * Find number of places to shift a value left to align
+     * if with a mask.  For example, as mask of "XXVVVXXX"
+     * means that the value 5 needs to be shifted left 3 places
+     * before being masked and stored as XX101XXX 
+     */
     protected int offsetVal(String maskString) {
         // convert String mask to int
         int offset = 0;
