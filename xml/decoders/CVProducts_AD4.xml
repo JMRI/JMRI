@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: CVProducts_AD4.xml,v 1.6 2003-01-03 11:42:57 jacobsen Exp $ -->
+<!-- $Id: CVProducts_AD4.xml,v 1.7 2003-02-09 01:15:44 jacobsen Exp $ -->
 <decoder-config>
 		<version author="afticarr@sympatico.ca" 
 					version="3" lastUpdated="20021016"/>
@@ -42,29 +42,29 @@
 
 		<variable label="Local_Input_1" CV="2" mask="XXXXXXXV" default="1">
 			<enumVal>
-				<enumChoice choice="Enable"/>
 				<enumChoice choice="Disable"/>
+				<enumChoice choice="Enable"/>
 				</enumVal>
 			</variable>
 
 		<variable label="Local_Input_2" CV="2" mask="XXXXXVXX" default="1">
 			<enumVal>
-				<enumChoice choice="Enable"/>
 				<enumChoice choice="Disable"/>
+				<enumChoice choice="Enable"/>
 				</enumVal>
 			</variable>
 
 		<variable label="Local_Input_3" CV="2" mask="XXXVXXXX" default="1">
 			<enumVal>
-				<enumChoice choice="Enable"/>
 				<enumChoice choice="Disable"/>
+				<enumChoice choice="Enable"/>
 				</enumVal>
 			</variable>
 
 		<variable label="Local_Input_4" CV="2" mask="XVXXXXXX" default="1">
 			<enumVal>
-				<enumChoice choice="Enable"/>
 				<enumChoice choice="Disable"/>
+				<enumChoice choice="Enable"/>
 				</enumVal>
 			</variable>
 
