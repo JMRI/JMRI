@@ -17,7 +17,7 @@ import javax.swing.JMenuBar;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 public class CornwallRR extends Apps {
 
@@ -29,6 +29,7 @@ public class CornwallRR extends Apps {
         panelMenu(menuBar, frame);
         systemsMenu(menuBar, frame);
         debugMenu(menuBar, frame);
+        helpMenu(menuBar, frame);
     }
 
     protected void systemsMenu(JMenuBar menuBar, JFrame frame) {
