@@ -1,6 +1,6 @@
 <!-- ugly first attempt at an ANT build.xml file for JMRI development -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.28 $ -->
+<!-- Revision $Revision: 1.29 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -55,24 +55,6 @@
            destdir="${target}" 
            target="1.1" 
            debug="no" >
-       <classpath refid="project.class.path"    />
-    </javac>
-    <!-- Copy top level resources to include in jar file -->
-    <copy todir="${target}/resources/">
-      <fileset dir="src/resources" includes="*.gif"  /> 
-    </copy>
-    <copy todir="${target}">
-      <fileset dir="src/" includes="**/*.properties"  /> 
-    </copy>
-  </target>
-
-  <target name="compile1.1.8" depends="clean, init" description="compile source against 1.1.8 libs, omitting tests">
-    <!-- Compile the java code from ${source} into ${target} -->
-    <javac srcdir="${source}" 
-           destdir="${target}" 
-           target="1.1" 
-           debug="no" >
-       <bootclasspath refid="compile1.1.8.path" />
        <classpath refid="project.class.path"    />
     </javac>
     <!-- Copy top level resources to include in jar file -->
@@ -340,6 +322,53 @@
     <ant dir="${release}/java" target="uploadjavadoc" />
  </target>
  				
+  <!-- The following is a long, ugly cut&paste of various -->
+  <!-- other targets (compile, test, alltest) which should -->
+  <!-- be refactored at some point -->
+  <target name="check1.1.8" depends="clean, init" description="compile source against 1.1.8 libs and run alltest with 1.1.8">
+    <!-- Compile specific classes with regular path -->
+    <javac  srcdir = "${source}"
+           destdir="${target}" 
+           includes="jmri/util/StringUtil.java, 
+                 jmri/util/FontUtil.java,
+                 jmri/util/JTreeUtil.java,
+                 jmri/util/LocaleUtil.java"
+           target="1.1" 
+           debug="no" >
+       <classpath refid="project.class.path"    />
+    </javac>
+    <!-- Compile the java 1.1.8 code from ${source} into ${target} -->
+    <javac srcdir="${source}" 
+           destdir="${target}" 
+           target="1.1" 
+           debug="no" >
+       <bootclasspath refid="compile1.1.8.path" />
+       <classpath refid="project.class.path"    />
+    </javac>
+    <!-- Copy top level resources to include in jar file -->
+    <copy todir="${target}/resources/">
+      <fileset dir="src/resources" includes="*.gif"  /> 
+    </copy>
+    <copy todir="${target}">
+      <fileset dir="src/" includes="**/*.properties"  /> 
+    </copy>
+    <!-- compile tests -->
+    <javac srcdir="${test}" 
+           destdir="${target}"
+           target="1.1" 
+           debug="no" >
+       <bootclasspath refid="compile1.1.8.path" />
+       <classpath refid="project.class.path"    />
+    </javac>
+    <!-- run alltest -->
+    <java classname="apps.tests.AllTest"
+          dir=".." 
+	  fork="yes" >
+       <classpath refid="compile1.1.8.path"    />
+       <sysproperty key="java.security.policy" value="lib/security.policy"/> 
+    </java>
+
+  </target>
 
 </project>
 
