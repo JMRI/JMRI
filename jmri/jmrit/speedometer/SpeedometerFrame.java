@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 /**
  * Frame providing access to a speedometer.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  *
  * Adapted for metric system - S.K. Bosch
  *
@@ -188,18 +188,18 @@ public class SpeedometerFrame extends javax.swing.JFrame {
         // start displaying the sensor status when the number is entered
         startSensor.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    startSensorIcon.setSensor(null, startSensor.getText());
+                    startSensorIcon.setSensor(startSensor.getText());
                 }
             });
         stopSensor1.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    stopSensorIcon1.setSensor(null, stopSensor1.getText());
+                    stopSensorIcon1.setSensor(stopSensor1.getText());
                 }
             });
 
         stopSensor2.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    stopSensorIcon2.setSensor(null, stopSensor2.getText());
+                    stopSensorIcon2.setSensor(stopSensor2.getText());
                 }
             });
 
@@ -271,7 +271,7 @@ public class SpeedometerFrame extends javax.swing.JFrame {
                     }
                 }
             });
-        startSensorIcon.setSensor(s.getSystemName(), s.getUserName());
+        startSensorIcon.setSensor(s.getSystemName());
 
         // set stop sensor1
         try {
@@ -316,7 +316,7 @@ public class SpeedometerFrame extends javax.swing.JFrame {
                     }
                 }
             });
-        stopSensorIcon1.setSensor(s.getSystemName(), s.getUserName());
+        stopSensorIcon1.setSensor(s.getSystemName());
 
         // set stop sensor2
         try {
@@ -362,7 +362,7 @@ public class SpeedometerFrame extends javax.swing.JFrame {
                     }
                 }
             });
-        stopSensorIcon2.setSensor(s.getSystemName(), s.getUserName());
+        stopSensorIcon2.setSensor(s.getSystemName());
 
     }
 
