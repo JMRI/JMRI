@@ -1,5 +1,5 @@
 <!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
-<!-- $Id: Start.html,v 1.1 2004-09-02 13:29:13 jacobsen Exp $ -->
+<!-- $Id: Start.html,v 1.2 2004-09-02 17:02:47 jacobsen Exp $ -->
 <html>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -146,67 +146,6 @@ it will allow you to invoke a Jython script.  Once it's integrated into
 the configuration process, you'll be able to code your automation in one
 or more .py files, and have the program start running them at startup.
 
-<h2>Next steps</h2>
-We're just learning how to best to integrate JMRI and Python, so there
-are still some basic mysteries.
-<h3>Initialization and modules</h3>
-The idea of Python "modules" isn't yet 
-clearly understood.  There are three ways to start the program via 
-a .py file:
-<OL>
-<LI>
-<PRE>
-  % ./jmrithon
-  Jython 2.1 on java1.4.1_01 (JIT: null)
-  Type "copyright", "credits" or "license" for more information.
-  >>> import JmriDemo
-</PRE>
-This works, in the sense that the program starts up. But the
-convenience methods are all in the JmriDemo namespace:
-<PRE>
-  >>> turnouts.newTurnout("LT1","")
-  Traceback (innermost last):
-    File "<console>", line 1, in ?
-  NameError: turnouts
-
-  >>> JmriDemo.turnouts.newTurnout("LT1","")
-  jmri.jmrix.loconet.LnTurnout@36b91b
-</PRE>
-which makes for significantly more typing later.
-And it's confusing, because depending on whether you started
-JmriDemo, DecoderPro or some other application, the names will
-be different.
-<LI>
-<PRE>
-  % ./jmrithon
-  >>>  execfile("JmriDemo.py")
-</PRE>
-or the simpler form
-<PRE>
-  % ./jmrithon -JmriDemo.py
-</PRE>
-
-This looks somewhat ugly, as it's not using the normal Python
-modules technique.  But the convenience methods are
-in the top-level name space:
-<PRE>
-  turnouts.newTurnout("LT1", "")
-</PRE>
-<BR>
-We need to understand whether this is a real issue.  Most Python
-programs don't use that top-level namespace, and there's probably
-a good reason!
-</OL>
-We need to understand how the developers of Jython intended this
-to be done.
-
-<h3>Termination</h3>
-Once the JMRI main thread (or Swing GUI thread?) has started, 
-^D is not sufficient to exist the program.  You have to select
-"Quit" from the actual file menu, or ^C the program.
-<P>
-It would be good to understand what's preventing the program 
-from stopping when it gets the ^D.
 <HR>
 <BR>Site hosted by: <BR>
 <A href="http://sourceforge.net"> 
