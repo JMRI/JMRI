@@ -9,7 +9,7 @@ package jmri.jmrix.lenz;
  * Defines standard operations for Dcc command stations.
  *
  * @author			Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
     
@@ -111,13 +111,13 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
                if(((a2 & 0x13)==0x01) || ((a2 &0x13)==0x02)) {
                   // This is the first address in the group*/
                   return(address + 1);
-               } else if(((a2 & 0x1a)==0x04) || ((a2 &0x1a)==0x06)) {
+               } else if(((a2 & 0x1c)==0x04) || ((a2 &0x1c)==0x08)) {
                   // This is the second address in the group
                   return(address + 2);
                } else if(((a2 & 0x13)==0x11) || ((a2 &0x13)==0x12)) {
                   // This is the third address in the group
                   return(address + 3);
-               } else if(((a2 & 0x1a)==0x14) || ((a2 &0x1a)==0x16)) { 
+               } else if(((a2 & 0x1c)==0x14) || ((a2 &0x1c)==0x18)) { 
                   // This is the fourth address in the group
                   return(address + 4);
      	       } else return -1;
