@@ -6,8 +6,8 @@ import com.sun.java.util.collections.LinkedList;
 /**
  * Client for the RMI LocoNet server.
  * <p>Copyright: Copyright (c) 2002</p>
- * @author Bob Jacobsen
- * @version $Id: LnMessageClient.java,v 1.5 2002-04-07 06:18:37 jacobsen Exp $
+ * @author Alex Shepherd, Bob Jacobsen
+ * @version $Revision: 1.6 $
  */
 
 public class LnMessageClient extends LnTrafficRouter {
