@@ -13,7 +13,7 @@ import jmri.*;
  *
  * @see            jmri.Programmer
  * @author         Paul Bender Copyright (C) 2003
- * @version        $Revision: 1.1 $
+ * @version        $Revision: 1.2 $
  */
 
 public class XNetOpsModeProgrammer implements Programmer,XNetListener 
@@ -21,6 +21,10 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
 
     int mAddressHigh;
     int mAddressLow;
+    int progState=0;
+    int value;
+    jmri.ProgListener progListener = null;
+
     public XNetOpsModeProgrammer(int pAddress) {
         if(pAddress < 100)
         {
@@ -37,6 +41,10 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
                 temp = temp &0x00FF;
                 mAddressLow=temp;
         }
+      
+      // register as a listener
+      XNetTrafficController.instance().addXNetListener(~0,this);
+
     }
 
     /**
@@ -45,18 +53,22 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
     public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         XNetMessage msg=XNetTrafficController.instance().getCommandStation().getWriteOpsModeCVMsg(mAddressHigh,mAddressLow,CV,val);
 	XNetTrafficController.instance().sendXNetMessage(msg,this);
-        /* In the long run, this is probably NOT what we want to do, but 
-        we're writing an XPressNet message that returns no feedback if
-        the operation fails */
-        p.programmingOpReply(val,jmri.ProgListener.OK);
+        /* we need to save the programer and value so we can send messages 
+        back to the screen when the programing screen when we recieve 
+        something from the command station */
+        progListener=p;
+        value=val;
+        progState=XNetProgrammer.REQUESTSENT;
     }
 
     public void readCV(int CV, ProgListener p) throws ProgrammerException {
            /* read is not yet implemented by XPressNet*/
+           p.programmingOpReply(CV,jmri.ProgListener.NotImplemented);
     }
 
     public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
            /* read is not yet implemented by XPressNet*/
+           p.programmingOpReply(val,jmri.ProgListener.NotImplemented);
     }
 
     public void setMode(int mode) {
@@ -97,7 +109,34 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
     }
 
 
-    public void message(XNetMessage l) {
+    synchronized public void message(XNetMessage l) {
+	if (progState == XNetProgrammer.NOTPROGRAMMING) {
+           // We really don't care about any messages unless we send a 
+           // request, so just ignore anything that comes in
+           return;
+        } else if (progState==XNetProgrammer.REQUESTSENT) {
+            if(l.getElement(0)==XNetConstants.LI_MESSAGE_RESPONCE_HEADER &&
+               l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONCE_SEND_SUCCESS) {
+	  	  progListener.programmingOpReply(value,jmri.ProgListener.OK);
+	    } else {
+              /* this is an error */
+              if(l.getElement(0)==XNetConstants.LI_MESSAGE_RESPONCE_HEADER &&
+		((l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONCE_UNKNOWN_DATA_ERROR ||
+		  l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONCE_CS_DATA_ERROR ||
+		  l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONCE_PC_DATA_ERROR ||
+		  l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONCE_TIMESLOT_ERROR))) {   
+                     /* this is a communications error */
+                     progListener.programmingOpReply(value,jmri.ProgListener.FailedTimeout);
+	      } else if(l.getElement(0)==XNetConstants.CS_INFO &&
+		        l.getElement(2)==XNetConstants.CS_NOT_SUPPORTED) {
+		     	   progListener.programmingOpReply(value,jmri.ProgListener.NotImplemented);
+              } else { 
+                        /* this is an unknown error */
+                   	progListener.programmingOpReply(value,jmri.ProgListener.UnknownError);
+                   }
+            progState=XNetProgrammer.NOTPROGRAMMING;
+          }
+	}
     }
 
     // initialize logging

@@ -9,6 +9,8 @@ parameter to "addXpressnetListener" work properly)
 2) Need to write Feedback code
 3) Need to seperate constants for Xpressnet V1 from those for X-Bus V1 
 and V2.
-4) Implement Operations Mode Programing
+4) Clean up Ops Mode Programing - mainly make it respond to proper 
+messages instead of just assuming the CV was sent to the command station 
+OK (see task #1).
 5) Implement a browser for the Command Station Locomotive database 
 (similar to the Digitrax "Slot Manager")

@@ -3,7 +3,7 @@
  *
  * Description:		Constants to represent values seen in XpressNet traffic
  * @author		Paul Bender  Copyright (C) 2003
- * @version             $ Revision: 1.7 $
+ * @version             $ Revision: 1.8 $
  *
  * Variable prefix abreviation keys:
  * ACC_ is for accessory messages
@@ -273,11 +273,26 @@ public final static int CS_MULTI_UNIT_REQ_BKWD = 0x04;
 
 /* The following are for information requests from the LI100/LI100F/LI101*/
 
+/* LI10x responces for general messages */
+public final static int LI_MESSAGE_RESPONCE_HEADER = 0x01;
+/* First, we have an error for timeouts between the PC and the LI10x */
+public final static int LI_MESSAGE_RESPONCE_PC_DATA_ERROR = 0x01;
+/* Second, we have an error for timeouts between the LI10x and the C.S.*/
+public final static int LI_MESSAGE_RESPONCE_CS_DATA_ERROR = 0x02;
+/* Next is an unknown communications error */
+public final static int LI_MESSAGE_RESPONCE_UNKNOWN_DATA_ERROR = 0x03;
+/* Now, we have a responce indicating what was sent was OK */
+public final static int LI_MESSAGE_RESPONCE_SEND_SUCCESS = 0x04;
+/* and a message indicating the LI10x doesn't have a timeslot on the 
+Xpressnet (possibly too many devices connected) */
+public final static int LI_MESSAGE_RESPONCE_TIMESLOT_ERROR = 0x05;
+/* Last, there is an error for an LI10x buffer overflow */
+public final static int LI_MESSAGE_RESPONCE_BUFFER_OVERFLOW = 0x06;
+
 /* LI100/LI100F/LI101 information (version) request */
 public final static int LI_VERSION_REQUEST = 0xF0;
 /* The responce to the above */
 public final static int LI_VERSION_RESPONCE = 0x02;
-
 
 /* request to the LI101 */
 public final static int LI101_REQUEST = 0xF2;
