@@ -3,7 +3,7 @@
  *
  * Description:		Frame for user input of CMRI serial messages
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Id: SerialPacketGenFrame.java,v 1.1 2002-03-03 05:50:45 jacobsen Exp $
+ * @version			$Id: SerialPacketGenFrame.java,v 1.2 2002-03-11 04:36:24 jacobsen Exp $
  */
 
 
@@ -23,6 +23,9 @@ public class SerialPacketGenFrame extends javax.swing.JFrame implements jmri.jmr
 	javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
 	javax.swing.JButton sendButton = new javax.swing.JButton();
 	javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
+
+    javax.swing.JButton pollButton = new javax.swing.JButton("Send poll");
+	javax.swing.JTextField uaAddrField = new javax.swing.JTextField(5);
 
 	public SerialPacketGenFrame() {
 	}
@@ -58,6 +61,24 @@ public class SerialPacketGenFrame extends javax.swing.JFrame implements jmri.jmr
 				sendButtonActionPerformed(e);
 			}
 		});
+
+        getContentPane().add(new JSeparator(JSeparator.HORIZONTAL));
+
+        // add poll message buttons
+        JPanel pane3 = new JPanel();
+            pane3.setLayout(new FlowLayout());
+            pane3.add(new JLabel("UA:"));
+            pane3.add(uaAddrField);
+            pane3.add(pollButton);
+            uaAddrField.setText("0");
+        getContentPane().add(pane3);
+
+		pollButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				pollButtonActionPerformed(e);
+			}
+		});
+
 		addWindowListener(new java.awt.event.WindowAdapter() {
 			public void windowClosing(java.awt.event.WindowEvent e) {
 				thisWindowClosing(e);
@@ -68,11 +89,16 @@ public class SerialPacketGenFrame extends javax.swing.JFrame implements jmri.jmr
 		pack();
 	}
 
-  	public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
+  	public void pollButtonActionPerformed(java.awt.event.ActionEvent e) {
+        SerialMessage msg = SerialMessage.getPoll(Integer.valueOf(uaAddrField.getText()).intValue());
+  		SerialTrafficController.instance().sendSerialMessage(msg, this);
+  	}
+
+   	public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
   		SerialTrafficController.instance().sendSerialMessage(createPacket(packetTextField.getText()), this);
   	}
 
-  	SerialMessage createPacket(String s) {
+ 	SerialMessage createPacket(String s) {
 		// gather bytes in result
 		int b[] = parseString(s);
 		if (b.length == 0) return null;  // no such thing as a zero-length message

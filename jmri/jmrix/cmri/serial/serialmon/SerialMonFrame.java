@@ -40,10 +40,31 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 	}
 
 	public synchronized void message(SerialMessage l) {  // receive a message and log it
-		nextLine("cmd: \""+l.toString()+"\"\n", "");
+        if (l.isPoll()) {
+            nextLine("Poll ua="+l.getUA()+"\n", l.toString()+"\n");
+        } else if (l.isXmt()) {
+            String s = "Transmit ua="+l.getUA()+" OB=";
+            for (int i=2; i<l.getNumDataElements(); i++)
+                s+=Integer.toHexString(l.getElement(i))+" ";
+            nextLine(s+"\n", l.toString()+"\n");
+        } else if (l.isInit()) {
+            String s = "Init ua="+l.getUA()+" DL="+(l.getElement(3)*256+l.getElement(4));
+            s+=" NS="+l.getElement(5)+" CT: ";
+            for (int i=6; i<l.getNumDataElements(); i++)
+                s+=Integer.toHexString(l.getElement(i))+" ";
+            nextLine(s+"\n", l.toString()+"\n");
+        } else
+    		nextLine("unrecognized cmd: \""+l.toString()+"\"\n", "");
 	}
+
 	public synchronized void reply(SerialReply l) {  // receive a reply message and log it
-		nextLine("rep: \""+l.toString()+"\"\n", "");
+        if (l.isRcv()) {
+            String s = "Receive ua="+l.getUA()+" IB=";
+            for (int i=2; i<l.getNumDataElements(); i++)
+                s+=Integer.toHexString(l.getElement(i))+" ";
+            nextLine(s+"\n", l.toString()+"\n");
+        } else
+            nextLine("unrecognized rep: \""+l.toString()+"\"\n", "");
 	}
 
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialMonFrame.class.getName());

@@ -7,7 +7,7 @@
  *                  are included. But it does include addressing characters,
  *                  etc.
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version         $Id: SerialReply.java,v 1.1 2002-03-03 05:50:45 jacobsen Exp $
+ * @version         $Id: SerialReply.java,v 1.2 2002-03-11 04:36:24 jacobsen Exp $
  */
 
 package jmri.jmrix.cmri.serial;
@@ -55,6 +55,10 @@ public class SerialReply {
 		}
 		return s;
 	}
+
+    // recognize format
+    public boolean isRcv()  { return getElement(1)==0x52;}
+    public int getUA() { return getElement(0)-65; }
 
 	static public int maxSize = 120;
 

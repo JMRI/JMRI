@@ -6,7 +6,7 @@
  *                  the header or trailer, nor the padding DLE characters
  *                  are included.
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Id: SerialMessage.java,v 1.1 2002-03-03 05:50:45 jacobsen Exp $
+ * @version			$Id: SerialMessage.java,v 1.2 2002-03-11 04:36:24 jacobsen Exp $
  */
 
 package jmri.jmrix.cmri.serial;
@@ -50,11 +50,17 @@ public class SerialMessage {
 		return s;
 	}
 
+    // static methods to recognize a message
+    public boolean isPoll() { return getElement(1)==0x50;}
+    public boolean isXmt()  { return getElement(1)==0x54;}
+    public boolean isInit() { return (getElement(1)==0x49)&(getNumDataElements()>=7);}
+    public int getUA() { return getElement(0)-65; }
+
 	// static methods to return a formatted message
 	static public SerialMessage getPoll(int UA) {
 		SerialMessage m = new SerialMessage(2);
-		m.setElement(0, 0x50); // 'P'
         m.setElement(0, 65+UA);
+		m.setElement(1, 0x50); // 'P'
 		return m;
 	}
 
