@@ -2,10 +2,19 @@
 
 package jmri.jmrix.loconet.slotmon;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 /**
  * Frame provinging a command station slot manager.
@@ -14,7 +23,7 @@ import javax.swing.*;
  * so are shown separately.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class SlotMonFrame extends javax.swing.JFrame {
 
@@ -66,6 +75,15 @@ public class SlotMonFrame extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 slotModel.estopAll();
             }
+        });
+        estopAllButton.addMouseListener(new MouseListener() {
+            public void mousePressed(MouseEvent e) {
+                slotModel.estopAll();
+            }
+            public void mouseExited(MouseEvent e) {}
+            public void mouseEntered(MouseEvent e) {}
+            public void mouseReleased(MouseEvent e) {}
+            public void mouseClicked(MouseEvent e) {}
         });
 
         // adjust model to default settings
