@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE layout-config SYSTEM "layout-config.dtd">
+<!-- This is an example panel containing a LocoNet reporter        -->
+<!-- which shows a transponding response from transponding zone 12 -->
 <layout-config>
-  <memories class="jmri.configurexml.DefaultMemoryManagerXml">
-    <memory systemName="IM12" userName="Foo" />
-  </memories>
   <paneleditor class="jmri.jmrit.display.configurexml.PanelEditorXml" name="Test memory" x="20" y="22" height="282" width="238" editable="yes" positionable="yes" controlling="yes" hide="no">
-    <reportericon reporter="LT12" x="10" y="10" class="jmri.jmrit.display.configurexml.ReporterIconXml"/>
+    <reportericon reporter="LR12" x="10" y="10" class="jmri.jmrit.display.configurexml.ReporterIconXml"/>
   </paneleditor>
 </layout-config>
 
