@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TerminalServer.html,v 1.6 2004-07-19 01:48:17 jacobsen Exp $ -->
+<!-- $Id: TerminalServer.html,v 1.7 2004-10-20 03:58:12 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -60,185 +60,49 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <H2> 
-      JMRI Install Guide:EasyDCC Terminal Server Connection
+      JMRI Install Guide: EasyDCC Terminal Server Connection
       </H2>
 
-      <p>David Zuhn writes...</p>
+A terminal server is a box that connects one or more serial
+ports to a network so they can be accessed from a remote computer.
+JMRI running on a computer with a network connection can 
+connect to a EasyDCC command station via one of these. This allows
+you to put the computer and command station as far apart as you'd like.
+<P>
+To make this work,
+you have to configure both JMRI and the terminal server, and make 
+the appropriate connections.
+<P>
+This capability was originally created for david zuhn, who 
+has a 
+<A href="http://stpaulterminal.org/software/jmri/lantronix.html">web page</a>
+describing in detail how he set it up.  The following is just an overview
+of this.
 
-      <p>I am currently running DecoderPro on my home Linux boxes, using a
-      <a HREF="http://www.lantronix.com/">Lantronix</a>
-      terminal server, model
-      <a HREF="http://www.lantronix.com/products/ts/ets4p_8p_16p/index.html">ETS-4P</a>.
-      </p>
-
-      <p>What's that?  It's a small box, with a handful of serial ports and an
-    Ethernet connection.  There's sufficient software built into the box to
-    allow any computer to make a network connection to the terminal server,
-    selecting which serial port the data stream should connect to.  This means
-    on the main computer, there's no serial port setup to mess with (it's just a
-    simple TCP network connection).  All of the serial setup is done on a box
-    that's very specifically designed to make this easy.</p>
-
-    <p>I'm doing this because 
-    <ul>
-      <li>my model railroad controls aren't anyplace particularly close to my
-	computers,
-      <li>the only computer that I might be willing to move only has a single
-	serial port, and I expect to need at least two in the near future. but
-      <li>I don't want a computer in the middle of my layout anyway, and
-      <li>I don't like overly long RS-232 serial cables, and lastly,
-      <li>I didn't want to build/buy yet another computer (I have enough as it
-	is, and I can live without additional fan noise and the need to shut it
-	down cleanly, etc.)
-    </ul>
-    </p>
-
-    <h2>Making the Cable</h2>
-    
-    <p>The first part I had to worry about was making a cable.  The Lantronix
-    box uses 8-pin modular plugs, and the EasyDCC command station uses a 6-pin
-    modular plug.  I had already made the necessary adapter from the 6 box
-    modular to a DB-9 Female.  I could have used a DB-9 made to Lantronix cable,
-    if I had one handy.  Alas, I didn't.  And that's sort of a frankenstein's
-    monster setup anyway.</p>
-    <p>The pinouts for EasyDCC are well documented (page 152 of my manual).  The
-      pinouts for the Lantronix are slightly harder to find, but available on the
-      Lantronix web site (search product support for "pinouts", their search
-      engine doesn't handle links well). </p>
-
-    <h3>Lantronix</h3>
-
-    <p>When looking at the 8-pin socket with the notch for the locking
-      tab facing down the pins are numbered 1-8 left to right:
-
-      <blockquote></blockquote>
-
-    <div ALIGN="CENTER">
-    <table BORDER=1>
-
-      <tr><td COLSPAN=8><tt>
-&nbsp;12345678  <br>
-[||||||||]<br>
-[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]<br>
-[__&nbsp;&nbsp;&nbsp;&nbsp;__]<br>
-&nbsp;&nbsp;&nbsp;|__|</tt></td></tr>
-      <tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td></tr>
-      <tr><td>RTS</td><td>DTR</td><td>Tx+</td><td>Tx-</td><td>Rx-</td><td>Rx+</td><td>DSR</td><td>CTS</td></tr>
-
-	
-    </table>
-    </div>
-
-    <h3>EasyDCC</h3>
-
-    <p>When looking at the 6-pin socket with the notch for the locking
-      tab facing down the pins are numbered 1-6 left to right:
-
-      <blockquote></blockquote>
-
-    <div ALIGN="CENTER">
-    <table BORDER=1>
-
-      <tr><td COLSPAN=8><tt>
-&nbsp;123456<br>
-[||||||]<br>
-[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]<br>
-[_&nbsp;&nbsp;&nbsp;&nbsp;_]<br>
-&nbsp;&nbsp;|__|</tt></td></tr>
-      <tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
-      <tr><td>Tx</td><td>GND</td><td></td><td></td><td>GND</td><td>Rx</td></tr>
-
-    </table>
-    </div>
-
-
-    <p>So it's a simple matter.  Tx on one end to Rx on the other.  Vice versa.
-      Connect the grounds.  Pull out the satin cable, a 6 pin connector, an 8
-      pin connector, expose the wires, re-arrange, and crimp.</p>
-
-    <p>This could have two 6 pin ends, but I chose one 6 and one 8 so that I 
-      couldn't get the cable installed wrong (the EasyDCC command station won't
-      take an 8 pin plug).</p>
-
-    <p>On the 6 pin end, I just wired straight across.  It was the easiest way
-      and there's no reason not to.  On the 8 pin end, I removed the middle two
-      wires (they're of no use for this cable).  Then I reversed the order
-      (which handles the Rx-to-Tx connection) and laid them into pins 3-6.
-      Crimp. Done. </p>
-
-    <h2>Lantronix Configuration</h2>
-
-    <p>Now it's an issue of setting up the Lantronix.  I won't go into all the
-    details.  If you've got one, read the manual.  If you don't, details won't
-    matter to you.</p>
-    
-    <h3>Network</h3>
-
-    <p>The machine is configured to receive an address upon boot via DHCP.  I
-      already have DHCP configured on my home network, so this wasn't much extra
-      work.  It received a fixed address, so I know what the address will be.<p>
-      
-    <h3>Serial Ports</h3>
-
-    <p>This is the meat of the configuration.  Set it up for 9600 baud, 8 data
-      bits, 1 stop bit, no parity (<tt>9600,8,1,none</tt>) and no flow control.
-      Configure it for remote access (so that connecting to the right network port
-      will activate the connection to the serial port).  Then turn off telnet
-      padding.  This gives you the complete data stream without
-      modification.</p>
-
-    <p>On the Lantronix, make sure these are all <tt>DEFINE</tt>d, not
-    <tt>SET</tt>, to ensure persistence across power cycles.</p>
-
-    <p>My configuration summary is shown below:
-
-       <blockquote><pre>
-
-Local> show port 4
- 
-Port 4 : Username:                     Physical Port 4 (Idle)
-                                                              
-   Char Size/Stop Bits:         8/1    Input Speed:                 9600
-   Flow Ctrl:                  None    Output Speed:                9600
-   Parity:                     None    Modem Control:               None
-                                                                         
-   Access:                   Remote    Local Switch:                None
-   Backward:                   None    Port Name:                 Port_4
-   Break Ctrl:                 None    Session Limit:                  4
-   Forward:                    None    Terminal Type:             Soft()
- 
-   Preferred Services:        (Lat)
-                           (Telnet)
-                                     
-   Authorized Groups : 0
-   (Current)  Groups : 0
- 
-   Characteristics:  Broadcast  Loss Notify  Verify
-</pre></blockquote></p>
-
-    <h2>JMRI configuration</h2>
-
-    <p>Buried away in the JMRI 1.3.5 configuration is a <tt>Layout
-    Connection</tt> choice called "<tt>EasyDCC via network</tt>".  Select this,
-    and then enter the hostname (or address) of the terminal server, then the
-    network port number (on Lantronix boxes, this is 2000+the physical port
-    number on the back of the box).</p>
-
-    <p>This is all it took to get things working.  Please note that this
-    configuration does NOT use the computer's serial port.  On Linux boxes, this
-    means you don't need to use or configure <tt>rxtx</tt> and
-    <tt>javax.comm</tt>.</p>
-
-    <h2>The Last Word</h2>
-
-    <p>I've had this working now for just a short time.  It's nice, since I
-    can run DecoderPro from any computer at home, not just one with a serial
-    port connected to the command station.</p>
-
-    <p>Kudos to Bob Jacobsen.  I asked for a pointer as to where to start, in
-    order to implement the JMRI changes myself.  Just a couple of days later, he
-    had done all the coding necessary.  That's just wonderful support.  I do
-    love this open source community thing.</p>
+<UL>
+<LI>
+To configure JMRI:
+<UL>
+<LI>Select "Preferences" from the "Edit" menu
+<LI>Select the "EasyDCC over terminal server" protocol
+<LI>Enter the IP address corresponding to the port on the terminal server
+<LI>Click save, then quit the program
+</UL>
+<LI>
+Then configure the terminal server to connect to the command 
+station: 9600 baud, no parity, 8 bits.
+<LI>
+Connect a serial cable from the terminal server to the command station.
+Depending on the type of the terminal server, this might require that you
+wire a custom cable to get the right connectors.  Note that you want the 
+"Transmit data" wire on one end to connect to the "Receive data" on the other.
+Do this for both directions, and also include a ground wire.
+<LI>
+Make the network connections needed.
+<LI>
+Start the program up.  If everything is OK, JMRI will start and show you
+that it's properly connected.
+</UL>
 
       <hr class="hide">
 <!-- Footer -->
