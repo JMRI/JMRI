@@ -2,22 +2,24 @@
 
 package jmri.jmrit.symbolicprog;
 
+import jmri.progdebugger.ProgDebugger;
 import java.util.Vector;
 
-import javax.swing.*;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 import com.sun.java.util.collections.ArrayList;
 import com.sun.java.util.collections.List;
-import jmri.*;
-import jmri.progdebugger.*;
-import junit.framework.*;
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 /**
- * LongAddrVariableValueTest.java
+ * Test LongAddrVariableValue class.
  *
  * @todo need a check of the MIXED state model for long address
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class LongAddrVariableValueTest extends VariableValueTest {
 
