@@ -22,7 +22,7 @@ import org.jdom.Element;
  * Based on AbstractSensorManagerConfigXML.java
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
 
@@ -141,6 +141,7 @@ public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
                     lgt.setControlTurnoutState( Integer.parseInt(((Element)(lightList.get(i))).
                                                     getAttribute("turnoutState").getValue()) );
                 }
+				lgt.activateLight();
             }
             else {
                 log.error ("failed to create Light: "+sysName);

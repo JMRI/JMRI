@@ -19,7 +19,7 @@ package jmri;
  * Based in concept on AbstractSignalHead.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public abstract class AbstractLight extends AbstractNamedBean
     implements Light, java.io.Serializable {
@@ -190,7 +190,7 @@ public abstract class AbstractLight extends AbstractNamedBean
             switch (mControlType) {
                 case SENSOR_CONTROL:
                     mControlSensor = InstanceManager.sensorManagerInstance().
-                                            getBySystemName(mControlSensorSystemName);
+                                            provideSensor(mControlSensorSystemName);
                     if (mControlSensor!=null) {
                         mControlSensor.addPropertyChangeListener(mSensorListener =
                                                 new java.beans.PropertyChangeListener() {
@@ -234,7 +234,7 @@ public abstract class AbstractLight extends AbstractNamedBean
                     break;
                 case TURNOUT_STATUS_CONTROL:
                     mControlTurnout = InstanceManager.turnoutManagerInstance().
-                                            getBySystemName(mControlTurnoutSystemName);
+                                            provideTurnout(mControlTurnoutSystemName);
                     if (mControlTurnout!=null) {
                         mControlTurnout.addPropertyChangeListener(mTurnoutListener =
                                                 new java.beans.PropertyChangeListener() {
