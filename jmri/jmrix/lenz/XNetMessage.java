@@ -12,7 +12,7 @@ import java.io.Serializable;
  * actually a variable number of bytes in Unicode.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version			$Revision: 2.0 $
+ * @version			$Revision: 2.1 $
  *
  */
 public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Serializable {
@@ -24,6 +24,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
 	 */
 	public XNetMessage(int len) {
         super(len);
+	setBinary(true);
         if (len>15||len<0) log.error("Invalid length in ctor: "+len);
 	_nDataChars=len;
 	}
@@ -33,6 +34,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
 	 */
 	public XNetMessage(XNetMessage message) {
            super(message);
+	   setBinary(true);
 	}
 
     // note that the opcode is part of the message, so we treat it
