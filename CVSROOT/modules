@@ -3,13 +3,12 @@
 # Note that this does not work from JBuilder itself!
 jbuilder -a xml lib jbuilderjava
 # build the java/ directory, which contains the actual JBuilder project
-jbuilderjava  -a jbuilder0 jbuilder1 jbuilder2 jbuilder3
+jbuilderjava  -a jbuilder0 jbuilder1 jbuilder2 jbuilder3 jbuilder4
 jbuilder0 -d java scripts jmri.jpx
 jbuilder1 -d java scripts JMRILibraries.library
 jbuilder2 -d java/src &jmri &apps &resources
 jbuilder3 -d java &test
-jbuilder4 -d java &xml
-jbuilder5 -d java &lib
+jbuilder4 -d java &lib
 
 # ant target - Ant directory in standard form
 # Note that this does not work from JBuilder itself!
