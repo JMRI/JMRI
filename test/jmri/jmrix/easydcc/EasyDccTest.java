@@ -1,10 +1,4 @@
-/**
- * EasyDccTest.java
- *
- * Description:	    tests for the jmri.jmrix.easydcc package
- * @author			Bob Jacobsen
- * @version         $Revision: 1.2 $
- */
+// EasyDccTest.java
 
 package jmri.jmrix.easydcc;
 
@@ -15,6 +9,11 @@ import junit.framework.TestSuite;
 import org.jdom.*;
 import org.jdom.output.*;
 
+/**
+ * Tests for the jmri.jmrix.easydcc package
+ * @author			Bob Jacobsen
+ * @version         $Revision: 1.3 $
+ */
 public class EasyDccTest extends TestCase {
 
 	// from here down is testing infrastructure

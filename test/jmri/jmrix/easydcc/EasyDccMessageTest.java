@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the EasyDccMessage class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 
 package jmri.jmrix.easydcc;
@@ -45,12 +45,12 @@ public class EasyDccMessageTest extends TestCase {
 
 	public void testReadPagedCV() {
 		EasyDccMessage m = EasyDccMessage.getReadPagedCV(12);
-		Assert.assertEquals("string compare ", "R012", m.toString());
+		Assert.assertEquals("string compare ", "R00C", m.toString());
 	}
 
 	public void testWritePagedCV() {
 		EasyDccMessage m = EasyDccMessage.getWritePagedCV(12, 126);
-		Assert.assertEquals("string compare ", "P0127E", m.toString());
+		Assert.assertEquals("string compare ", "P00C7E", m.toString());
 	}
 
 	public void testReadRegister() {
