@@ -10,14 +10,14 @@ import org.jdom.Element;
  * configuring MemoryManagers, working with
  * AbstractMemoryManagers.
  * <P>
- * Typically, a subclass will just implement the load(Element Memorys)
- * class, relying on implementation here to load the individual Memorys.
+ * Typically, a subclass will just implement the load(Element memories)
+ * class, relying on implementation here to load the individual Memory objects.
  * Note that these are stored explicitly, so the
  * resolution mechanism doesn't need to see *Xml classes for each
  * specific Memory or AbstractMemory subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public abstract class AbstractMemoryManagerConfigXML implements XmlAdapter {
 
@@ -31,8 +31,8 @@ public abstract class AbstractMemoryManagerConfigXML implements XmlAdapter {
      * @return Element containing the complete info
      */
     public Element store(Object o) {
-        Element memorys = new Element("memorys");
-        setStoreElementClass(memorys);
+        Element memories = new Element("memories");
+        setStoreElementClass(memories);
         MemoryManager tm = (MemoryManager) o;
         if (tm!=null) {
             com.sun.java.util.collections.Iterator iter =
@@ -47,20 +47,20 @@ public abstract class AbstractMemoryManagerConfigXML implements XmlAdapter {
                             .addAttribute("systemName", sname);
                 if (uname!=null) elem.addAttribute("userName", uname);
                 log.debug("store Memory "+sname+":"+uname);
-                memorys.addContent(elem);
+                memories.addContent(elem);
 
             }
         }
-        return memorys;
+        return memories;
     }
 
     /**
      * Subclass provides implementation to create the correct top
      * element, including the type information.
      * Default implementation is to use the local class here.
-     * @param memorys The top-level element being created
+     * @param memories The top-level element being created
      */
-    abstract public void setStoreElementClass(Element memorys);
+    abstract public void setStoreElementClass(Element memories);
 
     public void load(Element element, Object o) {
         log.error("Invalid method called");
@@ -69,19 +69,19 @@ public abstract class AbstractMemoryManagerConfigXML implements XmlAdapter {
     /**
      * Create a MemoryManager object of the correct class, then
      * register and fill it.
-     * @param memorys Top level Element to unpack.
+     * @param memories Top level Element to unpack.
      */
-    abstract public void load(Element memorys);
+    abstract public void load(Element memories);
 
     /**
      * Utility method to load the individual Memory objects.
      * If there's no additional info needed for a specific Memory type,
      * invoke this with the parent of the set of Memory elements.
-     * @param memorys Element containing the Memory elements to load.
+     * @param memories Element containing the Memory elements to load.
      */
-    public void loadMemorys(Element memorys) {
-        List memoryList = memorys.getChildren("memory");
-        if (log.isDebugEnabled()) log.debug("Found "+memoryList.size()+" Memorys");
+    public void loadMemories(Element memories) {
+        List memoryList = memories.getChildren("memory");
+        if (log.isDebugEnabled()) log.debug("Found "+memoryList.size()+" Memory objects");
         MemoryManager tm = InstanceManager.memoryManagerInstance();
 
         for (int i=0; i<memoryList.size(); i++) {

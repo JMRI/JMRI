@@ -11,7 +11,7 @@ import org.jdom.Element;
  * <P>The state of memory objects is not persisted, just their existance.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class DefaultMemoryManagerXml extends AbstractMemoryManagerConfigXML {
 
@@ -22,22 +22,22 @@ public class DefaultMemoryManagerXml extends AbstractMemoryManagerConfigXML {
      * Subclass provides implementation to create the correct top
      * element, including the type information.
      * Default implementation is to use the local class here.
-     * @param memorys The top-level element being created
+     * @param memories The top-level element being created
      */
-    public void setStoreElementClass(Element memorys) {
-        memorys.addAttribute("class","jmri.configurexml.DefaultMemoryManagerXml");
+    public void setStoreElementClass(Element memories) {
+        memories.addAttribute("class","jmri.configurexml.DefaultMemoryManagerXml");
     }
 
     /**
      * Create a MemoryManager object of the correct class, then
      * register and fill it.
-     * @param memorys Top level Element to unpack.
+     * @param memories Top level Element to unpack.
      */
-    public void load(Element memorys) {
+    public void load(Element memories) {
         // create the master object
         DefaultMemoryManager mgr = DefaultMemoryManager.instance();
         // load individual routes
-        loadMemorys(memorys);
+        loadMemories(memories);
 
     }
 
