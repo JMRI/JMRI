@@ -5,7 +5,7 @@ import junit.framework.*;
 import javax.swing.*;
 import javax.swing.event.*;
 
-// Revision: $Revision: 1.4 $
+// Revision: $Revision: 1.5 $
 
 public class CombinedLocoSelListPaneTest extends TestCase {
 
@@ -16,6 +16,8 @@ public class CombinedLocoSelListPaneTest extends TestCase {
   public void testIsDecoderSelected() {
     jmri.InstanceManager.setProgrammer(new jmri.progdebugger.ProgDebugger());
     JLabel val1=  new JLabel();
+    // ensure a valid DecoderIndexFile
+    jmri.jmrit.decoderdefn.DecoderIndexFile.resetInstance();
     CombinedLocoSelListPane combinedlocosellistpane = new CombinedLocoSelListPane(val1);
     Assert.assertEquals("initial state", false, combinedlocosellistpane.isDecoderSelected());
     combinedlocosellistpane.mDecoderList.setSelectedIndex(1);

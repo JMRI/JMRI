@@ -17,7 +17,7 @@ import jmri.jmrit.symbolicprog.*;
  * DecoderFileTest.java
  *
  * @author			Bob Jacobsen, Copyright (C) 2001, 2002
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class DecoderFileTest extends TestCase {
 
@@ -88,11 +88,6 @@ public class DecoderFileTest extends TestCase {
 		Assert.assertEquals("mfg name ", "Digitrax", DecoderFile.getMfgName(decoder));
 	}
 
-	public void testFamilyName() {
-		setupDecoder();
-		Assert.assertEquals("Family name ", "DH142 etc", DecoderFile.getFamilyName(decoder));
-	}
-
 	public void testLoadTable() {
 		setupDecoder();
 
@@ -157,11 +152,10 @@ public class DecoderFileTest extends TestCase {
 
 		// add some elements
 		root.addContent(decoder = new Element("decoder")
-					.addContent(new Element("id")
+					.addContent(new Element("family")
 									.addAttribute("family","DH142 etc")
 									.addAttribute("mfg","Digitrax")
 									.addAttribute("defnVersion","242")
-									.addAttribute("mfgID","129")
 									.addAttribute("comment","DH142 decoder: FX, transponding")
 								)
 					.addContent(new Element("programming")

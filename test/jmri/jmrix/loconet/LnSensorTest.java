@@ -1,11 +1,4 @@
-/**
- * LnSensorTest.java
- *
- * Description:	    tests for the jmri.jmrix.loconet.LnSensor class
- * @author			Bob Jacobsen
- * @version
- */
-
+// LnSensorTest.java
 package jmri.jmrix.loconet;
 
 import java.io.*;
@@ -16,6 +9,11 @@ import junit.framework.TestSuite;
 
 import jmri.jmrix.loconet.*;
 
+/**
+ * Tests for the jmri.jmrix.loconet.LnSensor class
+ * @author			Bob Jacobsen  Copyright 2001, 2002
+ * @version         $Revision: 1.3 $
+ */
 public class LnSensorTest extends TestCase {
 
 	public void testLnSensorCreate() {
@@ -39,7 +37,7 @@ public class LnSensorTest extends TestCase {
 		LocoNetMessage m = new LocoNetMessage(4);
 		m.setOpCode(0xb2);         // OPC_INPUT_REP
 		m.setElement(1, 0x15);     // all but lowest bit of address
-		m.setElement(2, 0x60);     // Aux (low addr bit high), sensor high
+		m.setElement(2, 0x50);     // Aux (low addr bit high), sensor high
 		m.setElement(3, 0x38);
 		lnis.sendTestMessage(m);
 		Assert.assertTrue(t.getKnownState() == jmri.Sensor.ACTIVE);
