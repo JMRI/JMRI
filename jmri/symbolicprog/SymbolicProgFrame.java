@@ -274,7 +274,6 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 										"http://jmri.sourceforge.net/xml/decoder");
 			SAXBuilder builder = new SAXBuilder(true);  // argument controls validation, on for now
 			Document doc = builder.build(file);
-			
 			// find root
 			Element root = doc.getRootElement();
 			
@@ -290,7 +289,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 				else log.error("Unrecognized config file contents");
 			}
 		} catch (Exception e) {
-			if (log.isInfoEnabled()) log.warn("readAndParseDecoderConfig: readAndParseDecoderConfig exception: "+e);
+			log.warn("readAndParseDecoderConfig: readAndParseDecoderConfig exception: "+e);
 		}
 	}
 		
