@@ -21,7 +21,7 @@ import jmri.*;
  * at least for now. Eventually, we can listen to messages to decouple this.
  * <P>
  * Head 0 guards entering the A leg, head 1 guards the B legt, head 2
- * guards the C leg
+ * guards the C leg, head 3 is the 2nd head on the A leg
  * <P>
  * Simple hard-coded aspect chart:
  *  Green is 55MPH and up
@@ -30,7 +30,7 @@ import jmri.*;
  *  Red is less than 15
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class AspectGenerator implements java.beans.PropertyChangeListener{
 
@@ -43,8 +43,8 @@ public class AspectGenerator implements java.beans.PropertyChangeListener{
 
         // load default values
         int headAddr = 257+(mSE.getNumber()-1)*8;
-        heads = new SignalHead[]{new SE8cSignalHead(headAddr), new SE8cSignalHead(headAddr+2),
-                                    new SE8cSignalHead(headAddr+4), new SE8cSignalHead(headAddr+6)};
+        heads = new SignalHead[]{new SE8cSignalHead(headAddr), new SE8cSignalHead(headAddr+4),
+                                    new SE8cSignalHead(headAddr+6), new SE8cSignalHead(headAddr+2)};
     }
 
     public AspectGenerator(int se) {
