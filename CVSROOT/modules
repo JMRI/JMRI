@@ -46,6 +46,7 @@ properties -a \
         jmri/jmrix/lenz/XNetBundle.properties \
         jmri/jmrix/loconet/LocoNetBundle.properties \
         jmri/NamedBeanBundle.properties \
+        jmri/jmrix/cmri/serial/nodeconfig/NodeConfigBundle.properties \
         \
         apps/AppsBundle_cs.properties \
         apps/AppsConfigBundle_cs.properties \
