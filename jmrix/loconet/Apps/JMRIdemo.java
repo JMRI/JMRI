@@ -16,6 +16,7 @@ import ms100.MS100Action;
 import locomon.LocoMonAction;
 import locogen.LocoGenAction;
 import locoecho.LocoEchoAction;
+import slotmon.SlotMonAction;
 
 public class JMRIdemo extends JPanel {
 	public JMRIdemo() {
@@ -46,6 +47,7 @@ public class JMRIdemo extends JPanel {
 		locomonAction  = new LocoMonAction("Monitoring");
 		locogenAction  = new LocoGenAction("Commands");
 		locoechoAction = new LocoEchoAction("Echo Test");
+		slotmonAction  = new SlotMonAction("Slot Monitor");
 		
 	// populate GUI
         // Create menu categories and add to the menu bar
@@ -59,6 +61,7 @@ public class JMRIdemo extends JPanel {
         funcMenu.add(locomonAction);
         funcMenu.add(locogenAction);
         funcMenu.add(locoechoAction);
+        funcMenu.add(slotmonAction);
 	}
 
 	// Main entry point
@@ -80,6 +83,7 @@ public class JMRIdemo extends JPanel {
 	private LocoMonAction locomonAction;
 	private LocoGenAction locogenAction;
 	private LocoEchoAction locoechoAction;
+	private SlotMonAction slotmonAction;
 
 	private LnTrafficController tc;
 	
