@@ -16,7 +16,7 @@ import jmri.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public class CornwallRR extends JPanel {
     public CornwallRR(JFrame frame) {
@@ -67,6 +67,8 @@ public class CornwallRR extends JPanel {
         funcMenu.add(new jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlAction("Turnout Control"));
         funcMenu.add(new jmri.jmrit.powerpanel.PowerPanelAction("Power Control"));
         funcMenu.add(new jmri.jmrit.speedometer.SpeedometerAction( "Speedometer" ));
+        funcMenu.add(new jmri.jmrit.beantable.TurnoutTableAction("Turnout Table"));
+        funcMenu.add(new jmri.jmrit.beantable.SensorTableAction("Sensor Table"));
 
         JMenu throttleMenu = new JMenu("Throttles");
         throttleMenu.add(new jmri.jmrit.throttle.ThrottleCreationAction( "New Throttle..." ));
