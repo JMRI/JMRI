@@ -15,7 +15,7 @@ import java.beans.PropertyChangeEvent;
  * counter-part of a LocoNet command station.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.8 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 
@@ -341,7 +341,29 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
         LnTrafficController.instance().sendLocoNetMessage(progTaskStart(pcmd, val, CV, true));
     }
 
-    public void confirmCV(int CV, int val, ProgListener p) throws jmri.ProgrammerException {
+    public void confirmCVOpsMode(int CV, int val, jmri.ProgListener p,
+                               int addr, boolean longAddr) throws jmri.ProgrammerException {
+        lopsa = addr&0x7f;
+        hopsa = (addr/128)&0x7f;
+        if (!longAddr) hopsa|=0x40;
+        doConfirm(CV, val, p, 0x2C);
+    }
+    public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+        lopsa = 0;
+        hopsa = 0;
+        // parse the programming command
+        int pcmd = 0x40;  // write command
+        if (getMode() == jmri.Programmer.PAGEMODE) pcmd = pcmd | 0x20;
+        else if (getMode() == jmri.Programmer.DIRECTBYTEMODE) pcmd = pcmd | 0x28;
+        else if (getMode() == jmri.Programmer.REGISTERMODE
+                 || getMode() == jmri.Programmer.ADDRESSMODE) pcmd = pcmd | 0x10;
+        else throw new jmri.ProgrammerException("mode not supported");
+
+        doConfirm(CV, val, p, pcmd);
+    }
+
+    public void doConfirm(int CV, int val, ProgListener p, 
+                          int pcmd) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) log.debug("confirmCV: "+CV);
         useProgrammer(p);
         _progRead = false;
@@ -353,7 +375,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 
         // format and send message
         startShortTimer();
-        LnTrafficController.instance().sendLocoNetMessage(progTaskStart(getMode(), -1, CV, false));
+        LnTrafficController.instance().sendLocoNetMessage(progTaskStart(pcmd, -1, CV, false));
     }
 
     int hopsa; // high address for CV read/write
