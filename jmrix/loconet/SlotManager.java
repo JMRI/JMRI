@@ -148,7 +148,10 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 						// check status byte
 						if (m.getElement(2) == 1) { // task accepted
 							// move to commandExecuting state
-							startLongTimer();
+							if (_progRead || _progConfirm)
+								startLongTimer();
+							else
+								startShortTimer();
 							progState = 2;
 							}
 						else if (m.getElement(2) == 0) { // task aborted as busy
