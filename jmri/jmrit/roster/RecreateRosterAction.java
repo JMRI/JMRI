@@ -12,9 +12,11 @@ import org.jdom.Element;
 
 /**
  * Recreate the roster index file if it's been damaged or lost.
+ * <P>
+ * Scans the roster directory for xml files, including any that are found.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class RecreateRosterAction extends AbstractAction {
 
@@ -72,6 +74,7 @@ public class RecreateRosterAction extends AbstractAction {
         int np = 0;
         String[] sp = null;
         XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
+        if (log.isDebugEnabled()) log.debug("search directory "+LocoFile.getFileLocation());
         File fp = new File(LocoFile.getFileLocation());
         if (fp.exists()) {
             sp = fp.list();
@@ -82,34 +85,24 @@ public class RecreateRosterAction extends AbstractAction {
         } else {
             log.warn(XmlFile.prefsDir()+"roster directory was missing, though tried to create it");
         }
-        // create an array of file names from xml/roster, count entries
-        String[] sx = (new File(LocoFile.getFileLocation())).list();
-        if (sx == null) sx = new String[0];
 
-        int nx = 0;
-        for (i=0; i<sx.length; i++) {
-            if (sx[i].endsWith(".xml") || sx[i].endsWith(".XML")) {
-                nx++;
-            }
-        }
-        // copy the entries to the final array
-        // note: this results in duplicate entries if the same name is also local.
-        // But for now I can live with that.
-        String sbox[] = new String[np+nx];
+        // Copy the entries to the final array
+        String sbox[] = new String[np];
         int n=0;
         if (sp != null && np> 0)
             for (i=0; i<sp.length; i++) {
                 if (sp[i].endsWith(".xml") || sp[i].endsWith(".XML"))
                     sbox[n++] = sp[i];
             }
-        for (i=0; i<sx.length; i++) {
-            if (sx[i].endsWith(".xml") || sx[i].endsWith(".XML"))
-                sbox[n++] = sx[i];
-        }
-        //the resulting array is now sorted on file-name to make it easier
+        // The resulting array is now sorted on file-name to make it easier
         // for humans to read
         jmri.util.StringUtil.sort(sbox);
 
+        if (log.isDebugEnabled()) {
+            log.debug("filename list:");
+            for (i=0; i<sbox.length; i++)
+                log.debug("      "+sbox[i]);
+        }
         return sbox;
     }
 
