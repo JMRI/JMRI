@@ -7,7 +7,7 @@ import com.sun.java.util.collections.HashMap;
 /**
  * XNet implementation of a ThrottleManager
  * @author     Paul Bender Copyright (C) 2002,2003
- * @version    $Revision: 1.7 $
+ * @version    $Revision: 1.8 $
  */
 
 public class XNetThrottleManager implements ThrottleManager,XNetListener
@@ -68,6 +68,12 @@ public class XNetThrottleManager implements ThrottleManager,XNetListener
             throttleListeners.remove(addressKey);
         }
     }
+
+    /*
+     * Lenz Systems DO NOT use the Dispatch Function
+     */
+    public boolean hasDispatchFunction() { return false; }
+
 
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call

@@ -11,7 +11,7 @@ import com.sun.java.util.collections.HashMap;
  * Based on Glen Oberhauser's original LnThrottleManager implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 abstract public class AbstractThrottleManager implements ThrottleManager {
     private HashMap throttleListeners;
@@ -75,6 +75,12 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             l.notifyThrottleFound(throttle);
         }
     }
+  
+    /**
+     * Check to see if the Dispatch Button should be enabled or not 
+     * Default to true, override if necessary
+     **/
+    public boolean hasDispatchFunction() { return true; }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractThrottleManager.class.getName());
 }

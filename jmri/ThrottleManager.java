@@ -13,7 +13,7 @@ package jmri;
  * that operation, it is handled internally.
  *
  * @author			Glen Oberhauser
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public interface ThrottleManager {
 
@@ -35,4 +35,8 @@ public interface ThrottleManager {
      */
     public void cancelThrottleRequest(int address, ThrottleListener l);
 
+    /**
+     * Check to see if the Dispatch Button should be enabled or not
+     **/
+    public boolean hasDispatchFunction();
 }

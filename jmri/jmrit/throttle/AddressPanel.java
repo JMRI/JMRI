@@ -74,7 +74,10 @@ public class AddressPanel extends JInternalFrame
     {
         this.throttle = t;
         releaseButton.setEnabled(true);
-        dispatchButton.setEnabled(true);
+	if(jmri.InstanceManager.throttleManagerInstance()
+			       .hasDispatchFunction()) {
+        	dispatchButton.setEnabled(true);
+	}
 		setButton.setEnabled(false);
 		addressField.setEditable(false);
 		rosterBox.setEnabled(false);
