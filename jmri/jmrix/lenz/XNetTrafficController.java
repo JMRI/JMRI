@@ -2,7 +2,10 @@
 
 package jmri.jmrix.lenz;
 
-import java.util.Vector;
+import jmri.jmrix.AbstractMRTrafficController;
+import jmri.jmrix.AbstractMRMessage;
+import jmri.jmrix.AbstractMRReply;
+import jmri.jmrix.AbstractMRListener;
 
 /**
  * Abstract base class for implementations of XNetInterface.
@@ -11,10 +14,10 @@ import java.util.Vector;
  * method for locating the local implementation.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Revision: 2.0 $
+ * @version 		$Revision: 2.1 $
  *
  */
-public abstract class XNetTrafficController implements XNetInterface {
+public abstract class XNetTrafficController extends AbstractMRTrafficController implements XNetInterface {
 
     /**
 	 * static function returning the TrafficController instance to use.
@@ -23,6 +26,14 @@ public abstract class XNetTrafficController implements XNetInterface {
 	 */
 	static public XNetTrafficController instance() {
 		return self;
+	}
+
+    /**
+	 * static function setting this object as the TrafficController 
+         * instance to use.
+	 */
+	protected void setInstance() {
+		if(self==null) self=this;
 	}
 
 	static protected XNetTrafficController self = null;
@@ -39,27 +50,26 @@ public abstract class XNetTrafficController implements XNetInterface {
     // Abstract methods for the XNetInterface
     abstract public boolean status();
 
-	/**
-	 * Forward a preformatted XNetMessage to the actual interface.
+    /**
+     * Forward a preformatted XNetMessage to the actual interface.
      * @param m Message to send; will be updated with CRC
-	 */
-	abstract public void sendXNetMessage(XNetMessage m, XNetListener reply);
+     */
+   abstract public void sendXNetMessage(XNetMessage m, XNetListener reply);
 
-    // The methods to implement adding and removing listeners
-	protected Vector listeners = new Vector();
+    /**
+     * Forward a preformatted XNetMessage to the actual interface.
+     * @param m Message to send; will be updated with CRC
+     */
+   public void forwardMessage(AbstractMRListener reply,AbstractMRMessage m){
+          ((XNetListener)reply).message(new XNetReply((XNetMessage)m));
+   }
 
-	public synchronized void addXNetListener(int mask, XNetListener l) {
-        // add only if not already registered
-        if (l == null) throw new java.lang.NullPointerException();
-        if (!listeners.contains(l)) {
-    		listeners.addElement(l);
-		}
+   public synchronized void addXNetListener(int mask, XNetListener l) {
+	addListener(l);
     }
 
-	public synchronized void removeXNetListener(int mask, XNetListener l) {
-    	if (listeners.contains(l)) {
-    		listeners.removeElement(l);
-    	}
+    public synchronized void removeXNetListener(int mask, XNetListener l) {
+	removeListener(l);
     }
 
 	/**
@@ -68,19 +78,12 @@ public abstract class XNetTrafficController implements XNetInterface {
      * @param replyTo Listener for the reply to this message, doesn't get
      *                the echo of it.
 	 */
+	protected void notify(XNetMessage m, XNetListener replyTo) {
+		notifyMessage((AbstractMRMessage)m,(AbstractMRListener) replyTo);
+        }
+
 	protected void notify(XNetReply m, XNetListener replyTo) {
-		// make a copy of the listener vector to synchronized not needed for transmit
-		Vector v;
-		synchronized(this) {
-			v = (Vector) listeners.clone();
-		}
-		if (log.isDebugEnabled()) log.debug("notify of incoming packet: "+m.toString());
-		// forward to all listeners
-		int cnt = v.size();
-		for (int i=0; i < cnt; i++) {
-			XNetListener client = (XNetListener) listeners.elementAt(i);
-			if (client!=replyTo) client.message(m);
-		}
+		notifyMessage(new XNetMessage(m),(AbstractMRListener)replyTo);
         }
 
     /** Reference to the command station in communication here */

@@ -1,4 +1,4 @@
-// XNetMessage.java
+// XNetReply.java
 
 package jmri.jmrix.lenz;
 
@@ -7,7 +7,7 @@ package jmri.jmrix.lenz;
  *<P>
  *
  * @author			Paul Bender Copyright (C) 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  *
  */
 public class XNetReply extends jmri.jmrix.AbstractMRReply {
@@ -28,8 +28,12 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     * Create a reply from an XNetMessage.
     */
     public XNetReply(XNetMessage message) {
-       super(message.toString()); 
+       super(); 
        setBinary(true);
+       for(int i=0;i<message.getNumDataElements();i++)
+       {
+	  setElement(i,message.getElement(i));
+       }
     }
 
 

@@ -12,7 +12,7 @@ import java.io.Serializable;
  * actually a variable number of bytes in Unicode.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version			$Revision: 2.1 $
+ * @version			$Revision: 2.2 $
  *
  */
 public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Serializable {
@@ -36,6 +36,18 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
            super(message);
 	   setBinary(true);
 	}
+
+	/**
+	 * Create an XNetMessage from an XNetReply.
+    	 */
+	public XNetMessage(XNetReply message) {
+	    super(message.getNumDataElements());                            
+       	    setBinary(true);
+            for(int i=0;i<message.getNumDataElements();i++)
+       		{
+          	   setElement(i,message.getElement(i));
+       		}
+    	}
 
     // note that the opcode is part of the message, so we treat it
     // directly
