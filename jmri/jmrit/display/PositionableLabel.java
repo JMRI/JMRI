@@ -7,11 +7,11 @@ import jmri.*;
 
 /**
  * <p>Title: PositionableLabel is a JLabel that can be dragged around the
- * inside of the enclosing Container.</p>
+ * inside of the enclosing Container using a right-drag.</p>
  * <p>Description: </p>
  * <p>Copyright: Bob Jacobsen Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class PositionableLabel extends JLabel
@@ -22,6 +22,7 @@ public class PositionableLabel extends JLabel
         super(s);
         text = true;
         debug = log.isDebugEnabled();
+        setToolTipText("Alt-click to see menu, drag with meta key to move");
         connect();
     }
     public PositionableLabel(Icon s, String name) {
@@ -29,6 +30,7 @@ public class PositionableLabel extends JLabel
         icon = true;
         iconName = name;
         debug = log.isDebugEnabled();
+        setToolTipText("Alt-click to see menu, drag with meta key to move");
         connect();
     }
 
@@ -56,15 +58,20 @@ public class PositionableLabel extends JLabel
         xClick = e.getX();
         yClick = e.getY();
         if (debug) log.debug("Pressed: "+where(e));
+        if (debug && e.isPopupTrigger()) {
+            if (debug) log.debug("show popup");
+            showPopUp(e);
+        }
     }
     public void mouseReleased(MouseEvent e) {
         if (debug) log.debug("Release: "+where(e));
+        if (debug && e.isPopupTrigger()) log.debug("Released was pop up trigger");
     }
     public void mouseClicked(MouseEvent e) {
         if (debug) log.debug("Clicked: "+where(e));
-        if (e.isPopupTrigger()) log.debug("Was pop up trigger");
-        if (e.isMetaDown()) log.debug("meta down");
-        if (e.isAltDown()) log.debug(" alt down");
+        if (debug && e.isPopupTrigger()) log.debug("Clicked was pop up trigger");
+        if (debug && e.isMetaDown()) log.debug("meta down");
+        if (debug && e.isAltDown()) log.debug(" alt down");
     }
     public void mouseExited(MouseEvent e) {
         if (debug) log.debug("Exited:  "+where(e));
@@ -77,14 +84,21 @@ public class PositionableLabel extends JLabel
         //if (debug) log.debug("Moved:   "+where(e));
     }
     public void mouseDragged(MouseEvent e) {
-        //if (debug) log.debug("Dragged: "+where(e));
-        // update object postion by how far dragged
-        int xObj = getX()+(e.getX()-xClick);
-        int yObj = getY()+(e.getY()-yClick);
-        this.setLocation(xObj, yObj);
-        // and show!
-        this.repaint();
+        if (e.isMetaDown()) {
+            //if (debug) log.debug("Dragged: "+where(e));
+            // update object postion by how far dragged
+            int xObj = getX()+(e.getX()-xClick);
+            int yObj = getY()+(e.getY()-yClick);
+            this.setLocation(xObj, yObj);
+            // and show!
+            this.repaint();
+        }
     }
+
+    /**
+     * For over-riding in the using classes:
+     */
+    protected void showPopUp(MouseEvent e) {}
 
     String where(MouseEvent e) {
         return ""+e.getX()+","+e.getY();

@@ -1,22 +1,21 @@
 package jmri.jmrit.display;
 
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import javax.swing.Icon;
+import javax.swing.*;
+import java.awt.event.*;
 
 import jmri.*;
 
 /**
  * SensorIcon provides a small icon to display a status of a Sensor.</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
     public SensorIcon() {
         // super ctor call to make sure this is an icon label
-        super(new ImageIcon(ClassLoader.getSystemResource("resources/images19x16/X-red.gif")),
+        super(new ImageIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/circuit-error.gif")),
             "sensor icon name");
         displayState(sensorState());
     }
@@ -39,10 +38,10 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     }
 
     // display icons
-    Icon active = new ImageIcon(ClassLoader.getSystemResource("resources/TrackSegments/GriffenSet/Turnouts44x40/RHNORMUP.gif"));
-    Icon inactive = new ImageIcon(ClassLoader.getSystemResource("resources/TrackSegments/GriffenSet/Turnouts44x40/RHREVUP.gif"));
-    Icon inconsistent = new ImageIcon(ClassLoader.getSystemResource("resources/images19x16/X-red.gif"));
-    Icon unknown = new ImageIcon(ClassLoader.getSystemResource("resources/images19x16/Question-black.gif"));
+    Icon active = new ImageIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/circuit-occupied.gif"));
+    Icon inactive = new ImageIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/circuit-empty.gif"));
+    Icon inconsistent = new ImageIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/circuit-error.gif"));
+    Icon unknown = new ImageIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/circuit-error.gif"));
 
     public Icon getActiveIcon() { return active; }
     public void setActiveIcon(Icon i) { active = i; displayState(sensorState()); }
@@ -71,8 +70,8 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     }
 
     /**
-     * Get current state of attached turnout
-     * @return A state variable from a Turnout, e.g. Turnout.CLOSED
+     * Get current state of attached sensor
+     * @return A state variable from a Sensor, e.g. Sensor.ACTIVE
      */
     int sensorState() {
         if (sensor != null) return sensor.getKnownState();
@@ -87,6 +86,20 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
              displayState(now);
 		}
 	}
+
+    JPopupMenu popup = null;
+    /**
+     * Pop-up just displays the sensor name
+     */
+    protected void showPopUp(MouseEvent e) {
+        if (popup==null) {
+            String name;
+            name = sensor.getID();
+            popup = new JPopupMenu();
+            popup.add(new JMenuItem(name));
+        }
+        popup.show(e.getComponent(), e.getX(), e.getY());
+    }
 
     /**
      * Drive the current state of the display from the state of the
@@ -112,6 +125,23 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                 return;
 			}
     }
+
+    /**
+     * (Temporarily) change occupancy on click
+     * @param e
+     */
+    public void mouseClicked(java.awt.event.MouseEvent e) {
+        if (e.isAltDown() || e.isMetaDown()) return;
+        try {
+            if (sensor.getKnownState()==jmri.Sensor.ACTIVE)
+                sensor.setKnownState(jmri.Sensor.INACTIVE);
+            else
+                sensor.setKnownState(jmri.Sensor.ACTIVE);
+        } catch (jmri.JmriException reason) {
+            log.warn("Exception changing sensor: "+reason);
+        }
+    }
+
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SensorIcon.class.getName());
 }

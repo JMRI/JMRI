@@ -23,7 +23,7 @@ import com.sun.java.util.collections.ArrayList;
  *
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class PanelEditor extends JPanel {
@@ -379,6 +379,7 @@ public class PanelEditor extends JPanel {
     void setNextLocation(JComponent obj) {
         int x = Integer.parseInt(nextX.getText());
         int y = Integer.parseInt(nextY.getText());
+        //obj.setLocation(x,y);
         obj.setBounds(x,y,obj.getPreferredSize().width,obj.getPreferredSize().height);
     }
 

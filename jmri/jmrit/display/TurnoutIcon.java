@@ -1,22 +1,21 @@
 package jmri.jmrit.display;
 
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import javax.swing.Icon;
+import javax.swing.*;
+import java.awt.event.*;
 
 import jmri.*;
 
 /**
  * TurnoutIcon provides a small icon to display a status of a turnout.</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
     public TurnoutIcon() {
         // super ctor call to make sure this is an icon label
-        super(new ImageIcon(ClassLoader.getSystemResource("resources/images19x16/X-red.gif")),
+        super(new ImageIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/os-upper-right-closed.gif")),
             "default turnout icon");
         displayState(turnoutState());
     }
@@ -39,10 +38,10 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
     }
 
     // display icons
-    Icon closed = new ImageIcon(ClassLoader.getSystemResource("resources/TrackSegments/GriffenSet/Turnouts44x40/RHNORMUP.gif"));
-    Icon thrown = new ImageIcon(ClassLoader.getSystemResource("resources/TrackSegments/GriffenSet/Turnouts44x40/RHREVUP.gif"));
-    Icon inconsistent = new ImageIcon(ClassLoader.getSystemResource("resources/images19x16/X-red.gif"));
-    Icon unknown = new ImageIcon(ClassLoader.getSystemResource("resources/images19x16/Question-black.gif"));
+    Icon closed = new ImageIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/os-upper-right-closed.gif"));
+    Icon thrown = new ImageIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/os-upper-right-thrown.gif"));
+    Icon inconsistent = new ImageIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/os-upper-right-error.gif"));
+    Icon unknown = new ImageIcon(ClassLoader.getSystemResource("resources/icons/smallschematics/tracksegments/os-upper-right-unknown.gif"));
 
     public Icon getClosedIcon() { return closed; }
     public void setClosedIcon(Icon i) { closed = i; displayState(turnoutState()); }
@@ -88,6 +87,23 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
 		}
 	}
 
+    JPopupMenu popup = null;
+    /**
+     * Pop-up just displays the turnout name
+     */
+    protected void showPopUp(MouseEvent e) {
+        if (popup==null) {
+            popup = new JPopupMenu();
+            String name;
+            if (turnout.getUserName()!=null)
+                name = turnout.getUserName()+" ("+turnout.getSystemName()+")";
+            else
+                name = turnout.getSystemName();
+            popup.add(new JMenuItem(name));
+        }
+        popup.show(e.getComponent(), e.getX(), e.getY());
+    }
+
     /**
      * Drive the current state of the display from the state of the
      * turnout.
@@ -111,6 +127,22 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
                 if (showIcon) super.setIcon(inconsistent);
                 return;
 			}
+    }
+
+    /**
+     * Throw the turnout when the icon is clicked
+     * @param e
+     */
+    public void mouseClicked(java.awt.event.MouseEvent e) {
+        if (e.isMetaDown() || e.isAltDown() ) return;
+        try {
+            if (turnout.getCommandedState()==jmri.Turnout.CLOSED)
+                turnout.setCommandedState(jmri.Turnout.THROWN);
+            else
+                turnout.setCommandedState(jmri.Turnout.CLOSED);
+        } catch (jmri.JmriException reason) {
+            log.warn("Exception changing turnout: "+reason);
+        }
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TurnoutIcon.class.getName());
