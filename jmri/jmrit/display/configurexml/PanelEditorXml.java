@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.PanelEditor panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class PanelEditorXml implements XmlAdapter {
 
@@ -94,9 +94,10 @@ public class PanelEditorXml implements XmlAdapter {
 
         targetFrame.getContentPane().add(targetPanel);
         targetPanel.setLayout(null);
-        PanelEditor panel = new PanelEditor(name+" Editor");
+        PanelEditor panel = new PanelEditor();
         panel.setFrame(targetFrame);
         panel.setTarget(targetPanel);
+        panel.setTitle();
 
         // load the contents
         List items = element.getChildren();

@@ -14,7 +14,7 @@ import com.sun.java.util.collections.ArrayList;
 
 /**
  * Provides a simple editor for adding jmri.jmrit.display items
- * to a captive JFrame
+ * to a captive JFrame.
  * <P>GUI is structured as a band of common parameters across the
  * top, then a series of things you can add.
  * <P>
@@ -41,7 +41,7 @@ import com.sun.java.util.collections.ArrayList;
  *
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 
 public class PanelEditor extends JFrame {
@@ -101,6 +101,24 @@ public class PanelEditor extends JFrame {
         common.add(nextY);
         this.getContentPane().add(common);
 
+        // allow naming the panel
+        {
+            JPanel namep = new JPanel();
+            namep.setLayout(new FlowLayout());
+            JButton b = new JButton("Set panel name");
+            b.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    // prompt for name
+                    String newName = JOptionPane.showInputDialog(target, "Enter new name:");
+                    if (newName==null) return;  // cancelled
+
+                    if (getTarget().getTopLevelAncestor()!=null) ((JFrame)getTarget().getTopLevelAncestor()).setTitle(newName);
+                    setTitle();
+                }
+            });
+            namep.add(b);
+            this.getContentPane().add(namep);
+        }
         // add a background image
         {
             JPanel panel = new JPanel();
@@ -501,6 +519,12 @@ public class PanelEditor extends JFrame {
         this.setVisible(false);        // doesn't remove the editor!
 
         dispose();
+    }
+    public void setTitle() {
+        String name = "";
+        if (getTarget().getTopLevelAncestor()!=null) name=((JFrame)getTarget().getTopLevelAncestor()).getTitle();
+        if (name==null || name.equals("")) super.setTitle("Editor");
+        super.setTitle(name+" Editor");
     }
 
     // initialize logging
