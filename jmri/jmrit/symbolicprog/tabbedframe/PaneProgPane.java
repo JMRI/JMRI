@@ -33,7 +33,7 @@ import org.jdom.Element;
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001; D Miller Copyright 2003
- * @version			$Revision: 1.22 $
+ * @version			$Revision: 1.23 $
  */
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
@@ -834,8 +834,6 @@ public class PaneProgPane extends javax.swing.JPanel
         int col2Width = w.getCharactersPerLine()/2 -3 + 5;
 
         try {
-          //Draw horizontal dividing line for each Pane section
-          w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(), w.getCharactersPerLine() + 1);
           //Create a string of spaces the width of the first column
           String spaces = "";
           for (int i=0; i < col1Width; i++) {
@@ -848,22 +846,34 @@ public class PaneProgPane extends javax.swing.JPanel
             int interval = spaces.length()- heading1.length();
             w.setFontStyle(Font.BOLD);
             if (cvList.size() > 0){
+              s = mName.toUpperCase();
+              w.write(s, 0, s.length());
               w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber() + 1, 0);
               w.write(w.getCurrentLineNumber(), w.getCharactersPerLine() + 1,
                       w.getCurrentLineNumber() + 1, w.getCharactersPerLine() + 1);
-              s = mName.toUpperCase() + "\n";
-              w.write(s, 0, s.length());
+              //Draw horizontal dividing line for each Pane section
+              w.write(w.getCurrentLineNumber()-1, 0, w.getCurrentLineNumber()-1,
+                      w.getCharactersPerLine()+1);
+              s = "\n";
+              w.write(s,0,s.length());
             }
             else {
-              w.write(w.getCurrentLineNumber(),0,w.getCurrentLineNumber() + 1,0);
-              w.write(w.getCurrentLineNumber(),w.getCharactersPerLine() + 1,w.getCurrentLineNumber() + 1,w.getCharactersPerLine() + 1);
-              s = mName.toUpperCase() + "\n";
+              s = mName.toUpperCase();
               w.write(s, 0, s.length());
               w.write(w.getCurrentLineNumber(),0,w.getCurrentLineNumber() + 1,0);
               w.write(w.getCurrentLineNumber(),w.getCharactersPerLine() + 1,w.getCurrentLineNumber() + 1,w.getCharactersPerLine() + 1);
+              s = "\n";
+              w.write(s,0,s.length());
               w.setFontStyle(Font.BOLD + Font.ITALIC);
-              s = "   " + heading1 + spaces.substring(0,interval) + "   Setting\n";
+              s = "   " + heading1 + spaces.substring(0,interval) + "   Setting";
               w.write(s, 0, s.length());
+              w.write(w.getCurrentLineNumber(),0,w.getCurrentLineNumber() + 1,0);
+              w.write(w.getCurrentLineNumber(),w.getCharactersPerLine() + 1,w.getCurrentLineNumber() + 1,w.getCharactersPerLine() + 1);
+              //Draw horizontal dividing line for each Pane section
+              w.write(w.getCurrentLineNumber()-1, 0, w.getCurrentLineNumber()-1,
+                      w.getCharactersPerLine()+1);
+              s = "\n";
+              w.write(s,0,s.length());
             }
             w.setFontStyle(Font.PLAIN);
             // index over variables
@@ -920,16 +930,18 @@ public class PaneProgPane extends javax.swing.JPanel
                     }
                     trimmedValue = value.substring(valueLeftIndex,valueRightIndex);
                     valueLeftIndex = valueRightIndex;
-                    s= s + "   " + trimmedValue + "\n";
+                    s= s + "   " + trimmedValue;
                   }
                   else {
                     trimmedValue = value.substring(valueLeftIndex);
-                    s = s + "   " + trimmedValue + "\n";
+                    s = s + "   " + trimmedValue;
                     valueLeftIndex = 0;
                     value = "";
                   }
+                  w.write(s,0,s.length());
                   w.write(w.getCurrentLineNumber(),0,w.getCurrentLineNumber() + 1,0);
                   w.write(w.getCurrentLineNumber(),w.getCharactersPerLine() + 1,w.getCurrentLineNumber() + 1,w.getCharactersPerLine() + 1);
+                  s = "\n";
                   w.write(s,0,s.length());
                 }
             }
@@ -938,16 +950,20 @@ public class PaneProgPane extends javax.swing.JPanel
             if (cvList.size() > 0){
               w.setFontStyle(Font.BOLD); //set font to Bold
               // print a simple heading
-              w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber() + 1, 0);
-              w.write(w.getCurrentLineNumber(), w.getCharactersPerLine() + 1,
-                      w.getCurrentLineNumber() + 1, w.getCharactersPerLine() + 1);
-              s = "         Value               Value               Value               Value\n";
+              s = "         Value               Value               Value               Value";
               w.write(s, 0, s.length());
               w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber() + 1, 0);
               w.write(w.getCurrentLineNumber(), w.getCharactersPerLine() + 1,
                       w.getCurrentLineNumber() + 1, w.getCharactersPerLine() + 1);
-              s = "   CV   Dec Hex        CV   Dec Hex        CV   Dec Hex        CV   Dec Hex\n";
+              s = "\n";
+              w.write(s,0,s.length());
+              s = "   CV   Dec Hex        CV   Dec Hex        CV   Dec Hex        CV   Dec Hex";
               w.write(s, 0, s.length());
+              w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber() + 1, 0);
+              w.write(w.getCurrentLineNumber(), w.getCharactersPerLine() + 1,
+                      w.getCurrentLineNumber() + 1, w.getCharactersPerLine() + 1);
+              s = "\n";
+              w.write(s,0,s.length());
               w.setFontStyle(0); //set font back to Normal
               //           }
               /*create an array to hold CV/Value strings to allow reformatting and sorting
@@ -1011,12 +1027,14 @@ public class PaneProgPane extends javax.swing.JPanel
 
                 //Print the array in four columns
                 for (int i = 0; i < tableHeight; i++) {
+                  s = cvStrings[i] + "    " + cvStrings[i + tableHeight] + "    " + cvStrings[i +
+                      tableHeight * 2] + "    " + cvStrings[i + tableHeight * 3];
+                  w.write(s, 0, s.length());
                   w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber() + 1, 0);
                   w.write(w.getCurrentLineNumber(), w.getCharactersPerLine() + 1,
                           w.getCurrentLineNumber() + 1, w.getCharactersPerLine() + 1);
-                  s = cvStrings[i] + "    " + cvStrings[i + tableHeight] + "    " + cvStrings[i +
-                      tableHeight * 2] + "    " + cvStrings[i + tableHeight * 3] + "\n";
-                  w.write(s, 0, s.length());
+                  s = "\n";
+                  w.write(s,0,s.length());
                 }
             }
               s = "\n\n";
