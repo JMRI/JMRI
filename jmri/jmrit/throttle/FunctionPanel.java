@@ -7,6 +7,7 @@ import jmri.ThrottleListener;
 import jmri.ThrottleManager;
 import jmri.InstanceManager;
 
+import org.jdom.Element;
 
 public class FunctionPanel extends JInternalFrame
         implements ThrottleListener, AddressListener, FunctionListener
@@ -43,6 +44,8 @@ public class FunctionPanel extends JInternalFrame
     public void notifyThrottleFound(DccThrottle t)
     {
         this.throttle = t;
+
+
         functionButton[0].setState(throttle.getF0());
         functionButton[1].setState(throttle.getF1());
         functionButton[2].setState(throttle.getF2());
@@ -128,6 +131,52 @@ public class FunctionPanel extends JInternalFrame
         }
         mainPanel.add(new JLabel(""));
         mainPanel.add(functionButton[0]);
+    }
+
+    public Element getXml()
+    {
+        Element me = new Element("FunctionPanel");
+        Element window = new Element("window");
+        WindowPreferences wp = new WindowPreferences();
+        com.sun.java.util.collections.ArrayList children =
+                new com.sun.java.util.collections.ArrayList(1);
+        children.add(wp.getPreferences(this));
+        for (int i=0; i<this.NUM_FUNCTION_BUTTONS; i++)
+        {
+            Element buttonElement = new Element("FunctionButton");
+            buttonElement.addAttribute("id", String.valueOf(i));
+            buttonElement.addAttribute("text", functionButton[i].getText());
+            children.add(buttonElement);
+        }
+        me.setChildren(children);
+        return me;
+    }
+
+    public void setXml(Element e)
+    {
+        try
+        {
+            Element window = e.getChild("window");
+            WindowPreferences wp = new WindowPreferences();
+            wp.setPreferences(this, window);
+
+            com.sun.java.util.collections.List buttonElements =
+                    e.getChildren("FunctionButton");
+
+            for (com.sun.java.util.collections.Iterator iter =
+             buttonElements.iterator(); iter.hasNext();)
+            {
+                Element buttonElement = (Element)iter.next();
+                int id = buttonElement.getAttribute("id").getIntValue();
+                String text = buttonElement.getAttribute("text").getValue();
+                functionButton[id].setText(text);
+            }
+
+        }
+        catch (org.jdom.DataConversionException ex)
+        {
+            System.out.println("Ugh");
+        }
     }
 
 }

@@ -5,8 +5,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
+import org.jdom.Element;
+
 public class AddressPanel extends JInternalFrame
-        implements ActionListener
 {
 
     private ArrayList listeners;
@@ -63,11 +64,18 @@ public class AddressPanel extends JInternalFrame
          constraints.gridx = 1;
          mainPanel.add(setButton, constraints);
 
-         setButton.addActionListener(this);
+         setButton.addActionListener(
+                 new ActionListener()
+         {
+             public void actionPerformed(ActionEvent e)
+             {
+                 changeOfAddress();
+             }
+         });
 
-     }
+    }
 
-     public void actionPerformed(ActionEvent e)
+     public void changeOfAddress()
      {
          try
          {
@@ -90,6 +98,34 @@ public class AddressPanel extends JInternalFrame
          {
              addressField.setText(String.valueOf(currentAddress));
          }
+
+     }
+
+     public Element getXml()
+     {
+         Element me = new Element("AddressPanel");
+         Element window = new Element("window");
+         WindowPreferences wp = new WindowPreferences();
+         com.sun.java.util.collections.ArrayList children =
+                 new com.sun.java.util.collections.ArrayList(1);
+         children.add(wp.getPreferences(this));
+         Element address = new Element("address");
+         address.addAttribute("value", String.valueOf(addressField.getText()));
+         children.add(address);
+         me.setChildren(children);
+         return me;
+     }
+
+     public void setXml(Element e)
+     {
+         Element window = e.getChild("window");
+         WindowPreferences wp = new WindowPreferences();
+         wp.setPreferences(this, window);
+
+         Element addressElement = e.getChild("address");
+         String address = addressElement.getAttribute("value").getValue();
+         addressField.setText(address);
+         changeOfAddress();
 
      }
 

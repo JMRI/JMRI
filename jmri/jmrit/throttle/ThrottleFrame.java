@@ -4,11 +4,15 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
+import java.io.PrintWriter;
+
 
 import jmri.DccThrottle;
 import jmri.ThrottleManager;
 import jmri.ThrottleListener;
 import jmri.InstanceManager;
+
+import org.jdom.Element;
 
 /**
  * A JFrame to contain throttle elements such as speed control, address chooser,
@@ -26,6 +30,9 @@ public class ThrottleFrame extends JFrame
 
     private ControlPanel controlPanel;
     private FunctionPanel functionPanel;
+    private AddressPanel addressPanel;
+
+
     /**
      * Default constructor
      */
@@ -77,7 +84,7 @@ public class ThrottleFrame extends JFrame
         functionPanel.setVisible(true);
         functionPanel.setEnabled(false);
 
-        AddressPanel addressPanel = new AddressPanel();
+        addressPanel = new AddressPanel();
         addressPanel.setResizable(true);
         addressPanel.setClosable(true);
         addressPanel.setIconifiable(true);
@@ -106,9 +113,32 @@ public class ThrottleFrame extends JFrame
         }
     }
 
+    public Element getXml()
+    {
+        Element me = new Element("ThrottleFrame");
+        com.sun.java.util.collections.ArrayList children =
+                new com.sun.java.util.collections.ArrayList(1);
+        WindowPreferences wp = new WindowPreferences();
 
+        children.add(wp.getPreferences(this));
+        children.add(controlPanel.getXml());
+        children.add(functionPanel.getXml());
+        children.add(addressPanel.getXml());
+        me.setChildren(children);
+        return me;
+    }
 
-
-
+    public void setXml(Element e)
+    {
+        Element window = e.getChild("window");
+        WindowPreferences wp = new WindowPreferences();
+        wp.setPreferences(this, window);
+        Element controlPanelElement = e.getChild("ControlPanel");
+        controlPanel.setXml(controlPanelElement);
+        Element functionPanelElement = e.getChild("FunctionPanel");
+        functionPanel.setXml(functionPanelElement);
+        Element addressPanelElement = e.getChild("AddressPanel");
+        addressPanel.setXml(addressPanelElement);
+    }
 
 }

@@ -9,6 +9,8 @@ import jmri.ThrottleListener;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 
+import org.jdom.Element;
+
 public class ControlPanel extends JInternalFrame
         implements AddressListener, ThrottleListener
 {
@@ -51,7 +53,6 @@ public class ControlPanel extends JInternalFrame
 
     public void dispose()
     {
-        System.out.println("Here");
         if (throttleManager != null)
         {
             throttleManager.cancelThrottleRequest(requestedAddress, this);
@@ -165,5 +166,23 @@ public class ControlPanel extends JInternalFrame
                  });
      }
 
+     public Element getXml()
+     {
+         Element me = new Element("ControlPanel");
+         Element window = new Element("window");
+         WindowPreferences wp = new WindowPreferences();
+         com.sun.java.util.collections.ArrayList children =
+                 new com.sun.java.util.collections.ArrayList(1);
+         children.add(wp.getPreferences(this));
+         me.setChildren(children);
+         return me;
+     }
+
+     public void setXml(Element e)
+     {
+         Element window = e.getChild("window");
+         WindowPreferences wp = new WindowPreferences();
+         wp.setPreferences(this, window);
+     }
 
 }
