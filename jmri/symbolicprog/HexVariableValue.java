@@ -44,13 +44,13 @@ public class HexVariableValue extends VariableValue implements ActionListener, P
 	public void actionPerformed(ActionEvent e) {
 		// called for new values - set the CV as needed
 		CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
-		// need eventual mask & shift, etc, but for now we store
+		// compute new cv value by combining old and request
 		int oldCv = cv.getValue();
 		int newVal;
 		try { newVal = Integer.valueOf(_value.getText(), 16).intValue(); }
 			catch (java.lang.NumberFormatException ex) { newVal = 0; }
 		int newCv = newValue(oldCv, newVal, getMask());
-		((CvValue)_cvVector.elementAt(getCvNum())).setValue(newCv);
+		cv.setValue(newCv);
 	}
 	
 	// to complete this class, fill in the routines to handle "Value" parameter

@@ -171,8 +171,9 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 			log.warn("Not yet able to handle speedTableVal");
 			return;
 		} else if ( (child = e.getChild("longAddressVal", ns)) != null) {
-			log.warn("Not yet able to handle longAddressVal");
-			return;
+			_cvModel.addCV(""+(CV+1));  // ensure 2nd CV exists
+			v = new LongAddrVariableValue(name, comment, readOnly, 
+								CV, mask, minVal, maxVal, _cvModel.allCvVector());
 		} else {
 			log.error("Did not find a valid variable type");
 			return;

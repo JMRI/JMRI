@@ -43,7 +43,7 @@ public class SymbolicProgTest extends TestCase {
 	// check a read operation
 	public void testCvValRead() {
 		// initialize the system
-		Programmer p = new ProgDebugger();
+		ProgDebugger p = new ProgDebugger();
 		InstanceManager.setProgrammer(p);
 		
 		// create the CV value
@@ -171,6 +171,7 @@ public class SymbolicProgTest extends TestCase {
 		assert(i<100);
 		assert( ((JTextField)var.getValue()).getText().equals("14") );
 		assert(var.getState() == CvValue.READ);
+		assert(cv.getValue() == 123);
 	}
 
 	// check a write operation
@@ -221,7 +222,131 @@ public class SymbolicProgTest extends TestCase {
 		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 		assert(var.getState() == VariableValue.EDITTED);
 	}
+
+	// can we create long address , then manipulate the variable to change the CV?
+	public void testLongAddressCreate() {
+		Vector v = createCvVector();
+		CvValue cv17 = new CvValue(17);
+		CvValue cv18 = new CvValue(18);
+		cv17.setValue(2);
+		cv18.setValue(3);
+		v.setElementAt(cv17, 17);
+		v.setElementAt(cv18, 18);
+		// create a variable pointed at CV 17&18, check name
+		LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "VVVVVVVV", 0, 255, v);
+		assert(var.name() == "name");
+		// pretend you've editted the value, check its in same object
+		((JTextField)var.getValue()).setText("1029");
+		assert( ((JTextField)var.getValue()).getText().equals("1029") );
+		// manually notify
+		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
+		// see if the CV was updated
+		System.out.println("cv 17, 18: "+cv17.getValue()+" "+cv18.getValue());
+		assert(cv17.getValue() == 5);
+		assert(cv18.getValue() == 8);
+	}
+	
+	// can we change the CV and see the result in the Variable?
+	public void testLongAddressFromCV() {
+		Vector v = createCvVector();
+		CvValue cv17 = new CvValue(17);
+		CvValue cv18 = new CvValue(18);
+		cv17.setValue(2);
+		cv18.setValue(3);
+		v.setElementAt(cv17, 17);
+		v.setElementAt(cv18, 18);
+		// create a variable pointed at CV 81, loaded as 5
+		LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "VVVVVVVV", 0, 255, v);
+		((JTextField)var.getValue()).setText("1029");
+		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
+
+		// change the CV, expect to see a change in the variable value
+		cv17.setValue(7);
+		System.out.println("want 1031: "+((JTextField)var.getValue()).getText()+" "+cv17.getValue()+" "+cv18.getValue());
+		assert( ((JTextField)var.getValue()).getText().equals("1031") );
+		assert(cv17.getValue() == 7);
+		cv18.setValue(9);
+		System.out.println("want 1159: "+((JTextField)var.getValue()).getText()+" "+cv17.getValue()+" "+cv18.getValue());
+		assert( ((JTextField)var.getValue()).getText().equals("1159") );
+		assert(cv18.getValue() == 9);
+	}
+	
+	// check a long address read operation
+	public void testLongAddressRead() {
+		// initialize the system
+		Programmer p = new ProgDebugger();
+		InstanceManager.setProgrammer(p);
 		
+		Vector v = createCvVector();
+		CvValue cv17 = new CvValue(17);
+		CvValue cv18 = new CvValue(18);
+		v.setElementAt(cv17, 17);
+		v.setElementAt(cv18, 18);
+
+		LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "XXVVVVXX", 0, 255, v);
+		// set to specific value
+		((JTextField)var.getValue()).setText("5");
+		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
+
+		var.read();
+		// wait for reply (normally, done by callback; will check that later)
+		int i = 0;
+		while ( var.isBusy() && i++ < 100 )  {
+			try {
+				Thread.sleep(10);
+			} catch (Exception e) {
+			}
+		}
+		/* if (log.isDebugEnabled()) log.debug */ System.out.println("past loop, i="+i+" value="+((JTextField)var.getValue()).getText()+" state="+var.getState());
+
+		assert(i>0);
+		assert(i<100);
+		assert( ((JTextField)var.getValue()).getText().equals("15867") );
+		assert(var.getState() == CvValue.READ);
+		assert(cv17.getValue() == 123);
+		assert(cv18.getValue() == 123);
+	}
+
+	// check a long address write operation
+	public void testLongAddressWrite() {
+		// initialize the system
+		ProgDebugger p = new ProgDebugger();
+		InstanceManager.setProgrammer(p);
+		
+		Vector v = createCvVector();
+		CvValue cv17 = new CvValue(17);
+		CvValue cv18 = new CvValue(18);
+		v.setElementAt(cv17, 17);
+		v.setElementAt(cv18, 18);
+
+		LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "XXVVVVXX", 0, 255, v);
+		((JTextField)var.getValue()).setText("1029");
+		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
+
+		System.out.println("do write");
+		var.write(); 
+		// wait for reply (normally, done by callback; will check that later)
+		int i = 0;
+		while ( var.isBusy() && i++ < 100  )  {
+			try {
+				Thread.sleep(10);
+			} catch (Exception e) {
+			}
+		}
+		/*if (log.isDebugEnabled()) log.debug*/ System.out.println("past loop, i="+i+" value="+((JTextField)var.getValue()).getText()
+															+" state="+var.getState()
+															+" last write: "+p.lastWrite());
+		assert(cv17.getValue() == 5);
+		assert(cv18.getValue() == 8);
+		assert(i>0);
+		assert(i<100);
+		assert( ((JTextField)var.getValue()).getText().equals("1029") );
+		assert(var.getState() == CvValue.STORED);
+		assert(p.lastWrite() == 8);
+		// how do you check separation of the two writes?  State model?
+	}
+	
+	// need a check of the MIXED state model for long address
 	
 // VariableTableModel tests
 	// Can we create a table?
@@ -283,6 +408,7 @@ public class SymbolicProgTest extends TestCase {
 		//	 fmt.output(doc, o);
 		//} catch (Exception e) { System.out.println("error writing XML: "+e);}	
 
+		log.warn("expect next message: WARN jmri.symbolicprog.VariableTableModel  - Element missing mask attribute: one");
 		// and test reading this
 		t.setRow(0, el0, ns);
 		assert(t.getValueAt(0,0).equals("1"));
@@ -293,6 +419,93 @@ public class SymbolicProgTest extends TestCase {
 		assert(t.getValueAt(1,1).equals("two"));
 
 		assert(t.getRowCount() == 2);
+		
+	}
+
+	// Check creating a longaddr type, walk through its programming
+	public void testVarTableLoadLongAddr() {
+		String[] args = {"CV", "Name"};
+		VariableTableModel t = new VariableTableModel(args, new CvTableModel());
+		
+		// create a JDOM tree with just some elements
+		Namespace ns = Namespace.getNamespace("decoder", "http://www.slac.stanford.edu/BFROOT/java/streamcalc");
+		Element root = new Element("decoder-config", ns);
+		Document doc = new Document(root);
+		doc.setDocType(new DocType("decoder:decoder-config","DTD/decoder-config.dtd"));
+		
+		// add some elements
+		Element el0, el1;
+		root.addContent(new Element("decoder",ns)		// the sites information here lists all relevant
+					.addContent(new Element("variables", ns)
+									.addContent(el0 = new Element("variable", ns)
+												.addAttribute("CV","17")
+												.addAttribute("mask","VVVVVVVV")
+												.addAttribute("name","long")
+												.addContent( new Element("longAddressVal", ns)
+													)
+												)
+										)	// variables element									
+						) // decoder element
+			; // end of adding contents
+
+		// print JDOM tree, to check
+		//OutputStream o = System.out;
+		//XMLOutputter fmt = new XMLOutputter();
+		//fmt.setNewlines(true);   // pretty printing
+		//fmt.setIndent(true);
+		//try {
+		//	 fmt.output(doc, o);
+		//} catch (Exception e) { System.out.println("error writing XML: "+e);}	
+
+		// and test reading this
+		t.setRow(0, el0, ns);
+		System.out.println("after add "+t.getValueAt(0,0)+" "+t.getValueAt(0,1)+" "+t.getRowCount());
+		assert(t.getValueAt(0,0).equals("17"));
+		assert(t.getValueAt(0,1).equals("long"));
+
+		assert(t.getRowCount() == 1);
+		
+	}
+	
+		// Check creating bogus XML (unknown variable type)
+	public void testVarTableLoadBogus() {
+		String[] args = {"CV", "Name"};
+		VariableTableModel t = new VariableTableModel(args, new CvTableModel());
+		
+		// create a JDOM tree with just some elements
+		Namespace ns = Namespace.getNamespace("decoder", "http://www.slac.stanford.edu/BFROOT/java/streamcalc");
+		Element root = new Element("decoder-config", ns);
+		Document doc = new Document(root);
+		doc.setDocType(new DocType("decoder:decoder-config","DTD/decoder-config.dtd"));
+		
+		// add some elements
+		Element el0, el1;
+		root.addContent(new Element("decoder",ns)		// the sites information here lists all relevant
+					.addContent(new Element("variables", ns)
+									.addContent(el0 = new Element("variable", ns)
+												.addAttribute("CV","17")
+												.addAttribute("mask","VVVVVVVV")
+												.addAttribute("name","long")
+												.addContent( new Element("bogusVal", ns)
+													)
+												)
+										)	// variables element									
+						) // decoder element
+			; // end of adding contents
+
+		// print JDOM tree, to check
+		//OutputStream o = System.out;
+		//XMLOutputter fmt = new XMLOutputter();
+		//fmt.setNewlines(true);   // pretty printing
+		//fmt.setIndent(true);
+		//try {
+		//	 fmt.output(doc, o);
+		//} catch (Exception e) { System.out.println("error writing XML: "+e);}	
+
+		// and test reading this
+		log.warn("expect next message: ERROR jmri.symbolicprog.VariableTableModel  - Did not find a valid variable type");
+		t.setRow(0, el0, ns);
+		assert(t.getRowCount() == 0);
 		
 	}
 
