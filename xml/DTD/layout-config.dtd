@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.13 2003-07-27 01:04:45 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.14 2003-07-27 04:59:07 jacobsen Exp $ -->
 
 <!ELEMENT layout-config (connection | gui | programmer | perform |
 						preferences | turnouts | sensors | blocks | signals | 
@@ -14,7 +14,7 @@
 <!--  Application section identifies serial port info -->
 <!ELEMENT connection EMPTY>
   <!ATTLIST connection class CDATA #REQUIRED>
-  <!ATTLIST connection port CDATA #REQUIRED>
+  <!ATTLIST connection port CDATA #IMPLIED>
   <!ATTLIST connection speed CDATA #IMPLIED>  <!-- May not be provided if fixed by protocol -->
   <!ATTLIST connection option1 CDATA #IMPLIED> <!-- Meaning is protocol specific -->
   <!ATTLIST connection option2 CDATA #IMPLIED> <!-- Meaning is protocol specific -->
