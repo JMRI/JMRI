@@ -37,7 +37,7 @@ import com.sun.java.util.collections.List;   // resolve ambiguity with package-l
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001; D Miller Copyright 2003
- * @version			$Revision: 1.31 $
+ * @version			$Revision: 1.32 $
  */
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
@@ -902,6 +902,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 String value = var.getTextValue();
                 String originalName = name;
                 String originalValue = value;
+                name = name +" (CV" +var.getCvNum() + ")";
 
                //define index values for name and value substrings
                 int nameLeftIndex = 0;
