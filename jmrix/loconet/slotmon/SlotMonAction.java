@@ -13,8 +13,6 @@ package jmri.jmrix.loconet.slotmon;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
-import ErrLoggerJ.ErrLog;
-
 import jmri.jmrix.loconet.SlotManager;
 
 public class SlotMonAction 			extends AbstractAction {

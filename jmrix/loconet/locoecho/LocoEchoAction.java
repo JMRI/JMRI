@@ -13,8 +13,6 @@ package jmri.jmrix.loconet.locoecho;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
-import ErrLoggerJ.ErrLog;
-
 import jmri.jmrix.loconet.LnTrafficController;
 
 public class LocoEchoAction 			extends AbstractAction {
@@ -28,13 +26,14 @@ public class LocoEchoAction 			extends AbstractAction {
 			//f.initComponents();
 			}
 		catch (Exception ex) {
-			ErrLog.msg(ErrLog.error, "LocoEchoAction starting LocoEchoFrame:", "", "Exception: "+ex.toString());
+			log.error("Exception: "+ex.toString());
 			}
 		f.show();	
 		
 		// connect to the LnTrafficController
 		LnTrafficController.instance().addLocoNetListener(~0, f);	
 	}
+   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoEchoAction.class.getName());
 }
 
 

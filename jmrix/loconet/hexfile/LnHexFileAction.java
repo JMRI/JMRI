@@ -13,7 +13,6 @@ package jmri.jmrix.loconet.hexfile;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import jmri.jmrix.loconet.hexfile.HexFileFrame;
-import ErrLoggerJ.ErrLog;
 
 public class LnHexFileAction 			extends AbstractAction {
 
@@ -26,13 +25,15 @@ public class LnHexFileAction 			extends AbstractAction {
 			f.initComponents();
 			}
 		catch (Exception ex) {
-			ErrLog.msg(ErrLog.error, "LocoMonAppl.HexFileAction starting HexFileFrame:", "", "Exception: "+ex.toString());
+			log.error("starting HexFileFrame exception: "+ex.toString());
 			}
 		f.show();	
 		// it connects to the LnTrafficController when the right button is pressed
 		
 		
 	};
+
+   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnHexFileAction.class.getName());
 
 }
 

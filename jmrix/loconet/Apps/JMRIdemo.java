@@ -15,7 +15,7 @@ public class JMRIdemo extends JPanel {
 	public JMRIdemo() {
 
         super(true);
-
+	
 	// create basic GUI
 		setLayout(new BorderLayout());
         // Create a menu bar and give it a bevel border

@@ -13,8 +13,6 @@ package jmri.jmrix.nce;
 
 import jmri.Programmer;
 
-import ErrLoggerJ.ErrLog;
-
 import java.util.Vector;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
@@ -24,8 +22,7 @@ public class NceProgrammer implements NceListener, Programmer {
 	public NceProgrammer() { 
 		// error if more than one constructed?
 		if (self != null) 
-			ErrLog.msg(ErrLog.error, "NceProgrammer", 
-						"ctor", "Creating too many SlotManager objects");
+			log.error("Creating too many SlotManager objects");
 
 		// register this as the default, register as the Programmer
 		self = this; 
@@ -120,8 +117,7 @@ public class NceProgrammer implements NceListener, Programmer {
 	protected void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
 		// test for only one!
 		if (_usingProgrammer != null && _usingProgrammer != p) {
-				ErrLog.msg(ErrLog.routine, "SlotManager", 
-						"useProgrammer", "programmer already in use by "+_usingProgrammer);
+				if (log.isInfoEnabled()) log.info("programmer already in use by "+_usingProgrammer);
 				throw new jmri.ProgrammerException("programmer in use");
 			}
 		else {
@@ -151,6 +147,9 @@ public class NceProgrammer implements NceListener, Programmer {
 		_usingProgrammer.programmingOpReply(-1, status);
 		_usingProgrammer = null;
 	}
+
+   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceProgrammer.class.getName());
+
 }
 
 

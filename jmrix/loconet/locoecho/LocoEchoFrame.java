@@ -24,8 +24,6 @@ import jmri.jmrix.loconet.LnTurnout;
 import java.io.PrintStream;
 import java.io.FileOutputStream;
 
-import ErrLoggerJ.ErrLog;
-
 public class LocoEchoFrame extends javax.swing.JFrame implements LocoNetListener {
 
 	// GUI member declarations
@@ -88,15 +86,6 @@ public class LocoEchoFrame extends javax.swing.JFrame implements LocoNetListener
 
 		pack();
 		
-		// debugging LnTurnout
-		t  = new LnTurnout(23);
-		// attach a listener
-		t.addPropertyChangeListener( new java.beans.PropertyChangeListener() {
-			public void propertyChange(java.beans.PropertyChangeEvent e) { 
-				System.out.println("Turnout property change: "+e.getPropertyName()
-					+" "+e.getOldValue()+" "+e.getNewValue()
-						);}
-			} );
 	}
   
   	LnTurnout t;
@@ -188,52 +177,53 @@ public class LocoEchoFrame extends javax.swing.JFrame implements LocoNetListener
 		}
 	}
 
-public void closeButtonActionPerformed(java.awt.event.ActionEvent e) {
-	// create a new LnTurnout item and ask it to handle this
+	public void closeButtonActionPerformed(java.awt.event.ActionEvent e) {
+		// create a new LnTurnout item and ask it to handle this
 
-	// load address from switchAddrTextField
-	int adr;
-	try {
-		adr = Integer.valueOf(adrTextField.getText()).intValue();
-		LnTurnout tmp = new LnTurnout(adr);
-		tmp.setCommandedState(LnTurnout.CLOSED);
+		// load address from switchAddrTextField
+		int adr;
+		try {
+			adr = Integer.valueOf(adrTextField.getText()).intValue();
+			LnTurnout tmp = new LnTurnout(adr);
+			tmp.setCommandedState(LnTurnout.CLOSED);
+			}
+		catch (Exception ex)
+			{
+				log.error("closeButtonActionPerformed Exception: "+ex.toString());
+				return;
+			}
+		return;
 		}
-	catch (Exception ex)
-		{
-			ErrLog.msg(ErrLog.error, "LocoEchoFrame", "closeButtonActionPerformed", "Exception: "+ex.toString());
-			return;
-		}
-	return;
-	}
 
-public void throwButtonActionPerformed(java.awt.event.ActionEvent e) {
-	// create a new LnTurnout item and ask it to handle this
+	public void throwButtonActionPerformed(java.awt.event.ActionEvent e) {
+		// create a new LnTurnout item and ask it to handle this
 
-	// load address from switchAddrTextField
-	int adr;
-	try {
-		adr = Integer.valueOf(adrTextField.getText()).intValue();
-		LnTurnout tmp = new LnTurnout(adr);
-		tmp.setCommandedState(LnTurnout.THROWN);
+		// load address from switchAddrTextField
+		int adr;
+		try {
+			adr = Integer.valueOf(adrTextField.getText()).intValue();
+			LnTurnout tmp = new LnTurnout(adr);
+			tmp.setCommandedState(LnTurnout.THROWN);
+			}
+		catch (Exception ex)
+			{
+				log.error("throwButtonActionPerformed exception: "+ex.toString());
+				return;
+			}
+		return;
 		}
-	catch (Exception ex)
-		{
-			ErrLog.msg(ErrLog.error, "LocoEchoFrame", "throwButtonActionPerformed", "Exception: "+ex.toString());
-			return;
-		}
-	return;
-	}
 
-private boolean myAddress(int a1, int a2) { 
-	try {
-		return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1) 
-			== Integer.valueOf(adrTextField.getText()).intValue(); 
+	private boolean myAddress(int a1, int a2) { 
+		try {
+			return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1) 
+				== Integer.valueOf(adrTextField.getText()).intValue(); 
+			}
+		catch (java.lang.NumberFormatException e) 
+			{
+				return false;
+			}
 		}
-	catch (java.lang.NumberFormatException e) 
-		{
-			return false;
-		}
-	}
 
-String newState = "";
+	String newState = "";
+   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoEchoFrame.class.getName());
 }

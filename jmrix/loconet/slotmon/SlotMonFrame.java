@@ -16,8 +16,6 @@ import jmri.jmrix.loconet.SlotListener;
 import jmri.jmrix.loconet.LocoNetSlot;
 import jmri.jmrix.loconet.LnConstants;
 
-import ErrLoggerJ.ErrLog;
-
 public class SlotMonFrame extends javax.swing.JFrame {
 
 	// GUI member declarations

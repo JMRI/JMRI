@@ -19,8 +19,6 @@ import java.io.DataInputStream;
 
 import jmri.jmrix.loconet.LnPortController;
 
-import ErrLoggerJ.ErrLog;
-
 public class MS100Adapter extends LnPortController  {
 
 	Vector portNameVector = null;
@@ -52,7 +50,7 @@ public class MS100Adapter extends LnPortController  {
 				activeSerialPort.setSerialPortParams(16600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 			} catch (javax.comm.UnsupportedCommOperationException e) {
 				// assume that's a baudrate problem, fall back. Error here goes out to terminate function
-				ErrLog.msg(ErrLog.warning, "MS100Adapter", "openPort", "attempting to fall back to 16457 baud after 16600 failed");
+				log.warn("attempting to fall back to 16457 baud after 16600 failed");
 				activeSerialPort.setSerialPortParams(16457, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 			}
 			
@@ -76,23 +74,23 @@ public class MS100Adapter extends LnPortController  {
 
 // base class methods for the LnPortController interface
 	public DataInputStream getInputStream() {
-		if (!opened) ErrLog.msg(ErrLog.error, "MS100Adapter", "getInputStream", "called before load(), stream not available");
+		if (!opened) log.error("called before load(), stream not available");
 		try {
 			return new DataInputStream(activeSerialPort.getInputStream());
      		}
      	catch (java.io.IOException e) {
-     		ErrLog.msg(ErrLog.error, "MS100Adapter", "getInputStream", "exception: "+e);
+     		log.error("getInputStream exception: "+e);
      	}
      	return null;
 	}
 	
 	public DataOutputStream getOutputStream() {
-		if (!opened) ErrLog.msg(ErrLog.error, "MS100Adapter", "getOutputStream", "called before load(), stream not available");
+		if (!opened) log.error("getOutputStream called before load(), stream not available");
 		try {
      		return new DataOutputStream(activeSerialPort.getOutputStream());
      		}
      	catch (java.io.IOException e) {
-     		ErrLog.msg(ErrLog.error, "MS100Adapter", "getOutputStream", "exception: "+e);
+     		log.error("getOutputStream exception: "+e);
      	}
      	return null;
 	}
@@ -101,5 +99,7 @@ public class MS100Adapter extends LnPortController  {
 	
 // private control members
 	private boolean opened = false;
+
+   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MS100Frame.class.getName());
 	
 }

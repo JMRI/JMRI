@@ -13,8 +13,6 @@ import jmri.jmrix.loconet.SlotListener;
 import jmri.jmrix.loconet.SlotManager;
 import jmri.jmrix.loconet.LnConstants;
 
-import ErrLoggerJ.ErrLog;
-
 import java.util.Vector;
 
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener  {
@@ -55,8 +53,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
 		
 		LocoNetSlot s = SlotManager.instance().slot(slotNum);
 		
-		if (s == null) ErrLog.msg(ErrLog.error, "SlotMonDataModel", "getValueAt",
-				"slot pointer was null for slot row: "+row+" col: "+col);
+		if (s == null) log.error("slot pointer was null for slot row: "+row+" col: "+col);
 		
 		switch (col) {
 			case 0:  // slot number
@@ -115,8 +112,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
 				return new Integer(s.id());
 		
 			default:
-				ErrLog.msg(ErrLog.error, "SlotMonDataModel", "getValueAt", 
-					"internal state inconsistent with table requst for "+row+" "+col);
+				log.error("internal state inconsistent with table requst for "+row+" "+col);
 				return null;
 			}			
 	};
@@ -176,5 +172,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
 		}
 		return slotNum;
 	}
+
+   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SlotMonDataModel.class.getName());
 	
 }

@@ -13,8 +13,6 @@ package jmri.jmrix.loconet.locogen;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
-import ErrLoggerJ.ErrLog;
-
 import jmri.jmrix.loconet.LnTrafficController;
 
 public class LocoGenAction 			extends AbstractAction {
@@ -28,13 +26,14 @@ public class LocoGenAction 			extends AbstractAction {
 			f.initComponents();
 			}
 		catch (Exception ex) {
-			ErrLog.msg(ErrLog.error, "LocoGenAction starting LocoGenFrame:", "", "Exception: "+ex.toString());
+			log.error("Exception: "+ex.toString());
 			}
 		f.show();	
 		
 		// connect to the LnTrafficController
 		f.connect(LnTrafficController.instance());
 	}
+   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoGenAction.class.getName());
 }
 
 

@@ -19,8 +19,6 @@ import javax.swing.*;
 
 import jmri.jmrix.loconet.LnTrafficController;
 
-import ErrLoggerJ.ErrLog;
-
 public class HexFileFrame extends javax.swing.JFrame {
 
 	// member declarations
@@ -191,5 +189,7 @@ public class HexFileFrame extends javax.swing.JFrame {
 	private Thread sourceThread;
 	private Thread sinkThread;
 	private LnHexFilePort p = null;
+
+   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(HexFileFrame.class.getName());
 	
 }

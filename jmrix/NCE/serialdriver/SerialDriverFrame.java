@@ -14,9 +14,6 @@ import javax.swing.*;
 
 import jmri.jmrix.nce.NceTrafficController;
 
-import ErrLoggerJ.ErrLog;
-
-
 public class SerialDriverFrame extends javax.swing.JFrame {
 
 	javax.swing.JButton getNamesButton = new javax.swing.JButton();

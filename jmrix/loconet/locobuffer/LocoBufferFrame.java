@@ -14,9 +14,6 @@ import javax.swing.*;
 
 import jmri.jmrix.loconet.LnTrafficController;
 
-import ErrLoggerJ.ErrLog;
-
-
 public class LocoBufferFrame extends javax.swing.JFrame {
 
 	javax.swing.JButton getNamesButton = new javax.swing.JButton();

@@ -19,8 +19,6 @@ import java.io.DataInputStream;
 
 import jmri.jmrix.nce.NcePortController;
 
-import ErrLoggerJ.ErrLog;
-
 public class SerialDriverAdapter extends NcePortController  {
 
 	Vector portNameVector = null;
@@ -73,23 +71,23 @@ public class SerialDriverAdapter extends NcePortController  {
 
 // base class methods for the NcePortController interface
 	public DataInputStream getInputStream() {
-		if (!opened) ErrLog.msg(ErrLog.error, "SerialDriverAdapter", "getInputStream", "called before load(), stream not available");
+		if (!opened) log.error("getInputStream called before load(), stream not available");
 		try {
 			return new DataInputStream(activeSerialPort.getInputStream());
      		}
      	catch (java.io.IOException e) {
-     		ErrLog.msg(ErrLog.error, "SerialDriverAdapter", "getInputStream", "exception: "+e);
+     		log.error("getInputStream exception: "+e);
      	}
      	return null;
 	}
 	
 	public DataOutputStream getOutputStream() {
-		if (!opened) ErrLog.msg(ErrLog.error, "SerialDriverAdapter", "getOutputStream", "called before load(), stream not available");
+		if (!opened) log.error("getOutputStream called before load(), stream not available");
 		try {
      		return new DataOutputStream(activeSerialPort.getOutputStream());
      		}
      	catch (java.io.IOException e) {
-     		ErrLog.msg(ErrLog.error, "SerialDriverAdapter", "getOutputStream", "exception: "+e);
+     		log.error("getOutputStream exception: "+e);
      	}
      	return null;
 	}

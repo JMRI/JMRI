@@ -86,15 +86,6 @@ public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame {
 
 		pack();
 		
-		// debugging LnTurnout
-		t  = new LnTurnout(23);
-		// attach a listener
-		t.addPropertyChangeListener( new java.beans.PropertyChangeListener() {
-			public void propertyChange(java.beans.PropertyChangeEvent e) { 
-				if (log.isDebugEnabled()) log.debug("Turnout property change: "+e.getPropertyName()
-					+" "+e.getOldValue()+" "+e.getNewValue()
-						);}
-			} );
 	}
   
   	LnTurnout t;

@@ -19,8 +19,6 @@ import java.io.DataInputStream;
 
 import jmri.jmrix.loconet.LnPortController;
 
-import ErrLoggerJ.ErrLog;
-
 public class LocoBufferAdapter extends LnPortController  {
 
 	Vector portNameVector = null;
@@ -73,23 +71,23 @@ public class LocoBufferAdapter extends LnPortController  {
 
 // base class methods for the LnPortController interface
 	public DataInputStream getInputStream() {
-		if (!opened) ErrLog.msg(ErrLog.error, "LocoBufferAdapter", "getInputStream", "called before load(), stream not available");
+		if (!opened) log.error("getInputStream called before load(), stream not available");
 		try {
 			return new DataInputStream(activeSerialPort.getInputStream());
      		}
      	catch (java.io.IOException e) {
-     		ErrLog.msg(ErrLog.error, "LocoBufferAdapter", "getInputStream", "exception: "+e);
+     		log.error("getInputStream exception: "+e);
      	}
      	return null;
 	}
 	
 	public DataOutputStream getOutputStream() {
-		if (!opened) ErrLog.msg(ErrLog.error, "LocoBufferAdapter", "getOutputStream", "called before load(), stream not available");
+		if (!opened) log.error("getOutputStream called before load(), stream not available");
 		try {
      		return new DataOutputStream(activeSerialPort.getOutputStream());
      		}
      	catch (java.io.IOException e) {
-     		ErrLog.msg(ErrLog.error, "LocoBufferAdapter", "getOutputStream", "exception: "+e);
+     		log.error("getOutputStream exception: "+e);
      	}
      	return null;
 	}

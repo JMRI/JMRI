@@ -21,8 +21,6 @@ import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetMessage;
 
-import ErrLoggerJ.ErrLog;
-
 public class LocoMonFrame extends javax.swing.JFrame implements LocoNetListener {
 
 // IMPORTANT: Source code between BEGIN/END comment pair will be regenerated
@@ -245,7 +243,7 @@ public class LocoMonFrame extends javax.swing.JFrame implements LocoNetListener 
 			try {
 				logStream = new PrintStream (new FileOutputStream(logFileTextField.getText()));
 			} catch (Exception ex) {
-				ErrLog.msg(ErrLog.error, "LocMonFrame", "logToFileToggleButtonStateChanged",""+ex);
+				log.error("exception "+ex);
 			}
 		}
 	}
@@ -308,5 +306,7 @@ public class LocoMonFrame extends javax.swing.JFrame implements LocoNetListener 
 	
 	// to find and remember the log file
 	final JFileChooser fc = new JFileChooser("logonetLog.txt");
+
+   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoMonFrame.class.getName());
 
 }
