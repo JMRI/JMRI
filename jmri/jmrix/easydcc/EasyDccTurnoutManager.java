@@ -3,7 +3,7 @@
  *
  * Description:		Implement turnout manager for EasyDcc systems
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Id: EasyDccTurnoutManager.java,v 1.1 2002-03-23 07:28:30 jacobsen Exp $
+ * @version			$Id: EasyDccTurnoutManager.java,v 1.2 2002-03-28 02:23:31 jacobsen Exp $
  */
  
 // System names are "LTnnn", where nnn is the turnout number without padding.
@@ -25,17 +25,17 @@ public class EasyDccTurnoutManager extends jmri.AbstractTurnoutManager {
 	// EasyDcc-specific methods
 	
 	public void putBySystemName(EasyDccTurnout t) {
-		String system = "LT"+t.getNumber();
+		String system = "ET"+t.getNumber();
 		_tsys.put(system, t);
 	}
 	
 	public Turnout newTurnout(String systemName, String userName) {
 		// if system name is null, supply one from the number in userName
-		if (systemName == null) systemName = "NT"+userName;
+		if (systemName == null) systemName = "ET"+userName;
 		
 		// return existing if there is one
 		Turnout t;
-		if ( (t = getByUserName(userName)) != null) return t;
+		if ( (userName != null) && ((t = getByUserName(userName)) != null)) return t;
 		if ( (t = getBySystemName(systemName)) != null) return t;
 
 		// get number from name
@@ -48,7 +48,7 @@ public class EasyDccTurnoutManager extends jmri.AbstractTurnoutManager {
 		t.setUserName(userName);
 		
 		_tsys.put(systemName, t);
-		_tuser.put(userName, t);
+		if (userName!=null) _tuser.put(userName, t);
 		t.addPropertyChangeListener(this);
 		
 		return t;

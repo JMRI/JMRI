@@ -25,7 +25,7 @@ public class NceTurnoutManager extends jmri.AbstractTurnoutManager {
 	// NCE-specific methods
 	
 	public void putBySystemName(NceTurnout t) {
-		String system = "LT"+t.getNumber();
+		String system = "NT"+t.getNumber();
 		_tsys.put(system, t);
 	}
 	
@@ -35,7 +35,7 @@ public class NceTurnoutManager extends jmri.AbstractTurnoutManager {
 		
 		// return existing if there is one
 		Turnout t;
-		if ( (t = getByUserName(userName)) != null) return t;
+		if ( (userName != null) && ((t = getByUserName(userName)) != null)) return t;
 		if ( (t = getBySystemName(systemName)) != null) return t;
 
 		// get number from name
@@ -48,7 +48,7 @@ public class NceTurnoutManager extends jmri.AbstractTurnoutManager {
 		t.setUserName(userName);
 		
 		_tsys.put(systemName, t);
-		_tuser.put(userName, t);
+		if (userName!=null) _tuser.put(userName, t);
 		t.addPropertyChangeListener(this);
 		
 		return t;
