@@ -22,7 +22,7 @@ import java.awt.*;
  *
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class JmriJFrame extends JFrame {
@@ -33,10 +33,16 @@ public class JmriJFrame extends JFrame {
 
     public Dimension getMaximumSize() {
         // adjust maximum size to full screen minus any toolbars
-        Insets insets = getToolkit().getScreenInsets(this.getGraphicsConfiguration());
-        Dimension screen = getToolkit().getScreenSize();
-        return new Dimension(screen.width-(insets.right+insets.left),
-            screen.height-(insets.top+insets.bottom));
+        try {
+            Insets insets = getToolkit().getScreenInsets(this.getGraphicsConfiguration());
+            Dimension screen = getToolkit().getScreenSize();
+            return new Dimension(screen.width-(insets.right+insets.left),
+                screen.height-(insets.top+insets.bottom));
+        } catch (Exception e) {
+            Dimension screen = getToolkit().getScreenSize();
+            return new Dimension(screen.width,
+                screen.height-45);  // approximate this...
+        }
     }
 
     public Dimension getPreferredSize() {
