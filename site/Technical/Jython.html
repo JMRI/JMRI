@@ -1,5 +1,5 @@
 <!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
-<!-- $Id: Jython.html,v 1.2 2003-09-02 20:56:42 jacobsen Exp $ -->
+<!-- $Id: Jython.html,v 1.3 2003-09-03 03:27:39 jacobsen Exp $ -->
 <html>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -124,6 +124,94 @@ and MacOS X systems:
 about "processing modified jar"; these can be ignored, as they are normal.
 </OL>
 
+<H2>Using Jython</h2>
+
+This section of the page is a pile of useful information on
+controlling Jython from JMRI.  
+
+<h3>Initialization</h3>
+
+JMRI uses the LogJ system extensively for logging information
+during program execution.  To configure that when running with
+Jython, you should do:
+<PRE>
+  import org
+  org.apache.log4j.PropertyConfigurator.configure("default.lcf")
+</PRE>
+before starting any of the JMRI classes.  The "default.lcf"
+is the name of the logging control file to be used; it can
+be omitted.
+<P>
+To make JMRI classes available, you have to do:
+<PRE>
+  import java.io
+</PRE>
+As currently set up, this does not run any initialization
+code.  You should therefore follow it with
+<PRE>
+  import java.io
+  configfile = java.io.File(jmri.jmrit.XmlFile.prefsDir()+"JmriDemoConfig2.xml")
+  jmri.InstanceManager.setConfigureManager(jmri.configurexml.ConfigXmlManager())
+  jmri.InstanceManager.configureManagerInstance().load(configfile)
+</PRE>
+to activate the JMRI classes and connect to your layout 
+hardware. "JmriDemoConfig2.xml" is the name of the configuration
+file from the JmriDemo program; you can use another name if desired.
+The configuration file controls the layout connection, and any other
+options that may have been set when it was created.
+
+<P>
+Alternately, if you want to run the complete JmriDemo application,
+including the menu bar, spash screen, etc, you can do:
+<PRE>
+ import apps
+ apps.JmriDemo.JMRIdemo.main([]) 
+</PRE>
+
+<P>
+To simplify this startup even further, you can do:
+<PRE>
+ execfile("JmriDemo.py")
+</PRE>
+to invoke these commands. 
+
+<h3>Simplified access</h3>
+
+JMRI uses the factory-pattern extensively to get access to 
+objects.  In Java this results in verbose code like
+<PRE>
+   Turnout t2 = InstanceManager.turnoutManagerInstance().newTurnout("LT2", "turnout 2");
+   t2.SetCommandedState(Turnout.THROWN)
+</PRE>
+Jython simplifies that by allowing us to provide useful variables,
+and by shortening certain method calls.
+<P>
+To get access to the SignalHead, Sensor and Turnout managers, 
+several shortcut variables are defined in the .py scripts listed above:
+<UL>
+<LI>sensors
+<LI>signals
+<LI>turnouts
+</UL>
+These can then be referenced directly in Jython as
+<PRE>
+   t2 = turnouts.newTurnout("LT2", "turnout 2");
+</PRE>
+Note that the variable t2 did not need to be declared.
+Juthon provides a shortcut for parameters that have 
+been defined with Java-Bean-like get and set methods:
+
+<PRE>
+   t2.SetCommandedState(Turnout.THROWN)
+</PRE>
+can be written as
+<PRE>
+   t2.commandedState = THROWN
+</PRE>
+where the assignment is actually invoking the set method.
+Also note that THROWN was defined when running the Python script
+at startup.
+
 <H2>Using Python for signal logic and automation</h2>
 
 The existing JMRI 
@@ -138,6 +226,62 @@ it will allow you to invoke a Jython script.  Once it's integrated into
 the configuration process, you'll be able to code your automation in one
 or more .py files, and have the program start running them at startup.
 
+<h2>Next steps</h2>
+We're just learning how to best to integrate JMRI and Python, so there
+are still some basic mysteries.
+<h3>Initialization and modules</h3>
+The idea of Python "modules" isn't yet 
+clearly understood.  There are three ways to start the program via 
+a .py file:
+<OL>
+<LI>
+<PRE>
+  % ./jmrithon
+  Jython 2.1 on java1.4.1_01 (JIT: null)
+  Type "copyright", "credits" or "license" for more information.
+  >>> import JmriDemo
+</PRE>
+This works, in the sense that the program starts up. But the
+convenience methods are all in the JmriDemo namespace:
+<PRE>
+  >>> turnouts.newTurnout("LT1","")
+  Traceback (innermost last):
+    File "<console>", line 1, in ?
+  NameError: turnouts
+
+  >>> JmriDemo.turnouts.newTurnout("LT1","")
+  jmri.jmrix.loconet.LnTurnout@36b91b
+</PRE>
+which makes for significantly more work later.
+<LI>
+<PRE>
+  % ./jmrithon
+  >>>  execfile("JmriDemo.py")
+</PRE>
+This looks somewhat ugly, as it's not using the normal Python
+modules techinque.  But it works!  The convenience methods are
+in the top-level name space:
+<PRE>
+  turnouts.newTurnout("LT1", "")
+</PRE>
+<LI>
+<PRE>
+  % ./jmrithon JmriDemo.py
+</PRE>
+is convenient, as it's on one line that could be put in a script.
+And it works, in the sense that the program starts up.  But 
+it never issues a command prompt.
+</OL>
+We need to understand how the developers of Jython intended this
+to be done.
+
+<h3>Termination</h3>
+Once the JMRI main thread (or Swing GUI thread?) has started, 
+^D is not sufficient to exist the program.  You have to select
+"Quit" from the actual file menu, or ^C the program.
+<P>
+It would be good to understand what's preventing the program 
+from stopping when it gets the ^D.
 <HR>
 <BR>Site hosted by: <BR>
 <A href="http://sourceforge.net"> 
