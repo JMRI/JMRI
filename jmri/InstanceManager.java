@@ -16,7 +16,7 @@ package jmri;
  * non-system-specific code.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class InstanceManager {
 
@@ -32,6 +32,15 @@ public class InstanceManager {
 
     static public ThrottleManager throttleManagerInstance()  { return mThrottleManager; }
 
+	static public jmri.jmrit.throttle.ThrottleFrameManager throttleFrameManagerInstance() 
+	{ 
+		if (mThrottleFrameManager == null)
+		{
+			mThrottleFrameManager = new jmri.jmrit.throttle.ThrottleFrameManager();
+		}
+		return mThrottleFrameManager; 
+	}
+	
     static private PowerManager _powerManager = null;
     static public void setPowerManager(PowerManager p) {
         if (p!=_powerManager && p!=null && log.isDebugEnabled()) log.debug("PowerManager instance is being replaced: "+p);
@@ -67,6 +76,8 @@ public class InstanceManager {
         if (p!=mThrottleManager && p!=null && log.isDebugEnabled()) log.debug("ThrottleManager instance is being replaced: "+p);
         mThrottleManager = p;
     }
+
+    static private jmri.jmrit.throttle.ThrottleFrameManager mThrottleFrameManager = null;
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(InstanceManager.class.getName());
 
