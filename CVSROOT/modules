@@ -21,7 +21,7 @@ ant -a runtime antfiles java
 
 # build the java/ directory for ant, including build.xml
 antfiles  -a ant0 
-ant0 -d java scripts build.xml
+ant0 -d java scripts build.xml manifest
 
 # build the java/ directory for both ant and jbuilder
 all -a runtime jbuilderfiles antfiles java
