@@ -16,28 +16,38 @@ import junit.framework.TestSuite;
  * suite for the package, but also contains some tests for the ProgDebugger class.
  *
  * @author		Bob Jacobsen, Copyright (C) 2001, 2002
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class ProgDebuggerTest extends TestCase {
 
-    int readValue = -1;
-    
-    synchronized public void testWriteRead() throws jmri.ProgrammerException, InterruptedException {
+    int readValue = -2;
+    boolean replied = false;
+
+    public void testWriteRead() throws jmri.ProgrammerException, InterruptedException {
         Programmer p = new ProgDebugger();
         ProgListener l = new ProgListener(){
                 public void programmingOpReply(int value, int status) {
                     log.debug("callback value="+value+" status="+status);
+                    replied = true;
                     readValue = value;
                 }
             };
         p.writeCV(4, 12, l);
-        wait(200);
+        waitReply();
+        log.debug("readValue is "+readValue);
         p.readCV(4, l);
-        wait(200);
+        waitReply();
+        log.debug("readValue is "+readValue);
         Assert.assertEquals("read back", 12, readValue);
     }
     
     // from here down is testing infrastructure
+
+    synchronized void waitReply() throws InterruptedException {
+        while(!replied)
+            wait(200);
+        replied = false;
+    }
     
     public ProgDebuggerTest(String s) {
         super(s);
