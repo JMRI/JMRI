@@ -2,13 +2,17 @@ package jmri.jmrix.lenz;
 
 import jmri.jmrix.AbstractThrottle;
 
-//import jmri.jmrix.lenz.XNetListener;
-//import jmri.jmrix.lenz.XNetTrafficController;
+import jmri.jmrix.lenz.XNetListener;
+import jmri.jmrix.lenz.XNetTrafficController;
 
 /**
  * An implementation of DccThrottle with code specific to a 
  * XpressnetNet connection.
+ * @author     Paul Bender
+ * @created    December 20,2002
+ * @version    $Revision: 1.4 $
  */
+
 public class XNetThrottle extends AbstractThrottle implements XNetListener
 {
     private float speedSetting;
@@ -28,23 +32,54 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     }
 
     /**
+     * Constructor
+     */
+    public XNetThrottle(int address)
+    {
+       super();
+       this.address=address;
+       this.speedIncrement=1;
+       this.isForward=true;
+       XNetTrafficController.instance().addXNetListener(~0, this);
+    }
+
+    /**
      * Send the XpressNet message to set the state of locomotive
      * direction and functions F0, F1, F2, F3, F4
      */
     protected void sendFunctionGroup1()
     {
-       XNetMessage msg=new XNetMessage(5);
-       msg.setOpCode(0xE4);   // hex E4 is the Opcode for setting 
-                                    // functions
-       msg.setElement(1,0x20);// hex 20 is the subset of comand E4 
-                                    // for setting Functions F0-F4
+       XNetMessage msg=new XNetMessage(6);
+       msg.setElement(0,XNetConstants.LOCO_OPER_REQ);   
+       msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP1);
        msg.setElement(2,0x00);// For now, the upper 8 bits of the 
                                     // address is going to be 00 (i.e. we 
                                     // can only address addresses 0-99
        msg.setElement(3,this.getDccAddress()); // set the DCC address 
                                     // to the third element
-
-       msg.setElement(4,10);// for now, we just turn on FO
+       // Now, we need to figure out what to send in element 3
+       int element4value=0;
+       if(f0)
+	{
+	  element4value += 16;
+	}
+       if(f1)
+	{
+	  element4value += 1;
+	}
+       if(f2)
+	{
+	  element4value += 2;
+	}
+       if(f3)
+	{
+	  element4value += 4;
+	}
+       if(f4)
+	{
+	  element4value += 8;
+	}
+       msg.setElement(4,element4value);
        msg.setParity(); // Set the parity bit
        // now, we send the message to the command station
        XNetTrafficController.instance().sendXNetMessage(msg,this);
@@ -56,6 +91,36 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     protected void sendFunctionGroup2()
     {
+       XNetMessage msg=new XNetMessage(6);
+        msg.setElement(0,XNetConstants.LOCO_OPER_REQ);   
+        msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP2);
+       msg.setElement(2,0x00);// For now, the upper 8 bits of the 
+                                    // address is going to be 00 (i.e. we 
+                                    // can only address addresses 0-99
+       msg.setElement(3,this.getDccAddress()); // set the DCC address 
+                                    // to the third element
+       // Now, we need to figure out what to send in element 3
+       int element4value=0;
+       if(f5)
+	{
+	  element4value += 1;
+	}
+       if(f6)
+	{
+	  element4value += 2;
+	}
+       if(f7)
+	{
+	  element4value += 4;
+	}
+       if(f8)
+	{
+	  element4value += 8;
+	}
+       msg.setElement(4,element4value);
+       msg.setParity(); // Set the parity bit
+       // now, we send the message to the command station
+       XNetTrafficController.instance().sendXNetMessage(msg,this);
     }
 
     /**
@@ -64,6 +129,36 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     protected void sendFunctionGroup3()
     {
+       XNetMessage msg=new XNetMessage(6);
+       msg.setElement(0,XNetConstants.LOCO_OPER_REQ);   
+       msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP3);
+       msg.setElement(2,0x00);// For now, the upper 8 bits of the 
+                                    // address is going to be 00 (i.e. we 
+                                    // can only address addresses 0-99
+       msg.setElement(3,this.getDccAddress()); // set the DCC address 
+                                    // to the third element
+       // Now, we need to figure out what to send in element 3
+       int element4value=0;
+       if(f9)
+	{
+	  element4value += 1;
+	}
+       if(f10)
+	{
+	  element4value += 2;
+	}
+       if(f11)
+	{
+	  element4value += 4;
+	}
+       if(f12)
+	{
+	  element4value += 8;
+	}
+       msg.setElement(4,element4value);
+       msg.setParity(); // Set the parity bit
+       // now, we send the message to the command station
+       XNetTrafficController.instance().sendXNetMessage(msg,this);
     }
 
    /** speed - expressed as a value 0.0 -> 1.0. Negative means emergency stop.
@@ -77,7 +172,56 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     public void setSpeedSetting(float speed)
     {
         this.speedSetting = speed;
+	if (speed<0)
+	{
+	/* we're sending an emergency stop to this locomotive only */
+	sendEmergencyStop();
+	}
+	else
+	{
+	/* we're sending a speed to the locomotive */
+       	 XNetMessage msg=new XNetMessage(6);
+         msg.setElement(0,XNetConstants.LOCO_OPER_REQ);   
+	 msg.setElement(1,XNetConstants.LOCO_SPEED_127);
+                                    // currently we're going to assume 128 
+			            // speed step mode
+      	 msg.setElement(2,0x00);// For now, the upper 8 bits of the 
+                                    // address is going to be 00 (i.e. we 
+                                    // can only address addresses 0-99
+         msg.setElement(3,this.getDccAddress()); // set the DCC address 
+                                    // to the third element
+         // Now, we need to figure out what to send in element 3
+         int element4value=(int)((speed)*(127)/speedIncrement);
+         if(isForward)
+ 	 {
+	    /* the direction bit is always the most significant bit */
+	    element4value+=128;
+	 }
+        msg.setElement(4,element4value);
+        msg.setParity(); // Set the parity bit
+        // now, we send the message to the command station
+        XNetTrafficController.instance().sendXNetMessage(msg,this);
+	}
     }
+
+    /* Since xpressnet has a seperate Opcode for emergency stop,
+     * We're setting this up as a seperate private function
+     */
+     private void sendEmergencyStop()
+     {
+	  /* Emergency stop sent */
+      	  XNetMessage msg=new XNetMessage(4);
+         msg.setElement(0,XNetConstants.EMERGENCY_STOP);   
+      	msg.setElement(1,0x00);     // For now, the upper 8 bits of the 
+                                    // address is going to be 00 (i.e. we 
+                                    // can only address addresses 0-99
+        msg.setElement(2,this.getDccAddress()); // set the DCC address 
+                                    // to the second element
+        msg.setParity(); // Set the parity bit
+        // now, we send the message to the command station
+        XNetTrafficController.instance().sendXNetMessage(msg,this);		
+ 	}
+
 
     /** direction
      * This is an bound parameter.
@@ -87,10 +231,12 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         return isForward;
     }
 
+    /* When we set the direction, we're going to set the speed to
+       zero as well */
     public void setIsForward(boolean forward)
     {
         isForward = forward;
-        sendFunctionGroup1();
+	setSpeedSetting(this.speedSetting);
     }
 
     // functions - note that we use the naming for DCC, though that's not the implication;

@@ -3,7 +3,7 @@
  *
  * Description:		PowerManager implementation for controlling layout power
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 package jmri.jmrix.lenz;
@@ -27,14 +27,16 @@ public class XNetPowerManager implements PowerManager, XNetListener {
 		power = UNKNOWN;
 		checkTC();
 		if (v==ON) {
-			// send GPON
-			XNetMessage l = new XNetMessage(2);
-			l.setOpCode(jmri.jmrix.loconet.LnConstants.OPC_GPON);
+			// send RESUME_OPS
+			XNetMessage l = new XNetMessage(3);
+			l.setElement(0,XNetConstants.CS_REQUEST);
+			l.setElement(1,XNetConstants.RESUME_OPS);
 			tc.sendXNetMessage(l, this);
 		} else if (v==OFF) {
-			// send GPOFF
-			XNetMessage l = new XNetMessage(2);
-			l.setOpCode(jmri.jmrix.loconet.LnConstants.OPC_GPOFF);
+			// send EMERGENCY_OFF
+			XNetMessage l = new XNetMessage(3);
+			l.setElement(0,XNetConstants.CS_REQUEST);
+			l.setElement(1,XNetConstants.EMERGENCY_OFF);
 			tc.sendXNetMessage(l, this);
 		}
 		firePropertyChange("Power", null, null);

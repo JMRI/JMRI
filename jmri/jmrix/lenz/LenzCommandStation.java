@@ -9,7 +9,7 @@ package jmri.jmrix.lenz;
  * Defines standard operations for Dcc command stations.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
     
@@ -41,7 +41,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
     public XNetMessage getTurnoutCommandMsg(int pNumber, boolean pClose,
                                             boolean pThrow, boolean pOn) {
         XNetMessage l = new XNetMessage(4);
-        l.setElement(0,0x52);
+        l.setElement(0, XNetConstants.ACC_OPER_REQ);
         
         // compute address byte fields
         int hiadr = (pNumber-1)/4;
@@ -106,7 +106,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
         int message=pMsg.getOpCode();
         if( message==0x83 || message==0x84 || message==0xA3 || 
             message == 0xA4 ||message == 0xE2 || message == 0xE3 || 
-           message == 0xE3) return true;
+           message == 0xE4) return true;
         return false;
     }
     
