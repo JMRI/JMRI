@@ -27,7 +27,7 @@ public class ThrottleCreationAction extends AbstractAction {
      */
     public void actionPerformed(ActionEvent e) {
 		ThrottleFrame tf = 
-			jmri.InstanceManager.throttleFrameManagerInstance().createThrottleFrame();
+			ThrottleFrameManager.instance().createThrottleFrame();
 		tf.setVisible(true);
     }
 

@@ -116,7 +116,7 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 				public void windowClosing(WindowEvent e)
 				{
 					ThrottleFrame me = (ThrottleFrame)e.getSource();
-					InstanceManager.throttleFrameManagerInstance().requestThrottleFrameDestruction(me);
+					ThrottleFrameManager.instance().requestThrottleFrameDestruction(me);
 				}
 			});
 
@@ -143,7 +143,7 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 		functionPanel.setLocation(100, 0);
 		functionPanel.setVisible(true);
 		functionPanel.setEnabled(false);
-		functionPanel.addInternalFrameListener(frameListener);
+		functionPanel.addInternalFrameListener(frameListener); 
 
 		addressPanel = new AddressPanel();
 		addressPanel.setResizable(true);
@@ -245,7 +245,7 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 	private void editPreferences()
 	{
 		ThrottleFramePropertyEditor editor = 
-			InstanceManager.throttleFrameManagerInstance().getThrottleFrameEditor();
+			ThrottleFrameManager.instance().getThrottleFrameEditor();
 		editor.setThrottleFrame(this);
 		//editor.setLocation(this.getLocationOnScreen());
 		editor.setLocationRelativeTo(this);

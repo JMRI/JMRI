@@ -51,14 +51,13 @@ public class StoreXmlThrottleAction extends AbstractAction {
 
         try
         {
-            ThrottleFrameManager manager = InstanceManager.throttleFrameManagerInstance();
             Element root = new Element("throttle-config");
             Document doc = new Document(root);
             doc.setDocType(new DocType("throttle-config", "throttle-config.dtd"));
 
             com.sun.java.util.collections.ArrayList children =
                     new com.sun.java.util.collections.ArrayList(5);
-            for (Iterator i = manager.getThrottleFrames(); i.hasNext(); )
+            for (Iterator i = ThrottleFrameManager.instance().getThrottleFrames(); i.hasNext(); )
             {
                 ThrottleFrame f = (ThrottleFrame)i.next();
                 Element throttleElement = f.getXml();
@@ -78,7 +77,7 @@ public class StoreXmlThrottleAction extends AbstractAction {
 			log.warn("Exception in storing throttle xml: "+ex);
 
         }
-        catch (IOException ex)
+        catch (IOException ex) 
         {
             log.warn("Exception in storing throttle xml: "+ex);
 

@@ -16,7 +16,7 @@ package jmri;
  * non-system-specific code.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class InstanceManager {
 
@@ -31,13 +31,6 @@ public class InstanceManager {
     static public ConfigureManager configureManagerInstance()  { return mConfigureManager; }
 
     static public ThrottleManager throttleManagerInstance()  { return mThrottleManager; }
-
-    static public jmri.jmrit.throttle.ThrottleFrameManager throttleFrameManagerInstance() {
-        if (mThrottleFrameManager == null) {
-            mThrottleFrameManager = new jmri.jmrit.throttle.ThrottleFrameManager();
-        }
-        return mThrottleFrameManager;
-    }
 
     static public SignalHeadManager signalHeadManagerInstance()  {
         if (mSignalHeadManager != null) return mSignalHeadManager;
@@ -89,7 +82,6 @@ public class InstanceManager {
         mSignalHeadManager = p;
     }
 
-    static private jmri.jmrit.throttle.ThrottleFrameManager mThrottleFrameManager = null;
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(InstanceManager.class.getName());
 

@@ -54,12 +54,12 @@ public class LoadXmlThrottleAction extends AbstractAction
 		}
 
 		// if exising frames are open ask to destroy those or merge.
-		if (InstanceManager.throttleFrameManagerInstance().getThrottleFrames().hasNext())
+		if (ThrottleFrameManager.instance().getThrottleFrames().hasNext())
 		{
 			Object[] possibleValues = {"Merge", "Replace", "Cancel"};
 			int selectedValue = JOptionPane.showOptionDialog(null,
 					"Throttles are currently open.\nDo you wish to Merge "
-					 + "saved throttles with open throttles or\n"
+					 + "saved throttles with open throttles or\n" 
 					 + "Replace open throttles",
 					"Loading Throttles",
 					JOptionPane.YES_NO_CANCEL_OPTION,
@@ -68,7 +68,7 @@ public class LoadXmlThrottleAction extends AbstractAction
 			if (selectedValue == JOptionPane.NO_OPTION)
 			{
 				// replace chosen - close all then load
-				InstanceManager.throttleFrameManagerInstance().requestAllThrottleFramesDestroyed();
+				ThrottleFrameManager.instance().requestAllThrottleFramesDestroyed();
 			}
 		}
 		loadThrottles(fileChooser.getSelectedFile());
@@ -88,7 +88,7 @@ public class LoadXmlThrottleAction extends AbstractAction
 			List throttles = root.getChildren("ThrottleFrame");
 			for (com.sun.java.util.collections.Iterator i = throttles.iterator(); i.hasNext(); )
 			{
-				ThrottleFrame tf = InstanceManager.throttleFrameManagerInstance().createThrottleFrame();
+				ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
 				tf.setXml((Element) i.next());
 				tf.setVisible(true);
 			}

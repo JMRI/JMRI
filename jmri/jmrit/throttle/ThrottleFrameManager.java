@@ -11,10 +11,13 @@ import java.util.Iterator;
  *
  * @author     Glen Oberhauser
  * @created    March 25, 2003
- * @version    $Revision: 1.7 $
+ * @version    $Revision: 1.8 $
  */
 public class ThrottleFrameManager
 {
+    /** record the single instance of Roster **/
+    private static ThrottleFrameManager instance = null;
+
 	private static int NEXT_THROTTLE_KEY = KeyEvent.VK_RIGHT;
 	private static int PREV_THROTTLE_KEY = KeyEvent.VK_LEFT;
 
@@ -35,6 +38,16 @@ public class ThrottleFrameManager
 		throttleFrames = new ArrayList(0);
 	}
 
+	public static ThrottleFrameManager instance()
+	{
+		if (instance == null)
+		{
+			instance = new ThrottleFrameManager();
+		}
+		return instance;
+	}
+		
+	
 	/**
 	 *  Tell this manager that a new ThrottleFrame was created.
 	 * @return The newly created ThrottleFrame
