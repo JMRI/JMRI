@@ -9,7 +9,7 @@ package jmri.jmrix.lenz;
  * Defines standard operations for Dcc command stations.
  *
  * @author			Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
 
@@ -276,7 +276,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
     public int getFeedbackMessageType(XNetMessage pMsg) {
         if (isFeedbackMessage(pMsg)) {
             int a2 = pMsg.getElement(2);
-            return((a2 & 0xff) / 16);            
+            return((a2 & 0x60) / 32);            
 	}
         else return -1;
     }

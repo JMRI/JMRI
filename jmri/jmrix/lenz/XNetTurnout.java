@@ -3,7 +3,7 @@
  *
  * Description:		extend jmri.AbstractTurnout for XNet layouts
  * @author			Bob Jacobsen Copyright (C) 2001, Portions by Paul Bender Copyright (C) 2003 
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 
 package jmri.jmrix.lenz;
@@ -189,8 +189,8 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                                                 .getFeedbackMessageType(l);
 	  if(messageType == 1) {
              int a2=l.getElement(2);
-             if((a2 & 0x80)==0x80) { return true;
-             } else { return false; }
+             if((a2 & 0x80)==0x80) { return false;
+             } else { return true; }
 	  } else return false;
         } else if (((mNumber%2)==0) && 
                    (XNetTrafficController.instance()
@@ -202,8 +202,8 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                                                 .getFeedbackMessageType(l);
 	  if(messageType == 1) {
              int a2=l.getElement(2);
-             if((a2&0x80)==0x80) { return true;
-             } else { return false; }
+             if((a2&0x80)==0x80) { return false;
+             } else { return true; }
 	  } else return false;            
         }    
        return(false);

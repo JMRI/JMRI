@@ -9,7 +9,7 @@ package jmri.jmrix.lenz;
  * based on the Command Station Type.
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class XNetInitilizationManager implements XNetListener {
 
@@ -51,8 +51,15 @@ public class XNetInitilizationManager implements XNetListener {
                                           .getCommandStation()
                                           .getCommandStationType();
 
-        if(CSSoftwareVersion<3.0)
+        if(CSSoftwareVersion<0)
         {
+           log.warn("Command Station disconnected, or powered down assuming LZ100/LZV100 V3.x");
+           jmri.InstanceManager.setPowerManager(new jmri.jmrix.lenz.XNetPowerManager());
+           jmri.InstanceManager.setThrottleManager(new jmri.jmrix.lenz.XNetThrottleManager());
+           jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager());
+           jmri.InstanceManager.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager());
+           jmri.InstanceManager.setProgrammerManager(new jmri.jmrix.lenz.XNetProgrammerManager(jmri.jmrix.lenz.XNetProgrammer.instance()));
+        } else if(CSSoftwareVersion<3.0) {
            log.error("Command Station does not support XPressNet Version 3 Command Set");
         } else {
             /* First, we load things that should work on all systems */
@@ -69,11 +76,13 @@ public class XNetInitilizationManager implements XNetListener {
             } else if(CSType==0x00) {
 	      if (log.isDebugEnabled()) log.debug("Command Station is LZ100/LZV100");
               jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager());
+              jmri.InstanceManager.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager());
               jmri.InstanceManager.setProgrammerManager(new jmri.jmrix.lenz.XNetProgrammerManager(jmri.jmrix.lenz.XNetProgrammer.instance()));
             } else {
               /* If we still don't  know what we have, load everything */
 	      if (log.isDebugEnabled()) log.debug("Command Station is Unknown type");
               jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager());
+              jmri.InstanceManager.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager());
               jmri.InstanceManager.setProgrammerManager(new jmri.jmrix.lenz.XNetProgrammerManager(jmri.jmrix.lenz.XNetProgrammer.instance()));
             }
         }
