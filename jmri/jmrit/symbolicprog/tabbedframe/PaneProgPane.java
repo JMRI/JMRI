@@ -33,7 +33,7 @@ import org.jdom.Element;
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  */
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
@@ -827,36 +827,204 @@ public class PaneProgPane extends javax.swing.JPanel
         // if pane is empty, don't print anything
         if (varList.size() == 0 && cvList.size() == 0) return;
 
+        // Define column widths for name and value output.
+        // Make col 2 slightly larger than col 1 and reduce both to allow for
+        // extra spaces that will be added during concatenation
+        int col1Width = w.getCharactersPerLine()/2 -3 - 5;
+        int col2Width = w.getCharactersPerLine()/2 -3 + 5;
+
         try {
+          //Draw horizontal dividing line for each Pane section
+          w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(), w.getCharactersPerLine() + 1);
+          //Create a string of spaces the width of the first column
+          String spaces = "";
+          for (int i=0; i < col1Width; i++) {
+            spaces = spaces + " ";
+          }
             // start with pane name in bold
-            String s = "\n\n"+mName+"\n\n";
+            String heading1 = "Field";
+            String heading2 = "Setting";
+            String s;
+            int interval = spaces.length()- heading1.length();
             w.setFontStyle(Font.BOLD);
-            w.write(s, 0, s.length());
+            if (cvList.size() > 0){
+              w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber() + 1, 0);
+              w.write(w.getCurrentLineNumber(), w.getCharactersPerLine() + 1,
+                      w.getCurrentLineNumber() + 1, w.getCharactersPerLine() + 1);
+              s = mName.toUpperCase() + "\n";
+              w.write(s, 0, s.length());
+            }
+            else {
+              w.write(w.getCurrentLineNumber(),0,w.getCurrentLineNumber() + 1,0);
+              w.write(w.getCurrentLineNumber(),w.getCharactersPerLine() + 1,w.getCurrentLineNumber() + 1,w.getCharactersPerLine() + 1);
+              s = mName.toUpperCase() + "\n";
+              w.write(s, 0, s.length());
+              w.write(w.getCurrentLineNumber(),0,w.getCurrentLineNumber() + 1,0);
+              w.write(w.getCurrentLineNumber(),w.getCharactersPerLine() + 1,w.getCurrentLineNumber() + 1,w.getCharactersPerLine() + 1);
+              w.setFontStyle(Font.BOLD + Font.ITALIC);
+              s = "   " + heading1 + spaces.substring(0,interval) + "   Setting\n";
+              w.write(s, 0, s.length());
+            }
             w.setFontStyle(Font.PLAIN);
-            String spaces = "                                                   ";
             // index over variables
             for (int i=0; i<varList.size(); i++) {
                 int varNum = ((Integer)varList.get(i)).intValue();
                 VariableValue var = _varModel.getVariable(varNum);
-                String name = "   "+var.label();
+                String name = var.label();
                 if (name == null) name = var.item();
-                String value = " "+var.getTextValue() + "\n";
-                int space = spaces.length()-name.length();
-                if (space >= 0)
-                    s = name+spaces.substring(0, space)+value;
-                else
-                    s = name+"\n"+spaces+value;
-                w.write(s, 0, s.length());
+                String value = var.getTextValue();
+
+               //define index values for name and value substrings
+                int nameLeftIndex = 0;
+                int nameRightIndex = name.length();
+                int valueLeftIndex = 0;
+                int valueRightIndex =value.length();
+                String trimmedName;
+                String trimmedValue;
+
+                // Check the name length to see if it is wider than the column.
+                // If so, split it and do the same checks for the Value
+                // Then concatenate the name and value (or the split versions thereof)
+                // before writing - if split, repeat until all pieces have been output
+                while ((valueLeftIndex < value.length()) || (nameLeftIndex < name.length())){
+                  // name split code
+                  if (name.substring(nameLeftIndex).length() > col1Width){
+                    for (int j = 0; j < col1Width; j++) {
+                      String delimiter = name.substring(nameLeftIndex + col1Width - j - 1,
+                                                       nameLeftIndex + col1Width - j);
+                      if (delimiter.equals(" ") || delimiter.equals(";") || delimiter.equals(",")) {
+                        nameRightIndex = nameLeftIndex + col1Width - j;
+                        break;
+                      }
+                    }
+                    trimmedName = name.substring(nameLeftIndex,nameRightIndex);
+                    nameLeftIndex = nameRightIndex;
+                    int space = spaces.length()- trimmedName.length();
+                    s = "   " + trimmedName + spaces.substring(0,space);
+                  }
+                  else {
+                    trimmedName = name.substring(nameLeftIndex);
+                    int space = spaces.length() - trimmedName.length();
+                    s = "   " + trimmedName + spaces.substring(0,space);
+                    name = "";
+                    nameLeftIndex = 0;
+                  }
+                  // value split code
+                  if (value.substring(valueLeftIndex).length() > col2Width){
+                    for (int j = 0; j < col2Width; j++){
+                      String delimiter = value.substring(valueLeftIndex + col2Width - j - 1, valueLeftIndex + col2Width - j);
+                      if (delimiter.equals(" ") || delimiter.equals(";") || delimiter.equals(",")) {
+                        valueRightIndex = valueLeftIndex + col2Width - j;
+                        break;
+                      }
+                    }
+                    trimmedValue = value.substring(valueLeftIndex,valueRightIndex);
+                    valueLeftIndex = valueRightIndex;
+                    s= s + "   " + trimmedValue + "\n";
+                  }
+                  else {
+                    trimmedValue = value.substring(valueLeftIndex);
+                    s = s + "   " + trimmedValue + "\n";
+                    valueLeftIndex = 0;
+                    value = "";
+                  }
+                  w.write(w.getCurrentLineNumber(),0,w.getCurrentLineNumber() + 1,0);
+                  w.write(w.getCurrentLineNumber(),w.getCharactersPerLine() + 1,w.getCurrentLineNumber() + 1,w.getCharactersPerLine() + 1);
+                  w.write(s,0,s.length());
+                }
             }
+
             // index over CVs
-            for (int i=0; i<cvList.size(); i++) {
-                int cvNum = ((Integer)cvList.get(i)).intValue();
+            if (cvList.size() > 0){
+              w.setFontStyle(Font.BOLD); //set font to Bold
+              // print a simple heading
+              w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber() + 1, 0);
+              w.write(w.getCurrentLineNumber(), w.getCharactersPerLine() + 1,
+                      w.getCurrentLineNumber() + 1, w.getCharactersPerLine() + 1);
+              s = "         Value               Value               Value               Value\n";
+              w.write(s, 0, s.length());
+              w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber() + 1, 0);
+              w.write(w.getCurrentLineNumber(), w.getCharactersPerLine() + 1,
+                      w.getCurrentLineNumber() + 1, w.getCharactersPerLine() + 1);
+              s = "   CV   Dec Hex        CV   Dec Hex        CV   Dec Hex        CV   Dec Hex\n";
+              w.write(s, 0, s.length());
+              w.setFontStyle(0); //set font back to Normal
+              //           }
+              /*create an array to hold CV/Value strings to allow reformatting and sorting
+                Same size as the table drawn above (4 columns*tableHeight; heading rows
+                not included)
+               */
+              int tableHeight = 20;
+              String[] cvStrings = new String[4 * tableHeight];
+
+              //blank the array
+              for (int j = 0; j < cvStrings.length; j++)
+                cvStrings[j] = "";
+
+                // get each CV and value
+              for (int i = 0; i < cvList.size(); i++) {
+
+                int cvNum = ( (Integer) cvList.get(i)).intValue();
                 CvValue cv = _cvModel.getCvByRow(cvNum);
-                String name = "   CV"+cv.number();
-                String value = " "+cv.getValue()+"\n";
-                s = name+spaces.substring(0, 15-name.length())+value;
-                w.write(s, 0, s.length());
+      //-------------------------------------------------------------------------
+
+                int num = cv.number();
+                int value = cv.getValue();
+
+                //convert and pad numbers as needed
+                String numString = Integer.toString(num);
+                String valueString = Integer.toString(value);
+                String valueStringHex = Integer.toHexString(value).toUpperCase();
+                if (value < 10)
+                  valueStringHex = "0" + valueStringHex;
+                for (int j = 1; j < 3; j++) {
+                  if (numString.length() < 3)
+                    numString = " " + numString;
+                }
+                for (int j = 1; j < 3; j++) {
+                  if (valueString.length() < 3)
+                    valueString = " " + valueString;
+                }
+                //Create composite string of CV and its decimal and hex values
+                s = "  " + numString + "   " + valueString + "  " + valueStringHex +
+                    " ";
+
+                //populate printing array - still treated as a single column
+                cvStrings[i] = s;
+              }
+                //sort the array in CV order (just the members with values)
+                String temp;
+                boolean swap = false;
+                do {
+                  swap = false;
+                  for (int i = 0; i < _cvModel.getRowCount() - 1; i++) {
+                    if (Integer.parseInt(cvStrings[i + 1].substring(2, 5).trim()) <
+                        Integer.parseInt(cvStrings[i].substring(2, 5).trim())) {
+                      temp = cvStrings[i + 1];
+                      cvStrings[i + 1] = cvStrings[i];
+                      cvStrings[i] = temp;
+                      swap = true;
+                    }
+                  }
+                }
+                while (swap == true);
+
+                //Print the array in four columns
+                for (int i = 0; i < tableHeight; i++) {
+                  w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber() + 1, 0);
+                  w.write(w.getCurrentLineNumber(), w.getCharactersPerLine() + 1,
+                          w.getCurrentLineNumber() + 1, w.getCharactersPerLine() + 1);
+                  s = cvStrings[i] + "    " + cvStrings[i + tableHeight] + "    " + cvStrings[i +
+                      tableHeight * 2] + "    " + cvStrings[i + tableHeight * 3] + "\n";
+                  w.write(s, 0, s.length());
+                }
             }
+              s = "\n\n";
+              w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber() + 2, 0);
+              w.write(w.getCurrentLineNumber(), w.getCharactersPerLine() + 1,
+                      w.getCurrentLineNumber() + 2, w.getCharactersPerLine() + 1);
+              w.write(s, 0, s.length());
+
             // handle special cases
 
         } catch (IOException e) { log.warn("error during printing: "+e);

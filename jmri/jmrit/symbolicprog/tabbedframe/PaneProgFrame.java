@@ -14,6 +14,7 @@ import jmri.jmrit.symbolicprog.*;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Font;
 
 import javax.swing.*;
 
@@ -21,11 +22,12 @@ import com.sun.java.util.collections.ArrayList;
 import com.sun.java.util.collections.List;
 import org.jdom.Attribute;
 import org.jdom.Element;
+import java.io.IOException;
 
 /**
  * Frame providing a command station programmer from decoder definition files
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.30 $
+ * @author			Bob Jacobsen   Copyright (C) 2001; D Miller Copyright 2003
+ * @version			$Revision: 1.31 $
  */
 abstract public class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
@@ -612,18 +614,29 @@ abstract public class PaneProgFrame extends javax.swing.JFrame
 
     public void printPanes(HardcopyWriter w) {
         printInfoSection(w);
+        try {
+           String s = "\n\n";
+           w.write(s, 0, s.length());
+         }
+         catch (IOException e) {
+           log.error("Error printing Info Section: " + e);
+         }
+
         for (int i=0; i<paneList.size(); i++) {
             if (log.isDebugEnabled()) log.debug("start printing page "+i);
             PaneProgPane pane = (PaneProgPane)paneList.get(i);
             pane.printPane(w);
         }
+        w.write(w.getCurrentLineNumber(),0,w.getCurrentLineNumber(),w.getCharactersPerLine() + 1);
     }
 
     public void printInfoSection(HardcopyWriter w) {
         ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("resources/decoderpro.gif"));
         // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
         w.write(icon.getImage(), new JLabel(icon));
+        w.setFontStyle(Font.BOLD);
         _rosterEntry.printEntry(w);
+        w.setFontStyle(Font.PLAIN);
     }
 
     boolean _read = true;
