@@ -7,9 +7,9 @@ import com.sun.java.util.collections.List;
 /**
  * Interface for controlling sensors
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
-public interface SensorManager {
+public interface SensorManager extends Manager {
 
     /**
      * Locate via user name, then system name if needed.
@@ -22,7 +22,7 @@ public interface SensorManager {
     public Sensor getSensor(String name);
 
     // to free resources when no longer used
-    public void dispose() throws JmriException;
+    public void dispose();
 
     public Sensor newSensor(String systemName, String userName);
 
