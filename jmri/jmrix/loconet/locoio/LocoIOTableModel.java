@@ -2,11 +2,14 @@
 
 package jmri.jmrix.loconet.locoio;
 
-import java.awt.event.*;
-import java.beans.*;
-import javax.swing.*;
+import jmri.jmrix.loconet.LnConstants;
+import jmri.jmrix.loconet.LnTrafficController;
+import jmri.jmrix.loconet.LocoNetListener;
+import jmri.jmrix.loconet.LocoNetMessage;
 
-import jmri.jmrix.loconet.*;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 /**
  * Configurer for LocoIO hardware.
@@ -29,11 +32,11 @@ import jmri.jmrix.loconet.*;
  * though there are significant modifications.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
     implements LocoNetListener {
-    
+
     /**
      * Address of this device
      */
@@ -41,13 +44,13 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
     public void setUnitAddress(int unit) {
         unitAddress = unit&0x7F7F;  // protect against high bits set
     }
-    
+
     /**
      * Define the number of rows in the table, which is also
      * the number of "channels" in a signel LocoIO unit
      */
     private int _numRows = 16;
-    
+
     /**
      * Define the contents of the individual columns
      */
@@ -58,13 +61,13 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
     public static final int READCOLUMN  	= 4;  // "read" button
     public static final int WRITECOLUMN 	= 5;  // "write" button
     public static final int HIGHESTCOLUMN 	= WRITECOLUMN+1;
-    
+
     // store the modes
     Object[] addr = new Object[_numRows];
     Object[] set  = new Object[_numRows];
     Object[] onMode = {"<none>", "<none>", "<none>", "<none>", "<none>", "<none>", "<none>", "<none>",
                        "<none>", "<none>", "<none>", "<none>", "<none>", "<none>", "<none>", "<none>"};
-    
+
     /**
      * The addr field (for the address info used in each LocoIO channel)
      * is stored as a string.  This converts it to an integer.
@@ -74,7 +77,7 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
     int addrFieldAsInt(int row) {
         return Integer.valueOf((String)addr[row],16).intValue();
     }
-    
+
     /**
      * Code for read activity needed.  See states
      * NONE, READMODE, READINGMODE,
@@ -82,7 +85,7 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
      * READVALUE2, READINGVALUE2
      */
     int[] needRead = new int[_numRows];
-    
+
     protected final int NONE = 0;
     protected final int READVALUE1 = 1;
     protected final int READINGVALUE1 = 2;
@@ -90,9 +93,9 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
     protected final int READINGVALUE2 = 4;
     protected final int READMODE = 5;
     protected final int READINGMODE = 6;
-    
+
     protected final int READ = READVALUE1;  // starting state
-    
+
     /**
      * Code for write activity needed.  See states
      * NONE, WRITEMODE, WRITINGMODE,
@@ -100,27 +103,27 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
      * WRITEVALUE2, WRITINGVALUE2
      */
     int[] needWrite = new int[_numRows];
-    
+
     protected final int WRITEVALUE1 = 11;
     protected final int WRITINGVALUE1 = 12;
     protected final int WRITEVALUE2 = 13;
     protected final int WRITINGVALUE2 = 14;
     protected final int WRITEMODE = 15;
     protected final int WRITINGMODE = 16;
-    
+
     protected final int WRITE = WRITEVALUE1;  // starting state
-    
+
     /**
      * Record whether this pin is looking to capture a value
      * from the LocoNet
      */
     protected boolean[] capture = new boolean[_numRows];
-    
+
     /**
      * Reference to the JTextField which should receive status info
      */
     JTextField status = null;
-    
+
     /**
      * Primary constructor.  Initializes all the arrays.
      * @param addr Address for this LocoIO unit.  Provided here,
@@ -143,12 +146,12 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
         else
             log.error("No LocoNet interface available");
     }
-    
+
     // basic methods for AbstractTableModel implementation
     public int getRowCount() { return _numRows; }
-    
+
     public int getColumnCount( ){ return HIGHESTCOLUMN;}
-    
+
     public String getColumnName(int col) {
         switch (col) {
         case PINCOLUMN: return "Pin";
@@ -160,7 +163,7 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
         default: return "unknown";
         }
     }
-    
+
     public Class getColumnClass(int col) {
         switch (col) {
         case PINCOLUMN: return String.class;
@@ -172,7 +175,7 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
         default: return null;
         }
     }
-    
+
     public boolean isCellEditable(int row, int col) {
         switch (col) {
         case PINCOLUMN: return false;
@@ -184,7 +187,7 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
         default: return false;
         }
     }
-    
+
     public Object getValueAt(int row, int col) {
         switch (col) {
         case PINCOLUMN:
@@ -202,7 +205,7 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
         default: return "unknown";
         }
     }
-    
+
     public int getPreferredWidth(int col) {
         switch (col) {
         case PINCOLUMN:
@@ -218,7 +221,7 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
         default: return new JLabel(" <unknown> ").getPreferredSize().width;
         }
     }
-    
+
     public void setValueAt(Object value, int row, int col) {
         if (col == ONMODECOLUMN) {
             if (isValidOnValue(value)) {
@@ -259,7 +262,7 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
             issueNextOperation();
         }
     }
-    
+
     /**
      * Start reading all rows back
      */
@@ -269,7 +272,7 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
         }
         issueNextOperation();
     }
-    
+
     /**
      * Start writing all rows out
      */
@@ -279,15 +282,15 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
         }
         issueNextOperation();
     }
-    
+
     protected int highPart(int value) { // generally value 1
         return value/256;
     }
-    
+
     protected int lowPart(int value) { // generally value 2
         return value-256*highPart(value);
     }
-    
+
     protected boolean isValidOnValue(Object value) {
         if (value instanceof String) {
             String sValue = (String) value;
@@ -297,9 +300,9 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
         }
         return false;
     }
-    
+
     public static String[] getValidOnModes() { return validOnModes; }
-    
+
     // define the various possible operation modes
     protected static final String TURNOUTCLOSE  = "Turnout close cmd sets output";
     protected static final String TURNOUTTHROW  = "Turnout throw cmd sets output";
@@ -307,7 +310,7 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
     protected static final String TOGGLESWITCH  = "Toggle switch controls turnout";
     protected static final String PUSHBUTTONLO  = "Input low flips turnout";
     protected static final String PUSHBUTTONHI  = "Input high flips turnout";
-    
+
     static String[] validOnModes = {
         TURNOUTCLOSE, TURNOUTTHROW,
         STATUSMESSAGE,
@@ -315,13 +318,13 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
         PUSHBUTTONLO, PUSHBUTTONHI,
     };
     static int[] codeForMode = {0x80, 0x80, 0xC0, 0x0F, 0x2F, 0x6F};
-    
+
     int codeFromModeString(String mode) {
         for (int i=0; i<codeForMode.length; i++)
             if (mode.equals(validOnModes[i])) return codeForMode[i];
         return -1;
     }
-    
+
     /**
      * Convert a configuration cv and two-byte address value to
      * a mode string.
@@ -347,10 +350,10 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
         }
         return "";
     }
-    
+
     public void dispose() {
         if (log.isDebugEnabled()) log.debug("dispose");
-        
+
         // disconnect from future events
         stopTimer();
         LnTrafficController.instance().removeLocoNetListener(~0, this);
@@ -359,10 +362,10 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
         set = null;
         onMode = null;
     }
-    
+
     int lastOpCv = -1;
     boolean reading = false;  // false means write in progress
-    
+
     /**
      * Listen to the LocoNet.
      * We're listening for incoming OPC_XFR messages, which might
@@ -401,7 +404,7 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
                     // get data and store
                     if (lastOpCv<0 || lastOpCv>50)
                         log.error("last CV recorded is invalid: "+lastOpCv);
-                    
+
                     // there are two formats of the return packet...
                     int data = 0;
                     if (contents[2] != 0){
@@ -435,9 +438,9 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
                     }
                     // tell the table to update
                     fireTableRowsUpdated(channel,channel);
-                    
+
                 }  // end of read processing
-                
+
                 // check for anything else to do
                 issueNextOperation();
                 return;
@@ -458,7 +461,7 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
                 }
             }
             return;
-            
+
         case LnConstants.OPC_SW_REQ:
             // these might require capture
             if (log.isDebugEnabled()) log.debug("OPC_INPUT_REP received");
@@ -478,12 +481,12 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
                 }
             }
             return;
-            
+
         default:
             // we ignore the default
         }
     }
-    
+
     /**
      * A valid reply has been received, so the read/write
      * worked, and the state should be advanced.
@@ -531,9 +534,9 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
             return;
         }
     }
-    
+
     int currentPin = 0;
-    
+
     /**
      * Look through the table to find the next thing that
      * needs to be read.
@@ -607,7 +610,7 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
                     lastOpCv = i*3+3;
                     sendWriteCommand(lastOpCv, codeFromModeString((String)onMode[i]));
                     return;
-                    
+
                 default:
                     log.error("found an unexpected state: "+needWrite[1]+" "+i);
                     return;
@@ -619,7 +622,7 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
         if (status!=null) status.setText("OK");
         currentPin = 0;
     }
-    
+
     /**
      * Internal routine to handle a timeout during read/write
      * by retrying the same operation.
@@ -628,21 +631,21 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
         if (log.isDebugEnabled()) log.debug("timeout!");
         issueNextOperation();
     }
-    
+
     /**
      * Internal routine to start timer to protect the mode-change.
      */
     protected void startTimer() {
         restartTimer(TIMEOUT);
     }
-    
+
     /**
      * Internal routine to stop timer, as all is well
      */
     protected void stopTimer() {
         if (timer!=null) timer.stop();
     }
-    
+
     /**
      * Internal routine to handle timer starts & restarts
      */
@@ -659,11 +662,11 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
         timer.setRepeats(false);
         timer.start();
     }
-    
+
     static private int TIMEOUT=2000;
-    
+
     javax.swing.Timer timer = null;
-    
+
     /**
      * Format and send a read command to the LocoIO device
      * at the known unit address
@@ -674,7 +677,7 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
         reading = true;
         // format a read message
         int[] contents = {2,cv,0,0,  0,0,0,0};
-        
+
         LocoNetMessage msg = LocoNetMessage.makePeerXfr(0x1050, unitAddress,
                                                         contents, 0x08);
         // send message
@@ -682,13 +685,13 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
         // and set timeout on reply
         startTimer();
     }
-    
+
     protected void sendWriteCommand(int cv, int data) {
         // remember current op is write
         reading = false;
         // format a write message
         int[] contents = {1,cv,0,data,  0,0,0,0};
-        
+
         LocoNetMessage msg = LocoNetMessage.makePeerXfr(0x1050, unitAddress,
                                                         contents, 0x08);
         // send message
@@ -696,6 +699,6 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
         // and set timeout on reply
         startTimer();
     }
-    
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoIOTableModel.class.getName());
 }

@@ -4,7 +4,6 @@ package jmri.jmrix.loconet.locoio;
 
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import jmri.util.StringUtil;
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetMessage;
 
@@ -21,7 +20,7 @@ import javax.swing.table.TableColumnModel;
  * Frame displaying and programming a LocoIO configuration.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class LocoIOFrame extends JFrame {
 
