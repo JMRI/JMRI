@@ -3,7 +3,7 @@
  *
  * Description:		Constants to represent values seen in XpressNet traffic
  * @author		Paul Bender  
- * @version             $ Revision: 1.0 $
+ * @version             $ Revision: 1.3 $
  *
  * Variable prefix abreviation keys:
  * ACC_ is for accessory messages

@@ -10,7 +10,7 @@ import jmri.jmrix.lenz.XNetTrafficController;
  * XpressnetNet connection.
  * @author     Paul Bender
  * @created    December 20,2002
- * @version    $Revision: 1.4 $
+ * @version    $Revision: 1.5 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -52,11 +52,10 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
        XNetMessage msg=new XNetMessage(6);
        msg.setElement(0,XNetConstants.LOCO_OPER_REQ);   
        msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP1);
-       msg.setElement(2,0x00);// For now, the upper 8 bits of the 
-                                    // address is going to be 00 (i.e. we 
-                                    // can only address addresses 0-99
-       msg.setElement(3,this.getDccAddress()); // set the DCC address 
-                                    // to the third element
+       msg.setElement(2,this.getDccAddressHigh());// set to the upper 
+						    // byte of the  DCC address
+       msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
+						    //of the DCC address 
        // Now, we need to figure out what to send in element 3
        int element4value=0;
        if(f0)
@@ -94,11 +93,10 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
        XNetMessage msg=new XNetMessage(6);
         msg.setElement(0,XNetConstants.LOCO_OPER_REQ);   
         msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP2);
-       msg.setElement(2,0x00);// For now, the upper 8 bits of the 
-                                    // address is going to be 00 (i.e. we 
-                                    // can only address addresses 0-99
-       msg.setElement(3,this.getDccAddress()); // set the DCC address 
-                                    // to the third element
+       msg.setElement(2,this.getDccAddressHigh());// set to the upper 
+						    // byte of the  DCC address
+       msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
+						    //of the DCC address 
        // Now, we need to figure out what to send in element 3
        int element4value=0;
        if(f5)
@@ -132,11 +130,10 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
        XNetMessage msg=new XNetMessage(6);
        msg.setElement(0,XNetConstants.LOCO_OPER_REQ);   
        msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP3);
-       msg.setElement(2,0x00);// For now, the upper 8 bits of the 
-                                    // address is going to be 00 (i.e. we 
-                                    // can only address addresses 0-99
-       msg.setElement(3,this.getDccAddress()); // set the DCC address 
-                                    // to the third element
+       msg.setElement(2,this.getDccAddressHigh());// set to the upper 
+						    // byte of the  DCC address
+       msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
+						    //of the DCC address 
        // Now, we need to figure out what to send in element 3
        int element4value=0;
        if(f9)
@@ -185,11 +182,10 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	 msg.setElement(1,XNetConstants.LOCO_SPEED_127);
                                     // currently we're going to assume 128 
 			            // speed step mode
-      	 msg.setElement(2,0x00);// For now, the upper 8 bits of the 
-                                    // address is going to be 00 (i.e. we 
-                                    // can only address addresses 0-99
-         msg.setElement(3,this.getDccAddress()); // set the DCC address 
-                                    // to the third element
+      	 msg.setElement(2,this.getDccAddressHigh());// set to the upper 
+						    // byte of the  DCC address
+         msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
+						    //of the DCC address 
          // Now, we need to figure out what to send in element 3
          int element4value=(int)((speed)*(127)/speedIncrement);
          if(isForward)
@@ -211,12 +207,11 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      {
 	  /* Emergency stop sent */
       	  XNetMessage msg=new XNetMessage(4);
-         msg.setElement(0,XNetConstants.EMERGENCY_STOP);   
-      	msg.setElement(1,0x00);     // For now, the upper 8 bits of the 
-                                    // address is going to be 00 (i.e. we 
-                                    // can only address addresses 0-99
-        msg.setElement(2,this.getDccAddress()); // set the DCC address 
-                                    // to the second element
+         msg.setElement(0,XNetConstants.EMERGENCY_STOP);
+      	 msg.setElement(1,this.getDccAddressHigh());// set to the upper 
+						    // byte of the  DCC address
+         msg.setElement(2,this.getDccAddressLow()); // set to the lower byte
+						    //of the DCC address 
         msg.setParity(); // Set the parity bit
         // now, we send the message to the command station
         XNetTrafficController.instance().sendXNetMessage(msg,this);		
@@ -446,6 +441,19 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     public int getDccAddress()
     {
         return address;
+    }
+
+    private int getDccAddressHigh()
+    {
+	int temp=address & 0xFF00;
+	temp>>>=temp;
+	return temp;
+    }
+
+    private int getDccAddressLow()
+    {
+	int temp=address & 0x00FF;
+	return temp;
     }
 
     // to handle quantized speed. Note this can change! Valued returned is
