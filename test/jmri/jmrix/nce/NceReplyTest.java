@@ -1,9 +1,9 @@
-/** 
+/**
  * NceReplyTest.java
  *
  * Description:	    JUnit tests for the NceReplyclass
  * @author			Bob Jacobsen
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 package jmri.jmrix.nce;
@@ -32,7 +32,7 @@ public class NceReplyTest extends TestCase {
 		Assert.assertEquals("expected length ", 4, m.getNumDataElements());
 		m.setElement(5, 'A');
 		Assert.assertEquals("expected length ", 6, m.getNumDataElements());
-		
+
 	}
 
 	public void testBinaryToString() {
@@ -44,7 +44,7 @@ public class NceReplyTest extends TestCase {
 		m.setElement(3, 0x00);
 		Assert.assertEquals("string compare ", "81 02 a2 00", m.toString());
 	}
-	
+
 	public void testAsciiToString() {
 		NceReply m = new NceReply();
 		m.setBinary(false);
@@ -87,12 +87,12 @@ public class NceReplyTest extends TestCase {
 		m.setElement(11, ':');
 		m.setElement(12, ' ');
 		m.setElement(13, 'X');
-		Assert.assertEquals(" too short", 13, m.skipCOMMAND(13));
-		Assert.assertEquals(" not found", 5, m.skipCOMMAND(5));
-		Assert.assertEquals(" too short", 6, m.skipCOMMAND(6));
-		Assert.assertEquals(" too short", 7, m.skipCOMMAND(7));
-		Assert.assertEquals(" find & skip", 13, m.skipCOMMAND(4));
-		Assert.assertEquals(" not found", 0, m.skipCOMMAND(0));
+		Assert.assertEquals(" too short", 13, m.skipPrefix(13));
+		Assert.assertEquals(" not found", 5, m.skipPrefix(5));
+		Assert.assertEquals(" too short", 6, m.skipPrefix(6));
+		Assert.assertEquals(" too short", 7, m.skipPrefix(7));
+		Assert.assertEquals(" find & skip", 13, m.skipPrefix(4));
+		Assert.assertEquals(" not found", 0, m.skipPrefix(0));
 		m = new NceReply();
 		m.setBinary(false);
 		m.setElement(0, 'C');
@@ -107,9 +107,9 @@ public class NceReplyTest extends TestCase {
 		m.setElement(9, '0');
 		m.setElement(10, '2');
 		m.setElement(11, '7');
-		Assert.assertEquals(" start of reply ", 9, m.skipCOMMAND(0));
+		Assert.assertEquals(" start of reply ", 9, m.skipPrefix(0));
 	}
-			
+
 	public void testValue1() {
 		// value when just the string comes back
 		NceReply m = new NceReply();
@@ -120,7 +120,7 @@ public class NceReplyTest extends TestCase {
 		m.setElement(3, ' ');
 		Assert.assertEquals("value ", 27, m.value());
 	}
-	
+
 	public void testValue2() {
 		// value with a "Command:" prefix
 		NceReply m = new NceReply();
@@ -145,9 +145,9 @@ public class NceReplyTest extends TestCase {
 		Assert.assertEquals("find ", 5, m.match("PROGRAMMING"));
 		Assert.assertEquals("not find ", -1, m.match("foo"));
 	}
-	
+
 	// from here down is testing infrastructure
-	
+
 	public NceReplyTest(String s) {
 		super(s);
 	}
@@ -157,11 +157,11 @@ public class NceReplyTest extends TestCase {
 		String[] testCaseName = {NceReplyTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
-	
+
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite(NceReplyTest.class);
 		return suite;
 	}
-	
+
 }
