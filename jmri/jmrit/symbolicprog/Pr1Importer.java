@@ -4,6 +4,7 @@ package jmri.jmrit.symbolicprog;
 
 import java.io.*;
 import java.util.*;
+import java.lang.ArrayIndexOutOfBoundsException;
 
 import jmri.JmriException;
 
@@ -11,7 +12,7 @@ import jmri.JmriException;
  * Import CV values from a "PR1" file written by PR1DOS or PR1WIN
  *
  * @author			Alex Shepherd   Copyright (C) 2003
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class Pr1Importer {
   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Pr1Importer.class.getName());
@@ -69,26 +70,35 @@ public class Pr1Importer {
       {
         int Index = Integer.parseInt( key.substring( CV_INDEX_OFFSET ) ) ;
 
-        int lowCV = Index ;
-        int highCV = Index ;
+        int lowCV ;
+        int highCV ;
 
         if( m_packedValues ){
           lowCV = Index * 4 - 3 ;
           highCV = Index * 4 ;
         }
+        else{
+          lowCV = Index ;
+          highCV = Index ;
+        }
 
         for( int cvNum = lowCV; cvNum <= highCV; cvNum++ ){
-          CvValue cv = pCvTable.getCvByNumber( cvNum ) ;
-          if( cv == null ){
-            pCvTable.addCV( Integer.toString( cvNum ) ) ;
-            cv = pCvTable.getCvByNumber( cvNum ) ;
-          }
+          if( cvNum < CvTableModel.MAXCVNUM ){
+            try {
+              CvValue cv = pCvTable.getCvByNumber( cvNum ) ;
+              if( cv == null ){
+                pCvTable.addCV( Integer.toString( cvNum ) ) ;
+                cv = pCvTable.getCvByNumber( cvNum ) ;
+              }
 
-          try {
-            cv.setValue( getCV( cvNum ) ) ;
-          }
-          catch (JmriException ex) {
-            log.error( "failed to getCV() " + cvNum );
+              cv.setValue( getCV( cvNum ) ) ;
+            }
+            catch (JmriException ex) {
+              log.error( "failed to getCV() " + cvNum );
+            }
+            catch (ArrayIndexOutOfBoundsException ex){
+              log.error( "failed to getCvByNumber() " + cvNum );
+            }
           }
         }
       }
@@ -127,12 +137,25 @@ public class Pr1Importer {
 
   public static void main(String[] args) {
     try {
-      String fileName = "Y:/ModelRail/pr1dos/alex.dec" ;
+      String logFile = "default.lcf";
+      try {
+        if (new java.io.File(logFile).canRead()) {
+          org.apache.log4j.PropertyConfigurator.configure("default.lcf");
+        } else {
+          org.apache.log4j.BasicConfigurator.configure();
+        }
+      }
+      catch (java.lang.NoSuchMethodError e) { System.out.println("Exception starting logging: "+e); }
+
+//      String fileName = "E:/ModelRail/pr1dos/alex.dec" ;
+      String fileName = "E:/ModelRail/pr1dos/840B8601.dec" ;
 
       if( args.length > 0 )
         fileName = args[ 0 ] ;
 
       Pr1Importer cvList = new Pr1Importer( new File( fileName ) );
+      CvTableModel model = new CvTableModel( null, null ) ;
+      cvList.setCvTable( model );
 
       System.out.println( "File: " + fileName ) ;
       System.out.println( "CV#, Hex Int, Dec Int, Hex Byte, Dec Byte" ) ;
@@ -142,9 +165,18 @@ public class Pr1Importer {
           System.out.println("CV" + cvIndex + " " + Integer.toHexString(cvValue) +
                              ", " + cvValue);
         }
-        catch (JmriException ex1) {}
+        catch (JmriException ex1) {
+          log.debug( "CV Not Found: " + cvIndex );
+        }
       }
     }
-    catch (IOException ex) {}
+    catch (IOException ex) {
+      log.debug( "IOException: ", ex );
+    }
+    catch (Exception ex) {
+      log.debug( "Exception: ", ex );
+    }
+
+    System.exit( 0 );
   }
 }

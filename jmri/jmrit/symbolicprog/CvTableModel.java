@@ -16,12 +16,12 @@ import jmri.*;
  * Programmer used to access it is a data member.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class CvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
     private int _numRows = 0;                // must be zero until Vectors are initialized
-    final int MAXCVNUM = 1024;
+    public static final int MAXCVNUM = 1024;
     private Vector _cvDisplayVector = new Vector();  // vector of CvValue objects, in display order
     private Vector _cvAllVector = new Vector(MAXCVNUM);  // vector of all possible CV objects
     public Vector allCvVector() { return _cvAllVector; }
