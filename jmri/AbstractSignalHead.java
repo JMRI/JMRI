@@ -5,12 +5,21 @@ package jmri;
  /**
  * Abstract class providing the basic logic of the SignalHead interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public abstract class AbstractSignalHead
     implements SignalHead, java.io.Serializable {
 
-    protected int mAppearance = NONE;
+    public AbstractSignalHead(String sys, String user) {
+        this(sys);
+        mUserName = user;
+    }
+
+    public AbstractSignalHead(String sys) {
+        mSystemName = sys;
+    }
+
+    protected int mAppearance = DARK;
     public int getAppearance() { return mAppearance; }
 
     // implementing classes will typically have a function/listener to get
@@ -37,6 +46,12 @@ public abstract class AbstractSignalHead
         // of the PropertyChangeSupport object
         pcs = null;
     }
+
+    public String getSystemName() { return mSystemName; }
+    public String getUserName() { return mUserName; }
+
+    String mSystemName;
+    String mUserName;
 
 }
 
