@@ -6,19 +6,27 @@ import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
 import jmri.jmrix.loconet.LnTrafficController;
-
+import java.util.ResourceBundle;
 
 /**
  * Create and register a LocoBufferStatsFrame object.
  *
  * @author			Alex Shepherd    Copyright (C) 2003
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class LocoBufferStatsAction extends AbstractAction {
 
-    public LocoBufferStatsAction(String s) { super(s);}
+    public LocoBufferStatsAction(String s) {
+        super(s);
+
+	// disable ourself if there is no locobuffer connection present
+        if (!jmri.jmrix.loconet.locobuffer.LocoBufferAdapter.hasInstance()) {
+            setEnabled(false);
+        }
+    }
+
     public LocoBufferStatsAction() {
-        this("LocoBuffer Stats Monitor");
+        this(ResourceBundle.getBundle("jmri.jmrix.loconet.LocoNetBundle").getString("MenuItemLocoBufferStats"));
     }
 
     public void actionPerformed(ActionEvent e) {
