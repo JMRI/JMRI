@@ -20,7 +20,7 @@ import org.jdom.*;
 /**
  * Frame providing a command station programmer from decoder definition files
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.23 $
+ * @version			$Revision: 1.24 $
  */
 abstract public class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
@@ -80,7 +80,7 @@ abstract public class PaneProgFrame extends javax.swing.JFrame
         // some of the names are so long, and we expect more formats
         JMenu importSubMenu = new JMenu("Import");
         fileMenu.add(importSubMenu);
-        importSubMenu.add(new Pr1ImportAction("PR1 file...", cvModel));
+        importSubMenu.add(new Pr1ImportAction("PR1 file...", cvModel, this));
 
         // add "Export" submenu; this is heirarchical because
         // some of the names are so long, and we expect more formats
