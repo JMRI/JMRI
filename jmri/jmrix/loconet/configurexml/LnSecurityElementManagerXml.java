@@ -12,7 +12,7 @@ import com.sun.java.util.collections.List;
  * configuring LnSecurityElementManager.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class LnSecurityElementManagerXml implements XmlAdapter {
 
@@ -40,6 +40,7 @@ public class LnSecurityElementManagerXml implements XmlAdapter {
 
                 elem.addAttribute("dsSensor", String.valueOf(se.dsSensor));
                 elem.addAttribute("turnout", String.valueOf(se.turnout));
+                elem.addAttribute("auxInput", String.valueOf(se.auxInput));
 
                 elem.addAttribute("attachAnum", String.valueOf(se.attachAnum));
                 elem.addAttribute("attachAleg", String.valueOf(se.attachAleg));
@@ -109,10 +110,14 @@ public class LnSecurityElementManagerXml implements XmlAdapter {
                 se.attachCnum = getIntValue(a);
             if ((a = current.getAttribute("attachCleg")) !=null)
                 se.attachCleg = getIntValue(a);
+
             if ((a = current.getAttribute("dsSensor")) !=null)
                 se.dsSensor = getIntValue(a);
             if ((a = current.getAttribute("turnout")) !=null)
                 se.turnout = getIntValue(a);
+            if ((a = current.getAttribute("auxInput")) !=null)
+                se.auxInput = getIntValue(a);
+
             if ((a = current.getAttribute("maxSpeedAC")) !=null)
                 se.maxSpeedAC = getIntValue(a);
             if ((a = current.getAttribute("maxSpeedAB")) !=null)
@@ -129,6 +134,8 @@ public class LnSecurityElementManagerXml implements XmlAdapter {
                 se.maxBrakingCA = getIntValue(a);
             if ((a = current.getAttribute("maxBrakingBA")) !=null)
                 se.maxBrakingBA = getIntValue(a);
+
+            // do mode last, as it overwrites the specific details
             if ((a= current.getAttribute("mode")) !=null) {
                 String mode = a.getValue();
                 if (mode.equals("ABS")) se.mLogic=SecurityElement.ABS;

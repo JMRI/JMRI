@@ -29,119 +29,130 @@ import jmri.*;
  * at a remote SE's A leg and it's reserved AX, that it NOT coming toward us.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class SecurityElement implements LocoNetListener {
-    
+
     // constants
-    
+
     // direction codes
     public static final int NONE = 0;  // unknown or undecided
     public static final int AX = 8;    // enter from A, leave from B or C
     public static final int XA = 16;   // enter from B or C, leave from A
-    
+
     // leg names
     public static final int A = 1;
     public static final int B = 2;
     public static final int C = 4;
     // also NONE for no connection
-    
+
     // configuration information
     public int mNumber;     // own SE number
-    
+
     public int mLogic = -1;      // logic executed by this element
     public static final int ABS = 0;
     public static final int APB = 1;
     public static final int HEADBLOCK = 2;
-    
+
+    public int onAXReservation;  // for reservation from A leg attachment
+    public int onXAReservation;  // for reservation from B/C leg attachment
+    // NONE is coded as zero
+    public static final int STOPOPPOSITE = 1;
+    public static final int STOPUNRESERVED = 2;
+
+    public boolean makeAReservation; // make reservation when entered from A leg
+    public boolean makeBReservation; // make reservation when entered from A leg
+    public boolean makeCReservation; // make reservation when entered from A leg
+
     public int attachAnum;  // SE number that A is attached to
     public int attachAleg;  // leg of SE attachAnum that A is attached to
-    
+
     public int attachBnum;  // SE that B is attached to
     public int attachBleg;  // leg of SE attachBnum that B is attached to
-    
+
     public int attachCnum;  // SE that C is attached to
     public int attachCleg;  // leg of SE attachCnum that C is attached to
-    
+
     public int dsSensor;    // associated occupancy sensor number;
     public int turnout;     // associated turnout number
-    
+    public int auxInput;    // associated SE
+
     public int maxSpeedAC = 70;  // speed limits set by track
     public int maxSpeedCA = 70;  // geometry; these are maxima
     public int maxSpeedAB = 70;
     public int maxSpeedBA = 70;
-    
+
     public int maxBrakingAC = 20; // how much a train can brake while transiting
     public int maxBrakingCA = 20; // this section.
     public int maxBrakingAB = 20;
     public int maxBrakingBA = 20;
-    
+
     // state information
-    
+
     // existing state information - inputs
     int currentDsStateHere       = Sensor.UNKNOWN;
     int currentTurnoutState      = Turnout.UNKNOWN;
-    
+
     int currentSpeedLimitFromA   = 0;   // speed limit on the SE leg attached to A
     int currentDsStateOnA        = Sensor.UNKNOWN;
     boolean currentReservedFromA = false;
-    
+
     int currentSpeedLimitFromB   = 0;   // speed limit on the SE leg attached to B
     int currentDsStateOnB        = Sensor.UNKNOWN;
     boolean currentReservedFromB = false;
-    
+
     int currentSpeedLimitFromC   = 0;   // speed limit on the SE leg attached to C
     int currentDsStateOnC        = Sensor.UNKNOWN;
     boolean currentReservedFromC = false;
-    
+
     // outputs
     public int currentSpeedAX      = 0;
     public int currentSpeedXA      = 0;
     public int currentDirection    = NONE;
-    
+
     // updated state information - inputs
     int newDsStateHere           = Sensor.INACTIVE; // start this way in case there's no connection
     int newTurnoutState          = Turnout.CLOSED;  // start this way in case there's no connection
-    
+
     int newSpeedLimitFromA       = 0;   // speed limit on the SE leg attached to A
     int newDsStateOnA            = Sensor.UNKNOWN;
     boolean newReservedFromA     = false;
-    
+
     int newSpeedLimitFromB       = 0;   // speed limit on the SE leg attached to B
     int newDsStateOnB            = Sensor.UNKNOWN;
     boolean newReservedFromB     = false;
-    
+
     int newSpeedLimitFromC       = 0;   // speed limit on the SE leg attached to C
     int newDsStateOnC            = Sensor.UNKNOWN;
     boolean newReservedFromC     = false;
-    
+
     // outputs
     int newSpeedAX          = 0;
     int newSpeedXA          = 0;
     int newDirection        = NONE;
-    
+
     boolean debug;
-    
+
     public SecurityElement(int pNumber) {
         debug = log.isDebugEnabled();
         mNumber = pNumber;
-        
+
         // default connections - same number for sensor, turnout
         dsSensor = pNumber;
         turnout = pNumber;
-        
+
         // We draw the default with A facing left into the B of the
         // n-1th SE, and B facing right into the A of the n+1th SE.
         // The C leg is not attached by default
         attachAnum = pNumber-1;
         attachAleg = B;
-        
+
         attachBnum = pNumber+1;
         attachBleg = A;
-        
+
         attachCnum = 0;
         attachCleg = NONE;
-        
+
         // At construction, register for all message types
         if (LnTrafficController.instance()!=null)
             LnTrafficController.instance().addLocoNetListener(~0, this);
@@ -149,7 +160,7 @@ public class SecurityElement implements LocoNetListener {
             log.error("Cannot connect to LocoNet, security element won't update");
     }
     public int getNumber() { return mNumber; }
-    
+
     /**
      * Process incoming messages.
      * This includes:
@@ -229,11 +240,11 @@ public class SecurityElement implements LocoNetListener {
             }
             break;
         }
-        
+
         }   // end block of switch cases
     }   // end of message() function
-    
-    
+
+
     /**
      * This OPC_SE message is from the SE attached to
      * a leg, find the occupancy it's asserting
@@ -244,7 +255,7 @@ public class SecurityElement implements LocoNetListener {
             return Sensor.ACTIVE;
         else return Sensor.INACTIVE;
     }
-    
+
     /**
      * This OPC_SE message is from the SE attached to
      * a leg, find the speed limit it's asserting
@@ -258,15 +269,15 @@ public class SecurityElement implements LocoNetListener {
         switch (leg) {
         case A:
             return speedAX;
-            
+
         case B:
             if (to) return speedXA;
             else return 0;    // can't enter if turnout against you
-            
+
         case C:
             if (!to) return speedXA;
             else return 0;
-            
+
         default:
             // includes case NONE - if you're attached, you have to
             // be attached to something!
@@ -274,7 +285,7 @@ public class SecurityElement implements LocoNetListener {
             return 0;
         }
     }
-    
+
     /**
      * This OPC_SE message is from the SE attached to
      * a leg, find whether its asserting a reservation toward us
@@ -286,11 +297,11 @@ public class SecurityElement implements LocoNetListener {
         switch (leg) {
         case A:
             return (m5&0x20)==0x20;  // checking XA as toward us
-            
+
         case B:  // these are combined
         case C:
             return (m5&0x10)==0x10;  // checking AX as toward us
-            
+
         default:
             // includes case NONE - if you're attached, you have to
             // be attached to something!
@@ -298,7 +309,7 @@ public class SecurityElement implements LocoNetListener {
             return false;
         }
     }
-    
+
     /**
      * Load a new state for the local detection section
      * @param pNewState A Sensor state, e.g. Sensor.ACTIVE
@@ -307,7 +318,7 @@ public class SecurityElement implements LocoNetListener {
         newDsStateHere = pNewState;
         doUpdate();
     }
-    
+
     /**
      * Load a new state for the local turnout
      * @param pNewState a Turnout state, e.g. Turnout.CLOSED
@@ -316,7 +327,7 @@ public class SecurityElement implements LocoNetListener {
         newTurnoutState = pNewState;
         doUpdate();
     }
-    
+
     /**
      * Update the calculation of speeds and direction.
      * This is the real core of the class, which does
@@ -344,17 +355,17 @@ public class SecurityElement implements LocoNetListener {
             return;
         }
     }
-    
+
     void doUpdateAPB() {
         // very similar to ABS, with the proviso that facing a
         // zero speed (red signal) with a direction reservation
         // will result in a red & set direction
-        
+
         // if we're not occupied, we're only propagating direction
         // reservations.  But if we are occupied, we hold our existing
         // reservations until the train is gone.
         if (newDsStateHere==Sensor.INACTIVE) newDirection = NONE;
-        
+
         // calculate speed for XA
         // Speed is the minumum of:
         //    zero if occupied
@@ -374,7 +385,7 @@ public class SecurityElement implements LocoNetListener {
             newDirection |= AX;  // reserved for a train coming into us from A
         }
         if (newDsStateHere==Sensor.ACTIVE) newSpeedXA = 0;
-        
+
         // calculate speed for AX
         // Speed is the minumum of:
         //    zero if occupied
@@ -397,12 +408,12 @@ public class SecurityElement implements LocoNetListener {
             }
         }
         if (newDsStateHere==Sensor.ACTIVE) newSpeedAX = 0;
-        
+
         // and propagate as needed
         sendUpdate();
         firePropertyChange("SecurityElement", null, this);
     }
-    
+
     void doUpdateABS() {
         // calculate speed for XA
         // Speed is the minumum of:
@@ -418,7 +429,7 @@ public class SecurityElement implements LocoNetListener {
             newSpeedXA = Math.min(maxSpeedCA, newSpeedLimitFromA+maxBrakingCA);
         }
         if (newDsStateHere==Sensor.ACTIVE) newSpeedXA = 0;
-        
+
         // calculate speed for AX
         // Speed is the minimum of:
         //    zero if occupied
@@ -433,13 +444,13 @@ public class SecurityElement implements LocoNetListener {
             newSpeedAX = Math.min(maxSpeedAC, newSpeedLimitFromC+maxBrakingAC);
         }
         if (newDsStateHere==Sensor.ACTIVE) newSpeedAX = 0;
-        
+
         // and propagate as needed
         sendUpdate();
         firePropertyChange("SecurityElement", null, this);
-        
+
     }
-    
+
     void doUpdateHeadBlock() {
         // first set your own reservations; we don't propagate them
         // through a head block.
@@ -449,9 +460,9 @@ public class SecurityElement implements LocoNetListener {
             && newDsStateOnB==Sensor.ACTIVE)
             newDirection = XA;
         else if (newDsStateHere==Sensor.INACTIVE) newDirection = NONE;
-        
+
         // now calculate ABS speeds for B and C, and the APB speed for A
-        
+
         // calculate speed for XA
         // Speed is the minumum of:
         //    zero if occupied
@@ -469,7 +480,7 @@ public class SecurityElement implements LocoNetListener {
             newSpeedXA = 0;
         }
         if (newDsStateHere==Sensor.ACTIVE) newSpeedXA = 0;
-        
+
         // calculate speed for AX
         // Speed is the minumum of:
         //    zero if occupied
@@ -484,12 +495,12 @@ public class SecurityElement implements LocoNetListener {
             newSpeedAX = Math.min(maxSpeedAC, newSpeedLimitFromC+maxBrakingAC);
         }
         if (newDsStateHere==Sensor.ACTIVE) newSpeedAX = 0;
-        
+
         // and propagate as needed
         sendUpdate();
         firePropertyChange("SecurityElement", null, this);
     }
-    
+
     /**
      * Format up a message containing the new values and send it.
      * In the process, copy the "new" values to the "current" values.
@@ -506,7 +517,7 @@ public class SecurityElement implements LocoNetListener {
                                  newSpeedAX+" "+
                                  newSpeedXA+" "+
                                  newDirection);
-            
+
             // format the status word
             // @todo define the 2nd status bits
             int seStat = 0;
@@ -514,7 +525,7 @@ public class SecurityElement implements LocoNetListener {
             if ((newDirection&XA)==XA) seStat |= 0x20;
             if (newTurnoutState==Turnout.CLOSED || turnout == 0) seStat |= 0x01;
             if (newDsStateHere==Sensor.ACTIVE) seStat |= 0x04;
-            
+
             LocoNetMessage m1 = new LocoNetMessage(9);
             m1.setOpCode(0xE4);         // OPC_SE
             m1.setElement(1, 0x09);     // OPC_SE
@@ -525,7 +536,7 @@ public class SecurityElement implements LocoNetListener {
             // @todo speed is only encoded in the lower range
             m1.setElement(6, (newSpeedAX/4)&0x3F);  // SE SPD_AX
             m1.setElement(7, (newSpeedXA/4)&0x3F);  // SE SPD_XA
-            
+
             LnTrafficController.instance().sendLocoNetMessage(m1);
         }
         // copy always
@@ -544,9 +555,9 @@ public class SecurityElement implements LocoNetListener {
         currentSpeedXA           = newSpeedXA;
         currentDirection         = newDirection;
     }
-    
+
     public void dispose() {}
-    
+
     // to hear of changes
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
@@ -556,9 +567,9 @@ public class SecurityElement implements LocoNetListener {
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
-    
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SecurityElement.class.getName());
-    
+
 }
 
 

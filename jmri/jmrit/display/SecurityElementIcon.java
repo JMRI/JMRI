@@ -15,7 +15,7 @@ import jmri.jmrix.loconet.SecurityElement;
  * explicitly add the code for Positionable
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class SecurityElementIcon extends JPanel
@@ -209,6 +209,20 @@ public class SecurityElementIcon extends JPanel
                                                                 javax.swing.JOptionPane.OK_CANCEL_OPTION);
                     if (newVal!=null) {
                         element.dsSensor=Integer.parseInt(newVal);
+                    }
+                }
+            }
+                  );
+
+        popup.add(new AbstractAction("aux: "+element.auxInput) {
+                public void actionPerformed(ActionEvent e) {
+                    String newVal =
+                        javax.swing.JOptionPane.showInputDialog(popup,
+                                                                "Set aux input number:",
+                                                                "SE "+element.getNumber()+" aux input",
+                                                                javax.swing.JOptionPane.OK_CANCEL_OPTION);
+                    if (newVal!=null) {
+                        element.auxInput=Integer.parseInt(newVal);
                     }
                 }
             }
