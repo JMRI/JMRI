@@ -9,10 +9,10 @@ import org.jdom.Attribute;
 import org.jdom.Element;
 
 /**
- * Handle configuration for display.SignalHeadIcon objects
+ * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class SignalHeadIconXml implements XmlAdapter {
 
