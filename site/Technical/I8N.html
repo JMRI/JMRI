@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: I8N.html,v 1.3 2003-09-14 05:12:42 jacobsen Exp $ -->
+<!-- $Id: I8N.html,v 1.4 2004-03-13 15:20:56 jacobsen Exp $ -->
 <html>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -75,14 +75,47 @@ By convention, resouce names for GUI elements start with one of
 </ol>
 Other resources are named so as not to conflict with these.
 <H2>Adapting to a new language</h2>
-It takes some work to adapt JMRI to a new language.  The steps include:
+The primary steps to adapt JMRI to a new language are:
 <UL>
 <LI>Create new versions of the .properties files to change the language
 of the GUI controls.
-<LI>Create new decoder XML files in the new language.
 <LI>Optionally, create new versions of GIF images used for logos
 and icons.
+</UL>
+<P>
+To get a clean copy of the properties files from CVS, do:
+<PRE>
+   cvs checkout properties
+</PRE>
+(For more info on using CVS, please see the 
+<A HREF="index.html#cvs">CVS section of the Technical page</a>.)
+<P>
+Then, make copies of the files with suffix for your
+new locale.  On a Unix machine, this would be:
+<PRE>
+  cd apps
+  cp AppsBundle.properties AppsBundle_xy.properties
+  cp AppsConfigBundle.properties AppsConfigBundle_xy.properties
+</PRE>
+and so on.  You can then edit those files to enter text in 
+your own language.
+<P>
+Languages that involve non-roman letters require some
+extra care; please see the 
+<A HREF="http://java.sun.com/j2se/1.3/docs/guide/intl/faq.html">Sun internationalization FAQ</a>
+for more info on how to include those characters in your property files.
+<P>
+That adapts the program itself, at least as far as we've 
+"internationalized" it.  (That's an ongoing effort, with 
+more and more parts of the program able to be customized 
+in each release).  
+<P>
+You may also want to provide additional language-specific 
+features for users:
+<UL>
+<LI>Create new decoder XML files in the new language. (Although we're currently working on a method to greatly reduce the effort that would take)
 <LI>Create a copy of the website and manuals.
+<LI>Create new help files.
 </UL>
 
 <h2>English-only resources</h2>
