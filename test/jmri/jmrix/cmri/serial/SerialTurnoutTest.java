@@ -2,20 +2,13 @@
 
 package jmri.jmrix.cmri.serial;
 
-import java.io.*;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import junit.framework.Assert;
-
-import jmri.AbstractTurnoutTest;
+import jmri.*;
+import junit.framework.*;
 
 /**
- * SerialTurnoutTest.java
- *
- * Description:	    tests for the jmri.jmrix.cmri.serial.SerialTurnout class
+ * Tests for the jmri.jmrix.cmri.serial.SerialTurnout class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 
@@ -31,13 +24,15 @@ public class SerialTurnoutTest extends AbstractTurnoutTest {
 	public int numListeners() { return tcis.numListeners(); }
 
 	public void checkThrownMsgSent() {
+                tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
 		Assert.assertTrue("message sent", tcis.outbound.size()>0);
-		Assert.assertEquals("content", "S C02 81 fe 7f", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
+		Assert.assertEquals("content", "41 54 08", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
 	}
 
 	public void checkClosedMsgSent() {
+                tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
 		Assert.assertTrue("message sent", tcis.outbound.size()>0);
-		Assert.assertEquals("content", "S C02 81 ff 7e", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
+		Assert.assertEquals("content", "41 54 00", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
 	}
 
 	// from here down is testing infrastructure
