@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PanelPro.html,v 1.11 2004-11-12 02:56:39 jacobsen Exp $ -->
+<!-- $Id: PanelPro.html,v 1.12 2005-03-19 03:02:50 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -22,8 +22,8 @@
 </head>
 
 <body>
+    <div id="container">
     <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
-
 <!-- Header -->
     <div id="header">
 	<!-- Logo -->
@@ -52,10 +52,25 @@
     </div> <!-- closes #header-->
 <!-- /Header -->
 
-    <hr class="hide">
+<!-- start PanelPro side bar -->
+	  <hr class="hide">
+	  <div id="mBody">
+	  <div id="side"> <!-- Block of text on left side of page -->
+	    <dl>
+		<dt><h3><a href="FAQ.html">FAQ</a></h3></dt>
+		<dd>
+		    Frequently asked questions about PanelPro and their answers
+		</dd>
 
-    <div class="nomenu" id="mBody">
-	<div id="mainContent">
+	    </dl>
+
+<a href="http://sourceforge.net/donate/index.php?group_id=26788"><img src="http://images.sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" ALIGN="RIGHT" alt="Support This Project" /> </a> 
+
+<!-- end PanelPro side bar -->
+
+	</div> <!-- closes #side -->
+	<hr class="hide">	<!-- only shows up on printouts -->
+	<div id="mainContent">	<!-- Body of page -->
 
 	    <!-- ------------- -->
 	    <!-- Page Contents --> <!-- Required -->
@@ -256,8 +271,9 @@ for more information.
     </div>
 <!-- /Footer -->
 
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+
+	</div> <!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
+</div> <!-- closes #container -->
 </body>
 </html>
-
