@@ -28,7 +28,7 @@
   </securityelements>
 
   <paneleditor class="jmri.jmrit.display.configurexml.PanelEditorXml" x="250" y="200" height="350" width="800" name="ABS Dual Siding Example">
-    <positionablelabel class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="00" y="00" height="16" width="170" text="Default (ABS) signalling" />
+    <positionablelabel class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="00" y="00" height="16" width="170" text="Default (ABS) signaling" />
 
     <positionablelabel class="jmri.jmrit.display.configurexml.PositionableLabelXml"  x="16" y="246" text="11" />
     <positionablelabel class="jmri.jmrit.display.configurexml.PositionableLabelXml"  x="66" y="246" text="12" />
