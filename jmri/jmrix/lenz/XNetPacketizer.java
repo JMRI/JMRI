@@ -30,7 +30,7 @@ import java.util.Vector;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.6 $
+ * @version 		$Revision: 1.7 $
  *
  */
 public class XNetPacketizer extends XNetTrafficController {
@@ -136,13 +136,14 @@ public class XNetPacketizer extends XNetTrafficController {
 	 * Terminates with the input stream breaking out of the try block.
 	 */
 	public void run() {
+		boolean debug=log.isDebugEnabled();
 		int opCode;
 		while (true) {   // loop permanently, program close will exit
 			try {
 				// start by looking for command
 				opCode = istream.readByte()&0xFF;
                 // Create output message
-				log.debug("Run: Start message with opcode: "+Integer.toHexString(opCode));
+				if (debug) log.debug("Run: Start message with opcode: " +Integer.toHexString(opCode));
                 int len = (opCode&0x0f)+2;  // opCode+Nbytes+ECC
 				XNetMessage msg = new XNetMessage(len);
                 msg.setElement(0, opCode);
@@ -181,11 +182,11 @@ public class XNetPacketizer extends XNetTrafficController {
 			}
  			catch (java.io.EOFException e) {
 				// posted from idle port when enableReceiveTimeout used
-				log.debug("EOFException, is serial I/O using timeouts?");
+				if(debug) log.debug("EOFException, is serial I/O using timeouts?");
 			}
  			catch (java.io.IOException e) {
 				// fired when write-end of HexFile reaches end
-				log.debug("IOException, should only happen with HexFIle: "+e);
+				if(debug) log.debug("IOException, should only happen with HexFIle: "+e);
 				log.info("End of file");
 				disconnectPort(controller);
 				return;
@@ -211,13 +212,14 @@ public class XNetPacketizer extends XNetTrafficController {
 		}
 
 	    public void run() {
+		    boolean debug=log.isDebugEnabled();
 		    int opCode;
 		    while (true) {   // loop permanently, program close will exit
 			    try {
 				    // start by looking for command
 				    opCode = istream.readByte()&0xFF;
                     // Create output message
-				    log.debug("RcvHandler: Start message with opcode: "+Integer.toHexString(opCode));
+				    if(debug) log.debug("RcvHandler: Start message with opcode: "+Integer.toHexString(opCode));
                     int len = (opCode&0x0f)+2;  // opCode+Nbytes+ECC
 				    XNetMessage msg = new XNetMessage(len);
                     msg.setElement(0, opCode);
@@ -226,7 +228,7 @@ public class XNetPacketizer extends XNetTrafficController {
                     //log.debug("len: "+len);
                     for (int i = 1; i < len; i++)  {
                         int b = istream.readByte()&0xFF;
-                        log.debug("char "+i+" of "+len+" is: "+Integer.toHexString(b));
+                        if (debug)log.debug("char "+i+" of "+len+" is: "+Integer.toHexString(b));
              		    msg.setElement(i, b);
  				    }
 				    // check parity
@@ -246,7 +248,7 @@ public class XNetPacketizer extends XNetTrafficController {
            					    myTC.notify(msgForLater, null);
 						    }
 					    };
-                        log.debug("schedule notify of incoming packet");
+                        if(debug) log.debug("schedule notify of incoming packet");
 					    javax.swing.SwingUtilities.invokeLater(r);
 				    }
 
@@ -257,11 +259,11 @@ public class XNetPacketizer extends XNetTrafficController {
 			    }
  			    catch (java.io.EOFException e) {
 				    // posted from idle port when enableReceiveTimeout used
-				    log.debug("EOFException, is serial I/O using timeouts?");
+				    if (debug) log.debug("EOFException, is serial I/O using timeouts?");
 			    }
  			    catch (java.io.IOException e) {
 				    // fired when write-end of HexFile reaches end
-				    log.debug("IOException, should only happen with HexFIle: "+e);
+				    if (debug) log.debug("IOException, should only happen with HexFIle: "+e);
 				    log.info("End of file");
 				    disconnectPort(controller);
 				    return;
@@ -294,9 +296,9 @@ public class XNetPacketizer extends XNetTrafficController {
 					try {
 						if (ostream != null) {
 							if (!controller.okToSend()) {
-                                                           log.debug ("XPressNet port not ready to receive");
+                                                           if (debug) log.debug ("XPressNet port not ready to receive");
                                                            while(!controller.okToSend()) { 
-                                                           log.debug ("Waiting for XPressNet port to become ready");
+                                                           if (debug) log.debug ("Waiting for XPressNet port to become ready");
                                                                  /* this is a busy loop to handle waiting until we can send */
                                                            }
                                                         log.debug("Ready to send to XPressNet port");
