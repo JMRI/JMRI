@@ -45,12 +45,12 @@ import com.sun.java.util.collections.List;
  * <P>
  * On MacOS Classic, this class was causing a problem with multiple 
  * initialization of the programmer file default.  See
- * {@link ProgDefaults} and 
+ * {@link ProgDefault} and 
  * {@link jmri.jmrit.symbolicprog.configurexml.ProgrammerConfigPaneXml}
  * for further information.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.22 $
  */
 public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeListener {
     

@@ -20,7 +20,7 @@ import org.jdom.Element;
  * Based on AbstractTurnoutManagerConfigXML
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class AbstractSignalHeadManagerXml implements XmlAdapter {
 
@@ -118,7 +118,6 @@ public class AbstractSignalHeadManagerXml implements XmlAdapter {
      * Replace the current signal head manager, if there is one, with
      * one newly created during a load operation. This is skipped
      * if they are of the same absolute type.
-     * @param pManager
      */
     protected void replaceSignalHeadManager() {
         if (InstanceManager.signalHeadManagerInstance().getClass().getName()
