@@ -16,7 +16,7 @@ import java.io.File;
  * Java 1.1.8 system, or at least try to fake it.
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class FileUtil {
@@ -25,6 +25,8 @@ public class FileUtil {
         try {
             return file.toURI().toURL().toString();
         } catch (Exception e) {
+            return "file:"+file.getAbsolutePath();
+        } catch (NoSuchMethodError e2) {
             return "file:"+file.getAbsolutePath();
         }
     }
