@@ -34,8 +34,8 @@ public class LoadXmlThrottleAction extends AbstractAction {
     }
 
     /**
-     * The action is performed. Create a new ThrottleFrame and
-     * position it adequately on the screen.
+     * The action is performed. Let the user choose the file to load from.
+     * Read XML for each ThrottleFrame.
      * @param e The event causing the action.
      */
     public void actionPerformed(ActionEvent e)
@@ -71,6 +71,9 @@ public class LoadXmlThrottleAction extends AbstractAction {
 
     }
 
+    /**
+     * An extension of the abstract XmlFile. No changes made to that class.
+     */
     class ThrottlePrefs extends XmlFile
     {
 

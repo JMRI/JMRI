@@ -5,8 +5,8 @@ import java.util.Iterator;
 
 /**
  * Interface for controlling throttles
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @author			Glen Oberhauser
+ * @version			$Revision: 1.6 $
  */
 public interface ThrottleManager
 {
@@ -29,8 +29,16 @@ public interface ThrottleManager
     public void cancelThrottleRequest(int address, ThrottleListener l);
 
 
+    /**
+     * Tell this manager that a new ThrottleFrame was created.
+     * @param tf The new ThrottleFrame.
+     */
     public void notifyNewThrottleFrame(ThrottleFrame tf);
 
+    /**
+     * Retrieve an Iterator over all the ThrottleFrames in existence.
+     * @return The Iterator on the list of ThrottleFrames.
+     */
     public Iterator getThrottleFrames();
 
 }

@@ -18,12 +18,19 @@ public class LnThrottleManager implements ThrottleManager, SlotListener
     private HashMap throttleMap;
     private ArrayList throttleFrames;
 
+    /**
+     * Constructor. Gets a reference to the LocoNet SlotManager.
+     */
     public LnThrottleManager()
     {
         slotManager = SlotManager.instance();
     }
 
 
+    /**
+     * Tell this manager that a new ThrottleFrame was created.
+     * @param tf The new ThrottleFrame.
+     */
     public void notifyNewThrottleFrame(ThrottleFrame tf)
     {
         if (throttleFrames == null)
@@ -33,6 +40,10 @@ public class LnThrottleManager implements ThrottleManager, SlotListener
         throttleFrames.add(tf);
     }
 
+    /**
+     * Retrieve an Iterator over all the ThrottleFrames in existence.
+     * @return The Iterator on the list of ThrottleFrames.
+     */
     public Iterator getThrottleFrames()
     {
         return throttleFrames.iterator();
@@ -71,6 +82,11 @@ public class LnThrottleManager implements ThrottleManager, SlotListener
         }
     }
 
+    /**
+     * Cancel a request for a throttle
+     * @param address The decoder address desired.
+     * @param l The ThrottleListener cancelling request for a throttle.
+     */
     public void cancelThrottleRequest(int address, ThrottleListener l)
     {
         if (throttleListeners != null)

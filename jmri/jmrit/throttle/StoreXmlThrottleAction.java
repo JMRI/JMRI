@@ -36,8 +36,8 @@ public class StoreXmlThrottleAction extends AbstractAction {
     }
 
     /**
-     * The action is performed. Create a new ThrottleFrame and
-     * position it adequately on the screen.
+     * The action is performed. Let the user choose the file to save to.
+     * Write XML for each ThrottleFrame.
      * @param e The event causing the action.
      */
     public void actionPerformed(ActionEvent e)
