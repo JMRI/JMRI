@@ -10,17 +10,17 @@ import jmri.jmrix.lenz.*;
 /**
  * Frame displaying Version information for Xpressnet hardware.
  * <P>
- * This is a utility for reading the software version and type of 
- * the command station, and, the Hardware and software versions of your 
+ * This is a utility for reading the software version and type of
+ * the command station, and, the Hardware and software versions of your
  * XPressNet Computer Interface.
  * <P>
- * Some of this code may be moved to facilitate automatic enabling of 
+ * Some of this code may be moved to facilitate automatic enabling of
  * features that are not available on all XPressNet Command Stations
  * (as an example, the fact that you can't program using the computer on a
  * Commander or Compact)
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SystemInfoFrame extends JFrame implements XNetListener {
 
@@ -60,7 +60,7 @@ public class SystemInfoFrame extends JFrame implements XNetListener {
         // install close button handler
         closeButton.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
-                	setVisible(false);          
+                	setVisible(false);
         		dispose();
                 }
             }
@@ -73,7 +73,10 @@ public class SystemInfoFrame extends JFrame implements XNetListener {
             }
         });
 
-	XNetTrafficController.instance().addXNetListener(~0, this);
+        if (XNetTrafficController.instance()!=null)
+	    XNetTrafficController.instance().addXNetListener(~0, this);
+        else
+            log.warn("No XPressNet connection, panel won't function");
 
     }
 
@@ -91,16 +94,16 @@ public class SystemInfoFrame extends JFrame implements XNetListener {
     //Send Information request to LI100/LI101
     void getSystemInfo() {
 	XNetMessage msg=new XNetMessage(3);
-        /* First, we need to send a request for the Command Station 
+        /* First, we need to send a request for the Command Station
         hardware and software version */
 	msg.setElement(0,XNetConstants.CS_REQUEST);
 	msg.setElement(1,XNetConstants.CS_VERSION);
         msg.setParity(); // Set the parity bit
         //Then send to the controller
         XNetTrafficController.instance().sendXNetMessage(msg,this);
-	
+
 	XNetMessage msg2=new XNetMessage(2);
-	/* Second, we send a request for the Interface hardware and 
+	/* Second, we send a request for the Interface hardware and
 	software version */
 	msg2.setElement(0,XNetConstants.LI_VERSION_REQUEST);
         msg2.setParity(); // Set the parity bit
@@ -108,7 +111,7 @@ public class SystemInfoFrame extends JFrame implements XNetListener {
         XNetTrafficController.instance().sendXNetMessage(msg2,this);
 
     }
-   
+
     // listen for responces from the LI101
     public void message(XNetMessage l) {
        // Check to see if this is a responce for the LI version info
@@ -138,7 +141,7 @@ public class SystemInfoFrame extends JFrame implements XNetListener {
               }
        }
     }
- 
+
     // Close the window when the close box is clicked
     void thisWindowClosing(java.awt.event.WindowEvent e) {
         setVisible(false);

@@ -15,7 +15,7 @@ import jmri.jmrix.lenz.*;
  * port speed used to communicate with the LI101.
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class LI101Frame extends JFrame implements XNetListener {
 
@@ -85,7 +85,7 @@ public class LI101Frame extends JFrame implements XNetListener {
         // install close button handler
         closeButton.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
-                	setVisible(false);          
+                	setVisible(false);
         		dispose();
                 }
             }
@@ -111,7 +111,10 @@ public class LI101Frame extends JFrame implements XNetListener {
             }
         });
 
-	XNetTrafficController.instance().addXNetListener(~0, this);
+        if (XNetTrafficController.instance() != null)
+	    XNetTrafficController.instance().addXNetListener(~0, this);
+        else
+            log.warn("No XpressNet connection, so panel won't function");
 
     }
 
@@ -134,26 +137,26 @@ public class LI101Frame extends JFrame implements XNetListener {
 
     //Send new address/baud rate to LI101
     void writeLI101Settings() {
-        if((String)addrBox.getSelectedItem()!="" && 
+        if((String)addrBox.getSelectedItem()!="" &&
            (String)addrBox.getSelectedItem()!=null) {
 	   XNetMessage msg=new XNetMessage(4);
            /* First, we take care of sending an address request */
 	   msg.setElement(0,XNetConstants.LI101_REQUEST);
 	   msg.setElement(1,XNetConstants.LI101_REQUEST_ADDRESS);
-           /* For element 2, we need to figure out what address to send based 
+           /* For element 2, we need to figure out what address to send based
            on user selections */
 	   msg.setElement(2,addrBox.getSelectedIndex());
            msg.setParity(); // Set the parity bit
            //Then send to the controller
            XNetTrafficController.instance().sendXNetMessage(msg,this);
         }
-        if((String)speedBox.getSelectedItem()!=""  && 
+        if((String)speedBox.getSelectedItem()!=""  &&
            (String)speedBox.getSelectedItem()!=null) {
 	     XNetMessage msg=new XNetMessage(4);
              /* Now, we can send a baud rate request */
 	     msg.setElement(0,XNetConstants.LI101_REQUEST);
 	     msg.setElement(1,XNetConstants.LI101_REQUEST_BAUD);
-             /* For element 2, we need to figure out what address to send based 
+             /* For element 2, we need to figure out what address to send based
              on user selections */
 	     msg.setElement(2,(int)speedBox.getSelectedIndex()+1);
              msg.setParity(); // Set the parity bit
@@ -168,7 +171,7 @@ public class LI101Frame extends JFrame implements XNetListener {
         /* First, we take care of sending an address request */
 	msg.setElement(0,XNetConstants.LI101_REQUEST);
 	msg.setElement(1,XNetConstants.LI101_REQUEST_ADDRESS);
-        /* For element 2, we need to send an out of range address to get 
+        /* For element 2, we need to send an out of range address to get
         the correct information back*/
 	msg.setElement(2,32);
         msg.setParity(); // Set the parity bit
@@ -178,18 +181,18 @@ public class LI101Frame extends JFrame implements XNetListener {
         /* Now, we can send a baud rate request */
 	msg.setElement(0,XNetConstants.LI101_REQUEST);
 	msg.setElement(1,XNetConstants.LI101_REQUEST_BAUD);
-        /* For element 2, we need to send an out of range address to get 
+        /* For element 2, we need to send an out of range address to get
         the correct information back*/
 	msg.setElement(2,6);
         msg.setParity(); // Set the parity bit
         //Then send to the controller
         XNetTrafficController.instance().sendXNetMessage(msg,this);
     }
-   
+
     // listen for responces from the LI101
     public void message(XNetMessage l) {
-       // Check to see if this is an LI101 info request messgage, if it 
-       //is, determine if it's the baud rate setting, or the address 
+       // Check to see if this is an LI101 info request messgage, if it
+       //is, determine if it's the baud rate setting, or the address
        //setting
        if (l.getElement(0)==XNetConstants.LI101_REQUEST)
        {
@@ -207,11 +210,11 @@ public class LI101Frame extends JFrame implements XNetListener {
 	  }
        }
     }
- 
-    // For now, reset just resets the screen to factory defaults, and does 
-    // not send any information to the LI101F.  To do a reset, we need to 
+
+    // For now, reset just resets the screen to factory defaults, and does
+    // not send any information to the LI101F.  To do a reset, we need to
     // send a BREAK signal for 200 milliseconds
-    // default values are 30 for the address, and 19,200 baud for the 
+    // default values are 30 for the address, and 19,200 baud for the
     // speed.
     void resetLI101Settings() {
 	addrBox.setSelectedIndex(30);
