@@ -9,7 +9,7 @@ import org.jdom.*;
  * Handle configuration for display.TurnoutIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class TurnoutIconXml implements XmlAdapter {
 
@@ -63,22 +63,22 @@ public class TurnoutIconXml implements XmlAdapter {
 
         NamedIcon closed;
         name = element.getAttribute("closed").getValue();
-        l.setClosedIcon(closed = p.catalog.getIconByName(name));
+        l.setClosedIcon(closed = CatalogPane.getIconByName(name));
         if (closed == null) log.warn("did not locate closed icon file "+name);
 
         NamedIcon thrown;
         name = element.getAttribute("thrown").getValue();
-        l.setThrownIcon(thrown = p.catalog.getIconByName(name));
+        l.setThrownIcon(thrown = CatalogPane.getIconByName(name));
         if (thrown == null) log.warn("did not locate thrown icon file "+name);
 
         NamedIcon unknown;
         name = element.getAttribute("unknown").getValue();
-        l.setUnknownIcon(unknown = p.catalog.getIconByName(name));
+        l.setUnknownIcon(unknown = CatalogPane.getIconByName(name));
         if (unknown == null) log.warn("did not locate unknown icon file "+name);
 
         NamedIcon inconsistent;
         name = element.getAttribute("inconsistent").getValue();
-        l.setInconsistentIcon(inconsistent = p.catalog.getIconByName(name));
+        l.setInconsistentIcon(inconsistent = CatalogPane.getIconByName(name));
         if (inconsistent == null) log.warn("did not locate inconsistent icon file "+name);
 
         try {

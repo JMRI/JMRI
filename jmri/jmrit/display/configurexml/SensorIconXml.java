@@ -9,7 +9,7 @@ import org.jdom.*;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class SensorIconXml implements XmlAdapter {
 
@@ -63,19 +63,19 @@ public class SensorIconXml implements XmlAdapter {
 
         NamedIcon active;
         name = element.getAttribute("active").getValue();
-        l.setActiveIcon(active = p.catalog.getIconByName(name));
+        l.setActiveIcon(active = CatalogPane.getIconByName(name));
 
         NamedIcon inactive;
         name = element.getAttribute("inactive").getValue();
-        l.setInactiveIcon(inactive = p.catalog.getIconByName(name));
+        l.setInactiveIcon(inactive = CatalogPane.getIconByName(name));
 
         NamedIcon unknown;
         name = element.getAttribute("unknown").getValue();
-        l.setUnknownIcon(unknown = p.catalog.getIconByName(name));
+        l.setUnknownIcon(unknown = CatalogPane.getIconByName(name));
 
         NamedIcon inconsistent;
         name = element.getAttribute("inconsistent").getValue();
-        l.setInconsistentIcon(inconsistent = p.catalog.getIconByName(name));
+        l.setInconsistentIcon(inconsistent = CatalogPane.getIconByName(name));
 
         try {
             Attribute a = element.getAttribute("rotate");

@@ -9,7 +9,7 @@ import org.jdom.*;
  * Handle configuration for display.SignalHeadIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class SignalHeadIconXml implements XmlAdapter {
 
@@ -70,19 +70,19 @@ public class SignalHeadIconXml implements XmlAdapter {
 
         NamedIcon red;
         name = element.getAttribute("red").getValue();
-        l.setRedIcon(red = p.catalog.getIconByName(name));
+        l.setRedIcon(red = CatalogPane.getIconByName(name));
 
         NamedIcon yellow;
         name = element.getAttribute("yellow").getValue();
-        l.setYellowIcon(yellow = p.catalog.getIconByName(name));
+        l.setYellowIcon(yellow = CatalogPane.getIconByName(name));
 
         NamedIcon flashyellow;
         name = element.getAttribute("flashyellow").getValue();
-        l.setFlashYellowIcon(flashyellow = p.catalog.getIconByName(name));
+        l.setFlashYellowIcon(flashyellow = CatalogPane.getIconByName(name));
 
         NamedIcon green;
         name = element.getAttribute("green").getValue();
-        l.setGreenIcon(green = p.catalog.getIconByName(name));
+        l.setGreenIcon(green = CatalogPane.getIconByName(name));
 
         try {
             Attribute a = element.getAttribute("rotate");
