@@ -3,9 +3,9 @@ package jmri.jmrit.roster;
 import junit.framework.*;
 
 /**
- * Tests for the jmrit.roster.RosterEntryPane class
+ * Tests for the jmrit.roster.RosterEntryPane class.
  * @author	Bob Jacobsen     Copyright (C) 2001, 2002
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class RosterEntryPaneTest extends TestCase {
 
