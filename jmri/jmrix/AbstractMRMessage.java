@@ -8,7 +8,7 @@ package jmri.jmrix;
  * Carries a sequence of characters, with accessors.
  *
  * @author	        Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 abstract public class AbstractMRMessage {
 
@@ -65,9 +65,17 @@ abstract public class AbstractMRMessage {
     public boolean isBinary() { return _isBinary; }
     public void setBinary(boolean b) { _isBinary = b; }
 
-    // recommended timeout for reply
-    static protected int SHORT_TIMEOUT=1000;
-    static protected int LONG_TIMEOUT=60000;
+    /**
+     * Minimum timeout that's acceptable.
+     * <P>
+     * Also used as default for normal operations.  Don't shorten
+     * this "to make recovery faster", as sometimes <i>internal</i> delays
+     * can slow processing down.
+     * <P>
+     * Units are milliseconds.
+     */
+    static protected int SHORT_TIMEOUT=2000;
+    static protected int LONG_TIMEOUT=60000;  // e.g. for programming options
     int mTimeout;  // in milliseconds
     public void setTimeout(int t) { mTimeout = t; }
     public int getTimeout() { return mTimeout; }
