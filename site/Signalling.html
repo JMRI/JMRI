@@ -1,0 +1,157 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<!-- $Id: Signalling.html,v 1.1 2003-08-10 04:10:07 jacobsen Exp $ -->
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Bob Jacobsen, LBL">
+   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>Using JMRI for signal logic</title>
+</head>
+<body>
+
+
+<IMG SRC="images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
+
+<h2>Using JMRI for signal logic</h2>
+
+Modeling railroad signalling on a layout can be done many different ways,
+ranging from "stoplights" to complete emulation of a particular prototype's
+signalling logic.
+<P>
+JMRI provides several different things that can help with this:
+<OL>
+<LI>The JMRI 
+<A HREF="#table">"Signal Table"</A>
+tool lets you control the appearance
+of individual signals on your layout.  This can be useful for
+debugging, for example.
+<LI>The JMRI 
+<A HREF="#logic">"Simple Signal Logic"</A>
+tool can provide simple versions
+of block and interlocking signalling.
+<LI>The JMRI 
+<A HREF="#automat">Automation classes</A>
+makes it easy to code your own signal
+logic into the program.  This is how Nick Kulp's Cornwall Railroad 
+was signalled.
+<LI>JMRI provides a 
+<A HREF="#widgets">complete toolkit</A>
+to make it easy to
+do any kind of automation on your layout by writing a new program
+of your own.
+</OL>
+<BR>
+There's more information on each of these below.
+As you move down that list, the task becomes more and more technical, 
+but you have more freedom to model exactly what you want.  
+
+<P>
+In addition, there are people working on more advanced signalling
+logic within the JMRI project.  Although it's too early to talk
+in detail, the idea is to provide ways of driving semi-prototypical
+signalling logic, including CTC dispatching and interlocking, 
+without requiring the user to write any Java code.  The 
+<a href="http://groups.yahoo.com/group/jmriusers/">jmriusers discussion group</A>
+will have more info on this as it becomes available.
+
+
+<A id="table"><h3>Signal Table</h3></a>
+<A href="images/SigTable.gif"><IMG SRC="images/SigTable.gif" ALIGN=RIGHT WIDTH="170" HEIGHT="314" HSPACE="0" VSPACE="0"></A>
+All the signals that JMRI knows about can be referenced
+using the "Signal Table" tool in the Tools menu of most JMRI programs.
+<P>As the signal changes, for whatever reason, the current
+appearance will show in the table.  You can also click on the
+appearance button to cycle through red, yellow and green.
+<P>If you're interested in having your signals carry "human readable"
+names, you can click in the "user name" column and change that information
+to whatever you want.
+<P>To define a new signal, click on the "Add.." button.  It will
+prompt you for the type (run off turnout outputs; SE8c; etc), and
+whatever setup information is needed.
+<P> This information is saved with the configuration in an XML file, along
+with control panel setup and similar stuff.  For more information
+on creating and displaying panels, including how to show signals,
+please see the 
+<A HREF="Panels.html">Panels pages</a>
+and the pages on the 
+<A HREF="Panels/Cornwall.html">Cornwall Railroad control panel</a>.
+
+<A id="logic"><h3>Simple Signal Logic</h3></a>
+<A href="images/SigLogic.gif"><IMG SRC="images/SigLogic.gif" ALIGN=RIGHT WIDTH="254" HEIGHT="108" HSPACE="0" VSPACE="010"></A>
+
+Much of signalling can be boiled down to "a signal goes red when a train
+can't safely enter the block it protects; it goes yellow when the following 
+block can't be entered". Although that's a simplication, it can serve
+as a powerful starting point for signalling logic.
+<P>
+The Simple Signal Logic tool allows you to configure JMRI to 
+use that type of logic to set the appearance of a signal. 
+Using the panel, you enter information on:
+<UL>
+<LI>The signal being driven
+<LI>Which sensor (occupancy detector) covers the block
+past the signal; when that sensor shows "active" the 
+signal will be set to red
+<LI>If the block contains a trailing point turnout, 
+configure the turnout name and whether you're entering
+the closed or thrown leg; the signal will be set red
+when the turnout is set against this track
+<LI>And the next signal that the train will reach;
+the signal will be set yellow if the next signal is
+red.  If the checkbox is checked, the signal will be set
+flashing yellow (not all types can show that!) if the
+next signal is yellow, thereby giving four-block signalling.
+</ul>
+Note that the case of a facing point switch which can lead 
+to two different "next signals" isn't yet covered; that's 
+an enhancement that's expected shortly.
+
+<P>
+It's clear that this won't cover complicated interlockings
+and similar situations, nor will it cover the speed-signalling
+seen on some prototypes.  But for simple block and route 
+signalling, it will do pretty well.
+<A id="automat"><h3>Automation classes</h3></a>
+
+JMRI provides classes to help you write Java code to control
+your layout.  The most powerful of these are aimed
+at general automation; see the 
+<A HREF="Automat.html">automation web page</a>.
+The 
+<A HREF="http://jmri.sourceforge.net/Technical/doc/jmri/jmrit/automat/Siglet.html">"Siglet" class</A> 
+and it's kin are meant to make it
+easy to write signal logic; a varient of these was used
+for the Cornwall Railroad.
+<P>
+More documentation on these is clearly needed...
+<A id="widgets"><h3>Toolkit</h3></a>
+The entire
+<A HREF="http://jmri.sourceforge.net/Technical/doc/">JMRI toolkit</A>
+is available for use if you really want to do something
+in detail. JMRI provides control of most DCC and C/MRI systems,
+with useful tools for manipulating turnouts, sensors, signals, locomotives,
+etc as well as powerful tools for working on the user screen.
+
+<HR>
+<BR>Site hosted by: <BR>
+<A href="http://sourceforge.net"> 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A>
+ 
+
+<script language=javascript 
+src="http://ss.webring.com/navbar?f=j;y=bob_jacobsen15;u=100088115910095949">
+</script><noscript><center>
+<table bgcolor=gray cellspacing=0 border=2 bordercolor=red><tr>
+<td><table cellpadding=2 cellspacing=0 border=0><tr><td align=center>
+<font face=arial size=-1>This site is a member of WebRing. 
+<br>To browse visit <a href="http://ss.webring.com/navbar?f=l;y=bob_jacobsen15;u=100088115910095949">
+Here</a>.</font></td></tr></table></td></tr></table>
+</center></noscript>
+
+<hr>
+Bob Jacobsen<BR>
+jake@physics.berkeley.edu
+
+</body>
+</html>
