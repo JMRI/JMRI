@@ -1,7 +1,7 @@
 <!-- Defines XML for configuring the JMRIdemo and DecoderPro programs -->
-<!-- $Id: preferences-config.dtd,v 1.2 2003-05-09 05:45:49 jacobsen Exp $ -->
+<!-- $Id: preferences-config.dtd,v 1.3 2003-05-11 01:56:49 jacobsen Exp $ -->
 
-<!ELEMENT preferences-config (connection*, gui, programmer)>
+<!ELEMENT preferences-config (connection*, gui, programmer, perform*)>
 <!ATTLIST preferences-config>
 
 <!--  Section identifies serial port info -->
@@ -21,6 +21,9 @@
 <!ATTLIST programmer defaultFile CDATA "Basic.xml">
 <!ATTLIST programmer verifyBeforeWrite (yes | no) "no" >
 
+<!--  Section identifies swing.Actions to invoke -->
+<!ELEMENT perform EMPTY>
+<!ATTLIST perform classname CDATA #REQUIRED>
 
 
 
