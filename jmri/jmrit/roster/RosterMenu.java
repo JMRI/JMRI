@@ -2,16 +2,19 @@
 
 package jmri.jmrit.roster;
 
-import java.awt.*;
+import java.awt.Component;
+import java.awt.Frame;
+import java.util.ResourceBundle;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.JMenu;
 
 /**
  * Provides a context-specific menu for handling the Roster.
  * <P>
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
@@ -49,23 +52,25 @@ public class RosterMenu extends JMenu {
     public RosterMenu(String pMenuName, int pMenuType, Component pWho) {
         super(pMenuName);
 
+        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
+
         // create the menu
 
-        AbstractAction importAction = new ImportRosterItemAction("Import ...", pWho);
+        AbstractAction importAction = new ImportRosterItemAction(rb.getString("MenuItemImport"), pWho);
         importAction.setEnabled(false);
 
-        AbstractAction exportAction = new ExportRosterItemAction("Export ...", pWho);
+        AbstractAction exportAction = new ExportRosterItemAction(rb.getString("MenuItemExport"), pWho);
         exportAction.setEnabled(false);
 
-        AbstractAction copyAction = new CopyRosterItemAction("Copy ...", pWho);
+        AbstractAction copyAction = new CopyRosterItemAction(rb.getString("MenuItemCopy"), pWho);
         copyAction.setEnabled(false);
 
-        AbstractAction deleteAction = new DeleteRosterItemAction("Delete ...", pWho);
+        AbstractAction deleteAction = new DeleteRosterItemAction(rb.getString("MenuItemDelete"), pWho);
         deleteAction.setEnabled(false);
 
         // Need a frame here, but are not passed one
         Frame newFrame = new Frame();
-        AbstractAction printAction = new PrintRosterAction("Print ...", newFrame);
+        AbstractAction printAction = new PrintRosterAction(rb.getString("MenuItemPrint"), newFrame);
         printAction.setEnabled(false);
 
         add(copyAction);
