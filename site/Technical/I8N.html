@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: I8N.html,v 1.1 2003-07-26 18:52:39 jacobsen Exp $ -->
+<!-- $Id: I8N.html,v 1.2 2003-09-14 04:55:44 jacobsen Exp $ -->
 <html>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -23,6 +23,11 @@ The JMRI libraries are intended to be usable world-wide.
 To make this possible, they make use of the "internationalization"
 features built into the Java language and libraries.
 
+<P>
+You can also use this feature to customize your copy of JMRI.  For info
+on this, please see the 
+<A HREF="#custom">customization section</a>.
+
 <h2>Use of Locales</h2>
 
 JMRI uses the default Locale for locating internationalization
@@ -34,12 +39,41 @@ Locals are specified by a language, and optionally a country. The
 language is a two letter lower-case code; the country is a two letter
 upper case code.  "en" is English, "fr" is French, "de" is German, 
 and "de_CH" is German as spoken in Switzerland.
+<P>
+When Java looks for resources (see below), it searches first for
+a file with the complete current locale at the end of it's name 
+(e.g. foo_de_CH.properties). If that fails, it tries for a file
+ending in just the current locale's language:  foo_de.properties.
+And if that fails, it goes to the defaults with no suffix:  foo.properties.
+<P>
+By installing appropriate files and allowing the user to select 
+a default locale (as part of the advanced preferences), we can
+customize the program to different countries and languages.
 
 <h2>Use of Resource Bundles</h2>
 The text for menus, buttons and similiar controls is contained in
 property files, which are accessed via the Resource Bundle mechanism
 of java.util.
-
+<P>
+For example, the property file that's used to configure the Roster
+panel contains lines like:
+<PRE>
+FieldRoadName       = Road Name:
+</PRE>
+To the left of the equal sign is the resource name that the program uses
+to refer to the string; to the right of the equals sign is the
+string that will be displayed.
+<p>
+By convention, resouce names for GUI elements start with one of
+<OL>
+<LI>Field - for a visible field, e.g. label, on the GUI
+<LI>Button - for a GUI button
+<LI>Menu - the name of a top-level menu
+<LI>MenuItem - an item in a menu (may be a nested item)
+<LI>ToolTip - contents of a tooltip
+<LI>Error - for an error message displayed as part of the GUI
+</ol>
+Other resources are named so as not to conflict with these.
 <H2>Adapting to a new language</h2>
 It takes some work to adapt JMRI to a new language.  The steps include:
 <UL>
@@ -59,6 +93,104 @@ English, as should messages sent to the logging system.
 As JMRI is open source, it would be OK to take a copy of the source
 and translate it.  Apart from being a lot of work, this would effectively
 isolate that copy from the rapid pace of improvements to the main code.
+
+
+<h2>Customizing JMRI for your own use</h2>
+<A id="custom"/>
+
+You can use the internationalization feature to customize the program
+for your own purposes.  This section describes how to do that, assuming 
+that your native language is English.
+<P>
+Basically, you're going to create an "English" version of the program
+text that gets used in front of the "default" version.  We do this so
+that new versions of the program, which might change the default 
+version, don't overwrite your changes.
+<P>
+<OL>
+<LI>
+Obtain a copy of the appropriate set of "properties" files.
+Note that you really do need the set of files that's consistent
+with the version of JMRI you're using.
+There are several ways to do this:
+<UL>
+<LI>
+Look for a "properties files" download on the 
+<A HREF="">JMRI downloads</a>
+page.  For example, the files for JMRI version 1.2.5 can
+be downloaded via
+<A REF="">http:</a>.
+<P>This will give you a "classes" directory, which should be placed
+in the same directory as the jmri.jar file.
+<LI>
+You can get these by checking out the "properties" module from
+cvs with "cvs checkout properties" (see the
+<A HREF="index.html#cvs">CVS information</a> on the
+technical page for background on how to use CVS if you're not 
+familiar with it.  The steps are:
+<ol>
+<LI>Create a directory named "classes" in the same directory
+as your "jmri.jar" file.  E.g. on MacOS X or linux:
+<PRE>
+	mkdir classes
+</PRE>
+<LI>Change to that directory:
+<PRE>
+	cd classes
+</PRE>
+
+<LI>Check out the properties module for the version you're interested in:
+<PRE>
+	cvs co -r Release-1-2-5 properties
+</PRE>
+
+</ol>
+
+</ul>
+
+
+<LI>
+Now, you have to find the correct file to edit, and the correct
+string within it.
+Some of the more useful files are:
+<ul>
+<LI>classes/jmri/jmrit/roster/JmritRosterBundle.properties for the 
+labels on the "Roster" panel and similar.
+<LI>classes/jmri/jmrit/JmritToolsBundle.properties for many
+of the Tools menu names
+<LI>classes/jmri/jmrix/JmrixSystemsBundle.properties for the names
+of the DCC systems that appear in the Systems menu
+</ul>
+<br>
+You're looking for a line that contains the string you
+want to change.  For example, the 
+classes/jmri/jmrit/roster/JmritRosterBundle.properties file
+contains the line
+<PRE>
+FieldRoadName       = Road Name:
+</PRE>
+To the left of the equal sign is the name that the program uses
+to refer to the string; to the right of the equals sign is the
+string that will be displayed.
+<LI>
+Once you've found the right file, make a copy of it with a "_en" 
+appended to the name.  For example, make a file
+classes/jmri/jmrit/roster/JmritRosterBundle_en.properties
+that's a copy of the classes/jmri/jmrit/roster/JmritRosterBundle.properties
+file.  Because of the way that Java searches these files, this
+new file will be found before the original.
+<LI>
+Change the strings you want to change, and (this part is important)
+<i>remove the rest of the lines</i>!  This will greatly reduce the
+changes that you'll have problems with a later version of JMRI 
+conflicting with your changes.
+<LI>
+Restart a JMRI program, and see if your changes appear in the user interface.
+</OL>
+
+If that doesn't work, please get in touch so that we can help you find the
+problem and improve the instructions.
+
 <HR>
 <BR>Site hosted by: <BR>
 <A href="http://sourceforge.net"> 
