@@ -18,7 +18,7 @@ pile of various information.  Eventually we have to organize it!
 
 <P>
 See also the 
-<A HREF="LocoNetClasses.html">documentation for the LocoNet-specific classes</a>.
+<A HREF="loconet/LocoNetClasses.html">documentation for the LocoNet-specific classes</a>.
 
 <H3>Source snapshots</H3>
 Occasional snapshots of the CVS source
@@ -29,22 +29,22 @@ documentation tree, etc; they're just source files.
 <h3>JavaDoc</h3>
 We'll occasionally upload a set of JavaDoc pages
 to the 
-<A HREF="Docs/">Docs directory</A>.
+<A HREF="doc/">doc directory</A>.
 Please expect these to be somewhat out of date with respect to the
 actual code! 
 <P>Starting points:
 <UL>
-<LI><A HREF="Docs/AllNames.html">Name index</A>
-<LI><A HREF="Docs/packages.html">Packages</A>
-<LI><A HREF="Docs/tree.html">Class heirarchy</A>
+<LI><A HREF="doc/index.html">Packages</A>
+<LI><A HREF="doc/allclasses-frame.html">Class heirarchy</A>
+<LI><A HREF="doc/index-all.html">Name index</A>
 </UL>
 
 <H3>Intro to demo program structure</h3>
 
 The demo program is just an example, but its meant to be a good one.
 <P>
-The source for the main class currently lives in jmri/apps/JmriDemo/JMRIdemo.java,
-which defines the main class as jmri.apps.JmriDemo.JMRIdemo.  
+The source for the main class currently lives in apps/JmriDemo/JMRIdemo.java,
+which defines the main class as apps.JmriDemo.JMRIdemo.  
 <P>
 The demo main just creates the menubar, and populates if with the desired menus
 and items. Each item as a "Action" class object associated with it, which does the
@@ -54,34 +54,6 @@ Because we expect to have different interfaces in the jmrix package, the JMRI to
 don't directly create the interface objects they need.  Rather, they ask for instances
 of interfaces. For interfaces in the jmri package, which might be implemented by
 lots of different layout types, jmri.InstanceManager satisfies these requests.
-<P>
-Examples:
-<UL>
-<LI>A SimpleProgFrame (simple programmer) is created by a SimpleProgAction when
-fired. 
-SimpleProgAction and SimpleProgFrame don't know that LocoNet is in use, so they can't
-create the correct instance of Programmer; instead they defer any reference
-to Programmer until a button is pushed, and its necessary to do something.
-When that Frame is eventually asked to do something, it will
-use the jmri.InstanceManager.programmerInstance() method to find an implementation
-of the Programmer interface. If its not been created, an error is posted.
-
-<LI>A LocoMon (LocoNet monitor) frame is created by the LocoMonAction. Since its
-clear that this will be communicating with Loconet, it also
-connects that Frame to the LnTrafficController which it finds with the static
-instance() method of LnTrafficController.  instance will create a LnTrafficController
-if one doesn't exist.  Note that this process configures the LocoMon to recieve any
-relevant traffic, but doesn't make the connections to the layout; that's 
-done in the next example.
-
-<LI>The MS100 LocoNet interface is configured by the MS100Action class in jmrix.loconet.ms100.
-When fired, this action configures the LocoNet-specific classes so that they
-are ready to communicate.
-(See the page on <A HREF="LocoNetClasses.html">LocoNet-specific classes</a>
-for specifics). This includes ensuring a LnTrafficManager exists, and connecting
-it to a comm port and MS100 via a LnPortController implementation.
-If no Programmer instance is registered with the jmri.InstanceManager, 
-a loconet.SlotManager is created to do that.
 
 </UL>
 <h3>Development tools</h3>
