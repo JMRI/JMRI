@@ -2,17 +2,16 @@ package jmri.jmrit.display;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.awt.*;
 
 import jmri.*;
 import jmri.jmrit.catalog.NamedIcon;
 
 /**
- * <p>Title: PositionableLabel is a JLabel that can be dragged around the
- * inside of the enclosing Container using a right-drag.</p>
- * <p>Description: </p>
- * <p>Copyright: Bob Jacobsen Copyright (c) 2002</p>
- * @author Bob Jacobsen
- * @version $Revision: 1.8 $
+ * PositionableLabel is a JLabel that can be dragged around the
+ * inside of the enclosing Container using a right-drag.
+ * @author Bob Jacobsen Copyright (c) 2002
+ * @version $Revision: 1.9 $
  */
 
 public class PositionableLabel extends JLabel
@@ -111,7 +110,7 @@ public class PositionableLabel extends JLabel
      */
     protected void showPopUp(MouseEvent e) {
         ours = this;
-        if (icon) {
+        if (icon && popup == null ) {
             popup = new JPopupMenu();
             popup.add(new AbstractAction("Rotate") {
                 public void actionPerformed(ActionEvent e) {
@@ -119,10 +118,91 @@ public class PositionableLabel extends JLabel
                     setIcon(namedIcon);
                     ours.setSize(ours.getPreferredSize().width, ours.getPreferredSize().height);
                 }
-            }
-            );
-            popup.show(e.getComponent(), e.getX(), e.getY());
-        }
+            });
+            popup.add(new AbstractAction("Remove") {
+                public void actionPerformed(ActionEvent e) {
+                    remove();
+                    dispose();
+                }
+            });
+        } else if (text && popup == null) {
+            popup = new JPopupMenu();
+            JMenu sizeMenu = new JMenu("Font size");
+            fontButtonGroup = new ButtonGroup();
+            addFontMenuEntry(sizeMenu, 6);
+            addFontMenuEntry(sizeMenu, 8);
+            addFontMenuEntry(sizeMenu, 10);
+            addFontMenuEntry(sizeMenu, 12);
+            addFontMenuEntry(sizeMenu, 14);
+            addFontMenuEntry(sizeMenu, 16);
+            addFontMenuEntry(sizeMenu, 20);
+            addFontMenuEntry(sizeMenu, 24);
+            addFontMenuEntry(sizeMenu, 28);
+            addFontMenuEntry(sizeMenu, 32);
+            addFontMenuEntry(sizeMenu, 36);
+            popup.add(sizeMenu);
+
+            JMenu styleMenu = new JMenu("Font style");
+            styleMenu.add(italic = newStyleMenuItem(new AbstractAction("Italic") {
+                public void actionPerformed(ActionEvent e) {
+                    if (bold.isSelected()) setFontStyle(Font.ITALIC, 0);
+                    else setFontStyle(0, Font.ITALIC);
+                }
+              }, Font.ITALIC));
+
+            styleMenu.add(bold = newStyleMenuItem(new AbstractAction("Bold") {
+                public void actionPerformed(ActionEvent e) {
+                    if (bold.isSelected()) setFontStyle(Font.BOLD, 0);
+                    else setFontStyle(0, Font.BOLD);
+                }
+              }, Font.BOLD));
+            popup.add(styleMenu);
+
+            popup.add(new AbstractAction("Remove") {
+                public void actionPerformed(ActionEvent e) {
+                    remove();
+                    dispose();
+                }
+            });
+
+        } else log.warn("showPopUp when neither text nor icon true");
+        // show the result
+        if (popup != null) popup.show(e.getComponent(), e.getX(), e.getY());
+    }
+
+    void addFontMenuEntry(JMenu menu, final int size) {
+        AbstractAction a = new AbstractAction(""+size) {
+            final float desiredSize = size+0.f;
+            public void actionPerformed(ActionEvent e) { setFontSize(desiredSize); }
+        };
+        JRadioButtonMenuItem r = new JRadioButtonMenuItem(a);
+        fontButtonGroup.add(r);
+        if (getFont().getSize() == size) r.setSelected(true);
+        else r.setSelected(false);
+        menu.add(r);
+    }
+
+    public void setFontSize(float newSize) {
+        setFont(getFont().deriveFont(newSize));
+        setSize(getPreferredSize().width, getPreferredSize().height);
+    }
+
+    public JMenuItem newStyleMenuItem(AbstractAction a, int mask) {
+        JCheckBoxMenuItem c = new JCheckBoxMenuItem(a);
+        if ( (mask & getFont().getStyle()) == mask ) c.setSelected(true);
+        return c;
+    }
+
+    JMenuItem italic = null;
+    JMenuItem bold = null;
+    ButtonGroup fontButtonGroup = null;
+
+    public void setFontStyle(int addStyle, int dropStyle) {
+        int styleValue = (getFont().getStyle() & ~dropStyle) | addStyle;
+        if (bold != null) bold.setSelected( (styleValue & Font.BOLD) != 0);
+        if (italic != null) italic.setSelected( (styleValue & Font.ITALIC) != 0);
+        setFont(getFont().deriveFont(styleValue));
+        setSize(getPreferredSize().width, getPreferredSize().height);
     }
 
     String where(MouseEvent e) {
@@ -134,6 +214,40 @@ public class PositionableLabel extends JLabel
     public void setPositionable(boolean enabled) {positionable = enabled;}
     public boolean getPositionable() { return positionable; }
     private boolean positionable = true;
+
+    /**
+     * Clean up when this object is no longer needed.  Should not
+     * be called while the object is still displayed; see remove()
+     */
+    void dispose() {
+        if (popup != null) popup.removeAll();
+        fontButtonGroup =null;
+        popup = null;
+        italic = null;
+        bold = null;
+        ours = null;
+    }
+
+    /**
+     * Removes this object from display and persistance
+     */
+    void remove() {
+        Container parent = this.getParent();
+        parent.remove(this);
+        // force redisplay
+        parent.validate();
+
+        // remove from persistance
+        active = false;
+    }
+
+    boolean active = true;
+    /**
+     * "active" means that the object is still displayed, and should be stored.
+     */
+    public boolean isActive() {
+        return active;
+    }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PositionableLabel.class.getName());
 
