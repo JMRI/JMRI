@@ -18,7 +18,7 @@ import org.jdom.Element;
  * decoder identification info _before_ the actual decoder file is read.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  * @see jmri.jmrit.decoderdefn.DecoderIndexFile
  */
 public class DecoderFile extends XmlFile {
@@ -155,12 +155,15 @@ public class DecoderFile extends XmlFile {
 
     /**
      * Convert to a cannonical text form for ComboBoxes, etc.
-     * Early on, this had been mfg+" "+model, but
-     * that resulted in a lot of duplicate mfg names in listings,
-     * so now this is the same as the model
+     * <P>
+     * Must distinquish identical models in different families.
      */
     public String titleString() {
-        return getModel();
+        return titleString(getModel(), getFamily());
+    }
+
+    static public String titleString(String model, String family) {
+        return model+" ("+family+")";
     }
 
     static public String fileLocation = "decoders"+File.separator;
