@@ -15,7 +15,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class DefaultRouteManagerXml implements XmlAdapter {
 
@@ -73,9 +73,28 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                 // add route control Sensors, if any
                 index = 0;
                 String rSensor = null;
-                while ( (rSensor = r.getRouteSensor(index)) != null) {
+                while ( (rSensor = r.getRouteSensorName(index)) != null) {
                     Element rsElem = new Element("routeSensor")
                                     .addAttribute("systemName", rSensor);
+                    int mode = r.getRouteSensorMode(index);
+                    String modeName;
+                    switch (mode) {
+                    case Route.ONACTIVE:
+                        modeName = "onActive";
+                        break;
+                    case Route.ONINACTIVE:
+                        modeName = "onInactive";
+                        break;
+                    case Route.VETOACTIVE:
+                        modeName = "vetoActive";
+                        break;
+                    case Route.VETOINACTIVE:
+                        modeName = "vetoInactive";
+                        break;
+                    default:
+                        modeName = null;
+                    }
+                    if (modeName!=null) rsElem.addAttribute("mode", modeName);
                     elem.addContent(rsElem);
                     index ++;
                 }
@@ -186,9 +205,24 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                                                 " "+((Element)(routeSensorList.get(k))).getAttributes());
                             break;
                         }
+                        int mode = Route.ONACTIVE;  // default mode
+                        if ( ((Element)(routeSensorList.get(k))).getAttribute("mode") != null) {
+                            String sm = ((Element)(routeSensorList.get(k))).getAttribute("mode").getValue();
+                            if (sm.equals("onActive"))
+                                mode = Route.ONACTIVE;
+                            else if (sm.equals("onInactive"))
+                                mode = Route.ONINACTIVE;
+                            else if (sm.equals("vetoActive"))
+                                mode = Route.VETOACTIVE;
+                            else if (sm.equals("vetoInactive"))
+                                mode = Route.VETOINACTIVE;
+                            else
+                                log.warn("unexpected sensor mode in route "+sysName+" was "+sm);
+                        }
+
                         // Add Sensor to route
                         r.addSensorToRoute(((Element)(routeSensorList.get(k)))
-                                                        .getAttribute("systemName").getValue());
+                                                        .getAttribute("systemName").getValue(), mode);
                     }
                 }
             // and start it working
