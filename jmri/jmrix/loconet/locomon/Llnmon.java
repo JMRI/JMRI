@@ -32,7 +32,7 @@ import jmri.jmrix.loconet.*;
  * Reverse engineering of OPC_MULTI_SENSE was provided by Al Silverstein.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class Llnmon {
 
@@ -245,7 +245,7 @@ public class Llnmon {
             } else if (src == dest) {  								/* IN USE       */
                 return "Set status of slot "+src+" to IN_USE\n";
             } else if (dest == 0) {              					/* DISPATCH PUT */
-                return "Mark slot "+dest+" as DISPATCHED\n";
+                return "Mark slot "+src+" as DISPATCHED to slot "+dest+"\n";
             } else {                                        		/* general move */
                 return "Move data in slot "+src+" to slot "+dest+"\n";
             }
