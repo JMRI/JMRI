@@ -7,10 +7,10 @@ import jmri.*;
 /**
  * Automate section 17C of the Cornwall RR.
  * <P>
- * Based on Crr0029.bas
+ * Based on Crr0029.bas, but the logic has been changed due to renaming of tu20, tu21, tu22
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class CrrSection17C extends CrrSection {
 
@@ -44,30 +44,30 @@ public class CrrSection17C extends CrrSection {
         boolean si129 = ( si[129].getCommandedState() == THROWN);
 
         int value = GREEN;
-        if ( !tu22 || bo30 )
+        if ( !tu20 || bo30 )
             value = RED;
-        else if ( !tu22 && tu25 && bo32 )
+        else if ( !tu20 && tu25 && bo32 )
             value = RED;
-        else if ( !tu22 && !tu25 && bo31 )
+        else if ( !tu20 && !tu25 && bo31 )
             value = RED;
-        else if ( tu22 && tu20 )
+        else if ( tu20 && !tu21 )
             value = RED;
-        else if ( tu22 && !tu21 )
+        else if ( tu20 && !tu22 )
             value = RED;
-        else if ( tu22 && bo27 )
+        else if ( tu20 && bo27 )
             value = RED;
-        else if ( tu22 && tu23 && bo29 )
+        else if ( tu20 && tu23 && bo29 )
             value = RED;
-        else if ( tu22 && !tu23 && bo28 )
+        else if ( tu20 && !tu23 && bo28 )
             value = RED;
 
-        if (value == GREEN && tu22 && tu23 && si123 )
+        if (value == GREEN && tu20 && tu23 && si123 )
             value = YELLOW;
-        if (value == GREEN && tu22 && !tu23 && si120 )
+        if (value == GREEN && tu20 && !tu23 && si120 )
             value = YELLOW;
-        if (value == GREEN && !tu22 && tu25 && si129 )
+        if (value == GREEN && !tu20 && tu25 && si129 )
             value = YELLOW;
-        if (value == GREEN && !tu22 && !tu25 && si126 )
+        if (value == GREEN && !tu20 && !tu25 && si126 )
             value = YELLOW;
 
         sig.setAppearance(value);
