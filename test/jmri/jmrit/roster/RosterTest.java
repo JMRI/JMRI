@@ -17,7 +17,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.roster package & jmrit.roster.Roster class.
  * @author	Bob Jacobsen     Copyright (C) 2001, 2002
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class RosterTest extends TestCase {
 
@@ -98,42 +98,12 @@ public class RosterTest extends TestCase {
     }
 
     public void testReadWrite() throws Exception {
-        // this test uses explicit filenames intentionally, to ensure that
-        // the resulting files go into the test tree area.  This is not
-        // a test of prefsDir, and shouldn't use that.
-
-        // store files in "temp"
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
-        Roster.fileLocation = "temp";
-        File f = new File(XmlFile.prefsDir()+"temp"+File.separator+"rosterTest.xml");
-        // remove existing roster if its there
-        f.delete();
-
-        // create a roster
-        Roster r = new Roster();
-        RosterEntry e;
-        e = new RosterEntry("file name Bob");
-        e.setRoadNumber("123");
-        e.setRoadName("SP");
-        r.addEntry(e);
-        e = new RosterEntry("file name Bill");
-        e.setRoadNumber("123");
-        e.setRoadName("ATSF");
-        e.setDecoderModel("81");
-        e.setDecoderFamily("33");
-        r.addEntry(e);
-        e = new RosterEntry("file name Ben");
-        e.setRoadNumber("123");
-        e.setRoadName("UP");
-        r.addEntry(e);
-
-        // write it
-        r.writeFile("temp"+File.separator+"rosterTest.xml");
+        // create a test roster & store in file
+        Roster r = createTestRoster();
 
         // create new roster & read
         Roster t = new Roster();
-        t.readFile("temp"+File.separator+"rosterTest.xml");
+        t.readFile(Roster.defaultRosterFilename());
 
         // check contents
         Assert.assertEquals("search for 0 ", 0, t.matchingList(null, "321", null, null, null, null, null).size());
@@ -141,6 +111,50 @@ public class RosterTest extends TestCase {
         Assert.assertEquals("search for 3 ", 3, t.matchingList(null, "123", null, null, null, null, null).size());
     }
 
+
+    public static Roster createTestRoster() throws java.io.IOException {
+        // this uses explicit filenames intentionally, to ensure that
+        // the resulting files go into the test tree area.
+
+        // store files in "temp"
+        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
+        Roster.fileLocation = "temp"+File.separator;
+        Roster.rosterFileName="rosterTest.xml";
+
+        File f = new File(XmlFile.prefsDir()+"temp"+File.separator+"rosterTest.xml");
+        // remove existing roster if its there
+        f.delete();
+
+        // create a roster with known contents
+        Roster r = new Roster();
+        RosterEntry e;
+        e = new RosterEntry("file name Bob");
+        e.setId("Bob");
+        e.setRoadNumber("123");
+        e.setRoadName("SP");
+        e.ensureFilenameExists();
+        r.addEntry(e);
+        e = new RosterEntry("file name Bill");
+        e.setId("Bill");
+        e.setRoadNumber("123");
+        e.setRoadName("ATSF");
+        e.setDecoderModel("81");
+        e.setDecoderFamily("33");
+        e.ensureFilenameExists();
+        r.addEntry(e);
+        e = new RosterEntry("file name Ben");
+        e.setId("Ben");
+        e.setRoadNumber("123");
+        e.setRoadName("UP");
+        e.ensureFilenameExists();
+        r.addEntry(e);
+
+        // write it
+        r.writeFile(Roster.defaultRosterFilename());
+
+        return r;
+    }
 
     // from here down is testing infrastructure
 
@@ -157,6 +171,7 @@ public class RosterTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite(RosterTest.class);
+        suite.addTest(jmri.jmrit.roster.CopyRosterItemActionTest.suite());
         suite.addTest(jmri.jmrit.roster.RosterEntryPaneTest.suite());
         suite.addTest(jmri.jmrit.roster.IdentifyLocoTest.suite());
         suite.addTest(jmri.jmrit.roster.RosterEntryTest.suite());
