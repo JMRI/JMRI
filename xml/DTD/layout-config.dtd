@@ -1,10 +1,33 @@
 <!-- Defines XML documenting a layout config, esp. information -->
 <!-- on hardware connections -->
-<!-- $Id: layout-config.dtd,v 1.7 2003-04-08 22:17:14 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.8 2003-04-09 15:45:59 jacobsen Exp $ -->
 
 <!ELEMENT layout-config (turnouts | sensors | blocks | signals | 
 						securityelements | aspectgenerator | paneleditor |
-						signalheads )*>
+						signalheads | application)*>
+
+<!-- Overall application configuration -->
+<!-- Copied from DecoderPro-config -->
+<!ELEMENT application (connection*, gui, programmer)>
+  <!ATTLIST application class CDATA #REQUIRED>
+
+<!--  Application section identifies serial port info -->
+<!ELEMENT connection EMPTY>
+  <!ATTLIST connection class CDATA #REQUIRED>
+  <!ATTLIST connection port CDATA #REQUIRED>
+  <!ATTLIST connection speed CDATA #IMPLIED>  <!-- May not be provided if fixed by protocol -->
+  <!ATTLIST connection option1 CDATA #IMPLIED> <!-- Meaning is protocol specific -->
+  <!ATTLIST connection option2 CDATA #IMPLIED> <!-- Meaning is protocol specific -->
+
+<!--  Application section identifies GUI info, e.g. look&feel info-->
+  <!ATTLIST gui class CDATA #REQUIRED>
+  <!ATTLIST gui LAFclass CDATA #IMPLIED>  <!-- default means use system default -->
+
+<!--  Application section identifies programmer options -->
+  <!ELEMENT programmer EMPTY>
+  <!ATTLIST programmer defaultFile CDATA "Basic.xml">
+  <!ATTLIST programmer verifyBeforeWrite (yes | no) "no" >
+
 
 <!ELEMENT turnouts (turnout*)>
   <!ATTLIST turnouts class		CDATA #REQUIRED>
