@@ -5,20 +5,27 @@ package jmri.jmrit.blockboss;
 import jmri.*;
 import jmri.jmrit.automat.*;
 import java.awt.event.ActionEvent;
-import java.util.*;
 import com.sun.java.util.collections.*;
+import java.util.Hashtable;
 
 /**
  * Represents the "simple signal" logic for one signal; provides
  * some collection services.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class BlockBossLogic extends Siglet {
 
-    public void setOutputSignal(String name) {
+    /**
+     * Create a default object, without contents
+     */
+    public BlockBossLogic() {
+    }
+
+    public BlockBossLogic(String name) {
+        this.name = name;
         driveSignal = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
     }
 
@@ -30,6 +37,7 @@ public class BlockBossLogic extends Siglet {
         watchTurnout = InstanceManager.turnoutManagerInstance().getTurnout(name);
     }
 
+    String name;
     SignalHead driveSignal = null;
     Sensor watchSensor = null;
     Turnout watchTurnout = null;
@@ -55,25 +63,50 @@ public class BlockBossLogic extends Siglet {
      * and apply it.
      */
     public void setOutput() {
+        System.out.println("got it "+watchSensor.getKnownState());
         int appearance = SignalHead.GREEN;
         if (watchSensor!=null && watchSensor.getKnownState() != Sensor.INACTIVE)
             appearance = SignalHead.RED;
         if (watchSensor!=null && watchSensor.getKnownState() != Sensor.INACTIVE)
             appearance = SignalHead.RED;
 
+        System.out.println("Appear "+appearance);
         ((SignalHead)outputs[0]).setAppearance(appearance);
     }
 
-    /**
-     * Force update of the siglet's IO and restart
-     */
 
-     public void restart() {
-        super.stop();
-        super.start();
+    static Hashtable map = null;
+
+    private static void setup() {
+        if (map == null) {
+            map = new Hashtable();
+            InstanceManager.configureManagerInstance().registerConfig(new BlockBossLogic());
+        }
     }
 
-     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(BlockBossLogic.class.getName());
+    public void retain() {
+        map.put(name, this);
+    }
+
+    /**
+     * Return the BlockBossLogic item governing a specific signal.
+     * @param signal
+     * @return never null
+     */
+    static BlockBossLogic getStoppedObject(String signal) {
+        BlockBossLogic b;
+        setup(); // ensure we've been registered
+        if (map.contains(signal)) {
+            b = (BlockBossLogic)map.get(signal);
+            b.stop();
+            map.remove(b);
+        } else {
+            b = new BlockBossLogic(signal);
+        }
+        return b;
+    }
+
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(BlockBossLogic.class.getName());
 
 }
 
