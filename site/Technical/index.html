@@ -20,6 +20,17 @@ pile of various information.  Eventually we have to organize it!
 See also the 
 <A HREF="loconet/LocoNetClasses.html">documentation for the LocoNet-specific classes</a>.
 
+<h3>JMRI project information (For people interested in how the software is being written)</h3>
+<A HREF="http://sourceforge.net/projects/jmri/">Project page</A><P>
+<A HREF="http://sourceforge.net/export/projhtml.php?group_id=26788">Statistics and links</A><P>
+<A HREF="http://sourceforge.net/export/projnews.php?group_id=26788">News items</A><P>
+
+You can download the most recent source code using:
+<PRE>
+cvs -d:pserver:anonymous@cvs.jmri.sourceforge.net:/cvsroot/jmri co ant 
+</PRE>
+<P>
+
 <H3>Source snapshots</H3>
 Occasional snapshots of the CVS source
 <A HREF="snapshots">are available</A>
@@ -123,8 +134,16 @@ notify of changes, etc, to make it easier to build applications from JRMI compon
 
 <LI>The Java communications toolbox (javax.comm) has worked fine on 
 Macintosh, OS/2 and Linux for serial I/O. We hope it works fine on other platforms. 
-If more complicated I/O is needed, then perhaps a JNI interface can be 
-constructed, but we'd certainly like to avoid that!
+For Windows, we had to move to 
+the Serialio package from
+<A HREF="Serialio.com">Serialio.com</a>
+to be able to use the MS100 baud rate.  To do this, the 
+jmri.jmrix.loconet.ms100.MS100Adapter class was converted to use
+Java reflection to decide which whether the Serialio package is
+available; on other systems, it uses javax.comm.
+Note that our license for Serialio limits it to this use only;
+we are not permitted to distribute the libraries for other purposes.
+
 <LI>Originally, we used ErrLoggerJ for logging of messages, etc.  We're now
 switching to log4j as it's both easier and more powerful.  To log messages
 from a class named MyClass, add this to the bottom of the class file:
@@ -149,6 +168,8 @@ make it better.
 <LI>The Java collections (List, etc) are available in JMRI, because
 we need them for various other packages.  Use them if you'd like; there 
 are often better approaches than to make everything a Vector.
+To ensure compatibility with Java 1.1.8, we use the 
+older form of class names, e.g. "com.sun.java.util.collections.List".
 <LI>It's really helpful to have tests for code, especially code that's
 being built by several people.  We use JUnit for that; see the section
 below.
@@ -179,11 +200,8 @@ GUI thread via:
 
 <h3>Jar files</h3>
 The various .jar files used in building the demos are available from the
-<A HREF="JARfiles">JARfiles subdirectory</A>. Note that up to the 0.5 demo,
-only swingall.jar and a version of the javax.comm.*.jar was needed (javax.comm.MRJ.jar
-is the Mac OS Classic version). For development after 0.5, you should assume
-all the .jar files in this area are needed.  junit.jar is for testing, and doesn't
-need to be distributed with product releases.
+<A HREF="JARfiles">JARfiles subdirectory</A>
+and the "lib" package in CVS.
 
 <h3>JUnit</H3>
 Some of the classes have JUnit tests available.  For more information on JUnit, see
@@ -223,20 +241,6 @@ moved to a client/server Java model.
 <BR>Site hosted by: <BR>
 <A href="http://sourceforge.net"> 
 <IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
-
-<!-- Begin Small Box -->
-<form method="POST" action="http://mindit.netmind.com/mindit.shtml">
-<input type="hidden" name="FORM" value="C">
-<table border="0" cellpadding="5" cellspacing="0" bgcolor="#666666"><tr><td align="center">
-<font face="arial,helvetica" size="-1" color="#ffffff"><b>Click to receive email <br>when this page changes</b></font></td>
-</tr><tr><td align="center">
-<input type="image" src="http://mindit.netmind.com/images/mindit.gif" border="0"></td>
-</tr><tr bgcolor="#FFFFCC"><td align="center">
-<font face="arial,helvetica" size="-2">&#149;<b> Powered by <a href="http://www.netmind.com"><font color="#000000">NetMind</font></a> </b>&#149;</font>
-</td></tr></table>
-<input type=hidden value="http://jmri.sourceforge.net/Technical/index.html" name="REDIRECT"> 
-</form>
-<!-- End Small Box -->
 
 <script language=javascript 
 src="http://ss.webring.com/navbar?f=j;y=bob_jacobsen15;u=100088115910095949">

@@ -13,11 +13,11 @@
 <IMG SRC="../images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
 </a>
  
-This page is _really_ still under construction! If you can help us make it a better page, please
-join the effort.<P>
-
 Reading the contents of a decoder generally takes a long time, and with
-some command stations it's not even possible.
+some command stations it's not even possible. The JMRI Roster
+stores the known values of decoder configuration values to make it
+unnecessary to read them from the decoder.  It can contain "roster entries"
+for an unlimited number of individual locomotives.
 
 <P>
 Each roster entry has an "identifier" (ID) by which it's known. 
@@ -38,7 +38,7 @@ The ID for this entry.  You can change it if you want, in
 which case it will appear in selection boxes, etc, with the
 new ID name.  
 
-<LI>Road Name, Road Number, Manufacturer, Model
+<LI>Road Name, Road Number, Manufacturer, Model, Owner
 <P>
 Use these for whatever you want.
 
@@ -91,7 +91,7 @@ want to program a new locomotive.
 <LI>Export ...
 <P>
 Although it is possible to find the XML files defining roster entries
-in the "prefs" directory, it's better not to mess with them directly.
+in the preferences directory, it's better not to mess with them directly.
 The "Export" command will create a new file representing a roster entry,
 including all of the comments, CV values, etc.  You can then take that
 to another copy of DecoderPro and import it into that roster.

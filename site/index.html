@@ -13,6 +13,12 @@
 
 <h2>JMRI: A Java Model Railroad Interface</h2>
 
+<B>Version 1.0 is released!</B>
+The long-awaited first production version is available for download (see below).
+Thanks and congratulations to 
+<A HREF="Acknowledgements.html">all who contributed</a>!
+
+<P>
 The JMRI project is building tools for model railroad computer control.  We 
 want it to be usable to as many people as possible, so we're building it 
 in Java to run anywhere, and we're trying to make it independent of specific
@@ -25,11 +31,12 @@ To do this, we've split the problem into two parts with an interface in-between:
 <UL>
 <LI>"Below" the interface lies code that connects to specific layout hardware.  Our initial
 work was with Digitrax&reg; systems, as they provide a lot of functionality already
-and really good support is available.  We also connect to NCE PowerHouse systems, providing
+and really good support is available.  We also connect to NCE PowerHouse, EasyDCC 
+and Lenz systems, providing
 the full functionality. We are certainly interested in connecting to other systems.
 
 <LI>"Above" the interface are the cool tools that people want. Our first examples are
-programmers for DCC decoders and simple layout controls.  The hope is that we can develop
+programmers for DCC decoders and layout controls.  The hope is that we can develop
 better and better tools that still will work on lots of type of computers, with lots
 of types of layouts.
 </UL>
@@ -37,77 +44,79 @@ of types of layouts.
 The long-term strategy is to:<P>
 
 <UL>
-<LI>Create a set of publically available common interfaces for model railroad control code, suitable
+<LI>Create a set of publically available common interfaces for model railroad 
+    control code, suitable
     for use with any type of layout, from any type of computer.
 
-<LI>Demonstrate the technical feasibility of these interfaces with initial DCC-based implementations.
+<LI>Demonstrate the technical feasibility of these interfaces with initial 
+    DCC-based implementations.
 
-<LI>Encourage interoperability of layout hardware and software through the use of common interfaces.
+<LI>Encourage interoperability of layout hardware and software through the 
+    use of common interfaces.
 </UL>
 
 <P>
-In the short term, we've created a demo version that can 
-communicate with either a Digitrax LocoNet or an NCE command station
-to control and display
-turnout positions, and to program decoders.  Its rough, but its a start.  
+In the short term, we've created several programs based on the JMRI
+libraries to move the project along and demonstrate its capabilities.
+<P>
+The most popular is
+<A href="PaneProg/index.html">DecoderPro, a better tool for programming decoders</a>. 
+It simplifies the job of configuring complicated DCC decoders by providing 
+screens on which you can select the various options and values you want.  These
+screens show the exact contents of each specific decoder type. Both
+the programming screens and decoder information are stored in text files, 
+so you can make up new ones as desired.
+You're welcome to download the full version of this program and try it; please see the 
+<A href="http://jmri.sourceforge.net/demoFiles/DecoderPro.README.html">DecoderPro README file</a>
+for additional information on how to install.  We welcome feedback!
+
+<P>
+We've also created a demo program to show the complete set of tools
+as they are developed:
+control and display
+turnout positions, program decoders, 
+display and control layout power
+monitor layout traffic, etc.  It's rough, but its a start.  
 
 <BR>
-<IMG SRC="images/MainPanel.gif" ALT="Main JMRI menus" WIDTH="293" HEIGHT="173" HSPACE="0" VSPACE="0">
 <IMG SRC="images/SimpleProg.jpg" ALT="Simple programmer frame" WIDTH="217" HEIGHT="181" HSPACE="0" VSPACE="0">
 <IMG SRC="images/TurnoutControl.jpg" ALT="Turnout control frame" WIDTH="223" HEIGHT="136" HSPACE="0" VSPACE="0">
 <P>
-JMRI also provides 
-<A HREF="DigiTrax/locotools.html">LocoNet-specific tools</a>
+JMRI also provides a package
+<A HREF="LocoTools.html">LocoNet-specific tools</a>
 for monitoring of the LocoNet and the command station slots, and also for sending user-defined
-packets.
+packets. These form the basis of the 
+<A HREF="LocoTools.html">LocoTools application</a> 
+which you're welcome to download and use.
 
 <P>
-The JMRI libraries also form the basis of 
-<A href="PaneProg/index.html">DecoderPro, a better tool for programming decoders</a>, which we 
-we're trying to adapt to many types of decoders. Development versions are available for
-download, please see the 
-<A href="http://jmri.sourceforge.net/demoFiles/DecoderPro.README.html">DecoderPro README file</a>
-for additional information on how to install.  We welcome feedback!
+These programs run on Windows, Linux, Macintosh (Classic and MacOS X) and OS/2 with only small
+exceptions. They work well with DCC systems from Digitrax, Intellibox, Atlas, Lenz, EasyDCC, NCE
+and Wangrow, in addition to serial C/MRI systems.  This gives us some confidence in the 
+approach.
+
 <P>
-If you're interested in using it with other model railroad equipment, with or without DCC, please
+If you're interested in using these libraries and tools
+with other model railroad equipment, with or without DCC, please
 join in the effort.
+The 
+<A HREF="Acknowledgements.html">acknowledgements page</a>
+shows that a lot of people have been able to contribute.
 
 <P>
 The JMRI name is chosen to bring to mind a "Java model railroad interface", but 
 to comply with the Sun licensing policy JMRI is not an acronym. <P>
 
-<h2>Demos</h2>
+<h2>Downloads</h2>
 
 JMRI is an open-source project, so you can get the entire source code at any time
 via the <A HREF="http://sourceforge.net/projects/jmri/">Project page</A>. If you'd
-like to download the complete libraries, including a running demo, we have the most recent 
-one (version 0.9) available packaged in several forms:
-
-<UL>
-<LI><A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.0.9.hqx">JMRI.0.9.hqx</A>  A binhex'd self-extracting archive for the Macintosh
-<LI><A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.0.9.tar.gz" >JMRI.0.9.tar.gz</A>   A .tar.gz file for Linux
-<LI><A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.0.9.zip">JMRI.0.9.zip</A>  A .zip file for OS/2, Windows 95, 98 and perhaps others
-</UL>
+prefer to download running programs, including DecoderPro, we have the most recent 
+one (version 1.0) freely available for download.
 You should read the 
 <A HREF="http://jmri.sourceforge.net/demoFiles/JMRIdemo.README.html">JMRI README page</a>
 for details on what layout hardware will work, what you'll need to connect, and instructions on how 
 to download, install and run the program.
-<P>
-There are also free versions available for the Decoder Pro program, see the
-Decoder Pro 
-<A HREF="http://jmri.sourceforge.net/demoFiles/DecoderPro.README.html">README page</a>
-for more links to download, instructions, etc.
-<P>
-Note that the people working on this project are really short of expertise
-in Windows and Linux; project development has primarily been on the Macintosh.
-Only the Macintosh version is packaged so you can just click on the icon to start it; see
-the README file for details of how to start the others.
-If you can help us package any of these better, we'd really appreciate your
-advice.<P>
-
-The 
-<A HREF="demoFiles/JMRIdemo.README.html">README file</A>
-from the latest version is also available separately.
 
 <h2>How can you use this?</h2>
 
@@ -116,6 +125,9 @@ There are several different ways to use JMRI:
 <LI>Use 
 <A HREF="PaneProg/index.html">DecoderPro</a> to configure your locomotive decoders and
 keep a roster.
+<LI>Use the <A HREF="LocoTools.html">LocoTools application</a> 
+with your Digitrax command station to control your layout, monitor communications, 
+configure add-on devices, etc.
 <LI>You can just run the demo and use the tools it provides.  As we
 add more and more, the demo becomes more useful.  But you shouldn't expect
 it to be as powerful as a commercial layout management program; JMRI
@@ -125,8 +137,8 @@ Making this easy is an important goal.
 <LI>You can write new general-purpose tools.  Although this is a little
 harder than writing automation for your own layout, writing tools that other
 people use can be very satisfying.
-<LI>You can implement the JMRI interfaces for a new system.  We've done 
-LocoNet and NCE, but having JMRI work with other systems is an important goal.  
+<LI>You can implement the JMRI interfaces for a new system.  
+Having JMRI work with other systems is an important goal.  
 Once an implementation for another system works, the general tools (e.g.
 symbolic programmer, automations tools, signalling, etc) can be immediately
 used.
@@ -146,39 +158,23 @@ help, or suggest some improvement, that discussion group is a good place.  You c
 subscribe, browse posts, etc, at 
 <a href="http://groups.yahoo.com/group/jmriusers/">http://groups.yahoo.com/group/jmriusers/</A>.<P>
 
-Sourceforge is providing tools to help us solve problems, track bugs, etc.  If you'd like
-to browse the existing problems, or perhaps ask for help on a new one, please follow one of the
-following links:
+Our <A HREF="Technical/index.html">technical web pages</A> are still being written.
+This is still an early stage, and we're critically short of documentation.  
+But if you're interested
+in working with the code, we'd love to help you get started via email, etc.
 
-<UL>
-<LI><A HREF="http://sourceforge.net/tracker/?atid=388313&group_id=26788&func=browse">Bugs</A>
-<LI><A HREF="http://sourceforge.net/tracker/?atid=388314&group_id=26788&func=browse">Support requests</A>
-<LI><A HREF="http://sourceforge.net/tracker/?atid=388316&group_id=26788&func=browse">Feature requests</A>
-</UL>
-
-<h3>Demo hardware requirements</h3>
+<h3>Hardware requirements</h3>
 
 JMRI connects to a LocoNet via a Digitrax MS100 adapter or a LocoBuffer.
-NCE command stations connect directly to a serial port. For more information,
-please see the README files for 
-<A HREF="demoFiles/DecoderPro.README.html">DecoderPro</a>
-or the 
-<A HREF="demoFiles/JMRIdemo.README.html">JMRI libraries</A>.
+Lenz and Atlas systems require a LI100 interface.
+EasyDCC, Wangrow and NCE command stations connect directly to a serial port. For more information,
+please see the 
+<A HREF="demoFiles/DecoderPro.README.html">README file</a>.
 <P>
 The demo is developed on a USB Macintosh, which is interfaced to a layout and LocoNet via
 a Keyspan PDA Adapter, DB9 to DB25 cable, and a Digitrax MS100 and/or LocoBuffer.  The
-Keyspan PDA adapter also works for connecting to the NCE command station.
-
-<P>
-PCs with a RS232 port should be able to connect directly to the MS100 with an appropriate cable,
-but some are not able to run at the LocoNet's non-standard baud rate.
-
-<h3>Java-specific information</h3>
-JMRI is written entirely in Java.  Some day, that means it will be "run anywhere",
-but we're not there yet.  <P>
-
-<A HREF="Java/InstallJava.html">Installing Java</A>: Many computers come with a usable version of Java already installed. If
-your's doesn't have one, try this page for some advice.
+Keyspan PDA adapter also works for connecting to the NCE command station. Note that 
+MacOS X systems cannot communicate with an MS100.
 
 <h3>Digitrax-specific information</h3>
 As a convenience for people using JRMI with Digitrax systems, we've got a directory of 
@@ -191,21 +187,6 @@ computers with USB ports to the MS100 Loconet interface.
 Some information on why Digitrax wants you to use different power transformers for the different types of cards
 </UL>
 
-<h2>JMRI project information (For people interested in how the software is being written)</h2>
-<A HREF="Technical/index.html">Technical web pages (still being written!)</A><P>
-<A HREF="http://sourceforge.net/projects/jmri/">Project page</A><P>
-<A HREF="http://sourceforge.net/export/projhtml.php?group_id=26788">Statistics and links</A><P>
-<A HREF="http://sourceforge.net/export/projnews.php?group_id=26788">News items</A><P>
-
-The source tree is available via anonymous CVS at:
-<PRE>
-anonymous@cvs.jmri.sourceforge.net:/cvsroot/jmri
-</PRE>
-If you have problems accessing that, please check for scheduled outages on the
-<A HREF="https://sourceforge.net/docman/display_doc.php?docid=2352&group_id=1">SourceForge status page</A><P>
-
-This is still an early stage, and we're critically short of documentation.  But if you're interested
-in working with the code, we'd love to help you get started via email, etc.
 
 <h2>Acknowledgements</h2>
 JMRI is a volunteer project, and we welcome people to contribute in any way.
@@ -215,12 +196,15 @@ Contributors include:
 Lenz decoders and loaned equipment for testing
 <LI>Patrick Beard, who allows us to distribute his javax.comm.MRJ package for the Macintosh
 <LI>Thomas Beutel, who helped with the early EasyDCC tests
+<LI>Dave Boydston of Serialio.com, who helped with the Windows connection to an MS100.
+Check out their great Java serial library!
 <LI>Mike Davison, who got the Linux serial connection working with Java 1.4, 
 has helped with the EasyDCC code, and helped debug the Ant compilation process
 <LI>Joseph Goldstone, who put together the javax.comm implementation for Mac OS X
 <LI>Walter Griffin provided graphics for signals and CTC panels
 <LI>Phil Hartung, who provided some CTC graphics
 <LI>John Jabour, who created the LocoBuffer and thereby made reliable LocoNet communications routine
+<LI>Bob Jacobsen, who maintains this code and wrote a lot of the initial code
 <LI>The good people at MindVision, who are letting us use their excellant Installer Vise
 to build our Windows installer
 <LI>Jim Scorse, who gave generously of his time to answer questions about NCE details
@@ -236,22 +220,7 @@ have contributed, and we thank
 <HR>
 <BR>Site hosted by: <BR>
 <A href="http://sourceforge.net"> 
-<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A>
-
-<!-- Begin Small Box -->
-<form method="POST" action="http://mindit.netmind.com/mindit.shtml">
-<input type="hidden" name="FORM" value="C">
-<table border="0" cellpadding="5" cellspacing="0" bgcolor="#666666"><tr><td align="center">
-<font face="arial,helvetica" size="-1" color="#ffffff"><b>Click to receive email <br>when this page changes</b></font></td>
-</tr><tr><td align="center">
-<input type="image" src="http://mindit.netmind.com/images/mindit.gif" border="0"></td>
-</tr><tr bgcolor="#FFFFCC"><td align="center">
-<font face="arial,helvetica" size="-2">&#149;<b> Powered by <a href="http://www.netmind.com"><font color="#000000">NetMind</font></a> </b>&#149;</font>
-</td></tr></table>
-<input type=hidden value="http://jmri.sourceforge.net/index.html" name="REDIRECT"> 
-</form>
-<!-- End Small Box -->
- 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
 
 <script language=javascript 
 src="http://ss.webring.com/navbar?f=j;y=bob_jacobsen15;u=100088115910095949">

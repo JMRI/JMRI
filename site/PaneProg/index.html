@@ -13,9 +13,10 @@
 <IMG SRC="../images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
 </a>
 
- This page is _really_ still under construction! If you can help us make it a better page, please
-join the 
-<A HREF="http://jmri.sourceforge.net/">JMRI</A> effort.<P>
+<B>Version 1.0 is released!</B>
+The long-awaited first production version is available for download.
+Thanks and congratulations to 
+<A HREF="Acknowledgements.html">all who contributed</a>!
 
 <H2>DecoderPro Symbolic Programmer</h2>
 
@@ -49,23 +50,23 @@ with instructions for installing and operating Decoder Pro.
 
 When you first open the programmer, you see a window like this:
 <p>
-<IMG SRC="../images/DPStart.gif" WIDTH="514" HEIGHT="289"><BR>
+<IMG SRC="../images/DPStart.gif" WIDTH="487" HEIGHT="274"><BR>
 
 <p>
 Click the "Program locomotive" button to start.  You'll get a new window to
 configure the programmer with information about a specific
 type of decoder, or an existing locomotive:
 <P>
-<IMG SRC="images/BlankSetup.gif" WIDTH="436" HEIGHT="234" HSPACE="0" VSPACE="0">
+<IMG SRC="images/BlankSetup.gif" WIDTH="520" HEIGHT="512" HSPACE="0" VSPACE="0">
 <p>
 For example, to 
 start working with a newly-installed decoder, you need to tell
 the programmer the decoder type so it can load information
 about the available settings.
 You can manually select the 
-decoder type from the selection box:
+decoder type:
 <p>
-<IMG SRC="images/SelDecoder.gif" WIDTH="436" HEIGHT="234" HSPACE="0" VSPACE="0">
+<IMG SRC="images/SelDecoder.gif" WIDTH="520" HEIGHT="512" HSPACE="0" VSPACE="0">
 <p>
 You can also click the adjacent "Ident" button to have the programmer
 read the decoder and attempt to identify it.   
@@ -75,14 +76,15 @@ the bottom of the window; "Idle" or "OK" means that things are working.
 If it succeeds, it 
 will select the decoder model in the selection box.  Usually
 it will only be able to narrow the selection down to a few choices.
-Pull down the "Decoder installed" selection box and check that the
-right model is selected.  
+Check that the
+right model is selected in the "Decoder Installed" box; update the
+selection if desired.  
 <P>
 Some people prefer a very simple programmer, and some want to 
 have access to every feature. To handle this, DecoderPro
 provides several displays.  
 <p>
-<IMG SRC="../images/SelProg.gif" WIDTH="441" HEIGHT="234" HSPACE="0" VSPACE="0">
+<IMG SRC="../images/SelProg.gif" WIDTH="516" HEIGHT="512" HSPACE="0" VSPACE="0">
 <p>
 As shipped, it comes with:
 <DL>
@@ -91,13 +93,16 @@ As shipped, it comes with:
 of detailed information.
 <DT>Registers<DD>Complete configuration for a register-only decoder
 <DT>Sample Club<DD>A sample of how a club might define their own
-programmer format to make it easy to set options needed to run at the club
+programmer format that shows just their set of required variables
 <DT>Tutorial<DD>Not useful for actually programming decoders, 
 this contains examples of how various special effects can
 be obtained when you're constructing your own programmer.
 </DL>
 You can even define your own format if you'd prefer to just see
-the variables you use.  For this first pass through the program,
+the variables you use.  
+
+<P>
+For this first pass through the program,
 we select "Comprehensive" in the lowest selection box.
 
 <P>
@@ -168,7 +173,7 @@ change their layout, and
 even redo the entire appearance.
 To do that,
 DecoderPro is driven by human-readable files in XML format.  
-<A HREF="ConfigFile.html">Incomplete documentation</a> exists, and we're
+<A HREF="ConfigFile.html">Documentation on the file contents</a> exists, and we're
 working to continuously update it.
 <P>
 These files make it convenient to update DecoderPro to work
@@ -188,12 +193,15 @@ Its also possible to program the CVs directly:
 <P>
 <IMG SRC="images/CVtable75.gif" WIDTH="504" HEIGHT="448" HSPACE="0" VSPACE="0">
 <P>
+The "Read" and "Write" buttons allow you to work with individual CV contents.
+Changes made here will also update the specific values on the other screens.
 
 <h3>Locomotive roster</h3>
 
 DecoderPro maintains a roster of your locomotives.  You can save the
-decoder configuration to a file, and then later work with CV values
-from the file.  This saves the time it takes to read a complete 
+decoder configuration, and then later work with the stored CV values
+instead of having to read them from the decoder.  
+This saves the time it takes to read a complete 
 decoder, which can be quite long. The roster can also store
 locomotive information for you.  
 The "Roster Entry" sheet displays this info and allows you to edit it:
@@ -208,7 +216,7 @@ this locomotive.  You can put whatever you'd like in it.
 For example, during the startup, you can
 select a specific locomotive to work with:
 <P>
-<IMG SRC="images/SelLoco.gif" WIDTH="434" HEIGHT="234" HSPACE="0" VSPACE="0">
+<IMG SRC="images/SelLoco.gif" WIDTH="511" HEIGHT="459" HSPACE="0" VSPACE="0">
 <P>
 The "Ident" button uses the DCC address to select a specific locomotive in 
 the roster.
@@ -235,15 +243,13 @@ appropriate cables.
 If you have an Empire Builder, you still won't be able to read CVs.  
 Note that DecoderPro cannot yet work with a PR1 standalone programmer.
 To connect the computer to the Digitrax LocoNet, you'll need either a LocoBuffer
-or MS100.  The LocoBuffer is recommended. Note that certain WinXX and MacOS X machines
+or MS100.  The LocoBuffer is recommended. Note that MacOS X machines
 cannot connect through the MS100, so those machines need to use a LocoBuffer.
 <LI>EasyDCC - You need a serial cable to connect your computer to the command station.
 <LI>Intellibox - You can connect DecoderPro to your Intellibox in LocoNet mode
 to program decoders.
 <LI>Lenz - You need a LI100 and cables to connect your PC to the XPressNet.
 DecoderPro can then work with the programming track of any XPressNet command station.
-Note that Lenz support is still being developed, and isn't as reliable as the
-others just yet.  We expect to have it working well by early July 2002.
 <LI>NCE - You need a serial cable to connect your computer to the command station.
 <LI>Wangrow - Any command station with a serial port, plus a serial cable.
 </UL>
@@ -260,21 +266,6 @@ for instructions for installing and operating it.
 <A HREF="MoreInfo.html">More information on how this works</a> is available, as is
 <A HREF="../index.html">more information on other JMRI tools</A>.
 
-<a id="avail"><h3>Availability</h3></a>
-The programmer is available in the current distributions of the JMRI libraries,
-and separately packaged as the "DecoderPro" application. 
-It works with Digitrax and NCE command stations.
-For downloading and installation instructions, please read the 
-<A HREF="../demoFiles/DecoderPro.README.html">README file</A>.
-<B>This is very preliminary software;</B>
-we're tenatively planning for something "of quality" by Summer 2002.
-In part, this page
-exists to encourage people to suggest how 
-we can improve it.  Please send any comments 
-to <A HREF="mailto:jake@physics.berkeley.edu">Bob Jacobsen</A>, or post them
-via the <A HREF="http://sourceforge.net/projects/jmri/">JMRI project site</a> as a feature request  
-(An anonymous feature 
-request started this whole effort! We take suggestions very seriously)
 <P>
 The <A href="http://lists.sourceforge.net/lists/listinfo/jmri-announce">jmri-announce</a> 
 mailing list carries announcements of new versions, major changes, etc.  
@@ -321,19 +312,6 @@ have contributed, and we thank
 <A href="http://sourceforge.net"> 
 <IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A>
 
-<!-- Begin Small Box -->
-<form method="POST" action="http://mindit.netmind.com/mindit.shtml">
-<input type="hidden" name="FORM" value="C">
-<table border="0" cellpadding="5" cellspacing="0" bgcolor="#666666"><tr><td align="center">
-<font face="arial,helvetica" size="-1" color="#ffffff"><b>Click to receive email <br>when this page changes</b></font></td>
-</tr><tr><td align="center">
-<input type="image" src="http://mindit.netmind.com/images/mindit.gif" border="0"></td>
-</tr><tr bgcolor="#FFFFCC"><td align="center">
-<font face="arial,helvetica" size="-2">&#149;<b> Powered by <a href="http://www.netmind.com"><font color="#000000">NetMind</font></a> </b>&#149;</font>
-</td></tr></table>
-<input type=hidden value="http://jmri.sourceforge.net/PaneProg/index.html" name="REDIRECT"> 
-</form>
-<!-- End Small Box -->
  
 <script language=javascript 
 src="http://ss.webring.com/navbar?f=j;y=bob_jacobsen15;u=100088115910095949">
