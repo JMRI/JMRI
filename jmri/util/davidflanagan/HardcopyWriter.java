@@ -14,7 +14,7 @@ import java.util.*;
  * David Flanagan with the alligator on the front.
  *
  * @author		David Flanagan
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class HardcopyWriter extends Writer {
 
@@ -229,9 +229,39 @@ public class HardcopyWriter extends Writer {
         page.drawImage(c, x, y, null);
     }
 
+    /**
+     * Draw a line on the printout.
+     * <P>This was not in the
+     * original class, but was added afterwards by Dennis Miller.
+     * <P>colStart and colEnd represent the horizontal character positions.  The
+     * lines actually start in the middle of the character position to make it easy to
+     * join lines and space them between printed characters.
+     * <P>rowStart and rowEnd represent the vertical character positions.  The
+     * lines are drawn underneath the row (line) number.  They are offset so they
+     * appear evenly spaced, although they don't take into account any space needed
+     * for descenders, so they look best with all caps text
+     */
+    public void write (int rowStart, int colStart,int rowEnd,int colEnd){
+        // if we haven't begun a new page, do that now
+        if (page == null) newpage();
+        int xStart = x0+(colStart-1)*charwidth + charwidth/2;
+        int xEnd = x0 + (colEnd-1)*charwidth + charwidth/2;
+        int yStart = y0 + rowStart*lineheight + (lineheight-lineascent)/2;
+        int yEnd = y0 + rowEnd*lineheight + (lineheight-lineascent)/2;
+        page.drawLine(xStart,yStart,xEnd,yEnd);
+    }
+
+    /**
+     * get the current linenumber.
+     * <P>This was not in the
+     * original class, but was added afterwards by Dennis Miller.
+     */
+    public int getCurrentLineNumber(){
+        return this.linenum;
+    }
+    
     public static class PrintCanceledException extends Exception {
         public PrintCanceledException(String msg) { super(msg); }
     }
-
 
 }
