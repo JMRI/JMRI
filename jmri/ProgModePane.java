@@ -85,8 +85,16 @@ public class ProgModePane extends javax.swing.JPanel implements java.beans.Prope
 		});
 		
 		// load the state if a programmer exists
-		connect();
-		if (connected) InstanceManager.programmerInstance().setMode(InstanceManager.programmerInstance().getMode());
+		connect();	
+		if (connected) {
+			int mode = InstanceManager.programmerInstance().getMode();
+			if (log.isDebugEnabled()) log.debug("setting mode at startup: "+mode);
+			InstanceManager.programmerInstance().setMode(mode);
+			setMode(mode);
+		}
+		else {
+			log.warn("Programmer doesn't exist, can't set default mode");
+		}
 		
 		// general GUI config
 		setLayout(new BoxLayout(this, direction));
@@ -114,31 +122,34 @@ public class ProgModePane extends javax.swing.JPanel implements java.beans.Prope
 	  		return 0;
   	}
   	  		
-
+	protected void setMode(int mode) {
+		switch (mode) {
+			case jmri.Programmer.REGISTERMODE:
+				registerButton.setSelected(true);
+				break;
+			case jmri.Programmer.PAGEMODE:
+				pagedButton.setSelected(true);
+				break;
+			case jmri.Programmer.DIRECTBYTEMODE:
+				directByteButton.setSelected(true);
+				break;
+			case jmri.Programmer.DIRECTBITMODE:
+				directBitButton.setSelected(true);
+				break;
+			case jmri.Programmer.ADDRESSMODE:
+				addressButton.setSelected(true);
+				break;
+			default:
+				log.warn("propertyChange without valid mode value");
+				break;
+		}
+	}
+	
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		// mode changed in programmer, change GUI here if needed
 		if (e.getPropertyName() == "Mode") {
 			int mode = ((Integer)e.getNewValue()).intValue();
-			switch (mode) {
-				case jmri.Programmer.REGISTERMODE:
-					registerButton.setSelected(true);
-					break;
-				case jmri.Programmer.PAGEMODE:
-					pagedButton.setSelected(true);
-					break;
-				case jmri.Programmer.DIRECTBYTEMODE:
-					directByteButton.setSelected(true);
-					break;
-				case jmri.Programmer.DIRECTBITMODE:
-					directBitButton.setSelected(true);
-					break;
-				case jmri.Programmer.ADDRESSMODE:
-					addressButton.setSelected(true);
-					break;
-				default:
-					log.warn("propertyChange without valid mode value");
-					break;
-			}
+			setMode(mode);
 		} else log.warn("propertyChange with unexpected propertyName: "+e.getPropertyName());
 	}
 
@@ -164,7 +175,7 @@ public class ProgModePane extends javax.swing.JPanel implements java.beans.Prope
 	}
 	
 	// no longer needed, disconnect if still connected
-	public void done() {
+	public void dispose() {
 		if (connected) {
 			if (InstanceManager.programmerInstance() != null) 
 				InstanceManager.programmerInstance().removePropertyChangeListener(this);

@@ -14,6 +14,7 @@ import java.beans.PropertyChangeListener;
 public interface Programmer  {
 
 	// mode e.g. register, direct, paged
+	public static final int NONE			=  0;
 	public static final int REGISTERMODE    = 11;
 	public static final int PAGEMODE        = 21;
 	public static final int DIRECTBITMODE   = 31;

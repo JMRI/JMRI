@@ -47,6 +47,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 	}
 	
 	public void actionPerformed(ActionEvent e) {
+		if (log.isDebugEnabled()) log.debug("action event: "+e);
 		// called for new values - set the CV as needed
 		CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
 		// compute new cv value by combining old and request
@@ -55,7 +56,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 		try { newVal = _value.getSelectedIndex(); }
 			catch (java.lang.NumberFormatException ex) { newVal = 0; }
 		int newCv = newValue(oldCv, newVal, getMask());
-		cv.setValue(newCv);
+		if (newCv != oldCv) cv.setValue(newCv);  // to prevent CV going EDITTED during loading of decoder file
 	}
 	
 	// to complete this class, fill in the routines to handle "Value" parameter
@@ -69,11 +70,9 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 	
 	public Component getValue()  { return _value; }
 	public void setValue(int value) { 
-		int oldVal;
-		try { oldVal = _value.getSelectedIndex(); }
-			catch (java.lang.NumberFormatException ex) { oldVal = 0; }	
+		int oldVal = _value.getSelectedIndex();
 		if (oldVal != value || getState() == VariableValue.UNKNOWN) 
-			prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value));
+			prop.firePropertyChange("Value", null, new Integer(value));
 		_value.setSelectedIndex(value);
 	}
 

@@ -274,7 +274,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 
 		//OK, close
 		setVisible(false);
-		modePane.done();
+		modePane.dispose();
 		dispose();	
 	}
 	

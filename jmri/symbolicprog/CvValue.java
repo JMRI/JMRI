@@ -24,11 +24,11 @@ public class CvValue implements ProgListener {
 	
 	public int getValue()  { return _value; }
 	public void setValue(int value) { 
+		setState(EDITTED);
 		if (_value != value) {
 			int old = _value;
 			_value = value;
-			setState(EDITTED);
-			prop.firePropertyChange("Value", new Integer(old), new Integer(value)); 
+			prop.firePropertyChange("Value", null, new Integer(value)); 
 		}
 	}
 	private int _value = 0;
@@ -101,6 +101,8 @@ public class CvValue implements ProgListener {
 	}
 	
 	public void programmingOpReply(int value, int retval) {
+		if (log.isDebugEnabled()) log.debug("CV progOpReply with retval "+retval
+											+" _reading "+_reading);
 		if (!_busy) log.error("opReply when not busy!");
 		setBusy(false);
 		if (retval == OK) {
@@ -108,11 +110,10 @@ public class CvValue implements ProgListener {
 			if (_reading) {
 				setState(READ);
 				// set & notify value directly to avoid state going to EDITTED
-				if (_value != value) {
-					int old = _value;
-					_value = value;
-					prop.firePropertyChange("Value", new Integer(old), new Integer(value)); 
-				}
+				int old = _value;
+				_value = value;
+				if (log.isDebugEnabled()) log.debug("CV firePropChange Value "+old+" "+value);
+				prop.firePropertyChange("Value", null, new Integer(value)); 
 			} else {  // writing
 				setState(STORED);
 			}

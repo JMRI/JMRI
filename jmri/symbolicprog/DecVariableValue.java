@@ -77,7 +77,8 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 		try { 
 			oldVal = Integer.valueOf(_value.getText()).intValue();
 			}
-			catch (java.lang.NumberFormatException ex) { oldVal = 0; }	
+			catch (java.lang.NumberFormatException ex) { oldVal = -999; }	
+		if (log.isDebugEnabled()) log.debug("setValue with new value "+value+" old value "+oldVal);
 		if (oldVal != value || getState() == VariableValue.UNKNOWN) 
 			prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value));
 		_value.setText(""+value);
@@ -99,6 +100,7 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 	// handle incoming parameter notification
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		// notification from CV; check for Value being changed
+		if (log.isDebugEnabled()) log.debug("Property changed: "+e.getPropertyName());
 		if (e.getPropertyName().equals("Busy")) {
 			setBusy(false);
 		}

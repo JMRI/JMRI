@@ -91,7 +91,7 @@ public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame {
 		// attach a listener
 		t.addPropertyChangeListener( new java.beans.PropertyChangeListener() {
 			public void propertyChange(java.beans.PropertyChangeEvent e) { 
-				System.out.println("Turnout property change: "+e.getPropertyName()
+				if (log.isDebugEnabled()) log.debug("Turnout property change: "+e.getPropertyName()
 					+" "+e.getOldValue()+" "+e.getNewValue()
 						);}
 			} );

@@ -213,7 +213,7 @@ public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgList
 	// Close the window when the close box is clicked
 	void thisWindowClosing(java.awt.event.WindowEvent e) {
 		setVisible(false);
-		modePane.done();
+		modePane.dispose();
 		dispose();
 	// and disconnect from the SlotManager
 	
