@@ -27,6 +27,7 @@ ant1 -d java scripts manifest
 # build the java/ directory for both ant and jbuilder
 all -a runtime jbuilderfiles antfiles java
 
+jython -d jython scripts/jython
 
 # properties target; all the properties files. Maintained manually!
 properties -a \
