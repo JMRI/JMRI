@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: SelectionGuide.xsl,v 1.1 2003-08-11 00:43:35 jacobsen Exp $ -->
+<!-- $Id: SelectionGuide.xsl,v 1.2 2003-08-29 14:34:41 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI decoder definition index and -->
 <!-- definition files into an HTML selection guide page -->
@@ -66,7 +66,7 @@ Family</h2></A>
 
 <!-- template to handle a size table -->
 <xsl:template name="sizeTable">
-		<h2>Size</h2>
+		<h2>Size</h2><A id="size"/>
 		<!-- define table and fill -->
 		<table border="0" cellspacing="1" cellpadding="1">
 		<tr>
@@ -105,7 +105,7 @@ Family</h2></A>
 
 <!-- template to handle an electrical power table -->
 <xsl:template name="powerTable">
-		<h2>Electrical</h2>
+		<h2>Electrical</h2><A id="electrical"/>
 		<!-- define table and fill -->
 		<table border="0" cellspacing="1" cellpadding="1">
 		<tr>
