@@ -1,13 +1,13 @@
 package jmri.jmrit.display;
 
-import com.sun.java.util.collections.ArrayList;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import jmri.*;
+import jmri.jmrit.catalog.*;
+import java.awt.*;
+import java.awt.event.*;
+
 import javax.swing.*;
-import jmri.InstanceManager;
-import jmri.jmrit.catalog.CatalogPane;
-import jmri.jmrit.catalog.NamedIcon;
+
+import com.sun.java.util.collections.*;
 
 /**
  * Provides a simple editor for adding jmri.jmrit.display items
@@ -37,7 +37,7 @@ import jmri.jmrit.catalog.NamedIcon;
  *
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class PanelEditor extends JFrame {
@@ -431,7 +431,6 @@ public class PanelEditor extends JFrame {
         if (thrownIconL!=null) l.setThrownIcon(new NamedIcon(thrownIconL));
         l.setTurnout(null, nextTurnoutL.getText());
 
-        log.debug("turnout height, width: "+l.getHeight()+" "+l.getWidth());
         setNextLocation(l);
         putTurnout(l);
     }
@@ -519,7 +518,7 @@ public class PanelEditor extends JFrame {
         int x = Integer.parseInt(nextX.getText());
         int y = Integer.parseInt(nextY.getText());
         //obj.setLocation(x,y);
-        obj.setBounds(x,y,obj.getPreferredSize().width,obj.getPreferredSize().height);
+        obj.setBounds(x,y,obj.getWidth(),obj.getHeight());
     }
 
     /**
