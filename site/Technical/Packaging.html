@@ -21,7 +21,8 @@ which contains only the JMRI classes.  These require other publicly-available
 Java classes, which are normally distributed separately as jar files.  
 The exact set of jar files varies from platform to platform, and the Windows
 version is packaged with both the JMRI and external classes packaged in a 
-single .jar file.
+single .jar file.  In some cases, e.g. DecoderPro, we package a subset
+of the JMRI classes with an application in a specific file, e.g. DecoderPro.jar.
 
 <h3>Macintosh</h3>
 
@@ -35,12 +36,13 @@ lib folder in the distribution. These are expected to be somewhat stable
 so we've put them in a separate place to make updaters easy to create.
 Note that we don't have any updaters yet.
 <P>
-To get communications support, we distribute javax.comm.MRJ.jar
-as part of a JMRI distribution. This file is specific to MacOS
-Classic.
-<P>
-We also distribute swingall.jar, as Java Swing is not installed
-by default with MRJ (Macintosh Runtime for Java).
+You need to have the Java Swing and Java communications libraries installed.
+We no longer distribute them with the program, as they are quite 
+large and don't change often.
+An installer can be downloaded from
+  <a href="http://prdownloads.sourceforge.net/jmri/JavaLibsInstaller-2.hqx">http://prdownloads.sourceforge.net/jmri/JavaLibsInstaller-2.hqx</a>.
+Unfortunately, its a 4MB download.  You only have to do it once, however; 
+future updates will continue to use these same libraries.
 <P>
 
 <h4>MacOS X</h4>
@@ -53,10 +55,10 @@ lib folder in the distribution. These are expected to be somewhat stable
 so we've put them in a separate place to make updaters easy to create.
 Note that we don't have any updaters yet.
 <P>
-Because the Mac Classic and MacOS X distributions are combined into one,
-the lib subdirectory contains the swingall.jar and javax.comm.MRJ.jar
-files.  These are not included in the CLASSPATH, hence not used, when the
-MacOS X app is launched.
+The communications API needs to be installed into MacOS X
+system directories. An installer to do that can be downloaded from
+<a href="http://prdownloads.sourceforge.net/jmri/JavaCommInstaller04.hqx">http://prdownloads.sourceforge.net/jmri/JavaCommInstaller04.hqx</a>.
+You will need the MacOS X administrator password to run it.
 
 <h3>OS/2</h3>
 
@@ -64,23 +66,10 @@ MacOS X app is launched.
 
 <h3>Windows</h3>
 
-We don't know how to handle the class path consistently across all the varients
-of Windows.  We deal with this by including external classes within a single
-.jar file which we distribute.  Specifically, we include the contents of these
-separate files from other platforms:
-<UL>
-<LI>jmri.jar
-<LI>xerxes.jar
-<LI>log4j.jar
-<LI>jdom-jdk11.jar
-<LI>collections.jar
-</UL>
-
-The jmriwin95.jar file contains all these. Its manifest is configured so
-you can just double click to launch it.  Unfortunately, in that case the
-log information (warnings, errors, etc) is not displayed.  To see that
-information, use the "java -jar jmriwin95.jar" command in a DOS 
-window.
+Starting with the 0.9b6 distributions, we are including .bat files
+that let the programs run from the same .jar files on Windows as
+on all other platforms.  (Previously, we had to distribute a single
+merged .jar file specific to windows).
 
 <HR>
 <BR>Site hosted by: <BR>
