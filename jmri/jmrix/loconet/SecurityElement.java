@@ -29,7 +29,7 @@ import jmri.*;
  * at a remote SE's A leg and it's reserved AX, that it NOT coming toward us.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class SecurityElement implements LocoNetListener {
 
@@ -41,9 +41,9 @@ public class SecurityElement implements LocoNetListener {
     public static final int XA = 16;   // enter from B or C, leave from A
 
     // leg names
-    static final int A = 1;
-    static final int B = 2;
-    static final int C = 4;
+    public static final int A = 1;
+    public static final int B = 2;
+    public static final int C = 4;
     // also NONE for no connection
 
     // configuration information
@@ -63,16 +63,16 @@ public class SecurityElement implements LocoNetListener {
     public int attachCnum;  // SE that C is attached to
     public int attachCleg;  // leg of SE attachCnum that C is attached to
 
-    public int dsSensor;   // associated occupancy sensor;
-    public int turnout;     // associated turnout
+    public int dsSensor;    // associated occupancy sensor number;
+    public int turnout;     // associated turnout number
 
-    public int maxSpeedAC = 70;  // speed limits set by track geometry; these are maxima
-    public int maxSpeedCA = 70;
+    public int maxSpeedAC = 70;  // speed limits set by track
+    public int maxSpeedCA = 70;  // geometry; these are maxima
     public int maxSpeedAB = 70;
     public int maxSpeedBA = 70;
 
-    public int maxBrakingAC = 20;
-    public int maxBrakingCA = 20;
+    public int maxBrakingAC = 20; // how much a train can break while transiting
+    public int maxBrakingCA = 20; // this section.
     public int maxBrakingAB = 20;
     public int maxBrakingBA = 20;
 
@@ -222,13 +222,13 @@ public class SecurityElement implements LocoNetListener {
 					} else {
 						setTurnoutState(Turnout.THROWN);
                     }
-                    doUpdate();
-				}
-				break;
+                        doUpdate();
+                    }
+                    break;
             }
 
         }   // end block of switch cases
-	}   // end of message() function
+    }   // end of message() function
 
 
     /**
@@ -417,11 +417,11 @@ public class SecurityElement implements LocoNetListener {
         if (newDsStateHere==Sensor.ACTIVE) newSpeedXA = 0;
 
         // calculate speed for AX
-        // Speed is the minumum of:
+        // Speed is the minimum of:
         //    zero if occupied
         //    mechanical speed limit for AB or AC
         //    entry speed on the leg attached to B, C + decrement AB or AC
-        // Start by seeing if this is B or C
+        // Start by seeing if this is coming from B or C
         if (newTurnoutState==Turnout.CLOSED || turnout == 0) {
             // This is AB
             newSpeedAX = Math.min(maxSpeedAB, newSpeedLimitFromB+maxBrakingAB);
