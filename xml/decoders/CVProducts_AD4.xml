@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<!-- $Id: CVProducts_AD4.xml,v 1.1 2002-08-08 06:13:31 jacobsen Exp $ -->
+<decoder-config>
+		<version author="jake@physics.berkeley.edu" 
+					version="1" lastUpdated="20020808"/>
+		
+<decoder>
+	<family name="AD4" mfg="CVP Products" lowVersionID="2" highVersionID="6">
+		<model model="AD4" />
+	</family>
+
+	<programming direct="byteOnly" paged="yes" 
+	                     register="yes" ops="yes"></programming>
+
+	<variables>
+		<variable label="Card Address" item="Short Address" CV="1" mask="VVVVVVVV">
+			<splitVal highCV="9"/>
+			</variable>
+
+		<variable label="Local input 1" CV="2" mask="XXXXXXXV"
+						 default="1">
+			<enumVal>
+				<enumChoice choice="Locked"/>
+				<enumChoice choice="Unlocked"/>
+				</enumVal>
+			</variable>
+		<variable label="Local input 2" CV="2" mask="XXXXXVXX"
+						 default="1">
+			<enumVal>
+				<enumChoice choice="Locked"/>
+				<enumChoice choice="Unlocked"/>
+				</enumVal>
+			</variable>
+		<variable label="Local input 3" CV="2" mask="XXXVXXXX"
+						 default="1">
+			<enumVal>
+				<enumChoice choice="Locked"/>
+				<enumChoice choice="Unlocked"/>
+				</enumVal>
+			</variable>
+		<variable label="Local input 4" CV="2" mask="XVXXXXXX"
+						 default="1">
+			<enumVal>
+				<enumChoice choice="Locked"/>
+				<enumChoice choice="Unlocked"/>
+				</enumVal>
+			</variable>
+
+		<variable label="Mode 1" CV="3" mask="VXXXXXXX"
+						 default="0">
+			<enumVal>
+				<enumChoice choice="Single pulse"/>
+				<enumChoice choice="Flashing"/>
+				</enumVal>
+			</variable>
+		<variable label="Constant mode 1" CV="3" mask="VVVVVVVV"
+						 default="0">
+			<enumVal>
+				<enumChoice choice="Constant output"/>
+				</enumVal>
+			</variable>
+		<variable label="On time for output 1" CV="3" default="1" mask="XVVVVVVV">
+			<decVal/>
+			</variable>
+
+		<variable label="Mode 2" CV="4" mask="VXXXXXXX"
+						 default="0">
+			<enumVal>
+				<enumChoice choice="Single pulse"/>
+				<enumChoice choice="Flashing"/>
+				</enumVal>
+			</variable>
+		<variable label="Constant mode 2" CV="4" mask="VVVVVVVV"
+						 default="0">
+			<enumVal>
+				<enumChoice choice="Constant output"/>
+				</enumVal>
+			</variable>
+		<variable label="On time for output 2" CV="4" default="1" mask="XVVVVVVV">
+			<decVal/>
+			</variable>
+
+		<variable label="Mode 3" CV="5" mask="VXXXXXXX"
+						 default="0">
+			<enumVal>
+				<enumChoice choice="Single pulse"/>
+				<enumChoice choice="Flashing"/>
+				</enumVal>
+			</variable>
+		<variable label="Constant mode 3" CV="5" mask="VVVVVVVV"
+						 default="0">
+			<enumVal>
+				<enumChoice choice="Constant output"/>
+				</enumVal>
+			</variable>
+		<variable label="On time for output 3" CV="5" default="1" mask="XVVVVVVV">
+			<decVal/>
+			</variable>
+
+		<variable label="Mode 4" CV="6" mask="VXXXXXXX"
+						 default="0">
+			<enumVal>
+				<enumChoice choice="Single pulse"/>
+				<enumChoice choice="Flashing"/>
+				</enumVal>
+			</variable>
+		<variable label="Constant mode 4" CV="6" mask="VVVVVVVV"
+						 default="0">
+			<enumVal>
+				<enumChoice choice="Constant output"/>
+				</enumVal>
+			</variable>
+		<variable label="On time for output 4" CV="6" default="1" mask="XVVVVVVV">
+			<decVal/>
+			</variable>
+
+	</variables>
+
+</decoder>
+
+<pane name="AD4">
+	<column>
+		<display item="Card Address" />
+		<label label=""/>
+		<separator/>
+		<row>
+		  <column>
+			<display item="Local input 1"/>
+			<display item="On time for output 1" label="Output 1 Time"/>
+			<display item="Constant mode 1" format="offradiobutton" label=""/>
+			<display item="Mode 1" label=""/>
+		  </column>
+		  <separator/>
+		  <column>
+			<display item="Local input 2"/>
+			<display item="On time for output 2" label="Output 2 Time"/>
+			<display item="Constant mode 2" format="offradiobutton" label=""/>
+			<display item="Mode 2" label=""/>
+		  </column>
+		  <separator/>
+		  <column>
+			<display item="Local input 3"/>
+			<display item="On time for output 3" label="Output 3 Time"/>
+			<display item="Constant mode 3" format="offradiobutton" label=""/>
+			<display item="Mode 3" label=""/>
+		  </column>
+		  <separator/>
+		  <column>
+			<display item="Local input 4"/>
+			<display item="On time for output 4" label="Output 4 Time"/>
+			<display item="Constant mode 4" format="offradiobutton" label=""/>
+			<display item="Mode 4" label=""/>
+		  </column>
+		</row>
+	</column>
+</pane>
+
+</decoder-config>
