@@ -19,10 +19,12 @@ import jmri.jmrix.loconet.*;
 public class LocoIOFrameTest extends TestCase {
 
 	public void testFrameCreate() {
+		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 		new LocoIOFrame();
 	}
 
 	public void testDispose() {
+		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 		LocoIOFrame f = new LocoIOFrame();
         f.dispose();
 	}
