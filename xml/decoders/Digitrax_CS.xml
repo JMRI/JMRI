@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_CS.xml,v 1.8 2003-06-05 17:45:34 jacobsen Exp $ -->
+<!-- $Id: Digitrax_CS.xml,v 1.9 2003-08-15 15:16:35 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
-					version="6" lastUpdated="20030606"/>
+					version="7" lastUpdated="20030814"/>
 					
 		<!-- made from 150 file (Basic FX) -->
 		<!-- version 3 added BEMF, transponding control, short address -->
@@ -11,11 +11,12 @@
 		<!-- version 4 adjusts versionID range -->
 		<!-- version 5 correct BEMF defaults -->
 		<!-- version 6 - add consist direction - jake -->
+		<!-- version 7 - two outputs, only F0, add Speed Comp Control to pane -->
 
 <decoder>
 	<family name="Basic CS" mfg="Digitrax" lowVersionID="225" highVersionID="239">
-		<model model="DZ121" numOuts="5" numFns="3"/>
-		<model model="DN122K2" numOuts="5" numFns="3"/>
+		<model model="DZ121" numOuts="2" numFns="0"/>
+		<model model="DN122K2" numOuts="2" numFns="0"/>
 	</family>
 
 	<programming direct="no" paged="yes" 
@@ -250,7 +251,7 @@
 				comment="0 is no keep-alive, use with LEDs">
 				<decVal max="15"/>
 			</variable>
-		<variable label="FX rate adjust" CV="62" mask="XXXXVVVV"
+		<variable label="Lighting rate adjust" CV="62" mask="XXXXVVVV"
 				item="Global lighting option 2"
 				comment="0 is fast, 15 is slow, 4 is recommended for start">
 				<decVal max="15"/>
@@ -301,6 +302,7 @@
 	<column>
 		<display item="Vstart/Vmid/Vfull in 128 step mode" />
 		<display item="Short-circuit protection" />
+		<display item="Speed Compensation Control" />
 	</column>
 </pane>
 
