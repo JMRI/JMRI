@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Lenz_DriveSelect.xml,v 1.2 2002-08-08 06:51:48 jacobsen Exp $ -->
+<!-- $Id: Lenz_DriveSelect.xml,v 1.3 2002-08-13 16:39:38 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu"
 			version="1" lastUpdated="20020705" />
@@ -11,6 +11,7 @@
 	<family name="Lenz Drive-Select decoders" mfg="Lenz" 
 			lowVersionID="46" highVersionID="46">
 		<model model="LE0511" numOuts="2" />
+		<model model="LE1014" numOuts="7" />
 	</family>
 
 	<programming direct="yes" paged="yes"
