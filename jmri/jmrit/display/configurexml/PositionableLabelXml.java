@@ -14,7 +14,7 @@ import javax.swing.*;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 
@@ -71,13 +71,14 @@ public class PositionableLabelXml implements XmlAdapter {
         try {
             x = element.getAttribute("x").getIntValue();
             y = element.getAttribute("y").getIntValue();
-            height = element.getAttribute("height").getIntValue();
-            width = element.getAttribute("width").getIntValue();
+            //height = element.getAttribute("height").getIntValue();
+            //width = element.getAttribute("width").getIntValue();
         } catch ( org.jdom.DataConversionException e) {
             log.error("failed to convert PanelEditor's attribute");
         }
         l.setLocation(x,y);
-        l.setSize(width, height);
+        //l.setSize(width, height);
+        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         if (element.getAttribute("text")!=null) {
             p.putLabel(l);
         } else if (element.getAttribute("icon")!=null) {

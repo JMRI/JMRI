@@ -15,7 +15,7 @@ import javax.swing.*;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SensorIconXml implements XmlAdapter {
 
@@ -81,18 +81,14 @@ public class SensorIconXml implements XmlAdapter {
         // find coordinates
         int x = 0;
         int y = 0;
-        int height = 10;
-        int width = 10;
         try {
             x = element.getAttribute("x").getIntValue();
             y = element.getAttribute("y").getIntValue();
-            height = element.getAttribute("height").getIntValue();
-            width = element.getAttribute("width").getIntValue();
         } catch ( org.jdom.DataConversionException e) {
             log.error("failed to convert positional attribute");
         }
         l.setLocation(x,y);
-        l.setSize(width, height);
+        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         p.putSensor(l);
     }
 
