@@ -7,6 +7,7 @@ import jmri.jmrit.catalog.NamedIcon;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 
 import javax.swing.*;
 
@@ -43,7 +44,7 @@ import com.sun.java.util.collections.ArrayList;
  * consistent via the {#setTitle} method.
  *
  * @author Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
- * @version $Revision: 1.40 $
+ * @version $Revision: 1.41 $
  */
 
 public class PanelEditor extends JFrame {
@@ -97,7 +98,8 @@ public class PanelEditor extends JFrame {
     public PanelEditor(String name) {
         super(name);
         this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
-
+		self = this;
+		
         // common items
         JPanel common = new JPanel();
         common.setLayout(new FlowLayout());
@@ -106,6 +108,18 @@ public class PanelEditor extends JFrame {
         common.add(new JLabel(" y:"));
         common.add(nextY);
         this.getContentPane().add(common);
+
+		// add menu - not using PanelMenu, because it now
+		// has other stuff in it?
+        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
+        JMenuBar menuBar = new JMenuBar();
+        JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
+        menuBar.add(fileMenu);
+		fileMenu.add(new jmri.jmrit.display.PanelEditorAction(rb.getString("MenuItemNew")));
+        fileMenu.add(new jmri.configurexml.LoadXmlConfigAction(rb.getString("MenuItemLoad")));
+        fileMenu.add(new jmri.configurexml.StoreXmlUserAction(rb.getString("MenuItemStore")));
+        setJMenuBar(menuBar);
+		
 
         // allow naming the panel
         {
@@ -530,7 +544,8 @@ public class PanelEditor extends JFrame {
     }
 
     JFrame frame;
-
+	PanelEditor self;
+	
     public ArrayList contents = new ArrayList();
 
     /**
@@ -626,7 +641,8 @@ public class PanelEditor extends JFrame {
      */
     public JFrame makeFrame(String name, int width, int height) {
         JFrame targetFrame = new JFrame(name);
-
+		
+		// arrange for scrolling and size services
         JLayeredPane targetPanel = new JLayeredPane(){
             // provide size services, even though a null layout manager is used
             public void setSize(int h, int w) {
@@ -660,7 +676,20 @@ public class PanelEditor extends JFrame {
         targetFrame.getContentPane().setLayout(new BoxLayout(targetFrame.getContentPane(),BoxLayout.Y_AXIS));
         this.setFrame(targetFrame);
         this.setTarget(targetPanel);
-
+        
+        // add menu
+        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
+        JMenuBar menuBar = new JMenuBar();
+        JMenu editMenu = new JMenu(rb.getString("MenuEdit"));
+        menuBar.add(editMenu);
+        editMenu.add(new AbstractAction("Open editor"){
+                public void actionPerformed(ActionEvent e) {
+					self.show();
+                }
+            });
+        targetFrame.setJMenuBar(menuBar);
+        
+		// set initial size, and force layout
         targetPanel.setSize(width, height);
         targetPanel.revalidate();
 
