@@ -18,7 +18,7 @@ import jmri.progdebugger.*;
 /**
  * Base for tests of classes inheriting from VariableValue abstract class
  * @author	Bob Jacobsen, Copyright 2002
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public abstract class VariableValueTest extends TestCase {
 
@@ -217,7 +217,7 @@ public abstract class VariableValueTest extends TestCase {
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, loaded as 5, manually notified
         VariableValue variable = makeVar("label", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
-        Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, variable.getValue().getBackground() );
+        Assert.assertEquals("FROM_FILE color", VariableValue.COLOR_FROMFILE, variable.getValue().getBackground() );
 
         cv.setState(CvValue.UNKNOWN);
         Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, variable.getValue().getBackground() );
@@ -234,8 +234,8 @@ public abstract class VariableValueTest extends TestCase {
         // get a representation
         JTextField rep = (JTextField)variable.getRep("");
 
-        Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, variable.getValue().getBackground() );
-        Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, rep.getBackground() );
+        Assert.assertEquals("FROMFILE color", VariableValue.COLOR_FROMFILE, variable.getValue().getBackground() );
+        Assert.assertEquals("FROMFILE color", VariableValue.COLOR_FROMFILE, rep.getBackground() );
 
         cv.setState(CvValue.UNKNOWN);
 
@@ -259,8 +259,8 @@ public abstract class VariableValueTest extends TestCase {
         // get a representation
         JTextField rep = (JTextField)variable.getRep("");
 
-        Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, variable.getValue().getBackground() );
-        Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, rep.getBackground() );
+        Assert.assertEquals("FROMFILE color", VariableValue.COLOR_FROMFILE, variable.getValue().getBackground() );
+        Assert.assertEquals("FROMFILE color", VariableValue.COLOR_FROMFILE, rep.getBackground() );
 
         cv.setState(CvValue.UNKNOWN);
         Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, variable.getValue().getBackground() );
