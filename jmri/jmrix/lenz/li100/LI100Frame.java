@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 /**
  * Frame to control and connect XPressNet via LI100 interface and comm port
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 2.0 $
+ * @version			$Revision: 2.1 $
  */
 public class LI100Frame extends jmri.jmrix.SerialPortFrame {
 
@@ -21,6 +21,7 @@ public class LI100Frame extends jmri.jmrix.SerialPortFrame {
 			// connect to the port
 			adapter.configureBaudRate((String)baudBox.getSelectedItem());
 			adapter.configureOption1((String)opt1Box.getSelectedItem());
+			adapter.configureOption2((String)opt2Box.getSelectedItem());
 			String errCode = adapter.openPort((String) portBox.getSelectedItem(),"LI100Frame");
 
 			if (errCode == null)	{
