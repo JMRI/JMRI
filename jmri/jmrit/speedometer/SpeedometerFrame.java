@@ -16,33 +16,36 @@ import jmri.jmrit.display.*;
  * and presentation; that should be improved.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class SpeedometerFrame extends javax.swing.JFrame {
 
+    final String blank = "       ";
     JTextField startSensor = new JTextField(5);
     javax.swing.ButtonGroup startGroup 		= new javax.swing.ButtonGroup();
-    javax.swing.JRadioButton startOnEntry  	= new javax.swing.JRadioButton("On entry");
-    javax.swing.JRadioButton startOnExit    = new javax.swing.JRadioButton("On exit");
+    javax.swing.JRadioButton startOnEntry  	= new javax.swing.JRadioButton("entry");
+    javax.swing.JRadioButton startOnExit    = new javax.swing.JRadioButton("exit");
 
     JTextField stopSensor1 = new JTextField(5);
     javax.swing.ButtonGroup stopGroup1 		= new javax.swing.ButtonGroup();
-    javax.swing.JRadioButton stopOnEntry1  	= new javax.swing.JRadioButton("On entry");
-    javax.swing.JRadioButton stopOnExit1    = new javax.swing.JRadioButton("On exit");
+    javax.swing.JRadioButton stopOnEntry1  	= new javax.swing.JRadioButton("entry");
+    javax.swing.JRadioButton stopOnExit1    = new javax.swing.JRadioButton("exit");
 
     JTextField stopSensor2 = new JTextField(5);
     javax.swing.ButtonGroup stopGroup2 		= new javax.swing.ButtonGroup();
-    javax.swing.JRadioButton stopOnEntry2  	= new javax.swing.JRadioButton("On entry");
-    javax.swing.JRadioButton stopOnExit2    = new javax.swing.JRadioButton("On exit");
+    javax.swing.JRadioButton stopOnEntry2  	= new javax.swing.JRadioButton("entry");
+    javax.swing.JRadioButton stopOnExit2    = new javax.swing.JRadioButton("exit");
 
     JTextField distance1 = new JTextField(5);
     JTextField distance2 = new JTextField(5);
 
     JButton startButton = new JButton("Start");
-    JLabel result1 = new JLabel("    ");
-    JLabel time1 = new JLabel("    ");
-    JLabel result2 = new JLabel("    ");
-    JLabel time2 = new JLabel("    ");
+    JButton clearButton = new JButton("Clear");
+
+    JLabel result1 = new JLabel(blank);
+    JLabel time1 = new JLabel(blank);
+    JLabel result2 = new JLabel(blank);
+    JLabel time2 = new JLabel(blank);
 
     SensorIcon startSensorIcon;
     SensorIcon stopSensorIcon1;
@@ -68,34 +71,40 @@ public class SpeedometerFrame extends javax.swing.JFrame {
         // add items to GUI
         JPanel pane1 = new JPanel();
         pane1.setLayout(new FlowLayout());
-        pane1.add(new JLabel("1st sensor:"));
+        pane1.add(new JLabel("Sensor "));
         startSensor.setToolTipText("Number of sensor starting the timer");
         pane1.add(startSensor);
+        pane1.add(new JLabel(" starts timers on "));
         pane1.add(startOnEntry);
         pane1.add(startOnExit);
         startSensorIcon = new SensorIcon();
+        startSensorIcon.setToolTipText("Shows sensor state; click to change");
         pane1.add(startSensorIcon);
         getContentPane().add(pane1);
 
         JPanel pane2 = new JPanel();
         pane2.setLayout(new FlowLayout());
-        pane2.add(new JLabel("2nd sensor:"));
+        pane2.add(new JLabel("Sensor "));
         stopSensor1.setToolTipText("Number of sensor ending the 1st timer");
         pane2.add(stopSensor1);
+        pane2.add(new JLabel(" stops timer 1 on "));
         pane2.add(stopOnEntry1);
         pane2.add(stopOnExit1);
         stopSensorIcon1 = new SensorIcon();
+        stopSensorIcon1.setToolTipText("Shows sensor state; click to change");
         pane2.add(stopSensorIcon1);
         getContentPane().add(pane2);
 
         JPanel pane3 = new JPanel();
         pane3.setLayout(new FlowLayout());
-        pane3.add(new JLabel("3rd sensor:"));
+        pane3.add(new JLabel("Sensor "));
         stopSensor2.setToolTipText("Number of sensor ending the 2nd timer");
         pane3.add(stopSensor2);
+        pane3.add(new JLabel(" stops timer 2 on "));
         pane3.add(stopOnEntry2);
         pane3.add(stopOnExit2);
         stopSensorIcon2 = new SensorIcon();
+        stopSensorIcon2.setToolTipText("Shows sensor state; click to change");
         pane3.add(stopSensorIcon2);
         getContentPane().add(pane3);
 
@@ -112,6 +121,9 @@ public class SpeedometerFrame extends javax.swing.JFrame {
         getContentPane().add(pane5);
 
         getContentPane().add(startButton);
+        getContentPane().add(clearButton);
+        clearButton.setVisible(false);
+
         // see if there's a sensor manager, if not disable
         if (null == InstanceManager.sensorManagerInstance()) {
             startButton.setEnabled(false);
@@ -120,17 +132,17 @@ public class SpeedometerFrame extends javax.swing.JFrame {
 
         JPanel pane6 = new JPanel();
         pane6.setLayout(new FlowLayout());
-        pane6.add(new JLabel("Speed 1 (scale MPH):"));
+        pane6.add(new JLabel("Timer1 speed (scale MPH):"));
         pane6.add(result1);
-        pane6.add(new JLabel("  Time 1 (seconds):"));
+        pane6.add(new JLabel("  Time (seconds):"));
         pane6.add(time1);
         getContentPane().add(pane6);
 
         JPanel pane7 = new JPanel();
         pane7.setLayout(new FlowLayout());
-        pane7.add(new JLabel("Speed 2 (scale MPH):"));
+        pane7.add(new JLabel("Timer2 speed (scale MPH):"));
         pane7.add(result2);
-        pane7.add(new JLabel("  Time 2 (seconds):"));
+        pane7.add(new JLabel("  Time (seconds):"));
         pane7.add(time2);
         getContentPane().add(pane7);
 
@@ -142,6 +154,14 @@ public class SpeedometerFrame extends javax.swing.JFrame {
                 }
             });
 
+        clearButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    time1.setText(blank);
+                    time2.setText(blank);
+                    result1.setText(blank);
+                    result2.setText(blank);
+                }
+            });
         // start displaying the sensor status when the number is entered
         startSensor.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -171,6 +191,11 @@ public class SpeedometerFrame extends javax.swing.JFrame {
     void setup() {
         startButton.setEnabled(false);
         startButton.setToolTipText("You can only configure this once");
+        startButton.setVisible(false);
+
+        clearButton.setEnabled(true);
+        clearButton.setVisible(true);
+
         // set start sensor
         Sensor s;
         try {
@@ -225,7 +250,7 @@ public class SpeedometerFrame extends javax.swing.JFrame {
                             double feet = Integer.parseInt(distance1.getText());
                             double speed = (feet/5280.)*(3600./secs);
                             if (log.isDebugEnabled()) log.debug("calc from "+secs+","+feet+":"+speed);
-                            result1.setText(String.valueOf(speed).substring(0,5));
+                            result1.setText(String.valueOf(speed).substring(0,4));
                             String time = String.valueOf(secs);
                             int offset = time.indexOf(".");
                             if (offset==-1) offset=time.length();
@@ -264,7 +289,7 @@ public class SpeedometerFrame extends javax.swing.JFrame {
                             double feet = Integer.parseInt(distance2.getText());
                             double speed = (feet/5280.)*(3600./secs);
                             if (log.isDebugEnabled()) log.debug("calc from "+secs+","+feet+":"+speed);
-                            result2.setText(String.valueOf(speed).substring(0,5));
+                            result2.setText(String.valueOf(speed).substring(0,4));
                             String time = String.valueOf(secs);
                             int offset = time.indexOf(".");
                             if (offset==-1) offset=time.length();
