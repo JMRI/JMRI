@@ -17,9 +17,13 @@ import jmri.Sensor;
  * state until the next change on the serial bus.  E.g. you can manually
  * change a state via an icon, and not have it change back the next time
  * that node is polled.
+ * <P>
+ * The SMINI is defined as having 1 input and 2 outputs cards.<br>
+ * USIC/SUSIC nodes can have 0-63 inputs and 0-63 output cards, but no
+ * more than 64 total cards.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class SerialNode {
 
@@ -45,9 +49,6 @@ public class SerialNode {
     // node definition instance variables
     public int nodeAddress = 0;                 // UA, Node address, 0-127 allowed
     protected int nodeType = SMINI;             // See above
-    protected int numInputCards = 1;            // 1 on SMINI, 0-63 on USIC/SUSIC 
-    protected int numOutputCards = 2;           // 2 on SMINI, 0-63 on USIC/SUSIC
-                                                // Note:  Only 64 total cards allowed on USIC/SUSIC
     protected int bitsPerCard = 24;             // 24 for SMINI and USIC, 24 or 32 for SUSIC
     protected int num2LSearchLights = 0;        // SMINI only, 'NS' number of two lead bicolor signals
     protected byte[] locSearchLightBits = new byte[48]; // SMINI only, 0 = not searchlight LED, 
@@ -68,6 +69,41 @@ public class SerialNode {
         }
     }
 
+    public int numInputCards() {
+    	int result = 0;
+    	for (int i=0; i<cardTypeLocation.length; i++) 
+    		if (cardTypeLocation[i]==INPUT_CARD) result++;
+    		
+    	// check consistency
+    	if (nodeType==SMINI && result!=1) 
+    		warn("C/MRI SMINI node with "+result+" input cards");
+    	if (nodeType==USIC_SUSIC && result>=64) 
+    		warn("C/MRI USIC/SUSIC node with "+result+" input cards");
+    		
+    	return result;
+    }
+
+    public int numOutputCards() {
+    	int result = 0;
+    	for (int i=0; i<cardTypeLocation.length; i++) 
+    		if (cardTypeLocation[i]==OUTPUT_CARD) result++;
+    		
+    	// check consistency
+    	if (nodeType==SMINI && result!=1) 
+    		warn("C/MRI SMINI node with "+result+" output cards");
+    	if (nodeType==USIC_SUSIC && result>=64) 
+    		warn("C/MRI USIC/SUSIC node with "+result+" output cards");
+    		
+    	return result;
+    }
+    
+    static boolean warned = false;
+    void warn(String s) {
+    	if (warned) return;
+    	warned = true;
+    	log.warn(s);
+    }
+    
     Sensor[] sensorArray;
     int[] sensorLastSetting;
 
