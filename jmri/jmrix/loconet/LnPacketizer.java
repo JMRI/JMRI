@@ -31,7 +31,7 @@ import com.sun.java.util.collections.NoSuchElementException;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.7 $
+ * @version 		$Revision: 1.8 $
  *
  */
 public class LnPacketizer extends LnTrafficController {
@@ -107,7 +107,7 @@ public class LnPacketizer extends LnTrafficController {
     }
 
     // methods to connect/disconnect to a source of data in a LnPortController
-    private LnPortController controller = null;
+    protected LnPortController controller = null;
 
     /**
      * Make connection to existing LnPortController object.
@@ -143,7 +143,7 @@ public class LnPacketizer extends LnTrafficController {
      * Forward a LocoNetMessage to all registered listeners.
      * @param m Message to forward. Listeners should not modify it!
      */
-    protected void notify(LocoNetMessage m) {
+    public void notify(LocoNetMessage m) {
         // make a copy of the listener vector to synchronized not needed for transmit
         Vector v;
         synchronized(this) {
