@@ -2,10 +2,15 @@
 
 package jmri.jmrit.roster;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Component;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 
-import javax.swing.*;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import com.sun.java.util.collections.List;
 
@@ -13,7 +18,7 @@ import com.sun.java.util.collections.List;
  * Display and edit a RosterEntry.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class RosterEntryPane extends javax.swing.JPanel  {
 
@@ -33,7 +38,10 @@ public class RosterEntryPane extends javax.swing.JPanel  {
     Component pane = null;
     RosterEntry re = null;
 
+    final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
+
     public RosterEntryPane(RosterEntry r) {
+
         id.setText(r.getId());
         filename.setText(r.getFileName());
         dccAddress.setText(r.getDccAddress());
@@ -51,16 +59,17 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         re = r;
 
         // add options
-        id.setToolTipText("Identifies this locomotive in the roster");
+        id.setToolTipText(rb.getString("ToolTipID"));
 
-        dccAddress.setToolTipText("This is filled in automatically by the program");
-        decoderModel.setToolTipText("This is filled in automatically by your earlier selections");
-        decoderFamily.setToolTipText("This is filled in automatically by your earlier selections");
-        filename.setToolTipText("This is filled in automatically by the program");
+        dccAddress.setToolTipText(rb.getString("ToolTipDccAddress"));
+        decoderModel.setToolTipText(rb.getString("ToolTipDecoderModel"));
+        decoderFamily.setToolTipText(rb.getString("ToolTipDecoderFamily"));
+        filename.setToolTipText(rb.getString("ToolTipFilename"));
 
         id.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    if (checkDuplicate()) JOptionPane.showMessageDialog(pane, "This ID is a duplicate, please change it");
+                    if (checkDuplicate())
+                        JOptionPane.showMessageDialog(pane, rb.getString("ErrorDuplicateID"));
 
                 }
             });
@@ -68,40 +77,40 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         // assemble the GUI
         setLayout(new GridLayout(12,2));
 
-        add(new JLabel("ID:"));
+        add(new JLabel(rb.getString("FieldID")));
         add(id);
 
-        add(new JLabel("Road Name:"));
+        add(new JLabel(rb.getString("FieldRoadName")));
         add(roadName);
 
-        add(new JLabel("Road Number:"));
+        add(new JLabel(rb.getString("FieldRoadNumber")));
         add(roadNumber);
 
-        add(new JLabel("Manufacturer:"));
+        add(new JLabel(rb.getString("FieldManufacturer")));
         add(mfg);
 
-        add(new JLabel("Owner:"));
+        add(new JLabel(rb.getString("FieldOwner")));
         add(owner);
 
-        add(new JLabel("Model:"));
+        add(new JLabel(rb.getString("FieldModel")));
         add(model);
 
-        add(new JLabel("DCC Address:"));
+        add(new JLabel(rb.getString("FieldDCCAddress")));
         add(dccAddress);
 
-        add(new JLabel("Comment:"));
+        add(new JLabel(rb.getString("FieldComment")));
         add(comment);
 
-        add(new JLabel("Decoder Family:"));
+        add(new JLabel(rb.getString("FieldDecoderFamily")));
         add(decoderFamily);
 
-        add(new JLabel("Decoder Model:"));
+        add(new JLabel(rb.getString("FieldDecoderModel")));
         add(decoderModel);
 
-        add(new JLabel("Decoder Comment:"));
+        add(new JLabel(rb.getString("FieldDecoderComment")));
         add(decoderComment);
 
-        add(new JLabel("Filename:"));
+        add(new JLabel(rb.getString("FieldFilename")));
         add(filename);
 
     }
