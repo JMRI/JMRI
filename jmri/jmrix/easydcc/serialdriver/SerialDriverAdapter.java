@@ -22,11 +22,11 @@ import javax.comm.SerialPort;
  * an EasyDcc command station via a serial com port.
  * Normally controlled by the SerialDriverFrame class.
  * <P>
- * The current implementation only handles the 19,200 baud rate, and does
+ * The current implementation only handles the 9,600 baud rate, and does
  * not use any other options at configuration time.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class SerialDriverAdapter extends EasyDccPortController  implements jmri.jmrix.SerialPortAdapter {
 
