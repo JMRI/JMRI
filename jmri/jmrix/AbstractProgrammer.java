@@ -12,7 +12,7 @@ import java.util.Vector;
  * Common implementations for the Programmer interface.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public abstract class AbstractProgrammer implements Programmer {
 
@@ -119,8 +119,8 @@ public abstract class AbstractProgrammer implements Programmer {
      */
     abstract protected void timeout();
 
-    static private int SHORT_TIMEOUT=2000;
-    static private int LONG_TIMEOUT=60000;
+    protected int SHORT_TIMEOUT=2000;
+    protected int LONG_TIMEOUT=60000;
 
     javax.swing.Timer timer = null;
 
