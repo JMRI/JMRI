@@ -45,6 +45,34 @@ properties -a \
         jmri/jmrix/loconet/LocoNetBundle.properties \
         jmri/NamedBeanBundle.properties \
         \
+        apps/AppsBundle_cs.properties \
+        apps/AppsConfigBundle_cs.properties \
+        apps/ActionListBundle_cs.properties \
+        jmri/jmrit/beantable/BeanTableBundle_cs.properties \
+        jmri/jmrit/display/DisplayBundle_cs.properties \
+        jmri/jmrit/JmritDebugBundle_cs.properties \
+        jmri/jmrit/JmritToolsBundle_cs.properties \
+        jmri/jmrit/powerpanel/PowerPanelBundle_cs.properties \
+        jmri/jmrit/roster/JmritRosterBundle_cs.properties \
+        jmri/jmrix/JmrixSystemsBundle_cs.properties \
+        jmri/jmrix/lenz/XNetBundle_cs.properties \
+        jmri/jmrix/loconet/LocoNetBundle_cs.properties \
+        jmri/NamedBeanBundle_cs.properties \
+        \
+        apps/AppsBundle_cs_CZ.properties \
+        apps/AppsConfigBundle_cs_CZ.properties \
+        apps/ActionListBundle_cs_CZ.properties \
+        jmri/jmrit/beantable/BeanTableBundle_cs_CZ.properties \
+        jmri/jmrit/display/DisplayBundle_cs_CZ.properties \
+        jmri/jmrit/JmritDebugBundle_cs_CZ.properties \
+        jmri/jmrit/JmritToolsBundle_cs_CZ.properties \
+        jmri/jmrit/powerpanel/PowerPanelBundle_cs_CZ.properties \
+        jmri/jmrit/roster/JmritRosterBundle_cs_CZ.properties \
+        jmri/jmrix/JmrixSystemsBundle_cs_CZ.properties \
+        jmri/jmrix/lenz/XNetBundle_cs_CZ.properties \
+        jmri/jmrix/loconet/LocoNetBundle_cs_CZ.properties \
+        jmri/NamedBeanBundle_cs_CZ.properties \
+        \
         apps/AppsBundle_de.properties \
         apps/AppsConfigBundle_de.properties \
         jmri/jmrit/beantable/BeanTableBundle_de.properties \
@@ -58,7 +86,19 @@ properties -a \
         jmri/jmrix/loconet/LocoNetBundle_de.properties \
         jmri/NamedBeanBundle_de.properties \
         \
-        jmri/jmrit/roster/JmritRosterBundle_en_GB.properties 
+        jmri/jmrit/roster/JmritRosterBundle_en_GB.properties \
+        \
+		apps/AppsBundle_fr.properties \
+		apps/AppsConfigBundle_fr.properties \
+		jmri/jmrit/beantable/BeanTableBundle_fr.properties \
+		jmri/jmrit/display/DisplayBundle_fr.properties \
+		jmri/jmrit/JmritDebugBundle_fr.properties \
+		jmri/jmrit/JmritToolsBundle_fr.properties \
+		jmri/jmrit/powerpanel/PowerPanelBundle_fr.properties \
+		jmri/jmrit/roster/JmritRosterBundle_fr.properties \
+		jmri/NamedBeanBundle_fr.properties \
+		
+
 
 # we're still missing a CodeWarrior target
 # and due to repository mismatches (cant checkout two files from different
