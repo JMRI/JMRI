@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.24 $)
+distribution.  ($Revision: 1.26 $)
 
 Start with a directory, typically called "Distributions", that
 contains:
@@ -19,14 +19,36 @@ contains:
   (Windows is separate, and involves a shared disk with VPC, but
    basically all the necessary stuff is in a VPC directory)
    
-This probably already exists....
+This probably already exists. Make sure that scripts, etc, have
+been updated!
+
+Make sure everything is up-to-date:
+
+( ) Remake the help index  (need a command line approach, so can put in ant!)
+    cd JMRI/jhelp/help/en
+    (launch JHelpDev, e.g. "open jhelpdev.jar")
+    (navigate to JHelpDev.xml & open it)
+    
+( ) To ensure that you've got the HEAD of CVS
+
+    cvs -q update -d help jython lib resources xml
+    cd java
+    cvs -q update -d build.xml jmri.jpx JMRILibraries.library lib manifest src test
+
+    (default.lcf?)
+    
+    
+To actually create the distribution:
 
 ( ) Go to your working directory and
-	cvs tag Release-1-2-3 src test manifest default.lcf jmri.jpx build.xml 
+	cvs tag Release-1-2-3 src test build.xml jmri.jpx JMRILibraries.library manifest
 	cd ..
-	cvs tag Release-1-2-3 xml resources help jython
+	cvs tag Release-1-2-3 help jython resources xml
 	cd lib
-	cvs tag Release-1-2-3 collections.jar comm.jar crimson.jar jdom-jdk11.jar jh.jar log4.j.jar security.policy
+	cvs tag Release-1-2-3 collections.jar comm.jar crimson.jar jdom-jdk11.jar jh.jar log4j.jar security.policy
+	
+	The following two tags are needed for the build & test process:
+	cvs tag Release-1-2-3 Serialio.jar junit.jar
 	
 	(be sure that's the default.lcf you want!)
 
@@ -44,7 +66,9 @@ This probably already exists....
 	Ant will launch three StuffIt processes; click
 	each to proceed, and wait for them to be running.
 	
-( ) Once they launch, you can start building the Windows installer.
+( ) Once they launch, you can start building the Windows installer
+	in parallel.
+	
 	Launch Installer Vise from the last build file.
 	"Update archive"; Check changes make sense.
 	Click the "test archive" button (right one of the pair)
@@ -61,12 +85,19 @@ This probably already exists....
 ( ) Once the 4th StuffIt process is done, start uploading via
 	ant -Drelease=Release-1-2-3 -Dnumber=1.2.3 release3
 
-	The Windows .exe must be present before the next step
+( ) Create and upload the XSLT pages. This can be done at any time,
+    but doing it now works well in parallel
+    
+    cd ../xml/XLST
+    ant xslt
+    ant upload
+
+( ) The Windows .exe must be present before the next step
 	
 ( ) When ready to upload the Windows version:
 	ant -Drelease=Release-1-2-3 -Dnumber=1.2.3 release4
 	
-	This also creates and uploads the JavaDocs
+    This also creates and uploads the JavaDocs as a last step
 		
 ( ) Format the email announcement; you'll cut and paste parts
 	to the release form.
