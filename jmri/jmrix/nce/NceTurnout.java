@@ -3,7 +3,7 @@
  *
  * Description:		extend jmri.AbstractTurnout for NCE layouts
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 
 /**
@@ -20,17 +20,19 @@ import jmri.NmraPacket;
 
 public class NceTurnout extends AbstractTurnout {
 
-	/**
-	 * NCE turnouts use the NMRA number (0-511) as their numerical identification.
-	 */
+    final String prefix = "NT";
 
-	public NceTurnout(int number) {
-		_number = number;
-		// At construction, register for messages
-	}
+    /**
+     * NCE turnouts use the NMRA number (0-511) as their numerical identification.
+     */
+
+    public NceTurnout(int number) {
+        super("NT"+number);
+        _number = number;
+        // At construction, register for messages
+    }
 
 	public int getNumber() { return _number; }
-	public String getSystemName() { return "NT"+getNumber(); }
 
 	// Handle a request to change state by sending a turnout command
 	protected void forwardCommandChangeToLayout(int s) {
