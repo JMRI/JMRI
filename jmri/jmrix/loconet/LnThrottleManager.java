@@ -19,13 +19,11 @@ public class LnThrottleManager implements ThrottleManager, SlotListener
     }
 
     /**
-     * Get a throttle for a given address.
-     *
-     * @param address The decoder address the throttle will use.
-     * @return A LocoNet throttle using the given address or null if no
-     * such throttle can be created. For example,
-     * Null is returned if the decoder address
-     * cannot be found.
+     * Request a throttle, given a decoder address. When the decoder address
+     * is located, the ThrottleListener gets a callback via the ThrottleListener.notifyThrottleFound
+     * method.
+     * @param address The decoder address desired.
+     * @param l The ThrottleListener awaiting notification of a found throttle.
      */
     public void requestThrottle(int address, ThrottleListener l)
     {
@@ -37,6 +35,11 @@ public class LnThrottleManager implements ThrottleManager, SlotListener
         slotManager.slotFromLocoAddress(address, this);
     }
 
+    /**
+     * SlotListener contract. Get notification that an address has changed slot.
+     * This method creates a throttle for all ThrottleListeners of that address
+     * and notifies them via the ThrottleListener.notifyThrottleFound method.
+     */
     public void notifyChangedSlot(LocoNetSlot s)
     {
         Integer address = new Integer(s.locoAddr());
