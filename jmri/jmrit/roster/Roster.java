@@ -29,7 +29,7 @@ import org.jdom.output.*;
  * whether it should...
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  * @see             jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -56,18 +56,30 @@ public class Roster extends XmlFile {
 		return _instance;
 	}
 
+    /**
+     * Add a RosterEntry object to the in-memory Roster.
+     * @param e Entry to add
+     */
 	public void addEntry(RosterEntry e) {
 		if (log.isDebugEnabled()) log.debug("Add entry "+e);
 		_list.add(_list.size(), e);
 		setDirty(true);
 	}
 
+    /**
+     * Remove a RosterEntry object from the in-memory Roster.  This
+     * does not delete the file for the RosterEntry!
+     * @param e Entry to remove
+     */
 	public void removeEntry(RosterEntry e) {
 		if (log.isDebugEnabled()) log.debug("Remove entry "+e);
 		_list.remove(_list.indexOf(e));
 		setDirty(true);
 	}
 
+    /**
+     * @return Number of entries in the Roster
+     */
 	public int numEntries() { return _list.size(); }
 
 	/**
@@ -106,6 +118,9 @@ public class Roster extends XmlFile {
 		return null;
 	}
 
+    /**
+     * List of contained RosterEntry elements.
+     */
 	protected List _list = new ArrayList();
 
 	/**
@@ -141,6 +156,13 @@ public class Roster extends XmlFile {
 		return true;
 	}
 
+    /**
+     * Write the entire roster to a file. This does not do backup; that has
+     * to be done separately. See writeRosterFile() for a function that
+     * finds the default location, does a backup and then calls this.
+     * @param name Filename for new file
+     * @throws IOException
+     */
 	void writeFile(String name) throws java.io.IOException {
 		if (log.isDebugEnabled()) log.debug("writeFile "+name);
 		// This is taken in large part from "Java and XML" page 368
