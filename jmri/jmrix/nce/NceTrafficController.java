@@ -20,7 +20,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface {
 
@@ -67,9 +67,14 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * Forward a preformatted message to the actual interface.
      */
     public void sendNceMessage(NceMessage m, NceListener reply) {
+        replyBinary = m.isBinary();
+        replyLen = m.getReplyLen();
         sendMessage(m, reply);
     }
 
+    protected int replyLen;
+    protected boolean replyBinary;
+    
     protected AbstractMRMessage enterProgMode() {
         return NceMessage.getProgMode();
     }
@@ -96,17 +101,25 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     protected AbstractMRReply newReply() { return new NceReply(); }
 
     protected boolean endOfMessage(AbstractMRReply msg) {
-        // detect that the reply buffer ends with "COMMAND: " (note ending space)
-        int num = msg.getNumDataElements();
-        if ( num >= 9) {
-            // ptr is offset of last element in NceReply
-            int ptr = num-1;
-            if (msg.getElement(ptr-1) != ':') return false;
-            if (msg.getElement(ptr)   != ' ') return false;
-            if (msg.getElement(ptr-2) != 'D') return false;
-            return true;
+        // first try boolean
+        if (replyBinary) {
+            if (msg.getNumDataElements() >= replyLen )
+                return true;
+            else 
+                return false;
+        } else {
+            // detect that the reply buffer ends with "COMMAND: " (note ending space)
+            int num = msg.getNumDataElements();
+            if ( num >= 9) {
+                // ptr is offset of last element in NceReply
+                int ptr = num-1;
+                if (msg.getElement(ptr-1) != ':') return false;
+                if (msg.getElement(ptr)   != ' ') return false;
+                if (msg.getElement(ptr-2) != 'D') return false;
+                return true;
+            }
+            else return false;
         }
-        else return false;
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceTrafficController.class.getName());
