@@ -12,11 +12,22 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the NceMessage class
  * @author			Bob Jacobsen Copyright 2002-2004
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 
 public class NceMessageTest extends TestCase {
 
+    // ensure that the static useBinary value is left OK
+    static boolean saveUseBinary;
+    
+    public void setUp() {
+        saveUseBinary = NceMessage.useBinary;
+    }
+    
+    public void tearDown() {
+        NceMessage.useBinary = saveUseBinary;
+    }
+    
 	public void testCreate() {
 		NceMessage m = new NceMessage(1);
 	}
@@ -28,7 +39,7 @@ public class NceMessageTest extends TestCase {
 		m.setElement(2, 0xA2);
 		m.setElement(3, 0x00);
 		m.setBinary(true);
-		Assert.assertEquals("string compare ", "81 02 a2 00", m.toString());
+		Assert.assertEquals("string compare ", "81 02 A2 00", m.toString());
 	}
 
 	public void testToASCIIString() {
@@ -42,12 +53,20 @@ public class NceMessageTest extends TestCase {
 		Assert.assertEquals("string compare ", "P 261", m.toString());
 	}
 
-	public void testGetEnable() {
+	public void testGetEnableAscii() {
+	    NceMessage.useBinary = false;
 		NceMessage m = NceMessage.getEnableMain();
 		Assert.assertEquals("length", 1, m.getNumDataElements());
 		Assert.assertEquals("opCode", 'E', m.getOpCode());
 	}
 
+	public void testGetEnableBinary() {
+	    NceMessage.useBinary = true;
+		NceMessage m = NceMessage.getEnableMain();
+		Assert.assertEquals("length", 1, m.getNumDataElements());
+		Assert.assertEquals("opCode", 0x89, m.getOpCode());
+	}
+	
 	public void testRecognizeEnable() {
 		NceMessage m = NceMessage.getEnableMain();
 		Assert.assertEquals("isEnableMain", true, m.isEnableMain());
@@ -74,9 +93,16 @@ public class NceMessageTest extends TestCase {
 		Assert.assertEquals("string compare ", "S2 251", m.toString());
 	}
 
-	public void testCheckPacketMessage1() {
+	public void testCheckPacketMessage1Ascii() {
+	    NceMessage.useBinary = false;
 		NceMessage m = NceMessage.sendPacketMessage(new byte[]{(byte)0x81,(byte)0xff,(byte)0x7e});
 		Assert.assertEquals("content", "S C02 81 FF 7E", m.toString());
+	}
+
+	public void testCheckPacketMessage1Bin() {
+	    NceMessage.useBinary = true;
+		NceMessage m = NceMessage.sendPacketMessage(new byte[]{(byte)0x81,(byte)0xff,(byte)0x7e});
+		Assert.assertEquals("content", "93 02 81 FF 7E", m.toString());
 	}
 
 	// from here down is testing infrastructure

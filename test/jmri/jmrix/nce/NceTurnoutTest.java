@@ -3,7 +3,7 @@
  *
  * Description:	    tests for the jmri.jmrix.nce.NceTurnout class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 
 package jmri.jmrix.nce;
@@ -28,12 +28,14 @@ public class NceTurnoutTest extends AbstractTurnoutTest {
 
 	public void checkThrownMsgSent() {
 		Assert.assertTrue("message sent", tcis.outbound.size()>0);
-		Assert.assertEquals("content", "S C02 81 FE 7F", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
+		// Assert.assertEquals("content", "S C02 81 FE 7F", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
+		Assert.assertEquals("content", "93 02 81 FE 7F", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
 	}
 
 	public void checkClosedMsgSent() {
 		Assert.assertTrue("message sent", tcis.outbound.size()>0);
-		Assert.assertEquals("content", "S C02 81 FF 7E", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
+		//Assert.assertEquals("content", "S C02 81 FF 7E", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
+		Assert.assertEquals("content", "93 02 81 FF 7E", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
 	}
 
 	// from here down is testing infrastructure

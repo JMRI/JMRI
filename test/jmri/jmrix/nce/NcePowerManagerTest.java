@@ -14,7 +14,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the NcePowerManager class.
  *
  * @author	Bob Jacobsen
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class NcePowerManagerTest extends AbstractPowerManagerTest {
 
@@ -92,11 +92,11 @@ public class NcePowerManagerTest extends AbstractPowerManagerTest {
     }
 
     protected boolean outboundOnOK(int index) {
-        return 'E' == ((NceMessage)(controller.outbound.elementAt(index))).getOpCode();
+        return ((NceMessage)(controller.outbound.elementAt(index))).isEnableMain();
     }
 
     protected boolean outboundOffOK(int index) {
-        return 'K' == ((NceMessage)(controller.outbound.elementAt(index))).getOpCode();
+        return ((NceMessage)(controller.outbound.elementAt(index))).isKillMain();
     }
 
     // setup a default NceTrafficController interface
