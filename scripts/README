@@ -129,9 +129,8 @@ but not yet Ops Mode.
 specific functions.  For more information, please see 
 http://jmri.sourceforge.net/SymbProg/index.html
 
-"LocoNet Commands" -  a window what allows limited interaction with the LocoNet. It 
-contains buttons for sending "power on", "power off" and "turnout request" messages 
-to the LocoNet.  
+"Send Packet" -  a window what allows you to send an arbitrary packet to the
+LocoNet.  Type in hex pairs, such as "b2 11 40 1c", then press 'Send'.
 
 "Slot Monitor" - Displays the contents of the command station slots.  These 
 are used by throttles to control locomotives.  If you uncheck the box at the top, 
