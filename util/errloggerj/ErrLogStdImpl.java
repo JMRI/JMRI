@@ -9,28 +9,28 @@
 package ErrLoggerJ;
 
 
-class ErrLogStdImpl extends ErrLogBase {
-	void msg(int severity, 
+class ErrLogStdImpl implements ErrLogBase {
+	public void msg(int severity, 
                 String facility, 
                 String code,
                 String text) {
           System.out.println("ErrLogger:"+labels[severity-ErrLog.debugging]+":"+facility+":"+code+":"+text);
           }
 
-    void msg(int severity, 
+    public void msg(int severity, 
                 String facility, 
                 int code,
                 String text) {
           this.msg(severity, facility, String.valueOf(code), text);
           }
 
-    boolean logging(int severity, 
+    public boolean logging(int severity, 
                 String facility, 
                 String code) {
           return true;   // !!
           }
 
-    boolean logging(int severity, 
+    public boolean logging(int severity, 
                 String facility, 
                 int code){
           return true;   // !!

@@ -2,7 +2,7 @@
  * ErrLogBase.java
  *
  * Description:		Base class for ErrLoggerJ implementations. Note that, unlike the
- 					C++ package, this is a seperate base class from the ErrLogger class.
+ 					C++ package, this is an interface, not a subclass of the ErrLogger class.
  * @author			Bob Jacobsen
  * @version			
  */
@@ -10,7 +10,7 @@
 package ErrLoggerJ;
 
 
-abstract class ErrLogBase {
+interface ErrLogBase {
 	abstract void msg(int severity, 
                 String facility, 
                 String code,
@@ -30,7 +30,7 @@ abstract class ErrLogBase {
                 int code);
                 
     // static data to improve logging speed
-    protected static String labels[] = {"debugging", "trace", "routine", "warning", "error", "fatal"};
+    static final String labels[] = {"debugging", "trace", "routine", "warning", "error", "fatal"};
 
 }
 
