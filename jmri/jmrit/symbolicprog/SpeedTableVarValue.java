@@ -2,19 +2,12 @@
 
 package jmri.jmrit.symbolicprog;
 
-import jmri.Programmer;
-import jmri.InstanceManager;
-import jmri.ProgListener;
-
 import java.awt.*;
-import java.awt.event.*;
-import java.beans.PropertyChangeListener;
-import java.util.Vector;
+import java.beans.*;
+import java.util.*;
+
 import javax.swing.*;
-import javax.swing.text.*;
 import javax.swing.event.*;
-import com.sun.java.util.collections.List;
-import com.sun.java.util.collections.ArrayList;
 
 /**
  * SpeedTableVarValue.java
@@ -39,13 +32,13 @@ import com.sun.java.util.collections.ArrayList;
  *<P>
  * Description:		Extends VariableValue to represent a NMRA long address
  * @author			Bob Jacobsen, Alex Shepherd   Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
 
-	final int nValues = 28;
-	BoundedRangeModel[] models = new BoundedRangeModel[nValues];
+    final int nValues = 28;
+    BoundedRangeModel[] models = new BoundedRangeModel[nValues];
 
 	/**
 	 * Create the object with a "standard format ctor".  Note that max and min are ignored.
@@ -94,7 +87,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 		for (int i=0; i<nValues; i++) {
 			if (r == models[i]) {
 				// found it, and i is useful!
-				setModel(i, r.getValue());
+                                setModel(i, r.getValue());
 				break; // no need to continue loop
 			}
 		}
@@ -106,14 +99,21 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 			models[i].setValue(value);
 		// update the CV
 		((CvValue)_cvVector.elementAt(getCvNum()+i)).setValue(value);
-		// check the neighbors, and force them if needed
+                // if programming, that's it
+                if (isReading || isWriting) return;
+
+		// otherwise check the neighbors, and force them if needed
 		if (i>0) {
 			// left neighbour
-			if (models[i-1].getValue() > value)  setModel(i-1, value);
+			if (models[i-1].getValue() > value)  {
+                            setModel(i-1, value);
+			}
 		}
 		if (i<nValues-1) {
 			// right neighbour
-			if (value > models[i+1].getValue())  setModel(i+1, value);
+			if (value > models[i+1].getValue()) {
+                            setModel(i+1, value);
+			}
 		}
 	}
 
@@ -159,7 +159,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 	Color _defaultColor;
 	// implement an abstract member to set colors
 	void setColor(Color c) {
-		prop.firePropertyChange("Value", null, null);
+		// prop.firePropertyChange("Value", null, null);
 	}
 
 	public Component getRep(String format)  {
@@ -314,14 +314,15 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         }
     }
 
-	/**
-	 * IDLE if a read/write operation is not in progress.  During an operation, it
-	 * indicates the index of the CV to handle when the current programming operation
-	 * finishes.
-	 */
-	private int _progState = IDLE;
-	private static final int IDLE = -1;
-	boolean isReading;
+    /**
+     * IDLE if a read/write operation is not in progress.  During an operation, it
+     * indicates the index of the CV to handle when the current programming operation
+     * finishes.
+     */
+    private int _progState = IDLE;
+    private static final int IDLE = -1;
+    boolean isReading;
+    boolean isWriting;
 
 	//
 	public void read() {
@@ -329,6 +330,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
  		setBusy(true);  // will be reset when value changes
 		if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in read()");
 		isReading = true;
+                isWriting = false;
 		_progState = -1;
 		if (log.isDebugEnabled()) log.debug("start series of read operations");
 		readNext();
@@ -341,6 +343,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
  		super.setState(STORED);
 		if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in write()");
 		isReading = false;
+                isWriting = true;
 		_progState = -1;
 		if (log.isDebugEnabled()) log.debug("start series of write operations");
  		writeNext();
@@ -352,6 +355,8 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 		if (_progState >= nValues) {
 			// done, clean up and return to invoker
 			_progState = IDLE;
+                        isReading = false;
+                        isWriting = false;
 			setBusy(false);
 			return;
 		}
@@ -368,6 +373,8 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 		_progState++;  // progState is the index of the CV to handle now
 		if (_progState >= nValues) {
 			_progState = IDLE;
+                        isReading = false;
+                        isWriting = false;
 			setBusy(false);
 			return;
 		}
@@ -388,7 +395,8 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 			// see if actually done
 
 			if (isReading) readNext();
-			else writeNext();
+			else if (isWriting) writeNext();
+                        else return;
 		}
 		else if (e.getPropertyName().equals("State")) {
 			CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
@@ -403,63 +411,63 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 			for (int i=0; i<nValues; i++) {
 				if ((CvValue)_cvVector.elementAt(getCvNum()+i) == cv) {
 					// this is the one, so use this i
-					setModel(i, value);
+                                        setModel(i, value);
 					break;
 				}
 			}
 		}
 	}
 
-	/* Internal class extends a JSlider so that its color is consistent with
-	 * an underlying CV; we return one of these in getRep.
-	 *<P>
-	 * Unlike similar cases elsewhere, this doesn't have to listen to
-	 * value changes.  Those are handled automagically since we're sharing the same
-	 * model between this object and others.  And this is listening to
-	 * a CV state, not a variable.
-	 *
-	 * @author			Bob Jacobsen   Copyright (C) 2001
-	 * @version
-	 */
-	public class VarSlider extends JSlider {
+    /* Internal class extends a JSlider so that its color is consistent with
+     * an underlying CV; we return one of these in getRep.
+     *<P>
+     * Unlike similar cases elsewhere, this doesn't have to listen to
+     * value changes.  Those are handled automagically since we're sharing the same
+     * model between this object and others.  And this is listening to
+     * a CV state, not a variable.
+     *
+     * @author			Bob Jacobsen   Copyright (C) 2001
+     * @version
+     */
+    public class VarSlider extends JSlider {
 
-		VarSlider(BoundedRangeModel m, CvValue var) {
-			super(m);
-			_var = var;
-			// get the original color right
-			setBackground(_var.getColor());
-			// listen for changes to original state
-			_var.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-				public void propertyChange(java.beans.PropertyChangeEvent e) {
-					originalPropertyChanged(e);
-				}
-			});
-		}
+        VarSlider(BoundedRangeModel m, CvValue var) {
+            super(m);
+            _var = var;
+            // get the original color right
+            setBackground(_var.getColor());
+            // listen for changes to original state
+            _var.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+                public void propertyChange(java.beans.PropertyChangeEvent e) {
+                    originalPropertyChanged(e);
+                }
+            });
+        }
 
-		CvValue _var;
+        CvValue _var;
 
-		void originalPropertyChanged(java.beans.PropertyChangeEvent e) {
-			if (log.isDebugEnabled()) log.debug("VarSlider saw property change: "+e);
-			// update this color from original state
-			if (e.getPropertyName().equals("State")) {
-				setBackground(_var.getColor());
-			}
-		}
+        void originalPropertyChanged(java.beans.PropertyChangeEvent e) {
+            if (log.isDebugEnabled()) log.debug("VarSlider saw property change: "+e);
+            // update this color from original state
+            if (e.getPropertyName().equals("State")) {
+                setBackground(_var.getColor());
+            }
+        }
 
-	}
+    }  // end class definition
 
-	// clean up connections when done
-	public void dispose() {
-		if (log.isDebugEnabled()) log.debug("dispose");
-		// the connection is to cvNum through cvNum+27 (28 values total)
-		for (int i=0; i<nValues; i++) {
-			((CvValue)_cvVector.elementAt(getCvNum()+i)).removePropertyChangeListener(this);
-		}
+    // clean up connections when done
+    public void dispose() {
+        if (log.isDebugEnabled()) log.debug("dispose");
+            // the connection is to cvNum through cvNum+27 (28 values total)
+            for (int i=0; i<nValues; i++) {
+                ((CvValue)_cvVector.elementAt(getCvNum()+i)).removePropertyChangeListener(this);
+            }
 
-		// do something about the VarSlider objects
-	}
+    // do something about the VarSlider objects
+    }
 
-	// initialize logging
+    // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SpeedTableVarValue.class.getName());
 
 }
