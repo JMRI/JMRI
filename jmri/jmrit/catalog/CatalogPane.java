@@ -21,7 +21,7 @@ import jmri.jmrit.XmlFile;
  * files in the distribution directory are _not_ included.
  *
  * @author			Bob Jacobsen  Copyright 2002
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class CatalogPane extends JPanel {
     public CatalogPane() {
@@ -99,7 +99,7 @@ public class CatalogPane extends JPanel {
      * @param pName The name string, possibly starting with file: or resource:
      * @return the desired icon with this same pName as its name.
      */
-    public NamedIcon getIconByName(String pName) {
+    static public NamedIcon getIconByName(String pName) {
         if (pName.startsWith("resource:"))
             // return new NamedIcon(ClassLoader.getSystemResource(pName.substring(9)), pName);
             return new NamedIcon(pName.substring(9), pName);
