@@ -1,12 +1,9 @@
 package jmri.jmrit.display;
 
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
-
+import javax.swing.AbstractAction;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JLayeredPane;
-
 import jmri.InstanceManager;
 
 /**
@@ -14,7 +11,7 @@ import jmri.InstanceManager;
  * connect it to.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  * @see             jmri.jmrit.display.PanelEditorAction
  */
 public class PanelEditorAction extends AbstractAction {
@@ -34,17 +31,12 @@ public class PanelEditorAction extends AbstractAction {
         PanelEditor panel = new PanelEditor();
         panel.setFrame(targetFrame);
         panel.setTarget(targetPanel);
-        JFrame editFrame = new JFrame("Panel Editor");
-        editFrame.getContentPane().add(panel);
-        editFrame.pack();
-        editFrame.show();
-
-        // register the result for later configuration
-        InstanceManager.configureManagerInstance().register(panel);
+        panel.pack();
+        panel.show();
 
 	}
 
 	// initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PanelEditorAction.class.getName());
+    //static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PanelEditorAction.class.getName());
 
 }
