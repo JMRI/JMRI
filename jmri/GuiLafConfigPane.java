@@ -27,7 +27,7 @@ import javax.swing.UIManager;
  * GUI (and perhaps LAF) configuration item.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class GuiLafConfigPane extends JPanel {
 
@@ -120,7 +120,7 @@ public class GuiLafConfigPane extends JPanel {
      * or Locale.getDefault if no configuration has been done.
      */
     public Locale getLocale() {
-        if (localeBox==null) return Locale.getDefault();
+        if (localeBox==null || locales==null) return Locale.getDefault();
         String desired = (String)localeBox.getSelectedItem();
         for (int i = 0; i<locales.length; i++) {
             if (desired.equals(localeNames[i])) return locales[i];
