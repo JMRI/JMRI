@@ -31,7 +31,7 @@ import org.jdom.output.XMLOutputter;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -132,6 +132,7 @@ public class DecoderIndexFile extends XmlFile {
 	}
 
 	static DecoderIndexFile _instance = null;
+    public synchronized static void resetInstance() { _instance = null; }
 	public synchronized static DecoderIndexFile instance() {
 		if (_instance == null) {
 			if (log.isDebugEnabled()) log.debug("DecoderIndexFile creating instance");
