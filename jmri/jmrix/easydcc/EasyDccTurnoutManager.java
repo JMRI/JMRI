@@ -3,10 +3,10 @@
  *
  * Description:		Implement turnout manager for EasyDcc systems
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Id: EasyDccTurnoutManager.java,v 1.3 2002-03-30 19:22:53 jacobsen Exp $
+ * @version			$Id: EasyDccTurnoutManager.java,v 1.4 2002-06-26 03:52:20 jacobsen Exp $
  */
 
-// System names are "LTnnn", where nnn is the turnout number without padding.
+// System names are "ETnnn", where nnn is the turnout number without padding.
 
 package jmri.jmrix.easydcc;
 

@@ -3,7 +3,7 @@
  *
  * Description:		extend jmri.AbstractTurnout for EasyDcc layouts
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Id: EasyDccTurnout.java,v 1.2 2002-04-05 07:16:56 jacobsen Exp $
+ * @version			$Id: EasyDccTurnout.java,v 1.3 2002-06-26 03:52:20 jacobsen Exp $
  */
 
 /**
@@ -30,7 +30,7 @@ public class EasyDccTurnout extends AbstractTurnout {
 	}
 
 	public int getNumber() { return _number; }
-	public String getSystemName() { return "NT"+getNumber(); }
+	public String getSystemName() { return "ET"+getNumber(); }
 
 	// Handle a request to change state by sending a LocoNet command
 	protected void forwardCommandChangeToLayout(int s) throws jmri.JmriException {
