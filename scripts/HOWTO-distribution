@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.34 $)
+distribution.  ($Revision: 1.35 $)
 
 Start with a directory, typically called "Distributions", that
 contains:
@@ -172,8 +172,10 @@ To actually create the distribution:
 		2 NCE groups
 		EasyDCC group
 		Lenz group
-		Linux software group
-		RRsoftware
+		linux-dcc@yahoogroups.com
+		rrsoftware@yahoogroups.com
+		VersionTracker
+		Apple MacOS Software
 		
 ( ) Commit back any changes made to this doc
 
