@@ -2,23 +2,34 @@
 
 package jmri.jmrit.symbolicprog;
 
-import java.awt.*;
-import java.beans.*;
-import java.util.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.beans.PropertyChangeListener;
+import java.util.Vector;
 
-import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.BoundedRangeModel;
+import javax.swing.DefaultBoundedRangeModel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
- * SpeedTableVarValue.java
+ * Represent an entire speed table as a single Variable.
  *<P>
- *_value is a holdover from the LongAddrVariableValue, which this was copied from; it should
+ * _value is a holdover from the LongAddrVariableValue, which this was copied from; it should
  * be removed. _maxVal, _minVal are also redundant.
  *
  *<P> Color (hence state) of individual sliders (hence CVs) are directly coupled to the
  * state of those CVs.
  *<P> The state of this variable has to be a composite of all the sliders, hence CVs.
- *The mapping is (in order):
+ * The mapping is (in order):
  *<UL>
  *<LI>If any CVs are UNKNOWN, its UNKNOWN..
  *<LI>If not, and any are EDITED, its EDITED.
@@ -27,14 +38,13 @@ import javax.swing.event.*;
  *<LI>If not, and any are STORED, its STORED.
  *<LI>And if we get to here, something awful has happened.
  *</UL><P>
- *A similar pattern is used for a read or write request.  Write writes them all;
- *Read reads any that aren't READ or WRITTEN.
+ * A similar pattern is used for a read or write request.  Write writes them all;
+ * Read reads any that aren't READ or WRITTEN.
  *<P>
  * Speed tables can have different numbers of entries; 28 is the default, and also the maximum.
  *<P>
- * Description:		Extends VariableValue to represent a NMRA long address
- * @author			Bob Jacobsen, Alex Shepherd   Copyright (C) 2001
- * @version			$Revision: 1.16 $
+ * @author	Bob Jacobsen, Alex Shepherd   Copyright (C) 2001, 2004
+ * @version	$Revision: 1.17 $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -82,8 +92,13 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         return new String("Speed table");
     }
 
+    /**
+     * Called for new values of a slider.
+     * <P>
+     * Sets the CV(s) as needed.
+     * @param e
+     */
     public void stateChanged(ChangeEvent e) {
-        // called for new values of a slider - set the CV(s) as needed
         // e.getSource() points to the JSlider object - find it in the list
         JSlider j = (JSlider) e.getSource();
         BoundedRangeModel r = j.getModel();
@@ -95,7 +110,8 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
                 break; // no need to continue loop
             }
         }
-
+        // notify that Value property changed
+        prop.firePropertyChange("Value", null, j);
     }
 
     void setModel(int i, int value) {  // value is 0 to 255
