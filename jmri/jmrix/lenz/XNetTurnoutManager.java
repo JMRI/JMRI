@@ -10,7 +10,7 @@ import jmri.Turnout;
  * System names are "XTnnn", where nnn is the turnout number without padding.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 2.1 $
+ * @version			$Revision: 2.2 $
  */
 public class XNetTurnoutManager extends jmri.AbstractTurnoutManager implements XNetListener {
 
@@ -56,6 +56,11 @@ public class XNetTurnoutManager extends jmri.AbstractTurnoutManager implements X
         }
         }
     }
+
+    // listen for the messages to the LI100/LI101
+    public void message(XNetMessage l) {
+    }
+
 
     static public XNetTurnoutManager instance() {
         if (_instance == null) _instance = new XNetTurnoutManager();

@@ -3,7 +3,7 @@
  *
  * Description:		extend jmri.AbstractTurnout for XNet layouts
  * @author			Bob Jacobsen Copyright (C) 2001, Portions by Paul Bender Copyright (C) 2003 
- * @version			$Revision: 2.1 $
+ * @version			$Revision: 2.2 $
  */
 
 package jmri.jmrix.lenz;
@@ -119,6 +119,11 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 	    sendOffMessage();
 	} else return;
     }
+
+    // listen for the messages to the LI100/LI101
+    public void message(XNetMessage l) {
+    }
+
 
     /* Send an "Off" message to the decoder for this output  */
     private void sendOffMessage() {

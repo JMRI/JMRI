@@ -20,7 +20,7 @@ import jmri.jmrix.lenz.*;
  * Commander or Compact)
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 2.0 $
+ * @version			$Revision: 2.1 $
  */
 public class SystemInfoFrame extends JFrame implements XNetListener {
 
@@ -138,7 +138,12 @@ public class SystemInfoFrame extends JFrame implements XNetListener {
               }
        }
     }
-   
+    
+    // listen for the messages to the LI100/LI101
+    public void message(XNetMessage l) {
+    }
+
+
     /**
      * This just displays the currently known version information from the 
      * LenzCommandStation class.

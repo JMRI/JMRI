@@ -15,7 +15,7 @@ import jmri.jmrix.lenz.*;
  * port speed used to communicate with the LI101.
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 2.0 $
+ * @version			$Revision: 2.1 $
  */
 public class LI101Frame extends JFrame implements XNetListener {
 
@@ -210,6 +210,11 @@ public class LI101Frame extends JFrame implements XNetListener {
 	  }
        }
     }
+
+    // listen for the messages to the LI101
+    public void message(XNetMessage l) {
+    }
+
 
     // For now, reset just resets the screen to factory defaults, and does
     // not send any information to the LI101F.  To do a reset, we need to

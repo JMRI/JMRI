@@ -9,7 +9,7 @@ package jmri.jmrix.lenz;
  * based on the Command Station Type.
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 2.0 $
+ * @version			$Revision: 2.1 $
  */
 public class XNetInitilizationManager implements XNetListener {
 
@@ -111,6 +111,10 @@ public class XNetInitilizationManager implements XNetListener {
               done=true;
               //this.notify();
        }
+    }
+
+    // listen for the messages to the LI100/LI101
+    public void message(XNetMessage l) {
     }
    
     public void dispose() {

@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractMRListener;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2004
- * @version 		$Revision: 2.5 $
+ * @version 		$Revision: 2.6 $
  *
  */
 public abstract class XNetTrafficController extends AbstractMRTrafficController implements XNetInterface {
@@ -63,7 +63,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
      * @param m Message to send; 
      */
    public void forwardMessage(AbstractMRListener reply,AbstractMRMessage m){
-          ((XNetListener)reply).message(new XNetReply((XNetMessage)m));
+          ((XNetListener)reply).message((XNetMessage)m);
    }
 
         /**

@@ -15,7 +15,7 @@ import jmri.jmrix.lenz.*;
  *                 Track Voltage 
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 2.1 $
+ * @version			$Revision: 2.2 $
  */
 public class LZV100Frame extends JFrame implements XNetListener {
 
@@ -182,6 +182,11 @@ public class LZV100Frame extends JFrame implements XNetListener {
 	  /* this was an "OK" message*/
        }
     }
+
+    // listen for the messages to the LI100/LI101
+    public void message(XNetMessage l) {
+    }
+
 
     // Set to default values.  Voltage is 16, E Line is Active. 
     void resetLZV100Settings() {

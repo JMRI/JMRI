@@ -3,7 +3,7 @@
  *
  * Description:		PowerManager implementation for controlling layout power
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 2.0 $
+ * @version			$Revision: 2.1 $
  */
 
 package jmri.jmrix.lenz;
@@ -67,8 +67,9 @@ public class XNetPowerManager implements PowerManager, XNetListener {
 	XNetTrafficController tc = null;
 
 	// to listen for Broadcast messages related to track power.
-        // There are 3 messages to listen for
+        // There are 4 messages to listen for
 	public void message(XNetReply m) {
+		if (log.isDebugEnabled()) log.debug("Message recieved: " +m.toString());
                 // First, we check for a "normal operations resumed message"
                 // This indicates the power to the track is ON
 		if (m.getElement(0) == jmri.jmrix.lenz.XNetConstants.CS_INFO &&
@@ -78,20 +79,28 @@ public class XNetPowerManager implements PowerManager, XNetListener {
 		}
                 // Next, we check for a Track Power Off message
                 // This indicates the power to the track is OFF
-		else if (m.getElement(0) == jmri.jmrix.lenz.XNetConstants.CS_INFO ||
+		else if (m.getElement(0) == jmri.jmrix.lenz.XNetConstants.CS_INFO &&
                          m.getElement(1) == jmri.jmrix.lenz.XNetConstants.BC_EVERYTHING_OFF) {
 			power = OFF;
 			firePropertyChange("Power", null, null);
 		}
-                // Finally, we check for an "Emergency Stop" message
+                // Then, we check for an "Emergency Stop" message
                 // This indicates the track power is ON, but all 
                 // locomotives are stopped
-		else if (m.getElement(0) == jmri.jmrix.lenz.XNetConstants.BC_EMERGENCY_STOP ||
+		else if (m.getElement(0) == jmri.jmrix.lenz.XNetConstants.BC_EMERGENCY_STOP &&
                          m.getElement(1) == jmri.jmrix.lenz.XNetConstants.BC_EVERYTHING_OFF) {
 			power = OFF;
 			firePropertyChange("Power", null, null);
 		}
 	}
+
+        // listen for the messages to the LI100/LI101
+        public void message(XNetMessage l) {
+        }
+
+
+	// Initialize logging information
+	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetPowerManager.class.getName());
 
 }
 

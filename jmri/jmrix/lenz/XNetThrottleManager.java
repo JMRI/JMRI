@@ -7,7 +7,7 @@ import com.sun.java.util.collections.HashMap;
 /**
  * XNet implementation of a ThrottleManager
  * @author     Paul Bender Copyright (C) 2002,2003
- * @version    $Revision: 2.0 $
+ * @version    $Revision: 2.1 $
  */
 
 public class XNetThrottleManager implements ThrottleManager,XNetListener
@@ -88,6 +88,10 @@ public class XNetThrottleManager implements ThrottleManager,XNetListener
         //    .getThrottleMsgAddr(l) != address) return;
         // is for this object, parse message type
         //log.error("message function invoked, but not yet prepared");
+    }
+
+    // listen for the messages to the LI100/LI101
+    public void message(XNetMessage l) {
     }
 
 

@@ -13,7 +13,7 @@ import jmri.*;
  *
  * @see            jmri.Programmer
  * @author         Paul Bender Copyright (C) 2003
- * @version        $Revision: 2.3 $
+ * @version        $Revision: 2.4 $
  */
 
 public class XNetOpsModeProgrammer implements Programmer,XNetListener 
@@ -131,6 +131,11 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
             }
 	}
     }
+
+    // listen for the messages to the LI100/LI101
+    public synchronized void message(XNetMessage l) {
+    }
+
 
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetOpsModeProgrammer.class.getName());

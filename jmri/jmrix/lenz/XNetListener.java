@@ -13,7 +13,7 @@ package jmri.jmrix.lenz;
  * case.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version			$Revision: 2.0 $		
+ * @version			$Revision: 2.1 $		
  */
 public interface XNetListener extends jmri.jmrix.AbstractMRListener {
 
@@ -26,6 +26,17 @@ public interface XNetListener extends jmri.jmrix.AbstractMRListener {
 	 *             modified here.
 	 */
 	public void message(XNetReply msg);
+
+	/**
+	 * Member function that will be invoked by a XNetInterface implementation
+	 * to forward a XNet message sent to the layout.
+	 * Normally, this function will do  nothing.
+	 *
+	 * @param msg  The received XNet message.  Note that this same object
+	 *             may be presented to multiple users. It should not be 
+	 *             modified here.
+	 */
+	public void message(XNetMessage msg);
 }
 
 

@@ -26,7 +26,7 @@ import java.beans.PropertyChangeEvent;
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Paul Bender  Copyright (c) 2003,2004
- * @version $Revision: 2.3 $
+ * @version $Revision: 2.4 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -163,7 +163,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		progState = REQUESTSENT;
 		_cv = CV;
 		try {
-		   // start the error timer
+                  // start the error timer
 		   restartTimer(XNetProgrammerTimeout);
 
 		   // format and send message to go to program mode
@@ -299,6 +299,12 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		if (log.isDebugEnabled()) log.debug("reply in un-decoded state");
 	    }
 	}
+
+ 	// listen for the messages to the LI100/LI101
+    	public void message(XNetMessage l) {
+    	}
+
+
 
 	/*
          * Since the Lenz programming sequence requires several 

@@ -20,7 +20,7 @@ import jmri.jmrix.lenz.XNetConstants;
 /**
  * Frame displaying (and logging) XpressNet messages
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version         $Revision: 2.3 $
+ * @version         $Revision: 2.4 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
@@ -156,9 +156,30 @@ import jmri.jmrix.lenz.XNetConstants;
 		  default:
 			text = l.toString();
 		  }
-                /* Now Start decoding messages sent by the computer */
+		} else { 
+		     text = l.toString(); 
+		}
+		// we use Llnmon to format, expect it to provide consistent \n after each line
+		nextLine(text+"\n", raw);
+
+	}
+
+ 	// listen for the messages to the LI100/LI101
+    	public synchronized void message(XNetMessage l) {
+		// display the raw data if requested
+		String raw = "packet: ";
+		if ( rawCheckBox.isSelected() ) {
+			int len = l.getNumDataElements();
+			for (int i=0; i<len; i++)
+				raw += Integer.toHexString(l.getElement(i))+" ";
+			raw+="\n";
+		}
+
+		// display the decoded data
+		String text;
+                /* Start decoding messages sent by the computer */
 		/* Start with generic requests */
-		} else if(l.getElement(0)==XNetConstants.CS_REQUEST) {
+		if(l.getElement(0)==XNetConstants.CS_REQUEST) {
 		  switch(l.getElement(1)) {
 		  case XNetConstants.EMERGENCY_OFF: 
 				text = new String("REQUEST: Emergency Off");
@@ -231,7 +252,8 @@ import jmri.jmrix.lenz.XNetConstants;
 		// we use Llnmon to format, expect it to provide consistent \n after each line
 		nextLine(text+"\n", raw);
 
-	}
+    	}
+
 
 	/**
   	 *  We need to calculate the locomotive address when doing the 
