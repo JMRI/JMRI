@@ -1,16 +1,18 @@
 package apps.configurexml;
 
-import apps.*;
-import java.awt.*;
-import jmri.*;
+import apps.PerformFilePanel;
+
+import jmri.InstanceManager;
 import jmri.configurexml.XmlAdapter;
+import java.awt.Component;
+
 import org.jdom.Element;
 
 /**
  * Handle XML persistance of PerformFileModel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @see apps.PerformFilePanel
  */
 public class PerformFilePanelXml implements XmlAdapter {
