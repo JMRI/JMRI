@@ -1,6 +1,6 @@
 package jmri.jmrit.display.configurexml;
 
-import org.jdom.Element;
+import org.jdom.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.display.PositionableLabel;
@@ -14,7 +14,7 @@ import javax.swing.*;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 
@@ -33,10 +33,14 @@ public class PositionableLabelXml implements XmlAdapter {
 
         // include contents
         PositionableLabel p = (PositionableLabel)o;
-        element.addAttribute("x", ""+p.getX());
-        element.addAttribute("y", ""+p.getY());
+        element.addAttribute("x", String.valueOf(p.getX()));
+        element.addAttribute("y", String.valueOf(p.getY()));
         if (p.isText() && p.getText()!=null) element.addAttribute("text", p.getText());
-        if (p.isIcon() && p.getIcon()!=null) element.addAttribute("icon", ((NamedIcon)p.getIcon()).getName());
+        if (p.isIcon() && p.getIcon()!=null) {
+            NamedIcon icon = (NamedIcon)p.getIcon();
+            element.addAttribute("icon", icon.getName());
+            element.addAttribute("rotate", String.valueOf(icon.getRotation()));
+        }
 
         return element;
     }
@@ -59,7 +63,15 @@ public class PositionableLabelXml implements XmlAdapter {
             l = new PositionableLabel(element.getAttribute("text").getValue());
         } else if (element.getAttribute("icon")!=null) {
             String name = element.getAttribute("icon").getValue();
-            l = new PositionableLabel(p.catalog.getIconByName(name));
+            NamedIcon icon = p.catalog.getIconByName(name);
+            l = new PositionableLabel(icon);
+            try {
+                Attribute a = element.getAttribute("rotate");
+                if (a!=null) {
+                    int rotation = element.getAttribute("rotate").getIntValue();
+                    icon.setRotation(rotation, l);
+                }
+            } catch (org.jdom.DataConversionException e) {}
         }
         // find coordinates
         int x = 0;
@@ -69,13 +81,10 @@ public class PositionableLabelXml implements XmlAdapter {
         try {
             x = element.getAttribute("x").getIntValue();
             y = element.getAttribute("y").getIntValue();
-            //height = element.getAttribute("height").getIntValue();
-            //width = element.getAttribute("width").getIntValue();
         } catch ( org.jdom.DataConversionException e) {
             log.error("failed to convert PanelEditor's attribute");
         }
         l.setLocation(x,y);
-        //l.setSize(width, height);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         if (element.getAttribute("text")!=null) {
             p.putLabel(l);
