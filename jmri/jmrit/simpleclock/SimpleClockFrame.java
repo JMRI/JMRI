@@ -17,7 +17,7 @@ import javax.swing.border.Border;
  * Frame for user configuration of Simple Timebase
  *
  * @author	Dave Duchamp   Copyright (C) 2004
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SimpleClockFrame extends javax.swing.JFrame 
 	implements java.beans.PropertyChangeListener {
@@ -213,7 +213,7 @@ public class SimpleClockFrame extends javax.swing.JFrame
     public void setRateButtonActionPerformed() {
         double rate = 1.0;
         try {
-            rate = Double.parseDouble(factorField.getText());
+            rate = Double.valueOf(factorField.getText()).doubleValue();
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(this,(rb.getString("ParseRateError")+"\n"+e),
