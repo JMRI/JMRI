@@ -18,16 +18,12 @@ import jmri.Turnout;
  * <P>
  * Description:		Implement turnout manager for loconet
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 
 public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements LocoNetListener {
 
     // ABC implementations
-
-    // to free resources when no longer used
-    public void dispose() throws JmriException {
-    }
 
     // LocoNet-specific methods
 
