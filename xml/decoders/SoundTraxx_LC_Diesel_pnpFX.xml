@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_LC_Diesel_pnpFX.xml,v 1.1 2002-12-20 03:10:39 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_LC_Diesel_pnpFX.xml,v 1.2 2003-01-05 12:48:37 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Robin Becker" version="8" lastUpdated="20021027"/>
+		<version author="Robin Becker" version="9" lastUpdated="20021208"/>
 
 		<!-- version 4: updates to minOut usage, function mapping -->
 		<!-- version 5: added LL100LC -->
@@ -10,6 +10,7 @@
 		<!-- version 6: redo family name for consistency -->
 		<!-- version 7: additional models -->
 		<!-- version 8: remove Atlas/Kato to other file -->
+		<!-- version 9: remove non-FX units to other file -->
 
 <decoder>
 	<family name="LC Diesel PNP + FX decoders" mfg="Throttle-Up (SoundTraxx)">

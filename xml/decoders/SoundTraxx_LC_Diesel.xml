@@ -1,63 +1,29 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_pnpLC_Diesel.xml,v 1.7 2002-10-28 03:13:48 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_LC_Diesel.xml,v 1.12 2003-01-05 12:48:37 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Robin Becker" version="8" lastUpdated="20021027"/>
+		<version author="Robin Becker" version="7" lastUpdated="20021027"/>
 
 		<!-- version 4: updates to minOut usage, function mapping -->
-		<!-- version 5: added LL100LC -->
-		<!--            removed erroneous CV19 definition, corrected VersionID -->
-		<!-- version 6: redo family name for consistency -->
-		<!-- version 7: additional models -->
-		<!-- version 8: remove Atlas/Kato to other file -->
+		<!-- version 5: removed erroneous CV19 definition, corrected VersionID -->
+		<!-- version 6: rename for tree structure -->
+		<!-- version 7: add Atlas/Kato -->
 
 <decoder>
-	<family name="Plug&amp;Play LC diesel decoders" mfg="Throttle-Up (SoundTraxx)">
-
-		<model model="C628LC Diesel" numOuts="4" numFns="8">
-			<versionCV lowVersionID="37"/>
+	<family name="LC Diesel decoders" mfg="Throttle-Up (SoundTraxx)">
+		<model model="100LC Diesel" numOuts="2" numFns="8">
+			<versionCV lowVersionID="34"/>
 			<output name="Horn"/> 
 			<output name="Bell"/> 
-			<output name="3" label="FX1/grn" />
-			<output name="4" label="FX2/brwn" />
+			<!--output name="3" label="FX1/grn" /-->
+			<!--output name="4" label="FX2/brwn" /-->
 			<output name="DynBrake"/> 
 			<output name="RPM+"/> 
 			<output name="RPM-"/> 
 			<output name="Dim"/>
 			<output name="Mute"/> 
-			</model>
-		<model model="LL100LC Diesel" numOuts="4" numFns="8">
-		<!-- note: The LL100LC has an FX2 output but no FX1 output -->
-			<versionCV lowVersionID="36"/>
-			<output name="Horn"/> 
-			<output name="Bell"/> 
-			<output name="3" label="none" />
-			<output name="4" label="FX2/brwn" />
-			<output name="DynBrake"/> 
-			<output name="RPM+"/> 
-			<output name="RPM-"/> 
-			<output name="Dim"/>
-			<output name="Mute"/> 
-			</model>
-		<model model="LL110LC Diesel" numOuts="2" numFns="8">
-			<versionCV lowVersionID="36"/>
-			<output name="Horn"/> 
-			<output name="Bell"/> 
-			<output name="DynBrake"/> 
-			<output name="RPM+"/> 
-			<output name="RPM-"/> 
-			<output name="Dim"/>
-			<output name="Mute"/> 
-			</model>
-		<model model="090LC Diesel" numOuts="2" numFns="8">
-			<versionCV lowVersionID="36"/>
-			<output name="Horn"/> 
-			<output name="Bell"/> 
-			<output name="DynBrake"/> 
-			<output name="RPM+"/> 
-			<output name="RPM-"/> 
-			<output name="Dim"/>
-			<output name="Mute"/> 
+			<!-- The four electrical outputs are front headlight, back -->
+			<!-- headlight, FX1, FX2 -->
 			</model>
 	</family>
 
@@ -157,7 +123,7 @@
 				</enumVal></variable>
 
 		<variable label="Consist Acceleration Rate" CV="23" mask="XVVVVVVV"
-				default="0"  item="Consist Acceleration Adjustment"
+				default="0" item="Consist Acceleration Adjustment"
 		        comment="Additional consist acceleration (combined with CV3)">
 			<decVal max="127"/>
 			</variable>
@@ -231,19 +197,19 @@
 
 
 		<variable label="CV Address Extension" CV="30" mask="XXXXXXXV"
-				item="Advanced Group 1 Option 1" default="0">
-			<enumVal>
+				default="0" item="Advanced Group 1 Option 1">
+			<enumVal >
 				<enumChoice choice="System Normal"/>
 				<enumChoice choice="CV112-128 mapped to 49-65"/>
 				</enumVal></variable>
 		<variable label="EEROM Data Corrupted" CV="30" mask="XXXXXXVX"
-				item="Advanced Group 1 Option 2" default="0">
-			<enumVal>
+				default="0" item="Advanced Group 1 Option 2">
+			<enumVal >
 				<enumChoice choice="System Normal"/>
 				<enumChoice choice="Data corrupted. Reset to defaults."/>
 				</enumVal></variable>
 		<variable label="Function Group 3 Disable" CV="30" mask="XXXXXVXX"
-				item="Advanced Group 1 Option 3" default="0">
+				item="Advanced Group 1 Option 3"  default="0">
 			<enumVal>
 				<enumChoice choice="System Normal"/>
 				<enumChoice choice="Ignore Group3 steerage bit"/>
@@ -511,33 +477,6 @@
 			<enumVal>
 				<enumChoice choice="On/Off"/>
 				<enumChoice choice="Dimmable"/>
-				<enumChoice choice="Mars light"/>
-				<enumChoice choice="Gyralite"/>
-				<enumChoice choice="Oscillating"/>
-				<enumChoice choice="Single flash strobe"/>
-				<enumChoice choice="Double flash strobe"/>
-				<enumChoice choice="Rotary beacon simulation"/>
-				<enumChoice choice="Stratolite"/>
-				<enumChoice choice="Type 1 ditch light"/>
-				<enumChoice choice="Type 2 ditch light"/>
-				<enumChoice choice="FRED end of train flasher"/>
-				<enumChoice choice="Engine exhaust flicker"/>
-				<enumChoice choice="Reserved (0x0D)"/>
-				<enumChoice choice="Reserved (0x0E)"/>
-				<enumChoice choice="Reserved (0x0F)"/>
-				</enumVal>
-			</variable>
-		<variable label="Forward light F0F behaviour" CV="49" mask="XVVVXXXX"
-					item="Function F0F behaviour">
-			<enumVal>
-				<enumChoice choice="Phase A"/>
-				<enumChoice choice="Phase B"/>
-				<enumChoice choice="Grade crossing enable, phase A"/>
-				<enumChoice choice="Grade crossing enable, phase B"/>
-				<enumChoice choice="Rule 17 enable, phase A"/>
-				<enumChoice choice="Rule 17 enable, phase B"/>
-				<enumChoice choice="Rule 17 enable, Grade crossing enable, Phase A"/>
-				<enumChoice choice="Rule 17 enable, Grade crossing enable, Phase B"/>
 				</enumVal>
 			</variable>
 		<variable label="Reverse light F0R effect generated" CV="50" mask="XXXXVVVV"
@@ -545,116 +484,7 @@
 			<enumVal>
 				<enumChoice choice="On/Off"/>
 				<enumChoice choice="Dimmable"/>
-				<enumChoice choice="Mars light"/>
-				<enumChoice choice="Gyralite"/>
-				<enumChoice choice="Oscillating"/>
-				<enumChoice choice="Single flash strobe"/>
-				<enumChoice choice="Double flash strobe"/>
-				<enumChoice choice="Rotary beacon simulation"/>
-				<enumChoice choice="Stratolite"/>
-				<enumChoice choice="Type 1 ditch light"/>
-				<enumChoice choice="Type 2 ditch light"/>
-				<enumChoice choice="FRED end of train flasher"/>
-				<enumChoice choice="Engine exhaust flicker"/>
-				<enumChoice choice="Reserved (0x0D)"/>
-				<enumChoice choice="Reserved (0x0E)"/>
-				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
-			</variable>
-		<variable label="Reverse light F0R behaviour" CV="50" mask="XVVVXXXX"
-					item="Function F0R behaviour">
-			<enumVal>
-				<enumChoice choice="Phase A"/>
-				<enumChoice choice="Phase B"/>
-				<enumChoice choice="Grade crossing enable, phase A"/>
-				<enumChoice choice="Grade crossing enable, phase B"/>
-				<enumChoice choice="Rule 17 enable, phase A"/>
-				<enumChoice choice="Rule 17 enable, phase B"/>
-				<enumChoice choice="Rule 17 enable, Grade crossing enable, Phase A"/>
-				<enumChoice choice="Rule 17 enable, Grade crossing enable, Phase B"/>
-				</enumVal>
-			</variable>
-
-		<variable label="FX1 effect generated" CV="51" mask="XXXXVVVV"
-					item="Function 1 effect generated">
-			<enumVal>
-				<enumChoice choice="On/Off"/>
-				<enumChoice choice="Dimmable"/>
-				<enumChoice choice="Mars light"/>
-				<enumChoice choice="Gyralite"/>
-				<enumChoice choice="Oscillating"/>
-				<enumChoice choice="Single flash strobe"/>
-				<enumChoice choice="Double flash strobe"/>
-				<enumChoice choice="Rotary beacon simulation"/>
-				<enumChoice choice="Stratolite"/>
-				<enumChoice choice="Type 1 ditch light"/>
-				<enumChoice choice="Type 2 ditch light"/>
-				<enumChoice choice="FRED end of train flasher"/>
-				<enumChoice choice="Engine exhaust flicker"/>
-				<enumChoice choice="Reserved (0x0D)"/>
-				<enumChoice choice="Reserved (0x0E)"/>
-				<enumChoice choice="Reserved (0x0F)"/>
-				</enumVal>
-			</variable>
-
-		<variable label="FX1 behaviour" CV="51" mask="XVVVXXXX"
-					item="Function 1 behaviour">
-			<enumVal>
-				<enumChoice choice="Phase A"/>
-				<enumChoice choice="Phase B"/>
-				<enumChoice choice="Grade crossing enable, phase A"/>
-				<enumChoice choice="Grade crossing enable, phase B"/>
-				<enumChoice choice="Rule 17 enable, phase A"/>
-				<enumChoice choice="Rule 17 enable, phase B"/>
-				<enumChoice choice="Rule 17 enable, Grade crossing enable, Phase A"/>
-				<enumChoice choice="Rule 17 enable, Grade crossing enable, Phase B"/>
-				</enumVal>
-			</variable>
-		<variable label="FX1 effect generated" CV="52" mask="XXXXVVVV"
-					item="Function 2 effect generated">
-			<enumVal>
-				<enumChoice choice="On/Off"/>
-				<enumChoice choice="Dimmable"/>
-				<enumChoice choice="Mars light"/>
-				<enumChoice choice="Gyralite"/>
-				<enumChoice choice="Oscillating"/>
-				<enumChoice choice="Single flash strobe"/>
-				<enumChoice choice="Double flash strobe"/>
-				<enumChoice choice="Rotary beacon simulation"/>
-				<enumChoice choice="Stratolite"/>
-				<enumChoice choice="Type 1 ditch light"/>
-				<enumChoice choice="Type 2 ditch light"/>
-				<enumChoice choice="FRED end of train flasher"/>
-				<enumChoice choice="Engine exhaust flicker"/>
-				<enumChoice choice="Reserved (0x0D)"/>
-				<enumChoice choice="Reserved (0x0E)"/>
-				<enumChoice choice="Reserved (0x0F)"/>
-				</enumVal>
-			</variable>
-		<variable label="FX2 behaviour" CV="52" mask="XVVVXXXX"
-					item="Function 2 behaviour">
-			<enumVal>
-				<enumChoice choice="Phase A"/>
-				<enumChoice choice="Phase B"/>
-				<enumChoice choice="Grade crossing enable, phase A"/>
-				<enumChoice choice="Grade crossing enable, phase B"/>
-				<enumChoice choice="Rule 17 enable, phase A"/>
-				<enumChoice choice="Rule 17 enable, phase B"/>
-				<enumChoice choice="Rule 17 enable, Grade crossing enable, Phase A"/>
-				<enumChoice choice="Rule 17 enable, Grade crossing enable, Phase B"/>
-				</enumVal>
-			</variable>
-
-
-		<variable label="Hyperlight flash rate" CV="59" mask="XXXXVVVV"
-				item="Global lighting option 2"
-				comment="0 is fast, 15 is slow, 4 is recommended for start">
-				<decVal max="15"/>
-			</variable>
-		<variable label="Grade crossing logic hold time" CV="59" mask="VVVVXXXX"
-				item="Global lighting option 3"
-				comment="0-15 seconds">
-				<decVal max="15"/>
 			</variable>
 
 		<variable label="Forward Trim" CV="66">
