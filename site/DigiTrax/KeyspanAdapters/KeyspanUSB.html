@@ -1,0 +1,132 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Bob Jacobsen, LBL">
+   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>Options for improving streaming overhead</title>
+</head>
+<body>
+
+This page describes tests of two USB serial adapters with the Digitrax 
+MS100 LocoNet interface.
+
+<h2>Keyspan PDA adapter P/N USA-19</h2>
+
+Summary: This worked fine.
+
+<P>
+This was actually the second USB serial adapter I tried, after the Keyspan Dual
+Serial Adapter (see below).  This adapter provides a DB9 male plug, 
+pinout available from the 
+<A HREF="http://www.keyspan.com/products/USB/PDAadapter/docs/mac/swp/aPinOuts.html">Keyspan product support page</A>.
+Note that there are both RTS and DTR outputs; these can be separately controlled
+to provide + and - voltage to the MS100.
+
+<P>I connected it through a DB9 female to DB25 male adapter cable 
+that I happened to have, and the test program was immediately 
+able to communicate with the LocoNet.
+
+<h3>DB9 female to DB25 male connections</h3>
+
+<PRE>
+       DB9 pin      DB25 pin
+       -------      --------
+
+DCD      1             8
+RxD      2             3
+TxD      3             2
+DTR      4            20
+ground   5             7
+DSR      6             6
+RTS      7             4
+CTS      8             5
+RI       9            22
+
+</PRE>
+
+<P> Note that I didn't test the level input from the MS100 (DSR, CTS).
+
+
+<h2>Keyspan Dual Serial Adapter P/N USA-28X</h2>
+
+Summary: This did not work.
+
+<P>
+The initial problem was that the USB adapter provides only one 
+control line output (see pinout on the 
+<A HREF="http://www.keyspan.com/products/USB/usa28x/docs/swp/aPinOuts.html">Keyspan product support page</A>.
+This means that the serial port can only provide one of the two 
++ and - levels needed for the MS100.  Since there are
+two ports, I build a small adapter to use the control line from the
+second port to provide the other level.
+<CENTER>
+<TABLE BORDER="0">
+<TR>
+<TD WIDTH="120" HEIGHT="120" ALIGN="CENTER"><A HREF="Jumper.jpg"><IMG SRC="thumbs/Jumper-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75">
+(click to enlarge)</A></TD>
+</TR>
+</TABLE>
+</CENTER>
+
+
+<P>
+The second problem was that the serial port outputs were only +/- 5V.
+This was not enough to power the MS100 during receive.
+
+<P>The following picture shows the transmit data levels from the 
+Keyspan adapter.  DC levels had similar ranges.  This was a large 
+enough swing to drive the LocoNet itself, but not to power the
+receive level shifter in the MS100.
+<CENTER>
+<TABLE BORDER="0">
+<TR>
+<TD WIDTH="120" HEIGHT="120" ALIGN="CENTER"><A HREF="RxD.jpg"><IMG SRC="thumbs/TxD-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75">
+(click to enlarge)</A></TD>
+</TR>
+</TABLE>
+</CENTER>
+
+<P>
+
+
+<P>Providing auxiliary +/- 9V power to the MS100, without using the
+output lines as a power source, was not sufficient. 
+The following picture is the received data, nominally an RS232
+signal of at least +/-6 volts, from the MS100.
+The received
+data signal was getting up to 6V, marginally OK, but it was
+not going below ground.  The USB serial adapter was not
+reporting any received charaters to the Macintosh.
+
+<CENTER>
+<TABLE BORDER="0">
+<TR>
+<TD WIDTH="120" HEIGHT="120" ALIGN="CENTER"><A HREF="RxD.jpg"><IMG SRC="thumbs/RxD-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75">
+(click to enlarge)</A></TD>
+</TR>
+</TABLE>
+</CENTER>
+<h2>Hardware & software used</h2>
+
+The tests were done with a PowerBook G4 400MHz, Mac OS 9.1.  The test 
+program was a Java application created with CodeWarrior 4.1.0.3 build 661.
+This program is available on request, see below for address.
+Java access to the USB serial adapters was via Patrick Beard's Macintosh
+implementation of javax.comm.  
+
+<P>
+The Digitrax system was a Chief, DT100IR throttle, and various
+decoders on the layout.  Traffic from command station, throttle
+and various auxiliary components (PM4, DS54) was available for testing.
+
+<P>
+
+
+<hr>
+Bob Jacobsen<BR>
++1-510-486-7355 Bob_Jacobsen@lbl.gov<BR>
+Last updated May 5, 2001
+
+</body>

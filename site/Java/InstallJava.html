@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+
+<TITLE>Installing Java</TITLE>
+
+<META NAME="generator" CONTENT="BBEdit 4.5">
+
+</HEAD>
+<BODY>
+
+<H2>Installing Java on Macintosh Classic</H2>
+Macintosh users should get Java version MRJ 2.4, which corresponds to Java 1.1.8,
+from Apple at <A HREF="http://devworld.apple.com/java/text/download.html">
+http://devworld.apple.com/java/text/download.html</A>
+
+<H2>Installing Java on MacOS X</H2>
+MacOS X comes with a working Java, which can be operated much like the
+Linux form. It shouldn't be necessary to install anything.
+
+<H2>Installing Java on Linux</H2>
+Start by making sure you have an appropriate version of Java on your system,
+a version number of 1.1.5 or greater.
+You can check the version number by typing
+<PRE>
+   java -version
+</PRE>
+<P>
+If you did not install Java on your system yourself, be aware that some systems
+have Java only partially installed.  They will respond correctly to the above
+command, but still are not all there.
+If your system does not have Java in the environment variable PATH,
+the install is probably not complete.
+Check with the system manager or do a fresh Java installation.
+<P>
+You can obtain a Linux version of Java free from
+Sun at <A HREF="http://java.sun.com/j2se">
+http://java.sun.com/j2se</A>
+<P>
+The same page contains links to third party versions of Java for other platforms.
+<P>
+<P>
+If you are using Java 1.1,
+<A NAME="classpath">Set the environment variable CLASSPATH</A>
+as follows (being sure to use all capitals).
+<BR>
+The exact setting of CLASSPATH depends on where you placed the Java code,
+but it should start with "." to include the current directory, and it should then
+specify where the basic Java classes are to be found.
+Examples are:
+
+<P>setenv CLASSPATH ".:/usr/lib/jdk1.1/lib/classes.zip"
+
+
+<H2>Installing Java on Windows</H2>
+Start by making sure you have an appropriate version of Java on your system,
+a version number of 1.1.5 or greater.
+You can check the version number by typing
+<PRE>
+   java -version
+</PRE>
+<P>
+If you did not install Java on your system yourself, be aware that some systems
+have Java only partially installed.  They will respond correctly to the above
+command, but still are not all there.
+If your system does not have Java in the environment variable PATH,
+the install is probably not complete.
+Check with the system manager or do a fresh Java installation.
+<P>
+You can obtain the Windows version of Java free from
+Sun at <A HREF="http://java.sun.com/j2se">
+http://java.sun.com/j2se</A>
+<P>
+The same page contains links to third party versions of Java for other platforms.
+<P>
+<P>
+If you are using Java 1.1,
+<A NAME="classpath">Set the environment variable CLASSPATH</A>
+as follows (being sure to use all capitals).
+<BR>
+The exact setting of CLASSPATH depends on where you placed the Java code,
+but it should start with "." to include the current directory, and it should then
+specify where the basic Java classes are to be found.
+Examples are:
+<P>set CLASSPATH=.;C:\jdk1.1.8\lib\classes.zip;
+<UL>
+<LI><A NAME="setntenv">NT users</A>
+who have administrative privileges on their machines can make
+this CLASSPATH setting permanent by going to the
+<UL>
+<LI>
+Start Menu...Settings...Control Panel...System...Environment
+<LI>
+Add a new Variable, "CLASSPATH" (careful, make it all Caps)
+<LI>
+Set the value as indicated above
+<LI>
+Then be sure to BOTH hit the Apply button and then the OK button.
+<LI>
+All new command windows will then have these settings
+(old ones will not get the new settings).
+<LI>
+To review the current settings in any command window, just type "set"
+<LI>
+In some cases, the new settings do not take effect until after a reboot.
+</UL>
+<LI>Windows 9x users can make the CLASSPATH setting permanent by
+doing the CLASSPATH equivalent of the procedure for making PATH changes
+permanent that you will find at
+<A HREF="http://java.sun.com/products/jdk/1.2/install-windows.html#Environment">http://java.sun.com/products/jdk/1.2/install-windows.html#Environment</A>
+<LI>Windows 9x users should also:
+<BR>set OS=W98 (or 95, etc)
+<BR>increase environment space as explained at:
+<A HREF="http://support.microsoft.com/support/kb/articles/Q230/2/05.ASP">
+http://support.microsoft.com/support/kb/articles/Q230/2/05.ASP</A>
+</UL>
+</UL>
+
+</BODY>
+</HTML>

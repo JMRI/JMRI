@@ -1,0 +1,173 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Bob Jacobsen, LBL">
+   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>JMRI: A Java Model Railroad Interface</title>
+</head>
+<body>
+
+&lt;If we had a logo, we'd put it here&gt; <BR>
+ 
+This page is _really_ still under construction! If you can help us make it a better page, please
+join the effort.<P>
+
+The JMRI project is building tools for model railroad computer control.  We 
+want it to be usable to as many people as possible, so we're building it 
+in Java to run anywhere, and we're trying to make it independent of specific
+hardware systems. 
+Like the CMRI system before it, JMRI is intended as a jumping-off point for 
+hobbyists who want to control their layouts from a computer without having to 
+create an entire system from scratch.<P>
+
+To do this, we've split the problem into two parts with an interface in-between:
+<UL>
+<LI>"Below" the interface lies code that connects to specific layout hardware.  Our initial
+work has been with Digitrax&tm; systems, as they provide a lot of functionality already
+and really good support is available.  But we're working on connections to other systems.
+<LI>"Above" the interface are the cool tools that people want. Our first examples are
+programmers for DCC decoders and simple layout controls.  The hope is that we can develop
+better and better tools that still will work on lots of type of computers, with lots
+of types of layouts.
+</UL>
+
+The long-term strategy is to:<P>
+
+<UL>
+<LI>Create a set of publically available common interfaces for model railroad control code, suitable
+    for use with any type of layout, from any type of computer.
+
+<LI>Demonstrate the technical feasibility of these interfaces with initial DCC-based implementations.
+
+<LI>Encourage interoperability of layout hardware and software through the use of common interfaces.
+</UL>
+
+<P>
+In the short term, we've created a demo version that can monitor a Digitrax LocoNet, control and display
+turnout positions, and program decoders.  Its rough, but its a start.  
+
+<BR>
+<IMG SRC="images/SimpleProg.jpg" ALT="Simple programmer frame" WIDTH="217" HEIGHT="181" HSPACE="0" VSPACE="0">
+<IMG SRC="images/MainPanel.jpg" ALT="Simple programmer frame" WIDTH="217" HEIGHT="181" HSPACE="0" VSPACE="0">
+<IMG SRC="images/TurnoutControl.jpg" ALT="Turnout control frame" WIDTH="223" HEIGHT="136" HSPACE="0" VSPACE="0">
+<IMG SRC="images/LocoMonFrame.jpg" ALT="LocoNet monitor sample image"  WIDTH="580" HEIGHT="396" HSPACE="0" VSPACE="0">
+<BR>
+
+If you're interested in using it with other model railroad equipment, with or without DCC, please
+join in the effort.
+
+<P>
+The JMRI name is chosen to bring to mind a "Java model railroad interface", but 
+to comply with the Sun licensing policy JMRI is not an acronym. <P>
+
+<h2>Demos</h2>
+
+JMRI is an open-source project, so you can get the entire source code at any time
+via the <A HREF="http://sourceforge.net/projects/jmri/">Project page</A>. If you'd
+like a running demo, we have the most recent one (demo 0.6) available packaged in several forms:
+
+<UL>
+<LI><A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.demo.0.6.hqx">JMRI.demo.0.6.hqx</A>  A binhex'd self-extracting archive for the Macintosh
+<LI><A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.demo.0.6.tar.gz" >JMRI.demo.0.6.tar.gz</A>   A .tar.gz file for Linux
+<LI><A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.demo.0.6.zip">JMRI.demo.0.6.zip</A>  A .zip file for OS/2
+</UL>
+Note that the people working on this project are really short of expertise
+in Windows and Linux; project development has so far been on the Macintosh.
+Only the Macintosh version is packaged so you can just click on the icon to start it; see
+the README file for details of how to start the others.
+If you can help us package any of these better, we'd really appreciate your
+advice.<P>
+
+The 
+<A HREF="demoFiles/README.html">README file</A>
+from the latest demo is also available separately.
+
+<h2>Further information</h2>
+
+The <A href="http://lists.sourceforge.net/lists/listinfo/jmri-announce">jmri-announce</a> 
+mailing list carries announcements of new versions, major changes, etc.  You can subscribe
+(or unsubscribe)
+using the 
+<A HREF="http://lists.sourceforge.net/lists/listinfo/jmri-announce">web interface</A>. <P>
+
+Sourceforge is providing tools to help us solve problems, track bugs, etc.  If you'd like
+to browse the existing problems, or perhaps ask for help on a new one, please follow one of the
+following links:
+
+<UL>
+<LI><A HREF="http://sourceforge.net/tracker/?atid=388313&group_id=26788&func=browse">Bugs</A>
+<LI><A HREF="http://sourceforge.net/tracker/?atid=388314&group_id=26788&func=browse">Support requests</A>
+<LI><A HREF="http://sourceforge.net/tracker/?atid=388316&group_id=26788&func=browse">Feature requests</A>
+</UL>
+
+<h3>Demo hardware requirements</h3>
+
+The demo is developed on a USB Macintosh, which is interfaced to a layout and LocoNet via
+a Keyspan PDA Adapter, DB9 to DB25 cable, and a Digitrax MS100.  
+It's not yet known whether a MS100 and simple
+adapter cable will work with a Macintosh that has the older style of RS422 (DIN8) serial ports.
+<P>
+PCs with a RS232 port should be able to connect directly to the MS100 with an appropriate cable.
+
+<h3>Java-specific information</h3>
+JMRI is written entirely in Java.  Some day, that means it will be "run anywhere",
+but we're not there yet.  <P>
+
+<A HREF="Java/InstallJava.html">Installing Java</A>: Many computers come with a usable version of Java already installed. If
+your's doesn't have one, try this page for some advice.
+
+<h3>Digitrax-specific information</h3>
+As a convenience for people using JRMI with Digitrax systems, we've got a directory of 
+<A HREF="DigiTrax/">Digitrax-specific information</A>:
+<UL>
+<LI><A HREF="DigiTrax/KeyspanAdapters/KeyspanUSB.html">Using a Keyspan USB adapter for LocoNet</A>: 
+Notes on connecting Macintosh
+computers with USB ports to the MS100 Loconet interface.
+<LI><A HREF="DigiTrax/DigitraxPower/DigitraxPower.html">Notes on power wiring for Digitrax components</A>:
+Some information on why Digitrax wants you to use different power transformers for the different types of cards
+</UL>
+
+<h2>JMRI project information (For people interested in how the software is being written)</h2>
+<A HREF="Technical/index.html">Technical web pages (still being written!)</A><P>
+<A HREF="http://sourceforge.net/projects/jmri/">Project page</A><P>
+<A HREF="http://sourceforge.net/export/projhtml.php?group_id=26788">Statistics and links</A><P>
+<A HREF="http://sourceforge.net/export/projnews.php?group_id=26788">News items</A><P>
+
+The source tree is available via anonymous CVS at:
+<PRE>
+anonymous@cvs.jmri.sourceforge.net:/cvsroot/jmri
+</PRE>
+If you have problems accessing that, please check for scheduled outages on the
+<A HREF="https://sourceforge.net/docman/display_doc.php?docid=2352&group_id=1">SourceForge status page</A><P>
+
+This is still an early stage, and we're critically short of documentation.  But if you're interested
+in working with the code, we'd love to help you get started via email, etc.
+
+<HR>
+<BR>Site hosted by: <BR>
+<A href="http://sourceforge.net"> 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A>
+
+<!-- Begin Small Box -->
+<form method="POST" action="http://mindit.netmind.com/mindit.shtml">
+<input type="hidden" name="FORM" value="C">
+<table border="0" cellpadding="5" cellspacing="0" bgcolor="#666666"><tr><td align="center">
+<font face="arial,helvetica" size="-1" color="#ffffff"><b>Click to receive email <br>when this page changes</b></font></td>
+</tr><tr><td align="center">
+<input type="image" src="http://mindit.netmind.com/images/mindit.gif" border="0"></td>
+</tr><tr bgcolor="#FFFFCC"><td align="center">
+<font face="arial,helvetica" size="-2">&#149;<b> Powered by <a href="http://www.netmind.com"><font color="#000000">NetMind</font></a> </b>&#149;</font>
+</td></tr></table>
+<input type=hidden value="http://jmri.sourceforge.net/index.html" name="REDIRECT"> 
+</form>
+<!-- End Small Box -->
+ 
+
+<hr>
+Bob Jacobsen<BR>
+jake@physics.berkeley.edu
+
+</body>
+</html>

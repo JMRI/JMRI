@@ -1,0 +1,192 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Bob Jacobsen, LBL">
+   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>JMRI technical info</title>
+</head>
+<body>
+
+This is the "technical" page of the JMRI website.  Right now, its just a 
+pile of various information.  Eventually we have to organize it!
+
+<P>
+See also the 
+<A HREF="LocoNetClasses.html">documentation for the LocoNet-specific classes</a>.
+
+<H3>Source snapshots</H3>
+Occasional snapshots of the CVS source
+<A HREF="snapshots">are available</A>
+for download as .zip files.   Note that these don't contain the .jar files, 
+documentation tree, etc; they're just source files.
+
+<h3>JavaDoc</h3>
+Anybody know how to connect JavaDoc to web pages like this without a 
+lot of manual updating?
+<P>
+In the meantime, we'll occasionally upload a set of JavaDoc pages. 
+Please expect these to be somewhat out of date with respect to the
+actual code! 
+<P>Starting points:
+<UL>
+<LI><A HREF="Docs/packages.html">Packages</A>
+<LI><A HREF="Docs/tree.html">Class heirarchy</A>
+<LI><A HREF="Docs/AllNames.html">Name index</A>
+</UL>
+
+<H3>Intro to demo program structure</h3>
+
+The demo program is just an example, but its meant to be a good one.
+<P>
+The source for the main class currently lives in jmrix/loconet/Apps/JMRIdemo.java,
+but note that it does not define the class as living in any Java package.  The
+demo was developed originally for the LocoNet aspects, but will eventually be more general.
+<P>
+The demo main just creates the menubar, and populates if with the desired menus
+and items. Each item as a "Action" class object associated with it, which does the
+necessary initialization when needed.
+<P>
+Because we expect to have different interfaces in the jmrix package, the JMRI tools
+don't directly create the interface objects they need.  Rather, they ask for instances
+of interfaces. For interfaces in the jmri package, which might be implemented by
+lots of different layout types, jmri.InstanceManager satisfies these requests.
+<P>
+Examples:
+<UL>
+<LI>A SimpleProgFrame (simple programmer) is created by a SimpleProgAction when
+fired. 
+SimpleProgAction and SimpleProgFrame don't know that LocoNet is in use, so they can't
+create the correct instance of Programmer; instead they defer any reference
+to Programmer until a button is pushed, and its necessary to do something.
+When that Frame is eventually asked to do something, it will
+use the jmri.InstanceManager.programmerInstance() method to find an implementation
+of the Programmer interface. If its not been created, an error is posted.
+
+<LI>A LocoMon (LocoNet monitor) frame is created by the LocoMonAction. Since its
+clear that this will be communicating with Loconet, it also
+connects that Frame to the LnTrafficController which it finds with the static
+instance() method of LnTrafficController.  instance will create a LnTrafficController
+if one doesn't exist.  Note that this process configures the LocoMon to recieve any
+relevant traffic, but doesn't make the connections to the layout; that's 
+done in the next example.
+
+<LI>The MS100 LocoNet interface is configured by the MS100Action class in jmrix.loconet.ms100.
+When fired, this action configures the LocoNet-specific classes so that they
+are ready to communicate.
+(See the page on <A HREF="LocoNetClasses.html">LocoNet-specific classes</a>
+for specifics). This includes ensuring a LnTrafficManager exists, and connecting
+it to a comm port and MS100 via a LnPortController implementation.
+If no Programmer instance is registered with the jmri.InstanceManager, 
+a loconet.SlotManager is created to do that.
+
+</UL>
+<h3>Development tools</h3>
+I (Bob) use Code Warrior on the Macintosh as a development platform. This handles
+selective recompilation, etc, and provides nice IDE capabilities.  The deugger
+part is just about unusable, however.  I'd be happy to send you a copy of the 
+project files if you'd like to use CW.
+
+<P>
+Eventually, we'll probably have to move to a platform-independent system 
+like Ant.  That would then work on any machine that people are interested in.
+
+<h3>Recommended Tools</h3>
+<UL>
+<LI>We use Java Swing for our GUI development.  Its a lot more powerful
+than the original AWT, and the price is right. In particular, we
+try to use the "Bean format" of setting and getting members, call-backs to
+notify of changes, etc, to make it easier to build applications from JRMI components.
+
+<LI>The Java communications toolbox (javax.comm) has worked fine on 
+Macintosh, OS/2 and Linux for serial I/O. We hope it works fine on other platforms. 
+If more complicated I/O is needed, then perhaps a JNI interface can be 
+constructed, but we'd certainly like to avoid that!
+<LI>Originally, we used ErrLoggerJ for logging of messages, etc.  We're now
+switching to log4j as its both easier and more powerful.  To log messages
+from a class named MyClass, add this to the bottom of the class file:
+<code>
+<PRE>
+	static org.apache.log4j.Category log 
+	        = org.apache.log4j.Category.getInstance(MyClass.class.getName());
+</PRE>
+</code>
+Then for each message to log insert a line like:
+<code>
+<PRE>
+	if (log.isInfoEnabled()) log.info("message");
+</PRE>
+</code>
+Message types are "fatal", "error", "warn", "info" and "debug".
+<LI>The 
+<A HREF="http://java.sun.com/docs/codeconv/">Java recommendations</A>
+for names, formatting, etc are really useful.
+If you find that you can't read a piece of code, these will help
+make it better.
+<LI>The Java collections (List, etc) are available in JMRI, because
+we need them for various other packages.  Use them if you'd like; there 
+are often better approaches than to make everything a Vector.
+<LI>Its really helpful to have tests for code, especially code that's
+being built by several people.  We use JUnit for that; see the section
+below.
+</UL>
+
+<h3>Jar files</h3>
+The various .jar files used in building the demos are available from the
+<A HREF="JARfiles">JARfiles subdirectory</A>. Note that up to the 0.5 demo,
+only swingall.jar and a version of the javax.comm.*.jar was needed (javax.comm.MRJ.jar
+is the Mac OS Classic version). For development after 0.5, you should assume
+all the .jar files in this area are needed.  junit.jar is for testing, and doesn't
+need to be distributed with product releases.
+
+<h3>JUnit</H3>
+Some of the classes have JUnit tests available.  For more information on JUnit, see
+<A HREF="http://www.junit.org">the JUnit home page</A>.
+A very interesting example of test-based development is available from 
+<A HREF="http://www.objectmentor.com/publications/xpepisode.htm">Robert Martin</a>'s new book.
+
+<h3>Other efforts similar to JMRI</h3>
+The 
+<A HREF="http://www.der-moba.de/Digital/">DER_MOBA digital project</a>
+is working on a client-server system interface.  Much of their discussions
+takes place on the 
+<A HREF="news:de.rec.modelle.bahn">de.rec.modelle.bahn</a> news group.
+
+<P>
+<A HREF="http:"//www.kamind.com">KAM Industries</A>
+has created a layout-level communications interface. They've proposed it to the NMRA
+for standardization.  A 1998 NMRA Convention 
+<A HREF="http://www.kamind.com/Clinics/NMRA-98/NMRA-98_Train_Tools_API_files/frame.htm">clinic writeup</A> 
+is available.  On their web pages, they refer to this as 
+<A HREF="http://www.kamind.com/Products/ds_TrainSrv_060000.asp">"Train server"</A>. It appears
+to be based on Windows-specific technologies. 
+
+<P>
+
+
+<HR>
+<BR>Site hosted by: <BR>
+<A href="http://sourceforge.net"> 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
+
+<!-- Begin Small Box -->
+<form method="POST" action="http://mindit.netmind.com/mindit.shtml">
+<input type="hidden" name="FORM" value="C">
+<table border="0" cellpadding="5" cellspacing="0" bgcolor="#666666"><tr><td align="center">
+<font face="arial,helvetica" size="-1" color="#ffffff"><b>Click to receive email <br>when this page changes</b></font></td>
+</tr><tr><td align="center">
+<input type="image" src="http://mindit.netmind.com/images/mindit.gif" border="0"></td>
+</tr><tr bgcolor="#FFFFCC"><td align="center">
+<font face="arial,helvetica" size="-2">&#149;<b> Powered by <a href="http://www.netmind.com"><font color="#000000">NetMind</font></a> </b>&#149;</font>
+</td></tr></table>
+<input type=hidden value="http://jmri.sourceforge.net/Technical/index.html" name="REDIRECT"> 
+</form>
+<!-- End Small Box -->
+
+<hr>
+Bob Jacobsen<BR>
+jake@physics.berkeley.edu
+
+</body>
+</html>

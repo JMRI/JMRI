@@ -1,0 +1,154 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Bob Jacobsen, LBL">
+   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>Measurements on power leads of Digitrax components</title>
+</head>
+<body>
+
+<H1>Measurements on power leads of Digitrax components</H1>
+
+I wanted to understand the reasons behind Digitrax's recommendations about separate
+power sources for PM4 and DS54 boards.  This page describes some
+measurements on my layout, and what I conclude from them.
+
+<h2>Conclusions</h2>
+
+The DCS100 and PM4 appear to use full-wave rectifier
+power supplies, while the DS54 uses a half-wave rectifier supply.
+These two types require different offsets between system ground and the transformer
+leads, which explains why these three types of components can't share
+AC auxillary power supplies.
+
+<h2>Specific measurements</h2>
+
+In this section, I describe the measurements leading to my conclusions.
+
+<P>The following measurements were made on an operating layout. It is powered
+by a single DCS100 (Chief) booster, with PM4 units for power subdistricts and
+DS54 units for various controls. Track power
+was on, and the DCS100 was in "run" mode, i.e. sending packets on the rails.
+About 1.2A was being drawn from the DCS100 booster output.  During the measurements,
+no LocoNet commands were sent, nor were reversing sections being traversed.
+
+<P>Unfortunately, the camera scope photos wasn't sufficiently
+sensitive, so they show a lot of blur. In all pictures, the ground reference was 
+centered and the vertical scale was 5V/division. The scope was line triggered. 
+Only a single trace is shown.
+
+<h3>Booster measurements</h3>
+
+Normally my DCS100 booster's ground connection is connected to the AC ground, 
+hence to earth.  I temporarily disconnected this to see what would happen with a 
+floating layout.  I found a 60Hz offset voltage of about 9V.  A 100K resistor to 
+ground removes this, so the source impedance is very large.  The photo was made with
+a 10MHz bandwidth limit; the visible spikes are about 6V with no bandwidth limit (500MHz scope).
+The ungrounded layout was probably generating a lot of RF noise...
+
+<P>
+<A HREF="DiscGround.jpg"><IMG SRC="thumbs/DiscGround-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></A>
+
+<P>
+For the rest of the measurements, I reconnected the DCS100 ground to the power
+ground. Both noise and offset were then less than 20mV.
+
+<P>
+With respect to system ground, the Rail A and Rail B lines alternate between 12V and about 0.8V:
+<BR>
+<A HREF="RailA.jpg"><IMG SRC="thumbs/RailA-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></A>
+<A HREF="RailB.jpg"><IMG SRC="thumbs/RailB-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></A>
+<BR>
+It appears that the DCS100 internal high-power supply is only positive.  To get a better understanding
+of that, I looked at the two power in lines from the transformer:
+<BR>
+<A HREF="BoosterPower1.jpg"><IMG SRC="thumbs/BoosterPower1-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></A>
+<A HREF="BoosterPower2.jpg"><IMG SRC="thumbs/BoosterPower2-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></A>
+<BR>
+Note they are both positive at all times, not centered on ground. The lowest voltage is about 1.3V below
+ground. This is characteristic of a full-wave rectifier supply with one side of the output grounded.
+The small offset is due to the voltage drop across the low-side diode, while the flat-top on the 
+waveform occurs when the transformer reaches a large enough voltage to charge the filter capacitor.
+<BR>
+<IMG SRC="Fullwave.jpg">
+<h3>PM4 measurements</h3>
+My PM4 power supply is an isolated transformer.  
+I made no measurements with a DC auxillary supply.
+The LocoNet was connected, providing a common ground connection.
+<P>
+The voltages on the PM4 power connections look like:
+<BR>
+<A HREF="PM4Power1.jpg"><IMG SRC="thumbs/PM4Power1-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></A>
+<A HREF="PM4Power2.jpg"><IMG SRC="thumbs/PM4Power2-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></A>
+<BR>
+Like the booster, this is indicative of a full-wave rectified power supply. The load profile is
+very different from what's seen on the booster supply. The ugly waveforms
+may be because my PM4 supply
+is a cheap little Radio Shack 450mA transformer; it seems to be clearly saturating. 
+
+<h3>DS54 measurements</h3>
+My DS54 power supply is an isolated transformer.  
+I made no measurements with a DC auxillary supply.
+The LocoNet was connected, providing a common ground connection.
+<P>
+The voltages on the DS54 "black" and "red" power connections look like:
+<BR>
+<A HREF="DS54PowerBlack.jpg"><IMG SRC="thumbs/DS54PowerBlack-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></A>
+<A HREF="DS54PowerRed.jpg"><IMG SRC="thumbs/DS54PowerRed-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></A>
+<BR>
+This is indicative of a half-wave rectified power supply. Note this is different 
+from the PM4 and DCS100. 
+<BR>
+<IMG SRC="Halfwave.jpg">
+<BR>
+Note the ripple in the ground (black) lead.
+Digitrax recommends that you <bold>not</bold>
+connect the DS54 ground lead to system ground; this offset shows why
+its a good idea to listen to that recommendation.  The ground in the 
+cartoon schematic is the DS54 black-wire "ground",
+but it is <bold>not</bold> the same as the system (LocoNet) 
+ground.  
+<P>
+Don Crano has pointed out that the DS54 is deriving
+a local ground from the rail connections so that the BD1 block current detector
+can use the DS54 ground connection.
+The following photos show
+that the offset from system ground changes slightly as the pulse-stretching 
+for analog operation moves from one extreme to the other. (Note that
+these photos are at 1V/division, with system ground in the center.)
+
+<BR>
+<CENTER>
+<TABLE BORDER="0">
+<TR>
+<TD WIDTH="120" HEIGHT="120" ALIGN="CENTER"><A HREF="DS54ConnAna-99.JPG"><IMG SRC="thumbs/DS54ConnAna-99-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75">LocoNet connected, analog at -99</A></TD>
+
+<TD WIDTH="120" HEIGHT="120" ALIGN="CENTER"><A HREF="DS54ConnAna0.JPG"><IMG SRC="thumbs/DS54ConnAna0-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75">LocoNet connected, analog at 0</A></TD>
+
+<TD WIDTH="120" HEIGHT="120" ALIGN="CENTER"><A HREF="DS54ConnAna+99.JPG"><IMG SRC="thumbs/DS54ConnAna+99-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75">LocoNet connected, analog at +99</A></TD>
+
+</TR>
+<TR>
+
+<TD WIDTH="120" HEIGHT="120" ALIGN="CENTER"><A HREF="DS54DiscAna+99.JPG"><IMG SRC="thumbs/DS54DiscAna+99-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75">LocoNet disconnected, analog at -99</A></TD>
+
+<TD WIDTH="120" HEIGHT="120" ALIGN="CENTER"><A HREF="DS54DiscAna-99.JPG"><IMG SRC="thumbs/DS54DiscAna-99-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75">LocoNet disconnected, analog at 0</A></TD>
+
+<TD WIDTH="120" HEIGHT="120" ALIGN="CENTER"><A HREF="DS54DiscAna0.JPG"><IMG SRC="thumbs/DS54DiscAna0-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75">LocoNet disconnected, analog at +99</A></TD>
+</TR>
+</TABLE>
+</CENTER>
+<BR>
+
+People on the Digitrax mailing list have recommended that all DS54 units on a layout be wired to the rails and common power supply with 
+the same polarity. (Mine are too.)  The offsets visible above show why you need to do this;  if two DS54 units were
+connected oppositely to either the common power or the rails, they would be unable to create a consistent ground reference.
+
+<hr>
+Bob Jacobsen<BR>
++1-510-486-7355 Bob_Jacobsen@lbl.gov<BR>
+Last updated May 20, 2001
+
+</body>

@@ -1,0 +1,178 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Bob Jacobsen, LBL">
+   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>README</title>
+</head>
+<body>
+
+<PRE>
+
+This is version 0.6 of "JMRI Demo".
+
+This demo provides monitoring  and programming tools for a 
+Digitrax LocoNet network. 
+
+For more information, contact Bob Jacobsen (jake@physics.berkeley.edu) or 
+visit the JMRI web page at http://jmri.sourceforge.net/
+
+To run the program:
+
+1) Connect a LocoBuffer or Digitrax MS100 interface to a serial port.  The 
+program is tested on a USB Macintosh using a Keyspan PDA Adapter to 
+provide the serial port; for information please see 
+http://jmri.sourceforge.net/DigiTrax/KeyspanAdapters/KeyspanUSB.html.  
+Its not known if a standard Macintosh RS422 serial port will work directly 
+with an MS100; if you have a pre-USB Macintosh and want to use this demo, please 
+contact us for more information.
+
+Macintosh startup instructions:
+
+This demo should run with an recent release of the Macintosh Runtime for Java (MRJ).  
+MRJ requires Mac OS 8.1 or later.  Development is currently using MRJ 2.2.5, available 
+for download from Apple.
+
+2) Start the demo by double-clicking on the "JMRI Demo" application icon.  
+
+
+
+OS/2 startup instructions:
+
+You need to have Java (at least 1.1.8), Swing and javacomm installed on your 
+machine. These can be downloaded from the IBM site.
+
+2) Run the J.CMD command script from this directory by
+
+     J
+     
+
+Linux startup instructions:
+
+You need to have a version of the javax.comm package installed on your machine.
+One is available at 
+  http://www.interstice.com/kevinh/linuxcomm.html
+with additional information at
+  http://www.rxtx.org/
+  
+2) Run the JmriDemo.tcsh script by from this directory by
+
+  ./JmriDemo.tcsh
+  
+
+
+After the program starts (all platforms):
+
+3) Pull down the left "Input" menu and select "MS100".
+
+  3A) Click "Get port names" to get a list of available ports.
+
+  3B) Select the port your MS100 is attached to.
+
+  3C) Click "Open LocoNet port"
+
+See the hints below if you don't have an MS100 connection to your layout available.
+
+4) Pull down the right "Functions" menu and select "LocoNet Monitor" to open 
+a LocoNet monitor frame.  You should immediately start seeing LocoNet traffic 
+in the top pane, which contains the last 20 messages. The controls at the bottom 
+allow you to display raw data in addition to the interpreted packets, to clear the 
+listing, and to write output to a log file.
+
+The right menu has additional tools for interacting with your LocoNet:
+
+"Simple Programmer" - a window to use the command station's programming track to 
+read or write a single CV at a time.  Paged, Direct and Register modes are available, 
+but not yet Ops Mode.
+
+"Layout Controls" -  a window what allows limited interaction with the LocoNet. It 
+contains buttons for sending "power on", "power off" and "turnout request" messages 
+to the LocoNet.  
+
+"Turnout Control" - a window to control and monitor a single turnout.  You can have as 
+many of these open as you'd like.  
+
+"Slot Monitor" - Displays the contents of the command station slots.  These are used by 
+throttles to control locomotives.  If you uncheck the box at the top, only slots 
+corresponding to active locomotives will be visible.
+
+
+
+If you don't have an MS100 or LocoNet layout available, you can still see the demo 
+run by selecting "Hexfile" from the left "Input" menu.  When you then click "read 
+from file" the program will pretend that LocoNet traffic is arriving from a file 
+of captured messages.  The lnpacket.hex file is provided as an example.
+
+More information is available on the JMRI web page:   http://jmri.sourceforge.net/
+
+Feedback is greatly appreciated!  We especially welcome suggestions of what you'd like 
+to see this program do.  If you encounter a problem, please let use know so we can fix 
+it.  You can send email to jake@physics.berkeley.edu, or use the web form to 
+
+ report bugs:     http://sourceforge.net/tracker/?atid=388313&group_id=26788&func=add
+
+ request help:   http://sourceforge.net/tracker/?atid=388314&group_id=26788&func=add
+
+ suggest improvements:   http://sourceforge.net/tracker/?atid=388316&group_id=26788&func=add
+
+
+Notes: 
+
+
+For systems not mentioned above, you may be able to start the program by directly invoking the 
+main procedure in the JMRIdemo class in the AppClasses.jar file.  Try a command of the 
+form
+
+  setenv CLASSPATH AppClasses.jar:swingall.jar
+  java JMRIdemo
+
+(That first instruction is a Unix-specific way to set the CLASSPATH; other systems will 
+do something slightly different). The linux.tcsh file is a script that might be useful 
+as a starting point.
+  
+The instructions from step (2) above should then work.
+
+Note that on other platforms you'll also need an appropriate implementation of 
+the javax.comm package.  See http://java.sun.com/products/javacomm/ for Solaris and 
+Windows. I would appreciate hearing about a source for a Linux version of javax.comm.  
+ 
+Some hardware may not support the LocoNet baud rate.  If so, please let me know the 
+specifics so I can create a workaround. 
+
+I would also appreciate help with creating installers for Linux, Windows and other platforms.
+
+The javax.comm.MRJ package, including the javax.comm.MRJ.jar file, is 
+copyright 1999 Patrick Beard, beard@netscape.com  Do not redistribute without 
+permission. See http://homepage.mac.com/pcbeard/javax.comm.MRJ/ for more information.
+
+The LocoNet monitoring includes algorithms first seen in the llnmon program by Ron W. Auld.
+
+Rob Hamerling wrote the OS/2 instructions and startup script.
+
+Some of the contents of this folder are copyright 2001 Bob Jacobsen, 
+jake@physics.berkeley.edu. For license information, see
+http://www.opensource.org/licenses/artistic-license.html
+
+LocoNet is a trademark of Digitrax Corp.
+
+More information on the JMRI project is available from the in-construction web pages at 
+http://jmri.sourceforge.net/  The source code is available vis CVS from that page.
+
+To comply with the Sun trademark policy, JMRI is not an acronym.
+
+
+</PRE>
+
+<HR>
+<BR>Site hosted by: <BR>
+<A href="http://sourceforge.net"> 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
+
+<hr>
+Bob Jacobsen<BR>
+jake@physics.berkeley.edu
+
+</body>
+</html>
