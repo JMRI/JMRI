@@ -2,11 +2,10 @@
 
 package jmri.managers;
 
-import java.util.*;
-import com.sun.java.util.collections.*;
+import jmri.Manager;
+import jmri.NamedBean;
 import com.sun.java.util.collections.ArrayList;
 import com.sun.java.util.collections.List;
-import jmri.*;
 
 /**
  * Implementation of a Manager that can serves as a proxy
@@ -14,7 +13,7 @@ import jmri.*;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class AbstractProxyManager implements Manager {
 
@@ -22,6 +21,22 @@ public class AbstractProxyManager implements Manager {
         for (int i=0; i<mgrs.size(); i++)
             ( (Manager)mgrs.get(i)).dispose();
         mgrs.clear();
+    }
+
+    /**
+     * Remember a NamedBean Object created outside the manager.
+     * <P>
+     * Forwards the register request to the matching system
+     */
+    public void register(NamedBean s) {
+        String systemName = s.getSystemName();
+        char systemLetter = systemName.charAt(0);
+
+        for (int i = 0; i<mgrs.size(); i++)
+             if ( systemLetter == ((Manager)mgrs.get(i)).systemLetter()) {
+                ((Manager)mgrs.get(i)).register(s);
+                return;
+            }
     }
 
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
