@@ -1,6 +1,6 @@
 <!-- ugly first attempt at an ANT build.xml file for JMRI development -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.5 $ -->
+<!-- Revision $Revision: 1.6 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -91,7 +91,9 @@
     <jar jarfile="${distdir}/jmri.jar" basedir="${target}" />
 
     <!-- zip it! -->
-    <zip zipfile="../${dist}.zip" basedir="${distdir}" />
+    <zip zipfile="../${dist}.zip"  >
+        <zipfileset dir="${distdir}" prefix="${dist}"/>
+    </zip>
 
     <!-- and remove working directory -->
     <delete dir="${distdir}" />
