@@ -12,77 +12,33 @@ import java.io.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import junit.framework.Assert;
 
 import jmri.jmrix.nce.*;
+import jmri.tests.jmrix.AbstractTurnoutTest;
 
-public class NceTurnoutTest extends TestCase {
+public class NceTurnoutTest extends AbstractTurnoutTest {
 
-	public void testNceTurnoutCreate() {
+	private NceTrafficControlScaffold tcis = null;
+	
+	public void setUp() {
 		// prepare an interface
-		NceTrafficControlScaffold tcis = new NceTrafficControlScaffold();
+		tcis = new NceTrafficControlScaffold();
 		
-		NceTurnout t = new NceTurnout(21);
-		
-		// set closed 
-		try {
-			t.setCommandedState(jmri.Turnout.CLOSED);
-		} catch (Exception e) { log.error("TO exception: "+e);
-		}	
-		assert(tcis.outbound.elementAt(0).toString().equals("b0 14 30 0 "));  // CLOSED message
-		assert(t.getCommandedState() == jmri.Turnout.CLOSED);
-		
-		// set thrown 
-		try {
-			t.setCommandedState(jmri.Turnout.THROWN);
-		} catch (Exception e) { log.error("TO exception: "+e);
-		}	
-		assert(tcis.outbound.elementAt(1).toString().equals("b0 14 10 0 "));  // THROWN message
-		assert(t.getCommandedState() == jmri.Turnout.THROWN);
-
-		// notify the Ln that somebody else changed it...
-		NceMessage m = new NceMessage(4);
-		m.setOpCode(0xb0);
-		m.setElement(1, 0x14);     // set CLOSED
-		m.setElement(2, 0x30);
-		m.setElement(3, 0x00);
-		tcis.sendTestMessage(m,t);
-		assert(t.getCommandedState() == jmri.Turnout.CLOSED);
-
-		m = new NceMessage(4);
-		m.setOpCode(0xb0);
-		m.setElement(1, 0x14);     // set THROWN
-		m.setElement(2, 0x10);
-		m.setElement(3, 0x00);
-		tcis.sendTestMessage(m,t);
-		assert(t.getCommandedState() == jmri.Turnout.THROWN);
+		t = new NceTurnout(134);
 	}
-
-	// test for incoming status message
-	public void testNceTurnoutStatusMsg() {
-		// prepare an interface
-		NceTrafficControlScaffold tcis = new NceTrafficControlScaffold();
-		
-		NceTurnout t = new NceTurnout(21);
-		
-		// set closed 
-		try {
-			t.setCommandedState(jmri.Turnout.CLOSED);
-		} catch (Exception e) { log.error("TO exception: "+e);
-		}	
-		assert(tcis.outbound.elementAt(0).toString().equals("b0 14 30 0 "));  // CLOSED message
-		assert(t.getCommandedState() == jmri.Turnout.CLOSED);
-
-		// notify the Ln that somebody else changed it...
-		NceMessage m = new NceMessage(4);
-		m.setOpCode(0xb1);
-		m.setElement(1, 0x14);     // set CLOSED
-		m.setElement(2, 0x20);
-		m.setElement(3, 0x7b);
-		tcis.sendTestMessage(m,t);
-		assert(t.getCommandedState() == jmri.Turnout.CLOSED);
-
+	
+	public int numListeners() { return tcis.numListeners(); }
+	
+	public void checkThrownMsgSent() {
+		Assert.assertTrue("message sent", tcis.outbound.size()>0);
+		Assert.assertEquals("content", "S C02 84 9c 18", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
 	}
-
+	
+	public void checkClosedMsgSent() {
+		Assert.assertTrue("message sent", tcis.outbound.size()>0);
+		Assert.assertEquals("content", "S C02 84 9d 19", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
+	}
 
 	// from here down is testing infrastructure
 	

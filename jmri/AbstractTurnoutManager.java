@@ -11,7 +11,8 @@ package jmri;
 import java.util.Hashtable;
 
 
-public abstract class AbstractTurnoutManager implements TurnoutManager{
+public abstract class AbstractTurnoutManager 
+		implements TurnoutManager, java.beans.PropertyChangeListener {
 
 	// abstract methods to be provided by subclasses
 	public abstract Turnout newTurnout(String systemName, String userName);
@@ -39,6 +40,17 @@ public abstract class AbstractTurnoutManager implements TurnoutManager{
 		return (Turnout)_tuser.get(key);
 	}
 
+	// keep track of Turnout user name changes
+	public void propertyChange(java.beans.PropertyChangeEvent e) {
+		if (e.getPropertyName().equals("UserName")) {
+			String old = (String) e.getOldValue();
+			String now = (String) e.getNewValue();
+			System.out.println("change: "+old+" "+now);
+			Turnout t = getByUserName(old);
+			_tuser.remove(old);
+			_tuser.put(now, t);
+		}
+	}
 }
 
 

@@ -11,11 +11,19 @@ package jmri;
 
 public interface Turnout {
 
-	// user identification, unbound parameter
-	public String getID();
-	public void   setID(String s);
+	// user identification, _bound_ parameter so manager(s) can listen
+	public String getUserName();
+	public void   setUserName(String s);
 	
-	// states are parameters; both closed and thrown is possible!
+	/** system identification:
+	 *  LTnnn  LocoNet turnouts
+	 *  NTnnn  NCE turnouts
+	 *  XTnnn  XpressNet turnouts
+	 *  DTnnn  direct-packet-drive turnouts
+	 */
+	public String getSystemName();
+	
+	// states are parameters; 'both closed and thrown' is possible!
 	public static final int UNKNOWN      = 0x01;
 	public static final int CLOSED       = 0x02;
 	public static final int THROWN       = 0x04;
@@ -30,7 +38,7 @@ public interface Turnout {
 	public int getCommandedState();
 	
 	// feedbackType is an unbound parameter; many possible forms....
-	public static final int NONE     = 0;  // only commanded state is known
+	public static final int NONE     = 0;  // only state commanded in this program is known
 	// UNKNOWN is also possible
 	public static final int EXACT    = 2;  // both open and thrown actively sensed
 	public static final int INDIRECT = 3;  // only one side directly sensed
@@ -38,8 +46,10 @@ public interface Turnout {
 	
 	public int getFeedbackType();
 	
-	// implementing classes will generally provide PropertyChangeListener
-	// calls for KnownState and CommandedState
+	public void addPropertyChangeListener(java.beans.PropertyChangeListener l);
+	public void removePropertyChangeListener(java.beans.PropertyChangeListener l);
+	public void dispose();  // remove _all_ connections!
+
 }
 
 

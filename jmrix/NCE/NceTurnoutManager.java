@@ -13,12 +13,13 @@ package jmri.jmrix.nce;
 import jmri.JmriException;
 import jmri.Turnout;
 
-public class NceTurnoutManager extends jmri.AbstractTurnoutManager implements NceListener {
+public class NceTurnoutManager extends jmri.AbstractTurnoutManager {
 
 	// ABC implementations
 	
 	// to free resources when no longer used
 	public void dispose() throws JmriException {
+		super.dispose();
 	}
 
 	// NCE-specific methods
@@ -26,7 +27,7 @@ public class NceTurnoutManager extends jmri.AbstractTurnoutManager implements Nc
 	public void putByUserName(String s, NceTurnout t) {
 		_tuser.put(s, t);
 		// find the system name, and put that way also
-		String system = "LT"+t.getNumber();
+		String system = "NT"+t.getNumber();
 		_tsys.put(system, t);
 	}
 
@@ -36,41 +37,30 @@ public class NceTurnoutManager extends jmri.AbstractTurnoutManager implements Nc
 	}
 	
 	public Turnout newTurnout(String systemName, String userName) {
+		// return existing if there is one
+		Turnout t;
+		if ( (t = getByUserName(userName)) != null) return t;
+		if ( (t = getBySystemName(systemName)) != null) return t;
+
 		// get number from name
-		if (!systemName.startsWith("LT")) {
-			log.error("Invalid system name for LocoNet turnout: "+systemName);
+		if (!systemName.startsWith("NT")) {
+			log.error("Invalid system name for NCE turnout: "+systemName);
 			return null;
 		}
 		int addr = Integer.valueOf(systemName.substring(2)).intValue();
-		NceTurnout t = new NceTurnout(addr);
+		t = new NceTurnout(addr);
+		t.setUserName(userName);
 		
 		_tsys.put(systemName, t);
 		_tuser.put(userName, t);
+		t.addPropertyChangeListener(this);
+		
 		return t;
 	}
 
-	// ctor has to register for LocoNet events
 	public NceTurnoutManager() {
-		NceTrafficController.instance().addNceListener(this);	
 	}
 		
-	// listen for turnouts, creating them as needed
-	public void message(NceMessage l) {
-		// parse message type
-		int addr = 0;
-		// reach here for NCE switch command; make sure we know about this one
-		String s = "LN"+addr;
-		if (null == getBySystemName(s)) {
-			// need to store a new one
-			NceTurnout t = new NceTurnout(addr);
-			putBySystemName(t);
-		}
-	}
-
-	public void reply(NceReply l) {
-		// doesn't do anything, as not looking for anything from reply
-	}
-	
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceTurnoutManager.class.getName());
 
 }

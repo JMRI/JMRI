@@ -19,6 +19,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
 	}
 
 	public int getNumber() { return _number; }
+	public String getSystemName() { return "LT"+getNumber(); }
 	
 	// Handle a request to change state by sending a LocoNet command
 	protected void forwardCommandChangeToLayout(int s) throws jmri.JmriException {
@@ -101,6 +102,8 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
 			}
 		// reach here only in error
 	}
+	
+	public void dispose() {}
 		
 	// data members
 	int _number;   // loconet turnout number

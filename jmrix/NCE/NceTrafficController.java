@@ -24,7 +24,10 @@ import java.util.Vector;
  */
 public class NceTrafficController implements NceInterface, Runnable {
 
-	public NceTrafficController() {self=this;}
+	public NceTrafficController() {
+		if (log.isDebugEnabled()) log.debug("setting instance: "+this);
+		self=this;
+	}
 	
 
 // The methods to implement the NceInterface
@@ -111,6 +114,7 @@ public class NceTrafficController implements NceInterface, Runnable {
 	 * Forward a preformatted message to the actual interface.
 	 */
 	public void sendNceMessage(NceMessage m, NceListener reply) {
+		if (log.isDebugEnabled()) log.debug("sendNceMessage message: ["+m+"]");
 		// remember who sent this
 		lastSender = reply;
 		
@@ -174,11 +178,14 @@ public class NceTrafficController implements NceInterface, Runnable {
 	 *         if need be creating one.
 	 */
 	static public NceTrafficController instance() { 
-		if (self == null) self = new NceTrafficController();
+		if (self == null) {
+			if (log.isDebugEnabled()) log.debug("creating a new NceTrafficController object");
+			self = new NceTrafficController();
+		}
 		return self;
 	}
 	
-	static private NceTrafficController self = null;
+	static protected NceTrafficController self = null;
 	
 // data members to hold the streams
 	DataInputStream istream = null;
