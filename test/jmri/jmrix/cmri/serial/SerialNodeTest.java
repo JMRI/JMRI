@@ -11,10 +11,34 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialNode class
  * @author		Bob Jacobsen  Copyright 2003
- * @version		$Revision: 1.5 $
+ * @version		$Revision: 1.6 $
  */
 public class SerialNodeTest extends TestCase {
 
+    public void testCountInput1() {
+		SerialNode a = new SerialNode();
+		a.cardTypeLocation = new byte[]{SerialNode.INPUT_CARD, SerialNode.NO_CARD, SerialNode.OUTPUT_CARD};
+		Assert.assertEquals("check 1 cards, not in order", 1, a.numInputCards());
+	}
+
+    public void testCountInput2() {
+		SerialNode a = new SerialNode();
+		a.cardTypeLocation = new byte[]{SerialNode.INPUT_CARD, SerialNode.NO_CARD, SerialNode.INPUT_CARD};
+		Assert.assertEquals("check 2 cards, not in order", 2, a.numInputCards());
+	}
+	
+    public void testCountOutput0() {
+		SerialNode a = new SerialNode();
+		a.cardTypeLocation = new byte[]{SerialNode.INPUT_CARD, SerialNode.NO_CARD, SerialNode.INPUT_CARD};
+		Assert.assertEquals("check 0 cards", 0, a.numOutputCards());
+	}
+	
+    public void testCountOutput2() {
+		SerialNode a = new SerialNode();
+		a.cardTypeLocation = new byte[]{SerialNode.OUTPUT_CARD, SerialNode.OUTPUT_CARD, SerialNode.INPUT_CARD};
+		Assert.assertEquals("check 2 cards", 2, a.numOutputCards());
+	}
+	
     public void testMarkChanges() {
         SerialNode a = new SerialNode();
         SerialSensor s1 = new SerialSensor("1");
