@@ -29,7 +29,7 @@ import org.jdom.JDOMException;
 /**
  * Frame providing a command station programmer from decoder definition files
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
@@ -597,7 +597,7 @@ public class PaneProgFrame extends javax.swing.JFrame
 	 * Store the locomotives information in the roster (and a RosterEntry file).
 	 */
 	public void storeFile() {
-		log.info("storeFile starts");
+		log.debug("storeFile starts");
 
 		// reload the RosterEntry
 		updateDccAddress();
@@ -605,7 +605,7 @@ public class PaneProgFrame extends javax.swing.JFrame
 
 		// id has to be set!
 		if (_rosterEntry.getId().equals("") || _rosterEntry.getId().equals("<new loco>")) {
-			log.info("storeFile without a filename; issued dialog");
+			log.debug("storeFile without a filename; issued dialog");
 			JOptionPane.showMessageDialog(this, "Please fill in the ID field first");
 			return;
 		}
