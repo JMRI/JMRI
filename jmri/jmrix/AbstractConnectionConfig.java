@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 abstract public class AbstractConnectionConfig  implements jmri.jmrix.ConnectionConfig {
 
@@ -82,12 +82,19 @@ abstract public class AbstractConnectionConfig  implements jmri.jmrix.Connection
     	
         setInstance();
 
-        Vector v = adapter.getPortNames();
-    	if (log.isDebugEnabled()) {
-    		log.debug("loadDetails called in class "+this.getClass().getName());
-    		log.debug("adapter class: "+adapter.getClass().getName());
-    		log.debug("loadDetails called for "+name());
-        	log.debug("Found "+v.size()+" ports");
+        Vector v;
+        try {
+            v = adapter.getPortNames();
+    	    if (log.isDebugEnabled()) {
+    		    log.debug("loadDetails called in class "+this.getClass().getName());
+    		    log.debug("adapter class: "+adapter.getClass().getName());
+    		    log.debug("loadDetails called for "+name());
+        	    log.debug("Found "+v.size()+" ports");
+            }
+        } catch (java.lang.UnsatisfiedLinkError e1) {
+            log.error("UnsatisfiedLinkError - the javax.comm library has not been installed properly");
+            javax.swing.JOptionPane.showMessageDialog(null, "Failed to load comm library.\nYou have to fix that before setting preferences.");
+            return;
         }
         String portName;
         portBox.removeAllItems();
