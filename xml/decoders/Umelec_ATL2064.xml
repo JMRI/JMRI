@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Umelec_ATL2064.xml,v 1.1 2004-08-24 03:11:32 jacobsen Exp $ -->
+<!-- $Id: Umelec_ATL2064.xml,v 1.2 2004-08-24 03:28:31 jacobsen Exp $ -->
 <decoder-config>
 	<version author="jefflaw@datamasta.co.nz"
 		version="1.00" lastUpdated="20040809" />
@@ -8,7 +8,7 @@
 
 
 <decoder>
-	<family name="Umelec ATLPlus Engine Module" mfg="Umelec" >
+	<family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero" >
 		<model model="ATL2064" lowVersionID="12" highVersionID="12" 
  		 maxInputVolts="12V" maxMotorCurrent="1A"
 		 maxTotalCurrent="1A" formFactor="HO"
