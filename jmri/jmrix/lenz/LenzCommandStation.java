@@ -9,7 +9,7 @@ package jmri.jmrix.lenz;
  * Defines standard operations for Dcc command stations.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
 
@@ -109,10 +109,27 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
 		return m;
 	}
 
+	public XNetMessage getReadDirectCVMsg(int cv) {
+		XNetMessage m = new XNetMessage(4);
+        m.setElement(0, 0x22);
+        m.setElement(1, 0x15);
+        m.setElement(2, cv);
+		return m;
+	}
+
 	public XNetMessage getWritePagedCVMsg(int cv, int val) {
 		XNetMessage m = new XNetMessage(5);
         m.setElement(0, 0x23);
         m.setElement(1, 0x17);
+        m.setElement(2, cv);
+        m.setElement(3, val);
+		return m;
+	}
+
+	public XNetMessage getWriteDirectCVMsg(int cv, int val) {
+		XNetMessage m = new XNetMessage(5);
+        m.setElement(0, 0x23);
+        m.setElement(1, 0x16);
         m.setElement(2, cv);
         m.setElement(3, val);
 		return m;

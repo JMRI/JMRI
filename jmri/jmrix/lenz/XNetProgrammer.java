@@ -26,7 +26,7 @@ import java.beans.PropertyChangeEvent;
  * <LI>Wait for Normal Operations Resumed broadcast
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -70,7 +70,8 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 			notifyPropertyChange("Mode", _mode, mode);
 			_mode = mode;
 		}
-		if (_mode != Programmer.PAGEMODE && _mode != Programmer.REGISTERMODE) {
+		if (_mode != Programmer.PAGEMODE && _mode != Programmer.REGISTERMODE
+                && mode != Programmer.DIRECTBITMODE && mode != Programmer.DIRECTBYTEMODE ) {
             // attempt to switch to unsupported mode, switch back to previous
 			_mode = oldMode;
 			notifyPropertyChange("Mode", mode, _mode);
@@ -84,7 +85,9 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
      */
     public boolean hasMode(int mode) {
         if ( mode == Programmer.PAGEMODE ||
-             mode == Programmer.REGISTERMODE ) {
+             mode == Programmer.REGISTERMODE ||
+             mode == Programmer.DIRECTBITMODE ||
+             mode == Programmer.DIRECTBYTEMODE ) {
             log.debug("hasMode request on mode "+mode+" returns true");
             return true;
         }
@@ -138,6 +141,10 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         if (_mode == Programmer.PAGEMODE)
 		    controller().sendXNetMessage(XNetTrafficController.instance()
                                     .getCommandStation().getWritePagedCVMsg(CV, val));
+        else if (_mode == Programmer.DIRECTBITMODE || _mode == Programmer.DIRECTBYTEMODE)
+		    controller().sendXNetMessage(XNetTrafficController.instance()
+                                    .getCommandStation().getWriteDirectCVMsg(CV, val));
+
         else // register mode by elimination
 		    controller().sendXNetMessage(XNetTrafficController.instance()
                                     .getCommandStation().getWriteRegisterMsg(registerFromCV(CV), val));
