@@ -24,7 +24,7 @@ import org.jdom.Attribute;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 abstract public class AbstractConfigFrame extends JFrame {
 
@@ -215,279 +215,291 @@ abstract public class AbstractConfigFrame extends JFrame {
 	 * Connection method has been selected; show available ports
 	 */
 	void protocolSelected() {
-		portBox.setEnabled(true);
-        portBox.setEditable(false);
-		portBox.setToolTipText("Select a communications port");
+        try {
+    		portBox.setEnabled(true);
+            portBox.setEditable(false);
+    		portBox.setToolTipText("Select a communications port");
 
-		// create the eventual serial driver object, and ask it for available comm ports
-		protocolName = (String) protocolBox.getSelectedItem();
-		portBox.removeAllItems();  // start over
-		baudBox.removeAllItems();  // start over
-		opt1Box.removeAllItems();  // start over
-		opt2Box.removeAllItems();  // start over
+    		// create the eventual serial driver object, and ask it for available comm ports
+    		protocolName = (String) protocolBox.getSelectedItem();
+    		portBox.removeAllItems();  // start over
+    		baudBox.removeAllItems();  // start over
+    		opt1Box.removeAllItems();  // start over
+    		opt2Box.removeAllItems();  // start over
 
-		log.debug("Connection selected: "+protocolName);
-		if (protocolName.equals("LocoNet LocoBuffer")) {
-			//
-			jmri.jmrix.loconet.locobuffer.LocoBufferAdapter a
-					= new jmri.jmrix.loconet.locobuffer.LocoBufferAdapter();
-			Vector v = a.getPortNames();
-			log.debug("Found "+v.size()+" LocoBuffer ports");
-			for (int i=0; i<v.size(); i++) {
-				if (i==0) portName = (String) v.elementAt(i);
-				portBox.addItem(v.elementAt(i));
-			}
-			String[] baudList = a.validBaudRates();
-			for (int i=0; i<baudList.length; i++) baudBox.addItem(baudList[i]);
-			String[] opt1List = a.validOption1();
-			for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
-			String[] opt2List = a.validOption2();
-			for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
+    		log.debug("Connection selected: "+protocolName);
+    		if (protocolName.equals("LocoNet LocoBuffer")) {
+    			//
+    			jmri.jmrix.loconet.locobuffer.LocoBufferAdapter a
+    					= new jmri.jmrix.loconet.locobuffer.LocoBufferAdapter();
+    			Vector v = a.getPortNames();
+    			log.debug("Found "+v.size()+" LocoBuffer ports");
+    			for (int i=0; i<v.size(); i++) {
+    				if (i==0) portName = (String) v.elementAt(i);
+    				portBox.addItem(v.elementAt(i));
+    			}
+    			String[] baudList = a.validBaudRates();
+    			for (int i=0; i<baudList.length; i++) baudBox.addItem(baudList[i]);
+    			String[] opt1List = a.validOption1();
+    			for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
+    			String[] opt2List = a.validOption2();
+    			for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
 
-			if (baudList.length>1) {
-				baudBox.setToolTipText("Must match the baud rate setting of your hardware");
-				baudBox.setEnabled(true);
-			} else {
-				baudBox.setToolTipText("The baud rate is fixed for this protocol");
-				baudBox.setEnabled(false);
-			}
-			if (opt1List.length>1) {
-				opt1Box.setToolTipText("The first option is strongly recommended. See README for more info.");
-				opt1Box.setEnabled(true);
-			} else {
-				opt1Box.setToolTipText("There are no options for this protocol");
-				opt1Box.setEnabled(false);
-			}
-			if (opt2List.length>1) {
-				opt2Box.setToolTipText("");
-				opt2Box.setEnabled(true);
-			} else {
-				opt2Box.setToolTipText("There are no options for this protocol");
-				opt2Box.setEnabled(false);
-			}
+    			if (baudList.length>1) {
+    				baudBox.setToolTipText("Must match the baud rate setting of your hardware");
+    				baudBox.setEnabled(true);
+    			} else {
+    				baudBox.setToolTipText("The baud rate is fixed for this protocol");
+    				baudBox.setEnabled(false);
+    			}
+    			if (opt1List.length>1) {
+    				opt1Box.setToolTipText("The first option is strongly recommended. See README for more info.");
+    				opt1Box.setEnabled(true);
+    			} else {
+    				opt1Box.setToolTipText("There are no options for this protocol");
+    				opt1Box.setEnabled(false);
+    			}
+    			if (opt2List.length>1) {
+    				opt2Box.setToolTipText("");
+    				opt2Box.setEnabled(true);
+    			} else {
+    				opt2Box.setToolTipText("There are no options for this protocol");
+    				opt2Box.setEnabled(false);
+    			}
 
-		} else if (protocolName.equals("LocoNet MS100")) {
-			//
-			jmri.jmrix.loconet.ms100.MS100Adapter a
-					= new jmri.jmrix.loconet.ms100.MS100Adapter();
-			Vector v = a.getPortNames();
-			log.debug("Found "+v.size()+" MS100 ports");
-			for (int i=0; i<v.size(); i++) {
-				if (i==0) portName = (String) v.elementAt(i);
-				portBox.addItem(v.elementAt(i));
-			}
-			String[] baudList = a.validBaudRates();
-			for (int i=0; i<baudList.length; i++) baudBox.addItem(baudList[i]);
-			String[] opt1List = a.validOption1();
-			for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
-			String[] opt2List = a.validOption2();
-			for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
+    		} else if (protocolName.equals("LocoNet MS100")) {
+    			//
+    			jmri.jmrix.loconet.ms100.MS100Adapter a
+    					= new jmri.jmrix.loconet.ms100.MS100Adapter();
+    			Vector v = a.getPortNames();
+    			log.debug("Found "+v.size()+" MS100 ports");
+    			for (int i=0; i<v.size(); i++) {
+    				if (i==0) portName = (String) v.elementAt(i);
+    				portBox.addItem(v.elementAt(i));
+    			}
+    			String[] baudList = a.validBaudRates();
+    			for (int i=0; i<baudList.length; i++) baudBox.addItem(baudList[i]);
+    			String[] opt1List = a.validOption1();
+    			for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
+    			String[] opt2List = a.validOption2();
+    			for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
 
-			if (baudList.length>1) {
-				baudBox.setToolTipText("Must match the baud rate setting of your hardware");
-				baudBox.setEnabled(true);
-			} else {
-				baudBox.setToolTipText("The baud rate is fixed for this protocol");
-				baudBox.setEnabled(false);
-			}
-			if (opt1List.length>1) {
-				opt1Box.setToolTipText("The first option is strongly recommended. See README for more info.");
-				opt1Box.setEnabled(true);
-			} else {
-				opt1Box.setToolTipText("There are no options for this protocol");
-				opt1Box.setEnabled(false);
-			}
-			if (opt2List.length>1) {
-				opt2Box.setToolTipText("");
-				opt2Box.setEnabled(true);
-			} else {
-				opt2Box.setToolTipText("There are no options for this protocol");
-				opt2Box.setEnabled(false);
-			}
+    			if (baudList.length>1) {
+    				baudBox.setToolTipText("Must match the baud rate setting of your hardware");
+    				baudBox.setEnabled(true);
+    			} else {
+    				baudBox.setToolTipText("The baud rate is fixed for this protocol");
+    				baudBox.setEnabled(false);
+    			}
+    			if (opt1List.length>1) {
+    				opt1Box.setToolTipText("The first option is strongly recommended. See README for more info.");
+    				opt1Box.setEnabled(true);
+    			} else {
+    				opt1Box.setToolTipText("There are no options for this protocol");
+    				opt1Box.setEnabled(false);
+    			}
+    			if (opt2List.length>1) {
+    				opt2Box.setToolTipText("");
+    				opt2Box.setEnabled(true);
+    			} else {
+    				opt2Box.setToolTipText("There are no options for this protocol");
+    				opt2Box.setEnabled(false);
+    			}
 
-		} else if (protocolName.equals("LocoNet Server")) {
-			// This is somewhat special, as the option has to
-            // allow editting in a host name
-            portBox.setEditable(true);
-	    	portBox.setToolTipText("Enter a server hostname");
+    		} else if (protocolName.equals("LocoNet Server")) {
+    			// This is somewhat special, as the option has to
+                // allow editting in a host name
+                portBox.setEditable(true);
+    	    	portBox.setToolTipText("Enter a server hostname");
 
-            baudBox.setToolTipText("Don't need to specify baud rate");
-            baudBox.setEnabled(false);
+                baudBox.setToolTipText("Don't need to specify baud rate");
+                baudBox.setEnabled(false);
 
-    		opt1Box.setToolTipText("There are no options for this protocol");
-    		opt1Box.setEnabled(false);
-    		opt2Box.setToolTipText("There are no options for this protocol");
-    		opt2Box.setEnabled(false);
+        		opt1Box.setToolTipText("There are no options for this protocol");
+        		opt1Box.setEnabled(false);
+        		opt2Box.setToolTipText("There are no options for this protocol");
+        		opt2Box.setEnabled(false);
 
-		} else if (protocolName.equals("NCE")) {
-			//
-			jmri.jmrix.nce.serialdriver.SerialDriverAdapter a
-					= new jmri.jmrix.nce.serialdriver.SerialDriverAdapter();
-			Vector v = a.getPortNames();
-			log.debug("Found "+v.size()+" NCE ports");
-			for (int i=0; i<v.size(); i++) {
-				if (i==0) portName = (String) v.elementAt(i);
-				portBox.addItem(v.elementAt(i));
-			}
-			String[] baudList = a.validBaudRates();
-			for (int i=0; i<baudList.length; i++) baudBox.addItem(baudList[i]);
-			String[] opt1List = a.validOption1();
-			for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
-			String[] opt2List = a.validOption2();
-			for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
+    		} else if (protocolName.equals("NCE")) {
+    			//
+    			jmri.jmrix.nce.serialdriver.SerialDriverAdapter a
+    					= new jmri.jmrix.nce.serialdriver.SerialDriverAdapter();
+    			Vector v = a.getPortNames();
+    			log.debug("Found "+v.size()+" NCE ports");
+    			for (int i=0; i<v.size(); i++) {
+    				if (i==0) portName = (String) v.elementAt(i);
+    				portBox.addItem(v.elementAt(i));
+    			}
+    			String[] baudList = a.validBaudRates();
+    			for (int i=0; i<baudList.length; i++) baudBox.addItem(baudList[i]);
+    			String[] opt1List = a.validOption1();
+    			for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
+    			String[] opt2List = a.validOption2();
+    			for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
 
-			if (baudList.length>1) {
-				baudBox.setToolTipText("Must match the baud rate setting of your hardware");
-				baudBox.setEnabled(true);
-			} else {
-				baudBox.setToolTipText("The baud rate is fixed for this protocol");
-				baudBox.setEnabled(false);
-			}
-			if (opt1List.length>1) {
-				opt1Box.setToolTipText("The first option is strongly recommended. See README for more info.");
-				opt1Box.setEnabled(true);
-			} else {
-				opt1Box.setToolTipText("There are no options for this protocol");
-				opt1Box.setEnabled(false);
-			}
-			if (opt2List.length>1) {
-				opt2Box.setToolTipText("");
-				opt2Box.setEnabled(true);
-			} else {
-				opt2Box.setToolTipText("There are no options for this protocol");
-				opt2Box.setEnabled(false);
-			}
-		} else if (protocolName.equals("EasyDCC")) {
-			//
-			jmri.jmrix.easydcc.serialdriver.SerialDriverAdapter a
-					= new jmri.jmrix.easydcc.serialdriver.SerialDriverAdapter();
-			Vector v = a.getPortNames();
-			log.debug("Found "+v.size()+" EasyDCC ports");
-			for (int i=0; i<v.size(); i++) {
-				if (i==0) portName = (String) v.elementAt(i);
-				portBox.addItem(v.elementAt(i));
-			}
-			String[] baudList = a.validBaudRates();
-			for (int i=0; i<baudList.length; i++) baudBox.addItem(baudList[i]);
-			String[] opt1List = a.validOption1();
-			for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
-			String[] opt2List = a.validOption2();
-			for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
+    			if (baudList.length>1) {
+    				baudBox.setToolTipText("Must match the baud rate setting of your hardware");
+    				baudBox.setEnabled(true);
+    			} else {
+    				baudBox.setToolTipText("The baud rate is fixed for this protocol");
+    				baudBox.setEnabled(false);
+    			}
+    			if (opt1List.length>1) {
+    				opt1Box.setToolTipText("The first option is strongly recommended. See README for more info.");
+    				opt1Box.setEnabled(true);
+    			} else {
+    				opt1Box.setToolTipText("There are no options for this protocol");
+    				opt1Box.setEnabled(false);
+    			}
+    			if (opt2List.length>1) {
+    				opt2Box.setToolTipText("");
+    				opt2Box.setEnabled(true);
+    			} else {
+    				opt2Box.setToolTipText("There are no options for this protocol");
+    				opt2Box.setEnabled(false);
+    			}
+    		} else if (protocolName.equals("EasyDCC")) {
+    			//
+    			jmri.jmrix.easydcc.serialdriver.SerialDriverAdapter a
+    					= new jmri.jmrix.easydcc.serialdriver.SerialDriverAdapter();
+    			Vector v = a.getPortNames();
+    			log.debug("Found "+v.size()+" EasyDCC ports");
+    			for (int i=0; i<v.size(); i++) {
+    				if (i==0) portName = (String) v.elementAt(i);
+    				portBox.addItem(v.elementAt(i));
+    			}
+    			String[] baudList = a.validBaudRates();
+    			for (int i=0; i<baudList.length; i++) baudBox.addItem(baudList[i]);
+    			String[] opt1List = a.validOption1();
+    			for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
+    			String[] opt2List = a.validOption2();
+    			for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
 
-			if (baudList.length>1) {
-				baudBox.setToolTipText("Must match the baud rate setting of your hardware");
-				baudBox.setEnabled(true);
-			} else {
-				baudBox.setToolTipText("The baud rate is fixed for this protocol");
-				baudBox.setEnabled(false);
-			}
-			if (opt1List.length>1) {
-				opt1Box.setToolTipText("The first option is strongly recommended. See README for more info.");
-				opt1Box.setEnabled(true);
-			} else {
-				opt1Box.setToolTipText("There are no options for this protocol");
-				opt1Box.setEnabled(false);
-			}
-			if (opt2List.length>1) {
-				opt2Box.setToolTipText("");
-				opt2Box.setEnabled(true);
-			} else {
-				opt2Box.setToolTipText("There are no options for this protocol");
-				opt2Box.setEnabled(false);
-			}
-		} else if (protocolName.equals("Lenz XPressNet")) {
-			//
-			jmri.jmrix.lenz.li100.LI100Adapter a
-					= new jmri.jmrix.lenz.li100.LI100Adapter();
-			Vector v = a.getPortNames();
-			log.debug("Found "+v.size()+" XPressNet ports");
-			for (int i=0; i<v.size(); i++) {
-				if (i==0) portName = (String) v.elementAt(i);
-				portBox.addItem(v.elementAt(i));
-			}
-			String[] baudList = a.validBaudRates();
-			for (int i=0; i<baudList.length; i++) baudBox.addItem(baudList[i]);
-			String[] opt1List = a.validOption1();
-			for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
-			String[] opt2List = a.validOption2();
-			for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
+    			if (baudList.length>1) {
+    				baudBox.setToolTipText("Must match the baud rate setting of your hardware");
+    				baudBox.setEnabled(true);
+    			} else {
+    				baudBox.setToolTipText("The baud rate is fixed for this protocol");
+    				baudBox.setEnabled(false);
+    			}
+    			if (opt1List.length>1) {
+    				opt1Box.setToolTipText("The first option is strongly recommended. See README for more info.");
+    				opt1Box.setEnabled(true);
+    			} else {
+    				opt1Box.setToolTipText("There are no options for this protocol");
+    				opt1Box.setEnabled(false);
+    			}
+    			if (opt2List.length>1) {
+    				opt2Box.setToolTipText("");
+    				opt2Box.setEnabled(true);
+    			} else {
+    				opt2Box.setToolTipText("There are no options for this protocol");
+    				opt2Box.setEnabled(false);
+    			}
+    		} else if (protocolName.equals("Lenz XPressNet")) {
+    			//
+    			jmri.jmrix.lenz.li100.LI100Adapter a
+    					= new jmri.jmrix.lenz.li100.LI100Adapter();
+    			Vector v = a.getPortNames();
+    			log.debug("Found "+v.size()+" XPressNet ports");
+    			for (int i=0; i<v.size(); i++) {
+    				if (i==0) portName = (String) v.elementAt(i);
+    				portBox.addItem(v.elementAt(i));
+    			}
+    			String[] baudList = a.validBaudRates();
+    			for (int i=0; i<baudList.length; i++) baudBox.addItem(baudList[i]);
+    			String[] opt1List = a.validOption1();
+    			for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
+    			String[] opt2List = a.validOption2();
+    			for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
 
-			if (baudList.length>1) {
-				baudBox.setToolTipText("Must match the baud rate setting of your hardware");
-				baudBox.setEnabled(true);
-			} else {
-				baudBox.setToolTipText("The baud rate is fixed for this protocol");
-				baudBox.setEnabled(false);
-			}
-			if (opt1List.length>1) {
-				opt1Box.setToolTipText("The first option is strongly recommended. See README for more info.");
-				opt1Box.setEnabled(true);
-			} else {
-				opt1Box.setToolTipText("There are no options for this protocol");
-				opt1Box.setEnabled(false);
-			}
-			if (opt2List.length>1) {
-				opt2Box.setToolTipText("");
-				opt2Box.setEnabled(true);
-			} else {
-				opt2Box.setToolTipText("There are no options for this protocol");
-				opt2Box.setEnabled(false);
-			}
+    			if (baudList.length>1) {
+    				baudBox.setToolTipText("Must match the baud rate setting of your hardware");
+    				baudBox.setEnabled(true);
+    			} else {
+    				baudBox.setToolTipText("The baud rate is fixed for this protocol");
+    				baudBox.setEnabled(false);
+    			}
+    			if (opt1List.length>1) {
+    				opt1Box.setToolTipText("The first option is strongly recommended. See README for more info.");
+    				opt1Box.setEnabled(true);
+    			} else {
+    				opt1Box.setToolTipText("There are no options for this protocol");
+    				opt1Box.setEnabled(false);
+    			}
+    			if (opt2List.length>1) {
+    				opt2Box.setToolTipText("");
+    				opt2Box.setEnabled(true);
+    			} else {
+    				opt2Box.setToolTipText("There are no options for this protocol");
+    				opt2Box.setEnabled(false);
+    			}
 
-		} else if (protocolName.equals("CMRI serial")) {
-			//
-			jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter a
-					= new jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter();
-			Vector v = a.getPortNames();
-			log.debug("Found "+v.size()+" CMRI serial ports");
-			for (int i=0; i<v.size(); i++) {
-				if (i==0) portName = (String) v.elementAt(i);
-				portBox.addItem(v.elementAt(i));
-			}
-			String[] baudList = a.validBaudRates();
-			for (int i=0; i<baudList.length; i++) baudBox.addItem(baudList[i]);
-			String[] opt1List = a.validOption1();
-			for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
-			String[] opt2List = a.validOption2();
-			for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
+    		} else if (protocolName.equals("CMRI serial")) {
+    			//
+    			jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter a
+    					= new jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter();
+    			Vector v = a.getPortNames();
+    			log.debug("Found "+v.size()+" CMRI serial ports");
+    			for (int i=0; i<v.size(); i++) {
+    				if (i==0) portName = (String) v.elementAt(i);
+    				portBox.addItem(v.elementAt(i));
+    			}
+    			String[] baudList = a.validBaudRates();
+    			for (int i=0; i<baudList.length; i++) baudBox.addItem(baudList[i]);
+    			String[] opt1List = a.validOption1();
+    			for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
+    			String[] opt2List = a.validOption2();
+    			for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
 
-			if (baudList.length>1) {
-				baudBox.setToolTipText("Must match the baud rate setting of your hardware");
-				baudBox.setEnabled(true);
-			} else {
-				baudBox.setToolTipText("The baud rate is fixed for this protocol");
-				baudBox.setEnabled(false);
-			}
-			if (opt1List.length>1) {
-				opt1Box.setToolTipText("The first option is strongly recommended. See README for more info.");
-				opt1Box.setEnabled(true);
-			} else {
-				opt1Box.setToolTipText("There are no options for this protocol");
-				opt1Box.setEnabled(false);
-			}
-			if (opt2List.length>1) {
-				opt2Box.setToolTipText("");
-				opt2Box.setEnabled(true);
-			} else {
-				opt2Box.setToolTipText("There are no options for this protocol");
-				opt2Box.setEnabled(false);
-			}
-		} else {
-			// selected nothing, so put it back as it was
-				portBox.addItem("(select a connection method first)");
-				portBox.setToolTipText("This is disabled until you select a connection method");
-				portBox.setEnabled(false);
-				baudBox.addItem("(select a connection method first)");
-				baudBox.setToolTipText("This is disabled until you select a connection method");
-				baudBox.setEnabled(false);
-				opt1Box.addItem("(select a connection method first)");
-				opt1Box.setToolTipText("This is disabled until you select a connection method");
-				opt1Box.setEnabled(false);
-				opt2Box.addItem("(select a connection method first)");
-				opt2Box.setToolTipText("This is disabled until you select a connection method");
-				opt2Box.setEnabled(false);
-		}
-	}
+    			if (baudList.length>1) {
+    				baudBox.setToolTipText("Must match the baud rate setting of your hardware");
+    				baudBox.setEnabled(true);
+    			} else {
+    				baudBox.setToolTipText("The baud rate is fixed for this protocol");
+    				baudBox.setEnabled(false);
+    			}
+    			if (opt1List.length>1) {
+    				opt1Box.setToolTipText("The first option is strongly recommended. See README for more info.");
+    				opt1Box.setEnabled(true);
+    			} else {
+    				opt1Box.setToolTipText("There are no options for this protocol");
+    				opt1Box.setEnabled(false);
+    			}
+    			if (opt2List.length>1) {
+    				opt2Box.setToolTipText("");
+    				opt2Box.setEnabled(true);
+    			} else {
+    				opt2Box.setToolTipText("There are no options for this protocol");
+    				opt2Box.setEnabled(false);
+    			}
+    		} else {
+	    		// selected nothing, so put it back as it was
+	    			portBox.addItem("(select a connection method first)");
+	    			portBox.setToolTipText("This is disabled until you select a connection method");
+	    			portBox.setEnabled(false);
+	    			baudBox.addItem("(select a connection method first)");
+	    			baudBox.setToolTipText("This is disabled until you select a connection method");
+	    			baudBox.setEnabled(false);
+	    			opt1Box.addItem("(select a connection method first)");
+	    			opt1Box.setToolTipText("This is disabled until you select a connection method");
+	    			opt1Box.setEnabled(false);
+	    			opt2Box.addItem("(select a connection method first)");
+	    			opt2Box.setToolTipText("This is disabled until you select a connection method");
+	    			opt2Box.setEnabled(false);
+	    	}
+	    }
+        catch (java.lang.NoClassDefFoundError e) {
+		    JOptionPane.showMessageDialog(null,
+		   	    "There was a problem loading the communications library, and the program "+
+                "cannot continue. Check that the library was installed correctly.",
+		        "Error - program will quit",
+                JOptionPane.ERROR_MESSAGE);
+            // end the program
+            setVisible(false);
+            System.exit(0);
+        }
+    }
 
 	/*
 	 * Port name has been selected; store
