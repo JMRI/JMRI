@@ -50,7 +50,7 @@ import com.sun.java.util.collections.List;
  * for further information.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  */
 public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeListener {
     
@@ -92,7 +92,9 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         pane1a.add(decoderBox);
         iddecoder= new JToggleButton("Ident");
         iddecoder.setToolTipText("Read the decoders mfg and version, then attempt to select its type");
-        if (!jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer().getCanRead()) {
+        if ((jmri.InstanceManager.programmerManagerInstance()==null) || 
+                (jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer()==null) ||
+                (!jmri.InstanceManager.programmerManagerInstance().getServiceModeProgrammer().getCanRead())) {
             // can't read, disable the button
             iddecoder.setEnabled(false);
             iddecoder.setToolTipText("Button disabled because configured command station can't read CVs");
