@@ -5,9 +5,7 @@ import jmri.ThrottleListener;
 import jmri.DccThrottle;
 import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.FunctionButtonPropertyEditor;
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * Abstract implementation of a ThrottleManager.
@@ -16,7 +14,7 @@ import java.util.Iterator;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 abstract public class AbstractThrottleManager implements ThrottleManager {
     private HashMap throttleListeners;
@@ -72,11 +70,17 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             list.add(l);
         }
         throttleListeners.put(addressKey, list);
-        if (list.size() == 1)
-        {
-            // Only need to do this once per address.
-            requestThrottleSetup(address);
+
+        // does Throttle object already exist for this?
+        if (throttleMap!=null) {
+            // return existing one if it exists
+            DccThrottle throttle = (DccThrottle)throttleMap.get(addressKey);
+            if (throttle!=null)
+                notifyThrottleKnown(throttle, address);
+                return;
         }
+        // if we get here, we need to make a new one
+        requestThrottleSetup(address);
     }
 
     /**
@@ -114,6 +118,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      */
     public void notifyThrottleKnown(DccThrottle throttle, int addr)
     {
+        log.debug("notifyThrottleKnown for "+addr);
         Integer address = new Integer(addr);
         ArrayList list = (ArrayList)throttleListeners.get(address);
         if (list != null)
@@ -127,6 +132,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             for (int i=0; i<list.size(); i++)
             {
                 ThrottleListener listener = (ThrottleListener)list.get(i);
+                log.debug("Notify listener");
                 listener.notifyThrottleFound(throttle);
             }
         }
@@ -144,4 +150,5 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         return functionButtonEditor;
     }
 
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractThrottleManager.class.getName());
 }

@@ -7,14 +7,14 @@ import jmri.DccThrottle;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 abstract public class AbstractThrottle implements DccThrottle {
-    private float speedSetting;
-    private float speedIncrement;
-    private int address;
-    private boolean isForward;
-    private boolean f0, f1, f2, f3, f4, f5, f6, f7, f8;
+    protected float speedSetting;
+    protected float speedIncrement;
+    protected int address;
+    protected boolean isForward;
+    protected boolean f0, f1, f2, f3, f4, f5, f6, f7, f8;
 
 
     /** speed - expressed as a value 0.0 -> 1.0. Negative means emergency stop.
