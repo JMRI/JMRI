@@ -1,6 +1,6 @@
 <!-- ugly first attempt at an ANT build.xml file for JMRI development -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.32 $ -->
+<!-- Revision $Revision: 1.33 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -271,13 +271,13 @@
     <!-- using MacOSX tools -->
     <echo message="build archives"/>
     <exec executable="open">
-    	<arg line="-a /Applications/Utilities/StuffItLite6.5.1/DropStuff MacOSX/JMRI"/>
+    	<arg line="-a DropStuff MacOSX/JMRI" />
     </exec>
     <exec executable="open">
-    	<arg line="-a /Applications/Utilities/StuffItLite6.5.1/DropTar Linux/JMRI"/>
+    	<arg line="-a DropTar Linux/JMRI" />
     </exec>
     <exec executable="open">
-    	<arg line="-a /Applications/Utilities/StuffItLite6.5.1/DropZip OS2/JMRI"/>
+    	<arg line="-a DropZip OS2/JMRI" />
     </exec>
 
 	<echo message="build the Windows .exe now"/>
@@ -287,7 +287,7 @@
  <target name="release2" depends=""
  					description="part 2 of build a release; useage is ant -Drelease=R1.2.3 -Dnumber=1.2.3 release2">
     <exec executable="open">
-    	<arg line="-a /Applications/Utilities/StuffItLite6.5.1/DropStuff MacClassic/JMRI"/>
+    	<arg line="-a DropStuff MacClassic/JMRI"/>
     </exec>
     <move file="MacOSX/JMRI.hqx" tofile="JMRI.${number}.hqx" />
     <move file="Linux/JMRI.tgz" tofile="JMRI.${number}.tgz" />
