@@ -51,6 +51,7 @@ public class FunctionPanel extends JInternalFrame
      */
     public void notifyThrottleFound(DccThrottle t)
     {
+        log.debug("Throttle found");
         this.throttle = t;
         for (int i=0; i<this.NUM_FUNCTION_BUTTONS; i++)
         {
@@ -64,15 +65,15 @@ public class FunctionPanel extends JInternalFrame
            }
            catch (java.lang.NoSuchMethodException ex1)
            {
-               // TODO log it.
+               log.warn("Exception in notifyThrottleFound: "+ex1);
            }
            catch (java.lang.IllegalAccessException ex2)
            {
-               // TODO log it.
+               log.warn("Exception in notifyThrottleFound: "+ex2);
            }
            catch (java.lang.reflect.InvocationTargetException ex3)
            {
-               // TODO log it.
+               log.warn("Exception in notifyThrottleFound: "+ex3);
            }
         }
         this.setEnabled(true);
@@ -89,9 +90,10 @@ public class FunctionPanel extends JInternalFrame
             throttleManager = InstanceManager.throttleManagerInstance();
         }
         throttleManager.cancelThrottleRequest(oldAddress, this);
-        throttleManager.requestThrottle(newAddress, this);
         requestedAddress = newAddress;
         this.setEnabled(false);
+        // has to be done last, as might come back immediately
+        throttleManager.requestThrottle(newAddress, this);
     }
 
     /**
@@ -202,4 +204,5 @@ public class FunctionPanel extends JInternalFrame
         }
     }
 
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(FunctionPanel.class.getName());
 }
