@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_LC_Diesel.xml,v 1.14 2003-07-16 06:01:05 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_LC_Diesel.xml,v 1.15 2003-08-01 20:33:55 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Michael Mosher" version="8" lastUpdated="20030706"/>
 
@@ -52,7 +52,7 @@
 						item="Manufacturer">			<decVal/></variable>
 
 		<variable label="Motor PWM Period" CV="9" item="Total PWM Period"
-					comment="52.2mS to 5.12 ms" defualt="180">
+					comment="52.2mS to 5.12 ms" default="180">
 			<decVal max="230"/></variable>
 
 		<variable label="Packet Timeout Value" CV="11" item="Packet Time-out Value">
