@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE layout-config SYSTEM "layout-config.dtd">
-<!-- $Id: CornwallMain.xml,v 1.15 2003-05-31 04:40:50 jacobsen Exp $ -->
+<!-- $Id: CornwallMain.xml,v 1.16 2003-06-04 16:20:05 jacobsen Exp $ -->
 <!-- Cornwall RR main dispatcher panel -->
 <!-- The layout turnouts, signals, and sensors are defined in CornwallDefinitions.xml -->
 <layout-config>
@@ -190,8 +190,8 @@
     <sensoricon sensor="CS47" x="808" y="341" active="resource:resources/icons/cornwall/TurnoutThrownL.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedL.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothL.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
 
 	<!-- signal heads on the lower schematic -->
-    <signalheadicon signalhead="si8a" x="50" y="350" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="0" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
-    <signalheadicon signalhead="si8b" x="50" y="375" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="0" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="si8b" x="50" y="350" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="0" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="si8a" x="50" y="375" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="0" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
 
     <signalheadicon signalhead="si10a" x="88" y="449" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="0" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
     <signalheadicon signalhead="si10b" x="88" y="474" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="0" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
