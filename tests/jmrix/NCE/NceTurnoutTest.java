@@ -24,19 +24,19 @@ public class NceTurnoutTest extends AbstractTurnoutTest {
 		// prepare an interface
 		tcis = new NceTrafficControlScaffold();
 		
-		t = new NceTurnout(134);
+		t = new NceTurnout(4);
 	}
 	
 	public int numListeners() { return tcis.numListeners(); }
 	
 	public void checkThrownMsgSent() {
 		Assert.assertTrue("message sent", tcis.outbound.size()>0);
-		Assert.assertEquals("content", "S C02 84 9c 18", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
+		Assert.assertEquals("content", "S C02 81 fe 7f", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
 	}
 	
 	public void checkClosedMsgSent() {
 		Assert.assertTrue("message sent", tcis.outbound.size()>0);
-		Assert.assertEquals("content", "S C02 84 9d 19", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
+		Assert.assertEquals("content", "S C02 81 ff 7e", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
 	}
 
 	// from here down is testing infrastructure

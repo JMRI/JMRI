@@ -49,10 +49,14 @@ public class NmraPacket {
 		// accessory decoder is activating or deactivating. Bits 1 and 2 of byte two is used 
 		// to indicate which of 4 pairs of outputs the packet is controlling. The significant 
 		// bits of the 9 bit address are bits 4-6 of the second data byte. By convention 
-		// these bits are in ones complement. The use of bit 7 of the second byte is reserved 
-		// for future use. 
+		// these three bits are in ones complement. The use of bit 7 of the second byte 
+		// is reserved for future use. 
+		
+		// Note that A=1 is the first (lowest) valid address field, and the
+		// largest is 512!  I don't know why this is, but it gets the
+		// right hardware addresses
 
-		if (addr < 0 || addr>511) {
+		if (addr < 1 || addr>511) {
 			log.error("invalid address "+addr);
 			return null;
 		} 
@@ -60,18 +64,18 @@ public class NmraPacket {
 			log.error("invalid active (C) bit "+addr);
 			return null;
 		} 
-		if (outputChannel < 0 || outputChannel>15) {
+		if (outputChannel < 0 || outputChannel>7) {
 			log.error("invalid output channel "+addr);
 			return null;
 		} 
 		
-		int lowAddr = addr & 0x07;
-		int highAddr = (addr >> 3) & 0x3f;
+		int lowAddr = addr & 0x3F;
+		int highAddr = ( (~addr) >> 6) & 0x07;
 		
 		byte[] retVal = new byte[3];
 		
-		retVal[0] = (byte) (0x80 | highAddr);
-		retVal[1] = (byte) (0x80 | (lowAddr << 4 ) | ( active << 3) | outputChannel);
+		retVal[0] = (byte) (0x80 | lowAddr);
+		retVal[1] = (byte) (0x80 | (highAddr << 4 ) | ( active << 3) | outputChannel&0x07);
 		retVal[2] = (byte) (retVal[0] ^ retVal[1]);
 		
 		return retVal;

@@ -178,7 +178,7 @@ public class PaneProgFrame extends javax.swing.JFrame
 		lroot = null;
 		try {
 			lroot = lf.rootFromName(lf.fileLocation+File.separator+locoFile);
-		} catch (Exception e) { log.error("Exception while loading loco XML file: "+e); }
+		} catch (Exception e) { log.error("Exception while loading loco XML file: "+locoFile+" exception: "+e); }
   	}
   	
   	protected void loadLocoFile() {
@@ -212,7 +212,7 @@ public class PaneProgFrame extends javax.swing.JFrame
 		
 		try {
 			decoderRoot = df.rootFromName(df.fileLocation+df.getFilename());
-		} catch (Exception e) { log.error("Exception while loading decoder XML file: "+e); }
+		} catch (Exception e) { log.error("Exception while loading decoder XML file: "+df.getFilename()+" exception: "+e); }
 		// load variables from decoder tree
 		df.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
   	}
@@ -226,7 +226,7 @@ public class PaneProgFrame extends javax.swing.JFrame
 			// load programmer config from programmer tree
 			readConfig(programmerRoot, r);
 		}
-		catch (Exception e) {log.error("exception reading programmer file: "+e); }
+		catch (Exception e) {log.error("exception reading programmer file: "+filename+" exception: "+e); }
   	}
   	
   	Element programmerRoot = null;

@@ -77,7 +77,7 @@ at the top (the examples are from the <A HREF="../xml/Digitrax_1x2.xml">Digitrax
 	<PRE>
 	&lt;?xml version="1.0"?&gt;
 	&lt;!DOCTYPE decoder-config SYSTEM "decoder-config.dtd"&gt;
-	&lt;!-- $Id: ConfigFile.html,v 1.4 2001-12-28 16:28:14 jacobsen Exp $ --&gt;
+	&lt;!-- $Id: ConfigFile.html,v 1.5 2001-12-30 04:14:29 jacobsen Exp $ --&gt;
 	&lt;decoder-config&gt;
 	</PRE>
 Don't mess with these lines; they describe the format of the file.
@@ -350,7 +350,9 @@ makes it easier to read:
 
 <a id="debug"><h3>Debugging</h3></a>
 
-Debugging information is printed to "standard output", which is in different
+<h4>While the program is running</h4>
+While the program is running, 
+debugging information is printed to "standard output", which is in different
 places depending on what operating system you're using and how you started the
 program.  On a Macintosh classic, it appears in a window that's created with the
 first error message.  With MacOS X, it may appear in a new window, or you may
@@ -377,6 +379,24 @@ down operation significantly.  Its also possible to request more information
 on just parts of the program, but in order for that to be useful you 
 have to have spent some time learning about the internals.
 
+<h4>Debugging problems with XML files</h4>
+When an XML file can't be parsed, you'll get some hard-to-understand
+error messages. For example:
+<PRE>
+</PRE>
+The most important part of this is the line number.  Use that to
+start looking for the problem.
+<P>
+You might be able to get better debugging information by trying
+to open the file with Internet Explorer.  The debugging information
+it provides is generally more detailed than that provided by the 
+XML routines in the JDOM libraries used by JMRI and Decoder Pro.
+<P>Note that Explorer needs
+to see both the .xml file, plus the definition information in the
+.dtd file.  If you get a message like "error in system resource", you
+need to put a copy of the associated .dtd file (e.g. decoder-config.dtd)
+in the directory with your new file.  DTD's can be found in the dtd
+subdirectory of the xml directory.  
 
 <HR>
 <BR>Site hosted by: <BR>
