@@ -28,119 +28,119 @@ package jmri;
  *            short vs long address type
  *
  * @author      Bob Jacobsen Copyright (C) 2001, 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class NmraPacket {
 
-	public static byte[] accDecoderPkt(int addr, int active, int outputChannel) {
-		// From the NMRA RP:
-		// 0 10AAAAAA 0 1AAACDDD 0 EEEEEEEE 1
-		// Accessory Digital Decoders can be designed to control momentary or
-		// constant-on devices, the duration of time each output is active being controlled
-		// by configuration variables CVs #515 through 518. Bit 3 of the second byte "C" is
-		// used to activate or deactivate the addressed device. (Note if the duration the
-		// device is intended to be on is less than or equal the set duration, no deactivation
-		// is necessary.) Since most devices are paired, the convention is that bit "0" of
-		// the second byte is used to distinguish between which of a pair of outputs the
-		// accessory decoder is activating or deactivating. Bits 1 and 2 of byte two is used
-		// to indicate which of 4 pairs of outputs the packet is controlling. The significant
-		// bits of the 9 bit address are bits 4-6 of the second data byte. By convention
-		// these three bits are in ones complement. The use of bit 7 of the second byte
-		// is reserved for future use.
-
-		// Note that A=1 is the first (lowest) valid address field, and the
-		// largest is 512!  I don't know why this is, but it gets the
-		// right hardware addresses
-
-		if (addr < 1 || addr>511) {
-			log.error("invalid address "+addr);
-			return null;
-		}
-		if (active < 0 || active>1) {
-			log.error("invalid active (C) bit "+addr);
-			return null;
-		}
-		if (outputChannel < 0 || outputChannel>7) {
-			log.error("invalid output channel "+addr);
-			return null;
-		}
-
-		int lowAddr = addr & 0x3F;
-		int highAddr = ( (~addr) >> 6) & 0x07;
-
-		byte[] retVal = new byte[3];
-
-		retVal[0] = (byte) (0x80 | lowAddr);
-		retVal[1] = (byte) (0x80 | (highAddr << 4 ) | ( active << 3) | outputChannel&0x07);
-		retVal[2] = (byte) (retVal[0] ^ retVal[1]);
-
-		return retVal;
-	}
-
-	static byte[] locoSpeed14S(int address, int speedStep, boolean F0 ) {
-		if (log.isDebugEnabled()) log.debug("create "+address+" "+speedStep+" "+F0);
-		if (speedStep < 0 || speedStep>14) {
-			log.error("invalid speedStep "+speedStep);
-			return null;
-		}
-		if (address < 0 || address>14) {
-			log.error("invalid address "+speedStep);
-			return null;
-		}
-		return new byte[2];
-	}
-
-	public static byte[] opsCvWriteByte(int address, boolean longAddr, int cvNum, int data ) {
-		if (log.isDebugEnabled()) log.debug("opswrite "+address+" "+cvNum+" "+data);
-		if (address < 0 ) {  // zero is valid broadcast
-			log.error("invalid address "+address);
-			return null;
-		}
-		if (longAddr&& (address> (255+(231-192)*256)) ) {
-			log.error("invalid address "+address);
-			return null;
-		}
-		if (!longAddr&& (address> 127) ) {
-			log.error("invalid address "+address);
-			return null;
-		}
-		if (data<0 || data>255) {
-			log.error("invalid data "+data);
-			return null;
-		}
-		if (cvNum<1 || cvNum>512) {
-			log.error("invalid CV number "+cvNum);
-			return null;
-		}
-
-                // end sanity checks, format output
-                byte[] retVal;
-                int arg1 = 0xEC + (((cvNum-1)>>8)&0x03);
-                int arg2 = (cvNum-1)&0xFF;
-                int arg3 = data&0xFF;
-
-                if (longAddr) {
-                    // long address form
-                    retVal = new byte[6];
-                    retVal[0] = (byte) (192+((address/256)&0x3F));
-                    retVal[1] = (byte) (address&0xFF);
-                    retVal[2] = (byte) arg1;
-                    retVal[3] = (byte) arg2;
-                    retVal[4] = (byte) arg3;
-                    retVal[5] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]^retVal[4]);
-                } else {
-                    // short address form
-                    retVal = new byte[5];
-                    retVal[0] = (byte) (address&0xFF);
-                    retVal[1] = (byte) arg1;
-                    retVal[2] = (byte) arg2;
-                    retVal[3] = (byte) arg3;
-                    retVal[4] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]);
-                }
-		return retVal;
-	}
-
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NmraPacket.class.getName());
+    public static byte[] accDecoderPkt(int addr, int active, int outputChannel) {
+        // From the NMRA RP:
+        // 0 10AAAAAA 0 1AAACDDD 0 EEEEEEEE 1
+        // Accessory Digital Decoders can be designed to control momentary or
+        // constant-on devices, the duration of time each output is active being controlled
+        // by configuration variables CVs #515 through 518. Bit 3 of the second byte "C" is
+        // used to activate or deactivate the addressed device. (Note if the duration the
+        // device is intended to be on is less than or equal the set duration, no deactivation
+        // is necessary.) Since most devices are paired, the convention is that bit "0" of
+        // the second byte is used to distinguish between which of a pair of outputs the
+        // accessory decoder is activating or deactivating. Bits 1 and 2 of byte two is used
+        // to indicate which of 4 pairs of outputs the packet is controlling. The significant
+        // bits of the 9 bit address are bits 4-6 of the second data byte. By convention
+        // these three bits are in ones complement. The use of bit 7 of the second byte
+        // is reserved for future use.
+        
+        // Note that A=1 is the first (lowest) valid address field, and the
+        // largest is 512!  I don't know why this is, but it gets the
+        // right hardware addresses
+        
+        if (addr < 1 || addr>511) {
+            log.error("invalid address "+addr);
+            return null;
+        }
+        if (active < 0 || active>1) {
+            log.error("invalid active (C) bit "+addr);
+            return null;
+        }
+        if (outputChannel < 0 || outputChannel>7) {
+            log.error("invalid output channel "+addr);
+            return null;
+        }
+        
+        int lowAddr = addr & 0x3F;
+        int highAddr = ( (~addr) >> 6) & 0x07;
+        
+        byte[] retVal = new byte[3];
+        
+        retVal[0] = (byte) (0x80 | lowAddr);
+        retVal[1] = (byte) (0x80 | (highAddr << 4 ) | ( active << 3) | outputChannel&0x07);
+        retVal[2] = (byte) (retVal[0] ^ retVal[1]);
+        
+        return retVal;
+    }
+    
+    static byte[] locoSpeed14S(int address, int speedStep, boolean F0 ) {
+        if (log.isDebugEnabled()) log.debug("create "+address+" "+speedStep+" "+F0);
+        if (speedStep < 0 || speedStep>14) {
+            log.error("invalid speedStep "+speedStep);
+            return null;
+        }
+        if (address < 0 || address>14) {
+            log.error("invalid address "+speedStep);
+            return null;
+        }
+        return new byte[2];
+    }
+    
+    public static byte[] opsCvWriteByte(int address, boolean longAddr, int cvNum, int data ) {
+        if (log.isDebugEnabled()) log.debug("opswrite "+address+" "+cvNum+" "+data);
+        if (address < 0 ) {  // zero is valid broadcast
+            log.error("invalid address "+address);
+            return null;
+        }
+        if (longAddr&& (address> (255+(231-192)*256)) ) {
+            log.error("invalid address "+address);
+            return null;
+        }
+        if (!longAddr&& (address> 127) ) {
+            log.error("invalid address "+address);
+            return null;
+        }
+        if (data<0 || data>255) {
+            log.error("invalid data "+data);
+            return null;
+        }
+        if (cvNum<1 || cvNum>512) {
+            log.error("invalid CV number "+cvNum);
+            return null;
+        }
+        
+        // end sanity checks, format output
+        byte[] retVal;
+        int arg1 = 0xEC + (((cvNum-1)>>8)&0x03);
+        int arg2 = (cvNum-1)&0xFF;
+        int arg3 = data&0xFF;
+        
+        if (longAddr) {
+            // long address form
+            retVal = new byte[6];
+            retVal[0] = (byte) (192+((address/256)&0x3F));
+            retVal[1] = (byte) (address&0xFF);
+            retVal[2] = (byte) arg1;
+            retVal[3] = (byte) arg2;
+            retVal[4] = (byte) arg3;
+            retVal[5] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]^retVal[4]);
+        } else {
+            // short address form
+            retVal = new byte[5];
+            retVal[0] = (byte) (address&0xFF);
+            retVal[1] = (byte) arg1;
+            retVal[2] = (byte) arg2;
+            retVal[3] = (byte) arg3;
+            retVal[4] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]);
+        }
+        return retVal;
+    }
+    
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NmraPacket.class.getName());
 }
 
 
