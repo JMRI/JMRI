@@ -29,88 +29,88 @@ import org.jdom.JDOMException;
 /**
  * Frame providing a command station programmer from decoder definition files
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
 
-	// members to contain working variable, CV values
-	JLabel 				progStatus     	= new JLabel("idle");
-	CvTableModel		cvModel			= new CvTableModel(progStatus);
-	VariableTableModel  variableModel	= new VariableTableModel(progStatus,
-														new String[]  {"Name", "Value"},
-														cvModel);
-	RosterEntry         _rosterEntry    = null;
-	RosterEntryPane     _rPane          = null;
+    // members to contain working variable, CV values
+    JLabel              progStatus     	= new JLabel("idle");
+    CvTableModel        cvModel         = new CvTableModel(progStatus);
+    VariableTableModel  variableModel	= new VariableTableModel(progStatus,
+                                                    new String[]  {"Name", "Value"},
+                                                    cvModel);
+    RosterEntry         _rosterEntry    = null;
+    RosterEntryPane     _rPane          = null;
 
     jmri.ProgModePane   modePane        = new jmri.ProgModePane(BoxLayout.X_AXIS);
 
-	List paneList = new ArrayList();
+    List                paneList        = new ArrayList();
 
-	String filename = null;
+    String              filename        = null;
 
-	// GUI member declarations
-	JTabbedPane tabPane = new JTabbedPane();
-	JToggleButton readAllButton = new JToggleButton("Read all");
-	JToggleButton writeAllButton = new JToggleButton("Write all");
-	JToggleButton confirmAllButton = new JToggleButton("Confirm all");
+    // GUI member declarations
+    JTabbedPane tabPane = new JTabbedPane();
+    JToggleButton readAllButton = new JToggleButton("Read all");
+    JToggleButton writeAllButton = new JToggleButton("Write all");
+    JToggleButton confirmAllButton = new JToggleButton("Confirm all");
 
-	ActionListener l1;
-	ActionListener l2;
+    ActionListener l1;
+    ActionListener l2;
 
-	protected void installComponents() {
-		// to control size, we need to insert a single
-		// JPanel, then have it laid out with BoxLayout
-		JPanel pane = new JPanel();
+    protected void installComponents() {
+        // to control size, we need to insert a single
+        // JPanel, then have it laid out with BoxLayout
+        JPanel pane = new JPanel();
 
-		// general GUI config
-		pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
+        // general GUI config
+        pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
 
-		// configure GUI elements
-		confirmAllButton.setEnabled(false);
-		confirmAllButton.setToolTipText("disabled because not yet implemented");
+        // configure GUI elements
+        confirmAllButton.setEnabled(false);
+        confirmAllButton.setToolTipText("disabled because not yet implemented");
 
-		readAllButton.setToolTipText("Read current values from decoder. Warning: may take a long time!");
-            if (jmri.InstanceManager.programmerInstance()!= null
+        readAllButton.setToolTipText("Read current values from decoder. Warning: may take a long time!");
+        if (jmri.InstanceManager.programmerInstance()!= null
                     && !jmri.InstanceManager.programmerInstance().getCanRead()) {
             // can't read, disable the button
             readAllButton.setEnabled(false);
             readAllButton.setToolTipText("Button disabled because configured command station can't read CVs");
         }
-		readAllButton.addActionListener( l1 = new ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				if (readAllButton.isSelected()) readAll();
-			}
-		});
-		writeAllButton.setToolTipText("Write current values to decoder");
-		writeAllButton.addActionListener( l2 = new ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				if (writeAllButton.isSelected()) writeAll();
-			}
-		});
+        readAllButton.addActionListener( l1 = new ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                    if (readAllButton.isSelected()) readAll();
+                }
+        });
+        writeAllButton.setToolTipText("Write current values to decoder");
+        writeAllButton.addActionListener( l2 = new ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                    if (writeAllButton.isSelected()) writeAll();
+                }
+        });
 
-		// most of the GUI is done from XML in readConfig() function
-		// which configures the tabPane
-		pane.add(tabPane);
+        // most of the GUI is done from XML in readConfig() function
+        // which configures the tabPane
+        pane.add(tabPane);
 
-		// add buttons
-		JPanel bottom = new JPanel();
-		bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
-		bottom.add(readAllButton);
-		bottom.add(confirmAllButton);
-		bottom.add(writeAllButton);
-		pane.add(bottom);
+        // add buttons
+        JPanel bottom = new JPanel();
+            bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
+            bottom.add(readAllButton);
+            bottom.add(confirmAllButton);
+            bottom.add(writeAllButton);
+        pane.add(bottom);
 
-		pane.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
+        pane.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
         pane.add(modePane);
 
-		pane.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
-		progStatus.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-		pane.add(progStatus);
+        pane.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
+        progStatus.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        pane.add(progStatus);
 
-		// and put that pane into the JFrame
-		getContentPane().add(pane);
-	}
+        // and put that pane into the JFrame
+        getContentPane().add(pane);
+    }
 
 	public Dimension getPreferredSize() {
 		Dimension screen = getMaximumSize();
@@ -119,10 +119,10 @@ public class PaneProgFrame extends javax.swing.JFrame
 		return new Dimension(width, height);
 	}
 
-	public Dimension getMaximumSize() {
+    public Dimension getMaximumSize() {
         Dimension screen = getToolkit().getScreenSize();
         return new Dimension(screen.width, screen.height-25);
-	}
+    }
 
 	// ctors
 	public PaneProgFrame() {
@@ -142,48 +142,48 @@ public class PaneProgFrame extends javax.swing.JFrame
                                     +", constrained to "+getPreferredSize());
 	}
 
-  	/**
-  	 * Initialization sequence:
-  	 * <UL>
-  	 * <LI> Ask the RosterEntry to read its contents
-  	 * <LI> If the decoder file is specified, open and load it, otherwise
-  	 *		get the decoder filename from the RosterEntry and load that.
-  	 *		Note that we're assuming the roster entry has the right decoder,
-  	 *		at least w.r.t. the loco file.
-  	 * <LI> Fill CV values from the roster entry
-  	 * <LI> Create the programmer panes
-  	 * </UL>
+    /**
+     * Initialization sequence:
+     * <UL>
+     * <LI> Ask the RosterEntry to read its contents
+     * <LI> If the decoder file is specified, open and load it, otherwise
+     *		get the decoder filename from the RosterEntry and load that.
+     *		Note that we're assuming the roster entry has the right decoder,
+     *		at least w.r.t. the loco file.
+     * <LI> Fill CV values from the roster entry
+     * <LI> Create the programmer panes
+     * </UL>
      * @param decoderFile XML file defining the decoder contents
      * @param r RosterEntry for information on this locomotive
      * @param name
      * @param file
-  	 */
-	public PaneProgFrame(DecoderFile decoderFile, RosterEntry r, String name, String file) {
-		super(name);
+     */
+    public PaneProgFrame(DecoderFile decoderFile, RosterEntry r, String name, String file) {
+        super(name);
         _rosterEntry =  r;
         if (_rosterEntry == null) log.error("null RosterEntry pointer");
-		filename = file;
-		installComponents();
+        filename = file;
+        installComponents();
 
-		if (_rosterEntry.getFileName() != null) {
-            // set the loco file name in the roster entry
+        if (_rosterEntry.getFileName() != null) {
+        // set the loco file name in the roster entry
             _rosterEntry.readFile();  // read, but don't yet process
         }
 
-		if (decoderFile != null) loadDecoderFile(decoderFile);
-		else					 loadDecoderFromLoco(r);
+        if (decoderFile != null) loadDecoderFile(decoderFile);
+        else			 loadDecoderFromLoco(r);
 
-		// save default values
-		saveDefaults();
+        // save default values
+        saveDefaults();
 
-		// finally fill the CV values from the specific loco file
-		if (_rosterEntry.getFileName() != null) _rosterEntry.loadCvModel(cvModel);
+        // finally fill the CV values from the specific loco file
+        if (_rosterEntry.getFileName() != null) _rosterEntry.loadCvModel(cvModel);
 
-		// mark file state as consistent
-		variableModel.setFileDirty(false);
+        // mark file state as consistent
+        variableModel.setFileDirty(false);
 
-		// and build the GUI
-		loadProgrammerFile(r);
+        // and build the GUI
+        loadProgrammerFile(r);
 
         // set the programming mode
         if (jmri.InstanceManager.programmerInstance() != null) {
@@ -218,81 +218,81 @@ public class PaneProgFrame extends javax.swing.JFrame
             log.error("Can't set programming mode, no programmer instance");
         }
 
-		// optionally, add extra panes from the decoder file
-		Attribute a;
-		if ( (a = programmerRoot.getChild("programmer").getAttribute("decoderFilePanes")) != null
-				&& a.getValue().equals("yes")) {
-			if (decoderRoot != null) {
-				List paneList = decoderRoot.getChildren("pane");
-				if (log.isDebugEnabled()) log.debug("will process "+paneList.size()+" pane definitions from decoder file");
-				for (int i=0; i<paneList.size(); i++) {
-					// load each pane
-					String pname = ((Element)(paneList.get(i))).getAttribute("name").getValue();
-					newPane( pname, ((Element)(paneList.get(i))), modelElem);
-				}
-			}
-		}
+        // optionally, add extra panes from the decoder file
+        Attribute a;
+        if ( (a = programmerRoot.getChild("programmer").getAttribute("decoderFilePanes")) != null
+		&& a.getValue().equals("yes")) {
+	    if (decoderRoot != null) {
+	        List paneList = decoderRoot.getChildren("pane");
+                if (log.isDebugEnabled()) log.debug("will process "+paneList.size()+" pane definitions from decoder file");
+		for (int i=0; i<paneList.size(); i++) {
+		    // load each pane
+                    String pname = ((Element)(paneList.get(i))).getAttribute("name").getValue();
+                    newPane( pname, ((Element)(paneList.get(i))), modelElem);
+                }
+            }
+        }
 
-		// ensure cleanup at end
-		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		addWindowListener(new java.awt.event.WindowAdapter() {
-			public void windowClosing(java.awt.event.WindowEvent e) {
-				thisWindowClosing(e);
-			}
-		});
+        // ensure cleanup at end
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                thisWindowClosing(e);
+            }
+        });
 
-		pack();
+        pack();
 
-		if (log.isDebugEnabled()) log.debug("PaneProgFrame \""+name
+        if (log.isDebugEnabled()) log.debug("PaneProgFrame \""+name
                                             +"\" constructed for file "+_rosterEntry.getFileName()
-											+", unconstrained size is "+super.getPreferredSize()
+                                            +", unconstrained size is "+super.getPreferredSize()
                                             +", constrained to "+getPreferredSize());
-	}
+    }
 
-	/**
-	 * Data element holding the 'model' element representing the decoder type
-	 */
-	Element modelElem = null;
+    /**
+     * Data element holding the 'model' element representing the decoder type
+     */
+    Element modelElem = null;
 
-	Element decoderRoot = null;
+    Element decoderRoot = null;
 
-  	protected void loadDecoderFromLoco(RosterEntry r) {
-  		// get a DecoderFile from the locomotive xml
-		String decoderModel = r.getDecoderModel();
-		String decoderFamily = r.getDecoderFamily();
-		if (log.isDebugEnabled()) log.debug("selected loco uses decoder "+decoderFamily+" "+decoderModel);
-		// locate a decoder like that.
-		List l = DecoderIndexFile.instance().matchingDecoderList(null, decoderFamily, null, null, decoderModel);
-		if (log.isDebugEnabled()) log.debug("found "+l.size()+" matches");
-		if (l.size() == 0) {
-			log.warn("Loco uses "+decoderFamily+" "+decoderModel+" decoder, but no such decoder defined");
+    protected void loadDecoderFromLoco(RosterEntry r) {
+        // get a DecoderFile from the locomotive xml
+        String decoderModel = r.getDecoderModel();
+        String decoderFamily = r.getDecoderFamily();
+        if (log.isDebugEnabled()) log.debug("selected loco uses decoder "+decoderFamily+" "+decoderModel);
+        // locate a decoder like that.
+        List l = DecoderIndexFile.instance().matchingDecoderList(null, decoderFamily, null, null, decoderModel);
+        if (log.isDebugEnabled()) log.debug("found "+l.size()+" matches");
+        if (l.size() == 0) {
+            log.warn("Loco uses "+decoderFamily+" "+decoderModel+" decoder, but no such decoder defined");
             // fall back to use just the decoder name, not family
-		    l = DecoderIndexFile.instance().matchingDecoderList(null, null, null, null, decoderModel);
-		    if (log.isDebugEnabled()) log.debug("found "+l.size()+" matches without family key");
-		}
-		if (l.size() > 0) {
-			DecoderFile d = (DecoderFile)l.get(0);
-			loadDecoderFile(d);
+            l = DecoderIndexFile.instance().matchingDecoderList(null, null, null, null, decoderModel);
+            if (log.isDebugEnabled()) log.debug("found "+l.size()+" matches without family key");
+        }
+        if (l.size() > 0) {
+            DecoderFile d = (DecoderFile)l.get(0);
+            loadDecoderFile(d);
         } else {
             log.warn("no matching \""+decoderModel+"\" decoder found for loco, no decoder info loaded");
         }
-	}
+    }
 
-  	protected void loadDecoderFile(DecoderFile df) {
-  		if (df == null) {
-  			log.warn("loadDecoder file invoked with null object");
-  			return;
-  		}
+    protected void loadDecoderFile(DecoderFile df) {
+        if (df == null) {
+            log.warn("loadDecoder file invoked with null object");
+            return;
+        }
 
-		try {
-			decoderRoot = df.rootFromName(df.fileLocation+df.getFilename());
-		} catch (Exception e) { log.error("Exception while loading decoder XML file: "+df.getFilename()+" exception: "+e); }
-		// load variables from decoder tree
-		df.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
+        try {
+            decoderRoot = df.rootFromName(df.fileLocation+df.getFilename());
+        } catch (Exception e) { log.error("Exception while loading decoder XML file: "+df.getFilename()+" exception: "+e); }
+        // load variables from decoder tree
+        df.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
 
-		// save the pointer to the model element
-		modelElem = df.getModelElement();
-  	}
+        // save the pointer to the model element
+        modelElem = df.getModelElement();
+    }
 
   	protected void loadProgrammerFile(RosterEntry r) {
 		// Open and parse programmer file
