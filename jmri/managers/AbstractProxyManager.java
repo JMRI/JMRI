@@ -13,7 +13,7 @@ import com.sun.java.util.collections.List;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class AbstractProxyManager implements Manager {
 
@@ -52,7 +52,11 @@ public class AbstractProxyManager implements Manager {
      * @return The system-specific prefix letter for the primary implementation
      */
     public char systemLetter() {
-        return ((Manager)mgrs.get(0)).systemLetter();
+	try {
+          return ((Manager)mgrs.get(0)).systemLetter();
+        } catch(IndexOutOfBoundsException ie) {
+          return '\0';
+        }
     }
 
     /**

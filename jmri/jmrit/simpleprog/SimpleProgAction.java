@@ -10,13 +10,13 @@ import java.awt.event.ActionEvent;
  *       			SimpleProgAction object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */public class SimpleProgAction 			extends AbstractAction {
 
      public SimpleProgAction(String s) {
          super(s);
 
-     // disable ourself if ops programming is not possible
+     // disable ourself if programming is not possible
         if (jmri.InstanceManager.programmerManagerInstance()==null) { 
             setEnabled(false);
         }

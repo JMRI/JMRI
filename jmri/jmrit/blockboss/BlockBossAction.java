@@ -12,13 +12,19 @@ import javax.swing.JFrame;
  * "Simple Signal Logic" GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 
 public class BlockBossAction extends AbstractAction {
 
-    public BlockBossAction(String s) { super(s);}
-    public BlockBossAction() { super();}
+    public BlockBossAction(String s) { 
+	super(s);
+        // disable ourself if there is no primary Signal Head manager available
+        if (jmri.InstanceManager.signalHeadManagerInstance()==null) {
+            setEnabled(false);
+        }
+    }
+    public BlockBossAction() { this("Simple Signal Logic");}
 
     public void actionPerformed(ActionEvent e) {
 

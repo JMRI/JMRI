@@ -22,7 +22,7 @@ import javax.swing.JTextField;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -34,7 +34,19 @@ public class TurnoutTableAction extends AbstractTableAction {
      * resulting frame.  Perhaps this should be changed?
      * @param actionName
      */
-    public TurnoutTableAction(String actionName) { super(actionName);}
+    public TurnoutTableAction(String actionName) { 
+	super(actionName);
+
+        // disable ourself if there is no primary turnout manager available
+        if (jmri.InstanceManager.turnoutManagerInstance()==null ||
+            (((jmri.managers.AbstractProxyManager)jmri.InstanceManager
+                                                 .turnoutManagerInstance())
+                                                 .systemLetter()=='\0')) {
+            setEnabled(false);
+        }
+
+    }
+
     public TurnoutTableAction() { this("Turnout Table");}
 
     /**

@@ -24,7 +24,7 @@ import javax.swing.JTextField;
  * SignalHeadTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -38,6 +38,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
      */
     public SignalHeadTableAction(String s) {
         super(s);
+        // disable ourself if there is no primary Signal Head manager available
+        if (jmri.InstanceManager.signalHeadManagerInstance()==null) {
+            setEnabled(false);
+        }
     }
     public SignalHeadTableAction() { this("Signal Table");}
 

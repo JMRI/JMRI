@@ -23,7 +23,7 @@ import javax.swing.JTextField;
  * SensorTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 
 public class SensorTableAction extends AbstractTableAction {
@@ -37,6 +37,14 @@ public class SensorTableAction extends AbstractTableAction {
      */
     public SensorTableAction(String actionName) {
         super(actionName);
+
+        // disable ourself if there is no primary sensor manager available
+        if (jmri.InstanceManager.sensorManagerInstance()==null ||
+            (((jmri.managers.AbstractProxyManager)jmri.InstanceManager
+                                                 .sensorManagerInstance())
+                                                 .systemLetter()=='\0')) {
+            setEnabled(false);
+        }
     }
     public SensorTableAction() { this("Sensor Table");}
 
