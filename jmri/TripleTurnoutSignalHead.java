@@ -15,18 +15,55 @@ package jmri;
  * been changed via some other mechanism.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class TripleTurnoutSignalHead extends AbstractSignalHead {
 
-    public TripleTurnoutSignalHead(Turnout green, Turnout yellow, Turnout red) {
-        super();
+    public TripleTurnoutSignalHead(String sys, String user, Turnout green, Turnout yellow, Turnout red) {
+        super(sys, user);
         mRed = red;
         mYellow = yellow;
         mGreen = green;
     }
 
-    public void setAppearance(int newAppearance) {}
+    public TripleTurnoutSignalHead(String sys, Turnout green, Turnout yellow, Turnout red) {
+        super(sys);
+        mRed = red;
+        mYellow = yellow;
+        mGreen = green;
+    }
+
+    public void setAppearance(int newAppearance) {
+        mAppearance = newAppearance;
+        switch (mAppearance) {
+        case RED:
+        case FLASHRED:
+            mRed.setCommandedState(Turnout.THROWN);
+            mYellow.setCommandedState(Turnout.CLOSED);
+            mGreen.setCommandedState(Turnout.CLOSED);
+            return;
+        case YELLOW:
+        case FLASHYELLOW:
+            mRed.setCommandedState(Turnout.CLOSED);
+            mYellow.setCommandedState(Turnout.THROWN);
+            mGreen.setCommandedState(Turnout.CLOSED);
+            return;
+        case GREEN:
+        case FLASHGREEN:
+            mRed.setCommandedState(Turnout.CLOSED);
+            mYellow.setCommandedState(Turnout.CLOSED);
+            mGreen.setCommandedState(Turnout.THROWN);
+            return;
+        default:
+            log.warn("Unexpected new appearance: "+mAppearance);
+            // go dark
+        case DARK:
+            mRed.setCommandedState(Turnout.CLOSED);
+            mYellow.setCommandedState(Turnout.CLOSED);
+            mGreen.setCommandedState(Turnout.CLOSED);
+            return;
+        }
+    }
 
     /**
      * Remove references to and from this object, so that it can
@@ -43,7 +80,11 @@ public class TripleTurnoutSignalHead extends AbstractSignalHead {
     Turnout mYellow;
     Turnout mGreen;
 
-}
+    public Turnout getRed() {return mRed;}
+    public Turnout getYellow() {return mYellow;}
+    public Turnout getGreen() {return mGreen;}
 
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TripleTurnoutSignalHead.class.getName());
+}
 
 /* @(#)TripleTurnoutSignalHead.java */
