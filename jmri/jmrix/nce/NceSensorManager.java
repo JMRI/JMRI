@@ -15,7 +15,7 @@ import jmri.Sensor;
  * see nextAiuPoll()
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class NceSensorManager extends jmri.AbstractSensorManager
                             implements NceListener {
@@ -26,10 +26,10 @@ public class NceSensorManager extends jmri.AbstractSensorManager
             aiuArray[i] = null;
     }
 
-    // ABC implementations
+    public char systemLetter() { return 'N'; }
 
     // to free resources when no longer used
-    public void dispose() throws JmriException {
+    public void dispose() {
     }
 
     public Sensor newSensor(String systemName, String userName) {
