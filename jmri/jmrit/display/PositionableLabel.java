@@ -23,7 +23,7 @@ import javax.swing.JRadioButtonMenuItem;
  * PositionableLabel is a JLabel that can be dragged around the
  * inside of the enclosing Container using a right-drag.
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class PositionableLabel extends JLabel
@@ -131,7 +131,7 @@ public class PositionableLabel extends JLabel
     }
     public void mouseDragged(MouseEvent e) {
         if (e.isMetaDown()) {
-            //if (debug) log.debug("Dragged: "+where(e));
+            if (!getPositionable()) return;
             // update object postion by how far dragged
             int xObj = getX()+(e.getX()-xClick);
             int yObj = getY()+(e.getY()-yClick);
@@ -147,6 +147,7 @@ public class PositionableLabel extends JLabel
      * For over-riding in the using classes: only provides icon rotation
      */
     protected void showPopUp(MouseEvent e) {
+        if (!getEditable()) return;
         ours = this;
         if (icon && popup == null ) {
             popup = new JPopupMenu();
@@ -294,6 +295,14 @@ public class PositionableLabel extends JLabel
     public boolean getPositionable() { return positionable; }
     private boolean positionable = true;
 
+    public void setEditable(boolean enabled) {editable = enabled;}
+    public boolean getEditable() { return editable; }
+    private boolean editable = true;
+
+    public void setControlling(boolean enabled) {controlling = enabled;}
+    public boolean getControlling() { return controlling; }
+    private boolean controlling = true;
+
     /**
      * Clean up when this object is no longer needed.  Should not
      * be called while the object is still displayed; see remove()
@@ -317,7 +326,7 @@ public class PositionableLabel extends JLabel
         // force redisplay
         parent.validate();
 
-        // remove from persistance
+        // remove from persistance by flagging inactive
         active = false;
     }
 

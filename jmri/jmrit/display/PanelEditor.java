@@ -38,10 +38,12 @@ import com.sun.java.util.collections.ArrayList;
  * and dispose is run. To make this logic work, the PanelEditor
  * is descended from a JFrame, not a JPanel.  That way it
  * can control its own visibility.
+ * <P>
+ * The title of the target and the editor panel are kept
+ * consistent via the {#setTitle} method.
  *
- * <p>Copyright: Copyright (c) 2002</p>
- * @author Bob Jacobsen
- * @version $Revision: 1.34 $
+ * @author Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
+ * @version $Revision: 1.35 $
  */
 
 public class PanelEditor extends JFrame {
@@ -323,9 +325,15 @@ public class PanelEditor extends JFrame {
         // register the resulting panel for later configuration
         InstanceManager.configureManagerInstance().registerUser(this);
 
-        // move it off the panel's position
+        // move this editor panel off the panel's position
         setLocation(250,0);
 
+        // when this window closes, set contents of target uneditable
+        addWindowListener(new java.awt.event.WindowAdapter() {
+                public void windowClosing(java.awt.event.WindowEvent e) {
+                    setAllPositionable(false);
+                }
+            });
     }  // end ctor
 
     /**
@@ -525,6 +533,18 @@ public class PanelEditor extends JFrame {
         if (getTarget().getTopLevelAncestor()!=null) name=((JFrame)getTarget().getTopLevelAncestor()).getTitle();
         if (name==null || name.equals("")) super.setTitle("Editor");
         super.setTitle(name+" Editor");
+    }
+
+    /**
+     *  Control whether target panel items are editable.
+     *  Does this by invoke the {@link Positionable#setPositionable} function of
+     * each item on the target panel. This also control the pop-up menu items.
+     * @param state true for editable.
+     */
+    void setAllPositionable(boolean state) {
+        for (int i = 0; i<contents.size(); i++) {
+            ((Positionable)contents.get(i)).setPositionable(state);
+        }
     }
 
     // initialize logging

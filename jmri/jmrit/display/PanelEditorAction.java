@@ -11,7 +11,7 @@ import javax.swing.JLayeredPane;
  * connect it to.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  * @see             jmri.jmrit.display.PanelEditorAction
  */
 public class PanelEditorAction extends AbstractAction {
@@ -40,8 +40,4 @@ public class PanelEditorAction extends AbstractAction {
         panel.show();
 
 	}
-
-	// initialize logging
-    //static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PanelEditorAction.class.getName());
-
 }

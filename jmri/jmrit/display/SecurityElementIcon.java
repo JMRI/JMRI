@@ -1,11 +1,21 @@
 package jmri.jmrit.display;
 
-import jmri.jmrix.loconet.*;
+import jmri.jmrix.loconet.SecurityElement;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Container;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JSeparator;
 
 /**
  * SecurityElementIcon provides a small icon to display a status of a SecurityElement.
@@ -15,12 +25,12 @@ import javax.swing.*;
  * explicitly add the code for Positionable
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class SecurityElementIcon extends JPanel
     implements java.beans.PropertyChangeListener,
-               MouseListener, MouseMotionListener {
+               MouseListener, MouseMotionListener, Positionable {
 
     JLabel rlspeed;  // speed from right to left, on the top
     JLabel dir;      // direction bits
@@ -173,7 +183,7 @@ public class SecurityElementIcon extends JPanel
     }
     public void mouseDragged(MouseEvent e) {
         if (e.isMetaDown()) {
-            //if (debug) log.debug("Dragged: "+where(e));
+            if (!getPositionable()) return;
             // update object postion by how far dragged
             int xObj = getX()+(e.getX()-xClick);
             int yObj = getY()+(e.getY()-yClick);
@@ -194,6 +204,7 @@ public class SecurityElementIcon extends JPanel
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
         popup.add(new AbstractAction("to: "+element.turnout) {
                 public void actionPerformed(ActionEvent e) {
+                    if (!getEditable()) return;
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(popup,
                                                                 "Set turnout number:",
@@ -208,6 +219,7 @@ public class SecurityElementIcon extends JPanel
 
         popup.add(new AbstractAction("ds: "+element.dsSensor) {
                 public void actionPerformed(ActionEvent e) {
+                    if (!getEditable()) return;
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(popup,
                                                                 "Set detection section number:",
@@ -222,6 +234,7 @@ public class SecurityElementIcon extends JPanel
 
         popup.add(new AbstractAction("aux: "+element.auxInput) {
                 public void actionPerformed(ActionEvent e) {
+                    if (!getEditable()) return;
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(popup,
                                                                 "Set aux input number:",
@@ -242,6 +255,7 @@ public class SecurityElementIcon extends JPanel
         if (element.attachAleg==SecurityElement.C) attach = "C";
         popup.add(new AbstractAction("A: "+element.attachAnum+":"+attach) {
                 public void actionPerformed(ActionEvent e) {
+                    if (!getEditable()) return;
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(popup,
                                                                 "Set A attachment number:",
@@ -268,6 +282,7 @@ public class SecurityElementIcon extends JPanel
         if (element.attachBleg==SecurityElement.C) attach = "C";
         popup.add(new AbstractAction("B: "+element.attachBnum+":"+attach) {
                 public void actionPerformed(ActionEvent e) {
+                    if (!getEditable()) return;
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(popup,
                                                                 "Set B attachment number:",
@@ -294,6 +309,7 @@ public class SecurityElementIcon extends JPanel
         if (element.attachCleg==SecurityElement.C) attach = "C";
         popup.add(new AbstractAction("C: "+element.attachCnum+":"+attach) {
                 public void actionPerformed(ActionEvent e) {
+                    if (!getEditable()) return;
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(popup,
                                                                 "Set C attachment number:",
@@ -319,6 +335,7 @@ public class SecurityElementIcon extends JPanel
 
         popup.add(new AbstractAction("maxAB: "+element.maxSpeedAB) {
                 public void actionPerformed(ActionEvent e) {
+                    if (!getEditable()) return;
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(popup,
                                                                 "Set max A->B speed:",
@@ -332,6 +349,7 @@ public class SecurityElementIcon extends JPanel
                   );
         popup.add(new AbstractAction("maxBA: "+element.maxSpeedBA) {
                 public void actionPerformed(ActionEvent e) {
+                    if (!getEditable()) return;
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(popup,
                                                                 "Set max B->A speed:",
@@ -345,6 +363,7 @@ public class SecurityElementIcon extends JPanel
                   );
         popup.add(new AbstractAction("maxAC: "+element.maxSpeedAC) {
                 public void actionPerformed(ActionEvent e) {
+                    if (!getEditable()) return;
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(popup,
                                                                 "Set max A->C speed:",
@@ -358,6 +377,7 @@ public class SecurityElementIcon extends JPanel
                   );
         popup.add(new AbstractAction("maxCA: "+element.maxSpeedCA) {
                 public void actionPerformed(ActionEvent e) {
+                    if (!getEditable()) return;
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(popup,
                                                                 "Set max C->A speed:",
@@ -374,6 +394,7 @@ public class SecurityElementIcon extends JPanel
 
         popup.add(new AbstractAction("brakeAB: "+element.maxBrakingAB) {
                 public void actionPerformed(ActionEvent e) {
+                    if (!getEditable()) return;
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(popup,
                                                                 "Set A->B braking:",
@@ -387,6 +408,7 @@ public class SecurityElementIcon extends JPanel
                   );
         popup.add(new AbstractAction("brakeBA: "+element.maxBrakingBA) {
                 public void actionPerformed(ActionEvent e) {
+                    if (!getEditable()) return;
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(popup,
                                                                 "Set B->A braking:",
@@ -400,6 +422,7 @@ public class SecurityElementIcon extends JPanel
                   );
         popup.add(new AbstractAction("brakeAC: "+element.maxBrakingAC) {
                 public void actionPerformed(ActionEvent e) {
+                    if (!getEditable()) return;
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(popup,
                                                                 "Set A->C braking:",
@@ -413,6 +436,7 @@ public class SecurityElementIcon extends JPanel
                   );
         popup.add(new AbstractAction("brakeCA: "+element.maxBrakingCA) {
                 public void actionPerformed(ActionEvent e) {
+                    if (!getEditable()) return;
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(popup,
                                                                 "Set C->A braking:",
@@ -427,6 +451,7 @@ public class SecurityElementIcon extends JPanel
 
         popup.add(new AbstractAction("onAXreserve: "+element.onAXReservation) {
                 public void actionPerformed(ActionEvent e) {
+                    if (!getEditable()) return;
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(popup,
                                                                 "On AX reservation (0 none, 1 stop opposite, 2 stop unreserved):",
@@ -440,6 +465,7 @@ public class SecurityElementIcon extends JPanel
                   );
         popup.add(new AbstractAction("onXAreserve: "+element.onAXReservation) {
                 public void actionPerformed(ActionEvent e) {
+                    if (!getEditable()) return;
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(popup,
                                                                 "On XA reservation (0 none, 1 stop opposite, 2 stop unreserved):",
@@ -454,6 +480,7 @@ public class SecurityElementIcon extends JPanel
 
         popup.add(new AbstractAction("makeAreserve: "+element.makeAReservation) {
                 public void actionPerformed(ActionEvent e) {
+                    if (!getEditable()) return;
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(popup,
                                                                 "Make A reservation (0 no, 1 yes):",
@@ -467,6 +494,7 @@ public class SecurityElementIcon extends JPanel
                   );
         popup.add(new AbstractAction("makeBreserve: "+element.makeBReservation) {
                 public void actionPerformed(ActionEvent e) {
+                    if (!getEditable()) return;
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(popup,
                                                                 "Make B reservation (0 no, 1 yes):",
@@ -480,6 +508,7 @@ public class SecurityElementIcon extends JPanel
                   );
         popup.add(new AbstractAction("makeCreserve: "+element.makeCReservation) {
                 public void actionPerformed(ActionEvent e) {
+                    if (!getEditable()) return;
                     String newVal =
                         javax.swing.JOptionPane.showInputDialog(popup,
                                                                 "Make C reservation (0 no, 1 yes):",
@@ -539,6 +568,18 @@ public class SecurityElementIcon extends JPanel
         // remove from persistance
         active = false;
     }
+
+    public void setPositionable(boolean enabled) {positionable = enabled;}
+    public boolean getPositionable() { return positionable; }
+    private boolean positionable = true;
+
+    public void setEditable(boolean enabled) {editable = enabled;}
+    public boolean getEditable() { return editable; }
+    private boolean editable = true;
+
+    public void setControlling(boolean enabled) {controlling = enabled;}
+    public boolean getControlling() { return controlling; }
+    private boolean controlling = true;
 
     boolean active = true;
     /**
