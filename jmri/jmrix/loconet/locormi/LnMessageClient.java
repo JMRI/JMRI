@@ -8,7 +8,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * Client for the RMI LocoNet server.
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Alex Shepherd, Bob Jacobsen
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class LnMessageClient extends LnTrafficRouter {
@@ -90,6 +90,9 @@ public class LnMessageClient extends LnTrafficRouter {
 
         // the serial connections (LocoBuffer et al) start
         // various threads here.
+
+        jmri.jmrix.loconet.ActiveFlag.setActive();
+
     }
 
     public static void main( String[] args ){
