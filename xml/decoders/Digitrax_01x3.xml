@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_01x3.xml,v 1.17 2004-02-08 01:32:47 jacobsen Exp $ -->
+<!-- $Id: Digitrax_01x3.xml,v 1.18 2004-02-11 04:55:04 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Michael Mosher mjmx@comcast.net" 
 					version="10.1" lastUpdated="20031008"/>
@@ -681,6 +681,7 @@
 				</enumVal>
 			</variable>
 		<variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX"
+			tooltip="Activates Digitrax Transponding"
 			item="Advanced Ack">
 			<enumVal>
 				<enumChoice choice="Off"/>
@@ -729,7 +730,8 @@
 			</variable>
 			
 		
-		<variable label="Switching speed enabled by F6" CV="54" mask="XXXXXXXV" >
+		<variable label="Switching speed enabled by F6" CV="54" mask="XXXXXXXV" 
+			tooltip="When enabled, F6 reduces top speed">
 			<enumVal>
 				<enumChoice choice="Disabled"/>
 				<enumChoice choice="Enabled"/>
@@ -1020,7 +1022,7 @@
 	<column>
 		<display item="Advanced consist droop compensation for speed stabilization" />
 		<display item="Speed Compensation Control" />
-		<display item="Transponding" />
+		<display item="Transponding" tooltip="Controls Digitrax Transponding usage"/>
 		<display item="Split field motor" />		
 		<display item="Vstart/Vmid/Vfull in 128 step mode" />
 		<display item="Short-circuit protection" />
