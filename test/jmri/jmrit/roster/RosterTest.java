@@ -2,15 +2,22 @@
 
 package jmri.jmrit.roster;
 
-import jmri.jmrit.*;
-import java.io.*;
+import jmri.jmrit.XmlFile;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
 
-import junit.framework.*;
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
- * Tests for the jmrit.roster package & jmrit.roster.Roster class
+ * Tests for the jmrit.roster package & jmrit.roster.Roster class.
  * @author	Bob Jacobsen     Copyright (C) 2001, 2002
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class RosterTest extends TestCase {
 
