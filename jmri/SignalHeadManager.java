@@ -11,7 +11,7 @@ import com.sun.java.util.collections.List;
  * are separately implemented, instead of being system-specific.
  *
  * @author      Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public interface SignalHeadManager {
 
@@ -25,7 +25,7 @@ public interface SignalHeadManager {
      */
     public List getSystemNameList();
 
-    public void register(SignalHead s, String systemName, String userName);
+    public void register(SignalHead s);
 }
 
 
