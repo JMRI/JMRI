@@ -9,13 +9,14 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import java.awt.Font;
+import jmri.util.PythonInterp;
 
 /**
  * This Action runs creates a JFrame for sending input to the
  * global jython interpreter
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class InputWindow extends AbstractAction {
 
@@ -37,7 +38,7 @@ public class InputWindow extends AbstractAction {
      * @param e
      */
     public void actionPerformed(ActionEvent e) {
-        RunJythonScript.getPythonInterpreter();
+        PythonInterp.getPythonInterpreter();
 
         java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.jython.JythonBundle");
 
@@ -76,10 +77,10 @@ public class InputWindow extends AbstractAction {
         // intermediate \n characters need to be prefixed
         echo = echo.replaceAll("\n", "\n... ");
         echo = echo.substring(0, echo.length()-4);
-        RunJythonScript.outputlog.append(echo);
+        PythonInterp.outputlog.append(echo);
 
         // and execute
-        RunJythonScript.execCommand(cmd);
+        PythonInterp.execCommand(cmd);
     }
 
 }

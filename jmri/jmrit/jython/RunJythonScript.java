@@ -19,7 +19,7 @@ import java.io.*;
  * read the code, the "non-reflection" statements are in the comments.
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class RunJythonScript extends AbstractAction {
 
@@ -57,121 +57,10 @@ public class RunJythonScript extends AbstractAction {
         if (retVal == JFileChooser.APPROVE_OPTION) {
             File file = fci.getSelectedFile();
             // Run the script from it's filename
-            runScript(file.toString());
+            jmri.util.PythonInterp.runScript(file.toString());
         }
     }
 
-    /**
-     * Run a script file from it's filename.
-     */
-    static public void runScript(String filename) {
-        // get a Python interpreter context, make sure it's ok
-        getPythonInterpreter();
-        if (interp == null) {
-            log.error("Can't contine to execute script "+filename+", could not create interpreter");
-            return;
-        }
-
-        // execute the file
-        execFile(filename);
-    }
-
-     static protected void execFile(String filename) {
-        execCommand("execfile(\""+filename+"\")");
-    }
-
-    static protected void execCommand(String command) {
-        // interp.execfile(command);
-        try {
-            // set up the method to exec python functions
-            java.lang.reflect.Method exec
-                = interp.getClass().getMethod("exec", new Class[]{String.class});
-
-            exec.invoke(interp, new Object[]{command});
-        } catch (java.lang.reflect.InvocationTargetException e2) {
-            log.error("InvocationTargetException while invoking command "+command
-                    +": "+e2.getCause());
-            outputlog.append("Error: "+e2.getCause());
-        } catch (NoSuchMethodException e1) {
-            log.error("NoSuchMethod error while invoking command "+command);
-        } catch (IllegalAccessException e) {
-            log.error("IllegalAccessException error while invoking command "+command);
-        }
-    }
-
-    /**
-     * All instance of this class share a single interpreter.
-     */
-    static private Object interp;
-
-    /**
-     * Provide an initialized Python interpreter.
-     * <P>
-     * If necessary to create one:
-     * <UL>
-     * <LI>Create the Python interpreter.
-     * <LI>Read the default-setting file
-     * </UL>
-     * <P>
-     * Interpreter is returned as an Object, which is to
-     * be invoked via reflection.
-     */
-    static public Object getPythonInterpreter() {
-
-        if (interp!=null) return interp;
-
-        // must create one.
-        try {
-            log.debug("create interpreter");
-            // PySystemState.initialize();
-            Class cs = Class.forName("org.python.core.PySystemState");
-            java.lang.reflect.Method initialize =
-                        cs.getMethod("initialize",null);
-            initialize.invoke(null, null);
-
-            // interp = new PythonInterpreter();
-            interp = Class.forName("org.python.util.PythonInterpreter").newInstance();
-
-            // Add the I/O pipes
-            PipedWriter pw = new PipedWriter();
-
-            // interp.setErr(pw);
-            java.lang.reflect.Method method
-                    = interp.getClass().getMethod("setErr", new Class[]{Writer.class});
-            method.invoke(interp, new Object[]{pw});
-            // interpreter.setOut(pw);
-            method
-                    = interp.getClass().getMethod("setOut", new Class[]{Writer.class});
-            method.invoke(interp, new Object[]{pw});
-
-            // ensure the output pipe is read and stored into a
-            // Swing TextArea data model
-            PipedReader pr = new PipedReader(pw);
-            PipeListener pl = new PipeListener(pr, outputlog);
-            pl.start();
-
-            // have jython execute the default setup
-            log.debug("load defaults from "+defaultContextFile);
-            execFile(defaultContextFile);
-
-            return interp;
-
-        } catch (Exception e) {
-            log.error("Exception creating jython system objects: "+e);
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
-     * JTextArea containing the output
-     */
-    static javax.swing.JTextArea outputlog = new javax.swing.JTextArea();
-
-    /**
-     * Name of the file containing the Python code defining JMRI defaults
-     */
-    static String defaultContextFile = "jython/jmri_defaults.py";
 
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RunJythonScript.class.getName());
