@@ -12,6 +12,7 @@
     <path>[lib/comm.jar]</path>
     <path>[lib/jh.jar]</path>
     <path>[lib/jython.jar]</path>
+    <path>[lib/MRJAdapter.jar]</path>
     <path>src/resources</path>
   </class>
 </library>
