@@ -10,6 +10,7 @@
     <path>[lib/junit.jar]</path>
     <path>[lib/Serialio.jar]</path>
     <path>[lib/comm.jar]</path>
+    <path>[lib/jython.jar]</path>
     <path>src/resources</path>
   </class>
 </library>
