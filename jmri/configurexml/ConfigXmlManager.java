@@ -13,7 +13,7 @@ import jmri.*;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
                                 implements jmri.ConfigureManager {
@@ -52,7 +52,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * @param o object of a configurable type
      * @return class name of adapter
      */
-    String adapterName(Object o) {
+    static String adapterName(Object o) {
         String className = o.getClass().getName();
         if (log.isDebugEnabled()) log.debug("handle object of class "+className);
         int lastDot = className.lastIndexOf(".");
@@ -98,19 +98,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             // get the registered objects and store as top-level elements
             for (int i=0; i<list.size(); i++) {
                 Object o = list.get(i);
-                String aName = adapterName(o);
-                log.debug("store using "+aName);
-                XmlAdapter adapter = null;
-                try {
-                    adapter = (XmlAdapter)Class.forName(adapterName(o)).newInstance();
-                } catch (java.lang.ClassNotFoundException ex) {
-                    log.fatal("Cannot load configuration adapter for "+o.getClass().getName());
-                }
-                if (adapter!=null){
-                    root.addContent(adapter.store(o));
-                } else {
-                    log.fatal("Cannot store configuration for "+o.getClass().getName());
-                }
+                Element e = elementFromObject(o);
+                if (e!=null) root.addContent(e);
             }
 
 			// write the result to selected file
@@ -125,6 +114,24 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             e.printStackTrace();
 		}
 	}
+
+    static public Element elementFromObject(Object o)
+            throws java.lang.InstantiationException, java.lang.IllegalAccessException {
+        String aName = adapterName(o);
+        log.debug("store using "+aName);
+        XmlAdapter adapter = null;
+        try {
+            adapter = (XmlAdapter)Class.forName(adapterName(o)).newInstance();
+        } catch (java.lang.ClassNotFoundException ex) {
+            log.fatal("Cannot load configuration adapter for "+o.getClass().getName());
+        }
+        if (adapter!=null){
+            return adapter.store(o);
+        } else {
+            log.fatal("Cannot store configuration for "+o.getClass().getName());
+            return null;
+        }
+    }
 
     public void load(File fi) {
         try {

@@ -6,7 +6,7 @@ import org.jdom.Element;
  * Interface assumed during configuration operations.
  *
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @see ConfigXmlManager
  */
 
@@ -17,6 +17,14 @@ public interface XmlAdapter {
      * @param e Top-level XML element containing the description
      */
     public void load(Element e);
+
+    /**
+     * Create a set of configured objects from their
+     * XML description, using an auxiliary object
+     * @param e Top-level XML element containing the description
+     * @param o Implementation-specific Object needed for the conversion
+     */
+    public void load(Element e, Object o);
 
     /**
      * Store the
