@@ -5,12 +5,10 @@ import java.io.*;
 import com.sun.java.util.collections.*;
 
 /**
- * <p> </p>
- * <p> </p>
- * <p> </p>
- * <p> </p>
+ * Allow selection of possible files by their extension.
+ *
  * @author Alex Shepherd
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class FileChooserFilter extends javax.swing.filechooser.FileFilter {

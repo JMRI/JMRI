@@ -1,6 +1,4 @@
-/**
- * DebugMenu.java
- */
+// DebugMenu.java
 
 package jmri.jmrit;
 
@@ -8,10 +6,11 @@ import javax.swing.*;
 import java.util.*;
 
 /**
- * Create a "Debug" menu containing the Jmri system-independent debugging tools
+ * Create a "Debug" menu containing the JMRI system-independent 
+ * debugging tools.
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class DebugMenu extends JMenu {
     public DebugMenu(String name, JPanel panel) {

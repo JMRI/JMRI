@@ -1,11 +1,4 @@
-/**
- * AbstractProgrammer.java
- *
- * Common implementations for the Programmer interface
- *
- * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.7 $
- */
+// AbstractProgrammer.java
 
 package jmri.jmrix;
 
@@ -15,6 +8,12 @@ import jmri.ProgrammerException;
 import java.beans.PropertyChangeListener;
 import java.util.Vector;
 
+/**
+ * Common implementations for the Programmer interface.
+ *
+ * @author	Bob Jacobsen  Copyright (C) 2001
+ * @version     $Revision: 1.8 $
+ */
 public abstract class AbstractProgrammer implements Programmer {
 
     public String decodeErrorCode(int code) {
