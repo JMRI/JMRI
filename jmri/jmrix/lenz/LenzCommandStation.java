@@ -9,7 +9,7 @@ package jmri.jmrix.lenz;
  * Defines standard operations for Dcc command stations.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
 
@@ -39,8 +39,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
      * Generate a message to change turnout state
      */
     public XNetMessage getTurnoutCommandMsg(int pNumber, boolean pClose,
-                                    boolean pThrow, boolean pOn)
-                            throws jmri.JmriException {
+                                    boolean pThrow, boolean pOn) {
 		XNetMessage l = new XNetMessage(4);
 		l.setElement(0,0x52);
 
@@ -55,7 +54,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
 
         // we don't know how to command both states right now!
         if (pClose & pThrow)
-            new jmri.JmriException("XPressNet turnout logic can't handle both THROWN and CLOSED yet");
+            log.error("XPressNet turnout logic can't handle both THROWN and CLOSED yet");
 
 		// store and send
 		l.setElement(1,hiadr);

@@ -21,10 +21,11 @@ import jmri.AbstractTurnout;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */public class LnTurnout extends AbstractTurnout implements LocoNetListener {
 
      public LnTurnout(int number) {  // a human-readable turnout number must be specified!
+        log.debug("new turnout "+number);
          _number = number;
          // At construction, register for messages
          if (LnTrafficController.instance()!=null)
@@ -37,7 +38,7 @@ import jmri.AbstractTurnout;
      public String getSystemName() { return "LT"+getNumber(); }
 
      // Handle a request to change state by sending a LocoNet command
-     protected void forwardCommandChangeToLayout(int s) throws jmri.JmriException {
+     protected void forwardCommandChangeToLayout(int s) {
          // send SWREQ for close
          LocoNetMessage l = new LocoNetMessage(4);
          l.setOpCode(LnConstants.OPC_SW_REQ);
@@ -52,7 +53,7 @@ import jmri.AbstractTurnout;
              hiadr |= 0x20;
              // thrown exception if also THROWN
              if ((s & THROWN) != 0)
-                 throw new jmri.JmriException("LocoNet turnout logic can't handle both THROWN and CLOSED yet");
+                 log.error("LocoNet turnout logic can't handle both THROWN and CLOSED yet");
          }
 
          // load On/Off with on

@@ -3,7 +3,7 @@
  *
  * Description:		extend jmri.AbstractTurnout for NCE layouts
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 /**
@@ -33,7 +33,7 @@ public class NceTurnout extends AbstractTurnout {
 	public String getSystemName() { return "NT"+getNumber(); }
 
 	// Handle a request to change state by sending a turnout command
-	protected void forwardCommandChangeToLayout(int s) throws jmri.JmriException {
+	protected void forwardCommandChangeToLayout(int s) {
 		// implementing classes will typically have a function/listener to get
 		// updates from the layout, which will then call
 		//		public void firePropertyChange(String propertyName,
