@@ -10,7 +10,7 @@ import apps.tests.*;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 2.0 $
+ * @version $Revision: 2.1 $
  */
 public class XNetTrafficRouterTest extends TestCase {
 
@@ -32,6 +32,9 @@ public class XNetTrafficRouterTest extends TestCase {
 
         // send a message
         XNetMessage m = new XNetMessage(3);
+	m.setElement(0,0x01);
+	m.setElement(1,0x04);
+	m.setElement(2,0x05);
         router.sendXNetMessage(m, null);
 
         // check receipt
@@ -56,7 +59,10 @@ public class XNetTrafficRouterTest extends TestCase {
         router.addXNetListener(~0, l);
         // send a message
         XNetReply m = new XNetReply();
-        router.message(m);
+	m.setElement(0,0x01);
+	m.setElement(1,0x04);
+	m.setElement(2,0x05);
+	router.forwardReply(l,m);
 
         // check receipt
         Assert.assertEquals("one message sent", 1, count);
