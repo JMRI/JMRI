@@ -32,7 +32,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author  Bob Jacobsen   Copyright (C) 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class SE8Frame extends JFrame implements LocoNetListener {
 
@@ -325,7 +325,7 @@ public class SE8Frame extends JFrame implements LocoNetListener {
                                               "Reserved (6)", "Reserved (7)"
                                               });  // opsw 3, 4, 5
     JComboBox section5to8mode     = new JComboBox(new String[] {
-                                              "3 LEDs common anode","3 LEDs common anode",
+                                              "3 LEDs common anode","3 LEDs common cathode",
                                               "3-wire searchlight common anode","3-wire searchlight common cathode",
                                               "2-wire searchlight common anode","2-wire searchlight common cathode",
                                               "Reserved (6)", "Reserved (7)"
