@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_yDS54.xml,v 1.5 2003-11-13 02:10:40 jacobsen Exp $ -->
+<!-- $Id: Digitrax_yDS54.xml,v 1.6 2004-03-17 04:57:09 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
 					version="3" lastUpdated="20031112"/>
@@ -10,13 +10,20 @@
 <decoder>
 	<family name="DS54" mfg="Digitrax" 
 				comment="DS54 is a stationary decoder, but it can be programmed in the usual way">
-			<model model= "DS54"/>
+			<model model= "DS54" lowVersionID="65"/>
 		</family>
 
 	<programming direct="no" paged="yes" 
 	                     register="no" ops="no"></programming>
 
 	<variables>
+		<variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
+				<decVal/>
+			</variable>
+		<variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer">
+				<decVal/>
+			</variable>
+
 		<variable label="Address" CV="1" mask="VVVVVVVV" comment="Decoder address">
 			<decVal min="1" max="127"/>
 			</variable>
