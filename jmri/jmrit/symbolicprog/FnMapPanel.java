@@ -30,7 +30,7 @@ import org.jdom.Attribute;
  * Although support for the "CV label column" is still here, its turned off now.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class FnMapPanel extends JPanel {
 	// columns
@@ -166,7 +166,10 @@ public class FnMapPanel extends JPanel {
 	 * are named instead of numbered.
 	 */
 	protected void configOutputs(Element model) {
-		if (model==null) return;
+		if (model==null) {
+                    log.debug("configOutputs was given a null model");
+                    return;
+		}
 		// get numOuts, numFns or leave the defaults
 		Attribute a = model.getAttribute("numOuts");
 		try { if (a!=null) numOut = Integer.valueOf(a.getValue()).intValue();}
