@@ -8,7 +8,7 @@ package jmri.jmrix.nce;
  * Some rudimentary support is provided for the "binary" option.
  *
  * @author		Bob Jacobsen  Copyright (C) 2001
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 public class NceReply extends jmri.jmrix.AbstractMRReply {
 
@@ -22,6 +22,15 @@ public class NceReply extends jmri.jmrix.AbstractMRReply {
     public NceReply(NceReply l) {
         super(l);
     }
+
+    int replyLen;    
+    /**
+     * Set the number of characters expected back from the 
+     * command station.  Used in binary mode, where there's
+     * no end-of-reply string to look for
+     */
+    public void setReplyLen(int len) { replyLen = len; }
+    public int getReplyLen() { return replyLen; }
 
     protected int skipPrefix(int index) {
         // start at index, passing any control characters at the start of the buffer

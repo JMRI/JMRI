@@ -9,14 +9,14 @@ package jmri.jmrix.nce;
  * class handles the response from the command station.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
     public NceMessage() {
         super();
     }
-
+    
     // create a new one
     public  NceMessage(int i) {
         super(i);
@@ -25,12 +25,22 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     // copy one
     public  NceMessage(NceMessage m) {
         super(m);
+        replyLen = m.replyLen;
     }
 
     // from String
     public  NceMessage(String m) {
         super(m);
     }
+
+    int replyLen;    
+    /**
+     * Set the number of characters expected back from the 
+     * command station.  Used in binary mode, where there's
+     * no end-of-reply string to look for
+     */
+    public void setReplyLen(int len) { replyLen = len; }
+    public int getReplyLen() { return replyLen; }
 
     // diagnose format
     public boolean isKillMain() {
@@ -116,6 +126,40 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         m.setElement(1, s.charAt(s.length()-1));
         m.setElement(2,' ');
         m.addIntAsThree(val, 3);
+        return m;
+    }
+    
+    static public NceMessage sendPacketMessage(byte[] bytes) {
+        NceMessage m = new NceMessage(5+3*bytes.length);
+        m.setBinary(false);
+        int i = 0; // counter to make it easier to format the message
+        
+        m.setElement(i++, 'S');  // "S C02 " means sent it twice
+        m.setElement(i++, ' ');
+        m.setElement(i++, 'C');
+        m.setElement(i++, '0');
+        m.setElement(i++, '2');
+        
+        for (int j = 0; j<bytes.length; j++) {
+            m.setElement(i++, ' ');
+            m.addIntAsTwoHex(bytes[j]&0xFF,i);
+            i = i+2;
+        }
+        return m;
+    }
+
+    static public NceMessage queuePacketMessage(byte[] bytes) {
+        NceMessage m = new NceMessage(1+3*bytes.length);
+        m.setBinary(false);
+        int i = 0; // counter to make it easier to format the message
+        
+        m.setElement(i++, 'Q');  // "S C02 " means sent it twice
+        
+        for (int j = 0; j<bytes.length; j++) {
+            m.setElement(i++, ' ');
+            m.addIntAsTwoHex(bytes[j]&0xFF,i);
+            i = i+2;
+        }
         return m;
     }
 
