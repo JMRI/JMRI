@@ -1,16 +1,20 @@
-/**
- * DebugProgrammerManagerTest.java
- *
- * Description:
- * @author			Bob Jacobsen
- * @version
- */
+// DebugProgrammerManagerTest.java
 
 package jmri.progdebugger;
 
-import junit.framework.*;
-import jmri.*;
+import jmri.InstanceManager;
+import jmri.Programmer;
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
+/**
+ * Test the DebugProgrammerManager class.
+ *
+ * @author	Bob Jacobsen Copyright 2002
+ * @version     $Revision: 1.2 $
+ */
 public class DebugProgrammerManagerTest extends TestCase {
 
 	/**
