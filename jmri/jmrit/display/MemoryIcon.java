@@ -17,7 +17,7 @@ import javax.swing.JPopupMenu;
  * have to subclass to do that.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -67,7 +67,6 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
      */
     public void setMemory(String pName) {
         if (InstanceManager.memoryManagerInstance()!=null) {
-        	System.out.println("set");
             memory = InstanceManager.memoryManagerInstance().
                 provideMemory(pName);
             if (memory != null) {
