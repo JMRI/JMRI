@@ -2,14 +2,20 @@
 
 package jmri.jmrit.symbolicprog;
 
-import java.awt.event.*;
+import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.roster.IdentifyLoco;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
+import java.awt.event.ActionListener;
 
-import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
-import com.sun.java.util.collections.*;
-import jmri.jmrit.decoderdefn.*;
-import jmri.jmrit.roster.*;
+import com.sun.java.util.collections.List;
 
 /**
  * Provide GUI controls to select a known loco via the Roster.
@@ -20,7 +26,7 @@ import jmri.jmrit.roster.*;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class KnownLocoSelPane extends LocoSelPane  {
 

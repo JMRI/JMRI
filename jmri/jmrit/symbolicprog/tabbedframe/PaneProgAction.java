@@ -2,14 +2,22 @@
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import java.awt.event.*;
-import java.io.*;
+import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.decoderdefn.DecoderIndexFile;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.symbolicprog.CombinedLocoSelTreePane;
+import java.awt.event.ActionEvent;
+import java.io.File;
 
-import javax.swing.*;
-
-import jmri.jmrit.decoderdefn.*;
-import jmri.jmrit.roster.*;
-import jmri.jmrit.symbolicprog.*;
+import javax.swing.AbstractAction;
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
 
 /**
  * Swing action to create and register a
@@ -25,7 +33,7 @@ import jmri.jmrit.symbolicprog.*;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 public class PaneProgAction 			extends AbstractAction {
 
@@ -91,7 +99,6 @@ public class PaneProgAction 			extends AbstractAction {
             };
 
         // load primary frame
-        // modePane.setAlignmentX(JLabel.LEFT_ALIGNMENT);
         f.getContentPane().add(modePane);
         f.getContentPane().add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
 

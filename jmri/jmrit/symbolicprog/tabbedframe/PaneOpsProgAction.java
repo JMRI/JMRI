@@ -2,15 +2,22 @@
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import java.awt.event.*;
-import java.io.*;
+import jmri.InstanceManager;
+import jmri.Programmer;
+import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.decoderdefn.DecoderIndexFile;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.symbolicprog.KnownLocoSelPane;
+import java.awt.event.ActionEvent;
+import java.io.File;
 
-import javax.swing.*;
-
-import jmri.jmrit.decoderdefn.*;
-import jmri.jmrit.roster.*;
-import jmri.jmrit.symbolicprog.*;
-import jmri.*;
+import javax.swing.AbstractAction;
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
 
 /**
  * Swing action to create and register a
@@ -26,7 +33,7 @@ import jmri.*;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class PaneOpsProgAction 	extends AbstractAction {
 
