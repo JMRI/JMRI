@@ -14,7 +14,7 @@ import jmri.jmrix.loconet.AspectGenerator;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -127,6 +127,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
      * Pop-up just displays the name
      */
     protected void showPopUp(MouseEvent e) {
+        ours = this;
         if (popup==null) {
             String name;
             name = "AG"+mGenerator.getSEName()+" head "+this.mHead;
@@ -139,7 +140,6 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
                         yellow.setRotation(yellow.getRotation()+1, ours);
                         flashYellow.setRotation(flashYellow.getRotation()+1, ours);
                         displayState(headState());
-                        ours.setSize(ours.getPreferredSize().width, ours.getPreferredSize().height);
                     }
                 });
         }
