@@ -20,7 +20,7 @@ import com.sun.java.util.collections.List;
 /**
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
- * @version		$Revision: 1.12 $
+ * @version		$Revision: 1.13 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -99,8 +99,9 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         switch (col) {
         case SYSNAMECOL:
         case USERNAMECOL:
-        case VALUECOL:
             return String.class;
+        case VALUECOL:
+            return JButton.class;
         default:
             return null;
         }
@@ -200,9 +201,9 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         TableColumnModel tcm = table.getColumnModel();
         // install a button renderer & editor
         ButtonRenderer buttonRenderer = new ButtonRenderer();
-        tcm.getColumn(column).setCellRenderer(buttonRenderer);
+		table.setDefaultRenderer(JButton.class,buttonRenderer);
         TableCellEditor buttonEditor = new ButtonEditor(new JButton());
-        tcm.getColumn(column).setCellEditor(buttonEditor);
+		table.setDefaultEditor(JButton.class,buttonEditor);
         // ensure the table rows, columns have enough room for buttons
         table.setRowHeight(sample.getPreferredSize().height);
         table.getColumnModel().getColumn(column)
