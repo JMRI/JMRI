@@ -67,49 +67,15 @@ public class ThrottleFrame extends JFrame
 			{
 				public void windowClosing(WindowEvent e)
 				{
-					destroyThrottleFrame(e);
+					//Window w = e.getWindow();
+					//w.setVisible(false);
+					destroyThrottleFrame();
+					e.getWindow().dispose();
 				}
 			});
 
-		JMenu viewMenu = new JMenu("View");
-		viewAddressPanel = new JCheckBoxMenuItem("Address Panel");
-		viewAddressPanel.setSelected(true);
-		viewAddressPanel.addItemListener(
-			new ItemListener()
-			{
-				public void itemStateChanged(ItemEvent e)
-				{
-					addressPanel.setVisible(e.getStateChange() == e.SELECTED);
-				}
-			});
-
-		viewControlPanel = new JCheckBoxMenuItem("Control Panel");
-		viewControlPanel.setSelected(true);
-		viewControlPanel.addItemListener(
-			new ItemListener()
-			{
-				public void itemStateChanged(ItemEvent e)
-				{
-					controlPanel.setVisible(e.getStateChange() == e.SELECTED);
-				}
-			});
-		viewFunctionPanel = new JCheckBoxMenuItem("Function Panel");
-		viewFunctionPanel.setSelected(true);
-		viewFunctionPanel.addItemListener(
-			new ItemListener()
-			{
-				public void itemStateChanged(ItemEvent e)
-				{
-					functionPanel.setVisible(e.getStateChange() == e.SELECTED);
-				}
-			});
-
-		viewMenu.add(viewAddressPanel);
-		viewMenu.add(viewControlPanel);
-		viewMenu.add(viewFunctionPanel);
-		this.setJMenuBar(new JMenuBar());
-		this.getJMenuBar().add(viewMenu);
-
+		initializeMenu();
+			
 		FrameListener frameListener = new FrameListener();
 
 		controlPanel = new ControlPanel();
@@ -169,26 +135,73 @@ public class ThrottleFrame extends JFrame
 
 	}
 
-	/**
-	 *  Description of the Method
-	 *
-	 * @param  e  Description of the Parameter
-	 */
-	public void destroyThrottleFrame(WindowEvent e)
+	private void initializeMenu()
 	{
-		Window w = e.getWindow();
-		w.setVisible(false);
+		JMenu viewMenu = new JMenu("View");
+		viewAddressPanel = new JCheckBoxMenuItem("Address Panel");
+		viewAddressPanel.setSelected(true);
+		viewAddressPanel.addItemListener(
+			new ItemListener()
+			{
+				public void itemStateChanged(ItemEvent e)
+				{
+					addressPanel.setVisible(e.getStateChange() == e.SELECTED);
+				}
+			});
+
+		viewControlPanel = new JCheckBoxMenuItem("Control Panel");
+		viewControlPanel.setSelected(true);
+		viewControlPanel.addItemListener(
+			new ItemListener()
+			{
+				public void itemStateChanged(ItemEvent e)
+				{
+					controlPanel.setVisible(e.getStateChange() == e.SELECTED);
+				}
+			});
+		viewFunctionPanel = new JCheckBoxMenuItem("Function Panel");
+		viewFunctionPanel.setSelected(true);
+		viewFunctionPanel.addItemListener(
+			new ItemListener()
+			{
+				public void itemStateChanged(ItemEvent e)
+				{
+					functionPanel.setVisible(e.getStateChange() == e.SELECTED);
+				}
+			});
+
+		viewMenu.add(viewAddressPanel);
+		viewMenu.add(viewControlPanel);
+		viewMenu.add(viewFunctionPanel);
+		
+		JMenu editMenu = new JMenu("Edit");
+		
+		this.setJMenuBar(new JMenuBar());
+		this.getJMenuBar().add(viewMenu);
+		this.getJMenuBar().add(editMenu);
+	}
+	
+	
+	/**
+	 *  Handle my own destruction.
+	 * <ol><li> dispose of sub windows.
+	 * <li> notify my manager of my demise.
+	 * </ol>
+	 */
+	public void destroyThrottleFrame()
+	{
 		controlPanel.dispose();
 		functionPanel.dispose();
 		addressPanel.dispose();
-		w.dispose();
+		//w.dispose();
 		ThrottleFrameManager manager = InstanceManager.throttleFrameManagerInstance();
 		manager.notifyDestroyThrottleFrame(this);
 	}
 
 
 	/**
-	 *  Description of the Class
+	 *  An extension of InternalFrameAdapter for listening to the closing of
+	 * of this frame's internal frames.
 	 *
 	 * @author     glen
 	 * @created    March 25, 2003
@@ -196,9 +209,10 @@ public class ThrottleFrame extends JFrame
 	class FrameListener extends InternalFrameAdapter
 	{
 		/**
-		 *  Description of the Method
+		 *  Listen for the closing of an internal frame and set the "View"
+		 * menu appropriately. Then hide the closing frame
 		 *
-		 * @param  e  Description of the Parameter
+		 * @param  e  The InternalFrameEvent leading to this action
 		 */
 		public void internalFrameClosing(InternalFrameEvent e)
 		{
