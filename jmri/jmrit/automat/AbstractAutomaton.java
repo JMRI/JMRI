@@ -52,7 +52,7 @@ import javax.swing.JTextArea;
  * so that Jython code can easily use some of the methods.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 public class AbstractAutomaton implements Runnable {
 
@@ -97,6 +97,10 @@ public class AbstractAutomaton implements Runnable {
      */
     protected boolean promptOnWait = false;
 
+    public void waitMsec( int milliseconds ) {
+    	this.wait(milliseconds);
+    }
+    
     /**
      * Wait for an interval, in a simple form.
      * <P>
@@ -108,13 +112,13 @@ public class AbstractAutomaton implements Runnable {
      * is explicitly synchronized internally.
      * @param milliseconds
      */
-    public void wait(int milliseconds){
+    protected void wait(int milliseconds){
         if (!inThread) log.warn("wait invoked from invalid context");
         synchronized(this) {
             try {
-                if (milliseconds <0)
+                if (milliseconds <0) {
                     super.wait();
-                else
+                } else
                     super.wait(milliseconds);
             } catch (InterruptedException e) {
                 // do nothing for now exception mention
