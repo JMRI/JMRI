@@ -15,7 +15,7 @@ package jmri;
  * been changed via some other mechanism.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class TripleTurnoutSignalHead extends AbstractSignalHead {
 
@@ -36,39 +36,58 @@ public class TripleTurnoutSignalHead extends AbstractSignalHead {
     public void setAppearance(int newAppearance) {
         int oldAppearance = mAppearance;
         mAppearance = newAppearance;
-        switch (mAppearance) {
-        case RED:
-        case FLASHRED:
-            mRed.setCommandedState(Turnout.THROWN);
-            mYellow.setCommandedState(Turnout.CLOSED);
-            mGreen.setCommandedState(Turnout.CLOSED);
-            break;
-        case YELLOW:
-        case FLASHYELLOW:
-            mRed.setCommandedState(Turnout.CLOSED);
-            mYellow.setCommandedState(Turnout.THROWN);
-            mGreen.setCommandedState(Turnout.CLOSED);
-            break;
-        case GREEN:
-        case FLASHGREEN:
-            mRed.setCommandedState(Turnout.CLOSED);
-            mYellow.setCommandedState(Turnout.CLOSED);
-            mGreen.setCommandedState(Turnout.THROWN);
-            break;
-        default:
-            log.warn("Unexpected new appearance: "+mAppearance);
-            // go dark
-        case DARK:
-            mRed.setCommandedState(Turnout.CLOSED);
-            mYellow.setCommandedState(Turnout.CLOSED);
-            mGreen.setCommandedState(Turnout.CLOSED);
-            break;
-        }
-
+		updateOutput();
+		
         // notify listeners, if any
         firePropertyChange("Appearance", new Integer(oldAppearance), new Integer(newAppearance));
     }
 
+	public void setLit(boolean newLit) {
+        // notify listeners, if any
+        boolean oldLit = mLit;
+        mLit = newLit;
+        updateOutput();
+        firePropertyChange("Lit", new Boolean(oldLit), new Boolean(newLit));
+	}
+	
+	protected void updateOutput() {
+		if (mLit == false) {
+            mRed.setCommandedState(Turnout.CLOSED);
+            mYellow.setCommandedState(Turnout.CLOSED);
+            mGreen.setCommandedState(Turnout.CLOSED);
+			return;
+		} else {
+        	switch (mAppearance) {
+        		case RED:
+        		case FLASHRED:
+            		mRed.setCommandedState(Turnout.THROWN);
+            		mYellow.setCommandedState(Turnout.CLOSED);
+            		mGreen.setCommandedState(Turnout.CLOSED);
+            		break;
+        		case YELLOW:
+        		case FLASHYELLOW:
+            		mRed.setCommandedState(Turnout.CLOSED);
+            		mYellow.setCommandedState(Turnout.THROWN);
+            		mGreen.setCommandedState(Turnout.CLOSED);
+            		break;
+        		case GREEN:
+        		case FLASHGREEN:
+            		mRed.setCommandedState(Turnout.CLOSED);
+            		mYellow.setCommandedState(Turnout.CLOSED);
+            		mGreen.setCommandedState(Turnout.THROWN);
+            		break;
+        		default:
+            		log.warn("Unexpected new appearance: "+mAppearance);
+            		// go dark
+        		case DARK:
+            		mRed.setCommandedState(Turnout.CLOSED);
+            		mYellow.setCommandedState(Turnout.CLOSED);
+            		mGreen.setCommandedState(Turnout.CLOSED);
+            		break;
+            }
+        }
+	}
+	
     /**
      * Remove references to and from this object, so that it can
      * eventually be garbage-collected.

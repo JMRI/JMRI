@@ -21,7 +21,7 @@ import jmri.AbstractSignalHead;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */public class SE8cSignalHead extends AbstractSignalHead implements LocoNetListener {
 
     public SE8cSignalHead(int pNumber, String userName) {
@@ -51,9 +51,20 @@ import jmri.AbstractSignalHead;
         int oldAppearance = mAppearance;
         mAppearance = newAppearance;
         if (oldAppearance != newAppearance) {
-            forwardCommandChangeToLayout(mAppearance);
+            forwardCommandChangeToLayout();
             // notify listeners, if any
             firePropertyChange("Appearance", new Integer(oldAppearance), new Integer(newAppearance));
+        }
+
+    }
+
+    public void setLit(boolean newLit) {
+        boolean oldLit = mLit;
+        mLit = newLit;
+        if (oldLit != newLit) {
+            forwardCommandChangeToLayout();
+            // notify listeners, if any
+            firePropertyChange("Lit", new Boolean(oldLit), new Boolean(newLit));
         }
 
     }
@@ -62,39 +73,43 @@ import jmri.AbstractSignalHead;
     public String getSystemName() { return "LH"+getNumber(); }
 
     // Handle a request to change state by sending a LocoNet command
-    protected void forwardCommandChangeToLayout(int s)  {
+    protected void forwardCommandChangeToLayout()  {
          // send SWREQ for close
          LocoNetMessage l = new LocoNetMessage(4);
          l.setOpCode(LnConstants.OPC_SW_REQ);
 
          int address = 0;
          boolean closed = false;
-         // which of the four states?
-         switch (s) {
-            case RED:
-                address = mNumber;
-                closed = false;
-                break;
-            case YELLOW:
-                address = mNumber+1;
-                closed = false;
-                break;
-            case FLASHGREEN:
-            case FLASHYELLOW:
-            case FLASHRED:
-            case DARK:
-                address = mNumber+1;
-                closed = true;
-                break;
-            case GREEN:
-                address = mNumber;
-                closed = true;
-                break;
-            default:
-                log.error("Invalid state request: "+s);
-                return;
-         }
-
+         if (!mLit) {
+         	address = mNumber+1;
+            closed = true;
+         } else {
+         	// which of the four states?
+         	switch (mAppearance) {
+            	case RED:
+                	address = mNumber;
+                	closed = false;
+                	break;
+            	case YELLOW:
+                	address = mNumber+1;
+                	closed = false;
+                	break;
+            	case FLASHGREEN:
+            	case FLASHYELLOW:
+            	case FLASHRED:
+            	case DARK:
+                	address = mNumber+1;
+                	closed = true;
+                	break;
+            	case GREEN:
+                	address = mNumber;
+                	closed = true;
+                	break;
+            	default:
+                	log.error("Invalid state request: "+mAppearance);
+                	return;
+         	}
+		 }
          // compute address fields
          int hiadr = (address-1)/128;
          int loadr = (address-1)-hiadr*128;
