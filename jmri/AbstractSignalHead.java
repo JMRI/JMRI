@@ -3,9 +3,10 @@
 package jmri;
 
  /**
- * Abstract class providing the basic logic of the SignalHead interface
+ * Abstract class providing the basic logic of the SignalHead interface.
+ *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public abstract class AbstractSignalHead extends AbstractNamedBean
     implements SignalHead, java.io.Serializable {
