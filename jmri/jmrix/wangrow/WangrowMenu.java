@@ -13,7 +13,7 @@ import javax.swing.JMenu;
  * {@link jmri.jmrix.nce} package.
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class WangrowMenu extends JMenu {
     public WangrowMenu(String name) {
@@ -32,7 +32,6 @@ public class WangrowMenu extends JMenu {
         add(new jmri.jmrix.nce.ncemon.NceMonAction(rb.getString("MenuItemCommandMonitor")));
         add(new jmri.jmrix.nce.packetgen.NcePacketGenAction(rb.getString("MenuItemSendCommand")));
     }
-
 }
 
 
