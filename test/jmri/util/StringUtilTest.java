@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.util.StringUtil class.
  * @author	Bob Jacobsen  Copyright 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class StringUtilTest extends TestCase {
 
@@ -122,6 +122,42 @@ public class StringUtilTest extends TestCase {
             String output[] = new String[]{ "A", "A", "b" };
             StringUtil.sort(input);
             Assert.assertTrue(compareStringArray(input, output));
+        }
+
+        public void testReplace1() {
+            String input = "123456";
+            String output = StringUtil.localReplaceAll(input, "1", "X");
+            Assert.assertTrue(output.equals("X23456"));
+        }
+
+        public void testReplace2() {
+            String input = "123456";
+            String output = StringUtil.localReplaceAll(input, "6", "X");
+            Assert.assertTrue(output.equals("12345X"));
+        }
+
+        public void testReplace3() {
+            String input = "123\n456";
+            String output = StringUtil.localReplaceAll(input, "\n", "\n...>");
+            Assert.assertTrue(output.equals("123\n...>456"));
+        }
+
+        public void testReplace4() {
+            String input = "123\n456\n";
+            String output = StringUtil.localReplaceAll(input, "\n", "\n...>");
+            Assert.assertTrue(output.equals("123\n...>456\n...>"));
+        }
+
+        public void testReplace5() {
+            String input = "123\n\n456";
+            String output = StringUtil.localReplaceAll(input, "\n", "\n...>");
+            Assert.assertTrue(output.equals("123\n...>\n...>456"));
+        }
+
+        public void testReplace6() {
+            String input = "\n123\n456\n";
+            String output = StringUtil.localReplaceAll(input, "\n", "\n...>");
+            Assert.assertTrue(output.equals("\n...>123\n...>456\n...>"));
         }
 
 	// from here down is testing infrastructure
