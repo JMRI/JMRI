@@ -24,7 +24,7 @@ import jmri.Sensor;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public class SerialNode {
 
@@ -455,7 +455,7 @@ public class SerialNode {
         }
         // validate that bits are not already set
         if ( (locSearchLightBits[bit] != 0) || (locSearchLightBits[bit+1] != 0) ) {
-            log.warn("bit number for SMINI Searchlights bits already set: "+
+            log.error("bit number for SMINI Searchlights bits already set: "+
                                             Integer.toString(bit));
             return;
         }
@@ -465,6 +465,38 @@ public class SerialNode {
         num2LSearchLights ++;
     }
 
+    /**
+     * Public Method to clear location of SearchLightBits (SMINI only)
+     *   bit - bitNumber of the low bit of an oscillating search light bit pair
+     *   Notes:  Bits are numbered from 0
+     *           Two bits are cleared by each call - bit and bit + 1.
+     *           If either bit is already clear, an error is logged and no
+     *               bits are set.
+     */
+    public void clear2LeadSearchLight(int bit) {
+        // check for SMINI
+// if other types of CMRI nodes allow oscillating search lights, modify this method
+        if (nodeType!=SMINI) {
+            log.error("Invalid setting of Searchlights bits - not SMINI node");
+            return;
+        }
+        // validate bit number range
+        if ( (bit<0) || (bit>46) ) {
+            log.error("Invalid bit number when setting SMINI Searchlights bits: "+
+                                            Integer.toString(bit));
+            return;
+        }
+        // validate that bits are not already clear
+        if ( (locSearchLightBits[bit] != 1) || (locSearchLightBits[bit+1] != 1) ) {
+            log.error("bit number for SMINI Searchlights bits already clear: "+
+                                            Integer.toString(bit));
+            return;
+        }
+        // set the bits
+        locSearchLightBits[bit] = 0;
+        locSearchLightBits[bit+1] = 0;
+        num2LSearchLights --;
+    }
 
     /**
      * Public Method to query SearchLightBits by bit number (SMINI only)
