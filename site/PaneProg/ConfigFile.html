@@ -77,7 +77,7 @@ at the top (the examples are from the <A HREF="../xml/Digitrax_1x2.xml">Digitrax
 	<PRE>
 	&lt;?xml version="1.0"?&gt;
 	&lt;!DOCTYPE decoder-config SYSTEM "decoder-config.dtd"&gt;
-	&lt;!-- $Id: ConfigFile.html,v 1.5 2001-12-30 04:14:29 jacobsen Exp $ --&gt;
+	&lt;!-- $Id: ConfigFile.html,v 1.6 2002-01-01 01:52:59 jacobsen Exp $ --&gt;
 	&lt;decoder-config&gt;
 	</PRE>
 Don't mess with these lines; they describe the format of the file.
@@ -340,13 +340,232 @@ makes it easier to read:
 
 <a id="decoderDetails"><h3>More details of decoder configuration</h3></a>
 
+<h4>Variable names</h4>
+
+Different manufacturers have different names for their decoder configuration 
+variables. Sometimes this is due to the decoder having a unique capability, but
+sometimes its just different terminology for the same old thing.  This 
+presents a problem for a configurable programmer like Decoder Pro.  On
+the one hand, the programmer definitions have use some common name to 
+refer to things, so they can specify what variables go on each pane.
+On the other hand, its important to be able to handle new and unique
+decoder options.  We handle this by defining "standard names", providing
+some controls, and using some conventions.  This section discusses those.
+
+<P>
+Panes in a programmer file are defined in terms of "standard names". 
+You can see the complete list in the names.xml file. 
+The "check programmer names" tool
+(from the "Tools" menu) can be used to check that a programmer definition
+file uses only valid names.
+
+<P>
+When the program
+is setting up a new pane, it will seach the decoder definition for a 
+variable with a matching name. 
+If everybody could agree on the same names and the same decoder features,
+this would be sufficient. But they can't, for good reasons.
+To handle differing terminology, its possible for the decoder definition
+to carry two names for a variable.  These are the "manufacturer's name", 
+given by the "name" attribute, and the "standard name", in the "stdName"
+attribute.  The programmer looks at both when trying to find a variable
+to display.
+
+<P>
+Each pane can be configured to display either the standard names,
+or the manufacturer's names.  Why would you want to do this, and 
+how do you do it?
+<UL>
+<LI>You always want the pane to look the same, regardless of
+what the manufacturer calls the variables.  To do this,
+set the pane's "nameFmt" attribute to "stdName".
+<LI>You want the pane to show the manufacturers terminology. This
+is the default, so you don't have to do anything. To force it,
+you can set the "nameFmt" attribute to "mfg".
+</UL>
+
+<P>
+That second approach also allows us to handle features that 
+vary from manufacturer to manufacturer.  For example, consider
+"lighting effects" functions.  Different manufacturers call these
+different things, and they do different things.  But if we want to 
+have a "Lighting" pane in a programmer, we have to deal with these
+variations.  We handle this by having generic "standard names" like:
+<PRE>
+	Function 1 effect generated
+	Function 1 behaviour
+	Function 1 options
+
+	Function 2 effect generated
+	Function 2 behaviour
+	Function 2 options
+</PRE>
+etc.  The lighting pane is defined in terms of these.  The decoder
+definition files then include definitions like:
+<PRE>
+	&lt;variable name="FX mode for function 1" CV="51" mask="XXXXVVVV"
+				stdName="Function 1 effect generated" &gt;
+		&lt;enumVal&gt;
+			&lt;enumChoice choice="Normal function of lead"/&gt;
+			&lt;enumChoice choice="Random flicker"/&gt;
+			...
+			&lt;enumChoice choice="Reserved (0x0F)"/&gt;
+			&lt;/enumVal&gt;
+		&lt;/variable&gt;
+</PRE>
+This will appear on the pane with the correct "FX mode for function 1"
+label, even though the programmer was defined in terms of a more generic
+name.
+
+<P>
+There will be cases where neither of the previous approaches
+work. For example, a decoder has the completely unique capability
+of controlling how the locomotive smells.  There are no clear
+standard names that could cover this.  In these cases, the
+decoder file can include the definition of a specific
+programmer pane, which will be presented to the user.  (But see
+the section on defining a programmer for information on how to
+control this)
+
+<P>
+(Procedure for updating the names.xml file?)
+
 <a id="files"><h3>What the configuration files contain and where they are located</h3></a>
+
+There are two places where configuration files can be found:
+<UL>
+<LI>The 'prefs' directory and its subdirectories. This is searched
+first for any needed files. You should put any locally-modified 
+versions of files here so they don't get overwritten by a new version
+of the program. Any files that the program writes to contain local
+information, e.g. roster entries, are also written here.
+<LI>The 'xml' directory and its subdirectories.  This contains
+the originally-distributed versions of files. Anything you modify
+here will be lost when you update the program to a new version.
+</UL>
+
+Within these two locations, there are a number of types of
+configuration files:
+<UL>
+<LI>Decoder definitions - Stored in the 'decoders' subdirectory,
+these define how a specific family of decoders is configured.
+<LI>Programmer definitions - Stored in the 'programmers' subdirectory,
+these define the formats for the various programming sheets that 
+are available in Decoder Pro.
+<LI>Locomotive configurations - Stored in the 'roster' subdirectory,
+these record the specific configuration of each locomotive in your roster.
+</UL>
+There are also a few general configuration files, which live in the 
+top-level xml or prefs directory:
+<UL>
+<LI>roster.xml - an index of your locomotives
+<LI>decoderIndex.xml - an index of the available decoder definition 
+files. It also contains the information on which specific decoder
+model uses which file, how to identify them, and what options they
+implement.
+<LI>names.xml - not used during normal operation, this is a list of
+the standard variable names for use in programmer definitions.  
+</UL>
 
 <a id="programmer"><h3>Defining a new programmer format</h3></a>
 
+<h4>Variables</h4>
+The basic element of a programmer pane is a "display". This tells
+the programmer to present a single variable.  The attributes are:
+<UL>
+<LI>name - (Required) This is the "standard name" of the variable
+to be presented.  
+<LI>label - If present, this will be used to label the variable
+on the pane instead of the name or standard name of the variable.
+<LI>tooltip - Allows you to specify a tooltip to be presented when
+the cursor is left over the variable.  If not present, the tooltip
+defined in the decoder file is used. (Note: This is not fully implemented
+in version 0.9b4)
+<LI>layout - Where to locate the label with respect to the
+edittable field, e.g. the text box.  Possible values are
+"left", "above", "below", "right" with a default of "right".
+<LI>format - How the variable should be presented.
+Numeric variables can be presented as an editable text field, 
+which is the default, or a horizontal slider (hslider) or vertical
+slider (vslider).  Enum variables can be presented as a 
+selection box, which is the default, or as "radiobuttons".  An enum
+with only two states can also be presented as a 
+"checkbox", or a single radio button that selected when the variable
+is zero ("offradiobutton") or one ("onradiobutton").  
+These last two can be useful for indicating
+which parts of a configuration are active; see the "Speed Table"
+pane of MultiPane.xml for an example.
+</UL>
+
+<P>
+Which name to display is controlled by the pane's  'nameFmt'
+attribute, and the 'label' attribute on each display element (variable).
+The choices are:
+<UL>
+<LI>If a label is specified, it will be used.  Use a label if you
+want absolute control over what a variable should be called, regardless
+of what the decoder file calls it, and you don't like the standard name.
+<LI>The pane's nameFmt attribute is "stdName", in which case the standard
+name will be used regardless of what the decoder file calls the variable.
+Use this is you want a uniform appearance for the pane for all decoders.
+But be aware that some standard names are really so generic as to be useless.
+<LI>If the pane's nameFmt attribute is allowed to default, or contains "mfg",
+the decoder definition file's name will be used.  This is the normal form,
+as it allows a manufacturer to specify in some detail what a 
+variable defines.
+</UL>
+
+<h4>Formatting</h4>
+Each pane of the programmer consists of (nested) rows and/or columns.
+Columns lay out variables from top to bottom.  Rows lay out
+variables from left to right.  You can nest these to achieve
+various effects; for an example of this, see the "Speed Table"
+pane of the MultiPane.xml file.  It has two columns, the left of each 
+uses a row to put some sliders from left to right.
+
+<h4>Special elements</h4>
+There are a number of elements you can use to get the programmer
+formatted exactly the way you want:
+<UL>
+<LI>label - Add text to a pane.
+<LI>separator - Add a separator line to a pane.  If included 
+in a column, this will be a horizontal separator line.  If
+included in a row, it will be a vertical line.
+<LI>cvtable - Insert a table of CV values onto the pane.  
+To get the spacing right, etc, you should probably not combine
+this with other variables on the same pane.
+<LI>fnmapping - Show a function mapping grid.
+<LI>dccaddress - Show a combined variable for the DCC address.  This 
+consists of a checkbox that selects use of short vs long address, and
+a single text field for entering the address.  Depending on how 
+the checkbox is set, the text field will configure the CV1 short
+address or the CV17/18 long address.
+</UL>
+
+<P>
+(All of the .xml files in the "programmers" subdirectory will 
+appear in the selection box when you create a new programmer in 
+Decoder Pro.  To use your new file, just put it in the 
+"programmers" subdirectory of the "prefs" directory and
+select it.  You don't have to restart the program, as the
+file is re-read each time you open a new programmer window.)
+
+<P>
+(Option to present/hide panes from the decoder file.  If you're
+writing a very basic programmer, you might want to hide them)
+
 <a id="roster"><h3>How the roster is stored; updating it by hand</h3></a>
 
+(The roster information presented in the selection box, and used for
+automatic selection of a locomotive, is stored in the roster.xml file
+in the "prefs" directory.  You can open this file and look
+at it to see the format.  Currently, the only way to remove
+a locomotive from the roster is to manually 
+remove the relevant element
+from the roster.xml file.)
+
 <a id="loco"><h3>What's in a locomotive file?</h3></a>
+
 
 <a id="debug"><h3>Debugging</h3></a>
 
