@@ -20,7 +20,7 @@ import javax.swing.text.Document;
  * <P>The original use is for addresses of stationary (accessory)
  * decoders.
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  *
  */
 public class SplitVariableValue extends VariableValue
@@ -67,6 +67,11 @@ public class SplitVariableValue extends VariableValue
 
     public int getSecondCvNum() { return mSecondCV;}
     int mShift;
+
+    public void setTooltipText(String t) {
+        super.setTooltipText(t);   // do default stuff
+        _value.setToolTipText(t);  // set our value
+    }
 
     // the connection is to cvNum and cvNum+1
 
@@ -143,9 +148,11 @@ public class SplitVariableValue extends VariableValue
     }
 
     public Component getValue()  {
-        if (getReadOnly())  //
-            return new JLabel(_value.getText());
-        else
+        if (getReadOnly())  {
+            JLabel r = new JLabel(_value.getText());
+            updateRepresentation(r);
+            return r;
+        } else
             return _value;
     }
 
@@ -180,7 +187,7 @@ public class SplitVariableValue extends VariableValue
     }
 
     public Component getRep(String format)  {
-        return new VarTextField(_value.getDocument(),_value.getText(), 5, this);
+        return updateRepresentation(new VarTextField(_value.getDocument(),_value.getText(), 5, this));
     }
     private int _progState = 0;
     private static final int IDLE = 0;
@@ -292,7 +299,7 @@ public class SplitVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.6 $
+     * @version     $Revision: 1.7 $
      */
     public class VarTextField extends JTextField {
 

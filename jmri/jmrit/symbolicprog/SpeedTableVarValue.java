@@ -44,7 +44,7 @@ import javax.swing.event.ChangeListener;
  * Speed tables can have different numbers of entries; 28 is the default, and also the maximum.
  *<P>
  * @author	Bob Jacobsen, Alex Shepherd   Copyright (C) 2001, 2004
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.18 $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -280,6 +280,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         val.add(j, BorderLayout.CENTER);
         val.add(k, BorderLayout.SOUTH);
 
+        updateRepresentation(val);
         return val;
 
     }

@@ -22,7 +22,7 @@ import com.sun.java.util.collections.ArrayList;
  * Decimal representation of a value.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.8 $
+ * @version             $Revision: 1.9 $
  *
  */
 public class DecVariableValue extends VariableValue
@@ -43,6 +43,11 @@ public class DecVariableValue extends VariableValue
         CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()));
         cv.addPropertyChangeListener(this);
         cv.setState(CvValue.FROMFILE);
+    }
+
+    public void setTooltipText(String t) {
+        super.setTooltipText(t);   // do default stuff
+        _value.setToolTipText(t);  // set our value
     }
 
     int _maxVal;
@@ -119,29 +124,34 @@ public class DecVariableValue extends VariableValue
     }
 
     public Component getValue()  {
-        if (getReadOnly())  //
-            return new JLabel(_value.getText());
-        else
+        if (getReadOnly())  {
+            JLabel r = new JLabel(_value.getText());
+            updateRepresentation(r);
+            return r;
+        } else
             return _value;
     }
 
     public Component getRep(String format)  {
         if (getReadOnly())  //
-            return new JLabel(_value.getText());
+            return updateRepresentation(new JLabel(_value.getText()));
         else if (format.equals("vslider")) {
             DecVarSlider b = new DecVarSlider(this, _minVal, _maxVal);
             b.setOrientation(JSlider.VERTICAL);
             sliders.add(b);
+            updateRepresentation(b);
             return b;
         }
         else if (format.equals("hslider")) {
             DecVarSlider b = new DecVarSlider(this, _minVal, _maxVal);
             b.setOrientation(JSlider.HORIZONTAL);
             sliders.add(b);
+            updateRepresentation(b);
             return b;
         }
         else {
             JTextField value = new VarTextField(_value.getDocument(),_value.getText(), 3, this);
+            updateRepresentation(value);
             return value;
         }
     }

@@ -16,7 +16,7 @@ import com.sun.java.util.collections.List;
  * Extends VariableValue to represent a enumerated variable.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
@@ -75,6 +75,11 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()));
         cv.addPropertyChangeListener(this);
         cv.setState(CvValue.FROMFILE);
+    }
+
+    public void setTooltipText(String t) {
+        super.setTooltipText(t);   // do default stuff
+        _value.setToolTipText(t);  // set our value
     }
 
     // stored value
@@ -182,27 +187,32 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
             // this only makes sense if there are exactly two options
             ComboCheckBox b = new ComboCheckBox(_value, this);
             comboCBs.add(b);
+            updateRepresentation(b);
             return b;
         }
         else if (format.equals("radiobuttons")) {
             ComboRadioButtons b = new ComboRadioButtons(_value, this);
             comboRBs.add(b);
+            updateRepresentation(b);
             return b;
         }
         else if (format.equals("onradiobutton")) {
             ComboRadioButtons b = new ComboOnRadioButton(_value, this);
             comboRBs.add(b);
+            updateRepresentation(b);
             return b;
         }
         else if (format.equals("offradiobutton")) {
             ComboRadioButtons b = new ComboOffRadioButton(_value, this);
             comboRBs.add(b);
+            updateRepresentation(b);
             return b;
         }
         else {
             // return a new JComboBox representing the same model
             VarComboBox b = new VarComboBox(_value.getModel(), this);
             comboVars.add(b);
+            updateRepresentation(b);
             return b;
         }
     }
@@ -262,7 +272,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * model between this object and the real JComboBox value.
      *
      * @author			Bob Jacobsen   Copyright (C) 2001
-     * @version         $Revision: 1.10 $
+     * @version         $Revision: 1.11 $
      */
     public class VarComboBox extends JComboBox {
 

@@ -8,13 +8,13 @@ import jmri.ProgListener;
 
 import java.util.Vector;
 import java.awt.Component;
-import javax.swing.JLabel;
+import javax.swing.*;
 import java.awt.Color;
 
 /**
- * Represents a single Variable value; abstract base class
+ * Represents a single Variable value; abstract base class.
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  *
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
@@ -74,6 +74,28 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     private String _item;
     protected Vector _cvVector;   // Vector of CV objects used to look up CVs
     protected JLabel _status = null;
+
+    protected String _tooltipText = null;
+    /**
+     * Set tooltip text to be used by both the "value" and
+     * representations of this Variable.
+     * <P>This is expected to be overridden in subclasses to
+     * change their internal info.
+     * @see updateRepresentation
+     * @param t
+     */
+    public void setTooltipText(String t) {
+        _tooltipText = t;
+    }
+    /**
+     * Add the proper tooltip text to a graphical rep
+     * before returning it
+     * @param c
+     */
+    protected JComponent updateRepresentation(JComponent c) {
+        c.setToolTipText(_tooltipText);
+        return c;
+    }
 
     public String getComment() { return _comment; }
     private String _comment;

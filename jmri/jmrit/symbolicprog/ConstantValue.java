@@ -21,7 +21,7 @@ import com.sun.java.util.collections.ArrayList;
  * Extends VariableValue to represent a constant enum-like-thing
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  *
  */
 public class ConstantValue extends VariableValue {
@@ -45,6 +45,11 @@ public class ConstantValue extends VariableValue {
 
     // stored value
     JComboBox _value = null;
+
+    public void setTooltipText(String t) {
+        super.setTooltipText(t);   // do default stuff
+        _value.setToolTipText(t);  // set our value
+    }
 
     // place to keep the items
     String[] _itemArray = null;
@@ -86,21 +91,25 @@ public class ConstantValue extends VariableValue {
             b.setEnabled(false);
             b.setSelected(true);
             comboCBs.add(b);
+            updateRepresentation(b);
             return b;
         }
         else if (format.equals("radiobuttons")) {
             JRadioButton b = new JRadioButton();
             comboRBs.add(b);
+            updateRepresentation(b);
             return b;
         }
         else if (format.equals("onradiobutton")) {
             JRadioButton b = new JRadioButton();
             comboRBs.add(b);
+            updateRepresentation(b);
             return b;
         }
         else if (format.equals("offradiobutton")) {
             JRadioButton b = new JRadioButton();
             comboRBs.add(b);
+            updateRepresentation(b);
             return b;
         }
         else {
