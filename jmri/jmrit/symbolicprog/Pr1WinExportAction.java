@@ -1,0 +1,84 @@
+// Pr1WinExportAction.java
+
+package jmri.jmrit.symbolicprog;
+
+import java.awt.event.*;
+import java.util.*;
+import java.io.*;
+
+import javax.swing.*;
+
+/**
+ * Action to export the CV values to a PR1WIN data file.
+ * <P>
+ * Note that this format is somewhat different from the PR1DOS format, and
+ * it's not clear they will interoperate.
+ *
+ * @author	Bob Jacobsen   Copyright (C) 2003
+ * @version     $Revision: 1.1 $
+ */
+public class Pr1WinExportAction  extends AbstractAction {
+
+    /**
+     * Create the action
+     * @param actionName String name to be displayed in menus, etc
+     * @param pModel  CvTableModel that contains the data to (eventually) be exported
+     * @param pParent JFrame that will eventually invoke the action, used to anchor a file dialog
+     */
+    public Pr1WinExportAction(String actionName, CvTableModel pModel, JFrame pParent) {
+        super(actionName);
+        mModel = pModel;
+        mParent = pParent ;
+    }
+
+    JFileChooser fileChooser ;
+    JFrame mParent ;
+
+    /**
+     * CvTableModel to load
+     */
+    CvTableModel mModel;
+
+
+    public void actionPerformed(ActionEvent e) {
+
+        if ( fileChooser == null ){
+            fileChooser = new JFileChooser() ;
+        }
+
+        int retVal = fileChooser.showSaveDialog( mParent ) ;
+
+        if(retVal == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            if (log.isDebugEnabled())  log.debug("start to export to PR1 file "+file);
+
+            try {
+
+                PrintStream str = new PrintStream(new FileOutputStream(file));
+
+                str.println("[DecoderData]");
+                for (int i=1; i<=256; i++) {
+                    int lowCvIndex = (i-1)*4+1;
+                    CvValue cv1 = (CvValue)mModel.allCvVector().get(lowCvIndex);
+                    int value1 = (cv1!=null) ? cv1.getValue() : 0;
+                    CvValue cv2 = (CvValue)mModel.allCvVector().get(lowCvIndex+1);
+                    int value2 = (cv2!=null) ? cv2.getValue() : 0;
+                    CvValue cv3 = (CvValue)mModel.allCvVector().get(lowCvIndex+2);
+                    int value3 = (cv3!=null) ? cv3.getValue() : 0;
+                    CvValue cv4 = (CvValue)mModel.allCvVector().get(lowCvIndex+3);
+                    int value4 = (cv4!=null) ? cv4.getValue() : 0;
+
+                    str.println("CV"+i+"="+(value1+value2*256+value3*256*256+value4*256*256*256));
+                }
+                str.println("Version=0");
+                str.flush();
+                str.close();
+            }
+            catch (IOException ex) {
+                log.error("Error writing file: "+ex);
+            }
+        }
+    }
+
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Pr1ExportAction.class.getName());
+}
