@@ -3,7 +3,7 @@
  *
  * Description:		Extends VariableValue to represent a decimal variable
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version
+ * @version             $Revision: 1.3 $
  *
  */
 
@@ -146,25 +146,25 @@ public class DecVariableValue extends VariableValue
 
 	ArrayList sliders = new ArrayList();
 
-	/**
-	 * Set a new value, including notification as needed.  This does the
-	 * conversion from string to int, so if the place where formatting
-	 * needs to be applied
-	 */
-	public void setValue(int value) {
-		int oldVal;
-		try {
-			oldVal = Integer.valueOf(_value.getText()).intValue();
-			}
-			catch (java.lang.NumberFormatException ex) { oldVal = -999; }
-		if (log.isDebugEnabled()) log.debug("setValue with new value "+value+" old value "+oldVal);
-		_value.setText(""+value);
-		if (oldVal != value || getState() == VariableValue.UNKNOWN)
-			updatedTextField();
-			prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value));
-	}
+    /**
+     * Set a new value, including notification as needed.  This does the
+     * conversion from string to int, so if the place where formatting
+     * needs to be applied
+     */
+    public void setValue(int value) {
+        int oldVal;
+        try {
+            oldVal = Integer.valueOf(_value.getText()).intValue();
+        } catch (java.lang.NumberFormatException ex) { oldVal = -999; }
+        if (log.isDebugEnabled()) log.debug("setValue with new value "+value+" old value "+oldVal);
+            _value.setText(""+value);
+        if (oldVal != value || getState() == VariableValue.UNKNOWN)
+            updatedTextField();
+        prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value));
+    }
 
-	Color _defaultColor;
+    Color _defaultColor;
+
 	// implement an abstract member to set colors
 	Color getColor() { return _value.getBackground(); }
 	void setColor(Color c) {
