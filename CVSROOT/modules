@@ -33,6 +33,7 @@ jython -d jython scripts/jython
 properties -a \
         apps/AppsBundle.properties \
         apps/AppsConfigBundle.properties \
+        apps/ActionListBundle.properties \
         jmri/jmrit/beantable/BeanTableBundle.properties \
         jmri/jmrit/display/DisplayBundle.properties \
         jmri/jmrit/JmritDebugBundle.properties \
