@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_01x3.xml,v 1.23 2004-11-28 22:06:36 jacobsen Exp $ -->
+<!-- $Id: Digitrax_01x3.xml,v 1.24 2005-01-13 02:57:49 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Michael Mosher mjmx@comcast.net" 
-					version="12" lastUpdated="20040227"/>
+					version="13" lastUpdated="20050112"/>
 
 		<!-- Created from version 5 of the 1x2 file -->
 		<!-- V2: fix default values for CV56, 57 BEMF -->
@@ -18,6 +18,7 @@
       <!-- Version 10.1 - changed spelling of "behavior" (Jack Shall) -->
       <!-- Version 11 - added DZ123 (Bob Jacobsen) -->
       <!-- Version 12 - added some tooltips (Jack Shall) -->
+      <!-- Version 13 - added DN163K1B and DN163I0 (Simon Ginsburg) -->
 	
 <decoder>
 	<family name="Series 3 with FX3, silent, readback" 
@@ -126,6 +127,13 @@
 			<output name="6" label="Pad" connection="solder" />
 			<size length="3.875" width="3.374" height="0.157" units="inches" />
 			</model>
+		<model model="DN163I0" numOuts="6" numFns="8"
+	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="N" >
+			<output name="4" label="Pad" connection="solder" /> 
+			<output name="5" label="Pad" connection="solder" />
+			<output name="6" label="Pad" connection="solder" />
+			<size length="3.0015" width="0.374" height="0.157" units="inches" />
+			</model>
 		<model model="DN163K0A" numOuts="6" numFns="8"
 	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="N" >
 			<output name="4" label="Pad" connection="solder" /> 
@@ -146,6 +154,14 @@
 			<output name="5" label="Pad" connection="solder" />
 			<output name="6" label="Pad" connection="solder" />
 			<size length="3.11" width="0.426" height="0.195" units="inches" />
+			</model>
+		<model model="DN163K1B" numOuts="6" numFns="8"
+	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="N" >
+			<output name="4" label="Pad" connection="solder" /> 
+			<output name="5" label="Pad" connection="solder" />
+			<output name="6" label="Pad" connection="solder" />
+			<size length="3.11" width="0.426" height="0.195" units="inches" />
+
 			</model>
 		<model model="DN163K2" numOuts="6" numFns="8"
 	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="N" >
