@@ -2,20 +2,24 @@
 
 package jmri.jmrit.beantable;
 
-import javax.swing.*;
-import jmri.*;
-import javax.swing.table.*;
-import java.util.Hashtable;
-import java.util.Enumeration;
+import jmri.Manager;
+import jmri.NamedBean;
+import jmri.util.table.ButtonEditor;
+import jmri.util.table.ButtonRenderer;
+import java.beans.PropertyChangeListener;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableColumnModel;
+
 import com.sun.java.util.collections.List;
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.Collections;
-import java.beans.*;
 
 /**
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
- * @version		$Revision: 1.1 $
+ * @version		$Revision: 1.2 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -132,12 +136,17 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
     abstract Manager getManager();
 
     abstract NamedBean getBySystemName(String name);
+    abstract void clickOn(NamedBean t);
 
     public void setValueAt(Object value, int row, int col) {
         if (col==USERNAMECOL) {
             getBySystemName((String)sysNameList.get(row))
                         .setUserName((String)value);
             fireTableRowsUpdated(row,row);
+        } else if (col==VALUECOL) {
+            // button fired, swap state
+            NamedBean t = getBySystemName((String)sysNameList.get(row));
+            clickOn(t);
         }
     }
 
@@ -150,6 +159,28 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
     public void configureTable(JTable table) {
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+        // have the value column hold a button
+        setColumnToHoldButton(table, VALUECOL);
+    }
+
+    /**
+     * Service method to setup a column so that it will hold a
+     * button for it's values
+     * @param table
+     * @param column
+     */
+    void setColumnToHoldButton(JTable table, int column) {
+        TableColumnModel tcm = table.getColumnModel();
+        // install a button renderer & editor
+        ButtonRenderer buttonRenderer = new ButtonRenderer();
+        tcm.getColumn(column).setCellRenderer(buttonRenderer);
+        TableCellEditor buttonEditor = new ButtonEditor(new JButton());
+        tcm.getColumn(column).setCellEditor(buttonEditor);
+        // ensure the table rows, columns have enough room for buttons
+        table.setRowHeight(new JButton("  "+getValueAt(1, column)).getPreferredSize().height);
+        table.getColumnModel().getColumn(column)
+			.setPreferredWidth(new JButton("  "+getValueAt(1, column)).getPreferredSize().width);
     }
 
     synchronized public void dispose() {

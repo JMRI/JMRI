@@ -3,6 +3,7 @@
 package jmri.jmrit.beantable;
 
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.Sensor;
@@ -15,7 +16,7 @@ import javax.swing.AbstractAction;
  * SensorTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class SensorTableAction extends AbstractAction {
@@ -39,6 +40,13 @@ public class SensorTableAction extends AbstractAction {
             }
             public Manager getManager() { return InstanceManager.sensorManagerInstance(); }
             public NamedBean getBySystemName(String name) { return InstanceManager.sensorManagerInstance().getBySystemName(name);}
+            public void clickOn(NamedBean t) {
+                try {
+                    int state = ((Sensor)t).getKnownState();
+                    if (state==Sensor.INACTIVE) ((Sensor)t).setKnownState(Sensor.ACTIVE);
+                    else ((Sensor)t).setKnownState(Sensor.INACTIVE);
+                } catch (JmriException e) { log.warn("Error setting state: "+e); }
+            }
         };
         // create the frame
         BeanTableFrame f = new BeanTableFrame(m);

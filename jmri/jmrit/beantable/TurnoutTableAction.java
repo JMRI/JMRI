@@ -15,7 +15,7 @@ import javax.swing.AbstractAction;
  * TurnoutTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class TurnoutTableAction extends AbstractAction {
@@ -39,6 +39,11 @@ public class TurnoutTableAction extends AbstractAction {
             }
             public Manager getManager() { return InstanceManager.turnoutManagerInstance(); }
             public NamedBean getBySystemName(String name) { return InstanceManager.turnoutManagerInstance().getBySystemName(name);}
+            public void clickOn(NamedBean t) {
+                int state = ((Turnout)t).getKnownState();
+                if (state==Turnout.CLOSED) ((Turnout)t).setCommandedState(Turnout.THROWN);
+                else ((Turnout)t).setCommandedState(Turnout.CLOSED);
+            }
         };
         // create the frame
         BeanTableFrame f = new BeanTableFrame(m);
