@@ -1,6 +1,6 @@
 <!-- ugly first attempt at an ANT build.xml file for JMRI development -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.4 $ -->
+<!-- Revision $Revision: 1.5 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -73,11 +73,30 @@
   
   <target name="csv" depends="init, copyDTD, copyXML" 
   			description="create CSV file listing CVs available on all decoders">
+	<copy todir="${target}" >
+    	<fileset dir="." >
+      		<include name="CSVindex.html"/>
+    	</fileset>
+  	</copy> 
     <style  basedir="${target}"
     		destdir="${target}"
-    		extension=".csv"
+    		style="SizeAsCSV.xsl"
+    		in="pages/decoderIndex.xml"
+    		out="pages/decodersizes.csv"
+    	>
+	</style>
+    <style  basedir="${target}"
+    		destdir="${target}"
+    		style="PowerAsCSV.xsl"
+    		in="pages/decoderIndex.xml"
+    		out="pages/decoderpower.csv"
+    	>
+	</style>
+    <style  basedir="${target}"
+    		destdir="${target}"
     		style="CSVsummary.xsl"
-    		includes="decoderIndex.xml"
+    		in="pages/decoderIndex.xml"
+    		out="pages/cvsummary.csv"
     	>
 	</style>
   </target>
