@@ -8,13 +8,14 @@ package jmri.jmrix;
  * Carries a sequence of characters, with accessors.
  *
  * @author	        Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 abstract public class AbstractMRMessage {
 
     public AbstractMRMessage() {
         setBinary(false);
-        setNeededState(AbstractMRTrafficController.NORMAL);
+        setNeededMode(AbstractMRTrafficController.NORMALMODE);
+        setTimeout(SHORT_TIMEOUT);  // default value is the short timeout
     }
 
     // create a new one
@@ -34,6 +35,8 @@ abstract public class AbstractMRMessage {
         _nDataChars = m._nDataChars;
         _dataChars = new int[_nDataChars];
         for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
+        setTimeout(m.getTimeout());
+        setNeededMode(m.getNeededMode());
     }
 
     public void setOpCode(int i) { _dataChars[0]=i;}
@@ -46,13 +49,21 @@ abstract public class AbstractMRMessage {
     public void setElement(int n, int v) { _dataChars[n] = v; }
 
     // state info
-    int mNeededState;
-    public void setNeededState(int pState) {mNeededState = pState; }
+    int mNeededMode;
+    public void setNeededMode(int pMode) {mNeededMode = pMode; }
+    public int getNeededMode() { return mNeededMode; }
 
     // mode accessors
     boolean _isBinary;
     public boolean isBinary() { return _isBinary; }
     public void setBinary(boolean b) { _isBinary = b; }
+
+    // recommended timeout for reply
+    static protected int SHORT_TIMEOUT=1000;
+    static protected int LONG_TIMEOUT=60000;
+    int mTimeout;  // in milliseconds
+    public void setTimeout(int t) { mTimeout = t; }
+    public int getTimeout() { return mTimeout; }
 
     // display format
     public String toString() {
