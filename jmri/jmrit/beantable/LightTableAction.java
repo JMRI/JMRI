@@ -32,7 +32,7 @@ import javax.swing.JOptionPane;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -62,6 +62,11 @@ public class LightTableAction extends AbstractTableAction {
      */
     void createModel() {
         m = new BeanTableDataModel() {
+			public int getPreferredWidth(int col) {
+				// override default value for UserName column
+				if (col==USERNAMECOL) return new JTextField(16).getPreferredSize().width;
+				else return super.getPreferredWidth(col);
+			}
             public String getValue(String name) {
                 int val = InstanceManager.lightManagerInstance().getBySystemName(name).getState();
                 switch (val) {
