@@ -1,6 +1,6 @@
 <!-- ugly first attempt at an ANT build.xml file for JMRI development -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.8 $ -->
+<!-- Revision $Revision: 1.9 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -11,6 +11,7 @@
   <property name="source" value="src"/>
   <property name="test" value="test"/>
   <property name="target" value="classes"/>
+  <property name="jartarget" value=".."/>
 
   <property name="dist" value="NODISTNAME" />
   <property name="distdir" value="../${dist}" />
@@ -45,6 +46,14 @@
     </copy>
   </target>
 
+  <target name="rmic" depends="compile">
+    <!-- Run rmic on specified classes -->
+    <rmic includes="**/LnMessageBuffer.class, **/LnMessageServer.class"
+           base="${target}" stubversion="1.1">
+       <classpath refid="project.class.path"    />
+    </rmic>
+  </target>
+
   <target name="tests" depends="compile">
     <!-- Compile the test java code from ${source} into ${target} -->
     <javac srcdir="${test}" 
@@ -75,7 +84,11 @@
 	  fork="yes" >
        <classpath refid="project.class.path"    />
     </java>
- </target>
+  </target>
+
+  <target name="jar" depends="compile, rmic">
+    <jar jarfile="${jartarget}/jmri.jar" basedir="${target}" />
+  </target>
 
   <!-- make update distribution .zip file -->
   <target name="makeupdate" depends="compile">
