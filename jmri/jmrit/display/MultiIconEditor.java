@@ -17,7 +17,7 @@ import com.sun.java.util.collections.*;
  *
  * <p>Copyright: Copyright (c) 2003</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @see jmri.jmrit.display.SensorIcon
  * @see jmri.jmrit.display.PanelEditor
  * @see jmri.jmrit.catalog
@@ -41,7 +41,7 @@ public class MultiIconEditor extends JPanel {
     public void setIcon(int iconNum, String label, String name) {
         iconList[iconNum] = new NamedIcon(name, name);
         // make a button to change that icon
-        JButton j = new IconButton(iconNum);
+        JButton j = new IconButton(iconNum, iconList[iconNum]);
         buttonList[iconNum] = j;
 
         // and add it to this panel
@@ -62,8 +62,8 @@ public class MultiIconEditor extends JPanel {
 
 
     private class IconButton extends JButton {
-        IconButton(int index) {
-            super(iconList[index]);
+        IconButton(int index, Icon init) {  // init icon passed to avoid ref before ctor complete
+            super(init);
             savedIndex = index;
             addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
