@@ -2,8 +2,6 @@
  * LnPacketizer.java
  *
  * Description:		Converts Stream-based I/O to/from LocoNet messages
- * @author			Bob Jacobsen  Copyright (C) 2001
- * @version
  */
 
 package jmri.jmrix.loconet;
@@ -34,7 +32,7 @@ import java.util.Vector;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Id: LnPacketizer.java,v 1.1 2002-03-18 04:52:43 jacobsen Exp $
+ * @version 		$Revision: 1.2 $
  *
  */
 public class LnPacketizer extends LnTrafficController {
@@ -439,7 +437,9 @@ public class LnPacketizer extends LnTrafficController {
 					if (debug) log.debug("start wait");
 					try {
 						synchronized(this) {
-							wait();
+                            // Java 1.4 gets confused by "wait()" in the
+                            // following line
+							((Object)this).wait();
 						}
 					}
 					catch (java.lang.InterruptedException ei) {}
