@@ -30,25 +30,34 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * the sole user of this. (It could be handled by moving the code from
  * locomon into the display member here)
  * <P>
- * Reverse engineering of OPC_MULTI_SENSE was provided by Al Silverstein.
+ * Reverse engineering of OPC_MULTI_SENSE was provided by Al Silverstein,
+ * used with permission.
  *
- * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version			$Revision: 1.21 $
+ * @author			Bob Jacobsen  Copyright 2001, 2002, 2003
+ * @version			$Revision: 1.22 $
  */
 public class Llnmon {
 
     static private int LOCO_ADR(int a1, int a2)   { return (((a1 & 0x7f) * 128) + (a2 & 0x7f)); }
-    static private int SENSOR_ADR(int a1, int a2) { return (((a2 & 0x0f) * 128) + (a1 & 0x7f)); }
+
+    /**
+     * Convert bytes from LocoNet packet into a 1-based address for
+     * a sensor or turnout.
+     * @param a1 Byte containing the upper bits
+     * @param a2 Byte containing the lower bits
+     * @return 1-4096 address
+     */
+    static private int SENSOR_ADR(int a1, int a2) { return (((a2 & 0x0f) * 128) + (a1 & 0x7f)) + 1; }
 
 
     // control data
     private boolean  rawLogMode      = false;  /* logging mode - 0=normal 1=raw (data only)        */
-    private int   	msgNumber        = 1;      /* message number                                   */
+    private int      msgNumber       = 1;      /* message number                                   */
     private boolean  showDecimal     = false;  /* flag that determines if we print decimal values  */
     private boolean  showHex         = false;  /* flag that determines if we print hex values      */
     private boolean  showDiscards    = false;  /* TRUE if the user wants to display discarded data */
     private boolean  showTrackStatus = true;   /* if TRUE, show track status on every slot read    */
-    private int   	trackStatus      = -1;     /* most recent track status value                   */
+    private int      trackStatus     = -1;     /* most recent track status value                   */
 
 
     /**
@@ -414,21 +423,23 @@ public class Llnmon {
             int in1 = l.getElement(1);
             int in2 = l.getElement(2);
 
-            String bdl = " (BDL16 "+((in1+(in2&0xF)*128)/8+1)+" ";
-            if ( ((in1/2) & 3) == 0 ) bdl = bdl+"A";
-            else if ( ((in1/2) & 3) == 1 ) bdl = bdl+"B";
-            else if ( ((in1/2) & 3) == 2 ) bdl = bdl+"C";
-            else bdl = bdl+"D";
-            if ( ((in1 & 1) !=0) && ((in2 & LnConstants.OPC_INPUT_REP_SW)!=0) ) bdl=bdl+"4)";
-            else if ( ((in1 & 1) !=0) && ((in2 & LnConstants.OPC_INPUT_REP_SW)==0) ) bdl=bdl+"3)";
-            else if ( ((in1 & 1) ==0) && ((in2 & LnConstants.OPC_INPUT_REP_SW)!=0) ) bdl=bdl+"2)";
-            else bdl=bdl+"1)";
+            String bdl = " (BDL16 "+((in1+(in2&0xF)*128)/8+1)+",";
+            int ch = 0;
+            if ( ((in1/2) & 3) == 0 ) ch = 0;
+            else if ( ((in1/2) & 3) == 1 ) ch = 4;
+            else if ( ((in1/2) & 3) == 2 ) ch = 8;
+            else ch = 12;
+            if ( ((in1 & 1) !=0) && ((in2 & LnConstants.OPC_INPUT_REP_SW)!=0) ) ch+=4;
+            else if ( ((in1 & 1) !=0) && ((in2 & LnConstants.OPC_INPUT_REP_SW)==0) ) ch+=3;
+            else if ( ((in1 & 1) ==0) && ((in2 & LnConstants.OPC_INPUT_REP_SW)!=0) ) ch+=2;
+            else ch+=1;
+            bdl = bdl+ch+")";
 
-            String ds = " (DS54 "+(SENSOR_ADR(in1,in2)/4)+" ch"+((SENSOR_ADR(in1, in2)&3)+1)
+            String ds = " (DS54 switch "+SENSOR_ADR(in1,in2)
                 +((in2 & LnConstants.OPC_INPUT_REP_SW)!=0 ? " Sw  input)" : " Aux input)");
 
             return "General sensor input report: contact "+
-                (SENSOR_ADR(in1, in2)*2+((in2 & LnConstants.OPC_INPUT_REP_SW)!=0?1:0))
+                ((SENSOR_ADR(in1, in2)-1)*2+((in2 & LnConstants.OPC_INPUT_REP_SW)!=0?2:1))
                 +ds+
                 bdl+
                 " is "+
@@ -471,16 +482,15 @@ public class Llnmon {
             int sn2 = l.getElement(2);
 
             if ((sn2 & LnConstants.OPC_SW_REP_INPUTS)!=0) {
-                return "Turnout sensor input state for address "+
+                return "Turnout "+
                     SENSOR_ADR(sn1, sn2)+
-                    ":\n\t"+
-                    ((sn2 & LnConstants.OPC_SW_REP_SW) !=0 ? "Switch" : "Aux input")+
+                    ((sn2 & LnConstants.OPC_SW_REP_SW) !=0 ? "Switch input" : "Aux input")+
                     " is "+
-                    (((sn2 & LnConstants.OPC_SW_REP_HI)!=0) ? "Closed (output off)" : "Thrown (output on)")+"\n";
+                    (((sn2 & LnConstants.OPC_SW_REP_HI)!=0) ? "Closed (input off)" : "Thrown (input on)")+"\n";
             } else {  // OPC_SW_REP_INPUTS is 0
-                return "Turnout sensor output state for address "+
+                return "Turnout "+
                     SENSOR_ADR(sn1, sn2)+
-                    ":\n\tClosed output is "+
+                    " output state: Closed output is "+
                     ((sn2 & LnConstants.OPC_SW_REP_CLOSED)!=0 ? "ON (sink)" : "OFF (open)")+
                     ", Thrown output is "+
                     ((sn2 & LnConstants.OPC_SW_REP_THROWN)!=0 ? "ON (sink)" : "OFF (open)")+"\n";
