@@ -30,7 +30,7 @@ import javax.swing.table.TableCellEditor;
  * </UL>
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 public class ValueEditor extends JComboBox implements TableCellEditor, FocusListener {
 
@@ -105,7 +105,7 @@ public class ValueEditor extends JComboBox implements TableCellEditor, FocusList
                     // extract the string from the JTextField and return it
 		    return new Integer( ((JTextField)mValue).getText() );
                 } else {
-                    log.error("getCellEditorValue unable to return a value from unknown type "
+                    log.debug("getCellEditorValue unable to return a value from unknown type "
                                 +mValue.getClass());
                     return null;
                 }
