@@ -2,13 +2,7 @@
 
 package jmri.jmrix.loconet.bdl16;
 
-import jmri.jmrix.loconet.LnTrafficController;
-import jmri.jmrix.loconet.LocoNetListener;
-import jmri.jmrix.loconet.LocoNetMessage;
-
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
@@ -35,23 +29,16 @@ import javax.swing.JToggleButton;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  *
- * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.10 $
+ * @author			Bob Jacobsen   Copyright (C) 2002, 2004
+ * @version			$Revision: 1.11 $
  */
-public class BDL16Frame extends JFrame implements LocoNetListener {
+public class BDL16Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
 
     public BDL16Frame() {
         super("BDL16 programmer");
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-        JPanel pane0 = new JPanel();
-        pane0.setLayout(new FlowLayout());
-            pane0.add(new JLabel("Unit address: "));
-            pane0.add(addrField);
-            pane0.add(readAllButton);
-            pane0.add(writeAllButton);
-        appendLine(pane0);
-
+        appendLine(provideAddressing("SE8"));  // add read/write buttons, address
 
         appendLine(commonrail);
         appendLine(polarity);
@@ -75,92 +62,24 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
         appendLine(antichatsens);
         appendLine(setdefault);
 
-        appendLine(status);
-
-        // install read all, write all button handlers
-        readAllButton.addActionListener( new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                	readAll();
-                }
-            }
-        );
-        writeAllButton.addActionListener( new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                	writeAll();
-                }
-            }
-        );
-
+        appendLine(provideStatusLine());
+        setStatus("The BDL16 should be in normal mode (Don't push the buttons on the BDL16!)");
         // add status
-        appendLine(status);
+        getContentPane().add(provideStatusLine());
 
-        // notice the window is closing
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                thisWindowClosing(e);
-            }
-        });
-
-        // listen for BDL16 traffic
-        if (LnTrafficController.instance()!=null)
-            LnTrafficController.instance().addLocoNetListener(~0, this);
-        else
-            log.error("No LocoNet connection available, can't function");
-
+        setTypeWord(0x71);  // configure BDL16 message type
+        
         // and prep for display
         pack();
-        addrField.setText("1");
+
     }
 
     /**
-     * Handle layout details during construction.
-     * <P>
-     * @param c component to put on a single line
+     * Copy from the GUI to the opsw array. 
+     * <p>
+     * Used before write operations start
      */
-    void appendLine(JComponent c) {
-        c.setAlignmentX(0.f);
-        getContentPane().add(c);
-    }
-
-    boolean read = false;
-    int state = 0;
-
-    void readAll() {
-        // Start the first operation
-        read = true;
-        state = 1;
-        nextRequest();
-    }
-
-    void nextRequest() {
-        if (read) {
-            // read op
-            status.setText("Reading opsw "+state);
-            LocoNetMessage l = new LocoNetMessage(6);
-            l.setOpCode(0xD0);
-            l.setElement(1, 0x62);
-            l.setElement(2, (Integer.parseInt(addrField.getText())-1)&0x7F);
-            l.setElement(3, 0x71);
-            int loc = (state-1)/8;
-            int bit = (state-1)-loc*8;
-            l.setElement(4, loc*16+bit*2);
-            LnTrafficController.instance().sendLocoNetMessage(l);
-        } else {
-            //write op
-            status.setText("Writing opsw "+state);
-            LocoNetMessage l = new LocoNetMessage(6);
-            l.setOpCode(0xD0);
-            l.setElement(1, 0x72);
-            l.setElement(2, (Integer.parseInt(addrField.getText())-1)&0x7F);
-            l.setElement(3, 0x71);
-            int loc = (state-1)/8;
-            int bit = (state-1)-loc*8;
-            l.setElement(4, loc*16+bit*2+(opsw[state]?1:0));
-            LnTrafficController.instance().sendLocoNetMessage(l);
-        }
-    }
-
-    void writeAll() {
+    protected void copyToOpsw() {
         // copy over the display
         opsw[ 1] = commonrail.isSelected();
         opsw[ 3] = polarity.isSelected();
@@ -184,55 +103,9 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
         opsw[44] = antichatsens.isSelected();
         opsw[40] = setdefault.isSelected();
 
-        // Start the first operation
-        read = false;
-        state = 1;
-        nextRequest();
     }
 
-    /**
-     * True is "closed", false is "thrown". This matches how we
-     * do the check boxes also, where we use the terminology for the
-     * "closed" option.
-     */
-    boolean[] opsw = new boolean[64];
-
-    public void message(LocoNetMessage m) {
-        if (log.isDebugEnabled()) log.debug("get message "+m);
-        // are we reading? If not, ignore
-        if (state == 0) return;
-        // check for right type, unit
-        if (m.getOpCode() != 0xb4 || m.getElement(1) != 0x00)  return;
-
-        // LACK with 0 in opcode; assume its to us.  Note that there
-        // should be a 0x50 in the opcode, not zero, but this is what we
-        // see...
-
-        boolean value = false;
-        if ( (m.getElement(2)&0x20) != 0) value = true;
-
-        // record this bit
-        opsw[state] = value;
-
-        // show what we've got so far
-        if (read) updateDisplay();
-
-        // and continue through next state, if any
-        state = nextState();
-        if (state == 0) {
-            // done
-            readAllButton.setSelected(false);
-            writeAllButton.setSelected(false);
-            status.setText("Done");
-            return;
-        } else {
-            // create next
-            nextRequest();
-            return;
-        }
-    }
-
-    void updateDisplay() {
+    protected void updateDisplay() {
         commonrail.setSelected(opsw[ 1]);
         polarity.setSelected(opsw[ 3]);
         transpond.setSelected(opsw[ 5]);
@@ -256,7 +129,7 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
         setdefault.setSelected(opsw[40]);
     }
 
-    int nextState() {
+    protected int nextState(int state) {
         switch (state) {
             case  1: return 3;
             case  3: return 5;
@@ -285,9 +158,6 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
         }
     }
 
-    JTextField addrField = new JTextField(4);
-
-
     JCheckBox commonrail            = new JCheckBox("OpSw 01: Common rail wiring");  // opsw 01
     JCheckBox polarity              = new JCheckBox("OpSw 03: Reverse polarity for detection"); // opsw 03
     JCheckBox transpond             = new JCheckBox("OpSw 05: Enable transponding"); // opsw 05
@@ -309,27 +179,6 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
     JCheckBox antichatfilt          = new JCheckBox("OpSw 43: Anti-chatter filtering (BDL168 only)");  // opsw 43
     JCheckBox antichatsens          = new JCheckBox("OpSw 44: Anti-chatter filter sensitivity (BDL168 only)");  // opsw 44
     JCheckBox setdefault            = new JCheckBox("OpSw 40: Restore factory default, including address");  // opsw 40
-
-    JLabel status = new JLabel("The BDL16 should be in normal mode (Don't push the buttons on the BDL16)");
-
-    JToggleButton readAllButton = new JToggleButton("Read from BDL16");
-    JToggleButton writeAllButton = new JToggleButton("Write to BDL16");
-
-    // Destroy the window when the close box is clicked, as there is no
-    // way to get it to show again
-    void thisWindowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-        dispose();
-    }
-
-    public void dispose() {
-        // Drop loconet connection
-        if (LnTrafficController.instance()!=null)
-            LnTrafficController.instance().removeLocoNetListener(~0, this);
-
-        // take apart the JFrame
-        super.dispose();
-    }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(BDL16Frame.class.getName());
 
