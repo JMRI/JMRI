@@ -225,6 +225,12 @@
           <output name="6" label="Pad" connection="solder" />
           <size length="2.2165" width="0.5485" height="0.1015" units="inches" />
         </model>
+        <model model="DN163K0B" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" connector="unspecified" nmraWarrant="no">
+          <output name="4" label="Pad" connection="solder" />
+          <output name="5" label="Pad" connection="solder" />
+          <output name="6" label="Pad" connection="solder" />
+          <size length="2.2165" width="0.5485" height="0.1015" units="inches" />
+        </model>
         <model model="DN163K1A" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" connector="unspecified" nmraWarrant="no">
           <output name="4" label="Pad" connection="solder" />
           <output name="5" label="Pad" connection="solder" />
@@ -682,6 +688,7 @@
         <model model="Broadway Limited On30 Consolidation 2-8-0" lowVersionID="5" connector="unspecified" nmraWarrant="no" />
         <model model="Broadway Limited PRR M1a/b 4-8-2" lowVersionID="5" connector="unspecified" nmraWarrant="no" />
         <model model="Broadway Limited USRA Heavy Mikado 2-8-2" lowVersionID="5" connector="unspecified" nmraWarrant="no" />
+        <model model="Broadway Limited AC5 Cab Forward" lowVersionID="5" connector="unspecified" nmraWarrant="no" />
       </family>
       <family name="DSD diesel" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_DSD_Diesel.xml">
         <model model="DSD diesel" numOuts="4" numFns="8" connector="unspecified" nmraWarrant="no">
