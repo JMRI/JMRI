@@ -23,7 +23,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 abstract public class AbstractMRTrafficController {
 
@@ -553,7 +553,6 @@ abstract public class AbstractMRTrafficController {
             if(log.isDebugEnabled()) log.debug("Error suppressed: reply complete in unexpected state: "
                         +mCurrentState
                         +" was "+msg.toString());
-		 }
             } else {
             log.error("reply complete in unexpected state: "
                         +mCurrentState
