@@ -20,7 +20,7 @@ import jmri.jmrix.lenz.XNetConstants;
 /**
  * Frame displaying (and logging) XpressNet messages
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version         $Revision: 2.7 $
+ * @version         $Revision: 2.8 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
@@ -44,7 +44,7 @@ import jmri.jmrix.lenz.XNetConstants;
 
 	public synchronized void message(XNetReply l) {  // receive a XpressNet message and log it
 		// display the raw data if requested
-		String raw = "packet: ";
+		String raw = "";
 		if ( rawCheckBox.isSelected() ) {
 			int len = l.getNumDataElements();
 			for (int i=0; i<len; i++)
@@ -136,6 +136,23 @@ import jmri.jmrix.lenz.XNetConstants;
 		  case XNetConstants.CS_NOT_SUPPORTED:
 				text= new String("XPressNet Instruction not supported by Command Station");
 				break;
+		  /* The remaining cases are for a Double Header or MU Error */
+		  case 0x83: 
+			text = new String("XBus V1 and V2 MU+DH error: ") ;
+			text = text+ "Selected Locomotive has not been operated by this XPressNet device or address 0 selected";
+				break;
+		  case 0x84:
+ 			text = new String("XBus V1 and V2 MU+DH error: ") ;
+			text = text+ "Selected Locomotive is being operated by another XPressNet device";
+		        break;
+		  case 0x85: 
+ 			text = new String("XBus V1 and V2 MU+DH error: ") ;
+			text = text+ "Selected Locomotive already in MU or DH";
+		        break;
+		  case 0x86: 
+ 			text = new String("XBus V1 and V2 MU+DH error: ") ;
+			text = text+ "Unit selected for MU or DH has speed setting other than 0";
+		        break;
 		  default:
 			text = l.toString();
 		  }
@@ -206,6 +223,29 @@ import jmri.jmrix.lenz.XNetConstants;
 				text = new String("Command Station Software Version: " + (l.getElementBCD(2).floatValue())/10 + "Type: Unknown (X-Bus V1 or V2)") ;
 		   } else text = l.toString();
 
+		// MU and Double Header Related Responses
+		} else if (l.getElement(0) == XNetConstants.CS_XpressNet_Error) {
+			text = new String("XpressNet MU+DH error: ") ;
+			switch(l.getElement(1)) {
+			case 0x81: text = text+ "Selected Locomotive has not been operated by this XPressNet device or address 0 selected";
+				break;
+			case 0x82: text = text+ "Selected Locomotive is being operated by another XPressNet device";
+				break;
+			case 0x83: text = text+ "Selected Locomotive already in MU or DH";
+		               break;
+			case 0x84: text = text+ "Unit selected for MU or DH has speed setting other than 0";
+		               break;
+			case 0x85: text = text+ "Locomotive not in a MU";
+		               break;
+			case 0x86: text = text+ "Locomotive address not a multi-unit base address";
+		               break;
+			case 0x87: text = text+ "It is not possible to delete the locomotive";
+		               break;
+			case 0x88: text = text+ "The Command Station Stack is Full";
+		               break;
+			default:
+				text = text + l.getElement(1);
+			}
 		} else {
 		     text = l.toString();
 		}
@@ -229,7 +269,7 @@ import jmri.jmrix.lenz.XNetConstants;
                 /* Start decoding messages sent by the computer */
 		/* Start with LI101F requests */
 		if(l.getElement(0)==XNetConstants.LI_VERSION_REQUEST) {
-			text = new String("Request LI10x hardware/software version");
+			text = new String("REQUEST LI10x hardware/software version");
 		} else if(l.getElement(0)==XNetConstants.LI101_REQUEST) {
 		  switch(l.getElement(1)) {
 		  case XNetConstants.LI101_REQUEST_ADDRESS:
@@ -328,6 +368,212 @@ import jmri.jmrix.lenz.XNetConstants;
 		  default:
 			text = l.toString();
 		  }
+		// Next, decode the locomotive operation requests
+                } else if(l.getElement(0)==XNetConstants.LOCO_OPER_REQ) {
+		  text = "Mobile Decoder Operations Request: ";
+		  switch(l.getElement(1)) {
+		  case XNetConstants.LOCO_SPEED_14: 
+						text = text 
+						+new String("Set Address: "
+						+calcLocoAddress(l.getElement(2),l.getElement(3))
+						+" To Speed Step "
+						+ (l.getElement(4)&0x0f)
+						+ " and direction ");	
+					if((l.getElement(4)&0x80)!=0) 
+						text+="Forward"; 
+					else text+="Reverse";
+						text+= " In 14 speed step mode.";
+						break;
+		  case XNetConstants.LOCO_SPEED_27:
+						text = text 
+						+new String("Set Address: "
+						+calcLocoAddress(l.getElement(2),l.getElement(3))
+						+" To Speed Step "
+						+ (((l.getElement(4)&0x1e)>> 1) + ((l.getElement(4)&0x01) << 4))
+						+ " and direction ");	
+					if((l.getElement(4)&0x80)!=0) 
+						text+="Forward"; 
+					else text+="Reverse";
+						text+= " In 27 speed step mode.";
+						break;
+		  case XNetConstants.LOCO_SPEED_28:
+						text = text 
+						+new String("Set Address: "
+						+calcLocoAddress(l.getElement(2),l.getElement(3))
+						+" To Speed Step "
+						+ (((l.getElement(4)&0x1e)>> 1) + ((l.getElement(4)&0x01) << 4))
+						+ " and direction ");	
+					if((l.getElement(4)&0x80)!=0) 
+						text+="Forward"; 
+					else text+="Reverse";
+						text+= " In 28 speed step mode.";
+						break;
+		  case XNetConstants.LOCO_SPEED_128:
+						text = text 
+						+new String("Set Address: "
+						+calcLocoAddress(l.getElement(2),l.getElement(3))
+						+" To Speed Step "
+						+ (l.getElement(4) & 0x7F)
+						+ " and direction ");
+					if((l.getElement(4)&0x80)!=0) 
+						text+="Forward"; 
+					else text+="Reverse";
+						text+= " In 128 speed step mode.";
+						break;
+		  case XNetConstants.LOCO_SET_FUNC_GROUP1: {
+						text = text 
+						+new String("Set Function Group 1 for address: "
+						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ");
+					int element4 = l.getElement(4);
+					if((element4 & 0x10)!=0) 
+						text += "F0 on ";
+					else text += "F0 off ";
+					if((element4 & 0x01)!=0) 
+						text += "F1 on ";
+					else text += "F1 off ";
+					if((element4 & 0x02)!=0)
+						text += "F2 on ";
+					else text += "F2 off ";
+					if((element4 & 0x04)!=0)
+						text += "F3 on ";
+					else text += "F3 off ";
+					if((element4 & 0x08)!=0)
+						text += "F4 on ";
+					else text += "F4 off ";
+						break;
+					}
+		  case XNetConstants.LOCO_SET_FUNC_GROUP2: {
+						text = text 
+						+new String("Set Function Group 2 for address: "
+						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ");
+					int element4 = l.getElement(4);
+					if((element4 & 0x01)!=0)
+						text += "F5 on ";
+					else text += "F5 off ";
+					if((element4 & 0x02)!=0)
+						text += "F6 on ";
+					else text += "F6 off ";
+					if((element4 & 0x04)!=0)
+						text += "F7 on ";
+					else text += "F7 off ";
+					if((element4 & 0x08)!=0)
+						text += "F8 on ";
+					else text += "F8 off ";
+						break;
+					}
+		  case XNetConstants.LOCO_SET_FUNC_GROUP3: {
+						text = text 
+						+new String("Set Function Group 3 for address: "
+						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ");
+					int element4 = l.getElement(4);
+					if((element4 & 0x01)!=0)
+						text += "F9 on ";
+					else text += "F9 off ";
+					if((element4 & 0x02)!=0)
+						text += "F10 on ";
+					else text += "F10 off ";
+					if((element4 & 0x04)!=0)
+						text += "F11 on ";
+					else text += "F11 off ";
+					if((element4 & 0x08)!=0)
+						text += "F12 on ";
+					else text += "F12 off ";
+						break;
+					}
+		  case XNetConstants.LOCO_SET_FUNC_Group1: {
+						text = text 
+						+new String("Set Function Group 1 Status for address: "
+						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ");
+					int element4 = l.getElement(4);
+					if((element4 & 0x10)!=0)
+						text += "F0 on/off ";
+					else text += "F0 momentary ";
+					if((element4 & 0x01)!=0)
+						text += "F1 on/off ";
+					else text += "F1 momentary ";
+					if((element4 & 0x02)!=0)
+						text += "F2 on/off ";
+					else text += "F2 momentary ";
+					if((element4 & 0x04)!=0)
+						text += "F3 on/off ";
+					else text += "F3 momentary ";
+					if((element4 & 0x08)!=0) 
+						text += "F4 on/off ";
+					else text += "F4 momentary ";
+						break;
+					}
+		  case XNetConstants.LOCO_SET_FUNC_Group2: {
+						text = text 
+						+new String("Set Function Group 2 Status for address: "
+						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ");
+					int element4 = l.getElement(4);
+					if((element4 & 0x01)!=0)
+						text += "F5 on/off ";
+					else text += "F5 momentary ";
+					if((element4 & 0x02)!=0)
+						text += "F6 on/off ";
+					else text += "F6 momentary ";
+					if((element4 & 0x04)!=0)
+						text += "F7 on/off ";
+					else text += "F7 momentary ";
+					if((element4 & 0x08)!=0)
+						text += "F8 on/off ";
+					else text += "F8 momentary ";
+						break;
+					}
+		  case XNetConstants.LOCO_SET_FUNC_Group3: {
+						text = text 
+						+new String("Set Function Group 1 Status for address: "
+						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ");
+					int element4 = l.getElement(4);
+					if((element4 & 0x01)!=0)
+						text += "F9 on/off ";
+					else text += "F9 momentary ";
+					if((element4 & 0x02)!=0)
+						text += "F10 on/off ";
+					else text += "F10 momentary ";
+					if((element4 & 0x04)!=0)
+						text += "F11 on/off ";
+					else text += "F11 momentary ";
+					if((element4 & 0x08)!=0) 
+						text += "F12 on/off ";
+					else text += "F12 momentary ";
+						break;
+					}
+		  case XNetConstants.LOCO_ADD_MULTI_UNIT_REQ: text = text 
+				+ new String("Add Locomotive:" 
+					+ calcLocoAddress(l.getElement(2),l.getElement(3))
+					+ " To Multi Unit Consist: "
+					+ l.getElement(4)
+					+ " With Loco Direction Normal");
+					break;
+		  case (XNetConstants.LOCO_ADD_MULTI_UNIT_REQ | 0x01): 
+				text = text + new String("Add Locomotive:" 
+					+ calcLocoAddress(l.getElement(2),l.getElement(3))
+					+ " To Multi Unit Consist: "
+					+ l.getElement(4)
+					+ " With Loco Direction Reversed");
+					break;
+		  case (XNetConstants.LOCO_REM_MULTI_UNIT_REQ):
+				text = text + new String("Remove Locomotive:" 
+					+ calcLocoAddress(l.getElement(2),l.getElement(3))
+					+ " From Multi Unit Consist: "
+					+ l.getElement(4));
+					break;
+		  default:
+			text = l.toString();
+		  }
+		// Disolve or Establish a Double Header
+		} else if(l.getElement(0)==XNetConstants.LOCO_DOUBLEHEAD &&
+			  l.getElement(1)==XNetConstants.LOCO_DOUBLEHEAD_BYTE2){
+		        text = "Double Header Request: ";
+			int loco1=calcLocoAddress(l.getElement(2),l.getElement(3));
+			int loco2=calcLocoAddress(l.getElement(4),l.getElement(5));
+			if(loco2 == 0) {
+			   text = text + "Disolve Double Header that includes mobile decoder " + loco1;
+			} else {
+			   text = text + "Establish Double Header with " + loco1 + " and " + loco2;
+			}
 		} else {
 		     text = l.toString();
 		}
@@ -351,8 +597,9 @@ import jmri.jmrix.lenz.XNetConstants;
 		} else {
 			/* This must be a long address */
 			int address = 0;
-			address += AL;
-			address += ( (AH<<6) -0xC000 );
+			address = ( (AH*256) &0xFF00);
+			address += (AL &0xFF);
+			address -= 0xC000;
 			return(address);
 	   	}
 	}
