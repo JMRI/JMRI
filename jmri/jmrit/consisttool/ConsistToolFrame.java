@@ -4,7 +4,7 @@
  * Description:          Frame object for manipulating consists.
  *
  * @author               Paul Bender Copyright (C) 2003
- * @version              $Revision: 1.8 $
+ * @version              $Revision: 1.9 $
  */
 
 
@@ -214,6 +214,7 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 
 	// Set up the jtable in a Scroll Pane..
 	JScrollPane consistPane = new JScrollPane(consistTable);
+	consistPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
     	consistModel.initTable(consistTable);
 	getContentPane().add(consistPane);
 
@@ -361,7 +362,8 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 	   adrTextField.setEnabled(false);
 	   recallConsist();
 	}
-	else if(consistAdrBox.getSelectedItem().equals("")) {
+	else if(consistAdrBox.getSelectedIndex()==-1 || 
+		consistAdrBox.getSelectedItem().equals("")) {
 	   if(log.isDebugEnabled()) log.debug("Null Consist Selected");
 	   adrTextField.setText("");
 	   adrTextField.setEnabled(true);
