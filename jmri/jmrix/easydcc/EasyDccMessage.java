@@ -3,13 +3,18 @@
 package jmri.jmrix.easydcc;
 
 /**
- * Description:		<describe the EasyDccMessage class here>
+ * Encodes a message to an EasyDCC command station.  The EasyDccReply
+ * class handles the response from the command station.
+ * <P>
+ * The "state" referred to here is the command station
+ * state needed before this message can be sent.
+ *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class EasyDccMessage {
     // is this logically an abstract class?
-    
+
     // create a new one
     public  EasyDccMessage(int i) {
         if (i<1)
@@ -17,7 +22,7 @@ public class EasyDccMessage {
         _nDataChars = i;
         _dataChars = new int[i];
     }
-    
+
     // copy one
     public  EasyDccMessage(EasyDccMessage m) {
         if (m == null)
@@ -26,7 +31,7 @@ public class EasyDccMessage {
         _dataChars = new int[_nDataChars];
         for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
     }
-    
+
     public void setOpCode(int i) { _dataChars[0]=i;}
     public int getOpCode() {return _dataChars[0];}
     public String getOpCodeHex() { return "0x"+Integer.toHexString(getOpCode()); }
@@ -35,7 +40,7 @@ public class EasyDccMessage {
     public int getNumDataElements() {return _nDataChars;}
     public int getElement(int n) {return _dataChars[n];}
     public void setElement(int n, int v) { _dataChars[n] = v&0x7F; }
-    
+
     // display format
     public String toString() {
         String s = "";
@@ -44,17 +49,17 @@ public class EasyDccMessage {
         }
         return s;
     }
-    
+
     // diagnose format
     public boolean isKillMain() {
         return getOpCode() == 'K';
     }
-    
+
     public boolean isEnableMain() {
         return getOpCode() == 'E';
     }
-    
-    
+
+
     // static methods to return a formatted message
     static public EasyDccMessage getEnableMain() {
         EasyDccMessage m = new EasyDccMessage(1);
