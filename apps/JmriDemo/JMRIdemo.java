@@ -36,6 +36,12 @@ public class JMRIdemo extends JPanel {
         	inputMenu.add(new jmri.jmrix.loconet.locobuffer.LocoBufferAction("LocoBuffer"));
         	inputMenu.add(new JSeparator());
         	inputMenu.add(new jmri.jmrix.nce.serialdriver.SerialDriverAction("NCE Serial"));
+        	inputMenu.add(new JSeparator());        	
+        	inputMenu.add(new AbstractAction("Quit"){
+    				public void actionPerformed(ActionEvent e) {
+    					System.exit(0);
+    				}
+        		});
 
         JMenu funcMenu = new JMenu("Tools");
         menuBar.add(funcMenu);

@@ -12,7 +12,7 @@ import BasicWindowMonitor;
  * DecoderPro application. 
  *
  * @author			Bob Jacobsen
- * @version			$Id: DecoderPro.java,v 1.4 2002-01-01 01:57:25 jacobsen Exp $
+ * @version			$Id: DecoderPro.java,v 1.5 2002-01-12 22:26:00 jacobsen Exp $
  */
 public class DecoderPro extends JPanel {
 	public DecoderPro() {
@@ -34,7 +34,13 @@ public class DecoderPro extends JPanel {
         // Create menu categories and add to the menu bar, add actions to menus
         JMenu fileMenu = new JMenu("File");
         menuBar.add(fileMenu);
-	       fileMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction("New Programmer..."));
+	  		fileMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction("New Programmer..."));
+        	fileMenu.add(new JSeparator());        	
+        	fileMenu.add(new AbstractAction("Quit"){
+    				public void actionPerformed(ActionEvent e) {
+    					System.exit(0);
+    				}
+        		});
 
         JMenu editMenu = new JMenu("Edit");
         menuBar.add(editMenu);
