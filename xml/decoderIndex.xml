@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <decoderIndex version="53">
+  <decoderIndex version="54">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -234,12 +234,14 @@
       </family>
       <family name="Basic FX" mfg="Digitrax" lowVersionID="91" highVersionID="111" type="locomotive" file="Digitrax_Basic.xml">
         <model model="DH083" numOuts="5" numFns="3" />
+        <model model="DH84FX" numOuts="5" numFns="6" />
         <model model="DH140" numOuts="4" numFns="2" />
         <model model="DH150" numOuts="5" numFns="3" />
         <model model="DH380" numOuts="8" numFns="12" />
         <model model="DH580" numOuts="8" numFns="12" />
         <model model="DG380" numOuts="8" numFns="12" lowVersionID="63" highVersionID="63" />
         <model model="DG580" numOuts="8" numFns="12" />
+        <model model="DN93FX" numOuts="4" numFns="6" />
         <model model="DN140" numOuts="4" numFns="2" />
         <model model="DN144" numOuts="4" numFns="3" />
         <model model="DN145" numOuts="4" numFns="3" />
@@ -257,6 +259,7 @@
       <family name="Basic STD*" mfg="Digitrax" lowVersionID="1" highVersionID="1" type="locomotive" file="Digitrax_STDstar.xml">
         <model model="DN121" numOuts="2" numFns="2" />
         <model model="DN93" numOuts="3" numFns="4" />
+        <model model="DH84" numOuts="3" numFns="4" />
       </family>
       <family name="Early decoders" mfg="Digitrax" lowVersionID="34" highVersionID="45" type="locomotive" file="Digitrax_xearly.xml">
         <model model="DH120" numOuts="2" numFns="2" />
