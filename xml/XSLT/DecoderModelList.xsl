@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: DecoderModelList.xsl,v 1.1 2003-08-08 17:35:57 jacobsen Exp $ -->
+<!-- $Id: DecoderModelList.xsl,v 1.2 2003-08-09 00:51:19 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI decoder definition to a HTML page -->
 
@@ -11,9 +11,6 @@
      See http://www.w3.org/TR/xslt#output for more details
 -->
 <xsl:output method="html" encoding="ISO-8859-1"/>
-<xsl:param name="version"/>
-
-
 
 <!-- This first template matches our root element in the input file.
      This will trigger the generation of the HTML skeleton document.
