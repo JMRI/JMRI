@@ -10,7 +10,7 @@ import junit.framework.TestCase;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 2.1 $
+ * @version $Revision: 2.2 $
  */
 public class XNetPacketizerTest extends TestCase {
 
@@ -66,21 +66,21 @@ public class XNetPacketizerTest extends TestCase {
         // check that the message was picked up by the read thread.
         synchronized  (this) { wait(100); }
         Assert.assertTrue("reply received ", waitForReply(l));
-        Assert.assertEquals("first char of reply ", 0x52, l.rcvdMsg.getElement(0));
+        Assert.assertEquals("first char of reply ", 0x52, l.rcvdRply.getElement(0));
     }
 
 
     private boolean waitForReply(XNetListenerScaffold l) {
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;
-        while ( l.rcvdMsg == null && i++ < 100  )  {
+        while ( l.rcvdRply == null && i++ < 100  )  {
             try {
                 Thread.sleep(10);
             } catch (Exception e) {
             }
         }
         if (log.isDebugEnabled()) log.debug("past loop, i="+i
-                                            +" reply="+l.rcvdMsg);
+                                            +" reply="+l.rcvdRply);
         if (i==0) log.warn("waitForReply saw an immediate return; is threading right?");
         return i<100;
     }
