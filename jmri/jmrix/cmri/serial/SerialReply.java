@@ -10,7 +10,7 @@ package jmri.jmrix.cmri.serial;
  * are included. But it does include addressing characters,
  * etc.
  * @author	Bob Jacobsen  Copyright (C) 2002
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class SerialReply {
     // is this logically an abstract class?
@@ -48,7 +48,7 @@ public class SerialReply {
         for (int i=0; i<_nDataChars; i++) {
             if (i!=0) s+=" ";
             if (_dataChars[i] < 16) s+="0";
-            s+=Integer.toHexString(_dataChars[i]);
+            s+=Integer.toHexString(_dataChars[i]&0xFF);
         }
         return s;
     }

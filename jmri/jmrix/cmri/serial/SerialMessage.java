@@ -9,7 +9,7 @@ package jmri.jmrix.cmri.serial;
  * the header or trailer, nor the padding DLE characters
  * are included. These are added during transmission.
  * @author    Bob Jacobsen  Copyright (C) 2001
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 
 public class SerialMessage {
@@ -51,7 +51,7 @@ public class SerialMessage {
     // static methods to recognize a message
     public boolean isPoll() { return getElement(1)==0x50;}
     public boolean isXmt()  { return getElement(1)==0x54;}
-    public boolean isInit() { return (getElement(1)==0x49)&(getNumDataElements()>=7);}
+    public boolean isInit() { return (getElement(1)==0x49); }
     public int getUA() { return getElement(0)-65; }
 
     // static methods to return a formatted message

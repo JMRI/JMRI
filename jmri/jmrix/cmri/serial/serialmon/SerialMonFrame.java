@@ -1,10 +1,5 @@
-/**
- * SerialMonFrame.java
- *
- * Description:		Frame displaying (and logging) CMRI serial command messages
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version
- */
+// SerialMonFrame.java
+
 
 package jmri.jmrix.cmri.serial.serialmon;
 
@@ -21,6 +16,12 @@ import jmri.jmrix.cmri.serial.SerialListener;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.serial.SerialMessage;
 import jmri.jmrix.cmri.serial.SerialReply;
+
+/**
+ * Frame displaying (and logging) CMRI serial command messages
+ * @author	    Bob Jacobsen   Copyright (C) 2001
+ * @version         $Revision: 1.3 $
+ */
 
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
@@ -48,7 +49,9 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                 s+=Integer.toHexString(l.getElement(i))+" ";
             nextLine(s+"\n", l.toString()+"\n");
         } else if (l.isInit()) {
-            String s = "Init ua="+l.getUA()+" DL="+(l.getElement(3)*256+l.getElement(4));
+            String s = "Init ua="+l.getUA()
+                    +" type="+((char)l.getElement(2))
+                    +" DL="+(l.getElement(3)*256+l.getElement(4));
             s+=" NS="+l.getElement(5)+" CT: ";
             for (int i=6; i<l.getNumDataElements(); i++)
                 s+=Integer.toHexString(l.getElement(i))+" ";

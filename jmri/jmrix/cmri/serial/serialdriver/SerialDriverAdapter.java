@@ -19,7 +19,7 @@ import jmri.jmrix.cmri.serial.*;
  * Provide access to C/MRI via a serial comm port.
  * Normally controlled by the cmri.serial.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -187,6 +187,11 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         //if (jmri.InstanceManager.turnoutManagerInstance() == null)
         //	jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager());
 
+        // start the threads as needed
+        sinkThread = new Thread(SerialTrafficController.instance());
+        sinkThread.start();
+
+
     }
 
     private Thread sinkThread;
@@ -222,7 +227,8 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         for (int i = 0; i<validSpeeds.length; i++ )
             if (validSpeeds[i].equals(selectedSpeed))
                 baud = validSpeedValues[i];
-        activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+        activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
+                                SerialPort.STOPBITS_2, SerialPort.PARITY_NONE);
 
         // set RTS high, DTR high - done early, so flow control can be configured after
         activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters

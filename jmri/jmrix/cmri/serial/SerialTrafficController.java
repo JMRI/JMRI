@@ -15,7 +15,7 @@ import java.util.Vector;
  * handled in an independent thread.
  *
  * @author    Bob Jacobsen  Copyright (C) 2001, 2002
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class SerialTrafficController implements SerialInterface, Runnable {
 
@@ -129,10 +129,14 @@ public class SerialTrafficController implements SerialInterface, Runnable {
 
         for (int i=0; i< len; i++)
             msg[i+3] = (byte) m.getElement(i);
-        msg[len] = 0x03;  // etx
+        msg[len+cr-1] = 0x03;  // etx
         try {
             if (ostream != null) {
-                if (log.isDebugEnabled()) log.debug("write message: "+msg);
+                if (log.isDebugEnabled()) {
+                    String f = "write message: ";
+                    for (int i = 0; i<msg.length; i++) f=f+(0xFF&msg[i])+" ";
+                    log.debug(f);
+                }
                 ostream.write(msg);
             }
             else {
@@ -221,6 +225,7 @@ public class SerialTrafficController implements SerialInterface, Runnable {
         int i;
         for (i = 0; i < SerialReply.maxSize; i++) {
             byte char1 = istream.readByte();
+            if (log.isDebugEnabled()) log.debug("received char: "+(char1&0xFF));
             if (char1 == 0x03) break;
             msg.setElement(i, char1);
         }
