@@ -70,22 +70,12 @@
   <property category="sys" name="WorkingDirectory" value="../"/>
   <node name="jmri" type="Package"/>
   <node name="org.apache" type="Package"/>
-  <node name="DecoderPro.jar file" type="Archive">
-    <property category="archiving" name="archiverClass" value="com.borland.jbuilder.wizard.archive.ApplicationArchiver"/>
-    <property category="archiving" name="buildWithProject" value="0"/>
-    <property category="archiving" name="extraDeployRoots.1" value="C:apps.DecoderPro.*"/>
-    <property category="archiving" name="manifestMainClass" value="apps.DecoderPro.DecoderPro"/>
-    <property category="archiving" name="outPathState" value="2"/>
-    <property category="archiving" name="targetCompressed" value="1"/>
-    <property category="archiving" name="targetPath" value="/Volumes/Users/jake/Documents/Trains/JMRI/project/DecoderPro.jar"/>
-  </node>
   <node name="jmri.jar file" type="Archive">
     <property category="archiving" name="archiverClass" value="com.borland.jbuilder.wizard.archive.ApplicationArchiver"/>
     <property category="archiving" name="buildWithProject" value="0"/>
     <property category="archiving" name="extraDeployRoots.1" value="F:resources/decoderpro.gif"/>
     <property category="archiving" name="extraDeployRoots.2" value="C:apps.JmriDemo.*"/>
     <property category="archiving" name="manifestMainClass" value="apps.JmriDemo.JMRIdemo"/>
-    <property category="archiving" name="outPathState" value="2"/>
     <property category="archiving" name="targetCompressed" value="1"/>
     <property category="archiving" name="targetPath" value="/Volumes/Users/jake/Documents/Trains/JMRI/project/jmri.jar"/>
   </node>

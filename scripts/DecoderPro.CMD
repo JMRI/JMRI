@@ -35,7 +35,7 @@
 
 DefaultApplication = "apps.DecoderPro.DecoderPro"         /* default application */
 
-j1 = "DecoderPro.jar;"                        /* JMRI files */
+j1 = "jmri.jar;"                        /* JMRI files */
 j2 = "lib\log4j.jar;lib\collections.jar;"
 j3 = "lib\xerces.jar;lib\jdom-jdk11.jar;"
 DefaultClassPath = j1||j2||j3           /* Default classpath prepend */
