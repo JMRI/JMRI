@@ -1,12 +1,11 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: NMRA.xml,v 1.10 2002-01-13 20:33:34 jacobsen Exp $ -->
+<!-- $Id: 0NMRA.xml,v 1.1 2002-06-13 16:39:08 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen" version="2" lastUpdated="20020111"/>
 
 <decoder>
-	<family name="NMRA All CVs" mfg="NMRA">
-		<model model="All CVs" comment="List is from RP 9.2.2" />
+	<family name="NMRA standard CV definitions" mfg="NMRA">
 	</family>
 
 	<programming direct="yes" paged="yes" 
