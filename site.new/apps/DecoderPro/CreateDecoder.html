@@ -1,10 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CreateDecoder.html,v 1.11 2004-12-01 01:55:23 jacobsen Exp $ -->
+<!-- $Id: CreateDecoder.html,v 1.12 2004-12-01 17:31:47 plocher Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
 	JMRI: DecoderPro User Guide - Creating a custom decoder file
     </TITLE>
+    <META content="Joe Ellis" name=Author>
     <META content="Bob Jacobsen" name=Author>
     <META content="John Plocher" name=Author>
     <meta name="keywords" content="java model railroad JMRI PacketScript user guide">
@@ -62,26 +63,23 @@
 
 	<div id="side"> <!-- Block of text on left side of page -->
 
-<div style="text-align: center">DecoderPro User Guide</div>
-<dl class=toc>
-<dt><a href="./Tour.html">Quick tour</A></dt><dd/>
-<dt><a href="./MoreInfo.html">Details</A></dt><dd/>
-<dt><a HREF="./Files.html">Configuration files</a></dt><dd/>
-<dt><a HREF="./Roster.html">Working with the roster</a></dt><dd/>
-<dt><a HREF="./FAQ.html">Frequently asked questions</a></dt><dd/>
-<dt><a HREF="./Install.html">Downloading and installing DecoderPro</a></dt><dd/>
-</dl>
+<ul class=toc>
+<li><H2>DecoderPro User Guide</H2></li>
+<li><a href="./Tour.html">Quick tour</A></li>
+<li><a href="./MoreInfo.html">Details</A></li>
+<li><a HREF="./Files.html">Configuration files</a></li>
+<li><a HREF="./Roster.html">Working with the roster</a></li>
+<li><a HREF="./FAQ.html">Frequently asked questions</a></li>
+<li><a HREF="./Install.html">Downloading and installing DecoderPro</a></li>
 
-<div style="text-align: center">More advanced information</div>
-<dl class=toc>
-
-<dt><a HREF="./IntroXML.html">Intro to XML files</a></dt><dd/>
-<dt class="this"><a href="./CreateDecoder.html">Create your own decoder definition</a></dt><dd/>
-<dt><a href="./Programmer.html">Create a custom programmer definition</a></dt><dd/>
-<dt><a HREF="./RosterFile.html">How the roster is stored; updating it by hand</a></dt><dd/>
-<dt><a HREF="./LocoFile.html">Locomotive (roster) files</a></dt><dd/>
-<dt><a HREF="./Debug.html">Debugging</a></dt><dd/>
-</dl>
+<li><H2>Advanced information</H2></li>
+<li><a HREF="./IntroXML.html">Intro to XML files</a></li>
+<li class="this"><a href="./CreateDecoder.html">Create your own decoder definition</a></li>
+<li><a href="./Programmer.html">Create a custom programmer definition</a></li>
+<li><a HREF="./RosterFile.html">How the roster is stored; updating it by hand</a></li>
+<li><a HREF="./LocoFile.html">Locomotive (roster) files</a></li>
+<li><a HREF="./Debug.html">Debugging</a></li>
+</ul>
 
 	</div>
 
@@ -133,7 +131,7 @@ HREF="../xml/Digitrax_1x2.xml">XXX FIXME XXX Digitrax_1x2.xml</a> file):
 <p class=example>
 &lt;?xml version="1.0"?&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;!DOCTYPE decoder-config SYSTEM "decoder-config.dtd"&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- $Id: CreateDecoder.html,v 1.11 2004-12-01 01:55:23 jacobsen Exp $ --&gt;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- $Id: CreateDecoder.html,v 1.12 2004-12-01 17:31:47 plocher Exp $ --&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;decoder-config&gt;<BR>
 </p>
 
@@ -402,7 +400,7 @@ application and try it.</p>
 	<P>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
 	<P><A href="/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a></p>
     
-       <BR/>Site hosted by: <BR/>
+       <BR>Site hosted by: <BR>
         <A href="http://sourceforge.net"> 
         <IMG src="http://sourceforge.net/sflogo.php?group_id=26788&amp;type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
 
