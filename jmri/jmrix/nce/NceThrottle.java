@@ -11,8 +11,8 @@ import jmri.jmrix.AbstractThrottle;
  * <P>
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
- * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.3 $
+ * @author	Bob Jacobsen  Copyright (C) 2001
+ * @version     $Revision: 1.4 $
  */
 public class NceThrottle extends AbstractThrottle
 {
@@ -21,7 +21,10 @@ public class NceThrottle extends AbstractThrottle
      */
     public NceThrottle(int address)
     {
-        // cache settings
+        super();
+
+        // cache settings. It would be better to read the
+        // actual state, but I don't know how to do this
         this.speedSetting = 0;
         this.f0           = false;
         this.f1           = false;
@@ -32,6 +35,10 @@ public class NceThrottle extends AbstractThrottle
         this.f6           = false;
         this.f7           = false;
         this.f8           = false;
+        this.f9           = false;
+        this.f10           = false;
+        this.f11           = false;
+        this.f12           = false;
         this.address      = address;
         this.isForward    = true;
 
@@ -41,7 +48,7 @@ public class NceThrottle extends AbstractThrottle
     /**
      * Send the message to set the state of functions F0, F1, F2, F3, F4
      */
-    protected void sendLowerFunctions() {
+    protected void sendFunctionGroup1() {
         byte[] result = jmri.NmraPacket.function0Through4Packet(address, (address>=100),
                                          getF0(), getF1(), getF2(), getF3(), getF4());
 
@@ -66,10 +73,36 @@ public class NceThrottle extends AbstractThrottle
      * Send the message to set the state of
      * functions F5, F6, F7, F8
      */
-    protected void sendHigherFunctions() {
+    protected void sendFunctionGroup2() {
 
         byte[] result = jmri.NmraPacket.function5Through8Packet(address, (address>=100),
                                          getF5(), getF6(), getF7(), getF8());
+
+        NceMessage m = new NceMessage(5+3*result.length);
+        int i = 0;  // message index counter
+        m.setElement(i++, 'S');
+        m.setElement(i++, ' ');
+        m.setElement(i++, 'C');
+        m.setElement(i++, '0');
+        m.setElement(i++, '5');
+
+        for (int j = 0; j<result.length; j++) {
+            m.setElement(i++, ' ');
+            m.addIntAsTwoHex(result[j]&0xFF,i);
+            i = i+2;
+        }
+
+        NceTrafficController.instance().sendNceMessage(m, null);
+    }
+
+    /**
+     * Send the message to set the state of
+     * functions F9, F10, F11, F12
+     */
+    protected void sendFunctionGroup3() {
+
+        byte[] result = jmri.NmraPacket.function9Through12Packet(address, (address>=100),
+                                         getF9(), getF10(), getF11(), getF12());
 
         NceMessage m = new NceMessage(5+3*result.length);
         int i = 0;  // message index counter
