@@ -57,6 +57,11 @@ Some device drivers will list each port under several names, e.g. starting
 with "/dev/tty" or "/dev/cu", for example "/dev/tty.KeyUSA19181.1". In that case, 
 select the one that starts with "tty" for best performance.
 
+Note that MacOS X 10.1 is required for this to work. Further, MacOS 10.1 does
+not yet support the LocoNet baud rate, so you must use a LocoBuffer to
+access a LocoNet; a MS100 will not yet work.  We're working with Apple
+to get this fixed.
+
 
 OS/2 instructions:
 ==================
@@ -147,7 +152,7 @@ LocoNet Hardware Connection:
 There are two hardware adapters available to connect to a LocoNet.  The
 LocoBuffer is the strongly preferred alternative, as it reduces the load 
 on the host computer and has a significantly smaller error rate.  The
-Digitrax MS100 interface adapter is also supported.
+Digitrax MS100 interface adapter is also supported (except on MacOS X).
 
 Connect a LocoBuffer or Digitrax MS100 interface to a serial port, using 
 an adapter cable as needed.  For more information on the MS100, please see
