@@ -5,105 +5,146 @@ package jmri.jmrit.symbolicprog;
 import java.io.*;
 import java.util.*;
 
+import jmri.JmriException;
+
 /**
  * Import CV values from a "PR1" file written by PR1DOS or PR1WIN
  *
  * @author			Alex Shepherd   Copyright (C) 2003
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class Pr1Importer {
-    private static final String versionKey = "Version" ;
-    Properties  m_CVs ;
-    boolean     m_packedValues = false ;
+  static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Pr1Importer.class.getName());
+  private static final String VERSION_KEY = "Version" ;
+  private static final String CV_PREFIX = "CV" ;
+  private static final int    CV_INDEX_OFFSET = 2 ;
 
-    public Pr1Importer( String fileName ) throws IOException {
-        m_CVs = new Properties() ;
-        FileInputStream file = new FileInputStream(fileName);
-        m_CVs.load( file );
+  Properties  m_CVs ;
+  boolean     m_packedValues = false ;
 
-        // First check to see if the file contains a Version=x entry and if it
-        // does assume it is a PR1WIN file that has packed values
-        if( m_CVs.containsKey( versionKey ) ) {
-            if (m_CVs.get(versionKey).equals("0"))
-                m_packedValues = true;
+  public Pr1Importer( File file ) throws IOException {
+    m_CVs = new Properties() ;
+    FileInputStream fileStream = new FileInputStream( file);
+    m_CVs.load( fileStream );
 
-            else
-                throw new IOException("Unsupported PR1 File Version");
-        }
+    // First check to see if the file contains a Version=x entry and if it
+    // does assume it is a PR1WIN file that has packed values
+    if( m_CVs.containsKey( VERSION_KEY ) ) {
+      if (m_CVs.get(VERSION_KEY).equals("0"))
+        m_packedValues = true;
 
-        // Have a look at the values and see if there are any entries with values
-        // greater out of the range 0..255. If they are found then also assume PR1WIN
-        else {
-            Set cvSet = m_CVs.entrySet();
-            Iterator cvIterator = cvSet.iterator() ;
-
-            while( cvIterator.hasNext() ) {
-                Map.Entry cvEntry = (Map.Entry) cvIterator.next() ;
-                String cvKey = (String)cvEntry.getKey() ;
-                if( cvKey.startsWith( "CV" ) )
-                    {
-                        String cvValue = (String)cvEntry.getValue() ;
-                        int cvIntValue = Integer.parseInt( cvValue ) ;
-                        if( ( cvIntValue < 0 ) || ( cvIntValue > 255 ) )
-                            {
-                                m_packedValues = true;
-                                return ;
-                            }
-                    }
-            }
-        }
+      else
+        throw new IOException("Unsupported PR1 File Version");
     }
 
-    public int getCV( int cvNumber ) throws Exception {
-        int result ;
+    // Have a look at the values and see if there are any entries with values
+    // greater out of the range 0..255. If they are found then also assume PR1WIN
+    else {
+      Set cvSet = m_CVs.entrySet();
+      Iterator cvIterator = cvSet.iterator() ;
 
-        if( m_packedValues ) {
-            String cvKey = "CV" + ((cvNumber / 4) + 1) ;
-            String cvValueStr = m_CVs.getProperty( cvKey ) ;
-            if( cvValueStr == null )
-                throw new Exception( "CV not found" ) ;
+      while( cvIterator.hasNext() ) {
+        Map.Entry cvEntry = (Map.Entry) cvIterator.next() ;
+        String cvKey = (String)cvEntry.getKey() ;
+        if( cvKey.startsWith( CV_PREFIX ) )
+        {
+          String cvValue = (String)cvEntry.getValue() ;
+          int cvIntValue = Integer.parseInt( cvValue ) ;
+          if( ( cvIntValue < 0 ) || ( cvIntValue > 255 ) )
+          {
+            m_packedValues = true;
+            return ;
+          }
+        }
+      }
+    }
+  }
 
-            int shiftBits = ((cvNumber - 1) % 4 ) * 8 ;
-            long cvValue = Long.parseLong( cvValueStr ) ;
+  public void setCvTable( CvTableModel pCvTable ){
+    Set keys = m_CVs.keySet() ;
+    Iterator keyIterator = keys.iterator() ;
+    while( keyIterator.hasNext()){
+      String key = (String)keyIterator.next() ;
+      if( key.startsWith( CV_PREFIX ) )
+      {
+        int Index = Integer.parseInt( key.substring( CV_INDEX_OFFSET ) ) ;
 
-            if( cvValue < 0 ) {
-                result = (int)(((cvValue + 0x7FFFFFFF) >> shiftBits ) % 256 ) ;
-                if( shiftBits > 16 )
-                    result += 127 ;
-            } else
-                result = (int)((cvValue >> shiftBits ) % 256 ) ;
-        } else {
-            String cvKey = "CV" + cvNumber ;
-            String cvValueStr = m_CVs.getProperty(cvKey);
-            if( cvValueStr == null )
-                throw new Exception( "CV not found" ) ;
+        int lowCV = Index ;
+        int highCV = Index ;
 
-            result = Integer.parseInt( cvValueStr ) ;
+        if( m_packedValues ){
+          lowCV = Index * 4 - 3 ;
+          highCV = Index * 4 ;
         }
 
-        return result ;
+        for( int cvNum = lowCV; cvNum <= highCV; cvNum++ ){
+          CvValue cv = pCvTable.getCvByNumber( cvNum ) ;
+          if( cv == null ){
+            pCvTable.addCV( Integer.toString( cvNum ) ) ;
+            cv = pCvTable.getCvByNumber( cvNum ) ;
+          }
+
+          try {
+            cv.setValue( getCV( cvNum ) ) ;
+          }
+          catch (JmriException ex) {
+            log.error( "failed to getCV() " + cvNum );
+          }
+        }
+      }
+    }
+  }
+
+  public int getCV( int cvNumber ) throws JmriException {
+    int result ;
+
+    if( m_packedValues ) {
+      String cvKey = CV_PREFIX + ((cvNumber / 4) + 1) ;
+      String cvValueStr = m_CVs.getProperty( cvKey ) ;
+      if( cvValueStr == null )
+        throw new JmriException( "CV not found" ) ;
+
+      int shiftBits = ((cvNumber - 1) % 4 ) * 8 ;
+      long cvValue = Long.parseLong( cvValueStr ) ;
+
+      if( cvValue < 0 ) {
+        result = (int)(((cvValue + 0x7FFFFFFF) >> shiftBits ) % 256 ) ;
+        if( shiftBits > 16 )
+          result += 127 ;
+      } else
+        result = (int)((cvValue >> shiftBits ) % 256 ) ;
+    } else {
+      String cvKey = CV_PREFIX + cvNumber ;
+      String cvValueStr = m_CVs.getProperty(cvKey);
+      if( cvValueStr == null )
+        throw new JmriException( "CV not found" ) ;
+
+      result = Integer.parseInt( cvValueStr ) ;
     }
 
-    public static void main(String[] args) {
+    return result ;
+  }
+
+  public static void main(String[] args) {
+    try {
+      String fileName = "Y:/ModelRail/pr1dos/alex.dec" ;
+
+      if( args.length > 0 )
+        fileName = args[ 0 ] ;
+
+      Pr1Importer cvList = new Pr1Importer( new File( fileName ) );
+
+      System.out.println( "File: " + fileName ) ;
+      System.out.println( "CV#, Hex Int, Dec Int, Hex Byte, Dec Byte" ) ;
+      for( int cvIndex = 1; cvIndex <= 512; cvIndex++ ){
         try {
-            //      String fileName = "Y:/ModelRail/pr1dos/Gp071586.dec" ;
-            //      String fileName = "Y:/ModelRail/pr1dos/a1.dec" ;
-            //      String fileName = "Y:/ModelRail/pr1dos/GP382158.DEC" ;
-            //      String fileName = "Y:/ModelRail/pr1dos/Gp071586.dec" ;
-            //      String fileName = "Y:/ModelRail/pr1dos/sw9_58.dec" ;
-            //      String fileName = "Y:/ModelRail/pr1dos/sw9_7405.dec" ;
-            String fileName = "Y:/ModelRail/pr1dos/alex.dec" ;
-            Pr1Importer cvList = new Pr1Importer( fileName );
-
-            System.out.println( "File: " + fileName ) ;
-            System.out.println( "CV#, Hex Int, Dec Int, Hex Byte, Dec Byte" ) ;
-            for( int cvIndex = 1; cvIndex <= 512; cvIndex++ )  {
-                try {
-                    int cvValue = cvList.getCV(cvIndex);
-                    System.out.println("CV" + cvIndex + " " + Integer.toHexString(cvValue) +
-                                       ", " + cvValue);
-                } catch (Exception ex1) {}
-            }
-        } catch (IOException ex) {}
+          int cvValue = cvList.getCV(cvIndex);
+          System.out.println("CV" + cvIndex + " " + Integer.toHexString(cvValue) +
+                             ", " + cvValue);
+        }
+        catch (JmriException ex1) {}
+      }
     }
+    catch (IOException ex) {}
+  }
 }
