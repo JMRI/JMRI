@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.beans.*;
 
 import jmri.DccThrottle;
+import jmri.jmrit.roster.Roster;
 import org.jdom.Element;
 
 /**
@@ -26,6 +27,7 @@ public class AddressPanel extends JInternalFrame
 	private JButton releaseButton;
 	private JButton dispatchButton;
 	private JButton setButton;
+	private JComboBox rosterBox;
 
     /** The longest 4 character string. Used for resizing. */
     private static final String LONGEST_STRING = "mmmm";
@@ -107,25 +109,23 @@ public class AddressPanel extends JInternalFrame
          GridBagConstraints constraints = new GridBagConstraints();
          constraints.anchor = GridBagConstraints.CENTER;
          constraints.fill = GridBagConstraints.HORIZONTAL;
-         constraints.gridheight = 1;
-         constraints.gridwidth = 1;
-         constraints.ipadx = 0;
-         constraints.ipady = 0;
-         Insets insets = new Insets(2, 2, 2, 2);
-         constraints.insets = insets;
+         constraints.insets = new Insets(2, 2, 2, 2);
          constraints.weightx = 1;
-         constraints.weighty = 1;
+		 constraints.weighty = 0;
          constraints.gridx = 0;
          constraints.gridy = 0;
 
+		 constraints.ipadx = constraints.ipady = -16;
          addressField = new JTextField();
          addressField.setColumns(4);
          addressField.setFont(new Font("", Font.PLAIN, 32));
          mainPanel.add(addressField, constraints);
 
          setButton = new JButton("Set");
-         constraints.gridx = 1;
+         constraints.gridx = GridBagConstraints.RELATIVE;
          constraints.fill = GridBagConstraints.NONE;
+         constraints.weightx = 0;
+		 constraints.ipadx = constraints.ipady = 0;
          mainPanel.add(setButton, constraints);
 
          setButton.addActionListener(
@@ -136,12 +136,28 @@ public class AddressPanel extends JInternalFrame
                  changeOfAddress();
              }
          });
-
+		 
+		 rosterBox = Roster.instance().matchingComboBox(null,null,null,null,null,null,null);
+		 rosterBox.insertItemAt(new NullComboBoxItem(), 0);
+		 rosterBox.setSelectedIndex(0);
+		 rosterBox.addActionListener(new ActionListener()
+         {
+             public void actionPerformed(ActionEvent e)
+             {
+                 rosterItemSelected();
+             }
+         });
+		 constraints.gridx=0;
+		 constraints.gridy= GridBagConstraints.RELATIVE;
+		 constraints.fill = GridBagConstraints.HORIZONTAL;
+		 constraints.weightx = 1;
+		 constraints.weighty = 1;
+		 mainPanel.add(rosterBox, constraints);
+		 
+		 JPanel buttonPanel = new JPanel();
+		 buttonPanel.setLayout(new FlowLayout());
          dispatchButton = new JButton("Dispatch");
-         constraints.gridx = 0;
-		 constraints.gridy = 1;
-         constraints.fill = GridBagConstraints.NONE;
-         mainPanel.add(dispatchButton, constraints);
+         buttonPanel.add(dispatchButton);
 		 dispatchButton.setEnabled(false);
          dispatchButton.addActionListener(
                  new ActionListener()
@@ -153,10 +169,7 @@ public class AddressPanel extends JInternalFrame
          });
 
          releaseButton = new JButton("Release");
-         constraints.gridx = 1;
-		 constraints.gridy = 1;
-         constraints.fill = GridBagConstraints.NONE;
-         mainPanel.add(releaseButton, constraints);
+         buttonPanel.add(releaseButton);
 		 releaseButton.setEnabled(false);
          releaseButton.addActionListener(
                  new ActionListener()
@@ -166,6 +179,13 @@ public class AddressPanel extends JInternalFrame
                  releaseAddress();
              }
          });
+		 
+		 constraints.gridx=0;
+		 constraints.gridy=GridBagConstraints.RELATIVE;
+		 constraints.gridwidth=2;
+		 constraints.weighty = 0;
+		 constraints.insets = new Insets(0,0,0,0);
+		 mainPanel.add(buttonPanel, constraints);
 
          this.addComponentListener(
                  new ComponentAdapter()
@@ -177,6 +197,16 @@ public class AddressPanel extends JInternalFrame
          });
     }
 
+	private void rosterItemSelected()
+	{
+		if (rosterBox.getSelectedItem() instanceof NullComboBoxItem)
+		{
+		}
+		else
+		{
+		}
+	}
+	
     /**
      * A resizing has occurred, so determine the optimum font size
      * for the addressField.
@@ -309,8 +339,16 @@ public class AddressPanel extends JInternalFrame
          String address = addressElement.getAttribute("value").getValue();
          addressField.setText(address);
          changeOfAddress();
-
      }
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AddressPanel.class.getName());
+	 
+	 class NullComboBoxItem
+	 {
+		 public String toString()
+		 {
+			 return "<No Item Selected>";
+		 }
+	 }
+	 
+	 static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AddressPanel.class.getName());
 
 }
