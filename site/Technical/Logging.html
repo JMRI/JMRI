@@ -1,0 +1,69 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<!-- $Id: Logging.html,v 1.1 2003-08-07 17:23:59 jacobsen Exp $ -->
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Bob Jacobsen, LBL">
+   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>JMRI Status Logging</title>
+</head>
+<body>
+
+<A href="../index.html">
+<IMG SRC="../images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
+</a>
+ 
+<H2>JMRI logging of status and error information</h2>
+
+This page provides a little information on how 
+JMRI logs error, status and debugging information.
+
+<A HREF="index.html">prior page</A>)
+For other details on JMRI internals, please see the
+<A HREF="../Technical/index.html" NAME="technical pages">technical pages</A>.
+
+<P>
+JMRI uses the Jakarta
+<A HREF="http://jakarta.apache.org/log4j/docs/index.html">Log4J</a>
+package to handle logging during program operation.
+<P>
+Log4J provides several levels of messages:
+<UL>
+<LI>Error
+<LI>Warning
+<LI>Info - summary information during normal operation
+<LI>Debug - information on the internal operation of the program.  
+There is a lot of this, and turning it all on can slow the 
+program down significantly.
+</UL>
+<P>
+By convention, JMRI applications will attempt to initialize
+Log4J using a "default.lcf" file.  The JMRI distributions
+contain a version of this file with
+extensive comments.
+
+<P>
+If you change the line:
+<PRE>
+ log4j.rootCategory=DEBUG, A1
+</PRE>
+to 
+<PRE>
+ log4j.rootCategory=DEBUG, A1, R
+</PRE>
+log entries will be written to both the "console"
+by "A1", and a file by "R". 
+
+<HR>
+<BR>Site hosted by: <BR>
+<A href="http://sourceforge.net"> 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A>
+ 
+
+<hr>
+Bob Jacobsen<BR>
+jake@physics.berkeley.edu
+
+</body>
+</html>
