@@ -1,9 +1,5 @@
 /**
  * JMRIdemo.java
- *
- * Description:
- * @author			Bob Jacobsen
- * @version         $Revision: 1.17 $
  */
 
 package apps.JmriDemo;
@@ -21,6 +17,8 @@ import javax.swing.border.*;
  * the configuration file.  Note that this is just the name, not the path;
  * the file is searched for in the usual way, first in prefs/ and then in
  * xml/
+ * @author			Bob Jacobsen
+ * @version         $Revision: 1.18 $
  */
 public class JMRIdemo extends JPanel {
 	public JMRIdemo() {
@@ -84,6 +82,8 @@ public class JMRIdemo extends JPanel {
 	        funcMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction("Decoder Pro programmer"));
 	        funcMenu.add(new jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlAction("Turnout Control"));
 	        funcMenu.add(new jmri.jmrit.powerpanel.PowerPanelAction("Power Control"));
+
+        menuBar.add(new jmri.jmrit.roster.RosterMenu("Roster", jmri.jmrit.roster.RosterMenu.MAINMENU, this));
 
         JMenu locoMenu = new JMenu("LocoNet");
         menuBar.add(locoMenu);
