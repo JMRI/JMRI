@@ -13,8 +13,6 @@ import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Vector;
 
-import ErrLoggerJ.ErrLog;
-
 /** 
  * Converts Stream-based I/O to/from LocoNet messages.  The "LocoNetInterface"
  * side sends/receives LocoNetMessage objects.  The connection to 
@@ -75,11 +73,11 @@ public class LnTrafficController implements LocoNetInterface, Runnable {
 				ostream.write(msg);
 			else {
 				// no stream connected
-				ErrLog.msg(ErrLog.warning, "LnTrafficController", "sendLocoNetMessage", "no connection established");
+				log.warn("sendLocoNetMessage: no connection established");
 				}
 			}
 		catch (Exception e) {
-			ErrLog.msg(ErrLog.error, "LnTrafficController", "sendLocoNetMessage", "Exception: "+e.toString());
+			log.warn("sendLocoNetMessage: Exception: "+e.toString());
 			}
 		}
 
@@ -93,8 +91,7 @@ public class LnTrafficController implements LocoNetInterface, Runnable {
 			istream = p.getInputStream();
 			ostream = p.getOutputStream();
 			if (controller != null)
-				ErrLog.msg(ErrLog.error,"LnTrafficController", "connectPort", 
-							"connect called while connected");
+				log.warn("connectPort: connect called while connected");
 			controller = p;
 		}
 		
@@ -106,8 +103,7 @@ public class LnTrafficController implements LocoNetInterface, Runnable {
 			istream = null;
 			ostream = null;
 			if (controller != p)
-				ErrLog.msg(ErrLog.error,"LnTrafficController", "disconnectPort", 
-							"disconnect called from non-connected LnPortController");
+				log.warn("disconnectPort: disconnect called from non-connected LnPortController");
 			controller = null;
 		}
 				
@@ -146,8 +142,7 @@ public class LnTrafficController implements LocoNetInterface, Runnable {
 				}
 			catch (Exception e)
 				{
-					ErrLog.msg(ErrLog.error,"LnTrafficController", 
-								"notify", "During dispatch to "+client+"\nException "+e);
+					log.warn("notify: During dispatch to "+client+"\nException "+e);
 				}
 			}
 	}
@@ -204,9 +199,11 @@ public class LnTrafficController implements LocoNetInterface, Runnable {
             
 			} // end of try
 		catch (Exception e) {
-			ErrLog.msg(ErrLog.error, "LnTrafficController", "run", "Exception: "+e.toString());
+			log.warn("run: Exception: "+e.toString());
 			}
 		}
+
+	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnTrafficController.class.getName());
 }
 
 

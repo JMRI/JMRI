@@ -13,8 +13,6 @@ package jmri.jmrix.loconet.locomon;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
-import ErrLoggerJ.ErrLog;
-
 import jmri.jmrix.loconet.LnTrafficController;
 
 
@@ -29,13 +27,16 @@ public class LocoMonAction 			extends AbstractAction {
 			f.initComponents();
 			}
 		catch (Exception ex) {
-			ErrLog.msg(ErrLog.error, "LocoMonAction starting LocoMonFrame:", "", "Exception: "+ex.toString());
+			log.warn("LocoMonAction starting LocoMonFrame: Exception: "+ex.toString());
 			}
 		f.show();	
 		
 		// connect to the LnTrafficController
 		LnTrafficController.instance().addLocoNetListener(~0, f);		
 	}
+
+	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoMonAction.class.getName());
+
 }
 
 

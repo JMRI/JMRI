@@ -16,6 +16,8 @@ import jmri.Programmer;
 import ErrLoggerJ.ErrLog;
 
 import java.util.Vector;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 public class SlotManager implements LocoNetListener, Programmer {
 
@@ -53,19 +55,30 @@ public class SlotManager implements LocoNetListener, Programmer {
 		}
 	static private SlotManager self = null;
 
-// data members to hold contact with the listeners
-	private Vector listeners = new Vector();
+	// handle mode
+	protected int _mode = 0;
+	
+	public void setMode(int mode) {
+		if (mode != _mode) {
+			notifyPropertyChange("Mode", _mode, mode);
+			_mode = mode;
+		}
+	}
+	public int getMode() { return _mode; }
+	
+	// data members to hold contact with the slot listeners
+	private Vector slotListeners = new Vector();
 	
 	public synchronized void addSlotListener(SlotListener l) { 
 			// add only if not already registered
-			if (!listeners.contains(l)) {
-					listeners.addElement(l);
+			if (!slotListeners.contains(l)) {
+					slotListeners.addElement(l);
 				}
 		}
 
 	public synchronized void removeSlotListener(SlotListener l) {
-			if (listeners.contains(l)) {
-					listeners.removeElement(l);
+			if (slotListeners.contains(l)) {
+					slotListeners.removeElement(l);
 				}
 		}
 
@@ -74,17 +87,48 @@ public class SlotManager implements LocoNetListener, Programmer {
 		Vector v;
 		synchronized(this)
 			{
-				v = (Vector) listeners.clone();
+				v = (Vector) slotListeners.clone();
 			}
 		// forward to all listeners
 		int cnt = v.size();
 		for (int i=0; i < cnt; i++) {
-			SlotListener client = (SlotListener) listeners.elementAt(i);
+			SlotListener client = (SlotListener) v.elementAt(i);
 			client.notifyChangedSlot(s);
 						}
 	}
 	
 
+// data members to hold contact with the property listeners
+	private Vector propListeners = new Vector();
+	
+	public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
+			// add only if not already registered
+			if (!propListeners.contains(l)) {
+					propListeners.addElement(l);
+				}
+		}
+
+	public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
+			if (propListeners.contains(l)) {
+					propListeners.removeElement(l);
+				}
+		}
+
+	protected void notifyPropertyChange(String name, int oldval, int newval) {
+		// make a copy of the listener vector to synchronized not needed for transmit
+		Vector v;
+		synchronized(this)
+			{
+				v = (Vector) propListeners.clone();
+			}
+		// forward to all listeners
+		int cnt = v.size();
+		for (int i=0; i < cnt; i++) {
+			PropertyChangeListener client = (PropertyChangeListener) v.elementAt(i);
+			client.propertyChange(new PropertyChangeEvent(this, name, new Integer(oldval), new Integer(newval)));
+						}
+	}
+	
 	// listen to the LocoNet
 	public void message(LocoNetMessage m) {
 		int i = 0;
@@ -216,25 +260,25 @@ public class SlotManager implements LocoNetListener, Programmer {
 		// 0 is notProgramming
 	boolean  _progRead = false;
 	
-	public void writeCV(int CV, int val, int mode, jmri.ProgListener p) throws jmri.ProgrammerException {
+	public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
 		useProgrammer(p);
 		_progRead = false;
 		// set commandPending state
 		progState = 1;
 		
 		// format and send message
-		LnTrafficController.instance().sendLocoNetMessage(progTaskStart(mode, val, CV));
+		LnTrafficController.instance().sendLocoNetMessage(progTaskStart(getMode(), val, CV));
 
 		}
 		
-	public void readCV(int CV, int mode, jmri.ProgListener p) throws jmri.ProgrammerException {
+	public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
 		useProgrammer(p);
 		_progRead = true;
 		// set commandPending state
 		progState = 1;
 		
 		// format and send message
-		LnTrafficController.instance().sendLocoNetMessage(progTaskStart(mode, -1, CV));
+		LnTrafficController.instance().sendLocoNetMessage(progTaskStart(getMode(), -1, CV));
 		}
 
 	private jmri.ProgListener _usingProgrammer = null;
@@ -242,7 +286,7 @@ public class SlotManager implements LocoNetListener, Programmer {
 	// internal method to remember who's using the programmer
 	protected void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
 		// test for only one!
-		if (_usingProgrammer != null) {
+		if (_usingProgrammer != null && _usingProgrammer != p) {
 				ErrLog.msg(ErrLog.routine, "SlotManager", 
 						"useProgrammer", "programmer already in use by "+_usingProgrammer);
 				throw new jmri.ProgrammerException("programmer in use");
@@ -268,7 +312,7 @@ public class SlotManager implements LocoNetListener, Programmer {
 		int pcmd = 0;
 		if (val != -1) pcmd = pcmd | 0x40;  // write command
 		if (mode == jmri.Programmer.PAGEMODE) pcmd = pcmd | 0x20;
-		else if (mode == jmri.Programmer.DIRECTMODE) pcmd = pcmd | 0x28;
+		else if (mode == jmri.Programmer.DIRECTBYTEMODE) pcmd = pcmd | 0x28;
 		else if (mode == jmri.Programmer.REGISTERMODE) pcmd = pcmd | 0x10;
 		else throw new jmri.ProgrammerException("mode not supported");
 		m.setElement(3, pcmd);

@@ -25,7 +25,6 @@ package jmri.jmrix.loconet.hexfile;
 
 import jmri.jmrix.loconet.LnPortController;
 
-import ErrLoggerJ.ErrLog;
 import java.io.FileInputStream;
 import java.io.DataInputStream;
 import java.io.PipedInputStream;
@@ -43,7 +42,7 @@ public void load(String filename) {
 			sFile = new DataInputStream(new FileInputStream(filename));
 			}
 		catch (Exception e) {
-			ErrLog.msg(ErrLog.error, "LnHexFilePort", "load (file)", "Exception: "+e.toString());
+			log.error("load (file): Exception: "+e.toString());
 			}
 
 		// create the pipe stream for output, also store as the input stream if somebody wants to send
@@ -55,7 +54,7 @@ public void load(String filename) {
 			pout = outpipe;
 			}
 		catch (Exception e) {
-			ErrLog.msg(ErrLog.error, "LnHexFilePort", "load (pipe)", "Exception: "+e.toString());
+			log.error("load (pipe): Exception: "+e.toString());
 			}
 	}
 
@@ -84,7 +83,7 @@ public void run() { // invoked in a new thread
 				}
 			}
 		catch (Exception e) {
-			ErrLog.msg(ErrLog.error, "LnHexFilePort","run", "Exception: "+e.toString());
+			log.error("run: Exception: "+e.toString());
 			}		
 		// here we're done processing the file, return to end the thread
 		_running = false;
@@ -96,37 +95,40 @@ public void setDelay(int newDelay) {
 	
 // base class methods
 	public DataInputStream getInputStream() {
-		if (pin == null) ErrLog.msg(ErrLog.error, "LnHexFilePort", "getInputStream", "called before load(), stream not available");
+		if (pin == null) 
+			log.error("getInputStream: called before load(), stream not available");
 		return pin;
 		}
 	
 	public DataOutputStream getOutputStream(){
-		if (pout == null) ErrLog.msg(ErrLog.error, "LnHexFilePort", "getOutputStream", "called before load(), stream not available");
+		if (pout == null) log.error("getOutputStream: called before load(), stream not available");
 		return pout;
 		}
 	
 	public boolean status() {return (pout!=null)&(pin!=null);}
 
-// to tell if we're currently putting out data
+	// to tell if we're currently putting out data
 	public boolean running() { return _running; }
 
-// private data
-private boolean _running = false;
+	// private data
+	private boolean _running = false;
 
-// streams to share with user class
-private DataOutputStream pout = null; // this is provided to classes who want to write to us
-private DataInputStream pin = null;  // this is provided to class who want data from us
+	// streams to share with user class
+	private DataOutputStream pout = null; // this is provided to classes who want to write to us
+	private DataInputStream pin = null;  // this is provided to class who want data from us
 
-// internal ends of the pipes
-private DataOutputStream outpipe = null;  // feed pin
-private DataInputStream inpipe = null; // feed pout
+	// internal ends of the pipes
+	private DataOutputStream outpipe = null;  // feed pin
+	private DataInputStream inpipe = null; // feed pout
 
-// internal access to the input file
-DataInputStream sFile = null;
+	// internal access to the input file
+	DataInputStream sFile = null;
 
-// define operation
-private int delay=100;  				// units are milliseconds; default is quiet a busy LocoNet
+	// define operation
+	private int delay=100;  				// units are milliseconds; default is quiet a busy LocoNet
+
+	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnHexFilePort.class.getName());
+
 }
-
 
 /* @(#)LnHexFilePort.java */

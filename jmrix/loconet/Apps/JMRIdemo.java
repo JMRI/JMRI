@@ -21,8 +21,6 @@ import jmri.jmrix.loconet.slotmon.SlotMonAction;
 import jmri.simpleprog.SimpleProgAction;
 import jmri.symbolicprog.SymbolicProgAction;
 
-import ErrLoggerJ. ErrLogFrameAction;
-
 public class JMRIdemo extends JPanel {
 	public JMRIdemo() {
 
@@ -47,35 +45,38 @@ public class JMRIdemo extends JPanel {
 		hexfileAction  = new LnHexFileAction("Hex File");
 		ms100Action    = new MS100Action("MS100");
 		locomonAction  = new LocoMonAction("LocoNet Monitor");
-		locogenAction  = new LocoGenAction("Layout Commands");
+		locogenAction  = new LocoGenAction("LocoNet Commands");
 		locoechoAction = new LocoEchoAction("Turnout Control");
 		slotmonAction  = new SlotMonAction("Slot Monitor");
 		simpleprogAction  = new SimpleProgAction("Simple Programmer");
 		symbolicprogAction  = new SymbolicProgAction("Symbolic Programmer");
-		errlogAction  = new ErrLogFrameAction("error logging");
 		
 	// populate GUI
         // Create menu categories and add to the menu bar
         JMenu inputMenu = new JMenu("Input");
         menuBar.add(inputMenu);
-        JMenu funcMenu = new JMenu("Functions");
+        JMenu funcMenu = new JMenu("Tools");
         menuBar.add(funcMenu);
-        JMenu debugMenu = new JMenu("Debugging");
-        menuBar.add(debugMenu);
+        JMenu locoMenu = new JMenu("LocoNet");
+        menuBar.add(locoMenu);
 		// add actions to menus
         inputMenu.add(hexfileAction);
         inputMenu.add(ms100Action);
         funcMenu.add(simpleprogAction);
-        funcMenu.add(locoechoAction);
-        funcMenu.add(locomonAction);
-        funcMenu.add(locogenAction);
-        funcMenu.add(slotmonAction);
         funcMenu.add(symbolicprogAction);
-        debugMenu.add(errlogAction);
+        funcMenu.add(locoechoAction);
+        locoMenu.add(locomonAction);
+        locoMenu.add(slotmonAction);
+        locoMenu.add(locogenAction);
 	}
 
 	// Main entry point
     public static void main(String s[]) {
+    
+    	// initialize log4j
+    	org.apache.log4j.BasicConfigurator.configure();
+    	
+    	// create the demo frame and menus
         JMRIdemo containedPane = new JMRIdemo();
         JFrame frame = new JFrame("JMRI demo main panel");
         frame.addWindowListener(new BasicWindowMonitor());
@@ -96,12 +97,13 @@ public class JMRIdemo extends JPanel {
 	private SlotMonAction slotmonAction;
 	private SimpleProgAction simpleprogAction;
 	private SymbolicProgAction symbolicprogAction;
-
-	private ErrLogFrameAction errlogAction;
 	
 	// GUI members
     private JMenuBar menuBar;
 	private JLabel helpLabel1;	
 	private JLabel helpLabel2;	
+	
+	
+   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(JMRIdemo.class.getName());
 }
 
