@@ -53,10 +53,16 @@
 				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="Analog conversion mode" CV="29" mask="XXXXXVXX">
-			<decoder:binaryVal phrasing="OffOn"/>
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Off"/>
+				<decoder:enumChoice choice="On"/>
+				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="Speed table" CV="29" mask="XXXVXXXX">
-			<decoder:binaryVal phrasing="OffOn"/>
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Off"/>
+				<decoder:enumChoice choice="On"/>
+				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="Addressing mode" CV="29" mask="XXVXXXXX">
 			<decoder:enumVal>

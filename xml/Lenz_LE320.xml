@@ -71,23 +71,41 @@
 			</decoder:variable>
 
 		<decoder:variable name="Motor short" CV="30" mask="XXXXXXXV" readOnly="yes">
-			<decoder:binaryVal phrasing="NoYes"/>
+			<decoder:enumVal>
+				<decoder:enumChoice choice="No"/>
+				<decoder:enumChoice choice="Yes"/>
+				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="Front headlight short" CV="30" mask="XXXXXXVX" readOnly="yes">
-			<decoder:binaryVal phrasing="NoYes"/>
+			<decoder:enumVal>
+				<decoder:enumChoice choice="No"/>
+				<decoder:enumChoice choice="Yes"/>
+				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="Rear headlight short" CV="30" mask="XXXXXVXX" readOnly="yes">
-			<decoder:binaryVal phrasing="NoYes"/>
+			<decoder:enumVal>
+				<decoder:enumChoice choice="No"/>
+				<decoder:enumChoice choice="Yes"/>
+				</decoder:enumVal>
 			</decoder:variable>
 			
 		<decoder:variable name="Back EMF control" CV="60" mask="XXXXXXXV">
-			<decoder:binaryVal phrasing="OffOn"/>
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Off"/>
+				<decoder:enumChoice choice="On"/>
+				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="Decoder control active" CV="60" mask="XXXXXXVX">
-			<decoder:binaryVal phrasing="OffOn"/>
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Off"/>
+				<decoder:enumChoice choice="On"/>
+				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="Brake momentum on DC operation" CV="60" mask="XXXXXVXX">
-			<decoder:binaryVal phrasing="OffOn"/>
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Off"/>
+				<decoder:enumChoice choice="On"/>
+				</decoder:enumVal>
 			</decoder:variable>
 
 		<decoder:variable name="Speed Table" CV="67">

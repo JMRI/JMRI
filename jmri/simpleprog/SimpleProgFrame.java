@@ -24,7 +24,7 @@ public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgList
 	javax.swing.JTextField  addrField       = new javax.swing.JTextField();
 	javax.swing.JTextField  valField        = new javax.swing.JTextField();
 	
-	jmri.ProgModePane       modePane        = new jmri.ProgModePane();
+	jmri.ProgModePane       modePane        = new jmri.ProgModePane(BoxLayout.Y_AXIS);
 	
 	javax.swing.ButtonGroup radixGroup 		= new javax.swing.ButtonGroup();
 	javax.swing.JRadioButton hexButton    	= new javax.swing.JRadioButton();

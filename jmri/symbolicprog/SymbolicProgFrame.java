@@ -48,7 +48,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 	JButton  newCvButton = new JButton();
 	JTextField newCvNum  = new JTextField();
 
-	ProgModePane   modePane = new ProgModePane();
+	ProgModePane   modePane = new ProgModePane(BoxLayout.X_AXIS);
 			
 	JLabel vendor  = new JLabel("         ");
 	JLabel model   = new JLabel("         ");

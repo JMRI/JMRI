@@ -1,7 +1,7 @@
 /** 
- * DecVariableValue.java
+ * HexVariableValue.java
  *
- * Description:		Extends VariableValue to represent a decimal variable
+ * Description:		Extends VariableValue to represent a hexadecimal variable
  * @author			Bob Jacobsen   Copyright (C) 2001
  * @version			
  *
@@ -20,9 +20,9 @@ import java.beans.PropertyChangeListener;
 import java.util.Vector;
 import javax.swing.JTextField;
 
-public class DecVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
+public class HexVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
 
-	public DecVariableValue(String name, String comment, boolean readOnly,
+	public HexVariableValue(String name, String comment, boolean readOnly,
 							int cvNum, String mask, int minVal, int maxVal,
 							Vector v) {
 		super(name, comment, readOnly, cvNum, mask, v);
@@ -38,7 +38,7 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 	int _minVal;
 	
 	public Object rangeVal() {
-		return new String("Decimal: "+_minVal+" - "+_maxVal);
+		return new String("Hex: "+_minVal+" - "+_maxVal);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -47,7 +47,7 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 		// need eventual mask & shift, etc, but for now we store
 		int oldCv = cv.getValue();
 		int newVal;
-		try { newVal = Integer.valueOf(_value.getText()).intValue(); }
+		try { newVal = Integer.valueOf(_value.getText(), 16).intValue(); }
 			catch (java.lang.NumberFormatException ex) { newVal = 0; }
 		int newCv = newValue(oldCv, newVal, getMask());
 		((CvValue)_cvVector.elementAt(getCvNum())).setValue(newCv);
@@ -58,11 +58,11 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 	public Component getValue()  { return _value; }
 	public void setValue(int value) { 
 		int oldVal;
-		try { oldVal = Integer.valueOf(_value.getText()).intValue(); }
+		try { oldVal = Integer.valueOf(_value.getText(), 16).intValue(); }
 			catch (java.lang.NumberFormatException ex) { oldVal = 0; }	
 		if (oldVal != value) 
 			prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value));
-		_value.setText(""+value);
+		_value.setText(Integer.toHexString(value));
 	}
 
 	public void read() {
@@ -108,6 +108,6 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 	}
 	
 	// initialize logging	
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DecVariableValue.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(HexVariableValue.class.getName());
 		
 }

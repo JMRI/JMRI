@@ -29,8 +29,11 @@ public class ProgModePane extends javax.swing.JPanel implements java.beans.Prope
 	javax.swing.JRadioButton directBitButton   	= new javax.swing.JRadioButton();
 	javax.swing.JRadioButton directByteButton   = new javax.swing.JRadioButton();
 	javax.swing.JRadioButton registerButton 	= new javax.swing.JRadioButton();
-			
-	public ProgModePane() {
+
+	/*
+	 * direction is BoxLayout.X_AXIS or BoxLayout.Y_AXIS
+	 */
+	public ProgModePane(int direction) {
 
 		// configure items for GUI				
 		pagedButton.setText("Paged Mode");
@@ -86,7 +89,7 @@ public class ProgModePane extends javax.swing.JPanel implements java.beans.Prope
 		if (connected) InstanceManager.programmerInstance().setMode(InstanceManager.programmerInstance().getMode());
 		
 		// general GUI config
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setLayout(new BoxLayout(this, direction));
 
 		// install items in GUI
 		add(pagedButton);

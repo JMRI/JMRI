@@ -17,6 +17,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import com.sun.java.util.collections.List;
+import org.jdom.Attribute;
 import org.jdom.Element;
 import org.jdom.Namespace;
 
@@ -125,19 +126,59 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 			log.warn("Element missing mask attribute: "+name);
 			mask ="VVVVVVVV";
 		}
-		int minVal = Integer.valueOf(e.getChild("decVal", ns).getAttribute("min").getValue()).intValue();
-		int maxVal = Integer.valueOf(e.getChild("decVal", ns).getAttribute("max").getValue()).intValue();
-
+		
+		int minVal = 0;
+		int maxVal = 255;
+		
 		boolean readOnly = false;
 		
-		// have to handle various value types, see "snippet"
-
-		if (_cvModel == null) log.error("CvModel reference is null; cannot add variables");
+		if (_cvModel == null) {
+			log.error("CvModel reference is null; cannot add variables");
+			return;
+		}
 		_cvModel.addCV(""+CV);
-
-		// assume decimal type for now, and continue
-		VariableValue v = new DecVariableValue(name, comment, readOnly, 
+		
+		// have to handle various value types, see "snippet"
+		Element child;
+		VariableValue v = null;
+		if ( (child = e.getChild("decVal", ns)) != null) {
+			Attribute a;
+			if ( (a = child.getAttribute("min")) != null)
+				minVal = Integer.valueOf(a.getValue()).intValue();
+			if ( (a = child.getAttribute("max")) != null)
+				maxVal = Integer.valueOf(a.getValue()).intValue();
+			v = new DecVariableValue(name, comment, readOnly, 
 								CV, mask, minVal, maxVal, _cvModel.allCvVector());
+								
+		} else if ( (child = e.getChild("hexVal", ns)) != null) {
+			Attribute a;
+			if ( (a = child.getAttribute("min")) != null)
+				minVal = Integer.valueOf(a.getValue(),16).intValue();
+			if ( (a = child.getAttribute("max")) != null)
+				maxVal = Integer.valueOf(a.getValue(),16).intValue();
+			v = new HexVariableValue(name, comment, readOnly, 
+								CV, mask, minVal, maxVal, _cvModel.allCvVector());
+								
+		} else if ( (child = e.getChild("enumVal", ns)) != null) {
+			List l = child.getChildren("enumChoice", ns);
+			EnumVariableValue v1 = new EnumVariableValue(name, comment, readOnly, 
+								CV, mask, 0, l.size()-1, _cvModel.allCvVector());
+			v = v1;
+			for (int k=0; k< l.size(); k++)
+				v1.addItem(((Element)l.get(k)).getAttribute("choice").getValue());
+
+		} else if ( (child = e.getChild("speedTableVal", ns)) != null) {
+			log.warn("Not yet able to handle speedTableVal");
+			return;
+		} else if ( (child = e.getChild("longAddressVal", ns)) != null) {
+			log.warn("Not yet able to handle longAddressVal");
+			return;
+		} else {
+			log.error("Did not find a valid variable type");
+			return;
+		}
+
+		// back to general processing
 		rowVector.addElement(v);
 		v.addPropertyChangeListener(this);
 	}

@@ -105,33 +105,60 @@
 			</decoder:variable>
 			
 		<decoder:variable name="F0 Fwd controls output 1" CV="33" mask="XXXXXXXV">
-			<decoder:binaryVal phrasing="NoYes"/>
+			<decoder:enumVal>
+				<decoder:enumChoice choice="No"/>
+				<decoder:enumChoice choice="Yes"/>
+				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="F0 Fwd controls output 2" CV="33" mask="XXXXXXVX">
-			<decoder:binaryVal phrasing="NoYes"/>
+			<decoder:enumVal>
+				<decoder:enumChoice choice="No"/>
+				<decoder:enumChoice choice="Yes"/>
+				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="F0 Fwd controls output 3" CV="33" mask="XXXXXVXX">
-			<decoder:binaryVal phrasing="NoYes"/>
+			<decoder:enumVal>
+				<decoder:enumChoice choice="No"/>
+				<decoder:enumChoice choice="Yes"/>
+				</decoder:enumVal>
 			</decoder:variable>
 
 		<decoder:variable name="F0 Rev controls output 1" CV="34" mask="XXXXXXXV">
-			<decoder:binaryVal phrasing="NoYes"/>
+			<decoder:enumVal>
+				<decoder:enumChoice choice="No"/>
+				<decoder:enumChoice choice="Yes"/>
+				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="F0 Rev controls output 2" CV="34" mask="XXXXXXVX">
-			<decoder:binaryVal phrasing="NoYes"/>
+			<decoder:enumVal>
+				<decoder:enumChoice choice="No"/>
+				<decoder:enumChoice choice="Yes"/>
+				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="F0 Rev controls output 3" CV="34" mask="XXXXXVXX">
-			<decoder:binaryVal phrasing="NoYes"/>
+			<decoder:enumVal>
+				<decoder:enumChoice choice="No"/>
+				<decoder:enumChoice choice="Yes"/>
+				</decoder:enumVal>
 			</decoder:variable>
 
 		<decoder:variable name="F1 controls output 1" CV="35" mask="XXXXXXXV">
-			<decoder:binaryVal phrasing="NoYes"/>
+			<decoder:enumVal>
+				<decoder:enumChoice choice="No"/>
+				<decoder:enumChoice choice="Yes"/>
+				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="F1 controls output 2" CV="35" mask="XXXXXXVX">
-			<decoder:binaryVal phrasing="NoYes"/>
+			<decoder:enumVal>
+				<decoder:enumChoice choice="No"/>
+				<decoder:enumChoice choice="Yes"/>
+				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="F1 controls output 3" CV="35" mask="XXXXXVXX">
-			<decoder:binaryVal phrasing="NoYes"/>
+			<decoder:enumVal>
+				<decoder:enumChoice choice="No"/>
+				<decoder:enumChoice choice="Yes"/>
+				</decoder:enumVal>
 			</decoder:variable>
 
 		<decoder:variable name="Kick start" CV="65" mask="VVVVVVVV">
@@ -165,10 +192,16 @@
 				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="Output 1 active in forward direction only" CV="120" mask="XXXXXXXV">
-			<decoder:binaryVal phrasing="NoYes"/>
+			<decoder:enumVal>
+				<decoder:enumChoice choice="No"/>
+				<decoder:enumChoice choice="Yes"/>
+				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="Output 1 active in reverse direction only" CV="120" mask="XXXXXXVX">
-			<decoder:binaryVal phrasing="NoYes"/>
+			<decoder:enumVal>
+				<decoder:enumChoice choice="No"/>
+				<decoder:enumChoice choice="Yes"/>
+				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="Output 1 connected to" CV="120" mask="VXXXXXXX">
 			<decoder:enumVal>
@@ -198,10 +231,16 @@
 				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="Output 2 active in forward direction only" CV="121" mask="XXXXXXXV">
-			<decoder:binaryVal phrasing="NoYes"/>
+			<decoder:enumVal>
+				<decoder:enumChoice choice="No"/>
+				<decoder:enumChoice choice="Yes"/>
+				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="Output 2 active in reverse direction only" CV="121" mask="XXXXXXVX">
-			<decoder:binaryVal phrasing="NoYes"/>
+			<decoder:enumVal>
+				<decoder:enumChoice choice="No"/>
+				<decoder:enumChoice choice="Yes"/>
+				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="Output 2 connected to" CV="121" mask="VXXXXXXX">
 			<decoder:enumVal>
@@ -231,10 +270,16 @@
 				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="Output 3 active in forward direction only" CV="122" mask="XXXXXXXV">
-			<decoder:binaryVal phrasing="NoYes"/>
+			<decoder:enumVal>
+				<decoder:enumChoice choice="No"/>
+				<decoder:enumChoice choice="Yes"/>
+				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="Output 3 active in reverse direction only" CV="122" mask="XXXXXXVX">
-			<decoder:binaryVal phrasing="NoYes"/>
+			<decoder:enumVal>
+				<decoder:enumChoice choice="No"/>
+				<decoder:enumChoice choice="Yes"/>
+				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="Output 3 connected to" CV="120" mask="VXXXXXXX">
 			<decoder:enumVal>

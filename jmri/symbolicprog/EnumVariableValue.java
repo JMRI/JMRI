@@ -1,7 +1,7 @@
 /** 
- * DecVariableValue.java
+ * EnumVariableValue.java
  *
- * Description:		Extends VariableValue to represent a decimal variable
+ * Description:		Extends VariableValue to represent a enumerated variable
  * @author			Bob Jacobsen   Copyright (C) 2001
  * @version			
  *
@@ -18,27 +18,31 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Vector;
-import javax.swing.JTextField;
+import javax.swing.JComboBox;
 
-public class DecVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
+public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
 
-	public DecVariableValue(String name, String comment, boolean readOnly,
+	public EnumVariableValue(String name, String comment, boolean readOnly,
 							int cvNum, String mask, int minVal, int maxVal,
 							Vector v) {
 		super(name, comment, readOnly, cvNum, mask, v);
 		_maxVal = maxVal;
 		_minVal = minVal;
-		_value = new JTextField();
+		_value = new JComboBox();
 		// connect to the JTextField value, cv
 		_value.addActionListener(this);
 		((CvValue)_cvVector.elementAt(getCvNum())).addPropertyChangeListener(this);
 	}
 	
-	int _maxVal;
-	int _minVal;
+	public void addItem(String s) {
+		_value.addItem(s);
+	}
+	
+	private int _maxVal;
+	private int _minVal;
 	
 	public Object rangeVal() {
-		return new String("Decimal: "+_minVal+" - "+_maxVal);
+		return new String("enum: "+_minVal+" - "+_maxVal);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -47,7 +51,7 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 		// need eventual mask & shift, etc, but for now we store
 		int oldCv = cv.getValue();
 		int newVal;
-		try { newVal = Integer.valueOf(_value.getText()).intValue(); }
+		try { newVal = _value.getSelectedIndex(); }
 			catch (java.lang.NumberFormatException ex) { newVal = 0; }
 		int newCv = newValue(oldCv, newVal, getMask());
 		((CvValue)_cvVector.elementAt(getCvNum())).setValue(newCv);
@@ -58,11 +62,11 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 	public Component getValue()  { return _value; }
 	public void setValue(int value) { 
 		int oldVal;
-		try { oldVal = Integer.valueOf(_value.getText()).intValue(); }
+		try { oldVal = _value.getSelectedIndex(); }
 			catch (java.lang.NumberFormatException ex) { oldVal = 0; }	
 		if (oldVal != value) 
 			prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value));
-		_value.setText(""+value);
+		_value.setSelectedIndex(value);
 	}
 
 	public void read() {
@@ -99,7 +103,7 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 	}
 
 	// stored value
-	JTextField _value = null;
+	JComboBox _value = null;
 
 	// clean up connections when done
 	public void dispose() {
@@ -108,6 +112,6 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 	}
 	
 	// initialize logging	
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DecVariableValue.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EnumVariableValue.class.getName());
 		
 }

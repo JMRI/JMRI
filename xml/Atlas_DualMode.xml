@@ -76,7 +76,10 @@
 				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="Brake momentum on DC operation" CV="50" mask="XXXXXVXX">
-			<decoder:binaryVal phrasing="OffOn"/>
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Off"/>
+				<decoder:enumChoice choice="On"/>
+				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="Directional headlights" CV="51" mask="XXXXXXXV">
 			<decoder:enumVal>
@@ -91,10 +94,16 @@
 				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="If lights independent, F4 dims F0" CV="51" mask="XXXXXVXX">
-				<decoder:binaryVal phrasing="NoYes"/>
+			<decoder:enumVal>
+				<decoder:enumChoice choice="No"/>
+				<decoder:enumChoice choice="Yes"/>
+				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="If lights independent, F4 dims F1" CV="51" mask="XXXXVXXX">
-				<decoder:binaryVal phrasing="NoYes"/>
+			<decoder:enumVal>
+				<decoder:enumChoice choice="No"/>
+				<decoder:enumChoice choice="Yes"/>
+				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="Dimming value (CV52)" CV="52">
 			<decoder:decVal/>
