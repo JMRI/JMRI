@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: CVProducts_AD4.xml,v 1.2 2002-08-11 16:44:43 jacobsen Exp $ -->
+<!-- $Id: CVProducts_AD4.xml,v 1.3 2002-08-13 16:39:49 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
 					version="1" lastUpdated="20020808"/>
@@ -14,8 +14,14 @@
 	                     register="yes" ops="yes"></programming>
 
 	<variables>
-		<variable label="Card Address" item="Short Address" CV="1" mask="VVVVVVVV">
-			<splitVal highCV="9"/>
+		<variable label="Card Address" item="Short Address" CV="1" mask="XXVVVVVV">
+			<splitVal highCV="9" />
+			</variable>
+		<variable label="Low Turnout Address" CV="1" mask="XXVVVVVV">
+			<splitVal highCV="9" factor="4" offset="-3"/>
+			</variable>
+		<variable label="High Turnout Address" item="Short Address" CV="1" mask="XXVVVVVV">
+			<splitVal highCV="9" factor="4" />
 			</variable>
 
 		<variable label="Local input 1" CV="2" mask="XXXXXXXV"
@@ -122,6 +128,8 @@
 <pane name="AD4">
 	<column>
 		<display item="Card Address" />
+		<display item="Low Turnout Address" />
+		<display item="High Turnout Address" />
 		<label label=""/>
 		<separator/>
 		<row>
