@@ -15,20 +15,19 @@ import jmri.NmraPacket;
  *
  * Description:		extend jmri.AbstractTurnout for Sprog layouts
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SprogTurnout extends AbstractTurnout {
 
-	/**
-	 * Sprog turnouts use the NMRA number (0-511) as their numerical identification.
-	 */
-	public SprogTurnout(int number) {
-		_number = number;
-		// At construction, register for messages
-	}
+    /**
+     * Sprog turnouts use the NMRA number (0-511) as their numerical identification.
+     */
+    public SprogTurnout(int number) {
+        super("ST"+number);
+        _number = number;
+    }
 
 	public int getNumber() { return _number; }
-	public String getSystemName() { return "ET"+getNumber(); }
 
 	// Handle a request to change state by sending a formatted DCC packet
 	protected void forwardCommandChangeToLayout(int s) {
