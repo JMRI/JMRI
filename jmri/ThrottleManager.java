@@ -10,7 +10,7 @@ import java.util.Iterator;
  * Different systems will distrinquish between short and long addresses
  * in different ways.
  * @author			Glen Oberhauser
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public interface ThrottleManager
 {
@@ -32,21 +32,4 @@ public interface ThrottleManager
      */
     public void cancelThrottleRequest(int address, ThrottleListener l);
 
-
-    /**
-     * Tell this manager that a new ThrottleFrame was created.
-     * @param tf The new ThrottleFrame.
-     */
-    public void notifyNewThrottleFrame(ThrottleFrame tf);
-
-    /**
-     * Retrieve an Iterator over all the ThrottleFrames in existence.
-     * @return The Iterator on the list of ThrottleFrames.
-     */
-    public Iterator getThrottleFrames();
-
-    /**
-     * Get a reference to the Function
-     */
-    public jmri.jmrit.throttle.FunctionButtonPropertyEditor getFunctionButtonEditor();
 }
