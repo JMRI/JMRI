@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <decoderIndex version="46">
+  <decoderIndex version="47">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -40,13 +40,21 @@
       <manufacturer mfg="Zimo" mfgID="145" />
     </mfgList>
     <familyList>
-      <family name="NMRA standard CV definitions" mfg="NMRA" type="locomotive" file="0NMRA.xml" />
-      <family name="NMRA standard register definitions" mfg="NMRA" type="locomotive" file="0NMRA_registers.xml" />
-      <family name="Raw CVs 1-255" mfg="NMRA" type="locomotive" file="0NMRA_test.xml" />
+      <family name="NMRA standard CV definitions" mfg="NMRA" type="locomotive" file="0NMRA.xml">
+        <model model="NMRA standard CV definitions" />
+      </family>
+      <family name="NMRA standard register definitions" mfg="NMRA" type="locomotive" file="0NMRA_registers.xml">
+        <model model="NMRA standard register definitions" />
+      </family>
+      <family name="Raw CVs 1-255" mfg="NMRA" type="locomotive" file="0NMRA_test.xml">
+        <model model="Raw CVs 1-255" />
+      </family>
       <family name="Dual Mode" mfg="Atlas" lowVersionID="1" highVersionID="255" type="locomotive" file="Atlas_DualMode.xml">
         <model model="Dual Mode" numOuts="4" numFns="8" />
       </family>
-      <family name="AD4" mfg="CVP Products" lowVersionID="40" highVersionID="65" type="stationary" file="CVProducts_AD4.xml" />
+      <family name="AD4" mfg="CVP Products" lowVersionID="40" highVersionID="65" type="stationary" file="CVProducts_AD4.xml">
+        <model model="AD4" />
+      </family>
       <family name="Series 3 with FX3, silent, readback" mfg="Digitrax" lowVersionID="49" highVersionID="49" type="locomotive" file="Digitrax_01x3.xml">
         <model model="DH163" numOuts="6" numFns="12">
           <output name="4" label="Violet" />
@@ -179,7 +187,9 @@
         <model model="DH120" numOuts="2" numFns="2" />
         <model model="DZ120" numOuts="2" numFns="2" />
       </family>
-      <family name="DS54" mfg="Digitrax" comment="DS54 is a stationary decoder, but it can be programmed in the usual way" type="locomotive" file="Digitrax_yDS54.xml" />
+      <family name="DS54" mfg="Digitrax" comment="DS54 is a stationary decoder, but it can be programmed in the usual way" type="locomotive" file="Digitrax_yDS54.xml">
+        <model model="DS54" />
+      </family>
       <family name="ESU LokSound2 Silent BEMF/Sound decoders" mfg="ESU" lowVersionID="21" type="locomotive" file="ESU_LokSound2_21.xml">
         <model model="ESU_LokSound2" numOuts="13" numFns="12">
           <output name="1" label="Front Lights" />
@@ -374,22 +384,6 @@
           <!-- for the DSX version -->
         </model>
       </family>
-      <family name="LC Diesel decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_LC_Diesel.xml">
-        <model model="100LC Diesel" numOuts="2" numFns="8">
-          <versionCV lowVersionID="34" />
-          <output name="Horn" />
-          <output name="Bell" />
-          <!--output name="3" label="FX1/grn" /-->
-          <!--output name="4" label="FX2/brwn" /-->
-          <output name="DynBrake" />
-          <output name="RPM+" />
-          <output name="RPM-" />
-          <output name="Dim" />
-          <output name="Mute" />
-          <!-- The four electrical outputs are front headlight, back -->
-          <!-- headlight, FX1, FX2 -->
-        </model>
-      </family>
       <family name="LC Diesel PNP decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_LC_Diesel_pnp.xml">
         <!--note: this file does not support the FX2 output for the LL100LC-->
         <model model="AT100LC/KT100LC Diesel" numOuts="2" numFns="8">
@@ -522,6 +516,53 @@
           <output name="Mute" />
           <!-- The two electical outputs are front headlight, back -->
           <!-- headlight-->
+        </model>
+      </family>
+      <family name="Plug&amp;Play LC diesel decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_pnpLC_Diesel.xml">
+        <model model="C628LC Diesel" numOuts="4" numFns="8">
+          <versionCV lowVersionID="37" />
+          <output name="Horn" />
+          <output name="Bell" />
+          <output name="3" label="FX1/grn" />
+          <output name="4" label="FX2/brwn" />
+          <output name="DynBrake" />
+          <output name="RPM+" />
+          <output name="RPM-" />
+          <output name="Dim" />
+          <output name="Mute" />
+        </model>
+        <model model="LL100LC Diesel" numOuts="4" numFns="8">
+          <!-- note: The LL100LC has an FX2 output but no FX1 output -->
+          <versionCV lowVersionID="36" />
+          <output name="Horn" />
+          <output name="Bell" />
+          <output name="3" label="none" />
+          <output name="4" label="FX2/brwn" />
+          <output name="DynBrake" />
+          <output name="RPM+" />
+          <output name="RPM-" />
+          <output name="Dim" />
+          <output name="Mute" />
+        </model>
+        <model model="LL110LC Diesel" numOuts="2" numFns="8">
+          <versionCV lowVersionID="36" />
+          <output name="Horn" />
+          <output name="Bell" />
+          <output name="DynBrake" />
+          <output name="RPM+" />
+          <output name="RPM-" />
+          <output name="Dim" />
+          <output name="Mute" />
+        </model>
+        <model model="090LC Diesel" numOuts="2" numFns="8">
+          <versionCV lowVersionID="36" />
+          <output name="Horn" />
+          <output name="Bell" />
+          <output name="DynBrake" />
+          <output name="RPM+" />
+          <output name="RPM-" />
+          <output name="Dim" />
+          <output name="Mute" />
         </model>
       </family>
       <family name="TCS A1 decoder" mfg="Train Control Systems" type="locomotive" file="TCS_A1.xml">
