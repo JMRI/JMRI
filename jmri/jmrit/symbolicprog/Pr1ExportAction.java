@@ -2,11 +2,15 @@
 
 package jmri.jmrit.symbolicprog;
 
-import java.awt.event.*;
-import java.util.*;
-import java.io.*;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 
 /**
  * Action to export the CV values to a PR1DOS data file.
@@ -15,7 +19,7 @@ import javax.swing.*;
  * it's not clear they will interoperate.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class Pr1ExportAction  extends AbstractAction {
 

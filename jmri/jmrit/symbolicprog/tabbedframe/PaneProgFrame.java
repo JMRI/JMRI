@@ -12,22 +12,22 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterEntryPane;
 import jmri.jmrit.symbolicprog.*;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Font;
+import java.io.IOException;
 
 import javax.swing.*;
 
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.List;
 import org.jdom.Attribute;
 import org.jdom.Element;
-import java.io.IOException;
+import com.sun.java.util.collections.ArrayList;
+import com.sun.java.util.collections.List;
 
 /**
- * Frame providing a command station programmer from decoder definition files
+ * Frame providing a command station programmer from decoder definition files.
  * @author			Bob Jacobsen   Copyright (C) 2001; D Miller Copyright 2003
- * @version			$Revision: 1.32 $
+ * @version			$Revision: 1.33 $
  */
 abstract public class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {

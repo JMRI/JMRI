@@ -2,17 +2,20 @@
 
 package jmri.jmrit.symbolicprog;
 
-import java.awt.event.*;
-import java.io.*;
-import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
 import jmri.jmrit.FileChooserFilter;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
+
+import javax.swing.AbstractAction;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 
 /**
  * Action to import the CV values from a PR1WIN/PR1DOS data file.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 public class Pr1ImportAction  extends AbstractAction {
