@@ -32,8 +32,7 @@ public class ComboCheckBoxTest extends TestCase {
 		if (log.isInfoEnabled()) log.info("Enum variable created, loaded");
 		
 		EnumVariableValue var = new EnumVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
-		var.addItem("Value0");
-		var.addItem("Value1");
+		addTestItems(var);
 		if (log.isInfoEnabled()) log.info("Enum variable created");
 
 		JComboBox combo = (JComboBox)(var.getValue());
@@ -66,8 +65,7 @@ public class ComboCheckBoxTest extends TestCase {
 		cv.setValue(3);
 		v.setElementAt(cv, 81);
 		EnumVariableValue var = new EnumVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
-		var.addItem("Value0");
-		var.addItem("Value1");
+		addTestItems(var);
 		JComboBox combo = (JComboBox)(var.getValue());
 		
 		// create object under test
@@ -91,6 +89,13 @@ public class ComboCheckBoxTest extends TestCase {
 	}
 	
 
+	protected void addTestItems(EnumVariableValue var) {
+		var.nItems(2);
+		var.addItem("Value0");
+		var.addItem("Value1");
+		var.lastItem();
+	}
+	
 	protected Vector createCvVector() {
 		Vector v = new Vector(512);
 		for (int i=0; i < 512; i++) v.addElement(null);

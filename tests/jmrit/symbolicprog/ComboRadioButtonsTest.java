@@ -28,9 +28,7 @@ public class ComboRadioButtonsTest extends TestCase {
 		cv.setValue(3);
 		v.setElementAt(cv, 81);
 		EnumVariableValue var = new EnumVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
-		var.addItem("Value0");
-		var.addItem("Value1");
-		var.addItem("Value2");
+		addTestItems(var);
 		JComboBox combo = (JComboBox)(var.getValue());
 		
 		// create object under test
@@ -47,9 +45,7 @@ public class ComboRadioButtonsTest extends TestCase {
 		cv.setValue(3);
 		v.setElementAt(cv, 81);
 		EnumVariableValue var = new EnumVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
-		var.addItem("Value0");
-		var.addItem("Value1");
-		var.addItem("Value2");
+		addTestItems(var);
 		JComboBox combo = (JComboBox)(var.getValue());
 		
 		// create object under test
@@ -85,9 +81,7 @@ public class ComboRadioButtonsTest extends TestCase {
 		cv.setValue(3);
 		v.setElementAt(cv, 81);
 		EnumVariableValue var = new EnumVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
-		var.addItem("Value0");
-		var.addItem("Value1");
-		var.addItem("Value2");
+		addTestItems(var);
 		JComboBox combo = (JComboBox)(var.getValue());
 		
 		// create object under test
@@ -122,6 +116,13 @@ public class ComboRadioButtonsTest extends TestCase {
 		return v;
 	}
 
+	protected void addTestItems(EnumVariableValue var) {
+		var.nItems(3);
+		var.addItem("Value0");
+		var.addItem("Value1");
+		var.addItem("Value2");
+		var.lastItem();
+	}
 
 	// from here down is testing infrastructure
 	
