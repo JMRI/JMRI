@@ -13,7 +13,7 @@ import jmri.ProgrammerException;
 /**
  * Debugging implementation of Programmer interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.13 $
+ * @version         $Revision: 1.14 $
  */
 public class ProgDebugger implements Programmer  {
 
@@ -27,7 +27,7 @@ public class ProgDebugger implements Programmer  {
     Hashtable mValues = new Hashtable();
 
 	public String decodeErrorCode(int i) {
-		log.info("decoderErrorCode "+i);
+		log.debug("decoderErrorCode "+i);
 		return "error "+i;
 	}
 
@@ -106,7 +106,7 @@ public class ProgDebugger implements Programmer  {
 	protected int _mode = 0;
 
 	public void setMode(int mode) {
-		log.info("setMode: old="+_mode+" new="+mode);
+		log.debug("setMode: old="+_mode+" new="+mode);
 		if (mode != _mode) {
 			notifyPropertyChange("Mode", _mode, mode);
 			_mode = mode;
