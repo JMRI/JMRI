@@ -140,11 +140,19 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
 		DecoderFile decoderFile = DecoderIndexFile.instance().fileFromTitle((String)decoderBox.getSelectedItem());
 		if (log.isDebugEnabled()) log.debug("decoder file: "+decoderFile.getFilename());
 
-		startProgrammer(decoderFile, locoFile);
+		// create a dummy RosterEntry with the decoder info
+		RosterEntry re = new RosterEntry();
+		re.setDecoderFamily(decoderFile.getFamily());
+		re.setDecoderModel(decoderFile.getModel());
+		re.setId("<new loco>");
+		// add the new roster entry to the in-memory roster
+		Roster.instance().addEntry(re);
+		
+		startProgrammer(decoderFile, locoFile, re);
 	}
 	
 	/** meant to be overridden to start the desired type of programmer */
-	protected void startProgrammer(DecoderFile decoderFile, String locoFile) {
+	protected void startProgrammer(DecoderFile decoderFile, String locoFile, RosterEntry r) {
 		log.error("startProgrammer method in NewLocoSelPane should have been overridden");
 	}
 	

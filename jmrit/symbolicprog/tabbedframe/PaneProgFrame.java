@@ -44,6 +44,9 @@ public class PaneProgFrame extends javax.swing.JFrame
 	VariableTableModel  variableModel	= new VariableTableModel(progStatus,
 														new String[]  {"Name", "Value"},
 														cvModel);
+	RosterEntry _rosterEntry = null;
+	RosterEntryPane _rPane = null;
+	
 	List paneList = new ArrayList();
 	
 	// GUI member declarations
@@ -71,7 +74,7 @@ public class PaneProgFrame extends javax.swing.JFrame
 			}
 		});
 
-		// most of this is done from XML in readConfig() function
+		// most of the GUI is done from XML in readConfig() function
 		getContentPane().add(tabPane);
 		
 		// add buttons
@@ -82,6 +85,7 @@ public class PaneProgFrame extends javax.swing.JFrame
 		bottom.add(writeAll);
 		getContentPane().add(bottom);
 		
+		getContentPane().add(progStatus);
 		// pack  - this should be done again later after config
 		pack();
 	}
@@ -198,10 +202,21 @@ public class PaneProgFrame extends javax.swing.JFrame
 		tabPane.addTab("Info", body);
 
 		// add roster info
-		JPanel bottom = new RosterEntryPane(r);
-		bottom.setMaximumSize(bottom.getPreferredSize());
+		_rPane = new RosterEntryPane(r);
+		_rosterEntry = r;
 		
-		body.add(bottom);
+		_rPane.setMaximumSize(_rPane.getPreferredSize());
+
+		body.add(_rPane);
+		
+		// add the store button
+		JButton store = new JButton("      Store to file       ");
+		store.addActionListener( new ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				storeFile();
+			}
+		});
+		body.add(store);
 	}
 	
 	public void newPane(String name, Element pane, Namespace ns) {
@@ -297,7 +312,53 @@ public class PaneProgFrame extends javax.swing.JFrame
 		if (_read) readAll();
 		else writeAll();
 	}
+	
+	/**
+	 * Write everything to a file.
+	 */
+	public void storeFile() {
+		System.out.println("storeFile starts");
+		// id has to be set!
+		if (_rosterEntry.getId().equals("")) {
+			log.error("Can't store a file without an ID entry");
+			return;
+		}
+		// if there isn't a filename, store using the id
+		String filename = "";
+		if (_rosterEntry.getFileName().equals("")) {
+			filename = _rosterEntry.getId()+".xml";
+			log.debug("new filename: "+filename);
+		}
+		
+		// create a DecoderFile to represent this
+		LocoFile df = new LocoFile();
+		
+		// do I/O
+		try {
+			String fullFilename = LocoFile.fileLocation+File.separator+filename;
+			File f = new File(fullFilename);
+			// make sure file doesn't exist
+			if (f.exists()) {
+				log.debug("Output locomotive file already exists: "+fullFilename);
+				f.renameTo(LocoFile.backupFileName(filename));
+				// name a new file object for the new file
+				f = new File(fullFilename);
+			}
+			// reload the RosterEntry
+			_rPane.update(_rosterEntry);
+			_rosterEntry.setFileName(filename);
+
+			// and finally write the file
+			df.writeFile(f, cvModel, variableModel, _rosterEntry);
 			
+			//and store an updated roster file
+			
+		} catch (Exception e) {
+			log.error("error during locomotive file output: "+e);
+		}
+		
+	}
+	
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PaneProgFrame.class.getName());
 
 }

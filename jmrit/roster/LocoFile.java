@@ -3,11 +3,15 @@
 package jmri.jmrit.decoderdefn;
 
 import com.sun.java.util.collections.List;
+import java.io.*;
+import java.util.Date;
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.CvValue;
-import org.jdom.Element;
-import org.jdom.Namespace;
+import org.jdom.*;
+import org.jdom.output.*;
 
 // try to limit the JDOM to this class, so that others can manipulate...
 
@@ -16,7 +20,7 @@ import org.jdom.Namespace;
  * in memory.  The interal storage is a JDOM tree. See locomotive-config.dtd
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version		
+ * @version		 	$Id: LocoFile.java,v 1.2 2001-11-16 15:02:41 jacobsen Exp $
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
@@ -74,6 +78,82 @@ public class LocoFile extends XmlFile {
 					cvObject.setState(CvValue.FROMFILE);
 				}
 			} else log.error("no values element found in config file; CVs not configured");
+	}
+	
+	public void writeFile(File file, CvTableModel cvModel, VariableTableModel variableModel, RosterEntry r) {
+		try {
+			// This is taken in large part from "Java and XML" page 368 
+			Namespace ns = Namespace.getNamespace("locomotive",
+										"http://jmri.sourceforge.net/xml/locomotive");
+
+			// create root element
+			Element root = new Element("locomotive-config", ns);
+			Document doc = new Document(root);
+			doc.setDocType(new DocType("locomotive:locomotive-config","DTD/locomotive-config.dtd"));
+		
+			// add top-level elements
+			Element values;
+			root.addContent(new Element("locomotive",ns)		// locomotive values are first item
+					.addAttribute("id", r.getId())
+					.addAttribute("fileName", r.getFileName())
+					.addAttribute("roadNumber",r.getRoadNumber())
+					.addAttribute("roadName",r.getRoadName())
+					.addAttribute("mfg",r.getMfg())
+					.addAttribute("model",r.getModel())
+					.addAttribute("dccAddress",r.getDccAddress())
+					.addAttribute("comment",r.getComment())
+					.addContent(new Element("decoder", ns)
+									.addAttribute("model",r.getDecoderModel())
+									.addAttribute("family",r.getDecoderFamily())
+									.addAttribute("comment",r.getDecoderComment())
+								)
+						  .addContent(values = new Element("values", ns))
+					)
+				;
+					
+			// Append a decoderDef element to values
+			Element decoderDef;
+			values.addContent(decoderDef = new Element("decoderDef", ns));
+			// add the variable values to the decoderDef Element
+			for (int i = 0; i < variableModel.getRowCount(); i++) {
+				decoderDef.addContent(new Element("varValue", ns)
+									.addAttribute("name", variableModel.getName(i))
+									.addAttribute("value", variableModel.getValString(i))
+						);
+			}
+			// add the CV values to the values Element
+			for (int i = 0; i < cvModel.getRowCount(); i++) {
+				values.addContent(new Element("CVvalue", ns)
+									.addAttribute("name", cvModel.getName(i))
+									.addAttribute("value", cvModel.getValString(i))
+						);
+			}
+			
+			// write the result to selected file
+			java.io.FileOutputStream o = new java.io.FileOutputStream(file);
+			XMLOutputter fmt = new XMLOutputter();
+			fmt.setNewlines(true);   // pretty printing
+			fmt.setIndent(true);
+			fmt.output(doc, o);
+			
+			// mark file as OK
+			variableModel.setFileDirty(false);
+			}
+		catch (Exception e) {
+			log.error(e);
+		}
+	}
+
+	/** 
+	* Return a File reference to a new, unique backup file. This is here so it can 
+	* be overridden during tests.
+	*/
+	static public File backupFileName(String name) {
+		// File.createTempFile is not available in java 1, so use millisecond time as unique string
+		File f =  new File(fileLocation+File.separator+"b-"
+							+((new Date()).getTime())+"-"+name);
+		if (log.isDebugEnabled()) log.debug("backup file name is "+f.getAbsolutePath());
+		return f;
 	}
 	
 	static public String fileLocation = "prefs";

@@ -37,9 +37,8 @@ public class PaneProgAction 			extends AbstractAction {
 		// new Loco on programming track
 		JLabel last;
 		JPanel pane1 = new NewLocoSelPane(){
-			protected void startProgrammer(DecoderFile decoderFile, String locoFile) {
-				// start with no RosterEntry, as this is a new loco
-				JFrame p = new PaneProgFrame(decoderFile, locoFile, new RosterEntry());
+			protected void startProgrammer(DecoderFile decoderFile, String locoFile, RosterEntry re) {
+				JFrame p = new PaneProgFrame(decoderFile, locoFile, re);
 				p.pack();
 				p.show();
 			}
@@ -47,8 +46,8 @@ public class PaneProgAction 			extends AbstractAction {
 		
 		// Known loco on programming track
 		JPanel pane2 = new KnownLocoSelPane(){
-			protected void startProgrammer(DecoderFile decoderFile, String locoFile) {
-				JFrame p = new PaneProgFrame(decoderFile, locoFile, null);
+			protected void startProgrammer(DecoderFile decoderFile, String locoFile, RosterEntry re) {
+				JFrame p = new PaneProgFrame(decoderFile, locoFile, re);
 				p.pack();
 				p.show();
 			}

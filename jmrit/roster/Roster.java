@@ -30,7 +30,7 @@ import org.jdom.output.*;
  * whether it should...
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: Roster.java,v 1.3 2001-11-16 00:27:28 jacobsen Exp $
+ * @version			$Id: Roster.java,v 1.4 2001-11-16 15:02:41 jacobsen Exp $
  * @see             jmri.jmrit.roster.RosterEntry
  */
 public class Roster {
@@ -49,13 +49,13 @@ public class Roster {
 		return _instance;
 	}
 	
-	void addEntry(RosterEntry e) {
+	public void addEntry(RosterEntry e) {
 		if (log.isDebugEnabled()) log.debug("Add entry "+e);
 		_list.add(_list.size(), e);
 		setDirty(true);
 	}
 	
-	void removeEntry(RosterEntry e) {
+	public void removeEntry(RosterEntry e) {
 		if (log.isDebugEnabled()) log.debug("Remove entry "+e);
 		_list.remove(_list.indexOf(e));
 		setDirty(true);
