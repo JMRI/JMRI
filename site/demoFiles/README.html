@@ -9,23 +9,24 @@
 </head>
 <body>
 
-<A href="../index.html">
-<IMG SRC="../images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
-</a>
-
 <PRE>
 
-This is version 0.7 of "JMRI Demo".
+This is version 0.8 of "JMRI Demo".
 
-This demo provides monitoring  and programming tools for a 
-Digitrax LocoNet network. 
+This demo works with Digitrax LocoNet and NCE-equipped layouts. It provides
+tools for layout control and monitoring, and for programming decoders.
 
-For more information, visit the JMRI web page at 
-<A HREF="http://jmri.sourceforge.net/">http://jmri.sourceforge.net/</a>
+For more information, visit the JMRI web page at http://jmri.sourceforge.net/
 or contact Bob Jacobsen (jake@physics.berkeley.edu). 
 
-For more installation information, please see 
-<A HREF="http://jmri.sourceforge.net/InstallJmri.html">http://jmri.sourceforge.net/InstallJmri.html</a>
+For more installation information, please 
+see http://jmri.sourceforge.net/InstallJmri.html
+
+Note that there are four distributions for JMRI, with different contents.
+The basic Java code is the same, but because of the specific features of
+various system's support for Java, its necessary to handle the details in
+different ways.  More information on the details of the various packages is 
+available at http://jmri.sourceforge.net/Technical/Packaging.html
 
 
 Macintosh instructions:
@@ -34,10 +35,16 @@ Macintosh instructions:
 This demo should run with any recent release of the Macintosh Runtime for Java (MRJ).  
 MRJ requires Mac OS 8.1 or later.  Development is currently using MRJ 2.2.5, 
 available for download from Apple at
-  <A HREF="http://developer.apple.com/java/download.html" NAME="http://developer.apple.com/java/download.html">http://developer.apple.com/java/download.html</A>
+  http://developer.apple.com/java/download.html
 
 Start the demo by double-clicking on the "JMRI Demo" application icon.  
 
+Under MacOS X, the demo runs under Classic if you double-click on the 
+"JMRI demo" application icon.  If you double-click the "JMRI MacOSX"
+icon it will start natively under MacOS X, and have the nice Aqua interface.
+Unfortunately, the serial connection when running under native MacOS X is 
+not yet working.  We hope to have that available in the 0.9 JMRI release,
+due in November 2001.
 
 
 OS/2 instructions:
@@ -46,9 +53,9 @@ OS/2 instructions:
 You need to have Java (at least 1.1.8), Swing and javacomm installed on your 
 machine. These can be downloaded from the IBM site.
 
-Download the JMRI.demo.0.7.zip file and expand it with 
+Download the JMRI.demo.0.8.OS2.zip file and expand it with 
 
-   PKZIP -extr -dir JMRI.demo.0.7.zip
+   PKZIP -extr -dir JMRI.demo.0.8.OS2.zip
 
 Change to the directory just created, then run the JmriDemo.CMD  
 script from this directory with
@@ -59,7 +66,7 @@ script from this directory with
 Linux instructions:
 ===================
 
-You need to have Java 1.2 or later installed on your machine, including Swing.  
+You need to have Java 1.2 or later installed on your machine, including Swing. 
 You can get this from Sun at
   http://java.sun.com/j2se/
 For information on installing Java, please see 
@@ -71,9 +78,9 @@ package installed on your computer.  One is available at
 with additional information at
   http://www.rxtx.org/
 
-Download the JMRI.demo.0.7.tar.gz file, then unpack it with
-   gunzip JMRI.demo.0.7.tar.gz
-   tar xf JMRI.demo.0.7.tar
+Download the JMRI.demo.0.8.tar.gz file, then unpack it with
+   gunzip JMRI.demo.0.8.tar.gz
+   tar xf JMRI.demo.0.8.tar
       
 Switch to the demo directory and run the demo using
 
@@ -83,24 +90,53 @@ Switch to the demo directory and run the demo using
 Windows instructions:
 =====================
 
-You need to have Java 1.1.8 or later installed on your machine, including Swing.  
-You can get this from Sun at
+You need to have Java 1.2 or later installed on your machine, including Swing. 
+We test with JRE 1.3.1-01. You can get this from Sun at
   http://java.sun.com/j2se/
 For information on installing Java, please see 
   http://jmri.sourceforge.net/Java/InstallJava.html
+  
+You will need to know where your Java installation is on your disk.  This is
+called the "Java home directory" below.  The Sun installers use
+  C:\Program Files\JavaSoft\JRE\<version> 
+for this, for example
+  C:\Program Files\JavaSoft\JRE\1.3.1
 
-To communicate with a LocoNet, you need to have a version of the javax.comm package 
-installed on your computer.  One is available at 
+To communicate with a LocoNet or NCE system, you need to have a version 
+of the javax.comm package installed on your computer.  The one from 
   http://java.sun.com/products/javacomm/
+is included with the JMRI distribution, but you have to copy some files
+to their final locations.
 
-Download the JMRI.demo.0.7.zip file and expand it with WinZip or similar.
-Change to the directory just created and do
+Download the JMRI.demo.win.0.8.zip file and expand it with WinZip or similar.
 
-  java -jar jmri.jar -classpath lib/log4j.jar;lib/xerces.jar;lib/jdom-jdk11.jar;${CLASSPATH}
-  
-  
+Copy the "win32com.dll" file just unpacked to the "bin" subdirectory of your
+Java home directory, for example:
+  copy win32com.dll C:\Program Files\JavaSoft\JRE\1.3.1\bin
+
+Copy the "javax.comm.properties" file just unpacked to the "lib" subdirectory 
+of your Java home directory, for example:
+  copy javax.comm.properties C:\Program Files\JavaSoft\JRE\1.3.1\lib
+
+Installation is complete.
+
+To start the program, double click on the "jmriwin95" icon, or type in a DOS
+window in the install directory:
+
+  java -jar jmriwin95.jar
+ 
+Note: We've heard that some types of Comm ports can't handle the LocoNet baud
+rate.  If you get errors messages about "Unsupported baud rate", please let
+use know so we can help find a solution for this.
+
+
 LocoNet Hardware Connection:
-===================
+============================
+
+There are two hardware adapters available to connect to a LocoNet.  The
+LocoBuffer is the strongly preferred alternative, as it reduces the load 
+on the host computer and has a significantly smaller error rate.  The
+Digitrax MS100 interface adapter is also supported.
 
 Connect a LocoBuffer or Digitrax MS100 interface to a serial port, using 
 an adapter cable as needed.  For more information on the MS100, please see
@@ -117,24 +153,72 @@ contact us for more information.
 
 See below if you don't have a hardware connection to a LocoNet layout available.
 
-Operating the demo (all platforms):
-===================================
 
-After the program starts, pull down the left "Input" menu 
-and select "MS100" or "LocoBuffer", depending on your hardware. (See 
-below if you don't have a hardware connection to a LocoNet layout available)
+NCE System Hardware Connection:
+===============================
 
-Select the name of the port connected to your LocoNet.
+The demo program is tested on a USB Macintosh using a Keyspan PDA Adapter to 
+provide the serial port; for information please see 
+http://jmri.sourceforge.net/DigiTrax/KeyspanAdapters/KeyspanUSB.html.  
+Its not known if a standard Macintosh RS422 serial port will work directly 
+with an NCE system; if you have a pre-USB Macintosh and want to use this demo, please 
+contact us for more information.
 
-Click "Open LocoNet port"
 
-You can now pull down the right "LocoNet" menu and select "LocoNet Monitor" to open 
+Operating the demo (Loconet on all platforms):
+==============================================
+
+After the program starts, pull down the left "Input" menu  and select 
+either "MS100" or "LocoBuffer" depending on the hardware adapter you 
+have connected.
+
+Select the name of the serial port connected to your layout.
+
+Click "Open port"
+
+You can now pull down the "LocoNet" menu and select "LocoNet Monitor" to open 
 a LocoNet monitor frame.  You should immediately start seeing LocoNet traffic 
 in the top pane, which contains the last 20 messages. The controls at the bottom 
 allow you to display raw data in addition to the interpreted packets, to clear the 
 listing, and to write output to a log file.
 
-The right and center menus have additional tools for interacting with your LocoNet:
+The "LocoNet" menu has additional tools:
+
+"Send Packet" -  a window what allows you to send an arbitrary packet to the
+LocoNet.  Type in hex pairs, such as "b2 11 40 1c", then press 'Send'.
+
+"Slot Monitor" - Displays the contents of the command station slots.  These 
+are used by throttles to control locomotives.  If you uncheck the box at the top, 
+only slots corresponding to active locomotives will be visible.
+
+If you don't have an MS100 or LocoBuffer connection to a LocoNet layout 
+available, you can still see the demo run by selecting "Hexfile" from 
+the left "Input" menu.  When you then click "Open file" and and then 
+open the lnpacket.hex sample file, the program will pretend that LocoNet 
+traffic is arriving from the captured-message file.  
+
+
+Operating the demo (NCE on all platforms):
+==========================================
+
+After the program starts, pull down the left "Input" menu  and select 
+"NCE Serial". 
+
+Select the name of the serial port connected to your layout.
+
+Click "Open port"
+
+You can now pull down the "NCE" menu and select "Command Monitor" to open 
+a monitor frame.  You won't see any traffic on this until you use one of the
+other panels to do something. The controls at the bottom 
+allow you to display raw data in addition to the interpreted packets, to clear the 
+listing, and to write output to a log file.
+
+
+Using the JMRI demo tools:
+==========================
+
+The "Tools" menu additional tools for interacting with your layout:
 
 "Turnout Control" - a window to control and monitor a single turnout.  You can have as 
 many of these open as you'd like.  
@@ -145,21 +229,7 @@ but not yet Ops Mode.
 
 "Symbolic Programmer" - a window for programming decoders in terms of 
 specific functions.  For more information, please see 
-<A HREF="http://jmri.sourceforge.net/SymbProg/index.html" NAME="http://jmri.sourceforge.net/SymbProg/index.html">http://jmri.sourceforge.net/SymbProg/index.html</A>
-
-"LocoNet Commands" -  a window what allows limited interaction with the LocoNet. It 
-contains buttons for sending "power on", "power off" and "turnout request" messages 
-to the LocoNet.  
-
-"Slot Monitor" - Displays the contents of the command station slots.  These 
-are used by throttles to control locomotives.  If you uncheck the box at the top, 
-only slots corresponding to active locomotives will be visible.
-
-If you don't have an MS100 or LocoBuffer connection to a LocoNet layout 
-available, you can still see the demo run by selecting "Hexfile" from 
-the left "Input" menu.  When you then click "read  from file" the program will 
-pretend that LocoNet traffic is arriving from a file of captured messages.  
-The lnpacket.hex file is provided as an example. 
+http://jmri.sourceforge.net/SymbProg/index.html
 
 
 For more information
@@ -172,11 +242,11 @@ you'd like to see this program do.  If you encounter a problem, please let use
 know so we can fix it.  You can send email to jake@physics.berkeley.edu, or use 
 the web form to 
 
- report bugs:     <A HREF="http://sourceforge.net/tracker/?atid=388313&group_id=26788&func=add" NAME="http://sourceforge.net/tracker/?atid=388313&group_id=26788&func=add">http://sourceforge.net/tracker/?atid=388313&group_id=26788&func=add</A>
+ report bugs:     http://sourceforge.net/tracker/?atid=388313&group_id=26788&func=add
 
- request help:   <A HREF="http://sourceforge.net/tracker/?atid=388314&group_id=26788&func=add" NAME="http://sourceforge.net/tracker/?atid=388314&group_id=26788&func=add">http://sourceforge.net/tracker/?atid=388314&group_id=26788&func=add</A>
+ request help:   http://sourceforge.net/tracker/?atid=388314&group_id=26788&func=add
 
- suggest improvements:   <A HREF="http://sourceforge.net/tracker/?atid=388316&group_id=26788&func=add" NAME="http://sourceforge.net/tracker/?atid=388316&group_id=26788&func=add">http://sourceforge.net/tracker/?atid=388316&group_id=26788&func=add</A>
+ suggest improvements:   http://sourceforge.net/tracker/?atid=388316&group_id=26788&func=add
 
 
 Notes: 
@@ -196,21 +266,20 @@ more information.
 The LocoNet monitoring includes algorithms first seen in the llnmon program 
 by Ron W. Auld.
 
-Rob Hamerling wrote the OS/2 instructions and startup script. Ronald Angel 
-has helped with the Linux & Windows startups.
+For other important acknowledgements, please see
+http://jmri.sourceforge.net/Acknowledgements.html
 
 Some of the contents of this folder are copyright 2001 Bob Jacobsen, 
 jake@physics.berkeley.edu. For license information, see
-<A HREF="http://www.opensource.org/licenses/artistic-license.html" NAME="http://www.opensource.org/licenses/artistic-license.html">http://www.opensource.org/licenses/artistic-license.html</A>
+http://www.opensource.org/licenses/artistic-license.html
 
 LocoNet is a trademark of Digitrax Corp.
 
 More information on the JMRI project is available from the in-construction 
-web pages at <A HREF="http://jmri.sourceforge.net/" NAME="http://jmri.sourceforge.net/">http://jmri.sourceforge.net/</A>  The source code is available vis CVS 
+web pages at http://jmri.sourceforge.net/  The source code is available vis CVS 
 from that page.
 
 To comply with the Sun trademark policy, JMRI is not an acronym.
-
 
 
 </PRE>

@@ -24,8 +24,10 @@ create an entire system from scratch.<P>
 To do this, we've split the problem into two parts with an interface in-between:
 <UL>
 <LI>"Below" the interface lies code that connects to specific layout hardware.  Our initial
-work has been with Digitrax&tm; systems, as they provide a lot of functionality already
-and really good support is available.  But we're working on connections to other systems.
+work was with Digitrax&reg; systems, as they provide a lot of functionality already
+and really good support is available.  We also connect to NCE PowerHouse systems, providing
+the full functionality. We are certainly interested in connecting to other systems.
+
 <LI>"Above" the interface are the cool tools that people want. Our first examples are
 programmers for DCC decoders and simple layout controls.  The hope is that we can develop
 better and better tools that still will work on lots of type of computers, with lots
@@ -68,13 +70,13 @@ to comply with the Sun licensing policy JMRI is not an acronym. <P>
 
 JMRI is an open-source project, so you can get the entire source code at any time
 via the <A HREF="http://sourceforge.net/projects/jmri/">Project page</A>. If you'd
-like a running demo, we have the most recent one (demo 0.7) available packaged in several forms:
+like a running demo, we have the most recent one (demo 0.8) available packaged in several forms:
 
 <UL>
-<LI><A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.demo.0.8.hqx">JMRI.demo.0.7A.hqx</A>  A binhex'd self-extracting archive for the Macintosh
-<LI><A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.demo.0.8.tar.gz" >JMRI.demo.0.7.tar.gz</A>   A .tar.gz file for Linux
-<LI><A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.demo.OS2.0.8.zip">JMRI.demo.0.7.zip</A>  A .zip file for OS/2
-<LI><A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.demo.win.0.8.zip">JMRI.demo.0.7.zip</A>  A .zip file for Windows 95, 98 and perhaps others
+<LI><A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.demo.0.8.hqx">JMRI.demo.0.8.hqx</A>  A binhex'd self-extracting archive for the Macintosh
+<LI><A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.demo.0.8.tar.gz" >JMRI.demo.0.8.tar.gz</A>   A .tar.gz file for Linux
+<LI><A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.demo.OS2.0.8.zip">JMRI.demo.0.8.zip</A>  A .zip file for OS/2
+<LI><A HREF="http://prdownloads.sourceforge.net/jmri/JMRI.demo.win.0.8.zip">JMRI.demo.0.8.zip</A>  A .zip file for Windows 95, 98 and perhaps others
 </UL>
 Note that the people working on this project are really short of expertise
 in Windows and Linux; project development has so far been on the Macintosh.
@@ -100,8 +102,8 @@ Making this easy is an important goal.
 <LI>You can write new general-purpose tools.  Although this is a little
 harder than writing automation for your own layout, writing tools that other
 people use can be very satisfying.
-<LI>You can implement the JMRI interfaces for a new system.  We're starting with
-LocoNet, but having JMRI work with other systems is an important goal.  
+<LI>You can implement the JMRI interfaces for a new system.  We've done 
+LocoNet and NCE, but having JMRI work with other systems is an important goal.  
 Once an implementation for another system works, the general tools (e.g.
 symbolic programmer, automations tools, signalling, etc) can be immediately
 used.
