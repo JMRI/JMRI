@@ -14,7 +14,7 @@ import jmri.jmrit.XmlFile;
  *
  * Description:	    tests for the jmrit.roster package & jmrit.roster.Roster class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class RosterTest extends TestCase {
 
@@ -65,14 +65,13 @@ public class RosterTest extends TestCase {
 
 	public void testBackupFile() throws Exception {
         // this test uses explicit filenames intentionally, to ensure that
-        // the resulting files go into the test tree area.  This is not
-        // a test of prefsDir, and shouldn't use that.
+        // the resulting files go into the test tree area.
 
 		// create a file in "temp"
-        XmlFile.ensurePrefsPresent("prefs");
-        XmlFile.ensurePrefsPresent("prefs/temp");
+        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
 		Roster.fileLocation = "temp";
-		File f = new File("prefs/temp"+File.separator+"roster.xml");
+		File f = new File(XmlFile.prefsDir()+"temp"+File.separator+"roster.xml");
 		// remove it if its there
 		f.delete();
 		// load a new one
@@ -83,12 +82,12 @@ public class RosterTest extends TestCase {
 		// now do the backup
 		Roster r = new Roster() {
 				public String backupFileName(String name)
-						{ return "prefs"+File.separator+"temp"+File.separator+"rosterBackupTest"; }
+						{ return XmlFile.prefsDir()+File.separator+"temp"+File.separator+"rosterBackupTest"; }
 				};
 		r.makeBackupFile("temp"+File.separator+"roster.xml");
 
 		// and check
-		InputStream in = new FileInputStream(new File("prefs"+File.separator+"temp"+File.separator+"rosterBackupTest"));
+		InputStream in = new FileInputStream(new File(XmlFile.prefsDir()+"temp"+File.separator+"rosterBackupTest"));
 		Assert.assertEquals("read 0 ", contents.charAt(0), in.read());
 		Assert.assertEquals("read 1 ", contents.charAt(1), in.read());
 		Assert.assertEquals("read 2 ", contents.charAt(2), in.read());
@@ -101,10 +100,10 @@ public class RosterTest extends TestCase {
         // a test of prefsDir, and shouldn't use that.
 
 		// store files in "temp"
-        XmlFile.ensurePrefsPresent("prefs");
-        XmlFile.ensurePrefsPresent("prefs/temp");
+        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
 		Roster.fileLocation = "temp";
-		File f = new File("prefs"+File.separator+"temp"+File.separator+"rosterTest.xml");
+		File f = new File(XmlFile.prefsDir()+"temp"+File.separator+"rosterTest.xml");
 		// remove existing roster if its there
 		f.delete();
 

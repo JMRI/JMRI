@@ -3,7 +3,7 @@
  *
  * Description:
  * @author			Bob Jacobsen  Copyright 2001
- * @version
+ * @version         $Revision: 1.4 $
  */
 
 package jmri.jmrit;
@@ -23,14 +23,14 @@ public class XmlFileTest extends TestCase {
 	public void testCheckFile() {
 		// XmlFile is abstract, so can't check ctor directly; use local class
 		XmlFile x = new XmlFile() {
-		};
+		                };
 
         // this test uses explicit filenames intentionally, to ensure that
         // the resulting files go into the test tree area.  This is not
         // a test of prefsDir, and shouldn't use that.
         XmlFile.ensurePrefsPresent("prefs");
-        XmlFile.ensurePrefsPresent("prefs/temp");
-		Assert.assertTrue("existing file ", x.checkFile("temp"));
+        XmlFile.ensurePrefsPresent("prefs"+File.separator+"temp");
+		Assert.assertTrue("existing file ", x.checkFile("decoders"));  // should be in xml
 		Assert.assertTrue("non-existing file ", !x.checkFile("dummy file not expected to exist"));
 	}
 
