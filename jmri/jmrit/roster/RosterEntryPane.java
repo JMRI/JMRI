@@ -22,17 +22,19 @@ import com.sun.java.util.collections.List;
 /**
  * Display and edit a RosterEntry.
  *
- * @author	Bob Jacobsen   Copyright (C) 2001; Dennis Miller Copyright 2004
- * @version	$Revision: 1.8 $
+ * @author	Bob Jacobsen   Copyright (C) 2001; Dennis Miller Copyright 2004, 2005
+ * @version	$Revision: 1.9 $
  */
 public class RosterEntryPane extends javax.swing.JPanel  {
 
-    JTextField id 		= new JTextField(12);
-    JTextField roadName 	= new JTextField(12);
-    JTextField roadNumber 	= new JTextField(12);
-    JTextField mfg 		= new JTextField(12);
-    JTextField model		= new JTextField(12);
-    JTextField owner		= new JTextField(12);
+// Field sizes expanded to 30 from 12 to match comment
+// fields and allow for more text to be displayed
+    JTextField id 		= new JTextField(30);
+    JTextField roadName 	= new JTextField(30);
+    JTextField roadNumber 	= new JTextField(30);
+    JTextField mfg 		= new JTextField(30);
+    JTextField model		= new JTextField(30);
+    JTextField owner		= new JTextField(30);
     JLabel dccAddress		= new JLabel();
     JTextArea comment		= new JTextArea(3,30);
     //JScrollPanes are defined with scroll bars on always to avoid undesireable resizing behavior
