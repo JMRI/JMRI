@@ -2,15 +2,17 @@
 
 package jmri.jmrit.decoderdefn;
 
+import java.io.*;
+import java.util.*;
+
+import javax.swing.*;
+
 import com.sun.java.util.collections.ArrayList;
 import com.sun.java.util.collections.Hashtable;
 import com.sun.java.util.collections.List;
-import java.io.File;
-import java.util.Enumeration;
-import javax.swing.JComboBox;
-import jmri.jmrit.XmlFile;
+import jmri.jmrit.*;
 import org.jdom.*;
-import org.jdom.output.XMLOutputter;
+import org.jdom.output.*;
 
 // try to limit the JDOM to this class, so that others can manipulate...
 
@@ -26,34 +28,34 @@ import org.jdom.output.XMLOutputter;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
-    
+
     // fill in abstract members
-    
+
     protected List decoderList = new ArrayList();
     public int numDecoders() { return decoderList.size(); }
-    
+
     int fileVersion = -1;
-    
+
     // map mfg ID numbers from & to mfg names
     protected Hashtable _mfgIdFromNameHash = new Hashtable();
     protected Hashtable _mfgNameFromIdHash = new Hashtable();
-    
+
     protected ArrayList mMfgNameList = new ArrayList();
-    
+
     public List getMfgNameList() { return mMfgNameList; }
-    
+
     public String mfgIdFromName(String name) {
         return (String)_mfgIdFromNameHash.get(name);
     }
-    
+
     public String mfgNameFromId(String name) {
         return (String)_mfgNameFromIdHash.get(name);
     }
-    
+
     /**
      *	Get a List of decoders matching some information
      */
@@ -66,7 +68,7 @@ public class DecoderIndexFile extends XmlFile {
         }
         return l;
     }
-    
+
     /**
      * Get a JComboBox representing the choices that match
      * some information
@@ -75,7 +77,7 @@ public class DecoderIndexFile extends XmlFile {
         List l = matchingDecoderList(mfg, family, decoderMfgID, decoderVersionID, model );
         return jComboBoxFromList(l);
     }
-    
+
     /**
      * Return a JComboBox made with the titles from a list of
      * DecoderFile entries
@@ -83,7 +85,7 @@ public class DecoderIndexFile extends XmlFile {
     static public JComboBox jComboBoxFromList(List l) {
         return new JComboBox(jComboBoxModelFromList(l));
     }
-    
+
     /**
      * Return a new ComboBoxModel made with the titles from a list of
      * DecoderFile entries
@@ -96,7 +98,7 @@ public class DecoderIndexFile extends XmlFile {
         }
         return b;
     }
-    
+
     /**
      * Return DecoderFile from a "title" string, ala selection in matchingComboBox.
      * Search backwards, so that if there is a decoder-entry and family-entry
@@ -109,7 +111,7 @@ public class DecoderIndexFile extends XmlFile {
         }
         return null;
     }
-    
+
     /**
      * Check if an entry consistent with specific properties. A null String entry
      * always matches. Strings are used for convenience in GUI building.
@@ -129,7 +131,7 @@ public class DecoderIndexFile extends XmlFile {
         }
         return true;
     }
-    
+
     static DecoderIndexFile _instance = null;
     public synchronized static void resetInstance() { _instance = null; }
     public synchronized static DecoderIndexFile instance() {
@@ -162,7 +164,7 @@ public class DecoderIndexFile extends XmlFile {
         if (log.isDebugEnabled()) log.debug("DecoderIndexFile returns instance "+_instance);
         return _instance;
     }
-    
+
     /**
      * Check whether the user's version of the decoder index file needs to be
      * updated; if it does, then force the update.
@@ -186,7 +188,7 @@ public class DecoderIndexFile extends XmlFile {
         else {
             return false;
         }
-        
+
         // get from user index.  Unless they are equal, force an update.
         // note we find this file via the search path; if not exists, so that
         // the master is found, we still do the right thing (nothing).
@@ -199,16 +201,16 @@ public class DecoderIndexFile extends XmlFile {
             log.debug("user version found, is "+userVersion);
         }
         if (userRoot!=null && masterVersion.equals(userVersion)) return false;
-        
+
         // force the update, with the version number located earlier
         instance().fileVersion = Integer.parseInt(masterVersion);
-        
+
         forceCreationOfNewIndex();
         // and force it's use
         return true;
-        
+
     }
-    
+
     /**
      * Force creation of a new user index
      */
@@ -251,11 +253,11 @@ public class DecoderIndexFile extends XmlFile {
             if (sx[i].endsWith(".xml") || sx[i].endsWith(".XML"))
                 sbox[n++] = sx[i];
         }
-        
+
         // create a new decoderIndex
         DecoderIndexFile index = new DecoderIndexFile();
         index.fileVersion = instance().fileVersion;
-        
+
         // write it out
         try {
             index.writeFile("decoderIndex.xml", _instance, sbox);
@@ -263,17 +265,17 @@ public class DecoderIndexFile extends XmlFile {
             log.error("Error writing new decoder index file: "+ex.getMessage());
         }
     }
-    
+
     /**
      * Read the contents of a decoderIndex XML file into this object. Note that this does not
      * clear any existing entries; reset the instance to do that.
      */
     void readFile(String name) throws org.jdom.JDOMException, java.io.FileNotFoundException {
         if (log.isDebugEnabled()) log.debug("readFile "+name);
-        
+
         // read file, find root
         Element root = rootFromName(name);
-        
+
         // decode type, invoke proper processing routine if a decoder file
         if (root.getChild("decoderIndex") != null) {
             if (root.getChild("decoderIndex").getAttribute("version")!=null)
@@ -289,11 +291,11 @@ public class DecoderIndexFile extends XmlFile {
             log.error("Unrecognized decoderIndex file contents in file: "+name);
         }
     }
-    
+
     void readMfgSection(Element decoderIndex) {
         Element mfgList = decoderIndex.getChild("mfgList");
         if (mfgList != null) {
-            
+
             List l = mfgList.getChildren("manufacturer");
             if (log.isDebugEnabled()) log.debug("readMfgSection sees "+l.size()+" children");
             for (int i=0; i<l.size(); i++) {
@@ -309,11 +311,11 @@ public class DecoderIndexFile extends XmlFile {
             }
         } else log.warn("no mfgList found in decoderIndexFile");
     }
-    
+
     void readFamilySection(Element decoderIndex) {
         Element familyList = decoderIndex.getChild("familyList");
         if (familyList != null) {
-            
+
             List l = familyList.getChildren("family");
             if (log.isDebugEnabled()) log.debug("readFamilySection sees "+l.size()+" children");
             for (int i=0; i<l.size(); i++) {
@@ -323,7 +325,7 @@ public class DecoderIndexFile extends XmlFile {
             }
         } else log.warn("no familyList found in decoderIndexFile");
     }
-    
+
     void readFamily(Element family) {
         Attribute attr;
         String filename = family.getAttribute("file").getValue();
@@ -332,10 +334,10 @@ public class DecoderIndexFile extends XmlFile {
         String familyName   = ((attr = family.getAttribute("name"))     != null ? attr.getValue() : null );
         String mfg   = ((attr = family.getAttribute("mfg"))     != null ? attr.getValue() : null );
         String mfgID   = mfgIdFromName(mfg);
-        
+
         List l = family.getChildren("model");
         if (log.isDebugEnabled()) log.debug("readFamily sees "+l.size()+" children");
-        
+
         // Record the family as a specific model, which allows you to select the
         // family as a possible thing to program
         DecoderFile vFamilyDecoderFile
@@ -345,7 +347,7 @@ public class DecoderIndexFile extends XmlFile {
                                filename,
                                -1, -1, null); // numFns, numOuts, XML element unknown
         decoderList.add(vFamilyDecoderFile);
-        
+
         // record each of the decoders
         for (int i=0; i<l.size(); i++) {
             // handle each entry by creating a DecoderFile object containing all it knows
@@ -370,23 +372,23 @@ public class DecoderIndexFile extends XmlFile {
             }
         }
     }
-    
+
     public void writeFile(String name, DecoderIndexFile oldIndex, String files[]) throws java.io.IOException {
         if (log.isInfoEnabled()) log.info("writeFile "+name);
         // This is taken in large part from "Java and XML" page 368
         File file = new File(prefsDir()+name);
-        
+
         // create root element
         Element root = new Element("decoderIndex-config");
         Document doc = new Document(root);
         doc.setDocType(new DocType("decoderIndex-config","decoderIndex-config.dtd"));
-        
+
         // add top-level elements
         Element index;
         root.addContent(index = new Element("decoderIndex"));
         index.addAttribute("version", Integer.toString(fileVersion));
         log.debug("version written to file as "+fileVersion);
-        
+
         // add mfg list from existing DecoderIndexFile item
         Element mfgList = new Element("mfgList");
         // We treat "NMRA" special...
@@ -412,7 +414,7 @@ public class DecoderIndexFile extends XmlFile {
                 mfgList.addContent(mfg);
             }
         }
-        
+
         // add family list by scanning files
         Element familyList = new Element("familyList");
         for (int i=0; i<files.length; i++) {
@@ -426,30 +428,30 @@ public class DecoderIndexFile extends XmlFile {
             catch (org.jdom.JDOMException exj) {log.error("could not parse "+files[i]+": "+exj.getMessage());}
             catch (java.io.FileNotFoundException exj) {log.error("could not read "+files[i]+": "+exj.getMessage());}
         }
-        
+
         index.addContent(mfgList);
         index.addContent(familyList);
-        
+
         // write the result to selected file
         java.io.FileOutputStream o = new java.io.FileOutputStream(file);
         XMLOutputter fmt = new XMLOutputter();
         fmt.setNewlines(true);   // pretty printing
         fmt.setIndent(true);
         fmt.output(doc, o);
-        
+
         // force a read of the new file next time
         _instance = null;
     }
-    
-    
+
+
     /**
      * Return the filename String for the default decoder index file, including location.
      * This is here to allow easy override in tests.
      */
     protected static String defaultDecoderIndexFilename() { return decoderIndexFileName;}
-    
+
     static final protected String decoderIndexFileName = "decoderIndex.xml";
     // initialize logging
     static private org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DecoderIndexFile.class.getName());
-    
+
 }
