@@ -6,7 +6,7 @@ package jmri;
  * Abstract class providing the basic logic of the SignalHead interface.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public abstract class AbstractSignalHead extends AbstractNamedBean
     implements SignalHead, java.io.Serializable {
@@ -29,6 +29,18 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
     //						Object newValue)
     // _once_ if anything has changed state
 
+
+	/**
+	 * Default behavior for "lit" parameter is
+	 * to stay "true".
+	 */
+	public boolean getLit() {return true;}
+	/**
+	 * Default behavior for "lit" parameter is
+	 * to stay "true".
+	 */
+	public void setLit() {}
+	
     /**
      * Implement a shorter name for setAppearance.
      *<P>
