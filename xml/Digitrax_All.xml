@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<!DOCTYPE decoder:decoder-config SYSTEM "DTD/decoder-config.dtd">
+<decoder:decoder-config xmlns:decoder="http://jmri.sourceforge.net/xml/decoder">
+<decoder:decoder>
+	<decoder:id model="All" mfg="Digitrax" mfgID="129"
+				comment="Generic CVs for Digitrax decoders"></decoder:id>
+
+	<decoder:programming direct="byte" paged="yes" 
+	                     register="yes" ops="yes"></decoder:programming>
+
+	<decoder:variables>
+		<decoder:variable name="Address" CV="1" mask="VVVVVVVV" comment="Short address">
+			<decoder:decVal></decoder:decVal>
+			</decoder:variable>
+		<decoder:variable name="Start voltage" CV="2" mask="VVVVVVVV"
+						comment="A value of 255 corresponds to 100%">
+			<decoder:decVal></decoder:decVal>
+			</decoder:variable>
+		<decoder:variable name="Acceleration rate" CV="3" mask="VVVVVVVV">
+			<decoder:decVal></decoder:decVal>
+			</decoder:variable>
+		<decoder:variable name="Deceleration rate" CV="4" mask="VVVVVVVV">
+			<decoder:decVal></decoder:decVal>
+			</decoder:variable>
+		<decoder:variable name="Maximum voltage" CV="5" mask="VVVVVVVV">
+			<decoder:decVal></decoder:decVal>
+			</decoder:variable>
+		<decoder:variable name="Midpoint voltage" CV="6" mask="VVVVVVVV">
+			<decoder:decVal></decoder:decVal>
+			</decoder:variable>
+		<decoder:variable name="Normal direction of motion" CV="29" mask="XXXXXXXV">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="forward"></decoder:enumChoice>
+				<decoder:enumChoice choice="reverse"></decoder:enumChoice>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Speed steps" CV="29" mask="XXXXXXVX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="14"></decoder:enumChoice>
+				<decoder:enumChoice choice="28/128"></decoder:enumChoice>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Analog conversion mode" CV="29" mask="XXXXXVXX">
+			<decoder:binaryVal phrasing="OffOn"></decoder:binaryVal>
+			</decoder:variable>
+		<decoder:variable name="Speed table" CV="29" mask="XXXXVXXX">
+			<decoder:binaryVal phrasing="OffOn"></decoder:binaryVal>
+			</decoder:variable>
+		<decoder:variable name="Addressing mode" CV="29" mask="XXXVXXXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="2 digit addressing"></decoder:enumChoice>
+				<decoder:enumChoice choice="4 digit addressing"></decoder:enumChoice>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Kick start value" CV="65" mask="VVVVVVVV">
+			<decoder:decVal></decoder:decVal>
+			</decoder:variable>
+		<decoder:variable name="Forward trim" CV="66" mask="VVVVVVVV">
+			<decoder:decVal></decoder:decVal>
+			</decoder:variable>
+		<decoder:variable name="Maximum speed table step" CV="94" mask="VVVVVVVV">
+			<decoder:decVal></decoder:decVal>
+			</decoder:variable>
+		<decoder:variable name="Reverse trim" CV="95" mask="VVVVVVVV">
+			<decoder:decVal></decoder:decVal>
+			</decoder:variable>
+		<decoder:variable name="User private ID #1" CV="105" mask="VVVVVVVV">
+			<decoder:decVal></decoder:decVal>
+			</decoder:variable>
+		<decoder:variable name="User private ID #2" CV="106" mask="VVVVVVVV">
+			<decoder:decVal></decoder:decVal>
+			</decoder:variable>
+	</decoder:variables>
+	
+</decoder:decoder>
+</decoder:decoder-config>
