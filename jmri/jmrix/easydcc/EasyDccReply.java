@@ -3,7 +3,7 @@
  *
  * Description:		Carries the reply to an EasyDccMessage
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Id: EasyDccReply.java,v 1.2 2002-03-30 19:22:53 jacobsen Exp $
+ * @version			$Id: EasyDccReply.java,v 1.3 2002-03-31 19:04:09 jacobsen Exp $
  */
 
 package jmri.jmrix.easydcc;
@@ -56,12 +56,15 @@ public class EasyDccReply {
 	public int value() {  // integer value of 8 and 9th digits
 		int index = 7;  // 8th position is index 7
 		//index = skipWhiteSpace(index);
-		String s = ""+(char)getElement(index)+(char)getElement(index+1);
+		String s1 = ""+(char)getElement(index);
+        String s2 = ""+(char)getElement(index+1);
 		int val = -1;
 		try {
-			val = Integer.parseInt(s);
+            int sum = Integer.valueOf(s2,16).intValue();
+			sum += 16*Integer.valueOf(s1,16).intValue();
+            val = sum;  // don't do this assign until now in case the conversion throws
 		} catch (Exception e) {
-			log.error("Unable to get number from reply: \""+s+"\" index: "+index
+			log.error("Unable to get number from reply: \""+s1+s2+"\" index: "+index
 					+" message: \""+toString()+"\"");
 		}
 		return val;
