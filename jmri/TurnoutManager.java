@@ -26,7 +26,7 @@ import com.sun.java.util.collections.List;
  * class, which provides a simple GUI for controlling a single turnout.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Id: TurnoutManager.java,v 1.4 2002-03-28 02:37:16 jacobsen Exp $
+ * @version			$Id: TurnoutManager.java,v 1.5 2002-04-15 03:16:37 jacobsen Exp $
  * @see             jmri.Turnout
  * @see             jmri.AbstractTurnoutManager
  * @see             jmri.InstanceManager
@@ -37,12 +37,14 @@ public interface TurnoutManager {
 	/**
 	 * Locate an instance based on a system name.  Returns null if no
 	 * instance already exists.
+     * @return requested Turnout object or null if none exists
 	 */
 	public Turnout getBySystemName(String systemName);
 
 	/**
 	 * Locate an instance based on a user name.  Returns null if no
 	 * instance already exists.
+     * @return requested Turnout object or null if none exists
 	 */
 	public Turnout getByUserName(String userName);
 
@@ -70,6 +72,7 @@ public interface TurnoutManager {
 	 * different objects.  This is a problem, and we don't have a
 	 * good solution.  To avoid it, provide only one or the other arugment values
 	 * (with null for the other).
+     * @return requested Turnout object (never null)
 	 */
 	public Turnout newTurnout(String systemName, String userName);
 

@@ -29,7 +29,7 @@ import jmri.jmrix.loconet.*;
  * though there are significant modifications.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
             implements LocoNetListener {
@@ -327,7 +327,7 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
      * a mode string.
      * @param cv The configuration CV from the LocoIO module
      * @param addr  The two-byte address from the LocoIO module
-     * @return
+     * @return Mode name corresponding to these config values
      */
     String modeFromValues(int cv, int addr) {
         // have to handle "Turnout closed" and "Turnout thrown" with ugly code

@@ -3,7 +3,7 @@
  *
  * Description:		Frame controlling a single turnout
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version
+ * @version         $Revision: 1.3 $
  */
 
 package jmri.jmrit.simpleturnoutctrl;

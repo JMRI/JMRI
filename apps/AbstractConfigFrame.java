@@ -24,7 +24,7 @@ import org.jdom.Attribute;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 abstract public class AbstractConfigFrame extends JFrame {
 
@@ -612,8 +612,6 @@ abstract public class AbstractConfigFrame extends JFrame {
      *  Alert the user if there were problems loading the PLAF.
      *  @param name (String) the presentable name for the class
      *  @param className (String) the className to be fed to the UIManager
-     *  @see javax.swing.UIManager#setLookAndFeel
-     *  @see javax.swing.SwingUtilities#updateComponentTreeUI
      */
     public void updateLookAndFeel(String name, String className) {
 	try {
