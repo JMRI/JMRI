@@ -22,7 +22,7 @@ import com.sun.java.util.collections.ArrayList;
  * Basic configuration GUI infrastructure.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class AppConfigPanel extends JPanel {
 
@@ -50,7 +50,7 @@ public class AppConfigPanel extends JPanel {
 
         // default programmer configuration
         log.debug("start prog");
-        JPanel p4;
+        jmri.jmrit.symbolicprog.ProgrammerConfigPane p4;
         addAndRemember(p4 = new jmri.jmrit.symbolicprog.ProgrammerConfigPane());
         p4.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutProgrammer")));
 
@@ -104,6 +104,12 @@ public class AppConfigPanel extends JPanel {
             advancedPane.add(p2);
             clist.add(p2);
         }
+
+        // add advanced programmer options
+        JPanel advProgSpace = new JPanel();
+        advProgSpace.add(p4.getAdvancedPanel());
+        advProgSpace.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutProgrammer")));
+        advancedPane.add(advProgSpace);
 
         // reserve space for Locale later
         log.debug("start res locale");

@@ -27,7 +27,7 @@ import org.jdom.Element;
 /**
  * Frame providing a command station programmer from decoder definition files.
  * @author			Bob Jacobsen   Copyright (C) 2001; D Miller Copyright 2003
- * @version			$Revision: 1.35 $
+ * @version			$Revision: 1.36 $
  */
 abstract public class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
@@ -540,10 +540,20 @@ abstract public class PaneProgFrame extends javax.swing.JFrame
     public void newPane(String name, Element pane, Element modelElem) {
 
         // create a panel to hold columns
-        JPanel p = new PaneProgPane(name, pane, cvModel, variableModel, modelElem);
+        PaneProgPane p = new PaneProgPane(name, pane, cvModel, variableModel, modelElem);
 
-        // add the tab to the frame
-        tabPane.addTab(name, p);
+        // how to handle the tab depends on whether it has contents and option setting
+        if ( (p.cvList.size()!=0) || (p.varList.size()!=0) ) {
+            tabPane.addTab(name, p);  // always add if not empty
+        } else if (getShowEmptyPanes()) {
+            // here empty, but showing anyway as disabled
+            tabPane.addTab(name, p);
+            int index = tabPane.indexOfTab(name);
+            tabPane.setEnabledAt(index, false);
+            tabPane.setToolTipTextAt(index, "Tab disabled because there are no options in this category");
+        } else {
+            // here not showing tab at all
+        }
 
         // and remember it for programming
         paneList.add(p);
@@ -765,6 +775,17 @@ abstract public class PaneProgFrame extends javax.swing.JFrame
         super.dispose();
 
     }
+
+    /**
+     * Option to control appearance of empty panes
+     */
+    public static void setShowEmptyPanes(boolean yes) {
+        showEmptyPanes = yes;
+    }
+    public static boolean getShowEmptyPanes() {
+        return showEmptyPanes;
+    }
+    static boolean showEmptyPanes = true;
 
     public RosterEntry getRosterEntry() { return _rosterEntry; }
 

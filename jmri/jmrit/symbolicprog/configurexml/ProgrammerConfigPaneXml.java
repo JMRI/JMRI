@@ -2,6 +2,8 @@ package jmri.jmrit.symbolicprog.configurexml;
 
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.symbolicprog.ProgrammerConfigPane;
+import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
+import org.jdom.Attribute;
 import org.jdom.Element;
 
 /**
@@ -13,7 +15,7 @@ import org.jdom.Element;
  * symbolicprog.CombinedLocoSelPane class.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class ProgrammerConfigPaneXml implements XmlAdapter {
 
@@ -31,6 +33,7 @@ public class ProgrammerConfigPaneXml implements XmlAdapter {
         Element programmer = new Element("programmer");
         programmer.addAttribute("defaultFile", p.getSelectedItem());
         programmer.addAttribute("verifyBeforeWrite", "no");
+        if (!p.getShowEmptyTabs()) programmer.addAttribute("showEmptyPanes", "no");
         programmer.addAttribute("class", this.getClass().getName());
         return programmer;
     }
@@ -42,6 +45,13 @@ public class ProgrammerConfigPaneXml implements XmlAdapter {
     public void load(Element element) {
         if (log.isDebugEnabled()) log.debug("set programmer default file: "+element.getAttribute("defaultFile").getValue());
         jmri.jmrit.symbolicprog.CombinedLocoSelPane.setDefaultProgFile(element.getAttribute("defaultFile").getValue());
+
+        Attribute a;
+        if (null != (a = element.getAttribute("showEmptyPanes")))
+            if ( a.getValue().equals("no"))
+                PaneProgFrame.setShowEmptyPanes(false);
+            else
+                PaneProgFrame.setShowEmptyPanes(true);
     }
 
     /**
