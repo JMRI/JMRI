@@ -50,26 +50,28 @@ public class PaneProgFrame extends javax.swing.JFrame
 	
 	// GUI member declarations
 	JTabbedPane tabPane = new JTabbedPane();
-	JButton readAll = new JButton("Read all");
-	JButton writeAll = new JButton("Write all");
-	JButton confirmAll = new JButton("Confirm all");
+	JToggleButton readAllButton = new JToggleButton("Read all");
+	JToggleButton writeAllButton = new JToggleButton("Write all");
+	JToggleButton confirmAllButton = new JToggleButton("Confirm all");
 	
 	ActionListener l1;
 	ActionListener l2;
 	
 	protected void installComponents() {
 		// configure GUI elements
-		confirmAll.setEnabled(false);
-		confirmAll.setToolTipText("disabled because not yet implemented");
+		confirmAllButton.setEnabled(false);
+		confirmAllButton.setToolTipText("disabled because not yet implemented");
 		
 		// general GUI config
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-		readAll.addActionListener( l1 = new ActionListener() {
+		readAllButton.setToolTipText("Read current values from decoder. Warning: may take a long time!");
+		readAllButton.addActionListener( l1 = new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				readAll();
 			}
 		});
-		writeAll.addActionListener( l2 = new ActionListener() {
+		writeAllButton.setToolTipText("Write current values to decoder");
+		writeAllButton.addActionListener( l2 = new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				writeAll();
 			}
@@ -81,9 +83,9 @@ public class PaneProgFrame extends javax.swing.JFrame
 		// add buttons
 		JPanel bottom = new JPanel();
 		bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
-		bottom.add(readAll);
-		bottom.add(confirmAll);
-		bottom.add(writeAll);
+		bottom.add(readAllButton);
+		bottom.add(confirmAllButton);
+		bottom.add(writeAllButton);
 		getContentPane().add(bottom);
 		
 		getContentPane().add(progStatus);
@@ -125,8 +127,14 @@ public class PaneProgFrame extends javax.swing.JFrame
 		if (decoderFile != null) loadDecoderFile(decoderFile);
 		else					 loadDecoderFromLoco(r);
 
-		// finally fill the CV values
+		// save default values
+		saveDefaults();
+
+		// finally fill the CV values from the specific loco file
 		if (locoFile != null) loadLocoFile();
+		
+		// mark file state as consistent
+		variableModel.setFileDirty(false);
 		
 		// and build the GUI
 		loadProgrammerFile(r);
@@ -258,6 +266,17 @@ public class PaneProgFrame extends javax.swing.JFrame
 
 	// Close the window when the close box is clicked
 	void thisWindowClosing(java.awt.event.WindowEvent e) {
+		// check for various types of dirty - first table data not written back
+		if (cvModel.decoderDirty() || variableModel.decoderDirty() ) {
+			if (JOptionPane.showConfirmDialog(null, 
+		   		"Some changes have not been written to the decoder. They will be lost. Close window?", 
+		    	"choose one", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.CANCEL_OPTION) return;
+		    }
+		if (variableModel.fileDirty() ) {
+			if (JOptionPane.showConfirmDialog(null, 
+		    	"Some changes have not been written to a configuration file. Close window?", 
+		    	"choose one", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.CANCEL_OPTION) return;
+		    }
 		//OK, close
 		setVisible(false);
 		dispose();	
@@ -272,7 +291,7 @@ public class PaneProgFrame extends javax.swing.JFrame
 		}
 
 		// add the Info tab
-		tabPane.addTab("Info", makeInfoPane(r));
+		tabPane.addTab("Roster Entry", makeInfoPane(r));
 		
 		// for all "pane" elements ...
 		List paneList = base.getChildren("pane");
@@ -283,6 +302,39 @@ public class PaneProgFrame extends javax.swing.JFrame
 			newPane( name, ((Element)(paneList.get(i))));
 		}
 
+	}
+	
+	/** 
+	 * reset all CV values to defaults stored earlier.  This will in turn update
+	 * the variables
+	 */
+	protected void resetToDefaults() {
+		int n = defaultCvValues.length;
+		for (int i=0; i<n; i++) {
+			CvValue cv = cvModel.getCvByNumber(defaultCvNumbers[i]);
+			if (cv == null) log.warn("Trying to set default in CV "+defaultCvNumbers[i]
+									+" but didn't find the CV object");
+			else cv.setValue(defaultCvValues[i]);
+		}
+	}
+	
+	int defaultCvValues[] = null;
+	int defaultCvNumbers[] = null;
+	
+	/** 
+	 * Save all CV values.  These stored values are used by
+	 * resetToDefaults
+	 */
+	protected void saveDefaults() {
+		int n = cvModel.getRowCount();
+		defaultCvValues = new int[n];
+		defaultCvNumbers = new int[n];
+		
+		for (int i=0; i<n; i++) {
+			CvValue cv = cvModel.getCvByRow(i);
+			defaultCvValues[i] = cv.getValue();
+			defaultCvNumbers[i] = cv.number();
+		}
 	}
 	
 	protected JPanel makeInfoPane(RosterEntry r) {
@@ -297,14 +349,28 @@ public class PaneProgFrame extends javax.swing.JFrame
 		body.add(_rPane);
 		
 		// add the store button
-		JButton store = new JButton("      Save      ");
+		JButton store = new JButton("Save");
+		store.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 		store.addActionListener( new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				storeFile();
 			}
 		});
-		body.add(store);
 		
+		// add the reset button
+		JButton reset = new JButton(" Reset to defaults ");
+		reset.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+		store.setPreferredSize(reset.getPreferredSize());
+		reset.addActionListener( new ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				resetToDefaults();
+			}
+		});
+
+		store.setPreferredSize(reset.getPreferredSize());
+		body.add(store);
+		body.add(reset);
+
 		// arrange for the dcc address to be updated
 		java.beans.PropertyChangeListener dccNews = new java.beans.PropertyChangeListener() {
 			public void propertyChange(java.beans.PropertyChangeEvent e) { updateDccAddress(); }
@@ -374,15 +440,19 @@ public class PaneProgFrame extends javax.swing.JFrame
 		for (int i=0; i<paneList.size(); i++) {
 			if (log.isDebugEnabled()) log.debug("readAll calls readPane on "+i);
 			_programmingPane = (PaneProgPane)paneList.get(i);
+			// some programming operations are instant, so need to have listener registered at readPane
+		    _programmingPane.addPropertyChangeListener(this);
 			if (_programmingPane.readPane()) {
 				// operation in progress, register to hear results, then stop loop
-			    _programmingPane.addPropertyChangeListener(this);
 				if (log.isDebugEnabled()) log.debug("readAll expecting callback from readPane "+i);
 				return true;
 			}
+			else
+				_programmingPane.removePropertyChangeListener(this);
 		}
 		// nothing to program, end politely
 		_programmingPane = null;
+		readAllButton.setSelected(false);
 		if (log.isDebugEnabled()) log.debug("readAll found nothing to do");
 		return false;	
 	}
@@ -402,15 +472,19 @@ public class PaneProgFrame extends javax.swing.JFrame
 		for (int i=0; i<paneList.size(); i++) {
 			if (log.isDebugEnabled()) log.debug("writeAll calls writePane on "+i);
 			_programmingPane = (PaneProgPane)paneList.get(i);
+			// some programming operations are instant, so need to have listener registered at readPane
+		    _programmingPane.addPropertyChangeListener(this);
 			if (_programmingPane.writePane()) {
 				// operation in progress, register to hear results, then stop loop
-			    _programmingPane.addPropertyChangeListener(this);
 				if (log.isDebugEnabled()) log.debug("writeAll expecting callback from writePane "+i);
 				return true;
 			}
+			else
+				_programmingPane.removePropertyChangeListener(this);
 		}
 		// nothing to program, end politely
 		_programmingPane = null;
+		writeAllButton.setSelected(false);
 		if (log.isDebugEnabled()) log.debug("writeAll found nothing to do");
 		return false;	
 	}
@@ -497,9 +571,12 @@ public class PaneProgFrame extends javax.swing.JFrame
 			log.error("error during locomotive file output: "+e);
 		}
 
+		// mark this as a success
+		variableModel.setFileDirty(false);
+
 		//and store an updated roster file
 		Roster.writeRosterFile();
-		
+
 	}
 	
 	/**
@@ -512,8 +589,8 @@ public class PaneProgFrame extends javax.swing.JFrame
 		if (log.isDebugEnabled()) log.debug("dispose local");
 		
 		// remove listeners (not much of a point, though)
-		readAll.removeActionListener(l1);
-		writeAll.removeActionListener(l2);
+		readAllButton.removeActionListener(l1);
+		writeAllButton.removeActionListener(l2);
 		if (_programmingPane != null) _programmingPane.removePropertyChangeListener(this);
 		
 		// dispose the list of panes
@@ -537,9 +614,9 @@ public class PaneProgFrame extends javax.swing.JFrame
 		_programmingPane = null;
 		lroot = null;
 		tabPane = null;
-		readAll = null;
-		writeAll = null;
-		confirmAll = null;
+		readAllButton = null;
+		writeAllButton = null;
+		confirmAllButton = null;
 		
 	}
 	

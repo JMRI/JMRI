@@ -29,7 +29,7 @@ import org.jdom.Attribute;
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: PaneProgPane.java,v 1.9 2001-12-09 17:59:44 jacobsen Exp $
+ * @version			$Id: PaneProgPane.java,v 1.10 2001-12-10 06:30:25 jacobsen Exp $
  */
 public class PaneProgPane extends javax.swing.JPanel 
 							implements java.beans.PropertyChangeListener  {
@@ -114,9 +114,9 @@ public class PaneProgPane extends javax.swing.JPanel
 	
 	List varList = new ArrayList();     // list of VariableValue objects to be programmed
 	
-	JButton readButton = new JButton("Read sheet");
-	JButton confButton = new JButton("Confirm sheet");
-	JButton writeButton = new JButton("Write sheet");
+	JToggleButton readButton = new JToggleButton("Read sheet");
+	JToggleButton confButton = new JToggleButton("Confirm sheet");
+	JToggleButton writeButton = new JToggleButton("Write sheet");
 	
 	/**
 	 * invoked by "Read Pane" button, this sets in motion a 
@@ -130,7 +130,6 @@ public class PaneProgPane extends javax.swing.JPanel
 	 * Returns true is a read has been started, false if the pane is complete.
 	 */
 	public boolean readPane() {
-		setBusy(true);
 		if (log.isDebugEnabled()) log.debug("readPane starts");
 		for (int i=0; i<varList.size(); i++) {
 			int varNum = ((Integer)varList.get(i)).intValue();
@@ -140,6 +139,7 @@ public class PaneProgPane extends javax.swing.JPanel
 			    vState == VariableValue.EDITTED ||
 			    vState == VariableValue.FROMFILE )  {
 										if (log.isDebugEnabled()) log.debug("start read of variable "+_varModel.getName(varNum));
+										setBusy(true);
 										if (_programmingVar != null) log.error("listener already set at read start");
 			    						_programmingVar = _varModel.getVariable(varNum);
 			    						_read = true;
@@ -148,11 +148,13 @@ public class PaneProgPane extends javax.swing.JPanel
 			    						// and make the read request
 			    						_programmingVar.read();
 										if (log.isDebugEnabled()) log.debug("return from starting read");
+										// the request may have instantateously been satisfied...
 			    						return true;  // only make one request at a time!
 			}
 		}	
 		// nothing to program, end politely
 		if (log.isDebugEnabled()) log.debug("readPane found nothing to do");
+		readButton.setSelected(false);
 		setBusy(false);
 		return false;	
 	}
@@ -169,7 +171,6 @@ public class PaneProgPane extends javax.swing.JPanel
 	 * Returns true is a write has been started, false if the pane is complete.
 	 */
 	public boolean writePane() {
-		setBusy(true);
 		if (log.isDebugEnabled()) log.debug("writePane starts");
 		for (int i=0; i<varList.size(); i++) {
 			int varNum = ((Integer)varList.get(i)).intValue();
@@ -179,6 +180,7 @@ public class PaneProgPane extends javax.swing.JPanel
 			    vState == VariableValue.EDITTED ||
 			    vState == VariableValue.FROMFILE )  {
 										if (log.isDebugEnabled()) log.debug("start write of variable "+_varModel.getName(varNum));
+										setBusy(true);
 										if (_programmingVar != null) log.error("listener already set at write start");
 			    						_programmingVar = _varModel.getVariable(varNum);
 			    						_read = false;
@@ -192,6 +194,7 @@ public class PaneProgPane extends javax.swing.JPanel
 		}	
 		// nothing to program, end politely
 		if (log.isDebugEnabled()) log.debug("writePane found nothing to do");
+		writeButton.setSelected(false);
 		setBusy(false);
 		return false;	
 	}
@@ -204,8 +207,9 @@ public class PaneProgPane extends javax.swing.JPanel
 	private boolean _busy = false;
 	public boolean isBusy() { return _busy; }
 	protected void setBusy(boolean busy) {
-		if (_busy != busy) prop.firePropertyChange("Busy", new Boolean(_busy), new Boolean(busy));
+		boolean oldBusy = _busy;
 		_busy = busy;
+		if (oldBusy != busy) prop.firePropertyChange("Busy", new Boolean(oldBusy), new Boolean(busy));
 	}
 
 	/** 

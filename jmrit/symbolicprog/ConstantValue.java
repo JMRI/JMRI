@@ -21,7 +21,7 @@ import com.sun.java.util.collections.ArrayList;
  * Extends VariableValue to represent a constant enum-like-thing
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: ConstantValue.java,v 1.1 2001-12-07 07:15:51 jacobsen Exp $
+ * @version			$Id: ConstantValue.java,v 1.2 2001-12-10 06:30:25 jacobsen Exp $
  *
  */
 public class ConstantValue extends VariableValue {
@@ -116,12 +116,25 @@ public class ConstantValue extends VariableValue {
 	void setColor(Color c) {
 	}
 
-	// dummy abstract members
+	/**
+	 * read() sets the state to READ so that you can 
+	 * have algorithms like "read all variables that aren't in READ state"
+	 */
 	public void read() {
-		log.error("read should not have been called");
+		if (log.isDebugEnabled()) log.debug("read invoked");
+		setState(READ);
+		setBusy(true);
+		setBusy(false);
 	}
+	/**
+	 * read() sets the state to STORED so that you can 
+	 * have algorithms like "write all variables that aren't in STORED state"
+	 */
 	public void write() {
-		log.error("read should not have been called");
+		if (log.isDebugEnabled()) log.debug("write invoked");
+		setState(STORED);
+		setBusy(true);
+		setBusy(false);
 	}
 	
 	public void propertyChange(java.beans.PropertyChangeEvent e) {

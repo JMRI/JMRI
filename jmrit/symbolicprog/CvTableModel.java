@@ -92,6 +92,9 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 		return ""+((CvValue)_cvDisplayVector.elementAt(row)).getValue();
 	}
 	
+	public CvValue getCvByRow(int row) { return ((CvValue)_cvDisplayVector.elementAt(row)); }
+	public CvValue getCvByNumber(int row) { return ((CvValue)_cvAllVector.elementAt(row)); }
+	
 	public Object getValueAt(int row, int col) { 
 		switch (col) {
 			case NUMCOLUMN: 

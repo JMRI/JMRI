@@ -20,7 +20,7 @@ import com.sun.java.util.collections.List;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: CombinedLocoSelPane.java,v 1.2 2001-12-09 17:59:44 jacobsen Exp $
+ * @version			$Id: CombinedLocoSelPane.java,v 1.3 2001-12-10 06:30:25 jacobsen Exp $
  */
 public class CombinedLocoSelPane extends javax.swing.JPanel  {
 		
@@ -57,7 +57,7 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 					}
 				}
 			});
-			idloco = new JButton("Ident");
+			idloco = new JToggleButton("Ident");
 			idloco.setToolTipText("Read the locomotive's address and attempt to select the right settings");
 			idloco.addActionListener( new ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -90,7 +90,7 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 				}
 			});
 			pane1a.add(decoderBox);
-			iddecoder= new JButton("Ident");
+			iddecoder= new JToggleButton("Ident");
 			idloco.setToolTipText("Read the decoders mfg and version, then attempt to select it's type");
 			iddecoder.addActionListener( new ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -151,6 +151,8 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 	}
 
 	private void selectLoco(int dccAddress) {
+		// raise the button again
+		idloco.setSelected(false);
 		// locate that loco
 		List l = Roster.instance().matchingList(null, null, Integer.toString(dccAddress), 
 												null, null, null, null);
@@ -168,6 +170,8 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 	}
 			
 	private void selectDecoder(int mfgID, int modelID) {
+		// raise the button again
+		iddecoder.setSelected(false);
 		// locate a decoder like that.
 		JComboBox temp = DecoderIndexFile.instance().matchingComboBox(null, null, Integer.toString(mfgID), Integer.toString(modelID), null);
 		if (log.isDebugEnabled()) log.debug("selectDecoder found "+temp.getItemCount()+" matches");
@@ -184,8 +188,8 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 
 	private JComboBox locoBox = null;
 	private JComboBox decoderBox = null;
-	private JButton iddecoder;
-	private JButton idloco;
+	private JToggleButton iddecoder;
+	private JToggleButton idloco;
 	private JButton go2;
 	
 	/** handle pushing the open programmer button by finding names, then calling a template method */

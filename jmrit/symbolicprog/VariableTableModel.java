@@ -388,8 +388,10 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		fireTableDataChanged();	
 	}
 
-	// fileDirty represents any chance to values, etc, hence rewriting the
-	// file is desirable
+	/**
+	 * Represents any chance to values, etc, hence rewriting the
+	 * file is desirable
+	 */
 	public boolean fileDirty() {
 		return _fileDirty;
 	}

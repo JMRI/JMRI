@@ -30,7 +30,7 @@ import org.jdom.output.*;
  * whether it should...
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: Roster.java,v 1.8 2001-12-04 19:41:12 jacobsen Exp $
+ * @version			$Id: Roster.java,v 1.9 2001-12-10 06:30:25 jacobsen Exp $
  * @see             jmri.jmrit.roster.RosterEntry
  */
 public class Roster {
@@ -177,7 +177,7 @@ public class Roster {
         }
 		String path = "file::"+apath;
 
-		if (log.isInfoEnabled()) log.info("readFile: "+name+" path: "+rawpath); 
+		if (log.isDebugEnabled()) log.debug("readFile: "+name+" path: "+rawpath); 
 		// This is taken in large part from "Java and XML" page 354
 				
 		// Open and parse file
