@@ -29,8 +29,11 @@ import jmri.*;
  *  Yellow is 15 and up
  *  Red is less than 15
  *
+ * <P>The algorithms in this class are a collaborative effort of Digitrax, Inc
+ * and Bob Jacobsen.  Some of the message formats are copyright Digitrax, Inc.
+ *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 public class AspectGenerator implements java.beans.PropertyChangeListener{
 

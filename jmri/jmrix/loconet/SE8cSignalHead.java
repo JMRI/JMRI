@@ -11,8 +11,11 @@ import jmri.*;
  * it's commanded to change appearance, and updates it's internal state
  * when it hears commands from other places.
  *
+ * <P>The algorithms in this class are a collaborative effort of Digitrax, Inc
+ * and Bob Jacobsen.  Some of the message formats are copyright Digitrax, Inc.
+ *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */public class SE8cSignalHead extends AbstractSignalHead implements LocoNetListener {
 
 
