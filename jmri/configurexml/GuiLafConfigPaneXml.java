@@ -1,9 +1,12 @@
 package jmri.configurexml;
 
 import jmri.GuiLafConfigPane;
+import java.util.Locale;
+
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import org.jdom.Attribute;
 import org.jdom.Element;
 
 /**
@@ -11,10 +14,12 @@ import org.jdom.Element;
  * <P>
  * This class is named as being the persistant form of the
  * GuiLafConfigPane class, but there's no object of that
- * form created when this is read back.  Instead, this interacts directly with Swing.
+ * form created when this is read back.  Instead, this interacts directly with Swing
+ * and the default Locale.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
+ * @see jmri.GuiLafConfigPane
  */
 public class GuiLafConfigPaneXml implements XmlAdapter {
 
@@ -33,6 +38,11 @@ public class GuiLafConfigPaneXml implements XmlAdapter {
 
         e.addAttribute("LAFclass", lafClassName);
         e.addAttribute("class", this.getClass().getName());
+
+        Locale l = g.getLocale();
+        e.addAttribute("LocaleLanguage",l.getLanguage());
+        e.addAttribute("LocaleCountry",l.getCountry());
+        e.addAttribute("LocaleVariant",l.getVariant());
         return e;
     }
 
@@ -61,6 +71,12 @@ public class GuiLafConfigPaneXml implements XmlAdapter {
                 log.error("Exception while setting GUI look & feel: "+ex);
             }
         }
+        Attribute langAttr = e.getAttribute("LocaleLanguage");
+        Attribute countryAttr = e.getAttribute("LocaleCountry");
+        Attribute varAttr = e.getAttribute("LocaleVariant");
+        if (countryAttr!=null && langAttr!=null && varAttr!=null)
+            Locale.setDefault(new Locale(langAttr.getValue(),countryAttr.getValue(),
+                                varAttr.getValue()));
     }
 
     /**
