@@ -2,10 +2,13 @@
 
 package jmri.jmrit.blockboss;
 
-import jmri.*;
-import jmri.jmrit.automat.*;
-import java.awt.event.ActionEvent;
-import com.sun.java.util.collections.*;
+import jmri.InstanceManager;
+import jmri.NamedBean;
+import jmri.Sensor;
+import jmri.SignalHead;
+import jmri.Turnout;
+import jmri.jmrit.automat.Siglet;
+import java.util.Enumeration;
 import java.util.Hashtable;
 
 /**
@@ -13,7 +16,7 @@ import java.util.Hashtable;
  * some collection services.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 public class BlockBossLogic extends Siglet {
@@ -29,8 +32,26 @@ public class BlockBossLogic extends Siglet {
         driveSignal = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
     }
 
+    /**
+     * The "driven signal" is controlled by this
+     * element.
+     * @return system name of the driven signal
+     */
+    public String getDrivenSignal() {
+        return driveSignal.getSystemName();
+    }
+
     public void setSensor(String name) {
         watchSensor = InstanceManager.sensorManagerInstance().getSensor(name);
+    }
+
+    /**
+     * Return the system name of the sensor being monitored
+     * @return system name; null if no sensor configured
+     */
+    public String getSensor() {
+        if (watchSensor == null) return null;
+        return watchSensor.getSystemName();
     }
 
     public void setTurnout(String name, int state) {
@@ -38,9 +59,32 @@ public class BlockBossLogic extends Siglet {
         watchTurnoutState = state;
     }
 
-    public void setSignal(String name, boolean useFlash) {
+    /**
+     * Return the system name of the turnout being monitored
+     * @return system name; null if no turnout configured
+     */
+    public String getTurnout() {
+        if (watchTurnout == null) return null;
+        return watchTurnout.getSystemName();
+    }
+    public int getTurnoutState() {
+        return watchTurnoutState;
+    }
+    public void setWatchedSignal(String name, boolean useFlash) {
         protectSignal = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
         protectWithFlashing = useFlash;
+    }
+    /**
+     * Return the system name of the turnout being monitored
+     * @return system name; null if no turnout configured
+     */
+    public String getWatchedSignal() {
+        if (protectSignal == null) return null;
+        return protectSignal.getSystemName();
+    }
+
+    public boolean getUseFlash() {
+        return protectWithFlashing;
     }
 
     String name;
@@ -89,9 +133,9 @@ public class BlockBossLogic extends Siglet {
         int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
 
         // check for yellow, flashing yellow overriding green
-        if (protectWithFlashing && protectSignal.getAppearance()==SignalHead.FLASHYELLOW)
+        if (protectSignal!=null && protectWithFlashing && protectSignal.getAppearance()==SignalHead.FLASHYELLOW)
             appearance = SignalHead.YELLOW;
-        if (protectSignal.getAppearance()==SignalHead.RED)
+        if (protectSignal!=null && protectSignal.getAppearance()==SignalHead.RED)
             if (protectWithFlashing)
                 appearance = SignalHead.FLASHYELLOW;
             else
@@ -104,13 +148,16 @@ public class BlockBossLogic extends Siglet {
             appearance = SignalHead.RED;
 
         // show result if changed
-        System.out.println("Appear "+appearance);
         if (appearance != oldAppearance)
             ((SignalHead)outputs[0]).setAppearance(appearance);
     }
 
 
     static Hashtable map = null;
+
+    public static Enumeration entries() {
+        return map.elements();
+    }
 
     private static void setup() {
         if (map == null) {
@@ -124,17 +171,36 @@ public class BlockBossLogic extends Siglet {
     }
 
     /**
-     * Return the BlockBossLogic item governing a specific signal.
+     * Return the BlockBossLogic item governing a specific signal,
+     * having removed it from use.
      * @param signal
      * @return never null
      */
-    static BlockBossLogic getStoppedObject(String signal) {
+    public static BlockBossLogic getStoppedObject(String signal) {
         BlockBossLogic b;
         setup(); // ensure we've been registered
         if (map.contains(signal)) {
             b = (BlockBossLogic)map.get(signal);
             b.stop();
             map.remove(b);
+        } else {
+            b = new BlockBossLogic(signal);
+        }
+        return b;
+    }
+    /**
+     * Return the BlockBossLogic item governing a specific signal.
+     * <P>
+     * Unlike {@link BlockBossLogic.getStoppedObject(String signal)}
+     * this does not remove the object from being used.
+     * @param signal system name
+     * @return never null
+     */
+    public static BlockBossLogic getExisting(String signal) {
+        BlockBossLogic b;
+        setup(); // ensure we've been registered
+        if (map.containsKey(signal)) {
+            b = (BlockBossLogic)map.get(signal);
         } else {
             b = new BlockBossLogic(signal);
         }
