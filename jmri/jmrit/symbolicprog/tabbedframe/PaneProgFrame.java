@@ -27,7 +27,7 @@ import org.jdom.Element;
 /**
  * Frame providing a command station programmer from decoder definition files.
  * @author			Bob Jacobsen   Copyright (C) 2001; D Miller Copyright 2003
- * @version			$Revision: 1.38 $
+ * @version			$Revision: 1.39 $
  */
 abstract public class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
@@ -379,7 +379,7 @@ abstract public class PaneProgFrame extends javax.swing.JFrame
                         new String[]{"Save and Close", "Close", "Cancel"}, "Save and Close");
             if (option==0) {
                 // save requested
-                storeFile();
+                if (!storeFile()) return;   // don't close if failed
             } else if (option ==2) {
                 // cancel requested
                 return; // without doing anything
@@ -693,8 +693,9 @@ abstract public class PaneProgFrame extends javax.swing.JFrame
 
     /**
      * Store the locomotives information in the roster (and a RosterEntry file).
+     * @returns false if store failed
      */
-    public void storeFile() {
+    public boolean storeFile() {
         log.debug("storeFile starts");
 
         // reload the RosterEntry
@@ -705,7 +706,7 @@ abstract public class PaneProgFrame extends javax.swing.JFrame
         if (_rosterEntry.getId().equals("") || _rosterEntry.getId().equals("<new loco>")) {
             log.debug("storeFile without a filename; issued dialog");
             JOptionPane.showMessageDialog(this, "Please fill in the ID field first");
-            return;
+            return false;
         }
         // if there isn't a filename, store using the id
         _rosterEntry.ensureFilenameExists();
@@ -724,6 +725,7 @@ abstract public class PaneProgFrame extends javax.swing.JFrame
         // show OK status
         progStatus.setText("Roster file "+filename+" saved OK");
 
+        return true;
     }
 
     /**
