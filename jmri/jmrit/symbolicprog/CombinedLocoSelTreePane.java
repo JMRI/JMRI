@@ -39,7 +39,7 @@ import com.sun.java.util.collections.List;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
 
@@ -71,7 +71,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
             public String getToolTipText(MouseEvent evt) {
                 if (getRowForLocation(evt.getX(), evt.getY()) == -1) return null;
                 TreePath curPath = getPathForLocation(evt.getX(), evt.getY());
-                return ((ToolTipTreeNode)curPath.getLastPathComponent()).getToolTipText();
+                return ((DecoderTreeNode)curPath.getLastPathComponent()).getToolTipText();
             }
         };
         dTree.setToolTipText("");
@@ -93,8 +93,8 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
             // build elements
             if (mfgElement==null || !mfg.equals(mfgElement.toString()) ) {
                 // need new mfg node
-                mfgElement = new ToolTipTreeNode(mfg,
-                    "CV8 = "+DecoderIndexFile.instance().mfgIdFromName(mfg));
+                mfgElement = new DecoderTreeNode(mfg,
+                    "CV8 = "+DecoderIndexFile.instance().mfgIdFromName(mfg), "");
                 dModel.insertNodeInto(mfgElement, dRoot, dRoot.getChildCount());
                 familyElement = null;
             }
@@ -109,7 +109,9 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
                     ) {
                     // normal here; insert the new family element & exit
                     log.debug("normal family update case: "+family);
-                    familyElement = new ToolTipTreeNode(family, ((DecoderFile) decoders.get(i)).getFamilyComment());
+                    familyElement = new DecoderTreeNode(family,
+                                                        ((DecoderFile) decoders.get(i)).getFamilyComment(),
+                                                        ((DecoderFile) decoders.get(i)).titleString());
                     dModel.insertNodeInto(familyElement, mfgElement, mfgElement.getChildCount());
                     continue;
                 } else {
@@ -118,7 +120,9 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
                                 ((DecoderFile) decoders.get(i+1)).getModel() );
                     if (i+1 > len) log.error("Unexpected single entry for family: "+family);
                     family = ((DecoderFile) decoders.get(i+1)).getModel();
-                    familyElement = new ToolTipTreeNode(family, ((DecoderFile) decoders.get(i)).getFamilyComment());
+                    familyElement = new DecoderTreeNode(family,
+                                                        ((DecoderFile) decoders.get(i)).getFamilyComment(),
+                                                        ((DecoderFile) decoders.get(i)).titleString());
                     dModel.insertNodeInto(familyElement, mfgElement, mfgElement.getChildCount());
                     i = i+1;
                     continue;
@@ -126,7 +130,9 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
             }
             // insert at the decoder level, except if family name is the same
             if (!family.equals(model)){
-                dModel.insertNodeInto(new ToolTipTreeNode(model, ((DecoderFile) decoders.get(i)).getModelComment()),
+                dModel.insertNodeInto(new DecoderTreeNode(model,
+                                                        ((DecoderFile) decoders.get(i)).getModelComment(),
+                                                        ((DecoderFile) decoders.get(i)).titleString()),
                                     familyElement, familyElement.getChildCount());
             }
         }  // end of loop over decoders
@@ -267,9 +273,10 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
         // get the decoder type, it has to be there (assumption!),
         String modelString = locoEntry.getDecoderModel();
         String familyString = locoEntry.getDecoderFamily();
+        String titleString = DecoderFile.titleString(modelString, familyString);
 
         // find the decoder mfg
-        String mfgString = DecoderIndexFile.instance().fileFromTitle(modelString)
+        String mfgString = DecoderIndexFile.instance().fileFromTitle(titleString)
                                     .getMfg();
         // close the entire GUI
         //collapseAll();
@@ -296,7 +303,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
      */
     String selectedDecoderType() {
         if (!isDecoderSelected()) return null;
-        else return ((DefaultMutableTreeNode)dTree.getLastSelectedPathComponent()).toString();
+        else return ((DecoderTreeNode)dTree.getLastSelectedPathComponent()).getTitle();
     }
 
     /**
@@ -309,14 +316,18 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
     }
 
     // from http://www.codeguru.com/java/articles/143.shtml
-   class ToolTipTreeNode extends DefaultMutableTreeNode {
+   class DecoderTreeNode extends DefaultMutableTreeNode {
         private String toolTipText;
+        private String title;
 
-        public ToolTipTreeNode(String str, String toolTipText) {
+        public DecoderTreeNode(String str, String toolTipText, String title) {
             super(str);
             this.toolTipText = toolTipText;
+            this.title = title;
         }
-
+        public String getTitle() {
+            return title;
+        }
         public String getToolTipText() {
             return toolTipText;
         }
