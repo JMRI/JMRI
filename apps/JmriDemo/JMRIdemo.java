@@ -75,6 +75,7 @@ public class JMRIdemo extends JPanel {
     	    locoMenu.add(new jmri.jmrix.loconet.slotmon.SlotMonAction("Slot Monitor"));
         	locoMenu.add(new jmri.jmrix.loconet.locogen.LocoGenAction("Send Packet"));
             locoMenu.add(locoio = new jmri.jmrix.loconet.locoio.LocoIOAction("LocoIO programmer"));
+          	locoMenu.add(new jmri.jmrix.loconet.locormi.LnMessageServerAction( "Start LocoNet Server" ));
 
         JMenu nceMenu = new JMenu("NCE");
         menuBar.add(nceMenu);
@@ -93,6 +94,8 @@ public class JMRIdemo extends JPanel {
 
         JMenu devMenu = new JMenu("Development");
         menuBar.add(devMenu);
+	        devMenu.add(new jmri.configurexml.LoadLayoutAction("Load layout config"));
+	        devMenu.add(new jmri.configurexml.StoreLayoutAction("Store layout config"));
 	        devMenu.add(new jmri.jmrit.MemoryFrameAction("Memory usage monitor"));
 	        // devMenu.add(new jmri.jmrit.symbolicprog.symbolicframe.SymbolicProgAction("Symbolic Programmer"));
 	        devMenu.add(new jmri.jmrit.XmlFileCheckAction("Check XML File", this));
