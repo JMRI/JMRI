@@ -6,7 +6,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Frame;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.text.MessageFormat;
@@ -19,7 +19,7 @@ import javax.swing.*;
  * Base class for Jmri Apps
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class Apps extends JPanel {
 
@@ -103,7 +103,21 @@ public class Apps extends JPanel {
         AbstractAction prefsAction = new AbstractAction(rb.getString("MenuItemPreferences")) {
             public void actionPerformed(ActionEvent e) {
                 if (prefsFrame == null) {
-                    prefsFrame = new JFrame(rb.getString("MenuItemPreferences"));
+                    prefsFrame = new JFrame(rb.getString("MenuItemPreferences")){
+                        public Dimension getMaximumSize() {
+                            // adjust maximum size to full screen minus any toolbars
+                            Insets insets = getToolkit().getScreenInsets(this.getGraphicsConfiguration());
+                            Dimension screen = getToolkit().getScreenSize();
+                            return new Dimension(screen.width-(insets.right+insets.left),
+                                        screen.height-(insets.top+insets.bottom));
+                        }
+                        public Dimension getPreferredSize() {
+                            Dimension screen = getMaximumSize();
+                            int width = Math.min(super.getPreferredSize().width, screen.width);
+                            int height = Math.min(super.getPreferredSize().height, screen.height);
+                            return new Dimension(width, height);
+                        }
+                    };
                     prefsFrame.getContentPane().setLayout(new BoxLayout(prefsFrame.getContentPane(), BoxLayout.X_AXIS));
                     prefs = newPrefs();
                     prefsFrame.getContentPane().add(prefs);
