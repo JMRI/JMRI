@@ -1,11 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Atlas_DualMode.xml,v 1.11 2002-10-16 17:33:08 jacobsen Exp $ -->
+<!-- $Id: Atlas_DualMode.xml,v 1.12 2002-10-17 12:38:04 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Bob Jacobsen" version="2" lastUpdated="20020111"/>
+		<version author="Bob Jacobsen" version="3" lastUpdated="20021016"/>
+		
+		<!-- V3 add versionID range -->
 
 <decoder>
-	<family name="Dual Mode" mfg="Atlas">
+	<family name="Dual Mode" mfg="Atlas" lowVersionID="1" highVersionID="255">
 		<model model="Dual Mode" numOuts="4" numFns="8"/>
 	</family>
 

@@ -1,18 +1,19 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_STDstar.xml,v 1.4 2002-10-16 17:33:09 jacobsen Exp $ -->
+<!-- $Id: Digitrax_STDstar.xml,v 1.5 2002-10-17 12:38:05 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
-					version="1" lastUpdated="20020803"/>
+					version="2" lastUpdated="20021016"/>
 
 <!-- Represent the family of Digitrax decoders with STD* outputs. -->
 <!-- STD* means that the lights are reversing only, so -->
 <!-- that aspect can't be configured -->
 
 <!-- Version 1 made from old 1x1 file -->
+<!-- Version 2 with versionID range -->
 
 <decoder>
-	<family name="Basic STD*" mfg="Digitrax">
+	<family name="Basic STD*" mfg="Digitrax" lowVersionID="1" highVersionID="1">
 		<model model="DN121" numOuts="2" numFns="2"/>
 		<model model="DN93" numOuts="3" numFns="4"/>
 	</family>

@@ -1,16 +1,17 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_CS.xml,v 1.5 2002-10-16 17:33:09 jacobsen Exp $ -->
+<!-- $Id: Digitrax_CS.xml,v 1.6 2002-10-17 12:38:05 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
-					version="3" lastUpdated="20021014"/>
+					version="4" lastUpdated="20021016"/>
 					
 		<!-- made from 150 file (Basic FX) -->
 		<!-- version 3 added BEMF, transponding control, short address -->
 		<!--   side effects -->
+		<!-- version 4 adjusts versionID range -->
 
 <decoder>
-	<family name="Basic CS" mfg="Digitrax" >
+	<family name="Basic CS" mfg="Digitrax" lowVersionID="225" highVersionID="239">
 		<model model="DZ121" numOuts="5" numFns="3"/>
 		<model model="DN122K2" numOuts="5" numFns="3"/>
 	</family>

@@ -1,18 +1,19 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: CVProducts_AD4.xml,v 1.4 2002-08-29 06:35:04 jacobsen Exp $ -->
+<!-- $Id: CVProducts_AD4.xml,v 1.5 2002-10-17 12:38:05 jacobsen Exp $ -->
 <decoder-config>
 		<version author="afticarr@sympatico.ca" 
-					version="2" lastUpdated="20020810"/>
+					version="3" lastUpdated="20021016"/>
 
 		<!-- Created from version 1 of the CVProducts_AD4 file -->
 		<!-- Added Manufacturer ID and Version Info - Read Only -->
 		<!-- Set appropriate programming modes - Direct and Ops-->
 		<!-- Reformatted AD4 Pane Objects -->
 		<!-- Changed Input Line drop down menus to checkboxes -->
+		<!-- V3 changed version range -->
 		
 <decoder>
-	<family name="AD4" mfg="CVP Products" lowVersionID="40" highVersionID="62" type="stationary">
+	<family name="AD4" mfg="CVP Products" lowVersionID="40" highVersionID="65" type="stationary">
 	</family>
 
 	<programming direct="byteOnly" paged="no" register="no" ops="yes"></programming>

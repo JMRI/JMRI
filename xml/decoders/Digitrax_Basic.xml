@@ -1,26 +1,27 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_Basic.xml,v 1.3 2002-10-16 17:33:09 jacobsen Exp $ -->
+<!-- $Id: Digitrax_Basic.xml,v 1.4 2002-10-17 12:38:05 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
-					version="4" lastUpdated="20020812"/>
+					version="5" lastUpdated="20021016"/>
 
 		<!-- Version 3 - rename family, add decoders, fix bug with FX on output 1 -->
 		<!-- version 4 - add DH140, DN140, update DN146 ID -->
+		<!-- version 5 - update versionID range -->
 		
 <decoder>
-	<family name="Basic FX" mfg="Digitrax" lowVersionID="107">
+	<family name="Basic FX" mfg="Digitrax" lowVersionID="91" highVersionID="111">
 		<model model="DH083" numOuts="5" numFns="3"/>
 		<model model="DH140" numOuts="4" numFns="2"/>
 		<model model="DH150" numOuts="5" numFns="3"/>
 		<model model="DH380" numOuts="8" numFns="12"/>
 		<model model="DH580" numOuts="8" numFns="12"/>
-		<model model="DG380" numOuts="8" numFns="12"/>
+		<model model="DG380" numOuts="8" numFns="12" lowVersionID="63" highVersionID="63"/>
 		<model model="DG580" numOuts="8" numFns="12"/>
 		<model model="DN140" numOuts="4" numFns="2"/>
 		<model model="DN144" numOuts="4" numFns="3"/>
 		<model model="DN145" numOuts="4" numFns="3"/>
-		<model model="DN146" numOuts="4" numFns="3" lowVersionID="105" highVersionID="106" />
+		<model model="DN146" numOuts="4" numFns="3"/>
 		<model model="DN147" numOuts="4" numFns="3"/>
 		<model model="DN148" numOuts="4" numFns="3"/>
 	</family>

@@ -1,21 +1,23 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: NCE_D13SR.xml,v 1.13 2002-10-16 17:33:09 jacobsen Exp $ -->
+<!-- $Id: NCE_D13SR.xml,v 1.14 2002-10-17 12:38:05 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Bob Jacobsen" version="5" lastUpdated="20020710"/>
+		<version author="Bob Jacobsen" version="6" lastUpdated="20021016"/>
 
 	<!-- version 4 added D15, D14, DA-SR, P2K, KRS, SW9, D408 and more functions -->
+	<!-- version 6 changed the versionID range -->
 	
 <decoder>
-  <family name="Silent Drive decoders" mfg="North Coast Engineering">
-    <model model="D15SR"  lowVersionID="32" numOuts="5" numFns="6" />
-    <model model="D14SRP" lowVersionID="32" numOuts="4" numFns="6" />
-    <model model="D13SR"  lowVersionID="32" numOuts="3" numFns="6" />
-    <model model="DA-SR"  lowVersionID="32" numOuts="4" numFns="8" />
-    <model model="P2K-SR" lowVersionID="32" numOuts="4" numFns="8" />
-    <model model="KRS-SR" lowVersionID="32" numOuts="4" numFns="8" />
-    <model model="SW9-SR" lowVersionID="32" numOuts="4" numFns="8" />
-    <model model="D408SR" lowVersionID="32" numOuts="7" numFns="12" />
+  <family name="Silent Drive decoders" mfg="North Coast Engineering" 
+  			lowVersionID="31" highVersionID="33">
+    <model model="D15SR"  numOuts="5" numFns="6" />
+    <model model="D14SRP" numOuts="4" numFns="6" />
+    <model model="D13SR"  numOuts="3" numFns="6" />
+    <model model="DA-SR"  numOuts="4" numFns="8" />
+    <model model="P2K-SR" numOuts="4" numFns="8" />
+    <model model="KRS-SR" numOuts="4" numFns="8" />
+    <model model="SW9-SR" numOuts="4" numFns="8" />
+    <model model="D408SR" numOuts="7" numFns="12" />
   </family>
 
 	<programming direct="yes" paged="yes" 
