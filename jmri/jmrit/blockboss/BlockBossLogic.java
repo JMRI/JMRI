@@ -16,7 +16,7 @@ import java.util.Hashtable;
  * some collection services.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 public class BlockBossLogic extends Siglet {
@@ -191,7 +191,7 @@ public class BlockBossLogic extends Siglet {
     /**
      * Return the BlockBossLogic item governing a specific signal.
      * <P>
-     * Unlike {@link BlockBossLogic.getStoppedObject(String signal)}
+     * Unlike {@link BlockBossLogic#getStoppedObject(String signal)}
      * this does not remove the object from being used.
      * @param signal system name
      * @return never null

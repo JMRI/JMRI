@@ -27,7 +27,7 @@ import javax.swing.UIManager;
  * GUI (and perhaps LAF) configuration item.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class GuiLafConfigPane extends JPanel {
 
@@ -39,8 +39,6 @@ public class GuiLafConfigPane extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JPanel p;
         doLAF(p = new JPanel());
-        add(p);
-        doLocale(p = new JPanel());
         add(p);
     }
 
@@ -73,7 +71,9 @@ public class GuiLafConfigPane extends JPanel {
         }
 
     }
-    void doLocale(JPanel panel) {
+
+    public JPanel doLocale() {
+        JPanel panel = new JPanel();
         // add JComboBoxen for language and country
         panel.setLayout(new FlowLayout());
         locales = Locale.getAvailableLocales();
@@ -84,13 +84,19 @@ public class GuiLafConfigPane extends JPanel {
         localeBox = new JComboBox(localeNames);
         localeBox.setSelectedItem(Locale.getDefault().getDisplayName());
         panel.add(localeBox);
+        return panel;
     }
 
     JComboBox localeBox;
     Locale[] locales;
     String[] localeNames;
 
+    /**
+     * Get the currently configured Locale
+     * or Locale.getDefault if no configuration has been done.
+     */
     public Locale getLocale() {
+        if (localeBox==null) return Locale.getDefault();
         String desired = (String)localeBox.getSelectedItem();
         for (int i = 0; i<locales.length; i++) {
             if (desired.equals(localeNames[i])) return locales[i];
