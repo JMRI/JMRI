@@ -1,0 +1,15 @@
+<!-- Defines XML documenting the list of available decoder definitions -->
+
+<!ELEMENT decoderList:decoderList-config (decoderList:decoderList*)>
+<!ATTLIST decoderList:decoderList-config xmlns:decoderList CDATA "">
+
+
+<!ELEMENT decoderList:decoderList (decoderList:definition*) >
+
+<!ELEMENT decoderList:definition EMPTY >
+<!ATTLIST decoderList:definition file      CDATA #REQUIRED>  <!-- file name for details -->
+<!ATTLIST decoderList:definition model     CDATA #REQUIRED>  <!-- model name used for identification -->
+<!ATTLIST decoderList:definition mfg       CDATA #REQUIRED>  <!-- mfg name used for identification   -->
+<!ATTLIST decoderList:definition versionID CDATA #IMPLIED >      <!-- CV07 value, default XX means any   -->
+<!ATTLIST decoderList:definition mfgID     CDATA #IMPLIED>  <!-- CV08 value, XX means any           -->
+<!ATTLIST decoderList:definition comment   CDATA #IMPLIED>

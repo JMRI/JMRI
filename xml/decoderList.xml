@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!DOCTYPE decoderList:decoderList-config SYSTEM "DTD/decoderList-config.dtd">
+<decoderList:decoderList-config xmlns:decoderList="http://jmri.sourceforge.net/xml/decoderList">
+
+<decoderList:decoderList>
+
+	<decoderList:definition model="All" mfg="Digitrax" file="Digitrax_All.xml" >
+	</decoderList:definition>
+		
+</decoderList:decoderList>
+</decoderList:decoderList-config>

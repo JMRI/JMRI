@@ -1,0 +1,16 @@
+<!-- Defines XML for configuring the JMRIdemo program -->
+
+<!ELEMENT JMRIdemo:JMRIdemo-config (JMRIdemo:directory JMRIdemo:decoderList)>
+<!ATTLIST JMRIdemo:JMRIdemo-config xmlns:JMRIdemo CDATA "">
+
+<!--  Section identifies directory(s) where various information is looked for -->
+<!ELEMENT JMRIdemo:directory EMPTY>
+<!ATTLIST JMRIdemo:directory xmlDir CDATA "xml/">
+
+<!--  Section identifies decoder configuration information -->
+<!ELEMENT JMRIdemo:decoderList EMPTY>
+<!ATTLIST JMRIdemo:decoderList listFile CDATA "xml/decoderList.xml">
+
+
+
+
