@@ -24,15 +24,18 @@ import org.jdom.Element;
  * @author			Glen Oberhauser
  * @version
  */
-public class ThrottleFrame extends JFrame
+public class ThrottleFrame extends JFrame							
 {
     private final Integer PANEL_LAYER = new Integer(1);
 
     private ControlPanel controlPanel;
     private FunctionPanel functionPanel;
     private AddressPanel addressPanel;
-
-
+	
+	private JCheckBoxMenuItem viewControlPanel;
+	private JCheckBoxMenuItem viewFunctionPanel;
+	private JCheckBoxMenuItem viewAddressPanel;
+	
     /**
      * Default constructor
      */
@@ -47,6 +50,7 @@ public class ThrottleFrame extends JFrame
      * <li> ControlPanel
      * <li> FunctionPanel
      * <li> AddressPanel
+	 * <li> JMenu
      * </ul>
      */
     private void initGUI()
@@ -61,9 +65,51 @@ public class ThrottleFrame extends JFrame
                 w.setVisible(false);
                 controlPanel.dispose();
                 functionPanel.dispose();
+				addressPanel.dispose();
                 w.dispose();
             }
         });
+		
+		JMenu viewMenu = new JMenu("View");
+		viewAddressPanel = new JCheckBoxMenuItem("Address Panel");
+		viewAddressPanel.setSelected(true);
+		viewAddressPanel.addItemListener(
+		                 new ItemListener()
+         {
+             public void itemStateChanged(ItemEvent e)
+             {
+                 addressPanel.setVisible(e.getStateChange() == e.SELECTED);
+             }
+         });
+
+		viewControlPanel = new JCheckBoxMenuItem("Control Panel");
+		viewControlPanel.setSelected(true);
+		viewControlPanel.addItemListener(
+		                 new ItemListener()
+         {
+             public void itemStateChanged(ItemEvent e)
+             {
+                 controlPanel.setVisible(e.getStateChange() == e.SELECTED);
+             }
+         });
+		viewFunctionPanel = new JCheckBoxMenuItem("Function Panel");
+		viewFunctionPanel.setSelected(true);
+		viewFunctionPanel.addItemListener(
+		                 new ItemListener()
+         {
+             public void itemStateChanged(ItemEvent e)
+             {
+                 functionPanel.setVisible(e.getStateChange() == e.SELECTED);
+             }
+         });
+
+		viewMenu.add(viewAddressPanel);
+		viewMenu.add(viewControlPanel);
+		viewMenu.add(viewFunctionPanel);
+		this.setJMenuBar(new JMenuBar());
+		this.getJMenuBar().add(viewMenu);
+		
+		FrameListener frameListener = new FrameListener();
 
         controlPanel = new ControlPanel();
         controlPanel.setResizable(true);
@@ -73,6 +119,7 @@ public class ThrottleFrame extends JFrame
         controlPanel.setSize(100,320);
         controlPanel.setVisible(true);
         controlPanel.setEnabled(false);
+		controlPanel.addInternalFrameListener(frameListener);
 
         functionPanel = new FunctionPanel();
         functionPanel.setResizable(true);
@@ -83,12 +130,14 @@ public class ThrottleFrame extends JFrame
         functionPanel.setLocation(100, 0);
         functionPanel.setVisible(true);
         functionPanel.setEnabled(false);
+		functionPanel.addInternalFrameListener(frameListener);
 
         addressPanel = new AddressPanel();
         addressPanel.setResizable(true);
         addressPanel.setClosable(true);
         addressPanel.setIconifiable(true);
         addressPanel.setTitle("Address Panel");
+		addressPanel.addInternalFrameListener(frameListener);
 
         addressPanel.setSize(200,120);
         addressPanel.setLocation(100, 200);
@@ -98,6 +147,7 @@ public class ThrottleFrame extends JFrame
            for address changes. */
         addressPanel.addAddressListener(controlPanel);
         addressPanel.addAddressListener(functionPanel);
+		addressPanel.addAddressListener(addressPanel);
 
         desktop.add(controlPanel, PANEL_LAYER);
         desktop.add(functionPanel, PANEL_LAYER);
@@ -115,6 +165,30 @@ public class ThrottleFrame extends JFrame
         }
     }
 
+	class FrameListener extends InternalFrameAdapter
+	{
+		public void internalFrameClosing(InternalFrameEvent e)
+		{
+			if (e.getSource() == controlPanel)
+			{
+				viewControlPanel.setSelected(false);
+				controlPanel.setVisible(false);
+			}
+			else if (e.getSource() == addressPanel)
+			{
+				viewAddressPanel.setSelected(false);
+				addressPanel.setVisible(false);
+			}
+			else if (e.getSource() == functionPanel)
+			{
+				viewFunctionPanel.setSelected(false);
+				functionPanel.setVisible(false);
+			}
+		}
+	}
+	
+	
+	
     /**
      * Collect the prefs of this object into XML Element
      * <ul>

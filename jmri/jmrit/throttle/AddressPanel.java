@@ -45,6 +45,18 @@ public class AddressPanel extends JInternalFrame
     }
 
     /**
+     * Cancel throttle request with ThrottleManager.
+     */
+    public void dispose()
+    {
+        if (throttleManager != null)
+        {
+            throttleManager.cancelThrottleRequest(requestedAddress, this);
+        }
+        super.dispose();
+    }
+
+    /**
      * Add an AddressListener. AddressListeners are notified when the
      * user selects a new address.
      * @param l
@@ -96,6 +108,7 @@ public class AddressPanel extends JInternalFrame
      {
          JPanel mainPanel = new JPanel();
          this.setContentPane(mainPanel);
+        this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
          mainPanel.setLayout(new GridBagLayout());
          GridBagConstraints constraints = new GridBagConstraints();

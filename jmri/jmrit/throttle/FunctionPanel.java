@@ -136,7 +136,7 @@ public class FunctionPanel extends JInternalFrame
     {
         JPanel mainPanel = new JPanel();
         this.setContentPane(mainPanel);
-        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         mainPanel.setLayout(new FlowLayout());
         functionButton = new FunctionButton[NUM_FUNCTION_BUTTONS];
         for (int i=0; i<NUM_FUNCTION_BUTTONS; i++)

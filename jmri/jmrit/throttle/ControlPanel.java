@@ -135,7 +135,7 @@ public class ControlPanel extends JInternalFrame
         JPanel mainPanel = new JPanel();
         this.setContentPane(mainPanel);
         mainPanel.setLayout(new BorderLayout());
-        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
         JPanel sliderPanel = new JPanel();
         sliderPanel.setLayout(new GridBagLayout());
