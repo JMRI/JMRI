@@ -12,7 +12,7 @@ import java.util.Vector;
  * statistics support.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.8 $
+ * @version 		$Revision: 1.9 $
  *
  */
 public abstract class LnTrafficController implements LocoNetInterface {
@@ -59,9 +59,15 @@ public abstract class LnTrafficController implements LocoNetInterface {
 
     /**
      * Forward a LocoNetMessage to all registered listeners.
+     * <P>
+     * this needs to have public access, as 
+     * {@link jmri.jmrix.loconet.loconetovertcp.LnOverTcpPacketizer}
+     * and
+     * {@link jmri.jmrix.loconet.Intellibox.IBLnPacketizer} invoke it,
+     * but don't inherit from it
      * @param m Message to forward. Listeners should not modify it!
      */
-    protected void notify(LocoNetMessage m) {
+    public void notify(LocoNetMessage m) {
         // record statistics
         receivedMsgCount++;
         receivedByteCount += m.getNumDataElements();
