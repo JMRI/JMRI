@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a Digitrax command station configuration, -->
 <!-- including both the available options and current settings -->
-<!-- $Id: digitrax-cs-config.dtd,v 1.1 2004-02-18 20:59:27 jacobsen Exp $ -->
+<!-- $Id: digitrax-cs-config.dtd,v 1.2 2004-02-22 09:00:56 kiwi64ajs Exp $ -->
 
 <!-- This DTD is Copyright 2004 JMRI.  You may freely use           -->
 <!-- it subject to the Open Source Artistic License, a copy of      -->
@@ -16,24 +16,38 @@
 <!-- represent things that require setting a number of opswitches   -->
 <!-- in a consistent pattern.  -->
 
-<!ELEMENT digitrax-cs-config (option)*>
+<!-- Define a Command Station -->
+<!ELEMENT digitrax-cs-config (command-station* )>
 
+<!-- Define a Command Station -->
+<!ELEMENT command-station (identifier, options )>
+  <!ATTLIST command-station name CDATA #REQUIRED>
+
+<!-- Define a Command Station Identifier -->
+<!ELEMENT identifier (opsw*)>
+
+<!-- Define the list of Options -->
+<!ELEMENT options (group*)>
+
+<!-- Define Option Groupings -->
+<!ELEMENT group (option*)>
+  <!ATTLIST group name CDATA #REQUIRED>
+  
 <!-- Define an available option -->
-<!ELEMENT option (value, choice*)>
+<!ELEMENT option (choice*)>
   <!ATTLIST option name CDATA #REQUIRED>
-  <!-- The value element also provides the default (e.g. current value with new file) -->
   
 <!-- Define how a choice for an option is configured -->
-<!ELEMENT choice (setting*)>
+<!ELEMENT choice (opsw*)>
   <!ATTLIST choice name CDATA #REQUIRED>
 
 <!-- Define a particular setting within a choice -->
-<!ELEMENT setting EMPTY>
-  <!ATTLIST setting opsw CDATA #REQUIRED>
-  <!ATTLIST setting value ( closed | thrown ) "thrown" >
+<!ELEMENT opsw EMPTY>
+  <!ATTLIST opsw number CDATA #REQUIRED>
+  <!ATTLIST opsw setting ( closed | thrown ) "thrown" >
 
 <!-- Define value for a specific option -->
+<!--
 <!ELEMENT value EMPTY>
-  <!ATTLIST option name CDATA #REQUIRED>
-
-
+  <!ATTLIST value name CDATA #REQUIRED>
+ -->
