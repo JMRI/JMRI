@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.5 $ -->
+<!-- Revision $Revision: 1.6 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -116,12 +116,32 @@
       		<include name="README"/>
       	</fileset>
 	</move>
-    <move todir="Windows/JMRI">
+    <copy todir="Windows/JMRI">
 		<fileset dir="Windows/JMRI/scripts/WinInstallFiles" >
       		<include name="*"/>
       	</fileset>
-   	</move>
+   	</copy>
+    <copy todir="Windows/JMRI/lib">
+		<fileset dir="Windows/JMRI/scripts/WinInstallFiles" >
+      		<include name="javax.comm.properties"/>
+      	</fileset>
+   	</copy>
     <delete dir="Windows/JMRI/scripts" />
+    <!-- move windows .jar files to top directory -->
+    <move todir="Windows/JMRI">
+		<fileset dir="Windows/JMRI/lib" >
+      		<include name="comm.jar"/>
+      		<include name="collections.jar"/>
+      		<include name="crimson.jar"/>
+      		<include name="jdom-jdk11.jar"/>
+      		<include name="jh.jar"/>
+      		<include name="jython.jar"/>
+      		<include name="log4j.jar"/>
+      		<include name="MRJAdapter.jar"/>
+      		<include name="Serialio.jar"/>
+      	</fileset>
+	</move>
+    
 </target>
 
 <target name="x-rel-create-osx" depends=""

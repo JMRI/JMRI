@@ -1,3 +1,3 @@
-REM Start the LocoTools Java program ($Revision: 1.6 $)
+REM Start the LocoTools Java program ($Revision: 1.7 $)
 
-java -noverify -Dsun.java2d.d3d=false -Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw -Djava.class.path=".;classes;jmriplugins.jar;lib\jmriplugins.jar;jmri.jar;lib\log4j.jar;lib\collections.jar;lib\jh.jar;lib\comm.jar;lib\crimson.jar;lib\jdom-jdk11.jar;lib\jython.jar" apps.LocoTools.LocoTools
+java -noverify -Dsun.java2d.d3d=false -Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw -Djava.class.path=".;classes;jmriplugins.jar;jmri.jar;comm.jar;Serialio.jar;log4j.jar;collections.jar;jh.jar;crimson.jar;jdom-jdk11.jar;jython.jar" apps.LocoTools.LocoTools
