@@ -11,11 +11,11 @@ import java.util.Vector;
  * method for locating the local implementation.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Id: LnTrafficController.java,v 1.3 2003-02-15 19:57:38 jacobsen Exp $
+ * @version 		$Id: LnTrafficController.java,v 1.4 2003-07-07 03:54:33 jacobsen Exp $
  *
  */
 public abstract class LnTrafficController implements LocoNetInterface {
-    
+
     /**
      * static function returning the LnTrafficController instance to use.
      * @return The registered LnTrafficController instance for general use,
@@ -24,21 +24,21 @@ public abstract class LnTrafficController implements LocoNetInterface {
     static public LnTrafficController instance() {
         return self;
     }
-    
+
     static protected LnTrafficController self = null;
-    
+
     // Abstract methods for the LocoNetInterface
     abstract public boolean status();
-    
+
     /**
      * Forward a preformatted LocoNetMessage to the actual interface.
      * @param m Message to send; will be updated with CRC
      */
     abstract public void sendLocoNetMessage(LocoNetMessage m);
-    
+
     // The methods to implement adding and removing listeners
     protected Vector listeners = new Vector();
-    
+
     public synchronized void addLocoNetListener(int mask, LocoNetListener l) {
         // add only if not already registered
         if (l == null) throw new java.lang.NullPointerException();
@@ -46,13 +46,13 @@ public abstract class LnTrafficController implements LocoNetInterface {
             listeners.addElement(l);
         }
     }
-    
+
     public synchronized void removeLocoNetListener(int mask, LocoNetListener l) {
     	if (listeners.contains(l)) {
             listeners.removeElement(l);
     	}
     }
-    
+
     /**
      * Forward a LocoNetMessage to all registered listeners.
      * @param m Message to forward. Listeners should not modify it!
@@ -71,7 +71,7 @@ public abstract class LnTrafficController implements LocoNetInterface {
             client.message(m);
         }
     }
-    
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnTrafficController.class.getName());
 }
 
