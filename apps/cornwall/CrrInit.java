@@ -13,7 +13,7 @@ import jmri.jmrix.loconet.LnTurnoutManager;
  * Based on Crr0024.bas
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class CrrInit extends jmri.jmrit.automat.AbstractAutomaton {
 
@@ -24,6 +24,7 @@ public class CrrInit extends jmri.jmrit.automat.AbstractAutomaton {
      * to make sure everything is consistent at the start.
      */
     protected void init() {
+        log.debug("CrrInit.init");
    }
 
     /**
@@ -31,6 +32,7 @@ public class CrrInit extends jmri.jmrit.automat.AbstractAutomaton {
      * @return Always returns true to continue operation
      */
     protected boolean handle() {
+        log.debug("CrrInit.handle");
 
         // sequence initialization of all the DCC turnouts
         TurnoutManager tm = LnTurnoutManager.instance();
