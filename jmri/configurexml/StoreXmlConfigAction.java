@@ -2,18 +2,16 @@
 
 package jmri.configurexml;
 
-import jmri.InstanceManager;
-
-import javax.swing.AbstractAction;
-import java.awt.event.ActionEvent;
-
-import java.io.File;
+import java.awt.event.*;
+import javax.swing.*;
+import jmri.*;
+import jmri.jmrit.*;
 
 /**
  * Store the JMRI config as XML
  *
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  * @see             jmri.jmrit.XmlFile
  */
 public class StoreXmlConfigAction extends AbstractAction {
@@ -26,8 +24,11 @@ public class StoreXmlConfigAction extends AbstractAction {
 	}
 
     public void actionPerformed(ActionEvent e) {
-		File fp = new File("temp.config.xml");
-        InstanceManager.configureManagerInstance().store(fp);
+        JFileChooser fileChooser = new JFileChooser(XmlFile.prefsDir());
+		int retVal = fileChooser.showSaveDialog(null);
+		if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
+        log.debug("Save config file: "+fileChooser.getSelectedFile().getPath());
+        InstanceManager.configureManagerInstance().store(fileChooser.getSelectedFile());
 	}
 
 	// initialize logging
