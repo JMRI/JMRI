@@ -9,13 +9,13 @@ import java.io.*;
 import javax.swing.*;
 
 /**
- * Action to export the CV values to a PR1WIN data file.
+ * Action to export the CV values to a PR1DOS data file.
  * <P>
- * Note that this format is somewhat different from the PR1DOS format, and
+ * Note that this format is somewhat different from the PR1WIN format, and
  * it's not clear they will interoperate.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class Pr1ExportAction  extends AbstractAction {
 
@@ -57,13 +57,13 @@ public class Pr1ExportAction  extends AbstractAction {
                 PrintStream str = new PrintStream(new FileOutputStream(file));
 
                 str.println("[DecoderData]");
-                for (int i=0; i<mModel.getRowCount(); i++) {
-                    CvValue cv = mModel.getCvByRow(i);
-                    int num = cv.number();
-                    int value = cv.getValue();
-                    str.println("CV"+num+"="+value);
+                for (int i=1; i<=256; i++) {
+                    int lowCvIndex = i;
+                    CvValue cv1 = (CvValue)mModel.allCvVector().get(lowCvIndex);
+                    int value1 = (cv1!=null) ? cv1.getValue() : 0;
+
+                    str.println("CV"+i+"="+value1);
                 }
-                str.println("Version=0");
                 str.flush();
                 str.close();
             }
