@@ -1,4 +1,5 @@
 <!-- Defines XML documenting a locomotive roster -->
+<!-- $Id: roster-config.dtd,v 1.2 2001-11-18 01:41:30 jacobsen Exp $ -->
 
 <!ELEMENT roster:roster-config (roster:roster*)>
 <!ATTLIST roster:roster-config xmlns:roster CDATA "">
@@ -10,18 +11,26 @@
 
 <!ELEMENT roster:locomotive (roster:decoder) >
 
-<!-- The whole point of this is to identify a definition file, based at "xml/roster/" -->
+<!-- Key used in lists, etc - User identification for this loco -->
+<!ATTLIST roster:locomotive id	CDATA #REQUIRED>          
+
+<!-- The whole point of this is to identify a definition file, based at "prefs/roster/" -->
 <!ATTLIST roster:locomotive fileName	CDATA #REQUIRED>          
 
 <!-- The identification attributes must be kept the same as the ones in the locomotive DTD -->
+<!-- That copy is used if we have to import an existing file into a roster -->
 
 <!-- Manual identification -->
-<!ATTLIST roster:locomotive roadNumber	CDATA #IMPLIED>          
+<!ATTLIST roster:locomotive id			CDATA #REQUIRED>          
 <!ATTLIST roster:locomotive roadName	CDATA #IMPLIED>          
+<!ATTLIST roster:locomotive roadNumber	CDATA #IMPLIED>          
 <!ATTLIST roster:locomotive mfg			CDATA #IMPLIED>
-<!ATTLIST roster:locomotive address		CDATA #IMPLIED>	<!-- DCC address -->
+<!ATTLIST roster:locomotive model		CDATA #IMPLIED>
+<!ATTLIST roster:locomotive dccAddress	CDATA #IMPLIED>	<!-- DCC address -->
+<!ATTLIST roster:locomotive comment		CDATA #IMPLIED>
 
 <!-- The decoder optional section identifies the installed decoder -->
 <!ELEMENT roster:decoder EMPTY >
-<!ATTLIST roster:decoder versionID		CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
-<!ATTLIST roster:decoder mfgID			CDATA #IMPLIED>   <!-- CV08 value, default blank means any   -->
+<!ATTLIST roster:decoder family			CDATA #REQUIRED>
+<!ATTLIST roster:decoder model			CDATA #REQUIRED>
+<!ATTLIST roster:decoder comment   		CDATA #IMPLIED>

@@ -1,15 +1,26 @@
 <!-- Defines XML documenting on a locomotive, esp. information -->
 <!-- on how it is programmed. -->
+<!-- $Id: locomotive-config.dtd,v 1.7 2001-11-18 01:44:07 jacobsen Exp $ -->
 
 <!ELEMENT locomotive:locomotive-config (locomotive:locomotive)>
-<!-- Exactly one locomotive per file now, as the SymbolicProgrammer reads a file -->
-<!-- to configure a locomotive.  How to create a "roster file"? -->
 <!ATTLIST locomotive:locomotive-config xmlns:locomotive CDATA "">
 
+<!-- The identification attributes in locomotive:locomotive and -->
+<!-- locomotive:decoder must be kept the same as the ones in the roster DTD -->
+<!-- This copy is used if we have to import an existing file into a roster -->
 
 <!-- The identification attributes must be kept the same as the ones in the roster DTD -->
 
 <!ELEMENT locomotive:locomotive (locomotive:decoder, locomotive:values*) >
+<<<<<<< locomotive-config.dtd
+<!ATTLIST locomotive:locomotive id			CDATA #REQUIRED>          
+<!ATTLIST locomotive:locomotive roadName	CDATA #IMPLIED>          
+<!ATTLIST locomotive:locomotive roadNumber	CDATA #IMPLIED>          
+<!ATTLIST locomotive:locomotive mfg			CDATA #IMPLIED>
+<!ATTLIST locomotive:locomotive model		CDATA #IMPLIED>
+<!ATTLIST locomotive:locomotive dccAddress	CDATA #IMPLIED>	<!-- long or short address -->
+<!ATTLIST locomotive:locomotive comment		CDATA #IMPLIED>
+=======
 <!ATTLIST locomotive:locomotive roadNumber	CDATA #IMPLIED>          
 <!ATTLIST locomotive:locomotive roadName	CDATA #IMPLIED>          
 <!ATTLIST locomotive:locomotive mfg			CDATA #IMPLIED>
@@ -17,13 +28,12 @@
 <!ATTLIST locomotive:locomotive comment		CDATA #IMPLIED>
 <!ATTLIST locomotive:locomotive shortAddress	CDATA #IMPLIED>	<!-- DCC address -->
 <!ATTLIST locomotive:locomotive longAddress	CDATA #IMPLIED>		<!-- DCC address -->
+>>>>>>> 1.6
 
 <!-- The decoder optional section defines the type of the installed decoder -->
 <!ELEMENT locomotive:decoder EMPTY >
-<!ATTLIST locomotive:decoder model     CDATA #REQUIRED>  <!-- model name used for identification -->
-<!ATTLIST locomotive:decoder mfg       CDATA #REQUIRED>  <!-- mfg name used for identification   -->
-<!ATTLIST locomotive:decoder versionID CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
-<!ATTLIST locomotive:decoder mfgID     CDATA #IMPLIED>   <!-- CV08 value, default blank means any           -->
+<!ATTLIST locomotive:decoder model     CDATA #REQUIRED>  <!-- used for identification -->
+<!ATTLIST locomotive:decoder family    CDATA #REQUIRED>  <!-- used for identification   -->
 <!ATTLIST locomotive:decoder comment   CDATA #IMPLIED>
 
 <!-- The values section defines values for CVs and/or variables -->

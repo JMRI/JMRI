@@ -10,7 +10,7 @@
 <!-- The id section identifies the decoder -->
 
 <!ELEMENT decoder:id EMPTY>
-<!ATTLIST decoder:id model     CDATA #REQUIRED>  <!-- model name used for identification -->
+<!ATTLIST decoder:id family     CDATA #REQUIRED>  <!--family name used for identification -->
 <!ATTLIST decoder:id mfg       CDATA #REQUIRED>  <!-- mfg name used for identification   -->
 <!ATTLIST decoder:id type      ( stationary | locomotive ) "locomotive">
 <!ATTLIST decoder:id versionID CDATA "XX" >      <!-- CV07 value, default XX means any   -->
@@ -47,6 +47,9 @@
                                            <!--     V   used bits    -->
 <!ATTLIST decoder:variable readOnly  (yes | no) "no" >
 <!ATTLIST decoder:variable comment   CDATA #IMPLIED>
+<!ATTLIST decoder:variable stdName CDATA #IMPLIED>  <!-- "standard name" for this function if different -->
+<!ATTLIST decoder:variable minFn CDATA #IMPLIED>  <!-- min number of fns in decoder for this to be valid -->
+<!ATTLIST decoder:variable inOptions CDATA #IMPLIED>  <!-- variable present if any of the options are present -->
 
 <!-- enumVal, decVal, hexval, speedTableVal, lognAddressVal are constraints on possible values -->
 

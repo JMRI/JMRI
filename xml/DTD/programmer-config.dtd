@@ -13,16 +13,31 @@
 
 <!-- The column section describes each column in the pane -->
 
+<<<<<<< programmer-config.dtd
+<!ELEMENT programmer:column ((programmer:variable | programmer:label | programmer:separator | programmer:cvtable| programmer:fnmapping )*)>
+=======
 <!ELEMENT programmer:column ((programmer:variable | programmer:label | programmer:separator | programmer:cvtable )*)>
+>>>>>>> 1.3
 
 <!-- Insert a separator line -->
 
 <!ELEMENT programmer:separator EMPTY>
 
+<<<<<<< programmer-config.dtd
 <!-- Insert a cv table -->
 
 <!ELEMENT programmer:cvtable EMPTY>
 
+<!-- Insert a function mapping display/edit panel -->
+
+<!ELEMENT programmer:fnmapping EMPTY>
+
+=======
+<!-- Insert a cv table -->
+
+<!ELEMENT programmer:cvtable EMPTY>
+
+>>>>>>> 1.3
 <!-- The label items describes an arbitrary text string -->
 
 <!ELEMENT programmer:label EMPTY >
