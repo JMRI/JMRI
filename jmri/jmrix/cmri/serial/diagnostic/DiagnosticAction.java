@@ -22,15 +22,16 @@ public class DiagnosticAction 			extends AbstractAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-		DiagnosticFrame f = new DiagnosticFrame();
-		try {
-			f.initComponents();
-			}
-		catch (Exception ex) {
-			log.error("Exception: "+ex.toString());
-			}
-		f.show();
-	}
+        DiagnosticFrame f = new DiagnosticFrame();
+        try {
+            f.initComponents();
+        }
+        catch (Exception ex) {
+            log.error("Exception: "+ex.toString());
+        }
+        f.show();
+    }
+    
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DiagnosticAction.class.getName());
 }
 
