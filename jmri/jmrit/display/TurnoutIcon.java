@@ -13,9 +13,11 @@ import jmri.*;
  * A click on the icon will command a state change. Specifically, it
  * will set the CommandedState to the opposite (THROWN vs CLOSED) of
  * the current KnownState.
- *
+ *<P>
+ * The default icons are for a left-handed turnout, facing point
+ * for east-bound traffic.
  * @author Bob Jacobsen
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -93,16 +95,16 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         else return Turnout.UNKNOWN;
     }
 
-	// update icon as state of turnout changes
-	public void propertyChange(java.beans.PropertyChangeEvent e) {
+    // update icon as state of turnout changes
+    public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) log.debug("property change: "
                                             +e.getPropertyName()
                                             +" is now "+e.getNewValue());
-		if (e.getPropertyName().equals("KnownState")) {
+	if (e.getPropertyName().equals("KnownState")) {
             int now = ((Integer) e.getNewValue()).intValue();
-             displayState(now);
-		}
-	}
+            displayState(now);
+        }
+    }
 
     JPopupMenu popup = null;
     JLabel ours = this;  // used for rotating icons
@@ -155,7 +157,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
                 if (showText) super.setText("<inconsistent>");
                 if (showIcon) super.setIcon(inconsistent);
                 return;
-			}
+        }
     }
 
     /**
