@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_STD.xml,v 1.1 2002-08-08 06:15:43 jacobsen Exp $ -->
+<!-- $Id: Digitrax_STD.xml,v 1.2 2002-08-13 16:40:14 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
 					version="5" lastUpdated="20020807"/>
@@ -9,11 +9,11 @@
 
 <!-- Version 3 - set ops mode programming to no -->
 <!-- Version 5 - renaming, adjust decoder models -->
+<!-- version 6 - move DN140 to Basic file -->
 
 <decoder>
 	<family name="Basic STD" mfg="Digitrax" lowVersionID="33" highVersionID="45">
 		<model model="DH121" numOuts="2" numFns="2"/>
-		<model model="DN140" numOuts="4" numFns="2"/>
 	</family>
 
 	<programming direct="no" paged="yes" 
