@@ -11,7 +11,7 @@ import jmri.*;
 /**
  * Pane for selecting an active decoder from multiple ones in a loco
  * @author   Bob Jacobsen   Copyright (C) 2003
- * @version  $Revision: 1.1 $
+ * @version  $Revision: 1.2 $
  */
 public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.ProgListener {
 
@@ -24,7 +24,7 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
     JRadioButton[] buttons = new JRadioButton[NENTRIES];
 
     JLabel status = new JLabel("Idle");
-    JButton searchButton = new JButton("Search");
+    JToggleButton searchButton = new JToggleButton("Search");
     jmri.ProgModePane modePane = new jmri.ProgModePane(BoxLayout.Y_AXIS);
 
     public DualDecoderSelectPane() {
@@ -101,6 +101,7 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
     void reset() {
         for (int i = 0; i<NENTRIES; i++) {
             labels[i].setEnabled(true);
+            buttons[i].setSelected(false);
             buttons[i].setEnabled(true);
         }
     }
@@ -173,7 +174,8 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
     final int WROTECV15 = 1;
     final int READCV16 = 2;
     final int FIRSTCV16 = 11;
-    final int SECONDCV16 = 12;
+    final int FIRSTCV15 = 12;
+    final int SECONDCV16 = 13;
     int state = IDLE;
 
     public void programmingOpReply(int value, int retcode) {
@@ -212,8 +214,10 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
                 result = "Could not confirm: "+modePane.getProgrammer().decodeErrorCode(retcode);
             } else if (value != next) {
                 log.debug("Readback error: "+retcode+" "+value);
-                labels[next].setEnabled(false);
-                buttons[next].setEnabled(false);
+                if (scanning) {
+                    labels[next].setEnabled(false);
+                    buttons[next].setEnabled(false);
+                }
                 result = "Unexpected ID read: "+value;
             }
             // go on to next?
@@ -240,7 +244,8 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
      * Start process of initializing a Digitrax and legacy decoder.
      * Operations are:
      * <ol>
-     * <li>Write 1 to CV16, which will write both decoders & turn off Digitrax
+     * <li>Write 1 to CV16, which will write both decoders
+     * <li>Write 7 to CV15, which will turn off Digitrax
      * <LI>Write 7 to CV16, which will be stored in the legacy decoder only
      * </ol>
      */
@@ -259,10 +264,20 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
             state = IDLE;
             break;
         case FIRSTCV16:
+            state = FIRSTCV15;
+            if (retcode!=ProgListener.OK ) {
+                log.debug("Readback error: "+retcode+" "+value);
+                status.setText("Write CV15=7 failed!");
+                state = IDLE;
+            } else { // is OK
+                writeCV15(7);
+            }
+            break;
+        case FIRSTCV15:
             state = SECONDCV16;
             if (retcode!=ProgListener.OK ) {
                 log.debug("Readback error: "+retcode+" "+value);
-                status.setText("Write CV16=8 failed!");
+                status.setText("Write CV16=7 failed!");
                 state = IDLE;
             } else { // is OK
                 writeCV16(7);
