@@ -11,8 +11,8 @@ import java.util.Date;
 import org.jdom.*;
 import org.jdom.output.*;
 
-/** 
- * Roster manages and manipulates a roster of locomotives.  It works 
+/**
+ * Roster manages and manipulates a roster of locomotives.  It works
  * with the "roster-config" XML DTD to load and store its information.
  *<P>
  * This is an in-memory representation of the roster xml file (see below
@@ -20,7 +20,7 @@ import org.jdom.output.*;
  * also responsible for the "dirty bit" handling to ensure it gets
  * written.  As a temporary reliability enhancement, all changes to
  * this structure are now being written to a backup file, and a copy
- * is made when the file is opened. 
+ * is made when the file is opened.
  *<P>
  * Multiple Roster objects don't make sense, so we use an "instance" member
  * to navigate to a single one.
@@ -29,12 +29,18 @@ import org.jdom.output.*;
  * whether it should...
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: Roster.java,v 1.1 2002-02-28 21:47:12 jacobsen Exp $
+ * @version			$Revision: 1.2 $
  * @see             jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
-	
+
+    /** record the single instance of Roster **/
 	private static Roster _instance = null;
+
+    /**
+     * Locate the single instance of Roster, loading it if need be
+     * @return The valid Roster object
+     */
 	public static synchronized Roster instance() {
 		if (_instance == null) {
 			if (log.isDebugEnabled()) log.debug("Roster creating instance");
@@ -49,23 +55,23 @@ public class Roster extends XmlFile {
 		if (log.isDebugEnabled()) log.debug("Roster returns instance "+_instance);
 		return _instance;
 	}
-	
+
 	public void addEntry(RosterEntry e) {
 		if (log.isDebugEnabled()) log.debug("Add entry "+e);
 		_list.add(_list.size(), e);
 		setDirty(true);
 	}
-	
+
 	public void removeEntry(RosterEntry e) {
 		if (log.isDebugEnabled()) log.debug("Remove entry "+e);
 		_list.remove(_list.indexOf(e));
 		setDirty(true);
 	}
-	
+
 	public int numEntries() { return _list.size(); }
-	
-	/** 
-	 * Get a JComboBox representing the choices that match 
+
+	/**
+	 * Get a JComboBox representing the choices that match
 	 * some information
 	 */
 	public JComboBox matchingComboBox(String roadName, String roadNumber, String dccAddress,
@@ -78,8 +84,8 @@ public class Roster extends XmlFile {
 		}
 		return b;
 	}
-	 	 
-	/** 
+
+	/**
 	 * Return RosterEntry from a "title" string, ala selection in matchingComboBox
 	 */
 	public RosterEntry entryFromTitle(String title ) {
@@ -90,8 +96,9 @@ public class Roster extends XmlFile {
 		return null;
 	}
 
-	/** 
+	/**
 	 * Return filename from a "title" string, ala selection in matchingComboBox
+     * @return The filename matching this "title", or null if none exists
 	 */
 	public String fileFromTitle(String title ) {
 		RosterEntry r = entryFromTitle(title);
@@ -102,7 +109,8 @@ public class Roster extends XmlFile {
 	protected List _list = new ArrayList();
 
 	/**
-	 *	Get a List of entries matching some information
+	 *	Get a List of entries matching some information. The list may have
+     *  null contents.
 	 */
 	public List matchingList(String roadName, String roadNumber, String dccAddress,
 									String mfg, String decoderMfgID, String decoderVersionID, String id ) {
@@ -113,11 +121,11 @@ public class Roster extends XmlFile {
 		}
 		return l;
 	}
-	
-	/** 
+
+	/**
 	* Check if an entry consistent with specific properties. A null String entry
 	* always matches. Strings are used for convenience in GUI building.
-	* 
+	*
 	*/
 	public boolean checkEntry(int i, String roadName, String roadNumber, String dccAddress,
 									String mfg, String decoderModel, String decoderFamily,
@@ -132,17 +140,17 @@ public class Roster extends XmlFile {
 		if (decoderFamily != null && !decoderFamily.equals(r.getDecoderFamily())) return false;
 		return true;
 	}
-	
+
 	void writeFile(String name) throws java.io.IOException {
-		if (log.isInfoEnabled()) log.info("writeFile "+name);
-		// This is taken in large part from "Java and XML" page 368 
+		if (log.isDebugEnabled()) log.debug("writeFile "+name);
+		// This is taken in large part from "Java and XML" page 368
 		File file = new File(prefsDir()+name);
 
 		// create root element
 		Element root = new Element("roster-config");
 		Document doc = new Document(root);
 		doc.setDocType(new DocType("roster-config","roster-config.dtd"));
-		
+
 		// add top-level elements
 		Element values;
 		root.addContent(values = new Element("roster"));
@@ -160,7 +168,7 @@ public class Roster extends XmlFile {
 		// done - roster now stored, so can't be dirty
 		setDirty(false);
 	}
-	
+
 	/**
 	 * Read the contents of a roster XML file into this object. Note that this does not
 	 * clear any existing entries.
@@ -173,7 +181,7 @@ public class Roster extends XmlFile {
 			return;
 		}
 		if (log.isDebugEnabled()) XmlFile.dumpElement(root);
-		
+
 		// decode type, invoke proper processing routine if a decoder file
 		if (root.getChild("roster") != null) {
 			List l = root.getChild("roster").getChildren("locomotive");
@@ -186,17 +194,17 @@ public class Roster extends XmlFile {
 			log.error("Unrecognized roster file contents in file: "+name);
 		}
 	}
-		
+
 	private boolean dirty = false;
 	void setDirty(boolean b) {dirty = b;}
 	boolean isDirty() {return dirty;}
-	
+
 	public void dispose() {
 		if (log.isDebugEnabled()) log.debug("dispose");
 		if (dirty) log.error("Dispose invoked on dirty Roster");
 	}
-	
-	/** 
+
+	/**
 	 * Store the roster in the default place, including making a backup if needed
 	 */
 	public static void writeRosterFile() {
@@ -209,10 +217,10 @@ public class Roster extends XmlFile {
 	}
 
 	/**
-	 * update the in-memory Roster to be consistent with 
+	 * update the in-memory Roster to be consistent with
 	 * the current roster file.  This removes the existing roster entries!
 	 */
-	 
+
 	public void reloadRosterFile() {
 		// clear existing
 		_list.clear();
@@ -223,9 +231,9 @@ public class Roster extends XmlFile {
 			log.error("Exception during roster reading: "+e);
 		}
 	}
-		
-	
-	/** 
+
+
+	/**
 	* Return the filename String for the default roster file, including location.
 	* This is here to allow easy override in tests.
 	*/
@@ -233,8 +241,8 @@ public class Roster extends XmlFile {
 
 	static protected String fileLocation  = "";
 	static final protected String rosterFileName = "roster.xml";
-	
-	// initialize logging	
+
+	// initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Roster.class.getName());
-		
+
 }

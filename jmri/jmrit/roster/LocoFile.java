@@ -13,18 +13,19 @@ import jmri.jmrit.symbolicprog.CvValue;
 import org.jdom.*;
 import org.jdom.output.*;
 
-// try to limit the JDOM to this class, so that others can manipulate...
-
 /**
  * Represents and manipulates a locomotive definition, both as a file and
  * in memory.  The interal storage is a JDOM tree. See locomotive-config.dtd
+ * <P>
+ * This class is intended for use by RosterEntry only; you should not use it
+ * directly. That's why it's not a public class.
  *
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version		 	$Id: LocoFile.java,v 1.1 2002-02-28 21:47:12 jacobsen Exp $
+ * @author			Bob Jacobsen   Copyright (C) 2001, 2002
+ * @version		 	$Revision: 1.2 $
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
-public class LocoFile extends XmlFile {
+class LocoFile extends XmlFile {
 
 	/**
 	 * Convert to a cannonical text form for ComboBoxes, etc
@@ -35,6 +36,10 @@ public class LocoFile extends XmlFile {
 
 	/**
 	 * Load a CvTableModel from the locomotive element in the File
+     * @param loco A JDOM Element containing the locomotive definition
+     * @param cvModel  An existing CvTableModel object which will have
+     *                 the CVs from the loco Element appended.  It is
+     *                 intended, but not required, that this be empty.
 	 */
 	public static void loadCvModel(Element loco, CvTableModel cvModel){
 		CvValue cvObject;
@@ -79,6 +84,16 @@ public class LocoFile extends XmlFile {
 		if (cvObject!=null) cvObject.setState(CvValue.FROMFILE);
 	}
 
+    /**
+     * Write an XML version of this object, including also the RosterEntry
+     * information.  Does not do an automatic backup of the file, so that
+     * should be done elsewhere.
+     *
+     * @param file Destination file. This file is overwritten if it exists.
+     * @param cvModel provides the CV numbers and contents
+     * @param variableModel provides the variable names and contents
+     * @param r  RosterEntry providing name, etc, information
+     */
 	public void writeFile(File file, CvTableModel cvModel, VariableTableModel variableModel, RosterEntry r) {
 		try {
 			// This is taken in large part from "Java and XML" page 368
@@ -140,6 +155,10 @@ public class LocoFile extends XmlFile {
 		}
 	}
 
+    /**
+     * Defines the prefs subdirectory in which LocoFiles are kept
+     * by default.
+     */
 	static public String fileLocation = "roster"+File.separator;
 
 	// initialize logging
