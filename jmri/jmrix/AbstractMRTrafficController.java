@@ -26,7 +26,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 abstract public class AbstractMRTrafficController {
 
@@ -597,6 +597,26 @@ abstract public class AbstractMRTrafficController {
         }
     }
 
+    // Override the finalize method for this class
+    protected void finalize() {
+            if(log.isDebugEnabled()) log.debug("Cleanup Starts");
+            AbstractMRMessage modeMsg=enterNormalMode();
+	    if(modeMsg!=null) {
+	       modeMsg.setRetries(100); // set the number of retries  
+					// high, just in case the interface
+					// is busy when we try to send
+               synchronized(self) {
+                  forwardToPort(modeMsg, null);
+                  // wait for reply
+                  try {
+                    synchronized(xmtRunnable) {
+                    xmtRunnable.wait(modeMsg.getTimeout());
+                    }
+                  } catch (InterruptedException e) { log.error("transmit interrupted"); }
+	       }
+	    }
+    }
+
     /**
      * Internal class to remember the Reply object and destination
      * listener with a reply is received.
@@ -617,14 +637,6 @@ abstract public class AbstractMRTrafficController {
         }
     }
    
-    // Override the finalize method for this class
-    protected void finalize() {
-            if(log.isDebugEnabled()) log.debug("Cleanup Starts");
-            AbstractMRMessage modeMsg=enterNormalMode();
-	    if(modeMsg!=null)
-                   forwardToPort(modeMsg, null);	
-    }
-
     /**
      * Internal class to remember the Message object and destination
      * listener when a message is queued for notification.
