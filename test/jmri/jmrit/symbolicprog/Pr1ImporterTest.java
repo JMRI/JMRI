@@ -17,9 +17,17 @@ import junit.framework.TestSuite;
  * Tests for Pr1Importer class.
  *
  * @author	Bob Jacobsen Copyright 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class Pr1ImporterTest extends TestCase {
+
+    class Pr1ImporterDummy extends Pr1Importer {
+        Pr1ImporterDummy(File f) throws java.io.IOException { super(f); }
+
+        boolean checkResult() {
+            return m_packedValues;
+        }
+    }
 
     public File makeTempFile(String contents) throws IOException {
         // create a file
@@ -41,11 +49,7 @@ public class Pr1ImporterTest extends TestCase {
                     +"CV2=1\n";
         File f = makeTempFile(s);
 
-        boolean result = (new Pr1Importer(f){
-            boolean checkResult() {
-                return m_packedValues;
-            }
-        }).checkResult();
+        boolean result = new Pr1ImporterDummy(f).checkResult();
 
         Assert.assertTrue("should not pack", !result);
     }
@@ -73,11 +77,7 @@ public class Pr1ImporterTest extends TestCase {
                     +"CV4=23\n";
         File f = makeTempFile(s);
 
-        boolean result = (new Pr1Importer(f){
-            boolean checkResult() {
-                return m_packedValues;
-            }
-        }).checkResult();
+        boolean result = new Pr1ImporterDummy(f).checkResult();
 
         Assert.assertTrue("should pack", result);
     }
@@ -88,11 +88,7 @@ public class Pr1ImporterTest extends TestCase {
                     +"CV2=1\n";
         File f = makeTempFile(s);
 
-        boolean result = (new Pr1Importer(f){
-            boolean checkResult() {
-                return m_packedValues;
-            }
-        }).checkResult();
+        boolean result = new Pr1ImporterDummy(f).checkResult();
 
         Assert.assertTrue("should pack", result);
     }
