@@ -56,6 +56,10 @@ public class LocoNetThrottle implements DccThrottle
     }
 
 
+    /**
+     * Send the LocoNet message to set the state of locomotive
+     * direction and functions F0, F1, F2, F3, F4
+     */
     private void sendLowerFunctions()
     {
         LocoNetMessage msg = new LocoNetMessage(4);
@@ -69,9 +73,12 @@ public class LocoNetThrottle implements DccThrottle
                     (getF4() ? LnConstants.DIRF_F4 : 0);
         msg.setElement(2, bytes);
         network.sendLocoNetMessage(msg);
-
     }
 
+    /**
+     * Send the LocoNet message to set the state of
+     * functions F5, F6, F7, F8
+     */
     private void sendHigherFunctions()
     {
        LocoNetMessage msg = new LocoNetMessage(4);

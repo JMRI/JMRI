@@ -13,6 +13,7 @@ public class LnThrottleManager implements ThrottleManager, SlotListener
 {
     private SlotManager slotManager;
     private HashMap throttleListeners;
+    private HashMap throttleMap;
 
     public LnThrottleManager()
     {
@@ -80,7 +81,16 @@ public class LnThrottleManager implements ThrottleManager, SlotListener
         ArrayList list = (ArrayList)throttleListeners.get(address);
         if (list != null)
         {
-            LocoNetThrottle throttle = new LocoNetThrottle(s);
+            if (throttleMap == null)
+            {
+                throttleMap = new HashMap();
+            }
+            LocoNetThrottle throttle = (LocoNetThrottle)throttleMap.get(address);
+            if (throttle == null)
+            {
+                throttle = new LocoNetThrottle(s);
+                throttleMap.put(address, throttle);
+            }
             for (int i=0; i<list.size(); i++)
             {
                 ThrottleListener listener = (ThrottleListener)list.get(i);
