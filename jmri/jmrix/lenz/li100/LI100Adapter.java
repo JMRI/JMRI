@@ -22,7 +22,7 @@ import javax.comm.SerialPortEventListener;
  * Provide access to XPressNet via a LI100 on an attached serial comm port.
  *					Normally controlled by the lenz.li100.LI100Frame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 
 public class LI100Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -295,8 +295,8 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
 	public void configureOption2(String value) {}
 
 
-	protected String [] validSpeeds = new String[]{"9,600 baud", "19,200 baud"};
-	protected int [] validSpeedValues = new int[]{9600, 19200};
+	protected String [] validSpeeds = new String[]{"9,600 baud","19,200 baud","38,400 baud","57,600 baud","115,200 baud"};
+	protected int [] validSpeedValues = new int[]{9600,19200,38400,57600,115200};
 	protected String selectedSpeed=validSpeeds[0];
 
 	// meanings are assigned to these above, so make sure the order is consistent
