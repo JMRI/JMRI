@@ -9,7 +9,7 @@ import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
  * refers to the switch settings on the new LocoBuffer II
  
  * @author			Bob Jacobsen   Copyright (C) 2004
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class LocoBufferIIAdapter extends LocoBufferAdapter {
 
@@ -20,8 +20,10 @@ public class LocoBufferIIAdapter extends LocoBufferAdapter {
     }
 
     /**
-     * Get an array of valid baud rates. This is currently just a message
-     * saying its fixed
+     * Get an array of valid baud rates. This is modified to
+     * have different comments.  Because the speeds are the same
+     * as the parent class (19200 and 57600), we don't override
+     * validBaudNumber().
      */
     public String[] validBaudRates() {
         return validSpeeds;
@@ -32,9 +34,14 @@ public class LocoBufferIIAdapter extends LocoBufferAdapter {
     public String option1Name() { return "LocoBuffer-II connection uses "; }
 
     static public LocoBufferAdapter instance() {
-        if (m2Instance == null) m2Instance = new LocoBufferIIAdapter();
+        if (m2Instance == null) {
+        	m2Instance = new LocoBufferIIAdapter();
+        	log.debug("new default instance in LocoBufferIIAdapter");
+        }
+        log.debug("LocoBufferIIAdapter.instance returns object of class "+m2Instance.getClass().getName());
         return m2Instance;
     }
-    static LocoBufferIIAdapter m2Instance = null;
+    static private LocoBufferIIAdapter m2Instance = null;
 
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoBufferIIAdapter.class.getName());
 }
