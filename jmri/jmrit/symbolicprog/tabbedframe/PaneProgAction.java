@@ -21,7 +21,7 @@ import javax.swing.border.*;
  * is constructed on the fly here, and has no specific type.
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class PaneProgAction 			extends AbstractAction {
 
@@ -79,7 +79,7 @@ public class PaneProgAction 			extends AbstractAction {
 
 		// new Loco on programming track
 		JLabel last;
-		JPanel pane1 = new CombinedLocoSelPane(statusLabel){
+		JPanel pane1 = new CombinedLocoSelListPane(statusLabel){
 			protected void startProgrammer(DecoderFile decoderFile, RosterEntry re, String filename) {
 				String title = "Program new decoder";
 				if (re!=null) title = "Program "+re.getId();
