@@ -20,7 +20,7 @@ import jmri.jmrix.lenz.*;
  * Commander or Compact)
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SystemInfoFrame extends JFrame implements XNetListener {
 
@@ -111,19 +111,19 @@ public class SystemInfoFrame extends JFrame implements XNetListener {
 
     }
 
-    // listen for responces from the LI101
+    // listen for responses from the LI101
     public void message(XNetMessage l) {
-       // Check to see if this is a responce for the LI version info
+       // Check to see if this is a response for the LI version info
        // or the Command Station Version Info
-       if (l.getElement(0)==XNetConstants.LI_VERSION_RESPONCE)
+       if (l.getElement(0)==XNetConstants.LI_VERSION_RESPONSE)
        {
-              // This is an Interface responce
+              // This is an Interface response
               LIHardwareVersion.setText("" + (l.getElementBCD(1).floatValue()/10) );
               LISoftwareVersion.setText("" + (l.getElementBCD(2)) );
        }
-       else if(l.getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONCE)
+       else if(l.getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONSE)
        {
-              // This is the Command Station Software Version Responce
+              // This is the Command Station Software Version Response
               if(l.getElement(1)==XNetConstants.CS_SOFTWARE_VERSION)
 	      {
 		CSSoftwareVersion.setText("" + (l.getElementBCD(2).floatValue())/10);
