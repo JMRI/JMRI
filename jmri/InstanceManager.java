@@ -12,7 +12,7 @@ package jmri;
  * non-system-specific code.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.24 $
+ * @version			$Revision: 1.25 $
  */
 public class InstanceManager {
 
@@ -51,6 +51,8 @@ public class InstanceManager {
         // As a convenience, we create a default object if none was provided explicitly.
         // This must be replaced when we start registering specific implementations
         instance().timebase = new jmri.jmrit.simpleclock.SimpleTimebase();
+        if (InstanceManager.configureManagerInstance() != null)
+            InstanceManager.configureManagerInstance().registerConfig(instance().timebase);        
         return instance().timebase;
     }
 
