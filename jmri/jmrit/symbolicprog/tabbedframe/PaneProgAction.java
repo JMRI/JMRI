@@ -21,7 +21,7 @@ import javax.swing.border.*;
  * is constructed on the fly here, and has no specific type.
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class PaneProgAction 			extends AbstractAction {
 
@@ -70,6 +70,12 @@ public class PaneProgAction 			extends AbstractAction {
 		// create the initial frame that steers
 		final JFrame f = new JFrame("Tab-Programmer Setup");
 		f.getContentPane().setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
+
+        // add the Roster menu
+        JMenuBar menuBar = new JMenuBar();
+        menuBar.setBorder(new BevelBorder(BevelBorder.RAISED));
+        menuBar.add(new jmri.jmrit.roster.RosterMenu("Roster", jmri.jmrit.roster.RosterMenu.MAINMENU, f));
+        f.setJMenuBar(menuBar);
 
 		// new Loco on programming track
 		JLabel last;
