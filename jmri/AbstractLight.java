@@ -19,7 +19,7 @@ package jmri;
  * Based in concept on AbstractSignalHead.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public abstract class AbstractLight extends AbstractNamedBean
     implements Light, java.io.Serializable {
@@ -174,6 +174,8 @@ public abstract class AbstractLight extends AbstractNamedBean
         }
     }
 
+	abstract public void setState(int value);
+	
     /**
      * Activates a light by control type.  This method tests the 
      *   control type, and set up a control mechanism, appropriate 
