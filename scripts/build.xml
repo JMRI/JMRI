@@ -1,0 +1,35 @@
+<!-- ugly first attempt at an ANT build.xml file for JMRI development -->
+<!-- Bob Jacobsen, April 2002 -->
+<!-- Revision $Revision: 1.1 $ -->
+
+<project name="JMRI" default="compile" basedir=".">
+
+  <!-- set global properties for this build -->
+  <property name="source" value="src"/>
+  <property name="target" value="classes"/>
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${target}"/>
+  </target>
+
+  <target name="compile" depends="init">
+    <!-- Compile the java code from ${source} into ${target} -->
+    <javac srcdir="${source}" 
+           destdir="${target}"
+	   classpath="../lib/collections.jar:../lib/crimson.jar:../lib/junit.jar:../lib/comm.jar:../lib/jdom-jdk11.jar:../lib/log4j.jar"
+    />
+  </target>
+
+  <target name="jmridemo" depends="compile">
+    <java classname="apps.JmriDemo.JMRIdemo"
+          dir=".."
+	  fork="yes"
+	   classpath="../lib/collections.jar:../lib/crimson.jar:../lib/junit.jar:../lib/comm.jar:../lib/jdom-jdk11.jar:../lib/log4j.jar:classes/"
+    />
+ </target>
+
+</project>
+
