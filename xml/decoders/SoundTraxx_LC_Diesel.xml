@@ -1,14 +1,15 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_LC_Diesel.xml,v 1.15 2003-08-01 20:33:55 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_LC_Diesel.xml,v 1.16 2004-02-11 04:57:28 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Michael Mosher" version="8" lastUpdated="20030706"/>
+		<version author="Michael Mosher" version="9" lastUpdated="20040205"/>
 
 		<!-- version 4: updates to minOut usage, function mapping -->
 		<!-- version 5: removed erroneous CV19 definition, corrected VersionID -->
 		<!-- version 6: rename for tree structure -->
 		<!-- version 7: add Atlas/Kato -->
 		<!-- version 8: added CV105&106 set CV9 default to 180   -->
+		<!-- version 9: update by Robin Becker -->
 
 <decoder>
 	<family name="LC Diesel decoders" mfg="Throttle-Up (SoundTraxx)">
@@ -480,11 +481,27 @@
 				<enumChoice choice="Dimmable"/>
 				</enumVal>
 			</variable>
+		<variable label="Forward light F0F behavior" CV="49" mask="XVXXXXXX"
+					item="Function F0F behavior">
+			<enumVal>
+				<enumChoice choice="directional"/>
+				<enumChoice choice="Rule 17 enable"/>
+				</enumVal>
+			</variable>
+
+
 		<variable label="Reverse light F0R effect generated" CV="50" mask="XXXXVVVV"
 					item="Function F0R effect generated">
 			<enumVal>
 				<enumChoice choice="On/Off"/>
 				<enumChoice choice="Dimmable"/>
+				</enumVal>
+			</variable>
+		<variable label="Reverse light F0R behavior" CV="50" mask="XVXXXXXX"
+					item="Function F0R behavior">
+			<enumVal>
+				<enumChoice choice="directional"/>
+				<enumChoice choice="Rule 17 enable"/>
 				</enumVal>
 			</variable>
 
