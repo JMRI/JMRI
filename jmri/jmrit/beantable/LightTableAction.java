@@ -32,7 +32,7 @@ import javax.swing.JOptionPane;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -109,8 +109,6 @@ public class LightTableAction extends AbstractTableAction {
 
     String sensorControl = rb.getString("LightSensorControl");
     String fastClockControl = rb.getString("LightFastClockControl");
-    String panelSwitchControl = rb.getString("LightPanelSwitchControl");
-    String signalHeadControl = rb.getString("LightSignalHeadControl");
     String turnoutStatusControl = rb.getString("LightTurnoutStatusControl");
 
     // fixed part of add frame
@@ -123,25 +121,22 @@ public class LightTableAction extends AbstractTableAction {
     JLabel typeBoxLabel = new JLabel( rb.getString("LightControlType") );
     int sensorControlIndex;
     int fastClockControlIndex;
-    int panelSwitchControlIndex;
-    int signalHeadControlIndex;
     int turnoutStatusControlIndex;
-    JTextField field1 = new JTextField(10);
     JButton create;
     JButton edit;
     JButton update;
     JButton cancel;
     
     // variable part of add frame
+    JTextField field1a = new JTextField(10);  // Sensor 
+    JTextField field1b = new JTextField(8);  // Fast Clock
+    JTextField field1c = new JTextField(10);  // Turnout
     JLabel f1Label = new JLabel( rb.getString("LightSensor") );
-    JTextField field2 = new JTextField(10);
+    JTextField field2 = new JTextField(8);
     JLabel f2Label = new JLabel( rb.getString("LightSensorSense") );
     JComboBox stateBox;
     int sensorActiveIndex;
     int sensorInactiveIndex;
-    int signalHeadGreenIndex;
-    int signalHeadRedIndex;
-    int signalHeadYellowIndex;
     int turnoutClosedIndex;
     int turnoutThrownIndex;
     JLabel stateBoxLabel = new JLabel( rb.getString("LightSensorSense") );
@@ -175,17 +170,11 @@ public class LightTableAction extends AbstractTableAction {
             panel31.setLayout(new FlowLayout());
             panel31.add(typeBoxLabel);
             panel31.add(typeBox = new JComboBox(new String[]{
-// temporarily suppress PanelSwitch and FastClock
-//            sensorControl,fastClockControl,panelSwitchControl,signalHeadControl,turnoutStatusControl
-            sensorControl,signalHeadControl,turnoutStatusControl
+                    sensorControl,fastClockControl,turnoutStatusControl
             }));
             sensorControlIndex = 0;
             fastClockControlIndex = 1;
-            panelSwitchControlIndex = 2;
-// change the following when fast clock or panel switch are included
-            signalHeadControlIndex = 1;      // eventually should be 3
             turnoutStatusControlIndex = 2;   // eventually should be 4
-// end area to be changed
             typeBox.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
                     controlTypeChanged();
@@ -195,8 +184,15 @@ public class LightTableAction extends AbstractTableAction {
             JPanel panel32 = new JPanel();
             panel32.setLayout(new FlowLayout());
             panel32.add(f1Label);
-            panel32.add(field1);
-            field1.setToolTipText( rb.getString("LightSensorHint") );
+            panel32.add(field1a);
+            panel32.add(field1b);
+            panel32.add(field1c);
+            field1a.setText("");
+            field1b.setText("00:00");
+            field1c.setText("");
+            field1b.setVisible(false);
+            field1c.setVisible(false);
+            field1a.setToolTipText( rb.getString("LightSensorHint") );
             JPanel panel33 = new JPanel();
             panel33.setLayout(new FlowLayout());
             panel33.add(f2Label);
@@ -205,6 +201,7 @@ public class LightTableAction extends AbstractTableAction {
             }));
             stateBox.setToolTipText( rb.getString("LightSensorSenseHint") );
             panel33.add(field2);
+            field2.setText("00:00");
             field2.setVisible(false);
             panel3.add(panel31);
             panel3.add(panel32);
@@ -299,7 +296,7 @@ public class LightTableAction extends AbstractTableAction {
         if ( sensorControl.equals(ctype) ) {
             // set up window for sensor control
             f1Label.setText( rb.getString("LightSensor") );
-            field1.setToolTipText( rb.getString("LightSensorHint") );
+            field1a.setToolTipText( rb.getString("LightSensorHint") );
             f2Label.setText( rb.getString("LightSensorSense") );
             stateBox.removeAllItems();
             stateBox.addItem( rbean.getString("SensorStateActive") );
@@ -308,48 +305,29 @@ public class LightTableAction extends AbstractTableAction {
             sensorInactiveIndex = 1;
             stateBox.setToolTipText( rb.getString("LightSensorSenseHint") );
             f2Label.setVisible(true);
+            field1a.setVisible(true);
+            field1b.setVisible(false);
+            field1c.setVisible(false);
             field2.setVisible(false);
             stateBox.setVisible(true);
         } 
         else if (fastClockControl.equals(ctype) ) {
             // set up window for fast clock control
             f1Label.setText( rb.getString("LightScheduleOn") );
-            field1.setToolTipText( rb.getString("LightScheduleHint") );
+            field1b.setToolTipText( rb.getString("LightScheduleHint") );
             f2Label.setText( rb.getString("LightScheduleOff") );
             field2.setToolTipText( rb.getString("LightScheduleHint") );
             f2Label.setVisible(true);
+            field1a.setVisible(false);
+            field1b.setVisible(true);
+            field1c.setVisible(false);
             field2.setVisible(true);
             stateBox.setVisible(false);
-        }
-        else if (panelSwitchControl.equals(ctype) ) {
-            // set up window for panel switch control
-            f1Label.setText( rb.getString("LightPanelSwitch") );
-            field1.setToolTipText( rb.getString("LightPanelSwitchHint") );
-            f2Label.setVisible(false);
-            field2.setVisible(false);
-            stateBox.setVisible(false);
-        }
-        else if (signalHeadControl.equals(ctype) ) {
-            // set up window for signal head control
-            f1Label.setText( rb.getString("LightSignalHead") );
-            field1.setToolTipText( rb.getString("LightSignalHeadHint") );
-            f2Label.setText( rb.getString("LightSignalHeadAspect") );
-            stateBox.removeAllItems();
-            stateBox.addItem( rbean.getString("SignalHeadStateGreen") );
-            signalHeadGreenIndex = 0;
-            stateBox.addItem( rbean.getString("SignalHeadStateYellow") );
-            signalHeadYellowIndex = 1;
-            stateBox.addItem( rbean.getString("SignalHeadStateRed") );
-            signalHeadRedIndex = 2;
-            stateBox.setToolTipText( rb.getString("LightSignalHeadAspectHint") );
-            f2Label.setVisible(true);
-            field2.setVisible(false);
-            stateBox.setVisible(true);
         }
         else if (turnoutStatusControl.equals(ctype) ) {
             // set up window for turnout status control
             f1Label.setText( rb.getString("LightTurnout") );
-            field1.setToolTipText( rb.getString("LightTurnoutHint") );
+            field1c.setToolTipText( rb.getString("LightTurnoutHint") );
             f2Label.setText( rb.getString("LightTurnoutSense") );
             stateBox.removeAllItems();
             stateBox.addItem( rbean.getString("TurnoutStateClosed") );
@@ -358,6 +336,9 @@ public class LightTableAction extends AbstractTableAction {
             turnoutThrownIndex = 1;
             stateBox.setToolTipText( rb.getString("LightTurnoutSenseHint") );
             f2Label.setVisible(true);
+            field1a.setVisible(false);
+            field1b.setVisible(false);
+            field1c.setVisible(true);
             field2.setVisible(false);
             stateBox.setVisible(true);
         }
@@ -409,6 +390,18 @@ public class LightTableAction extends AbstractTableAction {
             // Light with this user name already exists
             status1.setText( rb.getString("LightError8") );
             status2.setText( rb.getString("LightError9") );
+            status2.setVisible(true);
+            return;
+        }
+        // check if requested Light uses the same bit as a Turnout
+        String testSN = sName.substring(0,1)+"T"+
+                                            sName.substring(2,sName.length());
+        Turnout testT = InstanceManager.turnoutManagerInstance().
+                                                    getBySystemName(testSN);
+        if (testT != null) {
+            // Light with this user name already exists
+            status1.setText( rb.getString("LightError15")+" "+testSN+"." );
+            status2.setText( rb.getString("LightError6") );
             status2.setVisible(true);
             return;
         }
@@ -484,50 +477,26 @@ public class LightTableAction extends AbstractTableAction {
             case Light.SENSOR_CONTROL:
                 setUpControlType(sensorControl);
                 typeBox.setSelectedIndex(sensorControlIndex);
-                Sensor s = g.getControlSensor();
-                if (s==null) {
-                    field1.setText("");
-                }
-                else {
-                    field1.setText(s.getSystemName());
-                }
+                field1a.setText(g.getControlSensorSystemName());
                 stateBox.setSelectedIndex(sensorActiveIndex);
                 if (g.getControlSensorSense()==Sensor.INACTIVE) {
                     stateBox.setSelectedIndex(sensorInactiveIndex);
                 }
                 break;
             case Light.FAST_CLOCK_CONTROL:
-                break;
-            case Light.PANEL_SWITCH_CONTROL:
-                break;
-            case Light.SIGNAL_HEAD_CONTROL:
-                setUpControlType(signalHeadControl);
-                typeBox.setSelectedIndex(signalHeadControlIndex);
-                SignalHead sh = g.getControlSignalHead();
-                if (sh==null) {
-                    field1.setText("");
-                }
-                else {
-                    field1.setText(sh.getSystemName());
-                }
-                stateBox.setSelectedIndex(signalHeadGreenIndex);
-                if (g.getControlSignalHeadAspect()==SignalHead.RED) {
-                    stateBox.setSelectedIndex(signalHeadRedIndex);
-                }
-                else if (g.getControlSignalHeadAspect()==SignalHead.YELLOW) {
-                    stateBox.setSelectedIndex(signalHeadYellowIndex);
-                }
+                setUpControlType(fastClockControl);
+                typeBox.setSelectedIndex(fastClockControlIndex);
+                int onHour = g.getFastClockOnHour();
+                int onMin = g.getFastClockOnMin();
+                int offHour = g.getFastClockOffHour();
+                int offMin = g.getFastClockOffMin();
+                field1b.setText(formatTime(onHour,onMin));
+                field2.setText(formatTime(offHour,offMin));
                 break;
             case Light.TURNOUT_STATUS_CONTROL:
                 setUpControlType(turnoutStatusControl);
                 typeBox.setSelectedIndex(turnoutStatusControlIndex);
-                Turnout t = g.getControlTurnout();
-                if (t==null) {
-                    field1.setText("");
-                }
-                else {
-                    field1.setText(t.getSystemName());
-                }
+                field1c.setText(g.getControlTurnoutSystemName());
                 stateBox.setSelectedIndex(turnoutClosedIndex);
                 if (g.getControlTurnoutState()==Turnout.THROWN) {
                     stateBox.setSelectedIndex(turnoutThrownIndex);
@@ -537,7 +506,7 @@ public class LightTableAction extends AbstractTableAction {
                 // Set up as undefined sensor control
                 setUpControlType(sensorControl);
                 typeBox.setSelectedIndex(sensorControlIndex);
-                field1.setText("");
+                field1a.setText("");
                 stateBox.setSelectedIndex(sensorActiveIndex);
                 break;
         }
@@ -594,14 +563,15 @@ public class LightTableAction extends AbstractTableAction {
             // Set type of control
             g.setControlType(Light.SENSOR_CONTROL);
             // Get sensor control information
+            String sensorSystemName = field1a.getText();
             Sensor s = InstanceManager.sensorManagerInstance().
-                            provideSensor(field1.getText());
+                            provideSensor(sensorSystemName);
             int sState = Sensor.ACTIVE;
             if ( stateBox.getSelectedItem().equals(rbean.getString
                                                     ("SensorStateInactive")) ) {
                 sState = Sensor.INACTIVE;
             }
-            g.setControlSensor(s);
+            g.setControlSensor(sensorSystemName);
             g.setControlSensorSense(sState);
             if (s==null) {
                 status1.setText( rb.getString("LightWarn1") );
@@ -610,56 +580,120 @@ public class LightTableAction extends AbstractTableAction {
                 return (false);
             }
         }
-// place holder for fast clock control                 
-//        else if (fastClockControl.equals(typeBox.getSelectedItem())) {
-//            // Set type of control
-//            g.setControlType(Light.FAST_CLOCK_CONTROL);
-//        }
-// place holder for panel switch control                 
-//        else if (panelSwitchControl.equals(typeBox.getSelectedItem())) {
-//            // Set type of control
-//            g.setControlType(Light.PANEL_SWITCH_CONTROL);
-//        }
-        else if (signalHeadControl.equals(typeBox.getSelectedItem())) {
+        else if (fastClockControl.equals(typeBox.getSelectedItem())) {
             // Set type of control
-            g.setControlType(Light.SIGNAL_HEAD_CONTROL);
-            // Get signal head control information
-            SignalHead s = InstanceManager.signalHeadManagerInstance().
-                            getBySystemName(field1.getText());
-            int sState = SignalHead.GREEN;
-            if ( stateBox.getSelectedItem().equals(rbean.getString
-                                                    ("SignalHeadStateYellow")) ) {
-                sState = SignalHead.YELLOW;
+            g.setControlType(Light.FAST_CLOCK_CONTROL);
+            // read and parse the hours and minutes in the two fields
+            boolean error = false;
+            int onHour = 0;
+            int onMin = 0;
+            int offHour = 0;
+            int offMin = 0;
+            String s = field1b.getText();
+            if ( (s.length() != 5) || (s.charAt(2) != ':') ) {
+                status1.setText( rb.getString("LightError12") );
+                error = true;
             }
-            if ( stateBox.getSelectedItem().equals(rbean.getString
-                                                    ("SignalHeadStateRed")) ) {
-                sState = SignalHead.RED;
+            if (!error) {
+                try {
+                    onHour = Integer.valueOf(s.substring(0,2)).intValue();
+                    if ( (onHour < 0) || (onHour > 24) ) {
+                        status1.setText( rb.getString("LightError13") );
+                        error = true;
+                    }
+                }
+                catch (Exception e) {
+                    status1.setText( rb.getString("LightError14") );
+                    error = true;
+                }
             }
-            g.setControlSignalHead(s);
-            g.setControlSignalHeadAspect(sState);
-            if (s==null) {
-                status1.setText( rb.getString("LightWarn3") );
+            if (!error) {
+                try {
+                    onMin = Integer.valueOf(s.substring(3,5)).intValue();
+                    if ( (onMin < 0) || (onMin > 59) ) {
+                        status1.setText( rb.getString("LightError13") );
+                        error = true;
+                    }
+                }
+                catch (Exception e) {
+                    status1.setText( rb.getString("LightError14") );
+                    error = true;
+                }
+            }
+            s = field2.getText();
+            if ( (s.length() != 5) || (s.charAt(2) != ':') ) {
+                status1.setText( rb.getString("LightError12") );
+                error = true;
+            }
+            if (!error) {
+                try {
+                    offHour = Integer.valueOf(s.substring(0,2)).intValue();
+                    if ( (offHour < 0) || (offHour > 24) ) {
+                        status1.setText( rb.getString("LightError13") );
+                        error = true;
+                    }
+                }
+                catch (Exception e) {
+                    status1.setText( rb.getString("LightError14") );
+                    error = true;
+                }
+            }
+            if (!error) {
+                try {
+                    offMin = Integer.valueOf(s.substring(3,5)).intValue();
+                    if ( (offMin < 0) || (offMin > 59) ) {
+                        status1.setText( rb.getString("LightError13") );
+                        error = true;
+                    }
+                }
+                catch (Exception e) {
+                    status1.setText( rb.getString("LightError14") );
+                    error = true;
+                }
+            }
+                    
+            if (error) {
                 status2.setText( rb.getString("LightEditInst") );
                 status2.setVisible(true);
                 return (false);
             }
+            g.setFastClockControlSchedule(onHour,onMin,offHour,offMin);
         }
         else if (turnoutStatusControl.equals(typeBox.getSelectedItem())) {
+            boolean error = false;
+            Turnout t = null;
             // Set type of control
             g.setControlType(Light.TURNOUT_STATUS_CONTROL);
             // Get turnout control information
-            Turnout t = InstanceManager.turnoutManagerInstance().
-                            provideTurnout(field1.getText());
+            String turnoutSystemName = field1c.getText();
+            // Ensure that this Turnout is not already a Light
+            String testSN = turnoutSystemName.substring(0,1)+"L"+
+                    turnoutSystemName.substring(2,turnoutSystemName.length());
+            Light testLight = InstanceManager.lightManagerInstance().
+                                        getBySystemName(testSN);
+            if (testLight != null) {
+                // Requested turnout bit is already assigned to a Light
+                status2.setText( rb.getString("LightWarn3")+" "+testSN+"." );
+                error = true;
+            }
+            else {
+                // Requested turnout bit is no assigned to a Light
+                t = InstanceManager.turnoutManagerInstance().
+                                    provideTurnout(turnoutSystemName);
+            }
+            // Initialize the requested Turnout State
             int tState = Turnout.CLOSED;
             if ( stateBox.getSelectedItem().equals(rbean.getString
                                                     ("TurnoutStateThrown")) ) {
                 tState = Turnout.THROWN;
             }
-            g.setControlTurnout(t);
+            g.setControlTurnout(turnoutSystemName);
             g.setControlTurnoutState(tState);
             if (t==null) {
                 status1.setText( rb.getString("LightWarn2") );
-                status2.setText( rb.getString("LightEditInst") );
+                if (!error) {
+                    status2.setText( rb.getString("LightEditInst") );
+                }
                 status2.setVisible(true);
                 return (false);
             }
@@ -668,6 +702,32 @@ public class LightTableAction extends AbstractTableAction {
             log.error("Unexpected control type: "+typeBox.getSelectedItem());
         }
         return (true);
+    }
+    
+    /** 
+     *  Formats time to hh:mm given integer hour and minute
+     */
+    String formatTime (int hour,int minute) {
+        String s = "";
+        String t = Integer.toString(hour);
+        if (t.length() == 2) {
+            s = t + ":";
+        }
+        else if (t.length() == 1) {
+            s = "0" + t + ":";
+        } 
+        t = Integer.toString(minute);
+        if (t.length() == 2) {
+            s = s + t;
+        }
+        else if (t.length() == 1) {
+            s = s + "0" + t;
+        }
+        if (s.length() != 5) {
+            // input error
+            s = "00:00";
+        }
+        return s;
     }
 
     /**

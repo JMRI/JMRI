@@ -16,7 +16,7 @@ import jmri.Light;
  *  Based in part on SerialTurnout.java
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class SerialLight extends AbstractLight {
 
@@ -56,11 +56,7 @@ public class SerialLight extends AbstractLight {
         setControlType( NO_CONTROL );
         setControlSensor( null );
         setControlSensorSense(Sensor.ACTIVE);
-// Place holders for Fast Clock and Panel Switch control types
-//        setFastClockControlSchedule( null );
-//        setControlSwitch( null );
-        setControlSignalHead( null );
-        setControlSignalHeadAspect( SignalHead.RED );
+        setFastClockControlSchedule( 0,0,0,0 );
         setControlTurnout( null );
         setControlTurnoutState( Turnout.CLOSED );
     }

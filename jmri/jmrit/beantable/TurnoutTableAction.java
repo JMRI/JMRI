@@ -6,6 +6,7 @@ import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.Turnout;
+import jmri.Light;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +23,7 @@ import javax.swing.JTextField;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -117,7 +118,20 @@ public class TurnoutTableAction extends AbstractTableAction {
     void okPressed(ActionEvent e) {
         String user = userName.getText();
         if (user.equals("")) user=null;
-        InstanceManager.turnoutManagerInstance().newTurnout(sysName.getText(), user);
+        // Test if bit already in use as a light
+        String sName = sysName.getText();
+        if (sName.charAt(1)=='T') {
+            // probably standard format turnout system name
+            String testSN = sName.substring(0,1)+"L"+sName.substring(2,sName.length());
+            Light testLight = InstanceManager.lightManagerInstance().
+                                        getBySystemName(testSN);
+            if (testLight != null) {
+                // Bit is already used as a Light
+                log.error("Requested Turnout "+sName+" uses same bit as Light "+testSN);
+                return;
+            }
+        }
+        InstanceManager.turnoutManagerInstance().newTurnout(sName, user);
     }
 
     static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TurnoutTableAction.class.getName());

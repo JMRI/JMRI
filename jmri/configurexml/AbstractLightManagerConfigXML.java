@@ -25,7 +25,7 @@ import org.jdom.Element;
  * Based on AbstractSensorManagerConfigXML.java
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
 
@@ -58,24 +58,17 @@ public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
                 int type = lgt.getControlType();
                 elem.addAttribute("controlType", ""+type);
                 if (type==Light.SENSOR_CONTROL) {
-                    Sensor s = lgt.getControlSensor();
-                    if (s!=null) elem.addAttribute("controlSensor", s.getSystemName() );
+                    elem.addAttribute("controlSensor", lgt.getControlSensorSystemName() );
                     elem.addAttribute("sensorSense", ""+lgt.getControlSensorSense() );
                 }
                 else if (type==Light.FAST_CLOCK_CONTROL) {
-// placeholder for future Schedule object for Fast Clock control
-                }
-                else if (type==Light.PANEL_SWITCH_CONTROL) {
-// placeholder for future Switch object for Panel Switch control
-                }
-                else if (type==Light.SIGNAL_HEAD_CONTROL) {
-                    SignalHead sh = lgt.getControlSignalHead();
-                    if (sh!=null) elem.addAttribute("controlSignalHead", sh.getSystemName() );
-                    elem.addAttribute("signalHeadAspect", ""+lgt.getControlSignalHeadAspect() );
+                    elem.addAttribute("fastClockOnHour", ""+lgt.getFastClockOnHour() );
+                    elem.addAttribute("fastClockOnMin", ""+lgt.getFastClockOnMin() );
+                    elem.addAttribute("fastClockOffHour", ""+lgt.getFastClockOffHour() );
+                    elem.addAttribute("fastClockOffMin", ""+lgt.getFastClockOffMin() );
                 }
                 else if (type==Light.TURNOUT_STATUS_CONTROL) {
-                    Turnout t = lgt.getControlTurnout();
-                    if (t!=null) elem.addAttribute("controlTurnout", t.getSystemName() );
+                    elem.addAttribute("controlTurnout", lgt.getControlTurnoutSystemName() );
                     elem.addAttribute("turnoutState", ""+lgt.getControlTurnoutState() );
                 }
                 log.debug("store light "+sname+":"+uname);
@@ -129,41 +122,25 @@ public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
                 int type = Integer.parseInt(temString);
                 lgt.setControlType(type);
                 if (type==Light.SENSOR_CONTROL) {
-                    temString = ((Element)(lightList.get(i))).
-                                            getAttribute("controlSensor").getValue();
-                    if (temString!=null) {
-                        Sensor s = InstanceManager.sensorManagerInstance().
-                                                        provideSensor(temString);
-                        lgt.setControlSensor(s);
-                    }
+                    lgt.setControlSensor(((Element)(lightList.get(i))).
+                                            getAttribute("controlSensor").getValue() );
                     lgt.setControlSensorSense( Integer.parseInt(((Element)(lightList.get(i))).
                                                     getAttribute("sensorSense").getValue()) );
                 }
                 else if (type==Light.FAST_CLOCK_CONTROL) {
-// placeholder for future Schedule object for Fast Clock control
-                }
-                else if (type==Light.PANEL_SWITCH_CONTROL) {
-// placeholder for future Switch object for Panel Switch control
-                }
-                else if (type==Light.SIGNAL_HEAD_CONTROL) {
-                    temString = ((Element)(lightList.get(i))).
-                                            getAttribute("controlSignalHead").getValue();
-                    if (temString!=null) {
-                        SignalHead sh = InstanceManager.signalHeadManagerInstance().
-                                                        getBySystemName(temString);
-                        lgt.setControlSignalHead(sh);
-                    }
-                    lgt.setControlTurnoutState( Integer.parseInt(((Element)(lightList.get(i))).
-                                                    getAttribute("signalHeadAspect").getValue()) );
+                    int onHour = Integer.parseInt(((Element)(lightList.get(i))).
+                                                getAttribute("fastClockOnHour").getValue());
+                    int onMin = Integer.parseInt(((Element)(lightList.get(i))).
+                                                getAttribute("fastClockOnMin").getValue());
+                    int offHour = Integer.parseInt(((Element)(lightList.get(i))).
+                                                getAttribute("fastClockOffHour").getValue());
+                    int offMin = Integer.parseInt(((Element)(lightList.get(i))).
+                                                getAttribute("fastClockOffMin").getValue());
+                    lgt.setFastClockControlSchedule(onHour,onMin,offHour,offMin);
                 }
                 else if (type==Light.TURNOUT_STATUS_CONTROL) {
-                    temString = ((Element)(lightList.get(i))).
-                                            getAttribute("controlTurnout").getValue();
-                    if (temString!=null) {
-                        Turnout t = InstanceManager.turnoutManagerInstance().
-                                                        provideTurnout(temString);
-                        lgt.setControlTurnout(t);
-                    }
+                    lgt.setControlTurnout(((Element)(lightList.get(i))).
+                                            getAttribute("controlTurnout").getValue());
                     lgt.setControlTurnoutState( Integer.parseInt(((Element)(lightList.get(i))).
                                                     getAttribute("turnoutState").getValue()) );
                 }

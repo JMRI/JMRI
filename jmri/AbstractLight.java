@@ -19,7 +19,7 @@ package jmri;
  * Based in concept on AbstractSignalHead.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public abstract class AbstractLight extends AbstractNamedBean
     implements Light, java.io.Serializable {
@@ -37,21 +37,21 @@ public abstract class AbstractLight extends AbstractNamedBean
      */
     protected int mControlType = NO_CONTROL;
     protected int mControlSensorSense = Sensor.ACTIVE;
-    protected Sensor mControlSensor = null;
-// placeholder for future Schedule object for FastClock control
-//    protected Schedule mControlSchedule = null;   
-// placeholder for future Switch object for Panel Switch control
-//    protected Switch mControlSwitch = null;
-    protected SignalHead mControlSignalHead = null;
-    protected int mSignalHeadAspect = SignalHead.RED;
-    protected Turnout mControlTurnout = null;
+    protected String mControlSensorSystemName = "";
+    protected int mFastClockOnHour = 0;
+    protected int mFastClockOnMin = 0;
+    protected int mFastClockOffHour = 0;
+    protected int mFastClockOffMin = 0;
+    protected String mControlTurnoutSystemName = "";
     protected int mTurnoutState = Turnout.CLOSED;
     
     /**
      *  System independent operational instance variables (not saved between runs)
      */
     protected boolean mActive = false;
+    protected Sensor mControlSensor = null;
     protected java.beans.PropertyChangeListener mSensorListener = null;
+    protected Turnout mControlTurnout = null;
     protected java.beans.PropertyChangeListener mTurnoutListener = null;
     
     /**
@@ -64,8 +64,6 @@ public abstract class AbstractLight extends AbstractNamedBean
     public void setControlType(int controlType) {
         if ( (controlType==SENSOR_CONTROL) || 
                 (controlType==FAST_CLOCK_CONTROL) ||
-                (controlType==PANEL_SWITCH_CONTROL) ||
-                (controlType==SIGNAL_HEAD_CONTROL) ||
                 (controlType==TURNOUT_STATUS_CONTROL) ) {
             mControlType = controlType;
         }
@@ -77,12 +75,12 @@ public abstract class AbstractLight extends AbstractNamedBean
     /**
      *  Return the controlling Sensor if there is one, else null
      */    
-    public Sensor getControlSensor() { return mControlSensor; }    
+    public String getControlSensorSystemName() { return mControlSensorSystemName; }    
     /**
      *  Set the controlling Sensor if there is one, else null
      */    
-    public void setControlSensor(Sensor sensor) { 
-        mControlSensor = sensor;
+    public void setControlSensor(String sensorSystemName) { 
+        mControlSensorSystemName = sensorSystemName;
     }    
     
     /**
@@ -104,71 +102,61 @@ public abstract class AbstractLight extends AbstractNamedBean
         }
     }    
     
-// placeholder for future Schedule object for FastClock control
-//    /**
-//     *  Return the On/Off Schedule if FAST_CLOCK_CONTROL
-//     */        
-//    public Schedule getFastClockControlSchedule() { return mControlSchedule; }
-//    /**
-//     *  Set the On/Off Schedule if FAST_CLOCK_CONTROL
-//     */        
-//    public void setFastClockControlSchedule(Schedule schedule) { 
-//        mControlSchedule = schedule;
-//    }
-    
-// placeholder for future Switch object for Panel Switch control
-//    /**
-//     *  Return the controlling Panel Switch if PANEL_SWITCH_CONTROL
-//     */            
-//    public Switch getControlSwitch() { return mControlSwitch; }
-//    /**
-//     *  Set the controlling Panel Switch if PANEL_SWITCH_CONTROL
-//     */            
-//    public void setControlSwitch(Switch switch) { 
-//        mControlSwitch = switch;
-//    }
-    
     /**
-     *  Return the controlling Signal Head if there is one, else null
-     */    
-    public SignalHead getControlSignalHead() { return mControlSignalHead; }
+     *  Return the On/Off Schedule if FAST_CLOCK_CONTROL
+     */        
+    public int getFastClockOnHour() { return mFastClockOnHour; }
+    public int getFastClockOnMin() { return mFastClockOnMin; }
+    public int getFastClockOffHour() { return mFastClockOffHour; }
+    public int getFastClockOffMin() { return mFastClockOffMin; }
     /**
-     *  Set the controlling Signal Head if there is one, else null
-     */    
-    public void setControlSignalHead(SignalHead sh) { 
-        mControlSignalHead = sh;
-    }    
-    
-    /**
-     *  Return the controlling Signal Head Aspect.  This is the light
-     *     in the signal head that corresponds to this Light.  This
-     *     light should be ON if and only if this is the current aspect
-     *     of the controlling signal head.
-     */    
-    public int getControlSignalHeadAspect() { return mSignalHeadAspect; }
-    /**
-     *  Set the controlling Signal Head Aspect.  This is the light
-     *     in the signal head that corresponds to this Light.
-     *  This call is ignored if 'aspect' is not one of the supported 
-     *     Signal Head aspects.
-     */    
-    public void setControlSignalHeadAspect(int aspect) { 
-        if ( (aspect == SignalHead.RED) || (aspect == SignalHead.GREEN) ||
-                (aspect == SignalHead.YELLOW) ) {
-            mSignalHeadAspect = aspect;
+     *  Set the On/Off Schedule if FAST_CLOCK_CONTROL
+     */        
+    public void setFastClockControlSchedule(int onHour,int onMin,int offHour, int offMin) { 
+        if ( (onHour >= 0) && (onHour <= 24) ) {
+            // legal value, set it
+            mFastClockOnHour = onHour;
         }
-    }    
+        else {
+            log.error("Light time on hour not 0 - 24, but is "+onHour);
+            mFastClockOnHour = 0;
+        }
+        if ( (onMin >= 0) && (onMin <= 59) ) {
+            // legal value, set it
+            mFastClockOnMin = onMin;
+        }
+        else {
+            log.error("Light time on minute not 0 - 59, but is "+onMin);
+            mFastClockOnMin = 0;
+        }
+        if ( (offHour >= 0) && (offHour <= 24) ) {
+            // legal value, set it
+            mFastClockOffHour = offHour;
+        }
+        else {
+            log.error("Light time off hour not 0 - 24, but is "+offHour);
+            mFastClockOffHour = 0;
+        }
+        if ( (offMin >= 0) && (offMin <= 59) ) {
+            // legal value, set it
+            mFastClockOffMin = offMin;
+        }
+        else {
+            log.error("Light time off minute not 0 - 59, but is "+offMin);
+            mFastClockOffMin = 0;
+        }
+    }
     
     /**
      *  Return the controlling Turnout if there is one, else null.
      */    
-    public Turnout getControlTurnout() { return mControlTurnout; }
+    public String getControlTurnoutSystemName() { return mControlTurnoutSystemName; }
     /** 
      *  Set the controlling Turnout.  This is the Turnout whose state
      *     controls the ON and OFF of this Light.
      */
-    public void setControlTurnout(Turnout turnout) {
-        mControlTurnout = turnout;
+    public void setControlTurnout(String turnoutSystemName) {
+        mControlTurnoutSystemName = turnoutSystemName;
     }
     /**
      *  Return the state of the controlling Turnout that corresponds to
@@ -199,6 +187,8 @@ public abstract class AbstractLight extends AbstractNamedBean
             // activate according to control type
             switch (mControlType) {
                 case SENSOR_CONTROL:
+                    mControlSensor = InstanceManager.sensorManagerInstance().
+                                            getBySystemName(mControlSensorSystemName);
                     if (mControlSensor!=null) {
                         mControlSensor.addPropertyChangeListener(mSensorListener =
                                                 new java.beans.PropertyChangeListener() {
@@ -228,18 +218,21 @@ public abstract class AbstractLight extends AbstractNamedBean
                                     }
                                 }
                         });
+                        mActive = true;
+                    }
+                    else {
+                        // control sensor does not exist
+                        log.error("Light "+getSystemName()+" is linked to a Sensor that does not exist: "+
+                                             mControlSensorSystemName);
+                        return;
                     }
                     break;
                     
                 case FAST_CLOCK_CONTROL:
                     break;
-                case PANEL_SWITCH_CONTROL:
-                    break;
-                case SIGNAL_HEAD_CONTROL:
-                    // No activation required.  Light is controlled by the 
-                    //     Signal Head logic.
-                    break;
                 case TURNOUT_STATUS_CONTROL:
+                    mControlTurnout = InstanceManager.turnoutManagerInstance().
+                                            getBySystemName(mControlTurnoutSystemName);
                     if (mControlTurnout!=null) {
                         mControlTurnout.addPropertyChangeListener(mTurnoutListener =
                                                 new java.beans.PropertyChangeListener() {
@@ -269,6 +262,13 @@ public abstract class AbstractLight extends AbstractNamedBean
                                     }
                                 }
                         });
+                        mActive = true;
+                    }
+                    else {
+                        // control turnout does not exist
+                        log.error("Light "+getSystemName()+" is linked to a Turnout that does not exist: "+
+                                             mControlSensorSystemName);
+                        return;
                     }
                     break;
                 case NO_CONTROL:
@@ -277,7 +277,6 @@ public abstract class AbstractLight extends AbstractNamedBean
                 default:
                     log.warn("Unexpected control type when activating Light: "+getSystemName());
             }
-            mActive = true;
         }    
     }
     
@@ -300,12 +299,6 @@ public abstract class AbstractLight extends AbstractNamedBean
                     }
                     break;
                 case FAST_CLOCK_CONTROL:
-                    break;
-                case PANEL_SWITCH_CONTROL:
-                    break;
-                case SIGNAL_HEAD_CONTROL:
-                    // No activation required.  Light is controlled by the 
-                    //     Signal Head logic.
                     break;
                 case TURNOUT_STATUS_CONTROL:
                     if (mTurnoutListener!=null) {
