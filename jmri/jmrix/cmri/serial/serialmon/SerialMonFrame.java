@@ -10,7 +10,7 @@ import jmri.jmrix.cmri.serial.SerialTrafficController;
 /**
  * Frame displaying (and logging) CMRI serial command messages
  * @author	    Bob Jacobsen   Copyright (C) 2001
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
@@ -41,7 +41,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         } else if (l.isXmt()) {
             String s = "Transmit ua="+l.getUA()+" OB=";
             for (int i=2; i<l.getNumDataElements(); i++)
-                s+=Integer.toHexString(l.getElement(i))+" ";
+                s+=Integer.toHexString(l.getElement(i)&0x000000ff)+" ";
             nextLine(s+"\n", l.toString()+"\n");
         } else if (l.isInit()) {
             String s = "Init ua="+l.getUA()
@@ -52,7 +52,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
             if (len>=6) {
                 s+=" NS="+l.getElement(5)+" CT: ";
                 for (int i=6; i<l.getNumDataElements(); i++)
-                    s+=Integer.toHexString(l.getElement(i))+" ";
+                    s+=Integer.toHexString(l.getElement(i)&0x000000ff)+" ";
             }
             nextLine(s+"\n", l.toString()+"\n");
         } else
