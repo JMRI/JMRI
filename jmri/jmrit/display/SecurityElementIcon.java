@@ -15,7 +15,7 @@ import jmri.jmrix.loconet.SecurityElement;
  * explicitly add the code for Positionable
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class SecurityElementIcon extends JPanel
@@ -134,13 +134,19 @@ public class SecurityElementIcon extends JPanel
     }
     public void mouseReleased(MouseEvent e) {
         if (debug) log.debug("Release: "+where(e));
-        if (debug && e.isPopupTrigger()) log.debug("Released was pop up trigger");
+        if (e.isPopupTrigger()) {
+            if (debug) log.debug("show popup");
+            showPopUp(e);
+        }
     }
     public void mouseClicked(MouseEvent e) {
         if (debug) log.debug("Clicked: "+where(e));
-        if (debug && e.isPopupTrigger()) log.debug("Clicked was pop up trigger");
         if (debug && e.isMetaDown()) log.debug("meta down");
         if (debug && e.isAltDown()) log.debug(" alt down");
+        if (e.isPopupTrigger()) {
+            if (debug) log.debug("show popup");
+            showPopUp(e);
+        }
     }
     public void mouseExited(MouseEvent e) {
         if (debug) log.debug("Exited:  "+where(e));
