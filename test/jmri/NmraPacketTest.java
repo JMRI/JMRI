@@ -66,6 +66,27 @@ public class NmraPacketTest extends TestCase {
 		Assert.assertEquals("third byte ", 0x5C, ba[2] & 0xFF);
 	}
 
+	public void testOpsModeLong() {
+		// "typical packet" test
+		byte[] ba = NmraPacket.opsCvWriteByte(2065, true, 21, 75 );
+		Assert.assertEquals("first byte ",  0xC8, ba[0] & 0xFF);
+		Assert.assertEquals("second byte ", 0x11, ba[1] & 0xFF);
+		Assert.assertEquals("third byte ",  0xEC, ba[2] & 0xFF);
+		Assert.assertEquals("fourth byte ", 0x14, ba[3] & 0xFF);
+		Assert.assertEquals("fifth byte ",  0x4B, ba[4] & 0xFF);
+		Assert.assertEquals("sixth byte ",  0x6A, ba[5] & 0xFF);
+	}
+
+	public void testOpsModeShort() {
+		// "typical packet" test
+		byte[] ba = NmraPacket.opsCvWriteByte(65, false, 21, 75 );
+		Assert.assertEquals("first byte ",  0x41, ba[0] & 0xFF);
+		Assert.assertEquals("second byte ", 0xEC, ba[1] & 0xFF);
+		Assert.assertEquals("third byte ",  0x14, ba[2] & 0xFF);
+		Assert.assertEquals("fourth byte ", 0x4B, ba[3] & 0xFF);
+		Assert.assertEquals("fifth byte ",  0xF2, ba[4] & 0xFF);
+	}
+
 	// from here down is testing infrastructure
 	public NmraPacketTest(String s) {
 		super(s);
