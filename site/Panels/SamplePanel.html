@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: SamplePanel.html,v 1.1 2004-02-04 05:21:15 jacobsen Exp $ -->
+<!-- $Id: SamplePanel.html,v 1.2 2004-03-11 14:20:57 jacobsen Exp $ -->
 <html>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -283,10 +283,6 @@ The rest of this page discusses various ways to include additional
 neat features such as turnout sensing from the layout and signal 
 indicators.
 
-<HR>
-Below here is not revised yet!
-<HR>
-
 <A ID="turnoutsensors"><h2>Step 6 (optional): Add turnout sensing</h2><a/>
 
 <IMG SRC="turnout.gif" ALIGN=RIGHT>
@@ -297,7 +293,19 @@ by adding two sensor icons there.  The one on the left would show
 <IMG src="gray.gif"> if it was thrown.  The icon on the right
 would do the reverse, showing 
 <IMG src="gray.gif"> if the turnout was closed, and 
-<IMG src="red.gif"> if it was thrown.  
+<IMG src="red.gif"> if it was thrown.  These were attached to inputs
+on the C/MRI system, so that the actual position of the turnouts on the
+layout was read back. This way the indicators on the panel showed the
+real position of the turnout, not just what command had been sent to the motor.
+<P>
+To add these, go back to the panel editor for your panel.  Click "Edit Icons..."
+next to "Add sensor", and select the images you want to display.  (Nick's small
+lights are in "Icons : smallschematics : LEDS"). Then enter the name of the sensor 
+for the first turnout, and click "Add sensor" to put it on the screen. Drag-click
+it to move it into position near the turnout control.  Repeat that for all 
+of the rest of the indicators on the thrown side of the turnout levers, providing
+the right sensor number each time.  Then change the icons to the 2nd set, and
+go back and add sensors to the other side of each lever.
 <P>
 
 A similar technique is used for the turnouts on the schematic.  The indicators
@@ -317,22 +325,207 @@ There are "left" and "right" sets for the two basic types
 of turnouts used; they can be rotated via the popup menu to work with the various
 turnout orientations on the schematic.
 
+<HR>
+Below here is not revised yet!
+<HR>
 
 <h2>Signalling</h2>
 Signalling is a vital part of the Cornwall Railroad's operations.  If JMRI
 was going to drive the railroad, it had to properly handle the signals.
-(There's no way to share the C/MRI system between the existing program for
+(There's no way to share the C/MRI system between the existing BASIC program for
 driving signals, and a new program for the dispatcher panel).
+
+<A ID="definesignals"><h2>Step 7: Defining signals to the program</h2>
+
+<A href="sampleImages/SigTable.gif"><IMG SRC="sampleImages/SigTable.gif" ALIGN=RIGHT WIDTH="170" HEIGHT="314" HSPACE="0" VSPACE="0" ALT="Signal Table Figure"></A>
+
+To define the signals to the program, you use the "Signal Table" from the tools
+menu.
+The program can't detect what signals you have installed on your layout,
+so you have to define them individually. To do this, start by opening the 
+Signal Table, and then click the "Add..." button.  A new window will open.
 <P>
+PanelPro knows about several different types of signals.  Each has different
+information needed to specify it, so on the "Add" panel you first select the
+type of signal you have, and then provide additional information:
+      <DL>
+      <DT>Triple Turnout
+      <DD>This a signal head with red/yellow/green lights that
+      are driven by DCC turnout outputs.  To configure one of these,
+      enter it's name (typically something like IH2, etc), and
+      the names of the three turnouts that drive the lamps.
+      <DT>SE8c 4 aspect
+      <DD>This is one signal head driven by a Digitrax SE8c.  Enter
+      the the lower of the two "turnout address" that this head
+      responds to.  For example, if it's the first head on the first
+      card, you can control it by setting turnout 257 and 258 with
+      your throttle.  Enter LT257 in the turnout control box.
+      </DL>
+
+After filling in all the fields, click OK.  The signal will be added to the
+table.  You can use that same form to add all your signals by changing the values
+and clicking OK each time. Don't forget to save your work occasionally!
+<P>
+You can check your work by clicking on the buttons in the table. With each
+click, the signal will work its way through the sequence of available aspects:
+Red, Yellow, Flashing Yellow, Green. (The available aspects and the order they
+are presented will vary from one type of signal to another)  The signals
+on the layout should follow along.
+
+<A ID="signalindicators"><h2>Step 8 (Optional): Adding signals to your panel</h2>
+
 Like input sensors and turnouts, JMRI can display signal icons on the screen
-that follow the aspect of a signal head. The Cornwall panel was setup to 
-use small graphics for this to avoid making it too busy:
+that follow the appearance of a signal head. 
+
+<P>Prototype railroads would not usually display every signal head on
+a panel, but just summary information near signal levers.  But there are 
+advantages to having all your signals displayed on the panel:
+<UL>
+<LI>It makes it really easy for a part-time dispatcher to see what's
+actually present on the railroad.  You can see which signal aspect an
+engineer is seeing, without having to guess.
+<LI>Debugging the signals is made easier, because you can just click on the
+signal icon to change its appearance. That makes it easy to check for cross-wiring,
+burnt out bulbs, and wrong logic.
+<LI>And it looks really cool!
+</UL>
+<P>
+To put these on the panel, you use a similar procedure to what you've
+already done with sensors and turnouts using the panel editor window.
+If the default icons are fine,
+just put the signal name in the box next to "Add signal" and click the
+button.  A signal icon will appear on the panel, which you can drag to
+the desired spot.  You can rotate it to another orientation using its popup
+menu.
+<P>
+The Cornwall panel was setup to 
+use small graphics to avoid making it too busy:
 red <IMG src="right-red-short-white.gif">,
 yellow <IMG src="right-yellow-short-white.gif">,
 flashing yellow <IMG src="right-flashyellow-short-white.gif">,
 green <IMG src="right-green-short-white.gif">.
+<P>
+If you prefer to use other signal icons, use the "Edit icons..." button to select them.  
+There 
+are several sets available with different backgrounds, different sizes, etc.
+<P>
+You can also create your own icons using a paint program, and then use them.
+If you do that, please email them in so that we can add them to the program!
+
+<A ID="simplelogic"><h2>Step 9:Adding signal logic</h2>
+
+At this point, you have signals defined, and can change their appearance
+by clicking on them.  But they don't change appearance automatically
+in response to changes on the layout.  You need to have the right "logic"
+driving the signals.
+<P>
+The "Simple Signal Logic Tool" can provide logic for the most common
+cases.  It works particularly well for sidings and single-track blocks.
+A detailed example of it is 
+<A HREF="../SimpleSignalExample.html">available on another page</a>.
+<P>
+
+To use this, open the tool from the "Tools" menu.  You should get a 
+new window that looks like this:
+<A HREF="../images/SE8cExampleLogic.gif"><IMG SRC="../images/SE8cExampleLogic.gif" ALIGN=RIGHT WIDTH="345" HEIGHT="225" HSPACE="0" VSPACE="0" ALT="Demo screen with two trains"></a>
+<P>
+To define what you want done, you just enter values on this form.
+<UL>
+<LI>In the top box, enter the name of the signal you want to control.
+This should be the same as the name in the signal table.
+	<LI>The radio buttons below that select one of four possible uses
+	for this signal:
+		<UL>
+		<LI>"On Single Block" - this signal protects one end of a straight
+		through block, with no signalled turnouts
+		<LI>"On Main Leg of Trailing-Point Turnout" - this signal is along
+		 the main route through a turnout, which is defined as the direction
+		 taken by trains when the turnout is closed.  It's protecting the
+		 frog of the turnout so that trains will stop before running 
+		 through a turnout set against them.
+		<LI>"On Diverging Leg of Trailing-Point Turnout" - this signal is along
+		 the diverging route through a turnout, which is defined as the direction
+		 taken by trains when the turnout is set to "thrown".  It's protecting the
+		 frog of the turnout so that trains will stop before running 
+		 through a turnout set against them.
+		<LI>"On Facing-Point Turnout" - this signal is protecting the 
+		points-end of a turnout. Depending on whether the turnout is
+		thrown or closed, the train will take two different routes, and the
+		signal will protect different next blocks.
+		</UL>
+	<LI>If you want the signal to go red when a block detector shows
+	occupied (sensor active), enter the sensor name in the next box.
+	<LI>If this signal is protecting travel through a turnout, enter the
+	turnout number to be monitored in the 3rd box.
+	You'll have additional options depending on whether you've selected
+	a trailing or facing point turnout.
+	<LI>If you want multi-block logic, e.g. Absolute Block Signalling,
+	enter the name of the following signal in the last box(es).  When that
+	signal shows red, this one will be set to yellow to warn the engineer
+	that the train must be able to stop at the next signal.
+	<P>
+	If you'd like to give additional warning, click the "with flashing
+	yellow" checkbox.  In that case, the signal before a red will show
+	flashing yellow, and the signal before that flashing yellow will
+	show a steady yellow.
+    <li>Once you've set the options, click "OK".  
+    <LI>You can 
+      use this form repeatedly to enter logic for as many 
+      signals as you'd like.  Just enter the values, not forgetting
+      to change the signal name in the first box, and click OK
+      for each signal.
+	</UL>
+<P>
+Don't forget to save your work!
+<P>
+You can test this logic by changing the sensors, turnouts and signals
+using either the various tables, or by clicking on a panel.  The signals
+on the layout and the signal icons on the panel should respond appropriately.
+
+
+<A ID="scriptinglogic"><h2>Step 10:Adding signal scripts</h2>
+
+If the "Simple Signal Logic" tool is too simple, you'll have to 
+write either a script or Java code to drive your signals.
+PanelPro provides a couple of ways to do that.
+The simplest, which is covered here, is to write a script file
+for each signal that you need to control.  Once started, that script
+will continue to run, controlling the signal each time the conditions 
+change.
+<P>
+Before you try to code and debug a script, you should get a clear understanding
+of what you want to do.  Try to write it down in words, like "If sensor 21 is active,
+and sensor 22 is not active, then signal 19 should be yellow". There 
+are two approaches to how to do this:
+<OL>
+<LI>Start by saying the signal is red (Stop) by default.  Then make a list of
+all the conditions where it would be <i>safe</i> for a train to pass this
+signal, and write down the logic for each of those.
+<P>
+This is the way prototype signal engineering is usually done, but it often
+results in a lot more conditions to write down.
+<LI>Start by saying that the signal is green (Proceed) by default.
+Then make a list of all the conditions where it would be <i>unsafe</I>
+for a train to pass the signal, either a full speed or sometime to pass
+at all. 
+<P>
+This is not so prototypical, and can sometimes lead to the signal
+being green when it isn't safe (if you missed something in your logic).
+But it's often easier to figure out.
+</ol>
+<P>In the case of Nick's railroad, the logic for each signal had
+already been worked out for his old BASIC program.  It was helpful to 
+have that working code when figuring out what the new logic should do.
 
 <P>
+Next, we'll walk through creating a script to implement this logic.
+You'll do this once for each separate signal; don't try to combine
+
+<HR>
+Below here is not revised yet!
+<HR>
+
+
 To actually drive the signal aspects from the turnout and occupancy status,
 Java code was written based on JMRI's 
 <A href="../Automat.html">automation classes</a>.
