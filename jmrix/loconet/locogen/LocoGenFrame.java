@@ -19,96 +19,39 @@ import jmri.jmrix.loconet.LnTrafficController;
 
 public class LocoGenFrame extends javax.swing.JFrame {
 
-// IMPORTANT: Source code between BEGIN/END comment pair will be regenerated
-// every time the form is saved. All manual changes will be overwritten.
-// BEGIN GENERATED CODE
 	// member declarations
 	javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
-	javax.swing.JButton gponButton = new javax.swing.JButton();
-	javax.swing.JButton gpoffButton = new javax.swing.JButton();
-	javax.swing.JButton swreqButton = new javax.swing.JButton();
-	javax.swing.JTextField switchAddrTextField = new javax.swing.JTextField();
-	javax.swing.JCheckBox thrownCheckBox = new javax.swing.JCheckBox();
-	javax.swing.JCheckBox switchOnCheckBox = new javax.swing.JCheckBox();
-// END GENERATED CODE
+	javax.swing.JButton sendButton = new javax.swing.JButton();
+	javax.swing.JTextField packetTextField = new javax.swing.JTextField();
 
 	public LocoGenFrame() {
 	}
 
 	public void initComponents() throws Exception {
-// IMPORTANT: Source code between BEGIN/END comment pair will be regenerated
-// every time the form is saved. All manual changes will be overwritten.
-// BEGIN GENERATED CODE
 		// the following code sets the frame's initial state
 
-		jLabel1.setText("Commands:");
-		jLabel1.setLocation(new java.awt.Point(10, 10));
+		jLabel1.setText("Packet:");
 		jLabel1.setVisible(true);
-		jLabel1.setSize(new java.awt.Dimension(80, 30));
 
-		gponButton.setText("On");
-		gponButton.setLocation(new java.awt.Point(100, 20));
-		gponButton.setVisible(true);
-		gponButton.setToolTipText("Send GPON");
-		gponButton.setSize(new java.awt.Dimension(50, 30));
+		sendButton.setText("Send");
+		sendButton.setVisible(true);
+		sendButton.setToolTipText("Send packet");
+		
+		packetTextField.setText("                   ");
+		packetTextField.setToolTipText("Enter packet as hex pairs, e.g. 03 0A 12 3F");
+		
+		setTitle("Send LocoNet Packet");
+		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-		gpoffButton.setText("Off");
-		gpoffButton.setLocation(new java.awt.Point(160, 20));
-		gpoffButton.setVisible(true);
-		gpoffButton.setToolTipText("Send GPOFF");
-		gpoffButton.setSize(new java.awt.Dimension(60, 30));
-
-		swreqButton.setText("Switch Request");
-		swreqButton.setLocation(new java.awt.Point(100, 70));
-		swreqButton.setVisible(true);
-		swreqButton.setToolTipText("Send SW REQ");
-		swreqButton.setSize(new java.awt.Dimension(130, 30));
-
-		switchAddrTextField.setText("23");
-		switchAddrTextField.setLocation(new java.awt.Point(270, 70));
-		switchAddrTextField.setVisible(true);
-		switchAddrTextField.setToolTipText("Turnout number to throw (throttle number, one more than number on LocoNet)");
-		switchAddrTextField.setSize(new java.awt.Dimension(50, 30));
-
-		thrownCheckBox.setText("Thrown");
-		thrownCheckBox.setLocation(new java.awt.Point(330, 70));
-		thrownCheckBox.setVisible(true);
-		thrownCheckBox.setToolTipText("Checked for Thrown, unchecked for Closed");
-		thrownCheckBox.setSize(new java.awt.Dimension(80, 20));
-
-		switchOnCheckBox.setText("On");
-		switchOnCheckBox.setLocation(new java.awt.Point(420, 70));
-		switchOnCheckBox.setVisible(true);
-		switchOnCheckBox.setToolTipText("Checked for On, unchecked for Off");
-		switchOnCheckBox.setSize(new java.awt.Dimension(60, 20));
-		switchOnCheckBox.setSelected(true);
-
-		setLocation(new java.awt.Point(400, 400));
-		setTitle("locogen.LocoGenFrame");
-		getContentPane().setLayout(null);
-		setSize(new java.awt.Dimension(566, 250));
 		getContentPane().add(jLabel1);
-		getContentPane().add(gponButton);
-		getContentPane().add(gpoffButton);
-		getContentPane().add(swreqButton);
-		getContentPane().add(switchAddrTextField);
-		getContentPane().add(thrownCheckBox);
-		getContentPane().add(switchOnCheckBox);
+		getContentPane().add(packetTextField);
+		getContentPane().add(sendButton);
+		getContentPane().add(Box.createVerticalGlue());
 
 
-		gponButton.addActionListener(new java.awt.event.ActionListener() {
+		sendButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				gponButtonActionPerformed(e);
-			}
-		});
-		gpoffButton.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				gpoffButtonActionPerformed(e);
-			}
-		});
-		swreqButton.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				swreqButtonActionPerformed(e);
+				sendButtonActionPerformed(e);
 			}
 		});
 		addWindowListener(new java.awt.event.WindowAdapter() {
@@ -117,9 +60,61 @@ public class LocoGenFrame extends javax.swing.JFrame {
 			}
 		});
 
-// END GENERATED CODE
 	}
   
+  	public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
+  		tc.sendLocoNetMessage(createPacket(packetTextField.getText()));
+  	}
+  	
+  	LocoNetMessage createPacket(String s) {
+		// gather bytes in result
+		int b[] = parseString(s);
+		if (b.length == 0) return null;  // no such thing as a zero-length message
+  		LocoNetMessage m = new LocoNetMessage(b.length);
+		for (int i=0; i<b.length; i++) m.setElement(i, b[i]);
+  		return m;
+  	}
+  	
+  	int[] parseString(String s) {
+		String ts = s+"  "; // ensure blanks on end to make scan easier
+		int len = 0;
+		// scan for length
+  		for (int i= 0; i< s.length(); i++) {
+  			if (ts.charAt(i) != ' ')  {
+  				// need to process char for number. Is this a single digit?
+  				if (ts.charAt(i+1) != ' ') {
+  					// 2 char value
+  					i++;
+  					len++;
+  				} else {
+  					// 1 char value
+  					len++;
+  				}
+  			}
+  		}
+  		int[] b = new int[len];
+  		// scan for content
+  		int saveAt = 0;
+  		for (int i= 0; i< s.length(); i++) {
+  			if (ts.charAt(i) != ' ')  {
+  				// need to process char for number. Is this a single digit?
+  				if (ts.charAt(i+1) != ' ') {
+  					// 2 char value
+ 					String v = new String(""+ts.charAt(i))+ts.charAt(i+1);
+					b[saveAt] = Integer.valueOf(v,16).intValue();
+					i++;
+					saveAt++;
+   				} else {
+  					// 1 char value
+					String v = new String(""+ts.charAt(i));
+					b[saveAt] = Integer.valueOf(v,16).intValue();
+					saveAt++;
+  				}
+  			}
+  		}
+  		return b;
+  	}
+  	
   	private boolean mShown = false;
   	
 	public void addNotify() {
@@ -151,44 +146,7 @@ public class LocoGenFrame extends javax.swing.JFrame {
 	// connect to the LnTrafficController
 	public void connect(LnTrafficController t) {
 		tc = t;
-	}
-		
-	public void gponButtonActionPerformed(java.awt.event.ActionEvent e) {
-		// send GPON
-		LocoNetMessage l = new LocoNetMessage(2);
-		l.setOpCode(LnConstants.OPC_GPON);
-		tc.sendLocoNetMessage(l);
-	}
-	
-	public void gpoffButtonActionPerformed(java.awt.event.ActionEvent e) {
-		// send GPOFF
-		LocoNetMessage l = new LocoNetMessage(2);
-		l.setOpCode(LnConstants.OPC_GPOFF);
-		tc.sendLocoNetMessage(l);
-	}
-	
-	public void swreqButtonActionPerformed(java.awt.event.ActionEvent e) {
-		// send SWREQ
-		LocoNetMessage l = new LocoNetMessage(4);
-		l.setOpCode(LnConstants.OPC_SW_REQ);
-		
-		// load LocoNet address from switchAddrTextField
-		int adr = Integer.valueOf(switchAddrTextField.getText()).intValue()-1;  // field is throttle number
-		int hiadr = adr/128;
-		int loadr = adr-hiadr*128;
-		
-		// load T/C from thrownCheckBox - default is already thrown, check closed
-		if ( !thrownCheckBox.isSelected() )   hiadr |= 0x20;
-			
-		// load On/Off from switchOnCheckBox
-		if ( switchOnCheckBox.isSelected() )   hiadr |= 0x10;
-		
-		// store and send
-		l.setElement(1,loadr);
-		l.setElement(2,hiadr);
-		tc.sendLocoNetMessage(l);
-	}
-	
+	}	
 	
 	
 	// private data
