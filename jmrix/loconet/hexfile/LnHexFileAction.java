@@ -8,11 +8,11 @@
  * @version			
  */
 
-package hexfile;
+package jmri.jmrix.loconet.hexfile;
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
-import hexfile.HexFileFrame;
+import jmri.jmrix.loconet.hexfile.HexFileFrame;
 import ErrLoggerJ.ErrLog;
 
 public class LnHexFileAction 			extends AbstractAction {

@@ -20,10 +20,10 @@
  * @version			0.2.1
  */
 
-package locomon;
+package jmri.jmrix.loconet.locomon;
 
-import loconet.LnConstants;
-import loconet.LocoNetMessage;
+import jmri.jmrix.loconet.LnConstants;
+import jmri.jmrix.loconet.LocoNetMessage;
 
 public class Llnmon {
 

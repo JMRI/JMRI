@@ -10,15 +10,17 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
-import loconet.LnTrafficController;
-import hexfile.LnHexFileAction;
-import ms100.MS100Action;
-import locomon.LocoMonAction;
-import locogen.LocoGenAction;
-import locoecho.LocoEchoAction;
-import slotmon.SlotMonAction;
-import simpleprog.SimpleProgAction;
-import symbolicprog.SymbolicProgAction;
+
+import jmri.jmrix.loconet.LnTrafficController;
+import jmri.jmrix.loconet.hexfile.LnHexFileAction;
+import jmri.jmrix.loconet.ms100.MS100Action;
+import jmri.jmrix.loconet.locomon.LocoMonAction;
+import jmri.jmrix.loconet.locogen.LocoGenAction;
+import jmri.jmrix.loconet.locoecho.LocoEchoAction;
+import jmri.jmrix.loconet.slotmon.SlotMonAction;
+import jmri.simpleprog.SimpleProgAction;
+import jmri.symbolicprog.SymbolicProgAction;
+import ErrLoggerJ. ErrLogFrameAction;
 
 public class JMRIdemo extends JPanel {
 	public JMRIdemo() {
@@ -52,6 +54,7 @@ public class JMRIdemo extends JPanel {
 		slotmonAction  = new SlotMonAction("Slot Monitor");
 		simpleprogAction  = new SimpleProgAction("Simple Programmer");
 		symbolicprogAction  = new SymbolicProgAction("Symbolic Programmer");
+		errlogAction  = new ErrLogFrameAction("error logging");
 		
 	// populate GUI
         // Create menu categories and add to the menu bar
@@ -59,6 +62,8 @@ public class JMRIdemo extends JPanel {
         menuBar.add(inputMenu);
         JMenu funcMenu = new JMenu("Functions");
         menuBar.add(funcMenu);
+        JMenu debugMenu = new JMenu("Debugging");
+        menuBar.add(debugMenu);
 		// add actions to menus
         inputMenu.add(hexfileAction);
         inputMenu.add(ms100Action);
@@ -68,6 +73,7 @@ public class JMRIdemo extends JPanel {
         funcMenu.add(locogenAction);
         funcMenu.add(slotmonAction);
         funcMenu.add(symbolicprogAction);
+        debugMenu.add(errlogAction);
 	}
 
 	// Main entry point
@@ -92,6 +98,8 @@ public class JMRIdemo extends JPanel {
 	private SlotMonAction slotmonAction;
 	private SimpleProgAction simpleprogAction;
 	private SymbolicProgAction symbolicprogAction;
+
+	private ErrLogFrameAction errlogAction;
 
 	private LnTrafficController tc;
 	

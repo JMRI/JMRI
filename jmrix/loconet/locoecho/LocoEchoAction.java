@@ -8,12 +8,14 @@
  * @version			
  */
 
-package locoecho;
+package jmri.jmrix.loconet.locoecho;
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
+
 import ErrLoggerJ.ErrLog;
-import loconet.LnTrafficController;
+
+import jmri.jmrix.loconet.LnTrafficController;
 
 public class LocoEchoAction 			extends AbstractAction {
 

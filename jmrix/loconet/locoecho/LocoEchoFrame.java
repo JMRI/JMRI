@@ -6,7 +6,7 @@
  * @version			
  */
 
-package locoecho;
+package jmri.jmrix.loconet.locoecho;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -15,18 +15,18 @@ import java.util.Date;
 import java.text.DateFormat;
 import java.io.File;
 
-import loconet.LocoNetListener;
-import loconet.LnTrafficController;
-import loconet.LocoNetMessage;
-import loconet.LnConstants;
-import loconet.LnTurnout;
+import jmri.jmrix.loconet.LocoNetListener;
+import jmri.jmrix.loconet.LnTrafficController;
+import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.jmrix.loconet.LnConstants;
+import jmri.jmrix.loconet.LnTurnout;
 
 import java.io.PrintStream;
 import java.io.FileOutputStream;
 
 import ErrLoggerJ.ErrLog;
 
-public class LocoEchoFrame extends javax.swing.JFrame implements loconet.LocoNetListener {
+public class LocoEchoFrame extends javax.swing.JFrame implements LocoNetListener {
 
 	// GUI member declarations
 	javax.swing.JLabel textAdrLabel = new javax.swing.JLabel();

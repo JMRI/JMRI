@@ -6,7 +6,8 @@
  * @version			
  */
 
-package loconet;
+package jmri.jmrix.loconet;
+
 import jmri.AbstractTurnout;
 import ErrLoggerJ.ErrLog;
 
@@ -52,7 +53,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
 	//										Object oldValue,
 	//										Object newValue)	 
 	// _once_ if anything has changed state (or set the commanded state directly)
-	public void message(loconet.LocoNetMessage l) {
+	public void message(LocoNetMessage l) {
 		// parse message type
 		switch (l.getOpCode()) {
         	case LnConstants.OPC_SW_REQ: {               /* page 9 of Loconet PE */

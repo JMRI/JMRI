@@ -8,13 +8,15 @@
  * @version			
  */
 
-package locomon;
+package jmri.jmrix.loconet.locomon;
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
+
 import ErrLoggerJ.ErrLog;
-import loconet.LnTrafficController;
-import locomon.LocoMonFrame;
+
+import jmri.jmrix.loconet.LnTrafficController;
+
 
 public class LocoMonAction 			extends AbstractAction {
 

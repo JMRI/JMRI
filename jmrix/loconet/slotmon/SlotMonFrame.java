@@ -6,15 +6,15 @@
  * @version			
  */
 
-package slotmon;
+package jmri.jmrix.loconet.slotmon;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import loconet.SlotListener;
-import loconet.LocoNetSlot;
-import loconet.LnConstants;
+import jmri.jmrix.loconet.SlotListener;
+import jmri.jmrix.loconet.LocoNetSlot;
+import jmri.jmrix.loconet.LnConstants;
 
 import ErrLoggerJ.ErrLog;
 

@@ -6,18 +6,18 @@
  * @version			
  */
 
-package slotmon;
+package jmri.jmrix.loconet.slotmon;
 
-import loconet.LocoNetSlot;
-import loconet.SlotListener;
-import loconet.SlotManager;
-import loconet.LnConstants;
+import jmri.jmrix.loconet.LocoNetSlot;
+import jmri.jmrix.loconet.SlotListener;
+import jmri.jmrix.loconet.SlotManager;
+import jmri.jmrix.loconet.LnConstants;
 
 import ErrLoggerJ.ErrLog;
 
 import java.util.Vector;
 
-public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements loconet.SlotListener  {
+public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener  {
 
 	String headers[] = new String[]  {
 		"Slot", "Address", "Speed", "Decoder Type", "status", "consisted", "direction",

@@ -21,9 +21,9 @@
 	and separated by a space. Variable whitespace is not (yet) supported
 */
 
-package hexfile;
+package jmri.jmrix.loconet.hexfile;
 
-import loconet.LnTrafficController;
+import jmri.jmrix.loconet.LnPortController;
 
 import ErrLoggerJ.ErrLog;
 import java.io.FileInputStream;
@@ -34,7 +34,7 @@ import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class LnHexFilePort 			extends loconet.LnPortController implements Runnable {
+public class LnHexFilePort 			extends LnPortController implements Runnable {
 
 /* load("filename") fills the contents from a file */
 public void load(String filename) {

@@ -6,12 +6,13 @@
  * @version			
  */
 
-package loconet;
+package jmri.jmrix.loconet;
 
 import java.io.InputStream;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Vector;
+
 import ErrLoggerJ.ErrLog;
 
 public class LnTrafficController implements LocoNetInterface, Runnable {

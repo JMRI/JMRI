@@ -8,13 +8,14 @@
  * @version			
  */
 
-package locogen;
+package jmri.jmrix.loconet.locogen;
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
+
 import ErrLoggerJ.ErrLog;
-import loconet.LnTrafficController;
-import locogen.LocoGenFrame;
+
+import jmri.jmrix.loconet.LnTrafficController;
 
 public class LocoGenAction 			extends AbstractAction {
 

@@ -6,10 +6,7 @@
  * @version			
  */
 
-package loconet;
-
-import loconet.LocoNetMessage;
-import loconet.LocoNetException;
+package jmri.jmrix.loconet;
 
 public class LocoNetSlot {
 

@@ -16,7 +16,7 @@
  * OPCODE SUMMARY: found in the Loconet(r) Personal Edition 1.
  */
  
-package loconet;
+package jmri.jmrix.loconet;
 
 
 public final class LnConstants {

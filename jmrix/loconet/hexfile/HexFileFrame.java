@@ -11,13 +11,14 @@
 // a .hex file, feeding the information to a LocoMonFrame (monitor) and 
 // connecting to a LocoGenFrame (for sending a few commands).
 
-package hexfile;
+package jmri.jmrix.loconet.hexfile;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import hexfile.LnHexFilePort;
-import loconet.LnTrafficController;
+
+import jmri.jmrix.loconet.LnTrafficController;
+
 import ErrLoggerJ.ErrLog;
 
 public class HexFileFrame extends javax.swing.JFrame {

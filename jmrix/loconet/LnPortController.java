@@ -6,7 +6,7 @@
  * @version			
  */
 
-package loconet;
+package jmri.jmrix.loconet;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

@@ -9,17 +9,15 @@
  // This is a collection of LocoNetSlots, plus support for coordinating
  // them with the controller
 
-package loconet;
+package jmri.jmrix.loconet;
 
-import loconet.LocoNetSlot;
-import loconet.SlotManager;
-import loconet.LocoNetException;
+import jmri.Programmer;
 
 import ErrLoggerJ.ErrLog;
 
 import java.util.Vector;
 
-public class SlotManager implements LocoNetListener, jmri.Programmer {
+public class SlotManager implements LocoNetListener, Programmer {
 
 	private LocoNetSlot _slots[] = new LocoNetSlot[128];
 

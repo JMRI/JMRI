@@ -8,7 +8,7 @@
  * @version			
  */
 
-package ms100;
+package jmri.jmrix.loconet.ms100;
 
 import javax.comm.CommPortIdentifier;
 import javax.comm.SerialPort;
@@ -17,11 +17,11 @@ import java.util.Vector;
 import java.io.DataOutputStream;
 import java.io.DataInputStream;
 
-import loconet.LnPortController;
+import jmri.jmrix.loconet.LnPortController;
 
 import ErrLoggerJ.ErrLog;
 
-public class MS100Adapter extends loconet.LnPortController  {
+public class MS100Adapter extends LnPortController  {
 
 	Vector portNameVector = null;
 	SerialPort activeSerialPort = null;

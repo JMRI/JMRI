@@ -7,14 +7,15 @@
  */
 
 
-package locogen;
+package jmri.jmrix.loconet.locogen;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import loconet.LocoNetMessage;
-import loconet.LnConstants;
-import loconet.LnTrafficController;
+
+import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.jmrix.loconet.LnConstants;
+import jmri.jmrix.loconet.LnTrafficController;
 
 public class LocoGenFrame extends javax.swing.JFrame {
 

@@ -6,13 +6,14 @@
  * @version			
  */
 
-package ms100;
+package jmri.jmrix.loconet.ms100;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import loconet.LnTrafficController;
+import jmri.jmrix.loconet.LnTrafficController;
+
 import ErrLoggerJ.ErrLog;
 
 

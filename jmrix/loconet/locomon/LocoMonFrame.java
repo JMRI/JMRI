@@ -6,7 +6,7 @@
  * @version			
  */
 
-package locomon;
+package jmri.jmrix.loconet.locomon;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -14,16 +14,16 @@ import javax.swing.*;
 import java.util.Date;
 import java.text.DateFormat;
 import java.io.File;
-
-import loconet.LocoNetListener;
-import loconet.LnTrafficController;
-import loconet.LocoNetMessage;
-import locomon.Llnmon;
 import java.io.PrintStream;
 import java.io.FileOutputStream;
+
+import jmri.jmrix.loconet.LocoNetListener;
+import jmri.jmrix.loconet.LnTrafficController;
+import jmri.jmrix.loconet.LocoNetMessage;
+
 import ErrLoggerJ.ErrLog;
 
-public class LocoMonFrame extends javax.swing.JFrame implements loconet.LocoNetListener {
+public class LocoMonFrame extends javax.swing.JFrame implements LocoNetListener {
 
 // IMPORTANT: Source code between BEGIN/END comment pair will be regenerated
 // every time the form is saved. All manual changes will be overwritten.
