@@ -12,7 +12,7 @@ import jmri.jmrix.sprog.SprogTurnoutManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SprogTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -30,8 +30,7 @@ public class SprogTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutMan
 
     public void load(Element turnouts) {
         // create the master object
-        SprogTurnoutManager mgr = new SprogTurnoutManager();
-        replaceTurnoutManager(mgr);
+        SprogTurnoutManager mgr = SprogTurnoutManager.instance();
         // load individual turnouts
         loadTurnouts(turnouts);
     }
