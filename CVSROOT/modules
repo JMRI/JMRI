@@ -1,32 +1,30 @@
 
 # build a JBuilder project directory in standard form
 # Note that this does not work from JBuilder itself!
-jbuilder -a runtime defaultlcf jbuilderjava
+jbuilder -a runtime jbuilderjava
 # build the java/ directory, which contains the actual JBuilder project
 jbuilderjava  -a jbuilder0 jbuilder1 java
-jbuilder0 -d project/java scripts jmri.jpx
-jbuilder1 -d project/java scripts JMRILibraries.library
+jbuilder0 -d java scripts jmri.jpx
+jbuilder1 -d java scripts JMRILibraries.library
 
+# java target - the common java parts of a build directory
 java -a java1 java2 java3
-java1 -d project/java/src &jmri &apps &resources
-java2 -d project/java &test
-java3 -d project/java &lib
+java1 -d java/src &jmri &apps &resources
+java2 -d java &test
+java3 -d java &lib
 
-runtime -d project &xml &lib &resources
-defaultlcf -d project scripts default.lcf
+# runtime target - top level project runtime contents
+runtime -a xml lib resources
 
 # ant target - Ant directory in standard form
-ant -a xml lib resources defaultlcf antjava
-# build the java/ directory, which contains the actual code & build.xml
-antjava  -a ant0 ant1 ant2 ant3 ant4
+ant -a runtime antjava
+# build the java/ directory for any, including build.xml
+antjava  -a ant0 java
 ant0 -d java scripts build.xml
-ant1 -d java/src &jmri &apps &resources
-ant2 -d java &test
-ant3 -d java &xml
-ant4 -d java &lib
 
 # we're still missing a CodeWarrior target
-
+# and due to repository mismatches (cant checkout two files from different
+# CVS directories to a single location) we cant load the default.lcf file
 
 # Three different line formats are valid:
 #	key	-a    aliases...
