@@ -19,7 +19,7 @@ import org.jdom.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -39,16 +39,33 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
             n.addAttribute("name",""+node.getNodeAddress());
             e.addContent(n);
             // add parameters to the node as needed
-            Element p = new Element("parameter");
-            p.addAttribute("name","nodetype");
-            p.addContent(""+node.getNodeType());
-            n.addContent(p);
+            n.addContent(makeParameter("nodetype", ""+node.getNodeType()));
+            n.addContent(makeParameter("bitspercard", ""+node.getNumBitsPerCard()));
+            n.addContent(makeParameter("transmissiondelay", ""+node.getTransmissionDelay()));
+            n.addContent(makeParameter("num2lsearchlights", ""+node.getNum2LSearchLights()));
+            String value = "";
+            for (int i=0; i<node.getLocSearchLightBits().length; i++) {
+            	value = value + Integer.toHexString(node.getLocSearchLightBits()[i]&0xF);
+            }
+            n.addContent(makeParameter("locsearchlightbits", ""+value));
+            value = "";
+            for (int i=0; i<node.getCardTypeLocation().length; i++) {
+            	value = value + Integer.toHexString(node.getCardTypeLocation()[i]&0xF);
+            }
+            n.addContent(makeParameter("cardtypelocation", ""+value));
 
             // look for the next node
             node = SerialTrafficController.instance().getNextSerialNode();
         }
     }
 
+	protected Element makeParameter(String name, String value) {
+    	Element p = new Element("parameter");
+       	p.addAttribute("name",name);
+        p.addContent(value);
+        return p;
+	}
+	
     protected void getInstance() {
         adapter = SerialDriverAdapter.instance();
     }
@@ -63,11 +80,28 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
             Element n = (Element) l.get(i);
             int addr = Integer.parseInt(n.getAttributeValue("name"));
             int type = Integer.parseInt(findParmValue(n,"nodetype"));
-
-            // if more parameters are needed, get them here
+            int bpc = Integer.parseInt(findParmValue(n,"bitspercard"));
+            int delay = Integer.parseInt(findParmValue(n,"transmissiondelay"));
+            int num2l = Integer.parseInt(findParmValue(n,"num2lsearchlights"));
+            
+            String slb = findParmValue(n,"locsearchlightbits");
+            String ctl = findParmValue(n,"cardtypelocation");
+            
 
             // create node (they register themselves)
-            SerialNode s = new SerialNode(addr, type);
+            SerialNode node = new SerialNode(addr, type);
+            node.setNumBitsPerCard(bpc);
+            node.setTransmissionDelay(delay);
+            node.setNum2LSearchLights(num2l);
+            
+            for (int j = 0; j<slb.length(); j++) {
+            	node.setLocSearchLightBits(j, slb.charAt(j));
+            }
+            
+            for  (int j = 0; j<ctl.length(); j++) {
+            	node.setCardTypeLocation(j, ctl.charAt(j));
+            }
+            
 
         }
     }
@@ -92,6 +126,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     protected void register() {
         InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
     }
+     
 
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ConnectionConfigXml.class.getName());
