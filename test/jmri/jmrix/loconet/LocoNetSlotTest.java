@@ -13,10 +13,12 @@ public class LocoNetSlotTest extends TestCase {
 
     public void testGetSlotSend()  {
         SlotManager slotmanager = new SlotManager();
-        SlotListener p2=  null;
+        SlotListener p2=  new SlotListener(){
+                public void notifyChangedSlot(LocoNetSlot l) {}
+        };
         slotmanager.slotFromLocoAddress(21, p2);
         Assert.assertEquals("slot request message",
-			    "ef e 7c 20 0 0 0 0 2 b 7f 0 0 0 ",
+			    "bf 0 15 0 ",
 			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
     }
 
