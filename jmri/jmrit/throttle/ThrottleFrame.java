@@ -12,6 +12,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.FlowLayout;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JDesktopPane;
@@ -34,7 +35,7 @@ import org.jdom.Element;
  *  directed by the interface.
  *
  * @author     Glen Oberhauser
- * @version    $Revision: 1.22 $
+ * @version    $Revision: 1.23 $
  */
 public class ThrottleFrame extends JFrame implements AddressListener, ThrottleListener
 {
@@ -141,7 +142,7 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 		controlPanel.setClosable(true);
 		controlPanel.setIconifiable(true);
 		controlPanel.setTitle("Control Panel");
-		controlPanel.setSize(100, 345);
+                controlPanel.pack();
 		controlPanel.setVisible(true);
 		controlPanel.setEnabled(false);
 		controlPanel.addInternalFrameListener(frameListener);
@@ -151,8 +152,14 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 		functionPanel.setClosable(true);
 		functionPanel.setIconifiable(true);
 		functionPanel.setTitle("Function Panel");
-		functionPanel.setSize(200, 210);
-		functionPanel.setLocation(100, 0);
+
+                // assumes button width of 54, height of 30 (set in class FunctionButton) with
+                // horiz and vert gaps of 5 each (set in FunctionPanel class)
+                // with 3 buttons across and 5 rows high
+                // width = 3*54 + 2*3*5 = 192
+                // height = 5*30 + 2*5*5 = 200 (but there seems to be another 10 needed for some LAFs)
+                functionPanel.setSize(192, 210);
+		functionPanel.setLocation(controlPanel.getWidth(), 0);
 		functionPanel.setVisible(true);
 		functionPanel.setEnabled(false);
 		functionPanel.addInternalFrameListener(frameListener);
@@ -162,12 +169,19 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 		addressPanel.setClosable(true);
 		addressPanel.setIconifiable(true);
 		addressPanel.setTitle("Address Panel");
-		addressPanel.setSize(200, 135);
-		addressPanel.setLocation(100, 210);
+                addressPanel.pack();
+                if (addressPanel.getWidth()<functionPanel.getWidth()) {addressPanel.setSize(functionPanel.getWidth(),addressPanel.getHeight());}
+		addressPanel.setLocation(controlPanel.getWidth(), functionPanel.getHeight());
 		addressPanel.setVisible(true);
 		addressPanel.addInternalFrameListener(frameListener);
 		addressPanel.addAddressListener(this);
 
+                if (controlPanel.getHeight() < functionPanel.getHeight() + addressPanel.getHeight())
+                   {controlPanel.setSize(controlPanel.getWidth(),functionPanel.getHeight() + addressPanel.getHeight());}
+                if (controlPanel.getHeight() > functionPanel.getHeight() + addressPanel.getHeight())
+                   {addressPanel.setSize(addressPanel.getWidth(),controlPanel.getHeight()-functionPanel.getHeight());}
+                if (functionPanel.getWidth() < addressPanel.getWidth())
+                   {functionPanel.setSize(addressPanel.getWidth(),functionPanel.getHeight());}
 		desktop.add(controlPanel, PANEL_LAYER);
 		desktop.add(functionPanel, PANEL_LAYER);
 		desktop.add(addressPanel, PANEL_LAYER);
@@ -178,7 +192,9 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 		frameList[FUNCTION_PANEL_INDEX] = functionPanel;
 		activeFrame = ADDRESS_PANEL_INDEX;
 
-		desktop.setPreferredSize(new Dimension(300, 350));
+		desktop.setPreferredSize(new Dimension(
+                     Math.max(controlPanel.getWidth()+functionPanel.getWidth(),controlPanel.getWidth()+addressPanel.getWidth()),
+                     Math.max(addressPanel.getHeight()+functionPanel.getHeight(),controlPanel.getHeight())));
 
 		KeyListenerInstaller.installKeyListenerOnAllComponents(
 						new FrameCyclingKeyListener(), this);
