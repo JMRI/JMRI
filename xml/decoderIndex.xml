@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <decoderIndex version="56">
+  <decoderIndex version="58">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -344,6 +344,14 @@
         <model model="LE0511W" numOuts="2">
           <output name="1" label="A - White" />
           <output name="2" label="B - Yellow" />
+        </model>
+      </family>
+      <family name="Lenz SilentDrive decoders" mfg="Lenz" lowVersionID="60" type="locomotive" file="Lenz_80.xml">
+        <model model="LE080XS" numOuts="4">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+          <output name="3" label="C - Green" />
+          <output name="4" label="D - Violet" />
         </model>
       </family>
       <family name="Lenz Drive-Select decoders" mfg="Lenz" lowVersionID="46" highVersionID="46" type="locomotive" file="Lenz_DriveSelect.xml">
