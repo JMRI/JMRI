@@ -18,7 +18,7 @@ import org.jdom.Element;
  * decoder identification info _before_ the actual decoder file is read.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecoderFile.java,v 1.2 2002-05-09 16:37:11 jacobsen Exp $
+ * @version			$Revision: 1.3 $
  * @see jmri.jmrit.decoderdefn.DecoderIndexFile
  */
 public class DecoderFile extends XmlFile {
@@ -159,10 +159,13 @@ public class DecoderFile extends XmlFile {
 	}
 
 	/**
-	 * Convert to a cannonical text form for ComboBoxes, etc
+	 * Convert to a cannonical text form for ComboBoxes, etc.
+     * Early on, this had been mfg+" "+model, but
+     * that resulted in a lot of duplicate mfg names in listings,
+     * so now this is the same as the model
 	 */
 	public String titleString() {
-		return getMfg()+" "+getModel();
+		return getModel();
 	}
 
 	static public String fileLocation = "decoders"+File.separator;

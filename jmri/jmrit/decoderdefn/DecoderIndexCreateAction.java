@@ -13,19 +13,19 @@ import com.sun.java.util.collections.List;
 
 import jmri.jmrit.XmlFile;
 
-/** 
+/**
  * Check the names in an XML decoder file against the names.xml definitions
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecoderIndexCreateAction.java,v 1.1 2002-02-28 21:47:08 jacobsen Exp $
+ * @version			$Revision: 1.2 $
  * @see             jmri.jmrit.XmlFile
  */
 public class DecoderIndexCreateAction extends AbstractAction {
-		
-	public DecoderIndexCreateAction(String s) { 
+
+	public DecoderIndexCreateAction(String s) {
 		super(s);
 	}
-		
+
     public void actionPerformed(ActionEvent e) {
 		// create an array of file names from prefs/decoders, count entries
 		int i;
@@ -59,19 +59,19 @@ public class DecoderIndexCreateAction extends AbstractAction {
 		for (i=0; i<sx.length; i++) {
 			if (sx[i].endsWith(".xml")) sbox[n++] = sx[i];
 		}
-		
+
 		// create a new decoderIndex
 		DecoderIndexFile index = new DecoderIndexFile();
-		
+
 		// write it out
 		try {
 			index.writeFile("decoderIndex.xml", DecoderIndexFile.instance(), sbox);
 		} catch (java.io.IOException ex) {
-			log.error("Error writing new decoder index file: "+ex.getMessage());	
+			log.error("Error writing new decoder index file: "+ex.getMessage());
 		}
-	}		
-	
-	// initialize logging	
+	}
+
+	// initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DecoderIndexCreateAction.class.getName());
-		
+
 }

@@ -31,7 +31,7 @@ import org.jdom.output.XMLOutputter;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -44,6 +44,10 @@ public class DecoderIndexFile extends XmlFile {
 	// map mfg ID numbers from & to mfg names
 	protected Hashtable _mfgIdFromNameHash = new Hashtable();
 	protected Hashtable _mfgNameFromIdHash = new Hashtable();
+
+    protected ArrayList mMfgNameList = new ArrayList();
+
+    public List getMfgNameList() { return mMfgNameList; }
 
 	public String mfgIdFromName(String name) {
 		return (String)_mfgIdFromNameHash.get(name);
@@ -72,13 +76,29 @@ public class DecoderIndexFile extends XmlFile {
 	 */
 	public JComboBox matchingComboBox(String mfg, String family, String decoderMfgID, String decoderVersionID, String model ) {
 		List l = matchingDecoderList(mfg, family, decoderMfgID, decoderVersionID, model );
-		JComboBox b = new JComboBox();
+        return jComboBoxFromList(l);
+	}
+
+    /**
+     * Return a JComboBox made with the titles from a list of
+     * DecoderFile entries
+     */
+    static public JComboBox jComboBoxFromList(List l) {
+		return new JComboBox(jComboBoxModelFromList(l));
+    }
+
+    /**
+     * Return a new ComboBoxModel made with the titles from a list of
+     * DecoderFile entries
+     */
+    static public javax.swing.ComboBoxModel jComboBoxModelFromList(List l) {
+		javax.swing.DefaultComboBoxModel b = new javax.swing.DefaultComboBoxModel();
 		for (int i = 0; i < l.size(); i++) {
 			DecoderFile r = (DecoderFile)l.get(i);
-			b.addItem(r.titleString());
+			b.addElement(r.titleString());
 		}
 		return b;
-	}
+    }
 
 	/**
 	 * Return DecoderFile from a "title" string, ala selection in matchingComboBox
@@ -157,6 +177,7 @@ public class DecoderIndexFile extends XmlFile {
 				// handle each entry
 				Element el = (Element)l.get(i);
 				String mfg = el.getAttribute("mfg").getValue();
+                mMfgNameList.add(mfg);
 				Attribute attr = el.getAttribute("mfgID");
 				if (attr != null) {
 					_mfgIdFromNameHash.put(mfg, attr.getValue());
@@ -189,9 +210,21 @@ public class DecoderIndexFile extends XmlFile {
 		String mfg   = ((attr = family.getAttribute("mfg"))     != null ? attr.getValue() : null );
 		String mfgID   = mfgIdFromName(mfg);
 
-		// record the decoders
 		List l = family.getChildren("model");
 		if (log.isDebugEnabled()) log.debug("readFamily sees "+l.size()+" children");
+
+        // if there are multiple models in this family, record the family as a type
+        //if (l.size()>1){
+            DecoderFile vFamilyDecoderFile
+                = new DecoderFile( mfg, mfgID, familyName,
+                                    parentLowVersID, parentHighVersID,
+                                    familyName,
+                                    filename,
+                                    -1, -1, null); // numFns, numOuts, XML element unknown
+            decoderList.add(vFamilyDecoderFile);
+        //}
+
+		// record each of the decoders
 		for (int i=0; i<l.size(); i++) {
 			// handle each entry by creating a DecoderFile object containing all it knows
 			Element decoder = (Element)l.get(i);
@@ -232,13 +265,28 @@ public class DecoderIndexFile extends XmlFile {
 
 		// add mfg list from existing DecoderIndexFile item
 		Element mfgList = new Element("mfgList");
-		Enumeration keys = oldIndex._mfgNameFromIdHash.keys();
+        // We treat "NMRA" special...
+        Element mfg = new Element("manufacturer");
+        mfg.addAttribute("mfg","NMRA");
+        mfg.addAttribute("mfgID","999");
+        mfgList.addContent(mfg);
+        // start working on the rest of the entries
+		Enumeration keys = oldIndex._mfgIdFromNameHash.keys();
+        List l = new ArrayList();
 		while (keys.hasMoreElements()) {
-			String num = (String)keys.nextElement();
-			Element mfg = new Element("manufacturer");
-			mfg.addAttribute("mfgID",num);
-			mfg.addAttribute("mfg",(String)oldIndex._mfgNameFromIdHash.get(num));
-			mfgList.addContent(mfg);
+            l.add((String)keys.nextElement());
+        }
+        Object[] s = l.toArray();
+        // all of the above mess was to get something we can sort into alpha order
+        java.util.Arrays.sort(s);
+        for (int i=0; i<s.length; i++) {
+			String mfgName = (String)s[i];
+            if (!mfgName.equals("NMRA")){
+                mfg = new Element("manufacturer");
+    			mfg.addAttribute("mfg",mfgName);
+    			mfg.addAttribute("mfgID",(String)oldIndex._mfgIdFromNameHash.get(mfgName));
+    			mfgList.addContent(mfg);
+            }
 		}
 
 		// add family list by scanning files
