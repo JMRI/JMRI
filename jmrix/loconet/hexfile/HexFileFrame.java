@@ -178,8 +178,7 @@ public class HexFileFrame extends javax.swing.JFrame {
 		// start operation
 		sourceThread = new Thread(port);
 		sourceThread.start();
-		sinkThread = new Thread(LnTrafficController.instance());
-		sinkThread.start();
+		LnTrafficController.instance().startThreads();
 		
 		// reach here while file runs.  Need to return so GUI still acts, 
 		// but that normally lets the button go back to default.

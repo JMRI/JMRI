@@ -5,7 +5,7 @@
  * Description:		Provide access to LocoNet via a LocoBuffer attached to a serial comm port.
  *					Normally controlled by the LocoBufferFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: LocoBufferAdapter.java,v 1.6 2002-01-16 07:37:28 jacobsen Exp $
+ * @version			$Id: LocoBufferAdapter.java,v 1.7 2002-02-04 07:31:01 jacobsen Exp $
  */
 
 package jmri.jmrix.loconet.locobuffer;
@@ -166,6 +166,18 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 	}
 
 	/**
+	 * Can the port accept additional characters?  
+	 * The state of CTS determines this, as there seems to 
+	 * be no way to check the number of queued bytes and buffer length.
+	 * This might
+	 * go false for short intervals, but it might also stick
+	 * off if something goes wrong.
+	 */	
+	public boolean okToSend() {
+		return activeSerialPort.isCTS();
+	}
+
+	/**
 	 * set up all of the other objects to operate with a LocoBuffer
 	 * connected to this port
 	 */
@@ -189,10 +201,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 				jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager());
 
 			// start operation
-			// sourceThread = new Thread(p);
-			// sourceThread.start();
-			sinkThread = new Thread(LnTrafficController.instance());
-			sinkThread.start();
+			LnTrafficController.instance().startThreads();
 	}
 	
 	private Thread sinkThread;

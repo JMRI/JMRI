@@ -5,7 +5,7 @@
  * Description:		Provide access to LocoNet via a MS100 attached to a serial comm port.
  *					Normally controlled by the MS100Frame class.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: MS100Adapter.java,v 1.8 2002-01-16 07:37:28 jacobsen Exp $
+ * @version			$Id: MS100Adapter.java,v 1.9 2002-02-04 07:31:01 jacobsen Exp $
  */
 
 package jmri.jmrix.loconet.ms100;
@@ -116,6 +116,16 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
 	}
 
 	/**
+	 * Can the port accept additional characters?  
+	 * For an MS100, this is _always_ true, as we rely on the
+	 * queueing in the port itself.  But if a lot is being
+	 * send, this might result in the main thread getting stalled...
+	 */	
+	public boolean okToSend() {
+		return true;
+	}
+
+	/**
 	 * set up all of the other objects to operate with a MS100
 	 * connected to this port
 	 */
@@ -139,10 +149,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
 				jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager());
 
 			// start operation
-			// sourceThread = new Thread(p);
-			// sourceThread.start();
-			sinkThread = new Thread(LnTrafficController.instance());
-			sinkThread.start();
+			LnTrafficController.instance().startThreads();
 	}
 	
 	private Thread sinkThread;

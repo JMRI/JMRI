@@ -32,6 +32,7 @@ public class MS100Frame extends javax.swing.JFrame {
 
 		portList.setVisible(true);
 		portList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+		portList.setAlignmentX(JLabel.LEFT_ALIGNMENT);
 		portList.setToolTipText("Select the port to use");
 		portList.setListData(adapter.getPortNames());
 		
@@ -101,9 +102,7 @@ public class MS100Frame extends javax.swing.JFrame {
 		if ((String) portList.getSelectedValue() != null) {
 			// connect to the port
 			adapter.openPort((String) portList.getSelectedValue(),"MS100Frame");
-			
 			adapter.configure();
-						
 			// hide this frame, since we're done
 			hide();
 		} else {

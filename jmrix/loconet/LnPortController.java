@@ -21,8 +21,18 @@ public abstract class LnPortController {
 	// returns the outputStream to the port
 	public abstract DataOutputStream getOutputStream();
 	
-	// check that this object is ready to operate
+	/** 
+	 * Check that this object is ready to operate. This is a question
+	 * of configuration, not transient hardware status.
+	 */
 	public abstract boolean status();
+	
+	/**
+	 * Can the port accept additional characters?  This might
+	 * go false for short intervals, but it might also stick
+	 * off if something goes wrong.
+	 */	
+	public abstract boolean okToSend();
 }
 
 

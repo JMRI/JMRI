@@ -33,6 +33,7 @@ public class LocoBufferFrame extends javax.swing.JFrame {
 		portList.setVisible(true);
 		portList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		portList.setToolTipText("Select the port to use");
+		portList.setAlignmentX(JLabel.LEFT_ALIGNMENT);
 		portList.setListData(adapter.getPortNames());
 		
 		openPortButton.setText("Open port");
@@ -106,6 +107,18 @@ public class LocoBufferFrame extends javax.swing.JFrame {
 			
 			if (errCode == null)	{
 				adapter.configure();						
+				// check for port in OK state
+				if (!adapter.okToSend()) {
+					log.info("LocoBuffer port not ready to send");
+					JOptionPane.showMessageDialog(null, 
+				   		"The LocoBuffer is unable to accept data.\n"
+				   		+"Make sure its power is on, it is connected\n"
+				   		+"to a working LocoNet, and the command station is on.\n"
+				   		+"The LocoNet LED on the LocoBuffer should be off.\n"
+				   		+"Reset the LocoBuffer by cycling its power.\n"
+				   		+"Then restart this program.", 
+				   		"LocoBuffer not ready", JOptionPane.ERROR_MESSAGE);
+				}
 				// hide this frame, since we're done
 				hide();
 			} else {
@@ -119,4 +132,7 @@ public class LocoBufferFrame extends javax.swing.JFrame {
 	
 // Data members
 	private LocoBufferAdapter adapter = new LocoBufferAdapter();
+
+   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoBufferFrame.class.getName());
+
 }
