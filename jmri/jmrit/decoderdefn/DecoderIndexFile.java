@@ -31,7 +31,7 @@ import org.jdom.output.XMLOutputter;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -231,42 +231,37 @@ public class DecoderIndexFile extends XmlFile {
         }
 
         // create an array of file names from decoders dir in preferences, count entries
-        int i;
-        int np = 0;
+        ArrayList al = new ArrayList();
         String[] sp = null;
+        int i=0;
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+DecoderFile.fileLocation);
         File fp = new File(XmlFile.prefsDir()+DecoderFile.fileLocation);
         if (fp.exists()) {
             sp = fp.list();
             for (i=0; i<sp.length; i++) {
                 if (sp[i].endsWith(".xml") || sp[i].endsWith(".XML"))
-                    np++;
+                    al.add(sp[i]);
             }
         } else {
             log.warn(XmlFile.prefsDir()+"decoders was missing, though tried to create it");
         }
         // create an array of file names from xml/decoders, count entries
         String[] sx = (new File(XmlFile.xmlDir()+DecoderFile.fileLocation)).list();
-        int nx = 0;
         for (i=0; i<sx.length; i++) {
             if (sx[i].endsWith(".xml") || sx[i].endsWith(".XML")) {
-                nx++;
+                // Valid name.  Does it exist in preferences xml/decoders?
+                if (!al.contains(sx[i])) {
+                    // no, include it!
+                    al.add(sx[i]);
+                }
             }
         }
-        // copy the decoder entries to the final array
-        // note: this results in duplicate entries if the same name is also local.
-        // But for now I can live with that.
-        String sbox[] = new String[np+nx];
-        int n=0;
-        if (sp != null && np> 0)
-            for (i=0; i<sp.length; i++) {
-                if (sp[i].endsWith(".xml") || sp[i].endsWith(".XML"))
-                    sbox[n++] = sp[i];
-            }
-        for (i=0; i<sx.length; i++) {
-            if (sx[i].endsWith(".xml") || sx[i].endsWith(".XML"))
-                sbox[n++] = sx[i];
-        }
+        // copy the decoder entries to the final array (toArray needs cast of +elements+)
+        Object[] aa = al.toArray();
+        String sbox[] = new String[al.size()];
+        for (i =0; i<sbox.length; i++)
+            sbox[i] = (String) aa[i];
+
         //the resulting array is now sorted on file-name to make it easier
         // for humans to read
         java.util.Arrays.sort(sbox);
