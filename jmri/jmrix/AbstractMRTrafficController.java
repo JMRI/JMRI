@@ -22,7 +22,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 abstract public class AbstractMRTrafficController {
 
@@ -341,7 +341,7 @@ abstract public class AbstractMRTrafficController {
     }
 
     /**
-     * Break connection to existing NcePortController object. Once broken,
+     * Break connection to existing PortController object. Once broken,
      * attempts to send via "message" member will fail.
      */
     public void disconnectPort(AbstractPortController p) {
