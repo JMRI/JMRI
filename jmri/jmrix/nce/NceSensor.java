@@ -9,12 +9,16 @@ import jmri.Sensor;
  * Extend jmri.AbstractSensor for NCE systems
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class NceSensor extends AbstractSensor {
 
-    public NceSensor(String id) {
-        super(id);
+    public NceSensor(String systemName) {
+        super(systemName);
+    }
+
+    public NceSensor(String systemName, String userName) {
+        super(systemName, userName);
     }
 
     public void dispose() {}

@@ -9,7 +9,7 @@ import org.jdom.*;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class SensorIconXml implements XmlAdapter {
 
@@ -30,7 +30,7 @@ public class SensorIconXml implements XmlAdapter {
         Element element = new Element("sensoricon");
 
         // include contents
-        element.addAttribute("sensor", p.getSensor().getID());
+        element.addAttribute("sensor", p.getSensor().getSystemName());
         element.addAttribute("x", ""+p.getX());
         element.addAttribute("y", ""+p.getY());
         element.addAttribute("active", p.getActiveIcon().getName());

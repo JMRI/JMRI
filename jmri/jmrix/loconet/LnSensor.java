@@ -15,15 +15,26 @@ import jmri.Sensor;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.9 $
+ * @version         $Revision: 1.10 $
  */
 public class LnSensor extends AbstractSensor implements LocoNetListener {
 
     private LnSensorAddress a;
 
-    public LnSensor(String id) {  // a human-readable sensor number must be specified!
-        super(id);
+    public LnSensor(String systemName, String userName) {
+        super(systemName, userName);
+        init(systemName);
+    }
 
+    public LnSensor(String systemName) {
+        super(systemName);
+        init(systemName);
+    }
+
+    /**
+     * Common initialization for both constructors
+     */
+    private void init(String id) {
         // store address forms
         a = new LnSensorAddress(id);
         if (log.isDebugEnabled()) log.debug("create address "+a);

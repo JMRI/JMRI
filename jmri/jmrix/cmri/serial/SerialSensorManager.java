@@ -15,7 +15,7 @@ import jmri.Sensor;
  * see nextAiuPoll()
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SerialSensorManager extends jmri.AbstractSensorManager
                             implements SerialListener {
@@ -53,7 +53,10 @@ public class SerialSensorManager extends jmri.AbstractSensorManager
         if ( (systemName!=null) && ((s = getBySystemName(systemName)) != null)) return s;
 
         // doesn't exist, make a new one
-        s = new SerialSensor(systemName);
+        if (userName == null)
+            s = new SerialSensor(systemName);
+        else
+            s = new SerialSensor(systemName, userName);
 
         // save in the maps
         _tsys.put(systemName, s);

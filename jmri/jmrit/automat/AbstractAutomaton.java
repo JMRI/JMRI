@@ -39,7 +39,7 @@ import jmri.*;
  * a warning will be logged if they are used before the thread starts.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 abstract public class AbstractAutomaton implements Runnable {
 
@@ -119,7 +119,7 @@ abstract public class AbstractAutomaton implements Runnable {
      */
     protected synchronized int waitSensorChange(int mState, Sensor mSensor){
         if (!inThread) log.warn("waitSensorChange invoked from invalid context");
-        if (log.isDebugEnabled()) log.debug("waitSensorChange starts: "+mSensor.getID());
+        if (log.isDebugEnabled()) log.debug("waitSensorChange starts: "+mSensor.getSystemName());
         // register a listener
         java.beans.PropertyChangeListener l;
         mSensor.addPropertyChangeListener(l = new java.beans.PropertyChangeListener() {
@@ -157,7 +157,7 @@ abstract public class AbstractAutomaton implements Runnable {
     protected synchronized void waitSensorActive(Sensor mSensor){
         if (!inThread) log.warn("waitSensorActive invoked from invalid context");
         if (mSensor.getKnownState() == Sensor.ACTIVE) return;
-        if (log.isDebugEnabled()) log.debug("waitSensorActive starts: "+mSensor.getID());
+        if (log.isDebugEnabled()) log.debug("waitSensorActive starts: "+mSensor.getSystemName());
         // register a listener
         java.beans.PropertyChangeListener l;
         mSensor.addPropertyChangeListener(l = new java.beans.PropertyChangeListener() {
@@ -194,7 +194,7 @@ abstract public class AbstractAutomaton implements Runnable {
     protected synchronized void waitSensorInactive(Sensor mSensor){
         if (!inThread) log.warn("waitSensorInactive invoked from invalid context");
         if (mSensor.getKnownState() == Sensor.INACTIVE) return;
-        if (log.isDebugEnabled()) log.debug("waitSensorInactive starts: "+mSensor.getID());
+        if (log.isDebugEnabled()) log.debug("waitSensorInactive starts: "+mSensor.getSystemName());
         // register a listener
         java.beans.PropertyChangeListener l;
         mSensor.addPropertyChangeListener(l = new java.beans.PropertyChangeListener() {

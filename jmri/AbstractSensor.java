@@ -6,12 +6,18 @@ import jmri.Sensor;
 /**
  * Abstract class providing the basic logic of the Sensor interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.8 $
  */
-public abstract class AbstractSensor implements Sensor, java.io.Serializable {
+public abstract class AbstractSensor extends AbstractNamedBean implements Sensor, java.io.Serializable {
 
     // ctor takes a system-name string for initialization
-    public AbstractSensor(String s) { _id = s; }
+    public AbstractSensor(String systemName) {
+        super(systemName);
+    }
+
+    public AbstractSensor(String systemName, String userName) {
+        super(systemName, userName);
+    }
 
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call
@@ -19,10 +25,6 @@ public abstract class AbstractSensor implements Sensor, java.io.Serializable {
     //					       Object oldValue,
     //					       Object newValue)
     // _once_ if anything has changed state
-
-    // interface function implementations
-
-    public String getID() {return _id;}
 
     public int getKnownState() {return _knownState;}
 

@@ -14,7 +14,7 @@ import jmri.jmrix.loconet.AspectGenerator;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -142,14 +142,15 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
                         displayState(headState());
                     }
                 });
-        }
 
-        popup.add(new AbstractAction("Remove") {
-            public void actionPerformed(ActionEvent e) {
-                remove();
-                dispose();
-            }
-        });
+            popup.add(new AbstractAction("Remove") {
+                public void actionPerformed(ActionEvent e) {
+                    remove();
+                    dispose();
+                }
+            });
+
+        } // end creation of pop-up menu
 
         popup.show(e.getComponent(), e.getX(), e.getY());
     }

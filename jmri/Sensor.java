@@ -7,12 +7,9 @@ package jmri;
  * types of sensors.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
-public interface Sensor {
-
-    // user identification, unbound parameter
-    public String getID();
+public interface Sensor extends NamedBean {
 
     // states are parameters; both closed and thrown is possible!
     public static final int UNKNOWN      = 0x01;

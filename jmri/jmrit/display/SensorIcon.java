@@ -9,7 +9,7 @@ import jmri.jmrit.catalog.*;
 /**
  * SensorIcon provides a small icon to display a status of a Sensor.</p>
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -116,8 +116,12 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         ours = this;
         if (popup==null) {
             String name;
-            name = sensor.getID();
             popup = new JPopupMenu();
+            if (sensor.getUserName()!=null) {
+                name = sensor.getUserName();
+                if (sensor.getSystemName()!=null) name = name+" ("+sensor.getSystemName()+")";
+            } else
+                name = sensor.getSystemName();
             popup.add(new JMenuItem(name));
             if (icon) popup.add(new AbstractAction("Rotate") {
                     public void actionPerformed(ActionEvent e) {
@@ -128,14 +132,14 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                         displayState(sensorState());
                     }
                 });
-        }
 
-        popup.add(new AbstractAction("Remove") {
-            public void actionPerformed(ActionEvent e) {
-                remove();
-                dispose();
-            }
-        });
+            popup.add(new AbstractAction("Remove") {
+                    public void actionPerformed(ActionEvent e) {
+                        remove();
+                        dispose();
+                    }
+                });
+        }  // end creation of popup menu
 
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
