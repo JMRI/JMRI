@@ -26,7 +26,7 @@ import java.io.Serializable;
  * <P>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  * @see             jmri.jmrix.nce.NceMessage
  *
  */
@@ -78,9 +78,18 @@ public class LocoNetMessage implements Serializable {
 
     /** Get a String representation of the entire message in hex */
     public String toString() {
-        String s = "";
-        for (int i=0; i<_nDataBytes; i++) s+=Integer.toHexString(_dataBytes[i])+" ";
-        return s;
+			int val ;
+      StringBuffer sb = new StringBuffer() ;
+      for (int i=0; i<_nDataBytes; i++)
+			{
+				if( i > 0 )
+					sb.append( ' ' ) ;
+
+				val = _dataBytes[i] & 0xFF ;
+				sb.append( hexChars[ val >> 4 ] );
+				sb.append( hexChars[ val & 0x0F ] ) ;
+			}
+		  return sb.toString() ;
     }
 
     /**
@@ -253,6 +262,9 @@ public class LocoNetMessage implements Serializable {
     // contents (private)
     private int _nDataBytes = 0;
     private int _dataBytes[] = null;
+
+		  // Hex char array for toString conversion
+		static char[] hexChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' } ;
 
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoNetMessage.class.getName());

@@ -10,7 +10,7 @@ import jmri.jmrix.cmri.serial.SerialTrafficController;
 /**
  * Frame displaying (and logging) CMRI serial command messages
  * @author	    Bob Jacobsen   Copyright (C) 2001
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.8 $
  */
 
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
@@ -34,15 +34,15 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         // check for valid length
         if (l.getNumDataElements() < 2) {
             nextLine("Truncated message of length "+l.getNumDataElements()+"\n",
-                            l.toString()+"\n");
+                            l.toString());
             return;
         } else if (l.isPoll()) {
-            nextLine("Poll ua="+l.getUA()+"\n", l.toString()+"\n");
+            nextLine("Poll ua="+l.getUA()+"\n", l.toString());
         } else if (l.isXmt()) {
             String s = "Transmit ua="+l.getUA()+" OB=";
             for (int i=2; i<l.getNumDataElements(); i++)
                 s+=Integer.toHexString(l.getElement(i)&0x000000ff)+" ";
-            nextLine(s+"\n", l.toString()+"\n");
+            nextLine(s+"\n", l.toString());
         } else if (l.isInit()) {
             String s = "Init ua="+l.getUA()
                 +" type="+((char)l.getElement(2));
@@ -54,7 +54,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                 for (int i=6; i<l.getNumDataElements(); i++)
                     s+=Integer.toHexString(l.getElement(i)&0x000000ff)+" ";
             }
-            nextLine(s+"\n", l.toString()+"\n");
+            nextLine(s+"\n", l.toString());
         } else
             nextLine("unrecognized cmd: \""+l.toString()+"\"\n", "");
     }
@@ -63,13 +63,13 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         // check for valid length
         if (l.getNumDataElements() < 2) {
             nextLine("Truncated reply of length "+l.getNumDataElements()+"\n",
-                            l.toString()+"\n");
+                            l.toString());
             return;
         } else if (l.isRcv()) {
             String s = "Receive ua="+l.getUA()+" IB=";
             for (int i=2; i<l.getNumDataElements(); i++)
                 s+=Integer.toHexString(l.getElement(i))+" ";
-            nextLine(s+"\n", l.toString()+"\n");
+            nextLine(s+"\n", l.toString());
         } else
             nextLine("unrecognized rep: \""+l.toString()+"\"\n", "");
     }

@@ -20,7 +20,7 @@ import jmri.jmrix.lenz.XNetConstants;
 /**
  * Frame displaying (and logging) XpressNet messages
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version         $Revision: 2.6 $
+ * @version         $Revision: 2.7 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
@@ -49,42 +49,41 @@ import jmri.jmrix.lenz.XNetConstants;
 			int len = l.getNumDataElements();
 			for (int i=0; i<len; i++)
 				raw += Integer.toHexString(l.getElement(i))+" ";
-			raw+="\n";
 		}
 
 		// display the decoded data
 		String text;
-		// First, Decode anything that is sent by the LI10x, and 
-                // not the command station 
+		// First, Decode anything that is sent by the LI10x, and
+                // not the command station
 		if(l.isOkMessage()) {
 		   text=new String("Command Successfully Sent/Normal Operations Resumed after timeout");
 		} else if(l.getElement(0)==XNetConstants.LI_MESSAGE_RESPONSE_HEADER) {
 		  switch(l.getElement(1)) {
-		  case XNetConstants.LI_MESSAGE_RESPONSE_PC_DATA_ERROR: 
+		  case XNetConstants.LI_MESSAGE_RESPONSE_PC_DATA_ERROR:
 					text=new String("Error Occurred between the interface and the PC");
 					break;
-		  case XNetConstants.LI_MESSAGE_RESPONSE_CS_DATA_ERROR: 
+		  case XNetConstants.LI_MESSAGE_RESPONSE_CS_DATA_ERROR:
 					text=new String("Error Occurred between the interface and the command station");
-					break;		  
-	          case XNetConstants.LI_MESSAGE_RESPONSE_UNKNOWN_DATA_ERROR: 
+					break;
+	          case XNetConstants.LI_MESSAGE_RESPONSE_UNKNOWN_DATA_ERROR:
 					text=new String("Unknown Communications Error");
 					break;
-		  case XNetConstants.LI_MESSAGE_RESPONSE_TIMESLOT_ERROR: 
+		  case XNetConstants.LI_MESSAGE_RESPONSE_TIMESLOT_ERROR:
 					text=new String("Command Station no longer providing a timeslot for communications");
 					break;
-		  case XNetConstants.LI_MESSAGE_RESPONSE_BUFFER_OVERFLOW: 
+		  case XNetConstants.LI_MESSAGE_RESPONSE_BUFFER_OVERFLOW:
 					text=new String("Buffer Overflow in interface");
 					break;
 		  default:
 			text = l.toString();
 		  }
 		} else if(l.getElement(0)==XNetConstants.LI_VERSION_RESPONSE) {
-			text = new String("LI10x hardware Version:  " + 
-					    (l.getElementBCD(1).floatValue())/10 + 
+			text = new String("LI10x hardware Version:  " +
+					    (l.getElementBCD(1).floatValue())/10 +
 					  " Software Version: " +
 					    l.getElementBCD(2));
 		} else if(l.getElement(0)==XNetConstants.LI101_REQUEST) {
-		  // The request and response for baud rate look the same, 
+		  // The request and response for baud rate look the same,
 		  // so we need this for both incoming and outgoing directions
 		  switch(l.getElement(1)) {
 		  case XNetConstants.LI101_REQUEST_ADDRESS:
@@ -185,30 +184,30 @@ import jmri.jmrix.lenz.XNetConstants;
                 	if ((statusByte&0x02)==0x02){
                    	   // Command station is in Emergency Stop Mode
                            text= text + " Emergency Stop";
-                	} 
+                	}
 			if ((statusByte&0x08)==0x08){
                            // Command station is in Service Mode
                            text = text + " Service Mode";
-                	} 
+                	}
 			if ((statusByte&0x40)==0x40){
                    	   // Command station is in Power Up Mode
 			   text = text + " Powering up";
-			} 
-                        if((statusByte&0x04)==0x04) 
+			}
+                        if((statusByte&0x04)==0x04)
 				   text = text + " Auto power-up Mode";
                                 else text = text + " Manual power-up Mode";
 			if ((statusByte&0x80)==0x80){
                    	   // Command station has a experienced a ram check error
                            text=text + " RAM check error!";
-                	} 
+                	}
 		   } else if (l.getElement(1) == XNetConstants.CS_SOFTWARE_VERSION) {
-			/* This is a Software version response for XPressNet 
+			/* This is a Software version response for XPressNet
                            Version 1 or 2 */
-				text = new String("Command Station Software Version: " + (l.getElementBCD(2).floatValue())/10 + "Type: Unknown (X-Bus V1 or V2)") ;			
-		   } else text = l.toString(); 
+				text = new String("Command Station Software Version: " + (l.getElementBCD(2).floatValue())/10 + "Type: Unknown (X-Bus V1 or V2)") ;
+		   } else text = l.toString();
 
-		} else { 
-		     text = l.toString(); 
+		} else {
+		     text = l.toString();
 		}
 		// we use Llnmon to format, expect it to provide consistent \n after each line
 		nextLine(text+"\n", raw);
@@ -223,7 +222,6 @@ import jmri.jmrix.lenz.XNetConstants;
 			int len = l.getNumDataElements();
 			for (int i=0; i<len; i++)
 				raw += Integer.toHexString(l.getElement(i))+" ";
-			raw+="\n";
 		}
 
 		// display the decoded data
@@ -257,19 +255,19 @@ import jmri.jmrix.lenz.XNetConstants;
 		/* Next, we have generic requests */
 		} else if(l.getElement(0)==XNetConstants.CS_REQUEST) {
 		  switch(l.getElement(1)) {
-		  case XNetConstants.EMERGENCY_OFF: 
+		  case XNetConstants.EMERGENCY_OFF:
 				text = new String("REQUEST: Emergency Off");
 				break;
-		  case XNetConstants.RESUME_OPS: 
+		  case XNetConstants.RESUME_OPS:
 				text = new String("REQUEST: Normal Operations Resumed");
 				break;
-		  case XNetConstants.SERVICE_MODE_CSRESULT: 
+		  case XNetConstants.SERVICE_MODE_CSRESULT:
 				text = new String("REQUEST: Service Mode Results");
 				break;
-		  case XNetConstants.CS_VERSION: 
+		  case XNetConstants.CS_VERSION:
 				text = new String("REQUEST: Command Station Version");
 				break;
-		  case XNetConstants.CS_STATUS: 
+		  case XNetConstants.CS_STATUS:
 				text = new String("REQUEST: Command Station Status");
 				break;
 		  default:
@@ -286,13 +284,13 @@ import jmri.jmrix.lenz.XNetConstants;
 		/* Next, we have Programming Requests */
 		} else if(l.getElement(0)==XNetConstants.PROG_READ_REQUEST) {
 		  switch(l.getElement(1)) {
-		  case XNetConstants.PROG_READ_MODE_REGISTER: 
+		  case XNetConstants.PROG_READ_MODE_REGISTER:
 				text = new String("Service Mode Request: Read Register " + l.getElement(2));
 				break;
-		  case XNetConstants.PROG_READ_MODE_CV: 
+		  case XNetConstants.PROG_READ_MODE_CV:
 				text = new String("Service Mode Request: Read CV " + l.getElement(2) + " in Direct Mode");
 				break;
-		  case XNetConstants.PROG_READ_MODE_PAGED: 
+		  case XNetConstants.PROG_READ_MODE_PAGED:
 				text = new String("Service Mode Request: Read CV " + l.getElement(2) + " in Paged Mode");
 				break;
 		  default:
@@ -300,13 +298,13 @@ import jmri.jmrix.lenz.XNetConstants;
 		  }
 		} else if(l.getElement(0)==XNetConstants.PROG_WRITE_REQUEST) {
 		  switch(l.getElement(1)) {
-		  case XNetConstants.PROG_WRITE_MODE_REGISTER: 
+		  case XNetConstants.PROG_WRITE_MODE_REGISTER:
 				text = new String("Service Mode Request: Write " + l.getElement(3) +" to Register " + l.getElement(2));
 				break;
-		  case XNetConstants.PROG_WRITE_MODE_CV: 
+		  case XNetConstants.PROG_WRITE_MODE_CV:
 				text = new String("Service Mode Request: Write " + l.getElement(3) +" to CV " + l.getElement(2) + " in Direct Mode");
 				break;
-		  case XNetConstants.PROG_WRITE_MODE_PAGED: 
+		  case XNetConstants.PROG_WRITE_MODE_PAGED:
 				text = new String("Service Mode Request: Write " + l.getElement(3) +" to CV " + l.getElement(2) + " in Paged Mode");
 				break;
 		  default:
@@ -314,15 +312,15 @@ import jmri.jmrix.lenz.XNetConstants;
 		  }
                 } else if(l.getElement(0)==XNetConstants.OPS_MODE_PROG_REQ) {
 		  switch(l.getElement(1)) {
-		  case XNetConstants.OPS_MODE_PROG_WRITE_REQ: 
+		  case XNetConstants.OPS_MODE_PROG_WRITE_REQ:
 				text = new String("Operations Mode Programming Request: ");
 				if((l.getElement(4) & 0xEC)==0xEC) {
 					text = text + new String("Byte Mode Write: ");
  				} else if((l.getElement(4) & 0xE8)==0xE8) {
 					text = text + new String("Bit Mode Write: ");
 				}
-				text = text + new String(l.getElement(6) 
-					+" to Register " 
+				text = text + new String(l.getElement(6)
+					+" to Register "
 					+ (1+l.getElement(5)+((l.getElement(4)&0x03)<<8))
 					+" For Decoder Address "
 					+calcLocoAddress(l.getElement(2),l.getElement(3)));
@@ -330,8 +328,8 @@ import jmri.jmrix.lenz.XNetConstants;
 		  default:
 			text = l.toString();
 		  }
-		} else { 
-		     text = l.toString(); 
+		} else {
+		     text = l.toString();
 		}
 		// we use Llnmon to format, expect it to provide consistent \n after each line
 		nextLine(text+"\n", raw);
@@ -340,10 +338,10 @@ import jmri.jmrix.lenz.XNetConstants;
 
 
 	/**
-  	 *  We need to calculate the locomotive address when doing the 
+  	 *  We need to calculate the locomotive address when doing the
 	 *  translations back to text.
-	 *  XPressNet Messages will have these as two elements, which need 
-         *  to get translated back into a single address by reversing the 
+	 *  XPressNet Messages will have these as two elements, which need
+         *  to get translated back into a single address by reversing the
 	 *  formulas used to calculate them in the first place.
 	 */
 	private int calcLocoAddress(int AH,int AL) {

@@ -3,22 +3,25 @@
 package jmri.jmrix;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 
 import javax.swing.*;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JTextArea;
+import javax.swing.text.*;
 
 /**
  * Abstact base class for Frames displaying communications monitor information
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public abstract class AbstractMonFrame extends JFrame  {
 
@@ -42,7 +45,7 @@ public abstract class AbstractMonFrame extends JFrame  {
     protected JButton clearButton = new JButton();
     protected JToggleButton freezeButton = new JToggleButton();
     protected JScrollPane jScrollPane1 = new JScrollPane();
-    protected JTextPane monTextPane = new JTextPane();
+    protected JTextArea monTextPane = new JTextArea();
     protected JButton startLogButton = new JButton();
     protected JButton stopLogButton = new JButton();
     protected JCheckBox rawCheckBox = new JCheckBox();
@@ -71,10 +74,9 @@ public abstract class AbstractMonFrame extends JFrame  {
         monTextPane.setEditable(false);
 
         // fix a width for current character set
-        JTextField t = new JTextField(40);
-        // force a minimum size - 5 is just an arbitrary constant!
+        JTextField t = new JTextField(80);
         int x = jScrollPane1.getPreferredSize().width+t.getPreferredSize().width;
-        int y = jScrollPane1.getPreferredSize().height+5*t.getPreferredSize().height;
+        int y = jScrollPane1.getPreferredSize().height+10*t.getPreferredSize().height;
 
         jScrollPane1.getViewport().add(monTextPane);
         jScrollPane1.setMinimumSize(new Dimension(x, y));
@@ -204,58 +206,45 @@ public abstract class AbstractMonFrame extends JFrame  {
         // handle display of traffic
         // line is the traffic in 'normal form', raw is the "raw form"
         // Both should be one or more well-formed lines, e.g. end with \n
-
-        // !! limit length; without that, Swing eventually
-        // slows down
-
-        // !! ugly manual way of handling N lines _only_
-        s20 = s19;
-        s19 = s18;
-        s18 = s17;
-        s17 = s16;
-        s16 = s15;
-        s15 = s14;
-        s14 = s13;
-        s13 = s12;
-        s12 = s11;
-        s11 = s10;
-        s10 = s9;
-        s9 = s8;
-        s8 = s7;
-        s7 = s6;
-        s6 = s5;
-        s5 = s4;
-        s4 = s3;
-        s3 = s2;
-        s2 = s1;
-        s1 = "";
-
         StringBuffer sb = new StringBuffer(120);
-
-        // space if multipart form
-        if ( timeCheckBox.isSelected() || rawCheckBox.isSelected()) sb.append("\n");
 
         // display the timestamp if requested
         if ( timeCheckBox.isSelected() ) {
-            sb.append("time: ").append(df.format(new Date())).append("\n");
+            sb.append(df.format(new Date())).append( ": " ) ;
         }
 
         // display the raw data if requested
         if ( rawCheckBox.isSelected() ) {
-            sb.append(raw);
+            sb.append(raw).append( ' ' );
         }
 
         // display decoded data
         sb.append(line);
-        s1 = sb.toString();
+		synchronized( linesBuffer )
+		{
+			linesBuffer.append( sb.toString() );
+		}
 
-        // if no update pending & not frozen, display it in the Swing thread
-        if (!pending && !freezeButton.isSelected()) {
-            pending = true;
+        // if not frozen, display it in the Swing thread
+        if (!freezeButton.isSelected()) {
             Runnable r = new Runnable() {
                 public void run() {
-                    pending = false;
-                    monTextPane.setText(getFrameText());
+					synchronized( linesBuffer )
+					{
+						monTextPane.append( linesBuffer.toString() );
+						int LineCount = monTextPane.getLineCount() ;
+						if( LineCount > MAX_LINES )
+						{
+							LineCount -= MAX_LINES ;
+							try {
+								int offset = monTextPane.getLineStartOffset(LineCount);
+								monTextPane.getDocument().remove(0, offset ) ;
+							}
+							catch (BadLocationException ex) {
+							}
+						}
+						linesBuffer.setLength(0) ;
+					}
                 }
             };
             javax.swing.SwingUtilities.invokeLater(r);
@@ -263,18 +252,17 @@ public abstract class AbstractMonFrame extends JFrame  {
 
         // if requested, log to a file.
         if (logStream != null) {
-            String logLine = s1;
+            String logLine = sb.toString();
             if (!newline.equals("\n")) {
                 // have to massage the line-ends
                 int i = 0;
-                StringBuffer in  = new StringBuffer(s1);
-                int lim = in.length();
-                StringBuffer out = new StringBuffer(s1.length()+10);  // arbitrary guess at space
+                int lim = sb.length();
+                StringBuffer out = new StringBuffer(sb.length()+10);  // arbitrary guess at space
                 for ( i = 0; i<lim; i++) {
-                    if (in.charAt(i) == '\n')
+                    if (sb.charAt(i) == '\n')
                         out.append(newline);
                     else
-                        out.append(in.charAt(i));
+                        out.append(sb.charAt(i));
                 }
                 logLine = new String(out);
             }
@@ -282,24 +270,15 @@ public abstract class AbstractMonFrame extends JFrame  {
         }
     }
 
-    volatile boolean pending = false;
-
     String newline = System.getProperty("line.separator");
-
-    public synchronized String getFrameText() {
-        StringBuffer sb = new StringBuffer();
-        sb.append(s20); sb.append(s19); sb.append(s18); sb.append(s17); sb.append(s16);
-        sb.append(s15); sb.append(s14); sb.append(s13); sb.append(s12); sb.append(s11);
-        sb.append(s10); sb.append(s9); sb.append(s8); sb.append(s7); sb.append(s6);
-        sb.append(s5); sb.append(s4); sb.append(s3); sb.append(s2); sb.append(s1);
-        return 	sb.toString();
-    }
 
     public synchronized void clearButtonActionPerformed(java.awt.event.ActionEvent e) {
         // clear the monitoring history
-        monTextPane.setText("");
-        s1=s2=s3=s4=s5=s6=s7=s8=s9=s10 = "";
-        s11=s12=s13=s14=s15=s16=s17=s18=s19=s20 = "";
+		synchronized( linesBuffer )
+		{
+			linesBuffer.setLength(0);
+			monTextPane.setText("");
+		}
     }
 
     public synchronized void startLogButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -337,36 +316,12 @@ public abstract class AbstractMonFrame extends JFrame  {
         }
     }
 
-
-
-
     PrintStream logStream = null;
-
-    // remember old messages
-    String s1 = "";
-    String s2 = "";
-    String s3 = "";
-    String s4 = "";
-    String s5 = "";
-    String s6 = "";
-    String s7 = "";
-    String s8 = "";
-    String s9 = "";
-    String s10 = "";
-    String s11 = "";
-    String s12 = "";
-    String s13 = "";
-    String s14 = "";
-    String s15 = "";
-    String s16 = "";
-    String s17 = "";
-    String s18 = "";
-    String s19 = "";
-    String s20 = "";
 
     // to get a time string
     DateFormat df = DateFormat.getTimeInstance();
 
+	StringBuffer linesBuffer = new StringBuffer();
+	static private int MAX_LINES = 500 ;
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractMonFrame.class.getName());
-
 }
