@@ -7,6 +7,7 @@ H4 {FONT-SIZE: 12pt; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: norm
 H5 {FONT-SIZE: 12pt; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: normal; FONT-WEIGHT: bold; COLOR: #006400; TEXT-TRANSFORM: uppercase}
 H6 {FONT-SIZE: 11pt; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: normal; FONT-WEIGHT: bold; COLOR: #990066; TEXT-TRANSFORM: uppercase}
 P {FONT-SIZE: 12pt; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: normal; FONT-WEIGHT: normal; TEXT-TRANSFORM: none; COLOR: #000080}
+P.Tiny {FONT-SIZE: xx-small; FONT-FAMILY: Arial,Helvetica,sans-serif; FONT-STYLE: normal; FONT-WEIGHT: normal; COLOR: #000000; TEXT-ALIGN: center; TEXT-TRANSFORM: none}
 U {FONT-SIZE: 12pt; FONT-FAMILY: "Times New Roman", Arial, Helvetica, sans-serif; FONT-STYLE: normal; FONT-WEIGHT: bold; TEXT-TRANSFORM: none; COLOR: #2F4F4F}
 B {FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: normal; FONT-WEIGHT: bold; TEXT-TRANSFORM: none; COLOR: #0000CD}
 I {FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: italic; FONT-WEIGHT: bold; TEXT-TRANSFORM: none; COLOR: #009999}

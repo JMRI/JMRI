@@ -7,6 +7,7 @@ H4 {FONT-SIZE: 12pt; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: norm
 H5 {FONT-SIZE: 12pt; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: normal; FONT-WEIGHT: bold; COLOR: #9932CC; TEXT-TRANSFORM: none}
 H6 {FONT-SIZE: 11pt; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: normal; FONT-WEIGHT: bold; COLOR: #006400; TEXT-TRANSFORM: uppercase}
 P {FONT-SIZE: 12pt; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: normal; FONT-WEIGHT: normal; TEXT-TRANSFORM: none; COLOR: #000080}
+P.Tiny {FONT-SIZE: xx-small; FONT-FAMILY: Arial,Helvetica,sans-serif; FONT-STYLE: normal; FONT-WEIGHT: normal; COLOR: #000000; TEXT-ALIGN: center; TEXT-TRANSFORM: none}
 P.Chapter {FONT-SIZE: 14pt; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: normal; FONT-WEIGHT: 800; TEXT-TRANSFORM: none; COLOR: #000080; LINE-HEIGHT: 1; MAX-HEIGHT: 1; PADDING-LEFT: 0}
 P.SubC {FONT-SIZE: 12pt; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: normal; FONT-WEIGHT: bold; TEXT-TRANSFORM: none; COLOR: #FF1493; LINE-HEIGHT: 1; MAX-HEIGHT: 1; PADDING-LEFT: 20}
 P.SubSubC {FONT-SIZE: 12pt; FONT-FAMILY: Arial, Helvetica, sans-serif; FONT-STYLE: normal; FONT-WEIGHT: normal; TEXT-TRANSFORM: none; COLOR: #000080; PADDING-LEFT: 40; LINE-HEIGHT: 1; MAX-HEIGHT: 1}
