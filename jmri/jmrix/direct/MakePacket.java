@@ -70,7 +70,7 @@ public class MakePacket {
     static final int BITS_11111 = 0x55;	/* 11111  _-_-_-_-_- (0x55) */
 
 
-	/* MakePacketVA
+	/* BuildPacketVA
 	 *
 	 * This routine generates a string of bytes to be sent out the serial port from
 	 * the bytes that make up an nmra packet.
@@ -91,12 +91,12 @@ public class MakePacket {
 	 * int	addr = 3;
 	 * int	speed = 0x75;
 	 *
-	 * if (MakePacket(serialBuf, &serialBufCnt, addr, speed, addr^speed, -1) < 0)
+	 * if (BuildPacket(serialBuf, &serialBufCnt, addr, speed, addr^speed, -1) < 0)
 	 * 		* handle error - should never happen for 3 byte packets. *
 	 * else
 	 *		* send bytes in serialBuf out serial port repeatedly. *
 	 */
-	//int MakePacketVA(int[] pSerialBuf, int[] pSerialBufCnt,
+	//int BuildPacketVA(int[] pSerialBuf, int[] pSerialBufCnt,
         //                  int maxSerialBytes ) {
 	//	int     	bytes[MAX_PACKET_BYTES];
 	//	int				t;
@@ -110,12 +110,12 @@ public class MakePacket {
 	//	}
 	//	va_end(ap);
         //
-	//	return MakePacket(pSerialBuf, pSerialBufCnt, maxSerialBytes,bytes,numBytes);
+	//	return BuildPacket(pSerialBuf, pSerialBufCnt, maxSerialBytes,bytes,numBytes);
 	//}
 
 
-	/* Same as MakePacketVA above, except takes an array of numBytes packet bytes
-	 * instead of the variable arguments. Called by MakePacketVA to actually do
+	/* Same as BuildPacketVA above, except takes an array of numBytes packet bytes
+	 * instead of the variable arguments. Called by BuildPacketVA to actually do
 	 * the work.
 	 *
 	 * This function makes the bit stream from the packet bytes, and then calls
@@ -123,7 +123,7 @@ public class MakePacket {
 	 *
 	 * Returns 0 on success, -1 on failure.
 	 */
-    int MakePacket(int[] pSerialBuf, int pSerialBufCnt[],  // secretly just one
+    int BuildPacket(int[] pSerialBuf, int pSerialBufCnt[],  // secretly just one
 										int maxSerialBytes,
 										int[] pBytes, int numBytes) {
         int		i;
