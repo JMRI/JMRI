@@ -24,7 +24,7 @@ import org.jdom.Attribute;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 abstract public class AbstractConfigFrame extends JFrame {
 
@@ -70,9 +70,14 @@ abstract public class AbstractConfigFrame extends JFrame {
      * @return List of available protocols.
      */
     public String[] availableProtocols() {
-        return  new String[] {"(None selected)","NCE","LocoNet LocoBuffer","LocoNet MS100",
+        return  new String[] {"(None selected)",
+                            "CMRI serial",
+                            "EasyDCC",
+                            "Lenz XPressNet",
+                            "LocoNet LocoBuffer","LocoNet MS100",
                             "LocoNet Server",
-                            "CMRI serial", "EasyDCC", "Lenz XPressNet"};
+                            "NCE"
+                        };
     }
 
 	/**
