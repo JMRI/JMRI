@@ -1,10 +1,4 @@
-/**
- * PaneProgFrameTest.java
- *
- * Description:
- * @author			Bob Jacobsen
- * @version			$Revision: 1.2 $
- */
+// PaneProgFrameTest.java
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
@@ -26,6 +20,12 @@ import jmri.jmrit.symbolicprog.*;
 import jmri.jmrit.decoderdefn.*;
 import jmri.jmrit.roster.*;
 
+/**
+ * Test PaneProgFrame
+ *
+ * @author			Bob Jacobsen
+ * @version			$Revision: 1.3 $
+ */
 public class PaneProgFrameTest extends TestCase {
 
 	// test creating a pane in config file
