@@ -18,14 +18,14 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
 /**
- * The JMRI application for configuring DCC decoders
+ * The JMRI application for configuring DCC decoders.
  * <P>
  * If an argument is provided at startup, it will be used as the name of
  * the configuration file.  Note that this is just the name, not the path;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.40 $
+ * @version     $Revision: 1.41 $
  */
 public class DecoderPro extends Apps {
 
