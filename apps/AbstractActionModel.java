@@ -2,12 +2,15 @@
 
 package apps;
 
+import java.util.ResourceBundle;
+import java.util.Enumeration;
+
 /**
  * Provide services for invoking actions during configuration
  * and startup.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @see PerformActionPanel
  */
 public abstract class AbstractActionModel {
@@ -40,52 +43,48 @@ public abstract class AbstractActionModel {
     }
 
     static public String[] nameList() {
-        return new String[] {
-            "Open memory monitor",
-            "Start LocoNet Server",
-            "Open turnout table",
-            "Open sensor table",
-            "Open signal table",
-            "Open signal logic panel",
-            "Open power control",
-            "Open turnout control",
-            "Open single CV programmer",
-            "Open speedometer",
-            "New panel",
-            "Load panel",
-            "Open C/MRI monitor",
-            "Open EasyDCC monitor",
-            "Open XPressNet monitor",
-            "Open LocoNet monitor",
-            "Open LocoNet slot monitor",
-            "Open NCE monitor",
-            "Open Zimo monitor"
-        };
+        if (names==null) loadArrays();
+        return names;
+    }
+    static public Class[] classList() {
+        if (classes==null) loadArrays();
+        return classes;
     }
 
-    static public Class[] classList() {
-        return new Class[] {
-            jmri.jmrit.MemoryFrameAction.class,
-            jmri.jmrix.loconet.locormi.LnMessageServerAction.class,
-            jmri.jmrit.beantable.TurnoutTableAction.class,
-            jmri.jmrit.beantable.SensorTableAction.class,
-            jmri.jmrit.beantable.SignalHeadTableAction.class,
-            jmri.jmrit.blockboss.BlockBossAction.class,
-            jmri.jmrit.powerpanel.PowerPanelAction.class,
-            jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlAction.class,
-            jmri.jmrit.simpleprog.SimpleProgAction.class,
-            jmri.jmrit.speedometer.SpeedometerAction.class,
-            jmri.jmrit.display.PanelEditorAction.class,
-            jmri.configurexml.LoadXmlConfigAction.class,
-            jmri.jmrix.cmri.serial.serialmon.SerialMonAction.class,
-            jmri.jmrix.easydcc.easydccmon.EasyDccMonAction.class,
-            jmri.jmrix.lenz.mon.XNetMonAction.class,
-            jmri.jmrix.loconet.locomon.LocoMonAction.class,
-            jmri.jmrix.loconet.slotmon.SlotMonAction.class,
-            jmri.jmrix.nce.ncemon.NceMonAction.class,
-            jmri.jmrix.zimo.zimomon.Mx1MonAction.class
-        };
+    static private void loadArrays() {
+        ResourceBundle rb = ResourceBundle.getBundle("apps.ActionListBundle");
+        // count entries (not entirely efficiently!)
+        int count = 0;
+        Enumeration e = rb.getKeys();
+        while (e.hasMoreElements()) {
+            count++;
+            e.nextElement();
+        }
+        // create arrays
+        classes = new Class[count];
+        names = new String[count];
+        // load them
+        int index = 0;
+        e = rb.getKeys();
+        while (e.hasMoreElements()) {
+            String key = (String)e.nextElement();
+            names[index] = rb.getString(key);
+            // get class for key
+            try {
+                classes[index] = Class.forName(key);
+            } catch (ClassNotFoundException ex) {
+                log.error("Did not find class "+key);
+            }
+            index++;
+        }
     }
+
+    static private String[] names = null;
+    static private Class[] classes = null;
+
+    // initialize logging
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractActionModel.class.getName());
+
 }
 
 
