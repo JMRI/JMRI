@@ -1,0 +1,118 @@
+Making a distribution (substitute the release-name for 0.6 throughout):
+
+( ) Copy and rename the last distribution
+
+( ) update the README to include any changes, esp. including updating
+	the release name and URLs
+
+( ) Any new jar files that need to be put in the lib area?
+
+( ) Make sure that the "make manifest" button is pushed, then
+	make the jmri.jar file with the JMRI demo release target.
+
+( ) Commit and tag "release-0-6"
+
+( ) Move the jmri.jar file to the distribution folder
+
+( ) Update the various text files from the CVS scripts module. 
+
+( ) Update the xml subdirectory, removing the CVS subdirs
+
+( ) Upload folder to jmri.sourceforge.net via NiftyTelnet/SSH
+
+( ) Remove the Macintosh App and certain jar files:
+
+    cd JMRI.demo.0.6
+    rm JMRI\ demo
+    rm lib/javax.comm.MRJ.jar
+ 	rm lib/swingall.jar
+	
+   At this point, lib should contain:
+     collections.jar  jdom-jdk11.jar  log4j.jar  xerces.jar
+   
+( ) Update permissions
+
+    chmod 755 JmriDemo.tcsh
+    
+( ) Make a zip file
+
+    cd ..
+    # now above the distribution directory
+    
+    zip -rl JMRI.demo.0.7.zip JMRI.demo.0.7
+	zip JMRI.demo.0.7A.zip JMRI.demo.0.7/jmri.jar JMRI.demo.0.7/lib/*.jar
+	
+	# the first line adds CR's, and the second replaces the .jar files so they
+	# don't have CR inserted
+	
+( ) Make a .tar.gz
+
+	tar cf JMRI.demo.0.6.tar JMRI.demo.0.6
+	gzip JMRI.demo.0.6.tar
+	
+( ) Back on the Mac, start MRJAppBuilder.
+		Properties:  Release properties
+		Output file:  JMRI demo (in your target location; overwrite existing)
+		Merge files:  jmri.jar
+    And then make the output
+	   
+( ) Copy the application file to the release (if you didn't create it there)
+	   and update its icon. 
+	   
+( ) Make an opt-copy of the folder to the desktop, then into a CD.
+
+( ) Test it on the test machine!
+
+( ) Drag folder onto DropStuff, which will create a file JMRI.demo.0.6.hqx
+	(Preferences should be set for Macintosh, include linefeeds, remote .sit
+	suffix)
+
+( ) Upload Mac distribution to sourceforge home via SSH
+
+( ) Move to distribution site via SourceForge release:
+
+	ftp upload.sourceforge.net 
+		user: ftp 
+		password: me@myself.org 
+		cd incoming 
+		bin 
+		put JMRI.demo.0.6.zip
+		put JMRI.demo.0.6.tar.gz
+		put JMRI.demo.0.6.hqx
+		
+	Login to SourceForge web 
+	Go to the project home page, then admin page
+	Click on Edit/Release Files 
+	
+	Be sure to select "preserve preformatted text"
+
+( ) Update web pages:
+	site/index.html - download links, demo release name
+	site/InstallJMRI.html - download instructions
+	site/demoFiles/README.html - new README contents
+	
+( ) commit site and update on server
+	
+( ) Update CVS
+
+    cd cvs
+    cvs -d cvs.jmri.sourceforge.net:/cvsroot/jmri update -r Release-0-7
+    
+( ) Create a snapshot in zip format
+
+	cd
+	zip -rl snapshot-release-0-7.zip cvs
+	
+	(l option modified newlines to cr-lf)
+	
+( ) Create JavaDoc
+	Ensure that CW JMRI debug target has JavaDoc selected as prelinker
+	Build JMRI debug target
+
+( ) Upload JavaDoc
+
+	Upload the Development Project:Docs folder to htdocs/Technical/
+
+( ) News item
+
+( ) mail announcement 
