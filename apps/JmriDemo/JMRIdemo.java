@@ -16,13 +16,13 @@ import javax.swing.JFrame;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.58 $
+ * @version     $Revision: 1.59 $
  */
 public class JMRIdemo extends Apps {
 
     JMRIdemo(JFrame p) {
         super(p);
-        }
+    }
 
     protected String line1() {
         return MessageFormat.format(rb.getString("JmriDemoVersionCredit"),
