@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: DecoderID.xsl,v 1.1 2003-12-28 19:30:13 jacobsen Exp $ -->
+<!-- $Id: DecoderID.xsl,v 1.2 2003-12-29 03:13:32 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI decoder definition index and -->
 <!-- definition files into an HTML page on decoder ID -->
@@ -68,22 +68,25 @@
 
 		<xsl:for-each select="/decoderIndex-config/decoderIndex/familyList/family">
 		  <xsl:if test="( @mfg = $mfgname )" >
-			<xsl:for-each select="document(@file)/decoder-config/decoder/family/model">
+			<xsl:for-each select="model">
 			
-			<!-- display model as row in table -->
-			<tr>
+			  <!-- display model as row in table -->
+			  <tr>
 				<td bgcolor="#eeeeee" valign="top" align="center"><xsl:value-of select="@model"/></td>
 				<td bgcolor="#eeeeee" valign="top" align="center"><xsl:value-of select="../@name"/></td>
 				<td bgcolor="#eeeeee" valign="top" align="center">
-<xsl:if test="( @lowVersionID = '' )" ><xsl:value-of select="../@lowVersionID"/></xsl:if>
+<!-- display model version if present, else family -->
+<xsl:if test="string-length(@lowVersionID)=0" ><xsl:value-of select="../@lowVersionID"/></xsl:if>
 <xsl:value-of select="@lowVersionID"/>
 </td>
 				<td bgcolor="#eeeeee" valign="top" align="center">
-<xsl:value-of select="../@highVersionID"/>
+<xsl:if test="string-length(@highVersionID)=0" ><xsl:value-of select="../@highVersionID"/></xsl:if>
 <xsl:value-of select="@highVersionID"/>
 </td>
-			</tr>
-                        <xsl:apply-templates/>
+			  </tr>
+			  <xsl:for-each select="versionCV">
+        		<xsl:call-template name="versionCVline"/>
+ 			  </xsl:for-each>
 			</xsl:for-each>
 		  </xsl:if>
 		</xsl:for-each>
@@ -92,10 +95,11 @@
 </xsl:template>
 
 <!-- Index through versionCV elements in a model  -->
-<xsl:template match="versionCV">
+<xsl:template name="versionCVline">
                         <tr>
-                                <td bgcolor="#eeeeee" valign="top" align="center"><xsl:value-of select="../@model"/></td>
-                                <td bgcolor="#eeeeee" valign="top" align="center"><xsl:value-of select="../../@name"/></td>
+                        		<!-- dont display model or name for these subcases -->
+                                <td bgcolor="#eeeeee" valign="top" align="center"></td>
+                                <td bgcolor="#eeeeee" valign="top" align="center"></td>
                                 <td bgcolor="#eeeeee" valign="top" align="center">
 <xsl:value-of select="@lowVersionID"/>
 </td>
