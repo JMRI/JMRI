@@ -28,8 +28,8 @@ import jmri.jmrix.*;
  * (e.g. service mode and ops mode, or two ops mode) at the same time, but this
  * code definitely can't.
  * <P>
- * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.18 $
+ * @author	Bob Jacobsen  Copyright (C) 2001, 2003
+ * @version     $Revision: 1.19 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 
