@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: 0NMRA.xml,v 1.4 2003-06-05 17:44:13 jacobsen Exp $ -->
+<!-- $Id: 0NMRA.xml,v 1.5 2003-12-20 16:33:32 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Bob Jacobsen" version="3" lastUpdated="20030605"/>
+		<version author="Bob Jacobsen" version="4" lastUpdated="20031205"/>
 		<!-- version 3 - add consist direction - jake -->
+		<!-- version 4 - Minor formatting changes - Jack Shall -->
 
 <decoder>
 	<family name="NMRA standard CV definitions" mfg="NMRA">
@@ -28,9 +29,9 @@
 			<decVal max="31"/></variable>
 		<variable label="Vhigh" CV="5">					<decVal/></variable>
 		<variable label="Vmid" CV="6">					<decVal/></variable>
-		<variable label="Manufacturer Version No" CV="7" readOnly="yes"
+		<variable label="Manufacturer Version No: " CV="7" readOnly="yes"
 						item="Decoder Version"><decVal/></variable>
-		<variable label="Manufacturer ID" CV="8" readOnly="yes"
+		<variable label="Manufacturer ID: " CV="8" readOnly="yes"
 						item="Manufacturer">			<decVal/></variable>
 		<variable label="Total PWM Period" CV="9">		<decVal/></variable>
 		<variable label="EMF Feedback Cutout" CV="10">	<decVal/></variable>
