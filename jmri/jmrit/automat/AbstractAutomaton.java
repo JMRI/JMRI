@@ -2,6 +2,7 @@
 
 package jmri.jmrit.automat;
 
+import java.awt.*;
 import javax.swing.*;
 
 import jmri.*;
@@ -38,7 +39,7 @@ import jmri.*;
  * a warning will be logged if they are used before the thread starts.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 abstract public class AbstractAutomaton implements Runnable {
 
@@ -421,6 +422,96 @@ abstract public class AbstractAutomaton implements Runnable {
         return true;
     }
 
+    JFrame messageFrame = null;
+    String message = null;
+
+    /**
+     * Internal class to show a Frame
+     * @param message
+     */
+    protected class MsgFrame implements Runnable {
+        String mMessage;
+        boolean mPause;
+        boolean mShow;
+        JFrame mFrame = null;
+        JButton mButton;
+        JTextArea mArea;
+
+        public void hide() {
+            mShow = false;
+            // invoke the operation
+            javax.swing.SwingUtilities.invokeLater(this);
+        }
+
+        /**
+         * Show a message, and optionally wait for the user to acknowledge
+         */
+        public void show(String pMessage, boolean pPause) {
+            mMessage = pMessage;
+            mPause = pPause;
+            mShow = true;
+
+            // invoke the operation
+            javax.swing.SwingUtilities.invokeLater(this);
+            // wait to proceed?
+            if (mPause) {
+                synchronized(self) {
+                    try {
+                        self.wait();
+                    }  catch (InterruptedException e) {
+                        log.warn("Interrupted during pause, not expected");
+                    }
+                }
+            }
+        }
+        public void run() {
+            // create the frame if it doesn't exist
+            if (mFrame==null) {
+                mFrame = new JFrame("");
+                mArea = new JTextArea();
+                mArea.setEditable(false);
+                mArea.setLineWrap(false);
+                mArea.setWrapStyleWord(true);
+                mButton = new JButton("Continue");
+                mFrame.getContentPane().setLayout(new BorderLayout());
+                mFrame.getContentPane().add(mArea, BorderLayout.CENTER );
+                mFrame.getContentPane().add(mButton, BorderLayout.SOUTH );
+                mButton.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                        synchronized (self) {
+                            self.notify();
+                        }
+                        mFrame.hide();
+                    }
+                });
+                mFrame.pack();
+            }
+            if (mShow) {
+                // update message, show button if paused
+                mArea.setText(mMessage);
+                if (mPause) {
+                    mButton.setVisible(true);
+                } else {
+                    mButton.setVisible(false);
+                }
+                // do optional formatting
+                format();
+                // center the frame
+                mFrame.pack();
+                Dimension screen = mFrame.getContentPane().getToolkit().getScreenSize();
+                Dimension size = mFrame.getSize();
+                mFrame.setLocation((screen.width-size.width)/2,(screen.height-size.height)/2);
+                // and show it to the user
+                mFrame.show();
+            }
+            else mFrame.hide();
+        }
+
+        /**
+         * Abstract method to handle formatting of the text on a show
+         */
+        protected void format() {}
+    }
 
     JFrame debugWaitFrame = null;
 
