@@ -25,6 +25,7 @@
   <property category="runtime.2" name="ConfigurationName" value="Decoder Pro"/>
   <property category="runtime.2" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
   <property category="runtime.2" name="application.class" value="apps.DecoderPro.DecoderPro"/>
+  <property category="runtime.2" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/"/>
   <property category="runtime.2" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.2" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
   <property category="runtime.2" name="appserver.servername" value="standard"/>
@@ -54,6 +55,7 @@
   <property category="runtime.5" name="ConfigurationName" value="LocoTools"/>
   <property category="runtime.5" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
   <property category="runtime.5" name="application.class" value="apps.LocoTools.LocoTools"/>
+  <property category="runtime.5" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/"/>
   <property category="runtime.5" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.5" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
   <property category="runtime.5" name="appserver.servername" value="standard"/>
@@ -87,7 +89,7 @@
   <property category="sys" name="TestPath" value="test"/>
   <property category="sys" name="Title" value=""/>
   <property category="sys" name="TitleLabel" value=""/>
-  <property category="sys" name="Version" value="$Revision: 1.14 $"/>
+  <property category="sys" name="Version" value="$Revision: 1.15 $"/>
   <property category="sys" name="VersionLabel" value="@version"/>
   <property category="sys" name="WorkingDirectory" value="../"/>
   <property category="sys" name="max.package.levels" value="2"/>
@@ -105,6 +107,7 @@
     </file>
   </node>
   <node name="DTD files" type="Folder"/>
+  <node name="apps" type="Package"/>
   <node name="jmri" type="Package"/>
   <node name="org.apache" type="Package"/>
   <node name="xml" type="Package"/>
