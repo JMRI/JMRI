@@ -20,7 +20,7 @@ import com.sun.java.util.collections.Collections;
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class AbstractSignalHeadManager extends AbstractManager
     implements SignalHeadManager, java.beans.PropertyChangeListener {
@@ -72,6 +72,7 @@ public class AbstractSignalHeadManager extends AbstractManager
             else
                 _tuser.put(userName, s);
         }
+        firePropertyChange("length", null, new Integer(_tsys.size()));
     }
 
     /**
