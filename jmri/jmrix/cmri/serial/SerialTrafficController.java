@@ -10,7 +10,9 @@ import jmri.jmrix.AbstractMRTrafficController;
 import java.io.DataInputStream;
 
 /**
- * Converts Stream-based I/O to/from C/MRI serial messages.  The "SerialInterface"
+ * Converts Stream-based I/O to/from C/MRI serial messages.
+ * <P>
+ * The "SerialInterface"
  * side sends/receives message objects.
  * <P>
  * The connection to
@@ -21,8 +23,8 @@ import java.io.DataInputStream;
  * This handles the state transistions, based on the
  * necessary state in each message.
  *
- * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.11 $
+ * @author	Bob Jacobsen  Copyright (C) 2003
+ * @version	$Revision: 1.12 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -111,7 +113,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
             // send the initial message
             SerialMessage m = mInitMessage;
             log.debug("send init message: "+m);
-            m.setTimeout(2000);  // wait for init to finish
+            m.setTimeout(2000);  // wait for init to finish, but no reply expected
             return m;
         }
         synchronized (this) {
@@ -140,7 +142,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
             m.setElement(i+2, outputArray[i]);
         }
         if (log.isDebugEnabled()) log.debug("nextWrite with highByte="+highByte+" is "+m);
-        m.setTimeout(25); // short delay, as no reply expected in C/MRI
+        m.setTimeout(25); // short delay, as no reply expected in C/MRI, want to timeout
         return m;
     }
     /**
@@ -179,7 +181,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
             byte char1 = istream.readByte();
             if (char1 == 0x03) break;           // check before DLE handling
             if (char1 == 0x10) char1 = istream.readByte();
-            msg.setElement(i, char1);
+            msg.setElement(i, char1&0xFF);
         }
     }
 
