@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <decoderIndex version="49">
+  <decoderIndex version="51">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -110,6 +110,11 @@
       <family name="AD4" mfg="CVP Products" lowVersionID="40" highVersionID="65" type="stationary" file="CVProducts_AD4.xml">
         <model model="AD4" />
       </family>
+      <family name="Enhanced AD4" mfg="CVP Products" lowVersionID="6" highVersionID="6" type="stationary" file="CVProducts_AD4LC.xml">
+        <model model="AD4LC" />
+        <model model="AD4MC" />
+        <model model="AD4HC" />
+      </family>
       <family name="Series 3 with FX3, silent, readback" mfg="Digitrax" lowVersionID="49" highVersionID="49" type="locomotive" file="Digitrax_01x3.xml">
         <model model="DH163" numOuts="6" numFns="12">
           <output name="4" label="Violet" />
@@ -166,28 +171,43 @@
         <model model="DN163" numOuts="4" numFns="12">
           <output name="4" label="Violet" />
           <output name="5" label="Pad" />
+          <output name="6" label="Pad" />
         </model>
         <model model="DN163K0A" numOuts="4" numFns="12">
           <output name="4" label="Violet" />
           <output name="5" label="Pad" />
+          <output name="6" label="Pad" />
+        </model>
+        <model model="DN163K1A" numOuts="4" numFns="12">
+          <output name="4" label="Violet" />
+          <output name="5" label="Pad" />
+          <output name="6" label="Pad" />
+        </model>
+        <model model="DN163K2" numOuts="4" numFns="12">
+          <output name="4" label="Violet" />
+          <output name="5" label="Pad" />
+          <output name="6" label="Pad" />
         </model>
         <model model="DN163M0" numOuts="4" numFns="12">
           <output name="4" label="Violet" />
           <output name="5" label="Pad" />
+          <output name="6" label="Pad" />
         </model>
         <model model="DN163A0" numOuts="4" numFns="12">
           <output name="4" label="Violet" />
           <output name="5" label="Pad" />
+          <output name="6" label="Pad" />
         </model>
         <model model="DN163A1" numOuts="4" numFns="12">
           <output name="4" label="Violet" />
           <output name="5" label="Pad" />
+          <output name="6" label="Pad" />
         </model>
-        <model model="DZ143" numOuts="4" numFns="12">
+        <model model="DZ143" numOuts="4" numFns="12" lowVersionID="64" highVersionID="65">
           <output name="4" label="Violet" />
           <output name="5" label="Pad" />
         </model>
-        <model model="DZ143PS" numOuts="4" numFns="12">
+        <model model="DZ143PS" numOuts="4" numFns="12" lowVersionID="64" highVersionID="65">
           <output name="4" label="Violet" />
           <output name="5" label="Pad" />
         </model>
@@ -248,6 +268,16 @@
       <family name="Function Only, with transponding" mfg="Digitrax" lowVersionID="244" type="locomotive" file="Digitrax_yfunction.xml">
         <model model="TL1" numOuts="1" numFns="4">
           <output name="1" label="White" />
+        </model>
+      </family>
+      <family name="ESU LokPilot Silent BEMF decoders" mfg="ESU" lowVersionID="21" type="locomotive" file="ESU_LokPilotDCC.xml">
+        <model model="ESU_LokPilotDCC" numOuts="6" numFns="6">
+          <output name="1" label="Front Lights" />
+          <output name="2" label="Back Lights" />
+          <output name="3" label="Aux1" />
+          <output name="4" label="Aux2" />
+          <output name="5" label="Shunting" />
+          <output name="6" label="Acc/Dec off" />
         </model>
       </family>
       <family name="ESU LokSound2 Silent BEMF/Sound decoders" mfg="ESU" lowVersionID="21" type="locomotive" file="ESU_LokSound2_21.xml">
@@ -379,6 +409,14 @@
         <model model="KRS-SR" numOuts="4" numFns="8" />
         <model model="SW9-SR" numOuts="4" numFns="8" />
         <model model="D408SR" numOuts="7" numFns="12" />
+        <model model="NIMFT-A" numOuts="2" numFns="3">
+          <output name="1" label="Pad 1" />
+          <output name="2" label="Pad 2" />
+        </model>
+        <model model="NIMFT-B" numOuts="2" numFns="3">
+          <output name="1" label="Pad 1" />
+          <output name="2" label="Pad 2" />
+        </model>
       </family>
       <family name="Quantum" mfg="QSIndustries" type="locomotive" file="QSI_Quantum.xml">
         <model model="Quantum" />
