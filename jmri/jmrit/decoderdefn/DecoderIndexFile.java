@@ -28,7 +28,7 @@ import org.jdom.output.*;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -216,6 +216,17 @@ public class DecoderIndexFile extends XmlFile {
      */
     static public void forceCreationOfNewIndex() {
         log.info("update decoder index");
+        // make sure we're using only the default manufacturer info
+        // to keep from propagating wrong, old stuff
+        File oldfile = new File(XmlFile.prefsDir()+File.separator+"decoderIndex.xml");
+        if (oldfile.exists()) {
+            log.debug("remove existing user decoderIndex.xml file");
+            oldfile.delete();
+            // force read from distributed file
+            resetInstance();
+            instance();
+        }
+
         // create an array of file names from decoders dir in preferences, count entries
         int i;
         int np = 0;
@@ -255,6 +266,8 @@ public class DecoderIndexFile extends XmlFile {
         }
 
         // create a new decoderIndex
+        // the existing version is used, so that a new master file
+        // with a larger one will force an update
         DecoderIndexFile index = new DecoderIndexFile();
         index.fileVersion = instance().fileVersion;
 
