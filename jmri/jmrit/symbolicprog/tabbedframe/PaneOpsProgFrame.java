@@ -2,35 +2,16 @@
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.table.*;
-
-import java.io.*;
-import com.sun.java.util.collections.List;
-import com.sun.java.util.collections.ArrayList;
-
 import jmri.Programmer;
-import jmri.ProgListener;
-import jmri.ProgModePane;
-import jmri.jmrit.symbolicprog.*;
-import jmri.jmrit.decoderdefn.*;
-import jmri.jmrit.roster.*;
-import jmri.jmrit.XmlFile;
-
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.Attribute;
-import org.jdom.DocType;
-import org.jdom.output.XMLOutputter;
-import org.jdom.JDOMException;
+import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.roster.RosterEntry;
+import javax.swing.JPanel;
 
 /**
  * Extend the PaneProgFrame to handle ops mode operations
  *
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class PaneOpsProgFrame extends PaneProgFrame
 							implements java.beans.PropertyChangeListener  {

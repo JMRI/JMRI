@@ -2,25 +2,30 @@
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import jmri.*;
-import jmri.util.davidflanagan.*;
-import jmri.jmrit.*;
-import jmri.jmrit.decoderdefn.*;
-import jmri.jmrit.roster.*;
+import jmri.Programmer;
+import jmri.util.davidflanagan.HardcopyWriter;
+import jmri.jmrit.XmlFile;
+import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.decoderdefn.DecoderIndexFile;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.RosterEntryPane;
 import jmri.jmrit.symbolicprog.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import com.sun.java.util.collections.*;
+import com.sun.java.util.collections.ArrayList;
 import com.sun.java.util.collections.List;
-import org.jdom.*;
+import org.jdom.Attribute;
+import org.jdom.Element;
 
 /**
  * Frame providing a command station programmer from decoder definition files
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.28 $
+ * @version			$Revision: 1.29 $
  */
 abstract public class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {

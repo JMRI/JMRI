@@ -2,17 +2,27 @@
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
+import jmri.util.davidflanagan.HardcopyWriter;
+import jmri.jmrit.symbolicprog.CvTableModel;
+import jmri.jmrit.symbolicprog.CvValue;
+import jmri.jmrit.symbolicprog.DccAddressPanel;
+import jmri.jmrit.symbolicprog.FnMapPanel;
+import jmri.jmrit.symbolicprog.ValueEditor;
+import jmri.jmrit.symbolicprog.ValueRenderer;
+import jmri.jmrit.symbolicprog.VariableTableModel;
+import jmri.jmrit.symbolicprog.VariableValue;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.*;
 
-import com.sun.java.util.collections.*;
+import com.sun.java.util.collections.ArrayList;
 import com.sun.java.util.collections.List;   // resolve ambiguity with package-level import
-import jmri.jmrit.symbolicprog.*;
-import jmri.util.davidflanagan.*;
-import org.jdom.*;
+import org.jdom.Attribute;
+import org.jdom.Element;
 
 /**
  * Provides the individual panes for the TabbedPaneProgrammer.
@@ -23,7 +33,7 @@ import org.jdom.*;
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {

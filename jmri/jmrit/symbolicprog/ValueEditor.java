@@ -2,13 +2,19 @@
 
 package jmri.jmrit.symbolicprog;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import java.awt.Component;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.util.EventObject;
+import java.util.Vector;
 
-import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.table.*;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.table.TableCellEditor;
 
 /**
  * JTable editor for cells representing CV values.  This is a somewhat unconventional
@@ -24,7 +30,7 @@ import javax.swing.table.*;
  * </UL>
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class ValueEditor extends JComboBox implements TableCellEditor, FocusListener {
 

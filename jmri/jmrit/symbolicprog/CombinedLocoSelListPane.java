@@ -2,21 +2,25 @@
 
 package jmri.jmrit.symbolicprog;
 
-import jmri.jmrit.XmlFile;
-import jmri.jmrit.roster.*;
-import jmri.jmrit.decoderdefn.*;
+import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.decoderdefn.DecoderIndexFile;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
+import java.awt.event.ActionListener;
 
-import java.awt.*;
-import java.io.File;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JToggleButton;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-import com.sun.java.util.collections.List;
+
 import com.sun.java.util.collections.ArrayList;
+import com.sun.java.util.collections.List;
 
 /**
  * Provide GUI controls to select a known loco and/or new decoder.
@@ -32,7 +36,7 @@ import com.sun.java.util.collections.ArrayList;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
 
