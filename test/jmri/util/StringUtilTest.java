@@ -2,14 +2,42 @@
 
 package jmri.util;
 
-import junit.framework.*;
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.util.StringUtil class
  * @author	Bob Jacobsen  Copyright 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class StringUtilTest extends TestCase {
+
+    public void testHexFromInt() {
+        Assert.assertEquals("00",StringUtil.twoHexFromInt(0));
+        Assert.assertEquals("01",StringUtil.twoHexFromInt(1));
+        Assert.assertEquals("02",StringUtil.twoHexFromInt(2));
+        Assert.assertEquals("03",StringUtil.twoHexFromInt(3));
+        Assert.assertEquals("09",StringUtil.twoHexFromInt(9));
+        Assert.assertEquals("0a",StringUtil.twoHexFromInt(10));
+        Assert.assertEquals("0b",StringUtil.twoHexFromInt(11));
+        Assert.assertEquals("0e",StringUtil.twoHexFromInt(14));
+        Assert.assertEquals("0f",StringUtil.twoHexFromInt(15));
+        Assert.assertEquals("10",StringUtil.twoHexFromInt(16));
+        Assert.assertEquals("11",StringUtil.twoHexFromInt(17));
+        Assert.assertEquals("80",StringUtil.twoHexFromInt(0x80));
+        Assert.assertEquals("ff",StringUtil.twoHexFromInt(0xFF));
+    }
+
+    public void testHexFromIntFromByte() {
+        Assert.assertEquals("00",StringUtil.twoHexFromInt((byte)0));
+        Assert.assertEquals("01",StringUtil.twoHexFromInt((byte)1));
+        Assert.assertEquals("02",StringUtil.twoHexFromInt((byte)2));
+        Assert.assertEquals("11",StringUtil.twoHexFromInt((byte)17));
+        Assert.assertEquals("80",StringUtil.twoHexFromInt((byte)0x80));
+        Assert.assertEquals("ff",StringUtil.twoHexFromInt((byte)0xFF));
+    }
 
 	public void testParseStringNull() {
 		byte[] b = StringUtil.bytesFromHexString("");
