@@ -3,6 +3,7 @@ package jmri.jmrit.display;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import jmri.jmrit.catalog.CatalogPane;
 
 /**
  * Provides a simple editor for adding jmri.jmrit.display items
@@ -11,17 +12,19 @@ import java.awt.event.*;
  * top, then a series of things you can add. Unfortunately, I don't
  * know how to automatically get item widths when using a null layout
  * (Specific location) layout manager, so you have to specify these.
+ * <P>
+ * All created objects are put at the "front", ahead of everything that
+ * is already there, except the background, which clearly has to be put at
+ * the back.
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Id: PanelEditor.java,v 1.4 2002-07-11 14:46:52 jacobsen Exp $
+ * @version $Id: PanelEditor.java,v 1.5 2002-07-19 12:20:08 jacobsen Exp $
  */
 
 public class PanelEditor extends JPanel {
 
     JTextField nextX = new JTextField("20",4);
     JTextField nextY = new JTextField("30",4);
-    JTextField nextHeight = new JTextField("40",4);
-    JTextField nextWidth = new JTextField("90",4);
 
     JButton labelAdd = new JButton("add");
     JTextField nextLabel = new JTextField(10);
@@ -34,13 +37,15 @@ public class PanelEditor extends JPanel {
     JButton turnoutAdd = new JButton("add");
     JTextField nextTurnout = new JTextField(10);
     JButton closedIconButton = new JButton("Pick closed icon");
-    Icon closedIcon = null;
-    JLabel closedIconLabel = new JLabel();
+    Icon closedIcon;
+    JLabel closedIconLabel;
     JButton thrownIconButton = new JButton("Pick thrown icon");
-    Icon thrownIcon = null;
-    JLabel thrownIconLabel = new JLabel();
+    Icon thrownIcon;
+    JLabel thrownIconLabel;
 
     JButton backgroundAddButton = new JButton("Pick image");
+
+    CatalogPane catalog = new CatalogPane();
 
     public PanelEditor() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -52,10 +57,6 @@ public class PanelEditor extends JPanel {
         common.add(nextX);
         common.add(new JLabel(" y:"));
         common.add(nextY);
-        common.add(new JLabel(" height:"));
-        common.add(nextHeight);
-        common.add(new JLabel(" width:"));
-        common.add(nextWidth);
         this.add(common);
 
         this.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
@@ -123,6 +124,13 @@ public class PanelEditor extends JPanel {
         {
             JPanel panel = new JPanel();
             panel.setLayout(new FlowLayout());
+
+            TurnoutIcon to = new TurnoutIcon();
+            closedIcon = to.getClosedIcon();
+            thrownIcon = to.getThrownIcon();
+            closedIconLabel = new JLabel(closedIcon);
+            thrownIconLabel = new JLabel(thrownIcon);
+
             panel.add(new JLabel("indicate turnout: "));
             panel.add(nextTurnout);
             panel.add(closedIconLabel);
@@ -150,6 +158,9 @@ public class PanelEditor extends JPanel {
             );
             this.add(panel);
         }
+
+        // allow for selection of icons
+        add(catalog);
 
     }  // end ctor
 
@@ -181,12 +192,7 @@ public class PanelEditor extends JPanel {
      * Select and create and image
      */
     Icon pickIcon() {
-        JFileChooser inputFileChooser = new JFileChooser(" ");
-		//inputFileChooser.setSelectedFile(new File("lnpacket.hex"));
-		int retVal = inputFileChooser.showOpenDialog(this);
-		if (retVal != JFileChooser.APPROVE_OPTION) return null;  // give up if no file selected
-        log.debug("Open image file: "+inputFileChooser.getSelectedFile().getPath());
-		return new ImageIcon(inputFileChooser.getSelectedFile().getPath());
+        return catalog.getSelectedIcon();
     }
 
     /**
@@ -202,6 +208,7 @@ public class PanelEditor extends JPanel {
         l.setSize(icon.getIconWidth(), icon.getIconHeight());
         target.add(l);
         backgroundAddButton.setEnabled(false);   // theres only one
+        target.moveToBack(l);
         target.revalidate();
     }
 
@@ -214,9 +221,11 @@ public class PanelEditor extends JPanel {
         if (thrownIcon!=null) l.setThrownIcon(thrownIcon);
         l.setTurnout(nextTurnout.getText());
 
+        log.debug("turnout height, width: "+l.getHeight()+" "+l.getWidth());
         setNextLocation(l);
         l.invalidate();
         target.add(l);
+        target.moveToFront(l);
 
         // reshow the panel
         target.validate();
@@ -230,9 +239,11 @@ public class PanelEditor extends JPanel {
         setNextLocation(l);
         l.invalidate();
         target.add(l);
+        target.moveToFront(l);
 
         // reshow the panel
         target.validate();
+        log.debug("label height, width: "+l.getHeight()+" "+l.getWidth());
     }
 
     /**
@@ -240,34 +251,35 @@ public class PanelEditor extends JPanel {
      */
     void addIcon() {
         PositionableLabel l = new PositionableLabel(labelIcon);
+        //setNextLocation(l, labelIcon.getIconHeight(), labelIcon.getIconWidth());
         setNextLocation(l);
         l.invalidate();
         target.add(l);
+        target.moveToFront(l);
 
         // reshow the panel
         target.validate();
     }
 
     /**
-     * Get a Point object representing where the next item
-     * is to be located
+     * Set an objects location and size as it's created.
+     * Size comes from the preferredSize; location comes
+     * from the fields where the user can spec it.
      */
     void setNextLocation(JComponent obj) {
         int x = Integer.parseInt(nextX.getText());
         int y = Integer.parseInt(nextY.getText());
-        int h = Integer.parseInt(nextHeight.getText());
-        int w = Integer.parseInt(nextWidth.getText());
-        obj.setBounds(x,y,h,w);
+        obj.setBounds(x,y,obj.getPreferredSize().width,obj.getPreferredSize().height);
     }
 
     /**
      * Set the frame to be editted.
      */
-    public void setTarget(JPanel f) {
+    public void setTarget(JLayeredPane f) {
         target = f;
     }
 
-    JPanel target;
+    JLayeredPane target;
 
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PanelEditor.class.getName());
