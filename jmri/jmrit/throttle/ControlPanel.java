@@ -34,7 +34,7 @@ import org.jdom.Element;
  *  TODO: fix speed increments (14, 28)
  *
  * @author     glen
- * @version    $Revision: 1.25 $
+ * @version    $Revision: 1.26 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener
 {
@@ -310,7 +310,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	 *  A KeyAdapter that listens for the keys that work the control pad buttons
 	 *
 	 * @author     glen
-         * @version    $Revision: 1.25 $
+         * @version    $Revision: 1.26 $
 	 */
 	class ControlPadKeyListener extends KeyAdapter
 	{
@@ -377,7 +377,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (e.getPropertyName().equals("SpeedSetting")) {
 		   float speed=((Float) e.getNewValue()).floatValue();
-		   speedSlider.setValue((int)(speed * speedIncrement));
+		   speedSlider.setValue((int)(speed * MAX_SPEED));
 		} else if (e.getPropertyName().equals("IsForward")) {
 		   boolean Forward=((Boolean) e.getNewValue()).booleanValue();
 	           setIsForward(Forward);
