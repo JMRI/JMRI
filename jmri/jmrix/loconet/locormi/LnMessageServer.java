@@ -6,16 +6,20 @@ package jmri.jmrix.loconet.locormi;
  * Copyright:    Copyright (c) 2002
  * Company:
  * @author
- * @version $Id: LnMessageServer.java,v 1.4 2002-03-30 06:04:57 jacobsen Exp $
+ * @version $Id: LnMessageServer.java,v 1.5 2002-04-12 09:37:57 kiwi64ajs Exp $
  */
 
  // -Djava.security.policy=lib/security.policy
 
-import java.rmi.server.UnicastRemoteObject;
-import java.rmi.RemoteException ;
 import java.rmi.Naming ;
-import jmri.jmrix.loconet.*;
+import java.rmi.RemoteException ;
+import java.rmi.server.UnicastRemoteObject;
+import java.rmi.registry.LocateRegistry ;
+import java.rmi.registry.Registry ;
+
 import java.io.Serializable;
+
+import jmri.jmrix.loconet.*;
 
 public class LnMessageServer extends UnicastRemoteObject implements LnMessageServerInterface
 {
@@ -47,15 +51,31 @@ public class LnMessageServer extends UnicastRemoteObject implements LnMessageSer
 
   public synchronized void enable()
   {
+    Registry localRegistry = null ;
     try
     {
-      log.debug("attempt rebind for "+serviceName);
-      Naming.rebind( serviceName, self ) ;
-      log.debug("rebind completed");
+      log.debug("Create RMI Registry for: " + serviceName);
+      localRegistry = LocateRegistry.createRegistry( Registry.REGISTRY_PORT ) ;
+    }
+    catch( java.rmi.RemoteException ex )
+    {
+    }
+    try
+    {
+      if( localRegistry == null )
+      {
+        log.warn("Could not Create RMI Registry, Attempting to Locate existing Registry for: " + serviceName );
+        localRegistry = LocateRegistry.getRegistry( Registry.REGISTRY_PORT ) ;
+      }
+
+      log.debug("Register LocoNet Server: " + serviceName + " with RMI Registry" );
+      localRegistry.rebind( serviceName, self ) ;
+
+      log.debug("Register LocoNet Server Complete");
     }
     catch( Exception ex )
     {
-      log.warn( "Exception during enable: " + ex );
+      log.warn( "LnMessageServer: " + ex );
     }
   }
 
