@@ -19,7 +19,7 @@ import javax.swing.JMenuBar;
  * @see SystemsMenu
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class ActiveSystemsMenu extends JMenu {
     public ActiveSystemsMenu(String name) {
@@ -51,12 +51,12 @@ public class ActiveSystemsMenu extends JMenu {
             m.add(getMenu("jmri.jmrix.loconet.LocoNetMenu"));
         if (jmri.jmrix.nce.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.nce.NceMenu"));
-        if (jmri.jmrix.lenz.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.lenz.XNetMenu"));
         if (jmri.jmrix.sprog.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.sprog.SPROGMenu"));
         if (jmri.jmrix.wangrow.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.wangrow.WangrowMenu"));
+        if (jmri.jmrix.lenz.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.lenz.XNetMenu"));
         if (jmri.jmrix.zimo.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.zimo.Mx1Menu"));
     }
@@ -78,14 +78,14 @@ public class ActiveSystemsMenu extends JMenu {
         if (jmri.jmrix.nce.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.nce.NceMenu"));
 
-        if (jmri.jmrix.lenz.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.lenz.XNetMenu"));
-
         if (jmri.jmrix.sprog.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.sprog.SPROGMenu"));
 
         if (jmri.jmrix.wangrow.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.wangrow.WangrowMenu"));
+
+        if (jmri.jmrix.lenz.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.lenz.XNetMenu"));
 
         if (jmri.jmrix.zimo.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.zimo.Mx1Menu"));
@@ -95,7 +95,7 @@ public class ActiveSystemsMenu extends JMenu {
         try {
             return (JMenu) Class.forName(className).newInstance();
         } catch (Exception e) {
-            log.error("Could not load class "+className);
+            log.error("Could not load class "+className+"; "+e);
             return null;
         }
     }
