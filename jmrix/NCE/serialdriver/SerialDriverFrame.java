@@ -12,7 +12,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import jmri.jmrix.nec.NceTrafficController;
+import jmri.jmrix.nce.NceTrafficController;
 
 import ErrLoggerJ.ErrLog;
 
