@@ -9,10 +9,15 @@ import java.awt.*;
 import javax.swing.*;
 
 /**
- * User interface for sending DCC packets
+ * User interface for sending DCC packets.
+ * <P>
+ * This was originally made from jmrix.loconet.logogen, but note that
+ * the logic is somewhat different here.  The LocoNet version waited for
+ * the sent (LocoNet) packet to be echo'd, while this starts the timeout
+ * immediately.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SendPacketFrame extends javax.swing.JFrame {
 
@@ -154,19 +159,6 @@ public class SendPacketFrame extends javax.swing.JFrame {
     }
 
     /**
-     * Process the incoming message to look for the needed echo
-     * @param m
-     */
-    public void message(byte[] m) {
-        // are we running?
-        if (!mRunButton.isSelected()) return;
-        // yes, is this what we're looking for
-        if (! (mNextEcho.equals(m))) return;
-        // yes, we got it, do the next
-        startSequenceDelay();
-    }
-
-    /**
      * Echo has been heard, start delay for next packet
      */
     void startSequenceDelay() {
@@ -198,6 +190,8 @@ public class SendPacketFrame extends javax.swing.JFrame {
             // send it
             mNextEcho = m;
             cs.sendPacket(m, 1);
+            // and queue the rest of the sequence if we're continuing
+            if (mRunButton.isSelected()) startSequenceDelay();
         } else {
             // ask for the next one
             mNextSequenceElement++;
