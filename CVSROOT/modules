@@ -1,7 +1,7 @@
 
 # build a JBuilder project directory in standard form
 # Note that this does not work from JBuilder itself!
-jbuilder -a xml lib jbuilderjava
+jbuilder -a xml lib resources scripts/default.lcf jbuilderjava
 # build the java/ directory, which contains the actual JBuilder project
 jbuilderjava  -a jbuilder0 jbuilder1 jbuilder2 jbuilder3 jbuilder4
 jbuilder0 -d java scripts jmri.jpx
