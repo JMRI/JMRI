@@ -1,8 +1,5 @@
 package jmri.util.table;
 
-// This was adapted from Core Swing Advanced Programming, Prentice Hall
-// Changes:  Remove DataWithIcon reference. Change package
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -10,19 +7,29 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.EventObject;
+import java.awt.event.MouseListener;
 
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
-
+/**
+ * Make a JButton in a table cell function.
+ * <P> Works with {@link ButtonRenderer}.
+ * <P> This was adapted from Core Swing Advanced Programming, Prentice Hall
+ * <P> Changes:  Remove DataWithIcon reference. Change package
+ * <P> This also now implements and registers as a MouseListener, so you can change
+ * the mouse-event behavior by overriding the needed methods.
+ */
 public class ButtonEditor extends BasicCellEditor
     implements ActionListener,
-               TableCellEditor {
+               TableCellEditor,
+               MouseListener {
     public ButtonEditor(JButton button) {
         super(button);
         button.addActionListener(this);
+        button.addMouseListener(this);
     }
 
     public void setForeground(Color foreground) {
@@ -88,6 +95,12 @@ public class ButtonEditor extends BasicCellEditor
         // Button pressed - stop the edit
         stopCellEditing();
     }
+
+    public void mousePressed(MouseEvent e) {}
+    public void mouseExited(MouseEvent e) {}
+    public void mouseEntered(MouseEvent e) {}
+    public void mouseReleased(MouseEvent e) {}
+    public void mouseClicked(MouseEvent e) {}
 
     protected Object value;
     protected Color foreground;
