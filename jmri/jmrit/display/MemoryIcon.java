@@ -17,7 +17,7 @@ import javax.swing.JPopupMenu;
  * have to subclass to do that.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -93,6 +93,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     	// drop size cache
     	height = -1;
     	width = -1;
+        displayState(); // in case changed
     }
 
     private int height = -1;
