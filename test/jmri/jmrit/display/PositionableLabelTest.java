@@ -18,7 +18,7 @@ import java.beans.PropertyChangeEvent;
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class PositionableLabelTest extends TestCase {
 
@@ -57,7 +57,6 @@ public class PositionableLabelTest extends TestCase {
 
     // animate the visible frame
     public void whereButtonPushed() {
-        System.out.println("Found object at "+to.getLocation());
     }
 	// from here down is testing infrastructure
 

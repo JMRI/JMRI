@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * Tests for the SimpleTimebase class
  * @author	Bob Jacobsen
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SimpleTimebaseTest extends TestCase {
 
@@ -47,7 +47,6 @@ public class SimpleTimebaseTest extends TestCase {
 		wait(100);
 		Date then = p.getTime();
 		long delta = then.getTime()-now.getTime();
-		System.out.println("delta: "+delta);
 		Assert.assertTrue("delta ge 50 (nominal value)", delta>=50);
 		Assert.assertTrue("delta lt 150 (nominal value)", delta<150);
 	}

@@ -17,7 +17,7 @@ import junit.framework.*;
  *
  * @todo need a check of the MIXED state model for long address
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 
@@ -151,7 +151,6 @@ public class SplitVariableValueTest extends VariableValueTest {
     }
 
     public void testSplitAddressFromCV4() {
-        System.out.println("---------------------------------");
         Vector v = createCvVector();
         CvValue cv1 = new CvValue(lowCV, p);
         CvValue cv2 = new CvValue(lowCV+offset, p);

@@ -19,7 +19,7 @@ import junit.framework.TestSuite;
  *
  * @todo need a check of the MIXED state model for long address
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class LongAddrVariableValueTest extends VariableValueTest {
 
@@ -152,7 +152,6 @@ public class LongAddrVariableValueTest extends VariableValueTest {
         int nBusyFalse = 0;
         for (int k = 0; k < evtList.size(); k++) {
             java.beans.PropertyChangeEvent e = (java.beans.PropertyChangeEvent) evtList.get(k);
-            // System.out.println("name: "+e.getPropertyName()+" new value: "+e.getNewValue());
             if (e.getPropertyName().equals("Busy") && ((Boolean)e.getNewValue()).equals(Boolean.FALSE))
                 nBusyFalse++;
         }
