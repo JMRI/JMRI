@@ -1,0 +1,63 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Bob Jacobsen, LBL">
+   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>LocoNet Addressing</title>
+</head>
+<body>
+
+
+<IMG SRC="images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
+<h1>LocoNet addressing</h1>
+
+LocoNet systems address input sensors and output turnouts using numbers.
+This page talks about how those numbers are defined in JMRI, and how they relate
+to the numbers in other systems.
+
+<h2>Addressing LocoNet sensors in JMRI</h2>
+
+Inside packets on the LocoNet, sensors are addressed with numbers from 0 to 4095.
+JMRI uses this numbers for addresses, so the first sensor is number 0.
+<P>
+The simplest way to find the 
+right number for a given block is to open a "LocoNet monitor" window, and drop a 
+locomotive onto the block you're interested in.  You'll see the 
+LocoNet message, complete with number, in the window that looks 
+something like this:
+<PRE>
+   General sensor input report: contact 161 (DS54 20 ch1 Sw  input)
+        (BDL16 10 A2) is Lo
+</PRE>
+The contact number, 161 in this case, is what you want.
+<P>
+
+<h2>Addressing LocoNet turnouts in JMRI</h2>
+
+Inside packets on the LocoNet, output turnouts are addressed with numbers from 0 to 4095.
+Throttles, however, address these with numbers from 1 to 4096.
+
+<HR>
+<BR>Site hosted by: <BR>
+<A href="http://sourceforge.net"> 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A>
+ 
+
+<script language=javascript 
+src="http://ss.webring.com/navbar?f=j;y=bob_jacobsen15;u=100088115910095949">
+</script><noscript><center>
+<table bgcolor=gray cellspacing=0 border=2 bordercolor=red><tr>
+<td><table cellpadding=2 cellspacing=0 border=0><tr><td align=center>
+<font face=arial size=-1>This site is a member of WebRing. 
+<br>To browse visit <a href="http://ss.webring.com/navbar?f=l;y=bob_jacobsen15;u=100088115910095949">
+Here</a>.</font></td></tr></table></td></tr></table>
+</center></noscript>
+
+<hr>
+Bob Jacobsen<BR>
+jake@physics.berkeley.edu
+
+</body>
+</html>
