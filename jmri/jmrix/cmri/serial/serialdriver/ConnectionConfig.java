@@ -10,7 +10,7 @@ import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
  * via an C/MRI SerialDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
@@ -38,7 +38,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 		details.add(p);
 
 		// add another button
-		JButton b = new JButton("Edit node configurations");
+		JButton b = new JButton("Configure C/MRI nodes");
 
 		details.add(b);
 						
