@@ -8,10 +8,9 @@ package jmri.jmrix.nce;
  * Some rudimentary support is provided for the "binary" option.
  *
  * @author		Bob Jacobsen  Copyright (C) 2001
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class NceReply extends jmri.jmrix.AbstractMRReply {
-    // is this logically an abstract class?
 
     // create a new one
     public  NceReply() {
