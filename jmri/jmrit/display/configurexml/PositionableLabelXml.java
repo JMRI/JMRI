@@ -1,20 +1,15 @@
 package jmri.jmrit.display.configurexml;
 
+import jmri.configurexml.*;
+import jmri.jmrit.catalog.*;
+import jmri.jmrit.display.*;
 import org.jdom.*;
-
-import jmri.InstanceManager;
-import jmri.jmrit.display.PositionableLabel;
-import jmri.configurexml.XmlAdapter;
-import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.PanelEditor;
-
-import javax.swing.*;
 
 /**
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 
@@ -83,7 +78,7 @@ public class PositionableLabelXml implements XmlAdapter {
 
         } else if (element.getAttribute("icon")!=null) {
             String name = element.getAttribute("icon").getValue();
-            NamedIcon icon = p.catalog.getIconByName(name);
+            NamedIcon icon = CatalogPane.getIconByName(name);
             l = new PositionableLabel(icon);
             try {
                 Attribute a = element.getAttribute("rotate");
