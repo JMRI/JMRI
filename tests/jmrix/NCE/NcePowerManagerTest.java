@@ -1,7 +1,7 @@
 /** 
  * NcePowerManagerTest.java
  *
- * Description:	    tests for the Jmri package
+ * Description:	    JUnit tests for the NcePowerManager class
  * @author			Bob Jacobsen
  * @version			
  */
