@@ -32,7 +32,7 @@ import com.sun.java.util.collections.ArrayList;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
 
@@ -99,7 +99,12 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
         pane1a.add(new JScrollPane(mMfgList));
         pane1a.add(new JScrollPane(mDecoderList));
         iddecoder= new JToggleButton("Ident");
-        idloco.setToolTipText("Read the decoders mfg and version, then attempt to select it's type");
+        iddecoder.setToolTipText("Read the decoders mfg and version, then attempt to select it's type");
+        if (!jmri.InstanceManager.programmerInstance().getCanRead()) {
+            // can't read, disable the button
+            iddecoder.setEnabled(false);
+            iddecoder.setToolTipText("Button disabled because configured command station can't read CVs");
+        }
         iddecoder.addActionListener( new ActionListener() {
         	public void actionPerformed(java.awt.event.ActionEvent e) {
         		if (log.isInfoEnabled()) log.info("identify decoder pressed");

@@ -11,7 +11,7 @@ import com.sun.java.util.collections.List;
  * programming track.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: AbstractIdentify.java,v 1.2 2002-04-13 16:43:42 jacobsen Exp $
+ * @version			$Revision: 1.3 $
  * @see             jmri.jmrit.decoderdefn.IdentifyDecoder
  * @see             jmri.jmrit.roster.IdentifyLoco
  */

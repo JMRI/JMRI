@@ -36,7 +36,7 @@ import com.sun.java.util.collections.List;
  * </UL>
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class CombinedLocoSelPane extends javax.swing.JPanel
                                 implements PropertyChangeListener  {
@@ -76,7 +76,12 @@ public class CombinedLocoSelPane extends javax.swing.JPanel
         });
         pane1a.add(decoderBox);
         iddecoder= new JToggleButton("Ident");
-        idloco.setToolTipText("Read the decoders mfg and version, then attempt to select it's type");
+        iddecoder.setToolTipText("Read the decoders mfg and version, then attempt to select it's type");
+        if (!jmri.InstanceManager.programmerInstance().getCanRead()) {
+            // can't read, disable the button
+            iddecoder.setEnabled(false);
+            iddecoder.setToolTipText("Button disabled because configured command station can't read CVs");
+        }
         iddecoder.addActionListener( new ActionListener() {
         	public void actionPerformed(java.awt.event.ActionEvent e) {
         		if (log.isInfoEnabled()) log.info("identify decoder pressed");
@@ -143,6 +148,11 @@ public class CombinedLocoSelPane extends javax.swing.JPanel
 			});
 			idloco = new JToggleButton("Ident");
 			idloco.setToolTipText("Read the locomotive's address and attempt to select the right settings");
+            if (!jmri.InstanceManager.programmerInstance().getCanRead()) {
+                // can't read, disable the button
+                idloco.setEnabled(false);
+                idloco.setToolTipText("Button disabled because configured command station can't read CVs");
+            }
 			idloco.addActionListener( new ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					if (log.isInfoEnabled()) log.info("Identify locomotive pressed");

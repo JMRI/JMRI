@@ -29,7 +29,7 @@ import org.jdom.JDOMException;
 /**
  * Frame providing a command station programmer from decoder definition files
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
@@ -71,6 +71,11 @@ public class PaneProgFrame extends javax.swing.JFrame
 		confirmAllButton.setToolTipText("disabled because not yet implemented");
 
 		readAllButton.setToolTipText("Read current values from decoder. Warning: may take a long time!");
+        if (!jmri.InstanceManager.programmerInstance().getCanRead()) {
+            // can't read, disable the button
+            readAllButton.setEnabled(false);
+            readAllButton.setToolTipText("Button disabled because configured command station can't read CVs");
+        }
 		readAllButton.addActionListener( l1 = new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				if (readAllButton.isSelected()) readAll();
