@@ -139,7 +139,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
         JPanel mainPanel = new JPanel();
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        mainPanel.setLayout(new FlowLayout());
+        mainPanel.setLayout(new FlowLayout(FlowLayout.CENTER,5,5));
         functionButton = new FunctionButton[NUM_FUNCTION_BUTTONS];
         for (int i=0; i<NUM_FUNCTION_BUTTONS; i++)
         {
@@ -176,7 +176,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
 	 *  A KeyAdapter that listens for the keys that work the function buttons
 	 *
 	 * @author     glen
-          * @version    $Revision: 1.23 $
+          * @version    $Revision: 1.24 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter
 	{
