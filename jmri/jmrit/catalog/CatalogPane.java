@@ -21,25 +21,25 @@ import jmri.jmrit.XmlFile;
  * files in the distribution directory are _not_ included.
  *
  * @author			Bob Jacobsen  Copyright 2002
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class CatalogPane extends JPanel {
-	public CatalogPane() {
-
+    public CatalogPane() {
+        
         super(true);
-
-	    // create basic GUI
+        
+        // create basic GUI
         dRoot = new DefaultMutableTreeNode("Root");
         dModel = new DefaultTreeModel(dRoot);
         dTree = new JTree(dModel);
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        
         // we manually create the first node, rather than use
         // the routine, so we can name it.
         insertResourceNodes("resources", resourceRoot, dRoot);
         XmlFile.ensurePrefsPresent("resources");
         insertFileNodes("files", fileRoot, dRoot);
-
+        
         // build the tree GUI
         add(new JScrollPane(dTree));
         dTree.expandPath(new TreePath(dRoot));
@@ -50,22 +50,22 @@ public class CatalogPane extends JPanel {
                 //doesn't have a big effect
             dTree.setExpandsSelectedPaths(true);
         } catch (java.lang.NoSuchMethodError e) {}
-
+        
         dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
-
+        
         // add a listener for debugging
         if (log.isDebugEnabled()) dTree.addTreeSelectionListener(new TreeSelectionListener() {
-            public void valueChanged(TreeSelectionEvent e) {
-                if (!dTree.isSelectionEmpty() && dTree.getSelectionPath()!=null ) {
-                    // somebody has been selected
-                    log.debug("Selection event with "+dTree.getSelectionPath().toString());
-                    log.debug("          icon: "+getSelectedIcon());
+                public void valueChanged(TreeSelectionEvent e) {
+                    if (!dTree.isSelectionEmpty() && dTree.getSelectionPath()!=null ) {
+                        // somebody has been selected
+                        log.debug("Selection event with "+dTree.getSelectionPath().toString());
+                        log.debug("          icon: "+getSelectedIcon());
+                    }
                 }
-            }
-        });
-
-	}
-
+            });
+        
+    }
+    
     /**
      * Recursively add a representation of the resources
      * below a particular resource
@@ -82,7 +82,7 @@ public class CatalogPane extends JPanel {
         // File fp = new File(ClassLoader.getSystemResource(pPath).getFile());
         File fp = new File(pPath);
         if (!fp.exists()) return;
-
+        
         // first, represent this one
         DefaultMutableTreeNode newElement = new DefaultMutableTreeNode(pName);
         dModel.insertNodeInto(newElement, pParent, pParent.getChildCount());
@@ -90,13 +90,13 @@ public class CatalogPane extends JPanel {
         if (fp.isDirectory()) {
             // work on the kids
             String[] sp = fp.list();
- 			for (int i=0; i<sp.length; i++) {
-				if (log.isDebugEnabled()) log.debug("Descend into resource: "+sp[i]);
+            for (int i=0; i<sp.length; i++) {
+                if (log.isDebugEnabled()) log.debug("Descend into resource: "+sp[i]);
                 insertResourceNodes(sp[i],pPath+"/"+sp[i],newElement);
- 			}
-       }
+            }
+        }
     }
-
+    
     /**
      * Recursively add a representation of the files
      * below a particular file
@@ -114,13 +114,13 @@ public class CatalogPane extends JPanel {
         if (fp.isDirectory()) {
             // work on the kids
             String[] sp = fp.list();
- 			for (int i=0; i<sp.length; i++) {
-				if (log.isDebugEnabled()) log.debug("Descend into file: "+sp[i]);
+            for (int i=0; i<sp.length; i++) {
+                if (log.isDebugEnabled()) log.debug("Descend into file: "+sp[i]);
                 insertFileNodes(sp[i],path+"/"+sp[i],newElement);
- 			}
-       }
+            }
+        }
     }
-
+    
     public NamedIcon getSelectedIcon() {
         if (!dTree.isSelectionEmpty() && dTree.getSelectionPath()!=null ) {
             // somebody has been selected
@@ -133,7 +133,7 @@ public class CatalogPane extends JPanel {
                 String name = resourceRoot;
                 for (int i=2; i<level; i++) {
                     name = name+"/"
-                            +(String)((DefaultMutableTreeNode)path.getPathComponent(i)).getUserObject();
+                        +(String)((DefaultMutableTreeNode)path.getPathComponent(i)).getUserObject();
                 }
                 log.debug("attempt to load resource from "+name);
                 // return new NamedIcon(ClassLoader.getSystemResource(name), "resource:"+name);
@@ -143,7 +143,7 @@ public class CatalogPane extends JPanel {
                 String name = fileRoot;
                 for (int i=2; i<level; i++) {
                     name = name+File.separator
-                            +(String)((DefaultMutableTreeNode)path.getPathComponent(i)).getUserObject();
+                        +(String)((DefaultMutableTreeNode)path.getPathComponent(i)).getUserObject();
                 }
                 log.debug("attempt to load file from "+name);
                 return new NamedIcon(name, "file:"+name);
@@ -151,7 +151,7 @@ public class CatalogPane extends JPanel {
         }
         return null;
     }
-
+    
     /**
      * Find the icon corresponding to a name. There are three cases:
      * <UL>
@@ -175,44 +175,44 @@ public class CatalogPane extends JPanel {
         // else return new NamedIcon(ClassLoader.getSystemResource(pName), pName);
         else return new NamedIcon(pName, pName);
     }
-
+    
     JTree dTree;
     DefaultTreeModel dModel;
     DefaultMutableTreeNode dRoot;
-
+    
     /**
      * Starting point in the .jar file for the "icons" part of the tree
      */
     private final String resourceRoot = "resources";
     private final String fileRoot = jmri.jmrit.XmlFile.prefsDir()+"resources";
-
-	// Main entry point
+    
+    // Main entry point
     public static void main(String s[]) {
-
+        
     	// initialize log4j - from logging control file (lcf) only
     	// if can find it!
     	String logFile = "default.lcf";
     	try {
-	    	if (new java.io.File(logFile).canRead()) {
-	   	 		org.apache.log4j.PropertyConfigurator.configure("default.lcf");
-	    	} else {
-		    	org.apache.log4j.BasicConfigurator.configure();
-	    	}
-	    }
-		catch (java.lang.NoSuchMethodError e) { System.out.println("Exception starting logging: "+e); }
-
-		log.info("CatalogPane starts");
-
+            if (new java.io.File(logFile).canRead()) {
+                org.apache.log4j.PropertyConfigurator.configure("default.lcf");
+            } else {
+                org.apache.log4j.BasicConfigurator.configure();
+            }
+        }
+        catch (java.lang.NoSuchMethodError e) { System.out.println("Exception starting logging: "+e); }
+        
+        log.info("CatalogPane starts");
+        
     	// create the demo frame and menus
         CatalogPane pane = new CatalogPane();
         JFrame frame = new JFrame("CatalogPane");
         frame.getContentPane().add(pane);
-		// pack and center this frame
+        // pack and center this frame
       	frame.pack();
-
+        
         frame.setVisible(true);
     }
-
-   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CatalogPane.class.getName());
+    
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CatalogPane.class.getName());
 }
 
