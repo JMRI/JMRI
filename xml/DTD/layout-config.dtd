@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.40 2004-12-27 08:15:05 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.41 2004-12-29 04:12:14 jacobsen Exp $ -->
 
 <!-- This DTD is Copyright 2001, 2003 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -75,6 +75,9 @@
   <!ELEMENT turnout EMPTY >
     <!ATTLIST turnout systemName	CDATA #REQUIRED>  <!-- defines system type -->
     <!ATTLIST turnout userName		CDATA #IMPLIED>
+    <!ATTLIST turnout feedback		CDATA #IMPLIED>
+    <!ATTLIST turnout sensor1		CDATA #IMPLIED>
+    <!ATTLIST turnout sensor2		CDATA #IMPLIED>
 
 <!ELEMENT lights (light*)>
   <!ATTLIST lights class		CDATA #REQUIRED>
