@@ -32,7 +32,7 @@ import javax.swing.JOptionPane;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -106,6 +106,8 @@ public class LightTableAction extends AbstractTableAction {
     JFrame addFrame = null;
     Light curLight = null;
     boolean lightCreated = false;
+    boolean warnMsg = false;
+    boolean noWarn = false;
 
     String sensorControl = rb.getString("LightSensorControl");
     String fastClockControl = rb.getString("LightFastClockControl");
@@ -394,18 +396,6 @@ public class LightTableAction extends AbstractTableAction {
             status2.setVisible(true);
             return;
         }
-        // check if requested Light uses the same address as a Turnout
-        String testSN = sName.substring(0,1)+"T"+
-                                            sName.substring(2,sName.length());
-        Turnout testT = InstanceManager.turnoutManagerInstance().
-                                                    getBySystemName(testSN);
-        if (testT != null) {
-            // Light with this user name already exists
-            status1.setText( rb.getString("LightError15")+" "+testSN+"." );
-            status2.setText( rb.getString("LightError6") );
-            status2.setVisible(true);
-            return;
-        }
         // Does System Name correspond to configured hardware
         if (!InstanceManager.lightManagerInstance().validSystemNameConfig(sName)) {
             // System Name not in configured hardware
@@ -413,6 +403,31 @@ public class LightTableAction extends AbstractTableAction {
             status2.setText( rb.getString("LightError6") );
             status2.setVisible(true);
             return;
+        }
+        // check if requested Light uses the same address as a Turnout
+        String testSN = sName.substring(0,1)+"T"+
+                                            sName.substring(2,sName.length());
+        Turnout testT = InstanceManager.turnoutManagerInstance().
+                                                    getBySystemName(testSN);
+        if (testT != null) {
+            // Address is already used as a Turnout
+            log.warn("Requested Light "+sName+" uses same address as Turnout "+testT);
+            if (!noWarn) {
+                int selectedValue = JOptionPane.showOptionDialog(addFrame,
+                    rb.getString("LightWarn5")+" "+sName+" "+rb.getString("LightWarn6")+" "+
+                    testSN+".\n   "+rb.getString("LightWarn7"),rb.getString("WarningTitle"),
+                    JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,
+                    new Object[]{rb.getString("ButtonYes"),rb.getString("ButtonNo"),
+                    rb.getString("ButtonYesPlus")},rb.getString("ButtonNo"));
+                if (selectedValue == 1) return;   // return without creating if "No" response
+                if (selectedValue == 2) {
+                    // Suppress future warnings, and continue
+                    noWarn = true;
+                }
+            }
+            // Light with this user name already exists
+            status2.setText( rb.getString("LightWarn4")+" "+testSN+"." );
+            warnMsg = true;
         }
         // Create the new Light
         g = InstanceManager.lightManagerInstance().newLight(sName,uName);
@@ -426,7 +441,10 @@ public class LightTableAction extends AbstractTableAction {
             // successful, provide feedback to user
             status1.setText( rb.getString("LightCreateFeedback")+" "+sName+", "+uName);
             // change messages and activate Light
-            status2.setText( rb.getString("LightEditInst") );
+            if (!warnMsg) {
+                status2.setText( rb.getString("LightEditInst") );
+            }
+            warnMsg = false;
             status2.setVisible(true);
             g.activateLight();
             lightCreated = true;

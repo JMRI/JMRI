@@ -16,13 +16,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JOptionPane;
 
 /**
  * Swing action to create and register a
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -125,13 +126,26 @@ public class TurnoutTableAction extends AbstractTableAction {
             jmri.Light testLight = InstanceManager.lightManagerInstance().
                                         getBySystemName(testSN);
             if (testLight != null) {
-                // Bit is already used as a Light
-                log.error("Requested Turnout "+sName+" uses same address as Light "+testSN);
-                return;
+                // Address is already used as a Light
+                log.warn("Requested Turnout "+sName+" uses same address as Light "+testSN);
+                if (!noWarn) {
+                    int selectedValue = JOptionPane.showOptionDialog(addFrame,
+                        rb.getString("TurnoutWarn1")+" "+sName+" "+rb.getString("TurnoutWarn2")+" "+
+                        testSN+".\n   "+rb.getString("TurnoutWarn3"),rb.getString("WarningTitle"),
+                        JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,
+                        new Object[]{rb.getString("ButtonYes"),rb.getString("ButtonNo"),
+                        rb.getString("ButtonYesPlus")},rb.getString("ButtonNo"));
+                    if (selectedValue == 1) return;   // return without creating if "No" response
+                    if (selectedValue == 2) {
+                        // Suppress future warnings, and continue
+                        noWarn = true;
+                    }
+                }
             }
         }
         InstanceManager.turnoutManagerInstance().newTurnout(sName, user);
     }
+    private boolean noWarn = false;
 
     static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TurnoutTableAction.class.getName());
 }
