@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  * MemoryTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class MemoryTableAction extends AbstractTableAction {
@@ -36,7 +36,7 @@ public class MemoryTableAction extends AbstractTableAction {
      * resulting frame.  Perhaps this should be changed?
      * @param actionName
      */
-    public MemoryTableAction(String actionName) { 
+    public MemoryTableAction(String actionName) {
 	super(actionName);
 
         // disable ourself if there is no primary Memory manager available
@@ -86,7 +86,7 @@ public class MemoryTableAction extends AbstractTableAction {
 				return (e.getPropertyName().indexOf("alue")>=0);
 			}
 			public JButton configureButton() {
-				log.error("configureButton should not have been called");
+				super.log.error("configureButton should not have been called");
 				return null;
 			}
         };

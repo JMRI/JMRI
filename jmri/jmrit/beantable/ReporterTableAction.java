@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  * ReporterTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class ReporterTableAction extends AbstractTableAction {
@@ -36,7 +36,7 @@ public class ReporterTableAction extends AbstractTableAction {
      * resulting frame.  Perhaps this should be changed?
      * @param actionName
      */
-    public ReporterTableAction(String actionName) { 
+    public ReporterTableAction(String actionName) {
 	super(actionName);
 
         // disable ourself if there is no primary Reporter manager available
@@ -82,7 +82,7 @@ public class ReporterTableAction extends AbstractTableAction {
         		return super.isCellEditable(row,col);
 		    }
 			public JButton configureButton() {
-				log.error("configureButton should not have been called");
+				this.log.error("configureButton should not have been called");
 				return null;
 			}
         };
