@@ -10,5 +10,6 @@
     <path>[../lib/log4j.jar]</path>
     <path>src/resources</path>
     <path>[../lib/junit.jar]</path>
+    <path>[../lib/Serialio.jar]</path>
   </class>
 </library>
