@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: Names.html,v 1.2 2004-07-18 16:37:14 jacobsen Exp $ -->
+<!-- $Id: Names.html,v 1.3 2004-07-19 19:57:44 jacobsen Exp $ -->
 <html>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -42,12 +42,13 @@ There are lots of things that might need names:
 <UL>
 <LI>Aspects for signals
 <LI>Blocks
-<LI>Input Sensors
-<LI>Locomotive Decoders (which includes "virtual" addresses like consists)
+<LI>input Sensors
+<LI>Locomotive decoders (which includes "virtual" addresses like consists)
 <LI>Outputs
+<LI>Memories
 <LI>Power districts and subdistricts
 <LI>Reporters that can return detailed status info (e.g. transponding)
-<LI>Signal heads
+<LI>signal Heads
 <LI>Turnouts
 </UL>
 
@@ -110,7 +111,8 @@ there is no guarantee that any given hardware system will ever implement all of 
 Also interpreted to include indicators on control panels that
 are acting to display signal aspects
 
-<LI>L DCC Locomotive decoder - generally, a specific DCC address
+<LI>M Memory - As yet, this has no real equivalent in the layout hardware,
+but is used as a place to store information temporarily and display it on panels, etc.
 
 <LI>P Power manager i.e. layout, district, subdistrict; not all systems 
 distinguish between these,
@@ -118,9 +120,12 @@ so the device type letter doesn't either.  The system-specific part of the name
 can. For example, the system specific part might be B for main layout power, e.g. 
 LPB or S42 for subdistrict channel 2 on card 4, e.g. LPS42.
 
-<LI>S Sensors - general purpose input sensors. It's not clear whether this includes, 
-i.e. is a superset of, 
-other specific inputs like occupancy detectors.
+<LI>R Reporters - a general purpose mechanism for reporting complicated information
+from the layout, e.g. locomotive identification from some transponding hardware.
+
+<LI>S Sensors - general purpose input sensors that can generally
+be either ACTIVE or INACTIVE. This is most commonly used for block occupancy
+detectors.
 
 <LI>T Turnout - actually a general purpose output on the layout
 </ul>
