@@ -25,7 +25,7 @@ import javax.swing.*;
  * Base class for Jmri applications.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.21 $
+ * @version     $Revision: 1.22 $
  */
 public class Apps extends JPanel {
 
@@ -60,7 +60,14 @@ public class Apps extends JPanel {
         add(buttonSpace());
 
     }
-
+    
+    /**
+     * Prepare the JPanel to contain buttons in the startup GUI.
+     * Since it's possible to add buttons via the preferences,
+     * this space may have additional buttons appended to it
+     * later.  The default implementation here just creates an
+     * empty space for these to be added to.
+     */
     void setButtonSpace() {
         _buttonSpace = new JPanel();
         _buttonSpace.setLayout(new FlowLayout());
