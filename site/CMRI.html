@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: CMRI.html,v 1.4 2003-07-24 21:26:28 jacobsen Exp $ -->
+<!-- $Id: CMRI.html,v 1.5 2003-07-27 04:56:58 jacobsen Exp $ -->
 <html>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -45,7 +45,41 @@ of that output.
 
 <h2>Use with other C/MRI hardware</h2>
 
-To send the initialization string...
+A C/MRI system needs an initialization string before it can
+communicate.  	Look at C/MRI in July 1986 MRr, which says 
+the format of the initialization message is:
+
+<PRE>
+	0x41  UA+65, starting with UA 0
+	0x49  "I" for initialization
+	0x4E  "N" CRC not enabled
+	0x01  delay MSByte
+	0x09  delay LSByte  (units are 10usec)
+	0x01  NS=1   Number of card-Sets-of-four
+	0x02  CT(1) = 2  (up to NS items appear here)
+	            each CT value is set of 4 2-bit fields coded 
+	            0=no-card, 1=input-card, 2=output-card, 3=reserved
+	            LS2bits is card in slot 1 of the set of four, 
+	            MS2bits is card in slot 4 of the set of four
+</PRE>
+(The sofware puts the STX, DLE and ETX characters
+as needed to frame the packet). More recent hardware, like the SMINI, 
+use slightly different messages. 
+<P>
+For example, a system with 8 input cards would have:
+<PRE>
+ 41 49 4E 01 09 02 55 55
+</PRE>
+<P>
+Nick Kulp's Cornwall Railroad has 2 output cards, then 2 input cards,
+then three output cards, an input card, and one more output cards.
+It uses the string:
+<PRE>
+ 41 49 4D 00 0A 03 5A 9A 02
+</PRE>
+<P>
+Enter the initialization message for your system in the preferences
+panel, and then restart the program.
 
 <A id="numbers"><h2>Numbering</h2></a>
 
