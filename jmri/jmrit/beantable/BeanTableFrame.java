@@ -14,12 +14,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import jmri.util.JTableUtil;
+import jmri.util.com.sun.TableSorter;
 
 /**
  * Frame providing a table of NamedBeans.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class BeanTableFrame extends javax.swing.JFrame {
 
@@ -37,8 +38,12 @@ public class BeanTableFrame extends javax.swing.JFrame {
         dataTable	= JTableUtil.sortableDataModel(dataModel);
         dataScroll	= new JScrollPane(dataTable);
 
-        // configure items for GUI
+        // give system name column a smarter sorter and use it initially
+        TableSorter tmodel = ((TableSorter)dataTable.getModel());
+        tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
+        tmodel.setSortingStatus(BeanTableDataModel.SYSNAMECOL, TableSorter.ASCENDING);
 
+        // configure items for GUI
         dataModel.configureTable(dataTable);
 
         // general GUI config

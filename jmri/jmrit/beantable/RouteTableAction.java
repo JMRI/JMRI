@@ -29,7 +29,7 @@ import com.sun.java.util.collections.List;
  * Based in part on SignalHeadTableAction.java by Bob Jacobson
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -208,7 +208,10 @@ public class RouteTableAction extends AbstractTableAction {
             p21.add(new JLabel(" in this Route."));
             p2x.add(p21);
             routeTurnoutModel = new RouteTurnoutModel();
-            JTable routeTurnoutTable = new JTable(routeTurnoutModel);
+            JTable routeTurnoutTable = jmri.util.JTableUtil.sortableDataModel(routeTurnoutModel);
+            jmri.util.com.sun.TableSorter tmodel = ((jmri.util.com.sun.TableSorter)routeTurnoutTable.getModel());
+            tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
+            tmodel.setSortingStatus(RouteTurnoutModel.SNAME_COLUMN, jmri.util.com.sun.TableSorter.ASCENDING);
             routeTurnoutTable.setRowSelectionAllowed(false);
             routeTurnoutTable.setPreferredScrollableViewportSize(new 
                                                             java.awt.Dimension(480,100));
@@ -773,9 +776,9 @@ public class RouteTableAction extends AbstractTableAction {
             return ( (c==INCLUDE_COLUMN) || (c==STATE_COLUMN) );
         }
 		
-        public static final int INCLUDE_COLUMN = 0;
-        public static final int SNAME_COLUMN = 1;
-        public static final int UNAME_COLUMN = 2;
+        public static final int SNAME_COLUMN = 0;
+        public static final int UNAME_COLUMN = 1;
+        public static final int INCLUDE_COLUMN = 2;
         public static final int STATE_COLUMN = 3;
     }
     private boolean showAll = true;   // false indicates show only included Turnouts
