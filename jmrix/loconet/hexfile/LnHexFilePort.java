@@ -120,6 +120,7 @@ public void setDelay(int newDelay) {
 	// internal access to the input file
 	DataInputStream sFile = null;
 
+	public boolean okToSend() { return true; }
 	// define operation
 	private int delay=100;  				// units are milliseconds; default is quiet a busy LocoNet
 

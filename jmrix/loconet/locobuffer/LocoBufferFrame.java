@@ -11,104 +11,28 @@ package jmri.jmrix.loconet.locobuffer;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.Vector;
 
 import jmri.jmrix.loconet.LnTrafficController;
 
-public class LocoBufferFrame extends javax.swing.JFrame {
-
-	javax.swing.JButton getNamesButton = new javax.swing.JButton();
-	javax.swing.JList portList = new javax.swing.JList();
-	javax.swing.JButton openPortButton = new javax.swing.JButton();
+public class LocoBufferFrame extends jmri.jmrix.SerialPortFrame {
 
 	public LocoBufferFrame() {
+		super("Open LocoBuffer");
+		adapter = new LocoBufferAdapter();
 	}
 
-	public void initComponents() throws Exception {
-		// the following code sets the frame's initial state
-
-		getNamesButton.setText("Get port names");
-		getNamesButton.setToolTipText("Updates the list of available port names");
-		getNamesButton.setVisible(true);
-
-		portList.setVisible(true);
-		portList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-		portList.setToolTipText("Select the port to use");
-		portList.setAlignmentX(JLabel.LEFT_ALIGNMENT);
-		portList.setListData(adapter.getPortNames());
-		
-		openPortButton.setText("Open port");
-		openPortButton.setToolTipText("Configure program to use selected port");
-		openPortButton.setVisible(true);
-
-		setLocation(new java.awt.Point(5, 40));
-		setTitle("LocoBuffer connection");
-		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-		getContentPane().add(new JLabel("set LocoBuffer to 19200 baud,"));
-		getContentPane().add(new JLabel("     local echo"));
-		getContentPane().add(getNamesButton);
-		getContentPane().add(portList);
-		getContentPane().add(openPortButton);
-		
-		pack();
-
-		getNamesButton.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				getNamesButtonActionPerformed(e);
-			}
-		});
-		openPortButton.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				openPortButtonActionPerformed(e);
-			}
-		});
-		addWindowListener(new java.awt.event.WindowAdapter() {
-			public void windowClosing(java.awt.event.WindowEvent e) {
-				thisWindowClosing(e);
-			}
-		});
-	}
-  
-  	private boolean mShown = false;
-  	
-	public void addNotify() {
-		super.addNotify();
-		
-		if (mShown)
-			return;
-			
-		// resize frame to account for menubar
-		JMenuBar jMenuBar = getJMenuBar();
-		if (jMenuBar != null) {
-			int jMenuBarHeight = jMenuBar.getPreferredSize().height;
-			Dimension dimension = getSize();
-			dimension.height += jMenuBarHeight;
-			setSize(dimension);
-		}
-
-		mShown = true;
-	}
-
-	// Close the window when the close box is clicked
-	void thisWindowClosing(java.awt.event.WindowEvent e) {
-		setVisible(false);
-		dispose();
-		System.exit(0);
-	}
-		
-	public void getNamesButtonActionPerformed(java.awt.event.ActionEvent e) {
-		portList.setListData(adapter.getPortNames());
-
-	}
-	
-	public void openPortButtonActionPerformed(java.awt.event.ActionEvent e) {
-		if ((String) portList.getSelectedValue() != null) {
+	public void openPortButtonActionPerformed(java.awt.event.ActionEvent e) throws jmri.jmrix.SerialConfigException {
+		if ((String) portBox.getSelectedItem() != null) {
 			// connect to the port
-			String errCode = adapter.openPort((String) portList.getSelectedValue(),"LocoBufferFrame");
+			adapter.configureBaudRate((String)baudBox.getSelectedItem());
+			adapter.configureOption1((String)opt1Box.getSelectedItem());
+			String errCode = adapter.openPort((String) portBox.getSelectedItem(),"LocoBufferFrame");
 			
 			if (errCode == null)	{
 				adapter.configure();						
 				// check for port in OK state
-				if (!adapter.okToSend()) {
+				if (!((LocoBufferAdapter)adapter).okToSend()) {
 					log.info("LocoBuffer port not ready to send");
 					JOptionPane.showMessageDialog(null, 
 				   		"The LocoBuffer is unable to accept data.\n"
@@ -130,9 +54,6 @@ public class LocoBufferFrame extends javax.swing.JFrame {
 		}
 	}
 	
-// Data members
-	private LocoBufferAdapter adapter = new LocoBufferAdapter();
-
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoBufferFrame.class.getName());
 
 }

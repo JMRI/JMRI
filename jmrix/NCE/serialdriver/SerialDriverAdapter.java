@@ -1,12 +1,4 @@
-/** 
- * SerialDriverAdapter.java
- *
- * Title:			SerialDriverAdapter
- * Description:		Provide access to an NCE command station via a SerialDriver attached to a serial comm port.
- *					Normally controlled by the SerialDriverFrame class.
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: SerialDriverAdapter.java,v 1.6 2002-01-16 07:37:28 jacobsen Exp $
- */
+// SerialDriverAdapter.java
 
 package jmri.jmrix.nce.serialdriver;
 
@@ -21,6 +13,17 @@ import java.io.InputStream;
 
 import jmri.jmrix.nce.*;
 
+/** 
+ * Implements SerialPortAdapter for the NCE system.  This connects
+ * an NCE command station via a serial com port.
+ * Normally controlled by the SerialDriverFrame class.
+ * <P>
+ * The current implementation only handles the 19,200 baud rate, and does
+ * not use any other options at configuration time.
+ *
+ * @author			Bob Jacobsen   Copyright (C) 2001, 2002
+ * @version			$Id: SerialDriverAdapter.java,v 1.7 2002-02-20 15:57:03 jacobsen Exp $
+ */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
 	Vector portNameVector = null;
@@ -161,6 +164,34 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
 	}
 	
 	public boolean status() {return opened;}
+	
+	/**
+	 * Get an array of valid baud rates. This is currently only 19,200 bps
+	 */
+	public String[] validBaudRates() {
+		return new String[]{"19,200 bps"};
+	}
+	
+	/**
+	 * Set the baud rate.  This currently does nothing, as there's
+	 * only one possible value
+	 */
+	public void configureBaudRate(String rate) {}
+	
+	/**
+	 * Since option 1 is not used for this, return an array with just a single string
+	 */
+	public String[] validOption1() { return new String[]{""}; }
+	
+	/**
+	 * Option 1 not used, so return a null string.
+	 */
+	public String option1Name() { return ""; }
+	
+	/**
+	 * The first port option isn't used, so just ignore this call.
+	 */
+	public void configureOption1(String value) {}
 	
 // private control members
 	private boolean opened = false;

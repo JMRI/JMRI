@@ -5,7 +5,7 @@
  * Description:		Provide access to LocoNet via a LocoBuffer attached to a serial comm port.
  *					Normally controlled by the LocoBufferFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: LocoBufferAdapter.java,v 1.7 2002-02-04 07:31:01 jacobsen Exp $
+ * @version			$Id: LocoBufferAdapter.java,v 1.8 2002-02-20 15:57:03 jacobsen Exp $
  */
 
 package jmri.jmrix.loconet.locobuffer;
@@ -61,13 +61,6 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 				return "Cannot set serial parameters on port "+portName+": "+e.getMessage();
 			}
 			
-			// set RTS high, DTR high - done early, so flow control can be configured later
-			activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-			activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
-
-			// activeSerialPort.setFlowControlMode(0);
-			activeSerialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_OUT);
-			
 			// set timeout
 			// activeSerialPort.enableReceiveTimeout(1000);
 			log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
@@ -95,6 +88,11 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 						+" CTS: "+activeSerialPort.isCTS()
 						+"  CD: "+activeSerialPort.isCD()
 					);
+			}
+			if (log.isDebugEnabled()) {
+				// report additional status
+				log.debug(" port flow control shows "+
+							(activeSerialPort.getFlowControlMode()==SerialPort.FLOWCONTROL_RTSCTS_OUT?"hardware flow control":"no flow control"));
 			}
 			if (log.isDebugEnabled()) {
 				// arrange to notify later
@@ -232,8 +230,66 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 	 * Local method to do specific configuration, overridden in the LocoBufferHSAdapter class
 	 */
 	protected void setSerialPort() throws javax.comm.UnsupportedCommOperationException {
-		activeSerialPort.setSerialPortParams(19200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+		// find the baud rate value, configure comm options
+		int baud = 19200;  // default, but also defaulted in the initial value of selectedSpeed
+		for (int i = 0; i<validSpeeds.length; i++ )
+			if (validSpeeds[i].equals(selectedSpeed))
+				baud = validSpeedValues[i];
+		activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+			
+		// set RTS high, DTR high - done early, so flow control can be configured after
+		activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
+		activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
+
+		// find and configure flow control
+		int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftauls in selectedOption1
+		if (selectedOption1.equals(validOption1[1]))
+			flow = 0;
+		activeSerialPort.setFlowControlMode(flow);
 	}			
+	
+	/**
+	 * Get an array of valid baud rates. This is currently just a message
+	 * saying its fixed
+	 */
+	public String[] validBaudRates() {
+		return validSpeeds;
+	}
+	
+	/**
+	 * Set the baud rate.  This currently does nothing, as there's
+	 * only one possible value
+	 */
+	public void configureBaudRate(String rate) { 
+		log.debug("configureBaudRate: "+rate);
+		selectedSpeed = rate;
+	}
+	
+	/**
+	 * Since option 1 is not used for this, return an empty array.
+	 */
+	public String[] validOption1() { return validOption1; }
+	
+	/**
+	 * Option 1 controls flow control option
+	 */
+	public String option1Name() { return "LocoBuffer connections uses "; }
+	
+	/**
+	 * The first port option isn't used, so just ignore this call.
+	 */
+	public void configureOption1(String value) {
+		log.debug("configureOption1: "+value);
+		selectedOption1 = value;
+	}
+
+	protected String [] validSpeeds = new String[]{"19,200 baud (J1 on 1&2)", "57,600 baud (J1 on 2&3)"};
+	protected int [] validSpeedValues = new int[]{19200, 57600};
+	protected String selectedSpeed=validSpeeds[0];
+	
+	// meanings are assigned to these above, so make sure the order is consistent
+	protected String [] validOption1 = new String[]{"hardware flow control (recommended)", "no flow control"};
+	protected String selectedOption1=validOption1[0];
 	
 // private control members
 	private boolean opened = false;

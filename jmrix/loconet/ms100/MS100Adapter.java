@@ -1,12 +1,4 @@
-/** 
- * MS100Adapter.java
- *
- * Title:			MS100Adapter
- * Description:		Provide access to LocoNet via a MS100 attached to a serial comm port.
- *					Normally controlled by the MS100Frame class.
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: MS100Adapter.java,v 1.9 2002-02-04 07:31:01 jacobsen Exp $
- */
+// MS100Adapter.java
 
 package jmri.jmrix.loconet.ms100;
 
@@ -21,6 +13,16 @@ import java.io.InputStream;
 
 import jmri.jmrix.loconet.*;
 
+/** 
+ * Provide access to LocoNet via a MS100 attached to a serial comm port.
+ *					Normally controlled by the MS100Frame class.
+ *<P>
+ * By default, this attempts to use 16600 baud. If that fails, it falls back to 16457 baud.
+ * Neither the baud rate configuration nor the "option 1" option are used.
+ *
+ * @author			Bob Jacobsen   Copyright (C) 2001
+ * @version			$Id: MS100Adapter.java,v 1.10 2002-02-20 15:57:25 jacobsen Exp $
+ */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
 	Vector portNameVector = null;
@@ -176,6 +178,35 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
 	
 	public boolean status() {return opened;}
 	
+	/**
+	 * Get an array of valid baud rates. This is currently just a message
+	 * saying its fixed
+	 */
+	public String[] validBaudRates() {
+		return new String[]{"fixed at 16600 baud"};
+	}
+	
+	/**
+	 * Set the baud rate.  This currently does nothing, as there's
+	 * only one possible value
+	 */
+	public void configureBaudRate(String rate) {}
+	
+	/**
+	 * Since option 1 is not used for this, return an array with one empty element
+	 */
+	public String[] validOption1() { return new String[]{""}; }
+	
+	/**
+	 * Option 1 not used, so return a null string.
+	 */
+	public String option1Name() { return ""; }
+	
+	/**
+	 * The first port option isn't used, so just ignore this call.
+	 */
+	public void configureOption1(String value) {}
+
 // private control members
 	private boolean opened = false;
 	InputStream serialStream = null;
