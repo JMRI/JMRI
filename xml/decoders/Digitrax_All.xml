@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder:decoder-config SYSTEM "DTD/decoder-config.dtd">
+<!-- $Id: Digitrax_All.xml,v 1.2 2001-11-23 21:59:48 jacobsen Exp $ -->
 <decoder:decoder-config xmlns:decoder="http://jmri.sourceforge.net/xml/decoder">
 <decoder:decoder>
 	<decoder:id model="All" mfg="Digitrax" mfgID="129" defnVersion="0"

@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder:decoder-config SYSTEM "DTD/decoder-config.dtd">
+<!-- $Id: NMRA.xml,v 1.2 2001-11-23 21:59:48 jacobsen Exp $ -->
 <decoder:decoder-config xmlns:decoder="http://jmri.sourceforge.net/xml/decoder">
 <decoder:decoder>
 	<decoder:id family="NMRA" mfg="NMRA" mfgID="" defnVersion="0"
@@ -43,8 +44,35 @@
 		<decoder:variable name="Packet Time-out Value" CV="11">
 				<decoder:decVal/>
 			</decoder:variable>
-		<decoder:variable name="Power Source Conversion" CV="12">
-				<decoder:decVal/>
+		<decoder:variable name="Analog Power Conversion" CV="12" mask="XXXXXXXV">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="off"/>
+				<decoder:enumChoice choice="on"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Radio Power Conversion" CV="12" mask="XXXXXXVX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="off"/>
+				<decoder:enumChoice choice="on"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Zero-1 Power Conversion" CV="12" mask="XXXXXVXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="off"/>
+				<decoder:enumChoice choice="on"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="Trix Power Conversion" CV="12" mask="XXXXVXXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="off"/>
+				<decoder:enumChoice choice="on"/>
+				</decoder:enumVal>
+			</decoder:variable>
+		<decoder:variable name="CTC/Railcommand Power Conversion" CV="12" mask="XXXVXXXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="off"/>
+				<decoder:enumChoice choice="on"/>
+				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV">
 			<decoder:enumVal>
@@ -214,8 +242,253 @@
 			</decoder:variable>
 		<decoder:variable name="Address Format" CV="29" mask="XXVXXXXX">
 			<decoder:enumVal>
-				<decoder:enumChoice choice="One byte addressing"/>
-				<decoder:enumChoice choice="Two byte (extended) addressing"/>
+				<decoder:enumChoice choice="One byte (short) address"/>
+				<decoder:enumChoice choice="Two byte (extended) address"/>
+				</decoder:enumVal>
+			</decoder:variable>
+
+		<decoder:variable name="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minFn="1"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minFn="2"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minFn="3"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="FL(f) controls output 4" CV="33" mask="XXXXVXXX" minFn="4"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="FL(f) controls output 5" CV="33" mask="XXXVXXXX" minFn="5"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="FL(f) controls output 6" CV="33" mask="XXVXXXXX" minFn="6"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="FL(f) controls output 7" CV="33" mask="XVXXXXXX" minFn="7"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="FL(f) controls output 8" CV="33" mask="VXXXXXXX" minFn="8"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+
+		<decoder:variable name="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minFn="1"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minFn="2"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minFn="3"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minFn="4"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="FL(r) controls output 5" CV="34" mask="XXXVXXXX" minFn="5"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="FL(r) controls output 6" CV="34" mask="XXVXXXXX" minFn="6"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="FL(r) controls output 7" CV="34" mask="XVXXXXXX" minFn="7"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="FL(r) controls output 8" CV="34" mask="VXXXXXXX" minFn="8"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+
+		<decoder:variable name="F1 controls output 1" CV="35" mask="XXXXXXXV" minFn="1"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F1 controls output 2" CV="35" mask="XXXXXXVX" minFn="2"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F1 controls output 3" CV="35" mask="XXXXXVXX" minFn="3"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F1 controls output 4" CV="35" mask="XXXXVXXX" minFn="4"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F1 controls output 5" CV="35" mask="XXXVXXXX" minFn="5"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F1 controls output 6" CV="35" mask="XXVXXXXX" minFn="6"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F1 controls output 7" CV="35" mask="XVXXXXXX" minFn="7"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F1 controls output 8" CV="35" mask="VXXXXXXX" minFn="8"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+
+		<decoder:variable name="F2 controls output 1" CV="36" mask="XXXXXXXV" minFn="1"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F2 controls output 2" CV="36" mask="XXXXXXVX" minFn="2"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F2 controls output 3" CV="36" mask="XXXXXVXX" minFn="3"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F2 controls output 4" CV="36" mask="XXXXVXXX" minFn="4"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F2 controls output 5" CV="36" mask="XXXVXXXX" minFn="5"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F2 controls output 6" CV="36" mask="XXVXXXXX" minFn="6"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F2 controls output 7" CV="36" mask="XVXXXXXX" minFn="7"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F2 controls output 8" CV="36" mask="VXXXXXXX" minFn="8"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+
+		<decoder:variable name="F3 controls output 1" CV="37" mask="XXXXXXXV" minFn="1"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F3 controls output 2" CV="37" mask="XXXXXXVX" minFn="2"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F3 controls output 3" CV="37" mask="XXXXXVXX" minFn="3"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F3 controls output 4" CV="37" mask="XXXXVXXX" minFn="4"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F3 controls output 5" CV="37" mask="XXXVXXXX" minFn="5"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F3 controls output 6" CV="37" mask="XXVXXXXX" minFn="6"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F3 controls output 7" CV="37" mask="XVXXXXXX" minFn="7"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F3 controls output 8" CV="37" mask="VXXXXXXX" minFn="8"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+
+		<decoder:variable name="F4 controls output 4" CV="38" mask="XXXXXXXV" minFn="4"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F4 controls output 5" CV="38" mask="XXXXXXVX" minFn="5"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F4 controls output 6" CV="38" mask="XXXXXVXX" minFn="6"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F4 controls output 7" CV="38" mask="XXXXVXXX" minFn="7"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F4 controls output 8" CV="38" mask="XXXVXXXX" minFn="8"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F4 controls output 9" CV="38" mask="XXVXXXXX" minFn="9"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F4 controls output 10" CV="38" mask="XVXXXXXX" minFn="10"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F4 controls output 11" CV="38" mask="VXXXXXXX" minFn="11"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+			
+		<decoder:variable name="F5 controls output 4" CV="39" mask="XXXXXXXV" minFn="4"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F5 controls output 5" CV="39" mask="XXXXXXVX" minFn="5"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F5 controls output 6" CV="39" mask="XXXXXVXX" minFn="6"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F5 controls output 7" CV="39" mask="XXXXVXXX" minFn="7"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F5 controls output 8" CV="39" mask="XXXVXXXX" minFn="8"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F5 controls output 9" CV="39" mask="XXVXXXXX" minFn="9"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F5 controls output 10" CV="39" mask="XVXXXXXX" minFn="10"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F5 controls output 11" CV="39" mask="VXXXXXXX" minFn="11"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+			
+		<decoder:variable name="F6 controls output 4" CV="40" mask="XXXXXXXV" minFn="4"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F6 controls output 5" CV="40" mask="XXXXXXVX" minFn="5"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F6 controls output 6" CV="40" mask="XXXXXVXX" minFn="6"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F6 controls output 7" CV="40" mask="XXXXVXXX" minFn="7"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F6 controls output 8" CV="40" mask="XXXVXXXX" minFn="8"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F6 controls output 9" CV="40" mask="XXVXXXXX" minFn="9"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F6 controls output 10" CV="40" mask="XVXXXXXX" minFn="10"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F6 controls output 11" CV="40" mask="VXXXXXXX" minFn="11"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+			
+		<decoder:variable name="F7 controls output 4" CV="41" mask="XXXXXXXV" minFn="4"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F7 controls output 5" CV="41" mask="XXXXXXVX" minFn="5"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F7 controls output 6" CV="41" mask="XXXXXVXX" minFn="6"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F7 controls output 7" CV="41" mask="XXXXVXXX" minFn=""> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F7 controls output 8" CV="41" mask="XXXVXXXX" minFn="8"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F7 controls output 9" CV="41" mask="XXVXXXXX" minFn="9"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F7 controls output 10" CV="41" mask="XVXXXXXX" minFn="10"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F7 controls output 11" CV="41" mask="VXXXXXXX" minFn="11"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+			
+		<decoder:variable name="F8 controls output 4" CV="42" mask="XXXXXXXV" minFn="4"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F8 controls output 5" CV="42" mask="XXXXXXVX" minFn="5"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F8 controls output 6" CV="42" mask="XXXXXVXX" minFn="6"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F8 controls output 7" CV="42" mask="XXXXVXXX" minFn="7"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F8 controls output 8" CV="42" mask="XXXVXXXX" minFn="8"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F8 controls output 9" CV="42" mask="XXVXXXXX" minFn="9"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F8 controls output 10" CV="42" mask="XVXXXXXX" minFn="10"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F8 controls output 11" CV="42" mask="VXXXXXXX" minFn="11"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+			
+		<decoder:variable name="F9 controls output 7" CV="43" mask="XXXXXXXV" minFn="7"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F9 controls output 8" CV="43" mask="XXXXXXVX" minFn="8"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F9 controls output 9" CV="43" mask="XXXXXVXX" minFn="9"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F9 controls output 10" CV="43" mask="XXXXVXXX" minFn="10"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F9 controls output 11" CV="43" mask="XXXVXXXX" minFn="11"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F9 controls output 12" CV="43" mask="XXVXXXXX" minFn="12"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F9 controls output 13" CV="43" mask="XVXXXXXX" minFn="13"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F9 controls output 14" CV="43" mask="VXXXXXXX" minFn="14"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+			
+		<decoder:variable name="F10 controls output 7" CV="44" mask="XXXXXXXV" minFn="7"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F10 controls output 8" CV="44" mask="XXXXXXVX" minFn="8"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F10 controls output 9" CV="44" mask="XXXXXVXX" minFn="9"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F10 controls output 10" CV="44" mask="XXXXVXXX" minFn="10"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F10 controls output 11" CV="44" mask="XXXVXXXX" minFn="11"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F10 controls output 12" CV="44" mask="XXVXXXXX" minFn="12"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F10 controls output 13" CV="44" mask="XVXXXXXX" minFn="13"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F10 controls output 14" CV="44" mask="VXXXXXXX" minFn="14"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+			
+		<decoder:variable name="F11 controls output 7" CV="45" mask="XXXXXXXV" minFn="7"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F11 controls output 8" CV="45" mask="XXXXXXVX" minFn="8"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F11 controls output 9" CV="45" mask="XXXXXVXX" minFn="9"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F11 controls output 10" CV="45" mask="XXXXVXXX" minFn="10"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F11 controls output 11" CV="45" mask="XXXVXXXX" minFn="11"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F11 controls output 12" CV="45" mask="XXVXXXXX" minFn="12"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F11 controls output 13" CV="45" mask="XVXXXXXX" minFn="13"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F11 controls output 14" CV="45" mask="VXXXXXXX" minFn="14"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+			
+		<decoder:variable name="F12 controls output 7" CV="46" mask="XXXXXXXV" minFn="7"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F12 controls output 8" CV="46" mask="XXXXXXVX" minFn="8"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F12 controls output 9" CV="46" mask="XXXXXVXX" minFn="9"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F12 controls output 10" CV="46" mask="XXXXVXXX" minFn="10"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F12 controls output 11" CV="46" mask="XXXVXXXX" minFn="11"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F12 controls output 12" CV="46" mask="XXVXXXXX" minFn="12"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F12 controls output 13" CV="46" mask="XVXXXXXX" minFn="13"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+		<decoder:variable name="F12 controls output 14" CV="46" mask="VXXXXXXX" minFn="14"> <decoder:enumVal> 
+			<decoder:enumChoice choice="No"/> <decoder:enumChoice choice="Yes"/> </decoder:enumVal> </decoder:variable>
+			
+		<decoder:variable name="Speed Table Definition" CV="29" mask="XXXVXXXX">
+			<decoder:enumVal>
+				<decoder:enumChoice choice="Set by CVs 2, 5 and 6"/>
+				<decoder:enumChoice choice="Set by CVs 66 through 95"/>
 				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="Kick Start" CV="65">
@@ -223,6 +496,9 @@
 			</decoder:variable>
 		<decoder:variable name="Forward Trim" CV="66">
 			<decoder:decVal/>
+			</decoder:variable>
+		<decoder:variable name="Speed Table" CV="67">
+			<decoder:speedTableVal/>
 			</decoder:variable>
 		<decoder:variable name="Reverse Trim" CV="95">
 			<decoder:decVal/>
@@ -232,9 +508,6 @@
 			</decoder:variable>
 		<decoder:variable name="User Identification #2" CV="106">
 			<decoder:decVal/>
-			</decoder:variable>
-		<decoder:variable name="Speed Table" CV="67">
-			<decoder:speedTableVal/>
 			</decoder:variable>
 	</decoder:variables>
 	

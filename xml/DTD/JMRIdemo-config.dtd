@@ -1,4 +1,5 @@
 <!-- Defines XML for configuring the JMRIdemo program -->
+<!-- $Id: JMRIdemo-config.dtd,v 1.2 2001-11-23 21:59:20 jacobsen Exp $ -->
 
 <!ELEMENT JMRIdemo:JMRIdemo-config (JMRIdemo:directory JMRIdemo:decoderList)>
 <!ATTLIST JMRIdemo:JMRIdemo-config xmlns:JMRIdemo CDATA "">

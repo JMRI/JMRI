@@ -1,4 +1,5 @@
 <!-- Defines XML documenting a CV programmer format -->
+<!-- $Id: programmer-config.dtd,v 1.6 2001-11-23 21:59:20 jacobsen Exp $ -->
 
 <!ELEMENT programmer:programmer-config (programmer:programmer*)>
 <!ATTLIST programmer:programmer-config xmlns:programmer CDATA "">
@@ -33,6 +34,6 @@
 <!ATTLIST programmer:variable name CDATA #REQUIRED>  <!-- Name used for identification -->
 <!ATTLIST programmer:variable label CDATA  #IMPLIED>  <!-- optional, default is from name -->
 <!ATTLIST programmer:variable tooltip CDATA #IMPLIED>  <!-- optional, default is from variable tooltip -->
-<!ATTLIST programmer:variable layout ( left | above | below | right ) "left" > <!-- label position -->
+<!ATTLIST programmer:variable layout ( left | above | below | right ) "right" > <!-- label position -->
 <!ATTLIST programmer:variable format  (default | slider | radiobuttons | checkbox ) "default" >
 

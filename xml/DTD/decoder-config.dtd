@@ -1,5 +1,6 @@
 <!-- Defines XML documenting a DCC decoder as a component, esp. information -->
 <!-- on how to program it. -->
+<!-- $Id: decoder-config.dtd,v 1.8 2001-11-23 21:59:20 jacobsen Exp $ -->
 
 <!ELEMENT decoder:decoder-config (decoder:decoder*)>
 <!ATTLIST decoder:decoder-config xmlns:decoder CDATA "">
