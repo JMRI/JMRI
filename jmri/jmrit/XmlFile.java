@@ -20,8 +20,8 @@ import com.sun.java.util.collections.*;
 /**
  * XmlFile contains various member implementations for handling aspects of XML files.
  *
- * @author		Bob Jacobsen   Copyright (C) 2001
- * @version		$Id: XmlFile.java,v 1.3 2002-07-05 03:21:46 jacobsen Exp $
+ * @author		Bob Jacobsen   Copyright (C) 2001, 2002
+ * @version		$Revision: 1.4 $
  */
 public abstract class XmlFile {
 
