@@ -14,7 +14,7 @@ package jmri.util;
  * back to an explicit implementation when running on Java 1.1
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class StringUtil {
@@ -102,9 +102,7 @@ static char[] hexChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A'
     static public void sort(String[] values) {
         try {
             java.util.Arrays.sort(values);
-        } catch (Exception e1) {  // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
-            bubblesort(values);
-        } catch (java.lang.NoClassDefFoundError e2) {
+        } catch (Throwable e1) {  // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
             bubblesort(values);
         }
     }
@@ -149,7 +147,7 @@ static char[] hexChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A'
     static public void sort(Object[] values) {
         try {
             java.util.Arrays.sort(values);
-        } catch (Exception e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
+        } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
             // no Java sort, so ugly bubble sort
             bubblesort(values);
         }
