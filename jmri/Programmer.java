@@ -1,16 +1,14 @@
-/** 
- * Programmer.java
- *
- * Description:		<describe the Programmer interface here>
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version			
- */
+/* Programmer.java */
 
 package jmri;
 
 import jmri.ProgListener;
 import java.beans.PropertyChangeListener;
 
+/**
+ * @author			Bob Jacobsen Copyright (C) 2001
+ * @version			$Revision: 1.9 $
+ */
 public interface Programmer  {
 
 	// mode e.g. register, direct, paged
@@ -20,9 +18,9 @@ public interface Programmer  {
 	public static final int DIRECTBITMODE   = 31;
 	public static final int DIRECTBYTEMODE  = 32;
 	public static final int ADDRESSMODE     = 41;
-	
+
 	/**
-	 * Perform a CV write in the system-specific manner, 
+	 * Perform a CV write in the system-specific manner,
 	 * and using the specified programming mode.
 	 * Note that this returns before the write
 	 * is complete; you have to provide a ProgListener to hear about
@@ -33,7 +31,7 @@ public interface Programmer  {
 	public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException;
 
 	/**
-	 * Perform a CV read in the system-specific manner, 
+	 * Perform a CV read in the system-specific manner,
 	 * and using the specified programming mode.
 	 * Note that this returns before the read
 	 * is complete; you have to provide a ProgListener to hear about
@@ -53,31 +51,37 @@ public interface Programmer  {
 	 * due to an invalid mode (though that should be prevented earlier)
 	 */
 	public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException;
-	
-	/* 
+
+	/*
 	 * Mode is a property that can be set and queried for the
 	 * programmer.  Notification is also possible...
 	 */
 	public void setMode(int mode);
 	public int  getMode();
-	 
+    /**
+     * Check if a given mode is available
+     * @param mode Availability of this mode is returned
+     * @return True if the mode is available
+     */
+    public boolean hasMode(int mode);
+
 	public void addPropertyChangeListener(PropertyChangeListener p);
 	public void removePropertyChangeListener(PropertyChangeListener p);
-	 
+
 	// error handling on request is via exceptions
 	// results are returned via the ProgListener callback
-	
+
 	public String decodeErrorCode(int i);
-	
-	// special case for CV18/19 double write?	
+
+	// special case for CV18/19 double write?
 	// access to direct mode bit operations?
 	// programming on the main / ops mode?
-	
+
 	// in use? By who?
-	
+
 	// support for more than one programmer? For getting one?
-	
-	
+
+
 }
 
 
