@@ -1,6 +1,6 @@
 <!-- ugly first attempt at an ANT build.xml file for JMRI development -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.31 $ -->
+<!-- Revision $Revision: 1.32 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -158,7 +158,7 @@
          compress="true" />   <!-- compress="true" is default -->
     <!-- create the index -->
     <exec executable="jar" dir="${jartarget}">
-    	<arg line="-i jmri.jar"/>
+    	<arg line="i jmri.jar"/>
     </exec>
   </target>
 
