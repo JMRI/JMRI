@@ -18,7 +18,7 @@ import jmri.TurnoutManager;
  * specific Turnout or AbstractTurnout subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
 
@@ -116,6 +116,6 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
         InstanceManager.configureManagerInstance().register(pManager);
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ConfigXmlManager.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractTurnoutManagerConfigXML.class.getName());
 
 }
