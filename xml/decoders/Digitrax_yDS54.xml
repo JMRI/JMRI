@@ -1,10 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_yDS54.xml,v 1.4 2003-01-03 12:44:21 jacobsen Exp $ -->
+<!-- $Id: Digitrax_yDS54.xml,v 1.5 2003-11-13 02:10:40 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
-					version="2" lastUpdated="20021007"/>
+					version="3" lastUpdated="20031112"/>
 					
+		<!-- Version 3 fixes typo in CV47 definition -->
+		
 <decoder>
 	<family name="DS54" mfg="Digitrax" 
 				comment="DS54 is a stationary decoder, but it can be programmed in the usual way">
@@ -572,7 +574,7 @@
 				</enumVal>
 			</variable>
 
-		<variable label="When Aux D input changes, send" CV="4" mask="XXXXVVVV">
+		<variable label="When Aux D input changes, send" CV="47" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Sensor input message"/>
 				<enumChoice choice="No message"/>
