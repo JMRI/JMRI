@@ -26,7 +26,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class BDL16Frame extends JFrame implements LocoNetListener {
 
@@ -56,6 +56,7 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
             pane1.add(setdefault);
         getContentPane().add(pane1);
 
+        status.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
         getContentPane().add(status);
 
         // install read all, write all button handlers
@@ -83,7 +84,10 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
         });
 
         // listen for BDL16 traffic
-        LnTrafficController.instance().addLocoNetListener(~0, this);
+        if (LnTrafficController.instance()!=null)
+            LnTrafficController.instance().addLocoNetListener(~0, this);
+        else
+            log.error("No LocoNet connection available, can't function");
 
         // and prep for display
         pack();
@@ -103,6 +107,7 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
     void nextRequest() {
         if (read) {
             // read op
+            status.setText("Reading opsw "+state);
             LocoNetMessage l = new LocoNetMessage(6);
             l.setOpCode(0xD0);
             l.setElement(1, 0x62);
@@ -114,6 +119,7 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
             LnTrafficController.instance().sendLocoNetMessage(l);
         } else {
             //write op
+            status.setText("Writing opsw "+state);
             LocoNetMessage l = new LocoNetMessage(6);
             l.setOpCode(0xD0);
             l.setElement(1, 0x72);
@@ -178,6 +184,7 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
             // done
             readAllButton.setSelected(false);
             writeAllButton.setSelected(false);
+            status.setText("Done");
             return;
         } else {
             // create next
@@ -221,7 +228,7 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
 
 
     JCheckBox commonrail            = new JCheckBox("common rail wiring");  // opsw 01
-    JCheckBox forceoccupied         = new JCheckBox("not occupied with off");  // opsw 09
+    JCheckBox forceoccupied         = new JCheckBox("not occupied when power off");  // opsw 09
     JCheckBox section16qualpower    = new JCheckBox("section 16 used to sense power");  // opsw 10
     JCheckBox nomaster              = new JCheckBox("do not allow BDL16 to be LocoNet master");  // opsw 11
     JCheckBox noterminate           = new JCheckBox("do not allow BDL16 to terminate LocoNet");  // opsw 12
@@ -231,7 +238,7 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
     JCheckBox decodefromloconet     = new JCheckBox("decode switch commands from LocoNet");  // opsw 26
     JCheckBox setdefault            = new JCheckBox("restore factory default, including address");  // opsw 40
 
-    JLabel status = new JLabel("             ");
+    JLabel status = new JLabel("The BDL16 should be on and in normal mode (Don't push the buttons on the BDL16)");
 
     JToggleButton readAllButton = new JToggleButton("Read from BDL16");
     JToggleButton writeAllButton = new JToggleButton("Write to BDL16");
