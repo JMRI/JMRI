@@ -48,7 +48,6 @@ public class LocoIOTableModelTest extends TestCase {
 		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
 		LocoIOTableModel m = new LocoIOTableModel(0x1051, null);
-        m.setPICversion(LocoIOTableModel.PRE133);
 
         int channel = 2;
 		m.setValueAt(null, channel, LocoIOTableModel.READCOLUMN);
@@ -66,7 +65,6 @@ public class LocoIOTableModelTest extends TestCase {
 		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
 		LocoIOTableModel m = new LocoIOTableModel(0x1051, null);
-        m.setPICversion(LocoIOTableModel.PRE133);
 
         int channel = 5;
 		m.setValueAt(null, channel, LocoIOTableModel.READCOLUMN);
@@ -84,7 +82,6 @@ public class LocoIOTableModelTest extends TestCase {
 		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
 		LocoIOTableModel m = new LocoIOTableModel(0x1051, null);
-        m.setPICversion(LocoIOTableModel.PRE133);
 
         int channel = 5;
 		m.setValueAt(null, channel, LocoIOTableModel.READCOLUMN);
@@ -102,7 +99,6 @@ public class LocoIOTableModelTest extends TestCase {
 		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
 		LocoIOTableModel m = new LocoIOTableModel(0x1051, null);
-        m.setPICversion(LocoIOTableModel.PRE133);
 
         int channel = 5;
 		m.setValueAt(null, channel, LocoIOTableModel.READCOLUMN);
@@ -120,7 +116,6 @@ public class LocoIOTableModelTest extends TestCase {
 		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
 		LocoIOTableModel m = new LocoIOTableModel(0x1051, null);
-        m.setPICversion(LocoIOTableModel.PRE133);
 
         int channel = 5;
 		m.setValueAt(null, channel, LocoIOTableModel.CAPTURECOLUMN);
@@ -268,7 +263,6 @@ public class LocoIOTableModelTest extends TestCase {
 		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
 		LocoIOTableModel m = new LocoIOTableModel(0x1051, null);
-        m.setPICversion(LocoIOTableModel.PRE133);
 
         int channel = 5;
         m.setValueAt("1c10", channel, LocoIOTableModel.ADDRCOLUMN);
@@ -288,7 +282,6 @@ public class LocoIOTableModelTest extends TestCase {
 		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
 		LocoIOTableModel m = new LocoIOTableModel(0x1051, null);
-        m.setPICversion(LocoIOTableModel.PRE133);
 
         int channel = 5;
         m.setValueAt("ffff", channel, LocoIOTableModel.ADDRCOLUMN);
@@ -395,7 +388,6 @@ public class LocoIOTableModelTest extends TestCase {
 		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
 		LocoIOTableModel m = new LocoIOTableModel(0x1051, null);
-        m.setPICversion(LocoIOTableModel.PRE133);
 
 		m.sendReadCommand(1);
 
@@ -413,7 +405,6 @@ public class LocoIOTableModelTest extends TestCase {
 		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
 		LocoIOTableModel m = new LocoIOTableModel(0x1051, null);
-        m.setPICversion(LocoIOTableModel.PRE133);
 
 		m.sendWriteCommand(1, 0x31);
 
@@ -431,7 +422,6 @@ public class LocoIOTableModelTest extends TestCase {
 		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
 		LocoIOTableModel m = new LocoIOTableModel(0x1051, null);
-        m.setPICversion(LocoIOTableModel.PRE133);
 
         // do the channel write
         int channel = 2;
@@ -463,7 +453,6 @@ public class LocoIOTableModelTest extends TestCase {
 		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
 		LocoIOTableModel m = new LocoIOTableModel(0x1051, null);
-        m.setPICversion(LocoIOTableModel.ATLEAST133);
 
         // do the channel write
         int channel = 2;

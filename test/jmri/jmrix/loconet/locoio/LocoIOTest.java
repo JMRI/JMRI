@@ -3,7 +3,7 @@
  *
  * Description:	    tests for the jmri.jmrix.loconet package
  * @author			Bob Jacobsen
- * @version
+ * @version         $Revision: 1.3 $
  */
 
 package jmri.jmrix.loconet.locoio;

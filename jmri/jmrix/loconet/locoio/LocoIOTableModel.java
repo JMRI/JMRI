@@ -29,7 +29,7 @@ import jmri.jmrix.loconet.*;
  * though there are significant modifications.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: LocoIOTableModel.java,v 1.11 2002-04-01 03:51:35 jacobsen Exp $
+ * @version			$Revision: 1.12 $
  */
 public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
             implements LocoNetListener {
@@ -40,16 +40,6 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
     int unitAddress;
     public void setUnitAddress(int unit) {
         unitAddress = unit&0x7F7F;  // protect against high bits set
-    }
-
-    // define the LocoIO PIC code versions
-    public static final int ATLEAST133 = 0;
-    public static final int PRE133 = 1;
-
-    int picVersion = 0;
-    void setPICversion(int pv) {
-        picVersion = pv;
-        if (log.isDebugEnabled()) log.debug("set PIC version to "+pv);
     }
 
     /**
@@ -371,6 +361,7 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
 	}
 
     int lastOpCv = -1;
+    boolean reading = false;  // false means write in progress
 
     /**
      * Listen to the LocoNet.
@@ -396,28 +387,37 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
                 // dst is our 0x0150
                 int src = m.getElement(2);
                 int dst = m.getElement(3)+m.getElement(4)*256;
+                log.debug("OPC_PEER_XFER with src = "+src+" dest = "+dst);
                 if (dst==0x0150 && src==lowPart(unitAddress)) {
                     // yes, we assume this is a reply to us
                     stopTimer();
                     replyReceived(); // advance state
                     int[] contents = m.getPeerXfrData();
-                    if (contents[0] == 2) {  // read command
+                    log.debug("accepted, contents = "
+                                +contents[0]+","+contents[1]+","+contents[2]+","
+                                +contents[3]+", "+contents[4]+","+contents[5]+","
+                                +contents[6]+","+contents[7]);
+                    if (contents[0] == 2 || reading) {  // read command
                         // get data and store
                         if (lastOpCv<0 || lastOpCv>50)
                             log.error("last CV recorded is invalid: "+lastOpCv);
 
                         // there are two formats of the return packet...
                         int data = 0;
-                        if (contents[2] != 0)
+                        if (contents[2] != 0){
                             data = contents[5];
-                        else if (contents[2] == 0)
+                           log.debug("1.3.4 format, data = "+data);
+                        } else if (contents[2] == 0) {
                             data = contents[7];
-                        else
-                            log.error("PIC version flag unrecognized: "+picVersion);
+                            log.debug("1.3.2 format, data = "+data);
+                        } else {
+                            log.error("unexpected contents in byte 2: "+contents[2]);
+                        }
                         int channel = (lastOpCv/3)-1;
                         if (channel<0) log.warn("channel is less than zero");
                         int type = lastOpCv - (channel*3+3);
                             // type = 0 for Mode, 1 for value 1, 2 for value 2
+                        log.debug("channel = "+channel+" type = "+type);
                         if (type==0) {
                             // mode
                             onMode[channel] = modeFromValues(data, addrFieldAsInt(channel));
@@ -670,6 +670,8 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
      * @param cv
      */
     protected void sendReadCommand(int cv) {
+        // remember current op is read
+        reading = true;
         // format a read message
         int[] contents = {2,cv,0,0,  0,0,0,0};
 
@@ -682,6 +684,8 @@ public class LocoIOTableModel extends javax.swing.table.AbstractTableModel
     }
 
     protected void sendWriteCommand(int cv, int data) {
+        // remember current op is write
+        reading = false;
         // format a write message
         int[] contents = {1,cv,0,data,  0,0,0,0};
 
