@@ -1,4 +1,4 @@
-// SerialSensorManagerTest.java
+//// SerialSensorManagerTest.java
 
 package jmri.jmrix.cmri.serial;
 
@@ -10,50 +10,47 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialSensorManager class.
  * @author	Bob Jacobsen  Copyright 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialSensorManagerTest extends TestCase {
 
-    public void testScan1() {
+    public void testSensorCreationAndRegistration() {
+        SerialNode n0 = new SerialNode();
+        SerialNode n1 = new SerialNode(1,SerialNode.SMINI);
+        SerialNode n2 = new SerialNode(2,SerialNode.USIC_SUSIC);
+        n2.setNumBitsPerCard (24);
+        n2.setCardTypeByAddress (0,SerialNode.INPUT_CARD);
+        n2.setCardTypeByAddress (1,SerialNode.OUTPUT_CARD);
+        n2.setCardTypeByAddress (3,SerialNode.OUTPUT_CARD);
+        n2.setCardTypeByAddress (4,SerialNode.INPUT_CARD);
+        n2.setCardTypeByAddress (2,SerialNode.OUTPUT_CARD);
         SerialSensorManager s = new SerialSensorManager();
-        Assert.assertEquals("none expected", null, s.nextPoll());
+        Assert.assertTrue("none expected A0", !(n0.sensorsActive()) );
+        Assert.assertTrue("none expected A1", !(n1.sensorsActive()) );
+        Assert.assertTrue("none expected A2", !(n2.sensorsActive()) );
         s.provideSensor("3");
-    }
-
-    public void testScan2() {
-        SerialSensorManager s = new SerialSensorManager();
-        s.provideSensor("3");
-        SerialMessage m = s.nextPoll();
-        Assert.assertEquals("UA 0 ", 'A', m.getElement(0));
-    }
-
-    public void testScan3() {
-        SerialSensorManager s = new SerialSensorManager();
-        s.provideSensor("17");
-        s.provideSensor("127");
-        s.provideSensor("128");
-        s.provideSensor("129");
-        SerialMessage m = s.nextPoll();
-        Assert.assertEquals("UA 0 ", 'A', m.getElement(0));
-    }
-
-    public void testScan4() {
-        SerialSensorManager s = new SerialSensorManager();
+        Assert.assertTrue("UA 0", n0.sensorsActive() );
+        Assert.assertTrue("2nd none expected A1", !(n1.sensorsActive()) );
+        Assert.assertTrue("2nd none expected A2", !(n2.sensorsActive()) );
+        s.provideSensor("11");
+        s.provideSensor("8");
+        s.provideSensor("19");
+        s.provideSensor("23");
+        s.provideSensor("2048");
+        Assert.assertTrue("2nd UA 0", n0.sensorsActive() );
+        Assert.assertTrue("3rd none expected UA 1", !(n1.sensorsActive()) );
+        Assert.assertTrue("UA 2", n2.sensorsActive() );
+        s.provideSensor("15");
         s.provideSensor("1001");
-        SerialMessage m = s.nextPoll();
-        Assert.assertEquals("UA 1 ", 'B', m.getElement(0));
-    }
-
-    public void testScan5() {
-        SerialSensorManager s = new SerialSensorManager();
+        Assert.assertTrue("3rd UA 0", n0.sensorsActive() );
+        Assert.assertTrue("UA 1", n1.sensorsActive() );
+        Assert.assertTrue("2nd UA 2", n0.sensorsActive() );
         s.provideSensor("17");
         s.provideSensor("1017");
-        SerialMessage m = s.nextPoll();
-        Assert.assertEquals("UA 1 ", 'B', m.getElement(0));
-        m = s.nextPoll();
-        Assert.assertEquals("UA 0 ", 'A', m.getElement(0));
-        m = s.nextPoll();
-        Assert.assertEquals("UA 1 ", 'B', m.getElement(0));
+        s.provideSensor("2017");
+        Assert.assertTrue("4th UA 0", n0.sensorsActive() );
+        Assert.assertTrue("2nd UA 1", n1.sensorsActive() );
+        Assert.assertTrue("3rd UA 2", n0.sensorsActive() );
     }
 
     // from here down is testing infrastructure
@@ -72,5 +69,10 @@ public class SerialSensorManagerTest extends TestCase {
         TestSuite suite = new TestSuite(SerialSensorManagerTest.class);
         return suite;
     }
+
+    // The minimal setup for log4J
+    apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
+    protected void setUp() { log4jfixtureInst.setUp(); }
+    protected void tearDown() { log4jfixtureInst.tearDown(); }
 
 }

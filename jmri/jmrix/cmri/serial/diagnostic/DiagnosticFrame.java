@@ -20,7 +20,7 @@ import java.lang.Integer;
 /**
  * Frame for running CMRI diagnostics
  * @author	 Dave Duchamp   Copyright (C) 2004
- * @version	 $Revision: 1.4 $
+ * @version	 $Revision: 1.5 $
  */
 public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cmri.serial.SerialListener {
 
@@ -262,10 +262,12 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
             return (false);
         }
         // get the SerialNode corresponding to this node address
-//      node = SerialNode.getNodeFromAddress(ua);
-// the above routine doesn't work yet -- temporarily create a node to get one to work with
-        node = new SerialNode();
-// end temporary
+        node = SerialTrafficController.instance().getNodeFromAddress(ua);
+        if (node == null) {
+            statusText1.setText("Error - Unknown address in Node(UA) field, please try again.");
+            statusText1.setVisible(true);
+            return (false);
+        }     
         // determine if node is SMINI, USIC_SUSIC, or 
         int type = node.getNodeType();
         isSMINI = (type==SerialNode.SMINI);
@@ -350,9 +352,9 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
                 }
             }
             if (isSMINI && (inCardNum != 2) ) {
-                statusText1.setText("Error - In Card not 2 for SMINI, assumed 2 and continued.");
+                statusText1.setText("Error - In Card not 2 for SMINI, please try again.");
                 statusText1.setVisible(true);
-                inCardNum = 2;
+                return (false);
             }
 
             // read setup data - Filtering Delay field
@@ -378,27 +380,7 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
            begInByte = (node.getInputCardIndex(inCardNum)) * portsPerCard;
            endInByte = begInByte + portsPerCard - 1;
            nInBytes = numInputCards * portsPerCard;
-       }
-        
-// debugging
-        if (outTest) {
-            statusText1.setText("Output: UA = "+Integer.toString(ua)+", Out Card = "+
-                    Integer.toString(outCardNum)+", Obs Delay = "+Integer.toString(obsDelay));
-            statusText1.setVisible(true);
-        }
-        else if (wrapTest) {
-            statusText1.setText("Wraparound: UA = "+Integer.toString(ua)+", Out Card = "+
-                    Integer.toString(outCardNum)+", In Card = "+Integer.toString(inCardNum)+
-                    ", Filtering Delay = "+Integer.toString(filterDelay));
-            statusText1.setVisible(true);
-        }
-        try {
-            wait (2000);
-        }
-        catch (Exception e) {
-            // ignore exception
-        }
-// end debugging            
+       }        
         return (true);
     }
 
@@ -445,7 +427,7 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
         }
         // check the entered delay--if too short an overrun could occur
         //     where the computer program is ahead of buffered serial output
-        if (obsDelay<2000) obsDelay = 2000;
+        if (obsDelay<400) obsDelay = 400;
         // Set up beginning LED on position
         curOutByte = begOutByte;
         curOutBit = 0;
@@ -478,8 +460,9 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
                     // set new pattern
                     outBytes[curOutByte] = (byte)outBitPattern[curOutBit];                    
                     // send new pattern
-                    SerialTrafficController.instance().sendSerialMessage(
-                                                        createOutPacket(),curFrame);
+                    SerialMessage m = createOutPacket();
+                    m.setTimeout(50);
+                    SerialTrafficController.instance().sendSerialMessage(m,curFrame);
                     // update status panel to show bit that is on
                     statusText1.setText("Port "+portID[curOutByte-begOutByte]+" Bit "+
                             Integer.toString(curOutBit)+
@@ -518,7 +501,7 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
         outTimer.start();
     }
     
-     /**
+    /**
      * Local Method to stop an Output Test
      */
     protected void stopOutputTest() {
@@ -636,8 +619,10 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
                                 outBytes[curOutByte+3] = (byte) curOutValue;
                             }
                         }
-                        SerialTrafficController.instance().sendSerialMessage(
-                                                        createOutPacket(),curFrame);
+                        SerialMessage m = createOutPacket();
+                        // wait for signal to settle down if filter delay
+                        m.setTimeout(50 + filterDelay);
+                        SerialTrafficController.instance().sendSerialMessage(m,curFrame);
 
                         // update Status area
                         short[] outBitPattern = {0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80};
@@ -654,16 +639,6 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
                         statusText2.setText(st);
                         statusText2.setVisible(true);
 
-                        // wait for signal to settle down if filter delay
-                        if (filterDelay > 0) {
-                            try {
-                                wait (filterDelay);    
-                            }
-                            catch (Exception e) {
-                                // Ignore exception and continue
-                            }
-                        }
-
                         // set up for testing input returned
                         int k = 0;
                         for (int i = begOutByte;i<=endOutByte;i++, k++) {
@@ -672,11 +647,9 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
                         waitingOnInput = true;
                         needInputTest = true;
                         count = 50;
-// temporary for debugging - eliminate when polling is ready
                         // send poll
                         SerialTrafficController.instance().sendSerialMessage(
                                         SerialMessage.getPoll(ua),curFrame);
-// end debugging                      
 
                         // update output pattern for next entry
                         curOutValue ++;
@@ -794,7 +767,9 @@ public class DiagnosticFrame extends javax.swing.JFrame implements jmri.jmrix.cm
         mShown = true;
     }
 
-    // Close the window when the close box is clicked
+    /**
+     * Close the window when the close box is clicked
+     */
     void thisWindowClosing(java.awt.event.WindowEvent e) {
         if (testRunning) {
             if (outTest) {

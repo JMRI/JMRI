@@ -7,14 +7,13 @@ import jmri.Sensor;
 /**
  * Manage the C/MRI serial-specific Sensor implementation.
  * <P>
- * System names are "CSnnn", where nnn is the sensor number without padding.
+ * System names are "CSnnnn", where nnnn is the sensor number without padding.
  * <P>
- * This class is responsible for generating polling messages
- * for the TrafficController,
- * see nextAiuPoll()
+ * Sensors are numbered from 1.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.8 $
+ * @author                      Dave Duchamp, multi node extensions, 2004
+ * @version			$Revision: 1.9 $
  */
 public class SerialSensorManager extends jmri.AbstractSensorManager
                             implements SerialListener {
@@ -22,7 +21,7 @@ public class SerialSensorManager extends jmri.AbstractSensorManager
     /**
      * Number of sensors per UA in the naming scheme.
      * <P>
-     * The first UA (node) uses sensors from 1 to SENSORSPERUA-1,
+     * The first UA (node address) uses sensors from 1 to SENSORSPERUA-1,
      * the second from SENSORSPERUA+1 to SENSORSPERUA+(SENSORSPERUA-1), etc.
      * <P>
      * Must be more than, and is generally one more than,
@@ -57,48 +56,45 @@ public class SerialSensorManager extends jmri.AbstractSensorManager
         // ensure the serial node exists
         int index = (number/SENSORSPERUA);
         if (nodeArray[index] == null) {
-            if (log.isDebugEnabled()) log.debug("New SerialNode index:"+index+" number:"+number);
-            nodeArray[index] = new SerialNode();
+            if (log.isDebugEnabled()) log.debug("New SerialNode address:"+index+" number:"+number);
+            nodeArray[index] = SerialTrafficController.instance().getNodeFromAddress(index);
+            if (nodeArray[index] == null) {
+                // Sensor refers to undefined node
+                log.error("Sensor " + systemName + " refers to an undefined Serial Node.");
+            }
         }
         nodesPresent = true;
 
         // register this sensor with the SerialNode
-        nodeArray[index].registerSensor((SerialSensor)s, number-index*SENSORSPERUA-1);
-
+        if (nodeArray[index] != null) {
+            nodeArray[index].registerSensor((SerialSensor)s, number-index*SENSORSPERUA-1);
+        }
         return s;
     }
 
-    SerialNode[] nodeArray = new SerialNode[MAXNODE+1];  // element 0 isn't used
-
-
+    SerialNode[] nodeArray = new SerialNode[MAXNODE+1]; // indexed by node address, which
+                                                        //    ranges from 0 thru MAXNODE
     private static int MINNODE =  0;
-    private static int MAXNODE = 63;
+    private static int MAXNODE = 127;
     private int mNextIndex = MINNODE;
     private boolean nodesPresent = false;
-
-    public SerialMessage nextPoll() {
-        if (!nodesPresent) return null;
-
-        // increment to next entry
-        mNextIndex++;
-        if (mNextIndex>MAXNODE) mNextIndex = MINNODE;
-
-        // skip over undefined AIU entries
-        while (nodeArray[mNextIndex]==null) {
-            mNextIndex++;
-            if (mNextIndex>MAXNODE) mNextIndex = MINNODE;
-        }
-
-        return SerialMessage.getPoll(mNextIndex);
-    }
 
     public void message(SerialMessage r) {
         log.warn("unexpected message");
     }
+    /**
+     *  Process a reply to a poll of Sensors of one node
+     */
     public void reply(SerialReply r) {
-        nodeArray[mNextIndex].markChanges(r);
+        // determine which node
+        nodeArray[r.getUA()].markChanges(r);
     }
 
+    /**
+     * static function returning the SerialSensorManager instance to use.
+     * @return The registered SerialSensorManager instance for general use,
+     *         if need be creating one.
+     */
     static public SerialSensorManager instance() {
         if (_instance == null) _instance = new SerialSensorManager();
         return _instance;
