@@ -24,7 +24,7 @@ import jmri.ProgListener;
  * Note that you should call the dispose() method when you're really done, so that
  * a ProgModePane object can disconnect its listeners.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class ProgModePane extends ProgModeSelector {
 
@@ -81,6 +81,10 @@ public class ProgModePane extends ProgModeSelector {
         mServicePane = null;
         mOpsPane.dispose();
         mOpsPane = null;
+    }
+
+    public void setDefaultMode() {
+        mServicePane.setButtonMode(Programmer.PAGEMODE);
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ProgModePane.class.getName());
