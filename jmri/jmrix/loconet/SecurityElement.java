@@ -36,7 +36,7 @@ import jmri.*;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.13 $
+ * @version         $Revision: 1.14 $
  */
 public class SecurityElement implements LocoNetListener {
 
@@ -377,17 +377,27 @@ public class SecurityElement implements LocoNetListener {
         if ((speedXA&0x80)!=0) speedXA = (speedXA&0x7F)*4+128;
 
         boolean to = (l.getElement(6)&0x01)==0x01;
+
+        if (log.isDebugEnabled()) log.debug("Find speedAX="+speedAX+
+                                    " speedXA="+speedXA+" to="+to+" for leg "+leg);
+
         switch (leg) {
         case A:
             return speedAX;
 
         case B:
             if (!to) return speedXA;
-            else return 0;    // can't enter if turnout against you
+            else {
+                log.debug("speed 0 since TO set against leg B");
+                return 0;    // can't enter if turnout against you
+            }
 
         case C:
             if (to) return speedXA;
-            else return 0;
+            else {
+                log.debug("speed 0 since TO set against leg C");
+                return 0;    // can't enter if turnout against you
+            }
 
         default:
             // includes case NONE - if you're attached, you have to
@@ -455,7 +465,7 @@ public class SecurityElement implements LocoNetListener {
      * output values.  See sendUpdate and firePropertyChange.
      */
     void doUpdate() {
-        if (debug) log.debug("SE "+mNumber+" starts. Speeds: "
+        if (debug) log.debug("SE "+mNumber+" starts. Neighbor speeds: "
                              +newSpeedLimitFromA+","+newSpeedLimitFromB
                              +","+newSpeedLimitFromC
                              +" res: "+newDirection);
@@ -527,7 +537,6 @@ public class SecurityElement implements LocoNetListener {
             // this is CA
             newSpeedXA = Math.min(maxSpeedCA, newSpeedLimitFromA+maxBrakingCA);
         }
-        if (newDsStateHere==Sensor.ACTIVE) newSpeedXA = 0;
 
         // calculate speed for AX
         // Speed is the minimum of:
@@ -542,7 +551,12 @@ public class SecurityElement implements LocoNetListener {
             // this is AC
             newSpeedAX = Math.min(maxSpeedAC, newSpeedLimitFromC+maxBrakingAC);
         }
-        if (newDsStateHere==Sensor.ACTIVE) newSpeedAX = 0;
+        if (newDsStateHere==Sensor.ACTIVE) {
+            log.debug("Sensor active sets speeds to zero");
+            newSpeedAX = 0;
+            newSpeedXA = 0;
+        }
+        if (log.isDebugEnabled()) log.debug("Newly calculated speeds are "+newSpeedAX+","+newSpeedXA);
     }
 
     /**
@@ -553,20 +567,32 @@ public class SecurityElement implements LocoNetListener {
 
         switch (onAXReservation) {
         case STOPOPPOSITE:
-            if ( (newDirection&AX) == AX) newSpeedXA = 0;
+            if ( (newDirection&AX) == AX) {
+                newSpeedXA = 0;
+                log.debug("STOPOPPOSITE reservation set XA to zero");
+            }
             break;
         case STOPUNRESERVED:
-            if ( (newDirection&AX) != AX) newSpeedAX = 0;
+            if ( (newDirection&AX) != AX) {
+                newSpeedAX = 0;
+                log.debug("STOPUNRESERVED reservation set AX to zero");
+            }
             break;
         default:
         }
 
         switch (onXAReservation) {
         case STOPOPPOSITE:
-            if ( (newDirection&XA) == XA) newSpeedAX = 0;
+            if ( (newDirection&XA) == XA) {
+                newSpeedAX = 0;
+                log.debug("STOPOPPOSITE reservation set AX to zero");
+            }
             break;
         case STOPUNRESERVED:
-            if ( (newDirection&XA) != XA) newSpeedXA = 0;
+            if ( (newDirection&XA) != XA) {
+                newSpeedXA = 0;
+                log.debug("STOPUNRESERVED reservation set XA to zero");
+            }
             break;
         default:
         }
@@ -601,7 +627,7 @@ public class SecurityElement implements LocoNetListener {
             || newSpeedXA != currentSpeedXA
             || newDirection != currentDirection) {
             // yes, send the update via LocoNet
-            if (debug) log.debug("Send new values: "+
+            if (debug) log.debug("Send new values from SE"+mNumber+": "+
                                  newSpeedAX+" "+
                                  newSpeedXA+" "+
                                  newDirection);
@@ -611,15 +637,15 @@ public class SecurityElement implements LocoNetListener {
             int seStat1 = 0;
             int seStat2 = 0;
 
-            // reserved bits
+            // reserved direction bits
             if ((newDirection&AX)==AX) seStat1 |= 0x10;
-            if ((newDirection&XA)==XA) seStat2 |= 0x20;
+            if ((newDirection&XA)==XA) seStat1 |= 0x20;
 
-            // turnout bits
-            if (newTurnoutStateHere==Turnout.THROWN || turnout == 0) seStat2 |= 0x01;
-            if (newTurnoutStateOnA==Turnout.THROWN) seStat2 |= 0x02;
-            if (newTurnoutStateOnB==Turnout.THROWN) seStat2 |= 0x04;
-            if (newTurnoutStateOnC==Turnout.THROWN) seStat2 |= 0x08;
+            // turnout status bits
+            if (newTurnoutStateHere==Turnout.THROWN) seStat2 |= 0x01;
+            if (newTurnoutStateOnA==Turnout.THROWN)  seStat2 |= 0x02;
+            if (newTurnoutStateOnB==Turnout.THROWN)  seStat2 |= 0x04;
+            if (newTurnoutStateOnC==Turnout.THROWN)  seStat2 |= 0x08;
 
             // occupancy bits
             if (newDsStateHere==Sensor.ACTIVE) seStat1 |= 0x01;
@@ -638,6 +664,8 @@ public class SecurityElement implements LocoNetListener {
             // @todo speed is only encoded in the lower range
             m1.setElement(7, (newSpeedAX)&0x7F);  // SE SPD_AX
             m1.setElement(8, (newSpeedXA)&0x7F);  // SE SPD_XA
+
+            if (log.isDebugEnabled()) log.debug("Send SE message: "+m1.toString());
 
             LnTrafficController.instance().sendLocoNetMessage(m1);
         }
