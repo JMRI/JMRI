@@ -27,6 +27,7 @@ See also the
 
 You can download the most recent source code using:
 <PRE>
+cvs -d:pserver:anonymous@cvs.jmri.sourceforge.net:/cvsroot/jmri login
 cvs -d:pserver:anonymous@cvs.jmri.sourceforge.net:/cvsroot/jmri co ant 
 </PRE>
 <P>
@@ -91,21 +92,30 @@ A recent version can be downloaded from:
 <P>
 To get a copy of the source for your own use, you can use "anonymous checkout".
 For a command line cvs client, make a new directory for the project,
-change to it, and type
+change to it, and tell CVS you exist with
+<PRE>
+cvs -d:pserver:anonymous@cvs.jmri.sourceforge.net:/cvsroot/jmri login
+</PRE>
+This "login" line
+is only needed once; after that, it is remembered on your local machine.  You may
+be asked for a password. If so, just hit return, as the empty password will be accepted.
+You can then get a copy of the code with
 <PRE>
 cvs -d:pserver:anonymous@cvs.jmri.sourceforge.net:/cvsroot/jmri co TARGET
 </PRE>
-where "TARGET" is either "jbuilder" or "ant", see below.
+where "TARGET" is either "jbuilder" or "ant", see below. 
 <P>
 If you're using a GUI-based client like WinCVS, pull down the "admin"
-menu and select "command line" to get a place to type the command.
+menu and select "command line" to get a place to type these commands.
+On other computers, you can type them directly on the command line.
 <P>
 As the common code changes, you might want to update your copy to contain the 
 lastest version.  To do that, use:
 <PRE>
 cvs update
 </PRE>
-That's all there is to it!
+Any changes will be merged into the files on your disk, and you should then be up-to-date
+with your own changes still presetn.
 <P>
 Once you're working with the code, you'll probably create some improvements
 you'd like to contribute back to the project.  This is where CVS has tremendous
