@@ -8,7 +8,7 @@ import java.io.DataOutputStream;
 /**
  * Base for classes representing a LocoNet communications port
  * @author		Bob Jacobsen    Copyright (C) 2001, 2002
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 public abstract class LnPortController extends jmri.jmrix.AbstractPortController {
     // base class. Implementations will provide InputStream and OutputStream
@@ -30,8 +30,17 @@ public abstract class LnPortController extends jmri.jmrix.AbstractPortController
      * Can the port accept additional characters?  This might
      * go false for short intervals, but it might also stick
      * off if something goes wrong.
+     *<P>
+     * Provide a default implementation for the MS100, etc,
+     * in which this is _always_ true, as we rely on the
+     * queueing in the port itself.
      */
-    public abstract boolean okToSend();
+    public boolean okToSend() {
+        return true;
+    }
+
+    protected boolean mCanRead = true;
+    protected boolean mProgPowersOff = false;
 
     /**
      * Configure the programming manager and "command station" objects

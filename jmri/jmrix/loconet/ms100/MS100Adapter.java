@@ -29,7 +29,7 @@ import Serialio.SerialPortLocal;
  * Neither the baud rate configuration nor the "option 1" option are used.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -222,16 +222,6 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
 
 
     /**
-     * Can the port accept additional characters?
-     * For an MS100, this is _always_ true, as we rely on the
-     * queueing in the port itself.  But if a lot is being
-     * send, this might result in the main thread getting stalled...
-     */
-    public boolean okToSend() {
-        return true;
-    }
-
-    /**
      * set up all of the other objects to operate with a MS100
      * connected to this port
      */
@@ -320,9 +310,6 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
             mProgPowersOff = false;
         }
     }
-
-    boolean mCanRead = true;
-    boolean mProgPowersOff = false;
 
     // private control members
     private boolean opened = false;

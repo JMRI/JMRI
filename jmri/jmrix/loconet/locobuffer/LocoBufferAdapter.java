@@ -22,7 +22,7 @@ import javax.comm.SerialPortEventListener;
  * <P>
  * Normally controlled by the LocoBufferFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -177,8 +177,8 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     }
 
     /**
-     * set up all of the other objects to operate with a LocoBuffer
-     * connected to this port
+     * Set up all of the other objects to operate with a LocoBuffer
+     * connected to this port.
      */
     public void configure() {
         // connect to a packetizing traffic controller
@@ -290,9 +290,6 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
             mProgPowersOff = false;
         }
     }
-
-    boolean mCanRead = true;
-    boolean mProgPowersOff = false;
 
     protected String [] validSpeeds = new String[]{"19,200 baud (J1 on 1&2)", "57,600 baud (J1 on 2&3)"};
     protected int [] validSpeedValues = new int[]{19200, 57600};
