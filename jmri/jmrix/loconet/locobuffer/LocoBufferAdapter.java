@@ -5,7 +5,7 @@
  * Description:		Provide access to LocoNet via a LocoBuffer attached to a serial comm port.
  *					Normally controlled by the LocoBufferFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: LocoBufferAdapter.java,v 1.6 2002-07-24 05:00:28 jacobsen Exp $
+ * @version			$Revision: 1.7 $
  */
 
 package jmri.jmrix.loconet.locobuffer;
