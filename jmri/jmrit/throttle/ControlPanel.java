@@ -224,6 +224,7 @@ public class ControlPanel extends JInternalFrame
 				public void actionPerformed(ActionEvent e)
 				{
 					speedSlider.setValue(0);
+					throttle.setSpeedSetting(0);
 				}
 			});
 
