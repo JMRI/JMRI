@@ -23,8 +23,20 @@ import com.sun.java.util.collections.List;
  * overridden (e.g. in a local anonymous class) to create the programmer frame
  * you're interested in.
  *
+ * <P>To overide this class to use a different decoder-selection GUI,
+ * replace members:
+ * <UL>
+ * <LI>layoutDecoderSelection
+ * <LI>updateForDecoderTypeID
+ * <LI>updateForDecoderMfgID
+ * <LI>updateForDecoderNotID
+ * <LI>resetDecoder
+ * <LI>isDecoderSelected
+ * <LI>selectedDecoderName
+ * </UL>
+ *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class CombinedLocoSelPane extends javax.swing.JPanel
                                 implements PropertyChangeListener  {
@@ -38,6 +50,72 @@ public class CombinedLocoSelPane extends javax.swing.JPanel
 		init();
 	}
 
+    /**
+     * Create the panel used to select the decoder
+     * @return a JPanel for handling the decoder-selection GUI
+     */
+    protected JPanel layoutDecoderSelection() {
+        JPanel pane1a = new JPanel();
+        pane1a.setLayout(new BoxLayout(pane1a, BoxLayout.X_AXIS));
+        pane1a.add(new JLabel("Decoder installed: "));
+        decoderBox = DecoderIndexFile.instance().matchingComboBox(null, null, null, null, null);
+        decoderBox.insertItemAt("<from locomotive settings>",0);
+        decoderBox.setSelectedIndex(0);
+        decoderBox.addActionListener(new ActionListener() {
+        	public void actionPerformed(java.awt.event.ActionEvent e) {
+        		if (decoderBox.getSelectedIndex()!=0) {
+        			// reset and disable loco selection
+        			locoBox.setSelectedIndex(0);
+        			go2.setEnabled(true);
+        			go2.setToolTipText("Click to open the programmer");
+        		} else {
+        			go2.setEnabled(false);
+        			go2.setToolTipText("Select a locomotive or decoder to enable");
+        		}
+        	}
+        });
+        pane1a.add(decoderBox);
+        iddecoder= new JToggleButton("Ident");
+        idloco.setToolTipText("Read the decoders mfg and version, then attempt to select it's type");
+        iddecoder.addActionListener( new ActionListener() {
+        	public void actionPerformed(java.awt.event.ActionEvent e) {
+        		if (log.isInfoEnabled()) log.info("identify decoder pressed");
+        		startIdentifyDecoder();
+        	}
+        });
+        pane1a.add(iddecoder);
+        pane1a.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
+        return pane1a;
+    }
+
+    /**
+     *  Set the decoder GUI back to having no selection
+     */
+    void resetDecoderSelection() {
+        decoderBox.setSelectedIndex(0);
+    }
+
+    /**
+     * Has the user selected a decoder type, either manually or
+     * via a successful event?
+     * @return true if a decoder type is selected
+     */
+    boolean isDecoderSelected() {
+     return decoderBox.getSelectedIndex()!=0;
+    }
+
+    /**
+     * Convert the decoder selection UI result into a name.
+     * @return The selected decoder type name, or null if none selected.
+     */
+    String selectedDecoderType() {
+        if (!isDecoderSelected()) return null;
+        else return (String)decoderBox.getSelectedItem();
+    }
+
+    /**
+     * Initialize the GUI
+     */
 	protected void init() {
 		JLabel last;
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -54,7 +132,7 @@ public class CombinedLocoSelPane extends javax.swing.JPanel
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					if (locoBox.getSelectedIndex()!=0) {
 						// reset and disable decoder selection
-						decoderBox.setSelectedIndex(0);
+						resetDecoderSelection();
 						go2.setEnabled(true);
 						go2.setToolTipText("Click to open the programmer");
 					} else {
@@ -76,37 +154,7 @@ public class CombinedLocoSelPane extends javax.swing.JPanel
 		add(pane2a);
 
 
-			JPanel pane1a = new JPanel();
-			pane1a.setLayout(new BoxLayout(pane1a, BoxLayout.X_AXIS));
-			pane1a.add(new JLabel("Decoder installed: "));
-			decoderBox = DecoderIndexFile.instance().matchingComboBox(null, null, null, null, null);
-			decoderBox.insertItemAt("<from locomotive settings>",0);
-			decoderBox.setSelectedIndex(0);
-			decoderBox.addActionListener(new ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
-					if (decoderBox.getSelectedIndex()!=0) {
-						// reset and disable loco selection
-						locoBox.setSelectedIndex(0);
-						go2.setEnabled(true);
-						go2.setToolTipText("Click to open the programmer");
-					} else {
-						go2.setEnabled(false);
-						go2.setToolTipText("Select a locomotive or decoder to enable");
-					}
-				}
-			});
-			pane1a.add(decoderBox);
-			iddecoder= new JToggleButton("Ident");
-			idloco.setToolTipText("Read the decoders mfg and version, then attempt to select it's type");
-			iddecoder.addActionListener( new ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
-					if (log.isInfoEnabled()) log.info("identify decoder pressed");
-					startIdentifyDecoder();
-				}
-			});
-			pane1a.add(iddecoder);
-			pane1a.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
-		add(pane1a);
+		add(layoutDecoderSelection());
 
 			JPanel pane3a = new JPanel();
 			pane3a.setLayout(new BoxLayout(pane3a, BoxLayout.X_AXIS));
@@ -134,9 +182,17 @@ public class CombinedLocoSelPane extends javax.swing.JPanel
 		setBorder(new EmptyBorder(6,6,6,6));
 	}
 
+    /**
+     * Reference to an external (not in this pane) JLabel that should
+     * be updated with status information as identification happens.
+     */
 	JLabel _statusLabel = null;
 
-	private void startIdentifyLoco() {
+    /**
+     * Identify loco button pressed, start the identify operation
+     * This defines what happens when the identify is done.
+     */
+	protected void startIdentifyLoco() {
 		// start identifying a loco
 		final CombinedLocoSelPane me = this;
 		IdentifyLoco id = new IdentifyLoco() {
@@ -156,7 +212,11 @@ public class CombinedLocoSelPane extends javax.swing.JPanel
 		id.start();
 	}
 
-	private void startIdentifyDecoder() {
+    /**
+     * Identify loco button pressed, start the identify operation.
+     * This defines what happens when the identify is done.
+     */
+	protected void startIdentifyDecoder() {
 		// start identifying a decoder
 		final CombinedLocoSelPane me = this;
 		IdentifyDecoder id = new IdentifyDecoder() {
@@ -176,13 +236,24 @@ public class CombinedLocoSelPane extends javax.swing.JPanel
 		id.start();
 	}
 
+    /**
+     * Notification that the Roster has changed, so the locomotive
+     * selection list has to be changed.
+     * @param ev Ignored.
+     */
     public void propertyChange(PropertyChangeEvent ev) {
         Roster.instance().updateComboBox(locoBox);
         locoBox.insertItemAt("<none - new loco>",0);
         locoBox.setSelectedIndex(0);
     }
 
-	private void selectLoco(int dccAddress) {
+    /**
+     * Identify locomotive complete, act on it by setting the GUI.
+     * This will fire "GUI changed" events which will reset the
+     * decoder GUI.
+     * @param dccAddress
+     */
+	protected void selectLoco(int dccAddress) {
 		// raise the button again
 		idloco.setSelected(false);
 		// locate that loco
@@ -202,46 +273,91 @@ public class CombinedLocoSelPane extends javax.swing.JPanel
 		}
 	}
 
-	private void selectDecoder(int mfgID, int modelID) {
+    /**
+     * Identify decoder complete, act on it by setting the GUI
+     * This will fire "GUI changed" events which will reset the
+     * locomotive GUI.
+     * @param mfgID the decoder's manufacturer ID value from CV8
+     * @param modelID the decoder's model ID value from CV7
+     */
+	protected void selectDecoder(int mfgID, int modelID) {
 		// raise the button again
 		iddecoder.setSelected(false);
 		// locate a decoder like that.
-		JComboBox temp = DecoderIndexFile.instance().matchingComboBox(null, null, Integer.toString(mfgID), Integer.toString(modelID), null);
-		if (log.isDebugEnabled()) log.debug("selectDecoder found "+temp.getItemCount()+" matches");
+		List temp = DecoderIndexFile.instance().matchingDecoderList(null, null, Integer.toString(mfgID), Integer.toString(modelID), null);
+		if (log.isDebugEnabled()) log.debug("selectDecoder found "+temp.size()+" matches");
 		// install all those in the JComboBox in place of the longer, original list
-		if (temp.getItemCount() > 0) {
-			decoderBox.setModel(temp.getModel());
-			decoderBox.insertItemAt("<from locomotive settings>",0);
-			decoderBox.setSelectedIndex(1);
+		if (temp.size() > 0) {
+			updateForDecoderTypeID(temp);
 		} else {
 			String mfg = DecoderIndexFile.instance().mfgNameFromId(Integer.toString(mfgID));
-			if (mfg==null) mfg="<unknown>";
-			String msg = "Found mfg "+mfgID+" ("+mfg+") version "+modelID+"; no such decoder defined";
-			log.warn(msg);
-			_statusLabel.setText(msg);
-            // try to select all decoders from that MFG
-		    temp = DecoderIndexFile.instance().matchingComboBox(null, null, Integer.toString(mfgID), null, null);
-		    if (log.isDebugEnabled()) log.debug("mfg-only selectDecoder found "+temp.getItemCount()+" matches");
-		    // install all those in the JComboBox in place of the longer, original list
-		    if (temp.getItemCount() > 0) {
-			    decoderBox.setModel(temp.getModel());
-			    decoderBox.insertItemAt("<from locomotive settings>",0);
-			    decoderBox.setSelectedIndex(1);
-		    }
+			if (mfg==null) {
+                updateForDecoderNotID(mfgID, modelID);
+            }
+            else {
+                updateForDecoderMfgID(mfg, mfgID, modelID);
+            }
 		}
 	}
 
-	private JComboBox locoBox = null;
-	private JComboBox decoderBox = null;
-	private JComboBox programmerBox = null;
-	private JToggleButton iddecoder;
-	private JToggleButton idloco;
-	private JButton go2;
+    /**
+     * Decoder identify has matched one or more specific types
+     */
+    void updateForDecoderTypeID(List pList) {
+        decoderBox.setModel(DecoderIndexFile.jComboBoxModelFromList(pList));
+        decoderBox.insertItemAt("<from locomotive settings>",0);
+        decoderBox.setSelectedIndex(1);
+    }
+    /**
+     * Decoder identify has not matched specific types, but did
+     * find manufacturer match
+     * @param pMfg Manufacturer name. This is passed to save time,
+     *              as it has already been determined once.
+     * @param pMfgID Manufacturer ID number (CV8)
+     * @param pModelID Model ID number (CV7)
+     */
+    void updateForDecoderMfgID(String pMfg, int pMfgID, int pModelID) {
+        String msg = "Found mfg "+pMfgID+" ("+pMfg+") version "+pModelID+"; no such decoder defined";
+        log.warn(msg);
+        _statusLabel.setText(msg);
+        // try to select all decoders from that MFG
+        JComboBox temp = DecoderIndexFile.instance().matchingComboBox(null, null, Integer.toString(pMfgID), null, null);
+        if (log.isDebugEnabled()) log.debug("mfg-only selectDecoder found "+temp.getItemCount()+" matches");
+        // install all those in the JComboBox in place of the longer, original list
+        if (temp.getItemCount() > 0) {
+            decoderBox.setModel(temp.getModel());
+            decoderBox.insertItemAt("<from locomotive settings>",0);
+            decoderBox.setSelectedIndex(1);
+        } else {
+            // if there are none from this mfg, go back to showing everything
+            temp = DecoderIndexFile.instance().matchingComboBox(null, null, null, null, null);
+            decoderBox.setModel(temp.getModel());
+            decoderBox.insertItemAt("<from locomotive settings>",0);
+            decoderBox.setSelectedIndex(1);
+        }
+    }
+    /**
+     * Decoder identify did not match anything, warn and show all
+     */
+    void updateForDecoderNotID(int pMfgID, int pModelID) {
+        log.warn("Found mfg "+pMfgID+" version "+pModelID+"; no such manufacterer defined");
+        JComboBox temp = DecoderIndexFile.instance().matchingComboBox(null, null, null, null, null);
+        decoderBox.setModel(temp.getModel());
+        decoderBox.insertItemAt("<from locomotive settings>",0);
+        decoderBox.setSelectedIndex(1);
+    }
+
+	protected JComboBox locoBox = null;
+	private JComboBox decoderBox = null;       // private because children will override this
+	protected JComboBox programmerBox = null;
+	protected JToggleButton iddecoder;
+	protected JToggleButton idloco;
+	protected JButton go2;
 
 	/** handle pushing the open programmer button by finding names, then calling a template method */
 	protected void openButton() {
 		// figure out which we're dealing with
-		if (decoderBox.getSelectedIndex()!=0) {
+		if (isDecoderSelected()) {
 			// new loco
 			openNewLoco();
 		} else if (locoBox.getSelectedIndex()!=0) {
@@ -274,7 +390,7 @@ public class CombinedLocoSelPane extends javax.swing.JPanel
      */
 	protected void openNewLoco() {
 		// find the decoderFile object
-		DecoderFile decoderFile = DecoderIndexFile.instance().fileFromTitle((String)decoderBox.getSelectedItem());
+		DecoderFile decoderFile = DecoderIndexFile.instance().fileFromTitle(selectedDecoderType());
 		if (log.isDebugEnabled()) log.debug("decoder file: "+decoderFile.getFilename());
 
 		// create a dummy RosterEntry with the decoder info
@@ -329,7 +445,7 @@ public class CombinedLocoSelPane extends javax.swing.JPanel
 		}
 		return sbox;
 	}
-	static private String defaultProgFile = null;
+	static protected String defaultProgFile = null;
 	static public void setDefaultProgFile(String s) { defaultProgFile = s; }
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CombinedLocoSelPane.class.getName());
