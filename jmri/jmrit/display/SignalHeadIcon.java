@@ -12,7 +12,7 @@ import jmri.jmrix.loconet.AspectGenerator;
  * AspectGenerator, so is tied very closely to that class.  This needs to
  * be fixed in the longer term.
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -103,8 +103,6 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         displayState(headState());
     }
 
-    JPopupMenu popup = null;
-    SignalHeadIcon ours = this;
     /**
      * Pop-up just displays the name
      */
@@ -125,6 +123,14 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
                     }
                 });
         }
+
+        popup.add(new AbstractAction("Remove") {
+            public void actionPerformed(ActionEvent e) {
+                remove();
+                dispose();
+            }
+        });
+
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
 
@@ -153,6 +159,18 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         default:
             log.error("unexpected state during display: "+state);
         }
+    }
+
+    public void dispose() {
+        mGenerator.removePropertyChangeListener(this);
+        mGenerator = null;
+
+        red = null;
+        yellow = null;
+        flashYellow = null;
+        green = null;
+
+        super.dispose();
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SignalHeadIcon.class.getName());

@@ -1,11 +1,11 @@
 package jmri.jmrit.display;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseMotionListener;
+import jmri.jmrix.loconet.*;
+
+import java.awt.*;
+import java.awt.event.*;
+
 import javax.swing.*;
-import jmri.jmrix.loconet.SecurityElement;
 
 /**
  * SecurityElementIcon provides a small icon to display a status of a SecurityElement.
@@ -15,7 +15,7 @@ import jmri.jmrix.loconet.SecurityElement;
  * explicitly add the code for Positionable
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class SecurityElementIcon extends JPanel
@@ -481,6 +481,13 @@ public class SecurityElementIcon extends JPanel
             }
                   );
 
+        popup.add(new AbstractAction("Remove") {
+            public void actionPerformed(ActionEvent e) {
+                remove();
+                dispose();
+            }
+        });
+
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
 
@@ -488,4 +495,36 @@ public class SecurityElementIcon extends JPanel
         return ""+e.getX()+","+e.getY();
     }
 
+    /**
+     * Clean up when this object is no longer needed.  Should not
+     * be called while the object is still displayed; see remove()
+     */
+    void dispose() {
+        if (popup != null) popup.removeAll();
+        popup = null;
+        rlspeed = null;
+        lrspeed = null;
+        dir = null;
+    }
+
+    /**
+     * Removes this object from display and persistance
+     */
+    void remove() {
+        Container parent = this.getParent();
+        parent.remove(this);
+        // force redisplay
+        parent.validate();
+
+        // remove from persistance
+        active = false;
+    }
+
+    boolean active = true;
+    /**
+     * "active" means that the object is still displayed, and should be stored.
+     */
+    public boolean isActive() {
+        return active;
+    }
 }

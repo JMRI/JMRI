@@ -8,7 +8,7 @@ import jmri.jmrit.catalog.*;
 /**
  * SensorIcon provides a small icon to display a status of a Sensor.</p>
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -103,8 +103,6 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         }
     }
 
-    JPopupMenu popup = null;
-    SensorIcon ours = this;
     /**
      * Pop-up just displays the sensor name
      */
@@ -125,6 +123,14 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                     }
                 });
         }
+
+        popup.add(new AbstractAction("Remove") {
+            public void actionPerformed(ActionEvent e) {
+                remove();
+                dispose();
+            }
+        });
+
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
 
@@ -173,6 +179,17 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         }
     }
 
+    public void dispose() {
+        sensor.removePropertyChangeListener(this);
+        sensor = null;
+
+        active = null;
+        inactive = null;
+        inconsistent = null;
+        unknown = null;
+
+        super.dispose();
+    }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SensorIcon.class.getName());
 }

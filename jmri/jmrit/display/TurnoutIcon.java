@@ -19,7 +19,7 @@ import jmri.jmrit.catalog.*;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -112,9 +112,6 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         }
     }
 
-    JPopupMenu popup = null;
-    JLabel ours = this;  // used for rotating icons
-
     /**
      * Pop-up displays the turnout name, allows you to rotate the icons
      */
@@ -138,6 +135,14 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
                     }
                 });
         }
+
+        popup.add(new AbstractAction("Remove") {
+            public void actionPerformed(ActionEvent e) {
+                remove();
+                dispose();
+            }
+        });
+
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
 
@@ -182,6 +187,19 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         else
             turnout.setCommandedState(jmri.Turnout.CLOSED);
     }
+
+    public void dispose() {
+        turnout.removePropertyChangeListener(this);
+        turnout = null;
+
+        closed = null;
+        thrown = null;
+        inconsistent = null;
+        unknown = null;
+
+        super.dispose();
+    }
+
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TurnoutIcon.class.getName());
 }
