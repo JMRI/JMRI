@@ -48,11 +48,23 @@ import javax.swing.JTextArea;
  * for example, the program will appear to hang. To help ensure this,
  * a warning will be logged if they are used before the thread starts.
  * <P>
+ * For general use, e.g. in scripts, the most useful functions are:
+ *<UL>
+ *<LI>{@link #waitMsec} Wait for a specific number of milliseconds
+ *<LI>{@link #waitSensorActive} Wait for a specific sensor to be active
+ *<LI>{@link #waitSensorActive} Wait for a specific sensor to be inactive
+ *<LI>{@link #waitChange} Wait for any one of a number of Sensors, Turnouts and/or other objects to change
+ *<LI>{@link #getThrottle} Obtain a DCC throttle
+ *<LI>{@link #readServiceModeCV} Read a CV from decoder on programming track
+ *<LI>{@link #writeServiceModeCV} Write a value to a CV in a decoder on the programming track
+ *<LI>{@link #writeOpsModeCV} Write a value to a CV in a decoder on the main track
+ *</UL>
+ * <P>
  * Although this is named an "Abstract" class, it's actually concrete
  * so that Jython code can easily use some of the methods.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 public class AbstractAutomaton implements Runnable {
 
@@ -68,6 +80,9 @@ public class AbstractAutomaton implements Runnable {
     AutomatSummary summary = AutomatSummary.instance();
 
     Thread currentThread = null;
+    /**
+     * Part of the implementation; not for general use.
+     */
     public void start() {
         if (currentThread != null) log.error("Start with currentThread not null!");
         currentThread = new Thread(this);
@@ -76,6 +91,9 @@ public class AbstractAutomaton implements Runnable {
     	count = 0;
     }
 
+    /**
+     * Part of the implementation; not for general use.
+     */
     public void run() {
         inThread = true;
         init();
@@ -88,6 +106,9 @@ public class AbstractAutomaton implements Runnable {
         done();
     }
 
+    /**
+     * Part of the implementation; not for general use.
+     */
     public void stop() {
         if (currentThread == null) log.error("Stop with currentThread null!");
         currentThread.stop();
@@ -96,6 +117,8 @@ public class AbstractAutomaton implements Runnable {
     }
 
 	/**
+     * Part of the internal implementation; not for general use.
+     *
 	 * Common internal end-time processing
 	 */
 	void done() {
@@ -107,21 +130,29 @@ public class AbstractAutomaton implements Runnable {
 	private int count;
 
 	/**
+     * Part of the implementation; not for general use.
 	 *
+	 * Returns the number of times the handle routine has executed,
+	 * used by e.g. {@link jmri.jmrit.automat.monitor} to monitor progress
 	 */
 	public int getCount() {
 		return count;
 	}
 
 	/**
+     * Part of the internal implementation; not for general use.
 	 *
+	 * Gives access to the thread name for e.g. {@link jmri.jmrit.automat.monitor}
 	 */
 	public String getName() {
 		return name;
 	}
 	/**
-	 * name is not a bound parameter, so changed are not
-         * notified to listeners
+     * Update the name of this object.
+	 *
+	 * name is not a bound parameter, so changes are not
+     * notified to listeners
+     * @see #getName
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -131,12 +162,19 @@ public class AbstractAutomaton implements Runnable {
 	}
 
     /**
-     * User-provided initialization routine
+     * User-provided initialization routine.
+     *
+     * This is called exactly once for each object created.
+     * This is where you put all the code that needs to be
+     * run when your object starts up:  Finding sensors and turnouts,
+     * getting a throttle, etc.
      */
     protected void init() {}
 
     /**
-     * User-provided main routine. This is run repeatedly until
+     * User-provided main routine. 
+     * 
+     * This is run repeatedly until
      * it signals the end by returning false.  Many automata
      * are intended to run forever, and will always return true.
      *
@@ -145,17 +183,22 @@ public class AbstractAutomaton implements Runnable {
     protected boolean handle() { return false; }
 
     /**
-     * Control optional debugging prompt.  If this is set true,
+     * Control optional debugging prompt.  
+     * If this is set true,
      * each call to wait() will prompt the user whether to continue.
      */
     protected boolean promptOnWait = false;
 
+    /**
+     * Wait for a specified number of milliseconds, and then
+     * return control.
+     */
     public void waitMsec( int milliseconds ) {
     	this.wait(milliseconds);
     }
 
     /**
-     * Wait for an interval, in a simple form.
+     * Part of the intenal implementation, not intended for users.
      * <P>
      * This handles exceptions internally,
      * so they needn't clutter up the code.  Note that the current
@@ -554,7 +597,7 @@ public class AbstractAutomaton implements Runnable {
         }
 
         /**
-         * Show a message, and optionally wait for the user to acknowledge
+         * Show a message in the message frame, and optionally wait for the user to acknowledge
          */
         public void show(String pMessage, boolean pPause) {
             mMessage = pMessage;
@@ -574,6 +617,8 @@ public class AbstractAutomaton implements Runnable {
                 }
             }
         }
+        
+        
         public void run() {
             // create the frame if it doesn't exist
             if (mFrame==null) {
