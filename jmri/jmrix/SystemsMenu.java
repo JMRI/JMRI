@@ -9,10 +9,10 @@ import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
 /**
- * Provide a "Systems" menu containing the Jmri system-specific tools in submenus
+ * Provide a "Systems" menu containing the Jmri system-specific tools in submenus.
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class SystemsMenu extends JMenu {
     public SystemsMenu(String name) {
@@ -32,8 +32,8 @@ public class SystemsMenu extends JMenu {
         add(new jmri.jmrix.easydcc.EasyDCCMenu());
         add(new jmri.jmrix.loconet.LocoNetMenu());
         add(new jmri.jmrix.nce.NceMenu());
-        add(new jmri.jmrix.lenz.XNetMenu());
         add(new jmri.jmrix.sprog.SPROGMenu());
+        add(new jmri.jmrix.lenz.XNetMenu());
         add(new jmri.jmrix.zimo.Mx1Menu());
 
     }
