@@ -20,7 +20,7 @@ import com.sun.java.util.collections.List;
 /**
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
- * @version		$Revision: 1.10 $
+ * @version		$Revision: 1.11 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -63,7 +63,9 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             String name = ((NamedBean)e.getSource()).getSystemName();
             if (log.isDebugEnabled()) log.debug("Update cell "+sysNameList.indexOf(name)+","
                                                 +VALUECOL+" for "+name);
-            fireTableCellUpdated(sysNameList.indexOf(name), VALUECOL);
+            // since we can add columns, the entire row is marked as updated
+            int row = sysNameList.indexOf(name);
+            fireTableRowsUpdated(row, row);
         }
     }
 
