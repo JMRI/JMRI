@@ -3,7 +3,7 @@
  *
  * Description:
  * @author			Bob Jacobsen
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 
 package jmri.jmrit.symbolicprog.tabbedframe;
@@ -27,47 +27,49 @@ import jmri.jmrit.decoderdefn.*;
 import jmri.jmrit.roster.*;
 
 public class PaneProgPaneTest extends TestCase {
-    
+
+    ProgDebugger p = new ProgDebugger();
+
     // test creating columns in a pane
     public void testColumn() {
         setupDoc();
-        CvTableModel cvModel = new CvTableModel(new JLabel());
+        CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         if (log.isInfoEnabled()) log.info("CvTableModel ctor complete");
         String[] args = {"CV", "Name"};
         VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
         if (log.isInfoEnabled()) log.info("VariableTableModel ctor complete");
-        
+
         // create test object with special implementation of the newColumn(String) operation
         colCount = 0;
         PaneProgPane p = new PaneProgPane("name", pane1, cvModel, varModel, null) {
                 public JPanel newColumn(Element e, boolean a, Element el) { colCount++; return new JPanel();}
             };
-        
+
         assertEquals("column count", 2, colCount);
     }
-    
+
     // test specifying variables in columns
     public void testVariables() {
         setupDoc();  // make sure XML document is ready
-        CvTableModel cvModel = new CvTableModel(new JLabel());
+        CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
         VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
         if (log.isInfoEnabled()) log.info("VariableTableModel ctor complete");
-        
+
         // create test object with special implementation of the newVariable(String) operation
         varCount = 0;
         PaneProgPane p = new PaneProgPane("name", pane1, cvModel, varModel, null) {
                 public void newVariable(Element e, JComponent p, GridBagLayout g, GridBagConstraints c, boolean a)
                 { varCount++; }
             };
-        
+
         assertEquals("variable defn count", 7, varCount);
     }
-    
+
     // test storage of programming info in list
     public void testVarListFill() {
         setupDoc();  // make sure XML document is ready
-        CvTableModel cvModel = new CvTableModel(new JLabel());
+        CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
         VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
         if (log.isInfoEnabled()) log.info("VariableTableModel ctor complete");
@@ -90,23 +92,21 @@ public class PaneProgPaneTest extends TestCase {
         if (log.isInfoEnabled()) log.info("Second element created");
         varModel.setRow(1, el1);
         if (log.isInfoEnabled()) log.info("Two elements loaded");
-        
+
         // test by invoking
         PaneProgPane p = new PaneProgPane("name", pane1, cvModel, varModel, null);
         assertEquals("variable list length", 2, p.varList.size());
         assertEquals("1st variable index ", new Integer(1), p.varList.get(0));
         assertEquals("2nd variable index ", new Integer(0), p.varList.get(1));
     }
-    
+
     // test storage of programming info in list
     public void testPaneRead() {
         if (log.isDebugEnabled()) log.debug("testPaneRead starts");
         // initialize the system
-        ProgDebugger pr = new ProgDebugger();
-        InstanceManager.setProgrammerManager(new DefaultProgrammerManager(pr));
         setupDoc();  // make sure XML document is ready
-        
-        CvTableModel cvModel = new CvTableModel(new JLabel());
+
+        CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
         VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
         if (log.isInfoEnabled()) log.info("VariableTableModel ctor complete");
@@ -125,16 +125,16 @@ public class PaneProgPaneTest extends TestCase {
             .addAttribute("label","Primary Address")
             .addContent( new Element("decVal"));
         varModel.setRow(1, el1);
-        
-        PaneProgPane p = new PaneProgPane("name", pane1, cvModel, varModel, null);
-        
+
+        PaneProgPane progPane = new PaneProgPane("name", pane1, cvModel, varModel, null);
+
         // test by invoking
-        p.readPane();
-        
+        progPane.readPane();
+
         // wait for reply (normally, done by callback; will check that later)
         if (log.isInfoEnabled()) log.info("Start to wait for reply");
         int i = 0;
-        while ( p.isBusy() && i++ < 100 )  {
+        while ( progPane.isBusy() && i++ < 100 )  {
             try {
                 Thread.sleep(50);
             } catch (Exception e) {
@@ -143,20 +143,18 @@ public class PaneProgPaneTest extends TestCase {
         if (log.isDebugEnabled()) log.debug("past loop, i="+i);
         if (i==0) log.warn("testPaneRead saw an immediate return from isBusy");
         assertTrue("busy period ends before timeout ", i<=100);
-        
-        Assert.assertEquals("last cv read ", 2, pr.lastReadCv());
-        
+
+        Assert.assertEquals("last cv read ", 2, p.lastReadCv());
+
         if (log.isDebugEnabled()) log.debug("testPaneRead ends ok");
     }
-    
+
     public void testPaneWrite() {
         if (log.isDebugEnabled()) log.debug("testPaneWrite starts");
         // initialize the system
-        ProgDebugger pr = new ProgDebugger();
-        InstanceManager.setProgrammerManager(new DefaultProgrammerManager(pr));
         setupDoc();  // make sure XML document is ready
-        
-        CvTableModel cvModel = new CvTableModel(new JLabel());
+
+        CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
         VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
         if (log.isInfoEnabled()) log.info("VariableTableModel ctor complete");
@@ -176,16 +174,16 @@ public class PaneProgPaneTest extends TestCase {
             .addContent( new Element("decVal"));
         varModel.setRow(1, el1);
         if (log.isInfoEnabled()) log.info("Two elements loaded");
-        
-        PaneProgPane p = new PaneProgPane("name", pane1, cvModel, varModel, null);
-        
+
+        PaneProgPane progPane = new PaneProgPane("name", pane1, cvModel, varModel, null);
+
         // test by invoking
-        p.writePane();
-        
+        progPane.writePane();
+
         // wait for reply (normally, done by callback; will check that later)
         if (log.isInfoEnabled()) log.info("Start to wait for reply");
         int i = 0;
-        while ( p.isBusy() && i++ < 100 )  {
+        while ( progPane.isBusy() && i++ < 100 )  {
             try {
                 Thread.sleep(50);
             } catch (Exception e) {
@@ -194,31 +192,31 @@ public class PaneProgPaneTest extends TestCase {
         if (log.isDebugEnabled()) log.debug("past loop, i="+i);
         if (i==0) log.warn("testPaneWrite saw an immediate return from isBusy");
         assertTrue("busy period ends before timeout ", i<=100);
-        
-        Assert.assertEquals("last cv written ", 2, pr.lastWriteCv());
-        
+
+        Assert.assertEquals("last cv written ", 2, p.lastWriteCv());
+
         if (log.isDebugEnabled()) log.debug("testPaneWrite ends ok");
     }
-    
+
     // static variables for internal classes to report their interpretations
     static String result = null;
     static int colCount = -1;
     static int varCount = -1;
-    
+
     // static variables for the test XML structures
     Element root = null;
     Element pane1 = null;
     Element pane2 = null;
     Element pane3 = null;
     Document doc = null;
-    
+
     // provide a test document in the above static variables
     void setupDoc() {
         // create a JDOM tree with just some elements
         root = new Element("programmer-config");
         doc = new Document(root);
         doc.setDocType(new DocType("programmer-config","programmer-config.dtd"));
-        
+
         // add some elements
         root.addContent(new Element("programmer")
             .addContent(pane1 = new Element("pane")
@@ -270,29 +268,29 @@ public class PaneProgPaneTest extends TestCase {
                 )
             )
             ; // end of adding contents
-        
+
         if (log.isInfoEnabled()) log.info("setupDoc complete");
         return;
     }
-    
+
     // from here down is testing infrastructure
-    
+
     public PaneProgPaneTest(String s) {
         super(s);
     }
-    
+
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PaneProgPaneTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
-    
+
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite(PaneProgPaneTest.class);
         return suite;
     }
-    
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PaneProgPaneTest.class.getName());
-    
+
 }
