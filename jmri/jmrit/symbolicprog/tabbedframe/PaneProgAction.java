@@ -21,7 +21,7 @@ import javax.swing.border.*;
  * is constructed on the fly here, and has no specific type.
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class PaneProgAction 			extends AbstractAction {
 
@@ -46,19 +46,19 @@ public class PaneProgAction 			extends AbstractAction {
 		xmlThread.start();
 
 		// start a read low priority request to load some classes
-		final ClassLoader loader = this.getClass().getClassLoader();
-		Thread classLoadingThread = new Thread( new Runnable() {
-				public void run() {
-					// load classes by requesting objects
-					new PaneProgPane();
-					new EnumVariableValue();
-					new SpeedTableVarValue();
-
-					if (log.isInfoEnabled()) log.info("class loading thread finishes");
-				}
-			}, "loading classes");
-		classLoadingThread.setPriority(Thread.MIN_PRIORITY);
-		classLoadingThread.start();
+		//final ClassLoader loader = this.getClass().getClassLoader();
+		//Thread classLoadingThread = new Thread( new Runnable() {
+		//		public void run() {
+		//			// load classes by requesting objects
+		//			new PaneProgPane();
+		//			new EnumVariableValue();
+		//			new SpeedTableVarValue();
+        //
+		//			if (log.isInfoEnabled()) log.info("class loading thread finishes");
+		//		}
+		//	}, "loading classes");
+		//classLoadingThread.setPriority(Thread.MIN_PRIORITY);
+		//classLoadingThread.start();
 
 	}
 
@@ -78,7 +78,7 @@ public class PaneProgAction 			extends AbstractAction {
 
 		// new Loco on programming track
 		JLabel last;
-		JPanel pane1 = new CombinedLocoSelListPane(statusLabel){
+		JPanel pane1 = new CombinedLocoSelTreePane(statusLabel){
 			protected void startProgrammer(DecoderFile decoderFile, RosterEntry re, String filename) {
 				String title = "Program new decoder";
 				if (re!=null) title = "Program "+re.getId();
