@@ -29,29 +29,29 @@ import com.sun.java.util.collections.List;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  * @see             jmri.jmrit.decoderdefn.IdentifyDecoder
  * @see             jmri.jmrit.roster.IdentifyLoco
  */
 public class NewLocoSelPane extends javax.swing.JPanel  {
-    
+
     public NewLocoSelPane(JLabel s) {
         _statusLabel = s;
         init();
     }
-    
+
     public NewLocoSelPane() {
         init();
     }
-    
+
     public void init() {
         JLabel last;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(last = new JLabel("New locomotive on programming track"));
         last.setBorder(new EmptyBorder(6,0,6,0));
         add(new JLabel("Copy settings from existing locomotive:"));
-        
-        locoBox = Roster.instance().matchingComboBox(null, null, null, null, null, null, null);
+
+        locoBox = Roster.instance().fullRosterComboBox();
         locoBox.addActionListener( new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     if (log.isInfoEnabled()) log.info("Locomotive selected changed");
@@ -61,7 +61,7 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
         locoBox.insertItemAt("<none>",0);
         locoBox.setSelectedIndex(0);
         add(locoBox);
-        
+
         JPanel pane1a = new JPanel();
         pane1a.setLayout(new BoxLayout(pane1a, BoxLayout.X_AXIS));
         pane1a.add(new JLabel("Decoder installed:"));
@@ -75,10 +75,10 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
         pane1a.add(iddecoder);
         pane1a.setAlignmentX(JLabel.LEFT_ALIGNMENT);
         add(pane1a);
-        
+
         decoderBox = DecoderIndexFile.instance().matchingComboBox(null, null, null, null, null);
         add(decoderBox);
-        
+
         // Open programmer button
         JButton go1 = new JButton("Open programmer");
         go1.addActionListener( new ActionListener() {
@@ -90,9 +90,9 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
         add(go1);
         setBorder(new EmptyBorder(6,6,6,6));
     }
-    
+
     JLabel _statusLabel = null;
-    
+
     private void startIdentify() {
         // start identifying a decoder
         final NewLocoSelPane me = this;
@@ -109,7 +109,7 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
             };
         id.start();
     }
-    
+
     private void selectDecoder(int mfgID, int modelID) {
         // locate a decoder like that.
         JComboBox temp = DecoderIndexFile.instance().matchingComboBox(null, null, Integer.toString(mfgID), Integer.toString(modelID), null);
@@ -122,7 +122,7 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
             log.warn("Decoder says "+mfgID+" "+modelID+" decoder, but no such decoder defined");
         }
     }
-    
+
     private void matchDecoderToLoco() {
         if (((String)locoBox.getSelectedItem()).equals("<none>")) return;
         RosterEntry r = Roster.instance().entryFromTitle((String) locoBox.getSelectedItem());
@@ -143,19 +143,19 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
             log.warn("Loco uses "+decoderFamily+" "+decoderModel+" decoder, but no such decoder defined");
         }
     }
-    
+
     private JComboBox locoBox = null;
     private JComboBox decoderBox = null;
-    
+
     /**
      * Handle pushing the open programmer button by finding names, then calling a template method
      */
     protected void openButton() {
-        
+
         // find the decoderFile object
         DecoderFile decoderFile = DecoderIndexFile.instance().fileFromTitle((String)decoderBox.getSelectedItem());
         if (log.isDebugEnabled()) log.debug("decoder file: "+decoderFile.getFilename());
-        
+
         // create a dummy RosterEntry with the decoder info
         RosterEntry re = new RosterEntry();
         re.setDecoderFamily(decoderFile.getFamily());
@@ -164,10 +164,10 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
         // note we're leaving the filename information as null
         // add the new roster entry to the in-memory roster
         Roster.instance().addEntry(re);
-        
+
         startProgrammer(decoderFile, re);
     }
-    
+
     /**
      * Meant to be overridden to start the desired type of programmer
      *  @param decoderFile selected file, passed to eventual implementation
@@ -176,7 +176,7 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
     protected void startProgrammer(DecoderFile decoderFile, RosterEntry r) {
         log.error("startProgrammer method in NewLocoSelPane should have been overridden");
     }
-    
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NewLocoSelPane.class.getName());
-    
+
 }

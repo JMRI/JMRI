@@ -26,7 +26,7 @@ import com.sun.java.util.collections.List;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class KnownLocoSelPane extends LocoSelPane  {
 
@@ -66,7 +66,7 @@ public class KnownLocoSelPane extends LocoSelPane  {
         }
         add(pane2a);
 
-        locoBox = Roster.instance().matchingComboBox(null, null, null, null, null, null, null);
+        locoBox = Roster.instance().fullRosterComboBox();
         add(locoBox);
 
         addProgrammerBox();

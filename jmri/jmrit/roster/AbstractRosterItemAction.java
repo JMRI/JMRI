@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  * different that it doesn't use this base class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  * @see         jmri.jmrit.XmlFile
  */
 abstract public class AbstractRosterItemAction extends AbstractAction {
@@ -73,7 +73,7 @@ abstract public class AbstractRosterItemAction extends AbstractAction {
 
     boolean selectExistingFromEntry() {
         // create a dialog to select the roster entry to copy
-        JComboBox selections = Roster.instance().matchingComboBox(null, null, null, null, null, null, null);
+        JComboBox selections = Roster.instance().fullRosterComboBox();
         int retval = JOptionPane.showOptionDialog(mParent,
                                                   "Select one roster entry", "Select roster entry",
                                                   0, JOptionPane.INFORMATION_MESSAGE, null,

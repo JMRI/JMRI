@@ -145,7 +145,7 @@ public class AddressPanel extends JInternalFrame
              }
          });
 
-		 rosterBox = Roster.instance().matchingComboBox(null,null,null,null,null,null,null);
+		 rosterBox = Roster.instance().fullRosterComboBox();
 		 rosterBox.insertItemAt(new NullComboBoxItem(), 0);
 		 rosterBox.setSelectedIndex(0);
 		 rosterBox.addActionListener(new ActionListener()

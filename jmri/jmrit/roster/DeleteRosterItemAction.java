@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
  * an "are you sure" dialog box before acting.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  * @see         jmri.jmrit.XmlFile
  */
 public class DeleteRosterItemAction extends AbstractAction {
@@ -47,7 +47,7 @@ public class DeleteRosterItemAction extends AbstractAction {
         if ( event.getSource() instanceof Component) parent = (Component)event.getSource();
 
         // create a dialog to select the roster entry
-        JComboBox selections = roster.matchingComboBox(null,null, null, null, null,null,null);
+        JComboBox selections = roster.fullRosterComboBox();
         int retval = JOptionPane.showOptionDialog(_who,
                                                   "Select one roster entry", "Select roster entry",
                                                   0, JOptionPane.INFORMATION_MESSAGE, null,
