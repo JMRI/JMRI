@@ -3,22 +3,19 @@
 package jmri.jmrit.roster;
 
 import java.awt.Component;
-import java.awt.GridLayout;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
-import java.awt.Dimension;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-
-import java.beans.PropertyChangeListener;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import com.sun.java.util.collections.List;
 
@@ -26,7 +23,7 @@ import com.sun.java.util.collections.List;
  * Display and edit a RosterEntry.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001; Dennis Miller Copyright 2004
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class RosterEntryPane extends javax.swing.JPanel  {
 
@@ -224,8 +221,6 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         filename.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(filename,cR);
         add(filename);
-
-
     }
 
     /**

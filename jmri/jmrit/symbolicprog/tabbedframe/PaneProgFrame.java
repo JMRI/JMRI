@@ -27,7 +27,7 @@ import org.jdom.Element;
 /**
  * Frame providing a command station programmer from decoder definition files.
  * @author			Bob Jacobsen   Copyright (C) 2001; D Miller Copyright 2003
- * @version			$Revision: 1.40 $
+ * @version			$Revision: 1.41 $
  */
 abstract public class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
@@ -372,7 +372,7 @@ abstract public class PaneProgFrame extends javax.swing.JFrame
                                               "Some changes have not been written to the decoder. They will be lost. Close window?",
                                               "choose one", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.CANCEL_OPTION) return;
         }
-        if (variableModel.fileDirty() ) {
+        if (variableModel.fileDirty() || _rPane.guiChanged(_rosterEntry)) {
             int option = JOptionPane.showOptionDialog(null,"Some changes have not been written to a configuration file. Close window?",
                         "Choose one",
                         JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null,
