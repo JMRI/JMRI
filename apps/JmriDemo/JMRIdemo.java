@@ -58,6 +58,7 @@ public class JMRIdemo extends JPanel {
 	        locoMenu.add(new jmri.jmrix.loconet.locomon.LocoMonAction("LocoNet Monitor"));
     	    locoMenu.add(new jmri.jmrix.loconet.slotmon.SlotMonAction("Slot Monitor"));
         	locoMenu.add(new jmri.jmrix.loconet.locogen.LocoGenAction("Send Packet"));
+        	locoMenu.add(new jmri.jmrix.loconet.locoio.LocoIOAction("LocoIO programmer"));
 
         JMenu nceMenu = new JMenu("NCE");
         menuBar.add(nceMenu);
@@ -67,8 +68,8 @@ public class JMRIdemo extends JPanel {
         JMenu devMenu = new JMenu("Development");
         menuBar.add(devMenu);
 	        devMenu.add(new jmri.jmrit.MemoryFrameAction("Memory usage monitor"));
-	        devMenu.add(new jmri.jmrit.symbolicprog.symbolicframe.SymbolicProgAction("Symbolic Programmer"));
-	        devMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction("Pane Programmer"));
+	        // devMenu.add(new jmri.jmrit.symbolicprog.symbolicframe.SymbolicProgAction("Symbolic Programmer"));
+	        devMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction("Decoder Pro programmer"));
 	        devMenu.add(new AbstractAction("Look & Feel") {
 	        		public void actionPerformed(ActionEvent e) {
 	        			JFrame f = new com.apple.samplecode.swaplaf.SwapLAF();

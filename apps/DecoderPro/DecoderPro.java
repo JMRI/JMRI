@@ -12,7 +12,7 @@ import BasicWindowMonitor;
  * DecoderPro application. 
  *
  * @author			Bob Jacobsen
- * @version			$Id: DecoderPro.java,v 1.7 2002-02-02 07:06:59 jacobsen Exp $
+ * @version			$Id: DecoderPro.java,v 1.8 2002-02-04 07:35:13 jacobsen Exp $
  */
 public class DecoderPro extends JPanel {
 	public DecoderPro() {
@@ -52,6 +52,7 @@ public class DecoderPro extends JPanel {
 
         JMenu toolMenu = new JMenu("Tools");
         menuBar.add(toolMenu);
+	        toolMenu.add(new jmri.jmrit.simpleprog.SimpleProgAction("Single CV Programmer"));
 	        toolMenu.add(new jmri.jmrit.XmlFileCheckAction("Check XML File", this));
 	        toolMenu.add(new jmri.jmrit.NameCheckAction("Check decoder names", this));
 	        toolMenu.add(new jmri.jmrit.tabbedframe.ProgCheckAction("Check programmer names", this));
@@ -69,11 +70,13 @@ public class DecoderPro extends JPanel {
 			pane1.add(new JLabel(new ImageIcon(ClassLoader.getSystemResource("decoderpro.gif"),"Decoder Pro label"), JLabel.LEFT));
 			JPanel pane2 = new JPanel();
 				pane2.setLayout(new BoxLayout(pane2, BoxLayout.Y_AXIS));
-				pane2.add(new JLabel(" Decoder Pro 0.9b7 by Bob Jacobsen "));
+				pane2.add(new JLabel(" Decoder Pro 0.9b7, part of the JRMI project "));
 				pane2.add(new JLabel("   http://jmri.sf.net/DecoderPro "));
 				pane2.add(new JLabel(" "));
 				pane2.add(new JLabel(" Connected via "+prefs.getCurrentProtocolName()));
 				pane2.add(new JLabel(" on port "+prefs.getCurrentPortName()));
+				pane2.add(new JLabel(" "));
+				pane2.add(new JLabel(" Java version "+System.getProperty("java.version","<unknown>")));
 			pane1.add(pane2);
 		add(pane1);
 		

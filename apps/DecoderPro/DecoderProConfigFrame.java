@@ -21,7 +21,7 @@ import org.jdom.Attribute;
  * stored in local variables.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecoderProConfigFrame.java,v 1.10 2002-02-02 07:06:59 jacobsen Exp $
+ * @version			$Id: DecoderProConfigFrame.java,v 1.11 2002-02-04 07:35:13 jacobsen Exp $
  */
 public class DecoderProConfigFrame extends JFrame {
 		
@@ -240,6 +240,16 @@ public class DecoderProConfigFrame extends JFrame {
 					= new jmri.jmrix.loconet.locobuffer.LocoBufferHSAdapter();
 			a.openPort(portName, "DecoderPro");
 			a.configure();
+			if (!a.okToSend()) {
+				log.info("LocoBuffer port not ready to send");
+				JOptionPane.showMessageDialog(null, 
+				   	"The LocoBuffer is unable to accept data.\n"
+				   	+"Make sure its power is on, it is connected\n"
+				   	+"to a working LocoNet, and the command station is on.\n"
+				   	+"The LocoNet LED on the LocoBuffer should be off.\n"
+				   	+"Reset the LocoBuffer by cycling its power.", 
+				    "LocoBuffer not ready", JOptionPane.ERROR_MESSAGE);
+			}
 			
 		} else if (protocolName.equals("LocoNet LocoBuffer 19200bps")) {
 			//
@@ -247,6 +257,17 @@ public class DecoderProConfigFrame extends JFrame {
 					= new jmri.jmrix.loconet.locobuffer.LocoBufferAdapter();
 			a.openPort(portName, "DecoderPro");
 			a.configure();
+			// check for port in OK state
+			if (!a.okToSend()) {
+				log.info("LocoBuffer port not ready to send");
+				JOptionPane.showMessageDialog(null, 
+				   	"The LocoBuffer is unable to accept data.\n"
+				   	+"Make sure its power is on, it is connected\n"
+				   	+"to a working LocoNet, and the command station is on.\n"
+				   	+"The LocoNet LED on the LocoBuffer should be off.\n"
+				   	+"Reset the LocoBuffer by cycling its power.", 
+				    "LocoBuffer not ready", JOptionPane.ERROR_MESSAGE);
+			}
 			
 		} else if (protocolName.equals("LocoNet MS100")) {
 			//
