@@ -9,7 +9,7 @@ package jmri;
  *
  * @see             jmri.ProgrammerManager
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class DefaultProgrammerManager implements ProgrammerManager {
 
@@ -20,7 +20,10 @@ public class DefaultProgrammerManager implements ProgrammerManager {
     }
 
 
-    public Programmer getServiceModeProgrammer() {return mProgrammer;}
+    public Programmer getServiceModeProgrammer() {
+        if (log.isDebugEnabled()) log.debug("return default service-mode programmer");
+        return mProgrammer;
+    }
     public Programmer getOpsModeProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
@@ -34,7 +37,7 @@ public class DefaultProgrammerManager implements ProgrammerManager {
         return null;
     };
     public void releaseOopsModeProgrammer(Programmer p) {}
+
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DefaultProgrammerManager.class.getName());
 }
-
-
 /* @(#)DefaultProgrammerManager.java */
