@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
  * @author     Paul Bender (C) 2002,2003
- * @version    $Revision: 1.21 $
+ * @version    $Revision: 1.22 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -187,30 +187,56 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	/* we're sending a speed to the locomotive */
        	 XNetMessage msg=new XNetMessage(6);
          msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
+         int element4value=0;   /* this is for holding the speed and 
+                                 direction setting */
 	 if(getSpeedIncrement()==XNetConstants.SPEED_STEP_128_INCREMENT) {
 		 // We're in 128 speed step mode
 		 msg.setElement(1,XNetConstants.LOCO_SPEED_128);
+                 // Now, we need to figure out what to send in element 4
+                 // Remember, the speed steps are identified as 0-127 (in 
+	         // 128 step mode), not 1-128.
+                 int speedVal=java.lang.Math.round(speed*126);
+                 // speed step 1 is reserved to indicate emergency stop, 
+                 // so we need to step over speed step 1
+                 if(element4value>=1) { element4value+=1; }
 	 } else if(getSpeedIncrement()==XNetConstants.SPEED_STEP_28_INCREMENT) {
 		 // We're in 28 speed step mode
 		 msg.setElement(1,XNetConstants.LOCO_SPEED_28);
+                 // Now, we need to figure out what to send in element 4
+                 int speedVal=java.lang.Math.round(speed*28);
+                 // The first speed step used is actually at 4 for 28 
+                 // speed step mode.
+                 if(speedVal>=1) { element4value+=3; }
+                 // We have to re-arange the bits, since bit 4 is the LSB,
+                 // but other bits are in order from 0-3
+                 element4value=((speedVal&0x1e)>>1) + 
+                                   ((speedVal & 0x01) <<16);
 	 } else if(getSpeedIncrement()==XNetConstants.SPEED_STEP_27_INCREMENT) {
 		 // We're in 27 speed step mode
 		 msg.setElement(1,XNetConstants.LOCO_SPEED_27);
+                 // Now, we need to figure out what to send in element 4
+                 int speedVal=java.lang.Math.round(speed*27);
+                 // The first speed step used is actually at 4 for 27 
+                 // speed step mode.
+                 if(speedVal>=1) { element4value+=3; }
+                 // We have to re-arange the bits, since bit 4 is the LSB,
+                 // but other bits are in order from 0-3
+                 element4value=((speedVal&0x1e)>>1) + 
+                                   ((speedVal & 0x01) <<16);
 	 } else {
 		 // We're in 14 speed step mode
 		 msg.setElement(1,XNetConstants.LOCO_SPEED_14);
+                 // Now, we need to figure out what to send in element 4
+                 element4value=(int)(speed*14);
+                 int speedVal=java.lang.Math.round(speed*14);
+                 // The first speed step used is actually at 2 for 14 
+                 // speed step mode.
+                 if(element4value>=1) { element4value+=1; }
 	 }
       	 msg.setElement(2,this.getDccAddressHigh());// set to the upper
 						    // byte of the  DCC address
          msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
 						    //of the DCC address
-         // Now, we need to figure out what to send in element 3
-         // Remember, the speed steps are identified as 0-127 (in 
-	 // 128 step mode), not 1-128.
-         int element4value=(int)((speed)*(127)/speedIncrement);
-         // speed step 1 is reserved to indicate emergency stop, so we 
-	 // need to step over speed step 1
-         if(element4value==1) { element4value=2; }
          if(isForward)
  	 {
 	    /* the direction bit is always the most significant bit */
