@@ -19,7 +19,7 @@ import javax.swing.text.*;
 /**
  * Abstact base class for Frames displaying communications monitor information
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public abstract class AbstractMonFrame extends JFrame  {
 
@@ -107,9 +107,9 @@ public abstract class AbstractMonFrame extends JFrame  {
         getContentPane().add(jScrollPane1);
 
         JPanel paneA = new JPanel();
-	paneA.setLayout(new BoxLayout(paneA, BoxLayout.PAGE_AXIS));
+	paneA.setLayout(new BoxLayout(paneA, BoxLayout.Y_AXIS));
         JPanel pane1 = new JPanel();
-	pane1.setLayout(new BoxLayout(pane1, BoxLayout.LINE_AXIS));
+	pane1.setLayout(new BoxLayout(pane1, BoxLayout.X_AXIS));
         pane1.add(clearButton);
         pane1.add(freezeButton);
         pane1.add(rawCheckBox);
@@ -117,7 +117,7 @@ public abstract class AbstractMonFrame extends JFrame  {
 	paneA.add(pane1);
 
         JPanel pane2 = new JPanel();
-	pane2.setLayout(new BoxLayout(pane2, BoxLayout.LINE_AXIS));
+	pane2.setLayout(new BoxLayout(pane2, BoxLayout.X_AXIS));
         pane2.add(openFileChooserButton);
         pane2.add(startLogButton);
         pane2.add(stopLogButton);
