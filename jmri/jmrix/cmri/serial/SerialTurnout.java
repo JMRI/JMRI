@@ -15,23 +15,26 @@ import jmri.NmraPacket;
  *
  * Description:		extend jmri.AbstractTurnout for C/MRI serial layouts
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SerialTurnout extends AbstractTurnout {
 
     /**
-     * Create a turnout object.
-     * The number argument is this devices address within the CMRI
-     * output space.
-     **/
-    public SerialTurnout(int number) {
-        super("CT"+number);
-        _number = number;
+     * Create a Turnout object, with both system and user names.
+     * <P>
+     * 'systemName' was previously validated in SerialTurnoutManager
+     */
+    public SerialTurnout(String systemName, String userName) {
+        super(systemName, userName);
+        // Extract the Node from the name
+        tNode = SerialAddress.getNodeFromSystemName(systemName);
+        // Extract the Bit from the name
+        tBit = SerialAddress.getBitFromSystemName(systemName);
     }
 
-    public int getNumber() { return _number; }
-
-    // Handle a request to change state by sending a turnout command
+    /**
+     * Handle a request to change state by sending a turnout command
+     */
     protected void forwardCommandChangeToLayout(int s) {
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
@@ -60,10 +63,11 @@ public class SerialTurnout extends AbstractTurnout {
     public void dispose() {}  // no connections need to be broken
 
     // data members
-    int _number;   // turnout number
+    SerialNode tNode;  // Serial Node used to control turnout
+    int tBit;          // bit number of turnout control in Serial node
 
     protected void sendMessage(boolean closed) {
-        SerialTrafficController.instance().setOutputState(_number, closed);
+        tNode.setOutputBit(tBit, closed);
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTurnout.class.getName());

@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -54,21 +54,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         this.removeListener(l);
     }
 
-// The following is obsoleted by multi-node extension
-    /**
-     * Manage the outputs (only called by SerialTurnout.java)
-     */
-    public void setOutputState(int number, boolean closed) {
-        // temporary fix to keep turnouts running - this fix assumes
-        //     the turnouts are controlled by bits in the first node
-        //     that equal the turnout number.
-        // set the bit
-        if (nodeArray[0] != null) {
-            nodeArray[0].setOutputBit(number,closed);
-        }
-    }
-// end obsoleted code
-
+// remove this code when SerialLight is operational - obsoleted and doesn't belong here anyway
     /**
      * Public method to set a C/MRI Serial Output bit
      *     Note: systemName is of format CNnnnBxxxx where
@@ -80,12 +66,12 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
      */
     public void setSerialOutput(String systemName, boolean state) {
         // get the node and bit numbers
-        SerialNode node = getNodeFromSystemName(systemName);
+        SerialNode node = SerialAddress.getNodeFromSystemName(systemName);
         if ( node == null ) {
             log.error("bad SerialNode specification in SerialOutput system name:"+systemName);
             return;
         }
-        int bit = getBitFromSystemName(systemName);
+        int bit = SerialAddress.getBitFromSystemName(systemName);
         if ( bit == 0 ) {
             log.error("bad output bit specification in SerialOutput system name:"+systemName);
             return;
@@ -93,72 +79,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         // set the bit
         node.setOutputBit(bit,state);
     }
-    
-    /**
-     * Local method to parse a C/MRI Output Bit system name and return the Serial Node
-     *  Note:  Returns 'NULL' if illegal systemName format or if the node is not found
-     */
-    protected SerialNode getNodeFromSystemName(String systemName) {
-        // validate the system Name leader characters
-        if ( (systemName.charAt(0) != 'C') || ( (systemName.charAt(1) != 'N') ) ) {
-            // here if an illegal format 
-            log.error("illegal character in header field of SerialOutput system name");
-            return (null);
-        }
-        String s = "";
-        boolean noB = true;
-        for (int i = 2; (i<systemName.length()) && noB; i++) {
-            if (systemName.charAt(i) == 'B') {
-                s = systemName.substring(2,i);
-                noB = false;
-            }
-        }
-        if (noB) {
-            log.error("character 'B' not found in SerialOutput system name:"+systemName);
-            return (null);
-        }
-        if (s.length()==0) {
-            log.error("no node address before 'B' in SerialOutput system name:"+systemName);
-            return (null);
-        }
-        int ua = Integer.parseInt(s);
-        return (getNodeFromAddress(ua));
-    }
-    
-    /**
-     * Local method to parse a C/MRI Output Bit system name and return the bit number
-     *   Notes: Bits are numbered from 1.
-     *          If an error is found, 0 is returned.
-     */
-    protected int getBitFromSystemName(String systemName) {
-        // validate the system Name leader characters
-        if ( (systemName.charAt(0) != 'C') || (systemName.charAt(1) != 'N') ) {
-            // here if an illegal format 
-            log.error("illegal character in header field of system name: "+systemName);
-            return (0);
-        }
-        // Find the beginning of the bit number field
-        int k = 0;
-        for (int i = 2; ( (i<systemName.length()) && (k==0) ); i++) {
-            if (systemName.charAt(i) == 'B') {
-                k=i+1;
-            }
-        }
-        if (k==0) {
-            // here if 'B' not found -- an illegal format currently
-            log.error("Character 'B' not found in system name: "+systemName);
-            return (0);
-        }
-        int n = 0;
-        try {
-            n = Integer.parseInt(systemName.substring(k,systemName.length()));
-        }
-        catch (Exception e) {
-            log.error("illegal character in bit number field of SerialOutput system name");
-            return (0);
-        }
-        return (n);
-    } 
+// end of code to be removed
     
     private int numNodes = 0;       // Incremented as Serial Nodes are created and registered
                                     // Corresponds to next available address in nodeArray
