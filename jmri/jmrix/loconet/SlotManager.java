@@ -29,7 +29,7 @@ import jmri.jmrix.*;
  * code definitely can't.
  * <P>
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.16 $
+ * @version         $Revision: 1.17 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 
@@ -744,6 +744,39 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
     }
 
     javax.swing.Timer mPowerTimer = null;
+
+    /**
+     * Start the process of checking each slot for contents.
+     * <P>
+     * This is not invoked by this class, but can be invoked
+     * from elsewhere to start the process of scanning all
+     * slots to update their contents.
+     */
+    public void update() {
+        nextReadSlot = 0;
+        readNextSlot();
+    }
+
+    protected int nextReadSlot = 0;
+    synchronized protected void readNextSlot() {
+        // send info request
+        LocoNetMessage m = new LocoNetMessage(4);
+        m.setOpCode(0xBB);  // OPC_RQ_SL_DATA
+        m.setElement(1, (nextReadSlot++)&0x7F);
+        m.setElement(2, 0);
+        LnTrafficController.instance().sendLocoNetMessage(m);
+
+        // schedule next read if needed
+        if (nextReadSlot < 127) {
+            javax.swing.Timer t = new javax.swing.Timer(500, new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    readNextSlot();
+                }
+            });
+            t.setRepeats(false);
+            t.start();
+        }
+    }
 
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SlotManager.class.getName());
