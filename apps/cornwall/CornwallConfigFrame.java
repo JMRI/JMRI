@@ -20,12 +20,23 @@ import org.jdom.Attribute;
  * stored in local variables.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class CornwallConfigFrame extends apps.AbstractConfigFrame {
 
     public CornwallConfigFrame(String name) {
         super(name);
+    }
+
+    /**
+     * CornwallRR only supports the C/MRI and LocoNet protocols, so the parent member is overloaded
+     */
+    public String[] availableProtocols() {
+        return  new String[] {"(None selected)",
+                              "CMRI serial",
+                              "LocoNet LocoBuffer","LocoNet MS100",
+                              "LocoNet Server", "LocoNet HexFile"
+        };
     }
 
     /**
