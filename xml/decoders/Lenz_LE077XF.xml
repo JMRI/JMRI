@@ -1,14 +1,18 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Lenz_LE077XF.xml,v 1.5 2002-01-13 20:33:34 jacobsen Exp $ -->
+<!-- $Id: Lenz_LE077XF.xml,v 1.6 2002-03-12 05:36:06 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Joe Ellis filker@mindspring.com"
 			version="2" lastUpdated="20020112" />
 			<!-- Updated to new names by jake@physics.berkeley.edu -->
 
 <decoder>
-	<family name="Lenz LE077XF" mfg="Lenz">
+	<family name="Lenz LE077XF" mfg="Lenz" lowVersionID="44" highVersionID="45">
 		<model model="LE077XF" numOuts="3" />
+		<model model="LE103XF" numOuts="2" />
+		<model model="LE105XF" numOuts="4" />
+		<model model="LE062XF" numOuts="2" />
+		<model model="LE010XF" numOuts="2" />
 	</family>
 
 	<programming direct="byteOnly" paged="yes"

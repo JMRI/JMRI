@@ -1,0 +1,355 @@
+<?xml version="1.0"?>
+<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<!-- $Id: TCS_Tx.xml,v 1.1 2002-03-12 05:36:06 jacobsen Exp $ -->
+<decoder-config>
+		<version author="jake@physics.berkeley.edu" 
+					version="1" lastUpdated="200200302"/>
+
+		<!-- Version 1 - made from NMRA & Digitrax examples -->
+		
+<decoder>
+	<family name="TCS Tx" mfg="Train Control Systems" lowVersionID="16">
+		<model model="T1" numOuts="2" numFns="2" />
+		<model model="T2" numOuts="5" numFns="5">
+			<output name="4" label="Violet"/> </model>
+	</family>
+
+	<programming direct="yes" paged="yes" 
+	                     register="yes" ops="yes"></programming>
+
+	<variables>
+		<variable label="Primary Address" CV="1" item="Short Address" default="03">
+			<decVal min="1" max="127"/>
+			</variable>
+		<variable label="Start voltage" CV="2" item="Vstart"
+						comment="A value of 255 corresponds to 100%">
+			<decVal></decVal>
+			</variable>
+		<variable label="Acceleration Rate" CV="3" item="Accel">
+			<decVal max="255"/>
+			</variable>
+		<variable label="Deceleration Rate" CV="4" item="Decel">
+			<decVal max="255"/>
+			</variable>
+		<variable label="Maximum Voltage" CV="5" item="Vhigh">
+			<decVal/>
+			</variable>
+		<variable label="Midpoint Voltage" CV="6" item="Vmid">
+			<decVal/>
+			</variable>
+		<variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
+				<decVal/>
+			</variable>
+		<variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer">
+				<decVal/>
+			</variable>
+
+		<variable label="Long Address" CV="17" item="Extended Address">
+			<longAddressVal/>
+			</variable>
+		<variable label="Advanced Consist address" CV="19" item="Consist Address">
+			<decVal/>
+			</variable>
+		<variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
+			<enumVal>
+				<enumChoice choice="forward"/>
+				<enumChoice choice="reverse"/>
+				</enumVal>
+			</variable>
+		<variable label="Speed steps" CV="29" mask="XXXXXXVX" 
+				item="Speed Step Mode" default="1">
+			<enumVal>
+				<enumChoice choice="14"/>
+				<enumChoice choice="28/128"/>
+				</enumVal>
+			</variable>
+		<variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1"
+					 item="Analog (DC) Operation">
+			<enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+				</enumVal>
+			</variable>
+		<variable label="Use Speed Table" CV="29" mask="XXXVXXXX"
+					item="Speed Table Definition">
+			<enumVal>
+				<enumChoice choice="Use Vstart, Vmid, Vhigh"/>
+				<enumChoice choice="Use Table"/>
+				</enumVal>
+			</variable>
+		<variable label="Addressing Mode" CV="29" mask="XXVXXXXX"
+					item="Address Format">
+			<enumVal>
+				<enumChoice choice="2 digit addressing"/>
+				<enumChoice choice="4 digit addressing"/>
+				</enumVal>
+			</variable>
+		<variable label="Forward light F0F effect generated" CV="49" mask="XXXXVVVV"
+					item="Function F0F effect generated">
+			<enumVal>
+				<enumChoice choice="Normal on/off control"/>
+				<enumChoice choice="Random flicker (fire box)"/>
+				<enumChoice choice="Mars"/>
+				<enumChoice choice="Flashing light"/>
+				<enumChoice choice="Single pulse strobe"/>
+				<enumChoice choice="Double pulse strobe"/>
+				<enumChoice choice="Rotary beacon"/>
+				<enumChoice choice="Gyra lite"/>
+				<enumChoice choice="Run 17"/>
+				<enumChoice choice="Normal on/off control"/>
+				<enumChoice choice="Blinking ditch light A"/>
+				<enumChoice choice="Blinking ditch light B"/>
+				<enumChoice choice="Dim"/>
+				<enumChoice choice="Reserved (0x0D)"/>
+				<enumChoice choice="Reserved (0x0E)"/>
+				<enumChoice choice="Reserved (0x0F)"/>
+				</enumVal>
+			</variable>
+		<variable label="Forward light F0F behaviour" CV="49" mask="VVVVXXXX"
+					item="Function F0F behaviour">
+			<enumVal>
+				<enumChoice choice="Function on when loco going forward"/>
+				<enumChoice choice="Function on when loco going forward"/>
+				<enumChoice choice="Normal on/off control"/>
+				<enumChoice choice="Normal on/off control"/>
+				<enumChoice choice="Function on when loco forward and FL on"/>
+				<enumChoice choice="Function on when loco reverse and FL on"/>
+				<enumChoice choice="Reserved (0x6)"/>
+				<enumChoice choice="Reserved (0x7)"/>
+				<enumChoice choice="Reserved (0x8)"/>
+				<enumChoice choice="Reserved (0x9)"/>
+				<enumChoice choice="Reserved (0xA)"/>
+				<enumChoice choice="Reserved (0xB)"/>
+				<enumChoice choice="Reserved (0xC)"/>
+				<enumChoice choice="Reserved (0xD)"/>
+				<enumChoice choice="Reserved (0xE)"/>
+				<enumChoice choice="Reserved (0xF)"/>
+				</enumVal>
+			</variable>
+		<variable label="Reverse light F0R effect generated" CV="50" mask="XXXXVVVV"
+					item="Function F0R effect generated">
+			<enumVal>
+				<enumChoice choice="Normal on/off control"/>
+				<enumChoice choice="Random flicker (fire box)"/>
+				<enumChoice choice="Mars"/>
+				<enumChoice choice="Flashing light"/>
+				<enumChoice choice="Single pulse strobe"/>
+				<enumChoice choice="Double pulse strobe"/>
+				<enumChoice choice="Rotary beacon"/>
+				<enumChoice choice="Gyra lite"/>
+				<enumChoice choice="Run 17"/>
+				<enumChoice choice="Normal on/off control"/>
+				<enumChoice choice="Blinking ditch light A"/>
+				<enumChoice choice="Blinking ditch light B"/>
+				<enumChoice choice="Dim"/>
+				<enumChoice choice="Reserved (0x0D)"/>
+				<enumChoice choice="Reserved (0x0E)"/>
+				<enumChoice choice="Reserved (0x0F)"/>
+				</enumVal>
+			</variable>
+		<variable label="Reverse light F0R behaviour" CV="50" mask="VVVVXXXX"
+					item="Function F0R behaviour" default="1">
+			<enumVal>
+				<enumChoice choice="Function on when loco going forward"/>
+				<enumChoice choice="Function on when loco going forward"/>
+				<enumChoice choice="Normal on/off control"/>
+				<enumChoice choice="Normal on/off control"/>
+				<enumChoice choice="Function on when loco forward and FL on"/>
+				<enumChoice choice="Function on when loco reverse and FL on"/>
+				<enumChoice choice="Reserved (0x6)"/>
+				<enumChoice choice="Reserved (0x7)"/>
+				<enumChoice choice="Reserved (0x8)"/>
+				<enumChoice choice="Reserved (0x9)"/>
+				<enumChoice choice="Reserved (0xA)"/>
+				<enumChoice choice="Reserved (0xB)"/>
+				<enumChoice choice="Reserved (0xC)"/>
+				<enumChoice choice="Reserved (0xD)"/>
+				<enumChoice choice="Reserved (0xE)"/>
+				<enumChoice choice="Reserved (0xF)"/>
+				</enumVal>
+			</variable>
+
+		<variable label="Function 1 effect generated" CV="51" mask="XXXXVVVV" minFn="1">
+			<enumVal>
+				<enumChoice choice="Normal on/off control"/>
+				<enumChoice choice="Random flicker (fire box)"/>
+				<enumChoice choice="Mars"/>
+				<enumChoice choice="Flashing light"/>
+				<enumChoice choice="Single pulse strobe"/>
+				<enumChoice choice="Double pulse strobe"/>
+				<enumChoice choice="Rotary beacon"/>
+				<enumChoice choice="Gyra lite"/>
+				<enumChoice choice="Run 17"/>
+				<enumChoice choice="Normal on/off control"/>
+				<enumChoice choice="Blinking ditch light A"/>
+				<enumChoice choice="Blinking ditch light B"/>
+				<enumChoice choice="Dim"/>
+				<enumChoice choice="Reserved (0x0D)"/>
+				<enumChoice choice="Reserved (0x0E)"/>
+				<enumChoice choice="Reserved (0x0F)"/>
+				</enumVal>
+			</variable>
+		<variable label="Function 1 behaviour" CV="51" mask="VVVVXXXX" minFn="1">
+			<enumVal>
+				<enumChoice choice="Function on when loco going forward"/>
+				<enumChoice choice="Function on when loco going forward"/>
+				<enumChoice choice="Normal on/off control"/>
+				<enumChoice choice="Normal on/off control"/>
+				<enumChoice choice="Function on when loco forward and FL on"/>
+				<enumChoice choice="Function on when loco reverse and FL on"/>
+				<enumChoice choice="Reserved (0x6)"/>
+				<enumChoice choice="Reserved (0x7)"/>
+				<enumChoice choice="Reserved (0x8)"/>
+				<enumChoice choice="Reserved (0x9)"/>
+				<enumChoice choice="Reserved (0xA)"/>
+				<enumChoice choice="Reserved (0xB)"/>
+				<enumChoice choice="Reserved (0xC)"/>
+				<enumChoice choice="Reserved (0xD)"/>
+				<enumChoice choice="Reserved (0xE)"/>
+				<enumChoice choice="Reserved (0xF)"/>
+				</enumVal>
+			</variable>
+		<variable label="Function 2 effect generated" CV="52" mask="XXXXVVVV" minFn="2">
+			<enumVal>
+				<enumChoice choice="Normal on/off control"/>
+				<enumChoice choice="Random flicker (fire box)"/>
+				<enumChoice choice="Mars"/>
+				<enumChoice choice="Flashing light"/>
+				<enumChoice choice="Single pulse strobe"/>
+				<enumChoice choice="Double pulse strobe"/>
+				<enumChoice choice="Rotary beacon"/>
+				<enumChoice choice="Gyra lite"/>
+				<enumChoice choice="Run 17"/>
+				<enumChoice choice="Normal on/off control"/>
+				<enumChoice choice="Blinking ditch light A"/>
+				<enumChoice choice="Blinking ditch light B"/>
+				<enumChoice choice="Dim"/>
+				<enumChoice choice="Reserved (0x0D)"/>
+				<enumChoice choice="Reserved (0x0E)"/>
+				<enumChoice choice="Reserved (0x0F)"/>
+				</enumVal>
+			</variable>
+		<variable label="Function 2 behaviour" CV="52" mask="VVVVXXXX" minFn="2">
+			<enumVal>
+				<enumChoice choice="Function on when loco going forward"/>
+				<enumChoice choice="Function on when loco going forward"/>
+				<enumChoice choice="Normal on/off control"/>
+				<enumChoice choice="Normal on/off control"/>
+				<enumChoice choice="Function on when loco forward and FL on"/>
+				<enumChoice choice="Function on when loco reverse and FL on"/>
+				<enumChoice choice="Reserved (0x6)"/>
+				<enumChoice choice="Reserved (0x7)"/>
+				<enumChoice choice="Reserved (0x8)"/>
+				<enumChoice choice="Reserved (0x9)"/>
+				<enumChoice choice="Reserved (0xA)"/>
+				<enumChoice choice="Reserved (0xB)"/>
+				<enumChoice choice="Reserved (0xC)"/>
+				<enumChoice choice="Reserved (0xD)"/>
+				<enumChoice choice="Reserved (0xE)"/>
+				<enumChoice choice="Reserved (0xF)"/>
+				</enumVal>
+			</variable>
+		<variable label="Function 3 effect generated" CV="53" mask="XXXXVVVV" minFn="3">
+			<enumVal>
+				<enumChoice choice="Normal on/off control"/>
+				<enumChoice choice="Random flicker (fire box)"/>
+				<enumChoice choice="Mars"/>
+				<enumChoice choice="Flashing light"/>
+				<enumChoice choice="Single pulse strobe"/>
+				<enumChoice choice="Double pulse strobe"/>
+				<enumChoice choice="Rotary beacon"/>
+				<enumChoice choice="Gyra lite"/>
+				<enumChoice choice="Run 17"/>
+				<enumChoice choice="Normal on/off control"/>
+				<enumChoice choice="Blinking ditch light A"/>
+				<enumChoice choice="Blinking ditch light B"/>
+				<enumChoice choice="Dim"/>
+				<enumChoice choice="Reserved (0x0D)"/>
+				<enumChoice choice="Reserved (0x0E)"/>
+				<enumChoice choice="Reserved (0x0F)"/>
+				</enumVal>
+			</variable>
+		<variable label="Function 3 behaviour" CV="53" mask="VVVVXXXX" minFn="3">
+			<enumVal>
+				<enumChoice choice="Function on when loco going forward"/>
+				<enumChoice choice="Function on when loco going forward"/>
+				<enumChoice choice="Normal on/off control"/>
+				<enumChoice choice="Normal on/off control"/>
+				<enumChoice choice="Function on when loco forward and FL on"/>
+				<enumChoice choice="Function on when loco reverse and FL on"/>
+				<enumChoice choice="Reserved (0x6)"/>
+				<enumChoice choice="Reserved (0x7)"/>
+				<enumChoice choice="Reserved (0x8)"/>
+				<enumChoice choice="Reserved (0x9)"/>
+				<enumChoice choice="Reserved (0xA)"/>
+				<enumChoice choice="Reserved (0xB)"/>
+				<enumChoice choice="Reserved (0xC)"/>
+				<enumChoice choice="Reserved (0xD)"/>
+				<enumChoice choice="Reserved (0xE)"/>
+				<enumChoice choice="Reserved (0xF)"/>
+				</enumVal>
+			</variable>
+
+		<variable label="Dither frequency" CV="56"
+				item="Dither frequency">
+			<decVal/>
+			</variable>
+		<variable label="Dither amplitude" CV="57" 
+				item="Dither option" >
+			<decVal/>
+			</variable>
+
+		<variable label="Mars and Gyralite modulation frequency" 
+						CV="59" default="46"
+					item="Global lighting option 1">
+			<decVal/>
+			</variable>
+		<variable label="Time between Mars and Gyralite modulations" 
+						CV="60" default="54"
+					item="Global lighting option 2">
+			<decVal/>
+			</variable>
+
+		<variable label="Functions in analog mode" CV="61" mask="XXXXXXXV"
+				item="Analog Mode Function Status - FL(f)">
+			<enumVal>
+				<enumChoice choice="off"/>
+				<enumChoice choice="on"/>
+				</enumVal>
+			</variable>
+		<variable label="Dim opposite lighting" CV="61" mask="XXXXXXVX"
+			item="Global lighting option 3">
+			<enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+				</enumVal></variable>
+				
+		<variable label="User Private ID #1" CV="105"
+					item="User Id #1">
+			<decVal/>
+			</variable>
+		<variable label="User Private ID #2" CV="106"
+					item="User Id #2">
+			<decVal/>
+			</variable>
+		<variable label="Speed Table" CV="67">
+			<speedTableVal/>
+			</variable>
+			
+	<!-- Define the fixed Function-Output mapping -->
+	<constant label="FL(f) controls output 1" minOut="1" default="1" /> 
+	<constant label="FL(r) controls output 2" minOut="2" default="1" /> 
+	<constant label="F1 controls output 3" minOut="3" minFn="1" default="1" /> 
+	<constant label="F2 controls output 4" minOut="4" minFn="2" default="1" /> 
+	<constant label="F3 controls output 5" minOut="5" minFn="3" default="1" /> 
+	<constant label="F4 controls output 6" minOut="6" minFn="4" default="1" /> 
+	<constant label="F5 controls output 7" minOut="7" minFn="5" default="1" /> 
+	<constant label="F6 controls output 8" minOut="8" minFn="6" default="1" /> 
+	<constant label="F7 controls output 9" minOut="9" minFn="7" default="1" /> 
+	<constant label="F8 controls output 10" minOut="10" minFn="8" default="1" /> 
+
+	</variables>
+
+</decoder>
+
+</decoder-config>

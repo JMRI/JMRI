@@ -2,7 +2,7 @@
 <!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
 
 <programmer-config>
-<!-- $Id: Comprehensive.xml,v 1.1 2002-01-13 03:36:57 jacobsen Exp $ -->
+<!-- $Id: Comprehensive.xml,v 1.2 2002-03-12 05:36:40 jacobsen Exp $ -->
 		<version author="Mark Gurries, Bob Jacobsen" 
 					version="3" lastUpdated="20020112"/>
 
@@ -40,6 +40,8 @@
 			<label label=" "/>
 			<display item="DC Brake Momentum"/>
 			<display item="Total PWM Period"/>
+			<display item="Dither frequency" />
+			<display item="Dither option" />
 		</column>
 		<column>
 			<display item="EMF Static Config"/>

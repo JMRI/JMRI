@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE names-config SYSTEM "names-config.dtd">
-<!-- $Id: names.xml,v 1.7 2002-02-04 07:37:27 jacobsen Exp $ -->
+<!-- $Id: names.xml,v 1.8 2002-03-12 05:36:40 jacobsen Exp $ -->
 <names-config>
 		<version author="jake@physics.berkeley.edu" 
 			version="7" lastUpdated="20020112"/>
@@ -115,12 +115,16 @@
 		<definition item="Consist Adjustments Active"/>
 
 
-	<!-- BEMF variables -->
+	<!-- BEMF & motor control variables -->
 		
 		<definition item="EMF Feedback Cutout" CV="10" /> <!-- NMRA -->
 		<definition item="EMF Static Config" />
 		<definition item="EMF Dynamic Config" />
 		<definition item="EMF Droop Config" />
+
+
+		<definition item="Dither frequency" />
+		<definition item="Dither option" />
 		
 	<!-- Lighting section -->
 		
