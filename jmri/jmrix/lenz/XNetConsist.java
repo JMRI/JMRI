@@ -5,7 +5,7 @@
  * it uses the XPressNet specific commands to build a consist.
  *
  * @author                      Paul Bender Copyright (C) 2004
- * @version                     $Revision: 2.4 $
+ * @version                     $Revision: 2.5 $
  */
 
 package jmri.jmrix.lenz;
@@ -163,9 +163,22 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 		       addToConsistList(LocoAddress,directionNormal);
 		    }
 		 } else {
-			notifyConsistListeners(LocoAddress,
+                      // The only way it is valid for us to do something
+                      // here is if the locomotive we're adding is
+                      // already in the consist and we want to change
+                      // it's direction
+                      if(ConsistList.size()==2 &&   
+                         ConsistList.contains(Integer.toString(LocoAddress))) {
+                      addToCSConsist(LocoAddress, directionNormal);    
+                      // save the address for the check after we get aresponse
+                      // from the command station
+                      _locoAddress = LocoAddress;
+                      _directionNormal = directionNormal;
+                      } else {
+   			notifyConsistListeners(LocoAddress,
 				ConsistListener.CONSIST_ERROR | 
 				ConsistListener.CONSIST_FULL);
+			}
 		 }
 	      } else {
 		log.error("Consist Type Not Supported");
@@ -251,11 +264,41 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
          *        the same direction as the consist, or false otherwise.
          */
 	private synchronized void addToCSConsist(int LocoAddress, boolean directionNormal) {
-		// All we have to do here is create an apropriate XNetMessage, 
-		// and send it.
-		XNetMessage msg=XNetMessage.getBuildDoubleHeaderMsg(Integer.parseInt((String)ConsistList.get(0)),LocoAddress);
-		XNetTrafficController.instance().sendXNetMessage(msg,this);
-		_state=ADDREQUESTSENTSTATE;
+	   // If the consist already contains the locomotive in
+           // question, we need to disolve the consist
+           if(ConsistList.size()==2 &&
+                     ConsistList.contains(Integer.toString(LocoAddress))) {
+              XNetMessage msg=XNetMessage.getDisolveDoubleHeaderMsg(
+                           Integer.parseInt((String)ConsistList.get(0)));  
+              XNetTrafficController.instance().sendXNetMessage(msg,this);
+           }
+
+	   // We need to make sure the directions are set correctly
+           // In order to do this, we have to pull up both throttles,
+           // and check that the direction of the trailing locomotive
+           // is correct relative to the lead locomotive.
+                
+           XNetThrottle lead= new XNetThrottle(Integer.parseInt((String)ConsistList.get(0)));
+		
+	   XNetThrottle trail = new XNetThrottle(LocoAddress);
+
+           if(directionNormal) {
+              if(log.isDebugEnabled()) log.debug("DOUBLE HEADER: Set direction of trailing locomotive same as lead locomotive");
+              trail.setIsForward(lead.getIsForward());
+	      sendDirection(lead,lead.getIsForward());
+	      sendDirection(trail,lead.getIsForward());
+           } else {
+              if(log.isDebugEnabled()) log.debug("DOUBLE HEADER: Set direction of trailing locomotive opposite lead locomotive");
+              trail.setIsForward(!lead.getIsForward());
+	      sendDirection(lead,lead.getIsForward());
+	      sendDirection(trail,!lead.getIsForward());
+           }
+
+	   // All we have to do here is create an apropriate XNetMessage, 
+	   // and send it.
+	   XNetMessage msg=XNetMessage.getBuildDoubleHeaderMsg(Integer.parseInt((String)ConsistList.get(0)),LocoAddress);
+	   XNetTrafficController.instance().sendXNetMessage(msg,this);
+	   _state=ADDREQUESTSENTSTATE;
 	}
 
         /*
@@ -358,6 +401,56 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 	public void message(XNetMessage l){
 	}
 
+	/* 
+	 * <P>
+	 * Set the speed and direction of a locomotive; bypassing the 
+	 * commands in the throttle, since they don't work for this 
+	 * application
+	 * <P> 
+	 * For this application, we also set the speed setting to 0, which 
+	 * also establishes control over the locomotive in the consist.
+	 * @param t is an XPressNett throttle
+ 	 * @param isForward is the boolean value representing the desired 
+	 * direction
+	 */
+	private void sendDirection(XNetThrottle t,boolean isForward){
+	 XNetMessage msg=new XNetMessage(6);
+         msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
+         int element4value=0;   /* this is for holding the speed and
+                                 direction setting */
+         if(t.getSpeedIncrement()==XNetConstants.SPEED_STEP_128_INCREMENT) {
+                 // We're in 128 speed step mode
+                 msg.setElement(1,XNetConstants.LOCO_SPEED_128);
+         } else if(t.getSpeedIncrement()==XNetConstants.SPEED_STEP_28_INCREMENT) {
+                 // We're in 28 speed step mode
+                 msg.setElement(1,XNetConstants.LOCO_SPEED_28);
+         } else if(t.getSpeedIncrement()==XNetConstants.SPEED_STEP_27_INCREMENT) {
+                 // We're in 27 speed step mode
+                 msg.setElement(1,XNetConstants.LOCO_SPEED_27);
+         } else {
+                 // We're in 14 speed step mode
+                 msg.setElement(1,XNetConstants.LOCO_SPEED_14);
+	 }
+
+         msg.setElement(2,
+		LenzCommandStation.getDCCAddressHigh(t.getDccAddress()));
+						    // set to the upper
+                                                    // byte of the  DCC address
+         msg.setElement(3,
+		LenzCommandStation.getDCCAddressLow(t.getDccAddress())); 
+						    // set to the lower byte
+                                                    // of the DCC address
+         if(isForward)
+         {
+            /* the direction bit is always the most significant bit */
+            element4value+=128;
+         }
+        msg.setElement(4,element4value);
+        msg.setParity(); // Set the parity bit
+
+        // now, we send the message to the command station
+        XNetTrafficController.instance().sendXNetMessage(msg,this);
+    }
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetConsist.class.getName());
 
