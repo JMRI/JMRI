@@ -23,7 +23,7 @@ import javax.swing.JTextField;
  * SensorTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 
 public class SensorTableAction extends AbstractTableAction {
@@ -35,8 +35,9 @@ public class SensorTableAction extends AbstractTableAction {
      * resulting frame.  Perhaps this should be changed?
      * @param s
      */
-    public SensorTableAction(String s) { super(s); }
-    public SensorTableAction() {}
+    public SensorTableAction(String actionName) {
+        super(actionName);
+    }
 
     /**
      * Create the JTable DataModel, along with the changes

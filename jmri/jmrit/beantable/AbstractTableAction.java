@@ -5,6 +5,7 @@ package jmri.jmrit.beantable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
+import jmri.util.AbstractFrameAction;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -14,13 +15,14 @@ import javax.swing.JButton;
  * SignalHeadTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 abstract public class AbstractTableAction extends AbstractAction {
 
-    public AbstractTableAction(String s) { super(s);}
-    public AbstractTableAction() { }
+    public AbstractTableAction(String actionName) {
+        super(actionName);
+    }
 
     BeanTableDataModel m;
 
