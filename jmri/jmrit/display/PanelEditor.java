@@ -28,7 +28,7 @@ import com.sun.java.util.collections.ArrayList;
  *
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class PanelEditor extends JPanel {
@@ -128,6 +128,7 @@ public class PanelEditor extends JPanel {
             panel.setLayout(new FlowLayout());
             panel.add(iconAdd);
             panel.add(pickIcon);
+            pickIcon.setToolTipText("Click to select new icon");
             pickIcon.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         pickLabelIcon();
@@ -234,8 +235,9 @@ public class PanelEditor extends JPanel {
             activeIcon = to.getActiveIcon();
             inactiveIcon = to.getInactiveIcon();
             activeIconButton = new JButton(activeIcon);
-
+            activeIconButton.setToolTipText("Icon for sensor active. Click to select new icon");
             inactiveIconButton = new JButton(inactiveIcon);
+            inactiveIconButton.setToolTipText("Icon for sensor inactive. Click to select new icon");
 
             panel.add(sensorAdd);
             panel.add(nextSensor);
