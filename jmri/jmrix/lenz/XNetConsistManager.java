@@ -5,7 +5,7 @@
  *                        XNetConsist class for the consists it builds
  *
  * @author                Paul Bender Copyright (C) 2004
- * @version               $ version 1.00 $
+ * @version               $Revision 1.0 $
  */
 
 
