@@ -8,7 +8,7 @@ package jmri.jmrix;
  * Handles the character manipulation.
  *
  * @author		Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 abstract public class AbstractMRReply {
     // is this logically an abstract class?
@@ -115,7 +115,7 @@ abstract public class AbstractMRReply {
         return index;
     }
 
-    static protected int maxSize = 120;
+    static public final int maxSize = 120;
 
     // contents (private)
     private int _nDataChars;
