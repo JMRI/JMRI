@@ -1,6 +1,6 @@
 <!-- ugly first attempt at an ANT build.xml file for JMRI development -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.6 $ -->
+<!-- Revision $Revision: 1.7 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -145,7 +145,19 @@
 	</style>
   </target>
   
-  <target name="xslt" depends="init, models, index, selection, csv"
+  <target name="id" depends="init, copyDTD, copyXML" 
+  			description="create a page on decoder selection">
+    <style  basedir="${target}"
+    		destdir="${target}"
+    		extension=".xml.html"
+    		style="DecoderID.xsl"
+    		in="pages/decoderIndex.xml"
+    		out="pages/DecoderId.html"
+    	>
+	</style>
+  </target>
+  
+  <target name="xslt" depends="init, models, index, selection, csv, id"
   		description="run the whole sequence of processing" />
   		
   <target name="upload" description="Upload existing results to web site" >
