@@ -24,9 +24,9 @@ package jmri.jmrix.lenz;
  * be returned in any particular thread. See the XNetListener doc
  * for more background.
  *
- * @author			Bob Jacobsen Copyright (C) 2001
- * @see jmri.jmrix.lenz.LocoNetListener
- * @see jmri.jmrix.lenz.LnTrafficController
+ * @author			Bob Jacobsen Copyright (C) 2001, 2002
+ * @see jmri.jmrix.lenz.XNetListener
+ * @see jmri.jmrix.lenz.XNetTrafficController
  *
  */
 public interface XNetInterface {

@@ -11,7 +11,7 @@ import java.util.Vector;
  * method for locating the local implementation.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Revision: 1.1 $
+ * @version 		$Revision: 1.2 $
  *
  */
 public abstract class XNetTrafficController implements XNetInterface {
@@ -29,7 +29,8 @@ public abstract class XNetTrafficController implements XNetInterface {
 
     /**
      * Must provide a LenzCommandStation reference at creation time
-     * @return
+     * @param pCommandStation reference to associated command station object,
+     *          preserved for later.
      */
     XNetTrafficController(LenzCommandStation pCommandStation) {
         mCommandStation = pCommandStation;
@@ -83,7 +84,10 @@ public abstract class XNetTrafficController implements XNetInterface {
     /** Reference to the command station in communication here */
     LenzCommandStation mCommandStation;
 
-    /** get access to communicating command station object */
+    /**
+     * Get access to communicating command station object
+     * @return associated Command Station object
+     */
     public LenzCommandStation getCommandStation() { return mCommandStation; }
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetTrafficController.class.getName());
