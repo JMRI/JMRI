@@ -19,7 +19,7 @@ import org.jdom.*;
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
@@ -419,7 +419,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 cs.gridwidth = 1;
             }
             else if (name.equals("dccaddress")) {
-                JPanel l = addDccAddressPanel();
+                JPanel l = addDccAddressPanel(e);
                 cs.gridwidth = GridBagConstraints.REMAINDER;
                 g.setConstraints(l, cs);
                 c.add(l);
@@ -528,7 +528,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 cs.gridheight = 1;
             }
             else if (name.equals("dccaddress")) {
-                JPanel l = addDccAddressPanel();
+                JPanel l = addDccAddressPanel(e);
                 cs.gridheight = GridBagConstraints.REMAINDER;
                 g.setConstraints(l, cs);
                 c.add(l);
@@ -713,17 +713,26 @@ public class PaneProgPane extends javax.swing.JPanel
         _varModel = null;
     }
 
-    private JPanel addDccAddressPanel() {
-        JPanel l = new DccAddressPanel(_varModel);
+    private JPanel addDccAddressPanel(Element e) {
+        JPanel l;
+        if (e.getAttribute("label")!=null)
+            l = new DccAddressPanel(_varModel, e.getAttribute("label").getValue());
+        else
+            l = new DccAddressPanel(_varModel);
         panelList.add(l);
         // make sure this will get read/written, even if real vars not on pane
         int iVar;
         iVar = _varModel.findVarIndex("Address Format");
         if (iVar>=0) varList.add(new Integer(iVar));
-        iVar = _varModel.findVarIndex("Primary Address");
+        else log.debug("addDccAddressPanel did not find Address Format");
+
+        iVar = _varModel.findVarIndex("Short Address");
         if (iVar>=0) varList.add(new Integer(iVar));
-        iVar = _varModel.findVarIndex("Extended Address");
+        else log.debug("addDccAddressPanel did not find Short Address");
+
+        iVar = _varModel.findVarIndex("Long Address");
         if (iVar>=0) varList.add(new Integer(iVar));
+        else log.debug("addDccAddressPanel did not find Long Address");
         return l;
     }
 
