@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <!--Written by JMRI version 1.5.2 on Sun Aug 08 19:24:37 PDT 2004 $Id: decoderIndex.xml,v 1.65 2004-08-09 02:27:45 jacobsen Exp $-->
-  <decoderIndex version="81">
+  <!--Written by JMRI version 1.5.3 on Mon Aug 23 20:17:27 PDT 2004 $Id: decoderIndex.xml,v 1.66 2004-08-24 03:23:36 jacobsen Exp $-->
+  <decoderIndex version="83">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -1019,6 +1019,21 @@
       <family name="TCS Mx series decoders" mfg="Train Control Systems" type="locomotive" file="TCS_zMx.xml">
         <model model="M1" numOuts="2" numFns="2" lowVersionID="24" highVersionID="24" connector="unspecified" nmraWarrant="no">
           <size length="0.500" width="0.375" height="0.125" units="inches" />
+        </model>
+      </family>
+      <family name="Umelec ATLPlus Engine Module" mfg="Umelec" type="locomotive" file="Umelec_ATL2051.xml">
+        <model model="ATL2051" lowVersionID="59" highVersionID="59" comment="For DC Motors, or AC Motors with Infrared Light Barrier" maxInputVolts="12V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="HO" numOuts="9" numFns="8" connector="unspecified" nmraWarrant="no" />
+        <model model="ATL2054" lowVersionID="19" highVersionID="19" comment="For DC Motors, includes EMP control" maxInputVolts="12V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="HO" numOuts="9" numFns="8" connector="unspecified" nmraWarrant="no" />
+      </family>
+      <family name="Umelec ATLPlus Engine Module" mfg="Umelec" type="locomotive" file="Umelec_ATL2064.xml">
+        <model model="ATL2064" lowVersionID="12" highVersionID="12" maxInputVolts="12V" maxMotorCurrent="1A" maxTotalCurrent="1A" formFactor="HO" numOuts="9" numFns="8" connector="unspecified" nmraWarrant="no">
+          <output name="3" label="Pad C" connection="unspecified" />
+          <output name="4" label="Pad D" connection="unspecified" />
+          <output name="5" label="Whistle" connection="unspecified" />
+          <output name="6" label="Sound" connection="unspecified" />
+          <output name="7" label="Signal" connection="unspecified" />
+          <output name="8" label="Main Sw" connection="unspecified" />
+          <output name="9" label="Vmid" connection="unspecified" />
         </model>
       </family>
       <family name="Wangrow basic decoders" mfg="Wangrow" type="locomotive" file="Wangrow_2.xml">
