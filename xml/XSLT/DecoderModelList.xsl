@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: DecoderModelList.xsl,v 1.2 2003-08-09 00:51:19 jacobsen Exp $ -->
+<!-- $Id: DecoderModelList.xsl,v 1.3 2003-08-09 01:13:01 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI decoder definition to a HTML page -->
 
@@ -98,9 +98,9 @@
 <td bgcolor="#eeeeee" valign="top" align="center"><xsl:value-of select="@label"/></td>
 <td bgcolor="#eeeeee" valign="top" align="center"><xsl:value-of select="@mask"/></td>
 <td bgcolor="#eeeeee" valign="top">
-<ul>
+<OL start="0">
 	<xsl:apply-templates select="enumVal"/>
-</ul>
+</OL>
 </td>
 </tr>
 </xsl:template>
