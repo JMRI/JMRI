@@ -1,0 +1,231 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Bob Jacobsen, LBL">
+   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>Nick Kulp's Cornwall RR dispatcher panel</title>
+</head>
+<body>
+
+
+<IMG SRC="../images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
+
+JMRI was used to create the dispatcher control panel for Nick Kulp's
+<A href="http://kc.pennsyrr.com/layouts/kulp/index.html">Cornwall RR</a>.
+This page briefly describes how it was done.  
+Links to other pages with more detail are included, but many of those pages
+do not exist yet or are still under contruction.
+
+<P>
+<IMG src="SmallCornwallPanel.gif" WIDTH="502" HEIGHT="302" HSPACE="0" VSPACE="0">
+
+<h2><A href="http://kc.pennsyrr.com/layouts/kulp/index.html">The layout</a></h2>
+Nick's layout uses a mixture of
+C/MRI and DCC.  The block detectors, turnout position sensors, and 
+signals are all attached to a C/MRI serial system.  The locomotives
+are run using DIgitrax DCC.  Some turnouts are thrown manually, and
+some are operated by Tortoise motors connected to SwitchIt DCC decoders
+and thrown via the Digitrax system.
+<P>
+The layout has 45 signal heads controlled by the C/MRI system.  Most
+have red, yellow and green aspects; there are a couple that also indicate
+diverging routes with flashing yellow.  The signals respond to occupancy
+to provide an automatic interlocking system.
+<P>
+Originally, the dispatcher worked via applications on two computers.
+One ran the C/MRI system that showed block occupancy and drove the
+signals, while another application on a different laptop was used to
+throw turnouts.
+
+<h2>Creating the panel</h2>
+Nick wanted a computer-based panel for his dispatcher that would
+make it easier to run the railroad.  It should clearly show which sections
+are occupied, how the turnouts will route the trains, and the appearance
+of the signals.  It should also allow the dispatcher to change motorized
+turnouts with a click.  And of course, it should look good.
+<P>
+The first step is to draw the background of the panel into a GIF file.  
+In this case, the track schematic was drawn as 3-pixel white lines on a 
+black background, with connecting lines for turnouts drawn at a 45 degree angle.
+You can do this with any paint program you happen to have, but this picture
+was drawn with "GraphicConvertor" on a Macintosh.
+<BR>
+<IMG src="cornwallmainpanel.gif" WIDTH="500" HEIGHT="300" HSPACE="0" VSPACE="0">
+<P>
+To save screen space, the schematic was split into "over" and "under" 
+parts.  This is not very prototypical, but certainly works well.  Since the
+GIF file only uses three colors, it was made much smaller by storing it in 
+4-color mode.
+<P>
+To turn this picture into a control panel, you have JMRI display it, and
+then place "icons" in front of it that are redisplayed as the layout status
+changes.  For example, there are icons for lit 
+<IMG src="REDLED.gif">
+and unlit 
+<IMG src="GRAYLED.gif">
+red LED indicators. By having a "SensorIcon" display a red LED when
+a particular block is occupied (sensor active), and a gray one when the
+block is unoccupied (sensor inactive), you get an occupancy indication on the
+panel.
+<P>
+To actually do this:
+<UL>
+<LI>Start the JmriDemo program, and make sure it's talking to the layout
+<LI>Select "New panel" from the "Panels" menu item.
+<LI>(Need a bunch more text here; for now, see
+<A HREF="Panels.html">the earlier panels page</a>.
+</ul>
+Be sure to save the panel to a file when you're done using "Store..." under
+the panels menu.
+<P>
+
+If you have lots of icons to place, this can become unwieldy.  The panel
+definition is stored in a human-readable form in an XML file, which you
+can directly edit.  Each icon on the screen in one line on the screen, with
+some extra stuff at the top and bottom of the file.  The format is almost
+self-explanatory. x="12", for example, means draw the icon at an x coordinate
+of 12 pixels;  the top left corner is 0,0 (x, y), with y growing down the screen.
+You can duplicate and
+edit lines with your favorite tools.  For example, if you want to have
+to icons line up on a horizontal line, you might find it easier to position the 
+first item perfectly by hand, and then edit the rest of the lines to have the
+same y= coordinates.
+
+<P>
+A similar technique is used for the turnouts on the schematic.  The indicators
+on the schematic are meant to show the actual positions of the turnouts, not
+just the last status sent by the DCC system, so they respond to the C/MRI sensors
+using two icons:  
+<IMG src="TurnoutClosedL.gif">
+and
+<IMG src="TurnoutThrownL.gif">.
+These are positioned over the turnouts on the track schematic background. 
+They cover (with the little back blob) a bit of track on either the normal
+or diverging route, so that the screen displays only one line as complete.
+In this case, these icons were made by clipping a few pixels from the
+background drawing. There are "left" and "right" sets for the two basic types
+of turnouts used; they can be rotated via the popup menu to work with the various
+turnout orientations on the schematic.
+
+<P>
+Next, we start adding the turnout controls.  These are attached to DCC turnouts, 
+not C/MRI sensors, so that they will send a DCC message when clicked.  The 
+show two different images depending on whether the turnout has been commanded
+to be "Closed/Normal"
+<IMG src="plateSwitchN.gif">
+or "Thrown/Reversed"
+<IMG src="plateSwitchR.gif">.
+<P>
+<IMG SRC="turnout.gif" ALIGN=RIGHT>
+Nick also wanted the turnout controls to look like they had small indicator
+lamps over each side to show the actual status of the turnout.  This was done
+by adding two sensor icons there.  The one on the left would show
+<IMG src="yellow.gif"> if the turnout was closed, and 
+<IMG src="gray.gif"> if it was thrown.  The icon on the right
+would do the reverse, showing 
+<IMG src="gray.gif"> if the turnout was closed, and 
+<IMG src="red.gif"> if it was thrown.  
+<P>
+Finally, the turnout number over the switch plate was added as part of the background picture,
+and the control panel was ready to go.
+
+<H2>The CornwallRR custom program</h2>
+All of the above can be done using just the JmriDemo program that's
+part of the normal distribution. Nick wanted a couple more
+things, though:
+<IMG SRC="cornwall_logo.gif" ALIGN=RIGHT WIDTH="210" HEIGHT="44" >
+
+<UL>
+<LI>Automatically open the panel when the program starts
+<LI>Customize the menus somewhat
+<LI>Show a Cornwall RR logo instead of the normal JMRI one
+<LI>Drive the layout signals (see below)
+</UL>
+It was easiest to do these by copying the start-up code for the JmriDemo program,
+and producing a special version for Nick.  If you're interested, it can 
+be found as "apps.cornwall.CorwallRR" in 
+<A HREF="../Technical/index.html#cvs">CVS</a>.
+<P>
+Since all of the JMRI source is openly available, its quite easy to 
+create a version customized to your own desires.
+
+
+<h2>Signalling</h2>
+Signalling is a vital part of the Cornwall Railroad's operations.  If JMRI
+was going to drive the railroad, it had to properly handle the signals.
+(There's no way to share the C/MRI system between the existing program for
+driving signals, and a new program for the dispatcher panel).
+<P>
+Like input sensors and turnouts, JMRI can display signal icons on the screen
+that follow the aspect of a signal head. The Cornwall panel was setup to 
+use small graphics for this to avoid making it too busy:
+red <IMG src="right-red-short-white.gif">,
+yellow <IMG src="right-yellow-short-white.gif">,
+flashing yellow <IMG src="right-flashyellow-short-white.gif">,
+green <IMG src="right-green-short-white.gif">.
+
+<P>
+To actually drive the signal aspects from the turnout and occupancy status,
+Java code was written based on JMRI's 
+<A href="../Automat.html">automation classes</a>.
+Each of the 45 signals is driven by its own code snippet. 
+Since Nick already had a QBASIC program to use as an example, 
+the CrrSection class was created that would let the Java signal logic
+code look very similar.  For example, this is the logic for
+signal 13B:
+<pre><code>
+        int value = GREEN;
+        if ( !tu7 || bo15 || tu8 )
+            value = RED;
+        else if (!tu9 && bo22)
+            value = RED;
+        else if (tu9 && bo23)
+            value = RED;
+
+        if (value == GREEN && !tu9 && si87)
+            value = YELLOW;
+        else if (value == GREEN && tu9 && si90)
+            value = YELLOW;
+</code></pre>
+<P>
+Note that although prototype signals use logic that "starts with red, and see
+if you can find a reason to turn it green", the existing Cornwall logic was
+written the other way around.  Rather than change that, we wanted to get that
+same logic into the new program with as little change as possible.
+
+<P>
+JMRI makes it very easy to debug this logic, as the program doesn't
+have to be connected to the layout to let you test it.  You can change the
+state of an occupancy detector or turnout sensor on the display (though clearly not
+on the layout itself!) by clicking on it, and then see whether the signals 
+respond appropriately.  Even complicated interlocking logic can be 
+checked out quickly using this.
+
+<h2>Summary</H2>
+The process to create the Cornwall signalling and dispatcher panel was 
+straightforward, if a little long.
+
+<HR>
+<BR>Site hosted by: <BR>
+<A href="http://sourceforge.net"> 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A>
+ 
+
+<script language=javascript 
+src="http://ss.webring.com/navbar?f=j;y=bob_jacobsen15;u=100088115910095949">
+</script><noscript><center>
+<table bgcolor=gray cellspacing=0 border=2 bordercolor=red><tr>
+<td><table cellpadding=2 cellspacing=0 border=0><tr><td align=center>
+<font face=arial size=-1>This site is a member of WebRing. 
+<br>To browse visit <a href="http://ss.webring.com/navbar?f=l;y=bob_jacobsen15;u=100088115910095949">
+Here</a>.</font></td></tr></table></td></tr></table>
+</center></noscript>
+
+<hr>
+Bob Jacobsen<BR>
+jake@physics.berkeley.edu
+
+</body>
+</html>
