@@ -10,7 +10,6 @@
 <body>
 
 <PRE>
-
 This is version 0.8 of "JMRI Demo".
 
 This demo works with Digitrax LocoNet and NCE-equipped layouts. It provides
@@ -55,8 +54,8 @@ You also need the javax.comm package.  An installer can be downloaded from
 You will need the MacOS X administrator password to run it.
   
 Some device drivers will list each port under several names, e.g. starting
-with "tty" or "cu".  In that case, select the one that starts with "tty" 
-for best performance.
+with "/dev/tty" or "/dev/cu", for example "/dev/tty.KeyUSA19181.1". In that case, 
+select the one that starts with "tty" for best performance.
 
 
 OS/2 instructions:
@@ -158,10 +157,13 @@ For more information on the LocoBuffer, please see
   
 The demo program is tested on an MS100 and USB Macintosh using a Keyspan PDA 
 Adapter to provide the serial port; for information please see 
-http://jmri.sourceforge.net/DigiTrax/KeyspanAdapters/KeyspanUSB.html.  
-Its not known if a standard Macintosh RS422 serial port will work directly 
-with an MS100; if you have a pre-USB Macintosh and want to use this demo, please 
-contact us for more information.
+http://jmri.sourceforge.net/DigiTrax/KeyspanAdapters/KeyspanUSB.html. 
+ 
+A standard Macintosh RS422 serial port will not work directly 
+with an MS100. Since it doesn't have two output status lines (DTR and RTS),
+it can't provide correct power to the MS100.  It may be possible to 
+provide external power; if you're interested in trying this, we'd
+be happy to help work out a solution.
 
 See below if you don't have a hardware connection to a LocoNet layout available.
 
@@ -245,7 +247,7 @@ http://jmri.sourceforge.net/SymbProg/index.html
 
 
 For more information
-================
+====================
 
 More information is available on the JMRI web page:   http://jmri.sourceforge.net/
 
