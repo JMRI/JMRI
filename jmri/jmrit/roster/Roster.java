@@ -40,7 +40,7 @@ import org.jdom.output.XMLOutputter;
  * sort is done manually each time an entry is added.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.18 $
+ * @version	$Revision: 1.19 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -297,16 +297,24 @@ public class Roster extends XmlFile {
     /**
      * Set the default location for the Roster file, and all
      * individual locomotive files.
-     * @param f Absolute pathname to use
+     *
+     * @param f Absolute pathname to use. A null or "" argument flags
+     * a return to the original default in prefsdir.
      */
     public static void setFileLocation(String f) {
-        fileLocation = f;
-        if (f.endsWith(File.separator))
-            LocoFile.setFileLocation(f+"roster");
-        else
-            LocoFile.setFileLocation(f+File.separator+"roster");
+        if (f!=null && !f.equals("")) {
+            fileLocation = f;
+            if (f.endsWith(File.separator))
+                LocoFile.setFileLocation(f+"roster");
+            else
+                LocoFile.setFileLocation(f+File.separator+"roster");
+        } else {
+            if (log.isDebugEnabled()) log.debug("Roster location reset to default");
+            fileLocation = XmlFile.prefsDir();
+            LocoFile.setFileLocation(XmlFile.prefsDir()+File.separator+"roster"+File.separator);
+        }
     }
-    
+
     static String getFileLocation() { return fileLocation; }
 
     /**
