@@ -2,19 +2,9 @@
 
 package jmri.jmrit.symbolicprog;
 
-import jmri.Programmer;
-import jmri.InstanceManager;
-import jmri.ProgListener;
+import java.util.*;
 
-import java.awt.Component;
-import java.awt.event.*;
-import java.beans.PropertyChangeListener;
-import java.util.Vector;
-import java.awt.*;
 import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.text.*;
-import com.sun.java.util.collections.ArrayList;
 
 /**
  * Representation of a short address (CV1).
@@ -23,7 +13,7 @@ import com.sun.java.util.collections.ArrayList;
  * written.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  *
  */
 public class ShortAddrVariableValue extends DecVariableValue {
