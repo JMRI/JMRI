@@ -1,3 +1,11 @@
+/** 
+ * MS100Frame.java
+ *
+ * Description:		Frame to control and connect LocoNet via MS100 interface and comm port
+ * @author			Bob Jacobsen   Copyright (C) 2001
+ * @version			
+ */
+
 package LocoMon;
 
 import java.awt.*;

@@ -4,7 +4,7 @@
  * Title:			MS100Adapter
  * Description:		Provide access to LocoNet via a MS100 attached to a serial comm port.
  *					Normally controlled by the MS100Frame class.
- * @author			Bob Jacobsen
+ * @author			Bob Jacobsen   Copyright (C) 2001
  * @version			
  */
 
