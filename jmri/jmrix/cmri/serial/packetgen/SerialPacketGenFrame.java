@@ -2,17 +2,24 @@
 
 package jmri.jmrix.cmri.serial.packetgen;
 
-import jmri.util.*;
-import jmri.jmrix.cmri.serial.*;
+import jmri.util.StringUtil;
+import jmri.jmrix.cmri.serial.SerialMessage;
+import jmri.jmrix.cmri.serial.SerialReply;
+import jmri.jmrix.cmri.serial.SerialTrafficController;
 
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
 
 /**
  * Frame for user input of CMRI serial messages
  * @author	Bob Jacobsen   Copyright (C) 2002, 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SerialPacketGenFrame extends javax.swing.JFrame implements jmri.jmrix.cmri.serial.SerialListener {
 
