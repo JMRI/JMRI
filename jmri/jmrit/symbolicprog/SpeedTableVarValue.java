@@ -30,31 +30,35 @@ import javax.swing.event.*;
  *A similar pattern is used for a read or write request.  Write writes them all;
  *Read reads any that aren't READ or WRITTEN.
  *<P>
+ * Speed tables can have different numbers of entries; 28 is the default, and also the maximum.
+ *<P>
  * Description:		Extends VariableValue to represent a NMRA long address
  * @author			Bob Jacobsen, Alex Shepherd   Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
 
-    final int nValues = 28;
-    BoundedRangeModel[] models = new BoundedRangeModel[nValues];
+    int nValues;
+    BoundedRangeModel[] models;
 
 	/**
 	 * Create the object with a "standard format ctor".  Note that max and min are ignored.
 	 */
 	public SpeedTableVarValue(String name, String comment, boolean readOnly,
 							int cvNum, String mask, int minVal, int maxVal,
-							Vector v, JLabel status, String stdname) {
+							Vector v, JLabel status, String stdname, int entries) {
 		super(name, comment, readOnly, cvNum, mask, v, status, stdname);
 
+                nValues = entries;
+                models = new BoundedRangeModel[nValues];
 		// create the set of models
 		for (int i=0; i<nValues; i++) {
 			// create each model
 			DefaultBoundedRangeModel j = new DefaultBoundedRangeModel(255*i/nValues, 0, 0, 255);
 			models[i] = j;
 			// connect each model to CV for notification
-			// the connection is to cvNum through cvNum+27 (28 values total)
+			// the connection is to cvNum through cvNum+nValues (28 values total typically)
 			// The invoking code (e.g. VariableTableModel) must ensure the CVs exist
 			// Note that the default values in the CVs are zero, but are the ramp
 			// values here.  We leave that as work item 177, and move on to set the
@@ -162,22 +166,22 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 		// prop.firePropertyChange("Value", null, null);
 	}
 
-	public Component getRep(String format)  {
-		// put together a new panel in scroll pane
-		JPanel j = new JPanel();
+    public Component getRep(String format)  {
+        // put together a new panel in scroll pane
+        JPanel j = new JPanel();
 
-		GridBagLayout g = new GridBagLayout();
-		GridBagConstraints cs = new GridBagConstraints();
-		j.setLayout(g);
+        GridBagLayout g = new GridBagLayout();
+        GridBagConstraints cs = new GridBagConstraints();
+        j.setLayout(g);
 
-		for (int i=0; i<nValues; i++) {
-			cs.gridy = 0;
-			cs.gridx = i;
+        for (int i=0; i<nValues; i++) {
+            cs.gridy = 0;
+            cs.gridx = i;
 
             CvValue cv = (CvValue)_cvVector.elementAt(getCvNum()+i);
-			JSlider s = new VarSlider(models[i], cv);
-			s.setOrientation(JSlider.VERTICAL);
-			s.addChangeListener(this);
+            JSlider s = new VarSlider(models[i], cv);
+            s.setOrientation(JSlider.VERTICAL);
+            s.addChangeListener(this);
 
             int currentState = cv.getState();
             int currentValue = cv.getValue();
@@ -197,55 +201,59 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
                 float newSize = v.getFont().getSize() * 0.8f;
                 v.setFont(v.getFont().deriveFont(newSize));
             } catch (NoSuchMethodError e) {}  // just carry on with larger fonts
-			j.add ( v );
+            j.add ( v );
 
-			cs.gridy++;
+            cs.gridy++;
             g.setConstraints(s, cs);
 
-			j.add(s);
-		}
+            j.add(s);
+        }
 
         // add control buttons
         JPanel k = new JPanel();
         JButton b;
         k.add(b = new JButton("Force Straight"));
         k.setToolTipText("Insert straight line between min and max");
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				doForceStraight(e);
-			}
-		});
+        b.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                doForceStraight(e);
+            }
+        });
         k.add(b = new JButton("Match ends"));
         k.setToolTipText("Insert a straight line between existing endpoints");
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				doMatchEnds(e);
-			}
-		});
+        b.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                doMatchEnds(e);
+            }
+        });
         k.add(b = new JButton("Constant ratio curve"));
         k.setToolTipText("Insert a constant ratio curve between existing endpoints");
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				doRatioCurve(e);
-			}
-		});
+        b.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                doRatioCurve(e);
+            }
+        });
         k.add(b = new JButton("Log curve"));
         k.setToolTipText("Insert a logarithmic curve between existing endpoints");
-		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
-				doLogCurve(e);
-			}
-		});
+        b.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                doLogCurve(e);
+            }
+        });
 
         cs.gridy=2;
         cs.gridx = 0;
         cs.gridwidth = GridBagConstraints.RELATIVE;
         g.setConstraints(k, cs);
-        j.add(k);
 
-		return j;
+        JPanel val = new JPanel();
+        val.setLayout(new BorderLayout());
+        val.add(j, BorderLayout.CENTER);
+        val.add(k, BorderLayout.SOUTH);
 
-	}
+        return val;
+
+    }
 
     /**
      * Set the values to a straight line from 0 to 255
@@ -460,7 +468,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     // clean up connections when done
     public void dispose() {
         if (log.isDebugEnabled()) log.debug("dispose");
-            // the connection is to cvNum through cvNum+27 (28 values total)
+            // the connection is to cvNum through cvNum+nValues (28 values typical)
             for (int i=0; i<nValues; i++) {
                 ((CvValue)_cvVector.elementAt(getCvNum()+i)).removePropertyChangeListener(this);
             }
