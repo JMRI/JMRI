@@ -19,7 +19,7 @@ import org.jdom.Element;
  * Table data model for display of variables in symbolic programmer.
  * Also responsible for loading from the XML file...
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version      $Revision: 1.5 $
+ * @version      $Revision: 1.6 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -237,11 +237,17 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 			v1.lastItem();
 
 		} else if ( (child = e.getChild("speedTableVal")) != null) {
-			// ensure all 28 CVs exist
-			for (int i=0; i<28; i++) { _cvModel.addCV(""+(CV+i)); }
+                        Attribute entriesAttr = child.getAttribute("entries");
+                        int entries = 28;
+                        try {
+                            if (entriesAttr!=null) entries = entriesAttr.getIntValue();
+                        } catch (org.jdom.DataConversionException e1) {}
+
+			// ensure all CVs exist
+			for (int i=0; i<entries; i++) { _cvModel.addCV(""+(CV+i)); }
 
 			v = new SpeedTableVarValue(name, comment, readOnly,
-								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item);
+								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item, entries);
 
 		} else if ( (child = e.getChild("longAddressVal")) != null) {
 			_cvModel.addCV(""+(CV+1));  // ensure 2nd CV exists
