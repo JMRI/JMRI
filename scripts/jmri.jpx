@@ -15,7 +15,7 @@
   <property category="runtime.1" name="ConfigurationName" value="JMRI Demo"/>
   <property category="runtime.1" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
   <property category="runtime.1" name="application.class" value="apps.JmriDemo.JMRIdemo"/>
-  <property category="runtime.1" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy"/>
+  <property category="runtime.1" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/"/>
   <property category="runtime.1" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.1" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
   <property category="runtime.1" name="appserver.servername" value="standard"/>
@@ -76,6 +76,11 @@
   <property category="sys" name="WorkingDirectory" value="../"/>
   <node name="Additional Settings" type="Folder">
     <property category="sys" name="SettingsFolder" value="1"/>
+    <file path="src/jmri/jmrix/loconet/locormi/LnMessageBuffer.java">
+      <property category="generated" name="JavaSoft.rmic.0" value="jmri/jmrix/loconet/locormi/LnMessageBuffer_Skel.java"/>
+      <property category="generated" name="JavaSoft.rmic.1" value="jmri/jmrix/loconet/locormi/LnMessageBuffer_Stub.java"/>
+      <property category="idl" name="GenerateRMI" value="true"/>
+    </file>
     <file path="src/jmri/jmrix/loconet/locormi/LnMessageServer.java">
       <property category="generated" name="JavaSoft.rmic.0" value="jmri/jmrix/loconet/locormi/LnMessageServer_Skel.java"/>
       <property category="generated" name="JavaSoft.rmic.1" value="jmri/jmrix/loconet/locormi/LnMessageServer_Stub.java"/>
