@@ -16,7 +16,7 @@ package jmri;
  * non-system-specific code.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class InstanceManager {
 
@@ -39,6 +39,8 @@ public class InstanceManager {
         mSignalHeadManager = new AbstractSignalHeadManager();
         return mSignalHeadManager;
     }
+
+    static public CommandStation commandStationInstance()  { return mCommandStation; }
 
     static private PowerManager _powerManager = null;
     static public void setPowerManager(PowerManager p) {
@@ -87,6 +89,13 @@ public class InstanceManager {
         if (p!=mSignalHeadManager && mSignalHeadManager!=null && log.isDebugEnabled()) log.debug("SignalHeadManager instance is being replaced: "+p);
         if (p!=mSignalHeadManager && mSignalHeadManager==null && log.isDebugEnabled()) log.debug("SignalHeadManager instance is being installed: "+p);
         mSignalHeadManager = p;
+    }
+
+    static private CommandStation mCommandStation = null;
+    static public void setCommandStation(CommandStation p) {
+        if (p!=mCommandStation && mCommandStation!=null && log.isDebugEnabled()) log.debug("CommandStation instance is being replaced: "+p);
+        if (p!=mCommandStation && mCommandStation==null && log.isDebugEnabled()) log.debug("CommandStation instance is being installed: "+p);
+        mCommandStation = p;
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(InstanceManager.class.getName());
