@@ -1,21 +1,13 @@
-jbuilder1 -d java/src &jmri &apps
-jbuilder2 &xml
+# build a JBuilder project directory in standard form
+# Note that this does not work from JBuilder itself!
+jbuilder -a xml jbuilderjava
+
+# build the java/ directory, which contains the actual JBuilder project
+jbuilder -a jbuilderjava jbuilder1 jbuilder2 jbuilder3
+jbuilder1 -d java site index.html
+jbuilder2 -d java/src &jmri &apps
 jbuilder3 -d java &test
-jbuilder4 -d java site index.html
 
-jbuilder -a xml jbuilder4 jbuilder1 jbuilder3
-
-# the following works directly, but not from JBuilder
-#jbuilder -a src prx
-#src -a djmri dapps dxml
-#djmri -d java/src &jmri 
-#dapps -d java/src &apps
-#dxml -d java/src &xml
-#prx -d java site index.html
-
-#djmri -d java/src jmri
-#dapps -d java/src apps
-#dxml -d java/src xml
 
 # Three different line formats are valid:
 #	key	-a    aliases...
