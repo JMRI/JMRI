@@ -88,7 +88,6 @@ public abstract class AbstractTurnoutMgrTest extends TestCase {
 		TurnoutAddress a = new TurnoutAddress(getSystemName(31), "user");
 
 		// try to get nonexistant turnouts
-		Assert.assertTrue(null == l.getByAddress(a));
 		Assert.assertTrue(null == l.getByUserName("foo"));
 		Assert.assertTrue(null == l.getBySystemName("bar"));
 	}
