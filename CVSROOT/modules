@@ -1,7 +1,8 @@
 #jbuilder -d java/src &jmri &apps &xml
 
-jbuilder -a src site/index.html
+jbuilder -a src prx
 src -d java/src &jmri &apps &xml
+prx site/index.html
 
 #djmri -d java/src jmri
 #dapps -d java/src apps
