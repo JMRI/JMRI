@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.20 $)
+distribution.  ($Revision: 1.21 $)
 
 Start with a directory, typically called "Distributions", that
 contains:
@@ -22,7 +22,7 @@ contains:
 This probably already exists....
 
 ( ) Go to your working directory and
-	cvs tag Release-1-2-3 src test jmri.jpx build.xml 
+	cvs tag Release-1-2-3 src test manifest jmri.jpx build.xml 
 	cd ..
 	cvs tag Release-1-2-3 xml resources lib default.lcf
 	
