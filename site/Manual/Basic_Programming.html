@@ -5,40 +5,56 @@
    <meta name="Author" content="Joseph A. Ellis - TesserAct Studios">
    <meta name="GENERATOR" content="Mozilla/4.5 (Macintosh; U; PPC) [Netscape]">
    <title>Basic Programming</title>
+   <link href="DecoderPro.css" rel="stylesheet" type="text/css">
 </head>
-<body text="#000000" bgcolor="#96D1D4" link="#0000FF" vlink="#551A8B" alink="#BD7B35">
 
-<center><a NAME="Top"></a><img SRC="Pix/Logo.jpg" ALT="JMRI DecoderPro Logo" NOSAVE BORDER=5 height=152 width=210></center>
-
-<center>
+<body>
+<a NAME="Top"></a>
 <h1>
-Using Decoder Pro</h1></center>
+<img SRC="Pix/Logo.JPG" ALT="JMRI DecoderPro Logo" BORDER=10 height=140 width=185 vspace="15"></h1>
 
-<div align=right><a href="index.html#Basic Programmer">Back to Index</a></div>
+<h1>Using Decoder Pro</h1>
 
-<center>
-<hr WIDTH="100%"></center>
+<div align=right>
+<p><a href="Getting_Started.html#Getting Started">Back to Previous Section</a>
+<p><a href="index.html#Basic Programmer">Back to Index</a>
+</div>
 
-<h2>
-<a NAME="Setting Up"></a>Setting Up the Programmer</h2>
-We shall assume you've been through the previous section (<a href="Getting_Started.html#Top">Getting
-Started</a>) , have your computer hooked up to your command station/booster
+
+<hr>
+
+<h2><a NAME="Setting Up"></a>Setting Up the Programmer</h2>
+<p>
+We shall assume you've been through the previous section 
+(<a href="Getting_Started.html#Top">Getting Started</a>) , have your computer hooked up to your command station/booster
 with any necessary interface device, and are now ready to actually program
 a decoder.
-<p>Since there are such a wide variety of decoders that have different
+
+<p>
+On opening the software, you'll see the splash page again, and be given
+three options:
+
+<ol>
+     <li><b>Use programming track</b> - Program the locomotive on the dedicated programming track. Not all command stations support a dedicated programming track, and some will only "broadcast" programming commands, which can mean every locomotive on the layout gets the same programming! If in doubt, check your documentation.
+     <li><b>Program on main track</b> - Also known as "<b>service mode</b>" or "<b>ops mode</b>" programming, this lets you program a specifc decoder on the layout, even while it is operating. However, because it addresses a specific decoder, you cannot  change a decoder's address using this method!
+     <li><b>Quit</b> - Rather obviously, exit the program. 
+</ol>
+<p>
+Since it's highly unlikely that you'd have gotten this far if you were a quitter, click on either of the programming buttons. You'll see this screen:
+
+<h1><img SRC="Pix/Set_Up.JPG" ALT="Set Up Screen" BORDER=5 height=586 width=476></h1>
+
+<div align=right>
+<p><a href="index.html#Basic Programmer">Back to Index</a>
+</div>
+<hr>
+<br>
+<h2><a NAME="Select Decoder"></a>How to select the right decoder programmer</h2>
+<p>
+Because there are such a wide variety of decoders that have different
 features and capabilities, it is necessary to set up the programmer for
 the specific decoder you have installed in your locomotive.
-<p>On opening the software, you'll see the splash page again, and be given
-the option to continue or quit. Since it's highly unlikely that you'd have
-gotten this far if you were a quitter, click on the "<b>Continue</b>" button.
-You'll see this screen:
-<center>
-<p><img SRC="Pix/Set_up.jpg" ALT="Set Up Screen" NOSAVE BORDER=5 height=572 width=521></center>
-
-<div align=right><a href="index.html#Basic Programmer">Back to Index</a></div>
-
-<h2>
-<a NAME="Select Decoder"></a>How to select the right decoder programmer</h2>
+<p>
 With the decoder-equipped locomotive on the programming track, click on
 the "<b>Ident</b>" button towards the middle ot the window on the right
 hand side, right across from "<b>Decoder Installed</b>". DecoderPro will
@@ -48,143 +64,151 @@ is! This can take a little bit of time - since the decoder can only answer
 a while to get the right answers. When the program finds the correct decoder,
 it will display it in the appropriate section of the white portion of the
 window and the "<b>Open Programmer</b>" button will become active.
-<p><font color="#660000">This method will only work if your command station
+<p>
+This method will only work if your command station
 is capable of reading back CVs. Many lower end and/or older systems do
 not provide this capability. If the command station cannot read CVs from
 the programming track, then you will have to select the decoder manually
 from the list provided as described below. If DecoderPro knows your system
-cannot read CVs, then the <b>Ident</b> buttons will not be available.</font>
-<p>If you have a decoder that hasn't been added to the list yet, DecoderPro
-might not come up with the specific decoder. In this case, open the manufacturer's
-folder and find the right decoder or one closely related. Another option
-would be to open the NMRA decoder, a generic standard file that (for basic
-programming, at least) should cover your needs.
-<p>Note that in this example the "<b>Programmer format</b>" has been set
+cannot read CVs, then the <b>Ident</b> buttons will not be available.
+<p>
+If you have a decoder that hasn't been added to the list yet, DecoderPro
+might not come up with the specific decoder. In this case, open the manufacturer's folder and find the right decoder or one closely related. Another option would be to open the NMRA decoder, a generic standard file that (for basic programming, at least) should cover your needs.
+<p>
+Note that in this example the "<b>Programmer format</b>" has been set
 to "<b>Basic</b>". This is a good place to start if you're new to DCC decoder
 programming, because you won't be able to do much damage if you make mistakes.
-<p>Once you've selected a decoder, or DecoderPro has done it for you, the
+<p>
+Once you've selected a decoder, or DecoderPro has done it for you, the
 "<b>Open Programmer</b>" button will be activated. Click on it to move
 to the next step.
-<div align=right><a href="index.html#Basic Programmer">Back to Index</a></div>
 
-<h1>
-<a NAME="Basic Programmer"></a>The Basic Programmer</h1>
+<div align=right>
+<p><a href="index.html#Basic Programmer">Back to Index</a>
+</div>
+<hr>
+<br>
+<h1><a NAME="Basic Programmer"></a>The Basic Programmer</h1>
 
-<h2>
-<a NAME="Roster"></a>The Roster Entry Screen</h2>
+<h2><a NAME="Roster"></a>The Roster Entry Screen</h2>
+<p>
 A <b>roster</b> is a simply a database of all locomotives that your installation
 of DecoderPro has programmed. It includes the information seen in the screen
 below:
-<center>
-<p><img SRC="Pix/Basic_Roster.jpg" ALT="Basic Programmer Roster Tab" NOSAVE BORDER=5 height=493 width=521></center>
 
-<p><br>
-<br>
-<br>
-<p>Most of these fields are self-explanatory. However, note that the first
+<h1><img SRC="Pix/Basic_Roster.JPG" ALT="Basic Programmer Roster Tab" BORDER=5 height=531 width=696></h1>
+
+<p>
+Most of these fields are self-explanatory. However, note that the first
 field (<b>ID</b>) becomes the file name for the locomotive. I like to use
 the locomotive number, two spaces, and then the locomotive type for this
 field. In the event I want to look something up later or restore some data
 that got corrupted it makes things easier. The "<b>Comment</b>" field is
 a good place to put the date you purchased the locomotive, price, or any
 other information you might feel is important to record.
-<p>The "<b>Save</b>" button writes the current decoder information to the
+<p>
+The "<b>Save</b>" button writes the current decoder information to the
 drive and folder where the program is installed.
-<p>The "<b>Reset to Defaults</b>" button returns the values <u>i<b>n the
-computer</b></u> to those that would be in the decoder as shipped from
-the factory. It does <b><u><font color="#FF0000">not</font></u></b> write
+<p>
+The "<b>Reset to Defaults</b>" button returns the values 
+<span class="ACCENT">in the
+computer</span> to those that would be in the decoder as shipped from
+the factory. It does <span class="ACCENT">not</span> write
 those values to the decoder! To do so, you would have to press either the
 "<b>Write Sheet</b>" or "<b>Write All</b>" buttons.
-<p>At the bottom of the window there are several programming mode options:
-<font color="#660000"><b>Paged
-Mode</b>, <b>Direct Bit</b>, <b>Direct Byte</b>,
-<b>Register Mode</b>,
-and <b>Address Mode</b>.&nbsp;</font> For most newer decoders, stay with
-"P<b>aged Mode</b>"<font color="#660000"> or whichever Direct mode your
-Command Station supports. </font>Your decoder documentation will let you
-know if programming in some other mode is necessary.
-<br>&nbsp;
-<h2>
-<a NAME="Programming Modes"></a><font color="#660000">Some brief comments
-on Programming modes</font></h2>
-<font color="#660000"><b>Address Mode</b> is an outdated programming method
-that is included here for the sake&nbsp; of full compliance with the NMRA
-DCC standard. <b>Register Mode</b> is an expanded form of Address Mode,
-and is still used by some older and/or lower end decoders, particulary
-some from MRC and Wangrow. It is inherently limited in its ability to access
-all CVs in a decoder.&nbsp; <b>Paged Mode</b> is an expansion of Register
-mode that gives full access to all decoder CVs. <b>Direct Mode</b> is another
-method, not yet supported by all decoders, that allows full access. The
-AD4 Accessory Decoder can <b><u>only</u></b> be programmed in <b>Direct
-Mode</b>. There are two ways of implementing <b>Direct Mode</b>. The button
-for the method(s) your command station supports will be activated.</font>
-<p><font color="#660000">If you experience difficulty programming a decoder
-in Paged Mode, try Direct Mode, then Register Mode, and finally Address
-Mode.</font>
-<div align=right><a href="index.html#Basic Programmer">Back to Index</a></div>
+<p>
+At the bottom of the window there are several programming mode options:
+<b>Paged mode</b>, <b>Direct bit</b>, <b>Direct byte</b>,
+<b>Register mode</b>, and <b>Address mode</b>. For most newer decoders, stay with"<b>Paged mode</b>" or whichever <b>Direct</b> mode your
+Command Station supports. Your decoder documentation <span class="ACCENT">should</span> let you know if programming in some other mode is necessary... but if you are having problems, experiment. 
 
-<h2>
-<a NAME="Basic 2"></a>Using the Basic Programmer</h2>
-At the top of the window are two tabs: "Roster Entry" and "Basic". We have
-been working in the "Roster Entry" pane of the window. Now, click on the
-"Basic" tab to change panes. You will see a screen similar to the following:
-<center>
-<p><img SRC="Pix/Basic_Program.jpg" ALT="Basic Programming Pane" NOSAVE BORDER=5 height=492 width=520></center>
+<div class="BOXIT">
+<h3>
+<a NAME="Programming Modes"></a>Some brief comments on Programming Modes
+</h3>
+<p>
+<b>Address Mode</b> is an outdated programming method that is included here for the sake of full compliance with the NMRA DCC standard. <b>Register Mode</b> is an expanded form of Address Mode, and is still used by some older and/or lower end decoders, particularly some from MRC and Wangrow. It is inherently limited in its ability to access all CVs in a decoder. <b>Paged Mode</b> is an expansion of Register mode that gives full access to all decoder CVs. <b>Direct Mode</b> is another method, not yet supported by all decoders, that allows full access.  There are two ways of implementing <b>Direct Mode</b>. The radio button(s) for the method(s) your command station supports will be activated.
+<p>
+If you experience difficulty programming a decoder in Paged Mode, try Direct Mode, then Register Mode, and finally Address Mode. The EasyDCC AD4 Accessory Decoder can <span class="ACCENT">only</span> be programmed in <b>Direct Mode</b>.
+<p>
+To actually change programming modes while in a DecoderPro programmer pane, look at the bottom of the pane for the "<b>Set</b>" button. 
+<h1>
+<img SRC="Pix/Change_Mode.JPG" ALT="Change Programming Mode" BORDER=5 height=41 width=324></h1>
 
-<p>You will see three options you can change, highlighted in yellow:
-<ul>
-<li>
-The decoder address (should be unique among your locomotives)</li>
+<p>
+Click it and the following window will open:
 
-<li>
-Extended addressing (enables 4 digit DCC addresses)</li>
+<h1>
+<img SRC="Pix/Set_Mode.JPG" ALT="Set Programming Mode" BORDER=5 height=166 width=272></h1>
+<p>
+Click on the appropriate radio button to change programming modes. Simple, isn't it?
 
-<li>
-Analog operation (enables the decoder running under regular DC voltage/Analog
-control)</li>
-</ul>
-The yellow highlighting indicates these options are either "probable" settings
-and have not been confirmed from the decoder, or are settings that have
-been changed by the user and have not been written back to the decoder.&nbsp;<a NAME="Read Data"></a>To
-read the actual settings for these options, click on the "R<b>ead Sheet</b>"
+</div>
+
+<div align=right>
+<p><a href="index.html#Basic Programmer">Back to Index</a>
+</div>
+<hr>
+<br>
+<h2><a NAME="Basic 2"></a>Using the Basic Programmer</h2>
+<p>
+At the top of the window are two tabs: "<b>Roster Entry</b>" and "<b>Basic</b>". We have been working in the "<b>Roster Entry</b>" pane of the window. Now, click on the "<b>Basic</b>" tab to change panes. You will see a screen similar to the following:
+
+<h1><img SRC="Pix/Basic_Program.JPG" ALT="Basic Programming Pane" BORDER=5 height=531 width=694></h1>
+
+<p>
+You will see three options you can change, highlighted in yellow:
+
+<ol>
+     <li>The decoder address (should be unique among your locomotives)</li>
+     <li>Two radio buttons that let you toggle between 2 digit (one byte,    
+         normal) or 4 digit (two byte, extended) addressing</li>
+     <li>Analog operation (enables the decoder running under regular DC
+         voltage/analog control)</li>
+</ol>
+
+<p>The yellow highlighting indicates these options are "probable" settings and have not been confirmed from the decoder. Settings that have been changed by the user and have not been written back to the decoder appear in a darker yellow color. You will see examples of this throughout the manual. 
+<a NAME="Read Data"></a>
+To read the actual settings for these options, click on the "<b>Read Sheet</b>"
 button. The individual settings will turn red while they are in the process
-of being read, and will turn white once the values have been read sucessfully
-from the decoder. Once again, DecoderPro must play "Twenty Questions" to
-get this information, and sometimes even has to ask a couple of times.
+of being read (clever, eh?), and will turn white once the values have been read sucessfully from the decoder. Once again, DecoderPro must play "Twenty Questions" to get this information, and sometimes even has to ask a couple of times.
+<p>
 Be patient, especially with older computers. At the very bottom of the
-pane (where it says "i<b>dle</b>") you will see a running account of exactly
-what DecoderPro is doing.
-<p><font color="#660000">Again, the <b>Read sheet</b> and <b>Read all</b>
-functions are dependant on your command station. If your system does not
-have the capability to read CVs, then these buttons will not be available.</font>
-<p><a NAME="Enter/Edit data"></a>If you wish to change the address of the
-locomotive, simply click in the text box and type in the new address. To
-turn on or off 4 digit addressing, click on the check box. To enable/disable
-analog (regular DC) operation, select the appropriate entry from the pulldown
-menu.&nbsp;<a NAME="Write Data"></a>When you are finished, click on "<b>Write
-Sheet</b>" to send the new values to the decoder. It's that easy!
-<p>Writing <u>usually</u> takes much less time than reading, because the
-value can be sent directly. As the write operation proceeds, the data will
-change from yellow to white. If there is difficulty writing to the decoder,
-the data will change to red. The software will automatically keep trying
-until the write operation is sucessful.
-<p><a NAME="Save Data"></a>To finish this "basic" programming of a decoder,
-click once more on the "<b>Roster Entry</b>" tab, then click on the "<b>Save</b>"
-button. Your new decoder settings have now been written not only to the
-decoder, but also saved to a computer file where they may be recalled in
-the future. You may now close the programming pane.
-<p>If you forget to write the settings to the decoder, or to save the file
+pane (where it says "<b>idle</b>") you will see a running account of exactly
+what DecoderPro is doing, for example, the specific CV being read.
+<p>
+Again, the <b>Read sheet</b> and <b>Read all</b> functions are dependant on your command station. If your system does not have the capability to read CVs, then these buttons will not be available.
+
+<a NAME="Enter/Edit data"></a>
+<p>If you wish to change the address of the locomotive, simply click in the text box and type in the new address. To turn on or off 4 digit addressing, click on the check box. To enable/disable analog (regular DC) operation, select the appropriate entry from the pulldown menu.
+<a NAME="Write Data"></a>
+When you are finished, click on "<b>Write sheet</b>" to send the new values to the decoder. It's that easy!
+<p>
+Writing <span class="ACCENT">usually</span> takes much less time than reading, because the value can be sent directly. As the write operation proceeds, the data will change from yellow to white. If there is difficulty writing to the decoder, the data will change to red. The software will automatically keep trying until the write operation is sucessful.
+<a NAME="Save Data"></a>
+<p>
+To finish this "basic" programming of a decoder, click once more on the "<b>Roster Entry</b>" tab, then click on the "<b>Save</b>" button. Your new decoder settings have now been written not only to the decoder, but also saved to a computer file where they may be recalled in the future. You may now close the programming pane.
+<p>
+If you forget to write the settings to the decoder, or to save the file
 to the computer, you will be prompted to do so when you close the programming
 pane. You may elect not to do so.
-<p><a NAME="Do More"></a>Now, let's explore the <a href="Comp_Setup_Roster.html">Comprehensive
+<a NAME="Do More"></a>
+<p>
+Now, let's explore the <a href="Comp_Setup_Roster.html">Comprehensive
 Programmer</a>!
-<div align=right><a href="index.html#Basic Programmer">Back to Index</a></div>
 
-<HR>
-<BR>Site hosted by: <BR>
-<A href="http://sourceforge.net"> 
-<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
+<div align=right>
+<p><a href="Comp_Setup_Roster.html">On to next section</a>
+<p><a href="index.html#Basic Programmer">Back to Index</a>
+</div>
 
-<br>&nbsp;
+<hr>
+<br>
+This site is hosted by 
+<br>
+<a href="http://sourceforge.net">
+<IMG src="Pix/sflogo.JPG" width="88" height="31" border="0" alt="SourceForge Logo" hspace="10" vspace="5" align="top" align="left"></a>
+<br><a href="http://sourceforge.net">sourceforge.net</a>.
+
 </body>
 </html>

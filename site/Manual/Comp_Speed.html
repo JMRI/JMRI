@@ -5,49 +5,58 @@
    <meta name="Author" content="Joseph A. Ellis - TesserAct Studios">
    <meta name="GENERATOR" content="Mozilla/4.5 (Macintosh; U; PPC) [Netscape]">
    <title>Comprehensive Programmer - Speed Control Pane</title>
+   <link href="DecoderPro.css" rel="stylesheet" type="text/css">
 </head>
-<body text="#000000" bgcolor="#96D1D4" link="#0000FF" vlink="#551A8B" alink="#BD7B35">
 
-<center><img SRC="Pix/Logo.jpg" ALT="JMRI DecoderPro Logo" NOSAVE BORDER=5 height=152 width=210></center>
-
-<center>
+<body>
+<a NAME="Top"></a>
 <h1>
-DecoderPro Comprehensive Programmer</h1></center>
+<img SRC="Pix/Logo.JPG" ALT="JMRI DecoderPro Logo" BORDER=10 height=140 width=185 vspace="15"></h1>
 
-<center>
-<h1>
-Speed Control Pane</h1></center>
 
-<div align=right><a href="Comp_Motor.html">Back to Previous Section</a></div>
+<h1>DecoderPro Comprehensive Programmer</h1>
+<h1>Speed Control Pane</h1>
 
-<div align=right><a href="index.html#Advanced Programmer">Back to Index</a></div>
+<div align=right>
+<p><a href="Comp_Motor.html">Back to Previous Section</a>
+<p><a href="index.html#Advanced Programmer">Back to Index</a>
+</div>
 
-<hr WIDTH="100%">
-<br>The Speed Control pane looks very complicated, but it can be one of
+<hr>
+<p>The Speed Control pane looks very complicated, but it can be one of
 the most significant in improving the performance of your locomotive fleet.
-Let's look first at the left side of the pane:
-<center>
-<p><img SRC="Pix/Speed_Table_Main.jpg" ALT="Comprehensive Programmer - Speed Control Pane - Main view" NOSAVE BORDER=5 height=596 width=832></center>
+Let's look first at the top of the pane:
 
-<p>There are three important CVs here, <b>Start Volts</b>, <b>Mid Volts</b>,
-and <b>Max Volts</b>. They work together to make a three point speed curve.
-<p><b>Start Volts</b> is the voltage at the first speed step. If your locomotive
-didn't start moving until there were 3&nbsp; volts on the track with analog
+<h1><img SRC="Pix/Speed_Table_Main.JPG" ALT="Comprehensive Programmer - Speed Control Pane - Main view" BORDER=5 height=598 width=832></h1>
+
+<p>
+There are three important CVs here, <b>Start Volts</b>, <b>Mid Volts</b>,
+and <b>Max Volts</b>. They work together to make a very basic three point speed table.
+<p>
+<b>Start Volts</b> is the voltage at the first speed step. If your locomotive
+didn't start moving until there were three volts on the track with analog
 power, this lets you set up the decoder to give it 2.99 volts right away,
 so it will start moving when you want it to.
-<p><b>Max Volts</b> is the maximum amount of power the locomotive will
+<p>
+<b>Max Volts</b> is the maximum amount of power the locomotive will
 get from the decoder. If your locomotive looks like Chuck Yeager's X-1
 at full throttle, then you can trim the top speed down to a more reasonable
 level.
-<p><b>Mid Volts</b> lets you configure the slope between <b>Start Volts</b>
+<p>
+<b>Mid Volts</b> lets you configure the slope between <b>Start Volts</b>
 and <b>Max Volts</b> a bit, so that if your locomotive reaches full speed
 at 5 volts, you can stretch out the lower end of the curve to get more
 fine control in a useful speed range.
-<p>If the full <b>Speed Table</b> is used (which we'll be getting to in
+
+<p>
+If you are having problems with unpredictable speeds with your locomotives, check these settings. On any number of occassions I have discovered one or more of these settings have been changed accidentally (usually due to an error in programming with a throttle), leading to very odd speed performance. In particular, if the <b>Mid Volts</b> is lower than <b>Start Volts</b> or higher than <b>Max Volts</b>, results can be highly unpredictable. DecoderPro will not let you make this mistake.
+<p>
+If the full <b>Speed Table</b> is used (which we'll be getting to in
 just a moment) the <b>Start Volts</b>, <b>Mid Volts</b>, and <b>Max Volts
 </b>settings are ignored. The "<b>Use VStart, VMid, VHigh</b>" and "<b>Use
 Table</b>" radio buttons switch back and forth between the two.
-<p>I have not seen a model locomotive yet that would run at exactly the
+<p>
+I have not seen a model locomotive yet that would run at exactly the
 same speed forward and backward. The "<b>Forward Trim</b>" and "<b>Reverse
 Trim</b>" options let you make this adjustment. However, the settings for
 these are not as intuitive as you might think. A setting of 0 in these
@@ -55,62 +64,75 @@ CVs turns them off. However, a setting of 128 in either of them will have
 no visible effect! To make the forward and reverse trim effective, raise
 the value above 128 to increase speed, and lower it below 128 to decrease
 speed.
-<br>&nbsp;
+
+<hr>
 <h2>
 The Speed Table</h2>
-The Speed Table allows you to fine-tune the throttle response of your locomotive.
-You might opt to match all of your locomotives so they run at the same
-speed for the same throttle setting, or you might want to set the table
+<p>
+The Speed Table allows you to fine-tune the throttle response of your locomotive. You might opt to match all of your locomotives so they run at the same speed for the same throttle setting, or you might want to set the table
 up so that your locomotive runs at the actual scale speed indicated by
 the throttle. Or maybe you have someone in your operating group that likes
 to switch the yard at Mach 2.5, and you want to slow them down a bit. There
 are a lot of ways to use this feature.
-<p>The default speed table for most decoders is a straight line. The "Force
-Straight" button below the table duplicates that.
-<center>
-<p><img SRC="Pix/Speed_Table_Straight.jpg" ALT="Speed Table - Force Straight" NOSAVE BORDER=5 height=236 width=746></center>
+<p>
+The default speed table for most decoders is a straight line. The "<b>Force
+Straight</b>" button below the table duplicates that.
 
-<p>As you can see, you have both numbers and sliders to work with. Changing
+<h1><img SRC="Pix/Speed_Table_Straight.JPG" ALT="Speed Table - Force Straight" BORDER=5 height=297 width=832></h1>
+
+<p>
+As you can see, you have both numbers and sliders to work with. Changing
 eiither one will make the other change to match it. The first and last
 steps are set to minimum and maximum values.
-<br>&nbsp;
-<p>The "<b>Match Ends</b>" button will also result in a straight-line graph,
+
+<p>
+The "<b>Match ends</b>" button will also result in a straight-line graph,
 but you can offset the beginning and end by any amount you wish. The function
 will then draw a straight line between those two endpoints. Below is an
 example of the result.
-<center>
-<p><img SRC="Pix/Speed_Table_Match.jpg" ALT="Speed Table - Match Ends" NOSAVE BORDER=5 height=228 width=743></center>
 
-<p>If you don't desire a straight-line response curve, there are two other
-options available. The "Constant Ratio Curve" gives you a response that
+<h1><img SRC="Pix/Speed_Table_Match.JPG" ALT="Speed Table - Match Ends" BORDER=5 height=298 width=832></h1>
+
+<p>
+If you don't desire a straight-line response curve, there are two other
+options available. The "<b>Constant ratio curve</b>" gives you a response that
 increases slowly in the low end, and rapidly at high throttle. This function
 will also draw the curve between preset end points.
-<center>
-<p><img SRC="Pix/Speed_Table_Constant.jpg" ALT="Speed Table - Constant Ratio Curve" NOSAVE BORDER=5 height=222 width=742></center>
 
-<p>Finally, the "<b>Log Curve</b>" reverses this response, giving you a
-response curve with high accellleration at low speeds, but topping out
-quickly. It will also draw the curve between preset endpoints.
-<center>
-<p><img SRC="Pix/Speed_Table_Log.jpg" ALT="Speed Table - Log Curve" NOSAVE BORDER=5 height=225 width=742></center>
+<h1><img SRC="Pix/Speed_Table_Constant.JPG" ALT="Speed Table - Constant Ratio Curve" BORDER=5 height=300 width=832></h1>
 
-<p>Of course, you can enter the numbers individually or move the sliders
-one at a time to create your own fully customized speed table.
-<p>One very important thing to remember: <b><font color="#CC0000">No matter
-how pretty your speed table looks, it has absolutely no effect on the locomotive
-unless you write it to the decoder!</font></b>
 <p>
-<hr WIDTH="100%">
-<br>&nbsp;
-<div align=right><b><font color="#CC0000"><a href="Comp_FMap.html">On to
-Next Section</a></font></b></div>
+The "<b>Log curve</b>" reverses this response, giving you a logarithmic
+response curve with high accelleration at low speeds, but topping out
+quickly. It will also draw the curve between preset endpoints.
 
-<div align=right><a href="index.html#Advanced Programmer">Back to Index</a></div>
+<h1><img SRC="Pix/Speed_Table_Log.JPG" ALT="Speed Table - Log Curve" BORDER=5 height=299 width=832></h1>
 
-<HR>
-<BR>Site hosted by: <BR>
-<A href="http://sourceforge.net"> 
-<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
+<p>
+The "<b>Shift left</b>" and "<b>Shift right</b>" buttons move the entire speed table left or right one space with each click on the button. The example below shows a linear 0-255 speed table that has been "<b>Shifted left</b>" three times. "<b>Shift right</b>" works in the same manner, moving the entire table right one position with every click.
+
+<h1><img SRC="Pix/Speed_Table_ShiftLeft.JPG" ALT="Speed Table - Shift Left" BORDER=5 height=300 width=832></h1>
+
+
+<p>
+Of course, you can enter the numbers individually or move the sliders
+one at a time to create your own fully customized speed table.
+<p>
+One very important thing to remember: <span class="ACCENT">No matter
+how pretty your speed table looks, it has absolutely no effect on the locomotive
+unless you write it to the decoder!</span>
+
+<hr>
+<div align=right>
+<p><a href="Comp_FMap.html">On to Next Section</a>
+<p><a href="index.html#Advanced Programmer">Back to Index</a>
+</div>
+
+This site is hosted by 
+<br>
+<a href="http://sourceforge.net">
+<IMG src="Pix/sflogo.JPG" width="88" height="31" border="0" alt="SourceForge Logo" hspace="10" vspace="5" align="top" align="left"></a>
+<br><a href="http://sourceforge.net">sourceforge.net</a>.
 
 </body>
 </html>

@@ -5,152 +5,160 @@
    <meta name="Author" content="Joseph A. Ellis - TesserAct Studios">
    <meta name="GENERATOR" content="Mozilla/4.5 (Macintosh; U; PPC) [Netscape]">
    <title>DecoderPro Manual: Getting Started</title>
+   <link href="DecoderPro.css" rel="stylesheet" type="text/css">
 </head>
-<body text="#000000" bgcolor="#96D1D4" link="#0000FF" vlink="#551A8B" alink="#BD7B35">
 
-<center>
+<body>
+<a NAME="Top"></a>
 <h1>
-<a NAME="Top"></a><img SRC="Pix/Logo.jpg" ALT="JRMI DecoderPro Logo" NOSAVE BORDER=5 height=152 width=210></h1></center>
+<img SRC="Pix/Logo.JPG" ALT="JMRI DecoderPro Logo" BORDER=10 height=140 width=185 vspace="15"></h1>
 
-<center>
-<h1>
-Getting Started with DecoderPro</h1></center>
+<h1>Getting Started with DecoderPro</h1>
 
-<div align=right><a href="index.html#Getting Started">Back to Index</a></div>
+<div align=right>
+<p><a href="index.html#Getting Started">Back to Index</a>
+</div>
 
-<center>
-<hr WIDTH="100%"></center>
+<hr>
 
-<h3>
-<a NAME="What is DCC"></a>What is DCC?</h3>
+<h3><a NAME="What is DCC"></a>What is DCC?</h3>
+
+<p>
 In short, DCC is Digital Command Control, a system for operating model
 railroads in a more prototypical manner. Each locomotive contains a tiny,
-specialized computer. These computers (decoders) take digital commands
-addressed to them and interpret them to control the locomotive's speed,
-direction, lighting effects, sound, and other functions. Each decoder responds
-only to those commands addressed to it. Not every decoder will have functions
-beyond basic throttle commands available to it. Although there are standards
-for the format of communication (allowing the decoders from different manufacturers
-to work on the same railroad), beyond that there is considerable variety
-in the functions supported and the implementation of those functions.
-<p>Just like any other computer, decoders must be programmed by the user
+specialized computer. These computers (decoders) take digital commands over a network (the rails) addressed to them and interpret them to control the locomotive's speed, direction, lighting effects, sound, and other functions. Each decoder responds only to those commands addressed to it. Not every decoder will have functions beyond basic throttle commands available to it. Although there are standards for the format of communication (allowing the decoders from different manufacturers to work on the same railroad), beyond that there is considerable variety in the functions supported and the implementation of those functions.
+<p>
+Just like any other computer, decoders must be programmed by the user
 to reach their full potential. While they come with basic "default" programs,
 most users will want to customize the decoder address, motor control, lights,
 sound, and other functions to meet their specific needs. You do so by editing
-<b>CV</b>s,
-or <b>Configuration Variables</b>, in the decoder. Some CVs use values
-ranging from 0 to 255, others use their space in the decoder's memory as
+<b>CV</b>s, or <b>Configuration Variables</b>, in the decoder. Some CVs use values ranging from 0 to 255, others use their space in the decoder's memory as
 a bank of 8 on/off switches. While this lets you do a lot with very little
 memory, it can get very complex for those of us that aren't on speaking
 terms with binary code.
-<p>DecoderPro attempts to help overcome the inevitable complexity of this
-system by providing a clear, usable, user friendly <b><font color="#AA0000">open
-source</font></b> software solution for programming these on-board decoders.
+<p>
+DecoderPro attempts to help overcome the inevitable complexity of this
+system by providing a clear, usable, user friendly <span class="ACCENT">open
+source</span> software solution for programming these on-board decoders.
 Programming panel designs are written in <b>XML</b>, (a close relative
 of HTML) and can be modified or even created from scratch by users with
 even a passing familiarity with the format. Within 2 weeks of downloading
 a early version of DecoderPro, with no previous XML experience, I had created
 a programming set for a decoder myself.
-<br>&nbsp;
-<div align=right><a href="index.html#Getting Started">Back to Index</a></div>
+<p>
 
-<h3>
-<a NAME="DCC systems"></a>What DCC systems will DecoderPro work with?</h3>
+<div align=right>
+<p><a href="index.html#Getting Started">Back to Index</a>
+</div>
+
+<hr>
+
+<h3><a NAME="DCC systems"></a>What DCC systems will DecoderPro work with?</h3>
+<p>
 DecoderPro will work with the following DCC systems:
+
 <ul>
-<li>
-Easy DCC</li>
-
-<li>
-Lenz/Atlas</li>
-
-<li>
-Loconet (Digitrax)</li>
-
-<li>
-NCE/Wangrow</li>
+<li>Easy DCC</li>
+<li>Lenz/Atlas</li>
+<li>Loconet (Digitrax and Intellibox)</li>
+<li>NCE/Wangrow</li>
 </ul>
+
+<p>
 Depending on the specifics of your system and computer, some kind of hardware
 interface may be required.
-<div align=right><a href="index.html#Getting Started">Back to Index</a></div>
 
-<h3>
-<a NAME="DCC Hardware"></a>What hardware do I need?</h3>
-You will need, at minimum, a command station /booster for your DCC system,
+<div align=right>
+<p><a href="index.html#Getting Started">Back to Index</a>
+</div>
+
+<hr>
+
+<h3><a NAME="DCC Hardware"></a>What hardware do I need?</h3>
+<p>
+You will need, at minimum, a command station/booster for your DCC system,
 and a programming track set up according to the manufacturer's instructions.
 For some systems, you will also need an additional hardware interface to
 send the commands from your computer to the command station, and from there
 on to the decoder in the locomotive. For a Digitrax system, for example,
-you will need either the MS100 interface or a LocoBuffer. The <b>PR1 </b>device
-from Digitrax is a stand-alone programmer and is <b>not</b> usable with
-this software.
+you will need either the <b>MS100 interface</b> or a <b>LocoBuffer</b>. The <b>PR1</b> device
+from Digitrax is a stand-alone programmer and is <span class="ACCENT">not</span> usable with this software.
 <p>You will also need, of course, some correctly installed decoders to
 program.
-<div align=right><a href="index.html#Getting Started">Back to Index</a></div>
 
-<h3>
-<a NAME="Start"></a>How do I start the program?</h3>
+<div align=right>
+<p><a href="index.html#Getting Started">Back to Index</a>
+</div>
+
+<hr>
+
+<h3><a NAME="Start"></a>How do I start the program?</h3>
+<p>
 Once you have downloaded the DecoderPro software and installed it, simply
 open the program in the usual manner for your operating system. You should
 see this or a similar opening screen displayed:
-<center>
-<p><img SRC="Pix/Splash_Screen.jpg" ALT="DecoderPro Splash Screen" NOSAVE BORDER=5 height=286 width=503></center>
 
-<p>It may take a while for this screen to come up, especially on older
+<h1><img SRC="Pix/Splash_Screen.JPG" ALT="DecoderPro Splash Screen" BORDER=10 height=284 width=462></h1>
+
+<p>
+It may take a while for this screen to come up, especially on older
 and slower computers. Remember that you are essentially running the program
 on a Java emulator over your native operating system software. New computers
 can do this fairly quickly, but older ones will feel like they're taking
 forever. Be patient - it will come up eventually!
-<p>If this is the first time you have run the program, the preferences
+<p>
+If this is the first time you have run the program, the preferences
 screen will also come up automatically to allow you to set up the system
 for your particular configuration.
-<div align=right><a href="index.html#Getting Started">Back to Index</a></div>
 
-<h3>
-<a NAME="Preferences"></a>How do I set up my preferences?</h3>
+<div align=right>
+<p><a href="index.html#Getting Started">Back to Index</a>
+</div>
+
+<hr>
+
+<h3><a NAME="Preferences"></a>How do I set up my preferences?</h3>
+<p>
 You can access your configuration preferences through the "Edit" option
 in the screen above. They will also open automatically the first time you
 run the program. Here's an example of what you will see:
-<center>
-<p><img SRC="Pix/Preferences.jpg" ALT="Preferences window" NOSAVE BORDER=5 height=242 width=474></center>
 
-<p>In this example, the system is set up to:
+<h1><img SRC="Pix/Preferences.JPG" ALT="Preferences window" BORDER=5 height=245 width=602></h1>
+
+<p>
+In this example, the system is set up to:
 <ul>
-<li>
-Connect through a LocoBuffer hardware interface</li>
-
-<li>
-Use the Modem port for communicating with the Locobuffer</li>
-
-<li>
-Communicate at 57,600 baud</li>
-
-<li>
-Allow the Locobuffer to control data flow</li>
-
-<li>
-Work with a Digitrax DCS100 command station/booster (the Chief system)</li>
-
-<li>
-Use a Macintosh style Graphic User Interface (GUI)</li>
-
-<li>
-Default to a full-featured programming format (more on that later)</li>
+<li>Connect through a LocoBuffer hardware interface</li>
+<li>Use the Modem port for communicating with the Locobuffer</li>
+<li>Communicate at 57,600 baud</li>
+<li>Allow the Locobuffer to control data flow</li>
+<li>Work with a Digitrax DCS100 command station/booster (the Chief system)</li>
+<li>Use a Macintosh style Graphic User Interface (GUI)</li>
+<li>Default to a full-featured programming format (more on that later)</li>
 </ul>
-&nbsp;To change any of these options just click on the arrows to open the
+
+<p>
+To change any of these options just click on the arrows to open the
 pull-down menu. To change the GUI options, click on the appropriate radio
 button. When you are finished, click on the "Save" button to save your
 preferences. Changes in preferences will not take effect until the program
 is re-started, and a dialog box giving you the option of continuing with
 the old preferences or starting over will appear after you save the current
 preferences.
-<br>&nbsp;
-<br>&nbsp;
-<div align=right><a href="index.html#Getting Started">Back to Index</a></div>
-<HR>
-<BR>Site hosted by: <BR>
-<A href="http://sourceforge.net"> 
-<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
+
+<p>
+<hr>
+<div align=right>
+<p><a href="Basic_Programming.html">On to the Basic Programmer</a>
+<p><a href="index.html#Getting Started">Back to Index</a>
+</div>
+
+<br>
+This site is hosted by 
+<br>
+<a href="http://sourceforge.net">
+<IMG src="Pix/sflogo.JPG" width="88" height="31" border="0" alt="SourceForge Logo" hspace="10" vspace="5" align="top" align="left"></a>
+<br><a href="http://sourceforge.net">sourceforge.net</a>.
 
 </body>
 </html>
