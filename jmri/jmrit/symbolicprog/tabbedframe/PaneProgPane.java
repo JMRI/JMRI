@@ -19,7 +19,7 @@ import org.jdom.*;
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
@@ -91,7 +91,7 @@ public class PaneProgPane extends javax.swing.JPanel
         panelList.add(p);
         bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
 
-        readButton.setToolTipText("Read highlighted values from decoder.");
+        readButton.setToolTipText("Read highlighted values on this sheet from decoder. Warning: may take a long time!");
         if (cvModel.getProgrammer()!= null
             && !cvModel.getProgrammer().getCanRead()) {
             // can't read, disable the button
@@ -104,7 +104,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 }
             });
 
-        reReadButton.setToolTipText("Read all values from decoder. Warning: may take a long time!");
+        reReadButton.setToolTipText("Read all values on this sheet from decoder. Warning: may take a long time!");
         if (cvModel.getProgrammer()!= null
             && !cvModel.getProgrammer().getCanRead()) {
             // can't read, disable the button
@@ -117,14 +117,14 @@ public class PaneProgPane extends javax.swing.JPanel
                 }
             });
 
-        writeButton.setToolTipText("Write highlighted values to decoder");
+        writeButton.setToolTipText("Write highlighted values on this sheet to decoder");
         writeButton.addActionListener( l3 = new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     if (writeButton.isSelected()) writePane();
                 }
             });
 
-        reWriteButton.setToolTipText("Write all values to decoder");
+        reWriteButton.setToolTipText("Write all values on this sheet to decoder");
         reWriteButton.addActionListener( l4 = new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     if (reWriteButton.isSelected()) reWritePane();
@@ -154,10 +154,10 @@ public class PaneProgPane extends javax.swing.JPanel
      */
     List cvList = new ArrayList();
 
-    JToggleButton readButton     = new JToggleButton("Read sheet");
-    JToggleButton reReadButton   = new JToggleButton("Reread sheet");
-    JToggleButton writeButton    = new JToggleButton("Write sheet");
-    JToggleButton reWriteButton  = new JToggleButton("Rewrite sheet");
+    JToggleButton readButton     = new JToggleButton("Read highlighted");
+    JToggleButton reReadButton   = new JToggleButton("Read full sheet");
+    JToggleButton writeButton    = new JToggleButton("Write highlighted");
+    JToggleButton reWriteButton  = new JToggleButton("Write full sheet");
 
     /**
      * invoked by "Read Pane" button, this sets in motion a

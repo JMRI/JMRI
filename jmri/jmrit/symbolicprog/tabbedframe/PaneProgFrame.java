@@ -29,7 +29,7 @@ import org.jdom.JDOMException;
 /**
  * Frame providing a command station programmer from decoder definition files
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 abstract class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
@@ -49,11 +49,15 @@ abstract class PaneProgFrame extends javax.swing.JFrame
 
     // GUI member declarations
     JTabbedPane tabPane = new JTabbedPane();
-    JToggleButton readAllButton = new JToggleButton("Read all sheets");
-    JToggleButton writeAllButton = new JToggleButton("Write all sheets");
+    JToggleButton readAllButton = new JToggleButton("Read all highlighted");
+    JToggleButton writeAllButton = new JToggleButton("Write all highlighted");
+    JToggleButton rereadAllButton = new JToggleButton("Read all sheets");
+    JToggleButton rewriteAllButton = new JToggleButton("Write all sheets");
 
     ActionListener l1;
     ActionListener l2;
+    ActionListener l3;
+    ActionListener l4;
 
     /**
      * Abstract method to provide a JPanel setting the programming
@@ -70,7 +74,7 @@ abstract class PaneProgFrame extends javax.swing.JFrame
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
 
         // configure GUI elements
-        readAllButton.setToolTipText("Read highlighted values from decoder. Warning: may take a long time!");
+        readAllButton.setToolTipText("Read highlighted values on all sheets from decoder. Warning: may take a long time!");
         // check with CVTable programmer to see if read is possible
         if (cvModel!= null && cvModel.getProgrammer()!= null
             && !cvModel.getProgrammer().getCanRead()) {
@@ -83,10 +87,35 @@ abstract class PaneProgFrame extends javax.swing.JFrame
                     if (readAllButton.isSelected()) readAll();
                 }
             });
-        writeAllButton.setToolTipText("Write highlighted values to decoder");
+        rereadAllButton.setToolTipText("Read all values on all sheets from decoder. Warning: may take a long time!");
+        // check with CVTable programmer to see if read is possible
+        if (cvModel!= null && cvModel.getProgrammer()!= null
+            && !cvModel.getProgrammer().getCanRead()) {
+            // can't read, disable the button
+            rereadAllButton.setEnabled(false);
+            rereadAllButton.setToolTipText("Button disabled because configured command station can't read CVs");
+        }
+        rereadAllButton.addActionListener( l3 = new ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    if (rereadAllButton.isSelected()) {
+                        setAllToFromFile();
+                        readAll();
+                    }
+                }
+            });
+        writeAllButton.setToolTipText("Write highlighted values on all sheets to decoder");
         writeAllButton.addActionListener( l2 = new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     if (writeAllButton.isSelected()) writeAll();
+                }
+            });
+        rewriteAllButton.setToolTipText("Write all values on all sheets to decoder");
+        rewriteAllButton.addActionListener( l4 = new ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    if (rewriteAllButton.isSelected()) {
+                        setAllToFromFile();
+                        writeAll();
+                    }
                 }
             });
 
@@ -99,6 +128,8 @@ abstract class PaneProgFrame extends javax.swing.JFrame
         bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
         bottom.add(readAllButton);
         bottom.add(writeAllButton);
+        bottom.add(rereadAllButton);
+        bottom.add(rewriteAllButton);
         pane.add(bottom);
 
         JPanel modePane = getModePane();
@@ -375,6 +406,16 @@ abstract class PaneProgFrame extends javax.swing.JFrame
         }
     }
 
+    /**
+     * Mark everything to read or write, without changing the actual
+     * value.  This is used to force a read or write of every variable.
+     */
+    protected void setAllToFromFile() {
+        for (int i=0; i<paneList.size(); i++) {
+            ((PaneProgPane)paneList.get(i)).setAllToFromFile();
+        }
+    }
+
     protected JPanel makeInfoPane(RosterEntry r) {
         // create the identification pane (not configured by file now; maybe later?
         JPanel body = new JPanel();
@@ -490,6 +531,7 @@ abstract class PaneProgFrame extends javax.swing.JFrame
         // nothing to program, end politely
         _programmingPane = null;
         readAllButton.setSelected(false);
+        rereadAllButton.setSelected(false);
         if (log.isDebugEnabled()) log.debug("readAll found nothing to do");
         return false;
     }
@@ -522,6 +564,7 @@ abstract class PaneProgFrame extends javax.swing.JFrame
         // nothing to program, end politely
         _programmingPane = null;
         writeAllButton.setSelected(false);
+        rewriteAllButton.setSelected(false);
         if (log.isDebugEnabled()) log.debug("writeAll found nothing to do");
         return false;
     }
@@ -552,11 +595,11 @@ abstract class PaneProgFrame extends javax.swing.JFrame
             _programmingPane.removePropertyChangeListener(this);
             _programmingPane = null;
             // restart the operation
-            if (_read && readAllButton.isSelected()) {
+            if (_read && (readAllButton.isSelected()||rereadAllButton.isSelected())) {
                 if (log.isDebugEnabled()) log.debug("restart readAll");
                 readAll();
             }
-            else if (writeAllButton.isSelected()) {
+            else if (writeAllButton.isSelected()||rewriteAllButton.isSelected()) {
                 if (log.isDebugEnabled()) log.debug("restart writeAll");
                 writeAll();
             }
@@ -611,6 +654,8 @@ abstract class PaneProgFrame extends javax.swing.JFrame
         // remove listeners (not much of a point, though)
         readAllButton.removeActionListener(l1);
         writeAllButton.removeActionListener(l2);
+        rereadAllButton.removeActionListener(l3);
+        rewriteAllButton.removeActionListener(l4);
         if (_programmingPane != null) _programmingPane.removePropertyChangeListener(this);
 
         // dispose the list of panes
@@ -639,6 +684,8 @@ abstract class PaneProgFrame extends javax.swing.JFrame
         tabPane = null;
         readAllButton = null;
         writeAllButton = null;
+        rereadAllButton = null;
+        rewriteAllButton = null;
 
         if (log.isDebugEnabled()) log.debug("dispose superclass");
         removeAll();
