@@ -20,9 +20,10 @@ runtime -a xml lib resources help jython
 ant -a runtime antfiles java
 
 # build the java/ directory for ant, including build.xml
-antfiles  -a ant0 ant1
+antfiles  -a ant0 ant1 ant2
 ant0 -d java scripts build.xml
 ant1 -d java scripts manifest
+ant2 -d java scripts runtest.csh
 
 # build the java/ directory for both ant and jbuilder
 all -a runtime jbuilderfiles antfiles java
