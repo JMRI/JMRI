@@ -19,7 +19,7 @@ import javax.swing.JSeparator;
 /**
  * Frame for user input of CMRI serial messages
  * @author	Bob Jacobsen   Copyright (C) 2002, 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SerialPacketGenFrame extends javax.swing.JFrame implements jmri.jmrix.cmri.serial.SerialListener {
 
@@ -45,7 +45,7 @@ public class SerialPacketGenFrame extends javax.swing.JFrame implements jmri.jmr
         sendButton.setToolTipText("Send packet");
 
         packetTextField.setText("");
-        packetTextField.setToolTipText("Enter command as ASCII string (hex not yet available)");
+        packetTextField.setToolTipText("Enter command as hexadecimal bytes separated by a space");
         packetTextField.setMaximumSize(
                                        new Dimension(packetTextField.getMaximumSize().width,
                                                      packetTextField.getPreferredSize().height
@@ -75,6 +75,7 @@ public class SerialPacketGenFrame extends javax.swing.JFrame implements jmri.jmr
         pane3.add(uaAddrField);
         pane3.add(pollButton);
         uaAddrField.setText("0");
+        uaAddrField.setToolTipText("Enter node address (decimal integer)");
         getContentPane().add(pane3);
 
         pollButton.addActionListener(new java.awt.event.ActionListener() {
@@ -82,6 +83,7 @@ public class SerialPacketGenFrame extends javax.swing.JFrame implements jmri.jmr
                     pollButtonActionPerformed(e);
                 }
             });
+        pollButton.setToolTipText("Send poll request");
 
         addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent e) {
