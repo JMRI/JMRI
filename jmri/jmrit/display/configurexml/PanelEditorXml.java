@@ -3,23 +3,24 @@ package jmri.jmrit.display.configurexml;
 import jmri.InstanceManager;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.display.PanelEditor;
-import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
 import java.awt.Dimension;
 import java.awt.Point;
+
+import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
+
 import com.sun.java.util.collections.List;
-import org.jdom.Element;
+import org.jdom.*;
 
 /**
- * Handle configuration for display.PanelEditor panes.
+ * Handle configuration for {@link PanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class PanelEditorXml implements XmlAdapter {
 
-    public PanelEditorXml() {
-    }
+    public PanelEditorXml() {}
 
     /**
      * Default implementation for storing the contents of a
@@ -40,6 +41,9 @@ public class PanelEditorXml implements XmlAdapter {
         panel.addAttribute("y", ""+posn.y);
         panel.addAttribute("height", ""+size.height);
         panel.addAttribute("width", ""+size.width);
+        panel.addAttribute("editable", ""+(p.isEditable()?"yes":"no"));
+        panel.addAttribute("positionable", ""+(p.isPositionable()?"yes":"no"));
+        panel.addAttribute("controlling", ""+(p.isControlling()?"yes":"no"));
 
         // include contents
 
@@ -115,6 +119,23 @@ public class PanelEditorXml implements XmlAdapter {
                 e.printStackTrace();
             }
         }
+
+        // set contents state
+        Attribute a;
+        boolean value = true;
+        if ((a = element.getAttribute("editable"))!=null && a.getValue().equals("no"))
+            value = false;
+        panel.setAllEditable(value);
+
+        value = true;
+        if ((a = element.getAttribute("positionable"))!=null && a.getValue().equals("no"))
+            value = false;
+        panel.setAllPositionable(value);
+
+        value = true;
+        if ((a = element.getAttribute("controlling"))!=null && a.getValue().equals("no"))
+            value = false;
+        panel.setAllControlling(value);
 
         // display the results, with the editorin back
         panel.pack();
