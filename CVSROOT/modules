@@ -105,7 +105,8 @@ properties -a \
         apps/ActionListBundle_es.properties \
         jmri/jmrit/beantable/BeanTableBundle_es.properties \
         jmri/jmrit/display/DisplayBundle_es.properties \
-        jmri/jmrit/JmritDebugBundle_es.properties
+        jmri/jmrit/JmritDebugBundle_es.properties \
+        jmri/NamedBeanBundle_cs.properties
         
 
 # we're still missing a CodeWarrior target
