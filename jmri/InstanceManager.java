@@ -12,7 +12,7 @@ package jmri;
  * non-system-specific code.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 public class InstanceManager {
 
@@ -23,6 +23,8 @@ public class InstanceManager {
     static public SensorManager sensorManagerInstance()  { return instance().sensorManager; }
 
     static public TurnoutManager turnoutManagerInstance()  { return instance().turnoutManager; }
+
+    static public LightManager lightManagerInstance()  { return instance().lightManager; }
 
     static public ConfigureManager configureManagerInstance()  { return instance().configureManager; }
 
@@ -48,6 +50,7 @@ public class InstanceManager {
     private InstanceManager() {
         turnoutManager = new jmri.managers.ProxyTurnoutManager();
         sensorManager = new jmri.managers.ProxySensorManager();
+        lightManager = new jmri.managers.ProxyLightManager();
     }
 
     /**
@@ -96,6 +99,14 @@ public class InstanceManager {
     }
     protected void addTurnoutManager(TurnoutManager p) {
         ((jmri.managers.AbstractProxyManager)instance().turnoutManager).addManager(p);
+    }
+
+    private LightManager lightManager = null;
+    static public void setLightManager(LightManager p) {
+        instance().addLightManager(p);
+    }
+    protected void addLightManager(LightManager p) {
+        ((jmri.managers.AbstractProxyManager)instance().lightManager).addManager(p);
     }
 
     private ConfigureManager configureManager = null;
