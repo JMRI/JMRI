@@ -1,0 +1,90 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Bob Jacobsen, LBL">
+   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>Automat:  JMRI layout automation support</title>
+</head>
+<body>
+
+<A href="index.html">
+<IMG SRC="images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
+</a>
+
+<H2>Automat:  JMRI layout automation support</H2>
+
+The "Automat" class provides an easy way to write automation for your layout
+using JMRI.
+
+<P>
+Key aspect: These run in a separate thread, so they can wait for something
+to happen while the rest of the program proceeds. Effectively, each Automat
+is a separate program running when it needs to.
+
+<h3>Throttles</h3>
+there's a line like:
+<PRE>
+    // get the throttle instance for short address 3
+   throttle = getThrottle(3, false);
+</PRE>
+that assigns "short address 3" to the "throttle" variable 
+(the "false" selects short address; long address would have been "true").  
+If this doesn't work for some reason, you'll get a periodic 
+"still waiting for throttle" message in the Java window, and the program will wait.
+ 
+<H3>To put up some message boxes</h3>
+
+You can do that directly from Java, but it takes a little code to do it.  
+To simplify it at the start, I've added a "MsgFrame" helper class to the 
+library. 
+<P>
+To make a message box, you first make an object of the "MsgFrame" class:
+<PRE>
+  MsgFrame box = new MsgFrame();
+</PRE>
+(You can call it whatever you'd like, of course).  That line should go with the 
+other declarations, e.g. right after the "DccThrottle throttle = null;" line.
+<P>
+Then, inside the test routines, there are a few things you can do.  
+To show a message and wait for the user to click a "Continue" button, do:
+<PRE>
+   box.show("my message text goes here", true);
+</PRE>
+The 2nd argument shows the "Continue button and waits if true, and just continues if false.  So if you'd like to show a status message while the program continues to run, do:
+<PRE>
+  box.show("status message text", false);
+</PRE>
+If you've done that, you can change the message with another "show", or you can make the box go away with:
+<PRE>
+  box.hide();
+</PRE>
+Java actually has to do some work to pop the box and draw it.  We don't want 
+that to delay the main test program, so I've written this helper class to do 
+all that kind of work as a 2nd, lower priority.  
+You should be able to put messages up on the screen without significantly 
+slowing operation down (unless the program waits for the "Continue" button to be 
+pressed, of course).  And waiting for "Continue" to be pressed won't stop the
+operation of the rest of the program.
+<HR>
+<BR>Site hosted by: <BR>
+<A href="http://sourceforge.net"> 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A>
+ 
+<script language=javascript 
+src="http://ss.webring.com/navbar?f=j;y=bob_jacobsen15;u=100088115910095949">
+</script><noscript><center>
+<table bgcolor=gray cellspacing=0 border=2 bordercolor=red><tr>
+<td><table cellpadding=2 cellspacing=0 border=0><tr><td align=center>
+<font face=arial size=-1>This site is a member of WebRing. 
+<br>To browse visit <a href="http://ss.webring.com/navbar?f=l;y=bob_jacobsen15;u=100088115910095949">
+Here</a>.</font></td></tr></table></td></tr></table>
+</center></noscript>
+
+<hr>
+Bob Jacobsen<BR>
+jake@physics.berkeley.edu
+
+</body>
+</html>
