@@ -1,19 +1,21 @@
 
 # build a JBuilder project directory in standard form
 # Note that this does not work from JBuilder itself!
-jbuilder -a xml lib resources defaultlcf jbuilderjava
+jbuilder -a runtime jbuilderjava
 # build the java/ directory, which contains the actual JBuilder project
-jbuilderjava  -a jbuilder0 jbuilder1 jbuilder2 jbuilder3 jbuilder4 defaultlcf
+jbuilderjava  -a jbuilder0 jbuilder1 java
 jbuilder0 -d java scripts jmri.jpx
 jbuilder1 -d java scripts JMRILibraries.library
-jbuilder2 -d java/src &jmri &apps &resources
-jbuilder3 -d java &test
-jbuilder4 -d java &lib
 
-defaultlcf -d . &scripts/default.lcf
+java -a java1 java2 java3
+java1 -d java/src &jmri &apps &resources
+java2 -d java &test
+java3 -d java &lib
+
+runtime -a xml lib resources defaultlcf
+defaultlcf -d . scripts default.lcf
 
 # ant target - Ant directory in standard form
-# Note that this does not work from JBuilder itself!
 ant -a xml lib resources defaultlcf antjava
 # build the java/ directory, which contains the actual code & build.xml
 antjava  -a ant0 ant1 ant2 ant3 ant4
