@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.18 2003-08-14 04:44:31 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.19 2003-08-29 16:55:24 jacobsen Exp $ -->
 
 <!-- This DTD is Copyright 2001, 2003 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -9,13 +9,13 @@
 <!-- For more information on the JMRI project, including this DTD, -->
 <!-- see http://jmri.sf.net                                        -->
 
-<!ELEMENT layout-config (connection | gui | programmer | perform |
+<!ELEMENT layout-config (connection | gui | programmer | roster | perform |
 						preferences | turnouts | sensors | blocks | signals | 
 						securityelements | aspectgenerator | paneleditor |
 						signalheads | application | blocks)*>
 
 <!-- Overall application configuration -->
-<!ELEMENT application (connection*, gui*, programmer, perform*)>
+<!ELEMENT application (connection*, gui*, programmer, roster?, perform*)>
   <!ATTLIST application class CDATA #REQUIRED>
 
 <!--  Application section identifies serial port info -->
@@ -39,6 +39,11 @@
   <!ATTLIST programmer class CDATA #REQUIRED>
   <!ATTLIST programmer defaultFile CDATA "Basic.xml">
   <!ATTLIST programmer verifyBeforeWrite (yes | no) "no" >
+
+<!--  Application section identifies roster options -->
+<!ELEMENT roster EMPTY>
+  <!ATTLIST roster class CDATA #REQUIRED>
+  <!ATTLIST roster directory CDATA #REQUIRED>
 
 <!--  Section identifies items to invoke at startup -->
 <!ELEMENT perform EMPTY>
