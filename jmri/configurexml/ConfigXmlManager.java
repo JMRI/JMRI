@@ -12,15 +12,15 @@ import jmri.*;
  * to XML.  "Layout" refers to the hardware:  Specific communcation
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
- * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.6 $
+ * @author Bob Jacobsen  Copyright (c) 2002
+ * @version $Revision: 1.7 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
-    
+
     public ConfigXmlManager() {
     }
-    
+
     /**
      * Register an object whose state is to be tracked.
      * It is not an error if the original object was already registered.
@@ -41,13 +41,13 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         // and add to list
         list.add(o);
     }
-    
+
     public void deregister(Object o) {
         list.remove(o);
     }
-    
+
     ArrayList list = new ArrayList();
-    
+
     /**
      * Find the name of the adapter class for an object.
      * @param o object of a configurable type
@@ -58,7 +58,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         if (log.isDebugEnabled()) log.debug("handle object of class "+className);
         int lastDot = className.lastIndexOf(".");
         String result = null;
-        
+
         if (lastDot>0) {
             // found package-class boundary OK
             result = className.substring(0,lastDot)
@@ -73,7 +73,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             return null;
         }
     }
-    
+
     /**
      * Handle failure to load adapter class. Although only a
      * one-liner in this class, it is a separate member to facilitate testing.
@@ -81,29 +81,29 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     void locateFailed(java.lang.ClassNotFoundException ex, String adapterName, Object o) {
         log.error("could not load adapter class "+adapterName);
     }
-    
+
     public void store(File file) {
         // ensure that certain items from the InstanceManager are registered
         // to be stored.  (Others are registered as they are created)
         Object r = InstanceManager.turnoutManagerInstance();
         if (r!=null) register(r);
-        
+
         // do the write
         try {
             // This is taken in large part from "Java and XML" page 368
-            
+
             // create root element
             Element root = new Element("layout-config");
             Document doc = new Document(root);
             doc.setDocType(new DocType("layout-config","layout-config.dtd"));
-            
+
             // get the registered objects and store as top-level elements
             for (int i=0; i<list.size(); i++) {
                 Object o = list.get(i);
                 Element e = elementFromObject(o);
                 if (e!=null) root.addContent(e);
             }
-            
+
             // write the result to selected file
             java.io.FileOutputStream o = new java.io.FileOutputStream(file);
             XMLOutputter fmt = new XMLOutputter();
@@ -116,7 +116,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             e.printStackTrace();
         }
     }
-    
+
     static public Element elementFromObject(Object o)
         throws java.lang.InstantiationException, java.lang.IllegalAccessException {
         String aName = adapterName(o);
@@ -134,7 +134,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             return null;
         }
     }
-    
+
     public void load(File fi) {
         try {
             Element root = super.rootFromFile(fi);
@@ -154,14 +154,40 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                     e.printStackTrace();
                 }
             }
-            
+
         }
         catch (org.jdom.JDOMException e) { log.error("Exception reading: "+e); }
         catch (java.io.IOException e) { log.error("Exception reading: "+e); }
     }
-    
+
     static public String fileLocation = "layout"+File.separator;
-    
+
+    /**
+     * Find a file by looking
+     * <UL>
+     * <LI> at top level in the preferences directory
+     * <LI> in layout/ in the preferences directory, if that exists
+     * <LI> at top level in the application directory
+     * <LI> in layout/ in the application directory, if that exists
+     * </ul>
+     * @param f Local filename, perhaps without path information
+     * @return Corresponding File object
+     */
+    public File find(String f) {
+        File result;
+        result = findFile(f);
+        if (result != null) {
+            log.debug("found at "+result.getAbsolutePath());
+            return result;
+        } else if ( null != findFile(fileLocation+f) ) {
+            log.debug("found at "+result.getAbsolutePath());
+            return result;
+        } else {
+            log.warn("Could not locate file "+f);
+            return null;
+        }
+    }
+
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ConfigXmlManager.class.getName());
 }
