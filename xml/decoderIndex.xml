@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <decoderIndex version="79">
+  <!--Written by JMRI version 1.5.2 on Sun Aug 08 19:24:37 PDT 2004 $Id: decoderIndex.xml,v 1.65 2004-08-09 02:27:45 jacobsen Exp $-->
+  <decoderIndex version="81">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -357,6 +358,42 @@
           <output name="13" label="Soundslot 8" connection="unspecified" />
         </model>
       </family>
+      <family name="Lenz 4th gen BEMF decoders" mfg="Lenz" lowVersionID="51" type="locomotive" file="Lenz_51.xml">
+        <model model="LE030" maxInputVolts="16V" maxMotorCurrent="0.7A" maxTotalCurrent="0.7A" numOuts="2" formFactor="N" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="A - White" connection="unspecified" />
+          <output name="2" label="B - Yellow" connection="unspecified" />
+          <size length="0.1.4" width="0.45" height="0.13" units="inches" />
+        </model>
+        <model model="LE040" maxInputVolts="16V" maxMotorCurrent="0.7A" maxTotalCurrent="0.7A" numOuts="2" formFactor="N" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="A - White" connection="unspecified" />
+          <output name="2" label="B - Yellow" connection="unspecified" />
+          <size length="0.63" width="0.57" height="0.18" units="inches" />
+        </model>
+        <model model="LE130" maxInputVolts="16V" maxMotorCurrent="1.0A" maxTotalCurrent="1.2A" numOuts="4" formFactor="HO" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="A - White" connection="unspecified" />
+          <output name="2" label="B - Yellow" connection="unspecified" />
+          <output name="3" label="C - Green" connection="unspecified" />
+          <output name="4" label="D - Violet" connection="unspecified" />
+          <size length="1.04" width="0.67" height="0.26" units="inches" />
+        </model>
+        <model model="LE135" maxInputVolts="16V" maxMotorCurrent="1.3A" maxTotalCurrent="1.5A" numOuts="3" formFactor="HO" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="A - White" connection="unspecified" />
+          <output name="2" label="B - Yellow" connection="unspecified" />
+          <output name="3" label="C - Green" connection="unspecified" />
+          <size length="1.12" width="0.83" height="0.22" units="inches" />
+        </model>
+        <model model="LE230" maxInputVolts="26V" maxMotorCurrent="2.5A" maxTotalCurrent="2.5A" numOuts="8" formFactor="Large Scale" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="A - Terminal L1" connection="unspecified" />
+          <output name="2" label="B - Terminal L2" connection="unspecified" />
+          <output name="3" label="C - S1: Yellow" connection="unspecified" />
+          <output name="4" label="D - S2: White" connection="unspecified" />
+          <output name="5" label="E - S3: Black" connection="unspecified" />
+          <output name="6" label="F - S4: Red" connection="unspecified" />
+          <output name="7" label="G - S5: Gray" connection="unspecified" />
+          <output name="8" label="H - S6: Orange" connection="unspecified" />
+          <size length="2.75" width="1.18" height="0.50" units="inches" />
+        </model>
+      </family>
       <family name="Lenz 5th gen BEMF decoders" mfg="Lenz" lowVersionID="54" type="locomotive" file="Lenz_54.xml">
         <model model="LE010XF" numOuts="2" connector="unspecified" nmraWarrant="no">
           <output name="1" label="A - White" connection="unspecified" />
@@ -459,6 +496,14 @@
       </family>
       <family name="Function Decoder" mfg="Lenz" lowVersionID="10" type="locomotive" file="Lenz_LF100XF.xml">
         <model model="LF100XF" numOuts="4" numFns="12" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="A - White" connection="unspecified" />
+          <output name="2" label="B - Yellow" connection="unspecified" />
+          <output name="3" label="C - Green" connection="unspecified" />
+          <output name="4" label="D - Violet" connection="unspecified" />
+        </model>
+      </family>
+      <family name="Lenz Ultra-Drive decoders" mfg="Lenz" lowVersionID="1" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" type="locomotive" file="Lenz_UltraDrive.xml">
+        <model model="LE1035" numOuts="4" numFns="8" connector="unspecified" nmraWarrant="no">
           <output name="1" label="A - White" connection="unspecified" />
           <output name="2" label="B - Yellow" connection="unspecified" />
           <output name="3" label="C - Green" connection="unspecified" />
@@ -974,6 +1019,45 @@
       <family name="TCS Mx series decoders" mfg="Train Control Systems" type="locomotive" file="TCS_zMx.xml">
         <model model="M1" numOuts="2" numFns="2" lowVersionID="24" highVersionID="24" connector="unspecified" nmraWarrant="no">
           <size length="0.500" width="0.375" height="0.125" units="inches" />
+        </model>
+      </family>
+      <family name="Wangrow basic decoders" mfg="Wangrow" type="locomotive" file="Wangrow_2.xml">
+        <model model="DH-155" numOuts="3" connector="NMRAmedium" maxMotorCurrent="1.5A" formFactor="HO" nmraWarrant="no">
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="3" label="Violet or Brown" connection="wire" maxcurrent="100 mA" />
+          <output name="4" label="Brown" connection="wire" maxcurrent="100 mA" />
+        </model>
+        <model model="DO-407" numOuts="7" maxMotorCurrent="4.0A" formFactor="O" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="White" connection="wire" maxcurrent="400 mA" />
+          <output name="2" label="Green" connection="wire" maxcurrent="400 mA" />
+          <output name="3" label="Violet" connection="wire" maxcurrent="200 mA" />
+          <output name="4" label="Brown" connection="wire" maxcurrent="200 mA" />
+          <output name="5" label="Brown" connection="wire" maxcurrent="200 mA" />
+          <output name="6" label="Brown" connection="wire" maxcurrent="200 mA" />
+          <output name="7" label="Brown" connection="wire" maxcurrent="200 mA" />
+        </model>
+      </family>
+      <family name="Wangrow 2nd gen decoders" mfg="Wangrow" type="locomotive" file="Wangrow_4.xml">
+        <model model="DN-103" numOuts="3" connector="NMRAmedium" maxMotorCurrent="1.0A" formFactor="N" nmraWarrant="no">
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+        </model>
+      </family>
+      <family name="Wangrow 3rd generation decoders" mfg="Wangrow" type="locomotive" file="Wangrow_6.xml">
+        <model model="SH-104" numOuts="3" connector="NMRAmedium" maxMotorCurrent="1.0A" formFactor="HO" nmraWarrant="no">
+          <output name="1" connection="solder" maxcurrent="100 mA" />
+          <output name="2" connection="solder" maxcurrent="100 mA" />
+          <output name="3" connection="solder" maxcurrent="100 mA" />
+          <output name="4" connection="solder" maxcurrent="100 mA" />
+        </model>
+      </family>
+      <family name="Wangrow advanced lighting decoders" mfg="Wangrow" type="locomotive" file="Wangrow_7.xml">
+        <model model="DH-104" numOuts="3" maxMotorCurrent="1.4A" formFactor="HO" connector="unspecified" nmraWarrant="no">
+          <output name="1" maxcurrent="100 mA" connection="unspecified" />
+          <output name="2" maxcurrent="100 mA" connection="unspecified" />
+          <output name="3" maxcurrent="100 mA" connection="unspecified" />
+          <output name="4" maxcurrent="100 mA" connection="unspecified" />
         </model>
       </family>
       <family name="Zimo Silent BEMF decoders, early model" mfg="Zimo" type="locomotive" file="Zimo_MX61_1.xml">
