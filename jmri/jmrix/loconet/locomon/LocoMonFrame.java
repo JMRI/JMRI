@@ -1,25 +1,14 @@
-/** 
+/**
  * LocoMonFrame.java
  *
  * Description:		Frame displaying (and logging) LocoNet messages
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			
+ * @version
  */
 
 package jmri.jmrix.loconet.locomon;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import java.util.Date;
-import java.text.DateFormat;
-import java.io.File;
-import java.io.PrintStream;
-import java.io.FileOutputStream;
-
-import jmri.jmrix.loconet.LocoNetListener;
-import jmri.jmrix.loconet.LnTrafficController;
-import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.jmrix.loconet.*;
 
 public class LocoMonFrame extends jmri.jmrix.AbstractMonFrame implements LocoNetListener {
 
@@ -35,12 +24,12 @@ public class LocoMonFrame extends jmri.jmrix.AbstractMonFrame implements LocoNet
 		// and unwind swing
 		super.dispose();
 	}
-	
+
 	protected void init() {
 		// connect to the LnTrafficController
-		LnTrafficController.instance().addLocoNetListener(~0, this);		
+		LnTrafficController.instance().addLocoNetListener(~0, this);
 	}
-	
+
 	public synchronized void message(LocoNetMessage l) {  // receive a LocoNet message and log it
 		// display the raw data if requested
 		String raw = "packet: ";
@@ -56,7 +45,7 @@ public class LocoMonFrame extends jmri.jmrix.AbstractMonFrame implements LocoNet
 		nextLine(llnmon.displayMessage(l), raw);
 
 	}
-	
+
 	jmri.jmrix.loconet.locomon.Llnmon llnmon = new jmri.jmrix.loconet.locomon.Llnmon();
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoMonFrame.class.getName());
