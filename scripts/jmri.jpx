@@ -70,7 +70,7 @@
   <property category="sys" name="TestPath" value="test"/>
   <property category="sys" name="Title" value=""/>
   <property category="sys" name="TitleLabel" value="Title:"/>
-  <property category="sys" name="Version" value="1.0"/>
+  <property category="sys" name="Version" value="$Revision: 1.8 $"/>
   <property category="sys" name="VersionLabel" value="@version"/>
   <property category="sys" name="WorkingDirectory" value="../"/>
   <node name="Additional Settings" type="Folder">
@@ -112,4 +112,6 @@
   <file path="src/jmri/configurexml/LoadLayoutAction.java"/>
   <file path="test/jmri/jmrix/loconet/LocoNetMessageTest.java"/>
   <file path="src/jmri/jmrit/display/PanelEditorAction.java"/>
+  <file path="src/jmri/jmrit/display/PositionableLabel.java"/>
+  <file path="test/jmri/jmrit/display/PositionableLabelTest.java"/>
 </project>
