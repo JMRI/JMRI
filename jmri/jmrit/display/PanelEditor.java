@@ -46,7 +46,7 @@ import com.sun.java.util.collections.ArrayList;
  * consistent via the {#setTitle} method.
  *
  * @author Bob Jacobsen  Copyright: Copyright (c) 2002, 2003; modifications, Dennis Miller 2004
- * @version $Revision: 1.43 $
+ * @version $Revision: 1.44 $
  */
 
 public class PanelEditor extends JFrame {
@@ -709,27 +709,51 @@ public class PanelEditor extends JFrame {
      *            which contains the targetPane
      *
      */
-    public JFrame makeFrame(String name, int width, int height) {
+    public JFrame makeFrame(String name) {
         JFrame targetFrame = new JFrame(name);
 
 		// arrange for scrolling and size services
         JLayeredPane targetPanel = new JLayeredPane(){
             // provide size services, even though a null layout manager is used
-            public void setSize(int h, int w) {
+            public void setSize(int w, int h) {
                 this.h = h;
                 this.w = w;
-                super.setSize(h, w);
+                super.setSize(w,h);
+                if (log.isDebugEnabled()) log.debug("size now w="+w+", h="+h);
             }
             int h = 100;
             int w = 100;
+            public Dimension getSize() {
+                if (log.isDebugEnabled()) log.debug("get size w="+w+", h="+h);
+                return new Dimension(w,h);
+            }
             public Dimension getPreferredSize() {
-                return new Dimension(h,w);
+                return getSize();
             }
             public Dimension getMinimumSize() {
                 return getPreferredSize();
             }
             public Dimension getMaximumSize() {
                 return getPreferredSize();
+            }
+            public Component add(Component c, int i) {
+                if (log.isDebugEnabled()) log.debug("size was "+w+","+h);
+                int hnew = (int)Math.max(h,
+                        c.getLocation().getY()+c.getSize().getHeight());
+                int wnew = (int)Math.max(w,
+                        c.getLocation().getX()+c.getSize().getWidth());
+                setSize(wnew,hnew);
+                return super.add(c, i);
+            }
+            public void add(Component c, Object o) {
+                if (log.isDebugEnabled()) log.debug("adding of "+c.getSize()+" with Object");
+                super.add(c, o);
+                if (log.isDebugEnabled()) log.debug("in Object add, was "+w+","+h);
+                int hnew = (int)Math.max(h,
+                        c.getLocation().getY()+c.getSize().getHeight());
+                int wnew = (int)Math.max(w,
+                        c.getLocation().getX()+c.getSize().getWidth());
+                setSize(wnew,hnew);
             }
         };
         targetPanel.setLayout(null);
@@ -760,7 +784,7 @@ public class PanelEditor extends JFrame {
         targetFrame.setJMenuBar(menuBar);
 
 		// set initial size, and force layout
-        targetPanel.setSize(width, height);
+        targetPanel.setSize(200, 200);
         targetPanel.revalidate();
 
         return targetFrame;
