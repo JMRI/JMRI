@@ -94,7 +94,7 @@ public class EasyDccMonFrameTest extends TestCase {
 		protected void sendTestReply (EasyDccReply m) {
 			// forward a test message to Listeners
 			if (log.isDebugEnabled()) log.debug("sendTestReply    ["+m+"]");
-			notifyReply(m);
+			notifyReply(m, null);
 			return;
 		}
 

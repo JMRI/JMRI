@@ -56,7 +56,7 @@ public class EasyDccPowerManagerTest extends AbstractPowerManagerTest {
 		}
 		protected void sendTestReply (EasyDccReply m) {
 			// forward a test message to Listeners
-			notifyReply(m);
+			notifyReply(m, null);
 			return;
 		}
 	

@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the EasyDccReplyclass
  * @author			Bob Jacobsen
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 
 package jmri.jmrix.easydcc;
@@ -62,7 +62,7 @@ public class EasyDccReplyTest extends TestCase {
 	public void testValue1() {
 		// value when just the string comes back
 		EasyDccReply m = new EasyDccReply();
-        int i= 0;
+                int i= 0;
 		m.setElement(i++, 'C');
 		m.setElement(i++, 'V');
 		m.setElement(i++, '0');

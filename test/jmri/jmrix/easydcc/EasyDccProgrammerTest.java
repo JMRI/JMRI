@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the EasyDccProgrammer class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.8 $
  */
 
 package jmri.jmrix.easydcc;
@@ -30,33 +30,11 @@ public class EasyDccProgrammerTest extends TestCase {
 
 		// and do the write
 		p.writeCV(10, 20, l);
-		// check "prog mode" message sent
-		Assert.assertEquals("mode message sent", 1, t.outbound.size());
-		Assert.assertEquals("mode message contents", "M",
-			((EasyDccMessage)(t.outbound.elementAt(0))).toString());
-		// reply from programmer arrives
-		EasyDccReply r = new EasyDccReply("P");
-		t.sendTestReply(r);
-		Assert.assertEquals(" programmer listener not invoked", 0, rcvdInvoked);
 
 		// check write message sent
-		Assert.assertEquals("write message sent", 2, t.outbound.size());
-		Assert.assertEquals("write message contents", "P00A14",
-			((EasyDccMessage)(t.outbound.elementAt(1))).toString());
-		// reply from programmer arrives
-		r = new EasyDccReply();
-		t.sendTestReply(r);
-		Assert.assertEquals(" programmer listener not invoked", 0, rcvdInvoked);
-
-		// check "leave prog mode" message sent
-		Assert.assertEquals("normal mode message sent", 3, t.outbound.size());
-		Assert.assertEquals("normal mode message contents", "X",
-			((EasyDccMessage)(t.outbound.elementAt(2))).toString());
-		// reply from programmer arrives
-		r = new EasyDccReply();
-		t.sendTestReply(r);
-		Assert.assertEquals(" listener invoked", 1, rcvdInvoked);
-		Assert.assertEquals(" got data value back", 20, rcvdValue);
+		Assert.assertEquals("write message sent", 1, t.outbound.size());
+		Assert.assertEquals("write message contents", "P 00A 14",
+			((EasyDccMessage)(t.outbound.elementAt(0))).toString());
 	}
 
 	public void testWriteRegisterSequence() throws JmriException {
@@ -71,33 +49,11 @@ public class EasyDccProgrammerTest extends TestCase {
 
 		// and do the write
 		p.writeCV(3, 12, l);
-		// check "prog mode" message sent
-		Assert.assertEquals("mode message sent", 1, t.outbound.size());
-		Assert.assertEquals("mode message contents", "M",
-			((EasyDccMessage)(t.outbound.elementAt(0))).toString());
-		// reply from programmer arrives
-		EasyDccReply r = new EasyDccReply("**** PROGRAMMING MODE - MAIN TRACK NOW DISCONNECTED ****");
-		t.sendTestReply(r);
-		Assert.assertEquals(" programmer listener not invoked", 0, rcvdInvoked);
 
 		// check write message sent
-		Assert.assertEquals("write message sent", 2, t.outbound.size());
-		Assert.assertEquals("write message contents", "S30C",
-			((EasyDccMessage)(t.outbound.elementAt(1))).toString());
-		// reply from programmer arrives
-		r = new EasyDccReply();
-		t.sendTestReply(r);
-		Assert.assertEquals(" programmer listener not invoked", 0, rcvdInvoked);
-
-		// check "leave prog mode" message sent
-		Assert.assertEquals("normal mode message sent", 3, t.outbound.size());
-		Assert.assertEquals("normal mode message contents", "X",
-			((EasyDccMessage)(t.outbound.elementAt(2))).toString());
-		// reply from programmer arrives
-		r = new EasyDccReply();
-		t.sendTestReply(r);
-		Assert.assertEquals(" listener invoked", 1, rcvdInvoked);
-		Assert.assertEquals(" got data value back", 12, rcvdValue);
+		Assert.assertEquals("write message sent", 1, t.outbound.size());
+		Assert.assertEquals("write message contents", "S3 0C",
+			((EasyDccMessage)(t.outbound.elementAt(0))).toString());
 	}
 
 	public void testReadSequence() throws JmriException {
@@ -109,22 +65,13 @@ public class EasyDccProgrammerTest extends TestCase {
 
 		// and do the read
 		p.readCV(10, l);
-		// check "prog mode" message sent
-		Assert.assertEquals("mode message sent", 1, t.outbound.size());
-		Assert.assertEquals("mode message contents", "M",
-			((EasyDccMessage)(t.outbound.elementAt(0))).toString());
-		// reply from programmer arrives
-		EasyDccReply r = new EasyDccReply("P");
-		t.sendTestReply(r);
-		Assert.assertEquals(" programmer listener not invoked", 0, rcvdInvoked);
-
 
 		// check "read command" message sent
-		Assert.assertEquals("read message sent", 2, t.outbound.size());
-		Assert.assertEquals("read message contents", "R00A",
-			((EasyDccMessage)(t.outbound.elementAt(1))).toString());
+		Assert.assertEquals("read message sent", 1, t.outbound.size());
+		Assert.assertEquals("read message contents", "R 00A",
+			((EasyDccMessage)(t.outbound.elementAt(0))).toString());
 		// reply from programmer arrives
-		r = new EasyDccReply();
+		EasyDccReply r = new EasyDccReply();
 		r.setElement(0, 'C');
 		r.setElement(1, 'V');
 		r.setElement(2, '0');
@@ -132,15 +79,6 @@ public class EasyDccProgrammerTest extends TestCase {
 		r.setElement(4, '0');
 		r.setElement(5, '1');
 		r.setElement(6, '4');
-		t.sendTestReply(r);
-		Assert.assertEquals(" programmer listener not invoked", 0, rcvdInvoked);
-
-		// check "leave prog mode" message sent
-		Assert.assertEquals("normal mode message sent", 3, t.outbound.size());
-		Assert.assertEquals("normal mode message contents", "X",
-			((EasyDccMessage)(t.outbound.elementAt(2))).toString());
-		// reply from programmer arrives
-		r = new EasyDccReply();
 		t.sendTestReply(r);
 		Assert.assertEquals(" programmer listener invoked", 1, rcvdInvoked);
 		Assert.assertEquals(" value read", 20, rcvdValue);
@@ -158,36 +96,19 @@ public class EasyDccProgrammerTest extends TestCase {
 
 		// and do the read
 		p.readCV(3, l);
-		// check "prog mode" message sent
-		Assert.assertEquals("mode message sent", 1, t.outbound.size());
-		Assert.assertEquals("mode message contents", "M",
-			((EasyDccMessage)(t.outbound.elementAt(0))).toString());
-		// reply from programmer arrives
-		EasyDccReply r = new EasyDccReply("**** PROGRAMMING MODE - MAIN TRACK NOW DISCONNECTED ****");
-		t.sendTestReply(r);
-		Assert.assertEquals(" programmer listener not invoked", 0, rcvdInvoked);
-
 
 		// check "read command" message sent
-		Assert.assertEquals("read message sent", 2, t.outbound.size());
+		Assert.assertEquals("read message sent", 1, t.outbound.size());
 		Assert.assertEquals("read message contents", "V3",
-			((EasyDccMessage)(t.outbound.elementAt(1))).toString());
+			((EasyDccMessage)(t.outbound.elementAt(0))).toString());
 		// reply from programmer arrives
-		r = new EasyDccReply();
+		EasyDccReply r = new EasyDccReply();
 		r.setElement(0, 'V');
 		r.setElement(1, '3');
 		r.setElement(2, '1');
 		r.setElement(3, '4');
 		t.sendTestReply(r);
-		Assert.assertEquals(" programmer listener not invoked", 0, rcvdInvoked);
 
-		// check "leave prog mode" message sent
-		Assert.assertEquals("normal mode message sent", 3, t.outbound.size());
-		Assert.assertEquals("normal mode message contents", "X",
-			((EasyDccMessage)(t.outbound.elementAt(2))).toString());
-		// reply from programmer arrives
-		r = new EasyDccReply();
-		t.sendTestReply(r);
 		Assert.assertEquals(" programmer listener invoked", 1, rcvdInvoked);
 		Assert.assertEquals(" value read", 20, rcvdValue);
 	}
@@ -206,22 +127,13 @@ public class EasyDccProgrammerTest extends TestCase {
 
 		// and do the read
 		p.readCV(10, l);
-		// check "prog mode" message sent
-		Assert.assertEquals("mode message sent", 1, t.outbound.size());
-		Assert.assertEquals("mode message contents", "M",
-			((EasyDccMessage)(t.outbound.elementAt(0))).toString());
-		// reply from programmer arrives
-		EasyDccReply r = new EasyDccReply("P");
-		t.sendTestReply(r);
-		Assert.assertEquals(" programmer listener not invoked", 0, rcvdInvoked);
-
 
 		// check "read command" message sent
-		Assert.assertEquals("read message sent", 2, t.outbound.size());
-		Assert.assertEquals("read message contents", "R00A",
-			((EasyDccMessage)(t.outbound.elementAt(1))).toString());
+		Assert.assertEquals("read message sent", 1, t.outbound.size());
+		Assert.assertEquals("read message contents", "R 00A",
+			((EasyDccMessage)(t.outbound.elementAt(0))).toString());
 		// reply from programmer arrives
-		r = new EasyDccReply();
+		EasyDccReply r = new EasyDccReply();
 		r.setElement(0, 'C');
 		r.setElement(1, 'V');
 		r.setElement(2, '0');
@@ -229,17 +141,6 @@ public class EasyDccProgrammerTest extends TestCase {
 		r.setElement(4, '0');
 		r.setElement(5, '-');
 		r.setElement(6, '-');
-		t.sendTestReply(r);
-		Assert.assertEquals(" programmer listener told of faliure", 1, rcvdInvoked);
-		Assert.assertEquals(" value read", -1, rcvdValue);
-		Assert.assertEquals(" status read", jmri.ProgListener.NoLocoDetected, rcvdStatus);
-
-		// check "leave prog mode" message sent
-		Assert.assertEquals("normal mode message sent", 3, t.outbound.size());
-		Assert.assertEquals("normal mode message contents", "X",
-			((EasyDccMessage)(t.outbound.elementAt(2))).toString());
-		// reply from programmer arrives
-		r = new EasyDccReply();
 		t.sendTestReply(r);
 		Assert.assertEquals(" programmer listener not invoked again", 1, rcvdInvoked);
 	}
@@ -279,9 +180,10 @@ public class EasyDccProgrammerTest extends TestCase {
 			if (this.log.isDebugEnabled()) this.log.debug("sendEasyDccMessage ["+m+"]");
 			// save a copy
 			outbound.addElement(m);
-			lastSender = l;
+                        lastSender = l;
 		}
 
+                jmri.jmrix.easydcc.EasyDccListener lastSender;
 		// test control member functions
 
 		/**
@@ -296,7 +198,7 @@ public class EasyDccProgrammerTest extends TestCase {
 		protected void sendTestReply (EasyDccReply m) {
 			// forward a test message to Listeners
 			if (this.log.isDebugEnabled()) this.log.debug("sendTestReply    ["+m+"]");
-			notifyReply(m);
+			notifyReply(m, lastSender);
 			return;
 		}
 
