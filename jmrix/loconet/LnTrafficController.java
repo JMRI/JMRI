@@ -28,6 +28,7 @@ public class LnTrafficController implements LocoNetInterface, Runnable {
 
 	public synchronized void addLocoNetListener(int mask, LocoNetListener l) { 
 			// add only if not already registered
+			if (l == null) throw new java.lang.NullPointerException();
 			if (!listeners.contains(l)) {
 					listeners.addElement(l);
 				}
@@ -116,8 +117,15 @@ public class LnTrafficController implements LocoNetInterface, Runnable {
 		int cnt = v.size();
 		for (int i=0; i < cnt; i++) {
 			LocoNetListener client = (LocoNetListener) listeners.elementAt(i);
-			client.message(m);
-						}
+			try {
+				client.message(m);
+				}
+			catch (Exception e)
+				{
+					ErrLog.msg(ErrLog.error,"LnTrafficController", 
+								"notify", "During dispatch to "+client+"\nException "+e);
+				}
+			}
 	}
 	
 // main running member function

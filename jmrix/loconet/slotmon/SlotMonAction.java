@@ -20,6 +20,10 @@ public class SlotMonAction 			extends AbstractAction {
 	public SlotMonAction(String s) { super(s);}
 	
     public void actionPerformed(ActionEvent e) {
+
+		// create SlotManager if it doesn't exist
+		SlotManager.instance();
+
 		// create a SlotMonFrame
 		SlotMonFrame f = new SlotMonFrame();
 		try {
@@ -30,12 +34,6 @@ public class SlotMonAction 			extends AbstractAction {
 			}
 		f.show();	
 		
-		// create SlotManager if it doesn't exist
-		if (SlotManager.instance() == null) {
-			SlotManager temp = new SlotManager();
-			}
-		// connect to the SlotManager to be notified of each slot change
-		SlotManager.instance().addSlotListener(f);	
 	}
 }
 

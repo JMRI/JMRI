@@ -31,7 +31,7 @@ public class LocoNetSlot {
 	public int consistStatus() 	{ return stat&LnConstants.CONSIST_MASK; }	
 	
 	// direction and functions
-	public boolean isForward()	{ return 0!=(dirf&LnConstants.DIRF_DIR); }
+	public boolean isForward()	{ return 0==(dirf&LnConstants.DIRF_DIR); }
 	public boolean isF0()		{ return 0!=(dirf&LnConstants.DIRF_F0); }
 	public boolean isF1()		{ return 0!=(dirf&LnConstants.DIRF_F1); }
 	public boolean isF2()		{ return 0!=(dirf&LnConstants.DIRF_F2); }
@@ -46,6 +46,8 @@ public class LocoNetSlot {
 	public int locoAddr()   { return addr; }
 	public int speed()      { return spd; }
 	
+	public int id()			{ return id; }
+	
 	// global track status should be reference through SlotManager
 	
 // create a specific slot
@@ -57,22 +59,59 @@ public class LocoNetSlot {
 
 // methods to interact with LocoNet 
 	public void setSlot(LocoNetMessage l) throws LocoNetException { // exception if message can't be parsed 
-		// check valid
-		if ( l.getOpCode() != LnConstants.OPC_SL_RD_DATA
-			 && l.getElement(1) != 0x0E )
-					throw new LocoNetException();
-
-		// valid, so fill contents
-		slot = l.getElement(2);
-		stat = l.getElement(3);
-		addr = l.getElement(4)+128*l.getElement(9);
-		spd =  l.getElement(5);
-		dirf = l.getElement(6);
-		trk =  l.getElement(7);
-		ss2 =  l.getElement(8);
-		// item 9 is add2
-		snd =  l.getElement(10);
-		id =   l.getElement(11)+128*l.getElement(12);
+		// sort out valid messages, handle
+		switch (l.getOpCode()) {
+			case LnConstants.OPC_WR_SL_DATA: 
+			case LnConstants.OPC_SL_RD_DATA: {
+				if ( l.getElement(1) != 0x0E ) return;  // not an appropriate reply
+				// valid, so fill contents
+				slot = l.getElement(2);
+				stat = l.getElement(3);
+				addr = l.getElement(4)+128*l.getElement(9);
+				spd =  l.getElement(5);
+				dirf = l.getElement(6);
+				trk =  l.getElement(7);
+				ss2 =  l.getElement(8);
+				// item 9 is add2
+				snd =  l.getElement(10);
+				id =   l.getElement(11)+128*l.getElement(12);
+				return;
+				}
+			case LnConstants.OPC_SLOT_STAT1: 
+				slot = l.getElement(1);
+				stat = l.getElement(2);
+				return;
+			case LnConstants.OPC_LOCO_SND: {
+				// set sound functions in slot - first, clear bits
+				snd &= ~(LnConstants.SND_F5 | LnConstants.SND_F6 
+						| LnConstants.SND_F7 | LnConstants.SND_F8);
+				// and set them as masked
+				snd |= ((LnConstants.SND_F5 | LnConstants.SND_F6 
+						| LnConstants.SND_F7 | LnConstants.SND_F8) & l.getElement(2));
+				return;
+				}
+			case  LnConstants.OPC_LOCO_DIRF: {
+				// set direction, functions in slot - first, clear bits
+				dirf &= ~(LnConstants.DIRF_DIR | LnConstants.DIRF_F0 
+						| LnConstants.DIRF_F1 | LnConstants.DIRF_F2
+						| LnConstants.DIRF_F3 | LnConstants.DIRF_F4);
+				// and set them as masked
+				dirf += ((LnConstants.DIRF_DIR | LnConstants.DIRF_F0 
+						| LnConstants.DIRF_F1 | LnConstants.DIRF_F2
+						| LnConstants.DIRF_F3 | LnConstants.DIRF_F4) & l.getElement(2));
+				return;
+				}
+			case LnConstants.OPC_MOVE_SLOTS: {
+				// change in slot status will be reported by the reply, 
+				// so don't need to do anything here (but could)
+				return;
+				}
+			case LnConstants.OPC_LOCO_SPD: {
+				// set speed
+				spd  = l.getElement(2);
+				return;
+				}
+			}
 		}
 		
 	public LocoNetMessage writeSlot() { 

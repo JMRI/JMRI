@@ -15,13 +15,19 @@ import javax.swing.*;
 import loconet.SlotListener;
 import loconet.LocoNetSlot;
 import loconet.LnConstants;
+
+import slotmon.SlotMonFrame;
+
 import ErrLoggerJ.ErrLog;
 
-public class SlotMonFrame extends javax.swing.JFrame implements loconet.SlotListener {
+public class SlotMonFrame extends javax.swing.JFrame {
 
 	// GUI member declarations
-	javax.swing.JCheckBox showAllCheckBox = new javax.swing.JCheckBox();
-
+	javax.swing.JCheckBox 	showAllCheckBox = new javax.swing.JCheckBox();
+	SlotMonDataModel		slotModel 		= new SlotMonDataModel(128,16);
+	JTable					slotTable		= new JTable(slotModel);
+	JScrollPane 			slotScroll		= new JScrollPane(slotTable);
+	
 	public SlotMonFrame() {
 
 		// configure items for GUI
@@ -30,15 +36,35 @@ public class SlotMonFrame extends javax.swing.JFrame implements loconet.SlotList
 		showAllCheckBox.setSelected(true);
 		showAllCheckBox.setToolTipText("if checked, even empty/idle slots will appear");
 
+		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
+		slotTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		
+		// add listener object so checkbox functions
+		showAllCheckBox.addActionListener(new CheckNotify(slotModel, showAllCheckBox));
+		
 		// general GUI config
 		setTitle("Slot Monitor");
-		getContentPane().setLayout(new GridLayout(4,2));
+		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
 		// install items in GUI
 		getContentPane().add(showAllCheckBox);
+		getContentPane().add(slotScroll);
 		pack();
 	}
   
+  	// inner class to handle messaging for the "show all slots" check box
+	class CheckNotify implements ActionListener {
+		private SlotMonDataModel _model;
+		javax.swing.JCheckBox _box;
+		public CheckNotify(SlotMonDataModel model, javax.swing.JCheckBox box) 
+			{_model = model; _box=box;}
+		public void actionPerformed(ActionEvent ev) {
+			// checkbox action received; forward state
+			_model.showAllSlots(_box.isSelected());
+			_model.fireTableDataChanged();
+		}
+	}
+
   	private boolean mShown = false;
   	
 	public void addNotify() {
@@ -65,19 +91,5 @@ public class SlotMonFrame extends javax.swing.JFrame implements loconet.SlotList
 	// and disconnect from the SlotManager
 	
 	}
-	
-	public synchronized void notifyChangedSlot(LocoNetSlot s) {
-		boolean changedState = false;
-		// update model from this slot
-		
-		// display it in the Swing thread if changed
-		if (changedState) {
-			Runnable r = new Runnable() {
-				public void run() { /* cause the display to be redone */ }
-				};
-			javax.swing.SwingUtilities.invokeLater(r);
-		}
-	}
 
-String newState = "";
 }
