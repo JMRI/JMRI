@@ -23,6 +23,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JOptionPane;
 
 /**
  * Swing action to create and register a
@@ -31,7 +32,7 @@ import javax.swing.JTextField;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -104,6 +105,7 @@ public class LightTableAction extends AbstractTableAction {
 
     JFrame addFrame = null;
     Light curLight = null;
+    boolean lightCreated = false;
 
     String sensorControl = rb.getString("LightSensorControl");
     String fastClockControl = rb.getString("LightFastClockControl");
@@ -264,6 +266,21 @@ public class LightTableAction extends AbstractTableAction {
             contentPane.add(panel5);
         }
         typeBox.setSelectedIndex(0);  // force GUI status consistent
+
+        addFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+                public void windowClosing(java.awt.event.WindowEvent e) {
+                    // remind to save, if Light was created or edited
+                    if (lightCreated) {
+                        javax.swing.JOptionPane.showMessageDialog(addFrame,
+                            rb.getString("Reminder1")+"\n"+rb.getString("Reminder2"),
+                                rb.getString("ReminderTitle"),
+                                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    addFrame.setVisible(false);
+                    addFrame.dispose();
+                }
+            });
+            
         addFrame.pack();
         addFrame.show();
     }
@@ -417,6 +434,7 @@ public class LightTableAction extends AbstractTableAction {
             status2.setText( rb.getString("LightEditInst") );
             status2.setVisible(true);
             g.activateLight();
+            lightCreated = true;
         }
     }
     
@@ -563,6 +581,7 @@ public class LightTableAction extends AbstractTableAction {
         fixedSystemName.setVisible(false);
         systemName.setVisible(true);
         g.activateLight();
+        lightCreated = true;
     }
 
     /**
