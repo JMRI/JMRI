@@ -21,6 +21,13 @@ import java.beans.PropertyChangeEvent;
 
 public abstract class AbstractProgrammer implements Programmer {
 
+    // here only temporarily, to avoid compile errors
+    // @todo Fix that!
+    public boolean hasMode(int mode) {
+        log.debug("hasMode returns true by default");
+        return true;
+    }
+
 	public String decodeErrorCode(int code) {
 		if (code == ProgListener.OK) return "OK";
 		StringBuffer sbuf = new StringBuffer("");
@@ -99,7 +106,11 @@ public abstract class AbstractProgrammer implements Programmer {
 
     /**
      * Find the register number that corresponds to a specific
-     * CV number, or thrown a
+     * CV number.
+     * @throws ProgrammerException if the requested CV does not correspond
+     *          to a register
+     * @param cv CV number (1 through 512) for which equivalent register is desired
+     * @returns register number corresponding to cv
      */
 
     public int registerFromCV(int cv) throws ProgrammerException {
