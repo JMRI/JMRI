@@ -23,7 +23,7 @@ public class NceTest extends TestCase {
 		super(s);
 	}
 
-	// a simple test skeleton
+	// a dummy test to avoid JUnit warning
 	public void testDemo() {
 		assert(true);
 	}

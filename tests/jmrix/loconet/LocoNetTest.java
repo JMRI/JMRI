@@ -19,45 +19,6 @@ import jmri.jmrix.loconet.*;
 
 public class LocoNetTest extends TestCase {
 
-	// a simple test skeleton
-	public void testDemo() {
-		assert(true);
-	}
-
-	// Start LnTurnout tests
-	public void testLnTurnoutCreate() {
-		// prepare an interface
-		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
-		
-		LnTurnout t = new LnTurnout(21);
-		assert(true);
-		
-		// set closed 
-		try {
-			t.setCommandedState(jmri.Turnout.CLOSED);
-		} catch (Exception e) { log.error("TO exception: "+e);
-		}	
-		assert(lnis.outbound.elementAt(0).toString().equals("b0 14 30 0 "));  // output loconet message
-
-		// set thrown 
-		try {
-			t.setCommandedState(jmri.Turnout.THROWN);
-		} catch (Exception e) { log.error("TO exception: "+e);
-		}	
-		assert(lnis.outbound.elementAt(1).toString().equals("b0 14 10 0 "));  // output loconet message
-
-		// notify the Ln that somebody else changed it...
-		LocoNetMessage m = new LocoNetMessage(4);
-		m.setOpCode(0xb0);
-		m.setElement(1, 0x14);
-		m.setElement(2, 0x30);
-		m.setElement(3, 0x00);
-		lnis.sendTestMessage(m);
-		// following print says 1, 2 - UNKNOWN and THROWN
-		System.out.println("pass3:"+lnis.outbound+" // "+t.getKnownState()+" // "+t.getCommandedState());
-	}
-
-
 	// from here down is testing infrastructure
 	
 	public LocoNetTest(String s) {
@@ -72,7 +33,9 @@ public class LocoNetTest extends TestCase {
 	
 	// test suite from all defined tests
 	public static Test suite() {
-		TestSuite suite = new TestSuite(LocoNetTest.class);
+		TestSuite suite = new TestSuite("jmri.tests.jmrix.loconet.LocoNetTest");  // no tests in this class itself
+		suite.addTest(LnTurnoutTest.suite());
+		suite.addTest(LnTurnoutManagerTest.suite());
 		return suite;
 	}
 	 

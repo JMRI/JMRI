@@ -27,27 +27,29 @@ public class AllTest extends TestCase  {
 		// initialize junit
 		junit.swingui.TestRunner.main(testCaseName);
 	}
-	
-	// a simple test skeleton
-	public void testDemo() {
-		assert(true);
-	}
-	
+		
 	// test suite
 	public static Test suite() {
 		boolean log4jinit = true;
 		if (log4jinit) {
 			log4jinit = false;
-	   		org.apache.log4j.BasicConfigurator.configure();
-	   		// only log warnings and above
-	   		org.apache.log4j.Category.getRoot().setPriority(org.apache.log4j.Priority.INFO);
+    		// initialize log4j - from logging control file (lcf) if you can find it
+     		String logFile = "default.lcf";
+    		if (new java.io.File(logFile).canRead()) {
+    			System.out.println(logFile+" configures logging");
+    			org.apache.log4j.PropertyConfigurator.configure("default.lcf");
+   		} else {
+    			System.out.println(logFile+" not found, using default logging");
+	    		org.apache.log4j.BasicConfigurator.configure();
+	   			// only log warnings and above
+	   			org.apache.log4j.Category.getRoot().setPriority(org.apache.log4j.Priority.INFO);
+     		}
 		}
-		// all tests from here
-		TestSuite suite = new TestSuite(AllTest.class);
+		// all tests from here down in heirarchy
+		TestSuite suite = new TestSuite("AllTest");  // no tests in this class itself
 		// all tests from other classes
-		suite.addTest(jmri.tests.jmrix.loconet.LocoNetTest.suite());
 		suite.addTest(JmriTest.suite());
-		suite.addTest(SymbolicProgTest.suite());
+		suite.addTest(jmri.tests.jmrix.loconet.LocoNetTest.suite());
 		suite.addTest(jmri.tests.jmrix.nce.NceTest.suite());
 		
 		return suite;

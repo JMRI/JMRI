@@ -51,9 +51,15 @@ public class JMRIdemo extends JPanel {
 	// Main entry point
     public static void main(String s[]) {
     
-    	// initialize log4j
-    	org.apache.log4j.BasicConfigurator.configure();
-    	
+    	// initialize log4j - from logging control file (lcf) only 
+    	// if can find it!
+    	String logFile = "default.lcf";
+    	if (new java.io.File(logFile).canRead()) {
+    		org.apache.log4j.PropertyConfigurator.configure("default.lcf");
+    	} else {
+	    	org.apache.log4j.BasicConfigurator.configure();
+    	}
+    		
     	// create the demo frame and menus
         JMRIdemo containedPane = new JMRIdemo();
         JFrame frame = new JFrame("JMRI demo main panel");

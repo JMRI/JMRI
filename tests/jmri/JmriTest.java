@@ -23,11 +23,6 @@ public class JmriTest extends TestCase {
 		super(s);
 	}
 
-	// a simple test skeleton
-	public void testDemo() {
-		assert(true);
-	}
-
 	// Main entry point
 	static public void main(String[] args) {
 		String[] testCaseName = {JmriTest.class.getName()};
@@ -36,7 +31,8 @@ public class JmriTest extends TestCase {
 	
 	// test suite from all defined tests
 	public static Test suite() {
-		TestSuite suite = new TestSuite(JmriTest.class);
+		TestSuite suite = new TestSuite("jmri.tests.JmriTest");  // no tests in this class itself
+		suite.addTest(jmri.tests.symbolicprog.SymbolicProgTest.suite());
 		return suite;
 	}
 	

@@ -9,7 +9,6 @@
 package jmri.jmrix.loconet;
 
 import jmri.AbstractTurnout;
-import ErrLoggerJ.ErrLog;
 
 public class LnTurnout extends AbstractTurnout implements LocoNetListener {
 
@@ -19,6 +18,8 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
 		LnTrafficController.instance().addLocoNetListener(~0, this);	
 	}
 
+	public int getNumber() { return _number; }
+	
 	// Handle a request to change state by sending a LocoNet command
 	protected void forwardCommandChangeToLayout(int s) throws jmri.JmriException {
 		// send SWREQ for close
@@ -60,6 +61,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
 	            int sw1 = l.getElement(1);
 	            int sw2 = l.getElement(2);
 				if (myAddress(sw1, sw2)) {
+					if (log.isDebugEnabled()) log.debug("SW_REQ received with valid address");
 					if ((sw2 & LnConstants.OPC_SW_REQ_DIR)!=0)
 						newCommandedState(CLOSED);
 					else
@@ -71,6 +73,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
             	int sw1 = l.getElement(1);
             	int sw2 = l.getElement(2);
 				if (myAddress(sw1, sw2)) {
+					if (log.isDebugEnabled()) log.debug("SW_REP received with valid address");
 					// see if its a turnout state report
     	        	if ((sw2 & LnConstants.OPC_SW_REP_INPUTS)==0) {
     	        		// sort out states
@@ -106,6 +109,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
 		// the "+ 1" in the following converts to throttle-visible numbering
 		return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1) == _number; 
 		}
+	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnTurnout.class.getName());
 
 }
 
