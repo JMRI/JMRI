@@ -16,7 +16,7 @@ import jmri.jmrit.catalog.*;
  *
  * <p> Time code copied from code for the Nixie clock by Bob Jacobsen</p>
  * @author                     Dennis Miller Copyright (C) 2004
- * @version                    $Revision: 1.4 $
+ * @version                    $Revision: 1.5 $
  */
 
 public class AnalogClockFrame extends javax.swing.JFrame implements java.beans.PropertyChangeListener {
@@ -187,13 +187,13 @@ public void paint(Graphics g){
      // Calculation mimics the AffineTransform class calculations in Graphics2D
      // Grpahics2D and AffineTransform not used to maintain compatabilty with Java 1.1.8
      for (int i = 0; i < scaledMinuteX.length; i++) {
-       rotatedMinuteX[i] = (int) ((double)scaledMinuteX[i]*Math.cos(Math.toRadians(minuteAngle))-(double)scaledMinuteY[i]*Math.sin(Math.toRadians(minuteAngle)));
-       rotatedMinuteY[i] = (int) ((double)scaledMinuteX[i]*Math.sin(Math.toRadians(minuteAngle))+(double)scaledMinuteY[i]*Math.cos(Math.toRadians(minuteAngle)));
+       rotatedMinuteX[i] = (int) ((double)scaledMinuteX[i]*Math.cos(toRadians(minuteAngle))-(double)scaledMinuteY[i]*Math.sin(toRadians(minuteAngle)));
+       rotatedMinuteY[i] = (int) ((double)scaledMinuteX[i]*Math.sin(toRadians(minuteAngle))+(double)scaledMinuteY[i]*Math.cos(toRadians(minuteAngle)));
      }
      scaledMinuteHand = new Polygon(rotatedMinuteX, rotatedMinuteY, rotatedMinuteX.length);
      for (int i = 0; i < scaledHourX.length; i++) {
-       rotatedHourX[i] = (int) ((double)scaledHourX[i]*Math.cos(Math.toRadians(hourAngle))-(double)scaledHourY[i]*Math.sin(Math.toRadians(hourAngle)));
-       rotatedHourY[i] = (int) ((double)scaledHourX[i]*Math.sin(Math.toRadians(hourAngle))+(double)scaledHourY[i]*Math.cos(Math.toRadians(hourAngle)));
+       rotatedHourX[i] = (int) ((double)scaledHourX[i]*Math.cos(toRadians(hourAngle))-(double)scaledHourY[i]*Math.sin(toRadians(hourAngle)));
+       rotatedHourY[i] = (int) ((double)scaledHourX[i]*Math.sin(toRadians(hourAngle))+(double)scaledHourY[i]*Math.cos(toRadians(hourAngle)));
      }
      scaledHourHand = new Polygon(rotatedHourX, rotatedHourY, rotatedHourX.length);
 
@@ -209,18 +209,24 @@ public void paint(Graphics g){
 
      g.drawString(amPm, -amPmFontM.stringWidth(amPm)/2, faceSize/5 );
    }
+   
+   // Method to convert degrees to radians
+   // Math.toRadians was not available until Java 1.2
+   double toRadians(double degrees) {
+     return degrees/180.0*Math.PI;
+   }
 
    // Method to provide the cartesian x coordinate given a radius and angle (in degrees)
    int dotX (double radius, double angle) {
      int xDist;
-     xDist = (int) Math.round(radius * Math.cos(Math.toRadians(angle)));
+     xDist = (int) Math.round(radius * Math.cos(toRadians(angle)));
      return xDist;
    }
 
    // Method to provide the cartesian y coordinate given a radius and angle (in degrees)
    int dotY (double radius, double angle) {
      int yDist;
-     yDist = (int) Math.round(radius * Math.sin(Math.toRadians(angle)));
+     yDist = (int) Math.round(radius * Math.sin(toRadians(angle)));
      return yDist;
    }
 
