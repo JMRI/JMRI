@@ -13,9 +13,9 @@ import com.sun.java.util.collections.Collections;
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
-public abstract class AbstractTurnoutManager
+public abstract class AbstractTurnoutManager extends AbstractManager
     implements TurnoutManager, java.beans.PropertyChangeListener {
 
     // abstract methods to be provided by subclasses
@@ -27,6 +27,8 @@ public abstract class AbstractTurnoutManager
         _tsys.clear();
         _tuser.clear();
     }
+
+    public char typeLetter() { return 'T'; }
 
     // implemented methods
 
@@ -55,12 +57,6 @@ public abstract class AbstractTurnoutManager
 
     public Turnout getBySystemName(String key) {
         return (Turnout)_tsys.get(key);
-    }
-
-    public Turnout getByAddress(TurnoutAddress key) {
-        Turnout t = (Turnout)_tuser.get(key.getUserName());
-        if (t != null) return t;
-        return (Turnout)_tsys.get(key.getSystemName());
     }
 
     public Turnout getByUserName(String key) {
