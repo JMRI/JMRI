@@ -8,7 +8,7 @@ import junit.framework.*;
 /**
  * Tests for the jmrit.roster.RosterEntry class
  * @author	Bob Jacobsen     Copyright (C) 2001, 2002
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class RosterEntryTest extends TestCase {
 
@@ -121,6 +121,7 @@ public class RosterEntryTest extends TestCase {
         if (f.exists()) f.delete();
         r.ensureFilenameExists();
         Assert.assertEquals("final filename ", "test_Roster_Entry_123456789ABC.xml", r.getFileName());
+        if (f.exists()) f.delete();  // clean up afterwards
     }
 
     public void testEnsureFilenameExistsOld() throws IOException {
@@ -134,6 +135,8 @@ public class RosterEntryTest extends TestCase {
         if (!f2.exists()) f2.createNewFile();
         r.ensureFilenameExists();
         Assert.assertEquals("final filename ", "test_Roster_Entry_123456789ABC1.xml", r.getFileName());
+        if (f1.exists()) f1.delete();  // clean up afterwards
+        if (f2.exists()) f2.delete();
     }
 
     // from here down is testing infrastructure
