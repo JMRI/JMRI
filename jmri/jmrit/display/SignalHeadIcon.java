@@ -12,7 +12,7 @@ import jmri.jmrix.loconet.AspectGenerator;
  * AspectGenerator, so is tied very closely to that class.  This needs to
  * be fixed in the longer term.
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -91,7 +91,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
      * Get current appearance of the head
      * @return An appearance variable from a SignalHead, e.g. SignalHead.RED
      */
-    int headState() {
+    public int headState() {
         if (mGenerator==null) return 0;
         else return mGenerator.getHeadState(mHead);
     }
@@ -109,7 +109,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
     protected void showPopUp(MouseEvent e) {
         if (popup==null) {
             String name;
-            name = "<unknown>";
+            name = "AG"+mGenerator.getSEName()+" head "+this.mHead;
             popup = new JPopupMenu();
             popup.add(new JMenuItem(name));
         }
@@ -120,7 +120,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
      * Drive the current state of the display from the state of the
      * turnout.
      */
-    void displayState(int state) {
+    public void displayState(int state) {
         switch (state) {
             case SignalHead.RED:
                 if (showText) super.setText("<red>");
