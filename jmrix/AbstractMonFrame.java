@@ -212,21 +212,24 @@ public abstract class AbstractMonFrame extends javax.swing.JFrame  {
 		s2 = s1;
 		s1 = "";
 		
+		StringBuffer sb = new StringBuffer(120);
+		
 		// space if multipart form
-		if ( timeCheckBox.isSelected() || rawCheckBox.isSelected()) s1+="\n";
+		if ( timeCheckBox.isSelected() || rawCheckBox.isSelected()) sb.append("\n");
 		
 		// display the timestamp if requested
 		if ( timeCheckBox.isSelected() ) {
-			s1 += "time: "+df.format(new Date())+"\n";
+			sb.append("time: ").append(df.format(new Date())).append("\n");
 		}
 
 		// display the raw data if requested
 		if ( rawCheckBox.isSelected() ) {
-			s1 += raw;
+			sb.append(raw);
 		}
 
 		// display decoded data
-		s1 += line;
+		sb.append(line);
+		s1 = sb.toString();
 		
 		// display it in the Swing thread
 		Runnable r = new Runnable() {
@@ -241,10 +244,12 @@ public abstract class AbstractMonFrame extends javax.swing.JFrame  {
 	}
 	
 	public synchronized String getFrameText() {
-		return 	s20+s19+s18+s17+s16
-				+s15+s14+s13+s12+s11
-				+s10+s9+s8+s7+s6
-				+s5+s4+s3+s2+s1;
+		StringBuffer sb = new StringBuffer();
+		sb.append(s20); sb.append(s19); sb.append(s18); sb.append(s17); sb.append(s16); 
+		sb.append(s15); sb.append(s14); sb.append(s13); sb.append(s12); sb.append(s11); 
+		sb.append(s10); sb.append(s9); sb.append(s8); sb.append(s7); sb.append(s6); 
+		sb.append(s5); sb.append(s4); sb.append(s3); sb.append(s2); sb.append(s1); 
+		return 	sb.toString();
 	}
 
 	public synchronized void clearButtonActionPerformed(java.awt.event.ActionEvent e) {
