@@ -14,7 +14,7 @@ import java.awt.Color;
 /**
  * Represents a single Variable value; abstract base class
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  *
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
@@ -64,7 +64,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
 	public String item() { return _item; }
 	private String _label;
 	private String _item;
-	protected Vector _cvVector;   // Vector of 512 CV objects used to look up CVs
+	protected Vector _cvVector;   // Vector of CV objects used to look up CVs
 	protected JLabel _status = null;
 
 	public String getComment() { return _comment; }
