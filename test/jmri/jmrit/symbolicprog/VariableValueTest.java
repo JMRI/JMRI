@@ -18,7 +18,7 @@ import jmri.progdebugger.*;
 /**
  * Base for tests of classes inheriting from VariableValue abstract class
  * @author	Bob Jacobsen, Copyright 2002
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public abstract class VariableValueTest extends TestCase {
 
@@ -232,7 +232,7 @@ public abstract class VariableValueTest extends TestCase {
         // create a variable pointed at CV 81, loaded as 5, manually notified
         VariableValue variable = makeVar("label", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
         // get a representation
-        JTextField rep = (JTextField)variable.getRep("");
+        JComponent rep = (JComponent)variable.getRep("");
 
         Assert.assertEquals("FROMFILE color", VariableValue.COLOR_FROMFILE, variable.getValue().getBackground() );
         Assert.assertEquals("FROMFILE color", VariableValue.COLOR_FROMFILE, rep.getBackground() );
@@ -257,7 +257,7 @@ public abstract class VariableValueTest extends TestCase {
         // create a variable pointed at CV 81, loaded as 5, manually notified
         VariableValue variable = makeVar("label", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
         // get a representation
-        JTextField rep = (JTextField)variable.getRep("");
+        JComponent rep = (JComponent)variable.getRep("");
 
         Assert.assertEquals("FROMFILE color", VariableValue.COLOR_FROMFILE, variable.getValue().getBackground() );
         Assert.assertEquals("FROMFILE color", VariableValue.COLOR_FROMFILE, rep.getBackground() );
@@ -266,10 +266,14 @@ public abstract class VariableValueTest extends TestCase {
         Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, variable.getValue().getBackground() );
         Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, rep.getBackground() );
 
-        rep.setText("9");
-        rep.postActionEvent();
-        Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, variable.getValue().getBackground() );
-        Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, rep.getBackground() );
+        try {   // might be either of two reps?
+            ((JComboBox)rep).setSelectedItem("9");
+        } catch ( java.lang.ClassCastException e) {
+            ((JTextField)rep).setText("9");
+            ((JTextField)rep).postActionEvent();
+            Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, variable.getValue().getBackground() );
+            Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, rep.getBackground() );
+        }
     }
 
     // check synchonization of value, representations

@@ -9,7 +9,7 @@ import junit.framework.*;
 /**
  * Test the jmri.jmrix.symbolicprog package.
  * @author			Bob Jacobsen
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 public class SymbolicProgTest extends TestCase {
 
@@ -41,6 +41,7 @@ public class SymbolicProgTest extends TestCase {
         suite.addTest(jmri.jmrit.symbolicprog.ComboRadioButtonsTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrameTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.DecVariableValueTest.suite());
+        suite.addTest(jmri.jmrit.symbolicprog.EnumVariableValueTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.HexVariableValueTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.LongAddrVariableValueTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.SplitVariableValueTest.suite());
