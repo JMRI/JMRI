@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Lenz_DriveSelect.xml,v 1.5 2003-06-05 17:45:10 jacobsen Exp $ -->
+<!-- $Id: Lenz_DriveSelect.xml,v 1.6 2003-06-24 04:43:27 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu"
-			version="2" lastUpdated="20030606" />
+			version="3" lastUpdated="20030606" />
 			<!-- Made from the Lenz_54.xml file version 4 -->
 		<!-- version 2 - add consist direction - jake -->
+		<!-- version 3 - fix headlight variable name - David Harris -->
 
 
 <decoder>
@@ -142,7 +143,7 @@
 			</variable>
 
 	<variable label="Output A dimming control" CV="51"
-	         	comment="Controls how headlight dims (CV 52 controls amount)"
+	         	comment="Controls how front headlight dims (CV 52 controls amount)"
               	mask="XXXXXXVX">
 		     <enumVal>
 		         <enumChoice choice="Always dim"/>
@@ -205,7 +206,8 @@
 		         </enumVal>
 			</variable>
 
-	<variable label="Output B dimming" CV="57" 
+
+	<variable label="Output B dimming control" CV="57" 
 	          	comment="Controls how back headlights dims"
                	mask="XXXXXVXX">
 		     <enumVal>
@@ -213,6 +215,7 @@
 		         <enumChoice choice="Back headlight can dim"/>
 		         </enumVal>
 			</variable>
+
 
 	<variable label="Output B is Gyrolight" CV="57" 
                	mask="XXXVXXXX">
@@ -313,4 +316,3 @@
 </pane>
 
 </decoder-config>
-
