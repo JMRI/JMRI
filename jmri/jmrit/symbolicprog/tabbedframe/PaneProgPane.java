@@ -19,10 +19,10 @@ import java.io.IOException;
 
 import javax.swing.*;
 
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.List;   // resolve ambiguity with package-level import
 import org.jdom.Attribute;
 import org.jdom.Element;
+import com.sun.java.util.collections.ArrayList;
+import com.sun.java.util.collections.List;   // resolve ambiguity with package-level import
 
 /**
  * Provides the individual panes for the TabbedPaneProgrammer.
@@ -33,7 +33,7 @@ import org.jdom.Element;
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001; D Miller Copyright 2003
- * @version			$Revision: 1.23 $
+ * @version			$Revision: 1.24 $
  */
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
