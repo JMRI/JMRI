@@ -26,7 +26,7 @@ import com.sun.java.util.collections.List;
  * class, which provides a simple GUI for controlling a single turnout.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  * @see             jmri.Turnout
  * @see             jmri.AbstractTurnoutManager
  * @see             jmri.InstanceManager
@@ -91,13 +91,6 @@ public interface TurnoutManager extends Manager {
      * Get a list of all Turnouts' system names.
      */
     public List getSystemNameList();
-
-    /**
-     * Deprecated!
-     * Locate an instance based on a TurnoutAddress object.  Returns null if no
-     * instance already exists.
-     */
-    public Turnout getByAddress(TurnoutAddress key);
 
 }
 
