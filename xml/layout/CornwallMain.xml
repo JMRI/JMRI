@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE layout-config SYSTEM "layout-config.dtd">
-<!-- $Id: CornwallMain.xml,v 1.3 2003-05-13 02:52:08 jacobsen Exp $ -->
+<!-- $Id: CornwallMain.xml,v 1.4 2003-05-13 03:32:50 jacobsen Exp $ -->
 <!-- Cornwall RR configuration and main panel -->
 <layout-config>
 
@@ -12,6 +12,94 @@
     <turnout systemName="CT4" userName="1b green" />
     <turnout systemName="CT5" userName="1b yellow" />
     <turnout systemName="CT6" userName="1b red" />
+
+    <turnout systemName="CT7" userName="2a green" />
+    <turnout systemName="CT8" userName="2a yellow" />
+    <turnout systemName="CT9" userName="2a red" />
+
+    <turnout systemName="CT10" userName="2b green" />
+    <turnout systemName="CT11" userName="2b yellow" />
+    <turnout systemName="CT12" userName="2b red" />
+
+    <turnout systemName="CT13" userName="3a green" />
+    <turnout systemName="CT14" userName="3a yellow" />
+    <turnout systemName="CT15" userName="3a red" />
+
+    <turnout systemName="CT16" userName="3b green" />
+    <turnout systemName="CT17" userName="3b yellow" />
+    <turnout systemName="CT18" userName="3b red" />
+
+    <turnout systemName="CT19" userName="4a green" />
+    <turnout systemName="CT20" userName="4a yellow" />
+    <turnout systemName="CT21" userName="4a red" />
+
+    <turnout systemName="CT22" userName="4b green" />
+    <turnout systemName="CT23" userName="4b yellow" />
+    <turnout systemName="CT24" userName="4b red" />
+
+    <turnout systemName="CT25" userName="5a green" />
+    <turnout systemName="CT26" userName="5a yellow" />
+    <turnout systemName="CT27" userName="5a red" />
+
+    <turnout systemName="CT28" userName="5b green" />
+    <turnout systemName="CT29" userName="5b yellow" />
+    <turnout systemName="CT30" userName="5b red" />
+
+    <turnout systemName="CT31" userName="6a green" />
+    <turnout systemName="CT32" userName="6a yellow" />
+    <turnout systemName="CT33" userName="6a red" />
+
+    <turnout systemName="CT34" userName="6b green" />
+    <turnout systemName="CT35" userName="6b yellow" />
+    <turnout systemName="CT36" userName="6b red" />
+
+    <turnout systemName="CT37" userName="7a green" />
+    <turnout systemName="CT38" userName="7a yellow" />
+    <turnout systemName="CT39" userName="7a red" />
+
+    <turnout systemName="CT40" userName="7b green" />
+    <turnout systemName="CT41" userName="7b yellow" />
+    <turnout systemName="CT42" userName="7b red" />
+
+    <turnout systemName="CT43" userName="8a green" />
+    <turnout systemName="CT44" userName="8a yellow" />
+    <turnout systemName="CT45" userName="8a red" />
+
+    <turnout systemName="CT46" userName="8b green" />
+    <turnout systemName="CT47" userName="8b yellow" />
+    <turnout systemName="CT48" userName="8b red" />
+
+    <turnout systemName="CT49" userName="9a green" />
+    <turnout systemName="CT50" userName="9a yellow" />
+    <turnout systemName="CT51" userName="9a red" />
+
+    <turnout systemName="CT52" userName="9b green" />
+    <turnout systemName="CT53" userName="9b yellow" />
+    <turnout systemName="CT54" userName="9b red" />
+
+    <turnout systemName="CT55" userName="10a green" />
+    <turnout systemName="CT56" userName="10a yellow" />
+    <turnout systemName="CT57" userName="10a red" />
+
+    <turnout systemName="CT58" userName="10b green" />
+    <turnout systemName="CT59" userName="10b yellow" />
+    <turnout systemName="CT60" userName="10b red" />
+
+    <turnout systemName="CT61" userName="11a green" />
+    <turnout systemName="CT62" userName="11a yellow" />
+    <turnout systemName="CT63" userName="11a red" />
+
+    <turnout systemName="CT64" userName="11b green" />
+    <turnout systemName="CT65" userName="11b yellow" />
+    <turnout systemName="CT66" userName="11b red" />
+
+    <turnout systemName="CT67" userName="12a green" />
+    <turnout systemName="CT68" userName="12a yellow" />
+    <turnout systemName="CT69" userName="12a red" />
+
+    <turnout systemName="CT70" userName="12b green" />
+    <turnout systemName="CT71" userName="12b yellow" />
+    <turnout systemName="CT72" userName="12b red" />
 
   </turnouts>
 
@@ -108,6 +196,116 @@
       <turnout systemName="CT5" userName="1b yellow" />
       <turnout systemName="CT6" userName="1b red" />
     </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="si2a" userName="Signal 2A">
+      <turnout systemName="CT7" userName="2a green" />
+      <turnout systemName="CT8" userName="2a yellow" />
+      <turnout systemName="CT9" userName="2a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="si2b" userName="Signal 2B">
+      <turnout systemName="CT10" userName="2b green" />
+      <turnout systemName="CT11" userName="2b yellow" />
+      <turnout systemName="CT12" userName="2b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="si3a" userName="Signal 3A">
+      <turnout systemName="CT13" userName="3a green" />
+      <turnout systemName="CT14" userName="3a yellow" />
+      <turnout systemName="CT15" userName="3a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="si3b" userName="Signal 3B">
+      <turnout systemName="CT16" userName="3b green" />
+      <turnout systemName="CT17" userName="3b yellow" />
+      <turnout systemName="CT18" userName="3b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="si4a" userName="Signal 4A">
+      <turnout systemName="CT19" userName="4a green" />
+      <turnout systemName="CT20" userName="4a yellow" />
+      <turnout systemName="CT21" userName="4a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="si4b" userName="Signal 4B">
+      <turnout systemName="CT22" userName="4b green" />
+      <turnout systemName="CT23" userName="4b yellow" />
+      <turnout systemName="CT24" userName="4b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="si5a" userName="Signal 5A">
+      <turnout systemName="CT25" userName="5a green" />
+      <turnout systemName="CT26" userName="5a yellow" />
+      <turnout systemName="CT27" userName="5a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="si5b" userName="Signal 5B">
+      <turnout systemName="CT28" userName="5b green" />
+      <turnout systemName="CT29" userName="5b yellow" />
+      <turnout systemName="CT30" userName="5b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="si6a" userName="Signal 6A">
+      <turnout systemName="CT31" userName="6a green" />
+      <turnout systemName="CT32" userName="6a yellow" />
+      <turnout systemName="CT33" userName="6a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="si6b" userName="Signal 6B">
+      <turnout systemName="CT34" userName="6b green" />
+      <turnout systemName="CT35" userName="6b yellow" />
+      <turnout systemName="CT36" userName="6b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="si7a" userName="Signal 7A">
+      <turnout systemName="CT37" userName="7a green" />
+      <turnout systemName="CT38" userName="7a yellow" />
+      <turnout systemName="CT39" userName="7a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="si7b" userName="Signal 7B">
+      <turnout systemName="CT40" userName="7b green" />
+      <turnout systemName="CT41" userName="7b yellow" />
+      <turnout systemName="CT42" userName="7b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="si8a" userName="Signal 8A">
+      <turnout systemName="CT43" userName="8a green" />
+      <turnout systemName="CT44" userName="8a yellow" />
+      <turnout systemName="CT45" userName="8a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="si8b" userName="Signal 8B">
+      <turnout systemName="CT46" userName="8b green" />
+      <turnout systemName="CT47" userName="8b yellow" />
+      <turnout systemName="CT48" userName="8b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="si9a" userName="Signal 9A">
+      <turnout systemName="CT49" userName="9a green" />
+      <turnout systemName="CT50" userName="9a yellow" />
+      <turnout systemName="CT51" userName="9a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="si9b" userName="Signal 9B">
+      <turnout systemName="CT52" userName="9b green" />
+      <turnout systemName="CT53" userName="9b yellow" />
+      <turnout systemName="CT54" userName="9b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="si10a" userName="Signal 10A">
+      <turnout systemName="CT55" userName="10a green" />
+      <turnout systemName="CT56" userName="10a yellow" />
+      <turnout systemName="CT57" userName="10a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="si10b" userName="Signal 10B">
+      <turnout systemName="CT58" userName="10b green" />
+      <turnout systemName="CT59" userName="10b yellow" />
+      <turnout systemName="CT60" userName="10b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="si11a" userName="Signal 11A">
+      <turnout systemName="CT61" userName="11a green" />
+      <turnout systemName="CT62" userName="11a yellow" />
+      <turnout systemName="CT63" userName="11a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="si11b" userName="Signal 11B">
+      <turnout systemName="CT64" userName="11b green" />
+      <turnout systemName="CT65" userName="11b yellow" />
+      <turnout systemName="CT66" userName="11b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="si12a" userName="Signal 12A">
+      <turnout systemName="CT67" userName="12a green" />
+      <turnout systemName="CT68" userName="12a yellow" />
+      <turnout systemName="CT69" userName="12a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="si12b" userName="Signal 12B">
+      <turnout systemName="CT70" userName="12b green" />
+      <turnout systemName="CT71" userName="12b yellow" />
+      <turnout systemName="CT72" userName="12b red" />
+    </signalhead>
   </signalheads>
 
   <!-- start main dispatcher panel -->
@@ -160,7 +358,7 @@
     <sensoricon sensor="CS30" x="893" y="91" active="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" inactive="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
     <sensoricon sensor="CS31" x="893" y="116" active="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" inactive="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
 
-    <sensoricon sensor="CS32" x="980" y="141" active="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" inactive="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="CS32" x="967" y="141" active="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" inactive="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
 
 	<!-- turnouts on the upper schematic (left to right); the C/MRI ones are inputs only, so are coded with sensors -->
     <sensoricon sensor="CS52" x="19" y="86" active="resource:resources/icons/cornwall/TurnoutThrownL.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedL.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothL.gif" rotate="2" class="jmri.jmrit.display.configurexml.SensorIconXml" />
@@ -193,16 +391,38 @@
     <sensoricon sensor="CS1" x="819" y="43" active="resource:resources/icons/cornwall/TurnoutThrownL.gif" inactive="resource:resources/icons/cornwall/TurnoutClosedL.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothL.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
 
 	<!-- signal heads on the upper schematic -->
-    <signalheadicon signalhead="si1a" x="50" y="55" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="2" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
-    <signalheadicon signalhead="si1a" x="50" y="80" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="2" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
-    <signalheadicon signalhead="si1a" x="50" y="105" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="2" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
-    <signalheadicon signalhead="si1a" x="50" y="130" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="2" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="si1a" x="50" y="60" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="2" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="si1a" x="50" y="85" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="2" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="si1a" x="50" y="110" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="2" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="si1a" x="50" y="135" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="2" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
 
     <signalheadicon signalhead="si1b" x="109" y="77" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="0" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
     <signalheadicon signalhead="si1b" x="109" y="102" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="0" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
     <signalheadicon signalhead="si1b" x="109" y="127" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="0" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
     <signalheadicon signalhead="si1b" x="109" y="152" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="0" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
 
+    <signalheadicon signalhead="si1a" x="250" y="85" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="2" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="si1a" x="250" y="110" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="2" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+ 
+    <signalheadicon signalhead="si1b" x="390" y="77" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="0" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+
+    <signalheadicon signalhead="si1b" x="432" y="102" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="0" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="si1b" x="432" y="127" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="0" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+ 
+    <signalheadicon signalhead="si1a" x="620" y="85" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="2" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="si1a" x="620" y="110" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="2" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+
+    <signalheadicon signalhead="si1b" x="780" y="52" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="0" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+
+    <signalheadicon signalhead="si1a" x="840" y="35" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="2" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="si1a" x="840" y="60" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="2" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="si1a" x="840" y="85" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="2" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+
+    <signalheadicon signalhead="si1a" x="950" y="35" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="2" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+    <signalheadicon signalhead="si1a" x="950" y="60" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="2" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+
+    <signalheadicon signalhead="si1b" x="983" y="152" red="resource:resources/icons/smallschematics/searchlights/right-red-short-white.gif" yellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" flashyellow="resource:resources/icons/smallschematics/searchlights/right-yellow-short-white.gif" green="resource:resources/icons/smallschematics/searchlights/right-green-short-white.gif" rotate="0" class="jmri.jmrit.display.configurexml.SignalHeadIconXml" />
+  
 	<!-- background image; put it last so that its on the bottom -->
     <positionablelabel class="jmri.jmrit.display.configurexml.PositionableLabelXml" x="0" y="0" icon="resource:resources/icons/cornwall/cornwallmainpanel.gif" rotate="0" />
 
