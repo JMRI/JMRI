@@ -29,7 +29,7 @@ import java.util.*;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
@@ -60,7 +60,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         m.setElement(0,0xED);
         m.setElement(1,0x0B);
         m.setElement(2,0x7F);
-        m.setElement(3, 16*(repeats&0x7)+(packet.length&0x7));
+        m.setElement(3, (repeats&0x7)+16*(packet.length&0x7));
 
         int highBits = 0;
         if (packet.length>=1 && ((packet[0]&0x80) != 0)) highBits |= 0x01;
