@@ -90,7 +90,7 @@ public class RosterTest extends TestCase {
 	public void testReadWrite() throws Exception {
 		// store files in "temp"
 		Roster.fileLocation = "temp";
-		File f = new File("prefs"+File.separator+"temp"+File.separator+"roster.xml");
+		File f = new File("prefs"+File.separator+"temp"+File.separator+"rosterTest.xml");
 		// remove existing roster if its there
 		f.delete();
 
@@ -113,11 +113,11 @@ public class RosterTest extends TestCase {
 		r.addEntry(e);
 
 		// write it
-		r.writeFile("temp"+File.separator+"roster.xml");
+		r.writeFile("temp"+File.separator+"rosterTest.xml");
 		
 		// create new roster & read
 		Roster t = new Roster();
-		t.readFile("temp"+File.separator+"roster.xml");
+		t.readFile("temp"+File.separator+"rosterTest.xml");
 		
 		// check contents
 		Assert.assertEquals("search for 0 ", 0, t.matchingList(null, "321", null, null, null, null, null).size());

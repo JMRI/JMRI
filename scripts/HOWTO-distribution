@@ -1,30 +1,30 @@
-Making a distribution (substitute the release-number for 0.N throughout
-and the application name for <app>):
+Making a distribution (substitute the release-number for M.N and M-N throughout
+and the application name for App):
 
 ( ) Copy and rename the last distribution
 
-( ) update the README in site section in cvs to include any changes, esp. 
+( ) update the specific README in site section in cvs to include any changes, esp. 
     including updating the release name and URLs. 
 
-( ) Commit all cvs source and tag "Release-<app>-0-N"
+( ) Commit all cvs source and tag "Release-App-M-N"
 
 ( ) Make sure that the "make manifest" button is pushed, then
-	make the <app>.jar file with the <app> release target.
+	make the App.jar file with the App release target.
 
 ( ) Make sure that the following .jar files (and only these) have the
 	merge button pushed, then
-	make the jmriwin95.jar file with the JMRI demo release target.
+	make the AppWin95.jar file with the JMRI demo release target.
 		collections.jar
 		log4j.jar
 		crimson.jar
 		comm.jar
 		jdom-jdk11.jar
 
-( ) Move the <app>.jar and <app>Win95.jar files to the distribution folder
+( ) Move the App.jar and AppWin95.jar files to the distribution folder
 
 ( ) Update the various text files from the CVS scripts module. 
 
-()  Create a text README file from the site area. Change the
+( ) Create a text README file from the site area. Change the
 	creator code of README to ttxt (SimpleText)
 
 ( ) Update the xml subdirectory, removing the CVS subdirs
@@ -39,7 +39,10 @@ and the application name for <app>):
 ( ) This step is only needed if you've changed any of the properties, classpath, etc.
     Under MacOS 9, start MRJAppBuilder.
 		Properties:  Release properties
-		Output file:  JMRI demo (in your target location; overwrite existing)
+		
+		(Warning - does this handle App.jar OK?)
+		
+		Output file:  App (in your target location; overwrite existing)
 		Merge files:  (none)
     And then make the output app.  Copy that application file to the 
     release (if you didn't create it there) and update its icon.
@@ -56,15 +59,15 @@ and the application name for <app>):
 ( ) Create the Macintosh distribution
 	( ) Create a clean copy of the folder on the desktop, with the same name
 	
-	( ) Remove the win32com.dll, JmriWin95.jar files
+	( ) Remove the win32com.dll, AppWin95.jar files
 
-	( ) Drag folder onto DropStuff, which will create a file <app>.0.N.hqx
+	( ) Drag folder onto DropStuff, which will create a file App.M.N.hqx
 		(Preferences should be set for Macintosh, include linefeeds, remote .sit
 		suffix)
 
 	( ) Upload Mac distribution to sourceforge home via SSH
 
-( ) Upload distribution folder to jmri.sourceforge.net via NiftyTelnet/SSH
+( ) Upload original distribution folder to jmri.sourceforge.net via NiftyTelnet/SSH
 
 ( ) Make the OS/2 distribution:
 
@@ -72,26 +75,25 @@ and the application name for <app>):
 	
 	( ) Remove the Macintosh Apps and Mac-only jar files:
 
-    	cd JMRI.demo.0.N
-    	rm JMRI\ demo
-    	rm -rf JMRI\ MacOSX.app
-   		rm lib/javax.comm.MRJ.jar
- 		rm lib/swingall.jar
+    	cd App.M.N
+    	rm App
+    	rm -rf App\ MacOSX.app
 	
 	( ) Remove the Windows-specific files
 
-    	rm JmriWin95.jar
+    	rm AppWin95.jar
+    	rm win32com.dll
  
    	At this point, lib should contain only:
-     	collections.jar  jdom-jdk11.jar  log4j.jar  xerces.jar
+     	collections.jar  crimson.jar  jdom-jdk11.jar  log4j.jar
    
 	( ) Make a zip file
 
     	cd ..
     	# now above the distribution directory
     
-    	zip -rl JMRI.demo.0.N.OS2.zip JMRI.demo.0.N
-		zip JMRI.demo.0.N.OS2.zip JMRI.demo.0.N/jmri.jar JMRI.demo.0.N/lib/*.jar
+    	zip -rl App.OS2.zip App.M.N
+		zip App.OS2.zip App.M.N/*.jar App.M.N/lib/*.jar
 	
 		# the first line adds CR's, and the second replaces the .jar files so they
 		# don't have CR inserted
@@ -104,8 +106,8 @@ and the application name for <app>):
     
 	( ) Make a .tar.gz
 
-		tar cf JMRI.demo.0.N.tar JMRI.demo.0.N
-		gzip JMRI.demo.0.N.tar
+		tar cf App.M.N.tar App.M.N
+		gzip App.M.N.tar
 	
 ( ) Make the Windows distribution
 
@@ -113,23 +115,23 @@ and the application name for <app>):
 	
 	( ) Remove the Macintosh Apps and un-merged jar files:
 
-    	cd JMRI.demo.0.N
-    	rm JMRI\ demo
-    	rm -rf JMRI\ MacOSX.app
+    	cd App.M.N
+    	rm App
+    	rm -rf App\ MacOSX.app
    		rm -rf lib
- 		rm jmri.jar
+ 		rm App.jar
  			
-		At this point, only the jmriwin95.jar file should exist
+		At this point, only the AppWin95.jar file should exist
 		   
 	( ) Make a zip file
 
     	cd ..
     	# now above the distribution directory
     
-    	zip -rl JMRI.demo.0.N.win.zip JMRI.demo.0.N
-		zip JMRI.demo.0.N.win.zip JMRI.demo.0.N/JmriWin95.jar
+    	zip -rl App.M.N.win.zip App.M.N
+		zip App.M.N.win.zip App.M.N/*.jar App.M.N/win32com.dll
 	
-		# the first line adds CR's, and the second replaces the .jar file so it
+		# the first line adds CR's, and the second replaces the binary files so they
 		# don't have CR inserted
 
 ( ) Move to distribution site via SourceForge release:
@@ -139,10 +141,10 @@ and the application name for <app>):
 		password: me@myself.org 
 		cd incoming 
 		bin 
-		put JMRI.demo.0.N.OS2.zip
-		put JMRI.demo.0.N.win.zip
-		put JMRI.demo.0.N.tar.gz
-		put JMRI.demo.0.N.hqx
+		put App.M.N.OS2.zip
+		put App.M.N.win.zip
+		put App.M.N.tar.gz
+		put App.M.N.hqx
 		
 	Login to SourceForge web 
 	Go to the project home page, then admin page
@@ -156,7 +158,7 @@ and the application name for <app>):
 		
 	Be sure to update the top of the release note paragraph.
 	
-	The release name convention is "JMRI 0.N demo for XXX"
+	The release name convention is "App M.N (demo | development release) for XXX"
 	
 	Be sure to select "preserve preformatted text"
 
@@ -175,12 +177,12 @@ and the application name for <app>):
 ( ) Create a snapshot in zip format
 
 	cd
-	zip -rl snapshot-release-0-N.zip cvs
-	mv snapshot-release-0-N.zip htdocs/Technical/snapshots/
+	zip -rl snapshot-App-M-N.zip cvs
+	mv snapshot-App-M-N.zip htdocs/Technical/snapshots/
 	
 ( ) Create JavaDoc
-	Ensure that CW JMRI debug target has JavaDoc selected as prelinker
-	Build JMRI debug target
+	Ensure that CW JavaDoc target has JavaDoc selected as prelinker
+	Build JavaDoc target
 
 ( ) Upload JavaDoc
 
@@ -190,7 +192,7 @@ and the application name for <app>):
 
 ( ) News item from JMRI sourceforge page
 
-	Title is of the form "JMRI Demo 0.N is available"
+	Title is of the form "App M.N is available"
 
 ( ) mail announcement to jmri-announce@lists.sourceforge.net
 
