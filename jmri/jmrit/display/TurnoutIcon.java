@@ -1,14 +1,17 @@
 package jmri.jmrit.display;
 
-import java.awt.event.*;
+import jmri.InstanceManager;
+import jmri.Turnout;
+import jmri.jmrit.catalog.NamedIcon;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 
-import javax.swing.*;
-
-import jmri.*;
-import jmri.jmrit.catalog.*;
+import javax.swing.AbstractAction;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 
 /**
- * TurnoutIcon provides a small icon to display a status of a turnout.<P>
+ * Anicon to display a status of a turnout.<P>
  * This responds to only KnownState, leaving CommandedState to some other
  * graphic representation later.
  * <P>
@@ -18,8 +21,8 @@ import jmri.jmrit.catalog.*;
  *<P>
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
- * @author Bob Jacobsen
- * @version $Revision: 1.22 $
+ * @author Bob Jacobsen  Copyright (c) 2002
+ * @version $Revision: 1.23 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -149,6 +152,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
      * Pop-up displays the turnout name, allows you to rotate the icons
      */
     protected void showPopUp(MouseEvent e) {
+        if (!getEditable()) return;
         ours = this;
         if (popup==null) {
             popup = new JPopupMenu();
@@ -209,6 +213,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
      * @param e
      */
     public void mouseClicked(java.awt.event.MouseEvent e) {
+        if (!getControlling()) return;
         if (e.isMetaDown() || e.isAltDown() ) return;
         if (turnout==null) {
             log.error("No turnout connection, can't process click");

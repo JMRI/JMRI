@@ -1,20 +1,25 @@
 package jmri.jmrit.display;
 
-import jmri.*;
-import jmri.jmrit.catalog.*;
-import java.awt.event.*;
+import jmri.InstanceManager;
+import jmri.SignalHead;
+import jmri.jmrit.catalog.NamedIcon;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 
 /**
- * SignalHeadIcon provides a small icon to display a status of a SignalHead.
+ * An icon to display a status of a SignalHead.
  * <P>
  * SignalHeads are located via the SignalHeadManager, which in turn is located
- * via the InstanceManager
+ * via the InstanceManager.
+ *
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -139,6 +144,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
      * Pop-up just displays the name
      */
     protected void showPopUp(MouseEvent e) {
+        if (!getEditable()) return;
         ours = this;
         if (popup==null) {
             popup = new JPopupMenu();

@@ -1,15 +1,20 @@
 package jmri.jmrit.display;
 
-import java.awt.event.*;
-import java.awt.*;
-import javax.swing.*;
-import jmri.*;
-import jmri.jmrit.catalog.*;
+import jmri.InstanceManager;
+import jmri.Sensor;
+import jmri.jmrit.catalog.NamedIcon;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 
 /**
- * SensorIcon provides a small icon to display a status of a Sensor.</p>
+ * An icon to display a status of a Sensor.
+ *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -125,6 +130,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
      * Pop-up just displays the sensor name
      */
     protected void showPopUp(MouseEvent e) {
+        if (!getEditable()) return;
         ours = this;
         if (popup==null) {
             popup = new JPopupMenu();
@@ -202,6 +208,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
      * @param e
      */
     public void mouseClicked(java.awt.event.MouseEvent e) {
+        if (!getControlling()) return;
         if (e.isAltDown() || e.isMetaDown()) return;
         if (sensor==null) {  // no sensor connected for this protocol
             log.error("No sensor connection, can't process click");
