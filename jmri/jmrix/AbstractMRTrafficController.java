@@ -22,7 +22,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 abstract public class AbstractMRTrafficController {
 
@@ -486,7 +486,8 @@ abstract public class AbstractMRTrafficController {
         }
         default:
             log.error("reply complete in unexpected state: "
-                        +mCurrentState);
+                        +mCurrentState
+                        +" was "+msg.toString());
         }
         // forward the message to the registered recipients,
         // which includes the communications monitor
