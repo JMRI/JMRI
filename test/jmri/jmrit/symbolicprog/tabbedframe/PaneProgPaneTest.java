@@ -20,9 +20,11 @@ import jmri.jmrit.symbolicprog.*;
 import jmri.jmrit.decoderdefn.*;
 import jmri.jmrit.roster.*;
 
+import com.sun.java.util.collections.Vector;
+
 /**
  * @author	Bob Jacobsen Copyright 2001, 2002, 2003, 2004
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.9 $
  */
 public class PaneProgPaneTest extends TestCase {
 
@@ -250,7 +252,7 @@ public class PaneProgPaneTest extends TestCase {
         Assert.assertEquals("number of changed CVs to write ", 0, progPane.countOpsNeeded(false,true));
         
         // mark some as needing to be written
-        ((CvValue)cvModel.allCvVector().get(1)).setValue(12);
+        ((CvValue)cvModel.allCvVector().elementAt(1)).setValue(12);
 
         Assert.assertEquals("modified all CVs to read ", 29, progPane.countOpsNeeded(true,false));
         Assert.assertEquals("modified all CVs to write ", 29, progPane.countOpsNeeded(false,false));
@@ -258,7 +260,7 @@ public class PaneProgPaneTest extends TestCase {
         Assert.assertEquals("modified changed CVs to read ", 1, progPane.countOpsNeeded(true,true));
         Assert.assertEquals("modified changed CVs to write ", 1, progPane.countOpsNeeded(false,true));
         
-        ((CvValue)cvModel.allCvVector().get(69)).setValue(12);
+        ((CvValue)cvModel.allCvVector().elementAt(69)).setValue(12);
             // careful - might change more than one CV!
             
         Assert.assertEquals("spdtbl all CVs to read ", 29, progPane.countOpsNeeded(true,false));
