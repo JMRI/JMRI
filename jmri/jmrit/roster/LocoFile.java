@@ -21,7 +21,7 @@ import org.jdom.output.*;
  * directly. That's why it's not a public class.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version		 	$Revision: 1.3 $
+ * @version		 	$Revision: 1.4 $
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
@@ -187,8 +187,8 @@ class LocoFile extends XmlFile {
 			fmt.output(doc, o);
 
         }
-		catch (Exception e) {
-			log.error(e);
+		catch (Exception ex) {
+			log.error(ex);
 		}
 	}
 

@@ -25,7 +25,7 @@ import org.jdom.Element;
  * this entry.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  * @see jmri.jmrit.roster.LocoFile
  *
  */
@@ -121,7 +121,6 @@ public class RosterEntry {
 		if ((a = e.getAttribute("id")) != null )  _id = a.getValue();
 		else log.warn("no id attribute in locomotive element when reading roster");
 		if ((a = e.getAttribute("fileName")) != null )  _fileName = a.getValue();
-		else log.warn("no fileName attribute in locomotive element when reading roster");
 		if ((a = e.getAttribute("roadName")) != null )  _roadName = a.getValue();
 		if ((a = e.getAttribute("roadNumber")) != null )  _roadNumber = a.getValue();
 		if ((a = e.getAttribute("mfg")) != null )  _mfg = a.getValue();
