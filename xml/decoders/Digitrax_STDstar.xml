@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_STDstar.xml,v 1.7 2003-06-05 17:45:34 jacobsen Exp $ -->
+<!-- $Id: Digitrax_STDstar.xml,v 1.8 2003-06-05 18:03:33 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
 					version="4" lastUpdated="20030606"/>
@@ -12,12 +12,13 @@
 <!-- Version 1 made from old 1x1 file -->
 <!-- Version 2 with versionID range -->
 <!-- Version 3 remove speed tables, not present -->
-<!-- Version 4 - add consist direction - jake -->
+<!-- Version 4 - add consist direction, DH84 - jake -->
 
 <decoder>
 	<family name="Basic STD*" mfg="Digitrax" lowVersionID="1" highVersionID="1">
 		<model model="DN121" numOuts="2" numFns="2"/>
 		<model model="DN93" numOuts="3" numFns="4"/>
+		<model model="DH84" numOuts="3" numFns="4"/>
 	</family>
 
 	<programming direct="no" paged="yes" 
