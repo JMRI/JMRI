@@ -45,6 +45,8 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 	private JCheckBoxMenuItem viewControlPanel;
 	private JCheckBoxMenuItem viewFunctionPanel;
 	private JCheckBoxMenuItem viewAddressPanel;
+	
+	private DccThrottle throttle;
 
 	/**
 	 *  Default constructor
@@ -60,6 +62,7 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
      */
     public void notifyThrottleFound(DccThrottle t)
 	{
+		this.throttle = t;
 		addressPanel.notifyThrottleFound(t);
 		controlPanel.notifyThrottleFound(t);
 		functionPanel.notifyThrottleFound(t);
@@ -71,7 +74,12 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
      */
     public void notifyAddressChosen(int address)
 	{
-		InstanceManager.throttleManagerInstance().requestThrottle(address, this);
+		boolean throttleInUse = 
+			InstanceManager.throttleManagerInstance().requestThrottle(address, this);
+		if (throttleInUse)
+		{
+			JOptionPane.showMessageDialog(this, "Address in use by another throttle.");
+		}
 	}
 	
 	/**
@@ -84,6 +92,7 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 		controlPanel.notifyThrottleDisposed();
 		functionPanel.notifyThrottleDisposed();
 		addressPanel.notifyThrottleDisposed();
+		throttle = null;
 	}
 	
 	/**
@@ -106,8 +115,8 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 			{
 				public void windowClosing(WindowEvent e)
 				{
-					destroyThrottleFrame();
-					e.getWindow().dispose();
+					ThrottleFrame me = (ThrottleFrame)e.getSource();
+					InstanceManager.throttleFrameManagerInstance().requestThrottleFrameDestruction(me);
 				}
 			});
 
@@ -169,8 +178,7 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 		}
 		catch (java.beans.PropertyVetoException ex)
 		{
-			System.out.println(ex.getMessage());
-			//TODO log it.
+			log.error("Error selecting InternalFrame:" + ex);
 		}
 
 	}
@@ -219,12 +227,31 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 		viewMenu.add(viewFunctionPanel);
 
 		JMenu editMenu = new JMenu("Edit");
-
+		JMenuItem preferencesItem = new JMenuItem("Frame Properties");
+		editMenu.add(preferencesItem);
+		preferencesItem.addActionListener(
+			new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e)
+				{
+					editPreferences();
+				}
+			});
 		this.setJMenuBar(new JMenuBar());
 		this.getJMenuBar().add(viewMenu);
-		//this.getJMenuBar().add(editMenu);
+		this.getJMenuBar().add(editMenu);
 	}
 
+	private void editPreferences()
+	{
+		ThrottleFramePropertyEditor editor = 
+			InstanceManager.throttleFrameManagerInstance().getThrottleFrameEditor();
+		editor.setThrottleFrame(this);
+		//editor.setLocation(this.getLocationOnScreen());
+		editor.setLocationRelativeTo(this);
+		editor.setVisible(true);
+	}
+	
 	/**
 	 *  Handle my own destruction.
 	 *  <ol>
@@ -233,13 +260,22 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 	 *  </ol>
 	 *
 	 */
-	public void destroyThrottleFrame()
+	public void dispose()
 	{
+		// check for any special disposing in InternalFrames
 		controlPanel.dispose();
 		functionPanel.dispose();
+		// dispose of this last because it will release and destroy throttle.
 		addressPanel.dispose();
-		ThrottleFrameManager manager = InstanceManager.throttleFrameManagerInstance();
-		manager.notifyDestroyThrottleFrame(this);
+		
+		// Handle disposing of the throttle
+		if (throttle != null)
+		{
+			InstanceManager.throttleManagerInstance().
+				cancelThrottleRequest(throttle.getDccAddress(), this);
+		}
+		
+		super.dispose();
 	}
 
 
@@ -366,10 +402,11 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 	public Element getXml()
 	{
 		Element me = new Element("ThrottleFrame");
+		me.addAttribute("title", this.getTitle());
 		com.sun.java.util.collections.ArrayList children =
 				new com.sun.java.util.collections.ArrayList(1);
 		WindowPreferences wp = new WindowPreferences();
-
+		
 		children.add(wp.getPreferences(this));
 		children.add(controlPanel.getXml());
 		children.add(functionPanel.getXml());
@@ -382,6 +419,7 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 	 *  Set the preferences based on the XML Element.
 	 *  <ul>
 	 *    <li> Window prefs
+	 *	  <li> Frame title
 	 *    <li> ControlPanel
 	 *    <li> FunctionPanel
 	 *    <li> AddressPanel
@@ -392,6 +430,7 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 	 */
 	public void setXml(Element e)
 	{
+		this.setTitle(e.getAttribute("title").getValue());
 		Element window = e.getChild("window");
 		WindowPreferences wp = new WindowPreferences();
 		wp.setPreferences(this, window);

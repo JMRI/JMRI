@@ -11,18 +11,19 @@ import java.util.Iterator;
  *
  * @author     Glen Oberhauser
  * @created    March 25, 2003
- * @version    $Revision: 1.5 $
+ * @version    $Revision: 1.6 $
  */
 public class ThrottleFrameManager
 {
 	private static int NEXT_THROTTLE_KEY = KeyEvent.VK_RIGHT;
 	private static int PREV_THROTTLE_KEY = KeyEvent.VK_LEFT;
 
-	private int activeThrottle;
+	private int activeFrame;
 	private ThrottleCyclingKeyListener throttleCycler;
 
 	private ArrayList throttleFrames;
 	private FunctionButtonPropertyEditor functionButtonEditor;
+	private ThrottleFramePropertyEditor throttleFramePropertyEditor;
 
 
 	/**
@@ -31,36 +32,57 @@ public class ThrottleFrameManager
 	public ThrottleFrameManager()
 	{
 		throttleCycler = new ThrottleCyclingKeyListener();
+		throttleFrames = new ArrayList(0);
 	}
 
 	/**
 	 *  Tell this manager that a new ThrottleFrame was created.
-	 *
+	 * @return The newly created ThrottleFrame
 	 */
-	public void createThrottleFrame()
+	public ThrottleFrame createThrottleFrame()
 	{
 		ThrottleFrame tf = new ThrottleFrame();
 		tf.pack();
-		tf.setVisible(true);
 		KeyListenerInstaller.installKeyListenerOnAllComponents(throttleCycler, tf);
-		if (throttleFrames == null)
-		{
-			throttleFrames = new ArrayList(2);
-		}
 		throttleFrames.add(tf);
-		activeThrottle = throttleFrames.indexOf(tf);
+		activeFrame = throttleFrames.indexOf(tf);
+		return tf;
 	}
 
 	/**
-	 *  Tell this manager that a ThrottleFrame was destroyed
+	 *  Request that this manager destroy a throttle frame.
 	 *
-	 * @param  tf  The just-destroyed ThrottleFrame
+	 * @param  frame  The to-be-destroyed ThrottleFrame
 	 */
-	public void notifyDestroyThrottleFrame(ThrottleFrame tf)
+	public void requestThrottleFrameDestruction(ThrottleFrame frame)
 	{
-		throttleFrames.remove(throttleFrames.indexOf(tf));
+		if (frame != null)
+		{
+			throttleFrames.remove(throttleFrames.indexOf(frame));
+			destroyThrottleFrame(frame);
+		}
 	}
 
+	public void requestAllThrottleFramesDestroyed()
+	{
+		for (Iterator i = throttleFrames.iterator(); i.hasNext();)
+		{
+			ThrottleFrame frame = (ThrottleFrame)i.next();
+			destroyThrottleFrame(frame);
+		}
+		throttleFrames = new ArrayList(0);
+	}
+
+	/**
+	 * Perform the destruction of a ThrottleFrame. This method will not
+	 * affect the throttleFrames list, thus ensuring no synchronozation problems.
+	 * @param frame The ThrottleFrame to be destroyed.
+	 */
+	private void destroyThrottleFrame(ThrottleFrame frame)
+	{
+		frame.dispose();
+	}
+	
 	/**
 	 *  Retrieve an Iterator over all the ThrottleFrames in existence.
 	 *
@@ -74,16 +96,27 @@ public class ThrottleFrameManager
 	/**
 	 *  Get a reference to the Function Editor Allows us to have one editor without
 	 *  disposing and creating each time.
-	 *
-	 * @return    The functionButtonEditor value
 	 */
-	public jmri.jmrit.throttle.FunctionButtonPropertyEditor getFunctionButtonEditor()
+	public FunctionButtonPropertyEditor getFunctionButtonEditor()
 	{
 		if (functionButtonEditor == null)
 		{
 			functionButtonEditor = new FunctionButtonPropertyEditor();
 		}
 		return functionButtonEditor;
+	}
+
+	/**
+	 *  Get a reference to the ThrottleFrame Editor. Allows us to have one editor without
+	 *  disposing and creating each time.
+	 */
+	public ThrottleFramePropertyEditor getThrottleFrameEditor()
+	{
+		if (throttleFramePropertyEditor == null)
+		{
+			throttleFramePropertyEditor = new ThrottleFramePropertyEditor();
+		}
+		return throttleFramePropertyEditor;
 	}
 
 	/**
@@ -103,18 +136,18 @@ public class ThrottleFrameManager
 		{
 			if (e.isShiftDown() && e.getKeyCode() == NEXT_THROTTLE_KEY)
 			{
-				activeThrottle = (activeThrottle + 1) % throttleFrames.size();
-				ThrottleFrame tf = (ThrottleFrame) throttleFrames.get(activeThrottle);
+				activeFrame = (activeFrame + 1) % throttleFrames.size();
+				ThrottleFrame tf = (ThrottleFrame) throttleFrames.get(activeFrame);
 				tf.requestFocus();
 			}
 			else if (e.isShiftDown() && e.getKeyCode() == PREV_THROTTLE_KEY)
 			{
-				activeThrottle--;
-				if (activeThrottle < 0)
+				activeFrame--;
+				if (activeFrame < 0)
 				{
-					activeThrottle = throttleFrames.size() - 1;
+					activeFrame = throttleFrames.size() - 1;
 				}
-				ThrottleFrame tf = (ThrottleFrame) throttleFrames.get(activeThrottle);
+				ThrottleFrame tf = (ThrottleFrame) throttleFrames.get(activeFrame);
 				tf.requestFocus();
 			}
 		}

@@ -65,38 +65,13 @@ public class LoadXmlThrottleAction extends AbstractAction
 					JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.INFORMATION_MESSAGE, null,
 					possibleValues, possibleValues[0]);
-			if (selectedValue == JOptionPane.YES_OPTION)
+			if (selectedValue == JOptionPane.NO_OPTION)
 			{
-				// merge - just load new throttles
-				loadThrottles(fileChooser.getSelectedFile());
-			}
-			else if (selectedValue == JOptionPane.NO_OPTION)
-			{
-				// replace - close all then load
-				ThrottleFrameManager tfm = InstanceManager.throttleFrameManagerInstance();
-				// make copy of list because the destroyThrottleFrame method
-				// will access the same list
-				
-				ArrayList listCopy = new ArrayList();
-				for (Iterator i = tfm.getThrottleFrames(); i.hasNext();)
-				{
-					listCopy.add(i.next());	
-				}
-				for (Iterator i = listCopy.iterator(); i.hasNext();)
-				{
-					ThrottleFrame frame = (ThrottleFrame)i.next();
-					frame.destroyThrottleFrame();
-					frame.dispose();
-				}
-				
-				loadThrottles(fileChooser.getSelectedFile());
+				// replace chosen - close all then load
+				InstanceManager.throttleFrameManagerInstance().requestAllThrottleFramesDestroyed();
 			}
 		}
-		else
-		{
-			loadThrottles(fileChooser.getSelectedFile());
-		}
-		
+		loadThrottles(fileChooser.getSelectedFile());
 	}
 
 	/**
@@ -113,7 +88,7 @@ public class LoadXmlThrottleAction extends AbstractAction
 			List throttles = root.getChildren("ThrottleFrame");
 			for (com.sun.java.util.collections.Iterator i = throttles.iterator(); i.hasNext(); )
 			{
-				ThrottleFrame tf = new ThrottleFrame();
+				ThrottleFrame tf = InstanceManager.throttleFrameManagerInstance().createThrottleFrame();
 				tf.setXml((Element) i.next());
 				tf.setVisible(true);
 			}

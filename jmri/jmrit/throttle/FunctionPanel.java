@@ -25,6 +25,27 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener
         initGUI();
     }
 
+	public void dispose()
+	{
+		if (throttle != null)
+		{
+			throttle.setF0(false);
+			throttle.setF1(false);
+			throttle.setF2(false);
+			throttle.setF3(false);
+			throttle.setF4(false);
+			throttle.setF5(false);
+			throttle.setF6(false);
+			throttle.setF7(false);
+			throttle.setF8(false);
+			throttle.setF9(false);
+			throttle.setF10(false);
+			throttle.setF11(false);
+			throttle.setF12(false);
+		}
+		super.dispose();
+	}
+
     /**
      * Get notification that a throttle has been found as we requested.
      * Use reflection to find the proper getF? method for each button.

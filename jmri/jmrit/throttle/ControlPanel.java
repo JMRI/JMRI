@@ -55,6 +55,15 @@ public class ControlPanel extends JInternalFrame
 		throttle = null;
 	}
 
+	public void dispose()
+	{
+		if (throttle != null)
+		{
+			throttle.setSpeedSetting(0);
+		}
+		super.dispose();
+	}
+	
 	/**
 	 *  Get notification that a throttle has been found as we requested.
 	 *

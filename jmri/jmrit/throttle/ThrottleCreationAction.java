@@ -26,7 +26,9 @@ public class ThrottleCreationAction extends AbstractAction {
      * @param e The event causing the action.
      */
     public void actionPerformed(ActionEvent e) {
-		jmri.InstanceManager.throttleFrameManagerInstance().createThrottleFrame();		
+		ThrottleFrame tf = 
+			jmri.InstanceManager.throttleFrameManagerInstance().createThrottleFrame();
+		tf.setVisible(true);
     }
 
     // initialize logging

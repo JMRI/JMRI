@@ -38,6 +38,15 @@ public class AddressPanel extends JInternalFrame
         initGUI();
     }
 
+	public void dipose()
+	{
+		if (throttle != null)
+		{
+			throttle.release();
+		}
+		super.dispose();
+	}
+	
     /**
      * Add an AddressListener. AddressListeners are notified when the
      * user selects a new address.
