@@ -2,11 +2,11 @@
 
 package jmri.jmrix.loconet;
 
-import java.beans.*;
-import java.util.*;
-
 import jmri.*;
 import jmri.jmrix.*;
+
+import java.beans.*;
+import java.util.*;
 
 /**
  * Controls a collection of slots, acting as the
@@ -29,9 +29,9 @@ import jmri.jmrix.*;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
-public class SlotManager extends AbstractProgrammer implements LocoNetListener {
+public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
     public SlotManager() {
         // error if more than one constructed?
@@ -47,6 +47,37 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 
         // listen to the LocoNet
         LnTrafficController.instance().addLocoNetListener(~0, this);
+    }
+
+    /**
+     * Send a DCC packet to the rails. This implements the CommandStation interface.
+     * @param packet
+     */
+    public void sendPacket(byte[] packet, int repeats) {
+        if (repeats>7) log.error("Too many repeats!");
+
+        LocoNetMessage m = new LocoNetMessage(11);
+        m.setElement(0,0xED);
+        m.setElement(1,0x0B);
+        m.setElement(2,0x7F);
+        m.setElement(3, 16*(repeats&0x7)+(packet.length&0x7));
+
+        int highBits = 0;
+        if (packet.length>=1 && ((packet[0]&0x80) != 0)) highBits |= 0x01;
+        if (packet.length>=2 && ((packet[1]&0x80) != 0)) highBits |= 0x02;
+        if (packet.length>=3 && ((packet[2]&0x80) != 0)) highBits |= 0x04;
+        if (packet.length>=4 && ((packet[3]&0x80) != 0)) highBits |= 0x08;
+        if (packet.length>=5 && ((packet[4]&0x80) != 0)) highBits |= 0x10;
+        m.setElement(4,highBits);
+
+        m.setElement(5,0);
+        m.setElement(6,0);
+        m.setElement(7,0);
+        m.setElement(8,0);
+        m.setElement(9,0);
+        for (int i=0; i<packet.length; i++) m.setElement(5+i, packet[i]&0x7F);
+
+        LnTrafficController.instance().sendLocoNetMessage(m);
     }
 
     /**
