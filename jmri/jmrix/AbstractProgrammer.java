@@ -21,13 +21,6 @@ import java.beans.PropertyChangeEvent;
 
 public abstract class AbstractProgrammer implements Programmer {
 
-    // here only temporarily, to avoid compile errors
-    // @todo Fix that!
-    public boolean hasMode(int mode) {
-        log.debug("hasMode returns true by default");
-        return true;
-    }
-
 	public String decodeErrorCode(int code) {
 		if (code == ProgListener.OK) return "OK";
 		StringBuffer sbuf = new StringBuffer("");
