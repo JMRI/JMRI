@@ -33,7 +33,7 @@ import jmri.*;
  * and Bob Jacobsen.  Some of the message formats are copyright Digitrax, Inc.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.8 $
  */
 public class AspectGenerator implements java.beans.PropertyChangeListener{
 
@@ -85,7 +85,7 @@ public class AspectGenerator implements java.beans.PropertyChangeListener{
         // Head A, in two parts
         speed = mSE.newSpeedAX;
         updateSpeed(heads[0], speed);
-        updateDiverging(heads[3]);
+        updateDiverging(heads[0], heads[3]);
 
         if (mSE.newTurnoutState==Turnout.CLOSED) speed = mSE.newSpeedXA;
         else speed = 0;
@@ -112,15 +112,19 @@ public class AspectGenerator implements java.beans.PropertyChangeListener{
     /**
      * Set a SignalHead to represent the "diverging" status
      * of a AX route
-     * @param h lower (secondary) signal head on an A end
+     * @param hu upper (primary) signal head on an A end
+     * @param hl lower (secondary) signal head on an A end
      */
-    void updateDiverging(SignalHead h) {
-        if (mSE.newTurnoutState==Turnout.CLOSED)
-            h.setAppearance(SignalHead.GREEN);
-        else if (mSE.newTurnoutState==Turnout.THROWN)
-            h.setAppearance(SignalHead.YELLOW);
-        else
-            h.setAppearance(SignalHead.RED);
+    void updateDiverging(SignalHead hu, SignalHead hl) {
+        if (mSE.newTurnoutState==Turnout.CLOSED) {
+            // non-diverging case
+            hl.setAppearance(SignalHead.RED);
+            return;
+        } else {
+            // diverging case
+            hl.setAppearance(SignalHead.YELLOW);
+            return;
+        }
     }
 
     // to hear of changes
