@@ -22,6 +22,7 @@ import org.jdom.input.*;
 import jmri.*;
 import jmri.progdebugger.*;
 import jmri.jmrit.symbolicprog.*;
+import jmri.jmrit.decoderdefn.*;
 
 public class PaneProgFrameTest extends TestCase {
 
@@ -53,7 +54,7 @@ public class PaneProgFrameTest extends TestCase {
 		// invoke
 		colCount = 0;
 		p.readConfig(root, ns);
-		assertEquals("column count", 3, colCount);
+		assertEquals("column count", 4, colCount);
 	}
 
 	// test specifying variables in columns
@@ -77,7 +78,7 @@ public class PaneProgFrameTest extends TestCase {
 		PaneProgFrame p = new PaneProgFrame();
 		
 		// ugly, temporary way to load the decoder info
-		DecoderFileTest t = new DecoderFileTest("");
+		jmri.jmrit.decoderdefn.DecoderFileTest t = new jmri.jmrit.decoderdefn.DecoderFileTest("");
 		t.setupDecoder();
 		p.loadVariables(t.decoder, t.ns);
 		
@@ -90,7 +91,7 @@ public class PaneProgFrameTest extends TestCase {
 	public void XtestFileFrame() {
 		// Open and parse decoder file
 		System.out.println("start decoder file");
-		File dfile = new File("xml/decoders/NMRA_All.xml");
+		File dfile = new File("xml"+File.separator+"decoders"+File.separator+"NMRA_All.xml");
 		Namespace dns = Namespace.getNamespace("decoder",
 										"http://jmri.sourceforge.net/xml/decoder");
 		SAXBuilder dbuilder = new SAXBuilder(true);  // argument controls validation, on for now
@@ -108,7 +109,7 @@ public class PaneProgFrameTest extends TestCase {
 
 		// Open and parse programmer file
 		System.out.println("start programmer file");
-		File pfile = new File("xml/programmers/MultiPane.xml");
+		File pfile = new File("xml"+File.separator+"programmers"+File.separator+"MultiPane.xml");
 		Namespace pns = Namespace.getNamespace("programmer",
 										"http://jmri.sourceforge.net/xml/programmer");
 		SAXBuilder pbuilder = new SAXBuilder(true);  // argument controls validation, on for now
@@ -188,6 +189,12 @@ public class PaneProgFrameTest extends TestCase {
 												)
 								)
 					.addContent(new Element("pane",ns)
+									.addAttribute("name", "CV")
+									.addContent(new Element("column", ns)
+										.addContent(new Element("cvtable", ns))
+												)
+								)
+					.addContent(new Element("pane",ns)
 									.addAttribute("name", "Other")
 									.addContent(new Element("column", ns)
 										.addContent(new Element("variable", ns)
@@ -198,7 +205,7 @@ public class PaneProgFrameTest extends TestCase {
 													)
 												)
 								)
-						)
+				)
 			; // end of adding contents
 		
 		return;

@@ -93,7 +93,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
 		cv18.setValue(3);
 		v.setElementAt(cv17, 17);
 		v.setElementAt(cv18, 18);
-		// create a variable pointed at CV 81, loaded as 5
+		// create a variable pointed at CV 17 & 18
 		LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "VVVVVVVV", 0, 255, v, null);
 		((JTextField)var.getValue()).setText("1029");
 		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));

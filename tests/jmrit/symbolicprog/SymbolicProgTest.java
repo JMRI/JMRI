@@ -52,7 +52,6 @@ public class SymbolicProgTest extends TestCase {
 		suite.addTest(jmri.jmrit.symbolicprog.HexVariableValueTest.suite());
 		suite.addTest(jmri.jmrit.symbolicprog.LongAddrVariableValueTest.suite());
 		suite.addTest(jmri.jmrit.symbolicprog.CvValueTest.suite());
-		suite.addTest(jmri.jmrit.symbolicprog.DecoderFileTest.suite());
 		suite.addTest(jmri.jmrit.symbolicprog.CvTableModelTest.suite());
 		suite.addTest(jmri.jmrit.symbolicprog.VariableTableModelTest.suite());
 		return suite;

@@ -93,6 +93,19 @@ public class CvValueTest extends TestCase {
 		assert(cv.getState() == CvValue.EDITTED);
 	}
 		
+	// check the initial color
+	public void testInitialColor() {
+		CvValue cv = new CvValue(21);
+		Assert.assertEquals("initial color", CvValue.COLOR_UNKNOWN, cv.getTableEntry().getBackground());
+	}
+		
+	// check color update for EDITTED
+	public void testEdittedColor() {
+		CvValue cv = new CvValue(21);
+		cv.setValue(23);
+		Assert.assertEquals("editted color", CvValue.COLOR_EDITTED, cv.getTableEntry().getBackground());
+	}
+		
 
 	// from here down is testing infrastructure
 	
