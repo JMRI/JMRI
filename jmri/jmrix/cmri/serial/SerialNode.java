@@ -9,7 +9,7 @@ import jmri.Sensor;
  * Model a serial C/MRI node
  * <P>
  * These are numbered ala the UA number, from 1 to 63.
- * Node number 1 carries sensors 0 to 127, etc.
+ * Node number 1 carries sensors 1 to 128, etc.
  * <P>
  * The array of sensor states is used to update sensor known state
  * only when there's a change on the serial bus.  This allows for the
@@ -18,23 +18,23 @@ import jmri.Sensor;
  * change a state via an icon, and not have it change back the next time
  * that node is polled.
  *
- * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.2 $
+ * @author	Bob Jacobsen Copyright (C) 2003
+ * @version	$Revision: 1.3 $
  */
 public class SerialNode {
 
-    final int MAXSENSORS = 128;
+    final int MAXSENSORS = 24*8;  // assume a full traditional motherboard
     int LASTUSEDSENSOR = 1;
 
     public SerialNode() {
-        for (int i = 0; i<MAXSENSORS; i++) {
+        for (int i = 0; i<=MAXSENSORS; i++) {
             sensorArray[i] = null;
             sensorLastSetting[i] = Sensor.UNKNOWN;
         }
     }
 
-    Sensor[] sensorArray = new Sensor[MAXSENSORS];
-    int[] sensorLastSetting = new int[MAXSENSORS];
+    Sensor[] sensorArray = new Sensor[MAXSENSORS+1];
+    int[] sensorLastSetting = new int[MAXSENSORS+1];
 
     /**
      *
