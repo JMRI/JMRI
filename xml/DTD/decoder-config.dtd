@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a DCC decoder as a component, esp. information -->
 <!-- on how to program it. -->
-<!-- $Revision: 1.29 $ -->
+<!-- $Revision: 1.30 $ -->
 
 <!-- This DTD is Copyright 2001, 2003 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -36,7 +36,7 @@
 <!ATTLIST family lowVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
 <!ATTLIST family highVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
 
-<!ELEMENT model (versionCV*, output*) >
+<!ELEMENT model (versionCV*, output*, size?) >
 <!ATTLIST model model     	CDATA #REQUIRED>  <!-- model name used for identification -->
 <!ATTLIST model options   	CDATA #IMPLIED>   <!-- comma-sep list of included options, but default is all on -->
 <!ATTLIST model comment   	CDATA #IMPLIED>
@@ -59,6 +59,9 @@
 <!-- NMRA Conformance status -->
 <!ATTLIST model nmraWarrant  (yes|no) "no" >
 <!ATTLIST model nmraWarrantEnd CDATA #IMPLIED >  <!-- end date of current warrant, if any -->
+<!-- wiring specification -->
+<!ATTLIST model connector ( unspecified | NMRAsmall | 9pin |
+							NMRAmedium | NMRAlarge | other ) "unspecified" >
 
 <!ELEMENT versionCV EMPTY >
 <!-- lowVersionID, highVersionID define an inclusive range, with both endpoints included. -->
@@ -71,6 +74,16 @@
 <!ATTLIST output name     	CDATA #REQUIRED>  <!-- output name used for identification -->
 <!ATTLIST output label     	CDATA #IMPLIED>  <!-- optional label, e.g. wire color -->
 <!ATTLIST output comment   	CDATA #IMPLIED>
+<!ATTLIST output maxcurrent CDATA #IMPLIED>
+<!ATTLIST output connection ( plug | solder | wire | other | unspecified ) "unspecified" >
+
+<!ELEMENT size EMPTY>
+<!ATTLIST size length    CDATA #IMPLIED >
+<!ATTLIST size width    CDATA #IMPLIED >
+<!ATTLIST size height   CDATA #IMPLIED >
+<!ATTLIST size units  	( inches | cm | mm ) #REQUIRED >
+<!ATTLIST size comment 	CDATA #IMPLIED >
+
 
 <!-- The programming section describes the decoders programming capabilities -->
 

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_01x3.xml,v 1.13 2003-08-03 20:40:00 jacobsen Exp $ -->
+<!-- $Id: Digitrax_01x3.xml,v 1.14 2003-08-10 23:03:58 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Simon.Ginsburg@freesurf.ch" 
 					version="9" lastUpdated="20030805"/>
@@ -18,75 +18,114 @@
 <decoder>
 	<family name="Series 3 with FX3, silent, readback" 
 			mfg="Digitrax" lowVersionID="49" highVersionID="49">
-		<model model="DH163" numOuts="6" numFns="12">
+		<model model="DH163" numOuts="6" numFns="12"
+				connector="9pin">
+			<output name="4" label="Violet" connection="wire"/> 
+			<output name="5" label="Pad" connection="solder"/> 
+			<output name="6" label="Pad" connection="solder"/> 
+			<size length="1.05" width=".67" height="0.25" units="inches" />
+			</model>
+		<model model="DH163AT" numOuts="6" numFns="12"
+				connector="9pin">
+			<output name="4" label="Violet"/> 
+			<output name="5" label="Pad 1"/> 
+			<output name="6" label="Pad 2"/>
+			<size length="1.05" width=".67" height="0.25" units="inches" />
+			</model>
+		<model model="DH163A0" numOuts="6" numFns="12"
+				connector="9pin">
 			<output name="4" label="Violet"/> 
 			<output name="5" label="Pad"/> 
-			<output name="6" label="Pad"/> </model>
-		<model model="DH163AT" numOuts="6" numFns="12">
-			<output name="4" label="Violet"/> 
-			<output name="5" label="Pad"/> 
-			<output name="6" label="Pad"/> </model>
-		<model model="DH163A0" numOuts="6" numFns="12">
-			<output name="4" label="Violet"/> 
-			<output name="5" label="Pad"/> 
-			<output name="6" label="Pad"/> </model>
+			<output name="6" label="Pad"/>
+			<size length="1.05" width=".67" height="0.25" units="inches" />
+			</model>
 		<model model="DH163D" numOuts="6" numFns="12">
 			<output name="4" label="Violet"/> 
 			<output name="5" label="Pad"/> 
-			<output name="6" label="Pad"/> </model>
+			<output name="6" label="Pad"/>
+			<size length="1.05" width=".67" height="0.25" units="inches" />
+			</model>
 		<model model="DH163IP" numOuts="6" numFns="12">
 			<output name="4" label="Violet"/> 
 			<output name="5" label="Pad"/> 
-			<output name="6" label="Pad"/> </model>
+			<output name="6" label="Pad"/>
+			<size length="1.05" width=".67" height="0.25" units="inches" />
+			</model>
 		<model model="DH163K0" numOuts="6" numFns="12">
 			<output name="4" label="Violet"/> 
 			<output name="5" label="Pad"/> 
-			<output name="6" label="Pad"/> </model>
+			<output name="6" label="Pad"/>
+			<size length="1.05" width=".67" height="0.25" units="inches" />
+			</model>
 		<model model="DH163L0" numOuts="6" numFns="12">
 			<output name="4" label="Violet"/> 
 			<output name="5" label="Pad"/> 
-			<output name="6" label="Pad"/> </model>
+			<output name="6" label="Pad"/>
+			<size length="1.05" width=".67" height="0.25" units="inches" />
+			</model>
 		<model model="DH163P" numOuts="6" numFns="12">
 			<output name="4" label="Violet"/> 
 			<output name="5" label="Pad"/> 
-			<output name="6" label="Pad"/> </model>
+			<output name="6" label="Pad"/>
+			<size length="1.05" width=".67" height="0.25" units="inches" />
+			</model>
 		<model model="DG383" numOuts="8" numFns="12">
 			<output name="4" label="Violet"/> 
-			<output name="5" label="Pad"/> </model>
+			<output name="5" label="Pad"/>
+			<size length="1.05" width=".67" height="0.25" units="inches" />
+			</model>
 		<model model="DG583" numOuts="8" numFns="12">
 			<output name="4" label="Violet"/> 
-			<output name="5" label="Pad"/> </model>
+			<output name="5" label="Pad"/>
+			<size length="1.05" width=".67" height="0.25" units="inches" />
+			</model>
 		<model model="DN143" numOuts="4" numFns="12">
 			<output name="4" label="Violet"/> 
-			<output name="5" label="Pad"/> </model>
+			<output name="5" label="Pad"/>
+			<size length="1.05" width=".67" height="0.25" units="inches" />
+			</model>
 		<model model="DN163" numOuts="4" numFns="12">
 			<output name="4" label="Violet"/> 
 			<output name="5" label="Pad"/>
-			<output name="6" label="Pad"/> </model>
+			<output name="6" label="Pad"/>
+			<size length="1.05" width=".67" height="0.25" units="inches" />
+			</model>
 		<model model="DN163K0A" numOuts="4" numFns="12">
 			<output name="4" label="Violet"/> 
 			<output name="5" label="Pad"/>
-			<output name="6" label="Pad"/> </model>
+			<output name="6" label="Pad"/>
+			<size length="1.05" width=".67" height="0.25" units="inches" />
+			</model>
 		<model model="DN163K1A" numOuts="4" numFns="12">
 			<output name="4" label="Violet"/> 
 			<output name="5" label="Pad"/>
-			<output name="6" label="Pad"/> </model>
+			<output name="6" label="Pad"/>
+			<size length="1.05" width=".67" height="0.25" units="inches" />
+			</model>
 		<model model="DN163K2" numOuts="4" numFns="12">
 			<output name="4" label="Violet"/> 
 			<output name="5" label="Pad"/>
-			<output name="6" label="Pad"/> </model>
+			<output name="6" label="Pad"/>
+			<size length="1.05" width=".67" height="0.25" units="inches" />
+			</model>
 		<model model="DN163M0" numOuts="4" numFns="12">
 			<output name="4" label="Violet"/> 
 			<output name="5" label="Pad"/>
-			<output name="6" label="Pad"/> </model>
+			<output name="6" label="Pad"/>
+			<size length="1.05" width=".67" height="0.25" units="inches" />
+			</model>
 		<model model="DN163A0" numOuts="4" numFns="12">
 			<output name="4" label="Violet"/> 
 			<output name="5" label="Pad"/>
-			<output name="6" label="Pad"/> </model>
+			<output name="6" label="Pad"/>
+			<size length="1.05" width=".67" height="0.25" units="inches" />
+			</model>
 		<model model="DN163A1" numOuts="4" numFns="12">
 			<output name="4" label="Violet"/> 
 			<output name="5" label="Pad"/>
-			<output name="6" label="Pad"/> </model>
+			<output name="6" label="Pad"/>
+			<size length="1.05" width=".67" height="0.25" units="inches" />
+			</model>
 		<model model="DZ143" numOuts="4" numFns="12" lowVersionID="64" highVersionID="65">
 			<output name="4" label="Violet"/> 
 			<output name="5" label="Pad"/> </model>
