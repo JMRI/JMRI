@@ -13,7 +13,7 @@ import jmri.*;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
                                 implements jmri.ConfigureManager {
@@ -85,7 +85,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 	public void store(File file) {
         // ensure that certain items from the InstanceManager are registered
         // to be stored.  (Others are registered as they are created)
-        register(InstanceManager.turnoutManagerInstance());
+        Object r = InstanceManager.turnoutManagerInstance();
+        if (r!=null) register(r);
 
         // do the write
 		try {
