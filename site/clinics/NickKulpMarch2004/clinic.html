@@ -1,0 +1,525 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+         
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=windows-1252">
+         
+  <meta name="Generator" content="Microsoft Word 97">
+  <title>JMRIDEMO PanelPro Clinic</title>
+</head>
+  <body link="#0000ff" vlink="#800080">
+    <font size="5">  
+<p align="center">JMRIDEMO PanelPro Clinic</p>
+     
+<p>The first step in using the program is to download the latest version
+from the JMRI website. The current version as of 3/16/2004 is 1.3.10 it is
+available at:</p>
+   </font><font face="Arial Unicode MS" size="2"></font>  
+<p><font face="Arial Unicode MS" size="2">Download links:</font><font
+ size="2"><br>
+   </font><font face="Arial Unicode MS" size="2">Please use these links for
+ downloading, including the "?download" at</font><font size="2"><br>
+   </font><font face="Arial Unicode MS" size="2">the end. That adds to SourceForge's
+ advertising statistics, which</font><font size="2"><br>
+   </font><font face="Arial Unicode MS" size="2">makes them happy to host 
+our stuff.</font><font size="2"><br>
+   </font><font face="Arial Unicode MS" size="2">MacOS X:</font><font
+ size="2"><br>
+   </font><a
+ href="http://prdownloads.sourceforge.net/jmri/JMRI.1.3.10.hqx?download"><font
+ size="2">http://prdownloads.sourceforge.net/jmri/JMRI.1.3.10.hqx?download</font></a><font
+ size="2"><br>
+   <br>
+   </font><font face="Arial Unicode MS" size="2">Windows:</font><font
+ size="2"><br>
+   </font><a
+ href="http://prdownloads.sourceforge.net/jmri/JMRI.1.3.10.exe?download"><font
+ size="2">http://prdownloads.sourceforge.net/jmri/JMRI.1.3.10.exe?download</font></a><font
+ size="2"><br>
+   <br>
+   </font><font face="Arial Unicode MS" size="2">Linux:</font><font
+ size="2"><br>
+   </font><a
+ href="http://prdownloads.sourceforge.net/jmri/JMRI.1.3.10.tgz?download"><font
+ size="2">http://prdownloads.sourceforge.net/jmri/JMRI.1.3.10.tgz?download</font></a><font
+ size="2"><br>
+   <br>
+   </font><font face="Arial Unicode MS" size="2">MacOS 8/9 "Classic":</font><font
+ size="2"><br>
+   </font><a
+ href="http://prdownloads.sourceforge.net/jmri/JMRI.1.3.10.Classic.hqx?download"><font
+ size="2">http://prdownloads.sourceforge.net/jmri/JMRI.1.3.10.Classic.hqx?download</font></a><font
+ size="2"><br>
+   </font><font face="Arial Unicode MS" size="2">Changes since test version
+ 1.3.9:</font><font size="2"><br>
+   <br>
+   </font><font face="Arial Unicode MS" size="2">Soundtraxx DSD, DSX, LC
+decoders  updated by Robin Becker</font><font size="2"><br>
+   <br>
+   </font><font face="Arial Unicode MS" size="2">Bug where decoders that
+differ  only in family name, esp. certain NCE</font><font size="2"><br>
+   </font><font face="Arial Unicode MS" size="2">decoders, could not be properly
+ selected.</font><font size="2"><br>
+   <br>
+   </font><font face="Arial Unicode MS" size="2">Roco LocoMouse has now been
+ tested to work (Paul Bender)</font><font size="2"><br>
+   <br>
+   </font><font face="Arial Unicode MS" size="2">QSI decoder in the Lionel
+ Challenger now identifies (Walter Thompson)</font><font size="2"><br>
+   </font><font face="Arial Unicode MS" size="2">Additional QSI models added
+ using identification info provided by</font><font size="2"><br>
+   </font><font face="Arial Unicode MS" size="2">Randy Jones.</font><font
+ size="2"><br>
+   <br>
+   </font><font face="Arial Unicode MS" size="2">Tooltips now displayed in
+ the decoder-selection tree from the</font><font size="2"><br>
+   </font><font face="Arial Unicode MS" size="2">comments in the definition
+ files (Jack Shall)</font><font size="2"><br>
+   <br>
+   </font><font face="Arial Unicode MS" size="2">Tooltips added to some NEC,
+ Digitrax decoders (Jack Shall)</font><font size="2"><br>
+   <br>
+   </font><font face="Arial Unicode MS" size="2">New TCS M1 decoder definition
+ contributed by Eddie Delozier.</font><font size="2"><br>
+   <br>
+   </font><font face="Arial Unicode MS" size="2">Lenz sensor inputs now supported
+ (Paul Bender)</font><font size="2"><br>
+   <br>
+   </font><font face="Arial Unicode MS" size="2">Problem with Lenz throttles
+ in top part of speed range corrected (Paul Bender)</font></p>
+   <font size="5">  
+<p>Java must be loaded on your system as well. The program can be gotten
+free of charge via download from:</p>
+   </font><b><font face="Arial Unicode MS" size="4"></font></b>  
+<p><b><font face="Arial Unicode MS" size="4">"Standard Edition", Try starting
+ at this page:</font><font size="4"><br>
+   </font><font face="Arial Unicode MS" size="4">&lt;</font></b><a
+ href="http://java.sun.com/j2se/1.4.2/download.html"><b><font size="4">http://java.sun.com/j2se/1.4.2/download.html</font></b></a><b><font
+ face="Arial Unicode MS" size="4">&gt;</font></b></p>
+   <b><font size="4">  
+<p>Once the program is loaded on your system, you can install the JMRIDEMO
+ program and run it.</p>
+     
+<p>Now, let’s get started on the real subject of this clinic, creating a
+panel. </p>
+     
+<p>Some of the first things you might have done before you attempt to build
+ a control panel might be, drawing a linear drawing of your layout to represent
+ a point-to-point system. Your layout might be a simple loop of track with
+ one passing siding but a prototype panel represents miles and miles of a
+railroad. Your panel should represent your railroad in this manner. That
+is not to say that you cannot draw a loop of track with a passing siding
+as the background but that would cut down on your space available for levers,
+signals, and status lights in the lower section. Use that sketch and create
+a background image that will be used to place all of the icons on the dispatchers
+panel.</p>
+     
+<p>For my panel I used a drawing program call Paint Shop Pro. I created a
+ simple Black "track" area on the upper portion of the graphic, and an Olive
+ green area to place the control levers and indicator lights. The black area
+ will have a 3 pixel wide line that will represent the tracks under the dispatcher’s
+ control, including any switches, signals, and occupancy detectors. You would
+ draw the simple schematic representing this track and the other items will
+ be added on top of your background. There are a ton of icons included in
+the resources\icons folder and you can use your painting program to create
+any custom icons you might want. I created some PRR position lights for my
+use with Bob Jacobsen’s help.</p>
+     
+<p>Step 1. open PanelPro from your start menu. After the program finishes
+ loading you will see this menu screen.</p>
+   </font></b>  
+<p><img src="Image1.gif" width="390" height="200">
+  </p>
+   <b><font size="4"></font></b>  
+<p><b><font size="4"> </font></b></p>
+     
+<p><b><font size="4">Step 2. Set up you preferences for how the program will
+ talk to your layout connection. For the purposes of this clinic, I will
+use  a Digitrax Loconet connection on Com2 via a Locobuffer II donated by
+Dick  Bronson (</font></b><a href="http://www.rr-cirkits.com/"><b><font
+ size="4">www.rr-cirkits.com</font></b></a><b><font size="4">) at 56,000
+baud. Select one of the menu choices that works for your layout. If you do
+not have a layout yet or are using this to help your design, you can select
+the Loconet Hexfile as your layout connection. It will permit you to see
+all of the pieces function as if you were connected to a layout.</font></b></p>
+     
+<p><img src="Image2.gif" width="385" height="193">
+  </p>
+     
+<p><img src="Image3.gif" width="396" height="548">
+  </p>
+   <b><font size="4">  
+<p> </p>
+     
+<p>Step 3. SAVE your settings. The program will shut down at that time and
+ you will have to reopen it.</p>
+   </font></b>  
+<p><img src="Image4.gif" width="332" height="282">
+  </p>
+   <b><font size="4">  
+<p> </p>
+     
+<p>Step 4. Select the new panel option from the panel menu.</p>
+     
+<p> </p>
+   </font></b>  
+<p><img src="Image5.gif" width="388" height="196">
+  </p>
+   <b><font size="4">  
+<p> </p>
+     
+<p>	A panel editor will open up. You will use this for almost all of your
+ operations in building the panel. Note that the "panel frame to the left
+is blank. This is where the next step comes in.</p>
+   </font></b>  
+<p><img src="Image6.gif" width="568" height="457">
+  </p>
+   <b><font size="4">  
+<p>Step 5. Select a background for your panel.</p>
+     
+<p>Select the "Pick background image..." button and a menu will appear. This
+ is where you choose that graphic background that you spent weeks creating.
+ Now you have to remember where in the heck you saved it to on your hard
+drive.</p>
+   </font></b>  
+<p><img src="Image7.gif" width="576" height="345">
+  </p>
+   <b><font size="4">  
+<p>It can be as complex as you want. It is your railroad. The graphic above
+ is from my Cornwall Railroad. As you can see I’ve added location names,
+block  gaps, and switch numbers on the graphic. I have tried to make the
+panel as  self-explanatory as possible since I have several different dispatchers
+that  visit my railroad for op sessions. It looks kind of plain right now
+but when  it has all of the signals, Detector indicators, switches, levers,
+and panel  lights, it will fill out. I imagine when Digitrax has it’s transponding
+completed,  it will be possible to actually track (no pun intended) a train
+by it’s transponder.  This is what it looks like for m dispatcher during
+an op session.</p>
+   </font></b>  
+<p><img src="Image26.gif" width="571" height="343">
+  </p>
+     
+<p><img src="Image27.gif" width="569" height="240">
+  </p>
+   <b><font size="4">  
+<p>This panel is the one I’ll be using for the clinic. It is very simple
+but it will be able to show how each piece of this puzzle will be used to
+build a panel. </p>
+     
+<p>Step 6. Create the tables for sensors, switches, and signals.</p>
+   </font></b>  
+<p><img src="Image9.gif" width="394" height="360">
+  </p>
+   <b><font size="4">  
+<p>Use the tools from this menu to build all of the tables that you will
+use to identify all of the components that will "talk" to the layout control
+network, i.e. Loconet.</p>
+   </font></b>  
+<p><img src="Image10.gif" width="276" height="265">
+  </p>
+   <b><font size="4">  
+<p>PanelPro has a structured naming convention that identifies the different
+ components. For example, a sensor that talks to loconet would start with
+the letter "L". A Loconet Sensor would then be LS and the number that you
+have given it by connecting it to the Loconet device like the SE8c. The SE8c
+44 pin connector has 8 detector connections. They are identified by DS1 through
+ DS8. If you want the detector to be detector number 1, you would wire the
+ detector’s output to the DS1 connection. The BDL16 uses the same convention
+ so if you are using the BDL16, the manual will identify where you would
+connect  these connections.</p>
+     
+<p> </p>
+   </font></b>  
+<p><img src="Image11.gif" width="571" height="396">
+  </p>
+   <b><font size="4">  
+<p>The green LED on the top section is identified as LS3, Loconet-Sensor
+3 and it’s user name is Mainline. After you create a sensor in the sensor
+table you must then choose an icon from the available icons that come with
+the program to represent that sensor. Keep in mind that a sensor will have
+more than one state. You select this from the panel editor.</p>
+   </font></b>  
+<p><img src="Image12.gif" width="576" height="432">
+  <b><font size="4">Please note the highlighted selection called "panel items
+ can be repositioned" has it’s check box selected. If you fail to do this,
+ your icons will appear at the coordinates in the </font></b></p>
+     
+<p><b><font size="4">x-y coordinates at the top of the panel and you will
+ not be able to place them where you want them.</font></b></p>
+     
+<p><img src="Image13.gif" width="252" height="440">
+  </p>
+   <b><font size="4">  
+<p>To edit the icons find one that suits your needs from the selections like
+ the ones above and select it. Then click on the icon you want it to represent
+ and it will replace the default in the boxes at the top. You will see what
+ it looks like. Make a selection for all of the icons in this menu and they
+ will remain your selections as long as you have the program running. When
+ you shut the program down, AFTER YOU HAVE SAVED YOUR PANEL !! the next time
+ you open it, the icons will have reverted back to the program defaults shown
+ here. There are signals for searchlights, sensors, track pieces and more.
+ If what is here doesn’t meet your needs, create some with that paint program
+ you used to make you background image. From this point on, the process is
+ simply a matter of repetition. After the sensors are added, test them on
+the panel. If they change, you can see the change in the related table. Once
+you have seen them change on the screen, you can test them by connecting
+the computer to you layout’s interface and running a train. When the train
+crosses over the detector section, the indicator should change on the screen.
+There is nothing in the world like the first test of this program and having
+it work.</p>
+   </font></b>  
+<h3> </h3>
+   <b><font size="4" color="#ff0000"></font></b>  
+<p><b><font size="4" color="#ff0000">Note:</font><font size="4"> If you have
+ been using a loconet hexfile up to this point, don’t forget to edit your
+preferences to what you are actually using as your interface. If you forget
+to do this, the panel will not see the layout and you might spend hours trying
+to trouble-shoot wiring problems that don’t exist (Don’t Ask !!)</font></b></p>
+     
+<p><b><font size="4">After you have populated you panel with the sensors,
+ it is time to add the switches to the panel. This is a multi-part process.
+ You have already created the turnout table and created your turnouts, now
+ you will choose the icons to add to the panel. </font></b></p>
+     
+<p><b><font size="4">On a side note, with Digitrax loconet, creating the
+sensor and switch tables can be done "magically" by simply running a train
+on the layout with PanelPro running and the proper hardware connections made.
+As the train progresses over the layout, the feedback into the loconet is
+read by PanelPro and since the components are wired to specific terminals
+on you Loconet devices, they will send out Loconet messages from those devices.
+If a device is not in one of the tables, PanelPro will automatically create
+it in the appropriate table. At that point the objects are ready to be used
+by PanelPro.</font></b></p>
+     
+<p><img src="Image15.gif" width="316" height="162">
+  </p>
+   <b><font size="4">  
+<p>Although PanelPro will create the table entries, you must add the user
+ names yourself.</p>
+   </font></b>  
+<p><img src="Image16.gif" width="204" height="172">
+  </p>
+   <b><font size="4">  
+<p>As shown here, LT1 is in place and can be identified by "hovering" the
+ mouse over the location after you have placed the switch. The next image
+shows all of the icons associated with Switch 1 or the West Crossover. On
+the top is the track diagram icon. The icon lays over the three pixel line
+you drew for your track schematic. </p>
+   </font></b>  
+<p><b><font size="4">When you chose the icon it looked like this. </font></b></p>
+   
+<p><b><font size="4"> This is the TurnoutThrownR </font></b><img
+ src="file:///D:/Docs/JMRI%20Clinic/Image18.gif" width="20" height="20">
+  <b><font size="4">icon </font></b> <b><font size="4"> in the cornwall icons 
+folder. <br>
+  </font></b><b><font size="4"> There are also TurnoutClosedR,</font></b>  
+ <img src="file:///D:/Docs/JMRI%20Clinic/Image19.gif" width="20"
+ height="20">
+ <b><font size="4"> <br>
+  </font></b><b><font size="4"> and TurnoutNeitherR </font></b>  <img
+ src="file:///D:/Docs/JMRI%20Clinic/Image17.gif" width="20" height="20">
+ <b><font size="4"> icons that represent all of the icons for a right switch.
+ <br>
+  </font></b></p>
+   
+<p><b><font size="4">There are also icons for Left switches in that folder.
+ When the finished panel loads, it doesn’t know the status of the switch
+and  it will show the Neither until the switch is thrown or feedback is read
+from  the controlling device.</font></b></p>
+     
+<p><img src="Image20.gif" width="87" height="304">
+  </p>
+   <b><font size="4"> </font></b> 
+<p><b><font size="4">Next is the switch Lever. These icons are found in the 
+CTCPlates folder and are identified as:<br>
+  <br>
+  PlateSwitchN, <br>
+ <img src="plateSwitchN.gif" alt="" width="60" height="60">
+   <br>
+  PlateSwitchR,<br>
+  <img src="plateSwitchR.gif" alt="" width="60" height="60">
+   <br>
+  or PlateSwitch.<br>
+  <img src="plateSwitch.gif" alt="" width="60" height="60">
+   <br>
+  </font></b></p>
+   
+<p><b><font size="4">You must edit the icons and replace the track sections 
+with these before you can add them to the panel. When they are selected, they
+will act in sync with the track pieces and they will "change" to reflect the
+track status. </font></b></p>
+ 
+<p><b><font size="4">On my panels, I also added position indication LEDs from
+the small schematics folder. <img
+ src="file:///D:/Docs/JMRI%20Clinic/red.gif" alt="" width="10"
+ height="10">
+ </font></b><b><font size="4"><img
+ src="file:///D:/Docs/JMRI%20Clinic/green.gif" alt="" width="10"
+ height="10">
+ </font></b><b><font size="4"><img
+ src="file:///D:/Docs/JMRI%20Clinic/yellow.gif" alt="" width="10"
+ height="10">
+ <img src="file:///D:/Docs/JMRI%20Clinic/gray.gif" alt="" width="10"
+ height="10">
+  </font></b></p>
+ 
+<p><b><font size="4"> These are selected exactly like the track sections and
+the levers. The way to make them change color is to edit the icons and select
+a color for the position that is "active" and the gray one that is not. Add
+it to the panel and re-edit the icons to select the other state as a different
+color and the reverse state as gray. The LEDs will appear to "light" and
+go dark as the switch is thrown. Repeat this process until you populate your
+panel as completely as you want. <br>
+  </font></b></p>
+   
+<p><b><font size="4">I do one more thing with my panel. I have several hand-thrown 
+switches on my layout for industrial sidings and branch lines that the dispatcher
+ cannot control from his panel. I do, however have position sensors on those
+ switches so that the dispatcher can see if the last crew has realigned the
+ turnout back to it’s normal position after they have finished their work
+there. <br>
+ </font></b></p>
+ 
+<p><b><font size="4"><img src="plateSwitch.gif" alt="" width="60"
+ height="60">
+  </font></b><b><font size="4"><img
+ src="file:///D:/Docs/JMRI%20Clinic/green.gif" alt="" width="10"
+ height="10">
+ </font></b><b><font size="4"></font></b><b><font size="4"><img
+ src="file:///D:/Docs/JMRI%20Clinic/red.gif" alt="" width="10"
+ height="10">
+ </font></b><b><font size="4"><img
+ src="file:///D:/Docs/JMRI%20Clinic/gray.gif" alt="" width="10"
+ height="10">
+ </font></b> <br>
+ <b><font size="4">Under those switches on the panel, I still put a switch 
+plate there but instead of using the switch table, I use the sensor table. 
+The plate will not have a lever but it will have the LEDs. They will change 
+as the hand-throw is changed. It gives the dispatcher a visible indicator 
+of the switch position.</font></b></p>
+  <b><font size="4"> </font></b>  
+<p><img src="Image21.gif" width="246" height="336">
+  <img src="Image22.gif" width="260" height="289">
+  <img src="Image23.gif" width="217" height="216">
+  </p>
+   <b><font size="4">  
+<p>The final piece of the puzzle is the signals. Just like the evening news,
+ I have saved the best part for last. This is probably the most interesting
+ and challenging part of this process. You must first create you signal table
+ by selecting that option from the tools menu. Then you select "Add", then
+ select the SE8c aspect from the drop-down menu. You must then enter your
+name for the signal in the "user name" box, then enter the turnout number
+assigned to the signal head according to the SE8c address and signal assigned
+to the appropriate aspect. To do this you must have the SE8c manual and READ
+it. I know this goes against every instinct that you know but this is essential.
+ After you have added all of the signals to the signal table, you are now
+ready to do some real work. </p>
+     
+<p> <br>
+  <img src="Image25.gif" width="258" height="356">
+  </p>
+   </font></b> <b><font size="4"> </font></b>  
+<p><img src="Image22.gif" width="260" height="289">
+  <img src="Image24.gif" width="438" height="292">
+  <b><font size="4"><br>
+  </font></b></p>
+   
+<p><b><font size="4">You will now try to figure out how to make your signals
+ work like the prototype you are modeling. The Simple Signal Logic tool is
+ only a guide as to how you want the aspects to appear. Keep in mind, the
+first word in this tool is SIMPLE. It is not designed to provide correct
+aspects for a complex interlocking plant. It will protect sensors and signals
+associated with it but if you are modeling 30<sup>th</sup> Street Station,
+or the NYC’s entrance to Chicago, you will have to learn to do some JAVA
+scripting. Unfortunately, this is not what this clinic is all about. The
+menus above will show the selections you have to make. In the Simple Signal
+Logic tool panel, the first thing you need to enter is the line is the "Signal
+Name". This is the system name that is assigned by the program automatically
+after you created the signal in the Add New Signal tool. You can look the
+system name up in the Signal Table that was created while you were naming
+your signals. </font></b></p>
+     
+<p><img src="Image16.gif" width="204" height="172">
+  </p>
+   <b><font size="4">  
+<p>From this point, you will be doing the background work for your signals.
+ After this process, you can actually take your real signals, place them
+on  your layout, wire them up to your SE8c and connect it to your loconet
+and  your signals will work as you programmed them. Adding them to your dispatcher’s
+ panel is not necessary for them to work. But the reason you are all sitting
+ here is because you want to have your dispatcher get the most complete picture
+ of you railroad so he can efficiently keep your traffic moving and avoid
+disaster.</p>
+     
+<p>The sample shown here, SE8c manual page 5, shows all of the choices the
+ SE8c provides. A1 Main, A2 Diverging signaling at the points, B Main protection
+ at the Mainline frog, and C Diverging protection at the siding or diverging
+ route frog. Placing your signals is exactly the same process that you used
+ when you placed your switches, levers, or sensor icons. Edit the signal
+icon  in the panel editor, choosing the appropriate style and direction for
+the  signal, then using the "Add Signal" in your panel-editing tool, placing
+it  on the background of your panel.</p>
+     
+<p> </p>
+   </font></b>  
+<p><img src="Image28.gif" width="545" height="172">
+  </p>
+   <b><font size="4">  
+<p>After you place all of your signals on the background it will be time
+for you to see the fruits of your labor. Open the signal table, select any
+signal in the table and click on the "State" button. Find the signal you
+just changed on your panel and see what happened. It will now match the state
+shown in the table. If your preferences are set up to work through the Locobuffer
+and your layout loconet is powered up, you can walk out to the layout, find
+your signal, and it should also show what the table shows. The rest is simply
+repetition. Add a signal, test a signal, have a drink of celebration, add
+another signal, test the signal, have another drink. Continue this process
+until one of these options happen.</p>
+     
+<ol>
+    <li>You complete your panel</li>
+   <li>You run out of drinks.</li>
+   <li>You collapse from exhaustion or over-indulgence of the "devil’s brew".</li>
+   
+</ol>
+      
+<p> Congratulations !! You are now a qualified panel builder. Your services
+ will be sought far and wide and you should be able to start earning the
+BIG  money, just like me.</p>
+     
+<p>Always remember, SAVE your panel often during this process, you can always
+ make changes later if you mess up but you cannot recover lost data you forgot
+ to save. If you have any problems with this process remember, I am a hardware
+ tech, not a programmer. The problems are always caused by the software.</p>
+     
+<p>I hope this clinic provided you with the proper amount of information,
+ humor, and confusion to permit you to start building your panels. Thank
+you  for your attention.</p>
+     
+<p>Questions:</p>
+     
+<p>Contacts:</p>
+   </font></b>  
+<p><a href="mailto:cornwall9@yahoo.com"><b><font size="4">cornwall9@yahoo.com</font></b></a></p>
+     
+<p><a href="mailto:Bob_Jacobsen@lbl.gov"><b><font face="Courier New">Bob_Jacobsen@lbl.gov</font></b></a></p>
+   <b><font face="Courier New">  
+<p>jmriusers@yahoogroups.com</p>
+   </font></b>  
+<p> </p>
+   <b><font size="4">  
+<p> </p>
+     
+<p> </p>
+     
+<p> </p>
+     
+<p> </p>
+     
+<p> </p>
+  </font></b><br>
+  <br>
+ <br>
+</body>
+</html>
