@@ -28,7 +28,7 @@ package jmri;
  *            short vs long address type
  *
  * @author      Bob Jacobsen Copyright (C) 2001, 2003
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class NmraPacket {
 
@@ -87,6 +87,7 @@ public class NmraPacket {
             log.error("invalid address "+speedStep);
             return null;
         }
+        log.error("locoSpeed14S not fully implemented");
         return new byte[2];
     }
 
