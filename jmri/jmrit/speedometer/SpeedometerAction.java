@@ -10,23 +10,23 @@ import java.awt.event.ActionEvent;
  * SpeedometerFrame
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 public class SpeedometerAction 			extends AbstractAction {
-
-	public SpeedometerAction(String s) {
-		super(s);
-	}
-
+    
+    public SpeedometerAction(String s) {
+        super(s);
+    }
+    
     public void actionPerformed(ActionEvent e) {
-
-		// create a SimpleProgFrame
-		SpeedometerFrame f = new SpeedometerFrame();
-		f.show();
-
-	}
-
+        
+        // create a SimpleProgFrame
+        SpeedometerFrame f = new SpeedometerFrame();
+        f.show();
+        
+    }
+    
 }
 
 /* @(#)SpeedometerAction.java */
