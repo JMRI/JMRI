@@ -11,7 +11,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import org.jdom.Element;
 
 /**
- * Handle XML persistance of layout connections
+ * Handle XML persistance of layout connections.
  * <P>
  * This class is named as being the persistant form of the
  * JmrixConfigPane class, but there's no object of that
@@ -20,7 +20,7 @@ import org.jdom.Element;
  * e.g. jmrix.easydcc.serialdriver.configurexml
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class JmrixConfigPaneXml implements XmlAdapter {
 
