@@ -17,7 +17,7 @@ import javax.swing.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2002
- * @version     $Revision: 1.51 $
+ * @version     $Revision: 1.52 $
  */
 public class JMRIdemo extends JPanel {
     public JMRIdemo(JFrame frame) {
@@ -64,10 +64,12 @@ public class JMRIdemo extends JPanel {
         funcMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction("DecoderPro service programmer"));
         funcMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction("DecoderPro ops-mode programmer"));
         funcMenu.add(new jmri.jmrit.dualdecoder.DualDecoderToolAction());
-        funcMenu.add(new jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlAction("Turnout Control"));
         funcMenu.add(new jmri.jmrit.powerpanel.PowerPanelAction("Power Control"));
         funcMenu.add(new jmri.jmrit.speedometer.SpeedometerAction( "Speedometer" ));
         funcMenu.add(new jmri.jmrit.sendpacket.SendPacketAction( "Send DCC Packet" ));
+        funcMenu.add(new jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlAction("Turnout Control"));
+        funcMenu.add(new jmri.jmrit.beantable.TurnoutTableAction("Turnout Table"));
+        funcMenu.add(new jmri.jmrit.beantable.SensorTableAction("Sensor Table"));
 
         menuBar.add(new jmri.jmrit.roster.RosterMenu("Roster", jmri.jmrit.roster.RosterMenu.MAINMENU, this));
 
