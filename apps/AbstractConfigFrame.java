@@ -24,7 +24,7 @@ import org.jdom.Attribute;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 abstract public class AbstractConfigFrame extends JFrame {
 
@@ -610,7 +610,7 @@ abstract public class AbstractConfigFrame extends JFrame {
 					= new jmri.jmrix.loconet.locobuffer.LocoBufferAdapter();
 			a.configureBaudRate(getCurrentBaudRate());
 			a.configureOption1(getCurrentOption1Setting());
-			a.configureOption2(getCurrentOption1Setting());
+			a.configureOption2(getCurrentOption2Setting());
 			a.openPort(portName, "JMRI/DecoderPro");
 			a.configure();
 			if (!a.okToSend()) {
@@ -630,7 +630,7 @@ abstract public class AbstractConfigFrame extends JFrame {
 					= new jmri.jmrix.loconet.ms100.MS100Adapter();
 			a.openPort(portName, "JMRI/DecoderPro");
 			a.configure();
-			a.configureOption2(getCurrentOption1Setting());
+			a.configureOption2(getCurrentOption2Setting());
 
 		} else if (protocolName.equals("LocoNet Server")) {
 			// slightly different, as not based on a serial port...
