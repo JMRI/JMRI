@@ -16,7 +16,7 @@ import org.jdom.output.*;
  * JmriDemo application. Works with the JmriDemoConfigFrame
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version		 	$Revision: 1.4 $
+ * @version		 	$Revision: 1.5 $
  * @see apps.AbstractConfigFrame
  */
 public class JmriDemoConfigFile extends apps.AbstractConfigFile {
@@ -50,7 +50,7 @@ public class JmriDemoConfigFile extends apps.AbstractConfigFile {
             fmt.setNewlines(true);   // pretty printing
             fmt.setIndent(true);
             fmt.output(doc, o);
-
+            o.close();
         }
         catch (Exception e) {
             log.error(e);
@@ -64,5 +64,4 @@ public class JmriDemoConfigFile extends apps.AbstractConfigFile {
 
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(JmriDemoConfigFile.class.getName());
-
 }

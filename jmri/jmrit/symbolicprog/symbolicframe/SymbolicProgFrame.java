@@ -3,7 +3,7 @@
  *
  * Description:		Frame providing a command station programmer from decoder definition files
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 
 package jmri.jmrit.symbolicprog.symbolicframe;
@@ -460,6 +460,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 			fmt.setNewlines(true);   // pretty printing
 			fmt.setIndent(true);
 			fmt.output(doc, o);
+                        o.close();
 
 			// mark file as OK
 			variableModel.setFileDirty(false);

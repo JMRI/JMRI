@@ -35,7 +35,7 @@ import org.jdom.output.*;
  * sort is done manually each time an entry is added.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  * @see             jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -216,6 +216,7 @@ public class Roster extends XmlFile {
         fmt.setNewlines(true);   // pretty printing
         fmt.setIndent(true);
         fmt.output(doc, o);
+        o.close();
 
         // done - roster now stored, so can't be dirty
         setDirty(false);

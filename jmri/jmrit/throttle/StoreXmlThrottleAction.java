@@ -70,6 +70,7 @@ public class StoreXmlThrottleAction extends AbstractAction {
             fmt.setNewlines(true);   // pretty printing
             fmt.setIndent(true);
             fmt.output(doc, o);
+            o.close();
 
         }
         catch (FileNotFoundException ex)
@@ -77,7 +78,7 @@ public class StoreXmlThrottleAction extends AbstractAction {
 			log.warn("Exception in storing throttle xml: "+ex);
 
         }
-        catch (IOException ex) 
+        catch (IOException ex)
         {
             log.warn("Exception in storing throttle xml: "+ex);
 

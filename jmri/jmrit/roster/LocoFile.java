@@ -21,7 +21,7 @@ import org.jdom.output.*;
  * directly. That's why this is not a public class.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version		 	$Revision: 1.8 $
+ * @version		 	$Revision: 1.9 $
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
@@ -146,6 +146,7 @@ class LocoFile extends XmlFile {
             fmt.setNewlines(true);   // pretty printing
             fmt.setIndent(true);
             fmt.output(doc, o);
+            o.close();
 
             // mark file as OK
             variableModel.setFileDirty(false);
@@ -185,7 +186,7 @@ class LocoFile extends XmlFile {
             fmt.setNewlines(true);   // pretty printing
             fmt.setIndent(true);
             fmt.output(doc, o);
-
+            o.close();
         }
         catch (Exception ex) {
             log.error(ex);
