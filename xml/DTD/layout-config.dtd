@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.26 2004-02-23 13:22:51 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.27 2004-03-10 22:16:26 jacobsen Exp $ -->
 
 <!-- This DTD is Copyright 2001, 2003 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -210,7 +210,7 @@
 <!ELEMENT blocks (block*) >
   <!ATTLIST blocks class CDATA #REQUIRED> <!-- selects XML class that will handle -->
 
-<!ELEMENT block EMPTY >
+<!ELEMENT block (sensor*) >
   <!ATTLIST block signal 			  CDATA #REQUIRED >
   <!ATTLIST block mode				  CDATA #IMPLIED>
   <!ATTLIST block watchedsensor       CDATA #IMPLIED>
