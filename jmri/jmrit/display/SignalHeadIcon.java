@@ -19,7 +19,7 @@ import javax.swing.JPopupMenu;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -210,6 +210,37 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         }
 
         return;
+    }
+
+    /**
+     * Change the SignalHead state when the icon is clicked.
+     * Note that this change may not be permanent if there is
+     * logic controlling the signal head.
+     * @param e
+     */
+    public void mouseClicked(java.awt.event.MouseEvent e) {
+        if (!getControlling()) return;
+        if (e.isMetaDown() || e.isAltDown() ) return;
+        if (mHead==null) {
+            log.error("No turnout connection, can't process click");
+            return;
+        }
+        switch (mHead.getAppearance()) {
+        case jmri.SignalHead.RED:
+        case jmri.SignalHead.FLASHRED:
+            mHead.setAppearance(jmri.SignalHead.YELLOW);
+            break;
+        case jmri.SignalHead.YELLOW:
+        case jmri.SignalHead.FLASHYELLOW:
+            mHead.setAppearance(jmri.SignalHead.GREEN);
+            break;
+        case jmri.SignalHead.GREEN:
+        case jmri.SignalHead.FLASHGREEN:
+            mHead.setAppearance(jmri.SignalHead.RED);
+            break;
+        default:
+            mHead.setAppearance(jmri.SignalHead.RED);
+        }
     }
 
     private static boolean warned = false;
