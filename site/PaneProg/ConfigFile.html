@@ -60,9 +60,13 @@ if you use the same convention as the provided files.  That's
 For the provided files, we use the same capitalization, etc, that the
 decoder manufacturer uses in their documentation. 
 <P>
-This new file should go in the "decoders" subdirectory in the "prefs"
-directory where you've installed
-the JMRI package.  The program will find it there.
+This new file should go in the "decoders" subdirectory in the 
+"JMRI" preferences directory so that the program can find it.
+The "DecoderProConfig.xml" file
+lives in the preferences directory, so you can search for that file to locate
+it.
+<A HREF="#files">A later section</a> provides further details about 
+how to find that directory and it's contents. 
 
 <LI>
 Open the new file with your favorite editor.  You'll see something like this
@@ -70,7 +74,7 @@ at the top (the examples are from the <A HREF="../xml/Digitrax_1x2.xml">Digitrax
 <PRE>
     &lt;?xml version="1.0"?&gt;
     &lt;!DOCTYPE decoder-config SYSTEM "decoder-config.dtd"&gt;
-    &lt;!-- $Id: ConfigFile.html,v 1.14 2003-01-04 05:04:21 jacobsen Exp $ --&gt;
+    &lt;!-- $Id: ConfigFile.html,v 1.15 2003-02-17 18:45:44 jacobsen Exp $ --&gt;
     &lt;decoder-config&gt;
 </PRE>
 Don't mess with these lines; they describe the format of the file.
@@ -230,16 +234,16 @@ this from another file, or from this example:
     &lt;variable name=&quot;Long Address&quot; CV=&quot;17&quot;&gt;
         &lt;longAddressVal/&gt;
         &lt;/variable&gt;
-<\PRE>      
-<LI>If your decoder, supports it, you can enter
+</PRE>      
+<LI>If your decoder supports it, you can enter
 a 'speedTableVal' element for the speed table.  The only
-attribute is entries, which can be either "28", "14" or some
+attribute is "entries", which can be either "28", "14" or some
 other value.  Example:
 <PRE>
     &lt;variable name=&quot;Speed Table&quot; CV=&quot;67&quot;&gt;
         &lt;speedTableVal/&gt;
         &lt;/variable&gt;
-<\PRE>
+</PRE>
 <LI>Some decoder options are best represented by "choose one choice". These are 
 represented by a enumVariable element. Example:
 <PRE>
@@ -257,6 +261,7 @@ example.  For a 4 bit choice, like the FX codes in a Digitrax decoder, you
 can use up to 16 choices.  They are displayed in the order they are entered
 in the file, and are also numbered in that order.  If the first is chosen,
 a 0 is entered in the CV bits; choosing the second stores 1; etc.
+<P>
 If you need to specific a specific number for an enum option, add
 a "value" attribute:
 <PRE>
@@ -264,7 +269,9 @@ a "value" attribute:
 </PRE>
 
 </UL>
-At this point, you've created a new configuration file.
+<LI>
+At this point, you've created a new configuration file!
+<P>
 You can check it for syntax by selecting the "Check XML file"
 item from the "Tools" menu.  It opens a file selection dialog;
 select your file and click "open". 
@@ -275,8 +282,8 @@ that message is the line number; open an editor to that line
 and try to see what's wrong with the syntax.
 <LI>
 All that's left is to enter your new file in the index.  This index
-is used to speed the startup of the program, when a list of 
-possible decoder's is constructed.
+is used to speed the startup of the program, when the list of 
+available decoders is constructed.
 <P>
 Select the "Create decoder index" item from the "Tools" menu.</ol>
 
@@ -566,19 +573,27 @@ first for any needed files. You should put any locally-modified
 versions of files here so they don't get overwritten by a new version
 of the program. Any files that the program writes to contain local
 information, e.g. roster entries, are also written here.
-<P>The location of this varies by computer type.  On a Linux machine,
-look for a .jrmi directory in your home directory.  On a Macintosh, 
+<P>The location of this varies by computer type.  
+<UL>
+<LI>On a Linux machine,
+look for a .jrmi directory in your home directory.  
+<LI>On a Macintosh, 
 look in the Preferences folder of the current System Folder if running
 MacOS 8 or 9, or the Library/Preferences folder in your user directory on
-MacOS X.  On Windows, this can be in a number of places depending on which
+MacOS X.  
+<LI>On Windows, this can be in a number of places depending on which
 Windows version you're running and whether you have multiple users configured;
-Search for a "JMRI" directory to find it. Make sure you find the preferences,
+Search for a "JMRI" directory to find it. 
+</UL>Make sure you find the preferences,
 not the original application package. They are kept separate to simplify 
-updating the program version.
+updating the program version.  You'll know you've found the right place if
+you see the preferences files that store your applications settings:  DecoderProConfig.xml,
+JmriDemoConfig.xml and/or LocoToolsConfig.xml.  You can also search
+for one of those files to find this directory
 
-<LI>The 'xml' directory in the application package
-and its subdirectories.  This contains
-the originally-distributed versions of files. Anything you modify
+<LI>The originally-distributed versions of files
+are contained in 'xml' directory in the application package
+and its subdirectories.   Anything you modify
 here will be lost when you update the program to a new version.
 </UL>
 
