@@ -16,7 +16,7 @@ import javax.swing.*;
  * Handle configuration for display.TurnoutIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class TurnoutIconXml implements XmlAdapter {
 
@@ -93,7 +93,7 @@ public class TurnoutIconXml implements XmlAdapter {
             log.error("failed to convert positional attribute");
         }
         l.setLocation(x,y);
-        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+        l.setSize(l.getIcon().getIconWidth(), l.getIcon().getIconHeight());
         p.putTurnout(l);
 
     }
