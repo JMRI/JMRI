@@ -4,7 +4,7 @@
  * Description:          Frame object for manipulating consists.
  *
  * @author               Paul Bender Copyright (C) 2003
- * @version              $Revision: 1.9 $
+ * @version              $Revision: 1.10 $
  */
 
 
@@ -337,6 +337,7 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 	adrTextField.setEnabled(true);
         initializeConsistBox();
         resetLocoButtonActionPerformed(e);
+	canAdd();
     	}
 
     public void throttleButtonActionPerformed(java.awt.event.ActionEvent e) {
