@@ -7,11 +7,11 @@
 		<programmer:column>
 			<programmer:variable name="Primary Address"/>
 			<programmer:variable name="Extended Address"/>
-			<programmer:variable name="Address format"/>
-			<programmer:variable name="Power source conversion" format="radiobuttons"/>
+			<programmer:variable name="Address Format"/>
+			<programmer:variable name="Power Source Conversion" format="radiobuttons"/>
 			<programmer:variable name="Locomotive Direction" format ="radiobuttons"/>
-			<programmer:variable name="User identification #1"/>
-			<programmer:variable name="User identification #2"/>
+			<programmer:variable name="User Identification #1"/>
+			<programmer:variable name="User Identification #2"/>
 			<programmer:variable name="FL Location" layout="above"/>
 		</programmer:column>
 	</programmer:pane>
@@ -34,7 +34,8 @@
 	
 	<programmer:pane name="Speed Control">
 		<programmer:column>
-			<programmer:variable name="Speed table"/>
+			<programmer:variable name="Speed Table Definition"/>
+			<programmer:variable name="Speed Table"/>
 			<programmer:variable name="Vstart"/>
 			<programmer:variable name="Vmid"/>
 			<programmer:variable name="Vhigh"/>

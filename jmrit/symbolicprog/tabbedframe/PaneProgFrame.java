@@ -61,7 +61,6 @@ public class PaneProgFrame extends javax.swing.JFrame
 		confirmAll.setToolTipText("disabled because not yet implemented");
 		
 		// general GUI config
-		setTitle("Pane Programmer");
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		readAll.addActionListener( new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -96,29 +95,59 @@ public class PaneProgFrame extends javax.swing.JFrame
 		installComponents();
 	}
   		
-	public PaneProgFrame(DecoderFile decoderFile, String locoFile, RosterEntry r) {
-		super();
+	public PaneProgFrame(DecoderFile decoderFile, String locoFile, RosterEntry r, String name) {
+		super(name);
 		installComponents();
-		loadDecoderFile(decoderFile);
-		loadLocoFile(locoFile);
+
+		if (locoFile != null) readLocoFile(locoFile);  // read, but don't process
+
+		if (decoderFile != null) loadDecoderFile(decoderFile);
+		else					 loadDecoderFromLoco(r);
+
+		// finally fill the CV values
+		if (locoFile != null) loadLocoFile();
+		
+		// and build the GUI
 		loadProgrammerFile(r);
 	}
   	
-  	protected void loadLocoFile(String locoFile) {
+	Namespace lns = null;
+	Element lroot = null;
+	
+  	protected void readLocoFile(String locoFile) {
   		if (locoFile == null) {
   			log.info("loadLocoFile file invoked with null filename");
   			return;
   		}
 		LocoFile lf = new LocoFile();  // used as a temporary
-		Namespace lns = lf.getNamespace();
-		Element lroot = null;
+		lns = lf.getNamespace();
+		lroot = null;
 		try {
 			lroot = lf.rootFromFile(lf.fileLocation+File.separator+locoFile, true);
 		} catch (Exception e) { log.error("Exception while loading loco XML file: "+e); }
+  	}
+  	
+  	protected void loadLocoFile() {
 		// load CVs from the loco file tree
 		LocoFile.loadCvModel(lroot.getChild("locomotive", lns), lns, cvModel);
   	}
   	
+  	protected void loadDecoderFromLoco(RosterEntry r) {
+  		// get a DecoderFile from the locomotive xml
+		String decoderModel = r.getDecoderModel();
+		String decoderFamily = r.getDecoderFamily();
+		if (log.isDebugEnabled()) log.debug("selected loco uses decoder "+decoderFamily+" "+decoderModel);
+		// locate a decoder like that.
+		List l = DecoderIndexFile.instance().matchingDecoderList(null, decoderFamily, null, null, decoderModel);
+		if (log.isDebugEnabled()) log.debug("found "+l.size()+" matches");
+		if (l.size() > 0) {
+			DecoderFile d = (DecoderFile)l.get(0);
+			loadDecoderFile(d);
+		} else {
+			log.warn("Loco uses "+decoderFamily+" "+decoderModel+" decoder, but no such decoder defined");
+		} 		
+	}
+
   	protected void loadDecoderFile(DecoderFile df) {
   		if (df == null) {
   			log.warn("loadDecoder file invoked with null object");
@@ -194,19 +223,19 @@ public class PaneProgFrame extends javax.swing.JFrame
 			newPane( name, ((Element)(paneList.get(i))), ns);
 		}
 		
+		// add the Info tab
+		tabPane.addTab("Info", makeInfoPane(r));
+	}
+	
+	protected JPanel makeInfoPane(RosterEntry r) {
 		// create the identification pane (not configured by file now; maybe later?
 		JPanel body = new JPanel();
 		body.setLayout(new BoxLayout(body, BoxLayout.Y_AXIS));
 		
-		// add the tab to the frame
-		tabPane.addTab("Info", body);
-
 		// add roster info
 		_rPane = new RosterEntryPane(r);
-		_rosterEntry = r;
-		
+		_rosterEntry = r;		
 		_rPane.setMaximumSize(_rPane.getPreferredSize());
-
 		body.add(_rPane);
 		
 		// add the store button
@@ -217,8 +246,57 @@ public class PaneProgFrame extends javax.swing.JFrame
 			}
 		});
 		body.add(store);
+		
+		// arrange for the dcc address to be updated
+		java.beans.PropertyChangeListener dccNews = new java.beans.PropertyChangeListener() {
+			public void propertyChange(java.beans.PropertyChangeEvent e) { updateDccAddress(); }
+		};
+		primaryAddr = findVar("Primary Address");
+		if (primaryAddr==null) log.warn("DCC Address monitor didnt find a Primary Address variable");
+		else primaryAddr.addPropertyChangeListener(dccNews);
+		extendAddr = findVar("Extended Address");
+		if (extendAddr==null) log.warn("DCC Address monitor didnt find an Extended Address variable");
+		else extendAddr.addPropertyChangeListener(dccNews);
+		addMode = findVar("Address Format");
+		if (addMode==null) log.warn("DCC Address monitor didnt find an Address Format variable");
+		else addMode.addPropertyChangeListener(dccNews);
+		
+		return body;
 	}
-	
+
+	// hold refs to variables to check dccAddress
+	VariableValue primaryAddr = null;
+	VariableValue extendAddr = null;
+	VariableValue addMode = null;
+		
+	void updateDccAddress() {
+		if (log.isDebugEnabled()) 
+			log.debug("updateDccAddress: primary "+(primaryAddr==null?"<null>":primaryAddr.getValueString())+
+						" extended "+(extendAddr==null?"<null>":extendAddr.getValueString())+
+						" mode "+(addMode==null?"<null>":addMode.getValueString()));
+		String newAddr = null;
+		if (addMode == null || extendAddr == null || !addMode.getValueString().equals("1")) {
+			// short address mode
+			if (primaryAddr != null && !primaryAddr.getValueString().equals(""))
+				newAddr = primaryAddr.getValueString();
+		}
+		else {
+			// long address
+			if (extendAddr != null && !extendAddr.getValueString().equals(""))
+				newAddr = extendAddr.getValueString();
+		}
+		// update if needed
+		if (newAddr!=null) _rPane.setDccAddress(newAddr);
+	}
+		
+	VariableValue findVar(String name) {
+		for (int i=0; i<variableModel.getRowCount(); i++) 
+			if (name.equals(variableModel.getStdName(i))) return variableModel.getVariable(i);
+		for (int i=0; i<variableModel.getRowCount(); i++) 
+			if (name.equals(variableModel.getName(i))) return  variableModel.getVariable(i);
+		return null;
+	}
+
 	public void newPane(String name, Element pane, Namespace ns) {
 	
 		// create a panel to hold columns
@@ -242,11 +320,14 @@ public class PaneProgFrame extends javax.swing.JFrame
 	 */
 	public boolean readAll() {
 		if (log.isDebugEnabled()) log.debug("readAll starts");
+		_read = true;
 		for (int i=0; i<paneList.size(); i++) {
+			if (log.isDebugEnabled()) log.debug("readAll calls readPane on "+i);
 			_programmingPane = (PaneProgPane)paneList.get(i);
 			if (_programmingPane.readPane()) {
 				// operation in progress, register to hear results, then stop loop
 			    _programmingPane.addPropertyChangeListener(this);
+				if (log.isDebugEnabled()) log.debug("readAll expecting callback from readPane "+i);
 				return true;
 			}
 		}
@@ -267,11 +348,14 @@ public class PaneProgFrame extends javax.swing.JFrame
 	 */
 	public boolean writeAll() {
 		if (log.isDebugEnabled()) log.debug("writeAll starts");
+		_read = false;
 		for (int i=0; i<paneList.size(); i++) {
+			if (log.isDebugEnabled()) log.debug("writeAll calls writePane on "+i);
 			_programmingPane = (PaneProgPane)paneList.get(i);
 			if (_programmingPane.writePane()) {
 				// operation in progress, register to hear results, then stop loop
 			    _programmingPane.addPropertyChangeListener(this);
+				if (log.isDebugEnabled()) log.debug("writeAll expecting callback from writePane "+i);
 				return true;
 			}
 		}
@@ -295,40 +379,50 @@ public class PaneProgFrame extends javax.swing.JFrame
 			return;
 		} else if (log.isDebugEnabled()) log.debug("property changed: "+e.getPropertyName()
 													+" new value: "+e.getNewValue());
-		if (e.getSource() != _programmingPane ||
-			!e.getPropertyName().equals("Busy") ||
-			!((Boolean)e.getNewValue()).equals(Boolean.FALSE) )  { 
-				if (log.isDebugEnabled() && e.getPropertyName().equals("Busy")) 
-					log.debug("ignoring change of Busy "+((Boolean)e.getNewValue())
-								+" "+( ((Boolean)e.getNewValue()).equals(Boolean.FALSE)));
-				return;
-		}
+		log.debug("check valid: "+(e.getSource() == _programmingPane)+" "+(!e.getPropertyName().equals("Busy"))+" "+(((Boolean)e.getNewValue()).equals(Boolean.FALSE)));
+		if (e.getSource() == _programmingPane &&
+				e.getPropertyName().equals("Busy") &&
+				((Boolean)e.getNewValue()).equals(Boolean.FALSE) )  { 
 			
-		if (log.isDebugEnabled()) log.debug("correct event, restart operation");
-		// remove existing listener
-		_programmingPane.removePropertyChangeListener(this);
-		_programmingPane = null;
-		// restart the operation
-		if (_read) readAll();
-		else writeAll();
+			if (log.isDebugEnabled()) log.debug("end of a programming pane operation, remove");
+
+			// remove existing listener
+			_programmingPane.removePropertyChangeListener(this);
+			_programmingPane = null;
+			// restart the operation
+			if (_read) { 
+				if (log.isDebugEnabled()) log.debug("restart readAll");
+				readAll();
+			}
+			else {
+				if (log.isDebugEnabled()) log.debug("restart writeAll");
+				writeAll();
+			}
+		}
 	}
 	
 	/**
 	 * Write everything to a file.
 	 */
 	public void storeFile() {
-		System.out.println("storeFile starts");
+		log.info("storeFile starts");
+
+		// reload the RosterEntry
+		updateDccAddress();
+		_rPane.update(_rosterEntry);
+
 		// id has to be set!
-		if (_rosterEntry.getId().equals("")) {
-			log.error("Can't store a file without an ID entry");
+		if (_rosterEntry.getId().equals("") || _rosterEntry.getId().equals("<new loco>")) {
+			log.info("storeFile without a filename; issued dialog");
+			JOptionPane.showMessageDialog(this, "Please fill in the ID field first");
 			return;
 		}
 		// if there isn't a filename, store using the id
-		String filename = "";
 		if (_rosterEntry.getFileName().equals("")) {
-			filename = _rosterEntry.getId()+".xml";
-			log.debug("new filename: "+filename);
+			_rosterEntry.setFileName(_rosterEntry.getId()+".xml");
+			log.debug("new filename: "+_rosterEntry.getFileName());
 		}
+		String filename = _rosterEntry.getFileName();
 		
 		// create a DecoderFile to represent this
 		LocoFile df = new LocoFile();
@@ -344,14 +438,12 @@ public class PaneProgFrame extends javax.swing.JFrame
 				// name a new file object for the new file
 				f = new File(fullFilename);
 			}
-			// reload the RosterEntry
-			_rPane.update(_rosterEntry);
-			_rosterEntry.setFileName(filename);
 
 			// and finally write the file
 			df.writeFile(f, cvModel, variableModel, _rosterEntry);
 			
 			//and store an updated roster file
+			Roster.writeRosterFile();
 			
 		} catch (Exception e) {
 			log.error("error during locomotive file output: "+e);

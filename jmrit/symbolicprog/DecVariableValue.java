@@ -131,7 +131,7 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 			setState(cv.getState());
 		}
 		else if (e.getPropertyName().equals("Value")) {
-			setBusy(false);
+			//setBusy(false);
 			// update value of Variable
 			CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
 			int newVal = (cv.getValue() & maskVal(getMask())) >>> offsetVal(getMask());

@@ -14,8 +14,7 @@ import com.sun.java.util.collections.List;
 /** 
  * Provide GUI controls to select a decoder for a new loco and/or copy an existing config.
  *<P>
- * The user can select either a loco to copy, or a new decoder type.  If you
- * select one, the other selection is updated.
+ * The user can select either a loco to copy, or a new decoder type or both.
  * <P>
  * When the "open programmer" button is pushed, i.e. the user is ready to 
  * continue, the startProgrammer method is invoked.  This should be

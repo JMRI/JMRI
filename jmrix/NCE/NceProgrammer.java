@@ -97,6 +97,7 @@ public class NceProgrammer implements NceListener, Programmer {
 		
 	// programming interface
 	public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+		if (log.isDebugEnabled()) log.debug("writeCV "+CV+" listens "+p);
 		useProgrammer(p);
 		_progRead = false;
 		// set commandPending state
@@ -108,6 +109,7 @@ public class NceProgrammer implements NceListener, Programmer {
 	}
 		
 	public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+		if (log.isDebugEnabled()) log.debug("readCV "+CV+" listens "+p);
 		useProgrammer(p);
 		_progRead = true;
 		// set commandPending state
@@ -154,8 +156,10 @@ public class NceProgrammer implements NceListener, Programmer {
 	public void reply(NceReply m) {
 		if (progState == NOTPROGRAMMING) {
 			// we get the complete set of replies now, so ignore these
+			if (log.isDebugEnabled()) log.debug("reply in NOTPROGRAMMING state");
 			return;
 		} else if (progState == MODESENT) {
+			if (log.isDebugEnabled()) log.debug("reply in MODESENT state");
 			// see if reply is the acknowledge of program mode; if not, wait
 			if ( (m.match("PROGRAMMING MODE") == -1) && 
 				 (m.match("COMMAND NOT UNDERSTOOD") == -1)  // indicates already in program mode
@@ -178,10 +182,12 @@ public class NceProgrammer implements NceListener, Programmer {
 				controller().sendNceMessage(NceMessage.getExitProgMode(), this);
 			}
 		} else if (progState == COMMANDSENT) {
+			if (log.isDebugEnabled()) log.debug("reply in COMMANDSENT state");
 			// operation done, capture result, then have to leave programming mode
 			progState = RETURNSENT;
 			// check for errors
 			if (m.match("NO FEEDBACK DETECTED") >= 0) {
+				if (log.isDebugEnabled()) log.debug("handle NO FEEDBACK DETECTED");
 				// perhaps no loco present? Fail back to end of programming
 				progState = NOTPROGRAMMING;
 				controller().sendNceMessage(NceMessage.getExitProgMode(), this);
@@ -196,18 +202,25 @@ public class NceProgrammer implements NceListener, Programmer {
 				controller().sendNceMessage(NceMessage.getExitProgMode(), this);
 			}
 		} else if (progState == RETURNSENT) {
+			if (log.isDebugEnabled()) log.debug("reply in RETURNSENT state");
 			// all done, notify listeners of completion
 			progState = NOTPROGRAMMING;
 			// if this was a read, we cached the value earlier.  If its a 
 			// write, we're to return the original write value
 			notifyProgListenerEnd(_val, jmri.ProgListener.OK);
+		} else {
+			if (log.isDebugEnabled()) log.debug("reply in un-decoded state");
 		}
 	}
 	
 	// internal method to notify of the final result
 	protected void notifyProgListenerEnd(int value, int status) {
-		_usingProgrammer.programmingOpReply(value, status);
+		if (log.isDebugEnabled()) log.debug("notifyProgListenerEnd value "+value+" status "+status);
+		// the programmingOpReply handler might send an immediate reply, so
+		// clear the current listener _first_
+		jmri.ProgListener temp = _usingProgrammer;
 		_usingProgrammer = null;
+		temp.programmingOpReply(value, status);
 	}
 
 	NceTrafficController _controller = null;

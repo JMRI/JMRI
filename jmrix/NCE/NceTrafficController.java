@@ -199,17 +199,17 @@ public class NceTrafficController implements NceInterface, Runnable {
 	 * Terminates with the input stream breaking out of the try block.
 	 */
 	public void run() {
-		try {
-			while (true) {   // loop permanently, stream close will exit via exception
+		while (true) {   // loop permanently, stream close will exit via exception
+			try {
 				handleOneIncomingReply();
-			}            
-		} // end of try
-		catch (Exception e) {
-			log.warn("run: Exception: "+e.toString());
+			}
+			catch (java.io.IOException e) {
+				log.warn("run: Exception: "+e.toString());
+			}
 		}
 	}
 
-	void handleOneIncomingReply() throws Exception {
+	void handleOneIncomingReply() throws java.io.IOException {
 		// we sit in this until the message is complete, relying on
 		// threading to let other stuff happen
 		

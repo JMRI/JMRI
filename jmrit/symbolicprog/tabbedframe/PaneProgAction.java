@@ -31,14 +31,14 @@ public class PaneProgAction 			extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
 
 		// create the initial frame that steers
-		JFrame f = new JFrame();
+		JFrame f = new JFrame("Tab-Programmer Setup");
 		f.getContentPane().setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
 
 		// new Loco on programming track
 		JLabel last;
 		JPanel pane1 = new NewLocoSelPane(){
 			protected void startProgrammer(DecoderFile decoderFile, String locoFile, RosterEntry re) {
-				JFrame p = new PaneProgFrame(decoderFile, locoFile, re);
+				JFrame p = new PaneProgFrame(decoderFile, locoFile, re, "Program New Locomotive");
 				p.pack();
 				p.show();
 			}
@@ -47,7 +47,8 @@ public class PaneProgAction 			extends AbstractAction {
 		// Known loco on programming track
 		JPanel pane2 = new KnownLocoSelPane(){
 			protected void startProgrammer(DecoderFile decoderFile, String locoFile, RosterEntry re) {
-				JFrame p = new PaneProgFrame(decoderFile, locoFile, re);
+				String title = "Program "+re.getId();
+				JFrame p = new PaneProgFrame(decoderFile, locoFile, re, title);
 				p.pack();
 				p.show();
 			}

@@ -63,8 +63,8 @@ public class DecoderFile extends XmlFile {
 		return decoderElement.getChild("id",ns).getAttribute("mfgID").getValue();
 	}
 		
-	public static String getModelName(Element decoderElement, Namespace ns) {
-		return decoderElement.getChild("id",ns).getAttribute("model").getValue();
+	public static String getFamilyName(Element decoderElement, Namespace ns) {
+		return decoderElement.getChild("id",ns).getAttribute("family").getValue();
 	}
 		
 	public static String getVersionID(Element decoderElement, Namespace ns) {

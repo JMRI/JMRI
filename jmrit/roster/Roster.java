@@ -30,7 +30,7 @@ import org.jdom.output.*;
  * whether it should...
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: Roster.java,v 1.4 2001-11-16 15:02:41 jacobsen Exp $
+ * @version			$Id: Roster.java,v 1.5 2001-11-19 04:51:39 jacobsen Exp $
  * @see             jmri.jmrit.roster.RosterEntry
  */
 public class Roster {
@@ -198,6 +198,18 @@ public class Roster {
 	public void dispose() {
 		if (log.isDebugEnabled()) log.debug("dispose");
 		if (dirty) log.error("Dispose invoked on dirty Roster");
+	}
+	
+	/** 
+	 * Store the roster in the default place, including making a backup if needed
+	 */
+	public static void writeRosterFile() {
+		Roster.instance().makeBackupFile();
+		try {
+			Roster.instance().writeFile(defaultRosterFilename());
+		} catch (Exception e) {
+			log.error("Exception while writing the new roster file, may not be complete: "+e);
+		}
 	}
 	
 	/** 

@@ -17,6 +17,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.framework.Assert;
+import com.sun.java.util.collections.List;
+import com.sun.java.util.collections.ArrayList;
 
 import jmri.*;
 import jmri.progdebugger.*;
@@ -106,8 +108,11 @@ public class LongAddrVariableValueTest extends VariableValueTest {
 		assert(cv18.getValue() == 189);
 	}
 		
+	List evtList = null;  // holds a list of ParameterChange events
+	
 	// check a long address read operation
 	public void testLongAddressRead() {
+		log.debug("testLongAddressRead starts");
 		// initialize the system
 		Programmer p = new ProgDebugger();
 		InstanceManager.setProgrammer(p);
@@ -119,6 +124,17 @@ public class LongAddrVariableValueTest extends VariableValueTest {
 		v.setElementAt(cv18, 18);
 
 		LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "XXVVVVXX", 0, 255, v, null, null);
+		// register a listener for parameter changes
+		java.beans.PropertyChangeListener listen = new java.beans.PropertyChangeListener() {
+			public void propertyChange(java.beans.PropertyChangeEvent e) {
+				evtList.add(e);
+				if (e.getPropertyName().equals("Busy") && ((Boolean)e.getNewValue()).equals(Boolean.FALSE))
+					log.debug("Busy false seen in test");
+			}
+		};
+		evtList = new ArrayList();
+		var.addPropertyChangeListener(listen);
+		
 		// set to specific value
 		((JTextField)var.getValue()).setText("5");
 		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
@@ -134,8 +150,17 @@ public class LongAddrVariableValueTest extends VariableValueTest {
 		}
 		if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+((JTextField)var.getValue()).getText()+" state="+var.getState());
 		if (i==0) log.warn("testLongAddressRead saw an immediate return from isBusy");
-
 		assert(i<100);
+		
+		int nBusyFalse = 0;
+		for (int k = 0; k < evtList.size(); k++) {
+			java.beans.PropertyChangeEvent e = (java.beans.PropertyChangeEvent) evtList.get(k); 
+			// System.out.println("name: "+e.getPropertyName()+" new value: "+e.getNewValue());
+			if (e.getPropertyName().equals("Busy") && ((Boolean)e.getNewValue()).equals(Boolean.FALSE))
+				nBusyFalse++;
+		}
+		Assert.assertEquals("only one Busy -> false transition ", 1, nBusyFalse);
+		
 		assert( ((JTextField)var.getValue()).getText().equals("15227") );  // 15227 = (1230x3f)*256+123
 		assert(var.getState() == CvValue.READ);
 		assert(cv17.getValue() == 123);
@@ -205,6 +230,6 @@ public class LongAddrVariableValueTest extends VariableValueTest {
 		return suite;
 	}
 	
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance( LongAddrVariableValue.class.getName());
+	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance( LongAddrVariableValueTest.class.getName());
 
 }

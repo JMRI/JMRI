@@ -26,9 +26,9 @@ public class DecoderFileTest extends TestCase {
 		Assert.assertEquals("mfg name ", "Digitrax", DecoderFile.getMfgName(decoder, ns));
 	}
 	
-	public void testModelName() {
+	public void testFamilyName() {
 		setupDecoder();
-		Assert.assertEquals("model name ", "DH142", DecoderFile.getModelName(decoder, ns));
+		Assert.assertEquals("Family name ", "DH142 etc", DecoderFile.getFamilyName(decoder, ns));
 	}
 	
 	public void testLoadTable() {
@@ -65,7 +65,7 @@ public class DecoderFileTest extends TestCase {
 		// add some elements
 		root.addContent(decoder = new Element("decoder",ns)
 					.addContent(new Element("id", ns)
-									.addAttribute("model","DH142")
+									.addAttribute("family","DH142 etc")
 									.addAttribute("mfg","Digitrax")
 									.addAttribute("defnVersion","242")
 									.addAttribute("mfgID","129")

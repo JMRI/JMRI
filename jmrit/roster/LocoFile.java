@@ -20,7 +20,7 @@ import org.jdom.output.*;
  * in memory.  The interal storage is a JDOM tree. See locomotive-config.dtd
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version		 	$Id: LocoFile.java,v 1.2 2001-11-16 15:02:41 jacobsen Exp $
+ * @version		 	$Id: LocoFile.java,v 1.3 2001-11-19 04:51:39 jacobsen Exp $
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
@@ -95,7 +95,6 @@ public class LocoFile extends XmlFile {
 			Element values;
 			root.addContent(new Element("locomotive",ns)		// locomotive values are first item
 					.addAttribute("id", r.getId())
-					.addAttribute("fileName", r.getFileName())
 					.addAttribute("roadNumber",r.getRoadNumber())
 					.addAttribute("roadName",r.getRoadName())
 					.addAttribute("mfg",r.getMfg())

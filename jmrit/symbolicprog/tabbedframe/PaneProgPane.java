@@ -122,7 +122,7 @@ public class PaneProgPane extends javax.swing.JPanel
 			if (vState == VariableValue.UNKNOWN ||
 			    vState == VariableValue.EDITTED ||
 			    vState == VariableValue.FROMFILE )  {
-										if (log.isDebugEnabled()) log.debug("read started");
+										if (log.isDebugEnabled()) log.debug("start read of variable "+_varModel.getName(varNum));
 										if (_programmingVar != null) log.error("listener already set at read start");
 			    						_programmingVar = _varModel.getVariable(varNum);
 			    						_read = true;
@@ -130,6 +130,7 @@ public class PaneProgPane extends javax.swing.JPanel
 			    						_programmingVar.addPropertyChangeListener(this);
 			    						// and make the read request
 			    						_programmingVar.read();
+										if (log.isDebugEnabled()) log.debug("return from starting read");
 			    						return true;  // only make one request at a time!
 			}
 		}	
@@ -160,7 +161,7 @@ public class PaneProgPane extends javax.swing.JPanel
 			if (vState == VariableValue.UNKNOWN ||
 			    vState == VariableValue.EDITTED ||
 			    vState == VariableValue.FROMFILE )  {
-										if (log.isDebugEnabled()) log.debug("write started ");
+										if (log.isDebugEnabled()) log.debug("start write of variable "+_varModel.getName(varNum));
 										if (_programmingVar != null) log.error("listener already set at write start");
 			    						_programmingVar = _varModel.getVariable(varNum);
 			    						_read = false;
@@ -168,6 +169,7 @@ public class PaneProgPane extends javax.swing.JPanel
 			    						_programmingVar.addPropertyChangeListener(this);
 			    						// and make the read request
 			    						_programmingVar.write();
+										if (log.isDebugEnabled()) log.debug("return from starting write");
 			    						return true;  // only make one request at a time!
 			}
 		}	

@@ -39,6 +39,14 @@ public class RosterEntryPane extends javax.swing.JPanel  {
 		decoderFamily.setText(r.getDecoderFamily());
 		decoderComment.setText(r.getDecoderComment());
 		
+		// add options
+		id.setToolTipText("Identifies this locomotive in the roster");
+		
+		dccAddress.setToolTipText("This is filled in automatically by the program");
+		decoderModel.setToolTipText("This is filled in automatically by your earlier selections");
+		decoderFamily.setToolTipText("This is filled in automatically by your earlier selections");
+		filename.setToolTipText("This is filled in automatically by the program");
+		
 		// assemble the GUI
 		setLayout(new GridLayout(11,2));
 		
@@ -89,6 +97,8 @@ public class RosterEntryPane extends javax.swing.JPanel  {
 		r.setDecoderModel(decoderModel.getText());
 		r.setDecoderComment(decoderComment.getText());
 	}
+	
+	public void setDccAddress(String a) { dccAddress.setText(a); }
 	
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RosterEntryPane.class.getName());
 

@@ -34,7 +34,7 @@ public class RosterEntryTest extends TestCase {
 									.addAttribute("roadNumber","431")
 									.addAttribute("roadName","SP")
 									.addAttribute("mfg","Athearn")
-									.addAttribute("address","1234")
+									.addAttribute("dccAddress","1234")
 				; // end create element
 				
 		RosterEntry r = new RosterEntry(e, ns);
@@ -76,7 +76,7 @@ public class RosterEntryTest extends TestCase {
 									.addAttribute("roadNumber","431")
 									.addAttribute("roadName","SP")
 									.addAttribute("mfg","Athearn")
-									.addAttribute("address","1234")
+									.addAttribute("dccAddress","1234")
 									.addContent(new org.jdom.Element("decoder", ns)
 										.addAttribute("family","91")
 										.addAttribute("model","33")
@@ -103,7 +103,7 @@ public class RosterEntryTest extends TestCase {
 									.addAttribute("roadNumber","431")
 									.addAttribute("roadName","SP")
 									.addAttribute("mfg","Athearn")
-									.addAttribute("address","1234")
+									.addAttribute("dccAddress","1234")
 									.addContent(new org.jdom.Element("decoder", ns)
 										.addAttribute("family","91")
 										.addAttribute("model","33")

@@ -138,30 +138,30 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 										+e.getPropertyName());
 		// notification from CV; check for Value being changed
 		if (e.getPropertyName().equals("Busy") && ((Boolean)e.getNewValue()).equals(Boolean.FALSE)) {
-			// see if this was a read or write operation
-			if (log.isDebugEnabled()) log.debug("CV getBusy showing "
-												+((CvValue)_cvVector.elementAt(getCvNum())).isBusy());		
+			// busy transitions drive the state
 			switch (_progState) {
 				case IDLE:  // no, just a CV update
-						if (log.isDebugEnabled()) log.debug("Busy changed with state IDLE");
-						setBusy(false);
+						if (log.isDebugEnabled()) log.error("Busy goes false with state IDLE");
 						return;
 				case READING_FIRST:   // read first CV, now read second
-						if (log.isDebugEnabled()) log.debug("Busy changed with state READING_FIRST");
+						if (log.isDebugEnabled()) log.debug("Busy goes false with state READING_FIRST");
+						super.setState(READ);
+						_progState = READING_SECOND;
+						((CvValue)_cvVector.elementAt(getCvNum()+1)).read(_status);
 						return;
-				case READING_SECOND:  // ignore
-						if (log.isDebugEnabled()) log.debug("Busy changed with state READING_SECOND");
+				case READING_SECOND:  // finally done, set not busy
+						if (log.isDebugEnabled()) log.debug("Busy goes false with state READING_SECOND");
 						_progState = IDLE;
+						setBusy(false);
 						return;
 				case WRITING_FIRST:  // no, just a CV update
-						if (log.isDebugEnabled()) log.debug("Busy changed with state WRITING_FIRST");
-						setBusy(true);  // will be reset when value changes
+						if (log.isDebugEnabled()) log.debug("Busy goes false with state WRITING_FIRST");
  						super.setState(STORED);
 						_progState = WRITING_SECOND;
  						((CvValue)_cvVector.elementAt(getCvNum()+1)).write(_status);
 						return;
 				case WRITING_SECOND:  // now done with complete request
-						if (log.isDebugEnabled()) log.debug("Busy changed with state WRITING_SECOND");
+						if (log.isDebugEnabled()) log.debug("Busy goes false with state WRITING_SECOND");
 						_progState = IDLE;
 						setBusy(false);
 						return;
@@ -177,8 +177,6 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 			setState(cv.getState());
 		}
 		else if (e.getPropertyName().equals("Value")) {
-			
-			setBusy(false);
 			// update value of Variable
 			CvValue cv0 = (CvValue)_cvVector.elementAt(getCvNum());
 			CvValue cv1 = (CvValue)_cvVector.elementAt(getCvNum()+1);
@@ -193,14 +191,9 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 						return;
 				case READING_FIRST:  // yes, now read second
 						if (log.isDebugEnabled()) log.debug("Value changed with state READING_FIRST");
-						setBusy(true);  // will be reset when value changes
-						super.setState(READ);
-						_progState = READING_SECOND;
-						((CvValue)_cvVector.elementAt(getCvNum()+1)).read(_status);
 						return;
 				case READING_SECOND:  // now done with complete request
 						if (log.isDebugEnabled()) log.debug("Value changed with state READING_SECOND");
-						_progState = IDLE;
 						return;
 				default:  // unexpected!
 						log.error("Unexpected state found: "+_progState);

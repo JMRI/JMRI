@@ -120,6 +120,7 @@ public class CvValue extends AbstractValue implements ProgListener {
 	private boolean _reading = false;
 	
 	public void read(JLabel status) {
+		if (log.isDebugEnabled()) log.debug("read call with Cv number "+_num);
 		// get a programmer reference and write
 		_status = status;
 		if (status != null) status.setText("Reading...");
@@ -141,6 +142,7 @@ public class CvValue extends AbstractValue implements ProgListener {
 	}
 	
 	public void write(JLabel status) {
+		if (log.isDebugEnabled()) log.debug("write call with Cv number "+_num);
 		// get a programmer reference and write
 		_status = status;
 		if (status != null) status.setText("Writing...");
@@ -164,8 +166,8 @@ public class CvValue extends AbstractValue implements ProgListener {
 	}
 	
 	public void programmingOpReply(int value, int retval) {
-		if (log.isDebugEnabled()) log.debug("CV progOpReply with retval "+retval
-											+" _reading "+_reading);
+		if (log.isDebugEnabled()) log.debug("CV progOpReply for CV "+_num+" with retval "+retval
+											+" during "+(_reading?"read sequence":"write sequence"));
 		if (!_busy) log.error("opReply when not busy!");
 		boolean oldBusy = _busy;
 		if (retval == OK) {
@@ -176,6 +178,7 @@ public class CvValue extends AbstractValue implements ProgListener {
 				_value = value;
 				notifyValueChange(value);
 				setState(READ);
+				if (log.isDebugEnabled()) log.debug("CV setting not busy on end read");
 				_busy = false;
 				notifyBusyChange(oldBusy, _busy);
 			} else {  // writing
@@ -186,9 +189,11 @@ public class CvValue extends AbstractValue implements ProgListener {
 		} else {
 			if (_status != null) _status.setText("Programmer returned error status "+retval);
 			setState(UNKNOWN);
+			if (log.isDebugEnabled()) log.debug("CV setting not busy on error reply");
 			_busy = false;
 			notifyBusyChange(oldBusy, _busy);
 		}
+		if (log.isDebugEnabled()) log.debug("CV progOpReply end of handling CV "+_num);
 	}
 
 	// handle parameter notification
