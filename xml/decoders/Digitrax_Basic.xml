@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_Basic.xml,v 1.8 2003-10-18 23:51:55 jacobsen Exp $ -->
+<!-- $Id: Digitrax_Basic.xml,v 1.9 2004-02-11 04:59:05 jacobsen Exp $ -->
 <decoder-config>
-		<version author="jake@physics.berkeley.edu" 
-					version="7.1" lastUpdated="20031008"/>
+		<version author="phil.grainger@ca.com" 
+					version="8" lastUpdated="20031228"/>
 
 		<!-- Version 3 - rename family, add decoders, fix bug with FX on output 1 -->
 		<!-- version 4 - add DH140, DN140, update DN146 ID -->
@@ -11,10 +11,12 @@
 		<!-- version 6 - add consist direction - jake -->
 		<!-- Version 7 - fix "rule 17" typos -->
       <!-- Version 7.1 - changed spelling of "behavior" (Jack Shall) -->
+            <!-- Version 8 - Added fifth function, also added DH83FX) Phil G -->
 
 <decoder>
 	<family name="Basic FX" mfg="Digitrax" lowVersionID="91" highVersionID="111">
 		<model model="DH083" numOuts="5" numFns="3"/>
+		<model model="DH83FX" numOuts="5" numFns="3"/>
 		<model model="DH84FX" numOuts="5" numFns="6"/>
 		<model model="DH140" numOuts="4" numFns="2"/>
 		<model model="DH150" numOuts="5" numFns="3"/>
@@ -322,6 +324,46 @@
 				<enumChoice choice="Reserved (0xF)"/>
 				</enumVal>
 			</variable>
+<variable label="Function 3 effect generated" CV="53" mask="XXXXVVVV">
+			<enumVal>
+				<enumChoice choice="Normal function of lead"/>
+				<enumChoice choice="Random flicker"/>
+				<enumChoice choice="Mars light"/>
+				<enumChoice choice="Flashing head light"/>
+				<enumChoice choice="Single pulse strobe"/>
+				<enumChoice choice="Double pulse strobe"/>
+				<enumChoice choice="Rotary beacon simulation"/>
+				<enumChoice choice="Gyralite"/>
+				<enumChoice choice="Rule 17 dimmable headlight"/>
+				<enumChoice choice="FRED end of train light"/>
+				<enumChoice choice="Right ditch light; when F2 on, flashes alternately"/>
+				<enumChoice choice="Left ditch light; when F2 on, flashes alternately"/>
+				<enumChoice choice="Reserved (0x0C)"/>
+				<enumChoice choice="Reserved (0x0D)"/>
+				<enumChoice choice="Reserved (0x0E)"/>
+				<enumChoice choice="Reserved (0x0F)"/>
+				</enumVal>
+			</variable>
+		<variable label="Function 3 behavior" CV="53" mask="VVVVXXXX">
+			<enumVal>
+				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
+				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
+				<enumChoice choice="Non directional, ON with function ON, effect phase A"/>
+				<enumChoice choice="Non directional, ON with function ON, effect phase B"/>
+				<enumChoice choice="Forward direction, ON with F0 on &amp; function ON, phase A"/>
+				<enumChoice choice="Reverse direction, ON with F0 on &amp; function ON, phase B"/>
+				<enumChoice choice="Special logic for Fwd Ditch Light or Rule 17 dimming"/>
+				<enumChoice choice="Special logic for Rev Ditch Light or Rule 17 dimming"/>
+				<enumChoice choice="Reserved (0x8)"/>
+				<enumChoice choice="Reserved (0x9)"/>
+				<enumChoice choice="Reserved (0xA)"/>
+				<enumChoice choice="Reserved (0xB)"/>
+				<enumChoice choice="Reserved (0xC)"/>
+				<enumChoice choice="Reserved (0xD)"/>
+				<enumChoice choice="Reserved (0xE)"/>
+				<enumChoice choice="Reserved (0xF)"/>
+				</enumVal>
+			</variable>
 
 		<variable label="Directional Headlights" CV="61" mask="XXXXXXXV">
 			<enumVal>
@@ -402,3 +444,4 @@
 </pane>
 
 </decoder-config>
+
