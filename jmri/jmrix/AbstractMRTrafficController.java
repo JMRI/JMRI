@@ -22,7 +22,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 abstract public class AbstractMRTrafficController {
 
@@ -224,7 +224,7 @@ abstract public class AbstractMRTrafficController {
                 // wait for something to send
                 try {
                     synchronized(xmtRunnable) {
-                        xmtRunnable.wait(200);
+                        xmtRunnable.wait(mWaitBeforePoll);
                     }
                 } catch (InterruptedException e) { log.error("transmitLoop interrupted"); }
                 if (mCurrentState!=NOTIFIEDSTATE && mCurrentState!=IDLESTATE)
@@ -267,6 +267,41 @@ abstract public class AbstractMRTrafficController {
     }
 
     /**
+     * Add header to the outgoing byte stream.
+     * @param msg  The output byte stream
+     * @returns next location in the stream to fill
+     */
+    protected int addHeaderToOutput(byte[] msg, AbstractMRMessage m) {
+        return 0;
+
+    }
+
+    protected int mWaitBeforePoll = 100;
+
+    /**
+     * Add trailer to the outgoing byte stream.
+     * @param msg  The output byte stream
+     * @param offset the first byte not yet used
+     */
+    protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {
+        if (! m.isBinary()) msg[offset] = 0x0d;
+    }
+
+    /**
+     * Determine how much many bytes the entire
+     * message will take, including space for header and trailer
+     * @param m  The message to be sent
+     * @returns Number of bytes
+     */
+    protected int lengthOfByteStream(AbstractMRMessage m) {
+        int len = m.getNumDataElements();
+        int cr = 0;
+        if (! m.isBinary()) cr = 1;  // space for return
+        return len+cr;
+
+    }
+
+    /**
      * Actually transmits the next message to the port
      */
      private void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
@@ -281,18 +316,26 @@ abstract public class AbstractMRTrafficController {
         javax.swing.SwingUtilities.invokeLater(r);
 
         // stream to port in single write, as that's needed by serial
+        byte msg[] = new byte[lengthOfByteStream(m)];
+        // add header
+        int offset = addHeaderToOutput(msg, m);
+
+        // add data content
         int len = m.getNumDataElements();
-        int cr = 0;
-        if (! m.isBinary()) cr = 1;  // space for return
-
-        byte msg[] = new byte[len+cr];
-
         for (int i=0; i< len; i++)
-            msg[i] = (byte) m.getElement(i);
-        if (! m.isBinary()) msg[len] = 0x0d;
+            msg[i+offset] = (byte) m.getElement(i);
+
+        // add trailer
+        addTrailerToOutput(msg, len+offset, m);
+
+        // and stream the bytes
         try {
             if (ostream != null) {
-                if (log.isDebugEnabled()) log.debug("write message: "+msg);
+                if (log.isDebugEnabled()) {
+                    String f = "write message: ";
+                    for (int i = 0; i<msg.length; i++) f=f+Integer.toHexString(0xFF&msg[i])+" ";
+                    log.debug(f);
+                }
                 ostream.write(msg);
             }
             else {
@@ -379,6 +422,21 @@ abstract public class AbstractMRTrafficController {
     abstract protected boolean endOfMessage(AbstractMRReply r);
 
     /**
+     * Dummy routine, which can be filled by protocols that
+     * have to skip some start-of-message characters
+     */
+    protected void waitForStartOfReply(DataInputStream istream) throws java.io.IOException {}
+
+    protected void loadChars(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
+        int i;
+        for (i = 0; i < msg.maxSize; i++) {
+            byte char1 = istream.readByte();
+            msg.setElement(i, char1);
+            if (endOfMessage(msg)) break;
+        }
+    }
+
+    /**
      * (This is public for testing purposes)
      * @throws IOException
      */
@@ -388,16 +446,15 @@ abstract public class AbstractMRTrafficController {
 
         // Create message off the right concrete class
         AbstractMRReply msg = newReply();
+
+        // wait for start if needede
+        waitForStartOfReply(istream);
+
         // message exists, now fill it
-        int i;
-        for (i = 0; i < msg.maxSize; i++) {
-            byte char1 = istream.readByte();
-            msg.setElement(i, char1);
-            if (endOfMessage(msg)) break;
-        }
+        loadChars(msg, istream);
 
         // message is complete, dispatch it !!
-        if (log.isDebugEnabled()) log.debug("dispatch reply of length "+i);
+        if (log.isDebugEnabled()) log.debug("dispatch reply of length "+msg.getNumDataElements());
         switch (mCurrentState) {
         case WAITMSGREPLYSTATE: {
             // update state, and notify to continue
