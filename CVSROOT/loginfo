@@ -24,3 +24,8 @@
 #DEFAULT (echo ""; id; echo %s; date; cat) >> $CVSROOT/CVSROOT/commitlog
 # or
 #DEFAULT (echo ""; id; echo %{sVv}; date; cat) >> $CVSROOT/CVSROOT/commitlog
+
+CVSROOT $CVSROOT/CVSROOT/syncmail %{sVv} Bob_Jacobsen@lbl.gov
+DEFAULT $CVSROOT/CVSROOT/syncmail %{sVv} Bob_Jacobsen@lbl.gov
+DEFAULT $CVSROOT/CVSROOT/syncmail %{sVv} jmri-commits@lists.sourceforge.net
+
