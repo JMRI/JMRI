@@ -8,9 +8,9 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Tests for the jmri.util.StringUtil class
+ * Tests for the jmri.util.StringUtil class.
  * @author	Bob Jacobsen  Copyright 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class StringUtilTest extends TestCase {
 

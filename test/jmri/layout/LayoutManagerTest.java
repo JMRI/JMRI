@@ -1,9 +1,14 @@
 package jmri.layout;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.AWTEvent;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+
 import javax.swing.*;
-import com.sun.java.util.collections.*;
 
 public class LayoutManagerTest extends JFrame implements LayoutEventListener
 {

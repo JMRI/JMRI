@@ -1,23 +1,21 @@
-/**
- * XNetTurnoutManagerTest.java
- *
- * Description:	    tests for the jmri.jmrix.lenz.XNetTurnoutManager class
- * @author			Bob Jacobsen
- * @version         $Revision: 1.4 $
- */
+// XNetTurnoutManagerTest.java
 
 package jmri.jmrix.lenz;
 
-import java.io.*;
+import jmri.Turnout;
+import jmri.TurnoutAddress;
+import jmri.TurnoutManager;
+import com.sun.java.util.collections.ArrayList;
+import com.sun.java.util.collections.List;
 import junit.framework.Assert;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import com.sun.java.util.collections.List;
-import com.sun.java.util.collections.ArrayList;
 
-import jmri.*;
-
+/**
+ Tests for the jmri.jmrix.lenz.XNetTurnoutManager class.
+ * @author			Bob Jacobsen
+ * @version         $Revision: 1.5 $
+ */
 public class XNetTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 
 	public String getSystemName(int i) {

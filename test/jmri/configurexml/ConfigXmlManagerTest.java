@@ -5,8 +5,8 @@ package jmri.configurexml;
 import jmri.jmrit.XmlFile;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 
 import junit.framework.Assert;
@@ -19,7 +19,7 @@ import junit.framework.TestSuite;
  * <P>
  * Uses the local preferences for test files.
  * @author Bob Jacobsen Copyright 2003
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class ConfigXmlManagerTest extends TestCase {
 
