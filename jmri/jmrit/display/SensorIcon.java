@@ -1,14 +1,16 @@
 package jmri.jmrit.display;
 
-import javax.swing.*;
-import java.awt.event.*;
+import java.awt.event.MouseEvent;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+import jmri.InstanceManager;
+import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.*;
 
 /**
  * SensorIcon provides a small icon to display a status of a Sensor.</p>
- * @author Bob Jacobsen
- * @version $Revision: 1.5 $
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @version $Revision: 1.6 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -36,6 +38,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         if (InstanceManager.sensorManagerInstance()!=null) {
             sensor = InstanceManager.sensorManagerInstance().
                 newSensor(pUserName,pSystemName);
+            displayState(sensorState());
             sensor.addPropertyChangeListener(this);
         } else {
             log.error("No SensorManager for this protocol, sensor won't see changes");
@@ -149,10 +152,10 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         if (e.isAltDown() || e.isMetaDown()) return;
         try {
             if (sensor==null) return;   // no sensor connected for this protocol
-            if (sensor.getKnownState()==jmri.Sensor.ACTIVE)
-                sensor.setKnownState(jmri.Sensor.INACTIVE);
-            else
+            if (sensor.getKnownState()==jmri.Sensor.INACTIVE)
                 sensor.setKnownState(jmri.Sensor.ACTIVE);
+            else
+                sensor.setKnownState(jmri.Sensor.INACTIVE);
         } catch (jmri.JmriException reason) {
             log.warn("Exception changing sensor: "+reason);
         }
