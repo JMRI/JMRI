@@ -18,7 +18,7 @@ import org.jdom.Element;
  * decoder identification info _before_ the actual decoder file is read.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  * @see jmri.jmrit.decoderdefn.DecoderIndexFile
  */
 public class DecoderFile extends XmlFile {
@@ -95,14 +95,6 @@ public class DecoderFile extends XmlFile {
 	// static service methods - extract info from a given Element
 	public static String getMfgName(Element decoderElement) {
 		return decoderElement.getChild("family").getAttribute("mfg").getValue();
-	}
-
-	public static String getMfgID(Element decoderElement) {
-		return decoderElement.getChild("id").getAttribute("mfgID").getValue();
-	}
-
-	public static String getFamilyName(Element decoderElement) {
-		return decoderElement.getChild("id").getAttribute("family").getValue();
 	}
 
 	// use the decoder Element from the file to load a VariableTableModel for programming.
