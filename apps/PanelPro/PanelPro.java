@@ -4,6 +4,7 @@ package apps.PanelPro;
 
 import apps.Apps;
 import apps.SplashWindow;
+import jmri.util.JmriJFrame;
 
 import java.text.MessageFormat;
 
@@ -18,7 +19,7 @@ import javax.swing.JMenuBar;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 public class PanelPro extends Apps {
 
@@ -49,7 +50,7 @@ public class PanelPro extends Apps {
         log.info(apps.Apps.startupInfo("PanelPro"));
 
         setConfigFilename("PanelProConfig2.xml", args);
-        JFrame f = new JFrame("PanelPro");
+        JmriJFrame f = new JmriJFrame("PanelPro");
         createFrame(new PanelPro(f), f);
 
         log.info("main initialization done");

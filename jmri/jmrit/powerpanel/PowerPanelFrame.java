@@ -6,13 +6,16 @@ import java.awt.Dimension;
 import java.util.ResourceBundle;
 
 import javax.swing.JMenuBar;
+
+import jmri.util.JmriJFrame;
+
 /**
  * Frame for controlling layout power via a PowerManager.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
-public class PowerPanelFrame extends javax.swing.JFrame {
+public class PowerPanelFrame extends JmriJFrame {
 
     // GUI member declarations
     PowerPane pane	= new PowerPane();

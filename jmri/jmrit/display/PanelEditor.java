@@ -4,6 +4,7 @@ import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.util.JmriJFrame;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -46,10 +47,10 @@ import com.sun.java.util.collections.ArrayList;
  * consistent via the {#setTitle} method.
  *
  * @author Bob Jacobsen  Copyright: Copyright (c) 2002, 2003; modifications, Dennis Miller 2004
- * @version $Revision: 1.45 $
+ * @version $Revision: 1.46 $
  */
 
-public class PanelEditor extends JFrame {
+public class PanelEditor extends JmriJFrame {
 
     final public static Integer BKG       = new Integer(1);
     final public static Integer ICONS     = new Integer(3);
@@ -709,8 +710,8 @@ public class PanelEditor extends JFrame {
      *            which contains the targetPane
      *
      */
-    public JFrame makeFrame(String name) {
-        JFrame targetFrame = new JFrame(name);
+    public JmriJFrame makeFrame(String name) {
+        JmriJFrame targetFrame = new JmriJFrame(name);
 
 		// arrange for scrolling and size services
         JLayeredPane targetPanel = new JLayeredPane(){
