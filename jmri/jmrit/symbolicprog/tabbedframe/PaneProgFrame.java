@@ -25,7 +25,7 @@ import org.jdom.Element;
 /**
  * Frame providing a command station programmer from decoder definition files
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.29 $
+ * @version			$Revision: 1.30 $
  */
 abstract public class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
@@ -368,9 +368,17 @@ abstract public class PaneProgFrame extends javax.swing.JFrame
                                               "choose one", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.CANCEL_OPTION) return;
         }
         if (variableModel.fileDirty() ) {
-            if (JOptionPane.showConfirmDialog(null,
-                                              "Some changes have not been written to a configuration file. Close window?",
-                                              "choose one", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.CANCEL_OPTION) return;
+            int option = JOptionPane.showOptionDialog(null,"Some changes have not been written to a configuration file. Close window?",
+                        "Choose one",
+                        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null,
+                        new String[]{"Save and Close", "Close", "Cancel"}, "Save and Close");
+            if (option==0) {
+                // save requested
+                storeFile();
+            } else if (option ==2) {
+                // cancel requested
+                return; // without doing anything
+            }
         }
         // Check for a "<new loco>" roster entry; if found, remove it
         List l = Roster.instance().matchingList(null, null, null, null, null, null, "<new loco>");
