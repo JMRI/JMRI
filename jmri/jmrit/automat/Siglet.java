@@ -2,10 +2,7 @@
 
 package jmri.jmrit.automat;
 
-import java.awt.*;
-import javax.swing.*;
-
-import jmri.*;
+import jmri.NamedBean;
 
 /**
  * A Siglet is a "an embedded signal automation", like an "applet"
@@ -25,7 +22,7 @@ import jmri.*;
  * lists; this will cause a recursive invocation when the output changes.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class Siglet extends AbstractAutomaton {
 
