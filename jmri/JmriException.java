@@ -1,9 +1,9 @@
-/** 
+/**
  * JmriException.java
  *
  * Description:		<describe the JmriException class here>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			
+ * @version			$Revision: 1.3 $
  */
 
 package jmri;
