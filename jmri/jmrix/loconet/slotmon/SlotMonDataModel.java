@@ -11,7 +11,7 @@ import jmri.jmrix.loconet.locoio.*;
 /**
  * Table data model for display of slot manager contents
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version		$Revision: 1.8 $
+ * @version		$Revision: 1.9 $
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener  {
 
@@ -45,15 +45,39 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         SlotManager.instance().update();
     }
 
-    // basic methods for AbstractTableModel implementation
+    /**
+     * Returns the number of rows to be displayed.  This
+     * can vary depending on whether only active rows
+     * are displayed, and whether the system slots should be
+     * displayed.
+     * <P>
+     * This should probably use a local cache instead
+     * of counting/searching each time.
+     * @param row Row number in the displayed table
+     */
     public int getRowCount() {
         if (_allSlots) {
-            // will show the entire set
-            return 128;
-        } else {
-            return nActiveSlots();
+            // will show the entire set, so don't bother counting
+            if (_systemSlots)
+                return 128;
+            else
+                return 119;  // skip 0, and 120 through 127
         }
+        int n = 0;
+        int nMin = 1;
+        int nMax = 119;
+        if (_systemSlots) {
+            nMin = 0;
+            nMax = 128;
+        }
+        for (int i=nMin; i<nMax; i++) {
+            LocoNetSlot s = SlotManager.instance().slot(i);
+            if (s.slotStatus() != LnConstants.LOCO_FREE ||
+                i ==0 || i >= 120) n++;    // always show system slots if requested
+        }
+        return n;
     }
+
 
     public int getColumnCount( ){ return NUMCOLUMN;}
 
@@ -82,7 +106,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
-        public Class getColumnClass(int col) {
+    public Class getColumnClass(int col) {
         switch (col) {
         case SLOTCOLUMN:
         case ADDRCOLUMN:
@@ -110,7 +134,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
-        public boolean isCellEditable(int row, int col) {
+    public boolean isCellEditable(int row, int col) {
         switch (col) {
         case ESTOPCOLUMN:
         case DISPCOLUMN:
@@ -118,18 +142,6 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         default:
             return false;
         }
-    }
-
-    protected int slotNum(int row) {
-        int slotNum;
-        if (_allSlots) {
-            // will show the entire set
-            slotNum = row;
-        } else {
-            slotNum = ithActiveSlot(row);
-        }
-
-        return slotNum;
     }
 
     public Object getValueAt(int row, int col) {
@@ -338,31 +350,33 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
 
     // methods for control of "all slots" vs "only active slots"
     private boolean _allSlots = true;
-
     public void showAllSlots(boolean val) { _allSlots = val; }
 
-    // the following two service functions should probably use a local cache instead
-    // of counting/searching each time
-    public int nActiveSlots() {
-        int n = 0;
-        for (int i=0; i<128; i++) {
-            LocoNetSlot s = SlotManager.instance().slot(i);
-            if (s.slotStatus() != LnConstants.LOCO_FREE) n++;
-        }
-        return n;
-    }
+    // methods for control of display of system slots
+    private boolean _systemSlots = true;
+    public void showSystemSlots(boolean val) { _systemSlots = val; }
 
     /**
-     * Returns slot number for ith active slot, counting from 0.
-     * Intended to be called with a row number
+     * Returns slot number for a specific row.
+     * <P>
+     * This should probably use a local cache instead
+     * of counting/searching each time.
+     * @param row Row number in the displayed table
      */
-    public int ithActiveSlot(int i) {
+    protected int slotNum(int row) {
         int slotNum;
         int n = -1;   // need to find a used slot to have the 0th one!
-        for (slotNum=0; slotNum<128; slotNum++) {
+        int nMin = 1;
+        int nMax = 120;
+        if (_systemSlots) {
+            nMin = 0;
+            nMax = 128;
+        }
+        for (slotNum=nMin; slotNum<nMax; slotNum++) {
             LocoNetSlot s = SlotManager.instance().slot(slotNum);
-            if (s.slotStatus() != LnConstants.LOCO_FREE) n++;
-            if (n == i) break;
+            if (_allSlots || s.slotStatus() != LnConstants.LOCO_FREE
+                || slotNum ==0 || slotNum >= 120) n++;    // always show system slots if requested
+            if (n == row) break;
         }
         return slotNum;
     }
