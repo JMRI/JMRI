@@ -10,7 +10,7 @@ import jmri.*;
  * Based on Crr0024.bas
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
 
@@ -121,6 +121,5 @@ public class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CrrSection.class.getName());
 
 }
-
 
 /* @(#)CrrSection.java */

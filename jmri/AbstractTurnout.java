@@ -17,7 +17,7 @@ package jmri;
  *
  * Description:		Abstract class providing the basic logic of the Turnout interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean implements Turnout, java.io.Serializable {
 
@@ -88,6 +88,5 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements Turno
     private int _commandedState = UNKNOWN;
 
  }
-
 
 /* @(#)AbstractTurnout.java */

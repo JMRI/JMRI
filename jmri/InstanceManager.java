@@ -16,7 +16,7 @@ package jmri;
  * non-system-specific code.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class InstanceManager {
 
@@ -82,10 +82,7 @@ public class InstanceManager {
         mSignalHeadManager = p;
     }
 
-
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(InstanceManager.class.getName());
-
 }
-
 
 /* @(#)InstanceManager.java */
