@@ -23,11 +23,6 @@ public class JmritTest extends TestCase {
 		super(s);
 	}
 
-	// a dummy test to avoid JUnit warning
-	public void testDemo() {
-		assert(true);
-	}
-
 	// Main entry point
 	static public void main(String[] args) {
 		String[] testCaseName = {JmritTest.class.getName()};
@@ -36,8 +31,8 @@ public class JmritTest extends TestCase {
 	
 	// test suite from all defined tests
 	public static Test suite() {
-		TestSuite suite = new TestSuite(JmritTest.class);
-		suite.addTest(jmri.tests.jmrit.suite());
+		TestSuite suite = new TestSuite("jmri.tests.jmrit.JmritTest");   // no tests in this class itself
+		suite.addTest(jmri.tests.jmrit.powerpanel.PowerPanelTest.suite());
 		return suite;
 	}
 	

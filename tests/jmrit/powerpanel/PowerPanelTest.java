@@ -6,7 +6,7 @@
  * @version			
  */
 
-package jmri.tests.jmrit;
+package jmri.tests.jmrit.powerpanel;
 
 import java.io.*;
 import junit.framework.Test;
@@ -21,11 +21,6 @@ public class PowerPanelTest extends TestCase {
 		super(s);
 	}
 
-	// a dummy test to avoid JUnit warning
-	public void testDemo() {
-		assert(true);
-	}
-
 	// Main entry point
 	static public void main(String[] args) {
 		String[] testCaseName = {PowerPanelTest.class.getName()};
@@ -34,7 +29,8 @@ public class PowerPanelTest extends TestCase {
 	
 	// test suite from all defined tests
 	public static Test suite() {
-		TestSuite suite = new TestSuite(PowerPanelTest.class);
+		TestSuite suite = new TestSuite("jmri.tests.jmrit.powerpanel.PowerPanelTest"); // no tests in class itself
+		suite.addTest(jmri.tests.jmrit.powerpanel.PowerPaneTest.suite());
 		return suite;
 	}
 	
