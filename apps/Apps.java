@@ -25,7 +25,7 @@ import javax.swing.*;
  * Base class for Jmri applications.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 public class Apps extends JPanel {
 
@@ -48,7 +48,7 @@ public class Apps extends JPanel {
         configOK = InstanceManager.configureManagerInstance().load(file);
 
 	// populate GUI
-        rb = ResourceBundle.getBundle("apps.AppsBundle");
+        setResourceBundle();
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // Create a menu bar
         menuBar = new JMenuBar();
@@ -66,6 +66,10 @@ public class Apps extends JPanel {
         _buttonSpace.setLayout(new FlowLayout());
     }
 
+    protected void setResourceBundle() {
+        rb = ResourceBundle.getBundle("apps.AppsBundle");
+    }
+    
     /**
      * Create default menubar.
      * <P>
