@@ -17,7 +17,7 @@ import javax.swing.border.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author			Bob Jacobsen
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class LocoTools extends JPanel {
 	public LocoTools() {
@@ -59,30 +59,35 @@ public class LocoTools extends JPanel {
         menuBar.add(editMenu);
 	        editMenu.add(prefs);
 
-        JMenu funcMenu = new JMenu("Tools");
-        menuBar.add(funcMenu);
-	        funcMenu.add(new jmri.jmrit.simpleprog.SimpleProgAction("Simple Programmer"));
-	        funcMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction("Decoder Pro programmer"));
-	        funcMenu.add(new jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlAction("Turnout Control"));
-	        funcMenu.add(new jmri.jmrit.powerpanel.PowerPanelAction("Power Control"));
+        JMenu progMenu = new JMenu("Programming");
+        menuBar.add(progMenu);
+	        progMenu.add(new jmri.jmrit.simpleprog.SimpleProgAction("Simple Programmer"));
+	        progMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction("Decoder Pro programmer"));
+            progMenu.add(locoio = new jmri.jmrix.loconet.locoio.LocoIOAction("LocoIO programmer"));
 
         menuBar.add(new jmri.jmrit.roster.RosterMenu("Roster", jmri.jmrit.roster.RosterMenu.MAINMENU, this));
+
+        JMenu paneMenu = new JMenu("Panel");
+        menuBar.add(paneMenu);
+          	paneMenu.add(new jmri.jmrit.display.PanelEditorAction( "New panel ..." ));
+	        paneMenu.add(new jmri.configurexml.LoadXmlConfigAction("Load panels..."));
+	        paneMenu.add(new jmri.configurexml.StoreXmlConfigAction("Save panels..."));
+
+        JMenu funcMenu = new JMenu("Controls");
+        menuBar.add(funcMenu);
+	        funcMenu.add(new jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlAction("Turnout Control"));
+	        funcMenu.add(new jmri.jmrit.powerpanel.PowerPanelAction("Power Control"));
 
         JMenu locoMenu = new JMenu("LocoNet");
         menuBar.add(locoMenu);
 	        locoMenu.add(new jmri.jmrix.loconet.locomon.LocoMonAction("LocoNet Monitor"));
     	    locoMenu.add(new jmri.jmrix.loconet.slotmon.SlotMonAction("Slot Monitor"));
         	locoMenu.add(new jmri.jmrix.loconet.locogen.LocoGenAction("Send Packet"));
-            locoMenu.add(locoio = new jmri.jmrix.loconet.locoio.LocoIOAction("LocoIO programmer"));
 
         JMenu devMenu = new JMenu("Development");
         menuBar.add(devMenu);
           	devMenu.add(new jmri.jmrix.loconet.locormi.LnMessageServerAction( "Start LocoNet Server" ));
           	devMenu.add(new jmri.jmrix.loconet.locormi.LnMessageClientAction( "Start LocoNet Client" ));
-        	devMenu.add(new JSeparator());
-          	devMenu.add(new jmri.jmrit.display.PanelEditorAction( "PanelEditor" ));
-	        devMenu.add(new jmri.configurexml.LoadXmlConfigAction("Load config"));
-	        devMenu.add(new jmri.configurexml.StoreXmlConfigAction("Store config"));
         	devMenu.add(new JSeparator());
 	        devMenu.add(new jmri.jmrit.MemoryFrameAction("Memory usage monitor"));
         	devMenu.add(new JSeparator());

@@ -18,7 +18,7 @@ import javax.swing.border.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author			Bob Jacobsen   Copyright 2002
- * @version         $Revision: 1.24 $
+ * @version         $Revision: 1.25 $
  */
 public class JMRIdemo extends JPanel {
 	public JMRIdemo() {
@@ -85,11 +85,11 @@ public class JMRIdemo extends JPanel {
 
         menuBar.add(new jmri.jmrit.roster.RosterMenu("Roster", jmri.jmrit.roster.RosterMenu.MAINMENU, this));
 
-        JMenu diagMenu = new JMenu("Diagram");
+        JMenu diagMenu = new JMenu("Panels");
         menuBar.add(diagMenu);
           	diagMenu.add(new jmri.jmrit.display.PanelEditorAction( "New panel..." ));
-	        diagMenu.add(new jmri.configurexml.LoadXmlConfigAction("Load config..."));
-	        diagMenu.add(new jmri.configurexml.StoreXmlConfigAction("Store config..."));
+	        diagMenu.add(new jmri.configurexml.LoadXmlConfigAction("Load panels..."));
+	        diagMenu.add(new jmri.configurexml.StoreXmlConfigAction("Store panels..."));
 
         JMenu locoMenu = new JMenu("LocoNet");
         menuBar.add(locoMenu);
@@ -122,6 +122,7 @@ public class JMRIdemo extends JPanel {
         JMenu devMenu = new JMenu("Development");
         menuBar.add(devMenu);
 	        devMenu.add(new jmri.jmrit.MemoryFrameAction("Memory usage monitor"));
+            devMenu.add(new JSeparator());
 	        devMenu.add(new jmri.jmrit.XmlFileCheckAction("Check XML File", this));
 	        devMenu.add(new jmri.jmrit.decoderdefn.NameCheckAction("Check decoder names", this));
 	        devMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.ProgCheckAction("Check programmer names", this));
