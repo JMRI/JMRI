@@ -52,7 +52,7 @@ import javax.swing.JTextArea;
  * so that Jython code can easily use some of the methods.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 public class AbstractAutomaton implements Runnable {
 
@@ -103,14 +103,23 @@ public class AbstractAutomaton implements Runnable {
      * This handles exceptions internally,
      * so they needn't clutter up the code.  Note that the current
      * implementation doesn't guarantee the time, either high or low.
+     * <P>
+     * Because of the way Jython access handles synchronization, this
+     * is explicitly synchronized internally.
      * @param milliseconds
      */
-    protected synchronized void wait(int milliseconds){
+    public void wait(int milliseconds){
         if (!inThread) log.warn("wait invoked from invalid context");
-        try {
-            super.wait(milliseconds);
-        } catch (InterruptedException e) {
-            // do nothing for now
+        synchronized(this) {
+            try {
+                if (milliseconds <0)
+                    super.wait();
+                else
+                    super.wait(milliseconds);
+            } catch (InterruptedException e) {
+                // do nothing for now exception mention
+                log.warn("interrupted in wait");
+            }
         }
         if (promptOnWait) debuggingWait();
     }
@@ -138,7 +147,7 @@ public class AbstractAutomaton implements Runnable {
      * @param mSensor Sensor to watch
      * @return newly detected Sensor state
      */
-    protected synchronized int waitSensorChange(int mState, Sensor mSensor){
+    public int waitSensorChange(int mState, Sensor mSensor){
         if (!inThread) log.warn("waitSensorChange invoked from invalid context");
         if (log.isDebugEnabled()) log.debug("waitSensorChange starts: "+mSensor.getSystemName());
         // register a listener
@@ -153,11 +162,7 @@ public class AbstractAutomaton implements Runnable {
 
         int now;
         while (mState == (now = mSensor.getKnownState())) {
-            try {
-                super.wait(10000);
-            } catch (InterruptedException e) {
-                log.warn("waitSensorChange interrupted; this is unexpected");
-            }
+            wait(-1);
         }
 
         // remove the listener & report new state
@@ -175,7 +180,7 @@ public class AbstractAutomaton implements Runnable {
      *
      * @param mSensor Sensor to watch
      */
-    protected synchronized void waitSensorActive(Sensor mSensor){
+    public synchronized void waitSensorActive(Sensor mSensor){
         if (!inThread) log.warn("waitSensorActive invoked from invalid context");
         if (mSensor.getKnownState() == Sensor.ACTIVE) return;
         if (log.isDebugEnabled()) log.debug("waitSensorActive starts: "+mSensor.getSystemName());
@@ -190,11 +195,7 @@ public class AbstractAutomaton implements Runnable {
         });
 
         while (Sensor.ACTIVE != mSensor.getKnownState()) {
-            try {
-                super.wait(10000);
-            } catch (InterruptedException e) {
-                log.warn("waitSensorActive interrupted; this is unexpected");
-            }
+            wait(-1);   // wait for notification
         }
 
         // remove the listener & report new state
@@ -212,7 +213,7 @@ public class AbstractAutomaton implements Runnable {
      *
      * @param mSensor Sensor to watch
      */
-    protected synchronized void waitSensorInactive(Sensor mSensor){
+    public synchronized void waitSensorInactive(Sensor mSensor){
         if (!inThread) log.warn("waitSensorInactive invoked from invalid context");
         if (mSensor.getKnownState() == Sensor.INACTIVE) return;
         if (log.isDebugEnabled()) log.debug("waitSensorInactive starts: "+mSensor.getSystemName());
@@ -227,11 +228,7 @@ public class AbstractAutomaton implements Runnable {
         });
 
         while (Sensor.INACTIVE != mSensor.getKnownState()) {
-            try {
-                super.wait(10000);
-            } catch (InterruptedException e) {
-                log.warn("waitSensorInactive interrupted; this is unexpected");
-            }
+            wait(-1);  // wait for notification
         }
 
         // remove the listener & report new state
@@ -249,7 +246,7 @@ public class AbstractAutomaton implements Runnable {
      *
      * @param mSensors Array of sensors to watch
      */
-    protected synchronized void waitSensorActive(Sensor[] mSensors){
+    public synchronized void waitSensorActive(Sensor[] mSensors){
         if (!inThread) log.warn("waitSensorActive invoked from invalid context");
         if (log.isDebugEnabled()) log.debug("waitSensorActive[] starts");
 
@@ -276,11 +273,7 @@ public class AbstractAutomaton implements Runnable {
         }
 
         while (!checkForActive(mSensors)) {
-            try {
-                super.wait(10000);
-            } catch (InterruptedException e) {
-                log.warn("waitSensorChange interrupted; this is unexpected");
-            }
+            wait(-1);
         }
 
         // remove the listeners
@@ -300,7 +293,7 @@ public class AbstractAutomaton implements Runnable {
      *
      * @param mInputs Array of NamedBeans to watch
      */
-    protected synchronized void waitChange(NamedBean[] mInputs){
+    public synchronized void waitChange(NamedBean[] mInputs){
         if (!inThread) log.warn("waitChange invoked from invalid context");
         if (log.isDebugEnabled()) log.debug("waitChange[] starts");
 
@@ -322,11 +315,7 @@ public class AbstractAutomaton implements Runnable {
         }
 
         // wait for notify
-        try {
-            super.wait();
-        } catch (InterruptedException e) {
-            log.warn("waitChange interrupted; this is unexpected");
-        }
+        wait(-1);
 
         // remove the listeners
         for (i=0; i<mInputs.length; i++) {
@@ -344,7 +333,7 @@ public class AbstractAutomaton implements Runnable {
      *
      * @param mSensors Array of sensors to watch
      */
-    protected synchronized void waitSensorChange(Sensor[] mSensors){
+    public synchronized void waitSensorChange(Sensor[] mSensors){
         waitChange(mSensors);
        return;
     }
@@ -368,7 +357,7 @@ public class AbstractAutomaton implements Runnable {
      * @param longAddress true if this is a long address, false for a short address
      * @return A usable throttle, or null if error
      */
-    protected DccThrottle getThrottle(int address, boolean longAddress) {
+    public DccThrottle getThrottle(int address, boolean longAddress) {
         if (!inThread) log.warn("getThrottle invoked from invalid context");
         throttle = null;
         InstanceManager.throttleManagerInstance()
@@ -383,13 +372,7 @@ public class AbstractAutomaton implements Runnable {
         // now wait for reply from identified throttle
         while (throttle == null) {
             log.debug("waiting for throttle");
-            try {
-                synchronized (self) {
-                    super.wait(10000);
-                }
-            } catch (InterruptedException e) {
-                log.warn("getThrottle got unexpected interrupt");
-            }
+            wait(10000);
             if (throttle == null) log.warn("Still waiting for throttle!");
         }
         return throttle;
@@ -401,7 +384,7 @@ public class AbstractAutomaton implements Runnable {
      * @param value
      * @return true if completed OK
      */
-    protected boolean writeServiceModeCV(int CV, int value) {
+    public boolean writeServiceModeCV(int CV, int value) {
         // get service mode programmer
         Programmer programmer = InstanceManager.programmerManagerInstance()
                         .getServiceModeProgrammer();
@@ -418,13 +401,8 @@ public class AbstractAutomaton implements Runnable {
             return false;
         }
         // wait for the result
-        try {
-            synchronized (self) {
-                super.wait(30000);
-            }
-        } catch (InterruptedException e) {
-            log.warn("writeServiceModeCV got unexpected interrupt");
-        }
+        wait(-1);
+
         return true;
     }
 
@@ -436,7 +414,7 @@ public class AbstractAutomaton implements Runnable {
      * @param CV Number 1 through 512
      * @return -1 if error, else value
      */
-    protected int readServiceModeCV(int CV) {
+    public int readServiceModeCV(int CV) {
         // get service mode programmer
         Programmer programmer = InstanceManager.programmerManagerInstance()
                         .getServiceModeProgrammer();
@@ -456,13 +434,7 @@ public class AbstractAutomaton implements Runnable {
             return -1;
         }
         // wait for the result
-        try {
-            synchronized (self) {
-                super.wait(30000);
-            }
-        } catch (InterruptedException e) {
-            log.warn("writeServiceModeCV got unexpected interrupt");
-        }
+        wait(-1);
         return cvReturnValue;
     }
 
@@ -474,7 +446,7 @@ public class AbstractAutomaton implements Runnable {
      * @param longAddress true is the locomotive is using a long address
      * @return true if completed OK
      */
-    protected boolean writeOpsModeCV(int CV, int value, boolean longAddress, int loco) {
+    public boolean writeOpsModeCV(int CV, int value, boolean longAddress, int loco) {
         // get service mode programmer
         Programmer programmer = InstanceManager.programmerManagerInstance()
                         .getOpsModeProgrammer(longAddress, loco);
@@ -491,13 +463,8 @@ public class AbstractAutomaton implements Runnable {
             return false;
         }
         // wait for the result
-        try {
-            synchronized (self) {
-                super.wait(30000);
-            }
-        } catch (InterruptedException e) {
-            log.warn("writeServiceModeCV got unexpected interrupt");
-        }
+        wait(-1);
+
         return true;
     }
 
