@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_CS.xml,v 1.9 2003-08-15 15:16:35 jacobsen Exp $ -->
+<!-- $Id: Digitrax_CS.xml,v 1.10 2003-08-15 15:26:31 jacobsen Exp $ -->
 <decoder-config>
-		<version author="jake@physics.berkeley.edu" 
-					version="7" lastUpdated="20030814"/>
+		<version author="Michael Mosher mjmx@comcast.net" 
+					version="7" lastUpdated="20030815"/>
 					
 		<!-- made from 150 file (Basic FX) -->
 		<!-- version 3 added BEMF, transponding control, short address -->
@@ -11,7 +11,7 @@
 		<!-- version 4 adjusts versionID range -->
 		<!-- version 5 correct BEMF defaults -->
 		<!-- version 6 - add consist direction - jake -->
-		<!-- version 7 - two outputs, only F0, add Speed Comp Control to pane -->
+		<!-- version 7 - fixed numOuts & numFns numbers and add cv29 defaults -->
 
 <decoder>
 	<family name="Basic CS" mfg="Digitrax" lowVersionID="225" highVersionID="239">
@@ -128,13 +128,14 @@
 				</enumVal>
 			</variable>
 		<variable label="Speed steps" CV="29" mask="XXXXXXVX"
-					item="Speed Step Mode">
+					item="Speed Step Mode" default="1" >
 			<enumVal>
 				<enumChoice choice="14"/>
 				<enumChoice choice="28/128"/>
 				</enumVal>
 			</variable>
-		<variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation">
+		<variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" 
+					item="Analog (DC) Operation" default="1" >
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
@@ -251,7 +252,7 @@
 				comment="0 is no keep-alive, use with LEDs">
 				<decVal max="15"/>
 			</variable>
-		<variable label="Lighting rate adjust" CV="62" mask="XXXXVVVV"
+		<variable label="FX rate adjust" CV="62" mask="XXXXVVVV"
 				item="Global lighting option 2"
 				comment="0 is fast, 15 is slow, 4 is recommended for start">
 				<decVal max="15"/>
@@ -302,7 +303,7 @@
 	<column>
 		<display item="Vstart/Vmid/Vfull in 128 step mode" />
 		<display item="Short-circuit protection" />
-		<display item="Speed Compensation Control" />
+                <display item="Speed Compensation Control" />
 	</column>
 </pane>
 
