@@ -1,0 +1,38 @@
+package jmri.jmrix.loconet.configurexml;
+
+import org.jdom.Element;
+import jmri.InstanceManager;
+import jmri.jmrix.loconet.LnTurnoutManager;
+
+/**
+ * Provides load and store functionality for
+ * configuring LnTurnoutManagers.
+ * <P>
+ * Uses the store method from the abstract base class, but
+ * provides a load method here.
+ *
+ * @author Bob Jacobsen Copyright: Copyright (c) 2002
+ * @version $Revision: 1.1 $
+ */
+public class LnTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
+
+    public LnTurnoutManagerXml() {
+        super();
+    }
+
+    public void setStoreElementClass(Element turnouts) {
+        turnouts.addAttribute("class","jmri.jmrix.loconet.configurexml.LnTurnoutManagerXml");
+    }
+
+    public void load(Element turnouts) {
+        // create the master object
+        LnTurnoutManager mgr = new LnTurnoutManager();
+        // register it with InstanceManager
+        InstanceManager.setTurnoutManager(mgr);
+        // register it for configuration
+        InstanceManager.configureManagerInstance().register(mgr);
+        // load individual turnouts
+        loadTurnouts(turnouts);
+    }
+
+}
