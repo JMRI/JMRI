@@ -5,13 +5,13 @@
 # detects the engine
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.4 $
+# $Revision: 1.5 $
 
 import jarray
 import jmri
 
 class AutomatExample(jmri.jmrit.automat.AbstractAutomaton) :
-
+	
 	# init() is called exactly once at the beginning to do
 	# any necessary configuration.
 	def init(self):
@@ -45,6 +45,12 @@ class AutomatExample(jmri.jmrit.automat.AbstractAutomaton) :
 	
 # end of class definition
 
-# start one of these up
-AutomatExample().start()
+# create one of these
+a = AutomatExample()
+
+# set the name, as a example of configuring it
+a.setName("Automat example script")
+
+# and start it running
+a.start()
 
