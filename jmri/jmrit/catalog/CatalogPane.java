@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.tree.*;
 import javax.swing.border.*;
 import javax.swing.event.*;
+import jmri.jmrit.XmlFile;
 
 /**
  * Create a JPanel containing a tree of resources.
@@ -20,7 +21,7 @@ import javax.swing.event.*;
  * files in the distribution directory are _not_ included.
  *
  * @author			Bob Jacobsen  Copyright 2002
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class CatalogPane extends JPanel {
 	public CatalogPane() {
@@ -35,7 +36,8 @@ public class CatalogPane extends JPanel {
 
         // we manually create the first node, rather than use
         // the routine, so we can name it.
-        insertResourceNodes("icons", resourceRoot, dRoot);
+        insertResourceNodes("resources", resourceRoot, dRoot);
+        XmlFile.ensurePrefsPresent("resources");
         insertFileNodes("files", fileRoot, dRoot);
 
         // build the tree GUI
@@ -74,12 +76,17 @@ public class CatalogPane extends JPanel {
      *              where in the tree to insert it.
      */
     void insertResourceNodes(String pName, String pPath, DefaultMutableTreeNode pParent) {
+        // the following (commented) line only worked in JBuilder (July 27 2002)
+        // so we switched to storing this info in the resource/ filetree in
+        // the application directory, using the 2nd two lines (uncommented)
+        // File fp = new File(ClassLoader.getSystemResource(pPath).getFile());
+        File fp = new File(pPath);
+        if (!fp.exists()) return;
+
         // first, represent this one
         DefaultMutableTreeNode newElement = new DefaultMutableTreeNode(pName);
         dModel.insertNodeInto(newElement, pParent, pParent.getChildCount());
         // then look for childrent and recurse
-        // getSystemResource is a URL, getFile is the filename string
-        File fp = new File(ClassLoader.getSystemResource(pPath).getFile());
         if (fp.isDirectory()) {
             // work on the kids
             String[] sp = fp.list();
@@ -121,7 +128,7 @@ public class CatalogPane extends JPanel {
             TreePath path = dTree.getSelectionPath();
             int level = path.getPathCount();
             if (level < 3) return null;
-            if (((DefaultMutableTreeNode)path.getPathComponent(1)).getUserObject().equals("icons")) {
+            if (((DefaultMutableTreeNode)path.getPathComponent(1)).getUserObject().equals("resources")) {
                 // process a .jar icon
                 String name = resourceRoot;
                 for (int i=2; i<level; i++) {
@@ -129,7 +136,8 @@ public class CatalogPane extends JPanel {
                             +(String)((DefaultMutableTreeNode)path.getPathComponent(i)).getUserObject();
                 }
                 log.debug("attempt to load resource from "+name);
-                return new NamedIcon(ClassLoader.getSystemResource(name), "resource:"+name);
+                // return new NamedIcon(ClassLoader.getSystemResource(name), "resource:"+name);
+                return new NamedIcon(name, "resource:"+name);
             } else if (((DefaultMutableTreeNode)path.getPathComponent(1)).getUserObject().equals("files")) {
                 // process a file
                 String name = fileRoot;
@@ -157,13 +165,15 @@ public class CatalogPane extends JPanel {
      */
     public NamedIcon getIconByName(String pName) {
         if (pName.startsWith("resource:"))
-            return new NamedIcon(ClassLoader.getSystemResource(pName.substring(9)), pName);
+            // return new NamedIcon(ClassLoader.getSystemResource(pName.substring(9)), pName);
+            return new NamedIcon(pName.substring(9), pName);
         else if (pName.startsWith("file:")) {
             String fileName = pName.substring(5);
             log.debug("load from file: "+fileName);
             return new NamedIcon(fileName, pName);
         }
-        else return new NamedIcon(ClassLoader.getSystemResource(pName), pName);
+        // else return new NamedIcon(ClassLoader.getSystemResource(pName), pName);
+        else return new NamedIcon(pName, pName);
     }
 
     JTree dTree;
@@ -173,7 +183,7 @@ public class CatalogPane extends JPanel {
     /**
      * Starting point in the .jar file for the "icons" part of the tree
      */
-    private final String resourceRoot = "resources/icons";
+    private final String resourceRoot = "resources";
     private final String fileRoot = jmri.jmrit.XmlFile.prefsDir()+"resources";
 
 	// Main entry point
