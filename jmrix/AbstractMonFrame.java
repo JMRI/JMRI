@@ -239,9 +239,26 @@ public abstract class AbstractMonFrame extends javax.swing.JFrame  {
 		
 		// if requested, log to a file.
 		if (logStream != null) {
-			logStream.print(s1);
+			String logLine = s1;
+			if (!newline.equals("\n")) {
+				// have to massage the line-ends
+				int i = 0;
+				StringBuffer in  = new StringBuffer(s1);
+				int lim = in.length();
+				StringBuffer out = new StringBuffer(s1.length()+10);  // arbitrary guess at space
+				for ( i = 0; i<lim; i++) {
+					if (in.charAt(i) == '\n') 
+						out.append(newline);
+					else 
+						out.append(in.charAt(i));
+				}
+				logLine = new String(out);
+			}
+			logStream.print(logLine);
 		}
 	}
+	
+	String newline = System.getProperty("line.separator");
 	
 	public synchronized String getFrameText() {
 		StringBuffer sb = new StringBuffer();
