@@ -21,8 +21,6 @@ public class EasyDccTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 		// create and register the manager object
 		l = new EasyDccTurnoutManager();
 		jmri.InstanceManager.setTurnoutManager(l);
-		assertTrue(l == jmri.InstanceManager.turnoutManagerInstance());
-
 	}
 
 	public String getSystemName(int n) {

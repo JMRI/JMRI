@@ -3,7 +3,7 @@
  *
  * Description:	    tests for the jmri.jmrix.nce.NceTurnoutManager class
  * @author			Bob Jacobsen
- * @version  $Revision: 1.2 $
+ * @version  $Revision: 1.3 $
  */
 
 package jmri.jmrix.nce;
@@ -21,7 +21,6 @@ public class NceTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 		// create and register the manager object
 		l = new NceTurnoutManager();
 		jmri.InstanceManager.setTurnoutManager(l);
-		assertTrue(l == jmri.InstanceManager.turnoutManagerInstance());
 
 	}
 

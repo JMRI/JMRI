@@ -14,7 +14,7 @@ import jmri.*;
  *
  * Description:	    tests for the jmri.jmrix.nce.NceTurnoutManager class
  * @author			Bob Jacobsen
- * @version  $Revision: 1.1 $
+ * @version  $Revision: 1.2 $
  */
 public class SerialTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 
@@ -22,8 +22,6 @@ public class SerialTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 		// create and register the manager object
 		l = new SerialTurnoutManager();
 		jmri.InstanceManager.setTurnoutManager(l);
-		assertTrue(l == jmri.InstanceManager.turnoutManagerInstance());
-
 	}
 
 	public String getSystemName(int n) {
