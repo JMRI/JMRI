@@ -10,7 +10,7 @@ import javax.swing.*;
 /**
  * Frame provinging a command station slot manager
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class SlotMonFrame extends javax.swing.JFrame {
 
@@ -55,6 +55,8 @@ public class SlotMonFrame extends javax.swing.JFrame {
 
         getContentPane().add(pane1);
         getContentPane().add(slotScroll);
+        pack();
+        pane1.setMaximumSize(pane1.getSize());
         pack();
     }
 

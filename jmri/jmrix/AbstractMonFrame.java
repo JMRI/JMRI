@@ -12,7 +12,7 @@ import javax.swing.*;
 /**
  * Abstact base class for Frames displaying communications monitor information
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public abstract class AbstractMonFrame extends javax.swing.JFrame  {
 
@@ -156,7 +156,9 @@ public abstract class AbstractMonFrame extends javax.swing.JFrame  {
         // connect to data source
         init();
 
-        // and start displaying
+        // prevent button areas from expanding
+        pack();
+        paneA.setMaximumSize(paneA.getSize());
         pack();
     }
 
