@@ -1,22 +1,24 @@
-/**
- * NceMessage.java
- *
- * Description:		<describe the NceMessage class here>
- * @author	        Bob Jacobsen  Copyright (C) 2001
- * @version             $Revision: 1.3 $
- */
+// NceMessage.java
 
 package jmri.jmrix.nce;
 
-// Note:  This handles the "binary" form of command in the NCE spec
-
+/**
+ * Encodes a message to an NCE command station.  The NceReply
+ * class handles the response from the command station.
+ * <P>
+ * There's some rudimentary support for binary commands, but it's
+ * not to the point of being usable.
+ *
+ * @author	        Bob Jacobsen  Copyright (C) 2001
+ * @version             $Revision: 1.4 $
+ */
 public class NceMessage {
     // is this logically an abstract class?
-    
+
     public NceMessage() {
         setBinary(false);
     }
-    
+
     // create a new one
     public  NceMessage(int i) {
         this();
@@ -25,7 +27,7 @@ public class NceMessage {
         _nDataChars = i;
         _dataChars = new int[i];
     }
-    
+
     // copy one
     public  NceMessage(NceMessage m) {
         this();
@@ -35,21 +37,21 @@ public class NceMessage {
         _dataChars = new int[_nDataChars];
         for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
     }
-    
+
     public void setOpCode(int i) { _dataChars[0]=i;}
     public int getOpCode() {return _dataChars[0];}
     public String getOpCodeHex() { return "0x"+Integer.toHexString(getOpCode()); }
-    
+
     // accessors to the bulk data
     public int getNumDataElements() {return _nDataChars;}
     public int getElement(int n) {return _dataChars[n];}
     public void setElement(int n, int v) { _dataChars[n] = v; }
-    
+
     // mode accessors
     boolean _isBinary;
     public boolean isBinary() { return _isBinary; }
     public void setBinary(boolean b) { _isBinary = b; }
-    
+
     // display format
     public String toString() {
         String s = "";
@@ -64,17 +66,17 @@ public class NceMessage {
         }
         return s;
     }
-    
+
     // diagnose format
     public boolean isKillMain() {
         return getOpCode() == 'K';
     }
-    
+
     public boolean isEnableMain() {
         return getOpCode() == 'E';
     }
-    
-    
+
+
     // static methods to return a formatted message
     static public NceMessage getEnableMain() {
         NceMessage m = new NceMessage(1);
@@ -82,28 +84,28 @@ public class NceMessage {
         m.setOpCode('E');
         return m;
     }
-    
+
     static public NceMessage getKillMain() {
         NceMessage m = new NceMessage(1);
         m.setBinary(false);
         m.setOpCode('K');
         return m;
     }
-    
+
     static public NceMessage getProgMode() {
         NceMessage m = new NceMessage(1);
         m.setBinary(false);
         m.setOpCode('M');
         return m;
     }
-    
+
     static public NceMessage getExitProgMode() {
         NceMessage m = new NceMessage(1);
         m.setBinary(false);
         m.setOpCode('X');
         return m;
     }
-    
+
     static public NceMessage getReadPagedCV(int cv) { //Rxxx
         NceMessage m = new NceMessage(4);
         m.setBinary(false);
@@ -111,7 +113,7 @@ public class NceMessage {
         addIntAsThree(cv, m, 1);
         return m;
     }
-    
+
     static public NceMessage getWritePagedCV(int cv, int val) { //Pxxx xxx
         NceMessage m = new NceMessage(8);
         m.setBinary(false);
@@ -121,7 +123,7 @@ public class NceMessage {
         addIntAsThree(val, m, 5);
         return m;
     }
-    
+
     static public NceMessage getReadRegister(int reg) { //Vx
         if (reg>8) log.error("register number too large: "+reg);
         NceMessage m = new NceMessage(2);
@@ -131,7 +133,7 @@ public class NceMessage {
         m.setElement(1, s.charAt(s.length()-1));
         return m;
     }
-    
+
     static public NceMessage getWriteRegister(int reg, int val) { //Sx xxx
         if (reg>8) log.error("register number too large: "+reg);
         NceMessage m = new NceMessage(6);
@@ -143,11 +145,11 @@ public class NceMessage {
         addIntAsThree(val, m, 3);
         return m;
     }
-    
+
     // contents (private)
     private int _nDataChars = 0;
     private int _dataChars[] = null;
-    
+
     private static String addIntAsThree(int val, NceMessage m, int offset) {
         String s = ""+val;
         if (s.length() != 3) s = "0"+s;  // handle <10
@@ -157,9 +159,9 @@ public class NceMessage {
         m.setElement(offset+2,s.charAt(2));
         return s;
     }
-    
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceMessage.class.getName());
-    
+
 }
 
 
