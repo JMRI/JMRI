@@ -249,25 +249,25 @@ strongly recommended.
 <P>
 You need to have Java 1.3.1 or later installed on your machine, including Swing. 
 We test with JRE 1.3.1-01 and recommend you 
-use it or a later 1.3.1 version. You can get this from Sun at
-  <a href="http://java.sun.com/j2se/1.3/jre/">http://java.sun.com/j2se/1.3/jre/</a>.
+use it or a later version. You can get the latext production
+version from Sun at
+  <a href="http://java.sun.com/getjava/download.html">http://java.sun.com/getjava/download.html</a>.
+Click on the "install" button to run the installer over the web.
+Alternately, you can download the installer to use later.
 You'll need about 40MB of available disk space to download and unpack 
 the Java installer. 
-Java takes up about 20MB once the install is complete.
+Java takes up about 20MB of disk space once the install is complete.
 Other Java versions are available at
   <a href="http://java.sun.com/j2se/">http://java.sun.com/j2se/</a>.
-Note that the 1.4 versions are for beta testers, and we're not brave
-enough to have done that yet.
-For information on installing Java, please see 
-  <a href="http://jmri.sourceforge.net/Java/InstallJava.html">http://jmri.sourceforge.net/Java/InstallJava.html</a>
  
 <P>
 You will need to know where your Java installation is on your disk.  This is
 called the "Java home directory" below.  The Sun installers use
 <pre>
-  C:\Program Files\JavaSoft\JRE\_your_version_
+  C:\Program Files\Java\j2re1.4.0
 </pre>
-for this, for example
+for the most recent version; some older ones used "JavaSoft" as the directory name,
+for example:
 <pre>
   C:\Program Files\JavaSoft\JRE\1.3.1
 </pre>
@@ -312,6 +312,12 @@ There are two hardware adapters available to connect to a LocoNet.  The
 LocoBuffer is the strongly preferred alternative, as it reduces the load 
 on the host computer and has a significantly smaller error rate.  The
 Digitrax MS100 interface adapter is also supported (except on MacOS X). 
+
+<P>
+Note that these are LocoNet interfaces, not standalone programmers like
+the Digitrax PR1.  Neither of them will let you read CVs if you
+have an Empire Builder!  For that you need a Chief or Zephyr command
+station.  (We're working on PR1 support, and would welcome help).
 
 <P>
 The LocoBuffer was created by John Jabour 
