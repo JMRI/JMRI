@@ -15,7 +15,7 @@ import jmri.jmrix.loconet.LnPacketizer;
  * a .hex file, feeding the information to a LocoMonFrame (monitor) and
  * connecting to a LocoGenFrame (for sending a few commands).
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version                     $Revision: 1.9 $
+ * @version                     $Revision: 1.10 $
  */
 public class HexFileFrame extends javax.swing.JFrame {
 
@@ -172,14 +172,12 @@ public class HexFileFrame extends javax.swing.JFrame {
         packets.connectPort(port);
         connected = true;
 
-        // If a jmri.Programmer instance doesn't exist, create a
-        // loconet.SlotManager to do that
-        if (jmri.InstanceManager.programmerManagerInstance() == null)
-            jmri.InstanceManager.setProgrammerManager(
-                                                      new jmri.progdebugger.DebugProgrammerManager());
-
         // do the common manager config
         jmri.jmrix.loconet.LnPortController.configureManagers();
+
+        // Install a debug programmer, replacing the existing LocoNet one
+        jmri.InstanceManager.setProgrammerManager(
+                new jmri.progdebugger.DebugProgrammerManager());
 
         // start operation of packetizer
         packets.startThreads();
