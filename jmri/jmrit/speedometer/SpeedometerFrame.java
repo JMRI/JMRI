@@ -12,7 +12,7 @@ import jmri.jmrit.display.*;
 /**
  * Frame providing access to a speedometer
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SpeedometerFrame extends javax.swing.JFrame {
 
@@ -50,11 +50,11 @@ public class SpeedometerFrame extends javax.swing.JFrame {
         stopGroup1.add(stopOnExit1);
         stopGroup2.add(stopOnEntry2);
         stopGroup2.add(stopOnExit2);
-
+        
         // general GUI config
         setTitle("Speedometer");
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-
+        
         // add items to GUI
         JPanel pane1 = new JPanel();
         pane1.setLayout(new FlowLayout());
@@ -66,7 +66,7 @@ public class SpeedometerFrame extends javax.swing.JFrame {
         startSensorIcon = new SensorIcon();
         pane1.add(startSensorIcon);
         getContentPane().add(pane1);
-
+        
         JPanel pane2 = new JPanel();
         pane2.setLayout(new FlowLayout());
         pane2.add(new JLabel("2nd sensor:"));
@@ -77,7 +77,7 @@ public class SpeedometerFrame extends javax.swing.JFrame {
         stopSensorIcon1 = new SensorIcon();
         pane2.add(stopSensorIcon1);
         getContentPane().add(pane2);
-
+        
         JPanel pane3 = new JPanel();
         pane3.setLayout(new FlowLayout());
         pane3.add(new JLabel("3rd sensor:"));
@@ -88,41 +88,41 @@ public class SpeedometerFrame extends javax.swing.JFrame {
         stopSensorIcon2 = new SensorIcon();
         pane3.add(stopSensorIcon2);
         getContentPane().add(pane3);
-
-         JPanel pane4 = new JPanel();
+        
+        JPanel pane4 = new JPanel();
         pane4.setLayout(new FlowLayout());
         pane4.add(new JLabel("Distance 1 (scale feet):"));
         pane4.add(distance1);
         getContentPane().add(pane4);
-
+        
         JPanel pane5 = new JPanel();
-       pane5.setLayout(new FlowLayout());
-       pane5.add(new JLabel("Distance 2 (scale feet):"));
-       pane5.add(distance2);
-       getContentPane().add(pane5);
-
+        pane5.setLayout(new FlowLayout());
+        pane5.add(new JLabel("Distance 2 (scale feet):"));
+        pane5.add(distance2);
+        getContentPane().add(pane5);
+        
         getContentPane().add(startButton);
-
+        
         JPanel pane6 = new JPanel();
         pane6.setLayout(new FlowLayout());
         pane6.add(new JLabel("Speed 1 (scale MPH):"));
         pane6.add(result1);
         getContentPane().add(pane6);
-
+        
         JPanel pane7 = new JPanel();
         pane7.setLayout(new FlowLayout());
         pane7.add(new JLabel("Speed 2 (scale MPH):"));
         pane7.add(result2);
         getContentPane().add(pane7);
-
-
+        
+        
         // add the actions to the config button
         startButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     setup();
                 }
             });
-
+        
         // start displaying the sensor status when the number is entered
         startSensor.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -134,21 +134,21 @@ public class SpeedometerFrame extends javax.swing.JFrame {
                     stopSensorIcon1.setSensor(null, stopSensor1.getText());
                 }
             });
-
+        
         stopSensor2.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     stopSensorIcon2.setSensor(null, stopSensor2.getText());
                 }
             });
-
+        
         // and get ready to display
         pack();
     }
-
+    
     long startTime = 0;
     long stopTime1 = 0;
     long stopTime2 = 0;
-
+    
     void setup() {
         startButton.setEnabled(false);
         startButton.setToolTipText("You can only configure this once");
@@ -192,38 +192,38 @@ public class SpeedometerFrame extends javax.swing.JFrame {
                 }
             });
         stopSensorIcon1.setSensor(null, stopSensor1.getText());
-
-    // set stop sensor2
-    s = InstanceManager.sensorManagerInstance().
-        newSensor(null, stopSensor2.getText());
-    s.addPropertyChangeListener(new java.beans.PropertyChangeListener(){
-            public void propertyChange(java.beans.PropertyChangeEvent e) {
-                SpeedometerFrame.log.debug("stop sensor fired");
-                if (e.getPropertyName().equals("KnownState")) {
-                    int now = ((Integer) e.getNewValue()).intValue();
-                    if ( (now==Sensor.ACTIVE && stopOnEntry2.isSelected())
-                         || (now==Sensor.INACTIVE && stopOnExit2.isSelected()) ) {
-                        stopTime2 = System.currentTimeMillis();  // milliseconds
-                        if (log.isDebugEnabled()) log.debug("set stop "+stopTime2);
-                        // calculate and show speed
-                        double secs = (stopTime2-startTime)/1000.;
-                        double feet = Integer.parseInt(distance2.getText());
-                        double speed = (feet/5280.)*(3600./secs);
-                        if (log.isDebugEnabled()) log.debug("calc from "+secs+","+feet+":"+speed);
-                        result2.setText(String.valueOf(speed).substring(0,5));
+        
+        // set stop sensor2
+        s = InstanceManager.sensorManagerInstance().
+            newSensor(null, stopSensor2.getText());
+        s.addPropertyChangeListener(new java.beans.PropertyChangeListener(){
+                public void propertyChange(java.beans.PropertyChangeEvent e) {
+                    SpeedometerFrame.log.debug("stop sensor fired");
+                    if (e.getPropertyName().equals("KnownState")) {
+                        int now = ((Integer) e.getNewValue()).intValue();
+                        if ( (now==Sensor.ACTIVE && stopOnEntry2.isSelected())
+                             || (now==Sensor.INACTIVE && stopOnExit2.isSelected()) ) {
+                            stopTime2 = System.currentTimeMillis();  // milliseconds
+                            if (log.isDebugEnabled()) log.debug("set stop "+stopTime2);
+                            // calculate and show speed
+                            double secs = (stopTime2-startTime)/1000.;
+                            double feet = Integer.parseInt(distance2.getText());
+                            double speed = (feet/5280.)*(3600./secs);
+                            if (log.isDebugEnabled()) log.debug("calc from "+secs+","+feet+":"+speed);
+                            result2.setText(String.valueOf(speed).substring(0,5));
+                        }
                     }
                 }
-            }
-        });
-    stopSensorIcon2.setSensor(null, stopSensor2.getText());
+            });
+        stopSensorIcon2.setSensor(null, stopSensor2.getText());
     }
-
+    
     // Close the window when the close box is clicked
     void thisWindowClosing(java.awt.event.WindowEvent e) {
         setVisible(false);
         // dispose();
     }
-
+    
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SpeedometerFrame.class.getName());
 }
 
