@@ -12,7 +12,7 @@ import jmri.jmrit.catalog.NamedIcon;
  * <p>Description: </p>
  * <p>Copyright: Bob Jacobsen Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class PositionableLabel extends JLabel
@@ -29,6 +29,7 @@ public class PositionableLabel extends JLabel
     public PositionableLabel(NamedIcon s) {
         super(s);
         icon = true;
+        namedIcon = s;
         debug = log.isDebugEnabled();
         setToolTipText("Alt-click to see menu, drag with meta key to move");
         connect();
@@ -38,6 +39,8 @@ public class PositionableLabel extends JLabel
     boolean icon = false;
     public boolean isText() { return text; }
     boolean text = false;
+
+    NamedIcon namedIcon = null;
 
     /**
      * Connect listeners
@@ -56,6 +59,10 @@ public class PositionableLabel extends JLabel
         xClick = e.getX();
         yClick = e.getY();
         if (debug) log.debug("Pressed: "+where(e));
+        if (e.isPopupTrigger()) {
+            if (debug) log.debug("show popup");
+            showPopUp(e);
+        }
     }
 
     public void mouseReleased(MouseEvent e) {
@@ -68,9 +75,12 @@ public class PositionableLabel extends JLabel
 
     public void mouseClicked(MouseEvent e) {
         if (debug) log.debug("Clicked: "+where(e));
-        if (debug && e.isPopupTrigger()) log.debug("Clicked was pop up trigger");
         if (debug && e.isMetaDown()) log.debug("meta down");
         if (debug && e.isAltDown()) log.debug(" alt down");
+        if (e.isPopupTrigger()) {
+            if (debug) log.debug("show popup");
+            showPopUp(e);
+        }
     }
     public void mouseExited(MouseEvent e) {
         if (debug) log.debug("Exited:  "+where(e));
@@ -94,10 +104,26 @@ public class PositionableLabel extends JLabel
         }
     }
 
+    JPopupMenu popup = null;
+    JLabel ours;
     /**
-     * For over-riding in the using classes:
+     * For over-riding in the using classes: only provides icon rotation
      */
-    protected void showPopUp(MouseEvent e) {}
+    protected void showPopUp(MouseEvent e) {
+        ours = this;
+        if (icon) {
+            popup = new JPopupMenu();
+            popup.add(new AbstractAction("Rotate") {
+                public void actionPerformed(ActionEvent e) {
+                    namedIcon.setRotation(namedIcon.getRotation()+1, ours);
+                    setIcon(namedIcon);
+                    ours.setSize(ours.getPreferredSize().width, ours.getPreferredSize().height);
+                }
+            }
+            );
+            popup.show(e.getComponent(), e.getX(), e.getY());
+        }
+    }
 
     String where(MouseEvent e) {
         return ""+e.getX()+","+e.getY();
