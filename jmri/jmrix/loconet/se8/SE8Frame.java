@@ -32,7 +32,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author  Bob Jacobsen   Copyright (C) 2003
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class SE8Frame extends JFrame implements LocoNetListener {
 
@@ -40,13 +40,7 @@ public class SE8Frame extends JFrame implements LocoNetListener {
         super("SE8 programmer");
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-        JPanel pane0 = new JPanel();
-        pane0.setLayout(new FlowLayout());
-            pane0.add(new JLabel("Unit address: "));
-            pane0.add(addrField);
-            pane0.add(readAllButton);
-            pane0.add(writeAllButton);
-        appendLine(pane0);
+        appendLine(provideAddressing());  // add read/write buttons, address
 
         JPanel panel2;
         appendLine(fullmode);
@@ -79,20 +73,6 @@ public class SE8Frame extends JFrame implements LocoNetListener {
 
         appendLine(status);
 
-        // install read all, write all button handlers
-        readAllButton.addActionListener( new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                	readAll();
-                }
-            }
-        );
-        writeAllButton.addActionListener( new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                	writeAll();
-                }
-            }
-        );
-
         // add status
         getContentPane().add(status);
 
@@ -116,6 +96,35 @@ public class SE8Frame extends JFrame implements LocoNetListener {
     }
 
     /**
+     * Provide read, write buttons and address
+     */
+    JPanel provideAddressing() {
+        JPanel pane0 = new JPanel();
+        pane0.setLayout(new FlowLayout());
+            pane0.add(new JLabel("Unit address: "));
+            pane0.add(addrField);
+            pane0.add(readAllButton);
+            pane0.add(writeAllButton);
+        // install read all, write all button handlers
+        readAllButton.addActionListener( new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                	readAll();
+                }
+            }
+        );
+        writeAllButton.addActionListener( new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                	writeAll();
+                }
+            }
+        );
+        return pane0;
+    }
+    JToggleButton readAllButton  = new JToggleButton("Read from SE8");
+    JToggleButton writeAllButton = new JToggleButton("Write to SE8");
+    JTextField addrField = new JTextField(4);
+    
+    /**
      * Handle layout details during construction.
      * <P>
      * @param c component to put on a single line
@@ -129,12 +138,20 @@ public class SE8Frame extends JFrame implements LocoNetListener {
     int state = 0;
 
     void readAll() {
+        // check the address
+        try {
+            setAddress(255);
+        } catch (Exception e) {
+            log.debug("readAll aborted due to invalid address");
+        }
         // Start the first operation
         read = true;
         state = 1;
         nextRequest();
     }
 
+    int address = 0;
+        
     void nextRequest() {
         if (read) {
             // read op
@@ -142,7 +159,7 @@ public class SE8Frame extends JFrame implements LocoNetListener {
             LocoNetMessage l = new LocoNetMessage(6);
             l.setOpCode(0xD0);
             l.setElement(1, 0x62);
-            l.setElement(2, (Integer.parseInt(addrField.getText())-1)&0x7F);
+            l.setElement(2, address&0x7F);
             l.setElement(3, 0x72);
             int loc = (state-1)/8;
             int bit = (state-1)-loc*8;
@@ -154,7 +171,7 @@ public class SE8Frame extends JFrame implements LocoNetListener {
             LocoNetMessage l = new LocoNetMessage(6);
             l.setOpCode(0xD0);
             l.setElement(1, 0x72);
-            l.setElement(2, (Integer.parseInt(addrField.getText())-1)&0x7F);
+            l.setElement(2, address&0x7F);
             l.setElement(3, 0x72);
             int loc = (state-1)/8;
             int bit = (state-1)-loc*8;
@@ -163,8 +180,38 @@ public class SE8Frame extends JFrame implements LocoNetListener {
         }
     }
 
-    void writeAll() {
-        // copy over the display
+    /**
+      * Turn the textfield containing the address into 
+      * a valid integer address, handling user-input
+      * errors as needed
+      */
+    protected void setAddress(int maxValid) throws Exception {
+        try {
+            address = (Integer.parseInt(addrField.getText())-1);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,"Invalid Address",
+                    "Error",JOptionPane.ERROR_MESSAGE);
+            log.error("Exception when parsing Rate Field: "+e);
+            throw e;
+        }
+        // parsed OK, check range
+        if (address > (maxValid+1) || address < 0) {
+            JOptionPane.showMessageDialog(this,
+                "Address out of range, must be 1 to "+(maxValid+1),
+                "Error",JOptionPane.ERROR_MESSAGE);
+            log.error("Invalid address value");
+            throw new jmri.JmriException("Address out of range: "+address);
+        }
+        return;  // OK
+    }
+    
+    /**
+     * Copy from the GUI to the opsw array. 
+     * <p>
+     * Used before write operations start
+     */
+     
+    void copyToOpsw() {
         opsw[ 1] = fullmode.isSelected();
         opsw[ 2] = twoaspects.isSelected();
 
@@ -201,7 +248,19 @@ public class SE8Frame extends JFrame implements LocoNetListener {
         else opsw[10] = false;
         if ((value&0x02) != 0) opsw[9] = true;
         else opsw[9] = false;
-
+    }
+    
+    void writeAll() {
+        // check the address
+        try {
+            setAddress(255);
+        } catch (Exception e) {
+            log.debug("writeAll aborted due to invalid address"+e);
+        }
+        
+        // copy over the display
+        copyToOpsw();
+        
         // Start the first operation
         read = false;
         state = 1;
@@ -313,22 +372,20 @@ public class SE8Frame extends JFrame implements LocoNetListener {
         }
     }
 
-    JTextField addrField = new JTextField(4);
-
 
     JCheckBox fullmode            = new JCheckBox("Reserved (OpSw 1)");  // opsw 01
     JCheckBox twoaspects          = new JCheckBox("Two aspects (one turnout address) per head");  // opsw 02
     JComboBox section1to4mode     = new JComboBox(new String[] {
                                               "3 LEDs common anode","3 LEDs common cathode",
                                               "3-wire searchlight common anode","3-wire searchlight common cathode",
-                                              "2-wire searchlight common anode","2-wire searchlight common cathode",
-                                              "Reserved (6)", "Reserved (7)"
+                                              "Reserved (4)", "Reserved (5)",
+                                              "2-wire searchlight common anode","2-wire searchlight common cathode"
                                               });  // opsw 3, 4, 5
     JComboBox section5to8mode     = new JComboBox(new String[] {
                                               "3 LEDs common anode","3 LEDs common cathode",
                                               "3-wire searchlight common anode","3-wire searchlight common cathode",
-                                              "2-wire searchlight common anode","2-wire searchlight common cathode",
-                                              "Reserved (6)", "Reserved (7)"
+                                              "Reserved (4)", "Reserved (5)",
+                                              "2-wire searchlight common anode","2-wire searchlight common cathode"
                                               });  // opsw 6, 7, 8
     JComboBox fourthAspect        = new JComboBox(new String[] {
                                               "flashing yellow", "flashing red",
@@ -346,9 +403,6 @@ public class SE8Frame extends JFrame implements LocoNetListener {
     JCheckBox exercise            = new JCheckBox("Show LED exercise pattern");  // opsw 21
 
     JLabel status = new JLabel("The SE8 should be in normal mode (Don't push the buttons on the SE8!)");
-
-    JToggleButton readAllButton  = new JToggleButton("Read from SE8");
-    JToggleButton writeAllButton = new JToggleButton("Write to SE8");
 
     // Destroy the window when the close box is clicked, as there is no
     // way to get it to show again
