@@ -43,7 +43,7 @@ public class LocoMonFrame extends jmri.jmrix.AbstractMonFrame implements LocoNet
 	
 	public synchronized void message(LocoNetMessage l) {  // receive a LocoNet message and log it
 		// display the raw data if requested
-		String raw = "";
+		String raw = "packet: ";
 		if ( rawCheckBox.isSelected() ) {
 			int len = l.getNumDataElements();
 			for (int i=0; i<len; i++)

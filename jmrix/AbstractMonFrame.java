@@ -89,6 +89,7 @@ public abstract class AbstractMonFrame extends javax.swing.JFrame  {
 		// set sizes to same as largest
 		Dimension big = openFileChooserButton.getMaximumSize();
 		if (timeCheckBox.getMaximumSize().width > big.width) big.width = timeCheckBox.getMaximumSize().width;
+		openFileChooserButton.setMaximumSize(big);
 		clearButton.setMaximumSize(big);
 		timeCheckBox.setMaximumSize(big);
 		rawCheckBox.setMaximumSize(big);

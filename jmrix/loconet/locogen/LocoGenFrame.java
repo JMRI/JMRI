@@ -38,7 +38,7 @@ public class LocoGenFrame extends javax.swing.JFrame {
 		sendButton.setToolTipText("Send packet");
 		
 		packetTextField.setText("                   ");
-		packetTextField.setToolTipText("Enter packet as hex pairs, e.g. 03 0A 12 3F");
+		packetTextField.setToolTipText("Enter packet as hex pairs, e.g. 82 7D");
 		
 		setTitle("Send LocoNet Packet");
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
