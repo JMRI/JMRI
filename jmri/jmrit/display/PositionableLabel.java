@@ -1,15 +1,16 @@
 package jmri.jmrit.display;
 
 import jmri.jmrit.catalog.NamedIcon;
-import java.awt.*;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JLabel;
@@ -22,7 +23,7 @@ import javax.swing.JRadioButtonMenuItem;
  * PositionableLabel is a JLabel that can be dragged around the
  * inside of the enclosing Container using a right-drag.
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class PositionableLabel extends JLabel
@@ -181,13 +182,19 @@ public class PositionableLabel extends JLabel
             JMenu styleMenu = new JMenu("Font style");
             styleMenu.add(italic = newStyleMenuItem(new AbstractAction("Italic") {
                 public void actionPerformed(ActionEvent e) {
-                    if (bold.isSelected()) setFontStyle(Font.ITALIC, 0);
+                    if (log.isDebugEnabled())
+                        log.debug("When style item selected "+((String)getValue(NAME))
+                                    +" italic state is "+italic.isSelected());
+                    if (italic.isSelected()) setFontStyle(Font.ITALIC, 0);
                     else setFontStyle(0, Font.ITALIC);
                 }
               }, Font.ITALIC));
 
             styleMenu.add(bold = newStyleMenuItem(new AbstractAction("Bold") {
                 public void actionPerformed(ActionEvent e) {
+                    if (log.isDebugEnabled())
+                        log.debug("When style item selected "+((String)getValue(NAME))
+                                    +" bold state is "+bold.isSelected());
                     if (bold.isSelected()) setFontStyle(Font.BOLD, 0);
                     else setFontStyle(0, Font.BOLD);
                 }
@@ -216,7 +223,8 @@ public class PositionableLabel extends JLabel
                 }
             });
 
-        } else log.warn("showPopUp when neither text nor icon true");
+        } else if (!text && !icon)
+            log.warn("showPopUp when neither text nor icon true");
         // show the result
         if (popup != null) popup.show(e.getComponent(), e.getX(), e.getY());
     }
@@ -256,7 +264,8 @@ public class PositionableLabel extends JLabel
         // next two lines needed because JCheckBoxMenuItem(AbstractAction) not in 1.1.8
         JCheckBoxMenuItem c = new JCheckBoxMenuItem((String)a.getValue(a.NAME));
         c.addActionListener(a);
-
+        if (log.isDebugEnabled()) log.debug("When creating style item "+((String)a.getValue(a.NAME))
+                                            +" mask was "+mask+" state was "+getFont().getStyle());
         if ( (mask & getFont().getStyle()) == mask ) c.setSelected(true);
         return c;
     }
