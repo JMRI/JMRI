@@ -5,7 +5,7 @@ package jmri.jmrit.roster;
 import jmri.jmrit.XmlFile;
 import java.io.File;
 
-import javax.swing.JComboBox;
+import javax.swing.*;
 
 import com.sun.java.util.collections.ArrayList;
 import com.sun.java.util.collections.List;
@@ -40,7 +40,7 @@ import org.jdom.output.XMLOutputter;
  * sort is done manually each time an entry is added.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001;  Dennis Miller Copyright 2004
- * @version	$Revision: 1.21 $
+ * @version	$Revision: 1.22 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -75,13 +75,14 @@ public class Roster extends XmlFile {
      */
     public void addEntry(RosterEntry e) {
         if (log.isDebugEnabled()) log.debug("Add entry "+e);
-        int i;
-        for (i=0; i<_list.size(); i++) {
+        int i = _list.size()-1;// Last valid index
+        while (i>=0) {
             // compareToIgnoreCase not present in Java 1.1.8
-            if (e.getId().toUpperCase().compareTo(((RosterEntry)_list.get(i)).getId().toUpperCase()) < 0 )
+            if (e.getId().toUpperCase().compareTo(((RosterEntry)_list.get(i)).getId().toUpperCase()) > 0 )
                 break; // I can never remember whether I want break or continue here
+            i--;
         }
-        _list.add(i, e);
+        _list.add(i+1, e);
         setDirty(true);
         firePropertyChange("add", null, e);
     }
@@ -102,6 +103,17 @@ public class Roster extends XmlFile {
      * @return Number of entries in the Roster
      */
     public int numEntries() { return _list.size(); }
+
+    /**
+     * Return a combo box containing the entire roster.
+     * <P>
+     * This is based on a single model, so it can be updated
+     * when the roster changes.
+     *
+     */
+    public JComboBox fullRosterComboBox() {
+        return matchingComboBox(null, null, null, null, null, null, null);
+    }
 
     /**
      * Get a JComboBox representing the choices that match
@@ -465,12 +477,29 @@ public class Roster extends XmlFile {
         pcs.addPropertyChangeListener(l);
     }
 
-    protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
+    protected void firePropertyChange(String p, Object old, Object n) {
+        pcs.firePropertyChange(p,old,n);
+    }
 
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
 
+    /**
+     * Notify that the ID of an entry has changed.  This doesn't actually change the
+     * Roster per se, but triggers recreation.
+     */
+    public void entryIdChanged(RosterEntry r) {
+        log.debug("EntryIdChanged");
+        
+        // order may be wrong! Sort
+        RosterEntry[] rarray = new RosterEntry[_list.size()];
+        for (int i=0; i<rarray.length; i++) rarray[i] =(RosterEntry) (_list.get(i));
+        jmri.util.StringUtil.sortUpperCase(rarray);
+        for (int i=0; i<rarray.length; i++) _list.set(i,rarray[i]);
+        
+        firePropertyChange("change", null, r);
+    }
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Roster.class.getName());
 
