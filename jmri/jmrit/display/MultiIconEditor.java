@@ -19,7 +19,7 @@ import javax.swing.JPanel;
  * {@link PanelEditor} for an example of how to use this.
  *
  * @author Bob Jacobsen  Copyright (c) 2003
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  * @see jmri.jmrit.display.SensorIcon
  * @see jmri.jmrit.display.PanelEditor
  * @see jmri.jmrit.catalog
@@ -44,6 +44,7 @@ public class MultiIconEditor extends JPanel {
         iconList[iconNum] = new NamedIcon(name, name);
         // make a button to change that icon
         JButton j = new IconButton(iconNum, iconList[iconNum]);
+        j.setToolTipText(iconList[iconNum].getName());
         buttonList[iconNum] = j;
 
         // and add it to this panel
