@@ -8,10 +8,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * Provide GUI to configure symbolic programmer defaults
+ * Provide GUI to configure symbolic programmer defaults.
+ *
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class ProgrammerConfigPane extends JPanel {
 
