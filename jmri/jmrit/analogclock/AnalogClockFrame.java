@@ -17,7 +17,7 @@ import jmri.jmrit.catalog.*;
  *
  * <p> Time code copied from code for the Nixie clock by Bob Jacobsen</p>
  * @author                     Dennis Miller Copyright (C) 2004
- * @version                    $Revision: 1.1 $
+ * @version                    $Revision: 1.2 $
  */
 
 public class AnalogClockFrame extends javax.swing.JFrame implements java.beans.PropertyChangeListener {
@@ -29,6 +29,8 @@ public class AnalogClockFrame extends javax.swing.JFrame implements java.beans.P
       static int delay = 2*1000;  // update display every two seconds
       static double minuteAngle;
       static double hourAngle;
+      static String amPm;
+
 
 
 
@@ -122,6 +124,7 @@ public clockPanel() {
 	scaledMinuteIcon = new NamedIcon("resources/icons/misc/Analog/Minute.png", "resources/icons/misc/Analog/Minute.png");
 	minute = minuteIcon.getImage();
 
+        amPm = "AM";
 
         // Add component listener to handle frame resizing event
         this.addComponentListener(new ComponentAdapter() {
@@ -160,7 +163,7 @@ public void paint(Graphics g){
 
      // Add the hour digits, with the fontsize scaled to the clock size
      int fontSize = faceSize/10;
-     if (fontSize < 1) {fontSize=1;}
+     if (fontSize < 1) fontSize=1;
      Font sizedFont = new Font("Serif", Font.PLAIN, fontSize);
      g2.setFont(sizedFont);
      FontMetrics fontM = g2.getFontMetrics(sizedFont);
@@ -189,6 +192,15 @@ public void paint(Graphics g){
 
      // restore original transfrom
      g2.setTransform(saveXform);
+
+     // Draw AM/PM indicator in slightly smaller font
+     int amPmFontSize = (int) ((double) fontSize*.75);
+     if (amPmFontSize < 1) amPmFontSize = 1;
+     Font amPmSizedFont = new Font("Serif", Font.PLAIN, amPmFontSize);
+     g2.setFont(amPmSizedFont);
+     FontMetrics amPmFontM = g2.getFontMetrics(amPmSizedFont);
+
+     g2.drawString(amPm, centreX - amPmFontM.stringWidth(amPm)/2, centreY+faceSize/5 );
    }
 
    // Method to provide the cartesian x coordinate given a radius and angle (in degrees)
@@ -256,6 +268,8 @@ public void paint(Graphics g){
        int minutes = now.getMinutes();
        minuteAngle = (double) minutes*6.;
        hourAngle = (double) hours*30. + 30.*minuteAngle/360.;
+       if (hours < 12) {amPm = "AM";}
+       else amPm = "PM";
        repaint();
    }
 
