@@ -1,12 +1,4 @@
-/**
- * DiagnosticAction.java
- *
- * Description:		Swing action to create and register a
- *       			DiagnosticFrame object
- *
- * @author                  Dave Duchamp Copyright (C) 2004
- * @version
- */
+// DiagnosticAction.java
 
 package jmri.jmrix.cmri.serial.diagnostic;
 
@@ -18,9 +10,16 @@ import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.SerialSensorManager;
 // end temporary
 
-public class DiagnosticAction 			extends AbstractAction {
+/**
+ * Swing action to create and register a
+ *       			DiagnosticFrame object
+ *
+ * @author                  Dave Duchamp Copyright (C) 2004
+ * @version
+ */
+public class DiagnosticAction 	extends AbstractAction {
 
-	public DiagnosticAction(String s) { super(s);}
+    public DiagnosticAction(String s) { super(s);}
 
     public DiagnosticAction() {
         this("Run C/MRI Diagnostic");
@@ -50,12 +49,12 @@ public class DiagnosticAction 			extends AbstractAction {
         SerialNode n2 = new SerialNode(2,SerialNode.SMINI);
         // Define a Sensor for each serial node (needed for polling)
         SerialSensorManager m = SerialSensorManager.instance();
-        m.provideSensor("1"); 
-        m.provideSensor("1001"); 
-        m.provideSensor("2001");     
+        m.provideSensor("1");
+        m.provideSensor("1001");
+        m.provideSensor("2001");
     }
 //  end temporary
-    
+
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DiagnosticAction.class.getName());
 }
 

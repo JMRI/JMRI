@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -36,7 +36,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
 
         // entirely poll driven, so reduce interval
         mWaitBeforePoll = 25;  // default = 25
-        
+
         // clear the array of SerialNodes
         for (int i=0; i<=MAXNODE; i++) {
             nodeArray[i] = null;
@@ -80,24 +80,26 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         node.setOutputBit(bit,state);
     }
 // end of code to be removed
-    
+
     private int numNodes = 0;       // Incremented as Serial Nodes are created and registered
                                     // Corresponds to next available address in nodeArray
     private static int MINNODE = 0;
     private static int MAXNODE = 127;
     private SerialNode[] nodeArray = new SerialNode[MAXNODE+1];  // numbering from 0
-    private boolean[] mustInit = new boolean[MAXNODE+1]; 
-    
-    /** 
+    private boolean[] mustInit = new boolean[MAXNODE+1];
+
+    /**
      *  Public method to register a Serial node
      */
      public void registerSerialNode(SerialNode node) {
-        // no validity checking because at this point the node may not be fully defined
-        nodeArray[numNodes] = node;
-        numNodes ++;
+        synchronized (this) {
+            // no validity checking because at this point the node may not be fully defined
+            nodeArray[numNodes] = node;
+            numNodes++;
+        }
     }
-    
-    /** 
+
+    /**
      * Public method to identify a SerialNode from its node address
      *      Note:   'ua' is the node address, numbered from 0.
      *              Returns 'null' if a SerialNode with the specified address
@@ -111,18 +113,18 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         }
     	return (null);
     }
-    
-    /** 
+
+    /**
      *  Public method to return the first Serial node
      */
      public SerialNode getFirstSerialNode() {
         aNodeIndex = 0;
         return nodeArray[aNodeIndex];
     }
-    
+
     int aNodeIndex = 128;   // used by getFirstSerialNode and getNextSerialNode to
-                            //    cycle through the serial nodes    
-    /** 
+                            //    cycle through the serial nodes
+    /**
      *  Public method to return the next Serial node
      *     Note:  returns null if there is no 'next Serial node'
      */
@@ -159,10 +161,10 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
 
     SerialSensorManager mSensorManager = null;
     public void setSensorManager(SerialSensorManager m) { mSensorManager = m; }
-    
+
     int curSerialNodeIndex = 0;   // cycles over defined nodes when pollMessage is called
-    /** 
-     *  Handles initialization, output and polling for C/MRI Serial Nodes 
+    /**
+     *  Handles initialization, output and polling for C/MRI Serial Nodes
      *      from within the running thread
      */
     protected AbstractMRMessage pollMessage() {
@@ -202,7 +204,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
             return null;
         }
     }
-    
+
     protected AbstractMRListener pollReplyHandler() {
         return mSensorManager;
     }

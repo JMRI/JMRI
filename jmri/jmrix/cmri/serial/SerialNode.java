@@ -20,11 +20,11 @@ import jmri.Sensor;
  * <P>
  * The SMINI is defined as having 1 input and 2 outputs cards.<br>
  * USIC/SUSIC nodes can have 0-63 inputs and 0-63 output cards, but no
- * more than 64 total cards.   
+ * more than 64 total cards.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class SerialNode {
 
@@ -32,16 +32,16 @@ public class SerialNode {
      * Maximum number of sensors a node can carry.
      * <P>
      * Note this is less than a current SUSIC motherboard can have,
-     * but should be sufficient for all reasonable layouts.  
+     * but should be sufficient for all reasonable layouts.
      * <P>
      * Must be less than, and is general one less than,
      * {@link SerialSensorManager#SENSORSPERUA}
      */
     static final int MAXSENSORS = 999;
 
-    // class constants 
+    // class constants
     public static final int SMINI = 1;          // SMINI node type
-    public static final int USIC_SUSIC = 2;     // USIC/SUSIC node type 
+    public static final int USIC_SUSIC = 2;     // USIC/SUSIC node type
     public static final byte INPUT_CARD = 1;    // USIC/SUSIC input card type for specifying location
     public static final byte OUTPUT_CARD = 2;   // USIC/SUSIC output card type for specifying location
     public static final byte NO_CARD = 0;       // USIC/SUSIC unused location
@@ -51,24 +51,24 @@ public class SerialNode {
     protected int bitsPerCard = 24;             // 24 for SMINI and USIC, 24 or 32 for SUSIC
     protected int transmissionDelay = 0;        // DL, delay between bytes on Receive (units of 10 microsec.)
     protected int num2LSearchLights = 0;        // SMINI only, 'NS' number of two lead bicolor signals
-    protected byte[] locSearchLightBits = new byte[48]; // SMINI only, 0 = not searchlight LED, 
+    protected byte[] locSearchLightBits = new byte[48]; // SMINI only, 0 = not searchlight LED,
                                                 //   1 = searchlight LED, 2*NS bits must be set to 1
     protected byte[] cardTypeLocation = new byte[64]; // Varys on USIC/SUSIC. There must numInputCards bytes set to
-    						//   INPUT_CARD, and numOutputCards set to OUTPUT_CARD, with 
-                                                //   the remaining locations set to NO_CARD.  All 
+    						//   INPUT_CARD, and numOutputCards set to OUTPUT_CARD, with
+                                                //   the remaining locations set to NO_CARD.  All
                                                 //   NO_CARD locations must be at the end of the array.  The
                                                 //   array is indexed by card address.
     // operational instance variables  (should not be preserved between runs)
     protected boolean needSend = true;          // 'true' if something has changed in the outputByte array since
                                                 //    the last send to the hardware node
     protected byte[] outputArray = new byte[256]; // current values of the output bits for this node
-    protected boolean hasActiveSensors = false; // 'true' if there are active Sensors for this node         
+    protected boolean hasActiveSensors = false; // 'true' if there are active Sensors for this node
     protected int lastUsedSensor = 0;           // grows as sensors defined
     protected Sensor[] sensorArray = new Sensor[MAXSENSORS+1];
     protected int[] sensorLastSetting = new int[MAXSENSORS+1];
     protected int[] sensorTempSetting = new int[MAXSENSORS+1];
 
-    /** 
+    /**
      * Assumes a node address of 0, and a node type of SMINI
      * If this constructor is used, actual node address must be set using
      *    setNodeAddress, and actual node type using 'setNodeType'
@@ -77,11 +77,11 @@ public class SerialNode {
         this (0,SMINI);
     }
 
-    /** 
+    /**
      * Creates a new SerialNode and initialize default instance variables
      *   address - Address of node on CMRI serial bus (0-127)
-     *   type - SMINI, USIC_SUSIC, 
-     */    
+     *   type - SMINI, USIC_SUSIC,
+     */
     public SerialNode(int address, int type) {
         // set address and type and check validity
         setNodeAddress (address);
@@ -111,7 +111,8 @@ public class SerialNode {
         SerialTrafficController.instance().registerSerialNode(this);
     }
 
-    /** Public method setting an output bit.
+    /**
+     * Public method setting an output bit.
      *    Note:  state = 'true' for 0, 'false' for 1
      *           bits are numbered from 1 (not 0)
      */
@@ -123,7 +124,7 @@ public class SerialNode {
             warn("C/MRI - Output bit out-of-range for defined node");
         }
         if (byteNumber >= 256) byteNumber = 255;
-        // update the byte        
+        // update the byte
         byte bit = (byte) (1<<((bitNumber-1) % 8));
         byte oldByte = outputArray[byteNumber];
         if (state) outputArray[byteNumber] &= (~bit);
@@ -133,67 +134,67 @@ public class SerialNode {
             needSend = true;
         }
     }
-    
-    /** 
+
+    /**
      * Public method to return state of Sensors.
      *  Note:  returns 'true' if at least one sensor is active for this node
      */
     public boolean sensorsActive() { return hasActiveSensors; }
-    
-    /** 
+
+    /**
      * Public method to return state of needSend flag.
      */
     public boolean mustSend() { return needSend; }
-    
-    /** 
+
+    /**
      * Public to reset state of needSend flag.
      */
     public void resetMustSend() { needSend = false; }
 
-    /** 
+    /**
      * Public method to return number of input cards.
      */
     public int numInputCards() {
     	int result = 0;
-    	for (int i=0; i<cardTypeLocation.length; i++) 
+    	for (int i=0; i<cardTypeLocation.length; i++)
     		if (cardTypeLocation[i]==INPUT_CARD) result++;
-    		
+
     	// check consistency
-    	if (nodeType==SMINI && result!=1) 
+    	if (nodeType==SMINI && result!=1)
     		warn("C/MRI SMINI node with "+result+" input cards");
-    	if (nodeType==USIC_SUSIC && result>=64) 
+    	if (nodeType==USIC_SUSIC && result>=64)
     		warn("C/MRI USIC/SUSIC node with "+result+" input cards");
-    		
+
     	return result;
     }
 
-    /** 
+    /**
      * Public method to return number of output cards.
      */
     public int numOutputCards() {
     	int result = 0;
-    	for (int i=0; i<cardTypeLocation.length; i++) 
+    	for (int i=0; i<cardTypeLocation.length; i++)
     		if (cardTypeLocation[i]==OUTPUT_CARD) result++;
-    		
+
     	// check consistency
-    	if (nodeType==SMINI && result!=2) 
+    	if (nodeType==SMINI && result!=2)
     		warn("C/MRI SMINI node with "+result+" output cards");
-    	if (nodeType==USIC_SUSIC && result>=64) 
+    	if (nodeType==USIC_SUSIC && result>=64)
     		warn("C/MRI USIC/SUSIC node with "+result+" output cards");
-    		
+
     	return result;
     }
-    
-    /** 
+
+    /**
      * Public method to return node type
      *   Current types are:
-     *      SMINI, USIC_SUSIC, 
+     *      SMINI, USIC_SUSIC,
      */
     public int getNodeType() {
         return (nodeType);
     }
-    
-    /** 
+
+    /**
      * Public method to set node type
      *   Current types are:
      *      SMINI, USIC_SUSIC,
@@ -225,14 +226,14 @@ public class SerialNode {
         }
     }
 
-    /** 
+    /**
      * Public method to return number of bits per card.
      */
     public int getNumBitsPerCard() {
         return (bitsPerCard);
     }
-    
-    /** 
+
+    /**
      * Public method to set number of bits per card.
      */
     public void setNumBitsPerCard(int bits) {
@@ -244,15 +245,15 @@ public class SerialNode {
             bitsPerCard = bits;
         }
     }
-    
-    /** 
+
+    /**
      * Public method to return the node address.
      */
     public int getNodeAddress() {
         return (nodeAddress);
     }
 
-    /** 
+    /**
      * Public method to set the node address.
      *   address - node address set in dip switches (0 - 127)
      */
@@ -265,15 +266,15 @@ public class SerialNode {
             nodeAddress = 0;
         }
     }
-    
-    /** 
+
+    /**
      * Public method to return transmission delay.
      */
     public int getTransmissionDelay() {
         return (transmissionDelay);
     }
 
-    /** 
+    /**
      * Public method to set transmission delay.
      *   delay - delay between bytes on receive (units of 10 microsec.)
      *   Note: two bytes are used, so range is 0-65,535.  If delay
@@ -289,7 +290,7 @@ public class SerialNode {
         transmissionDelay = delay;
     }
 
-    /** 
+    /**
      * Public method to set the type of one card.
      *   address - address recognized for this card by the node hardware.
      *               for USIC_SUSIC address set in card's dip switches (0 - 63)
@@ -313,11 +314,11 @@ public class SerialNode {
                                 ( (address<2) && (type!=OUTPUT_CARD) ) ) ) {
             log.error("illegal card type/address specification for SMINI");
             return;
-        }        
-// here add type/location restrictions for other types of card        
+        }
+// here add type/location restrictions for other types of card
         cardTypeLocation[address] = (byte) type;
     }
-    
+
     /** Public method to test for OUTPUT_CARD type.
      *   Returns true if card with 'cardNum' is an output card.
      *   Returns false if card is not an output card, or if
@@ -334,7 +335,7 @@ public class SerialNode {
         }
         return (cardTypeLocation[cardNum]==OUTPUT_CARD);
     }
-        
+
     /** Public method to test for INPUT_CARD type.
      *   Returns true if card with 'cardNum' is an input card.
      *   Returns false if card is not an input card, or if
@@ -351,10 +352,10 @@ public class SerialNode {
         }
         return (cardTypeLocation[cardNum]==INPUT_CARD);
     }
-        
+
     /** Public method to return 'Output Card Index'
-     *   Returns the index this output card would have in an 
-     *     array of output cards for this node.  Can be used 
+     *   Returns the index this output card would have in an
+     *     array of output cards for this node.  Can be used
      *     to locate this card's bytes in an output message.
      *     Array is ordered by increasing node address.
      */
@@ -373,14 +374,14 @@ public class SerialNode {
                 }
             }
         }
-        // Here if error - cardNum is not an 
+        // Here if error - cardNum is not an
         warn("C/MRI - input card to getOutputCardIndex is not an Output Card");
         return (0);
     }
-        
+
     /** Public method to return 'Input Card Index'
-     *   Returns the index this input card would have in an 
-     *     array of input cards for this node.  Can be used 
+     *   Returns the index this input card would have in an
+     *     array of input cards for this node.  Can be used
      *     to locate this card's bytes in an receive message.
      *     Array is ordered by increasing node address.
      */
@@ -399,17 +400,17 @@ public class SerialNode {
                 }
             }
         }
-        // Here if error - cardNum is not an 
+        // Here if error - cardNum is not an
         warn("C/MRI - input card to getOutputCardIndex is not an Output Card");
         return (0);
     }
-    
+
     /**
      * Public Method to set location of SearchLightBits (SMINI only)
      *   bit - bitNumber of the low bit of an oscillating search light bit pair
      *   Notes:  Bits are numbered from 0
      *           Two bits are set by each call - bit and bit + 1.
-     *           If either bit is already set, an error is logged and no 
+     *           If either bit is already set, an error is logged and no
      *               bits are set.
      */
     public void set2LeadSearchLight(int bit) {
@@ -435,7 +436,7 @@ public class SerialNode {
         locSearchLightBits[bit] = 1;
         locSearchLightBits[bit+1] = 1;
         num2LSearchLights ++;
-    }        
+    }
 
 
     /**
@@ -486,7 +487,7 @@ public class SerialNode {
         initBytes[2] = (byte)secondByte;
 
         // SMINI specific part of initialization byte array
-        if (nodeType==SMINI) { 
+        if (nodeType==SMINI) {
             initBytes[3] = (byte)num2LSearchLights;
             if (num2LSearchLights>0) {
                 // Set up searchlight LED bit codes
@@ -520,14 +521,14 @@ public class SerialNode {
             }
         }
 // here add specific initialization for other type of card
-        
+
         // count the number of DLE's to be inserted
         int nDLE = 0;
         for (int i=1; i<nInitBytes; i++) {
-            if ( (initBytes[i]==2) || (initBytes[i]==3) || (initBytes[i]==16) ) 
+            if ( (initBytes[i]==2) || (initBytes[i]==3) || (initBytes[i]==16) )
                 nDLE ++;
         }
-        
+
         // create a Serial message and add initialization bytes
         SerialMessage m = new SerialMessage(nInitBytes + nDLE + 2);
         m.setElement(0,nodeAddress+65);  // node address
@@ -555,7 +556,7 @@ public class SerialNode {
         int nOutBytes = numOutputCards() * (bitsPerCard/8);
         int nDLE = 0;
         for (int i=0; i<nOutBytes; i++) {
-            if ( (outputArray[i]==2) || (outputArray[i]==3) ||(outputArray[i]==16) ) 
+            if ( (outputArray[i]==2) || (outputArray[i]==3) ||(outputArray[i]==16) )
                 nDLE ++;
         }
         // Create a Serial message and add initial bytes
@@ -576,7 +577,7 @@ public class SerialNode {
         }
         return m;
     }
-    
+
     boolean warned = false;
 
     void warn(String s) {
@@ -584,7 +585,7 @@ public class SerialNode {
     	warned = true;
     	log.warn(s);
     }
-    
+
     /**
      * Use the contents of the poll reply to mark changes
      * @param l Reply to a poll operation
