@@ -1,32 +1,30 @@
-/** 
- * SimpleProgAction.java
- *
- * Description:		Swing action to create and register a 
- *       			SimpleProgAction object
- *
- * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			
- */
+// SimpleProgAction.java
 
-package jmri.jmrit.simpleprog;
+ package jmri.jmrit.simpleprog;
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
-public class SimpleProgAction 			extends AbstractAction {
+/**
+ * Swing action to create and register a
+ *       			SimpleProgAction object
+ *
+ * @author			Bob Jacobsen    Copyright (C) 2001
+ * @version			$Revision: 1.2 $
+ */public class SimpleProgAction 			extends AbstractAction {
 
-	public SimpleProgAction(String s) { 
+	public SimpleProgAction(String s) {
 		super(s);
 	}
-	
+
     public void actionPerformed(ActionEvent e) {
 
 		// create a SimpleProgFrame
 		SimpleProgFrame f = new SimpleProgFrame();
-		f.show();	
-		
+		f.show();
+
 	}
-		
+
 }
 
 /* @(#)SimpleProgAction.java */
