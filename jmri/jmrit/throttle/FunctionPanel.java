@@ -16,7 +16,6 @@ public class FunctionPanel extends JInternalFrame
         implements ThrottleListener, AddressListener, FunctionListener
 {
     public static final int NUM_FUNCTION_BUTTONS = 10;
-    private final Integer BUTTON_LAYER = new Integer(1);
     private ThrottleManager throttleManager;
     private DccThrottle throttle;
     private int requestedAddress;
@@ -46,21 +45,36 @@ public class FunctionPanel extends JInternalFrame
 
     /**
      * Get notification that a throttle has been found as we requested.
+     * Use reflection to find the proper getF? method for each button.
+     *
      * @param t An instantiation of the DccThrottle with the address requested.
      */
     public void notifyThrottleFound(DccThrottle t)
     {
         this.throttle = t;
-        functionButton[0].setState(throttle.getF0());
-        functionButton[1].setState(throttle.getF1());
-        functionButton[2].setState(throttle.getF2());
-        functionButton[3].setState(throttle.getF3());
-        functionButton[4].setState(throttle.getF4());
-        functionButton[5].setState(throttle.getF5());
-        functionButton[6].setState(throttle.getF6());
-        functionButton[7].setState(throttle.getF7());
-        functionButton[8].setState(throttle.getF8());
-        functionButton[9].setState(false); // No F9?
+        for (int i=0; i<this.NUM_FUNCTION_BUTTONS; i++)
+        {
+           try
+           {
+                int functionNumber = functionButton[i].getIdentity();
+                java.lang.reflect.Method getter =
+                        throttle.getClass().getMethod("getF"+functionNumber,null);
+                Boolean state = (Boolean)getter.invoke(throttle, null);
+                functionButton[i].setState(state.booleanValue());
+           }
+           catch (java.lang.NoSuchMethodException ex1)
+           {
+               // TODO log it.
+           }
+           catch (java.lang.IllegalAccessException ex2)
+           {
+               // TODO log it.
+           }
+           catch (java.lang.reflect.InvocationTargetException ex3)
+           {
+               // TODO log it.
+           }
+        }
         this.setEnabled(true);
     }
 
@@ -121,49 +135,22 @@ public class FunctionPanel extends JInternalFrame
         JPanel mainPanel = new JPanel();
         this.setContentPane(mainPanel);
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        mainPanel.setLayout(new GridBagLayout());
+        mainPanel.setLayout(new FlowLayout());
         functionButton = new FunctionButton[NUM_FUNCTION_BUTTONS];
         for (int i=0; i<NUM_FUNCTION_BUTTONS; i++)
         {
-            functionButton[i] = new FunctionButton(i, false);
+            functionButton[i] = new FunctionButton();
+            functionButton[i].setIdentity(i);
             functionButton[i].setFunctionListener(this);
             functionButton[i].setText("F"+String.valueOf(i));
-        }
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.anchor = GridBagConstraints.CENTER;
-        constraints.fill = GridBagConstraints.BOTH;
-        constraints.gridheight = 1;
-        constraints.gridwidth = 1;
-        constraints.ipadx = 0;
-        constraints.ipady = 0;
-        Insets insets = new Insets(0, 0, 0, 0);
-        constraints.insets = insets;
-        constraints.weightx = 1;
-        constraints.weighty = 1;
-
-        int i = 1;
-        for (int row = 0; row < 3; row++)
-        {
-            for (int col = 0; col < 3; col++)
+            if (i > 0)
             {
-                constraints.gridx = col;
-                constraints.gridy = row;
-                mainPanel.add(functionButton[i++], constraints);
+                mainPanel.add(functionButton[i]);
             }
         }
-        constraints.gridx = 1;
-        constraints.gridy = 3;
-        mainPanel.add(functionButton[0], constraints);
-
-/**
-        JMenuBar menuBar = new JMenuBar();
-        this.setJMenuBar(menuBar);
-        JMenu viewMenu = new JMenu("View");
-        JMenuItem arrangeItem = new JMenuItem(new Action(("Arrange Buttons")));
-        menuBar.add(viewMenu);
-        viewMenu.add(arrangeItem);
- **/
+        mainPanel.add(functionButton[0]);
     }
+
 
     /**
      * Collect the prefs of this object into XML Element
@@ -183,12 +170,7 @@ public class FunctionPanel extends JInternalFrame
         children.add(wp.getPreferences(this));
         for (int i=0; i<this.NUM_FUNCTION_BUTTONS; i++)
         {
-            Element buttonElement = new Element("FunctionButton");
-            buttonElement.addAttribute("id", String.valueOf(i));
-            buttonElement.addAttribute("text", functionButton[i].getText());
-            buttonElement.addAttribute("isLockable",
-                                       String.valueOf(functionButton[i].getIsLockable()));
-            children.add(buttonElement);
+            children.add(functionButton[i].getXml());
         }
         me.setChildren(children);
         return me;
@@ -204,30 +186,19 @@ public class FunctionPanel extends JInternalFrame
      */
     public void setXml(Element e)
     {
-        try
-        {
-            Element window = e.getChild("window");
-            WindowPreferences wp = new WindowPreferences();
-            wp.setPreferences(this, window);
+        Element window = e.getChild("window");
+        WindowPreferences wp = new WindowPreferences();
+        wp.setPreferences(this, window);
 
-            com.sun.java.util.collections.List buttonElements =
-                    e.getChildren("FunctionButton");
+        com.sun.java.util.collections.List buttonElements =
+                e.getChildren("FunctionButton");
 
-            for (com.sun.java.util.collections.Iterator iter =
+        int i = 0;
+        for (com.sun.java.util.collections.Iterator iter =
              buttonElements.iterator(); iter.hasNext();)
-            {
-                Element buttonElement = (Element)iter.next();
-                int id = buttonElement.getAttribute("id").getIntValue();
-                String text = buttonElement.getAttribute("text").getValue();
-                functionButton[id].setText(text);
-                boolean isLockable = buttonElement.getAttribute("isLockable").getBooleanValue();
-                functionButton[id].setIsLockable(isLockable);
-            }
-
-        }
-        catch (org.jdom.DataConversionException ex)
         {
-            System.out.println("Ugh");
+            Element buttonElement = (Element)iter.next();
+            functionButton[i++].setXml(buttonElement);
         }
     }
 
