@@ -13,7 +13,7 @@ import java.io.Serializable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2003,2004
- * @version			$Revision: 2.4 $
+ * @version			$Revision: 2.5 $
  *
  */
 public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Serializable {
@@ -202,7 +202,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
 	m.setTimeout(XNetProgrammingTimeout);
         m.setElement(0, XNetConstants.PROG_READ_REQUEST);
         m.setElement(1, XNetConstants.PROG_READ_MODE_PAGED);
-        m.setElement(2, cv);
+        m.setElement(2,  (0xff & cv));
         return m;
     }
     
@@ -212,7 +212,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
 	m.setTimeout(XNetProgrammingTimeout);
         m.setElement(0, XNetConstants.PROG_READ_REQUEST);
         m.setElement(1, XNetConstants.PROG_READ_MODE_CV);
-        m.setElement(2, cv);
+        m.setElement(2, (0xff &cv));
         return m;
     }
     
@@ -222,7 +222,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
 	m.setTimeout(XNetProgrammingTimeout);
         m.setElement(0, XNetConstants.PROG_WRITE_REQUEST);
         m.setElement(1, XNetConstants.PROG_WRITE_MODE_PAGED);
-        m.setElement(2, cv);
+        m.setElement(2, (0xff & cv));
         m.setElement(3, val);
         return m;
     }
@@ -233,7 +233,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
 	m.setTimeout(XNetProgrammingTimeout);
         m.setElement(0, XNetConstants.PROG_WRITE_REQUEST);
         m.setElement(1, XNetConstants.PROG_WRITE_MODE_CV);
-        m.setElement(2, cv);
+        m.setElement(2, (0xff & cv));
         m.setElement(3, val);
         return m;
     }
@@ -245,7 +245,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
 	m.setTimeout(XNetProgrammingTimeout);
         m.setElement(0, XNetConstants.PROG_READ_REQUEST);
         m.setElement(1, XNetConstants.PROG_READ_MODE_REGISTER);
-        m.setElement(2, reg);
+        m.setElement(2, (0x0f & reg));
         return m;
     }
     
@@ -256,7 +256,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
 	m.setTimeout(XNetProgrammingTimeout);
         m.setElement(0, XNetConstants.PROG_WRITE_REQUEST);
         m.setElement(1, XNetConstants.PROG_WRITE_MODE_REGISTER);
-        m.setElement(2, reg);
+        m.setElement(2, (0x0f & reg));
         m.setElement(3, val);
         return m;
     }
@@ -274,7 +274,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         temp=temp/0x00FF;
         m.setElement(4,0xEC+temp);
         /* Element 5 is the lower 8 bits of the cv */
-        m.setElement(5, (cv-1)-temp);
+        m.setElement(5, ((0x00ff & cv)-1));
         m.setElement(6, val);
         return m;
     }
