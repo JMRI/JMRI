@@ -3,7 +3,7 @@ package jmri;
 /**
  * Interface for controlling throttles
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public interface ThrottleManager
 {
@@ -16,5 +16,13 @@ public interface ThrottleManager
      * @param l The ThrottleListener awaiting notification of a found throttle.
      */
     public void requestThrottle(int address, ThrottleListener l);
+
+
+    /**
+     * Cancel a request for a throttle
+     * @param address The decoder address desired.
+     * @param l The ThrottleListener cancelling request for a throttle.
+     */
+    public void cancelThrottleRequest(int address, ThrottleListener l);
 
 }
