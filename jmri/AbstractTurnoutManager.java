@@ -3,20 +3,24 @@
 package jmri;
 
 import java.util.Hashtable;
+import java.util.Enumeration;
+import com.sun.java.util.collections.List;
+import com.sun.java.util.collections.ArrayList;
+import com.sun.java.util.collections.Collections;
 
 
-/** 
+/**
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Id: AbstractTurnoutManager.java,v 1.4 2001-11-10 21:32:11 jacobsen Exp $
+ * @version			$Id: AbstractTurnoutManager.java,v 1.5 2002-03-28 02:37:16 jacobsen Exp $
  */
-public abstract class AbstractTurnoutManager 
+public abstract class AbstractTurnoutManager
 		implements TurnoutManager, java.beans.PropertyChangeListener {
 
 	// abstract methods to be provided by subclasses
 	public abstract Turnout newTurnout(String systemName, String userName);
-	
+
 	// abstract methods to be extended by subclasses
 	// to free resources when no longer used
 	public void dispose() throws JmriException {
@@ -50,6 +54,20 @@ public abstract class AbstractTurnoutManager
 			_tuser.put(now, t);
 		}
 	}
+
+    public List getSystemNameList() {
+        String[] arr = new String[_tsys.size()];
+        List out = new ArrayList();
+        Enumeration en = _tsys.elements();
+        int i=0;
+        while (en.hasMoreElements()) {
+            arr[i] = ((Turnout)en.nextElement()).getSystemName();
+            i++;
+        }
+        java.util.Arrays.sort(arr);
+        for (i=0; i<arr.length; i++) out.add(arr[i]);
+        return out;
+    }
 }
 
 
