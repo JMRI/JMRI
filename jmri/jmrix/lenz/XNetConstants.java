@@ -163,7 +163,7 @@ public final static int EMERGENCY_STOP = 0x92;
 /* Program mode read requests */
 public final static int PROG_READ_REQUEST = 0x22;
 
-/* programing modes to be used with PROG_READ_REQUEST
+/* programing modes to be used with PROG_READ_REQUEST */
 public final static int PROG_READ_MODE_REGISTER = 0x11;
 public final static int PROG_READ_MODE_CV       = 0x15;
 public final static int PROG_READ_MODE_PAGED    = 0x14;
@@ -171,9 +171,9 @@ public final static int PROG_READ_MODE_PAGED    = 0x14;
 /* Program mode read requests */
 public final static int PROG_WRITE_REQUEST = 0x23;
 
-/* programing modes to be used with PROG_WRITE_REQUEST
+/* programing modes to be used with PROG_WRITE_REQUEST */
 public final static int PROG_WRITE_MODE_REGISTER = 0x12;
-public final static int PROG_WRITE_MODE_CV       = 0x15;
+public final static int PROG_WRITE_MODE_CV       = 0x16;
 public final static int PROG_WRITE_MODE_PAGED    = 0x17;
 
 /* Accessory Decoder Info Request */

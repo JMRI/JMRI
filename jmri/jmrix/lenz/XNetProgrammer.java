@@ -26,7 +26,7 @@ import java.beans.PropertyChangeEvent;
  * <LI>Wait for Normal Operations Resumed broadcast
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -170,6 +170,9 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		    controller().sendXNetMessage(XNetTrafficController.instance()
                                     .getCommandStation().getReadPagedCVMsg(CV)
                                     , this);
+        else if (_mode == Programmer.DIRECTBITMODE || _mode == Programmer.DIRECTBYTEMODE)
+		    controller().sendXNetMessage(XNetTrafficController.instance()
+                                    .getCommandStation().getReadDirectCVMsg(CV), this);
         else // register mode by elimination
 		    controller().sendXNetMessage(XNetTrafficController.instance()
                                     .getCommandStation().getReadRegisterMsg(registerFromCV(CV))
@@ -199,7 +202,8 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		} else if (progState == REQUESTSENT) {
 			if (log.isDebugEnabled()) log.debug("reply in REQUESTSENT state");
 			// see if reply is the acknowledge of program mode; if not, wait for next
-            if (m.getElement(0)==0x61 && m.getElement(1)==0x02) {
+            if (m.getElement(0)==XNetConstants.CS_INFO && 
+                m.getElement(1)==XNetConstants.BC_SERVICE_MODE_ENTRY) {
 
 			    // here ready to request the results
 			    progState = INQUIRESENT;
@@ -208,7 +212,8 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
                                     .getCommandStation().getServiceModeResultsMsg(),
                                     this);
                 return;
-            } else if (m.getElement(0)==0x61 && m.getElement(1)==0x82) {
+            } else if (m.getElement(0)==XNetConstants.CS_INFO && 
+                       m.getElement(1)==XNetConstants.CS_NOT_SUPPORTED) {
                 // programming operation not supported by this command station
 			    progState = NOTPROGRAMMING;
 			    controller().sendXNetMessage(XNetTrafficController.instance()
@@ -221,7 +226,8 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		} else if (progState == INQUIRESENT) {
 			if (log.isDebugEnabled()) log.debug("reply in INQUIRESENT state");
             // check for right message, else return
-            if (m.getElement(0)==0x63 && m.getElement(1)==0x10) {
+            if (m.getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONCE && 
+                m.getElement(1)==XNetConstants.CS_SERVICE_REG_PAGE_RESPONCE) {
                 // valid operation response
 				// see why waiting
 				if (_progRead) {
@@ -235,7 +241,23 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
                                     this);
                 return;
 
-            } else if (m.getElement(0)==0x61 && m.getElement(1)==0x13) {
+            } else if (m.getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONCE && 
+                m.getElement(1)==XNetConstants.CS_SERVICE_DIRECT_RESPONCE) {
+                // valid operation response
+				// see why waiting
+				if (_progRead) {
+					// read was in progress - get return value
+					_val = m.getElement(3);
+				}
+				startShortTimer();
+			    progState = RETURNSENT;
+				controller().sendXNetMessage(XNetTrafficController.instance()
+                                    .getCommandStation().getExitProgModeMsg(),
+                                    this);
+                return;
+
+            } else if (m.getElement(0)==XNetConstants.CS_INFO && 
+                       m.getElement(1)==XNetConstants.PROG_BYTE_NOT_FOUND) {
                 // "data byte not found", e.g. no reply
 				progState = NOTPROGRAMMING;
                 stopTimer();
