@@ -6,6 +6,10 @@
 
 	<decoderList:definition mfg="Digitrax" 	model="All" 		file="Digitrax_All.xml" />
 	<decoderList:definition mfg="Digitrax" 	model="Generic" 	file="Digitrax_Generic.xml" />
+	<decoderList:definition mfg="Digitrax" 	model="DH121" 		file="Digitrax_DH121.xml" />
+	<decoderList:definition mfg="Digitrax" 	model="DH142" 		file="Digitrax_DH142.xml" />
+	<decoderList:definition mfg="Digitrax" 	model="DH150" 		file="Digitrax_DH150.xml" />
+	<decoderList:definition mfg="Digitrax" 	model="DS54" 		file="Digitrax_DS54.xml" />
 		
 	<decoderList:definition mfg="Atlas" 	model="DualMode" 	file="Atlas_DualMode.xml" />
 		

@@ -3,7 +3,7 @@
 <decoder:decoder-config xmlns:decoder="http://jmri.sourceforge.net/xml/decoder">
 <decoder:decoder>
 	<decoder:id model="All" mfg="Digitrax" mfgID="129" defnVersion="0"
-				comment="DH142 decoder: FX, transponding"></decoder:id>
+				comment="DH150 decoder: FX"></decoder:id>
 
 	<decoder:programming direct="byteOnly" paged="yes" 
 	                     register="yes" ops="yes"></decoder:programming>
@@ -356,34 +356,6 @@
 				<decoder:enumChoice choice="Reserved (0xD)"/>
 				<decoder:enumChoice choice="Reserved (0xE)"/>
 				<decoder:enumChoice choice="Reserved (0xF)"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="Static compensation for speed stabilization" CV="55"
-				comment="Factory default is 128, no effect until droop (CV57) set">
-			<decoder:decVal/>
-			</decoder:variable>
-		<decoder:variable name="Dynamic compensation for speed stabilization" CV="56"
-				comment="Factory default is 48, no effect until droop (CV57) set">
-			<decoder:decVal/>
-			</decoder:variable>
-		<decoder:variable name="Solo operation droop compensation for speed stabilization" CV="57" mask="VVVVXXXX"
-				comment="0 is compenstation off, 15 is full on, typical value is 5">
-			<decoder:decVal max="15"/>
-			</decoder:variable>
-		<decoder:variable name="Advanced consist droop compensation for speed stabilization" CV="57" mask="XXXXVVVV"
-				comment="0 is compenstation off, 15 is full on, typical value is 5">
-			<decoder:decVal max="15"/>
-			</decoder:variable>
-		<decoder:variable name="Speed compensation" CV="61" mask="XXXVXXXX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="F5 has no effect on speed compensation"/>
-				<decoder:enumChoice choice="F5 On disables speed compensation"/>
-				</decoder:enumVal>
-			</decoder:variable>
-		<decoder:variable name="Transponding" CV="61" mask="XXXXXXVX">
-			<decoder:enumVal>
-				<decoder:enumChoice choice="Off"/>
-				<decoder:enumChoice choice="On"/>
 				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="Split field motor" CV="61" mask="XXXXXVXX">

@@ -67,6 +67,7 @@
 <!ELEMENT decoder:enumChoice EMPTY>
 <!ATTLIST decoder:enumChoice choice CDATA #REQUIRED >
 <!ATTLIST decoder:enumChoice comment CDATA #IMPLIED >
+<!ATTLIST decoder:enumChoice value CDATA "" >
 
 <!ELEMENT decoder:speedTableVal (decoder:speedTableEntry*) >
 <!ATTLIST decoder:speedTableVal entries CDATA "28">        <!-- number of entries/CVs in table -->
