@@ -67,7 +67,8 @@ public class EasyDccTrafficControllerTest extends TestCase {
 		m.setElement(1, '1');
 		m.setElement(2, '2');
 		c.sendEasyDccMessage(m, new EasyDccListenerScaffold());
-
+		synchronized (this) {wait(100);}
+		
 		// check it arrived at monitor
 		Assert.assertTrue("message not null", rcvdMsg != null);
 		Assert.assertEquals("total length ", 4, tostream.available());
