@@ -26,7 +26,7 @@ import javax.swing.JPanel;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.37 $
+ * @version     $Revision: 1.38 $
  */
 public class DecoderPro extends Apps {
 
@@ -100,7 +100,7 @@ public class DecoderPro extends Apps {
 
         initLog4J();
         log.info("program starts");
-        setConfigFilename("DecoderProConfig.xml", args);
+        setConfigFilename("DecoderProConfig2.xml", args);
         JFrame f = new JFrame("DecoderPro");
         createFrame(new DecoderPro(f), f);
 

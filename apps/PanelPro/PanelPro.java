@@ -18,7 +18,7 @@ import javax.swing.JMenuBar;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class PanelPro extends Apps {
 
@@ -49,7 +49,7 @@ public class PanelPro extends Apps {
 
         initLog4J();
         log.info("program starts");
-        setConfigFilename("PanelProConfig.xml", args);
+        setConfigFilename("PanelProConfig2.xml", args);
         JFrame f = new JFrame("PanelPro");
         createFrame(new PanelPro(f), f);
 

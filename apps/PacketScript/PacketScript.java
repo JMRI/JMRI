@@ -21,7 +21,7 @@ import javax.swing.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2002
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class PacketScript extends Apps {
 
@@ -51,7 +51,7 @@ public class PacketScript extends Apps {
 
         initLog4J();
         log.info("program starts");
-        setConfigFilename("PacketScriptConfig.xml", args);
+        setConfigFilename("PacketScriptConfig2.xml", args);
         JFrame f = new JFrame("PanelPro");
         createFrame(new PacketScript(f), f);
 

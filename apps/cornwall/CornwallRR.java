@@ -18,7 +18,7 @@ import javax.swing.JMenuBar;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 public class CornwallRR extends Apps {
 
@@ -59,7 +59,7 @@ public class CornwallRR extends Apps {
 
         initLog4J();
         log.info("program starts");
-        setConfigFilename("CornwallConfig.xml", args);
+        setConfigFilename("CornwallConfig2.xml", args);
         JFrame f = new JFrame("Cornwall Railroad");
         createFrame(new CornwallRR(f), f);
 
