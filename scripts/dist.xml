@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.4 $ -->
+<!-- Revision $Revision: 1.5 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -64,6 +64,7 @@
     <mkdir dir="${release}"/>
     <echo message="cvs checkout" />
     <cvs package="ant" quiet="true" dest="${release}" tag="${release}"/>
+    <cvs package="check" quiet="true" dest="${release}" tag="${release}"/>
 
     <echo message="test" />
     <ant antfile="build.xml" dir="${release}/java" target="alltest" />
@@ -78,10 +79,10 @@
  <target name="x-rel-1.1.8-build" depends=""
  					description="create jar files for Java 1.1">
     <echo message="make Java 1.1 distribution jar" />
-    <ant antfile="build.xml" dir="${release}/java" target="clean" />
-    <ant antfile="build.xml" dir="${release}/java" target="init" />
-    <ant antfile="build.xml" dir="${release}/java" target="dist">
-  		<property name="build.compiler" value="javac1.2" />
+    <ant antfile="check.xml" dir="${release}/java" target="clean" />
+    <ant antfile="check.xml" dir="${release}/java" target="init" />
+    <ant antfile="check.xml" dir="${release}/java" target="dist" >
+        <property name="jarname" value="jmri118.jar"/>
     </ant>
 </target>
 
@@ -179,8 +180,9 @@
  					description="update files in master MacOS Classic directory">
     <echo message="update files in master MacClassic directory" />
     <copy todir="MacClassic/JMRI">
-      <fileset dir="${release}" includes="jmri.jar"  /> 
+      <fileset dir="${release}" includes="jmri118.jar"  /> 
     </copy>
+    <move file="MacClassic/JMRI/jmri118.jar" tofile="MacClassic/JMRI/jmri.jar"/>
     <delete dir="MacClassic/JMRI/lib" />
     <cvs command="export" quiet="true" package="lib" dest="MacClassic/JMRI" tag="${release}"/>
     <delete file="MacClassic/JMRI/lib/junit.jar" />
