@@ -1,6 +1,6 @@
 <!-- ugly first attempt at an ANT build.xml file for JMRI development -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.46 $ -->
+<!-- Revision $Revision: 1.47 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -53,8 +53,18 @@
     </delete>
   </target>
 
-  <target name="compile" depends="init" description="compile source, omitting tests">
+  <target name="compilefiles" depends="init" description="compile specific files">
+    <!-- Compile the java code from ${files} -->
+    <javac srcdir="${source}" 
+           destdir="${target}" 
+           includes="${files}"
+           target="1.1" 
+           debug="no" >
+       <classpath refid="project.class.path"    />
+    </javac>
+  </target>
 
+  <target name="compile" depends="init" description="compile source, omitting tests">
     <!-- Compile the java code from ${source} into ${target} -->
     <javac srcdir="${source}" 
            destdir="${target}" 
