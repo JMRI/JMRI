@@ -22,7 +22,7 @@ import javax.comm.SerialPortEventListener;
  * <P>
  * Normally controlled by the LocoBufferFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.22 $
  */
 public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -243,7 +243,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also defaults in selectedOption1
         if (mOpt1.equals(validOption1[1]))
-            flow = 0;
+            flow = SerialPort.FLOWCONTROL_NONE;
         activeSerialPort.setFlowControlMode(flow);
         log.debug("Found flow control "+activeSerialPort.getFlowControlMode()
                   +" RTSCTS_OUT="+SerialPort.FLOWCONTROL_RTSCTS_OUT
