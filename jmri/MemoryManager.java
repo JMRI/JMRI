@@ -25,7 +25,7 @@ import com.sun.java.util.collections.List;
  * can form the basis for a system-specific implementation.
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  * @see             jmri.Memory
  * @see             jmri.AbstractMemoryManager
  * @see             jmri.InstanceManager
@@ -86,14 +86,14 @@ public interface MemoryManager extends Manager {
      * addresses are provided, but the given values are associated with
      * different objects.  This is a problem, and we don't have a
      * good solution except to issue warnings.
-     * This will mostly happen if you're creating Memorys when you should
+     * This will mostly happen if you're creating Memory objects when you should
      * be looking them up.
      * @return requested Memory object (never null)
      */
     public Memory newMemory(String systemName, String userName);
 
     /**
-     * Get a list of all Memorys' system names.
+     * Get a list of all Memory objects' system names.
      */
     public List getSystemNameList();
 
