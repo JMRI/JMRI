@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.32 $)
+distribution.  ($Revision: 1.33 $)
 
 Start with a directory, typically called "Distributions", that
 contains:
@@ -25,7 +25,14 @@ been updated!
 
 Make sure everything is up-to-date:
 
-( ) Remake the help index  (need a command line approach, so can put in ant!)
+( ) Check if the decoder definitions have changed since the previous tag
+    If so, remake the decoder index. 
+    Copy the new file from preferences into the CVS tree.
+    Update the version number by hand.
+    Commit.
+    
+( ) Check if the help has changed since the previous tag
+    If so, remake the help index  (need a command line approach, so can put in ant!)
     cd JMRI/jhelp/help/en
     (launch JHelpDev, e.g. "open jhelpdev.jar")
     (navigate to JHelpDev.xml & open it)
