@@ -30,7 +30,7 @@ public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgList
 	javax.swing.JRadioButton hexButton    	= new javax.swing.JRadioButton();
 	javax.swing.JRadioButton decButton   	= new javax.swing.JRadioButton();
 	
-	javax.swing.JLabel       resultsField   = new javax.swing.JLabel();
+	javax.swing.JLabel       resultsField   = new javax.swing.JLabel(" ");
 	
 	public SimpleProgFrame() {
 
@@ -56,6 +56,8 @@ public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgList
 				writePushed(e);
 			}
 		});
+
+		resultsField.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 
 		// general GUI config
 		setTitle("Simple Programmer");
