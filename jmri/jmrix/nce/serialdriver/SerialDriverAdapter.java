@@ -19,7 +19,9 @@ import javax.comm.PortInUseException;
 import javax.comm.SerialPort;
 
 /**
- * Implements SerialPortAdapter for the NCE system.  This connects
+ * Implements SerialPortAdapter for the NCE system.
+ * <P>
+ * This connects
  * an NCE command station via a serial com port.
  * Normally controlled by the SerialDriverFrame class.
  * <P>
@@ -28,7 +30,7 @@ import javax.comm.SerialPort;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 

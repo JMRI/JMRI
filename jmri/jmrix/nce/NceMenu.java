@@ -1,6 +1,4 @@
-/**
- * NceMenu.java
- */
+// NceMenu.java
 
 package jmri.jmrix.nce;
 
@@ -9,10 +7,13 @@ import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
 /**
- * Create a "Systems" menu containing the Jmri NCE-specific tools
+ * Create a "Systems" menu containing the Jmri NCE-specific tools.
+ * <P>
+ * Some of the tools used here are also used directly by the Wangrow
+ * support in {@link jmri.jmrix.wangrow}.
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class NceMenu extends JMenu {
     public NceMenu(String name) {
