@@ -2,14 +2,8 @@
 
 package jmri.jmrit.blockboss;
 
-import jmri.InstanceManager;
-import jmri.Manager;
-import jmri.NamedBean;
-import jmri.SignalHead;
 import java.awt.event.ActionEvent;
-import java.util.*;
 
-import javax.swing.AbstractAction;
 import javax.swing.*;
 
 /**
@@ -17,7 +11,7 @@ import javax.swing.*;
  * "Simple Signal Logic" GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class BlockBossAction extends AbstractAction {
@@ -58,10 +52,11 @@ public class BlockBossAction extends AbstractAction {
         line.add(new JCheckBox("with flashing yellow"));
         f.getContentPane().add(line);
 
+        f.pack();
         f.show();
     }
 
 }
 
 
-/* @(#)SignalHeadTableAction.java */
+/* @(#)BlockBossAction.java */
