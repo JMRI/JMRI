@@ -2,12 +2,14 @@
 
 package jmri;
 
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Invoke complete set of tests for the Jmri package
  * @author	Bob Jacobsen, Copyright (C) 2001, 2002
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 public class JmriTest extends TestCase {
 
