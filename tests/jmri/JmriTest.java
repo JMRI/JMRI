@@ -1,23 +1,31 @@
 /** 
  * JmriTest.java
  *
- * Description:	
+ * Description:	    tests for the Jmri package
  * @author			Bob Jacobsen
  * @version			
  */
 
 package jmri.tests;
 
+import java.io.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import jmri.tests.symbolicprog.*;
-
+import org.jdom.*;
+import org.jdom.output.*;
 
 public class JmriTest extends TestCase {
+
+	// from here down is testing infrastructure
+	
 	public JmriTest(String s) {
 		super(s);
+	}
+
+	// a simple test skeleton
+	public void testDemo() {
+		assert(true);
 	}
 
 	// Main entry point
@@ -26,18 +34,9 @@ public class JmriTest extends TestCase {
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 	
-	// a simple test skeleton
-	public void testDemo() {
-		assert(true);
-	}
-	
-	// test suite
+	// test suite from all defined tests
 	public static Test suite() {
-		// all tests from here
 		TestSuite suite = new TestSuite(JmriTest.class);
-		// all tests from other classes
-		suite.addTest(SymbolicProgTest.suite());
-		
 		return suite;
 	}
 	

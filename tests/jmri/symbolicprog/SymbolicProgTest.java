@@ -9,24 +9,168 @@
 package jmri.tests.symbolicprog;
 
 import java.io.*;
+import javax.swing.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.jdom.*;
 import org.jdom.output.*;
 
+import jmri.*;
 import jmri.symbolicprog.*;
+import jmri.progdebugger.*;
 
 public class SymbolicProgTest extends TestCase {
 
+// CvVal tests
+	// can we create one and manipulate info?
+	public void testCvValCreate() {
+		CvValue cv = new CvValue(19);
+		assert(cv.number() == 19);
+		cv.setValue(23);
+		assert(cv.getValue() == 23);
+	}
+
+	// check configuring the programmer
+	public void testConfigProgrammer() {
+		// initialize the system
+		Programmer p = new ProgDebugger();
+		InstanceManager.setProgrammer(p);
+		assert (InstanceManager.programmerInstance() == p);
+	}
+	
+	// check a read operation
+	public void testCvValRead() {
+		// initialize the system
+		Programmer p = new ProgDebugger();
+		InstanceManager.setProgrammer(p);
+		
+		// create the CV value
+		CvValue cv = new CvValue(91);
+		cv.read();
+		// wait for reply (normally, done by callback; will check that later)
+		int i = 0;
+		while ( i++ < 100 && cv.isBusy() )  {
+			try {
+				Thread.sleep(10);
+			} catch (Exception e) {
+			}
+		}
+		if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+cv.getValue()+" state="+cv.getState());
+		
+		assert(cv.getValue() == 123);
+		assert(cv.getState() == CvValue.READ);
+	}
+
+	// check a write operation
+	public void testCvValWrite() {
+		// initialize the system
+		Programmer p = new ProgDebugger();
+		InstanceManager.setProgrammer(p);
+		
+		// create the CV value
+		CvValue cv = new CvValue(91);
+		cv.setValue(12);
+		cv.write(); 
+		// wait for reply (normally, done by callback; will check that later)
+		int i = 0;
+		while ( i++ < 100 && cv.isBusy() )  {
+			try {
+				Thread.sleep(10);
+			} catch (Exception e) {
+			}
+		}
+		if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+cv.getValue()+" state="+cv.getState());
+		
+		assert(cv.getValue() == 12);
+		assert(cv.getState() == CvValue.STORED);
+	}
+	
+	// check the state diagram
+	public void testCvValStates() {
+		CvValue cv = new CvValue(21);
+		assert(cv.getState() == CvValue.UNKNOWN);
+		cv.setValue(23);
+		assert(cv.getState() == CvValue.EDITTED);
+	}
+		
+		
+// VariableValue tests via decimal subclass
+	// can we create one and manipulate info?
+	public void testVariableValueCreate() {
+		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "VVVVVVVV", null);
+		assert(var.name() == "name");
+		System.out.println(" name "+ var.name());
+		((JTextField)var.getValue()).setText("123");
+		System.out.println("val "+ ((JTextField)var.getValue()).getText() );
+		assert( ((JTextField)var.getValue()).getText().equals("123") );
+	}
+	
+	// check a read operation
+	public void testVariableValueRead() {
+		// initialize the system
+		Programmer p = new ProgDebugger();
+		InstanceManager.setProgrammer(p);
+		
+		// create the CV value
+		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "VVVVVVVV", null);
+		var.read();
+		// wait for reply (normally, done by callback; will check that later)
+		int i = 0;
+		while ( i++ < 100 && var.isBusy() )  {
+			try {
+				Thread.sleep(10);
+			} catch (Exception e) {
+			}
+		}
+		if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+var.getValue()+" state="+var.getState());
+		
+		// assert(cv.getValue() == 123);
+		// assert(cv.getState() == CvValue.READ);
+	}
+
+	// check a write operation
+	public void testVariableValueWrite() {
+		// initialize the system
+		Programmer p = new ProgDebugger();
+		InstanceManager.setProgrammer(p);
+		
+		// create the CV value
+		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "VVVVVVVV", null);
+		var.setValue(12);
+		var.write(); 
+		// wait for reply (normally, done by callback; will check that later)
+		int i = 0;
+		while ( i++ < 100 && var.isBusy() )  {
+			try {
+				Thread.sleep(10);
+			} catch (Exception e) {
+			}
+		}
+		if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+var.getValue()+" state="+var.getState());
+		
+		//assert(cv.getValue() == 12);
+		//assert(cv.getState() == CvValue.STORED);
+	}
+	
+	// check the state diagram
+	public void testVariableValueStates() {
+		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "VVVVVVVV", null);
+		assert(var.getState() == VariableValue.UNKNOWN);
+		var.setValue(23);
+		assert(var.getState() == VariableValue.EDITTED);
+	}
+		
+	
+// VariableTableModel tests
 	// Can we create a table?
-	public void testCreate() {
+	public void testVarTableCreate() {
 		String[] args = {"CV", "Name"};
 		VariableTableModel t = new VariableTableModel(args);
 	}
 
 	// Check column count member fn, column names
-	public void testColumnCount() {
+	public void testVarTableColumnCount() {
 		String[] args = {"CV", "Name"};
 		VariableTableModel t = new VariableTableModel(args);
 		assert(t.getColumnCount() == 2);
@@ -34,7 +178,7 @@ public class SymbolicProgTest extends TestCase {
 	}
 
 	// Check loading two columns, three rows
-	public void testLoad_2_3() {
+	public void testVarTableLoad_2_3() {
 		String[] args = {"CV", "Name"};
 		VariableTableModel t = new VariableTableModel(args);
 		t.setNumRows(3);
@@ -98,4 +242,6 @@ public class SymbolicProgTest extends TestCase {
 		return suite;
 	}
 	
+	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SymbolicProgTest.class.getName());
+
 }
