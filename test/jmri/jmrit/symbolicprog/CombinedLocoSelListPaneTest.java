@@ -6,7 +6,7 @@ import javax.swing.*;
 import jmri.*;
 import junit.framework.*;
 
-// Revision: $Revision: 1.7 $
+// Revision: $Revision: 1.8 $
 
 public class CombinedLocoSelListPaneTest extends TestCase {
 
@@ -35,7 +35,8 @@ public class CombinedLocoSelListPaneTest extends TestCase {
     combinedlocosellistpane.mDecoderList.setSelectedIndex(2);
     Assert.assertEquals("after update", true, combinedlocosellistpane.isDecoderSelected());
     String stringRet = combinedlocosellistpane.selectedDecoderType();
-    Assert.assertEquals("selected item", "NMRA standard register definitions", stringRet);
+    Assert.assertEquals("selected item", "NMRA standard register definitions (NMRA standard register definitions)",
+                    stringRet);
   }
 
 	// Main entry point

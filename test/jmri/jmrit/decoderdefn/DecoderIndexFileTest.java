@@ -14,10 +14,10 @@ import org.jdom.output.*;
 import com.sun.java.util.collections.List;
 
 /**
- * DecoderIndexFileTest.java
+ * Tests for DecoderIndexFile class
  *
  * @author			Bob Jacobsen, Copyright (c) 2001, 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class DecoderIndexFileTest extends TestCase {
 
@@ -138,8 +138,8 @@ public class DecoderIndexFileTest extends TestCase {
 		// search for the two Digitrax decoders
 		JComboBox l1 = di.matchingComboBox("Digitrax", null, null, null, null);
 		Assert.assertEquals("Found with name Digitrax ", 3, l1.getItemCount());
-		Assert.assertEquals("Found with name Digitrax ", "DH142", (String)l1.getItemAt(1));
-		Assert.assertEquals("Found with name Digitrax ", "DN142", (String)l1.getItemAt(2));
+		Assert.assertEquals("Found with name Digitrax ", "DH142 (FX2 family)", (String)l1.getItemAt(1));
+		Assert.assertEquals("Found with name Digitrax ", "DN142 (FX2 family)", (String)l1.getItemAt(2));
 		// search for the two decoders from mfgID 129
 		JComboBox l2 = di.matchingComboBox(null, null, "129", null, null);
 		Assert.assertEquals("Found with id 129 ", 3, l2.getItemCount());
