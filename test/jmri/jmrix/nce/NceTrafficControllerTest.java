@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the NceTrafficController class
  * @author			Bob Jacobsen
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 package jmri.jmrix.nce;
@@ -95,7 +95,6 @@ public class NceTrafficControllerTest extends TestCase {
 		c.sendNceMessage(m, new NceListenerScaffold());
 
 		// check it arrived at monitor
-		Assert.assertTrue("message not null", rcvdMsg != null);
 		Assert.assertEquals("total length ", 4, tostream.available());
 		Assert.assertEquals("Char 0", '0', tostream.readByte());
 		Assert.assertEquals("Char 1", '1', tostream.readByte());
