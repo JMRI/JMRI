@@ -8,15 +8,13 @@
 
 package jmri.jmrix.loconet;
 
-import ErrLoggerJ.ErrLog;
-
 public class LocoNetMessage {
 // is this logically an abstract class?
 
 // create a new one
 public LocoNetMessage(int i) {
 	if (i<1)
-		ErrLog.msg(ErrLog.error, "LocoNetMessage","","invalid length in call to ctor");
+		log.error("invalid length in call to ctor: "+i);
 	_nDataBytes = i;
 	_dataBytes = new int[i];
 }
@@ -40,6 +38,9 @@ public String toString() {
 // contents (private)
 private int _nDataBytes = 0;
 private int _dataBytes[] = null;
+
+	// initialize logging	
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoNetMessage.class.getName());
 
 }
 

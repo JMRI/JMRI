@@ -12,8 +12,7 @@
 package jmri.jmrix.loconet;
 
 import jmri.Programmer;
-
-import ErrLoggerJ.ErrLog;
+import jmri.ProgListener;
 
 import java.util.Vector;
 import java.beans.PropertyChangeListener;
@@ -28,8 +27,7 @@ public class SlotManager implements LocoNetListener, Programmer {
 	public SlotManager() { 
 		// error if more than one constructed?
 		if (self != null) 
-			ErrLog.msg(ErrLog.error, "SlotManager", 
-						"ctor", "Creating too many SlotManager objects");
+			log.warn("Creating too many SlotManager objects");
 
 		// initialize slot array
 		for (int i=0; i<=127; i++) _slots[i] = new LocoNetSlot();
@@ -56,7 +54,7 @@ public class SlotManager implements LocoNetListener, Programmer {
 	static private SlotManager self = null;
 
 	// handle mode
-	protected int _mode = 0;
+	protected int _mode = Programmer.PAGEMODE;
 	
 	public void setMode(int mode) {
 		if (mode != _mode) {
@@ -178,8 +176,7 @@ public class SlotManager implements LocoNetListener, Programmer {
 							notifyProgListenerLack(jmri.ProgListener.OK);
 							}
 						else { // not sure how to cope, so complain
-							ErrLog.msg(ErrLog.error, "SlotManager", 
-								"message", "unexpected LACK reply code "+m.getElement(2));
+							log.warn("unexpected LACK reply code "+m.getElement(2));
 							// move to not programming state
 							progState = 0;
 							// notify user ProgListener
@@ -200,8 +197,7 @@ public class SlotManager implements LocoNetListener, Programmer {
 			}
 		catch (LocoNetException e) {
 			// must not have been interesting, or at least routed right
-			ErrLog.msg(ErrLog.error, "SlotManager", 
-						"message", "slot rejected LocoNetMessage"+m);
+			log.error("slot rejected LocoNetMessage"+m);
 			return;
 			}
 		// notify listeners that slots may have changed
@@ -245,8 +241,7 @@ public class SlotManager implements LocoNetListener, Programmer {
 					}
 					break;
 				default:  // error!
-					ErrLog.msg(ErrLog.error, "SlotManager", 
-						"message", "unexpected programming state "+progState);
+					log.error("unexpected programming state "+progState);
 					break;
 			}
 		}
@@ -287,8 +282,7 @@ public class SlotManager implements LocoNetListener, Programmer {
 	protected void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
 		// test for only one!
 		if (_usingProgrammer != null && _usingProgrammer != p) {
-				ErrLog.msg(ErrLog.routine, "SlotManager", 
-						"useProgrammer", "programmer already in use by "+_usingProgrammer);
+				if (log.isInfoEnabled()) log.info("programmer already in use by "+_usingProgrammer);
 				throw new jmri.ProgrammerException("programmer in use");
 			}
 		else {
@@ -336,8 +330,9 @@ public class SlotManager implements LocoNetListener, Programmer {
 	
 	// internal method to notify of the final result
 	protected void notifyProgListenerEnd(int value, int status) {
-		_usingProgrammer.programmingOpReply(value, status);
+		ProgListener p = _usingProgrammer;
 		_usingProgrammer = null;
+		p.programmingOpReply(value, status);
 	}
 
 	// internal method to notify of the LACK result
@@ -346,6 +341,9 @@ public class SlotManager implements LocoNetListener, Programmer {
 		_usingProgrammer.programmingOpReply(-1, status);
 		_usingProgrammer = null;
 	}
+
+	// initialize logging	
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SlotManager.class.getName());
 }
 
 
