@@ -1,16 +1,16 @@
-/** 
- * AbstractTurnoutManager.java
- *
- * Description:		Abstract base implementation of the TurnoutManager interface
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version			
- */
+// AbstractTurnoutManager.java
 
 package jmri;
 
 import java.util.Hashtable;
 
 
+/** 
+ * Abstract partial implementation of a TurnoutManager.
+ *
+ * @author			Bob Jacobsen Copyright (C) 2001
+ * @version			$Id: AbstractTurnoutManager.java,v 1.4 2001-11-10 21:32:11 jacobsen Exp $
+ */
 public abstract class AbstractTurnoutManager 
 		implements TurnoutManager, java.beans.PropertyChangeListener {
 

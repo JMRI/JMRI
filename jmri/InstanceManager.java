@@ -1,17 +1,28 @@
-/** 
- * InstanceManager.java
- *
- * Description:		static members for locating various interfaces
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version			
- */
+// InstanceManager.java
 
 package jmri;
+
 import jmri.Programmer;
 import jmri.PowerManager;
 import jmri.SensorManager;
 import jmri.TurnoutManager;
 
+/** 
+ * Provides static members for locating various interface implementations.
+ *<P>
+ * Provides implementations for the JMRI interfaces:
+ *<UL>
+ *<LI>PowerManager
+ *</UL>
+ *
+ * The implementations of these interfaces are specific to the layout hardware, etc.
+ * During initialization, objects of the right type are created and registered
+ * with the ImplementationManager class, so they can later be retrieved by
+ * non-system-specific code.
+ *
+ * @author			Bob Jacobsen Copyright (C) 2001
+ * @version			$Id: InstanceManager.java,v 1.5 2001-11-10 21:32:11 jacobsen Exp $
+ */
 public class InstanceManager {
 
 	static public PowerManager powerManagerInstance()  { return _powerManager; }
