@@ -23,7 +23,7 @@ import jmri.jmrix.nce.*;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -136,12 +136,6 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
         // nce.NcePowerManager to do that
         if (jmri.InstanceManager.turnoutManagerInstance() == null)
             jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.nce.NceTurnoutManager());
-
-        // start operation
-        // sourceThread = new Thread(p);
-        // sourceThread.start();
-        sinkThread = new Thread(NceTrafficController.instance());
-        sinkThread.start();
     }
 
     private Thread sinkThread;

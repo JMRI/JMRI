@@ -2,7 +2,9 @@
 
 package jmri.jmrix;
 
-import javax.swing.JOptionPane;
+import java.io.*;
+
+import javax.swing.*;
 
 /**
  * Provide an abstract base for *PortController classes.
@@ -15,9 +17,18 @@ import javax.swing.JOptionPane;
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
-public class AbstractPortController {
+abstract public class AbstractPortController {
+
+    // returns the InputStream from the port
+    public abstract DataInputStream getInputStream();
+
+    // returns the outputStream to the port
+    public abstract DataOutputStream getOutputStream();
+
+    // check that this object is ready to operate
+    public abstract boolean status();
 
     /**
      * Standard error handling for port-busy case

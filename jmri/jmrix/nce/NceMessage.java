@@ -5,68 +5,24 @@ package jmri.jmrix.nce;
 /**
  * Encodes a message to an NCE command station.  The NceReply
  * class handles the response from the command station.
- * <P>
- * There's some rudimentary support for binary commands, but it's
- * not to the point of being usable.
- * <P>The "state" referred to here is the command station
- * state needed before this message can be sent.
  *
  * @author	        Bob Jacobsen  Copyright (C) 2001
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
-public class NceMessage {
-    // is this logically an abstract class?
+public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
     public NceMessage() {
-        setBinary(false);
+        super();
     }
 
     // create a new one
     public  NceMessage(int i) {
-        this();
-        if (i<1)
-            log.error("invalid length in call to ctor");
-        _nDataChars = i;
-        _dataChars = new int[i];
+        super(i);
     }
 
     // copy one
     public  NceMessage(NceMessage m) {
-        this();
-        if (m == null)
-            log.error("copy ctor of null message");
-        _nDataChars = m._nDataChars;
-        _dataChars = new int[_nDataChars];
-        for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
-    }
-
-    public void setOpCode(int i) { _dataChars[0]=i;}
-    public int getOpCode() {return _dataChars[0];}
-    public String getOpCodeHex() { return "0x"+Integer.toHexString(getOpCode()); }
-
-    // accessors to the bulk data
-    public int getNumDataElements() {return _nDataChars;}
-    public int getElement(int n) {return _dataChars[n];}
-    public void setElement(int n, int v) { _dataChars[n] = v; }
-
-    // mode accessors
-    boolean _isBinary;
-    public boolean isBinary() { return _isBinary; }
-    public void setBinary(boolean b) { _isBinary = b; }
-
-    // display format
-    public String toString() {
-        String s = "";
-        for (int i=0; i<_nDataChars; i++) {
-            if (_isBinary) {
-                if (i!=0) s+=" ";
-                if (_dataChars[i] < 16) s+="0";
-                s+=Integer.toHexString(_dataChars[i]);
-            } else {
-                s+=(char)_dataChars[i];
-            }
-        }
-        return s;
+        super(m);
     }
 
     // diagnose format
@@ -112,7 +68,7 @@ public class NceMessage {
         NceMessage m = new NceMessage(4);
         m.setBinary(false);
         m.setOpCode('R');
-        addIntAsThree(cv, m, 1);
+        m.addIntAsThree(cv, 1);
         return m;
     }
 
@@ -120,9 +76,9 @@ public class NceMessage {
         NceMessage m = new NceMessage(8);
         m.setBinary(false);
         m.setOpCode('P');
-        addIntAsThree(cv, m, 1);
+        m.addIntAsThree(cv, 1);
         m.setElement(4,' ');
-        addIntAsThree(val, m, 5);
+        m.addIntAsThree(val, 5);
         return m;
     }
 
@@ -144,31 +100,8 @@ public class NceMessage {
         String s = ""+reg;
         m.setElement(1, s.charAt(s.length()-1));
         m.setElement(2,' ');
-        addIntAsThree(val, m, 3);
+        m.addIntAsThree(val, 3);
         return m;
-    }
-
-    // contents (private)
-    private int _nDataChars = 0;
-    private int _dataChars[] = null;
-
-    static String addIntAsThree(int val, NceMessage m, int offset) {
-        String s = ""+val;
-        if (s.length() != 3) s = "0"+s;  // handle <10
-        if (s.length() != 3) s = "0"+s;  // handle <100
-        m.setElement(offset,s.charAt(0));
-        m.setElement(offset+1,s.charAt(1));
-        m.setElement(offset+2,s.charAt(2));
-        return s;
-    }
-
-    static String addIntAsTwoHex(int val, NceMessage m, int offset) {
-        String s = (""+Integer.toHexString(val)).toUpperCase();
-        if (s.length() < 2) s = "0"+s;  // handle one digit
-        if (s.length() > 2) log.error("can't add as two hex digits: "+s);
-        m.setElement(offset,s.charAt(0));
-        m.setElement(offset+1,s.charAt(1));
-        return s;
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceMessage.class.getName());

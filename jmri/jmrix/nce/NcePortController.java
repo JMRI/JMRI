@@ -15,14 +15,6 @@ public abstract class NcePortController extends jmri.jmrix.AbstractPortControlle
 	// base class. Implementations will provide InputStream and OutputStream
 	// objects to NceTrafficController classes, who in turn will deal in messages.
 
-	// returns the InputStream from the port
-	public abstract DataInputStream getInputStream();
-
-	// returns the outputStream to the port
-	public abstract DataOutputStream getOutputStream();
-
-	// check that this object is ready to operate
-	public abstract boolean status();
 }
 
 
