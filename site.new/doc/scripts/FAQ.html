@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: FAQ.html,v 1.9 2005-01-02 23:25:17 jacobsen Exp $ -->
+<!-- $Id: FAQ.html,v 1.10 2005-01-24 05:13:31 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -154,7 +154,20 @@
 <PRE>
     waitMsec(1000)
 </PRE>
-            waits for 1000 milliseconds (one second) before continuing.
+            causes an automaton or Siglet script to wait for 
+            1000 milliseconds (one second) before continuing.
+            <P>
+            For just a simple script, something that doesn't use the
+            Automat or Siglet classes, you can sleep by doing
+            
+<PRE>
+from time import sleep
+sleep(10)
+</PRE>
+            The first line defines the "sleep" routine, and only needs
+            to be done once.  The second line then sleeps for 10 seconds.
+            Note that the accuracy of this method is not as good as
+            using one of the special classes.
 		    </div>
 
 		</div>
