@@ -25,7 +25,7 @@ import org.jdom.Element;
  * this entry.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  * @see jmri.jmrit.roster.LocoFile
  *
  */
@@ -52,6 +52,7 @@ public class RosterEntry {
         _decoderModel = pEntry._decoderModel;
         _decoderFamily = pEntry._decoderFamily;
         _decoderComment = pEntry._decoderComment;
+        _owner = pEntry._owner;
     }
 
 	public void   setId(String s) { _id = s; }
@@ -85,6 +86,9 @@ public class RosterEntry {
 
 	public void   setModel(String s) { _model = s; }
 	public String getModel() { return _model; }
+
+    public void   setOwner(String s) { _owner = s; }
+    public String getOwner() { return _owner; }
 
 	public void   setDccAddress(String s) { _dccAddress = s; }
 	public String getDccAddress() { return _dccAddress; }
@@ -123,6 +127,7 @@ public class RosterEntry {
 		if ((a = e.getAttribute("fileName")) != null )  _fileName = a.getValue();
 		if ((a = e.getAttribute("roadName")) != null )  _roadName = a.getValue();
 		if ((a = e.getAttribute("roadNumber")) != null )  _roadNumber = a.getValue();
+		if ((a = e.getAttribute("owner")) != null )  _owner = a.getValue();
 		if ((a = e.getAttribute("mfg")) != null )  _mfg = a.getValue();
 		if ((a = e.getAttribute("model")) != null )  _model = a.getValue();
 		if ((a = e.getAttribute("dccAddress")) != null )  _dccAddress = a.getValue();
@@ -147,6 +152,7 @@ public class RosterEntry {
 		e.addAttribute("roadNumber",getRoadNumber());
 		e.addAttribute("roadName",getRoadName());
 		e.addAttribute("mfg",getMfg());
+		e.addAttribute("owner",getOwner());
 		e.addAttribute("model",getModel());
 		e.addAttribute("dccAddress",getDccAddress());
 		e.addAttribute("comment",getComment());
@@ -171,6 +177,7 @@ public class RosterEntry {
 			+" "+_roadName
 			+" "+_roadNumber
 			+" "+_mfg
+            +" "+_owner
 			+" "+_model
 			+" "+_dccAddress
 			+" "+_comment
@@ -252,6 +259,7 @@ public class RosterEntry {
 	protected String _roadName = "";
 	protected String _roadNumber = "";
 	protected String _mfg = "";
+    protected String _owner ="";
 	protected String _model = "";
 	protected String _dccAddress = "";
 	protected String _comment = "";

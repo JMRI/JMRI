@@ -11,7 +11,7 @@ import com.sun.java.util.collections.List;
  * Display and edit a RosterEntry.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class RosterEntryPane extends javax.swing.JPanel  {
 
@@ -20,6 +20,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
 	JTextField roadNumber 		= new JTextField(12);
 	JTextField mfg 				= new JTextField(12);
 	JTextField model			= new JTextField(12);
+	JTextField owner			= new JTextField(12);
 	JLabel dccAddress		= new JLabel();
 	JTextField comment			= new JTextField(12);
 	JLabel filename 		= new JLabel();
@@ -37,6 +38,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
 		roadName.setText(r.getRoadName());
 		roadNumber.setText(r.getRoadNumber());
 		mfg.setText(r.getMfg());
+		owner.setText(r.getOwner());
 		model.setText(r.getModel());
 		comment.setText(r.getComment());
 		decoderModel.setText(r.getDecoderModel());
@@ -62,7 +64,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
 		});
 
 		// assemble the GUI
-		setLayout(new GridLayout(11,2));
+		setLayout(new GridLayout(12,2));
 
 		add(new JLabel("ID:"));
 		add(id);
@@ -75,6 +77,9 @@ public class RosterEntryPane extends javax.swing.JPanel  {
 
 		add(new JLabel("Manufacturer:"));
 		add(mfg);
+
+		add(new JLabel("Owner:"));
+		add(owner);
 
 		add(new JLabel("Model:"));
 		add(model);
@@ -120,6 +125,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
 		r.setRoadName(roadName.getText());
 		r.setRoadNumber(roadNumber.getText());
 		r.setMfg(mfg.getText());
+		r.setOwner(owner.getText());
 		r.setModel(model.getText());
 		r.setDccAddress(dccAddress.getText());
 		r.setComment(comment.getText());
