@@ -15,7 +15,7 @@ import javax.swing.*;
  * explicitly add the code for Positionable
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class SecurityElementIcon extends JPanel
@@ -74,6 +74,18 @@ public class SecurityElementIcon extends JPanel
         element = jmri.jmrix.loconet.LnSecurityElementManager.instance()
             .getSecurityElement(name);
         element.addPropertyChangeListener(this);
+        setProperToolTip();
+    }
+
+    void setProperToolTip() {
+        setToolTipText(getNameString());
+    }
+
+    String getNameString() {
+        String name;
+        if (element == null) name = "<Not connected>";
+        else name = "SE"+element.getNumber();
+        return name;
     }
 
     // update as state of turnout changes
