@@ -28,7 +28,7 @@ import com.sun.java.util.collections.ArrayList;
 /**
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class AppConfigPanel extends JPanel {
 
@@ -60,8 +60,10 @@ public class AppConfigPanel extends JPanel {
         // add button to show advanced section
         add(new JSeparator(JSeparator.HORIZONTAL));
         showAdvanced = new JCheckBox(rb.getString("ButtonShowAdv"));
+        showAdvanced.setAlignmentX(1.f);
         JPanel p5 = new JPanel();
         p5.setLayout(new FlowLayout());
+        p5.setAlignmentX(1.f);
         p5.add(showAdvanced);
         add(p5);
 
