@@ -28,7 +28,7 @@ public class SlotManagerTest extends TestCase {
         };
         slotmanager.slotFromLocoAddress(0x2134, p2);
         Assert.assertEquals("slot request message",
-			    "bf 42 34 0 ",
+			    "BF 42 34 00",
 			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
         Assert.assertEquals("hash length", 1, slotmanager.mLocoAddrHash.size());
         Assert.assertEquals("key present", true,
@@ -84,7 +84,7 @@ public class SlotManagerTest extends TestCase {
         slotmanager.setMode(Programmer.PAGEMODE);
         slotmanager.readCV(CV1, p2);
         Assert.assertEquals("read message",
-			    "ef e 7c 20 0 0 0 0 2 b 7f 0 0 0 ",
+			    "EF 0E 7C 20 00 00 00 00 02 0B 7F 00 00 00",
 			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
     }
 
@@ -95,7 +95,7 @@ public class SlotManagerTest extends TestCase {
         slotmanager.setMode(Programmer.REGISTERMODE);
         slotmanager.readCV(CV1, p2);
         Assert.assertEquals("read message",
-			    "ef e 7c 10 0 0 0 0 2 1 7f 0 0 0 ",
+			    "EF 0E 7C 10 00 00 00 00 02 01 7F 00 00 00",
 			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
     }
 
@@ -106,7 +106,7 @@ public class SlotManagerTest extends TestCase {
         slotmanager.setMode(Programmer.DIRECTBYTEMODE);
         slotmanager.readCV(CV1, p2);
         Assert.assertEquals("read message",
-			    "ef e 7c 28 0 0 0 0 2 b 7f 0 0 0 ", lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
+			    "EF 0E 7C 28 00 00 00 00 02 0B 7F 00 00 00", lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
     }
 
     public void testReadCVOpsModeLong() throws jmri.ProgrammerException {
@@ -115,7 +115,7 @@ public class SlotManagerTest extends TestCase {
         ProgListener p2=  null;
         slotmanager.readCVOpsMode(CV1, p2, 4*128+0x23, true);
         Assert.assertEquals("read message",
-			    "ef e 7c 2c 0 4 23 0 2 b 7f 0 0 0 ", lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
+			    "EF 0E 7C 2C 00 04 23 00 02 0B 7F 00 00 00", lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
     }
 
     public void testReadCVOpsModeShort() throws jmri.ProgrammerException {
@@ -124,7 +124,7 @@ public class SlotManagerTest extends TestCase {
         ProgListener p2=  null;
         slotmanager.readCVOpsMode(CV1, p2, 22, false);
         Assert.assertEquals("read message",
-			    "ef e 7c 2c 0 40 16 0 2 b 7f 0 0 0 ", lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
+			    "EF 0E 7C 2C 00 40 16 00 02 0B 7F 00 00 00", lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
     }
 
     public void testWriteCVPaged() throws jmri.ProgrammerException {
@@ -135,7 +135,7 @@ public class SlotManagerTest extends TestCase {
 	slotmanager.setMode(Programmer.PAGEMODE);
         slotmanager.writeCV(CV1, val2, p3);
 	Assert.assertEquals("write message",
-			    "ef e 7c 60 0 0 0 0 0 b 22 0 0 0 ",
+			    "EF 0E 7C 60 00 00 00 00 00 0B 22 00 00 00",
 			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
     }
 
@@ -147,7 +147,7 @@ public class SlotManagerTest extends TestCase {
         slotmanager.setMode(Programmer.REGISTERMODE);
         slotmanager.writeCV(CV1, val2, p3);
         Assert.assertEquals("write message",
-			    "ef e 7c 50 0 0 0 0 0 1 22 0 0 0 ",
+			    "EF 0E 7C 50 00 00 00 00 00 01 22 00 00 00",
                             lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
     }
 
@@ -159,7 +159,7 @@ public class SlotManagerTest extends TestCase {
         slotmanager.setMode(Programmer.DIRECTBYTEMODE);
         slotmanager.writeCV(CV1, val2, p3);
         Assert.assertEquals("write message",
-			    "ef e 7c 68 0 0 0 0 0 b 22 0 0 0 ",
+			    "EF 0E 7C 68 00 00 00 00 00 0B 22 00 00 00",
 			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
     }
 
@@ -170,7 +170,7 @@ public class SlotManagerTest extends TestCase {
         ProgListener p3=  null;
         slotmanager.writeCVOpsMode(CV1, val2, p3, 4*128+0x23, true);
         Assert.assertEquals("write message",
-			    "ef e 7c 67 0 4 23 0 0 b 22 0 0 0 ",
+			    "EF 0E 7C 67 00 04 23 00 00 0B 22 00 00 00",
 			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
     }
 
@@ -181,7 +181,7 @@ public class SlotManagerTest extends TestCase {
         ProgListener p3=  null;
         slotmanager.writeCVOpsMode(CV1, val2, p3, 22, false);
         Assert.assertEquals("write message",
-			    "ef e 7c 67 0 0 16 0 0 b 22 0 0 0 ",
+			    "EF 0E 7C 67 00 00 16 00 00 0B 22 00 00 00",
 			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
     }
 

@@ -13,7 +13,7 @@ import jmri.*;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class SecurityElementTest extends TestCase {
 
@@ -63,7 +63,7 @@ public class SecurityElementTest extends TestCase {
         Assert.assertEquals("AX speed ", 0, testSE10.currentSpeedAX);
         Assert.assertEquals("XA speed ", 0, testSE10.currentSpeedXA);
         Assert.assertEquals("messages sent ", 1, controller.outbound.size());
-        Assert.assertEquals("message contents ","e4 a 0 a 0 1 0 0 0 0 ",
+        Assert.assertEquals("message contents ","E4 0A 00 0A 00 01 00 00 00 00",
                     controller.outbound.elementAt(0).toString());
     }
 
@@ -79,7 +79,7 @@ public class SecurityElementTest extends TestCase {
         Assert.assertEquals("AX speed ", 48, testSE10.currentSpeedAX);
         Assert.assertEquals("XA speed ", 44, testSE10.currentSpeedXA);
         Assert.assertEquals("messages sent ", 1, controller.outbound.size());
-        Assert.assertEquals("message contents ","e4 a 0 a 0 0 0 30 2c 0 ",
+        Assert.assertEquals("message contents ","E4 0A 00 0A 00 00 00 30 2C 00",
                                             controller.outbound.elementAt(0).toString());
     }
 
@@ -115,38 +115,38 @@ public class SecurityElementTest extends TestCase {
         Assert.assertEquals("AX speed ", 0, testSE15.currentSpeedAX);
         Assert.assertEquals("XA speed ", 0, testSE15.currentSpeedXA);
         Assert.assertEquals("messages sent ", 1, controller.outbound.size());
-        Assert.assertEquals("SE15 message contents ","e4 a 0 f 0 1 0 0 0 0 ",
+        Assert.assertEquals("SE15 message contents ","E4 0A 00 0F 00 01 00 00 00 00",
                                             controller.outbound.elementAt(0).toString());
         // start the propagation
         controller.forwardMessage(0);
         Assert.assertEquals("messages sent ", 3, controller.outbound.size());
-        Assert.assertEquals("SE14 message contents ","e4 a 0 e 0 4 0 14 14 0 ",
+        Assert.assertEquals("SE14 message contents ","E4 0A 00 0E 00 04 00 14 14 00",
                                             controller.outbound.elementAt(1).toString());
-        Assert.assertEquals("SE16 message contents ","e4 a 0 10 0 2 0 14 14 0 ",
+        Assert.assertEquals("SE16 message contents ","E4 0A 00 10 00 02 00 14 14 00",
                                             controller.outbound.elementAt(2).toString());
 
         // 1st message of 2nd turn
         controller.forwardMessage(1);  // from SE14
         Assert.assertEquals("messages sent ", 4, controller.outbound.size());
-        Assert.assertEquals("SE13 message contents ","e4 a 0 d 0 0 0 28 14 0 ",
+        Assert.assertEquals("SE13 message contents ","E4 0A 00 0D 00 00 00 28 14 00",
                                             controller.outbound.elementAt(3).toString());
 
         // 2nd message of 2nd turn
         controller.forwardMessage(2);  // from SE16
         Assert.assertEquals("messages sent ", 5, controller.outbound.size());
-        Assert.assertEquals("SE17 message contents ","e4 a 0 11 0 0 0 14 28 0 ",
+        Assert.assertEquals("SE17 message contents ","E4 0A 00 11 00 00 00 14 28 00",
                                             controller.outbound.elementAt(4).toString());
 
         // 1st message of 3rd turn
         controller.forwardMessage(3);  // from SE13
         Assert.assertEquals("messages sent ", 7, controller.outbound.size());
-        Assert.assertEquals("SE12 message contents ","e4 a 0 c 0 0 0 3c 14 0 ",
+        Assert.assertEquals("SE12 message contents ","E4 0A 00 0C 00 00 00 3C 14 00",
                                             controller.outbound.elementAt(5).toString());
 
         // 2nd message of 3rd turn
         controller.forwardMessage(4);  // from SE14
         Assert.assertEquals("messages sent ", 9, controller.outbound.size());
-        Assert.assertEquals("SE14 message contents ","e4 a 0 e 0 4 0 14 28 0 ",
+        Assert.assertEquals("SE14 message contents ","E4 0A 00 0E 00 04 00 14 28 00",
                                             controller.outbound.elementAt(6).toString());
 
         // enough detail, check final state

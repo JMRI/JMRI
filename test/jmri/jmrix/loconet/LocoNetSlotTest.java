@@ -18,7 +18,7 @@ public class LocoNetSlotTest extends TestCase {
         };
         slotmanager.slotFromLocoAddress(21, p2);
         Assert.assertEquals("slot request message",
-			    "bf 0 15 0 ",
+			    "BF 00 15 00",
 			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
     }
 

@@ -10,7 +10,7 @@ import jmri.jmrix.loconet.*;
 /**
  * Tests for the jmri.jmrix.loconet.LnTurnout class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class LnTurnoutTest extends jmri.AbstractTurnoutTest {
 
@@ -28,12 +28,14 @@ public class LnTurnoutTest extends jmri.AbstractTurnoutTest {
 	LocoNetInterfaceScaffold lnis;
 
 	public void checkClosedMsgSent() {
-		Assert.assertTrue(lnis.outbound.elementAt(lnis.outbound.size()-1).toString().equals("b0 14 30 0 "));  // CLOSED loconet message
+		Assert.assertTrue(lnis.outbound.elementAt(lnis.outbound.size()-1)
+		    .toString().equals("B0 14 30 00"));  // CLOSED loconet message
 		Assert.assertTrue(t.getCommandedState() == jmri.Turnout.CLOSED);
 	}
 
 	public void checkThrownMsgSent() {
-		Assert.assertTrue(lnis.outbound.elementAt(lnis.outbound.size()-1).toString().equals("b0 14 10 0 "));  // THROWN loconet message
+		Assert.assertTrue(lnis.outbound.elementAt(lnis.outbound.size()-1)
+		    .toString().equals("B0 14 10 00"));  // THROWN loconet message
 		Assert.assertTrue(t.getCommandedState() == jmri.Turnout.THROWN);
 	}
 
@@ -64,7 +66,8 @@ public class LnTurnoutTest extends jmri.AbstractTurnoutTest {
 			t.setCommandedState(jmri.Turnout.CLOSED);
 		} catch (Exception e) { log.error("TO exception: "+e);
 		}
-		Assert.assertTrue(lnis.outbound.elementAt(0).toString().equals("b0 14 30 0 "));  // CLOSED loconet message
+		Assert.assertTrue(lnis.outbound.elementAt(0)
+		    .toString().equals("B0 14 30 00"));  // CLOSED loconet message
 		Assert.assertTrue(t.getCommandedState() == jmri.Turnout.CLOSED);
 
 		// notify the Ln that somebody else changed it...
