@@ -43,7 +43,7 @@ import com.sun.java.util.collections.List;
  * </UL>
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeListener {
 
@@ -420,7 +420,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
 		re.setDecoderFamily(decoderFile.getFamily());
 		re.setDecoderModel(decoderFile.getModel());
 		re.setId("<new loco>");
-        // note that we're leaving the filename null
+                // note that we're leaving the filename null
 		// add the new roster entry to the in-memory roster
 		Roster.instance().addEntry(re);
 
