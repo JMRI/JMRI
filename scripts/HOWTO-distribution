@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.
+distribution.  ($Revision: 1.20 $)
 
 Start with a directory, typically called "Distributions", that
 contains:
