@@ -10,10 +10,10 @@ import javax.swing.Action;
 import org.jdom.Element;
 
 /**
- * Handle XML persistance of PerformActionModel objects
+ * Handle XML persistance of PerformActionModel objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @see apps.PerformActionPanel
  */
 public class PerformActionModelXml implements XmlAdapter {
