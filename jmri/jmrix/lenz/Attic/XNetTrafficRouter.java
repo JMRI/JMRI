@@ -18,7 +18,7 @@ import java.util.Vector;
  * without traffic over the connection.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Revision: 2.2 $
+ * @version 		$Revision: 2.3 $
  *
  */
 public class XNetTrafficRouter extends XNetTrafficController implements XNetListener {
@@ -36,13 +36,18 @@ public class XNetTrafficRouter extends XNetTrafficController implements XNetList
     boolean connected = false;
 	public boolean status() { return connected; }
 
+
+    /* store the last sender */
+    XNetListener lastSender=null;
+
 	/**
 	 * Forward a preformatted XNetMessage to the actual interface.
 	 *
      * @param m Message to send; will be updated with CRC
 	 */
 	public void sendXNetMessage(XNetMessage m, XNetListener replyTo) {
-        destination.sendXNetMessage(m, replyTo);
+		lastSender=replyTo;
+	        destination.sendXNetMessage(m, replyTo);
 	}
 
     /**
@@ -89,7 +94,8 @@ public class XNetTrafficRouter extends XNetTrafficController implements XNetList
      * @param m Message to forward. Listeners should not modify it!
 	 */
 	protected void notify(XNetReply m) {
-		notifyReply((jmri.jmrix.AbstractMRReply)m,this);
+		notifyReply((jmri.jmrix.AbstractMRReply)m,lastSender);
+	        lastSender=null;
 	}
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetTrafficRouter.class.getName());
