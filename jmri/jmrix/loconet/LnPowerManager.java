@@ -5,8 +5,6 @@ package jmri.jmrix.loconet;
 import jmri.JmriException;
 import jmri.PowerManager;
 
-import java.beans.PropertyChangeListener;
-
 /**
  * PowerManager implementation for controlling layout power
  * <P>
@@ -17,7 +15,7 @@ import java.beans.PropertyChangeListener;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class LnPowerManager implements PowerManager, LocoNetListener {
 
