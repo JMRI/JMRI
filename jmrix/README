@@ -1,0 +1,7 @@
+The jmrix Java package defines implementations for the JMRI interfaces.
+
+Currently existing packages include:
+	jmrix.loconet   - implementations of the DigiTrax LocoNet
+	
+	
+
