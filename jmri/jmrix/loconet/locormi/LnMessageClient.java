@@ -7,7 +7,7 @@ import com.sun.java.util.collections.LinkedList;
  * Client for the RMI LocoNet server.
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Alex Shepherd, Bob Jacobsen
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class LnMessageClient extends LnTrafficRouter {
@@ -25,7 +25,7 @@ public class LnMessageClient extends LnTrafficRouter {
     /**
      * Forward messages to the server.
      */
-	public void sendLocoNetMessage(LocoNetMessage m) {
+    public void sendLocoNetMessage(LocoNetMessage m) {
         try{
             if( lnMessageBuffer != null )
                 lnMessageBuffer.sendLocoNetMessage( m );
@@ -33,14 +33,14 @@ public class LnMessageClient extends LnTrafficRouter {
                 log.warn( "sendLocoNetMessage: no connection to server" ) ;
         }
         catch( java.rmi.RemoteException ex )
-        {
-            log.warn( "sendLocoNetMessage: Exception: " + ex );
-        }
-	}
-
+            {
+                log.warn( "sendLocoNetMessage: Exception: " + ex );
+            }
+    }
+    
     // messages that are received from the server should
     // be passed to this.notify(LocoNetMessage m);
-
+    
     /**
      * Start the connection to the server. This is invoked
      * once.
@@ -48,85 +48,85 @@ public class LnMessageClient extends LnTrafficRouter {
     public void configureRemoteConnection(String remoteHostName, int timeoutSec) throws LocoNetException {
         serverName = remoteHostName ;
         pollTimeout = timeoutSec * 1000 ;  // convert to ms
-
+        
         if (log.isDebugEnabled()) log.debug("configureRemoteConnection: "
                                             +remoteHostName+" "+timeoutSec);
-
+        
         try{
             System.setSecurityManager(new java.rmi.RMISecurityManager());
             log.debug("security manager set, set interface to //"
-                        +remoteHostName+"//"
-                        +LnMessageServer.serviceName );
+                      +remoteHostName+"//"
+                      +LnMessageServer.serviceName );
             LnMessageServerInterface lnServer = (LnMessageServerInterface) java.rmi.Naming.lookup(
-                "//" + serverName + "/" + LnMessageServer.serviceName );
-
+                                                                                                  "//" + serverName + "/" + LnMessageServer.serviceName );
+            
             lnMessageBuffer = lnServer.getMessageBuffer() ;
             lnMessageBuffer.enable( 0 );
             pollThread = new LnMessageClientPollThread( this ) ;
         }
         catch( Exception ex ){
-          log.error( "Exception: " + ex );
-          throw new LocoNetException( "Failed to Connect to Server: " + serverName ) ;
+            log.error( "Exception: " + ex );
+            throw new LocoNetException( "Failed to Connect to Server: " + serverName ) ;
         }
     }
-
+    
     /**
-	 * set up all of the other objects to operate with a server
-	 * connected to this application
-	 */
-	public void configureLocalServices() {
-			// This is invoked on the LnMessageClient after it's
-            // ready to go, connection running, etc.
-
-			// If a jmri.Programmer instance doesn't exist, create a
-			// loconet.SlotManager to do that
-			if (jmri.InstanceManager.programmerManagerInstance() == null)
-				jmri.jmrix.loconet.SlotManager.instance();
-
-			// If a jmri.PowerManager instance doesn't exist, create a
-			// loconet.LnPowerManager to do that
-			if (jmri.InstanceManager.powerManagerInstance() == null)
-				jmri.InstanceManager.setPowerManager(new jmri.jmrix.loconet.LnPowerManager());
-
-			// If a jmri.TurnoutManager instance doesn't exist, create a
-			// loconet.LnTurnoutManager to do that
-			if (jmri.InstanceManager.turnoutManagerInstance() == null)
-				jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager());
-
-    		// If a jmri.SensorManager instance doesn't exist, create a
-	    	// loconet.LnSensorManager to do that
-		    if (jmri.InstanceManager.sensorManagerInstance() == null)
-			    jmri.InstanceManager.setSensorManager(new jmri.jmrix.loconet.LnSensorManager());
-
-            // the serial connections (LocoBuffer et al) start
-            // various threads here.
-	}
-
+     * set up all of the other objects to operate with a server
+     * connected to this application
+     */
+    public void configureLocalServices() {
+        // This is invoked on the LnMessageClient after it's
+        // ready to go, connection running, etc.
+        
+        // If a jmri.Programmer instance doesn't exist, create a
+        // loconet.SlotManager to do that
+        if (jmri.InstanceManager.programmerManagerInstance() == null)
+            jmri.jmrix.loconet.SlotManager.instance();
+        
+        // If a jmri.PowerManager instance doesn't exist, create a
+        // loconet.LnPowerManager to do that
+        if (jmri.InstanceManager.powerManagerInstance() == null)
+            jmri.InstanceManager.setPowerManager(new jmri.jmrix.loconet.LnPowerManager());
+        
+        // If a jmri.TurnoutManager instance doesn't exist, create a
+        // loconet.LnTurnoutManager to do that
+        if (jmri.InstanceManager.turnoutManagerInstance() == null)
+            jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager());
+        
+        // If a jmri.SensorManager instance doesn't exist, create a
+        // loconet.LnSensorManager to do that
+        if (jmri.InstanceManager.sensorManagerInstance() == null)
+            jmri.InstanceManager.setSensorManager(new jmri.jmrix.loconet.LnSensorManager());
+        
+        // the serial connections (LocoBuffer et al) start
+        // various threads here.
+    }
+    
     public static void main( String[] args ){
     	String logFile = "default.lcf";
     	try {
-	    	if (new java.io.File(logFile).canRead()) {
-	   	 		org.apache.log4j.PropertyConfigurator.configure("default.lcf");
-	    	} else {
-		    	org.apache.log4j.BasicConfigurator.configure();
-	    	}
-	    }
-		catch (java.lang.NoSuchMethodError e) { System.out.println("Exception starting logging: "+e); }
-
+            if (new java.io.File(logFile).canRead()) {
+                org.apache.log4j.PropertyConfigurator.configure("default.lcf");
+            } else {
+                org.apache.log4j.BasicConfigurator.configure();
+            }
+        }
+        catch (java.lang.NoSuchMethodError e) { System.out.println("Exception starting logging: "+e); }
+        
         try{
             String serverName = java.net.InetAddress.getLocalHost().getHostName();
             LnMessageClient lnClient = new LnMessageClient() ;
             lnClient.configureRemoteConnection( serverName, 60 );
-
-                // Now just site and wait for the Thread to read
+            
+            // Now just site and wait for the Thread to read
             synchronized( lnClient ){
                 lnClient.wait() ;
             }
         }
         catch( Exception ex ){
-          System.out.println( "Exception: " + ex ) ;
+            System.out.println( "Exception: " + ex ) ;
         }
     }
-
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnMessageClient.class.getName());
+    
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnMessageClient.class.getName());
 }
