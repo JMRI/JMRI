@@ -24,26 +24,51 @@ import jmri.jmrix.loconet.*;
  * Neither the baud rate configuration nor the "option 1" option are used.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
 	Vector portNameVector = null;
 
 	public Vector getPortNames() {
-		// first, check that the comm package can be opened and ports seen
-		portNameVector = new Vector();
-		Enumeration portIDs = CommPortIdentifier.getPortIdentifiers();
-		// find the names of suitable ports
-		while (portIDs.hasMoreElements()) {
-		  CommPortIdentifier id = (CommPortIdentifier) portIDs.nextElement();
-		  // accumulate the names in a vector
-		  portNameVector.addElement(id.getName());
-		  }
+        portNameVector = null;
+        try {
+            // this has to work through one of two sets of class. If
+            // Serialio.SerialConfig exists on this machine, we use that
+            // else we revert to javax.comm
+            try {
+                Class.forName("Serialio.SerialConfig");
+                log.debug("openPort using SerialIO");
+                InnerSerial inner = new InnerSerial();
+                inner.getPortNames();
+            } catch (ClassNotFoundException e) {
+                log.debug("openPort using javax.comm");
+                InnerJavaComm inner = new InnerJavaComm();
+                inner.getPortNames();
+            }
+		}
+		catch (Exception ex) {
+            log.error("error listing port names");
+			ex.printStackTrace();
+		}
+
 		return portNameVector;
 	}
 
     class InnerSerial {
+	    public Vector getPortNames() {
+		    // first, check that the comm package can be opened and ports seen
+            portNameVector = new Vector();
+            try {
+		        String[] names = SerialPortLocal.getPortList();
+                // accumulate the names in a vector
+                for (int i=0; i<names.length; i++) {
+		            portNameVector.addElement(names[i]);
+		        }
+            }
+            catch (java.io.IOException e) { log.error("IO exception listing ports: "+e); }
+		    return portNameVector;
+	    }
         public String openPort(String portName, String appName) throws java.io.IOException {
 			    // get and open the primary port
 			    SerialConfig config = new SerialConfig(portName);
@@ -79,6 +104,19 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
     }
 
     class InnerJavaComm  {
+	    public Vector getPortNames() {
+		    // first, check that the comm package can be opened and ports seen
+		    portNameVector = new Vector();
+		    Enumeration portIDs = CommPortIdentifier.getPortIdentifiers();
+		    // find the names of suitable ports
+		    while (portIDs.hasMoreElements()) {
+		        CommPortIdentifier id = (CommPortIdentifier) portIDs.nextElement();
+		        // accumulate the names in a vector
+		        portNameVector.addElement(id.getName());
+		    }
+		    return portNameVector;
+	    }
+
         public String openPort(String portName, String appName) throws javax.comm.NoSuchPortException, javax.comm.UnsupportedCommOperationException,
                                 java.io.IOException {
                 // get and open the primary port
