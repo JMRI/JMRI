@@ -6,12 +6,12 @@ import jmri.JmriException;
 import jmri.Turnout;
 
 /**
- * Implement turnout manager for Sprog systems
+ * Implement turnout manager for Sprog systems.
  * <P>
  * System names are "STnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class SprogTurnoutManager extends jmri.AbstractTurnoutManager {
 

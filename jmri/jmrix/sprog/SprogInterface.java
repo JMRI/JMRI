@@ -3,18 +3,30 @@
 package jmri.jmrix.sprog;
 
 /**
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * Define interface for sending and receiving messages to the SPROG
+ * command station.
+ *
+ * @author	Bob Jacobsen Copyright (C) 2001
+ * @version	$Revision: 1.3 $
  */
 
 public interface SprogInterface {
 
-	public void addSprogListener( SprogListener l);
-	public void removeSprogListener( SprogListener l);
+    public void addSprogListener( SprogListener l);
+    public void removeSprogListener( SprogListener l);
 
-	boolean status();   // true if the implementation is operational
+    /**
+     * Test operational status of interface.
+     * @return true is interface implementation is operational.
+     */
+    boolean status();
 
-	void sendSprogMessage(SprogMessage m, SprogListener l);  // 2nd arg gets the reply
+    /**
+     * Send a message through the interface.
+     * @param m Message to be sent.
+     * @param l Listener to be notified of reply.
+     */
+    void sendSprogMessage(SprogMessage m, SprogListener l);
 }
 
 

@@ -3,15 +3,15 @@
 package jmri.jmrix.nce;
 
 /**
- * Defines the interface to an NCE protocol handling class
+ * Defines the interface for listening to traffic on the NCE
+ * communications link.
  *
  * @author		Bob Jacobsen  Copyright (C) 2001
- * @version		$Revision: 1.2 $
+ * @version		$Revision: 1.3 $
  */
 public interface NceListener extends jmri.jmrix.AbstractMRListener {
-	public void message(NceMessage m);
-	public void reply(NceReply m);
+    public void message(NceMessage m);
+    public void reply(NceReply m);
 }
-
 
 /* @(#)NceListener.java */

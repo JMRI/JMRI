@@ -2,16 +2,15 @@
 
 package jmri.jmrix.nce;
 
-import jmri.JmriException;
 import jmri.Turnout;
 
 /**
- * Implement turnout manager for NCE systems
+ * Implement turnout manager for NCE systems.
  * <P>
  * System names are "NTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class NceTurnoutManager extends jmri.AbstractTurnoutManager {
 
