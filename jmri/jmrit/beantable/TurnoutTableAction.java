@@ -22,7 +22,7 @@ import javax.swing.JTextField;
  * TurnoutTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -39,7 +39,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 
     /**
      * Create the JTable DataModel, along with the changes
-     * for the specific case of Sensors
+     * for the specific case of Turnouts
      */
     void createModel() {
         m = new BeanTableDataModel() {
@@ -77,7 +77,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 
     void addPressed(ActionEvent e) {
         if (addFrame==null) {
-            addFrame = new JFrame(rb.getString("TitleAddSensor"));
+            addFrame = new JFrame(rb.getString("TitleAddTurnout"));
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             JPanel p;
             p = new JPanel(); p.setLayout(new FlowLayout());
