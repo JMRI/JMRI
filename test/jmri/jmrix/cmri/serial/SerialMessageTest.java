@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialMessage class.
  * @author	Bob Jacobsen Copyright 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SerialMessageTest extends TestCase {
 
@@ -25,7 +25,7 @@ public class SerialMessageTest extends TestCase {
 		m.setElement(2, 0xA2);
 		m.setElement(3, 0x00);
 		m.setBinary(true);
-		Assert.assertEquals("string compare ", "81 02 a2 00", m.toString());
+		Assert.assertEquals("string compare ", "81 02 A2 00", m.toString());
 	}
 
 	public void testBytesToString() {
@@ -35,7 +35,7 @@ public class SerialMessageTest extends TestCase {
 		m.setElement(2, (byte)0xA2);
 		m.setElement(3, (byte)0x00);
 		m.setBinary(true);
-		Assert.assertEquals("string compare ", "81 02 a2 00", m.toString());
+		Assert.assertEquals("string compare ", "81 02 A2 00", m.toString());
 	}
 
 	public void testToASCIIString() {
