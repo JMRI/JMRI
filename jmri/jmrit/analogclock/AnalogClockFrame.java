@@ -7,7 +7,6 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.util.Date;
 import jmri.*;
-import java.awt.geom.AffineTransform;
 
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.catalog.*;
@@ -17,7 +16,7 @@ import jmri.jmrit.catalog.*;
  *
  * <p> Time code copied from code for the Nixie clock by Bob Jacobsen</p>
  * @author                     Dennis Miller Copyright (C) 2004
- * @version                    $Revision: 1.2 $
+ * @version                    $Revision: 1.3 $
  */
 
 public class AnalogClockFrame extends javax.swing.JFrame implements java.beans.PropertyChangeListener {
@@ -89,20 +88,34 @@ public class clockPanel extends JPanel {
       Image scaledHour;
       NamedIcon hourIcon;
       NamedIcon scaledHourIcon;
+      int hourX[] = {-12, -11, -25, -10, -10, 0, 10, 10, 25, 11 ,12};
+      int hourY[] = {-31, -163, -170, -211, -276, -285, -276, -211, -170, -163, -31};
+      int minuteX[] = {-12, -11, -24, -11, -11, 0, 11, 11, 24, 11, 12};
+      int minuteY[] = {-31, -261, -266, -314, -381, -391, -381, -314, -266, -261, -31};
+   //   int minuteY[] = {-31, -237, -242, -290, -381, -391, -381, -290, -242, -237, -31};
+      int scaledHourX[] = new int[hourX.length];
+      int scaledHourY[] = new int[hourY.length];
+      int scaledMinuteX[] = new int[minuteX.length];
+      int scaledMinuteY[] = new int[minuteY.length];
+      int rotatedHourX[] = new int[hourX.length];
+      int rotatedHourY[] = new int[hourY.length];
+      int rotatedMinuteX[] = new int[minuteX.length];
+      int rotatedMinuteY[] = new int[minuteY.length];
+
+      Polygon hourHand;
+      Polygon scaledHourHand;
+      Polygon minuteHand;
+      Polygon scaledMinuteHand;
+      int minuteHeight;
+      int hourHeight;
+      double scaleRatio;
       int faceSize;
       int panelWidth;
       int panelHeight;
       int size;
       int logoWidth;
       int logoHeight;
-      int hourWidth;
-      int hourHeight;
-      int hourCentreX;
-      int hourCentreY;
-      int minuteWidth;
-      int minuteHeight;
-      int minuteCentreX;
-      int minuteCentreY;
+
       // centreX, centreY are the coordinates of the centre of the clock
       int centreX;
       int centreY;
@@ -116,13 +129,12 @@ public clockPanel() {
         scaledIcon = new NamedIcon("resources/logo.gif", "resources/logo.gif");
         logo = jmriIcon.getImage();
 
-	hourIcon = new NamedIcon("resources/icons/misc/Analog/Hour.png", "resources/icons/misc/Analog/Hour.png");
-	scaledHourIcon = new NamedIcon("resources/icons/misc/Analog/Hour.png", "resources/icons/misc/Analog/Hour.png");
-	hour = hourIcon.getImage();
-
-        minuteIcon = new NamedIcon("resources/icons/misc/Analog/Minute.png", "resources/icons/misc/Analog/Minute.png");
-	scaledMinuteIcon = new NamedIcon("resources/icons/misc/Analog/Minute.png", "resources/icons/misc/Analog/Minute.png");
-	minute = minuteIcon.getImage();
+        // Create an unscaled set of hands to get the original size (height)to use
+        // in the scaling calculations
+        hourHand = new Polygon(hourX, hourY, 11);
+        hourHeight = hourHand.getBounds().getSize().height;
+        minuteHand = new Polygon(minuteX, minuteY, 11);
+        minuteHeight = minuteHand.getBounds().getSize().height;
 
         amPm = "AM";
 
@@ -137,70 +149,74 @@ public clockPanel() {
 public void paint(Graphics g){
 
      // overridden Paint method to draw the clock
-     AffineTransform at = new AffineTransform();
-     Graphics2D g2 = (Graphics2D) g;
-     AffineTransform saveXform = g2.getTransform();
 
-     // Draw the clockface outline scaled to the panel size with a dot in the middle
-     g2.setColor(Color.white);
-     g2.fillOval(centreX-faceSize/2, centreY-faceSize/2, faceSize, faceSize);
-     g2.setColor(Color.black);
-     g2.drawOval(centreX-faceSize/2, centreY-faceSize/2, faceSize, faceSize);
+     g.translate(centreX, centreY);
+
+     // Draw the clockface outline scaled to the panel size with a dot in the middle and
+     // rings for the hands
+     g.setColor(Color.white);
+     g.fillOval(-faceSize/2, -faceSize/2, faceSize, faceSize);
+     g.setColor(Color.black);
+     g.drawOval(-faceSize/2, -faceSize/2, faceSize, faceSize);
+
      int dotSize = faceSize/40;
-     g2.fillOval(centreX-dotSize/2, centreY-dotSize/2, dotSize, dotSize);
+     g.fillOval(-dotSize*2, -dotSize*2, 4*dotSize, 4*dotSize);
+     g.setColor(Color.white);
+     g.fillOval(-dotSize, -dotSize, 2*dotSize, 2*dotSize);
+     g.setColor(Color.black);
+     g.fillOval(-dotSize/2, -dotSize/2, dotSize, dotSize);
 
      // Draw the JMRI logo
-     g2.drawImage(scaledLogo, centreX-logoWidth/2, centreY-faceSize/4, logoWidth, logoHeight, this);
+     g.drawImage(scaledLogo, -logoWidth/2, -faceSize/4, logoWidth, logoHeight, this);
 
      // Draw the hour and minute markers
      int dashSize = size/60;
      for (int i = 0; i < 360; i = i + 6) {
-       g2.drawLine(centreX + dotX(faceSize/2, i), centreY + dotY(faceSize/2, i), centreX + dotX(faceSize/2 - dashSize, i), centreY + dotY(faceSize/2 - dashSize, i));
+       g.drawLine(dotX(faceSize/2, i), dotY(faceSize/2, i), dotX(faceSize/2 - dashSize, i), dotY(faceSize/2 - dashSize, i));
      }
      for (int i = 0; i < 360; i = i + 30) {
-       g2.drawLine(centreX + dotX(faceSize/2, i), centreY + dotY(faceSize/2, i), centreX + dotX(faceSize/2 - 3 * dashSize, i), centreY + dotY(faceSize/2 - 3 * dashSize, i));
+       g.drawLine(dotX(faceSize/2, i), dotY(faceSize/2, i), dotX(faceSize/2 - 3 * dashSize, i), dotY(faceSize/2 - 3 * dashSize, i));
      }
 
      // Add the hour digits, with the fontsize scaled to the clock size
      int fontSize = faceSize/10;
      if (fontSize < 1) fontSize=1;
      Font sizedFont = new Font("Serif", Font.PLAIN, fontSize);
-     g2.setFont(sizedFont);
-     FontMetrics fontM = g2.getFontMetrics(sizedFont);
+     g.setFont(sizedFont);
+     FontMetrics fontM = g.getFontMetrics(sizedFont);
 
      for (int i = 0; i < 12; i++) {
        String hour = Integer.toString(i+1);
        int xOffset = fontM.stringWidth(hour);
        int yOffset = fontM.getHeight();
-       g2.drawString(Integer.toString(i+1), centreX + dotX(faceSize/2-6*dashSize,i*30-60) - xOffset/2, centreY + dotY(faceSize/2-6*dashSize,i*30-60) + yOffset/4);
+       g.drawString(Integer.toString(i+1), dotX(faceSize/2-6*dashSize,i*30-60) - xOffset/2, dotY(faceSize/2-6*dashSize,i*30-60) + yOffset/4);
      }
 
      // Draw hour hand rotated to appropriate angle
-     // "centre" point of hour hand is at 41, 256 in unscaled image
-     // Use a translated rotated affine transform to rotate about the centre point of the
-     // clock rather than the anchor point of the gifs
-     at.setToRotation(Math.toRadians(hourAngle), (double) centreX, (double) centreY);
-     g2.setTransform(at);
-     g2.drawImage(scaledHour, centreX-hourWidth/2, centreY-hourCentreY, hourWidth, hourHeight, this);
+     // Calculation mimics the AffineTransform class calculations in Graphics2D
+     // Grpahics2D and AffineTransform not used to maintain compatabilty with Java 1.1.8
+     for (int i = 0; i < scaledMinuteX.length; i++) {
+       rotatedMinuteX[i] = (int) ((double)scaledMinuteX[i]*Math.cos(Math.toRadians(minuteAngle))-(double)scaledMinuteY[i]*Math.sin(Math.toRadians(minuteAngle)));
+       rotatedMinuteY[i] = (int) ((double)scaledMinuteX[i]*Math.sin(Math.toRadians(minuteAngle))+(double)scaledMinuteY[i]*Math.cos(Math.toRadians(minuteAngle)));
+     }
+     scaledMinuteHand = new Polygon(rotatedMinuteX, rotatedMinuteY, rotatedMinuteX.length);
+     for (int i = 0; i < scaledHourX.length; i++) {
+       rotatedHourX[i] = (int) ((double)scaledHourX[i]*Math.cos(Math.toRadians(hourAngle))-(double)scaledHourY[i]*Math.sin(Math.toRadians(hourAngle)));
+       rotatedHourY[i] = (int) ((double)scaledHourX[i]*Math.sin(Math.toRadians(hourAngle))+(double)scaledHourY[i]*Math.cos(Math.toRadians(hourAngle)));
+     }
+     scaledHourHand = new Polygon(rotatedHourX, rotatedHourY, rotatedHourX.length);
 
+     g.fillPolygon(scaledHourHand);
+     g.fillPolygon(scaledMinuteHand);
 
-     // Draw minute hand rotated to approriate angle
-     // "centre" point of minute hand is at 41, 351 in unscaled image
-     at.setToRotation(Math.toRadians(minuteAngle), (double) centreX, (double) centreY);
-     g2.setTransform(at);
-     g2.drawImage(scaledMinute, centreX-minuteWidth/2, centreY-minuteCentreY, minuteWidth, minuteHeight, this);
-
-     // restore original transfrom
-     g2.setTransform(saveXform);
-
-     // Draw AM/PM indicator in slightly smaller font
+     // Draw AM/PM indicator in slightly smaller font than hour digits
      int amPmFontSize = (int) ((double) fontSize*.75);
      if (amPmFontSize < 1) amPmFontSize = 1;
      Font amPmSizedFont = new Font("Serif", Font.PLAIN, amPmFontSize);
-     g2.setFont(amPmSizedFont);
-     FontMetrics amPmFontM = g2.getFontMetrics(amPmSizedFont);
+     g.setFont(amPmSizedFont);
+     FontMetrics amPmFontM = g.getFontMetrics(amPmSizedFont);
 
-     g2.drawString(amPm, centreX - amPmFontM.stringWidth(amPm)/2, centreY+faceSize/5 );
+     g.drawString(amPm, -amPmFontM.stringWidth(amPm)/2, faceSize/5 );
    }
 
    // Method to provide the cartesian x coordinate given a radius and angle (in degrees)
@@ -235,25 +251,15 @@ public void paint(Graphics g){
      logoWidth = scaledIcon.getIconWidth();
      logoHeight = scaledIcon.getIconHeight();
 
-     int minuteScaleHeight = (int) ((float)faceSize/2.2);
-     int minuteScaleWidth = (int) ((float)minuteScaleHeight * (float)minuteIcon.getIconWidth()/(float)minuteIcon.getIconHeight());
-     scaledMinute = minute.getScaledInstance(minuteScaleWidth, minuteScaleHeight, Image.SCALE_SMOOTH);
-     scaledMinuteIcon.setImage(scaledMinute);
-     minuteWidth = scaledMinuteIcon.getIconWidth();
-     minuteHeight = scaledMinuteIcon.getIconHeight();
-     // pivot point of minute hand is at 41, 351 in unscaled image size of 83, 392
-     minuteCentreX = (int) (41./83.*(float)minuteWidth);
-     minuteCentreY = (int) (351./392.*(float)minuteHeight);
-
-     int hourScaleHeight = minuteScaleHeight*hourIcon.getIconHeight()/minuteIcon.getIconHeight();
-     int hourScaleWidth = (int) ((float)hourScaleHeight * (float)hourIcon.getIconWidth()/(float)hourIcon.getIconHeight());
-     scaledHour = hour.getScaledInstance(hourScaleWidth, hourScaleHeight, Image.SCALE_SMOOTH);
-     scaledHourIcon.setImage(scaledHour);
-     hourWidth = scaledHourIcon.getIconWidth();
-     hourHeight = scaledHourIcon.getIconHeight();
-     // pivot point of hour hand is at 41, 256 in unscaled image size of 83, 296
-     hourCentreX = (int)(41./83.*(float)hourWidth);
-     hourCentreY = (int)(256./296.*(float)hourHeight);
+     scaleRatio=(double)faceSize/2.7/(double)minuteHeight;
+     for (int i = 0; i < minuteX.length; i++) {
+       scaledMinuteX[i] =(int) ((double)minuteX[i]*scaleRatio);
+       scaledMinuteY[i] = (int) ((double)minuteY[i]*scaleRatio);
+       scaledHourX[i] = (int) ((double)hourX[i]*scaleRatio);
+       scaledHourY[i] = (int) ((double)hourY[i]*scaleRatio);
+     }
+     scaledHourHand = new Polygon(scaledHourX, scaledHourY, scaledHourX.length);
+     scaledMinuteHand = new Polygon(scaledMinuteX, scaledMinuteY, scaledMinuteX.length);
 
      centreX = panelWidth/2;
      centreY = panelHeight/2;
@@ -270,6 +276,8 @@ public void paint(Graphics g){
        hourAngle = (double) hours*30. + 30.*minuteAngle/360.;
        if (hours < 12) {amPm = "AM";}
        else amPm = "PM";
+       if (hours == 12 && minutes == 0) {amPm = "Noon";}
+       if (hours == 0 && minutes == 0) {amPm = "Midnight";}
        repaint();
    }
 
