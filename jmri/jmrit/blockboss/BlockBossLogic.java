@@ -16,7 +16,7 @@ import java.util.Hashtable;
  * some collection services.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
 public class BlockBossLogic extends Siglet {
@@ -29,7 +29,8 @@ public class BlockBossLogic extends Siglet {
 
     public BlockBossLogic(String name) {
         this.name = name;
-        driveSignal = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
+        driveSignal = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
+        if (driveSignal == null) log.warn("Signal "+name+" was not found!");
     }
 
     /**
@@ -42,7 +43,12 @@ public class BlockBossLogic extends Siglet {
     }
 
     public void setSensor(String name) {
+        if (name == null || name.equals("")) {
+            watchSensor = null;
+            return;
+        }
         watchSensor = InstanceManager.sensorManagerInstance().getSensor(name);
+        if (watchSensor == null) log.warn("Sensor "+name+" was not found!");
     }
 
     /**
@@ -55,7 +61,12 @@ public class BlockBossLogic extends Siglet {
     }
 
     public void setTurnout(String name, int state) {
+        if (name == null || name.equals("")) {
+            watchTurnout = null;
+            return;
+        }
         watchTurnout = InstanceManager.turnoutManagerInstance().getTurnout(name);
+        if (watchTurnout == null) log.warn("Turnout "+name+" was not found!");
         watchTurnoutState = state;
     }
 
@@ -71,7 +82,12 @@ public class BlockBossLogic extends Siglet {
         return watchTurnoutState;
     }
     public void setWatchedSignal(String name, boolean useFlash) {
+        if (name == null || name.equals("")) {
+            protectSignal = null;
+            return;
+        }
         protectSignal = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
+        if (protectSignal == null) log.warn("Signal "+name+" was not found!");
         protectWithFlashing = useFlash;
     }
     /**
