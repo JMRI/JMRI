@@ -26,7 +26,7 @@ import java.io.Serializable;
  * <P>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  * @see             jmri.jmrix.nce.NceMessage
  *
  */
@@ -66,7 +66,7 @@ public class LocoNetMessage implements Serializable {
             log.error("reference element "+n
                       +" in message of "+_dataBytes.length
                       +" elements: "+this.toString());
-        return _dataBytes[n];
+        return _dataBytes[n] & 0xFF;
     }
     public void setElement(int n, int v) {
         if (n < 0 || n >= _dataBytes.length)
