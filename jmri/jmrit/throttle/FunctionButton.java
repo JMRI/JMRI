@@ -65,6 +65,10 @@ public class FunctionButton extends JButton implements ActionListener
         this.isOn = isOn;
     }
 
+    public void setIsLockable(boolean isLockable)
+    {
+        this.isLockable = isLockable;
+    }
     /**
      * Button is clicked
      * @param e The ActionEvent causing the action.
@@ -77,7 +81,7 @@ public class FunctionButton extends JButton implements ActionListener
         }
         else if (e.getSource() == changeLockStateItem)
         {
-            isLockable = !isLockable;
+            this.setIsLockable(!isLockable);
             if (!isLockable)
             {
                 isOn = false;
