@@ -14,7 +14,7 @@ import javax.swing.event.*;
  * Create a JPanel containing a tree of resources
  *
  * @author			Bob Jacobsen
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class CatalogPane extends JPanel {
 	public CatalogPane() {
@@ -105,7 +105,7 @@ public class CatalogPane extends JPanel {
        }
     }
 
-    public ImageIcon getSelectedIcon() {
+    public NamedIcon getSelectedIcon() {
         if (!dTree.isSelectionEmpty() && dTree.getSelectionPath()!=null ) {
             // somebody has been selected
             log.debug("getSelectedIcon with "+dTree.getSelectionPath().toString());
@@ -120,7 +120,7 @@ public class CatalogPane extends JPanel {
                             +(String)((DefaultMutableTreeNode)path.getPathComponent(i)).getUserObject();
                 }
                 log.debug("attempt to load resource from "+name);
-                return new ImageIcon(ClassLoader.getSystemResource(name));
+                return new NamedIcon(ClassLoader.getSystemResource(name), name);
             } else if (((DefaultMutableTreeNode)path.getPathComponent(1)).getUserObject().equals("files")) {
                 // process a file
                 String name = fileRoot;
@@ -129,7 +129,7 @@ public class CatalogPane extends JPanel {
                             +(String)((DefaultMutableTreeNode)path.getPathComponent(i)).getUserObject();
                 }
                 log.debug("attempt to load file from "+name);
-                return new ImageIcon(name);
+                return new NamedIcon(name, name);
             } else log.error("unexpected first element on getSelectedIcon: "+path.getPathComponent(1));
         }
         return null;
@@ -165,8 +165,8 @@ public class CatalogPane extends JPanel {
         return null;
     }
 
-    public Icon getIconByName(String name) {
-        return new ImageIcon(ClassLoader.getSystemResource(name));
+    public NamedIcon getIconByName(String name) {
+        return new NamedIcon(ClassLoader.getSystemResource(name), name);
     }
 
     JTree dTree;
