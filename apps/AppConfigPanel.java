@@ -18,7 +18,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
+import javax.swing.*;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
@@ -29,7 +29,7 @@ import com.sun.java.util.collections.ArrayList;
  * Basic configuration GUI infrastructure.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class AppConfigPanel extends JPanel {
 
@@ -74,10 +74,14 @@ public class AppConfigPanel extends JPanel {
 
         // add advanced section itself
         log.debug("start adv");
+        advScroll = new JPanel();
+        advScroll.setLayout(new BoxLayout(advScroll, BoxLayout.Y_AXIS));
 	advancedPane = new JPanel();
+        JScrollPane js = new JScrollPane(advancedPane);
         advancedPane.setLayout(new BoxLayout(advancedPane, BoxLayout.Y_AXIS));
-        advancedPane.setVisible(false);  // have to click first
-        add(advancedPane);
+        advScroll.setVisible(false);  // have to click first
+        advScroll.add(js);
+        add(advScroll);
         showAdvanced.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (showAdvanced.isSelected()) {
@@ -85,22 +89,22 @@ public class AppConfigPanel extends JPanel {
                         localeSpace.add(p3.doLocale());
                         localeAdded = true;
                     }
-                    advancedPane.setVisible(true);
-                    advancedPane.validate();
+                    advScroll.setVisible(true);
+                    advScroll.validate();
                     if (getTopLevelAncestor()!=null) ((JFrame)getTopLevelAncestor()).pack();
-                    advancedPane.repaint();
+                    advScroll.repaint();
                 }
                 else {
-                    advancedPane.setVisible(false);
-                    advancedPane.validate();
+                    advScroll.setVisible(false);
+                    advScroll.validate();
                     if (getTopLevelAncestor()!=null) ((JFrame)getTopLevelAncestor()).pack();
-                    advancedPane.repaint();
+                    advScroll.repaint();
                 }
             }
         });
 
-        log.debug("start comm 2");
         // fill advanced section
+        log.debug("start comm 2");
         if (nConnections>1) {
             if (p2 == null) p2 = JmrixConfigPane.instance(2);
             p2.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutAuxConnection")));
@@ -154,6 +158,7 @@ public class AppConfigPanel extends JPanel {
     }
 
     JCheckBox showAdvanced;
+    JPanel advScroll;
     JPanel advancedPane;
 
     JPanel localeSpace = null;
