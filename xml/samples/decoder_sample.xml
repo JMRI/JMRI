@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE decoder:decoder-config SYSTEM "DTD/decoder-config.dtd">
+<decoder:decoder-config xmlns:decoder="http://jmri.sourceforge.net/xml/decoder">
+
+<decoder:decoder>
+	<decoder:id
+		model="",
+		mfg="",
+		mfgID="129"
+	>
+	</decoder:id>
+
+	<decoder:programming
+		direct="both",
+		paged="yes",
+		register="yes",
+		ops="yes"
+	>
+	</decoder:programming>
+
+	<decoder:variables>
+		<decoder:variable
+			name="address",
+			CV="3",
+			mask="VVVVVVVV",
+			comment="short address"
+		>
+			<decoder:decVal></decoder:decVal>
+		</decoder:variable>
+		
+	</decoder:variables>
+	
+</decoder:decoder>
+</decoder:decoder-config>
