@@ -8,7 +8,7 @@ package jmri;
  * Right now, it just contains the members needed by InstanceManager to handle
  * managers for more than one system.
  * <P>
- * Although they are not defined here, an individual manager
+ * Although they are not defined here because their return type differs, an individual manager
  * provides "get" methods to locate specific objects, and a "new" method
  * to create a new one via the Factory pattern.
  * The "get" methods will
@@ -17,7 +17,7 @@ package jmri;
  * that system name.
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public interface Manager {
 
