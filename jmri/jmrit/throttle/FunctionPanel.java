@@ -176,7 +176,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
 	 *  A KeyAdapter that listens for the keys that work the function buttons
 	 *
 	 * @author     glen
-          * @version    $Revision: 1.21 $
+          * @version    $Revision: 1.22 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter
 	{
@@ -233,37 +233,37 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
                 } else if (e.getPropertyName().equals("F1")) {
                    boolean function=((Boolean) e.getNewValue()).booleanValue();
 		   functionButton[1].changeState(function);
-                } else if (e.getPropertyName().equals("F1")) {
+                } else if (e.getPropertyName().equals("F2")) {
                    boolean function=((Boolean) e.getNewValue()).booleanValue();
 		   functionButton[2].changeState(function);
-                } else if (e.getPropertyName().equals("F1")) {
+                } else if (e.getPropertyName().equals("F3")) {
                    boolean function=((Boolean) e.getNewValue()).booleanValue();
 		   functionButton[3].changeState(function);
-                } else if (e.getPropertyName().equals("F1")) {
+                } else if (e.getPropertyName().equals("F4")) {
                    boolean function=((Boolean) e.getNewValue()).booleanValue();
 		   functionButton[4].changeState(function);
-                } else if (e.getPropertyName().equals("F1")) {
+                } else if (e.getPropertyName().equals("F5")) {
                    boolean function=((Boolean) e.getNewValue()).booleanValue();
 		   functionButton[5].changeState(function);
-                } else if (e.getPropertyName().equals("F1")) {
+                } else if (e.getPropertyName().equals("F6")) {
                    boolean function=((Boolean) e.getNewValue()).booleanValue();
 		   functionButton[6].changeState(function);
-                } else if (e.getPropertyName().equals("F1")) {
+                } else if (e.getPropertyName().equals("F7")) {
                    boolean function=((Boolean) e.getNewValue()).booleanValue();
 		   functionButton[7].changeState(function);
-                } else if (e.getPropertyName().equals("F1")) {
+                } else if (e.getPropertyName().equals("F8")) {
                    boolean function=((Boolean) e.getNewValue()).booleanValue();
 		   functionButton[8].changeState(function);
-                } else if (e.getPropertyName().equals("F1")) {
+                } else if (e.getPropertyName().equals("F9")) {
                    boolean function=((Boolean) e.getNewValue()).booleanValue();
 		   functionButton[9].changeState(function);
-                } else if (e.getPropertyName().equals("F1")) {
+                } else if (e.getPropertyName().equals("F10")) {
                    boolean function=((Boolean) e.getNewValue()).booleanValue();
 		   functionButton[10].changeState(function);
-                } else if (e.getPropertyName().equals("F1")) {
+                } else if (e.getPropertyName().equals("F11")) {
                    boolean function=((Boolean) e.getNewValue()).booleanValue();
 		   functionButton[11].changeState(function);
-                } else if (e.getPropertyName().equals("F1")) {
+                } else if (e.getPropertyName().equals("F12")) {
                    boolean function=((Boolean) e.getNewValue()).booleanValue();
 		   functionButton[12].changeState(function);
                 }
