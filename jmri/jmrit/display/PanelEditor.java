@@ -37,7 +37,7 @@ import jmri.jmrit.catalog.NamedIcon;
  *
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class PanelEditor extends JFrame {
@@ -78,12 +78,14 @@ public class PanelEditor extends JFrame {
 
     JButton sensorAdd = new JButton("Add sensor:");
     JTextField nextSensor = new JTextField(5);
-
     JButton activeIconButton;
     NamedIcon activeIcon;
-
     JButton inactiveIconButton;
     NamedIcon inactiveIcon;
+
+    JButton signalAdd = new JButton("Add signal:");
+    JTextField nextSignalSE = new JTextField(5);
+    JTextField nextSignalHead = new JTextField(2);
 
     JButton backgroundAddButton = new JButton("Pick background image...");
 
@@ -293,6 +295,24 @@ public class PanelEditor extends JFrame {
             this.getContentPane().add(panel);
         }
 
+        // add a signal head
+        {
+            JPanel panel = new JPanel();
+            panel.setLayout(new FlowLayout());
+
+            panel.add(signalAdd);
+            panel.add(nextSignalSE);
+            panel.add(new JLabel("head:"));
+            panel.add(nextSignalHead);
+            signalAdd.addActionListener( new ActionListener() {
+                    public void actionPerformed(ActionEvent a) {
+                        addSignalHead();
+                    }
+                }
+            );
+            this.getContentPane().add(panel);
+        }
+
         // allow for selection of icons
         this.getContentPane().add(catalog);
 
@@ -437,6 +457,23 @@ public class PanelEditor extends JFrame {
     public void putSensor(SensorIcon l) {
         l.invalidate();
         target.add(l, SENSORS);
+        contents.add(l);
+        // reshow the panel
+        target.validate();
+    }
+
+    /**
+     * Add a signal head to the target
+     */
+    void addSignalHead() {
+        SignalHeadIcon l = new SignalHeadIcon();
+        l.setSignalHead(nextSignalSE.getText(), Integer.parseInt(nextSignalHead.getText()));
+        setNextLocation(l);
+        putSignal(l);
+    }
+    public void putSignal(SignalHeadIcon l) {
+        l.invalidate();
+        target.add(l, SIGNALS);
         contents.add(l);
         // reshow the panel
         target.validate();

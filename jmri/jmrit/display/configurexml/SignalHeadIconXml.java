@@ -9,7 +9,7 @@ import org.jdom.*;
  * Handle configuration for display.SignalHeadIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class SignalHeadIconXml implements XmlAdapter {
 
@@ -102,11 +102,7 @@ public class SignalHeadIconXml implements XmlAdapter {
         }
         l.setLocation(x,y);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
-
-        // no putSignalHead exists, so code is here
-        p.target.add(l, PanelEditor.SIGNALS);
-        p.contents.add(l);
-        p.target.revalidate();
+        p.putSignal(l);
 
     }
 
