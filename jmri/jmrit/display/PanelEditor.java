@@ -46,7 +46,7 @@ import com.sun.java.util.collections.ArrayList;
  * consistent via the {#setTitle} method.
  *
  * @author Bob Jacobsen  Copyright: Copyright (c) 2002, 2003; modifications, Dennis Miller 2004
- * @version $Revision: 1.42 $
+ * @version $Revision: 1.43 $
  */
 
 public class PanelEditor extends JFrame {
@@ -511,7 +511,7 @@ public class PanelEditor extends JFrame {
      * Add a sensor indicator to the target
      */
     void addSensor() {
-        int errorCheck = checkEntry("Sensor" , nextTurnoutL.getText());
+        int errorCheck = checkEntry("Sensor" , nextSensor.getText());
         if (errorCheck != 0) return;
         SensorIcon l = new SensorIcon();
         l.setActiveIcon(sensorIconEditor.getIcon(0));
