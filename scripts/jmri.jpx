@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--JBuilder XML Project-->
 <project>
+  <property category="editor.general" name="line_ending.style" value="1"/>
   <property category="idl" name="ProcessIDL" value="false"/>
   <property category="runtime" name="ConfigurationCount" value="3"/>
   <property category="runtime.0" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
@@ -80,4 +81,5 @@
     <property category="archiving" name="targetPath" value="/Volumes/Users/jake/Documents/Trains/JMRI/project/jmri.jar"/>
   </node>
   <file path="../resources/decoderpro.gif"/>
+  <file path="test/jmri/jmrix/loconet/LocoNetMessageTest.java"/>
 </project>
