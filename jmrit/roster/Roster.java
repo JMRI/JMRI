@@ -29,7 +29,7 @@ import org.jdom.output.*;
  * whether it should...
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: Roster.java,v 1.11 2001-12-18 07:31:07 jacobsen Exp $
+ * @version			$Id: Roster.java,v 1.12 2002-01-08 04:10:27 jacobsen Exp $
  * @see             jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -168,7 +168,10 @@ public class Roster extends XmlFile {
 	void readFile(String name) throws org.jdom.JDOMException, java.io.FileNotFoundException {
 		// find root
 		Element root = rootFromName(name);
-		
+		if (root==null) {
+			log.warn("roster file could not be read");
+			return;
+		}
 		if (log.isDebugEnabled()) XmlFile.dumpElement(root);
 		
 		// decode type, invoke proper processing routine if a decoder file
