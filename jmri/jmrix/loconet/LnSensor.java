@@ -6,7 +6,7 @@ import jmri.AbstractSensor;
 import jmri.Sensor;
 
 /**
- * Extend jmri.AbstractSensor for LocoNet layouts
+ * Extend jmri.AbstractSensor for LocoNet layouts.
  * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project.  That permission
@@ -15,7 +15,7 @@ import jmri.Sensor;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.10 $
+ * @version         $Revision: 1.11 $
  */
 public class LnSensor extends AbstractSensor implements LocoNetListener {
 
@@ -42,8 +42,6 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
         // At construction, register for messages
         LnTrafficController.instance().addLocoNetListener(~0, this);
     }
-
-    public int getNumber() { return _number; }
 
     /**
      * request an update on status by sending a loconet message
@@ -114,10 +112,9 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
         // reach here only in error
     }
 
-    public void dispose() {}
-
-    // data members
-    int _number;   // loconet sensor number
+    public void dispose() {
+        LnTrafficController.instance().removeLocoNetListener(~0, this);
+    }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnSensor.class.getName());
 
