@@ -16,7 +16,7 @@ import jmri.Light;
  *  Based in part on SerialTurnout.java
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SerialLight extends AbstractLight {
 
@@ -103,4 +103,4 @@ public class SerialLight extends AbstractLight {
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialLight.class.getName());
 }
 
-/* @(#)SerialTurnout.java */
+/* @(#)SerialLight.java */
