@@ -6,7 +6,7 @@ package jmri;
  * Default implementation of the basic logic of the SignalHead interface.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public abstract class DefaultSignalHead extends AbstractSignalHead {
 
@@ -42,6 +42,10 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         boolean oldLit = mLit;
         mLit = newLit;
         if (oldLit != newLit) {
+            if ( mLit && ((mAppearance == FLASHGREEN) ||
+                    (mAppearance == FLASHYELLOW) ||
+                    (mAppearance == FLASHRED) ) )
+                startFlash();
             if (!mLit) stopFlash();
             updateOutput();
             // notify listeners, if any
@@ -66,7 +70,7 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
     /**
      * Should a flashing signal be on (lit) now?
      */
-    boolean mFlashOn = true;
+    protected boolean mFlashOn = true;
     
     javax.swing.Timer timer = null;
     /**

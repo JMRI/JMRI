@@ -10,13 +10,11 @@ package jmri;
  * Normally, "THROWN" is on, and "CLOSED" is off.
  * YELLOW is provided by turning both on ("THROWN")
  * <P>
- * This class doesn't currently do flashing aspects.
- * <P>
  * This class doesn't currently listen to the Turnout's to see if they've
  * been changed via some other mechanism.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class DoubleTurnoutSignalHead extends DefaultSignalHead {
 
@@ -33,10 +31,20 @@ public class DoubleTurnoutSignalHead extends DefaultSignalHead {
     }
 
 	protected void updateOutput() {
+	    // assumes that writing a turnout to an existing state is cheap!
 		if (mLit == false) {
             mRed.setCommandedState(Turnout.CLOSED);
             mGreen.setCommandedState(Turnout.CLOSED);
 			return;
+        } else if ( !mFlashOn &&
+            ( (mAppearance == FLASHGREEN) ||
+            (mAppearance == FLASHYELLOW) ||
+            (mAppearance == FLASHRED) ) ) {
+                // flash says to make output dark
+                mRed.setCommandedState(Turnout.CLOSED);
+                mGreen.setCommandedState(Turnout.CLOSED);
+			    return;
+
 		} else {
         	switch (mAppearance) {
         		case RED:

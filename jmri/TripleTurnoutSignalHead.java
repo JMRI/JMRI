@@ -9,13 +9,11 @@ package jmri;
  * and each drives a specific color (RED, YELLOW and GREEN).
  * Normally, "THROWN" is on, and "CLOSED" is off.
  * <P>
- * This class doesn't currently do flashing aspects.
- * <P>
  * This class doesn't currently listen to the Turnout's to see if they've
  * been changed via some other mechanism.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class TripleTurnoutSignalHead extends DefaultSignalHead {
 
@@ -44,6 +42,7 @@ public class TripleTurnoutSignalHead extends DefaultSignalHead {
             ( (mAppearance == FLASHGREEN) ||
             (mAppearance == FLASHYELLOW) ||
             (mAppearance == FLASHRED) ) ) {
+                // flash says to make output dark
                 mRed.setCommandedState(Turnout.CLOSED);
                 mYellow.setCommandedState(Turnout.CLOSED);
                 mGreen.setCommandedState(Turnout.CLOSED);
