@@ -10,7 +10,7 @@ import com.sun.java.util.collections.List;
  * when the program is started.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @see PerformActionPanel
  */
 public class PerformActionModel {
@@ -45,14 +45,22 @@ public class PerformActionModel {
     static public String[] nameList() {
         return new String[] {
             "Open memory monitor",
-            "Start LocoNet Server"
+            "Start LocoNet Server",
+            "Open turnout table",
+            "Open sensor table",
+            "Open signal table",
+            "Open signal logic panel"
         };
     }
 
     static public Class[] classList() {
         return new Class[] {
             jmri.jmrit.MemoryFrameAction.class,
-            jmri.jmrix.loconet.locormi.LnMessageServerAction.class
+            jmri.jmrix.loconet.locormi.LnMessageServerAction.class,
+            jmri.jmrit.beantable.TurnoutTableAction.class,
+            jmri.jmrit.beantable.SensorTableAction.class,
+            jmri.jmrit.beantable.SignalHeadTableAction.class,
+            jmri.jmrit.blockboss.BlockBossAction.class
         };
     }
 
