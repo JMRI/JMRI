@@ -13,6 +13,12 @@ java1 -d java/src &jmri &apps &resources
 java2 -d java &test
 java3 -d java &lib
 
+# check target - all, plus the Java 1.1.8 libraries
+check -a check1 check2 check3 lib118
+check1 -d java &lib118
+check2 -d java scripts check.xml
+check3 -d java scripts synchlist.csh
+
 # runtime target - top level project runtime contents
 runtime -a xml lib resources help jython
 
