@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JLayeredPane;
 
 import jmri.InstanceManager;
 
@@ -13,7 +14,7 @@ import jmri.InstanceManager;
  * connect it to.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  * @see             jmri.jmrit.display.PanelEditorAction
  */
 public class PanelEditorAction extends AbstractAction {
@@ -24,7 +25,7 @@ public class PanelEditorAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
         JFrame targetFrame = new JFrame("Panel");
-        JPanel targetPanel = new JPanel();
+        JLayeredPane targetPanel = new JLayeredPane();
         targetFrame.getContentPane().add(targetPanel);
         targetPanel.setLayout(null);
 
