@@ -6,11 +6,11 @@ import com.sun.java.util.collections.ArrayList;
 import com.sun.java.util.collections.List;
 
 /**
- * A PerformActionModel object invokes a Swing Action
+ * Invokes a Swing Action
  * when the program is started.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  * @see PerformActionPanel
  */
 public class PerformActionModel {
@@ -49,7 +49,17 @@ public class PerformActionModel {
             "Open turnout table",
             "Open sensor table",
             "Open signal table",
-            "Open signal logic panel"
+            "Open signal logic panel",
+            "Open power control",
+            "Open turnout control",
+            "Open single CV programmer",
+            "Open speedometer",
+            "Open C/MRI monitor",
+            "Open EasyDCC monitor",
+            "Open XPressNet monitor",
+            "Open LocoNet monitor",
+            "Open NCE monitor",
+            "Open Zimo monitor"
         };
     }
 
@@ -60,7 +70,17 @@ public class PerformActionModel {
             jmri.jmrit.beantable.TurnoutTableAction.class,
             jmri.jmrit.beantable.SensorTableAction.class,
             jmri.jmrit.beantable.SignalHeadTableAction.class,
-            jmri.jmrit.blockboss.BlockBossAction.class
+            jmri.jmrit.blockboss.BlockBossAction.class,
+            jmri.jmrit.powerpanel.PowerPanelAction.class,
+            jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlAction.class,
+            jmri.jmrit.simpleprog.SimpleProgAction.class,
+            jmri.jmrit.speedometer.SpeedometerAction.class,
+            jmri.jmrix.cmri.serial.serialmon.SerialMonAction.class,
+            jmri.jmrix.easydcc.easydccmon.EasyDccMonAction.class,
+            jmri.jmrix.lenz.mon.XNetMonAction.class,
+            jmri.jmrix.loconet.locomon.LocoMonAction.class,
+            jmri.jmrix.nce.ncemon.NceMonAction.class,
+            jmri.jmrix.zimo.zimomon.Mx1MonAction.class
         };
     }
 
