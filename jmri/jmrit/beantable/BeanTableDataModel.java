@@ -19,7 +19,7 @@ import com.sun.java.util.collections.List;
 /**
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
- * @version		$Revision: 1.2 $
+ * @version		$Revision: 1.3 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -111,7 +111,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         case USERNAMECOL:  //
             return getBySystemName((String)sysNameList.get(row)).getUserName();
         case VALUECOL:  //
-            return getValue((String)sysNameList.get(row));;
+            return getValue((String)sysNameList.get(row));
         default:
             log.error("internal state inconsistent with table requst for "+row+" "+col);
             return null;
