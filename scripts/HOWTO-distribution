@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.25 $)
+distribution.  ($Revision: 1.26 $)
 
 Start with a directory, typically called "Distributions", that
 contains:
@@ -47,6 +47,9 @@ To actually create the distribution:
 	cd lib
 	cvs tag Release-1-2-3 collections.jar comm.jar crimson.jar jdom-jdk11.jar jh.jar log4j.jar security.policy
 	
+	The following two tags are needed for the build & test process:
+	cvs tag Release-1-2-3 Serialio.jar junit.jar
+	
 	(be sure that's the default.lcf you want!)
 
 ( ) Come back to Distributions and 
@@ -63,7 +66,9 @@ To actually create the distribution:
 	Ant will launch three StuffIt processes; click
 	each to proceed, and wait for them to be running.
 	
-( ) Once they launch, you can start building the Windows installer.
+( ) Once they launch, you can start building the Windows installer
+	in parallel.
+	
 	Launch Installer Vise from the last build file.
 	"Update archive"; Check changes make sense.
 	Click the "test archive" button (right one of the pair)
