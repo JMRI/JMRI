@@ -25,7 +25,7 @@ import org.jdom.Element;
  * this entry.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  * @see jmri.jmrit.roster.LocoFile
  *
  */
@@ -240,6 +240,28 @@ public class RosterEntry {
         if (cvModel == null) log.error("loadCvModel must be given a non-null argument");
         if (mRootElement == null) log.error("loadCvModel called before readFile() succeeded");
         LocoFile.loadCvModel(mRootElement.getChild("locomotive"), cvModel);
+    }
+
+    public void printEntry(Writer w) {
+        try {
+            String s =
+                 "\n   ID:                "+_id
+                +"\n   Filename:          "+(_fileName!=null?_fileName:"<null>")
+                +"\n   Road name:         "+_roadName
+                +"\n   Road number:       "+_roadNumber
+                +"\n   Manufacturer:      "+_mfg
+                +"\n   Owner:             "+_owner
+                +"\n   Model:             "+_model
+                +"\n   DCC Address:       "+_dccAddress
+                +"\n   Comment:           "+_comment
+                +"\n   Decoder Model:     "+_decoderModel
+                +"\n   Decoder Family:    "+_decoderFamily
+                +"\n   Decoder Comment:   "+_decoderComment
+                +"\n";
+            w.write(s, 0, s.length());
+        } catch (IOException e) {
+            log.error("Error printing RosterEntry: "+e);
+        }
     }
 
     /**
