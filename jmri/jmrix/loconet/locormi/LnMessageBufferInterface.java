@@ -6,7 +6,7 @@ package jmri.jmrix.loconet.locormi;
  * Copyright:    Copyright (c) 2002
  * Company:
  * @author
- * @version 1.0
+ * @version $Id: LnMessageBufferInterface.java,v 1.2 2002-03-28 02:25:24 jacobsen Exp $
  */
 
 import java.rmi.RemoteException;
