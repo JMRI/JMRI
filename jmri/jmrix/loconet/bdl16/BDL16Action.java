@@ -9,13 +9,10 @@ import jmri.jmrix.loconet.LnTrafficController;
 
 
 /**
- * BDL16Action.java
+ * Create and register a BDL16Frame object.
  *
- * Description:		Swing action to create and register a
- *       			BDL16Frame object
- *
- * @author			Bob Jacobsen    Copyright (C) 2002
- * @version			$Revision: 1.2 $
+ * @author	Bob Jacobsen    Copyright (C) 2002
+ * @version	$Revision: 1.3 $
  */
 public class BDL16Action 			extends AbstractAction {
 
