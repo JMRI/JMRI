@@ -14,7 +14,7 @@ package jmri.util;
  * back to an explicit implementation when running on Java 1.1
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class StringUtil {
@@ -128,7 +128,7 @@ static char[] hexChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A'
             for (int j=values.length-2; j>=i; j--) {
                 // check that the jth value is smaller than j+1th,
                 // else swap
-                if (0 < ((String)values[j]).compareTo((String)values[j+1])) {
+                if (0 < (values[j].toString()).compareTo(values[j+1].toString())) {
                     // swap
                     Object temp = values[j];
                     values[j] = values[j+1];
@@ -151,6 +151,32 @@ static char[] hexChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A'
             // no Java sort, so ugly bubble sort
             bubblesort(values);
         }
+    }
+
+    static void bubblesortUpper(Object[] values) {
+        for (int i=0; i<=values.length-2; i++) { // stop sort early to save time!
+            for (int j=values.length-2; j>=i; j--) {
+                // check that the jth value is smaller than j+1th,
+                // else swap
+                if (0 < (values[j].toString().toUpperCase()).compareTo(values[j+1].toString().toUpperCase())) {
+                    // swap
+                    Object temp = values[j];
+                    values[j] = values[j+1];
+                    values[j+1] = temp;
+                }
+            }
+        }
+    }
+
+    /**
+     * This is a case-independent lexagraphic sort.
+     * Identical entries are retained, so the output length is the same
+     * as the input length.
+     * @param values
+     */
+    static public void sortUpperCase(Object[] values) {
+        // no Java sort, so ugly bubble sort
+        bubblesortUpper(values);
     }
 
     /**
