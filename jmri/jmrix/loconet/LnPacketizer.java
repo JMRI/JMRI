@@ -32,7 +32,7 @@ import java.util.Vector;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.2 $
+ * @version 		$Revision: 1.3 $
  *
  */
 public class LnPacketizer extends LnTrafficController {
@@ -174,13 +174,15 @@ public class LnPacketizer extends LnTrafficController {
 					//log.debug("Skipping: "+Integer.toHexString(opCode));
 				}
 				// here opCode is OK. Create output message
-				// log.debug("Start message with opcode: "+Integer.toHexString(opCode));
+				if (log.isDebugEnabled())
+                    log.debug("Start message with opcode: "+Integer.toHexString(opCode));
 				LocoNetMessage msg = null;
 				while (msg == null) {
 					try {
 						// Capture 2nd byte, always present
 						int byte2 = istream.readByte()&0xFF;
-						//log.debug("Byte2: "+Integer.toHexString(byte2));
+						if (log.isDebugEnabled())
+                            log.debug("Byte2: "+Integer.toHexString(byte2));
 						// Decide length
 						switch((opCode & 0x60) >> 5)
                     		{
@@ -258,6 +260,7 @@ public class LnPacketizer extends LnTrafficController {
  			catch (java.io.EOFException e) {
 				// posted from idle port when enableReceiveTimeout used
 				log.debug("EOFException, is LocoNet serial I/O using timeouts?");
+                e.printStackTrace();
 			}
  			catch (java.io.IOException e) {
 				// fired when write-end of HexFile reaches end
