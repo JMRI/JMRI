@@ -18,7 +18,7 @@ import javax.swing.border.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author			Bob Jacobsen   Copyright 2002
- * @version         $Revision: 1.22 $
+ * @version         $Revision: 1.23 $
  */
 public class JMRIdemo extends JPanel {
 	public JMRIdemo() {
@@ -116,7 +116,7 @@ public class JMRIdemo extends JPanel {
         JMenu devMenu = new JMenu("Development");
         menuBar.add(devMenu);
           	devMenu.add(new jmri.jmrix.loconet.locormi.LnMessageClientAction( "Start LocoNet Client" ));
-          	devMenu.add(new jmri.jmrit.display.PanelEditorAction( "PanelEditor" ));
+          	devMenu.add(new jmri.jmrit.display.PanelEditorAction( "Panel Editor" ));
 	        devMenu.add(new jmri.configurexml.LoadXmlConfigAction("Load config"));
 	        devMenu.add(new jmri.configurexml.StoreXmlConfigAction("Store config"));
 	        devMenu.add(new jmri.jmrit.MemoryFrameAction("Memory usage monitor"));
@@ -125,6 +125,7 @@ public class JMRIdemo extends JPanel {
 	        devMenu.add(new jmri.jmrit.decoderdefn.NameCheckAction("Check decoder names", this));
 	        devMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.ProgCheckAction("Check programmer names", this));
 	        devMenu.add(new jmri.jmrit.decoderdefn.DecoderIndexCreateAction("Create decoder index"));
+	        devMenu.add(new jmri.jmrit.symbolicprog.symbolicframe.SymbolicProgAction("symbolic programmer"));
 
 		// Label & text
 		JPanel pane1 = new JPanel();
