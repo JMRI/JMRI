@@ -3,17 +3,17 @@
 package apps.cornwall;
 
 import jmri.*;
-
-import com.sun.java.util.collections.List;
 import jmri.jmrix.loconet.LnTurnoutManager;
 
+import com.sun.java.util.collections.List;
+
 /**
- * Start Cornwall RR initialization and automation
+ * Start Cornwall RR initialization and automation.
  * <P>
  * Based on Crr0024.bas
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class CrrInit extends jmri.jmrit.automat.AbstractAutomaton {
 
