@@ -34,7 +34,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * used with permission.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2003
- * @version			$Revision: 1.27 $
+ * @version			$Revision: 1.28 $
  */
 public class Llnmon {
 
@@ -485,7 +485,7 @@ public class Llnmon {
             if ((sn2 & LnConstants.OPC_SW_REP_INPUTS)!=0) {
                 return "Turnout "+
                     SENSOR_ADR(sn1, sn2)+
-                    ((sn2 & LnConstants.OPC_SW_REP_SW) !=0 ? "Switch input" : "Aux input")+
+                    ((sn2 & LnConstants.OPC_SW_REP_SW) !=0 ? " Switch input" : " Aux input")+
                     " is "+
                     (((sn2 & LnConstants.OPC_SW_REP_HI)!=0) ? "Closed (input off)" : "Thrown (input on)")+"\n";
             } else {  // OPC_SW_REP_INPUTS is 0
@@ -648,29 +648,30 @@ public class Llnmon {
             else if ((l.getElement(2)&0x0F) == 0x04) zone = "C";
             else if ((l.getElement(2)&0x0F) == 0x06) zone = "D";
             else zone="<unknown "+(l.getElement(2)&0x0F)+">";
-
+			int section = (l.getElement(2)/16)+(l.getElement(1)&0x1F)*16;
+			
             switch (type) {
             case LnConstants.OPC_MULTI_SENSE_POWER:
                 return powerMultiSenseMessage(l);
             case LnConstants.OPC_MULTI_SENSE_PRESENT:  // from transponding app note
-                m =  "OPC_MULTI_SENSE transponder present zone "
-                    +zone+" decoder address ";
+                m =  "Transponder present in section "+section
+                    +" zone "+zone+" decoder address ";
                 if (l.getElement(3)==0x7D)
                     m+=l.getElement(4)+" (short) ";
                 else
                     m+=l.getElement(3)*128+l.getElement(4)+" (long) ";
-                return m;
+                return m+"\n";
             case LnConstants.OPC_MULTI_SENSE_ABSENT:
-                m =  "OPC_MULTI_SENSE transponder absent zone "
-                    +zone+" decoder address ";
+                m =  "Transponder absent in section "+section
+                	+" zone "+zone+" decoder address ";
                 if (l.getElement(3)==0x7D)
                     m+=l.getElement(4)+" (short) ";
                 else
                     m+=l.getElement(3)*128+l.getElement(4)+" (long) ";
-                return m;
+                return m+"\n";
             default:
                 forceHex = true;
-                return "OPC_MULTI_SENSE unknown format ";
+                return "OPC_MULTI_SENSE unknown format\n";
             }
         }
 
