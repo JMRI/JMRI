@@ -49,9 +49,14 @@ public class ControlPanel extends JInternalFrame
         this.setEnabled(false);
     }
 
-    public void shutdown()
+    public void dispose()
     {
-        throttleManager.cancelThrottleRequest(requestedAddress, this);
+        System.out.println("Here");
+        if (throttleManager != null)
+        {
+            throttleManager.cancelThrottleRequest(requestedAddress, this);
+        }
+        super.dispose();
     }
 
     /**
@@ -94,6 +99,7 @@ public class ControlPanel extends JInternalFrame
         JPanel mainPanel = new JPanel();
         this.setContentPane(mainPanel);
         mainPanel.setLayout(new GridBagLayout());
+        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.anchor = GridBagConstraints.CENTER;

@@ -52,8 +52,8 @@ public class ThrottleFrame extends JFrame
             {
                 Window w = e.getWindow();
                 w.setVisible(false);
-                controlPanel.shutdown();
-                functionPanel.shutdown();
+                controlPanel.dispose();
+                functionPanel.dispose();
                 w.dispose();
             }
         });

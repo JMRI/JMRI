@@ -27,9 +27,13 @@ public class FunctionPanel extends JInternalFrame
         initGUI();
     }
 
-    public void shutdown()
+    public void dispose()
     {
-        throttleManager.cancelThrottleRequest(requestedAddress, this);
+        if (throttleManager != null)
+        {
+            throttleManager.cancelThrottleRequest(requestedAddress, this);
+        }
+        super.dispose();
     }
 
     /**
@@ -109,6 +113,7 @@ public class FunctionPanel extends JInternalFrame
     {
         JPanel mainPanel = new JPanel();
         this.setContentPane(mainPanel);
+        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         mainPanel.setLayout(new GridLayout(4, 3));
         functionButton = new FunctionButton[NUM_FUNCTION_BUTTONS];
         for (int i=0; i<NUM_FUNCTION_BUTTONS; i++)
