@@ -34,7 +34,7 @@ import javax.swing.event.*;
  *<P>
  * Description:		Extends VariableValue to represent a NMRA long address
  * @author			Bob Jacobsen, Alex Shepherd   Copyright (C) 2001
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -240,6 +240,20 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
                 doLogCurve(e);
             }
         });
+        k.add(b = new JButton("Shift left"));
+        k.setToolTipText("Shift the existing curve left one slot");
+        b.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                doShiftLeft(e);
+            }
+        });
+        k.add(b = new JButton("Shift right"));
+        k.setToolTipText("Shift the existing curve right one slot");
+        b.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                doShiftRight(e);
+            }
+        });
 
         cs.gridy=2;
         cs.gridx = 0;
@@ -318,7 +332,26 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         for (int i = 1; i<nValues; i++) {
             previous = limit-(limit-first)*ratio/Math.pow(1.-factor, nValues-1.-i);
             int value = (int)(Math.floor(previous));
-            System.out.println("step "+i+" "+previous);
+            ((CvValue)_cvVector.elementAt(getCvNum()+i)).setValue(value);
+        }
+    }
+
+    /**
+     * Shift the curve one CV to left.  The last entry is left unchanged.
+     */
+    void doShiftLeft(java.awt.event.ActionEvent e) {
+        for (int i = 0; i<nValues-1; i++) {
+            int value = ((CvValue)_cvVector.elementAt(getCvNum()+i+1)).getValue();
+            ((CvValue)_cvVector.elementAt(getCvNum()+i)).setValue(value);
+        }
+    }
+
+    /**
+     * Shift the curve one CV to right.  The first entry is left unchanged.
+     */
+    void doShiftRight(java.awt.event.ActionEvent e) {
+        for (int i = nValues-1; i>0; i--) {
+            int value = ((CvValue)_cvVector.elementAt(getCvNum()+i-1)).getValue();
             ((CvValue)_cvVector.elementAt(getCvNum()+i)).setValue(value);
         }
     }
