@@ -5,17 +5,19 @@
  * Description:		Provide access to LocoNet via a MS100 attached to a serial comm port.
  *					Normally controlled by the MS100Frame class.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			
+ * @version			$Id: MS100Adapter.java,v 1.8 2002-01-16 07:37:28 jacobsen Exp $
  */
 
 package jmri.jmrix.loconet.ms100;
 
 import javax.comm.CommPortIdentifier;
+import javax.comm.PortInUseException;
 import javax.comm.SerialPort;
 import java.util.Enumeration;
 import java.util.Vector;
 import java.io.DataOutputStream;
 import java.io.DataInputStream;
+import java.io.InputStream;
 
 import jmri.jmrix.loconet.*;
 
@@ -42,26 +44,55 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
 		try {
 			// get and open the primary port
 			CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
-  			activeSerialPort = (SerialPort) portID.open(appName, 0);  // name of program, msec to wait
+ 			try {
+	  			activeSerialPort = (SerialPort) portID.open(appName, 100);  // name of program, msec to wait
+	  			}
+			catch (PortInUseException p) {
+				log.error(portName+" port is in use: "+p.getMessage());
+				return portName+" port is in use";
+			}
 
 			// try to set it for LocoNet direct (e.g. via MS100)
 			// spec is 16600, says 16457 is OK also. Try that as a second choice
 			try {
 				activeSerialPort.setSerialPortParams(16600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 			} catch (javax.comm.UnsupportedCommOperationException e) {
-				// assume that's a baudrate problem, fall back. Error here goes out to terminate function
+				// assume that's a baudrate problem, fall back.
 				log.warn("attempting to fall back to 16457 baud after 16600 failed");
-				activeSerialPort.setSerialPortParams(16457, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+				try {
+					activeSerialPort.setSerialPortParams(16457, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+				} catch (javax.comm.UnsupportedCommOperationException e2) {
+					log.warn("trouble setting 16600 baud");
+					javax.swing.JOptionPane.showMessageDialog(null, 
+		   				"Failed to set the correct baud rate for the MS100. Port is set to "
+		   				+activeSerialPort.getBaudRate()+
+		   				" baud. See the README file for more info.", 
+		   				 "Connection failed", javax.swing.JOptionPane.ERROR_MESSAGE);
+				}
 			}
 			
-			// disable flow control; hardware lines used for signalling, XON/XOFF might appear in data
-			activeSerialPort.setFlowControlMode(0);
-			// activeSerialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN | SerialPort.FLOWCONTROL_RTSCTS_OUT);
-
 			// set RTS high, DTR low to power the MS100
 			activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
 			activeSerialPort.setDTR(false);		// pin 1 in DIN8; on main connector, this is DTR
+
+			// disable flow control; hardware lines used for signalling, XON/XOFF might appear in data
+			activeSerialPort.setFlowControlMode(0);
 						
+			// activeSerialPort.enableReceiveTimeout(1000);
+			log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
+						+" "+activeSerialPort.isReceiveTimeoutEnabled());
+			
+			// get and save stream
+			serialStream = activeSerialPort.getInputStream();
+			
+			// purge contents, if any
+			int count = serialStream.available();
+			log.debug("input stream shows "+count+" bytes available");
+			while ( count > 0) {
+				serialStream.skip(count);
+				count = serialStream.available();
+			}
+				
 			// report status?
 			if (log.isInfoEnabled()) {
 				log.info(portName+" port opened at "
@@ -118,14 +149,11 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
 
 // base class methods for the LnPortController interface
 	public DataInputStream getInputStream() {
-		if (!opened) log.error("called before load(), stream not available");
-		try {
-			return new DataInputStream(activeSerialPort.getInputStream());
-     		}
-     	catch (java.io.IOException e) {
-     		log.error("getInputStream exception: "+e);
-     	}
-     	return null;
+		if (!opened) {
+			log.error("called before load(), stream not available");
+			return null;
+		}
+		return new DataInputStream(serialStream);
 	}
 	
 	public DataOutputStream getOutputStream() {
@@ -143,6 +171,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
 	
 // private control members
 	private boolean opened = false;
+	InputStream serialStream = null;
 
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MS100Frame.class.getName());
 	

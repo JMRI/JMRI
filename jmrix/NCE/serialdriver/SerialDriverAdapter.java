@@ -5,17 +5,19 @@
  * Description:		Provide access to an NCE command station via a SerialDriver attached to a serial comm port.
  *					Normally controlled by the SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			
+ * @version			$Id: SerialDriverAdapter.java,v 1.6 2002-01-16 07:37:28 jacobsen Exp $
  */
 
 package jmri.jmrix.nce.serialdriver;
 
 import javax.comm.CommPortIdentifier;
+import javax.comm.PortInUseException;
 import javax.comm.SerialPort;
 import java.util.Enumeration;
 import java.util.Vector;
 import java.io.DataOutputStream;
 import java.io.DataInputStream;
+import java.io.InputStream;
 
 import jmri.jmrix.nce.*;
 
@@ -42,23 +44,45 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
 		try {
 			// get and open the primary port
 			CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
-  			activeSerialPort = (SerialPort) portID.open(appName, 0);  // name of program, msec to wait
+ 			try {
+	  			activeSerialPort = (SerialPort) portID.open(appName, 100);  // name of program, msec to wait
+	  			}
+			catch (PortInUseException p) {
+				log.error(portName+" port is in use: "+p.getMessage());
+				return portName+" port is in use";
+			}
 
 			// try to set it for comunication via SerialDriver
 			try {
 				activeSerialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 			} catch (javax.comm.UnsupportedCommOperationException e) {
-				log.error("Cannot open serial port: "+e);	
+				log.error("Cannot set serial parameters on port "+portName+": "+e.getMessage());	
+				return "Cannot set serial parameters on port "+portName+": "+e.getMessage();
 			}
-			
-			// disable flow control; hardware lines used for signalling, XON/XOFF might appear in data
-			activeSerialPort.setFlowControlMode(0);
-			// activeSerialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN | SerialPort.FLOWCONTROL_RTSCTS_OUT);
 
 			// set RTS high, DTR high
 			activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
 			activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
 						
+			// disable flow control; hardware lines used for signalling, XON/XOFF might appear in data
+			activeSerialPort.setFlowControlMode(0);
+
+			// set timeout
+			// activeSerialPort.enableReceiveTimeout(1000);
+			log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
+						+" "+activeSerialPort.isReceiveTimeoutEnabled());
+			
+			// get and save stream
+			serialStream = activeSerialPort.getInputStream();
+			
+			// purge contents, if any
+			int count = serialStream.available();
+			log.debug("input stream shows "+count+" bytes available");
+			while ( count > 0) {
+				serialStream.skip(count);
+				count = serialStream.available();
+			}
+				
 			// report status?
 			if (log.isInfoEnabled()) {
 				log.info(portName+" port opened at "
@@ -75,7 +99,9 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
 			
 		}
 		catch (Exception ex) {
+			log.error("Unexpected exception while opening port "+portName+" trace follows: "+ex);
 			ex.printStackTrace();
+			return "Unexpected error while opening port "+portName+": "+ex;
 		}
 		
 		return null; // indicates OK return
@@ -116,14 +142,11 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
 
 // base class methods for the NcePortController interface
 	public DataInputStream getInputStream() {
-		if (!opened) log.error("getInputStream called before load(), stream not available");
-		try {
-			return new DataInputStream(activeSerialPort.getInputStream());
-     		}
-     	catch (java.io.IOException e) {
-     		log.error("getInputStream exception: "+e);
-     	}
-     	return null;
+		if (!opened) {
+			log.error("getInputStream called before load(), stream not available");
+			return null;
+		}
+		return new DataInputStream(serialStream);
 	}
 	
 	public DataOutputStream getOutputStream() {
@@ -141,6 +164,7 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
 	
 // private control members
 	private boolean opened = false;
+	InputStream serialStream = null;
 	
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialDriverAdapter.class.getName());
 

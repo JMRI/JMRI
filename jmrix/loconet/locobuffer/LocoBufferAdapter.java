@@ -5,13 +5,13 @@
  * Description:		Provide access to LocoNet via a LocoBuffer attached to a serial comm port.
  *					Normally controlled by the LocoBufferFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			
+ * @version			$Id: LocoBufferAdapter.java,v 1.6 2002-01-16 07:37:28 jacobsen Exp $
  */
 
 package jmri.jmrix.loconet.locobuffer;
 
-import javax.comm.PortInUseException;
 import javax.comm.CommPortIdentifier;
+import javax.comm.PortInUseException;
 import javax.comm.SerialPortEventListener;
 import javax.comm.SerialPortEvent;
 import javax.comm.SerialPort;
@@ -55,7 +55,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 			}
 			// try to set it for LocoNet via LocoBuffer
 			try {
-				activeSerialPort.setSerialPortParams(19200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+				setSerialPort();
 			} catch (javax.comm.UnsupportedCommOperationException e) {
 				log.error("Cannot set serial parameters on port "+portName+": "+e.getMessage());	
 				return "Cannot set serial parameters on port "+portName+": "+e.getMessage();
@@ -199,7 +199,10 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 
 // base class methods for the LnPortController interface
 	public DataInputStream getInputStream() {
-		if (!opened) log.error("getInputStream called before load(), stream not available");
+		if (!opened) {
+			log.error("getInputStream called before load(), stream not available");
+			return null;
+		}
 		return new DataInputStream(serialStream);
 	}
 	
@@ -215,6 +218,13 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 	}
 	
 	public boolean status() {return opened;}
+	
+	/**
+	 * Local method to do specific configuration, overridden in the LocoBufferHSAdapter class
+	 */
+	protected void setSerialPort() throws javax.comm.UnsupportedCommOperationException {
+		activeSerialPort.setSerialPortParams(19200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+	}			
 	
 // private control members
 	private boolean opened = false;
