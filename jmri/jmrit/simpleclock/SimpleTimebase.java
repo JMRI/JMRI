@@ -18,7 +18,7 @@ import jmri.Timebase;
  * current fast time when the clock was paused.
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SimpleTimebase implements Timebase {
 
@@ -43,6 +43,7 @@ public class SimpleTimebase implements Timebase {
     	setTimeValue = new Date(d.getTime());   // to ensure not modified from outside
     	if (pauseTime != null)
     		pauseTime = setTimeValue;  // if stopped, continue stopped at new time
+    	handleAlarm();
     }
 
     public void setRun(boolean run) {
@@ -57,14 +58,20 @@ public class SimpleTimebase implements Timebase {
     		pauseTime = getTime();
     	}
     	firePropertyChange("run", new Boolean(run), new Boolean(!run));
+    	handleAlarm();
     }
     
     public boolean getRun() { return pauseTime == null; }
 
     public void setRate(double factor) {
+        if (factor < 0.1 || factor > 100) {
+            log.error("rate of "+factor+" is out of reasonable range, set to 1");
+            factor = 1;
+        }
     	double oldFactor = mFactor;
     	mFactor = factor;
     	firePropertyChange("rate", new Double(factor), new Double(oldFactor));
+    	handleAlarm();
     }
     public double getRate() { return mFactor; }
 
@@ -103,6 +110,69 @@ public class SimpleTimebase implements Timebase {
 	Date setTimeValue;
 	Date pauseTime;   // null value indicates clock is running
 	
+	
+	javax.swing.Timer timer = null;
+    java.beans.PropertyChangeSupport pcMinutes = new java.beans.PropertyChangeSupport(this);
+	
+	/**
+	 * Start the minute alarm ticking, if it isnt
+	 * already.
+	 */
+	void startAlarm() {
+	    if (timer == null) handleAlarm();
+	}
+	
+	int oldMinutes = 0;
+	/**
+	 * Handle an "alarm", which is used to count off minutes.
+	 *<P>
+	 * Listeners won't be notified if the minute value hasn't changed since the last time.
+	 */	 
+	void handleAlarm() {
+	    // on first pass, set up the timer to call this routine
+	    if (timer==null) {
+            timer = new javax.swing.Timer(60*1000, new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                        handleAlarm();
+                    }
+                });
+        }
+
+        timer.stop();
+        Date date = getTime();
+        int waitSeconds = 60-date.getSeconds();
+	    int delay = (int)(waitSeconds*1000/mFactor)+100;  // make sure you miss the time transition
+        timer.setInitialDelay(delay);
+        timer.setRepeats(true);     // in case we run by
+        timer.start();
+        
+        // and notify the others
+        int minutes = date.getMinutes();
+    	if (minutes!=oldMinutes) 
+    	    pcMinutes.firePropertyChange("minutes", new Double(minutes), new Double(oldMinutes));
+
+        oldMinutes = minutes;
+
+    }
+
+    /**
+     * Request a call-back when the minutes place of the time changes.
+     */
+    public void addMinuteChangeListener(java.beans.PropertyChangeListener l) {
+        pcMinutes.addPropertyChangeListener(l);
+        startAlarm();
+    }
+
+    /**
+     * Remove a request for call-back when the minutes place of the time changes.
+     */
+    public void removeMinuteChangeListener(java.beans.PropertyChangeListener l) {
+        pcMinutes.removePropertyChangeListener(l);
+    }
+
+
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SimpleTimebase.class.getName());
+
 }
 
 /* @(#)Timebase.java */
