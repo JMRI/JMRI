@@ -8,6 +8,10 @@ import jmri.jmrit.symbolicprog.VariableTableModel;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.StringTokenizer;
+import java.util.Vector;
+import jmri.util.davidflanagan.HardcopyWriter;
+
 
 import org.jdom.Element;
 
@@ -28,8 +32,8 @@ import org.jdom.Element;
  * When the filePath attribute is non-null, the user has decided to
  * organize the roster into directories.
  *
- * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.15 $
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2002; Dennis Miller Copyright 2004
+ * @version	$Revision: 1.16 $
  * @see jmri.jmrit.roster.LocoFile
  *
  */
@@ -260,27 +264,199 @@ public class RosterEntry {
         LocoFile.loadCvModel(mRootElement.getChild("locomotive"), cvModel);
     }
 
-    public void printEntry(Writer w) {
+    /**
+     *Prints the roster information. Updated to allow for multiline
+     *comment and decoder comment fields.
+     *Created separate write statements for text and line feeds to work
+     *around the HardcopyWriter bug that misplaces borders
+     */
+    public void printEntry(Writer w)
+    {
         try {
-            String s =
-                 "\n   ID:                "+_id
-                +"\n   Filename:          "+(_fileName!=null?_fileName:"<null>");
-            if (!(_roadName.equals("")))    s+="\n   Road name:         "+_roadName;
-            if (!(_roadNumber.equals("")))  s+="\n   Road number:       "+_roadNumber;
-            if (!(_mfg.equals("")))         s+="\n   Manufacturer:      "+_mfg;
-            if (!(_owner.equals("")))       s+="\n   Owner:             "+_owner;
-            if (!(_model.equals("")))       s+="\n   Model:             "+_model;
-            if (!(_dccAddress.equals("")))  s+="\n   DCC Address:       "+_dccAddress;
-            if (!(_comment.equals("")))     s+="\n   Comment:           "+_comment;
-            if (!(_decoderModel.equals(""))) s+="\n   Decoder Model:     "+_decoderModel;
-            if (!(_decoderFamily.equals(""))) s+="\n   Decoder Family:    "+_decoderFamily;
-            if (!(_decoderComment.equals(""))) s+="\n   Decoder Comment:   "+_decoderComment;
-            s+="\n";
-            w.write(s, 0, s.length());
-        } catch (IOException e) {
-            log.error("Error printing RosterEntry: "+e);
-        }
+            String indent = "                      ";
+            int indentWidth = indent.length();
+            HardcopyWriter ww = (HardcopyWriter) w;
+            int textSpace = ww.getCharactersPerLine() - indentWidth -1;
+            String newLine = "\n";
+
+            w.write(newLine,0,1);
+            String s = "   ID:                "+_id;
+            w.write(s,0,s.length());
+            w.write(newLine,0,1);
+            s =  "   Filename:          "+(_fileName!=null?_fileName:"<null>");
+            w.write(s,0,s.length());
+
+            if (!(_roadName.equals("")))
+            {
+              w.write(newLine,0,1);
+              s = "   Road name:         " + _roadName;
+              w.write(s,0,s.length());
+            }
+            if (!(_roadNumber.equals("")))
+            {
+              w.write(newLine,0,1);
+              s = "   Road number:       " + _roadNumber;
+              w.write(s,0,s.length());
+            }
+            if (!(_mfg.equals("")))
+            {
+              w.write(newLine,0,1);
+              s = "   Manufacturer:      " + _mfg;
+              w.write(s,0,s.length());
+            }
+            if (!(_owner.equals("")))
+            {
+              w.write(newLine,0,1);
+              s = "   Owner:             " + _owner;
+              w.write(s,0,s.length());
+            }
+            if (!(_model.equals("")))
+            {
+              w.write(newLine,0,1);
+              s = "   Model:             " + _model;
+              w.write(s,0,s.length());
+            }
+            if (!(_dccAddress.equals("")))
+            {
+              w.write(newLine,0,1);
+              s = "   DCC Address:       " + _dccAddress;
+              w.write(s,0,s.length());
+            }
+
+            //If there is a comment field, then wrap it using the new wrapCommment
+            //method and print it
+            if (!(_comment.equals("")))
+            {
+              Vector commentVector = wrapComment(_comment, textSpace);
+
+              //Now have a vector of text pieces and line feeds that will all
+              //fit in the allowed space. Print each piece, prefixing the first one
+              //with the label and indenting any remainding.
+              int k = 0;
+              w.write(newLine,0,1);
+              s = "   Comment:           " + (String)commentVector.elementAt(k);
+              w.write(s,0,s.length());
+              k++;
+              while (k < commentVector.size())
+              {
+                String token = (String) commentVector.elementAt(k);
+                if (!token.equals("\n")) s = indent + token;
+                else s = token;
+                w.write(s,0,s.length());
+                k++;
+              }
+            }
+
+            if (!(_decoderModel.equals("")))
+            {
+              w.write(newLine,0,1);
+              s = "   Decoder Model:     " + _decoderModel;
+              w.write(s,0,s.length());
+            }
+            if (!(_decoderFamily.equals("")))
+            {
+              w.write(newLine,0,1);
+              s = "   Decoder Family:    " + _decoderFamily;
+              w.write(s,0,s.length());
+            }
+
+            //If there is a decoderComment field, need to wrap it
+            if (!(_decoderComment.equals("")))
+            {
+              Vector decoderCommentVector = wrapComment(_decoderComment, textSpace);
+
+                //Now have a vector of text pieces and line feeds that will all
+                //fit in the allowed space. Print each piece, prefixing the first one
+                //with the label and indenting the remainder.
+                int k = 0;
+                w.write(newLine,0,1);
+                s = "   Decoder Comment:   " + (String)decoderCommentVector.elementAt(k);
+                w.write(s,0,s.length());
+                k++;
+                while (k < decoderCommentVector.size())
+                {
+                  String token = (String) decoderCommentVector.elementAt(k);
+                  if (!token.equals("\n")) s = indent + token;
+                  else s = token;
+                  w.write(s,0,s.length());
+                  k++;
+                }
+              }
+              w.write(newLine,0,1);
+            } catch (IOException e) {
+              log.error("Error printing RosterEntry: "+e);
+              }
     }
+
+    /**
+     * Take a String comment field and perform line wrapping on it.
+     * String must be non-null and may or may not have \n
+     * characters embedded.
+     * textSpace is the width of the space to print for wrapping purposes.
+     * The comment is wrapped on a word wrap basis
+     */
+    public Vector wrapComment(String comment, int textSpace)
+    {
+      //Tokenize the string using \n to separate the text on mulitple lines
+      //and create a vector to hold the processed text pieces
+      StringTokenizer commentTokens = new StringTokenizer (comment,"\n",true);
+      Vector textVector = new Vector(commentTokens.countTokens());
+      String newLine = "\n";
+      while (commentTokens.hasMoreTokens())
+      {
+        String commentToken = commentTokens.nextToken();
+        int startIndex = 0;
+        int endIndex = textSpace;
+        //Check each token to see if it needs to have a line wrap.
+        //Get a piece of the token, either the size of the allowed space or
+        //a shorter piece if there isn't enough text to fill the space
+        if (commentToken.substring(startIndex).length() < startIndex+textSpace)
+        {
+          //the piece will fit so extract it and put it in the vector
+          String tokenPiece = commentToken.substring(startIndex);
+          textVector.addElement(tokenPiece);
+        }
+        else
+        {
+          //Piece too long to fit. Extract a piece the size of the textSpace
+          //and check for farthest right space for word wrapping.
+          while (startIndex < commentToken.length())
+          {
+            String tokenPiece = commentToken.substring(startIndex, startIndex + textSpace);
+            if (tokenPiece.lastIndexOf(" ") == -1)
+            {
+              //If no spaces, put the whole piece in the vector and add a line feed, then
+              //increment the startIndex to reposition for extracting next piece
+              textVector.addElement(tokenPiece);
+              textVector.addElement(newLine);
+              startIndex += textSpace;
+            }
+            else
+            {
+              //If there is at least one space, extract up to and including the
+              //last space and put in the vector as well as a line feed
+              endIndex = tokenPiece.lastIndexOf(" ") + 1;
+              textVector.addElement(tokenPiece.substring(startIndex, endIndex));
+              textVector.addElement(newLine);
+              startIndex += endIndex;
+            }
+            //Check the remaining piece to see if it fits - startIndex now points
+            //to the start of the next piece
+            if (commentToken.substring(startIndex).length() < textSpace)
+            {
+              //It will fit so just insert it, otherwise will cycle through the
+              //while loop and the checks above will take care of the remainder.
+              //Line feed is not required as this is the last part of the token.
+              tokenPiece = commentToken.substring(startIndex);
+              textVector.addElement(commentToken.substring(startIndex));
+              startIndex += textSpace;
+            }
+          }
+        }
+      }
+      return textVector;
+    }
+
 
     /**
      * Read a file containing the contents of this RosterEntry.
