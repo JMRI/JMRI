@@ -26,7 +26,7 @@
  * Reverse engineering of OPC_MULTI_SENSE was provided by Al Silverstein.
  *
  * @author			Bob Jacobsen
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 
 package jmri.jmrix.loconet.locomon;
@@ -367,7 +367,7 @@ protected String format(LocoNetMessage l) {
                     } else if (ack1 == 0x40) {
                         return "LONG_ACK: The Slot Write command was accepted blind (no response will be sent)\n";
                     } else if (ack1 == 0x7f) {
-                        return "LONG_ACK: The Slot Write command was accepted\n";
+                        return "LONG_ACK: Function not implemented, no reply will follow\n";
                     } else {
                         forceHex = true;
                         return "LONG_ACK: Unknown response to Write Slot Data message 0x"+Integer.toHexString(ack1)+"\n";
