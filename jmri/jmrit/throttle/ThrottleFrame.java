@@ -34,7 +34,7 @@ import org.jdom.Element;
  *  directed by the interface.
  *
  * @author     Glen Oberhauser
- * @version    $Revision: 1.20 $
+ * @version    $Revision: 1.21 $
  */
 public class ThrottleFrame extends JFrame implements AddressListener, ThrottleListener
 {
@@ -86,9 +86,9 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
      */
     public void notifyAddressChosen(int address)
 	{
-		boolean throttleInUse =
+		boolean requestOK =
 			InstanceManager.throttleManagerInstance().requestThrottle(address, this);
-		if (throttleInUse)
+		if (!requestOK)
 		{
 			JOptionPane.showMessageDialog(this, "Address in use by another throttle.");
 		}
