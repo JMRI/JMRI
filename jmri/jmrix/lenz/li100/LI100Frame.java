@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 /**
  * Frame to control and connect XPressNet via LI100 interface and comm port
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 2.0 $
  */
 public class LI100Frame extends jmri.jmrix.SerialPortFrame {
 

@@ -14,7 +14,7 @@ import javax.swing.AbstractAction;
  * the {@link jmri.jmrix.lenz.li100.LI100Frame} class.
  *
  * @author			Paul Bender    Copyright (C) 2003
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 2.0 $
  */
 public class LI101Action extends AbstractAction {
 

@@ -12,7 +12,7 @@ import jmri.jmrix.lenz.XNetTurnoutManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.4 $
+ * @version $Revision: 2.0 $
  */
 public class XNetTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
 

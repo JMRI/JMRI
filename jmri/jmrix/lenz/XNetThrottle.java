@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
  * @author     Paul Bender (C) 2002,2003,2004
- * @version    $Revision: 1.26 $
+ * @version    $Revision: 2.0 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -557,7 +557,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     }
 
     // Handle incoming messages for This throttle.
-    public void message(XNetMessage l) {
+    public void message(XNetReply l) {
 	// First, we want to see if this throttle is waiting for a message 
         //or not.
                if (log.isDebugEnabled()) { log.debug("Throttle - recieved message "); }

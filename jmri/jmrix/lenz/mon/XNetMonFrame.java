@@ -14,11 +14,12 @@ import java.io.FileOutputStream;
 import jmri.jmrix.lenz.XNetListener;
 import jmri.jmrix.lenz.XNetTrafficController;
 import jmri.jmrix.lenz.XNetMessage;
+import jmri.jmrix.lenz.XNetReply;
 
 /**
  * Frame displaying (and logging) XpressNet messages
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 2.0 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
@@ -40,7 +41,7 @@ import jmri.jmrix.lenz.XNetMessage;
 		XNetTrafficController.instance().addXNetListener(~0, this);
 	}
 
-	public synchronized void message(XNetMessage l) {  // receive a XpressNet message and log it
+	public synchronized void message(XNetReply l) {  // receive a XpressNet message and log it
 		// display the raw data if requested
 		String raw = "packet: ";
 		if ( rawCheckBox.isSelected() ) {

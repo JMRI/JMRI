@@ -3,7 +3,7 @@
  *
  * Description:		Abstract base for classes representing a XNet communications port
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 2.0 $
  */
 
 package jmri.jmrix.lenz;

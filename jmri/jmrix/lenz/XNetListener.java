@@ -13,9 +13,9 @@ package jmri.jmrix.lenz;
  * case.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version			$Revision: 1.1 $		
+ * @version			$Revision: 2.0 $		
  */
-public interface XNetListener extends java.util.EventListener{
+public interface XNetListener extends jmri.jmrix.AbstractMRListener {
 
 	/**
 	 * Member function that will be invoked by a XNetInterface implementation
@@ -25,7 +25,7 @@ public interface XNetListener extends java.util.EventListener{
 	 *             may be presented to multiple users. It should not be 
 	 *             modified here.
 	 */
-	public void message(XNetMessage msg);
+	public void message(XNetReply msg);
 }
 
 

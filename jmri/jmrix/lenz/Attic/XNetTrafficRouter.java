@@ -18,7 +18,7 @@ import java.util.Vector;
  * without traffic over the connection.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Revision: 1.2 $
+ * @version 		$Revision: 2.0 $
  *
  */
 public class XNetTrafficRouter extends XNetTrafficController implements XNetListener {
@@ -49,7 +49,7 @@ public class XNetTrafficRouter extends XNetTrafficController implements XNetList
      * Receive a XNet message from upstream and forward it to
      * all the local clients.
      */
-    public void message(XNetMessage m) {
+    public void message(XNetReply m) {
         notify(m);
     }
 
@@ -84,7 +84,7 @@ public class XNetTrafficRouter extends XNetTrafficController implements XNetList
 	 * Forward a XNetMessage to all registered listeners.
      * @param m Message to forward. Listeners should not modify it!
 	 */
-	protected void notify(XNetMessage m) {
+	protected void notify(XNetReply m) {
 		// make a copy of the listener vector to synchronized not needed for transmit
 		Vector v;
 		synchronized(this) {

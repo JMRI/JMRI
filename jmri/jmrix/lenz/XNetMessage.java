@@ -12,17 +12,27 @@ import java.io.Serializable;
  * actually a variable number of bytes in Unicode.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 2.0 $
  *
  */
-public class XNetMessage extends jmri.jmrix.NetMessage implements Serializable {
+public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Serializable {
 
+
+	int _nDataChars = 0;
 	/** Create a new object, representing a specific-length message.
 	 * @param len Total bytes in message, including opcode and error-detection byte.
 	 */
 	public XNetMessage(int len) {
         super(len);
         if (len>15||len<0) log.error("Invalid length in ctor: "+len);
+	_nDataChars=len;
+	}
+
+	/** Create a new object, that is a copy of an existing message.
+	 * @param message existing message.
+	 */
+	public XNetMessage(XNetMessage message) {
+           super(message);
 	}
 
     // note that the opcode is part of the message, so we treat it
@@ -68,6 +78,11 @@ public class XNetMessage extends jmri.jmrix.NetMessage implements Serializable {
 
     /** Get an integer representation of a BCD value */
 	public Integer getElementBCD(int n) { return Integer.decode(Integer.toHexString(getElement(n))); }
+
+    /**   
+      * return the message length 
+      */
+      public int length() { return _nDataChars; }
 
     // decode messages of a particular form
 

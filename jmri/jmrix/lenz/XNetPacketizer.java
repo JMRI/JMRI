@@ -30,7 +30,7 @@ import java.util.Vector;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.9 $
+ * @version 		$Revision: 2.0 $
  *
  */
 public class XNetPacketizer extends XNetTrafficController {
@@ -80,7 +80,7 @@ public class XNetPacketizer extends XNetTrafficController {
 		m.setElement(len-1, chksum);  // checksum is last element of message
 
         // notify all _other_ listeners
-		notify(m, reply);
+		notify(new XNetReply(m), reply);
 
 		// stream to port in single write, as that's needed by serial
 		byte msg[] = new byte[len];
@@ -169,7 +169,7 @@ public class XNetPacketizer extends XNetTrafficController {
 						XNetMessage msgForLater = thisMsg;
 						XNetPacketizer myTC = thisTC;
 						public void run() {
-           					myTC.notify(msgForLater,null);
+           					myTC.notify(new XNetReply(msgForLater),null);
 						}
 					};
 					javax.swing.SwingUtilities.invokeLater(r);
@@ -245,7 +245,7 @@ public class XNetPacketizer extends XNetTrafficController {
 						    XNetMessage msgForLater = thisMsg;
 						    XNetPacketizer myTC = thisTC;
 						    public void run() {
-           					    myTC.notify(msgForLater, null);
+           					    myTC.notify(new XNetReply(msgForLater), null);
 						    }
 					    };
                         if(debug) log.debug("schedule notify of incoming packet");

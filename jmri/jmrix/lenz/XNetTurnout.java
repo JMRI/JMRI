@@ -3,7 +3,7 @@
  *
  * Description:		extend jmri.AbstractTurnout for XNet layouts
  * @author			Bob Jacobsen Copyright (C) 2001, Portions by Paul Bender Copyright (C) 2003 
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 2.0 $
  */
 
 package jmri.jmrix.lenz;
@@ -54,7 +54,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     //										Object oldValue,
     //										Object newValue)
     // _once_ if anything has changed state (or set the commanded state directly)
-    public void message(XNetMessage l) {
+    public void message(XNetReply l) {
       if(InternalState==OFFSENT) {
 	  // If an OFF was sent, we want to check for Communications 
           // errors before we try to do anything else. 
@@ -151,7 +151,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
       * parse the feedback message, and set the status of the turnout 
       * accordingly
       */
-     private int parseFeedbackMessage(XNetMessage l) {
+     private int parseFeedbackMessage(XNetReply l) {
         // check validity & addressing
         // if this is an ODD numbered turnout, then we always get the 
         // right response from .getTurnoutMsgAddr.  If this is an even 
@@ -200,7 +200,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
       * it's motion or not.  Returns true for mostion complete, false 
       * otherwise. 
       */
-     private boolean motionComplete(XNetMessage l) {
+     private boolean motionComplete(XNetReply l) {
         // check validity & addressing
         // if this is an ODD numbered turnout, then we always get the 
         // right response from .getTurnoutMsgAddr.  If this is an even 

@@ -9,7 +9,7 @@ import jmri.Sensor;
  * Extend jmri.AbstractSensor for XPressNet layouts.
  * <P>
  * @author			Paul Bender Copyright (C) 2003
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 2.0 $
  */
 public class XNetSensor extends AbstractSensor implements XNetListener {
 
@@ -93,7 +93,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
      * _once_ if anything has changed state (or set the commanded state directly)
      * @param l
      */
-    public void message(XNetMessage l) {
+    public void message(XNetReply l) {
 	   if(XNetTrafficController.instance().getCommandStation()
                                               .isFeedbackMessage(l) &&
              (XNetTrafficController.instance().getCommandStation()

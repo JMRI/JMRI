@@ -7,7 +7,7 @@ import com.sun.java.util.collections.HashMap;
 /**
  * XNet implementation of a ThrottleManager
  * @author     Paul Bender Copyright (C) 2002,2003
- * @version    $Revision: 1.8 $
+ * @version    $Revision: 2.0 $
  */
 
 public class XNetThrottleManager implements ThrottleManager,XNetListener
@@ -81,7 +81,7 @@ public class XNetThrottleManager implements ThrottleManager,XNetListener
     //
     //
     // _once_ if anything has changed state (or set the commanded state directly
-    public void message(XNetMessage l) {
+    public void message(XNetReply l) {
         // check validity & addressing
         //if (XNetTrafficController.instance()
         //    .getCommandStation()

@@ -13,7 +13,7 @@ import javax.swing.AbstractAction;
  * Station.
  *
  * @author			Paul Bender    Copyright (C) 2003
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 2.0 $
  */
 public class LZV100Action extends AbstractAction {
 

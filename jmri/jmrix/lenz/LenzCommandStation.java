@@ -10,7 +10,7 @@ package jmri.jmrix.lenz;
  * to the a Lenz Command Station, on an XPressNet network.
  *
  * @author			Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
- * @version			$Revision: 1.22 $
+ * @version			$Revision: 2.0 $
  */
 public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
 
@@ -38,7 +38,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
     /**
      * Set the CS type based on an XPressNet Message
      **/
-     public void setCommandStationType(XNetMessage l) {
+     public void setCommandStationType(XNetReply l) {
        if(l.getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONSE)
        {
               // This is the Command Station Software Version Response
@@ -62,7 +62,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
     /**
      * Set the CS Software Version based on an XPressNet Message
      **/
-     public void setCommandStationSoftwareVersion(XNetMessage l) {
+     public void setCommandStationSoftwareVersion(XNetReply l) {
        if(l.getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONSE)
        {
               // This is the Command Station Software Version Response
@@ -177,7 +177,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
      * Note we only identify the command here; the reponse to a
      * request for status is not interpreted here.
      */
-    public int getTurnoutMsgAddr(XNetMessage pMsg) {
+    public int getTurnoutMsgAddr(XNetReply pMsg) {
         if (isFeedbackMessage(pMsg)) {
             int a1 = pMsg.getElement(1);
             int a2 = pMsg.getElement(2);
@@ -211,7 +211,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
      * upper part of the nibble) or 1 for odd turnouts (the lower part of 
      * the nibble
      **/
-     public int getTurnoutStatus(XNetMessage pMsg,int turnout) {
+     public int getTurnoutStatus(XNetReply pMsg,int turnout) {
         if (isFeedbackMessage(pMsg)) {
             int a1 = pMsg.getElement(1);
             int a2 = pMsg.getElement(2);
@@ -252,7 +252,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
      * Note we only identify the command here; the reponse to a
      * request for status is not interpreted here.
      */
-    public int getFeedbackEncoderMsgAddr(XNetMessage pMsg) {
+    public int getFeedbackEncoderMsgAddr(XNetReply pMsg) {
         if (isFeedbackMessage(pMsg)) {
             int a1 = pMsg.getElement(1);
             int messagetype=getFeedbackMessageType(pMsg);
@@ -268,7 +268,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
     /**
      * Is this a feedback response message?
      */
-    public boolean isFeedbackMessage(XNetMessage pMsg) {
+    public boolean isFeedbackMessage(XNetReply pMsg) {
         return (pMsg.getElement(0)==XNetConstants.ACC_INFO_RESPONSE);
     }
 
@@ -282,7 +282,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
      * 2 for a feedback encoder
      * 3 is reserved by Lenz for future use.
      */ 
-    public int getFeedbackMessageType(XNetMessage pMsg) {
+    public int getFeedbackMessageType(XNetReply pMsg) {
         if (isFeedbackMessage(pMsg)) {
             int a2 = pMsg.getElement(2);
             return((a2 & 0x60) / 32);            
@@ -300,7 +300,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
      * Note we only identify the command now; the reponse to a
      * request for status is not yet seen here.
      */
-    public int getThrottleMsgAddr(XNetMessage pMsg) {
+    public int getThrottleMsgAddr(XNetReply pMsg) {
         if (isThrottleCommand(pMsg)) {
             int a1 = pMsg.getElement(3);
             int a2 = pMsg.getElement(4);
@@ -312,7 +312,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
     /**
      * Is this a throttle message?
      */
-    public boolean isThrottleCommand(XNetMessage pMsg) {
+    public boolean isThrottleCommand(XNetReply pMsg) {
         int message=pMsg.getElement(0);
         if( message==0x83 || message==0x84 || message==0xA3 || 
             message == 0xA4 ||message == 0xE2 || message == 0xE3 || 
@@ -625,7 +625,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
      * In the interest of code reuse, The following function checks to see 
      * if an XPressNet Message is the OK message (01 04 05)
      */
-    public boolean isOkMessage(XNetMessage m) {
+    public boolean isOkMessage(XNetReply m) {
         return (m.getElement(0)==XNetConstants.LI_MESSAGE_RESPONSE_HEADER && 
                 m.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_SEND_SUCCESS);
     }	
@@ -634,7 +634,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
      * In the interest of code reuse, The following function checks to see 
      * if an XPressNet Message is the Command Station Busy message (61 81 e3)
      */
-    public boolean isCSBusyMessage(XNetMessage m) {
+    public boolean isCSBusyMessage(XNetReply m) {
         return (m.getElement(0)==XNetConstants.CS_INFO && 
                 m.getElement(1)==XNetConstants.CS_BUSY);
     }	
@@ -649,7 +649,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
      *		01 05 04  -- Timeslot Error
      *          01 06 07  -- LI10x Buffer Overflow
      */
-    public boolean isCommErrorMessage(XNetMessage l) {
+    public boolean isCommErrorMessage(XNetReply l) {
 	return (l.getElement(0)==XNetConstants.LI_MESSAGE_RESPONSE_HEADER &&
                ((l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_UNKNOWN_DATA_ERROR ||
                  l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_CS_DATA_ERROR ||

@@ -11,7 +11,7 @@ import java.util.Vector;
  * method for locating the local implementation.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Revision: 1.3 $
+ * @version 		$Revision: 2.0 $
  *
  */
 public abstract class XNetTrafficController implements XNetInterface {
@@ -68,7 +68,7 @@ public abstract class XNetTrafficController implements XNetInterface {
      * @param replyTo Listener for the reply to this message, doesn't get
      *                the echo of it.
 	 */
-	protected void notify(XNetMessage m, XNetListener replyTo) {
+	protected void notify(XNetReply m, XNetListener replyTo) {
 		// make a copy of the listener vector to synchronized not needed for transmit
 		Vector v;
 		synchronized(this) {
@@ -81,7 +81,7 @@ public abstract class XNetTrafficController implements XNetInterface {
 			XNetListener client = (XNetListener) listeners.elementAt(i);
 			if (client!=replyTo) client.message(m);
 		}
-	}
+        }
 
     /** Reference to the command station in communication here */
     LenzCommandStation mCommandStation;

@@ -3,7 +3,7 @@
  *
  * Description:		<describe the JmriException class here>
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 2.0 $
  */
 
 package jmri.jmrix.lenz;

@@ -13,7 +13,7 @@ import jmri.*;
  *
  * @see            jmri.Programmer
  * @author         Paul Bender Copyright (C) 2003
- * @version        $Revision: 1.5 $
+ * @version        $Revision: 2.0 $
  */
 
 public class XNetOpsModeProgrammer implements Programmer,XNetListener 
@@ -100,7 +100,7 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
     }
 
 
-    synchronized public void message(XNetMessage l) {
+    synchronized public void message(XNetReply l) {
 	if (progState == XNetProgrammer.NOTPROGRAMMING) {
            // We really don't care about any messages unless we send a 
            // request, so just ignore anything that comes in

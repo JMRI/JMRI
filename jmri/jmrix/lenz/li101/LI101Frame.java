@@ -15,7 +15,7 @@ import jmri.jmrix.lenz.*;
  * port speed used to communicate with the LI101.
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 2.0 $
  */
 public class LI101Frame extends JFrame implements XNetListener {
 
@@ -190,7 +190,7 @@ public class LI101Frame extends JFrame implements XNetListener {
     }
 
     // listen for responces from the LI101
-    public void message(XNetMessage l) {
+    public void message(XNetReply l) {
        // Check to see if this is an LI101 info request messgage, if it
        //is, determine if it's the baud rate setting, or the address
        //setting

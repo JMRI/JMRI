@@ -10,7 +10,7 @@ package jmri.jmrix.lenz;
  * so as to limit the number of unneeded class loading.
  *
  * @author		Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 2.0 $
  */
 abstract public class ActiveFlag {
 

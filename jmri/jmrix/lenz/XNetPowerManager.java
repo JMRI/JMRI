@@ -3,7 +3,7 @@
  *
  * Description:		PowerManager implementation for controlling layout power
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 2.0 $
  */
 
 package jmri.jmrix.lenz;
@@ -68,7 +68,7 @@ public class XNetPowerManager implements PowerManager, XNetListener {
 
 	// to listen for Broadcast messages related to track power.
         // There are 3 messages to listen for
-	public void message(XNetMessage m) {
+	public void message(XNetReply m) {
                 // First, we check for a "normal operations resumed message"
                 // This indicates the power to the track is ON
 		if (m.getElement(0) == jmri.jmrix.lenz.XNetConstants.CS_INFO &&

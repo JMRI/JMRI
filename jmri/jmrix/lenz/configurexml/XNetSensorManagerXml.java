@@ -12,7 +12,7 @@ import jmri.jmrix.lenz.XNetSensorManager;
  * provides a load method here.
  *
  * @author  Paul Bender Copyright (c) 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 2.0 $
  */
 public class XNetSensorManagerXml extends jmri.configurexml.AbstractSensorManagerConfigXML {
 

@@ -25,7 +25,7 @@ import java.beans.PropertyChangeEvent;
  * <LI>Wait for Normal Operations Resumed broadcast
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.12 $
+ * @version $Revision: 2.0 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -193,7 +193,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		}
 	}
 
-	synchronized public void message(XNetMessage m) {
+	synchronized public void message(XNetReply m) {
 		if (progState == NOTPROGRAMMING) {
 			// we get the complete set of replies now, so ignore these
 			return;

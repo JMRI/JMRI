@@ -5,7 +5,7 @@
  *       			frame for serial XPressNet access via a LI100
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 2.0 $
  */
 
 package jmri.jmrix.lenz.li100;
