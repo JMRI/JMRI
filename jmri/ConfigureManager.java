@@ -27,7 +27,7 @@ import java.io.File;
  *<P>
  *The configuration manager is generally located through the InstanceManager
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  * @see jmri.InstanceManager
  * @see jmri.configurexml.ConfigXmlManager
  */
@@ -37,6 +37,7 @@ public interface ConfigureManager {
     public void removePrefItems();
 
     public void registerConfig(Object o);
+    public void registerTool(Object o);
     public void registerUser(Object o);
 
     public void deregister(Object o);
