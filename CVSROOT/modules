@@ -14,7 +14,7 @@ java2 -d java &test
 java3 -d java &lib
 
 # runtime target - top level project runtime contents
-runtime -a xml lib resources run1 run2
+runtime -a run1 run2 xml lib resources
 run1 -d . scripts default.lcf
 run2 -d . scripts DecoderPro.csh cornwall.csh
 
