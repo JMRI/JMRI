@@ -15,8 +15,8 @@ station.
 Known Issues:
 
 Currently, the modem must support Hayes style modem commands.  
-ATX0E0 is used as the modem initilization string.
+ATX0E0 is used as the modem initialization string.
 
-It is possible to interupt a command while it is being sent to the XPA, 
+It is possible to interrupt a command while it is being sent to the XPA, 
 resulting in incomplete instructions, and, possibly unwanted power 
 shutdown commands being sent.
