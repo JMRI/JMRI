@@ -15,7 +15,7 @@ import java.beans.PropertyChangeEvent;
  * counter-part of a LocoNet command station.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 
@@ -56,12 +56,31 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 	protected int _mode = Programmer.PAGEMODE;
 
 	public void setMode(int mode) {
+        if (mode == jmri.Programmer.DIRECTBITMODE)
+            mode = jmri.Programmer.DIRECTBYTEMODE;
 		if (mode != _mode) {
 			notifyPropertyChange("Mode", _mode, mode);
 			_mode = mode;
 		}
 	}
 	public int getMode() { return _mode; }
+
+    /**
+     * Signifies mode's available
+     * @param mode
+     * @return True if paged or register mode
+     */
+    public boolean hasMode(int mode) {
+        if ( mode == Programmer.PAGEMODE ||
+             mode == Programmer.ADDRESSMODE ||
+             mode == Programmer.DIRECTBYTEMODE ||
+             mode == Programmer.REGISTERMODE ) {
+            log.debug("hasMode request on mode "+mode+" returns true");
+            return true;
+        }
+        log.debug("hasMode returns false on mode "+mode);
+        return false;
+    }
 
 	// data members to hold contact with the slot listeners
 	private Vector slotListeners = new Vector();
@@ -355,7 +374,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 		if (write) pcmd = pcmd | 0x40;  // write command
 		if (mode == jmri.Programmer.PAGEMODE) pcmd = pcmd | 0x20;
 		else if (mode == jmri.Programmer.DIRECTBYTEMODE) pcmd = pcmd | 0x28;
-		else if (mode == jmri.Programmer.REGISTERMODE) pcmd = pcmd | 0x10;
+		else if (mode == jmri.Programmer.REGISTERMODE
+                    || mode == jmri.Programmer.ADDRESSMODE) pcmd = pcmd | 0x10;
 		else throw new jmri.ProgrammerException("mode not supported");
 		m.setElement(3, pcmd);
 
