@@ -26,7 +26,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class BDL16Frame extends JFrame implements LocoNetListener {
 
@@ -111,7 +111,7 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
             LocoNetMessage l = new LocoNetMessage(6);
             l.setOpCode(0xD0);
             l.setElement(1, 0x62);
-            l.setElement(2, Integer.parseInt(addrField.getText())-1);
+            l.setElement(2, (Integer.parseInt(addrField.getText())-1)&0x7F);
             l.setElement(3, 0x71);
             int loc = (state-1)/8;
             int bit = (state-1)-loc*8;
@@ -123,7 +123,7 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
             LocoNetMessage l = new LocoNetMessage(6);
             l.setOpCode(0xD0);
             l.setElement(1, 0x72);
-            l.setElement(2, Integer.parseInt(addrField.getText())-1);
+            l.setElement(2, (Integer.parseInt(addrField.getText())-1)&0x7F);
             l.setElement(3, 0x71);
             int loc = (state-1)/8;
             int bit = (state-1)-loc*8;
