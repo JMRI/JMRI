@@ -12,7 +12,7 @@ import jmri.jmrix.AbstractThrottle;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class NceThrottle extends AbstractThrottle
 {
@@ -52,19 +52,7 @@ public class NceThrottle extends AbstractThrottle
         byte[] result = jmri.NmraPacket.function0Through4Packet(address, (address>=100),
                                          getF0(), getF1(), getF2(), getF3(), getF4());
 
-        NceMessage m = new NceMessage(5+3*result.length);
-        int i = 0;  // message index counter
-        m.setElement(i++, 'S');
-        m.setElement(i++, ' ');
-        m.setElement(i++, 'C');
-        m.setElement(i++, '0');
-        m.setElement(i++, '5');
-
-        for (int j = 0; j<result.length; j++) {
-            m.setElement(i++, ' ');
-            m.addIntAsTwoHex(result[j]&0xFF,i);
-            i = i+2;
-        }
+        NceMessage m = NceMessage.sendPacketMessage(result);
 
         NceTrafficController.instance().sendNceMessage(m, null);
     }

@@ -14,7 +14,7 @@ import jmri.*;
  *
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class NceOpsModeProgrammer extends NceProgrammer  {
 
@@ -33,19 +33,7 @@ public class NceOpsModeProgrammer extends NceProgrammer  {
         if (log.isDebugEnabled()) log.debug("write CV="+CV+" val="+val);
         // create the message and fill it,
         byte[] contents = NmraPacket.opsCvWriteByte(mAddress, mLongAddr, CV, val );
-        NceMessage msg = new NceMessage(5+3*contents.length);
-        msg.setBinary(false);
-        msg.setOpCode('S');
-        msg.setElement(1, ' ');
-        msg.setElement(2, 'C');
-        msg.setElement(3, '0');
-        msg.setElement(4, '5');
-        int j = 5;
-        for (int i=0; i<contents.length; i++) {
-            msg.setElement(j++, ' ');
-            msg.addIntAsTwoHex(((int)contents[i])&0xFF, j);
-            j = j+2;
-        }
+        NceMessage msg = NceMessage.sendPacketMessage(contents);
 
         // record state.  COMMANDSENT is just waiting for a reply...
         useProgrammer(p);
