@@ -34,9 +34,9 @@ import org.jdom.Element;
  *  TODO: fix speed increments (14, 28)
  *
  * @author     glen
- * @version    $Revision: 1.24 $
+ * @version    $Revision: 1.25 $
  */
-public class ControlPanel extends JInternalFrame
+public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener
 {
 	private DccThrottle throttle;
 
@@ -73,6 +73,7 @@ public class ControlPanel extends JInternalFrame
 	public void notifyThrottleDisposed()
 	{
 		this.setEnabled(false);
+                this.throttle.removePropertyChangeListener(this);
 		throttle = null;
 	}
 
@@ -96,6 +97,7 @@ public class ControlPanel extends JInternalFrame
 		this.setIsForward(throttle.getIsForward());
 		this.setSpeedValues((int) throttle.getSpeedIncrement(),
 				(int) throttle.getSpeedSetting());
+                this.throttle.addPropertyChangeListener(this);
 	}
 
 	/**
@@ -308,7 +310,7 @@ public class ControlPanel extends JInternalFrame
 	 *  A KeyAdapter that listens for the keys that work the control pad buttons
 	 *
 	 * @author     glen
-         * @version    $Revision: 1.24 $
+         * @version    $Revision: 1.25 $
 	 */
 	class ControlPadKeyListener extends KeyAdapter
 	{
@@ -369,6 +371,19 @@ public class ControlPanel extends JInternalFrame
 			}
 		}
 	}
+
+
+	// update the state of this panel if any of the properties change
+	public void propertyChange(java.beans.PropertyChangeEvent e) {
+		if (e.getPropertyName().equals("SpeedSetting")) {
+		   float speed=((Float) e.getNewValue()).floatValue();
+		   speedSlider.setValue((int)(speed * speedIncrement));
+		} else if (e.getPropertyName().equals("IsForward")) {
+		   boolean Forward=((Boolean) e.getNewValue()).booleanValue();
+	           setIsForward(Forward);
+		}		
+	}
+
 
 	/**
 	 *  Collect the prefs of this object into XML Element
