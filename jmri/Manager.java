@@ -23,7 +23,7 @@ import com.sun.java.util.collections.Collections;
  * that system name.
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public interface Manager {
 
@@ -52,6 +52,7 @@ public interface Manager {
 
     public void addPropertyChangeListener(java.beans.PropertyChangeListener l);
     public void removePropertyChangeListener(java.beans.PropertyChangeListener l);
+    public void register(NamedBean n);
 }
 
 
