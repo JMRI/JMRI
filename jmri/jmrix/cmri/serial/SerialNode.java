@@ -24,7 +24,7 @@ import jmri.Sensor;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.18 $
  */
 public class SerialNode {
 
@@ -135,7 +135,18 @@ public class SerialNode {
     }
 
     public void setCardTypeLocation(int num, int value) {
-    	cardTypeLocation[num] = (byte)(value&0xFF);
+        // Validate the input
+        if ( (num < 0) || (num >= MAXCARDLOCATIONBYTES) ) {
+            log.error("setCardTypeLocation - invalid num (index) - "+num);
+            return;
+        }
+        int val = value & 0xFF;
+        if ( (val!=NO_CARD) && (val!=INPUT_CARD) && (val!=OUTPUT_CARD) ) {
+            log.error("setCardTypeLocation - invalid value - "+val);
+            return;
+        }
+        // Set the card type
+    	cardTypeLocation[num] = (byte)(val);
     }
     	
     /**
