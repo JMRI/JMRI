@@ -14,7 +14,7 @@ import jmri.*;
  *
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class EasyDccOpsModeProgrammer extends EasyDccProgrammer  {
 
@@ -41,7 +41,7 @@ public class EasyDccOpsModeProgrammer extends EasyDccProgrammer  {
         int j = 4;
         for (int i=0; i<contents.length; i++) {
             msg.setElement(j++, ' ');
-            EasyDccMessage.addIntAsTwoHex(((int)contents[i])&0xFF, msg, j);
+            msg.addIntAsTwoHex(((int)contents[i])&0xFF, j);
             j = j+2;
         }
 
