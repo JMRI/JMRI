@@ -5,18 +5,21 @@ package jmri.jmrix.loconet;
 /** 
  * LocoNetListener provides the call-back interface for notification when a 
  * new LocoNet message arrives from the layout.
+ *<P>
+ * Note that the LocoNetListener implementation cannot assume that messages will
+ * be returned in any particular thread. We may eventually revisit this, as returning
+ * messages in the Swing GUI thread would result in some simplification of client code.
+ * We've not done that yet because we're not sure that deadlocks can be avoided in that 
+ * case.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Id: LocoNetListener.java,v 1.4 2001-10-26 16:29:43 jacobsen Exp $		
+ * @version			$Id: LocoNetListener.java,v 1.5 2001-11-10 21:33:42 jacobsen Exp $		
  */
 public interface LocoNetListener extends java.util.EventListener{
 
-	/*
+	/**
 	 * Member function that will be invoked by a LocoNetInterface implementation
 	 * to forward a LocoNet message from the layout.
-	 *<P>
-	 * Note that the LocoNetListener implementation cannot assume that this
-	 * will be invoked in any particular thread.
 	 *
 	 * @param msg  The received LocoNet message.  Note that this same object
 	 *             may be presented to multiple users. It should not be 

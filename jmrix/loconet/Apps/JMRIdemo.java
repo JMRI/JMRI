@@ -40,8 +40,6 @@ public class JMRIdemo extends JPanel {
         JMenu funcMenu = new JMenu("Tools");
         menuBar.add(funcMenu);
 	        funcMenu.add(new jmri.jmrit.simpleprog.SimpleProgAction("Simple Programmer"));
-	        funcMenu.add(new jmri.jmrit.symbolicprog.symbolicframe.SymbolicProgAction("Symbolic Programmer"));
-	        funcMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction("Pane Programmer"));
 	        funcMenu.add(new jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlAction("Turnout Control"));
 	        funcMenu.add(new jmri.jmrit.powerpanel.PowerPanelAction("Power Control"));
 
@@ -55,6 +53,11 @@ public class JMRIdemo extends JPanel {
         menuBar.add(nceMenu);
 	        nceMenu.add(new jmri.jmrix.nce.ncemon.NceMonAction("Command Monitor"));
 	        nceMenu.add(new jmri.jmrix.nce.packetgen.NcePacketGenAction("Send Command"));
+
+        JMenu devMenu = new JMenu("Development");
+        menuBar.add(devMenu);
+	        devMenu.add(new jmri.jmrit.symbolicprog.symbolicframe.SymbolicProgAction("Symbolic Programmer"));
+	        devMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction("Pane Programmer"));
 	}
 
 	// Main entry point

@@ -8,16 +8,34 @@ package jmri.jmrix.loconet;
  * Use this interface to send messages to a LocoNet layout.
  * Classes implementing the LocoNetListener interface can register
  * here to receive incoming LocoNet messages as events.
+ *<P>
+ * The jmri.jrmix.loconet.LnTrafficManager provides the first implementation
+ * of this interface. 
+ *<P>
+ * How do you locate an implemenation of this interface?  That's an interesting
+ * question.  This is inherently LocoNet specific, so it would be inappropriate
+ * to put it in the jmri.InterfaceManager.  And Java interfaces can't have static
+ * members, so we can't provide an implementation() member.  For now, we use
+ * a static implementation member in the LnTrafficManager implementation to locate
+ * _any_ implementation; this clearly needs to be improved.
+ *<P>
+ * LocoNetListener implementations registering for traffic updates
+ * cannot assume that messages will
+ * be returned in any particular thread. See the LocoNetListener doc
+ * for more background.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * 
- * @see jmri.jrmix.LocoNetListener
+ * @see jmri.jrmix.loconet.LocoNetListener
+ * @see jmri.jrmix.loconet.LnTrafficManager
  *
  */
 public interface LocoNetInterface {
 
 	/*
-	 * Request a message be sent to the attached LocoNet
+	 * Request a message be sent to the attached LocoNet. Return is immediate,
+	 * with the message being queued for eventual sending.  If you're interested
+	 * in a reply, you need to register a LocoNetListener object to watch the
+	 * message stream.
 	 */
 	public void sendLocoNetMessage(LocoNetMessage msg);
 
