@@ -26,7 +26,7 @@ import java.beans.PropertyChangeEvent;
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Paul Bender  Copyright (c) 2003,2004
- * @version $Revision: 2.6 $
+ * @version $Revision: 2.7 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -132,7 +132,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		// set new state & save values
 		progState = REQUESTSENT;
 		_val = val;
-		_cv = CV;
+		_cv = 0xff & CV;
 		
 		try {
 		   // start the error timer
@@ -161,7 +161,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		_progRead = true;
 		// set new state
 		progState = REQUESTSENT;
-		_cv = CV;
+		_cv = 0xff & CV;
 		try {
                   // start the error timer
 		   restartTimer(XNetProgrammerTimeout);
