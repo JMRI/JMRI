@@ -17,7 +17,7 @@ import junit.framework.*;
  *
  * @todo need a check of the MIXED state model for long address
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 
@@ -25,7 +25,7 @@ public class SplitVariableValueTest extends VariableValueTest {
     final int lowCV = 12;
     final int offset = 6;
     ProgDebugger p = new ProgDebugger();
-
+    
     // abstract members invoked by tests in parent VariableValueTest class
     VariableValue makeVar(String label, String comment, boolean readOnly,
                           int cvNum, String mask, int minVal, int maxVal,
@@ -36,7 +36,7 @@ public class SplitVariableValueTest extends VariableValueTest {
         v.setElementAt(cvNext, cvNum+offset);
         return new SplitVariableValue(label, comment, readOnly,
                                       cvNum, "XXXXVVVV", minVal, maxVal, v, status, item,
-                                      cvNum+offset, 1, 0);
+                                      cvNum+offset, 1, 0, "VVVVVVVV");
     }
 
 
@@ -69,32 +69,7 @@ public class SplitVariableValueTest extends VariableValueTest {
     public void testVariableCvWrite() {}    // due to multi-cv nature of SplitAddr
     public void testWriteSynch2() {}        // programmer synch is different
 
-    // can we create long value , then manipulate the variable to change the CV?
-    public void testSplitAddressCreate() {
-        Vector v = createCvVector();
-        CvValue cv1 = new CvValue(lowCV, p);
-        CvValue cv2 = new CvValue(lowCV+offset, p);
-        cv1.setValue(2);
-        cv2.setValue(3);
-        v.setElementAt(cv1, lowCV);
-        v.setElementAt(cv2, lowCV+offset);
-        // create a variable pointed at CVs, check name
-        SplitVariableValue var = new SplitVariableValue("label", "comment", false,
-                                                        lowCV, "XXVVVVVV", 0, 255, v, null, null,
-                                                        lowCV+offset, 1, 0);
-        Assert.assertTrue(var.label() == "label");
-        // pretend you've edited the value, check its in same object
-        ((JTextField)var.getValue()).setText(""+(17+189*64));
-        Assert.assertEquals("text value", ""+(17+189*64), ((JTextField)var.getValue()).getText() );
-        // manually notify
-        var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
-        // see if the CV was updated
-        Assert.assertEquals("low bits", 17, cv1.getValue());
-        Assert.assertEquals("high bits", 189, cv2.getValue());
-    }
-
-    // can we change both CVs and see the result in the Variable?
-    public void testSplitAddressFromCV() {
+    public void testSplitAddressFromCV1() {
         Vector v = createCvVector();
         CvValue cv1 = new CvValue(lowCV, p);
         CvValue cv2 = new CvValue(lowCV+offset, p);
@@ -104,23 +79,112 @@ public class SplitVariableValueTest extends VariableValueTest {
         v.setElementAt(cv2, lowCV+offset);
         // create a variable pointed at CVs
         SplitVariableValue var = new SplitVariableValue("name", "comment", false, lowCV,
-                                                        "XXVVVVVV", 0, 255, v, null, null,
-                                                        lowCV+offset, 1, 0);
-        ((JTextField)var.getValue()).setText("1029");
+                                                        "VVVVVVVV", 0, 255, v, null, null,
+                                                        lowCV+offset, 1, 0, "VVVVVVVV");
+
+        ((JTextField)var.getValue()).setText("1029");  // to tell if changed
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
+        Assert.assertEquals("set var full value", ""+(1029), ((JTextField)var.getValue()).getText());
+        Assert.assertEquals("set var low bits", 5, cv1.getValue());
+        Assert.assertEquals("set var high bits", 4, cv2.getValue());
 
         // change the CV, expect to see a change in the variable value
         cv1.setValue(21);
-        Assert.assertEquals("low bits", 21, cv1.getValue());
         cv2.setValue(189);
-        Assert.assertEquals("full value", ""+(21+189*64), ((JTextField)var.getValue()).getText());
-        Assert.assertEquals("high bits", 189, cv2.getValue());
+        Assert.assertEquals("set cv low bits", 21, cv1.getValue());
+        Assert.assertEquals("set cv full value", ""+(189*256+21), ((JTextField)var.getValue()).getText());
+        Assert.assertEquals("set cv high bits", 189, cv2.getValue());
     }
+
+    public void testSplitAddressFromCV2() {
+        Vector v = createCvVector();
+        CvValue cv1 = new CvValue(lowCV, p);
+        CvValue cv2 = new CvValue(lowCV+offset, p);
+        cv1.setValue(0xFF);
+        cv2.setValue(0xFF);
+        v.setElementAt(cv1, lowCV);
+        v.setElementAt(cv2, lowCV+offset);
+        // create a variable pointed at CVs
+        SplitVariableValue var = new SplitVariableValue("name", "comment", false, lowCV,
+                                                        "XXXXVVVV", 0, 255, v, null, null,
+                                                        lowCV+offset, 1, 0, "VVVVVVVV");
+
+        ((JTextField)var.getValue()).setText("1029");  // to tell if changed
+        var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
+        Assert.assertEquals("set var full value", ""+(1029), ((JTextField)var.getValue()).getText());
+        Assert.assertEquals("set var low bits", 0xF5, cv1.getValue());
+        Assert.assertEquals("set var high bits", 4*16, cv2.getValue());
+
+        // change the CV, expect to see a change in the variable value
+        cv1.setValue(21);
+        cv2.setValue(189);
+        Assert.assertEquals("set cv low bits", 21, cv1.getValue());
+        Assert.assertEquals("set cv full value", ""+(189*16+(21&0xF)), ((JTextField)var.getValue()).getText());
+        Assert.assertEquals("set cv high bits", 189, cv2.getValue());
+    }
+
+    public void testSplitAddressFromCV3() {
+        Vector v = createCvVector();
+        CvValue cv1 = new CvValue(lowCV, p);
+        CvValue cv2 = new CvValue(lowCV+offset, p);
+        cv1.setValue(0xFF);
+        cv2.setValue(0xFF);
+        v.setElementAt(cv1, lowCV);
+        v.setElementAt(cv2, lowCV+offset);
+        // create a variable pointed at CVs
+        SplitVariableValue var = new SplitVariableValue("name", "comment", false, lowCV,
+                                                        "VVVVVVVV", 0, 255, v, null, null,
+                                                        lowCV+offset, 1, 0, "XXVVVVXX");
+
+        ((JTextField)var.getValue()).setText("1029");  // to tell if changed
+        var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
+        Assert.assertEquals("set var full value", ""+(1029), ((JTextField)var.getValue()).getText());
+        Assert.assertEquals("set var low bits", 5, cv1.getValue());
+        Assert.assertEquals("set var high bits", 0xC3+4*4, cv2.getValue());
+
+        // change the CV, expect to see a change in the variable value
+        cv1.setValue(21);
+        cv2.setValue(189);
+        Assert.assertEquals("set cv low bits", 21, cv1.getValue());
+        Assert.assertEquals("set cv full value", ""+((189&0x3C)/4*256+(21)), ((JTextField)var.getValue()).getText());
+        Assert.assertEquals("set cv high bits", 189, cv2.getValue());
+    }
+
+    public void testSplitAddressFromCV4() {
+        System.out.println("---------------------------------");
+        Vector v = createCvVector();
+        CvValue cv1 = new CvValue(lowCV, p);
+        CvValue cv2 = new CvValue(lowCV+offset, p);
+        cv1.setValue(0xFF);
+        cv2.setValue(0xFF);
+        v.setElementAt(cv1, lowCV);
+        v.setElementAt(cv2, lowCV+offset);
+        // create a variable pointed at CVs
+        SplitVariableValue var = new SplitVariableValue("name", "comment", false, lowCV,
+                                                        "XVVVVVVX", 0, 255, v, null, null,
+                                                        lowCV+offset, 1, 0, "XVVVVVXX");
+
+        ((JTextField)var.getValue()).setText("1029");  // to tell if changed
+        var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
+        Assert.assertEquals("set var full value", ""+(1029), ((JTextField)var.getValue()).getText());
+        Assert.assertEquals("set var low bits", 5*2+0x81, cv1.getValue());
+        Assert.assertEquals("set var high bits", 0x83+0x40, cv2.getValue());
+
+        // change the CV, expect to see a change in the variable value
+        cv1.setValue(21);
+        cv2.setValue(189);
+        Assert.assertEquals("set cv low bits", 21, cv1.getValue());
+        Assert.assertEquals("set cv full value", ""+((189&0x3C)/4*64+(10)), ((JTextField)var.getValue()).getText());
+        Assert.assertEquals("set cv high bits", 189, cv2.getValue());
+    }
+
+
+
 
     List evtList = null;  // holds a list of ParameterChange events
 
     // check a long address read operation
-    public void testSplitAddressRead() {
+    public void testSplitAddressRead1() {
         log.debug("testSplitAddressRead starts");
 
         Vector v = createCvVector();
@@ -131,7 +195,7 @@ public class SplitVariableValueTest extends VariableValueTest {
 
         SplitVariableValue var = new SplitVariableValue("name", "comment", false,
                                                         lowCV, "XXVVVVVV", 0, 255, v, null, null,
-                                                        lowCV+offset, 1, 0);
+                                                        lowCV+offset, 1, 0, "VVVVVVVV");
         // register a listener for parameter changes
         java.beans.PropertyChangeListener listen = new java.beans.PropertyChangeListener() {
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -146,7 +210,10 @@ public class SplitVariableValueTest extends VariableValueTest {
         // set to specific value
         ((JTextField)var.getValue()).setText("5");
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
+        
+        // read should get 123, 123 from CVs
         var.read();
+        
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;
         while ( var.isBusy() && i++ < 100 )  {
@@ -166,14 +233,14 @@ public class SplitVariableValueTest extends VariableValueTest {
         }
         Assert.assertEquals("only one Busy -> false transition ", 1, nBusyFalse);
 
-        Assert.assertEquals("text value ", ""+((123&0x3f)+123*64), ((JTextField)var.getValue()).getText() );  // 15227 = (1230x3f)*256+123
+        Assert.assertEquals("text value ", ""+((123&0x3f)+(123)*64), ((JTextField)var.getValue()).getText() );  // 15227 = (1230x3f)*256+123
         Assert.assertEquals("Var state", AbstractValue.READ, var.getState() );
-        Assert.assertEquals("CV 1 value ", 123&0x3f, cv1.getValue());  // 123 with 128 bit set
+        Assert.assertEquals("CV 1 value ", 123, cv1.getValue());  // 123 with 128 bit set
         Assert.assertEquals("CV 2 value ", 123, cv2.getValue());
     }
 
     // check a long address write operation
-    public void testSplitAddressWrite() {
+    public void testSplitAddressWrite1() {
 
         Vector v = createCvVector();
         CvValue cv1 = new CvValue(lowCV, p);
@@ -183,7 +250,7 @@ public class SplitVariableValueTest extends VariableValueTest {
 
         SplitVariableValue var = new SplitVariableValue("name", "comment",
                                                         false, lowCV, "XXVVVVVV", 0, 255, v, null, null,
-                                                        lowCV+offset, 1, 0);
+                                                        lowCV+offset, 1, 0, "VVVVVVVV");
         ((JTextField)var.getValue()).setText("4797");
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 
@@ -225,7 +292,7 @@ public class SplitVariableValueTest extends VariableValueTest {
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = { SplitVariableValueTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
