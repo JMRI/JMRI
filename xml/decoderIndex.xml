@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <decoderIndex version="73">
+  <decoderIndex version="75">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -317,7 +317,7 @@
         <model model="DZ120" numOuts="2" numFns="2" connector="unspecified" nmraWarrant="no" />
       </family>
       <family name="DS54" mfg="Digitrax" comment="DS54 is a stationary decoder, but it can be programmed in the usual way" type="locomotive" file="Digitrax_yDS54.xml">
-        <model model="DS54" connector="unspecified" nmraWarrant="no" />
+        <model model="DS54" lowVersionID="65" connector="unspecified" nmraWarrant="no" />
       </family>
       <family name="Function Only, with transponding" mfg="Digitrax" lowVersionID="244" type="locomotive" file="Digitrax_yfunction.xml">
         <model model="TL1" numOuts="1" numFns="4" connector="unspecified" nmraWarrant="no">
@@ -906,6 +906,36 @@
           <output name="Mute" connection="unspecified" />
           <!-- The two electical outputs are front headlight, back -->
           <!-- headlight-->
+        </model>
+      </family>
+      <family name="SHS Diesel decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_SHS_F3.xml">
+        <model model="F3 Diesel" maxInputVolts="16V" maxMotorCurrent="5A" maxTotalCurrent="6A" formFactor="SHS F3" nmraWarrant="no" connector="other" numOuts="4" numFns="8">
+          <versionCV lowVersionID="38" />
+          <output name="Bell" connection="unspecified" />
+          <output name="Horn" connection="unspecified" />
+          <output name="3" label="NumberBd" connection="unspecified" />
+          <output name="4" label="Mars" connection="unspecified" />
+          <output name="DynBrake" connection="unspecified" />
+          <output name="RPM+" connection="unspecified" />
+          <output name="RPM-" connection="unspecified" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Mute" connection="unspecified" />
+        </model>
+      </family>
+      <family name="SHS Diesel decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_SHS_F7.xml">
+        <model model="F7 Diesel" maxInputVolts="16V" maxMotorCurrent="6A" maxTotalCurrent="6A" formFactor="SHS F7" nmraWarrant="yes" connector="other" numOuts="6" numFns="8">
+          <versionCV lowVersionID="40" />
+          <output name="Bell" connection="unspecified" />
+          <output name="Horn" connection="unspecified" />
+          <output name="3" label="NumberBd" connection="unspecified" />
+          <output name="4" label="Mars" connection="unspecified" />
+          <output name="5" label="RedClass" connection="unspecified" />
+          <output name="6" label="GreenClass" connection="unspecified" />
+          <output name="DynBrake" connection="unspecified" />
+          <output name="RPM+" connection="unspecified" />
+          <output name="RPM-" connection="unspecified" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Mute" connection="unspecified" />
         </model>
       </family>
       <family name="TCS A1 decoder" mfg="Train Control Systems" type="locomotive" file="TCS_A1.xml">
