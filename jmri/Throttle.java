@@ -22,7 +22,7 @@ package jmri;
  * and deassign locos from this throttle, but that doesn't seem right.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Id: Throttle.java,v 1.4 2003-03-25 14:41:39 glenobie Exp $
+ * @version			$Id: Throttle.java,v 1.5 2003-03-28 17:16:15 jacobsen Exp $
  */
 public interface Throttle {
 
@@ -69,6 +69,15 @@ public interface Throttle {
 
 	public boolean getF9();
 	public void setF9(boolean f9);
+
+	public boolean getF10();
+	public void setF10(boolean f10);
+
+	public boolean getF11();
+	public void setF11(boolean f11);
+
+	public boolean getF12();
+	public void setF12(boolean f12);
 
 	/**
 	 * Locomotive identification.  The exact format is defined by the
