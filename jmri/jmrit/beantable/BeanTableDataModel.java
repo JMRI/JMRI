@@ -20,7 +20,7 @@ import com.sun.java.util.collections.List;
 /**
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
- * @version		$Revision: 1.9 $
+ * @version		$Revision: 1.10 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -137,6 +137,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         case VALUECOL:
             return new JTextField(8).getPreferredSize().width;
         default:
+        	log.warn("Unexpected column in getPreferredWidth: "+col);
             return new JTextField(8).getPreferredSize().width;
         }
     }
