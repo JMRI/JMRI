@@ -34,7 +34,7 @@ import org.jdom.Element;
  *  directed by the interface.
  *
  * @author     Glen Oberhauser
- * @version    $Revision: 1.21 $
+ * @version    $Revision: 1.22 $
  */
 public class ThrottleFrame extends JFrame implements AddressListener, ThrottleListener
 {
@@ -141,7 +141,7 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 		controlPanel.setClosable(true);
 		controlPanel.setIconifiable(true);
 		controlPanel.setTitle("Control Panel");
-		controlPanel.setSize(100, 330);
+		controlPanel.setSize(100, 345);
 		controlPanel.setVisible(true);
 		controlPanel.setEnabled(false);
 		controlPanel.addInternalFrameListener(frameListener);
@@ -151,7 +151,7 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 		functionPanel.setClosable(true);
 		functionPanel.setIconifiable(true);
 		functionPanel.setTitle("Function Panel");
-		functionPanel.setSize(200, 204);
+		functionPanel.setSize(200, 210);
 		functionPanel.setLocation(100, 0);
 		functionPanel.setVisible(true);
 		functionPanel.setEnabled(false);
@@ -162,8 +162,8 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 		addressPanel.setClosable(true);
 		addressPanel.setIconifiable(true);
 		addressPanel.setTitle("Address Panel");
-		addressPanel.setSize(200, 126);
-		addressPanel.setLocation(100, 204);
+		addressPanel.setSize(200, 135);
+		addressPanel.setLocation(100, 210);
 		addressPanel.setVisible(true);
 		addressPanel.addInternalFrameListener(frameListener);
 		addressPanel.addAddressListener(this);
@@ -178,7 +178,7 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 		frameList[FUNCTION_PANEL_INDEX] = functionPanel;
 		activeFrame = ADDRESS_PANEL_INDEX;
 
-		desktop.setPreferredSize(new Dimension(300, 340));
+		desktop.setPreferredSize(new Dimension(300, 350));
 
 		KeyListenerInstaller.installKeyListenerOnAllComponents(
 						new FrameCyclingKeyListener(), this);
