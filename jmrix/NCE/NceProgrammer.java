@@ -221,7 +221,6 @@ public class NceProgrammer implements NceListener, Programmer {
 		// connect the first time
 		if (_controller == null) {
 			_controller = NceTrafficController.instance();
-			// _controller.addNceListener(this);	
 		}
 		return _controller;
 	}

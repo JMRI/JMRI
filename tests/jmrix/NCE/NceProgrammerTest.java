@@ -137,6 +137,7 @@ public class NceProgrammerTest extends TestCase {
 			if (this.log.isDebugEnabled()) this.log.debug("sendLocoNetMessage ["+m+"]");
 			// save a copy
 			outbound.addElement(m);
+			lastSender = l;
 		}
 
 		// test control member functions

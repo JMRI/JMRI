@@ -76,8 +76,11 @@ public class NceTrafficController implements NceInterface, Runnable {
 			}
 	}
 
+	NceListener lastSender = null;
+	
 	protected void notifyReply(NceReply r) {
-		// make a copy of the listener vector to synchronized not needed for transmit
+		
+		// make a copy of the listener vector to synchronized (not needed for transmit?)
 		Vector v;
 		synchronized(this)
 			{
@@ -96,6 +99,11 @@ public class NceTrafficController implements NceInterface, Runnable {
 					log.warn("notify: During dispatch to "+client+"\nException "+e);
 				}
 			}
+
+		// forward to the last listener who send a message
+		// this is done _second_ so monitoring can have already stored the reply
+		// before a response is sent
+		if (lastSender != null) lastSender.reply(r);
 	}
 	
 
@@ -103,6 +111,9 @@ public class NceTrafficController implements NceInterface, Runnable {
 	 * Forward a preformatted message to the actual interface.
 	 */
 	public void sendNceMessage(NceMessage m, NceListener reply) {
+		// remember who sent this
+		lastSender = reply;
+		
 		// notify all _other_ listeners
 		notifyMessage(m, reply);
 		
