@@ -8,7 +8,7 @@ import jmri.*;
  * Abstract base class for Cornwall RR automation.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public abstract class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
     static final int RED    = SignalHead.RED;
@@ -42,6 +42,7 @@ public abstract class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
      * kick off processing
      */
     Sensor[] sensors;
+
 
     /**
      * Obtain the output object, sets the output to an initial state
@@ -176,10 +177,17 @@ public abstract class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
             for (int i = 1; i<bo.length; i++)
                 if (bo[i]==null) log.error("bo["+i+"] unexpectedly null");
 
-
+            // also initialize 'gate'
+            gate = tm.getByUserName("Gate Power Interlock Gate");
+            if (gate == null) log.error("Failed to initialize gate");
         }
 
     }
+
+    /**
+     * Java sensor object representing the "gate" input
+     */
+    static Sensor gate;
 
     /**
      * Java array of Sensor objects corresponding to TU() turnout sensors
