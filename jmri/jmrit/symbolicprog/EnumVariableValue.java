@@ -20,46 +20,46 @@ import com.sun.java.util.collections.ArrayList;
 /**
  * Extends VariableValue to represent a enumerated variable.
  *
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: EnumVariableValue.java,v 1.4 2002-10-16 16:01:37 jacobsen Exp $
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
+ * @version	$Revision: 1.5 $
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
 
-  public EnumVariableValue(String name, String comment, boolean readOnly,
-							int cvNum, String mask, int minVal, int maxVal,
-							Vector v, JLabel status, String stdname) {
-    super(name, comment, readOnly, cvNum, mask, v, status, stdname);
-    _maxVal = maxVal;
-    _minVal = minVal;
-  }
+    public EnumVariableValue(String name, String comment, boolean readOnly,
+                             int cvNum, String mask, int minVal, int maxVal,
+                             Vector v, JLabel status, String stdname) {
+        super(name, comment, readOnly, cvNum, mask, v, status, stdname);
+        _maxVal = maxVal;
+        _minVal = minVal;
+    }
 
-  	/**
-  	 * Create a null object.  Normally only used for tests and to pre-load classes.
-  	 */
-   	public EnumVariableValue() {}
+    /**
+     * Create a null object.  Normally only used for tests and to pre-load classes.
+     */
+    public EnumVariableValue() {}
 
-	public void nItems(int n) {
-		_itemArray = new String[n];
-		_nstored = 0;
-	}
+    public void nItems(int n) {
+        _itemArray = new String[n];
+        _nstored = 0;
+    }
 
-	public void addItem(String s) {
-		_itemArray[_nstored++] = s;
-	}
+    public void addItem(String s) {
+        _itemArray[_nstored++] = s;
+    }
 
-	public void lastItem() {
-		_value = new JComboBox(_itemArray);
-		// finish initialization
-		_value.setActionCommand("");
-		_defaultColor = _value.getBackground();
-		_value.setBackground(COLOR_UNKNOWN);
-		// connect to the JComboBox model and the CV so we'll see changes.
-		_value.addActionListener(this);
-		CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()));
-		cv.addPropertyChangeListener(this);
-		cv.setState(CvValue.FROMFILE);
-	}
+    public void lastItem() {
+        _value = new JComboBox(_itemArray);
+        // finish initialization
+        _value.setActionCommand("");
+        _defaultColor = _value.getBackground();
+        _value.setBackground(COLOR_UNKNOWN);
+        // connect to the JComboBox model and the CV so we'll see changes.
+        _value.addActionListener(this);
+        CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()));
+        cv.addPropertyChangeListener(this);
+        cv.setState(CvValue.FROMFILE);
+    }
 
     // stored value
     JComboBox _value = null;
@@ -123,7 +123,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         _value.setSelectedIndex(value);
         if (oldVal != value || getState() == VariableValue.UNKNOWN)
             prop.firePropertyChange("Value", null, new Integer(value));
-        }
+    }
 
     public Component getRep(String format) {
         // sort on format type
@@ -164,7 +164,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     void setColor(Color c) {
         if (c != null) _value.setBackground(c);
         else _value.setBackground(_defaultColor);
-            // prop.firePropertyChange("Value", null, null);
+        // prop.firePropertyChange("Value", null, null);
     }
 
     // member functions to control reading/writing the variables
@@ -203,7 +203,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * model between this object and the real JComboBox value.
      *
      * @author			Bob Jacobsen   Copyright (C) 2001
-     * @version         $Revision: 1.4 $
+     * @version         $Revision: 1.5 $
      */
     public class VarComboBox extends JComboBox {
 
@@ -211,11 +211,11 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
             super(m);
             _var = var;
             _l = new java.beans.PropertyChangeListener() {
-                public void propertyChange(java.beans.PropertyChangeEvent e) {
-                    if (log.isDebugEnabled()) log.debug("VarComboBox saw property change: "+e);
+                    public void propertyChange(java.beans.PropertyChangeEvent e) {
+                        if (log.isDebugEnabled()) log.debug("VarComboBox saw property change: "+e);
                         originalPropertyChanged(e);
-                }
-            };
+                    }
+                };
             // get the original color right
             setBackground(_var._value.getBackground());
             // listen for changes to original state
@@ -234,9 +234,9 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 
         public void dispose() {
 	    if (_var != null && _l != null ) _var.removePropertyChangeListener(_l);
-                _l = null;
-		_var = null;
-            }
+            _l = null;
+            _var = null;
+        }
     }
 
     // clean up connections when done
@@ -257,7 +257,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         _value = null;
         // do something about the VarComboBox
 
-        }
+    }
 
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EnumVariableValue.class.getName());
