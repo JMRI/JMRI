@@ -12,7 +12,7 @@ import jmri.Turnout;
  *
  * Description:		Implement turnout manager for loconet
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 
 public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements LocoNetListener {
@@ -22,23 +22,23 @@ public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements Loc
     // to free resources when no longer used
     public void dispose() throws JmriException {
     }
-    
+
     // LocoNet-specific methods
-    
+
     public void putBySystemName(LnTurnout t) {
         String system = "LT"+t.getNumber();
         _tsys.put(system, t);
     }
-    
+
     public Turnout newTurnout(String systemName, String userName) {
         // if system name is null, supply one from the number in userName
         if (systemName == null) systemName = "LT"+userName;
-        
+
         // return existing if there is one
         Turnout t;
         if ( (userName!=null) && ((t = getByUserName(userName)) != null)) return t;
         if ( (t = getBySystemName(systemName)) != null) return t;
-        
+
         // get number from name
         if (!systemName.startsWith("LT")) {
             log.error("Invalid system name for LocoNet turnout: "+systemName);
@@ -47,19 +47,22 @@ public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements Loc
         int addr = Integer.valueOf(systemName.substring(2)).intValue();
         t = new LnTurnout(addr);
         t.setUserName(userName);
-        
+
         _tsys.put(systemName, t);
         if (userName!=null) _tuser.put(userName, t);
         t.addPropertyChangeListener(this);
-        
+
         return t;
     }
-    
+
     // ctor has to register for LocoNet events
     public LnTurnoutManager() {
-        LnTrafficController.instance().addLocoNetListener(~0, this);
+        if (LnTrafficController.instance() != null)
+            LnTrafficController.instance().addLocoNetListener(~0, this);
+        else
+            log.error("No layout connection, turnout manager can't function");
     }
-    
+
     // listen for turnouts, creating them as needed
     public void message(LocoNetMessage l) {
         // parse message type
@@ -90,14 +93,14 @@ public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements Loc
             putBySystemName(t);
         }
     }
-    
+
     private int address(int a1, int a2) {
         // the "+ 1" in the following converts to throttle-visible numbering
         return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1);
     }
-    
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnTurnoutManager.class.getName());
-    
+
 }
 
 
