@@ -112,6 +112,11 @@ public class LocoBufferFrame extends javax.swing.JFrame {
 			if (jmri.InstanceManager.programmerInstance() == null) 
 				jmri.jmrix.loconet.SlotManager.instance();
 				
+			// If a jmri.PowerManager instance doesn't exist, create a 
+			// loconet.LnPowerManager to do that
+			if (jmri.InstanceManager.powerManagerInstance() == null) 
+				jmri.InstanceManager.setPowerManager(new jmri.jmrix.loconet.LnPowerManager());
+
 			// start operation
 			// sourceThread = new Thread(p);
 			// sourceThread.start();
