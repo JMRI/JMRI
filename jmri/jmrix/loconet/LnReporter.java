@@ -28,7 +28,7 @@ import jmri.AbstractReporter;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
  
  public class LnReporter extends AbstractReporter implements LocoNetListener {
@@ -80,7 +80,7 @@ import jmri.AbstractReporter;
 	 * the numeric locomotive address last seen, unless the last 
 	 * message said the loco was exiting. Note that there may still some
 	 * other locomotive in the transponding zone!
-	 * @returns -1 if the last message specified exiting
+	 * @return -1 if the last message specified exiting
 	 */
 	 public int getState() {
 	 	return lastLoco;

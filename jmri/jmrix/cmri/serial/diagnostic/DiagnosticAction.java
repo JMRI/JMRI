@@ -15,7 +15,7 @@ import jmri.jmrix.cmri.serial.SerialSensorManager;
  *       			DiagnosticFrame object
  *
  * @author                  Dave Duchamp Copyright (C) 2004
- * @version
+ * @version	$Revision: 1.7 $
  */
 public class DiagnosticAction 	extends AbstractAction {
 
