@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a locomotive roster -->
-<!-- $Id: roster-config.dtd,v 1.5 2002-07-11 14:16:17 jacobsen Exp $ -->
+<!-- $Id: roster-config.dtd,v 1.6 2003-05-31 05:15:15 jacobsen Exp $ -->
 
 <!ELEMENT roster-config (roster*)>
 
@@ -14,10 +14,11 @@
 <!ATTLIST locomotive id	CDATA #REQUIRED>          
 
 <!-- The whole point of this is to identify a definition file, based at prefs/roster/ -->
-<!ATTLIST locomotive fileName	CDATA #REQUIRED>          
+<!ATTLIST locomotive fileName	CDATA #REQUIRED>  
+<!ATTLIST locomotive groupName  CDATA #IMPLIED>        
 
 <!-- The identification attributes must be kept the same as the ones in the locomotive DTD -->
-<!-- That copy is used if we have to import an existing file into a roster -->
+<!-- The copy in the locomotive file is used if we have to import an existing file into a roster -->
 
 <!-- Manual identification -->
 <!ATTLIST locomotive id			CDATA #REQUIRED>          
