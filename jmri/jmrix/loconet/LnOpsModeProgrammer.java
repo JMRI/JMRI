@@ -11,7 +11,7 @@ import jmri.*;
  * SlotManager object.
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class LnOpsModeProgrammer implements Programmer  {
 
@@ -45,11 +45,11 @@ public class LnOpsModeProgrammer implements Programmer  {
     }
 
     public int  getMode() {
-        return mSlotMgr.getMode();
+        return Programmer.OPSBYTEMODE;
     }
 
     public boolean hasMode(int mode) {
-        return mSlotMgr.hasMode(mode);
+        return (mode==Programmer.OPSBYTEMODE);
     }
 
     /**
