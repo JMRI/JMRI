@@ -9,7 +9,7 @@ import jmri.jmrix.AbstractThrottle;
  * An implementation of DccThrottle with code specific to a 
  * XpressnetNet connection.
  */
-public class XNetThrottle extends AbstractThrottle
+public class XNetThrottle extends AbstractThrottle implements XNetListener
 {
     private float speedSetting;
     private float speedIncrement;
@@ -23,6 +23,7 @@ public class XNetThrottle extends AbstractThrottle
     public XNetThrottle()
     {
        super();
+       XNetTrafficController.instance().addXNetListener(~0, this);
        log.error("XnetThrottle constructor");
     }
 
@@ -46,7 +47,7 @@ public class XNetThrottle extends AbstractThrottle
        msg.setElement(4,10);// for now, we just turn on FO
        msg.setParity(); // Set the parity bit
        // now, we send the message to the command station
-       //XNetTrafficController.instance().sendXNetMessage(msg,this);
+       XNetTrafficController.instance().sendXNetMessage(msg,this);
     }
 
     /**
@@ -307,6 +308,22 @@ public class XNetThrottle extends AbstractThrottle
     {
         return speedIncrement;
     }
+
+    // implementing classes will typically have a function/listener to get
+    // updates from the layout, which will then call
+    //          public void firePropertyChange(String propertyName,
+    //                                                                         
+    //                                                                         
+    // _once_ if anything has changed state (or set the commanded state directly
+    public void message(XNetMessage l) {
+        // check validity & addressing
+        if (XNetTrafficController.instance()
+            .getCommandStation()
+            .getThrottleMsgAddr(l) != address) return;
+        // is for this object, parse message type
+        log.error("message function invoked, but not yet prepared");
+    }
+
 
     // information on consisting  (how do we set consisting?)
 

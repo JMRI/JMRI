@@ -13,7 +13,7 @@ import java.util.Iterator;
 /**
  * XNet implementation of a ThrottleManager
  */
-public class XNetThrottleManager implements ThrottleManager
+public class XNetThrottleManager implements ThrottleManager,XNetListener
 {
     private HashMap throttleListeners;
     private HashMap throttleMap;
@@ -26,7 +26,7 @@ public class XNetThrottleManager implements ThrottleManager
     public XNetThrottleManager()
     {
        super();
-       log.error("XNetThrottleManger constructor");
+       XNetTrafficController.instance().addXNetListener(~0, this);
     }
 
 
@@ -117,6 +117,23 @@ public class XNetThrottleManager implements ThrottleManager
         }
         return functionButtonEditor;
     }
+
+    // implementing classes will typically have a function/listener to get
+    // updates from the layout, which will then call
+    //          public void firePropertyChange(String propertyName,
+    //
+    // 
+    // _once_ if anything has changed state (or set the commanded state directly
+    public void message(XNetMessage l) {
+        // check validity & addressing  
+        //if (XNetTrafficController.instance()
+        //    .getCommandStation()
+        //    .getThrottleMsgAddr(l) != address) return;
+        // is for this object, parse message type
+        //log.error("message function invoked, but not yet prepared");
+    }
+
+
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetThrottleManager.class.getName());
 

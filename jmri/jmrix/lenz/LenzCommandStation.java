@@ -9,7 +9,7 @@ package jmri.jmrix.lenz;
  * Defines standard operations for Dcc command stations.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
     
@@ -77,12 +77,37 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
         }
         else return -1;
     }
-    
+
     /**
      * Is this a command to change turnout state?
      */
     public boolean isTurnoutCommand(XNetMessage pMsg) {
         return pMsg.getOpCode()==0x05;
+    }
+    /**
+     * If this is a throttle-type message, return address. Otherwise
+     * return -1.
+     * Note we only identify the command now; the reponse to a
+     * request for status is not yet seen here.
+     */
+    public int getThrottleMsgAddr(XNetMessage pMsg) {
+        if (isThrottleCommand(pMsg)) {
+            int a1 = pMsg.getElement(3);
+            int a2 = pMsg.getElement(4);
+            return (((a1 & 0xff) * 4) + (a2 & 0x6)/2 + 1);
+        }
+        else return -1;
+    }
+    
+    /**
+     * Is this a throttle message?
+     */
+    public boolean isThrottleCommand(XNetMessage pMsg) {
+        int message=pMsg.getOpCode();
+        if( message==0x83 || message==0x84 || message==0xA3 || 
+            message == 0xA4 ||message == 0xE2 || message == 0xE3 || 
+           message == 0xE3) return true;
+        return false;
     }
     
     // start of programming messages
