@@ -1,6 +1,6 @@
 <!-- Special build file for doing Java 1.1.8 compatibility tests -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.8 $ -->
+<!-- Revision $Revision: 1.9 $ -->
 
 <project name="JMRI" default="check" basedir=".">
 
@@ -78,17 +78,19 @@
     <!-- Compile the java code from ${files} -->
     <javac srcdir="${source}" 
            destdir="${target}" 
-           includes="jmri/util/StringUtil.java, 
-                 jmri/util/FontUtil.java,
+           includes="
                  jmri/util/FileUtil.java,
+                 jmri/util/FontUtil.java,
                  jmri/util/JmriJFrame.java,
-                 jmri/util/JTreeUtil.java,
-                 jmri/util/LocaleUtil.java,
                  jmri/util/JTabbedPaneUtil.java,
                  jmri/util/JTableUtil.java,
-                 jmri/util/SwingUtil.java,
-                 jmri/util/com/sun/TableSorter.java,
-                 jmri/util/PythonInterp.java"
+                 jmri/util/JTreeUtil.java,
+                 jmri/util/LocaleUtil.java,
+                 jmri/util/PythonInterp.java,
+                 jmri/util/RuntimeUtil.java, 
+                 jmri/util/StringUtil.java, 
+                 jmri/util/SwingUtil.java, 
+                 jmri/util/com/sun/TableSorter.java"
            target="1.1" 
            debug="yes" >
        <classpath refid="project.class.path"    />
