@@ -15,12 +15,20 @@ import jmri.jmrix.lenz.*;
  *                 Track Voltage 
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 2.3 $
+ * @version			$Revision: 2.4 $
  */
-public class LZV100Frame extends JFrame implements XNetListener {
+public class LZV100Frame extends jmri.util.JmriJFrame implements XNetListener {
 
 
     private boolean autoMode = false; // Holds Auto/Manual Startup Mode.
+
+    private int resetMode=0; // hold the reset mode;
+    static final private int IDLE = 0;
+    static final private int ONSENT = 1;
+    static final private int OFFSENT = 2;
+
+    private int sendCount=0; // count the number of times the on/off 
+			      // sequence for F4 has been sent durring a reset
 
     public LZV100Frame() {
         super("LZV100 Configuration Utility");
@@ -223,7 +231,37 @@ public class LZV100Frame extends JFrame implements XNetListener {
     // listen for responses from the LZV100
     synchronized public void message(XNetReply l) {
        if(l.isOkMessage()) {
-	  /* this was an "OK" message*/
+	  /* this was an "OK" message
+	     We're only paying attention to it if we're 
+	     resetting the command station 
+           */
+	  if(resetMode==OFFSENT) {
+            XNetMessage msgon=new XNetMessage(6);
+            msgon.setElement(0,XNetConstants.LOCO_OPER_REQ);
+            msgon.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP1);
+            msgon.setElement(2,0); // set to the upper byte of the DCC address
+      	    msgon.setElement(3,0);   // set to the lower byte of the DCC address
+      	    msgon.setElement(4,0x08);
+      	    msgon.setParity(); // Set the parity bit
+	    sendCount--;
+	    resetMode=ONSENT;
+	    XNetTrafficController.instance().sendXNetMessage(msgon,this);
+	  } else if(resetMode==ONSENT) {
+      	    XNetMessage msgoff=new XNetMessage(6);
+      	    msgoff.setElement(0,XNetConstants.LOCO_OPER_REQ);
+      	    msgoff.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP1);
+      	    msgoff.setElement(2,0); // set to the upper byte of the DCC address
+      	    msgoff.setElement(3,0); // set to the lower byte of the DCC address
+            msgoff.setElement(4,0x00);
+            msgoff.setParity(); // Set the parity bit
+	    if(sendCount>=0)
+	    	resetMode=OFFSENT;
+	    else {
+		resetMode=IDLE;
+		resetCSButton.setEnabled(true);
+	    }
+	    XNetTrafficController.instance().sendXNetMessage(msgoff,this);
+	  }
        } else if (l.getElement(0) == XNetConstants.CS_REQUEST_RESPONSE &&
                   l.getElement(1) == XNetConstants.CS_STATUS_RESPONSE) {
                 int statusByte=l.getElement(2); 
@@ -252,14 +290,21 @@ public class LZV100Frame extends JFrame implements XNetListener {
 
     // reset the command station to factory defaults
     void resetLZV100CS() {
+      resetCSButton.setEnabled(false);
       // the Command station is reset by sending F4 25 times for address 00
-      XNetThrottle zerothrottle=new XNetThrottle(0);
-      zerothrottle.setSpeedSetting(0);
-      for (int i=0;i<25;i++)
-      {
-        zerothrottle.setF4(true);
-      }
-      zerothrottle.dispose();
+
+      XNetMessage msgon=new XNetMessage(6);
+      msgon.setElement(0,XNetConstants.LOCO_OPER_REQ);
+      msgon.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP1);
+      msgon.setElement(2,0);   // set to the upper byte of the DCC address
+      msgon.setElement(3,0);   // set to the lower byte of the DCC address
+      msgon.setElement(4,0x08);
+      msgon.setParity(); // Set the parity bit
+
+      resetMode = ONSENT;
+      sendCount = 25;
+
+      XNetTrafficController.instance().sendXNetMessage(msgon,this);
     }
 
     // get the current automatic/manual mode
