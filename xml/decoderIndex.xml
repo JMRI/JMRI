@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
-<!-- $Id: decoderIndex.xml,v 1.33 2002-10-25 16:06:38 jacobsen Exp $ -->
-
 <decoderIndex-config>
-  <decoderIndex version="41">
+  <decoderIndex version="44">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -50,6 +48,41 @@
       </family>
       <family name="AD4" mfg="CVP Products" lowVersionID="40" highVersionID="65" type="stationary" file="CVProducts_AD4.xml" />
       <family name="Series 3 with FX3, silent, readback" mfg="Digitrax" lowVersionID="49" highVersionID="49" type="locomotive" file="Digitrax_01x3.xml">
+        <model model="DH163" numOuts="6" numFns="12">
+          <output name="4" label="Violet" />
+          <output name="5" label="Pad" />
+          <output name="6" label="Pad" />
+        </model>
+        <model model="DH163AT" numOuts="6" numFns="12">
+          <output name="4" label="Violet" />
+          <output name="5" label="Pad" />
+          <output name="6" label="Pad" />
+        </model>
+        <model model="DH163A0" numOuts="6" numFns="12">
+          <output name="4" label="Violet" />
+          <output name="5" label="Pad" />
+          <output name="6" label="Pad" />
+        </model>
+        <model model="DH163D" numOuts="6" numFns="12">
+          <output name="4" label="Violet" />
+          <output name="5" label="Pad" />
+          <output name="6" label="Pad" />
+        </model>
+        <model model="DH163IP" numOuts="6" numFns="12">
+          <output name="4" label="Violet" />
+          <output name="5" label="Pad" />
+          <output name="6" label="Pad" />
+        </model>
+        <model model="DH163K0" numOuts="6" numFns="12">
+          <output name="4" label="Violet" />
+          <output name="5" label="Pad" />
+          <output name="6" label="Pad" />
+        </model>
+        <model model="DH163L0" numOuts="6" numFns="12">
+          <output name="4" label="Violet" />
+          <output name="5" label="Pad" />
+          <output name="6" label="Pad" />
+        </model>
         <model model="DH163P" numOuts="6" numFns="12">
           <output name="4" label="Violet" />
           <output name="5" label="Pad" />
@@ -71,7 +104,27 @@
           <output name="4" label="Violet" />
           <output name="5" label="Pad" />
         </model>
+        <model model="DN163K0A" numOuts="4" numFns="12">
+          <output name="4" label="Violet" />
+          <output name="5" label="Pad" />
+        </model>
+        <model model="DN163M0" numOuts="4" numFns="12">
+          <output name="4" label="Violet" />
+          <output name="5" label="Pad" />
+        </model>
+        <model model="DN163A0" numOuts="4" numFns="12">
+          <output name="4" label="Violet" />
+          <output name="5" label="Pad" />
+        </model>
+        <model model="DN163A1" numOuts="4" numFns="12">
+          <output name="4" label="Violet" />
+          <output name="5" label="Pad" />
+        </model>
         <model model="DZ143" numOuts="4" numFns="12">
+          <output name="4" label="Violet" />
+          <output name="5" label="Pad" />
+        </model>
+        <model model="DZ143PS" numOuts="4" numFns="12">
           <output name="4" label="Violet" />
           <output name="5" label="Pad" />
         </model>
@@ -328,6 +381,18 @@
           <!-- The four electrical outputs are front headlight, back -->
           <!-- headlight, FX1, FX2 -->
         </model>
+        <model model="AT100LC/KT100LC Diesel" numOuts="2" numFns="8">
+          <versionCV lowVersionID="35" />
+          <output name="Horn" />
+          <output name="Bell" />
+          <!--output name="3" label="FX1/grn" /-->
+          <!--output name="4" label="FX2/brwn" /-->
+          <output name="DynBrake" />
+          <output name="RPM+" />
+          <output name="RPM-" />
+          <output name="Dim" />
+          <output name="Mute" />
+        </model>
       </family>
       <family name="LC steam decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_LC_Steam.xml">
         <model model="100LC Steam" numOuts="2" numFns="8">
@@ -372,18 +437,6 @@
           <versionCV lowVersionID="36" />
           <output name="Horn" />
           <output name="Bell" />
-          <output name="DynBrake" />
-          <output name="RPM+" />
-          <output name="RPM-" />
-          <output name="Dim" />
-          <output name="Mute" />
-        </model>
-        <model model="AT100LC/KT100LC Diesel" numOuts="2" numFns="8">
-          <versionCV lowVersionID="35" />
-          <output name="Horn" />
-          <output name="Bell" />
-          <!--output name="3" label="FX1/grn" /-->
-          <!--output name="4" label="FX2/brwn" /-->
           <output name="DynBrake" />
           <output name="RPM+" />
           <output name="RPM-" />
