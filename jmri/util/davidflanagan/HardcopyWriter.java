@@ -4,6 +4,7 @@ package jmri.util.davidflanagan;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.*;
 import java.io.*;
 import java.text.*;
 import java.util.*;
@@ -13,7 +14,7 @@ import java.util.*;
  * David Flanagan with the alligator on the front.
  *
  * @author		David Flanagan
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class HardcopyWriter extends Writer {
 
@@ -209,6 +210,23 @@ public class HardcopyWriter extends Writer {
 
         // set basic font
         page.setFont(font);
+    }
+
+    /**
+     * Write a graphic to the printout.
+     * <P>This was not in the
+     * original class, but was added afterwards by Bob Jacobsen.
+     * <P> The image is positioned on the right side of the paper,
+     * at the current height.
+     */
+    public void write(Image c, Component i) {
+        // if we haven't begun a new page, do that now
+        if (page == null) newpage();
+
+        int x = x0+width-c.getWidth(null);
+        int y = y0+(linenum*lineheight) + lineascent;
+
+        page.drawImage(c, x, y, null);
     }
 
     public static class PrintCanceledException extends Exception {
