@@ -14,7 +14,7 @@ import jmri.InstanceManager;
  * A JFrame to contain throttle elements such as speed control, address chooser,
  * function panel, and maybe others.
  * <p>
- * This class creates a DccThrottle and calls methods in that object as
+ * This class requests a DccThrottle and calls methods in that object as
  * directed by the interface.
  *
  * @author			Glen Oberhauser
@@ -45,7 +45,7 @@ public class ThrottleFrame extends JFrame
         JDesktopPane desktop = new JDesktopPane();
         this.setContentPane(desktop);
 
-        controlPanel = new ControlPanel(0, 1, 128, true);
+        controlPanel = new ControlPanel();
         controlPanel.setControlPanelListener(this);
         controlPanel.setResizable(true);
         controlPanel.setClosable(true);
@@ -92,6 +92,27 @@ public class ThrottleFrame extends JFrame
         }
     }
 
+    private void initializeGUIFromThrottle()
+    {
+        controlPanel.setIsForward(throttle.getIsForward());
+        controlPanel.setSpeedValues((int)throttle.getSpeedIncrement(),
+                                    (int)throttle.getSpeedSetting());
+        boolean [] functionStates = new boolean[FunctionPanel.NUM_FUNCTION_BUTTONS];
+        functionStates[0] = throttle.getF0();
+        functionStates[1] = throttle.getF1();
+        functionStates[2] = throttle.getF2();
+        functionStates[3] = throttle.getF3();
+        functionStates[4] = throttle.getF4();
+        functionStates[5] = throttle.getF5();
+        functionStates[6] = throttle.getF6();
+        functionStates[7] = throttle.getF7();
+        functionStates[8] = throttle.getF8();
+        functionStates[9] = false; // No F9?
+        functionPanel.setFunctionStates(functionStates);
+
+        controlPanel.setEnabled(true);
+        functionPanel.setEnabled(true);
+    }
 
     /**
      * Get notification that a throttle has been found as we requested.
@@ -100,8 +121,7 @@ public class ThrottleFrame extends JFrame
     public void notifyThrottleFound(DccThrottle t)
     {
         this.throttle = t;
-        controlPanel.setEnabled(true);
-        functionPanel.setEnabled(true);
+        initializeGUIFromThrottle();
     }
 
     /**

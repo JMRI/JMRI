@@ -7,7 +7,7 @@ public class FunctionPanel extends JInternalFrame
 {
     //private FunctionListener listener;
     private FunctionButton functionButton[];
-    private static final int NUM_FUNCTION_BUTTONS = 10;
+    public static final int NUM_FUNCTION_BUTTONS = 10;
 
     public FunctionPanel()
     {
@@ -21,6 +21,15 @@ public class FunctionPanel extends JInternalFrame
         {
             functionButton[i].setEnabled(isEnabled);
         }
+    }
+
+    public void setFunctionStates(boolean [] states )
+    {
+        for (int i=0; i < NUM_FUNCTION_BUTTONS; i++)
+        {
+            functionButton[i].setState(states[i]);
+        }
+
     }
 
     private void initGUI()

@@ -16,6 +16,11 @@ public class FunctionButton extends JButton implements ActionListener
         this.addActionListener(this);
     }
 
+    public void setState(boolean isOn)
+    {
+        this.isOn = isOn;
+    }
+
     public void actionPerformed(ActionEvent e)
     {
         isOn = !isOn;

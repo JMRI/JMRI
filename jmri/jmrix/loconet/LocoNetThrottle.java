@@ -12,8 +12,8 @@ public class LocoNetThrottle implements DccThrottle
     private int address;
     private boolean isForward;
     private boolean f0, f1, f2, f3, f4, f5, f6, f7, f8;
-    private LocoNetSlot slot;
 
+    private LocoNetSlot slot;
     private LocoNetInterface network;
 
     /**
@@ -29,6 +29,30 @@ public class LocoNetThrottle implements DccThrottle
         msg.setElement(1, slot.getSlot());
         msg.setElement(2, slot.getSlot());
         network.sendLocoNetMessage(msg);
+
+        // cache settings
+        this.speedSetting = slot.speed();
+        this.f0           = slot.isF0();
+        this.f1           = slot.isF1();
+        this.f2           = slot.isF2();
+        this.f3           = slot.isF3();
+        this.f4           = slot.isF4();
+        this.f5           = slot.isF5();
+        this.f6           = slot.isF6();
+        this.f7           = slot.isF7();
+        this.f8           = slot.isF8();
+        this.address      = slot.locoAddr();
+        this.isForward    = slot.isForward();
+
+        switch(slot.decoderType())
+        {
+            case LnConstants.DEC_MODE_128:
+            case LnConstants.DEC_MODE_128A: this.speedIncrement = 1; break;
+            case LnConstants.DEC_MODE_28:
+            case LnConstants.DEC_MODE_28A:
+            case LnConstants.DEC_MODE_28TRI: this.speedIncrement = 4; break;
+            case LnConstants.DEC_MODE_14: this.speedIncrement = 8; break;
+        }
     }
 
 

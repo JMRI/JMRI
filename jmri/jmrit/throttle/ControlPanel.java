@@ -11,15 +11,16 @@ public class ControlPanel extends JInternalFrame
     private JSlider speedSlider;
     private JRadioButton forwardButton, reverseButton;
     private JButton stopButton;
+    private int speedIncrement;
 
-    public ControlPanel(int initialSpeed, int speedIncrement,
-                        int maxSpeed, boolean isForward)
+    private static int MAX_SPEED = 127; //TODO: correct always?
+
+    public ControlPanel()
     {
-        speedSlider = new JSlider(0, maxSpeed/speedIncrement, initialSpeed);
+        speedSlider = new JSlider(0, MAX_SPEED);
+        speedSlider.setValue(0);
         forwardButton = new JRadioButton("Forward");
         reverseButton = new JRadioButton("Reverse");
-        forwardButton.setSelected(isForward);
-        reverseButton.setSelected(!isForward);
 
         initGUI();
     }
@@ -31,6 +32,18 @@ public class ControlPanel extends JInternalFrame
         reverseButton.setEnabled(isEnabled);
         stopButton.setEnabled(isEnabled);
         speedSlider.setEnabled(isEnabled);
+    }
+
+    public void setIsForward(boolean isForward)
+    {
+        forwardButton.setSelected(isForward);
+        reverseButton.setSelected(!isForward);
+    }
+
+    public void setSpeedValues(int speedIncrement, int speed)
+    {
+        this.speedIncrement = speedIncrement;
+        speedSlider.setValue(speed*speedIncrement);
     }
 
     private void initGUI()
