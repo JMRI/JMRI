@@ -22,11 +22,15 @@ public class JMRIdemo extends JPanel {
         menuBar = new JMenuBar();
         menuBar.setBorder(new BevelBorder(BevelBorder.RAISED));
         
+    // load preferences
+    	jmri.apps.JmriDemoConfigAction prefs 
+    				= new jmri.apps.JmriDemoConfigAction("Preferences...");
+
 	// populate GUI
         // create text box for advice
         JLabel helpLabel1 = new JLabel();
 		add(helpLabel1, BorderLayout.NORTH);     
-		helpLabel1.setText("Pick an input source from the left menu first");
+		helpLabel1.setText("Pick an input source from the input menu first");
 			
         // Create menu categories and add to the menu bar, add actions to menus
         JMenu inputMenu = new JMenu("Input");
@@ -43,22 +47,26 @@ public class JMRIdemo extends JPanel {
     				}
         		});
 
+        JMenu editMenu = new JMenu("Edit");
+        menuBar.add(editMenu);
+	        editMenu.add(prefs);
+
+
         JMenu funcMenu = new JMenu("Tools");
         menuBar.add(funcMenu);
 	        funcMenu.add(new jmri.jmrit.simpleprog.SimpleProgAction("Simple Programmer"));
+	        funcMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction("Decoder Pro programmer"));
 	        funcMenu.add(new jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlAction("Turnout Control"));
 	        funcMenu.add(new jmri.jmrit.powerpanel.PowerPanelAction("Power Control"));
-	        funcMenu.add(new jmri.jmrit.XmlFileCheckAction("Check XML File", this));
-	        funcMenu.add(new jmri.jmrit.NameCheckAction("Check decoder names", this));
-	        funcMenu.add(new jmri.jmrit.tabbedframe.ProgCheckAction("Check programmer names", this));
-	        funcMenu.add(new jmri.jmrit.decoderdefn.DecoderIndexCreateAction("Create decoder index"));
 
         JMenu locoMenu = new JMenu("LocoNet");
         menuBar.add(locoMenu);
 	        locoMenu.add(new jmri.jmrix.loconet.locomon.LocoMonAction("LocoNet Monitor"));
     	    locoMenu.add(new jmri.jmrix.loconet.slotmon.SlotMonAction("Slot Monitor"));
         	locoMenu.add(new jmri.jmrix.loconet.locogen.LocoGenAction("Send Packet"));
-        	locoMenu.add(new jmri.jmrix.loconet.locoio.LocoIOAction("LocoIO programmer"));
+        	
+        	// temporarily remove this one
+        	//locoMenu.add(locoio = new jmri.jmrix.loconet.locoio.LocoIOAction("LocoIO programmer"));
 
         JMenu nceMenu = new JMenu("NCE");
         menuBar.add(nceMenu);
@@ -69,13 +77,10 @@ public class JMRIdemo extends JPanel {
         menuBar.add(devMenu);
 	        devMenu.add(new jmri.jmrit.MemoryFrameAction("Memory usage monitor"));
 	        // devMenu.add(new jmri.jmrit.symbolicprog.symbolicframe.SymbolicProgAction("Symbolic Programmer"));
-	        devMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction("Decoder Pro programmer"));
-	        devMenu.add(new AbstractAction("Look & Feel") {
-	        		public void actionPerformed(ActionEvent e) {
-	        			JFrame f = new com.apple.samplecode.swaplaf.SwapLAF();
-	        			f.show();
-	        		}
-	        	});
+	        devMenu.add(new jmri.jmrit.XmlFileCheckAction("Check XML File", this));
+	        devMenu.add(new jmri.jmrit.NameCheckAction("Check decoder names", this));
+	        devMenu.add(new jmri.jmrit.tabbedframe.ProgCheckAction("Check programmer names", this));
+	        devMenu.add(new jmri.jmrit.decoderdefn.DecoderIndexCreateAction("Create decoder index"));
 	}
 
 	// Main entry point
@@ -103,7 +108,13 @@ public class JMRIdemo extends JPanel {
         frame.getContentPane().add(containedPane);
         frame.pack();
         frame.setVisible(true);
+		log.info("JMRIdemo main initialization done");
+		
+		// for debugging, start the LocoIO programmer always
+		//locoio.actionPerformed(null);
     }
+	
+	static Action locoio = null;
 	
 	// GUI members
     private JMenuBar menuBar;	

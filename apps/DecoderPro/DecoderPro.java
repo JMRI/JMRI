@@ -12,7 +12,7 @@ import BasicWindowMonitor;
  * DecoderPro application. 
  *
  * @author			Bob Jacobsen
- * @version			$Id: DecoderPro.java,v 1.8 2002-02-04 07:35:13 jacobsen Exp $
+ * @version			$Id: DecoderPro.java,v 1.9 2002-02-20 07:33:46 jacobsen Exp $
  */
 public class DecoderPro extends JPanel {
 	public DecoderPro() {
@@ -90,6 +90,7 @@ public class DecoderPro extends JPanel {
 		q1.addActionListener(quit);
 		q1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 		add(q1);
+
 	}
 
 	// Main entry point
@@ -110,12 +111,17 @@ public class DecoderPro extends JPanel {
 		log.info("DecoderPro starts");
 		    		
     	// create the demo frame and menus
-        DecoderPro containedPane = new DecoderPro();
-        JFrame frame = new JFrame("DecoderPro");
+        DecoderPro pane = new DecoderPro();
+        JFrame frame = new JFrame("Decoder Pro");
         frame.addWindowListener(new BasicWindowMonitor());
-        frame.setJMenuBar(containedPane.menuBar);
-        frame.getContentPane().add(containedPane);
-        frame.pack();
+        frame.setJMenuBar(pane.menuBar);
+        frame.getContentPane().add(pane);
+		// pack and center this frame
+      	frame.pack();
+ 		Dimension screen = pane.getToolkit().getScreenSize();
+ 		Dimension size = frame.getSize();
+ 		frame.setLocation((screen.width-size.width)/2,(screen.height-size.height)/2);
+ 		
         frame.setVisible(true);
     }
 	

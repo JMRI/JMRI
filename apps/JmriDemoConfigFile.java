@@ -1,4 +1,4 @@
-// DecoderProConfigFile.java
+// JmriDemoConfigFile.java
 
 package jmri.apps;
 
@@ -12,13 +12,13 @@ import org.jdom.output.*;
 
 /** 
  * Represents and manipulates the preferences information for the
- * DecoderPro application. Works with the DecoderProConfigFrame
+ * JmriDemo application. Works with the JmriDemoConfigFrame
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version		 	$Id: DecoderProConfigFile.java,v 1.5 2002-02-20 07:33:46 jacobsen Exp $
- * @see jmri.apps.DecodeProConfigFrame
+ * @version		 	$Id: JmriDemoConfigFile.java,v 1.1 2002-02-20 07:33:45 jacobsen Exp $
+ * @see jmri.apps.AbstractConfigFrame
  */
-public class DecoderProConfigFile extends jmri.apps.AbstractConfigFile {
+public class JmriDemoConfigFile extends jmri.apps.AbstractConfigFile {
 	
 	public void writeFile(String name, AbstractConfigFrame f) {
 		try {
@@ -57,8 +57,11 @@ public class DecoderProConfigFile extends jmri.apps.AbstractConfigFile {
 		}
 	}
 
-	protected String configFileName() { return "DecoderProConfig.xml";}
+	protected String configFileName() { return "JmriDemoConfig.xml";}
 
 	public String defaultConfigFilename() { return configFileName();}
 
+	// initialize logging	
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(JmriDemoConfigFile.class.getName());
+		
 }
