@@ -15,7 +15,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class DefaultRouteManagerXml implements XmlAdapter {
 
@@ -191,6 +191,9 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                                                         .getAttribute("systemName").getValue());
                     }
                 }
+            // and start it working
+            r.activateRoute();
+            
             }
             else {
                 log.error ("failed to create Route: "+sysName);
