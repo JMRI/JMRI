@@ -11,7 +11,8 @@ import jmri.jmrix.loconet.LocoNetSlot;
 import jmri.jmrix.loconet.SlotListener;
 import jmri.jmrix.loconet.SlotManager;
 
-import javax.swing.JButton;
+import javax.swing.*;
+import java.awt.event.*;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
@@ -20,7 +21,7 @@ import javax.swing.table.TableColumnModel;
 /**
  * Table data model for display of slot manager contents
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version		$Revision: 1.11 $
+ * @version		$Revision: 1.12 $
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener  {
 
@@ -312,15 +313,32 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         setColumnToHoldButton(slotTable, SlotMonDataModel.DISPCOLUMN);
 
         // install a button renderer & editor in the "ESTOP" column for stopping a loco
-        setColumnToHoldButton(slotTable, SlotMonDataModel.ESTOPCOLUMN);
+        setColumnToHoldEStopButton(slotTable, SlotMonDataModel.ESTOPCOLUMN);
     }
 
     void setColumnToHoldButton(JTable slotTable, int column) {
         TableColumnModel tcm = slotTable.getColumnModel();
-        // install a button renderer & editor
+        // install the button renderers & editors in this column
         ButtonRenderer buttonRenderer = new ButtonRenderer();
         tcm.getColumn(column).setCellRenderer(buttonRenderer);
         TableCellEditor buttonEditor = new ButtonEditor(new JButton());
+        tcm.getColumn(column).setCellEditor(buttonEditor);
+        // ensure the table rows, columns have enough room for buttons
+        slotTable.setRowHeight(new JButton("  "+getValueAt(1, column)).getPreferredSize().height);
+        slotTable.getColumnModel().getColumn(column)
+			.setPreferredWidth(new JButton("  "+getValueAt(1, column)).getPreferredSize().width);
+    }
+
+    void setColumnToHoldEStopButton(JTable slotTable, int column) {
+        TableColumnModel tcm = slotTable.getColumnModel();
+        // install the button renderers & editors in this column
+        ButtonRenderer buttonRenderer = new ButtonRenderer();
+        tcm.getColumn(column).setCellRenderer(buttonRenderer);
+        TableCellEditor buttonEditor = new ButtonEditor(new JButton()){
+            public void mousePressed(MouseEvent e) {
+                stopCellEditing();
+            }
+        };
         tcm.getColumn(column).setCellEditor(buttonEditor);
         // ensure the table rows, columns have enough room for buttons
         slotTable.setRowHeight(new JButton("  "+getValueAt(1, column)).getPreferredSize().height);
