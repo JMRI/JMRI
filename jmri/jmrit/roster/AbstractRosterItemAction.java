@@ -18,7 +18,7 @@ import com.sun.java.util.collections.List;
  * Base class for Actions to copy, export and import RosterEntrys
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  * @see             jmri.jmrit.XmlFile
  */
 abstract public class AbstractRosterItemAction extends AbstractAction {
@@ -68,7 +68,7 @@ abstract public class AbstractRosterItemAction extends AbstractAction {
 		// create a dialog to select the roster entry to copy
         JComboBox selections = roster.matchingComboBox(null, null, null, null, null, null, null);
         int retval = JOptionPane.showOptionDialog(mParent,
-                        "Select one roster entry to copy", "Select roster entry",
+                        "Select one roster entry", "Select roster entry",
                         0, JOptionPane.INFORMATION_MESSAGE, null,
                         new Object[]{"Cancel", "OK", selections}, null );
         log.debug("Dialog value "+retval+" selected "+selections.getSelectedIndex()+":\""
@@ -102,8 +102,9 @@ abstract public class AbstractRosterItemAction extends AbstractAction {
         return true;
     }
 
+    javax.swing.JFileChooser fileChooser = new JFileChooser(jmri.jmrit.XmlFile.prefsDir());
+
     boolean selectNewFromFile() {
-    	javax.swing.JFileChooser fileChooser = new JFileChooser(" ");
 		int retVal = fileChooser.showOpenDialog(mParent);
 
 		// handle selection or cancel
@@ -118,7 +119,6 @@ abstract public class AbstractRosterItemAction extends AbstractAction {
     }
 
     boolean selectNewToFile() {
-    	javax.swing.JFileChooser fileChooser = new JFileChooser(" ");
         fileChooser.setSelectedFile(new File(mFromFilename));
 		int retVal = fileChooser.showSaveDialog(mParent);
 
