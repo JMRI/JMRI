@@ -9,10 +9,10 @@ import javax.swing.JTextField;
 
 /**
  * Definition of objects to handle configuring  the layout connection
- * via LocoNet RMI
+ * via LocoNet RMI.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
