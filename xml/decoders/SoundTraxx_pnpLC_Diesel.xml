@@ -1,14 +1,15 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_pnpLC_Diesel.xml,v 1.6 2002-10-16 17:33:10 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_pnpLC_Diesel.xml,v 1.7 2002-10-28 03:13:48 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Robin Becker" version="7" lastUpdated="20020808"/>
+		<version author="Robin Becker" version="8" lastUpdated="20021027"/>
 
 		<!-- version 4: updates to minOut usage, function mapping -->
 		<!-- version 5: added LL100LC -->
 		<!--            removed erroneous CV19 definition, corrected VersionID -->
 		<!-- version 6: redo family name for consistency -->
 		<!-- version 7: additional models -->
+		<!-- version 8: remove Atlas/Kato to other file -->
 
 <decoder>
 	<family name="Plug&amp;Play LC diesel decoders" mfg="Throttle-Up (SoundTraxx)">
@@ -42,18 +43,6 @@
 			<versionCV lowVersionID="36"/>
 			<output name="Horn"/> 
 			<output name="Bell"/> 
-			<output name="DynBrake"/> 
-			<output name="RPM+"/> 
-			<output name="RPM-"/> 
-			<output name="Dim"/>
-			<output name="Mute"/> 
-			</model>
-		<model model="AT100LC/KT100LC Diesel" numOuts="2" numFns="8">
-			<versionCV lowVersionID="35"/>
-			<output name="Horn"/> 
-			<output name="Bell"/> 
-			<!--output name="3" label="FX1/grn" /-->
-			<!--output name="4" label="FX2/brwn" /-->
 			<output name="DynBrake"/> 
 			<output name="RPM+"/> 
 			<output name="RPM-"/> 
