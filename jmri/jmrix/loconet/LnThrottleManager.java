@@ -5,6 +5,7 @@ import jmri.ThrottleListener;
 import jmri.ThrottleManager;
 import com.sun.java.util.collections.HashMap;
 
+import jmri.jmrix.AbstractThrottleManager;
 
 /**
  * LocoNet implementation of a ThrottleManager.
@@ -14,9 +15,9 @@ import com.sun.java.util.collections.HashMap;
  *
  * @see SlotManager
  * @author		Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.15 $
+ * @version 		$Revision: 1.16 $
  */
-public class LnThrottleManager implements ThrottleManager, SlotListener {
+public class LnThrottleManager extends AbstractThrottleManager implements ThrottleManager, SlotListener {
     private SlotManager slotManager;
     private HashMap throttleListeners;
 
@@ -24,48 +25,26 @@ public class LnThrottleManager implements ThrottleManager, SlotListener {
      * Constructor. Gets a reference to the LocoNet SlotManager.
      */
     public LnThrottleManager() {
+    	super();
         slotManager = SlotManager.instance();
     }
 
-    /**
-     * Request a throttle, given a decoder address. When the decoder address
-     * is located, the ThrottleListener gets a callback via the ThrottleListener.notifyThrottleFound
-     * method.
-     * @param address The decoder address desired.
-     * @param l The ThrottleListener awaiting notification of a found throttle.
-     * @return True if the request will continue, false if the request will not
-     * be made. False may be returned if the throttle is already in use.
+	/**
+	 * LocoNet allows multiple throttles for the same device
      */
-    public boolean requestThrottle(int address, ThrottleListener l)
-    {
-        boolean throttleInUse = false;
-        if (throttleListeners == null) {
-            throttleListeners = new HashMap(5);
-        }
+	boolean singleUse() { return false; }
 
-        Integer addressKey = new Integer(address);
-        if (throttleListeners.containsKey(addressKey)) {
-            throttleInUse = true;
-        } else {
-            throttleListeners.put(addressKey, l);
-            slotManager.slotFromLocoAddress(address, this);
-        }
-        return throttleInUse;
 
-    }
-
-    /**
-     * Cancel a request for a throttle
-     * @param address The decoder address desired.
-     * @param l The ThrottleListener cancelling request for a throttle.
-     */
-    public void cancelThrottleRequest(int address, ThrottleListener l) {
-        if (throttleListeners != null) {
-            Integer addressKey = new Integer(address);
-            throttleListeners.remove(addressKey);
-        }
-
-    }
+	/** 
+	 * Start creating a Throttle object.
+	 *
+	 * This returns directly, having arranged for the Throttle
+	 * object to be delivered via callback
+	 */
+	public void requestThrottleSetup(int address) {
+    	slotManager.slotFromLocoAddress(address, this);
+	}
+	
 
     /**
      * LocoNet does have a Dispatch function
@@ -78,12 +57,8 @@ public class LnThrottleManager implements ThrottleManager, SlotListener {
      * and notifies them via the ThrottleListener.notifyThrottleFound method.
      */
     public void notifyChangedSlot(LocoNetSlot s) {
-        Integer address = new Integer(s.locoAddr());
-        ThrottleListener l = (ThrottleListener)throttleListeners.get(address);
-        if (l != null) {
-            DccThrottle throttle = new LocoNetThrottle(s);
-            l.notifyThrottleFound(throttle);
-        }
+    	DccThrottle throttle = new LocoNetThrottle(s);
+    	notifyThrottleKnown(throttle, s.locoAddr());
     }
 
 
