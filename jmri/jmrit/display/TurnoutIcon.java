@@ -6,9 +6,16 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.*;
 
 /**
- * TurnoutIcon provides a small icon to display a status of a turnout.</p>
+ * TurnoutIcon provides a small icon to display a status of a turnout.<P>
+ * This responds to only KnownState, leaving CommandedState to some other
+ * graphic representation later.
+ * <P>
+ * A click on the icon will command a state change. Specifically, it
+ * will set the CommandedState to the opposite (THROWN vs CLOSED) of
+ * the current KnownState.
+ *
  * @author Bob Jacobsen
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -81,14 +88,16 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
      * @return A state variable from a Turnout, e.g. Turnout.CLOSED
      */
     int turnoutState() {
-        if (turnout != null) return turnout.getCommandedState();
+        if (turnout != null) return turnout.getKnownState();
         else return Turnout.UNKNOWN;
     }
 
 	// update icon as state of turnout changes
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (log.isDebugEnabled()) log.debug("property change: "+e);
-		if (e.getPropertyName().equals("CommandedState")) {
+        if (log.isDebugEnabled()) log.debug("property change: "
+                                            +e.getPropertyName()
+                                            +" is now "+e.getNewValue());
+		if (e.getPropertyName().equals("KnownState")) {
             int now = ((Integer) e.getNewValue()).intValue();
              displayState(now);
 		}
@@ -143,7 +152,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
     public void mouseClicked(java.awt.event.MouseEvent e) {
         if (e.isMetaDown() || e.isAltDown() ) return;
         try {
-            if (turnout.getCommandedState()==jmri.Turnout.CLOSED)
+            if (turnout.getKnownState()==jmri.Turnout.CLOSED)
                 turnout.setCommandedState(jmri.Turnout.THROWN);
             else
                 turnout.setCommandedState(jmri.Turnout.CLOSED);
