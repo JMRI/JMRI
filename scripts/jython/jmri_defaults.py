@@ -7,7 +7,8 @@
 # a script, so changes will not take effect until after restarting
 # the program
 #
-# $Id: jmri_defaults.py,v 1.2 2004-03-05 00:36:27 jacobsen Exp $
+# The next line is maintained by CVS, please don't change it
+# $Revision: 1.3 $
 
 #define shortcuts to some managers
 import jmri

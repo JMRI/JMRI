@@ -2,6 +2,9 @@
 #
 # It listens for changes to two sensors and a turnout,
 # and then recalculates a signal aspect based on the values
+#
+# The next line is maintained by CVS, please don't change it
+# $Revision: 1.4 $
 
 import jarray
 import jmri

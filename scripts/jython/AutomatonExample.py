@@ -4,7 +4,8 @@
 # forth between them by changing its direction when a sensor
 # detects the engine
 #
-# $Revision: 1.3 $
+# The next line is maintained by CVS, please don't change it
+# $Revision: 1.4 $
 
 import jarray
 import jmri

@@ -1,5 +1,7 @@
 # start the PacketPro Java application, including main menu
-# $Id: PacketPro.py,v 1.1 2003-12-21 06:58:45 jacobsen Exp $
+#
+# The next line is maintained by CVS, please don't change it
+# $Revision: 1.2 $
 
 # Start the program
 import apps

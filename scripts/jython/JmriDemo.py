@@ -1,5 +1,8 @@
 # Python code to start a JmriDemo app, complete with menu bar
-# $Id: JmriDemo.py,v 1.1 2003-10-24 04:21:41 jacobsen Exp $
+#
+# The next line is maintained by CVS, please don't change it
+# $Revision: 1.2 $
+
 
 # start the program
 import apps

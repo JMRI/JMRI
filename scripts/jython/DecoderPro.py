@@ -1,5 +1,7 @@
 # Python code to start a DecoderPro app, complete with menu bar
-# $Id: DecoderPro.py,v 1.1 2003-10-24 04:21:50 jacobsen Exp $
+#
+# The next line is maintained by CVS, please don't change it
+# $Revision: 1.2 $
 
 # start the program
 import apps

@@ -1,5 +1,8 @@
 # example of an event listener for a JMRI class, in this case
 # a Turnout.
+#
+# The next line is maintained by CVS, please don't change it
+# $Revision: 1.2 $
 
 # First, define the listener.  This one just prints some
 # information on the change, but more complicated code is
