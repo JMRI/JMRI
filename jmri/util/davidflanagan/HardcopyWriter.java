@@ -6,13 +6,14 @@ import java.awt.*;
 import java.io.*;
 import java.text.*;
 import java.util.*;
+import javax.swing.JWindow;
 
 /**
  * This is from Chapter 12 of the O'Reilly Java book by
  * David Flanagan with the alligator on the front.
  *
  * @author		David Flanagan
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class HardcopyWriter extends Writer {
 
@@ -227,6 +228,31 @@ public class HardcopyWriter extends Writer {
         int y = y0+(linenum*lineheight) + lineascent;
 
         page.drawImage(c, x, y, (int)c.getWidth(null)*2/3, (int)c.getHeight(null)*2/3, null);
+    }
+
+    /** A Method to allow a JWindow to print itself at the current line position
+    * <P>This was not in the
+    * original class, but was added afterwards by Dennis Miller.
+    * <P>Intended to allow for a graphic printout of the speed table, but can be
+    * used to print any window
+    */
+
+    public void write(JWindow jW) {
+    // if we haven't begun a new page, do that now
+    if (page == null) newpage();
+    int x = x0;
+    int y = y0+(linenum*lineheight);
+    //shift origin to current printing position
+    page.translate(x,y);
+    //Window must be visible to print
+    jW.setVisible(true);
+    // Have the windoe print itself
+    jW.printAll(page);
+    //Make it invisible again
+    jW.setVisible(false);
+    //Get rid of the window now that it's printed and put the origin back where it was
+    jW.dispose();
+    page.translate(-x,-y);
     }
 
     /**
