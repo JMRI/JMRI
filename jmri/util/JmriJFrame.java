@@ -22,7 +22,7 @@ import java.awt.*;
  *
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class JmriJFrame extends JFrame {
@@ -38,7 +38,7 @@ public class JmriJFrame extends JFrame {
             Dimension screen = getToolkit().getScreenSize();
             return new Dimension(screen.width-(insets.right+insets.left),
                 screen.height-(insets.top+insets.bottom));
-        } catch (Exception e) {
+        } catch (NoSuchMethodError e) {
             Dimension screen = getToolkit().getScreenSize();
             return new Dimension(screen.width,
                 screen.height-45);  // approximate this...
