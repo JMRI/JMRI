@@ -31,6 +31,7 @@ public class IdentifyLocoTest extends TestCase {
 		IdentifyLoco i = new IdentifyLoco() {
 			public void message(String m) {}
 			public void done(int i) {}
+			public void error() {}
 		};
 		
 		i.start();
@@ -62,6 +63,7 @@ public class IdentifyLocoTest extends TestCase {
 		IdentifyLoco i = new IdentifyLoco() {
 			public void message(String m) {}
 			public void done(int i) {}
+			public void error() {}
 		};
 		
 		i.start();

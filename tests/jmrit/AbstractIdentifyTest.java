@@ -144,6 +144,8 @@ public class AbstractIdentifyTest extends TestCase {
 		
 		protected void statusUpdate(String s) {};
 
+		public void error() {}
+
 	}
 
 	public static int invoked = -1;

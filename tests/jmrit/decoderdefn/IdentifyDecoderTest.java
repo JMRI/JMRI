@@ -31,6 +31,7 @@ public class IdentifyDecoderTest extends TestCase {
 		IdentifyDecoder i = new IdentifyDecoder() {
 			public void done(int mfgID, int modelID) {}
 			public void message(String m) {}
+			public void error() {}
 		};
 		
 		i.start();
