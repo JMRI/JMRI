@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
@@ -22,7 +23,7 @@ import com.sun.java.util.collections.List;
  *
  *
  * @author		Bob Jacobsen   Copyright (C) 2004
- * @version		$Revision: 1.1 $
+ * @version		$Revision: 1.2 $
  */
 public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -80,9 +81,10 @@ public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
     public Class getColumnClass(int col) {
         switch (col) {
         case NAMECOL:
-        case TURNSCOL:
         case KILLCOL:
             return String.class;
+        case TURNSCOL:
+        	return Integer.class;
         default:
             return null;
         }
@@ -102,7 +104,7 @@ public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
         case NAMECOL:
             return summary.get(row).getName();
         case TURNSCOL:
-            return ""+summary.get(row).getCount();
+            return new Integer(summary.get(row).getCount());
         case KILLCOL:  // return button text here
             return rb.getString("ButtonKill");
         default:
@@ -114,13 +116,14 @@ public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
     public int getPreferredWidth(int col) {
         switch (col) {
         case NAMECOL:
-            return new JLabel(" Reasonably Long Name, with extra stuff at end ").getPreferredSize().width;
+            return new JTextField(20).getPreferredSize().width;
         case TURNSCOL:
-            return new JLabel(" 123456 ").getPreferredSize().width;
+            return new JTextField(5).getPreferredSize().width;
         case KILLCOL:
             return new JButton(rb.getString("ButtonKill")).getPreferredSize().width;
         default:
-            return new JLabel(" <unknown> ").getPreferredSize().width;
+        	log.warn("Unexpected column in getPreferredWidth: "+col);
+            return new JTextField(5).getPreferredSize().width;
         }
     }
 
@@ -138,8 +141,18 @@ public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
      * @param table
      */
     public void configureTable(JTable table) {
+        // allow reordering of the columns
+        table.getTableHeader().setReorderingAllowed(true);
+
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+        // resize columns as requested
+        for (int i=0; i<table.getColumnCount(); i++) {
+            int width = getPreferredWidth(i);
+            table.getColumnModel().getColumn(i).setPreferredWidth(width);
+        }
+        table.sizeColumnsToFit(-1);
 
         // have the value column hold a button
         setColumnToHoldButton(table, KILLCOL, new JButton(rb.getString("ButtonKill")));
