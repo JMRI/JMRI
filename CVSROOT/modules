@@ -10,7 +10,7 @@ jbuilder3 -d java &test
 jbuilder4 -d java &xml
 
 auto -a a1 a2 a3 a4 a5
-a1 -a . site index.html
+a1 -d . site index.html
 a2 &xml
 a3 &test
 a4 -d src &apps
