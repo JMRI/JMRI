@@ -13,11 +13,11 @@ import javax.swing.JFileChooser;
  * <P>
  * Note that this does not store preferences, tools or user information
  * in the file.  This is not a complete store!
- * See {@jmri.ConfigureManager} for information on the various
+ * See {@link jmri.ConfigureManager} for information on the various
  * types of information stored in configuration files.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  * @see         jmri.jmrit.XmlFile
  */
 public class StoreXmlConfigAction extends AbstractAction {

@@ -12,11 +12,11 @@ import javax.swing.JFileChooser;
  * Load configuration information from an XML file.
  * <P>
  * This will load whatever information types are present in the file.
- * See {@jmri.ConfigureManager} for information on the various
+ * See {@link jmri.ConfigureManager} for information on the various
  * types of information stored in configuration files.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2002
- * @version	    $Revision: 1.6 $
+ * @version	    $Revision: 1.7 $
  * @see             jmri.jmrit.XmlFile
  */
 public class LoadXmlConfigAction extends AbstractAction {

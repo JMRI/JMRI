@@ -11,11 +11,11 @@ import javax.swing.JFileChooser;
 /**
  * Store the entire JMRI status in an XML file.
  * <P>
- * See {@jmri.ConfigureManager} for information on the various
+ * See {@link jmri.ConfigureManager} for information on the various
  * types of information stored in configuration files.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  * @see         jmri.jmrit.XmlFile
  */
 public class StoreXmlAllAction extends AbstractAction {
