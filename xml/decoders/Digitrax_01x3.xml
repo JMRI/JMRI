@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_01x3.xml,v 1.16 2003-10-18 23:51:55 jacobsen Exp $ -->
+<!-- $Id: Digitrax_01x3.xml,v 1.17 2004-02-08 01:32:47 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Michael Mosher mjmx@comcast.net" 
 					version="10.1" lastUpdated="20031008"/>
@@ -164,7 +164,7 @@
 			</model>
 	</family>
 
-	<programming direct="byteOnly" paged="yes" 
+	<programming direct="yes" paged="yes" 
 	                     register="yes" ops="yes"></programming>
 
 	<variables>
