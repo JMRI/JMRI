@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.27 2004-03-10 22:16:26 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.28 2004-05-22 04:45:57 jacobsen Exp $ -->
 
 <!-- This DTD is Copyright 2001, 2003 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -18,15 +18,22 @@
 <!ELEMENT application (connection*, gui*, programmer, roster?, perform*)>
   <!ATTLIST application class CDATA #REQUIRED>
 
-<!--  Application section identifies serial port info -->
-<!ELEMENT connection EMPTY>
+<!--  Connection section identifies serial port info -->
+<!ELEMENT connection (node*)>
   <!ATTLIST connection class CDATA #REQUIRED>
   <!ATTLIST connection port CDATA #IMPLIED>
   <!ATTLIST connection speed CDATA #IMPLIED>  <!-- May not be provided if fixed by protocol -->
   <!ATTLIST connection option1 CDATA #IMPLIED> <!-- Meaning is protocol specific -->
   <!ATTLIST connection option2 CDATA #IMPLIED> <!-- Meaning is protocol specific -->
 
-<!--  Application section identifies GUI info, e.g. look&feel info-->
+<!ELEMENT node (parameter*)>
+  <!ATTLIST node name CDATA #REQUIRED>
+
+<!ELEMENT parameter (#PCDATA)>  <!-- Character content is parameter value -->
+  <!ATTLIST parameter name CDATA #REQUIRED>
+
+  
+<!--  Gui section identifies GUI info, e.g. look&feel info-->
 <!ELEMENT gui EMPTY>
   <!ATTLIST gui class CDATA #REQUIRED>
   <!ATTLIST gui LAFclass CDATA #IMPLIED>  <!-- default means use system default -->
