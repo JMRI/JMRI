@@ -10,7 +10,7 @@ package jmri.jmrix.lenz;
  * to the a Lenz Command Station, on an XPressNet network.
  *
  * @author			Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.22 $
  */
 public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
 
@@ -629,6 +629,34 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
         return (m.getElement(0)==XNetConstants.LI_MESSAGE_RESPONSE_HEADER && 
                 m.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_SEND_SUCCESS);
     }	
+
+    /* 
+     * In the interest of code reuse, The following function checks to see 
+     * if an XPressNet Message is the Command Station Busy message (61 81 e3)
+     */
+    public boolean isCSBusyMessage(XNetMessage m) {
+        return (m.getElement(0)==XNetConstants.CS_INFO && 
+                m.getElement(1)==XNetConstants.CS_BUSY);
+    }	
+
+    /* 
+     * In the interest of code reuse, The following function checks to see 
+     * if an XPressNet Message is a communications error message.
+     * the errors handeled are:
+     *		01 01 00  -- Error between interface and the PC
+     *		01 02 03  -- Error between interface and the Command Station
+     *		01 03 02  -- Unknown Communications Error
+     *		01 05 04  -- Timeslot Error
+     *          01 06 07  -- LI10x Buffer Overflow
+     */
+    public boolean isCommErrorMessage(XNetMessage l) {
+	return (l.getElement(0)==XNetConstants.LI_MESSAGE_RESPONSE_HEADER &&
+               ((l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_UNKNOWN_DATA_ERROR ||
+                 l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_CS_DATA_ERROR ||
+                 l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_PC_DATA_ERROR ||
+                 l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_BUFFER_OVERFLOW ||
+                 l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_TIMESLOT_ERROR)));
+    }
 
 
     /*

@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
  * @author     Paul Bender (C) 2002,2003,2004
- * @version    $Revision: 1.25 $
+ * @version    $Revision: 1.26 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -591,27 +591,24 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	    	 if(log.isDebugEnabled()) { log.debug("Current throttle status is THROTTLECMDSENT"); }
 	    // For a Throttle Command, we're just looking for a return 
             // acknowledgment, Either a Success or Failure message.
-	    if(XNetTrafficController.instance().getCommandStation().isOkMessage(l)) 
+	     if(XNetTrafficController.instance().getCommandStation().isOkMessage(l)) 
 		{
 	    	 if(log.isDebugEnabled()) { log.debug("Last Command processed successfully."); }
                  // Since we recieved an "ok",  we want to make sure 
                  // "isAvailable reflects we are in control
 		 setIsAvailable(true);
 		requestState=THROTTLEIDLE;
-	    } else if(l.getElement(0)==XNetConstants.LI_MESSAGE_RESPONSE_HEADER &&
-                     ((l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_UNKNOWN_DATA_ERROR ||
-               	       l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_CS_DATA_ERROR ||
-                       l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_PC_DATA_ERROR ||
-                       l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_TIMESLOT_ERROR))) {
+	    } else if(XNetTrafficController.instance().getCommandStation()
+						      .isCommErrorMessage(l)) {
                      /* this is a communications error */
                      log.error("Communications error occured - message recieved was: " + l);
 		     requestState=THROTTLEIDLE;
-              } else if(l.getElement(0)==XNetConstants.CS_INFO &&
+            } else if(l.getElement(0)==XNetConstants.CS_INFO &&
                         l.getElement(2)==XNetConstants.CS_NOT_SUPPORTED) {
                      /* The Command Station does not support this command */
                      log.error("Unsupported Command Sent to command station");
 		     requestState=THROTTLEIDLE;
-              } else {
+            } else {
                         /* this is an unknown error */
 		     requestState=THROTTLEIDLE;                        
                      log.warn("Recieved unhandled response: " + l);

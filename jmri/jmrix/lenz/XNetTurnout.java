@@ -3,7 +3,7 @@
  *
  * Description:		extend jmri.AbstractTurnout for XNet layouts
  * @author			Bob Jacobsen Copyright (C) 2001, Portions by Paul Bender Copyright (C) 2003 
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 
 package jmri.jmrix.lenz;
@@ -59,13 +59,16 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
       if(InternalState==OFFSENT) {
 	  // If an OFF was sent, we want to check for Communications 
           // errors before we try to do anything else. 
-	  if(l.getElement(0)==XNetConstants.LI_MESSAGE_RESPONSE_HEADER &&
-            ((l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_UNKNOWN_DATA_ERROR ||
-            l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_CS_DATA_ERROR ||
-            l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_PC_DATA_ERROR ||
-            l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_TIMESLOT_ERROR))) {
+	   if(XNetTrafficController.instance().getCommandStation()
+                                              .isCommErrorMessage(l)) {
             /* this is a communications error */
             log.error("Communications error occured - message recieved was: " + l);
+	    sendOffMessage();
+            return;
+	  } else  if(XNetTrafficController.instance().getCommandStation()
+                                                     .isCSBusyMessage(l)) {
+            /* this is a communications error */
+            log.error("Command station busy - message recieved was: " + l);
 	    sendOffMessage();
             return;
 	  } else {
@@ -138,7 +141,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                                                   false );
  	    // We have to send this message twice for some reason, 
             // otherwise, the turnout continues to throw.
-            XNetTrafficController.instance().sendXNetMessage(msg, this);
+            // XNetTrafficController.instance().sendXNetMessage(msg, this);
             XNetTrafficController.instance().sendXNetMessage(msg, this);
 	    // Set the known state to the commanded state.
 	    newKnownState(getCommandedState());
