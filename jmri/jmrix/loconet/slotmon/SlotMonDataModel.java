@@ -21,7 +21,7 @@ import javax.swing.table.TableColumnModel;
 /**
  * Table data model for display of slot manager contents
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version		$Revision: 1.14 $
+ * @version		$Revision: 1.15 $
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener  {
 
@@ -119,12 +119,13 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         switch (col) {
         case SLOTCOLUMN:
         case ADDRCOLUMN:
+        case THROTCOLUMN:
+        	return Integer.class;
         case SPDCOLUMN:
         case TYPECOLUMN:
         case STATCOLUMN:
         case CONSCOLUMN:
         case DIRCOLUMN:
-        case THROTCOLUMN:
             return String.class;
         case ESTOPCOLUMN:
         case DISPCOLUMN:
@@ -163,23 +164,25 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
 
         switch (col) {
         case SLOTCOLUMN:  // slot number
-            return ""+slotNum(row);
+            return new Integer(slotNum(row));
         case ESTOPCOLUMN:  //
             return "E Stop";          // will be name of button in default GUI
         case ADDRCOLUMN:  //
-            return ""+s.locoAddr();
+            return new Integer(s.locoAddr());
         case SPDCOLUMN:  //
-            if (s.speed() == 1) return "1 (estop)";
-            else return ""+s.speed();
+            String t;
+            if (s.speed() == 1) t = "(estop) 1";
+            else t = "          "+s.speed();
+            return t.substring(t.length()-9, t.length()); // 9 comes from (estop)
         case TYPECOLUMN:  //
             switch (s.decoderType()) {
-            case LnConstants.DEC_MODE_128A:	return "128 step advanced";
-            case LnConstants.DEC_MODE_28A:	return "28 step advanced";
-            case LnConstants.DEC_MODE_128:	return "128 step";
-            case LnConstants.DEC_MODE_14:	return "14 step";
-            case LnConstants.DEC_MODE_28TRI:	return "28 step trinary";
-            case LnConstants.DEC_MODE_28:	return "28 step";
-            default:				return "<unknown>";
+            case LnConstants.DEC_MODE_128A:	    return "128 step adv";
+            case LnConstants.DEC_MODE_28A:	    return " 28 step adv";
+            case LnConstants.DEC_MODE_128:	    return "128 step";
+            case LnConstants.DEC_MODE_14:	    return " 14 step";
+            case LnConstants.DEC_MODE_28TRI:	return " 28 step trinary";
+            case LnConstants.DEC_MODE_28:	    return " 28 step";
+            default:				            return "<unknown>";
             }
         case STATCOLUMN:  //
             switch (s.slotStatus()) {
@@ -237,13 +240,13 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         case ADDRCOLUMN:
             return new JTextField(5).getPreferredSize().width;
         case SPDCOLUMN:
-            return new JTextField(5).getPreferredSize().width;
+            return new JTextField(6).getPreferredSize().width;
         case TYPECOLUMN:
-            return new JTextField(15).getPreferredSize().width;
+            return new JTextField(12).getPreferredSize().width;
         case STATCOLUMN:
             return new JTextField(6).getPreferredSize().width;
         case CONSCOLUMN:
-            return new JTextField(6).getPreferredSize().width;
+            return new JTextField(4).getPreferredSize().width;
         case DIRCOLUMN:
             return new JTextField(3).getPreferredSize().width;
         case DISPCOLUMN:
