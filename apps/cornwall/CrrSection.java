@@ -10,22 +10,15 @@ import jmri.*;
  * Based on Crr0024.bas
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
 
     /**
-     * References the turnouts to be controlled.
-     * <P>
-     * These are actually signals
+     * References the signalheads to be controlled.
      */
-    Turnout si1green1a;
-    Turnout si2yellow1a;
-    Turnout si3red1a;
-
-    Turnout si4green1b;
-    Turnout si5yellow1b;
-    Turnout si6red1b;
+    SignalHead si1a;
+    SignalHead si1b;
 
     /**
      * References the sensors to be monitored
@@ -50,13 +43,17 @@ public class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
 
         // get references to sample layout objects
 
-        si1green1a  = tm.newTurnout("CT1","1a green");
-        si2yellow1a = tm.newTurnout("CT2","1a yellow");
-        si3red1a    = tm.newTurnout("CT3","1a red");
+        si1a  = new TripleTurnoutSignalHead("si1a", "Signal 1A",
+                                            tm.newTurnout("CT1","1a green"),
+                                            tm.newTurnout("CT2","1a yellow"),
+                                            tm.newTurnout("CT3","1a red"));
+        InstanceManager.signalHeadManagerInstance().register(si1a);
 
-        si4green1b  = tm.newTurnout("CT4","1b green");
-        si5yellow1b = tm.newTurnout("CT5","1b yellow");
-        si6red1b    = tm.newTurnout("CT6","1b red");
+        si1b  = new TripleTurnoutSignalHead("si1b", "Signal 1B",
+                                            tm.newTurnout("CT4","1b green"),
+                                            tm.newTurnout("CT5","1b yellow"),
+                                            tm.newTurnout("CT6","1b red"));
+        InstanceManager.signalHeadManagerInstance().register(si1b);
 
         bo4  = sm.newSensor("CS7","RDG block 1");
         bo16 = sm.newSensor("CS27","PRR/Lebanon entrance (under bridge)");
@@ -103,15 +100,9 @@ public class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
              || ( bo16now && !tu1now )
              || ( tu1now && tu3now && !tu12now )
             ) {
-            // set red
-            si1green1a.setCommandedState(Turnout.CLOSED);
-            si2yellow1a.setCommandedState(Turnout.CLOSED);
-            si3red1a.setCommandedState(Turnout.THROWN);
+            si1a.setAppearance(SignalHead.RED);
         } else {
-            // set green
-            si1green1a.setCommandedState(Turnout.THROWN);
-            si2yellow1a.setCommandedState(Turnout.CLOSED);
-            si3red1a.setCommandedState(Turnout.CLOSED);
+            si1a.setAppearance(SignalHead.GREEN);
         }
 
         // section 1B
@@ -120,15 +111,9 @@ public class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
              || ( !tu3now && bo4now )
              || ( !tu3now && !tu12now )
             ) {
-            // set red
-            si4green1b.setCommandedState(Turnout.CLOSED);
-            si5yellow1b.setCommandedState(Turnout.CLOSED);
-            si6red1b.setCommandedState(Turnout.THROWN);
+            si1b.setAppearance(SignalHead.RED);
         } else {
-            // set green
-            si4green1b.setCommandedState(Turnout.THROWN);
-            si5yellow1b.setCommandedState(Turnout.CLOSED);
-            si6red1b.setCommandedState(Turnout.CLOSED);
+            si1b.setAppearance(SignalHead.GREEN);
         }
     }
 
