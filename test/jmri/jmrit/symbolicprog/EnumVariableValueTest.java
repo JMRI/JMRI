@@ -18,7 +18,7 @@ import jmri.progdebugger.*;
  * Test EnumVariableValue
  *
  * @author		Bob Jacobsen  Copyright 2003
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 
 public class EnumVariableValueTest extends VariableValueTest {
@@ -55,7 +55,11 @@ public class EnumVariableValueTest extends VariableValueTest {
     }
 
     void checkValue(VariableValue var, String comment, String val) {
-        Assert.assertEquals(comment, val, var.getTextValue());
+        // we treat one test case (from the parent) specially...
+        if (val.equals("14"))
+            Assert.assertEquals(comment, "Reserved value "+val, var.getTextValue());
+        else
+            Assert.assertEquals(comment, val, var.getTextValue());
     }
 
     void checkReadOnlyValue(VariableValue var, String comment, String val) {
