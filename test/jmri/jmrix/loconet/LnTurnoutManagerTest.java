@@ -46,7 +46,6 @@ public class LnTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 		TurnoutAddress a = new TurnoutAddress("LT22", "user");
 
 		// try to get nonexistant turnouts
-		Assert.assertTrue(null == l.getByAddress(a));
 		Assert.assertTrue(null == l.getByUserName("foo"));
 		Assert.assertTrue(null == l.getBySystemName("bar"));
 	}

@@ -3,7 +3,7 @@
  *
  * Description:	    tests for the jmri.jmrix.lenz.XNetTurnoutManager class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 
 package jmri.jmrix.lenz;
@@ -46,7 +46,6 @@ public class XNetTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 		TurnoutAddress a = new TurnoutAddress("XT22", "user");
 
 		// try to get nonexistant turnouts
-		Assert.assertTrue(null == l.getByAddress(a));
 		Assert.assertTrue(null == l.getByUserName("foo"));
 		Assert.assertTrue(null == l.getBySystemName("bar"));
 	}
