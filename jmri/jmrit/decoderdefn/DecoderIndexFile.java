@@ -33,7 +33,7 @@ import com.sun.java.util.collections.List;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -106,8 +106,6 @@ public class DecoderIndexFile extends XmlFile {
 
     /**
      * Return DecoderFile from a "title" string, ala selection in matchingComboBox.
-     * Search backwards, so that if there is a decoder-entry and family-entry
-     * with the same title, we get the decoder.
      */
     public DecoderFile fileFromTitle(String title ) {
         for (int i = numDecoders()-1; i >= 0; i--) {
