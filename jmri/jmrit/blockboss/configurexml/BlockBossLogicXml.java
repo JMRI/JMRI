@@ -11,7 +11,7 @@ import org.jdom.Element;
  * Handle XML persistance of Simple Signal Logic objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class BlockBossLogicXml implements XmlAdapter {
 
@@ -41,7 +41,12 @@ public class BlockBossLogicXml implements XmlAdapter {
             Element block = new Element("block");
             block.addAttribute("signal", p.getDrivenSignal());
             block.addAttribute("mode", ""+p.getMode());
-            if (p.getSensor()!=null) block.addAttribute("watchedsensor", p.getSensor());
+
+            if (p.getSensor1()!=null) block.addContent(storeSensor(p.getSensor1()));
+            if (p.getSensor2()!=null) block.addContent(storeSensor(p.getSensor2()));
+            if (p.getSensor3()!=null) block.addContent(storeSensor(p.getSensor3()));
+            if (p.getSensor4()!=null) block.addContent(storeSensor(p.getSensor4()));
+
             if (p.getTurnout()!=null) {
                 block.addAttribute("watchedturnout", p.getTurnout());
             }
@@ -59,6 +64,13 @@ public class BlockBossLogicXml implements XmlAdapter {
         return blocks;
     }
 
+    Element storeSensor(String name) {
+        Element e = new Element("sensor");
+        jmri.Sensor s = jmri.InstanceManager.sensorManagerInstance().getSensor(name);
+        e.addAttribute("systemName", s.getSystemName());
+        return e;
+    }
+
     /**
      * Update static data from XML file
      * @param element Top level blocks Element to unpack.
@@ -68,8 +80,14 @@ public class BlockBossLogicXml implements XmlAdapter {
         for (int i = 0; i<l.size(); i++) {
             Element block = (Element)l.get(i);
             BlockBossLogic bb = BlockBossLogic.getStoppedObject(block.getAttributeValue("signal"));
-            if (block.getAttribute("watchedsensor")!=null)
-                bb.setSensor(block.getAttributeValue("watchedsensor"));
+            if (block.getAttribute("watchedsensor")!=null)   // for older XML files
+                bb.setSensor1(block.getAttributeValue("watchedsensor"));
+            List sl = block.getChildren("sensor");
+            if (sl.size()>=1 && sl.get(0)!= null) bb.setSensor1(((Element)sl.get(0)).getAttributeValue("systemName"));
+            if (sl.size()>=2 && sl.get(1)!= null) bb.setSensor2(((Element)sl.get(1)).getAttributeValue("systemName"));
+            if (sl.size()>=3 && sl.get(2)!= null) bb.setSensor3(((Element)sl.get(2)).getAttributeValue("systemName"));
+            if (sl.size()>=4 && sl.get(3)!= null) bb.setSensor4(((Element)sl.get(3)).getAttributeValue("systemName"));
+
             try {
                 bb.setMode(block.getAttribute("mode").getIntValue());
                 if (block.getAttribute("watchedturnout")!=null)
