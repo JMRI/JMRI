@@ -16,7 +16,7 @@ import org.jdom.input.SAXBuilder;
  * Handle common aspects of XML files.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public abstract class XmlFile {
 
@@ -65,6 +65,8 @@ public abstract class XmlFile {
     public Element rootFromStream(InputStream stream) throws org.jdom.JDOMException, java.io.FileNotFoundException {
         // get full pathname to the DTD directory (apath is an absolute path)
         String apath = "xml"+File.separator+"DTD"+File.separator;
+        if( File.separatorChar != '/' )
+          apath = apath.replace(File.separatorChar, '/');
 
         String path = "file:"+apath;
 
