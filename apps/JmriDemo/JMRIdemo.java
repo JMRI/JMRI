@@ -17,10 +17,10 @@ import javax.swing.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2002
- * @version     $Revision: 1.47 $
+ * @version     $Revision: 1.48 $
  */
 public class JMRIdemo extends JPanel {
-    public JMRIdemo() {
+    public JMRIdemo(JFrame frame) {
 
         super(true);
 
@@ -67,6 +67,10 @@ public class JMRIdemo extends JPanel {
                     System.exit(0);
                 }
             });
+
+        JMenu fileMenu = new JMenu("File");
+        menuBar.add(fileMenu);
+        fileMenu.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(frame));
 
         JMenu editMenu = new JMenu("Edit");
         menuBar.add(editMenu);
@@ -205,8 +209,8 @@ public class JMRIdemo extends JPanel {
         }
 
     	// create the demo frame and menus
-        JMRIdemo containedPane = new JMRIdemo();
         JFrame frame = new JFrame("JMRI demo main panel");
+        JMRIdemo containedPane = new JMRIdemo(frame);
         frame.addWindowListener(new jmri.util.oreilly.BasicWindowMonitor());
         frame.setJMenuBar(containedPane.menuBar);
         frame.getContentPane().add(containedPane);

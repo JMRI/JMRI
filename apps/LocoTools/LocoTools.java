@@ -16,10 +16,10 @@ import javax.swing.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author			Bob Jacobsen
- * @version         $Revision: 1.13 $
+ * @version         $Revision: 1.14 $
  */
 public class LocoTools extends JPanel {
-    public LocoTools() {
+    public LocoTools(JFrame frame) {
 
         super(true);
 
@@ -44,6 +44,7 @@ public class LocoTools extends JPanel {
         // Create menu categories and add to the menu bar, add actions to menus
         JMenu fileMenu = new JMenu("File");
         menuBar.add(fileMenu);
+        fileMenu.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(frame));
         fileMenu.add(new AbstractAction("Quit"){
                 public void actionPerformed(ActionEvent e) {
                     System.exit(0);
@@ -151,8 +152,8 @@ public class LocoTools extends JPanel {
         }
 
     	// create the demo frame and menus
-        LocoTools containedPane = new LocoTools();
         JFrame frame = new JFrame("LocoTools main panel");
+        LocoTools containedPane = new LocoTools(frame);
         frame.addWindowListener(new jmri.util.oreilly.BasicWindowMonitor());
         frame.setJMenuBar(containedPane.menuBar);
         frame.getContentPane().add(containedPane);

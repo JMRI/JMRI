@@ -13,10 +13,10 @@ import jmri.util.oreilly.*;
  * DecoderPro application main class.
  *
  * @author                      Bob Jacobsen
- * @version                     $Revision: 1.2 $
+ * @version                     $Revision: 1.3 $
  */
 public class DecoderProMain extends JPanel {
-    public DecoderProMain() {
+    public DecoderProMain(JFrame frame) {
 
         super(true);
 
@@ -47,6 +47,7 @@ public class DecoderProMain extends JPanel {
         fileMenu.add(serviceprog);
         fileMenu.add(opsprog);
         fileMenu.add(new JSeparator());
+        fileMenu.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(frame));
         fileMenu.add(quit);
 
         JMenu editMenu = new JMenu("Edit");
@@ -148,10 +149,11 @@ public class DecoderProMain extends JPanel {
 
         log.info("DecoderPro starts");
 
-        // create the demo frame and menus
-        DecoderProMain pane = new DecoderProMain();
+        // create the primary frame
         JFrame frame = new JFrame("Decoder Pro");
+        DecoderProMain pane = new DecoderProMain(frame);
         frame.addWindowListener(new BasicWindowMonitor());
+        // insert contents
         frame.setJMenuBar(pane.menuBar);
         frame.getContentPane().add(pane);
         // pack and center this frame
