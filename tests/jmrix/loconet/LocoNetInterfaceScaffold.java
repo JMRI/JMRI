@@ -8,7 +8,7 @@
  * Use an object of this type as a LnTrafficController in tests
  */
 
-package jmri.tests.jmrix.loconet;
+package jmri.jmrix.loconet;
 
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetListener;

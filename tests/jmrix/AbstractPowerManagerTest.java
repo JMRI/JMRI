@@ -6,7 +6,7 @@
  * @version			
  */
 
-package jmri.tests.jmrix;
+package jmri.jmrix;
 
 import jmri.*;
 

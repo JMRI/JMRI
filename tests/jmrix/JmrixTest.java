@@ -6,7 +6,7 @@
  * @version			
  */
 
-package jmri.tests.jmrix;
+package jmri.jmrix;
 
 import java.io.*;
 import junit.framework.Test;
@@ -31,10 +31,10 @@ public class JmrixTest extends TestCase {
 	
 	// test suite from all defined tests
 	public static Test suite() {
-		jmri.tests.AllTest.initLogging();
-		TestSuite suite = new TestSuite("jmri.tests.jmrix");
-		suite.addTest(jmri.tests.jmrix.loconet.LocoNetTest.suite());
-		suite.addTest(jmri.tests.jmrix.nce.NceTest.suite());
+		jmri.AllTest.initLogging();
+		TestSuite suite = new TestSuite("jmri.jmrix");
+		suite.addTest(jmri.jmrix.loconet.LocoNetTest.suite());
+		suite.addTest(jmri.jmrix.nce.NceTest.suite());
 		return suite;
 	}
 	

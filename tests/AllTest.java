@@ -6,15 +6,11 @@
  * @version			
  */
 
-package jmri.tests;
+package jmri;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import jmri.tests.symbolicprog.*;
-import jmri.tests.*;
-
 
 public class AllTest extends TestCase  {
 	public AllTest(String s) {
@@ -34,8 +30,8 @@ public class AllTest extends TestCase  {
 		// all tests from here down in heirarchy
 		TestSuite suite = new TestSuite("AllTest");  // no tests in this class itself
 		// all tests from other classes
-		suite.addTest(jmri.tests.jmrix.JmrixTest.suite());
-		suite.addTest(jmri.tests.jmrit.JmritTest.suite());
+		suite.addTest(jmri.jmrix.JmrixTest.suite());
+		suite.addTest(jmri.jmrit.JmritTest.suite());
 		suite.addTest(JmriTest.suite());
 		
 		return suite;

@@ -6,7 +6,7 @@
  * @version			
  */
 
-package jmri.tests.jmrix.loconet;
+package jmri.jmrix.loconet;
 
 import jmri.*;
 
@@ -17,7 +17,7 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import jmri.tests.jmrix.AbstractPowerManagerTest;
+import jmri.jmrix.AbstractPowerManagerTest;
 
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LnPowerManager;

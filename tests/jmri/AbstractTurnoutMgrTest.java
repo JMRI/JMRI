@@ -11,7 +11,7 @@
  * this forms the base for test classes, including providing some common tests
  */
 
-package jmri.tests.jmrix;
+package jmri;
 
 import jmri.*;
 

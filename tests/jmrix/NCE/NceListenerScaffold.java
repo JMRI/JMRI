@@ -6,15 +6,9 @@
  * @version			
  */
 
-package jmri.tests.jmrix.nce;
+package jmri.jmrix.nce;
 
 import jmri.*;
-
-import jmri.jmrix.nce.NceMessage;
-import jmri.jmrix.nce.NceReply;
-import jmri.jmrix.nce.NceListener;
-import jmri.jmrix.nce.NceTrafficController;
-import jmri.jmrix.nce.NcePortController;
 
 class NceInterfaceScaffold implements jmri.jmrix.nce.NceListener {
 	public NceInterfaceScaffold() {

@@ -6,17 +6,16 @@
  * @version			
  */
 
-package jmri.tests.jmrix.nce;
+package jmri.jmrix.nce;
 
 import java.io.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import jmri.jmrix.nce.*;
 import jmri.*;
 
-public class NceTurnoutManagerTest extends jmri.tests.jmrix.AbstractTurnoutMgrTest  {
+public class NceTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 
 	public void setUp() {
 		// create and register the manager object
@@ -62,7 +61,7 @@ public class NceTurnoutManagerTest extends jmri.tests.jmrix.AbstractTurnoutMgrTe
 	
 	// test suite from all defined tests
 	public static Test suite() {
-		jmri.tests.AllTest.initLogging();
+		jmri.AllTest.initLogging();
 		TestSuite suite = new TestSuite(NceTurnoutManagerTest.class);
 		return suite;
 	}

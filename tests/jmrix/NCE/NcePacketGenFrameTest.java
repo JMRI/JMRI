@@ -16,7 +16,6 @@ import junit.framework.TestSuite;
 
 import jmri.jmrix.nce.*;
 import jmri.jmrix.nce.packetgen.*;
-import jmri.tests.jmrix.nce.*;
 
 public class NcePacketGenFrameTest extends TestCase {
 

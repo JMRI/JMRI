@@ -6,7 +6,7 @@
  * @version			
  */
 
-package jmri.tests.jmrix.loconet;
+package jmri.jmrix.loconet;
 
 import java.io.*;
 import junit.framework.Test;
@@ -16,7 +16,7 @@ import junit.framework.TestSuite;
 import jmri.jmrix.loconet.*;
 import jmri.*;
 
-public class LnTurnoutManagerTest extends jmri.tests.jmrix.AbstractTurnoutMgrTest  {
+public class LnTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 
 	public String getSystemName(int i) {
 		return "LT"+i;

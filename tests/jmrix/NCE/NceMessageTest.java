@@ -6,7 +6,7 @@
  * @version			
  */
 
-package jmri.tests.jmrix.nce;
+package jmri.jmrix.nce;
 
 import jmri.*;
 
@@ -14,8 +14,6 @@ import junit.framework.Test;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import jmri.jmrix.nce.NceMessage;
 
 public class NceMessageTest extends TestCase {
 

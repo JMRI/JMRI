@@ -6,7 +6,7 @@
  * @version			
  */
 
-package jmri.tests.jmrix.nce;
+package jmri.jmrix.nce;
 
 import java.io.*;
 import junit.framework.Test;
@@ -36,17 +36,17 @@ public class NceTest extends TestCase {
 	
 	// test suite from all defined tests
 	public static Test suite() {
-		jmri.tests.AllTest.initLogging();
-		TestSuite suite = new TestSuite("jmri.tests.jmrix.nce.NceTest");
-		suite.addTest(jmri.tests.jmrix.nce.NceTurnoutTest.suite());
-		suite.addTest(jmri.tests.jmrix.nce.NceTurnoutManagerTest.suite());
+		jmri.AllTest.initLogging();
+		TestSuite suite = new TestSuite("jmri.jmrix.nce.NceTest");
+		suite.addTest(jmri.jmrix.nce.NceTurnoutTest.suite());
+		suite.addTest(jmri.jmrix.nce.NceTurnoutManagerTest.suite());
 		suite.addTest(jmri.jmrix.nce.ncemon.NceMonFrameTest.suite());
 		suite.addTest(jmri.jmrix.nce.NceProgrammerTest.suite());
 		suite.addTest(jmri.jmrix.nce.packetgen.NcePacketGenFrameTest.suite());
 		suite.addTest(jmri.jmrix.nce.NceTrafficControllerTest.suite());
-		suite.addTest(jmri.tests.jmrix.nce.NceMessageTest.suite());
+		suite.addTest(jmri.jmrix.nce.NceMessageTest.suite());
 		suite.addTest(jmri.jmrix.nce.NceReplyTest.suite());
-		suite.addTest(jmri.tests.jmrix.nce.NcePowerManagerTest.suite());
+		suite.addTest(jmri.jmrix.nce.NcePowerManagerTest.suite());
 		return suite;
 	}
 	

@@ -6,7 +6,7 @@
  * @version			
  */
 
-package jmri.tests.jmrit;
+package jmri.jmrit;
 
 import java.io.*;
 import junit.framework.Test;
@@ -31,8 +31,9 @@ public class JmritTest extends TestCase {
 	
 	// test suite from all defined tests
 	public static Test suite() {
-		TestSuite suite = new TestSuite("jmri.tests.jmrit.JmritTest");   // no tests in this class itself
-		suite.addTest(jmri.tests.jmrit.powerpanel.PowerPanelTest.suite());
+		TestSuite suite = new TestSuite("jmri.jmrit.JmritTest");   // no tests in this class itself
+		suite.addTest(jmri.jmrit.powerpanel.PowerPanelTest.suite());
+		suite.addTest(jmri.jmrit.symbolicprog.SymbolicProgTest.suite());
 		return suite;
 	}
 	

@@ -6,14 +6,12 @@
  * @version			
  */
 
-package jmri.tests;
+package jmri;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.framework.Assert;
-
-import jmri.*;
 
 public class NmraPacketTest extends TestCase {
 

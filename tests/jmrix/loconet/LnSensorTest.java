@@ -6,7 +6,7 @@
  * @version			
  */
 
-package jmri.tests.jmrix.loconet;
+package jmri.jmrix.loconet;
 
 import java.io.*;
 import junit.framework.Test;

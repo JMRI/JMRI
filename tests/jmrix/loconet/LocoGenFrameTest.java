@@ -16,7 +16,7 @@ import junit.framework.TestSuite;
 
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.loconet.locogen.*;
-import jmri.tests.jmrix.loconet.*;
+import jmri.jmrix.loconet.*;
 
 public class LocoGenFrameTest extends TestCase {
 

@@ -6,7 +6,7 @@
  * @version			
  */
 
-package jmri.tests.jmrit.powerpanel;
+package jmri.jmrit.powerpanel;
 
 import java.io.*;
 import junit.framework.Test;
@@ -29,7 +29,7 @@ public class PowerPanelTest extends TestCase {
 	
 	// test suite from all defined tests
 	public static Test suite() {
-		TestSuite suite = new TestSuite("jmri.tests.jmrit.powerpanel.PowerPanelTest"); // no tests in class itself
+		TestSuite suite = new TestSuite("jmri.jmrit.powerpanel.PowerPanelTest"); // no tests in class itself
 		suite.addTest(jmri.jmrit.powerpanel.PowerPaneTest.suite());
 		return suite;
 	}

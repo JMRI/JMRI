@@ -6,7 +6,7 @@
  * @version			
  */
 
-package jmri.tests.jmrix.nce;
+package jmri.jmrix.nce;
 
 import jmri.*;
 
@@ -19,12 +19,7 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import jmri.jmrix.nce.NcePowerManager;
-import jmri.jmrix.nce.NceTrafficController;
-import jmri.jmrix.nce.NceMessage;
-import jmri.jmrix.nce.NceReply;
-
-import jmri.tests.jmrix.AbstractPowerManagerTest;
+import jmri.jmrix.AbstractPowerManagerTest;
 
 public class NcePowerManagerTest extends AbstractPowerManagerTest {
 
@@ -45,7 +40,6 @@ public class NcePowerManagerTest extends AbstractPowerManagerTest {
 	 	*/
 		public Vector outbound = new Vector();  // public OK here, so long as this is a test class
 		public void sendNceMessage(NceMessage m, jmri.jmrix.nce.NceListener l) {
-			if (log.isDebugEnabled()) log.debug("sendNceMessage ["+m+"]");
 			// save a copy
 			outbound.addElement(m);
 		}
@@ -57,13 +51,11 @@ public class NcePowerManagerTest extends AbstractPowerManagerTest {
 		 */
 		protected void sendTestMessage (NceMessage m) {
 			// forward a test message to Listeners
-			if (log.isDebugEnabled()) log.debug("sendTestMessage    ["+m+"]");
 			notifyMessage(m, null);
 			return;
 		}
 		protected void sendTestReply (NceReply m) {
 			// forward a test message to Listeners
-			if (log.isDebugEnabled()) log.debug("sendTestReply    ["+m+"]");
 			notifyReply(m);
 			return;
 		}

@@ -6,7 +6,7 @@
  * @version			
  */
 
-package jmri.tests.jmrix.loconet;
+package jmri.jmrix.loconet;
 
 import java.io.*;
 import junit.framework.Test;
@@ -15,7 +15,7 @@ import junit.framework.TestSuite;
 
 import jmri.jmrix.loconet.*;
 
-public class LnTurnoutTest extends jmri.tests.jmrix.AbstractTurnoutTest {
+public class LnTurnoutTest extends jmri.AbstractTurnoutTest {
 
 	public void setUp() {
 		// prepare an interface

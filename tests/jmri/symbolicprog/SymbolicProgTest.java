@@ -6,7 +6,7 @@
  * @version			
  */
 
-package jmri.tests.symbolicprog;
+package jmri.jmrit.symbolicprog;
 
 import java.io.*;
 import java.util.*;
@@ -18,8 +18,9 @@ import org.jdom.*;
 import org.jdom.output.*;
 
 import jmri.*;
-import jmri.symbolicprog.*;
 import jmri.progdebugger.*;
+import jmri.jmrit.symbolicprog.vartable.VariableTableModel;
+import jmri.jmrit.symbolicprog.cvtable.CvTableModel;
 
 public class SymbolicProgTest extends TestCase {
 

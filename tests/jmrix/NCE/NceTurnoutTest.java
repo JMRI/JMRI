@@ -6,7 +6,7 @@
  * @version			
  */
 
-package jmri.tests.jmrix.nce;
+package jmri.jmrix.nce;
 
 import java.io.*;
 import junit.framework.Test;
@@ -14,8 +14,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.framework.Assert;
 
-import jmri.jmrix.nce.*;
-import jmri.tests.jmrix.AbstractTurnoutTest;
+import jmri.AbstractTurnoutTest;
 
 public class NceTurnoutTest extends AbstractTurnoutTest {
 
