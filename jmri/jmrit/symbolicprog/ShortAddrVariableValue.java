@@ -10,10 +10,11 @@ import javax.swing.*;
  * Representation of a short address (CV1).
  * <P>
  * This is a decimal value, extended to modify the other CVs when
- * written.
+ * written.  The CVs to be modified and there new values are
+ * stored in two arrays for simplicity.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  *
  */
 public class ShortAddrVariableValue extends DecVariableValue {
@@ -24,6 +25,49 @@ public class ShortAddrVariableValue extends DecVariableValue {
         super(name, comment, readOnly, cvNum, mask, minVal, maxVal, v, status, stdname);
     }
 
+    /**
+     * Register a CV to be modified regardless of
+     * current value
+     */
+    public void setModifiedCV(int cvNum) {
+        if (firstFreeSpace>=maxCVs) {
+            log.error("too many CVs registered for changes!");
+            return;
+        }
+        cvNumbers[firstFreeSpace] = cvNum;
+        newValues[firstFreeSpace] = -1;
+        firstFreeSpace++;
+    }
+
+    /**
+     * Register a CV to be modified if the value is
+     * different.
+     */
+    public void setModifiedCV(int cvNum, int newValue) {
+        if (firstFreeSpace>=maxCVs) {
+            log.error("too many CVs registered for changes!");
+            return;
+        }
+        cvNumbers[firstFreeSpace] = cvNum;
+        newValues[firstFreeSpace] = newValue;
+        firstFreeSpace++;
+    }
+    /**
+     * Change CV values due to change in short address
+     */
+    private void updateCvForAddrChange() {
+        for (int i=0; i<firstFreeSpace; i++) {
+            CvValue cv = ((CvValue)_cvVector.elementAt(cvNumbers[i]));
+            if (cv.getValue()!=newValues[i]
+                && cv.getState()!=CvValue.EDITED)
+                cv.setState(CvValue.FROMFILE);
+        }
+    }
+
+    int firstFreeSpace = 0;
+    static final int maxCVs = 20;
+    int[] cvNumbers = new int[maxCVs];
+    int[] newValues = new int[maxCVs];
 
     /**
      * Invoked when a permanent change to the JTextField has been
