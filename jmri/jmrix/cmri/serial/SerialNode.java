@@ -24,7 +24,7 @@ import jmri.Sensor;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class SerialNode {
 
@@ -66,6 +66,7 @@ public class SerialNode {
     protected int lastUsedSensor = 0;           // grows as sensors defined
     protected Sensor[] sensorArray = new Sensor[MAXSENSORS+1];
     protected int[] sensorLastSetting = new int[MAXSENSORS+1];
+    protected int[] sensorTempSetting = new int[MAXSENSORS+1];
 
     /** 
      * Assumes a node address of 0, and a node type of SMINI
@@ -97,6 +98,7 @@ public class SerialNode {
         for (int i = 0; i<MAXSENSORS+1; i++) {
             sensorArray[i] = null;
             sensorLastSetting[i] = Sensor.UNKNOWN;
+            sensorTempSetting[i] = Sensor.UNKNOWN;
         }
         // clear all output bits
         for (int i = 0; i<256; i++) {
@@ -435,6 +437,7 @@ public class SerialNode {
         num2LSearchLights ++;
     }        
 
+
     /**
      * Public Method to query SearchLightBits by bit number (SMINI only)
      *   bit - bitNumber of the either bit of an oscillating search light bit pair
@@ -596,17 +599,23 @@ public class SerialNode {
                 if ( value == 1) {
                     // bit set, considered ACTIVE
                     if ( sensorArray[i]!=null &&
+                            ( sensorTempSetting[i] == Sensor.ACTIVE) &&
                             ( sensorLastSetting[i] != Sensor.ACTIVE) ) {
                         sensorLastSetting[i] = Sensor.ACTIVE;
                         sensorArray[i].setKnownState(Sensor.ACTIVE);
                     }
+                    // save for next time
+                    sensorTempSetting[i] = Sensor.ACTIVE;
                 } else {
                     // bit reset, considered INACTIVE
                     if ( sensorArray[i]!=null &&
+                            ( sensorTempSetting[i] == Sensor.INACTIVE) &&
                             ( sensorLastSetting[i] != Sensor.INACTIVE) ) {
                         sensorLastSetting[i] = Sensor.INACTIVE;
                         sensorArray[i].setKnownState(Sensor.INACTIVE);
                     }
+                    // save for next time
+                    sensorTempSetting[i] = Sensor.INACTIVE;
                 }
             }
         } catch (JmriException e) { log.error("exception in markChanges: "+e); }
