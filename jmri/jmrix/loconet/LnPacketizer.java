@@ -31,7 +31,7 @@ import com.sun.java.util.collections.NoSuchElementException;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.8 $
+ * @version 		$Revision: 1.9 $
  *
  */
 public class LnPacketizer extends LnTrafficController {
@@ -61,9 +61,11 @@ public class LnPacketizer extends LnTrafficController {
     }
 
     /**
-     * Synchronized list used as a transmit queue
+     * Synchronized list used as a transmit queue.
+     * <P>
+     * This is public to allow access from the internal class(es) when compiling with Java 1.1
      */
-    protected LinkedList xmtList = new LinkedList();
+    public LinkedList xmtList = new LinkedList();
 
     /**
      * XmtHandler (a local class) object to implement the transmit thread
@@ -107,7 +109,8 @@ public class LnPacketizer extends LnTrafficController {
     }
 
     // methods to connect/disconnect to a source of data in a LnPortController
-    protected LnPortController controller = null;
+    // This is public to allow access from the internal class(es) when compiling with Java 1.1
+    public LnPortController controller = null;
 
     /**
      * Make connection to existing LnPortController object.
@@ -135,9 +138,10 @@ public class LnPacketizer extends LnTrafficController {
         controller = null;
     }
 
-    // data members to hold the streams
-    protected DataInputStream istream = null;
-    protected OutputStream ostream = null;
+    // data members to hold the streams. These are public so the inner classes defined here
+    // can access whem with a Java 1.1 compiler
+    public DataInputStream istream = null;
+    public OutputStream ostream = null;
 
     /**
      * Forward a LocoNetMessage to all registered listeners.
