@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: I8N.html,v 1.3 2004-08-13 02:20:06 jacobsen Exp $ -->
+<!-- $Id: I8N.html,v 1.4 2004-09-03 09:45:35 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -220,6 +220,23 @@ All that adapts the program itself, at least as far as we've
 "internationalized" it.  (That's an ongoing effort, with 
 more and more parts of the program able to be customized 
 in each release).  
+<P>
+To check your work:
+<OL>
+<LI>Drop the entire "classes" directory into the "JMRI" directory containing your 
+copy of the application.  This is the same directory that contains the jmri.jar file.  
+<LI>Start the program and select "Preferences" from the Edit menu
+<LI>Click the "show advanced preferences" box
+<LI>Select your language from the "Locale" drop-down box,
+<LI>Click "Save", quit and restart
+<li>You should immediately seen the items you've translated.
+</OL>
+<P>
+If there's a problem at this point, check to see what language is
+listed on the startup screen that the application has displayed.  
+Is it showing the same suffix (e.g. _fr or _cs_CZ) as you 
+gave to your files?  The suffix the program uses is determined
+by the Locale you selected in the preferences above.
 <P>
 To make your work available to other JMRI users, please 
 use a TAR or ZIP utility to create an archive of the
