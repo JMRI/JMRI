@@ -35,7 +35,6 @@ public class LnThrottleManager implements ThrottleManager, SlotListener
         }
         throttleListeners.put(new Integer(address), l);
         slotManager.slotFromLocoAddress(address, this);
-        System.out.println("Requesting loco for address: " + address);
     }
 
     public void notifyChangedSlot(LocoNetSlot s)
@@ -43,7 +42,6 @@ public class LnThrottleManager implements ThrottleManager, SlotListener
         Integer address = new Integer(s.locoAddr());
         ThrottleListener listener = (ThrottleListener)
                                     throttleListeners.get(address);
-        System.out.println("Found decoder with addr: " +s.locoAddr() + " in slot " + s.getSlot());
         if (listener != null)
         {
             LocoNetThrottle throttle = new LocoNetThrottle(s);
