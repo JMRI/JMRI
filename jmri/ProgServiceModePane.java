@@ -2,12 +2,7 @@
 
 package jmri;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-
-import jmri.Programmer;
-import jmri.ProgListener;
+import javax.swing.BoxLayout;
 
 /**
  * Provide a JPanel to configure the service mode programmer.
@@ -24,7 +19,7 @@ import jmri.ProgListener;
  * Note that you should call the dispose() method when you're really done, so that
  * a ProgModePane object can disconnect its listeners.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class ProgServiceModePane extends ProgModeSelector implements java.beans.PropertyChangeListener {
 
