@@ -6,10 +6,11 @@ and the application name for App):
 ( ) update the specific README in site section in cvs to include any changes, esp. 
     including updating the release name and URLs. 
 
+( ) apps.App.App have a version number in it?  If so, update
+
 ( ) Commit all cvs source and tag "Release-App-M-N"
 
-( ) Make sure that the "make manifest" button is pushed, then
-	make the App.jar file with the App release target.
+( ) Make the App.jar file with the App release target.
 
 ( ) Move the App.jar file to the distribution folder
 
@@ -45,7 +46,7 @@ and the application name for App):
 
 ( ) Test CD on the test machine!
 
-( ) Test copied folder under Windows
+( ) Test copied folder under Windows (use dropZip to create a transfer file)
 
 ( ) Create the Macintosh distribution
 	( ) Create a clean copy of the folder on the desktop, with the same name
@@ -129,7 +130,7 @@ and the application name for App):
 ( ) Update CVS copy
 
     cd cvs
-    cvs -d cvs.jmri.sourceforge.net:/cvsroot/jmri update -d -r Release-0-N
+    cvs -d cvs.jmri.sourceforge.net:/cvsroot/jmri update -d -r Release-App-M-N
     
 ( ) Create a snapshot in zip format
 
