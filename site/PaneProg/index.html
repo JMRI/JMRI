@@ -17,7 +17,7 @@
 join the 
 <A HREF="http://jmri.sourceforge.net/">JMRI</A> effort.<P>
 
-<H2>Decoder Pro Symbolic Programmer</h2>
+<H2>DecoderPro Symbolic Programmer</h2>
 
 Modern DCC decoders are complicated beasts to program.  
 The simple idea of "put the address in CV01" doesn't cope well when you 
@@ -34,98 +34,154 @@ the code is available via open source, if you want to improve on it you can.
 
 <h3>A quick tour</h3>
 
-When you first open the symbolic programmer, you see a window like this:
+When you first open the programmer, you see a window like this:
 <p>
-<IMG SRC="images/Initial.gif" WIDTH="509" HEIGHT="390" HSPACE="0" VSPACE="0">
+<IMG SRC="images/BlankSetup.gif" WIDTH="436" HEIGHT="209" HSPACE="0" VSPACE="0">
 <p>
-It has four sections:
-<UL>
-<LI>At the top are places to enter information about this specific
-locomotive, buttons to let you read and write configuration files, and
-to select what programming mode you want to use.
-<LI>Just below that is an empty table, which will eventually
-contain rows of variables used to configure the decoder.
-<LI>Next is a table of CV values.  Initially it only contains
-the short address CV, as different decoders provide different ones.
-<LI>Finally, the bottom of the frame provides a way to change
-the configuration using the "Create new CV" and "Create new variable" buttons.
-</ul>
+
+You use this to configure the programmer with information about a specific
+type of decoder, or an existing locomotive.  For example, to 
+start working with a newly-installed decoder, you need to tell
+the programmer the decoder type so it can load information
+about the available settings.
+You can manually select the 
+decoder type from the selection box:
+<p>
+<IMG SRC="images/SelDecoder.gif" WIDTH="441" HEIGHT="249" HSPACE="0" VSPACE="0">
+<p>
+You can also click the adjacent "Ident" button to have the programmer
+read the decoder and attempt to identify it.   
+While the 
+programmer is talking to the decoder, status will be displayed in
+the bottom of the window; "Idle" or "OK" means that things are working.
+If it succeeds, it 
+will select the decoder model in the selection box.  Usually
+it will only be able to narrow the selection down to a few choices.
+Pull down the "Decoder installed" selection box and check that the
+right model is selected.  
+
 <P>
-When you click "Read File", you're prompted to select a configuration file.
-Selecting one for a Digitrax DH142 decoder, for example, changes the window to 
-look like:<P>
-<IMG SRC="images/readDecoder.gif" WIDTH="509" HEIGHT="390" HSPACE="0" VSPACE="0">
+Then, click "Open Programmer" to start working with the decoder.
+The actual programmer opens in a large window (shown reduced in size):
+<p>
+<IMG SRC="images/BasicPaneY75.gif" WIDTH="618" HEIGHT="388" HSPACE="0" VSPACE="0">
+<p>
+
+Each of the tabs selects a screen you can use to configure
+different aspects of the decoder.  The "Basic" pane
+handles the address other settings you'll usually need. 
+Using the buttons on the bottom of each screen are buttons
+that will read values from or write values to the decoder.
+For example, to do a basic configuration, enter values in the 
+fields and click "Write sheet".  
+
+<P>The variable fields are color coded to represent their states:
+<DL>
+<DT>Editted<DD>You've changed this value, or it contains default
+values from the decoder file.  This is shown as yellow, since the
+value differs from what's in the decoder.
+<DT>From File<DD>The field contains values read from a
+locomotive file.  This is also shown as yellow, since we're not
+certain that the file agrees with the decoder contents.
+<DT>Read<DD>The value shown has been read from the decoder.
+This is shown as white to indicate that the value is trustworthy.
+<DT>Stored<DD>The value show has been written to the decoder.
+This is also shown as white.
+<DT>Unknown<DD>If something goes wrong with the read or write process,
+we might have a completely untrustworthy result.  This results in
+the variable's state being marked as UNKNOWN and shown as red.
+</DL>
 <P>
-Note that the two tables have now been filled in. There are a lot of
-options for a Digitrax DH142 decoder, so there are a lot of rows. The
-scrollbars let you see more than fit on the screen.
+For example, after a "Read all" the speed table values are shown as 
+white:
 <P>
-You can now use the two tables to directly program a decoder in a locomotive on the
-programming track.  For example, to set the short address (CV1) to 23, all you 
-have to do is:
-<OL>
-<LI>Type "23" in the box next to CV1.
-<LI>Click "Write" on that line.
-<LI>If your command station permits it, you can read the CV back by clicking
-"Read" on the CV1 line.
-</ol>
-At this point, the lower table would look like:
+<IMG SRC="images/SpeedTableW75.gif" WIDTH="618" HEIGHT="387" HSPACE="0" VSPACE="0">
 <P>
-<IMG SRC="images/CV1stored.gif" WIDTH="492" HEIGHT="109" HSPACE="0" VSPACE="0">
+When you modify a value, its marked as yellow:
 <P>
-Notice that CV 1 shows "Stored" under status to indicate you've updated that CV.
-You can continue to program the rest of the CVs like this, but the upper table 
-provides a better way.
+<IMG SRC="images/ModSpeedTable75.gif" WIDTH="618" HEIGHT="387" HSPACE="0" VSPACE="0">
 <P>
-Reading the configuration file has loaded a number of "variables" into the
-upper table.  These are individual features of the decoder, basically anything
-that can be separately configured.  The simplest types are complete CVs like the
-address and momentum settings:
+Doing a write will set it back to white; doing a read will reset the
+value to the value in the decoder, and reset it to white.
+
 <P>
-<IMG SRC="images/simpleVar.gif" WIDTH="715" HEIGHT="101" HSPACE="0" VSPACE="0">
-<P>
-The name and value columns are the most useful, along with the Read and Write
-buttons. The range and state columns are reminders for you, and are described
-later.
-The "CV" and "Mask" columns show where the value for this variable will be stored.
-You generally don't have to worry about those, as the configuration file
-is supposed to have set them up right, and normally the window is small enough
-that they've scrolled off the right.
-<P>
-The values of the variables are kept consistent with the CV values in the lower
-table. Since we set CV1 to 23, the address variable is also showing a value of
-23.
-<P>Although having a name for a CV is nice, where this really helps is with
+Although having a name for an entire CV is nice, where this really helps is with
 complicated bit-mapped options.  Digitrax FX lighting options, for example,
-require configuring two sets of bits into one CV.  In the upper table of this
-programmer, that looks like (the columns have been slide wider so the entire
-names fit):
-<P>
-<IMG SRC="images/FX1.gif" WIDTH="510" HEIGHT="52" HSPACE="0" VSPACE="0">
-<P>
+require configuring two sets of bits into one CV. 
+Each selection box, checkbox or radiobutton is mapped to specific
+bit(s) in the decoder's CVs.  The programmer handles the 
+reading and writing of the CVs when the individual settings are changed.
 Instead of bits, you're working with the name or description from the 
-decoder manual. Pressing "Read" will then store the right bits into the
-CV without you having to do any combinations, etc.
-<P>If you want to change the selection, click on the value column to 
-get a pop-down list of possibilities:
+decoder manual. 
+
 <P>
-<IMG SRC="images/FXchoices.gif" WIDTH="338" HEIGHT="155" HSPACE="0" VSPACE="0">
+DecoderPro is meant to be easily configurable to add new 
+types of decoders. You can also add programmer sheets, 
+change their layout, and   
+even redo the entire appearance.
+To do that,
+DecoderPro is driven by human-readable files in XML format.  
+<A HREF="ConfigFile.html">Incomplete documentation</a> exists, and we hope to
+update it soon (November 2001).
 <P>
-"Mars light" is currently showing at the top because its selected. Click on
-another option to select it instead, then click "Write" to store it in the
-decoder.
+These files make it convenient to update DecoderPro to work
+with a new decoder.  For example, the unique capabilities of a
+Digitrax DH142 appear on a "Digitrax" sheet:
 <P>
-Once you have your locomotive programmed as you'd like, you can click
-"Write File" to store that configuration into a text file. That can then
-be read later as a starting point for changing the locomotives decoder
-settings.
+<IMG SRC="images/Digitrax75.gif" WIDTH="618" HEIGHT="387" HSPACE="0" VSPACE="0">
+<P>
+Additional decoder-specific variables and sheets can be added
+via configuration files. By choosing an industry-standard XML format for 
+decoder information, we
+hope to make it possible to create a complete library. Perhaps
+we can even interest manufacturers in documenting their products in this format.
+
+<P>
+Its also possible to program the CVs directly:
+<P>
+<IMG SRC="images/CVtable75.gif" WIDTH="504" HEIGHT="448" HSPACE="0" VSPACE="0">
+<P>
+
+<h3>Locomotive roster</h3>
+
+DecoderPro maintains a roster of your locomotives.  You can save the
+decoder configuration to a file, and then later work with CV values
+from the file.  This saves the time it takes to read a complete 
+decoder, which can be quite long. The roster can also store
+locomotive information for you.  
+The "Roster entry" sheet displays this info and allows you to edit it:
+<P>
+<IMG SRC="images/Roster75.gif" WIDTH="618" HEIGHT="387" HSPACE="0" VSPACE="0">
+<P>
+Click "Save" to store the information; you'll be reminded to do this
+if you close the programmer with any unstored information.
+<P>
+The "ID" field at the top is the name you'll later use to select
+this locomotive.  You can put whatever you'd like in it.
+For example, during the startup, you can
+select a specific locomotive to work with:
+<P>
+<IMG SRC="images/SelLoco.gif" WIDTH="462" HEIGHT="284" HSPACE="0" VSPACE="0">
+<P>
+The "Ident" button uses the DCC address to select a specific locomotive in 
+the roster.
+When you click "Open Programmer" with a specific locomotive selected, the
+programmer opens each sheet with the current values already present.
+
+<h3>More information</h3>
 
 <P>
 <A HREF="MoreInfo.html">More information on how this works</a> is available, as is
 <A HREF="../index.html">more information on other JMRI tools</A>.
 
 <h3>Availability</h3>
-The programmer is available in the current distributions of the JMRI demo.
+The programmer is available in the current distributions of the JMRI libraries,
+and separately packaged as the "DecoderPro" application. A development
+version for the Macintosh is available for download at
+<A HREF="http://prdownloads.sourceforge.net/jmri/DecoderPro.0.9b3.hqx">DecoderPro.0.9b3.hqx</A>.
+Before downloading, please read the 
+<A HREF="../demoFiles/DecoderPro.README.html">README file</A>.
+<P>
 Note that this is not a final version; the programmer is still being developed.  
 In part, this page
 exists to encourage people to suggest how it can be improved.  Please send any comments 
@@ -149,7 +205,7 @@ request started this whole effort! We take suggestions very seriously)
 </tr><tr bgcolor="#FFFFCC"><td align="center">
 <font face="arial,helvetica" size="-2">&#149;<b> Powered by <a href="http://www.netmind.com"><font color="#000000">NetMind</font></a> </b>&#149;</font>
 </td></tr></table>
-<input type=hidden value="http://jmri.sourceforge.net/SymbProg/index.html" name="REDIRECT"> 
+<input type=hidden value="http://jmri.sourceforge.net/PaneProg/index.html" name="REDIRECT"> 
 </form>
 <!-- End Small Box -->
  

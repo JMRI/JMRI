@@ -55,8 +55,8 @@ turnout positions, and program decoders.  Its rough, but its a start.
 <IMG SRC="images/TurnoutControl.jpg" ALT="Turnout control frame" WIDTH="223" HEIGHT="136" HSPACE="0" VSPACE="0">
 <IMG SRC="images/LocoMonFrame.jpg" ALT="LocoNet monitor sample image"  WIDTH="580" HEIGHT="396" HSPACE="0" VSPACE="0">
 <P>
-The current demo version also includes a  
-<A href="SymbProg/index.html">better tool for programming decoders</a>, which we 
+The JMRI libraries also form the basis of 
+<A href="PaneProg/index.html">DecoderPro, a better tool for programming decoders</a>, which we 
 we're trying to adapt to many types of decoders.
 <P>
 If you're interested in using it with other model railroad equipment, with or without DCC, please
@@ -93,6 +93,9 @@ from the latest demo is also available separately.
 
 There are several different ways to use JMRI:
 <OL>
+<LI>Use 
+<A HREF="PaneProg/index.html">DecoderPro</a> to configure your locomotive decoders and
+keep a roster.
 <LI>You can just run the demo and use the tools it provides.  As we
 add more and more, the demo becomes more useful.  But you shouldn't expect
 it to be as powerful as a commercial layout management program; JMRI
@@ -129,10 +132,15 @@ following links:
 
 <h3>Demo hardware requirements</h3>
 
+JMRI connects to a LocoNet via a Digitrax MS100 adapter or a LocoBuffer.
+NCE command stations connect directly to a serial port. For more information,
+please see the README files for 
+<A HREF="demoFiles/DecoderPro.README.html">DecoderPro</a>
+or the 
+<A HREF="demoFiles/README.html">JMRI demo</A>.
+<P>
 The demo is developed on a USB Macintosh, which is interfaced to a layout and LocoNet via
 a Keyspan PDA Adapter, DB9 to DB25 cable, and a Digitrax MS100.  
-It's not yet known whether a MS100 and simple
-adapter cable will work with a Macintosh that has the older style of RS422 (DIN8) serial ports.
 <P>
 PCs with a RS232 port should be able to connect directly to the MS100 with an appropriate cable.
 
@@ -182,7 +190,9 @@ has been patiently testing
 <LI>Jim Wells, who created our logo
 <LI>Freek Heite, who located some important XpressNet info
 <LI>Joseph Goldstone, who put together the javax.comm implementation for Mac OS X
-<LI>Mark Gurries, who provided loaner equipment and great ideas
+<LI>Mark Gurries, who provided loaner equipment and great ideas. He's currently
+working on decoder definitions for DecoderPro.
+<LI>Dave Falkenburg has contributed his work on the DecoderPro appplication.
 <LI>Jim Scorse, who gave generously of his time to answer questions about NCE details
 <LI>Bill Brown, whose layout was used for the first NCE tests
 
