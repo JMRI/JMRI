@@ -18,7 +18,7 @@ import jmri.TurnoutManager;
  * specific Turnout or AbstractTurnout subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
 
@@ -90,7 +90,7 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
             String userName = null;
             if ( ((Element)(turnoutList.get(i))).getAttribute("userName") != null)
             userName = ((Element)(turnoutList.get(i))).getAttribute("userName").getValue();
-
+            if (log.isDebugEnabled()) log.debug("create turnout: ("+sysName+")("+(userName==null?"<null>":userName)+")");
             tm.newTurnout(sysName, userName);
         }
     }
