@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: MERG_10.html,v 1.1 2003-11-29 06:03:35 jacobsen Exp $ -->
+<!-- $Id: MERG_10.xml,v 1.1 2003-11-29 06:09:58 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Len Royles len@len-royles.co.uk"
 			version="1"
