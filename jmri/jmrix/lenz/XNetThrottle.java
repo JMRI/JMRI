@@ -6,7 +6,7 @@ import jmri.jmrix.AbstractThrottle;
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
  * @author     Paul Bender (C) 2002,2003
- * @version    $Revision: 1.13 $
+ * @version    $Revision: 1.14 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -27,7 +27,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     {
        super();
        XNetTrafficController.instance().addXNetListener(~0, this);
-       //log.error("XnetThrottle constructor");
+       if (log.isDebugEnabled()) { log.debug("XnetThrottle constructor"); }
     }
 
     /**
@@ -42,6 +42,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
        this.isAvailable=false;
        XNetTrafficController.instance().addXNetListener(~0, this);
        sendStatusInformationRequest();
+       if (log.isDebugEnabled()) { log.debug("XnetThrottle constructor called for address " + address ); }
     }
 
     /**
@@ -520,6 +521,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
        XNetTrafficController.instance().sendXNetMessage(msg,this);
        requestState=THROTTLESTATSENT;
 
+
        /* next, send the request for function values */
        msg.setElement(0,XNetConstants.LOCO_STATUS_REQ);
        msg.setElement(1,XNetConstants.LOCO_INFO_REQ_FUNC);
@@ -545,18 +547,18 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     public void message(XNetMessage l) {
 	// First, we want to see if this throttle is waiting for a message 
         //or not.
-        //log.error("Throttle - recieved message ");
+               if (log.isDebugEnabled()) { log.debug("Throttle - recieved message "); }
 	if (requestState==THROTTLEIDLE) {
-	    //log.error("THROTTLEIDLE");
+	    if (log.isDebugEnabled()) { log.debug("Current throttle status is THROTTLEIDLE"); }
 	    // We haven't sent anything, but we might be told someone else 
 	    // has taken over this address
 	    if (l.getElement(0)==XNetConstants.LOCO_INFO_RESPONSE) {
-              //log.error("Throttle - message is LOCO_INFO_RESPONSE ");
+              if (log.isDebugEnabled()) { log.debug("Throttle - message is LOCO_INFO_RESPONSE "); }
 		if(l.getElement(1)==XNetConstants.LOCO_NOT_AVAILABLE) {
 	           /* the address is in bytes 3 and 4*/
 		   if(getDccAddressHigh()==l.getElement(2) && getDccAddressLow()==l.getElement(3)) {
 			//Set the Is available flag to "False"
-	              //log.error("Loco In use by another device");
+	              log.warn("Loco " +getDccAddress() + " In use by another device");
         	      notifyPropertyChangeListener("IsAvailable",
                 	                         new Boolean(this.isAvailable),
                         	                 new Boolean(this.isAvailable = false));
@@ -564,11 +566,12 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	       }
            }
 	} else if (requestState==THROTTLECMDSENT) {
-	    //log.error("THROTTLECMDSENT");
+	    	 if(log.isDebugEnabled()) { log.debug("Current throttle status is THROTTLECMDSENT"); }
 	    // For a Throttle Command, we're just looking for a return 
             // acknowledgment, Either a Success or Failure message.
 	    if(l.getElement(0)==XNetConstants.LI_MESSAGE_RESPONCE_HEADER &&
 	       l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONCE_SEND_SUCCESS) {
+	    	 if(log.isDebugEnabled()) { log.debug("Last Command processed successfully."); }
 		requestState=THROTTLEIDLE;
 	    } else if(l.getElement(0)==XNetConstants.LI_MESSAGE_RESPONCE_HEADER &&
                      ((l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONCE_UNKNOWN_DATA_ERROR ||
@@ -576,22 +579,25 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                        l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONCE_PC_DATA_ERROR ||
                        l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONCE_TIMESLOT_ERROR))) {
                      /* this is a communications error */
+                     log.error("Communications error occured - message recieved was: " + l);
 		     requestState=THROTTLEIDLE;
               } else if(l.getElement(0)==XNetConstants.CS_INFO &&
                         l.getElement(2)==XNetConstants.CS_NOT_SUPPORTED) {
                      /* The Command Station does not support this command */
+                     log.error("Unsupported Command Sent to command station");
 		     requestState=THROTTLEIDLE;
               } else {
                         /* this is an unknown error */
 		     requestState=THROTTLEIDLE;                        
+                     log.error("Recieved unhandled responce: " + l);
               }
 
 	} else if(requestState==THROTTLESTATSENT) {
-	    //log.error("THROTTLESTATSENT");
+	     if (log.isDebugEnabled()) { log.debug("Current throttle status is THROTTLESTATSENT"); }
 	     // This throttle has requested status information, so we need 
              // to process those messages.	
 	     if (l.getElement(0)==XNetConstants.LOCO_INFO_NORMAL_UNIT) {
-                //log.error("Throttle - message is LOCO_INFO_NORMAL_UNIT");
+                if(log.isDebugEnabled()) {log.debug("Throttle - message is LOCO_INFO_NORMAL_UNIT"); }
                 /* there is no address sent with this information */
 		int b1=l.getElement(1);
 		int b2=l.getElement(2);
@@ -605,7 +611,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                 //We've processed this request, so set the status to Idle.
 		requestState=THROTTLEIDLE;
 	    } else if (l.getElement(0)==XNetConstants.LOCO_INFO_MUED_UNIT) {
-                //log.error("Throttle - message is LOCO_INFO_MUED_UNIT ");
+                if(log.isDebugEnabled()) {log.debug("Throttle - message is LOCO_INFO_MUED_UNIT "); }
                 /* there is no address sent with this information */
 		int b1=l.getElement(1);
 		int b2=l.getElement(2);
@@ -623,7 +629,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 		requestState=THROTTLEIDLE;
 
 	    } else if (l.getElement(0)==XNetConstants.LOCO_INFO_DH_UNIT) {
-                //log.error("Throttle - message is LOCO_INFO_DH_UNIT ");
+                if(log.isDebugEnabled()) {log.debug("Throttle - message is LOCO_INFO_DH_UNIT "); }
                 /* there is no address sent with this information */
 		int b1=l.getElement(1);
 		int b2=l.getElement(2);
@@ -643,7 +649,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 		requestState=THROTTLEIDLE;
 
 	    } else if (l.getElement(0)==XNetConstants.LOCO_INFO_MU_ADDRESS) {
-                //log.error("Throttle - message is LOCO_INFO_MU ADDRESS ");
+                if(log.isDebugEnabled()) {log.debug("Throttle - message is LOCO_INFO_MU ADDRESS "); }
                 /* there is no address sent with this information */
 		int b1=l.getElement(1);
 		int b2=l.getElement(2);
@@ -655,12 +661,12 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 		requestState=THROTTLEIDLE;
 
 	    } else if (l.getElement(0)==XNetConstants.LOCO_INFO_RESPONSE) {
-                //log.error("Throttle - message is LOCO_INFO_RESPONSE ");
+                if(log.isDebugEnabled()) {log.debug("Throttle - message is LOCO_INFO_RESPONSE "); }
 		if(l.getElement(1)==XNetConstants.LOCO_NOT_AVAILABLE) {
 	           /* the address is in bytes 3 and 4*/
 		   if(getDccAddressHigh()==l.getElement(2) && getDccAddressLow()==l.getElement(3)) {
 			//Set the Is available flag to "False"
-	              //log.error("Loco In use by another device");
+                      log.warn("Loco "+ getDccAddress() + " In use by another device");
         	      notifyPropertyChangeListener("IsAvailable",
                 	                           new Boolean(this.isAvailable),
                         	                   new Boolean(this.isAvailable = false));
@@ -689,28 +695,28 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 
 	if((b1 & 0x08)==0x08 && isAvailable==true)
 	{
-           //log.error("Loco In use by another device");
+	   log.warn("Loco " +getDccAddress() + " In use by another device");
            notifyPropertyChangeListener("IsAvailable",
                                          new Boolean(this.isAvailable),
                                          new Boolean(this.isAvailable = false));
 	} else if ((b1&0x08)==0x00 && isAvailable==false) {
-           //log.error("Loco Is Available");
+           if(log.isDebugEnabled()) { log.debug("Loco Is Available"); }
 	   notifyPropertyChangeListener("IsAvailable",
 					new Boolean(this.isAvailable),
 					new Boolean(this.isAvailable = true));
 	}
 	if((b1 & 0x01)==0x01)
 	{
-           //log.error("Speed Step setting 27");
+           if(log.isDebugEnabled()) { log.debug ("Speed Step setting 27"); }
 	   this.speedIncrement=XNetConstants.SPEED_STEP_27_INCREMENT;
 	} else if((b1 & 0x02)==0x02) {
-           //log.error("Speed Step setting 28");
+           if(log.isDebugEnabled()) { log.debug("Speed Step setting 28"); }
            this.speedIncrement=XNetConstants.SPEED_STEP_28_INCREMENT;
 	} else if((b1 & 0x04)==0x04) {
-           //log.error("Speed Step setting 128");
+           if(log.isDebugEnabled()) { log.debug("Speed Step setting 128"); }
 	   this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;;
 	} else {
-           //log.error("Speed Step setting 14");
+           if(log.isDebugEnabled()) { log.debug("Speed Step setting 14"); }
     	   this.speedIncrement=XNetConstants.SPEED_STEP_14_INCREMENT;
 	}
     }
@@ -721,21 +727,20 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	/* the second byte indicates the speed and direction setting */
 
 	if ((b2 & 0x80)==0x80 && this.isForward==false) {
-           //log.error("Throttle - Direction Forward Locomotive:" +address);
+           if (log.isDebugEnabled ()) { log.debug("Throttle - Direction Forward Locomotive:" +address); }
    	   notifyPropertyChangeListener("IsForward",
 		 			new Boolean(this.isForward),
 					new Boolean(this.isForward=true));
-	   if(this.isForward==true)
-           {
-		//log.error("Throttle - Changed direction to Forward Locomotive:"+address);
+	   if(this.isForward==true) {
+		if(log.isDebugEnabled()) { log.debug("Throttle - Changed direction to Forward Locomotive:"+address); }
            }
 	} else if ((b2 & 0x80)==0x00 && this.isForward==true) {
-           //log.error("Throttle - Direction Reverse Locomotive:" +address);
+           if(log.isDebugEnabled()) { log.debug("Throttle - Direction Reverse Locomotive:" +address); }
 	   notifyPropertyChangeListener("IsForward",
 			 		new Boolean(this.isForward),
 					new Boolean(this.isForward=false));
 	   if(this.isForward==false) {
-		//log.error("Throttle - Changed direction to Reverse Locomotive:" +address);
+		if(log.isDebugEnabled()) { log.debug("Throttle - Changed direction to Reverse Locomotive:" +address);}
 	   }
 	}
 	if(this.speedIncrement==XNetConstants.SPEED_STEP_128_INCREMENT) {
