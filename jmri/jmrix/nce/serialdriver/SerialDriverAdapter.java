@@ -23,7 +23,7 @@ import jmri.jmrix.nce.*;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -122,7 +122,10 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
         // If a jmri.Programmer instance doesn't exist, create a
         // nce.NceProgrammer to do that
         if (jmri.InstanceManager.programmerManagerInstance() == null)
-            jmri.jmrix.nce.NceProgrammer.instance();
+            jmri.InstanceManager.setProgrammerManager(
+                new NceProgrammerManager(
+                    new NceProgrammer()));
+
 
         // If a jmri.PowerManager instance doesn't exist, create a
         // nce.NcePowerManager to do that

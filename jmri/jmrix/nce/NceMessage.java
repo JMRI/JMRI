@@ -10,7 +10,7 @@ package jmri.jmrix.nce;
  * not to the point of being usable.
  *
  * @author	        Bob Jacobsen  Copyright (C) 2001
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 public class NceMessage {
     // is this logically an abstract class?
@@ -150,13 +150,22 @@ public class NceMessage {
     private int _nDataChars = 0;
     private int _dataChars[] = null;
 
-    private static String addIntAsThree(int val, NceMessage m, int offset) {
+    static String addIntAsThree(int val, NceMessage m, int offset) {
         String s = ""+val;
         if (s.length() != 3) s = "0"+s;  // handle <10
         if (s.length() != 3) s = "0"+s;  // handle <100
         m.setElement(offset,s.charAt(0));
         m.setElement(offset+1,s.charAt(1));
         m.setElement(offset+2,s.charAt(2));
+        return s;
+    }
+
+    static String addIntAsTwoHex(int val, NceMessage m, int offset) {
+        String s = (""+Integer.toHexString(val)).toUpperCase();
+        if (s.length() < 2) s = "0"+s;  // handle one digit
+        if (s.length() > 2) log.error("can't add as two hex digits: "+s);
+        m.setElement(offset,s.charAt(0));
+        m.setElement(offset+1,s.charAt(1));
         return s;
     }
 
