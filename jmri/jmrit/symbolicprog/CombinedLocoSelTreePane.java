@@ -32,7 +32,7 @@ import java.util.Enumeration;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
 
@@ -157,7 +157,6 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
         }
         iddecoder.addActionListener( new ActionListener() {
         	public void actionPerformed(java.awt.event.ActionEvent e) {
-        		if (log.isInfoEnabled()) log.info("identify decoder pressed");
         		startIdentifyDecoder();
         	}
         });
@@ -171,6 +170,12 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
      */
     void updateForDecoderTypeID(List pList) {
         // find and select the first item
+        if (log.isDebugEnabled()) {
+            String msg = "Identified "+pList.size()+" matches: ";
+            for (int i = 0 ; i< pList.size(); i++)
+                msg = msg+((DecoderFile)pList.get(i)).getModel()+":";
+            log.debug(msg);
+        }
         if (pList.size()<=0) {
             log.error("Found empty list in updateForDecoderTypeID, should not happen");
             return;
