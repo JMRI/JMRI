@@ -2,17 +2,12 @@
 
 package jmri.jmrix.wangrow.serialdriver;
 
-import jmri.jmrix.nce.serialdriver.SerialDriverAdapter;
-
 /**
  * Definition of objects to handle configuring a layout connection
- * via an NCE SerialDriverAdapter object.
- * <P>
- * Note that this is not referencing Wangrow code, but is
- * using NCE code in place.  This should eventually be changed!
+ * via an Wagnrow SerialDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
