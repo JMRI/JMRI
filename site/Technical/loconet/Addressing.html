@@ -17,10 +17,21 @@ LocoNet systems address input sensors and output turnouts using numbers.
 This page talks about how those numbers are defined in JMRI, and how they relate
 to the numbers in other systems.
 
+<h2>Addressing LocoNet turnouts in JMRI</h2>
+
+Inside packets on the LocoNet, output turnouts are addressed with numbers from 0 to 4095.
+Throttles, however, address these with numbers from 1 to 4096. To avoid user
+confusion, JMRI uses the same numbering as the throttles:  LT1 to LT4096.
+<P>
+Note that the LocoNet monitor panel shows the contents of the LocoNet packets, hence
+0 to 4095.  Yes, that's confusing, but there has to be some confusion somewhere, given
+the way this was set up.
+
 <h2>Addressing LocoNet sensors in JMRI</h2>
 
 Inside packets on the LocoNet, sensors are addressed with numbers from 0 to 4095.
-JMRI uses this numbers for addresses, so the first sensor is number 0.
+Digitrax documentation refers to these as 1 to 4096, however.  Just like
+turnouts, we use the documentation numbering to define the sensor names: LS1 to LS4096.
 <P>
 The simplest way to find the 
 right number for a given block is to open a "LocoNet monitor" window, and drop a 
@@ -31,18 +42,9 @@ something like this:
    General sensor input report: contact 161 (DS54 20 ch1 Sw  input)
         (BDL16 10 A2) is Lo
 </PRE>
-The contact number, 161 in this case, is what you want.
+The contact number, 161 in this case, is the LocoNet address of the sensor.
+Add one to that to get the sensor name, e.g. LS162 in this case.
 <P>
-
-<h2>Addressing LocoNet turnouts in JMRI</h2>
-
-Inside packets on the LocoNet, output turnouts are addressed with numbers from 0 to 4095.
-Throttles, however, address these with numbers from 1 to 4096. To avoid user
-confusion, JMRI uses the same numbering as the throttles:  1 to 4096.
-<P>
-Note that the LocoNet monitor panel shows the contents of the LocoNet packets, hence
-0 to 4095.  Yes, that's confusing, but there has to be some confusion somewhere, given
-the way this was set up.
 
 <HR>
 <BR>Site hosted by: <BR>
