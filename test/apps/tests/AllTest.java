@@ -1,9 +1,9 @@
-/** 
+/**
  * AllTest.java
  *
  * Description:	    Driver for JMRI project test classes
  * @author			Bob Jacobsen
- * @version			
+ * @version			$Revision: 1.2 $
  */
 
 package apps.tests;
@@ -16,22 +16,21 @@ public class AllTest extends TestCase  {
 	public AllTest(String s) {
 		super(s);
 	}
-	
+
 	// note that initLogging has to be invoked _twice_ to get logging to
 	// work in both the test routines themselves, and also in the TestSuite
 	// code.  And even though it should be protected by a static, it runs
 	// twice!  There are probably two sets of classes being created here...
 
 	// Main entry point
-	static public void main(String[] args) { 
+	static public void main(String[] args) {
 		System.out.println("AllTest starts");
 		String[] testCaseName = {AllTest.class.getName()};
   		log = org.apache.log4j.Category.getInstance("jmri");
-		//initLogging();
 		// initialize junit
 		junit.swingui.TestRunner.main(testCaseName);
 	}
-		
+
 	// test suite
 	public static Test suite() {
 		initLogging();
@@ -41,10 +40,10 @@ public class AllTest extends TestCase  {
 		suite.addTest(jmri.jmrit.JmritTest.suite());
 		suite.addTest(jmri.jmrix.JmrixTest.suite());
 		suite.addTest(jmri.JmriTest.suite());
-		
+
 		return suite;
 	}
-	
+
 	static boolean log4jinit = true;
 	public static void initLogging() {
 		if (log4jinit) {
@@ -62,7 +61,7 @@ public class AllTest extends TestCase  {
      		}
 		}
 	}
-		
+
   	static org.apache.log4j.Category log = null;
 
 }
