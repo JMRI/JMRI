@@ -15,7 +15,7 @@ import javax.swing.JMenu;
  *
  * @see ActiveSystemsMenu
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class SystemsMenu extends JMenu {
     public SystemsMenu(String name) {
@@ -38,6 +38,7 @@ public class SystemsMenu extends JMenu {
         add(new jmri.jmrix.sprog.SPROGMenu());
         add(new jmri.jmrix.wangrow.WangrowMenu());
         add(new jmri.jmrix.lenz.XNetMenu());
+        add(new jmri.jmrix.xpa.XpaMenu());
         add(new jmri.jmrix.zimo.Mx1Menu());
 
     }
