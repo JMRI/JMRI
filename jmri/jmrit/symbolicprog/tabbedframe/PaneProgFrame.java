@@ -20,7 +20,7 @@ import org.jdom.*;
 /**
  * Frame providing a command station programmer from decoder definition files
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.27 $
+ * @version			$Revision: 1.28 $
  */
 abstract public class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
@@ -73,8 +73,10 @@ abstract public class PaneProgFrame extends javax.swing.JFrame
             }
         });
 
-
-        fileMenu.add(new PrintAction("Print ...", this));
+        JMenu printSubMenu = new JMenu("Print");
+        printSubMenu.add(new PrintAction("All ...", this));
+        printSubMenu.add(new PrintCvAction("CVs ...", cvModel, this));
+        fileMenu.add(printSubMenu);
 
         // add "Import" submenu; this is heirarchical because
         // some of the names are so long, and we expect more formats
@@ -604,7 +606,7 @@ abstract public class PaneProgFrame extends javax.swing.JFrame
         }
     }
 
-    void printInfoSection(HardcopyWriter w) {
+    public void printInfoSection(HardcopyWriter w) {
         ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("resources/decoderpro.gif"));
         // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
         w.write(icon.getImage(), new JLabel(icon));
