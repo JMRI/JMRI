@@ -24,7 +24,7 @@ import javax.swing.JTextField;
  * SignalHeadTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -172,13 +172,16 @@ public class SignalHeadTableAction extends AbstractTableAction {
             s = new jmri.jmrix.loconet.SE8cSignalHead(Integer.parseInt(to1.getText()),name.getText());
             InstanceManager.signalHeadManagerInstance().register(s);
         } else if (TripleTurnout.equals(typeBox.getSelectedItem())) {
-            Turnout t1 = InstanceManager.turnoutManagerInstance().getTurnout(to1.getText());
-            Turnout t2 = InstanceManager.turnoutManagerInstance().getTurnout(to2.getText());
-            Turnout t3 = InstanceManager.turnoutManagerInstance().getTurnout(to3.getText());
-            if (t1==null) log.warn("Could not find turnout "+to1.getText());
-            if (t2==null) log.warn("Could not find turnout "+to2.getText());
-            if (t3==null) log.warn("Could not find turnout "+to3.getText());
-            if (t3==null || t2==null || t1==null) return;
+            Turnout t1 = InstanceManager.turnoutManagerInstance().provideTurnout(to1.getText());
+            Turnout t2 = InstanceManager.turnoutManagerInstance().provideTurnout(to2.getText());
+            Turnout t3 = InstanceManager.turnoutManagerInstance().provideTurnout(to3.getText());
+            if (t1==null) log.warn("Could not provide turnout "+to1.getText());
+            if (t2==null) log.warn("Could not provide turnout "+to2.getText());
+            if (t3==null) log.warn("Could not provide turnout "+to3.getText());
+            if (t3==null || t2==null || t1==null) {
+                log.warn("skipping creation of signal "+name.getText()+" due to error");
+                return;
+            }
             s = new jmri.TripleTurnoutSignalHead(name.getText(),t1, t2, t3);
             InstanceManager.signalHeadManagerInstance().register(s);
         } else log.error("Unexpected type: "+typeBox.getSelectedItem());
