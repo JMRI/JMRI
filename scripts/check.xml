@@ -1,6 +1,6 @@
 <!-- Special build file for doing Java 1.1.8 compatibility tests -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.5 $ -->
+<!-- Revision $Revision: 1.6 $ -->
 
 <project name="JMRI" default="check" basedir=".">
 
@@ -17,6 +17,7 @@
   <property name="test" value="test"/>
   <property name="target" value="classes"/>
   <property name="jartarget" value=".."/>
+  <property name="jarname" value="jmri.jar"/>
 
   <path id="project.class.path">
     <pathelement location="../lib/collections.jar" />
@@ -156,13 +157,13 @@
 
   <target name="jar" depends="compile, rmic"  
           description="create working jar file with current contents">
-    <jar jarfile="${jartarget}/jmri118.jar" 
+    <jar jarfile="${jartarget}/${jarname}" 
          basedir="${target}"
          manifest="manifest" 
          compress="true" />   <!-- compress="true" is default -->
     <!-- create the index, using the information in the manifest -->
     <exec executable="jar" dir="${jartarget}">
-    	<arg line="i jmri118.jar"/>
+    	<arg line="i ${jarname}"/>
     </exec>
   </target>
 
