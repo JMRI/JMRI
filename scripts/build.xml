@@ -1,6 +1,6 @@
 <!-- ugly first attempt at an ANT build.xml file for JMRI development -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.14 $ -->
+<!-- Revision $Revision: 1.15 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -106,10 +106,6 @@
   </target>
 
   <target name="jar" depends="compile, rmic">
-    <echo>
-    You should remove the classes directory first if
-    creating a distribution jar
-    </echo>
     <jar jarfile="${jartarget}/jmri.jar" basedir="${target}" />
   </target>
 
@@ -137,6 +133,10 @@
       <arg value="jacobsen@jmri.sf.net:htdocs/Technical/"/>
     </exec>
   </target>
+
+ <target name="dist" depends="clean, init, compile, rmic, jar"/>
+
+ <!-- items below here are obsolete, kept only as examples -->
 
   <!-- make update distribution .zip file -->
   <target name="makeupdate" depends="compile, jar">
