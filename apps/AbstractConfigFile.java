@@ -15,16 +15,20 @@ import org.jdom.output.*;
  * application. Works with the AbstractConfigFrame
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version		 	$Revision: 1.7 $
+ * @version		 	$Revision: 1.8 $
  * @see apps.AbstractConfigFrame
  */
 abstract public class AbstractConfigFile extends XmlFile {
 
     public void readFile(String name) throws java.io.FileNotFoundException, org.jdom.JDOMException {
         Element root = rootFromName(name);
-        _connection = root.getChild("connection");
+        readConnection(root);
         _gui = root.getChild("gui");
         _programmer = root.getChild("programmer");
+    }
+
+    protected void readConnection(Element root) {
+        _connection = root.getChild("connection");
     }
 
     // access to the three elements
@@ -40,9 +44,9 @@ abstract public class AbstractConfigFile extends XmlFile {
         return _programmer;
     }
 
-    Element _connection;
-    Element _gui;
-    Element _programmer;
+    protected Element _connection;
+    protected Element _gui;
+    protected Element _programmer;
 
     public void writeFile(String name, AbstractConfigFrame f) {
         try {
@@ -57,9 +61,10 @@ abstract public class AbstractConfigFile extends XmlFile {
             Document doc = new Document(root);
             doc.setDocType(new DocType("preferences-config","preferences-config.dtd"));
 
-            // add connection element
             Element values;
-            root.addContent(f.getCommPane().getConnection());
+
+            // add connection element
+            writeConnection(root, f);
 
             // add gui element
             root.addContent(f.getGUI());
@@ -79,6 +84,11 @@ abstract public class AbstractConfigFile extends XmlFile {
             log.error(e);
             e.printStackTrace();
         }
+    }
+
+    protected void writeConnection(Element root, AbstractConfigFrame f) {
+        // add connection element
+        root.addContent(f.getCommPane().getConnection());
     }
 
     abstract protected String configFileName();

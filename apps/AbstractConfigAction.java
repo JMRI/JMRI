@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
  * Abstract base action to create a ConfigFrame
  *
  * @author	Bob Jacobsen    Copyright (C) 2001
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 abstract public class AbstractConfigAction 			extends AbstractAction {
 
@@ -87,7 +87,7 @@ abstract public class AbstractConfigAction 			extends AbstractAction {
     public String getCurrentProtocolName() { return (frame != null ? frame.getCommPane().getCurrentProtocolName():null); }
     public String getCurrentPortName() { return (frame != null ? frame.getCommPane().getCurrentPortName():null); }
 
-    AbstractConfigFrame frame = null;
+    protected AbstractConfigFrame frame = null;
 
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractConfigAction.class.getName());

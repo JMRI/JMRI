@@ -24,7 +24,7 @@ import org.jdom.Attribute;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002. AC 11/09/2002 Added SPROG support
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.22 $
  */
 abstract public class AbstractConfigFrame extends JFrame {
 
@@ -33,8 +33,7 @@ abstract public class AbstractConfigFrame extends JFrame {
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         // create the GUI in steps
-        commPane = new DefaultCommConfigPane();
-        getContentPane().add(commPane);
+        addCommPane();
         getContentPane().add(createGUIPane());
         getContentPane().add(createProgrammerPane());
 
@@ -53,7 +52,12 @@ abstract public class AbstractConfigFrame extends JFrame {
         pack();
     }
 
-    DefaultCommConfigPane commPane;
+    protected void addCommPane() {
+        commPane = new DefaultCommConfigPane(availableProtocols());
+        getContentPane().add(commPane);
+    }
+
+    protected DefaultCommConfigPane commPane;
 
     public DefaultCommConfigPane getCommPane() { return commPane; }
 
@@ -180,7 +184,7 @@ abstract public class AbstractConfigFrame extends JFrame {
         return e;
     }
 
-    boolean configureGUI(Element e) {
+    protected boolean configureGUI(Element e) {
         String name = e.getAttribute("LAFclass").getValue();
         String className = (String) installedLAFs.get(name);
         log.debug("GUI selection: "+name+" class name: "+className);
@@ -249,7 +253,7 @@ abstract public class AbstractConfigFrame extends JFrame {
 		return programmer;
 	}
 
-	boolean configureProgrammer(Element e) {
+	protected boolean configureProgrammer(Element e) {
 		jmri.jmrit.symbolicprog.CombinedLocoSelPane.setDefaultProgFile(e.getAttribute("defaultFile").getValue());
 		programmerBox.setSelectedItem(e.getAttribute("defaultFile").getValue());
 		return true;

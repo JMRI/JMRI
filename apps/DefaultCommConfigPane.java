@@ -24,49 +24,23 @@ import org.jdom.Attribute;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002. AC 11/09/2002 Added SPROG support
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class DefaultCommConfigPane extends JPanel {
 
-    public DefaultCommConfigPane() {
+    String[] mProtocols;
+
+    public DefaultCommConfigPane(String[] pProtocols) {
         super();
-        
+        mProtocols = pProtocols;
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // create the GUI in steps
         add(createConnectionPane());
+
     }
-    
-    /**
-     * Overload this to subset the list of available protocols
-     * The supported list is:<UL>
-     * <LI>"NCE"
-     * <LI>"LocoNet LocoBuffer"
-     * <LI>"LocoNet MS100"
-     * <LI>"LocoNet Server"
-     * <LI>"LocoNet HexFile"
-     * <LI>"CMRI serial"
-     * <LI>"EasyDCC"
-     * <LI>"Lenz XPressNet"
-     * <LI>"SPROG"
-     * </UL>
-     * DecoderPro and JmriDemo are known to overload, hence may have to
-     * be edited when this is changed.
-     * @see apps.DecoderPro.DecoderProConfigFrame
-     * @see apps.JmriDemo.JmriDemoConfigFrame
-     * @return List of available protocols.
-     */
-    public String[] availableProtocols() {
-        return  new String[] {"(None selected)",
-                              "CMRI serial",
-                              "EasyDCC",
-                              "Lenz XPressNet",
-                              "LocoNet LocoBuffer","LocoNet MS100",
-                              "LocoNet Server", "LocoNet HexFile",
-                              "NCE",
-                              "SPROG"
-        };
-    }
-    
+
+
     /**
      * Command reading the configuration, and setting it into the application.
      * Returns true if
@@ -78,23 +52,23 @@ public class DefaultCommConfigPane extends JPanel {
     public boolean configure(AbstractConfigFile file) throws jmri.JmriException {
         return configureConnection(file.getConnectionElement());
     }
-    
+
     JComboBox protocolBox;
     JComboBox portBox;
     JComboBox baudBox;
     JComboBox opt1Box;
     JComboBox opt2Box;
-    
+
     /*
      * Create a panel showing the valid connection methods and port names
      */
     JPanel createConnectionPane() {
     	JPanel j = new JPanel();
-        
+
     	JLabel l;
-        
+
     	j.setLayout(new GridLayout(5,2));
-    	protocolBox = new JComboBox(availableProtocols());
+    	protocolBox = new JComboBox(mProtocols);
     	protocolBox.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     protocolSelected();
@@ -104,7 +78,7 @@ public class DefaultCommConfigPane extends JPanel {
         l = new JLabel("Layout connection: ");
         j.add(l);
         j.add(protocolBox);
-        
+
         portBox = new JComboBox(new String[] {"(select a connection method first)"});
         portBox.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -113,11 +87,11 @@ public class DefaultCommConfigPane extends JPanel {
             });
         portBox.setToolTipText("This is disabled until you select a connection method");
         portBox.setEnabled(false);
-        
+
         l = new JLabel("Serial port: ");
         j.add(l);
         j.add(portBox);
-        
+
         baudBox = new JComboBox(new String[] {"(select a connection method first)"});
         baudBox.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -126,11 +100,11 @@ public class DefaultCommConfigPane extends JPanel {
             });
         baudBox.setToolTipText("This is disabled until you select a connection method");
         baudBox.setEnabled(false);
-        
+
         l = new JLabel("Baud rate: ");
         j.add(l);
         j.add(baudBox);
-        
+
         opt1Box = new JComboBox(new String[] {"(select a connection method first)"});
         opt1Box.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -139,11 +113,11 @@ public class DefaultCommConfigPane extends JPanel {
             });
         opt1Box.setToolTipText("This is disabled until you select a connection method");
         opt1Box.setEnabled(false);
-        
+
         l = new JLabel("Communications option: ");
         j.add(l);
         j.add(opt1Box);
-        
+
         opt2Box = new JComboBox(new String[] {"(select a connection method first)"});
         opt2Box.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -152,14 +126,14 @@ public class DefaultCommConfigPane extends JPanel {
             });
         opt2Box.setToolTipText("This is disabled until you select a connection method");
         opt2Box.setEnabled(false);
-        
+
         l = new JLabel("Command station option: ");
         j.add(l);
         j.add(opt2Box);
-        
+
         return j;
     }
-    
+
     /*
      * Connection method has been selected; show available ports
      */
@@ -168,14 +142,14 @@ public class DefaultCommConfigPane extends JPanel {
             portBox.setEnabled(true);
             portBox.setEditable(false);
             portBox.setToolTipText("Select a communications port");
-            
+
             // create the eventual serial driver object, and ask it for available comm ports
             protocolName = (String) protocolBox.getSelectedItem();
             portBox.removeAllItems();  // start over
             baudBox.removeAllItems();  // start over
             opt1Box.removeAllItems();  // start over
             opt2Box.removeAllItems();  // start over
-            
+
             log.debug("Connection selected: "+protocolName);
             if (protocolName.equals("LocoNet LocoBuffer")) {
                 //
@@ -193,7 +167,7 @@ public class DefaultCommConfigPane extends JPanel {
                 for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
                 String[] opt2List = a.validOption2();
                 for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
-                
+
                 if (baudList.length>1) {
                     baudBox.setToolTipText("Must match the baud rate setting of your hardware");
                     baudBox.setEnabled(true);
@@ -215,7 +189,7 @@ public class DefaultCommConfigPane extends JPanel {
                     opt2Box.setToolTipText("There are no options for this protocol");
                     opt2Box.setEnabled(false);
                 }
-                
+
             } else if (protocolName.equals("LocoNet MS100")) {
                 //
                 jmri.jmrix.loconet.ms100.MS100Adapter a
@@ -232,7 +206,7 @@ public class DefaultCommConfigPane extends JPanel {
                 for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
                 String[] opt2List = a.validOption2();
                 for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
-                
+
                 if (baudList.length>1) {
                     baudBox.setToolTipText("Must match the baud rate setting of your hardware");
                     baudBox.setEnabled(true);
@@ -254,34 +228,34 @@ public class DefaultCommConfigPane extends JPanel {
                     opt2Box.setToolTipText("There are no options for this protocol");
                     opt2Box.setEnabled(false);
                 }
-                
+
             } else if (protocolName.equals("LocoNet HexFile")) {
                 //
                 log.debug("HexFile has no ports to find");
-                
+
                 baudBox.setToolTipText("The baud rate is fixed for this protocol");
                 baudBox.setEnabled(false);
-                
+
                 opt1Box.setToolTipText("There are no options for this protocol");
                 opt1Box.setEnabled(false);
-                
+
                 opt2Box.setToolTipText("There are no options for this protocol");
                 opt2Box.setEnabled(false);
-                
+
             } else if (protocolName.equals("LocoNet Server")) {
                 // This is somewhat special, as the option has to
                 // allow editting in a host name
                 portBox.setEditable(true);
     	    	portBox.setToolTipText("Enter a server hostname");
-                
+
                 baudBox.setToolTipText("Don't need to specify baud rate");
                 baudBox.setEnabled(false);
-                
+
                 opt1Box.setToolTipText("There are no options for this protocol");
                 opt1Box.setEnabled(false);
                 opt2Box.setToolTipText("There are no options for this protocol");
                 opt2Box.setEnabled(false);
-                
+
             } else if (protocolName.equals("NCE")) {
                 //
                 jmri.jmrix.nce.serialdriver.SerialDriverAdapter a
@@ -298,7 +272,7 @@ public class DefaultCommConfigPane extends JPanel {
                 for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
                 String[] opt2List = a.validOption2();
                 for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
-                
+
                 if (baudList.length>1) {
                     baudBox.setToolTipText("Must match the baud rate setting of your hardware");
                     baudBox.setEnabled(true);
@@ -336,7 +310,7 @@ public class DefaultCommConfigPane extends JPanel {
                 for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
                 String[] opt2List = a.validOption2();
                 for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
-                
+
                 if (baudList.length>1) {
                     baudBox.setToolTipText("Must match the baud rate setting of your hardware");
                     baudBox.setEnabled(true);
@@ -358,7 +332,7 @@ public class DefaultCommConfigPane extends JPanel {
                     opt2Box.setToolTipText("There are no options for this protocol");
                     opt2Box.setEnabled(false);
                 }
-                
+
             } else if (protocolName.equals("SPROG")) {
                 //
                 jmri.jmrix.sprog.serialdriver.SerialDriverAdapter a
@@ -375,7 +349,7 @@ public class DefaultCommConfigPane extends JPanel {
                 for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
                 String[] opt2List = a.validOption2();
                 for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
-                
+
                 if (baudList.length>1) {
                     baudBox.setToolTipText("Must match the baud rate setting of your hardware");
                     baudBox.setEnabled(true);
@@ -397,8 +371,8 @@ public class DefaultCommConfigPane extends JPanel {
                     opt2Box.setToolTipText("There are no options for this protocol");
                     opt2Box.setEnabled(false);
                 }
-                
-                
+
+
             } else if (protocolName.equals("Lenz XPressNet")) {
                 //
                 jmri.jmrix.lenz.li100.LI100Adapter a
@@ -415,7 +389,7 @@ public class DefaultCommConfigPane extends JPanel {
                 for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
                 String[] opt2List = a.validOption2();
                 for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
-                
+
                 if (baudList.length>1) {
                     baudBox.setToolTipText("Must match the baud rate setting of your hardware");
                     baudBox.setEnabled(true);
@@ -437,7 +411,7 @@ public class DefaultCommConfigPane extends JPanel {
                     opt2Box.setToolTipText("There are no options for this protocol");
                     opt2Box.setEnabled(false);
                 }
-                
+
             } else if (protocolName.equals("CMRI serial")) {
                 //
                 jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter a
@@ -454,7 +428,7 @@ public class DefaultCommConfigPane extends JPanel {
                 for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
                 String[] opt2List = a.validOption2();
                 for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
-                
+
                 if (baudList.length>1) {
                     baudBox.setToolTipText("Must match the baud rate setting of your hardware");
                     baudBox.setEnabled(true);
@@ -503,42 +477,42 @@ public class DefaultCommConfigPane extends JPanel {
             System.exit(0);
         }
     }
-    
+
     /*
      * Port name has been selected; store
      */
     void portSelected() {
         portName = (String) portBox.getSelectedItem();
     }
-    
+
     /*
      * Baud rate has been selected; store
      */
     void baudSelected() {
         baudRate = (String) baudBox.getSelectedItem();
     }
-    
+
     /*
      * Option1 value has been selected; store
      */
     void opt1Selected() {
         option1Setting = (String) opt1Box.getSelectedItem();
     }
-    
+
     /*
      * Option2 value has been selected; store
      */
     void opt2Selected() {
         option2Setting = (String) opt2Box.getSelectedItem();
     }
-    
+
     jmri.jmrix.SerialPortAdapter port = null;
     String protocolName = "(None selected)";
     String portName = "(None selected)";
     String baudRate = "(None selected)";
     String option1Setting = "(None selected)";
     String option2Setting = "(None selected)";
-    
+
     public Element getConnection() {
         Element e = new Element("connection");
         // many of the following are required by the DTD; failing to include
@@ -546,42 +520,42 @@ public class DefaultCommConfigPane extends JPanel {
         // invocation of the program can then continue.
         if (getCurrentProtocolName()!=null)
             e.addAttribute("class", getCurrentProtocolName());
-        
+
         if (getCurrentPortName()!=null)
             e.addAttribute("port", getCurrentPortName());
         else e.addAttribute("port", "(None selected)");
-        
+
         if (getCurrentBaudRate()!=null)
             e.addAttribute("speed", getCurrentBaudRate());
         else e.addAttribute("speed", "(None selected)");
-        
+
         if (getCurrentOption1Setting()!=null)
             e.addAttribute("option1", getCurrentOption1Setting());
         else e.addAttribute("option1", "(None selected)");
-        
+
         if (getCurrentOption2Setting()!=null)
             e.addAttribute("option2", getCurrentOption2Setting());
         else e.addAttribute("option2", "(None selected)");
-        
+
         return e;
     }
-    
+
     public String getCurrentProtocolName() { return protocolName; }
     public String getCurrentPortName() { return portName; }
     public String getCurrentBaudRate() { return baudRate; }
     public String getCurrentOption1Setting() { return option1Setting; }
     public String getCurrentOption2Setting() { return option2Setting; }
-    
-    boolean configureConnection(Element e) throws jmri.JmriException {
+
+    public boolean configureConnection(Element e) throws jmri.JmriException {
         protocolName = e.getAttribute("class").getValue();
-        
+
         // check that the config file has a protocol selected
         if (protocolName.equals("(None selected)")) return false;
-        
+
         protocolBox.setSelectedItem(protocolName);
         // note that the line above will _change_ the value of portName, as it
         // selects a default and runs the GUI config for that protocol
-        
+
         // configure port name
         portName = e.getAttribute("port").getValue();
         // ugly special-case hack: skip parts for certain protocols
@@ -596,7 +570,7 @@ public class DefaultCommConfigPane extends JPanel {
                                               "Error", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
-            
+
             if (!protocolName.equals("LocoNet Server")) {
                 // configure baud rate - an optional attribute
                 if (e.getAttribute("speed")!=null) {
@@ -610,7 +584,7 @@ public class DefaultCommConfigPane extends JPanel {
                         return false;
                     }
                 }
-                
+
                 // configure option1 - an optional attribute
                 if (e.getAttribute("option1")!=null) {
                     option1Setting = e.getAttribute("option1").getValue();
@@ -623,7 +597,7 @@ public class DefaultCommConfigPane extends JPanel {
                         return false;
                     }
                 }
-                
+
                 // configure option2 - an optional attribute
                 if (e.getAttribute("option2")!=null) {
                     option2Setting = e.getAttribute("option2").getValue();
@@ -638,7 +612,7 @@ public class DefaultCommConfigPane extends JPanel {
                 }
             }
         } // end of HexFile special-case hack
-        
+
         // handle the specific case (a good use for reflection!)
         log.info("Configuring connection with "+protocolName+" "+portName);
         if (protocolName.equals("LocoNet LocoBuffer")) {
@@ -660,7 +634,7 @@ public class DefaultCommConfigPane extends JPanel {
                                               +"Reset the LocoBuffer by cycling its power.",
                                               "LocoBuffer not ready", JOptionPane.ERROR_MESSAGE);
             }
-            
+
         } else if (protocolName.equals("LocoNet MS100")) {
             //
             jmri.jmrix.loconet.ms100.MS100Adapter a
@@ -668,7 +642,7 @@ public class DefaultCommConfigPane extends JPanel {
             a.openPort(portName, "JMRI/DecoderPro");
             a.configure();
             a.configureOption2(getCurrentOption2Setting());
-            
+
         } else if (protocolName.equals("LocoNet HexFile")) {
             // pop the panel
             jmri.jmrix.loconet.hexfile.HexFileFrame f
@@ -680,39 +654,39 @@ public class DefaultCommConfigPane extends JPanel {
             }
             f.pack();
             f.show();
-            
+
         } else if (protocolName.equals("LocoNet Server")) {
             // slightly different, as not based on a serial port...
             // create the LnMessageClient
             jmri.jmrix.loconet.locormi.LnMessageClient client = new jmri.jmrix.loconet.locormi.LnMessageClient();
-            
+
             // start the connection
             client.configureRemoteConnection(portName, 500);
-            
+
             // configure the other instance objects
             client.configureLocalServices();
-            
+
         } else if (protocolName.equals("NCE")) {
             //
             jmri.jmrix.nce.serialdriver.SerialDriverAdapter a
                 = new jmri.jmrix.nce.serialdriver.SerialDriverAdapter();
             a.openPort(portName, "JMRI/DecoderPro");
             a.configure();
-            
+
         } else if (protocolName.equals("EasyDCC")) {
             //
             jmri.jmrix.easydcc.serialdriver.SerialDriverAdapter a
                 = new jmri.jmrix.easydcc.serialdriver.SerialDriverAdapter();
             a.openPort(portName, "JMRI/DecoderPro");
             a.configure();
-            
+
         } else if (protocolName.equals("SPROG")) {
             //
             jmri.jmrix.sprog.serialdriver.SerialDriverAdapter a
                 = new jmri.jmrix.sprog.serialdriver.SerialDriverAdapter();
             a.openPort(portName, "JMRI/DecoderPro");
             a.configure();
-            
+
         } else if (protocolName.equals("Lenz XPressNet")) {
             //
             jmri.jmrix.lenz.li100.LI100Adapter a
@@ -721,7 +695,7 @@ public class DefaultCommConfigPane extends JPanel {
             a.configureOption1(getCurrentOption1Setting());
             a.openPort(portName, "JMRI/DecoderPro");
             a.configure();
-            
+
         } else if (protocolName.equals("CMRI serial")) {
             //
             jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter a
@@ -731,17 +705,17 @@ public class DefaultCommConfigPane extends JPanel {
             a.configureOption2(getCurrentOption2Setting());
             a.openPort(portName, "JMRI/DecoderPro");
             a.configure();
-            
+
         } else {
             // selected no match, so throw an error
             throw new jmri.JmriException();
         }
-        
+
         return true;
     }
-    
+
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractConfigFrame.class.getName());
-    
+
 }
 
