@@ -2,17 +2,24 @@
 
 package jmri.jmrit.symbolicprog;
 
-import jmri.jmrit.XmlFile;
-import jmri.jmrit.roster.*;
-import jmri.jmrit.decoderdefn.*;
-
-import java.awt.*;
-import java.io.File;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.border.*;
-import java.beans.PropertyChangeListener;
+import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.decoderdefn.DecoderIndexFile;
+import jmri.jmrit.decoderdefn.IdentifyDecoder;
+import jmri.jmrit.roster.IdentifyLoco;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JToggleButton;
+import javax.swing.border.EmptyBorder;
+
 import com.sun.java.util.collections.List;
 
 /**
@@ -36,7 +43,7 @@ import com.sun.java.util.collections.List;
  * </UL>
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeListener {
 

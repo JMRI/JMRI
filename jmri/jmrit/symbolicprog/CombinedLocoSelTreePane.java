@@ -2,22 +2,27 @@
 
 package jmri.jmrit.symbolicprog;
 
-import jmri.jmrit.XmlFile;
-import jmri.jmrit.roster.*;
-import jmri.jmrit.decoderdefn.*;
-
-import java.awt.*;
-import java.io.File;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.tree.*;
-import javax.swing.border.*;
-import javax.swing.event.*;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-import com.sun.java.util.collections.List;
-import com.sun.java.util.collections.ArrayList;
+import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.decoderdefn.DecoderIndexFile;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
+import java.awt.event.ActionListener;
 import java.util.Enumeration;
+
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JToggleButton;
+import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.DefaultTreeSelectionModel;
+import javax.swing.tree.TreePath;
+
+import com.sun.java.util.collections.List;
 
 /**
  * Provide GUI controls to select a known loco and/or new decoder.
@@ -32,7 +37,7 @@ import java.util.Enumeration;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
 
