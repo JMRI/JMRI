@@ -1,9 +1,9 @@
-/** 
+/**
  * SimpleTurnoutCtrlFrame.java
  *
  * Description:		Frame controlling a single turnout
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			
+ * @version
  */
 
 package jmri.jmrit.simpleturnoutctrl;
@@ -20,10 +20,10 @@ public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.b
 	// GUI member declarations
 	javax.swing.JLabel textAdrLabel = new javax.swing.JLabel();
 	javax.swing.JTextField adrTextField = new javax.swing.JTextField(3);
-		
+
 	javax.swing.JButton throwButton = new javax.swing.JButton();
 	javax.swing.JButton closeButton = new javax.swing.JButton();
-	
+
 	javax.swing.JLabel textStateLabel = new javax.swing.JLabel();
 	javax.swing.JLabel nowStateLabel = new javax.swing.JLabel();
 
@@ -71,22 +71,22 @@ public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.b
 
 		getContentPane().add(textStateLabel);
 		getContentPane().add(nowStateLabel);
-		
+
 		getContentPane().add(throwButton);
 		getContentPane().add(closeButton);
 
 		pack();
-		
+
 	}
-  
+
   	private boolean mShown = false;
-  	
+
 	public void addNotify() {
 		super.addNotify();
-		
+
 		if (mShown)
 			return;
-			
+
 		// resize frame to account for menubar
 		JMenuBar jMenuBar = getJMenuBar();
 		if (jMenuBar != null) {
@@ -103,7 +103,7 @@ public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.b
 		setVisible(false);
 		dispose();
 	}
-	
+
 
 	public void closeButtonActionPerformed(java.awt.event.ActionEvent e) {
 		// load address from switchAddrTextField
@@ -147,13 +147,13 @@ public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.b
 		if (e.getPropertyName().equals("CommandedState")) {
 			int now = ((Integer) e.getNewValue()).intValue();
 			switch (now) {
-				case Turnout.UNKNOWN: 
+				case Turnout.UNKNOWN:
 					nowStateLabel.setText("<unknown>");
 					return;
-				case Turnout.CLOSED: 
+				case Turnout.CLOSED:
 					nowStateLabel.setText("Closed");
 					return;
-				case Turnout.THROWN: 
+				case Turnout.THROWN:
 					nowStateLabel.setText("Thrown");
 					return;
 				default:
@@ -164,8 +164,8 @@ public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.b
 	}
 
 	Turnout turnout = null;
-	
+
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SimpleTurnoutCtrlFrame.class.getName());
 
-String newState = "";
+    String newState = "";
 }
