@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_DSX_Steam.xml,v 1.1 2002-02-20 16:05:36 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_DSX_Steam.xml,v 1.2 2002-04-08 06:06:40 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Robin Becker" version="4" lastUpdated="20020217"/>
 
@@ -9,17 +9,17 @@
 <decoder>
 	<family name="DSX Steam" mfg="Throttle-Up"
 			lowVersionID="6" highVersionID="7">
-		<model model="DSX Steam" numOuts="1" numFns="8">
-			<output name="3" label="F1/grn" />
-			<output name="4" label="F5/brwn" />
+		<model model="DSX Steam" numOuts="0" numFns="8">
+			<!--output name="3" label="F1/grn" /-->
 			<output name="Whistle"/>
 			<output name="Bell"/> 
 			<output name="Hiss"/> 
+			<!-- output name="4" label="F5/brwn" /-->
 			<output name="Dynamo"/> 
 			<output name="Coupler"/> 
 			<output name="Mute"/> 
-			<!-- The four electical outputs are front headlight, back -->
-			<!-- headlight, F1 output, F5 output -->
+			<!-- There are no electrical outputs -->
+			<!-- for the DSX version -->
 			</model>
 	</family>
 
