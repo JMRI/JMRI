@@ -1,0 +1,80 @@
+Metrowerks RAD Data V 1
+BeginClasses
+    {9BE3D9E0-166E-11D1-B2D8-0060081C5489} "#base-object-class"
+    {24A693F8-14E5-11D2-B334-00600819ADE3} "LocoMonAppl"
+    {5FA17216-8612-11D1-B2AD-006008A5C0A5} "Frame1"
+    {AF105FF8-70D9-11D1-B010-00805F6114CC} "javax.swing.JTextField"
+    {AF105FF8-70D9-11D1-B010-00805F6114CC} "javax.swing.JButton"
+    {5FA17216-8612-11D1-B2AD-006008A5C0A5} "LocoMonGen"
+    {AF105FF8-70D9-11D1-B010-00805F6114CC} "javax.swing.JLabel"
+    {AF105FF8-70D9-11D1-B010-00805F6114CC} "javax.swing.JCheckBox"
+    {5FA17216-8612-11D1-B2AD-006008A5C0A5} "MS100Frame"
+    {AF105FF8-70D9-11D1-B010-00805F6114CC} "javax.swing.JList"
+EndClasses
+BeginObject LocoMon.MS100Frame "MS100Frame"
+    BeginProperties
+        location = "5, 40"
+        title = "LocoNet Monitor startup"
+        layout = <none>
+        size = "442, 257"
+    EndProperties
+    BeginInternalProperties
+        UseSwing 11 = 1
+        IsApplet 11 = 0
+    EndInternalProperties
+    BeginEventConnections
+        BeginEventConnection {796E35A1-9372-11D2-9A19-00104B70C619}
+            SourcePath = "\\\\LocoMon.MS100Frame"
+            SinkPath = "\\\\LocoMon.MS100Frame"
+            EventName = windowClosing
+            EventSetName = window
+            HandlerName = thisWindowClosing
+        EndEventConnection
+        BeginEventConnection {796E35A1-9372-11D2-9A19-00104B70C619}
+            SourcePath = "\\\\LocoMon.MS100Frame\\getNamesButton"
+            SinkPath = "\\\\LocoMon.MS100Frame"
+            EventName = actionPerformed
+            EventSetName = action
+            HandlerName = getNamesButtonActionPerformed
+        EndEventConnection
+        BeginEventConnection {796E35A1-9372-11D2-9A19-00104B70C619}
+            SourcePath = "\\\\LocoMon.MS100Frame\\openPortButton"
+            SinkPath = "\\\\LocoMon.MS100Frame"
+            EventName = actionPerformed
+            EventSetName = action
+            HandlerName = openPortButtonActionPerformed
+        EndEventConnection
+    EndEventConnections
+    BeginObject getNamesButton "javax.swing.JButton"
+        LayoutClass {5FA17216-8612-11D1-B2AD-006008A5C0A5} "MS100Frame"
+        BeginProperties
+            text = "Get port names"
+            location = "10, 10"
+            size = "180, 40"
+        EndProperties
+        BeginInternalProperties
+        EndInternalProperties
+    EndObject
+    BeginObject portList "javax.swing.JList"
+        LayoutClass {5FA17216-8612-11D1-B2AD-006008A5C0A5} "MS100Frame"
+        BeginProperties
+            location = "10, 60"
+            selectionMode = SINGLE_SELECTION
+            toolTipText = "Select the primary serial port"
+            size = "180, 80"
+        EndProperties
+        BeginInternalProperties
+        EndInternalProperties
+    EndObject
+    BeginObject openPortButton "javax.swing.JButton"
+        LayoutClass {5FA17216-8612-11D1-B2AD-006008A5C0A5} "MS100Frame"
+        BeginProperties
+            text = "Open LocoNet port"
+            location = "10, 150"
+            toolTipText = "Use this open button if your MS100 is connected to one port"
+            size = "180, 40"
+        EndProperties
+        BeginInternalProperties
+        EndInternalProperties
+    EndObject
+EndObject
