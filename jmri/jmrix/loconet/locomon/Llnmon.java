@@ -26,7 +26,7 @@
  * Reverse engineering of OPC_MULTI_SENSE was provided by Al Silverstein.
  *
  * @author			Bob Jacobsen
- * @version			0.2.1
+ * @version			$Revision: 1.6 $
  */
 
 package jmri.jmrix.loconet.locomon;
