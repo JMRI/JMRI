@@ -7,15 +7,17 @@ import java.io.File;
 
 import javax.swing.JComboBox;
 
+import com.sun.java.util.collections.ArrayList;
+import com.sun.java.util.collections.List;
 import org.jdom.DocType;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.List;
 
 /**
- * Roster manages and manipulates a roster of locomotives.  It works
+ * Roster manages and manipulates a roster of locomotives.
+ * <P>
+ * It works
  * with the "roster-config" XML DTD to load and store its information.
  *<P>
  * This is an in-memory representation of the roster xml file (see below
@@ -38,7 +40,7 @@ import com.sun.java.util.collections.List;
  * sort is done manually each time an entry is added.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -290,8 +292,8 @@ public class Roster extends XmlFile {
      */
     public static String defaultRosterFilename() { return fileLocation+rosterFileName;}
 
-    static protected String fileLocation  = "";
-    static final protected String rosterFileName = "roster.xml";
+    static String fileLocation  = "";  // includes final file separator if needed
+    static String rosterFileName = "roster.xml";
 
     // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
     // reflect to it.
