@@ -22,10 +22,14 @@ import javax.swing.JSeparator;
  * <p>
  * Unfortunately, this cannot inherit from PositionableLabel, as that displays
  * only text or icon.  So instead we inherit from JPanel and
- * explicitly add the code for Positionable
+ * explicitly add the code for Positionable.
+ * <P>
+ * This also has LocoNet-specific code, so perhaps should be in the
+ * jmrix.loconet package.  See also {@link jmri.jmrit.display.configurexml.SecurityElementIconXml}
+ * if you move this.
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class SecurityElementIcon extends JPanel
