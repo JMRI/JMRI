@@ -6,7 +6,7 @@ package jmri.jmrix.loconet.locormi;
  * Copyright:    Copyright (c) 2002
  * Company:
  * @author
- * @version $Id: LnMessageServer.java,v 1.3 2002-03-30 00:38:06 kiwi64ajs Exp $
+ * @version $Id: LnMessageServer.java,v 1.4 2002-03-30 06:04:57 jacobsen Exp $
  */
 
  // -Djava.security.policy=lib/security.policy
@@ -49,11 +49,13 @@ public class LnMessageServer extends UnicastRemoteObject implements LnMessageSer
   {
     try
     {
+      log.debug("attempt rebind for "+serviceName);
       Naming.rebind( serviceName, self ) ;
+      log.debug("rebind completed");
     }
     catch( Exception ex )
     {
-      log.warn( "Exception: " + ex );
+      log.warn( "Exception during enable: " + ex );
     }
   }
 
@@ -65,7 +67,7 @@ public class LnMessageServer extends UnicastRemoteObject implements LnMessageSer
     }
     catch( Exception ex )
     {
-      log.fatal( "LnMessageBufferServer Exception: " + ex );
+      log.fatal( "Exception during disable: " + ex );
     }
   }
 }

@@ -7,7 +7,7 @@ import com.sun.java.util.collections.LinkedList;
  * Client for the RMI LocoNet server.
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Id: LnMessageClient.java,v 1.2 2002-03-30 00:38:06 kiwi64ajs Exp $
+ * @version $Id: LnMessageClient.java,v 1.3 2002-03-30 06:04:57 jacobsen Exp $
  */
 
 public class LnMessageClient extends LnTrafficRouter {
@@ -44,7 +44,9 @@ public class LnMessageClient extends LnTrafficRouter {
 
         try{
             System.setSecurityManager(new java.rmi.RMISecurityManager());
-
+            log.debug("security manager set, set interface to //"
+                        +remoteHostName+"//"
+                        +LnMessageServer.serviceName );
             LnMessageServerInterface lnServer = (LnMessageServerInterface) java.rmi.Naming.lookup(
                 "//" + serverName + "/" + LnMessageServer.serviceName );
 
@@ -53,7 +55,7 @@ public class LnMessageClient extends LnTrafficRouter {
             pollThread = new LnMessageClientPollThread( this ) ;
         }
         catch( Exception ex ){
-          System.out.println( "Exception: " + ex ) ;
+          log.error( "Exception: " + ex );
           throw new LocoNetException( "Failed to Connect to Server: " + serverName ) ;
         }
     }
