@@ -19,16 +19,15 @@ This page discusses how JMRI is packaged for various systems.
 The JMRI collection of classes are normally distributed in a "jmri.jar" file, 
 which contains only the JMRI classes.  These require other publicly-available
 Java classes, which are normally distributed separately as jar files.  
-The exact set of jar files varies from platform to platform, and the Windows
-version is packaged with both the JMRI and external classes packaged in a 
-single .jar file.  In some cases, e.g. DecoderPro, we package a subset
-of the JMRI classes with an application in a specific file, e.g. DecoderPro.jar.
+The exact set of jar files varies from platform to platform.
+In some cases, e.g. DecoderPro, we package an additional set of 
+startup scripts with the jmri.jar file to start from a different main class.
 
 <h3>Macintosh</h3>
 
 <h4>MacOS "Classic", 8.1 through 9.X</h4>
 
-The main jmri.jar file contains all of our code.  The "JMRI demo" application
+The main jmri.jar file contains all of our code.  The "JmriDemo" application
 configures Java, and then starts the JMRI code.
 <P>
 External jar files are included in the 
@@ -47,7 +46,7 @@ future updates will continue to use these same libraries.
 
 <h4>MacOS X</h4>
 
-The main jmri.jar file contains all of our code.  The "JMRI demo" application
+The main jmri.jar file contains all of our code.  The "JmriDemoX" application
 configures Java, and then starts the JMRI code.
 <P>
 External jar files are included in the 

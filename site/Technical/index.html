@@ -43,9 +43,8 @@ actual code!
 
 The demo program is just an example, but its meant to be a good one.
 <P>
-The source for the main class currently lives in jmrix/loconet/Apps/JMRIdemo.java,
-but note that it does not define the class as living in any Java package.  The
-demo was developed originally for the LocoNet aspects, but will eventually be more general.
+The source for the main class currently lives in jmri/apps/JmriDemo/JMRIdemo.java,
+which defines the main class as jmri.apps.JmriDemo.JMRIdemo.  
 <P>
 The demo main just creates the menubar, and populates if with the desired menus
 and items. Each item as a "Action" class object associated with it, which does the
@@ -86,8 +85,25 @@ a loconet.SlotManager is created to do that.
 
 </UL>
 <h3>Development tools</h3>
-I (Bob) use Code Warrior on the Macintosh as a development platform. This handles
-selective recompilation, etc, and provides nice IDE capabilities.  The deugger
+
+Development is currently done using Borland's JBuilder.  The Personal Edition
+is available for free download at 
+<A HREF="http://www.borland.com/jbuilder/personal/">http://www.borland.com/jbuilder/personal/</A>.
+Once you have it installed, the steps to get a working project are:
+<UL>
+<LI>Create a "project" directory.
+<LI>In the project directory, do a CVS checkout of the "jbuilder" 
+module from our repository. This will create a "java" subdirectory 
+where the JBuilder IDE will run, and load it with source, tests and resources.
+It will also create and populate directories for xml and libraries in the 
+project directory.
+<LI>Change to the newly created java subdirectory. Start JBuilder with the 
+jmri.ipcx file you'll find there.
+<LI>Click run, and sit back to watch it go.
+</UL>
+<P>
+Originally, I (Bob) used CodeWarrior on the Macintosh as a development platform. This handles
+selective recompilation, etc, and provides nice IDE capabilities.  The debugger
 part is just about unusable, however.  I'd be happy to send you a copy of the 
 project files if you'd like to use CW.
 

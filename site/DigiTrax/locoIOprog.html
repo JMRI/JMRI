@@ -14,10 +14,6 @@
 
 <h2>JMRI LocoIO Programmer</h2>
 
-<B>Note that this tool is not yet available in a JMRI download. See
-<A HREF="#demo">below</a>
-for more information.</B><P>
-
 The 
 <A HREF="../index.html">JMRI libraries</a>
 contain a number of LocoNet tools.  This page describes the 
@@ -31,15 +27,15 @@ The channels are configured via LocoNet messages.  The LocoIO programmer
 uses a table to represent the configuration of each channel.
 
 <P>
-<IMG SRC="../images/locoio.gif" ALT="Screen shot of LocoIO programmer" WIDTH="637" HEIGHT="326" HSPACE="0" VSPACE="0"><P>
+<IMG SRC="../images/locoio.gif" ALT="Screen shot of LocoIO programmer" WIDTH="692" HEIGHT="324" HSPACE="0" VSPACE="0"><P>
 <P>
-The "Function" column is used to select how the 
+The "Action" column is used to select how the 
 channel behaves.  Click in a cell to be given a menu
 of available choices. 
 Currently, the choices are:
 <UL>
 <LI>
-<dfn>"Toggle switch"</dfn><P>
+<dfn>"Toggle switch controls turnout"</dfn><P>
 Generate a OPC_SW_REQ to close/throw a turnout
 when a toggle switch changes state.
 When the input goes high, a "close" command is
@@ -47,7 +43,7 @@ sent; when the input goes low, a "throw" command is sent.
 The channel configuration value is 0x0F.
 
 <LI>
-<dfn>"Pushbutton active low"</dfn><P>
+<dfn>"Input low flips turnout"</dfn><P>
 Generate a OPC_SW_REQ LocoNet message
 when the input goes low.  This
 is intended for use with a momentary pushbutton.
@@ -57,7 +53,7 @@ was last sent, a "throw" will be sent now and vice-versa.
 The channel configuration value is 0x2F.
 
 <LI>
-<dfn>"Pushbutton active high"</dfn><P>
+<dfn>"Input high flips turnout"</dfn><P>
 Generate a OPC_SW_REQ LocoNet message 
 when the input goes high.This
 is intended for use with a momentary pushbutton.
@@ -67,7 +63,7 @@ was last sent, a "throw" will be sent now and vice-versa.
 The channel configuration value is 0x6F.
 
 <LI>
-<dfn>"Status message"</dfn><P>
+<dfn>"Status message sets output"</dfn><P>
 Drive an output from OPC_INPUT_REP 
 input status messages on the LocoNet.
 The output goes high when an "input high" message
@@ -78,31 +74,40 @@ when the block is occupied, and low when its empty.
 The channel configuration value is 0XC0.
 
 <LI>
-<dfn>"Turnout close command"</dfn><P>
+<dfn>"Turnout close cmd sets output"</dfn><P>
 Drive an output on 
-the LocoIO board from a OPC_SW_REQ command.
+the LocoIO board from received OPC_SW_REQ commands.
 The channel configuration value is 0x80. This adjusts the address field
 to look for a command that sets the turnout "closed".
 
 <LI>
-<dfn>"Turnout thrown command"</dfn><P>
+<dfn>"Turnout throw cmd sets output"</dfn><P>
 Drive an output on 
-the LocoIO board from a OPC_SW_REQ command.
+the LocoIO board from received OPC_SW_REQ commands.
 The channel configuration value is 0x80. This adjusts the address field
 to look for a command that sets the turnout "thrown".
 
 </UL>
 <p>
-The "Address" column sets the address that the
+The "Hex Value1,Value2" column sets the address that the
 LocoIO board will use for LocoNet communications.
+This contains a hexadecimal representation 
+of the two configuration values described in John Jabour's
+LocoIO programming guide.
+You generally won't need
+to figure out these addresses, as the "capture" buttons
+will find them for you.
+
+<P>
+We're also planning to have a "User Address" column
+that will show the human-readable address for turnouts and sensors.
 For turnout messages, this is the same number that 
 you would use on your throttle.  For block occupancy
 messages, this is the block number. For input status
 messages, this is the input number, which is twice the 
 number of the associated turnout, plus one if its
-a DS54 "switch" input.  You generally don't need
-to figure out these addresses, as the "capture" buttons
-will find them for you.
+a DS54 "switch" input.  
+
 <P>
 The "Read" button reads from the LocoIO board via the LocoNet
 and shows the current configuration for that pin.
@@ -128,32 +133,31 @@ throttle to command the correct turnout thrown.
 <P>
 At the bottom of the table are some general controls.  The 
 LocoIO address field sets the address of the board being programmed.
-LocoIO processors are sent with an address of 1081 programmed; see
+LocoIO processors are sent with an address of 1051 programmed; see
 below for how to change that.
 Address "0" is a global address which any LocoIO board will
 respond to; make sure you have only one connected when you use that!
 <P>
 The "Set address" button will use the global address to configure a
 specific address into a LocoIO board.  Again, make sure you have
-only one connected.
+only one connected. (This button is disabled in the current
+version while we sort out a problem)
 <P>
 The "Open..." and "Save..." buttons are not yet implemented. They will
 eventually allow you to load and store configuration files.
 <P>
-The "Read All" and "Write All" buttons are not also not yet implemented.
-They will read or write all of the channels, and are just a convenience.
+The "Read All" and "Write All" buttons 
+read or write all of the channels, and are just a convenience.
 
 <P>Status messages during capture/read/write are displayed at the
 bottom of the window.  If no response is heard from the LocoIO
-unit, an error message will be shown and the operation will be retried
-until it succeeds.
-Clicking another capture/read/write button will terminate an operation in 
-progress.
+unit, the operation will be retried
+until it succeeds or until you close the window.
 
 <A id="demo"><h2>Getting the programmer</h2></a>
 
-A complete version of this tool will be made available for download around
-February 26, 2002.
+A complete version of this tool is available for download 
+as part of the 0.9 version of the JMRI demo.
 It will work on many 
 Macintosh, Windows, Linux and OS/2 computers.  The JMRI libraries
 will work with NCE or Digitrax equipment, but of course the LocoNet
@@ -175,16 +179,18 @@ demo!
 <P>
 For more information on
 how to install the demo, whether it will run on your computer, etc, please see the 
-<A HREF="../demoFiles/README.html">README file</A>.
-
+<A HREF="../demoFiles/JMRIdemo.README.html">README file</A>.
+<P>
 JMRI is an open-source project, so you can get the entire source code at any time
 via the <A HREF="http://sourceforge.net/projects/jmri/">Project page</A>. For more
 information, please see the
 <A HREF="../index.html">main JMRI page<a/>.
 
 <h2>Running the tools</h2>
+<B>Note that this tool first became available in the 0.9 JMRI download. 
+Earlier versions don't include it.</B><P>
 <UL>
-<LI><A HREF="../demoFiles/README.html">Download and install</a> the program.
+<LI><A HREF="../demoFiles/JMRIdemo.README.html">Download and install</a> the program.
 <LI>Start the program.
 <LI>From the input menu, select either "MS100" or "LocoBuffer", depending on 
 how your layout is connected.  Then select the serial port, and click "open".
