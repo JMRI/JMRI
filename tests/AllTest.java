@@ -27,7 +27,8 @@ public class AllTest extends TestCase  {
     	// initialize log4j
     	System.out.println("Initialize log4j");
     	org.apache.log4j.BasicConfigurator.configure();
-    	org.apache.log4j.Category.getInstance("jmri.progdebugger.ProgDebugger").info("Test message");
+    	log.info("Test message");
+		System.out.println("log4j "+org.apache.log4j.Category.getRoot());
 		// initialize log4j
 		junit.swingui.TestRunner.main(testCaseName);
 	}
