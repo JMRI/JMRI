@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.54 $ -->
+<!-- Revision $Revision: 1.55 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -30,6 +30,7 @@
     <pathelement location="../lib/Serialio.jar" />
     <pathelement location="../lib/junit.jar" />
     <pathelement location="../lib/jython.jar" />
+    <pathelement location="../lib/MRJAdapter.jar" />
     <pathelement location="classes/" />
   </path>
 
