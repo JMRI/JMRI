@@ -26,7 +26,7 @@
  * Reverse engineering of OPC_MULTI_SENSE was provided by Al Silverstein.
  *
  * @author			Bob Jacobsen
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 
 package jmri.jmrix.loconet.locomon;
@@ -1313,6 +1313,39 @@ protected String format(LocoNetMessage l) {
                     +", D7=0x"+Integer.toHexString(d[6])
                     +", D8=0x"+Integer.toHexString(d[7])
                     +"\n";
+
+		/***********************************************************************************
+		*                  0xE4   ;                                                        *
+		*                         ;                                                        *
+		*                         ; <0xE4>,<0x09>,...                                      *
+		***********************************************************************************/
+        case 0XE4:
+            if (l.getElement(1)!=0x09) {
+                forceHex = true;
+                return "Unrecognized command varient\n";
+            }
+
+            // OK, format
+            int element = l.getElement(2)*128+l.getElement(3);
+            int stat = l.getElement(5);
+            String status;
+            if ( (stat&0x10) !=0 )
+                if ( (stat&0x20) !=0 )
+                    status = " AX, XA reserved; ";
+                else
+                    status = " AX reserved; ";
+            else
+                if ( (stat&0x20) !=0 )
+                    status = " XA reserved; ";
+                else
+                    status = " no reservation; ";
+            if ( (stat&0x01) !=0 ) status+="Turnout normal; ";
+            else status+="Turnout reversed; ";
+            if ( (stat&0x04) !=0 ) status+="Occupied";
+            else status+="Not occupied";
+            return "SE"+element+" reports AX:"+l.getElement(6)*4
+                    +" XA:"+l.getElement(7)*4
+                    +status+"\n";
 
 		/**************************************************************************
 		* OPC_IMM_PACKET   0xED   ;SEND n-byte packet immediate LACK              *
