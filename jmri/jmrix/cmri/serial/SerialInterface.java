@@ -1,22 +1,22 @@
-/**
- * SerialInterface.java
- *
- * Description:		<describe the SerialInterface class here>
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Id: SerialInterface.java,v 1.1 2002-03-03 05:50:45 jacobsen Exp $
- */
+// SerialInterface.java
 
 package jmri.jmrix.cmri.serial;
 
 
+/**
+ * Interface to send/receive serial C/MRI information
+ *
+ * @author			Bob Jacobsen Copyright (C) 2001
+ * @version			$Revision: 1.2 $
+ */
 public interface SerialInterface {
 
-	public void addSerialListener( SerialListener l);
-	public void removeSerialListener( SerialListener l);
+    public void addSerialListener( SerialListener l);
+    public void removeSerialListener( SerialListener l);
 
-	boolean status();   // true if the implementation is operational
+    boolean status();   // true if the implementation is operational
 
-	void sendSerialMessage(SerialMessage m, SerialListener l);  // 2nd arg gets the reply
+    void sendSerialMessage(SerialMessage m, SerialListener l);  // 2nd arg gets the reply
 }
 
 
