@@ -10,7 +10,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * The main() in this class is for test purposes only.
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Alex Shepherd, Bob Jacobsen
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class LnMessageClient extends LnTrafficRouter {
@@ -29,6 +29,10 @@ public class LnMessageClient extends LnTrafficRouter {
      * Forward messages to the server.
      */
     public void sendLocoNetMessage(LocoNetMessage m) {
+        // update statistics
+        transmittedMsgCount++;
+
+        // attempt to forward message
         try{
             if( lnMessageBuffer != null )
                 lnMessageBuffer.sendLocoNetMessage( m );
