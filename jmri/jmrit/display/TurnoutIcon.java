@@ -15,7 +15,7 @@ import jmri.*;
  * the current KnownState.
  *
  * @author Bob Jacobsen
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -42,6 +42,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
     public void setTurnout(String pUserName, String pSystemName) {
         turnout = InstanceManager.turnoutManagerInstance().
             newTurnout(pUserName, pSystemName);
+        displayState(turnoutState());
         turnout.addPropertyChangeListener(this);
     }
 
