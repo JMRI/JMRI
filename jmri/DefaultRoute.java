@@ -6,7 +6,7 @@ package jmri;
  * Class providing the basic logic of the Route interface.
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class DefaultRoute extends AbstractNamedBean
     implements Route, java.io.Serializable {
@@ -198,6 +198,22 @@ public class DefaultRoute extends AbstractNamedBean
             }
         }
     }
+    
+    /**
+     * Not needed for Routes - included to complete implementation of the NamedBean interface.
+     */
+    public int getState() {
+        log.warn("Unexpected call to getState in DefaultRoute.");
+        return UNKNOWN;
+    }
+    
+    /**
+     * Not needed for Routes - included to complete implementation of the NamedBean interface.
+     */
+    public void setState(int state) {
+        log.warn("Unexpected call to setState in DefaultRoute.");
+        return;
+    }    
 }
      
 /* @(#)DefaultRoute.java */
