@@ -2,7 +2,7 @@
 <!DOCTYPE decoder:decoder-config SYSTEM "DTD/decoder-config.dtd">
 <decoder:decoder-config xmlns:decoder="http://jmri.sourceforge.net/xml/decoder">
 <decoder:decoder>
-	<decoder:id model="LE320" mfg="Lenz" mfgID="99" versionID="51"  defnVersion="0"/>
+	<decoder:id model="LE230" mfg="Lenz" mfgID="99" versionID="51"  defnVersion="0"/>
 
 	<decoder:programming direct="yes" paged="yes" 
 	                     register="yes" ops="yes"></decoder:programming>
