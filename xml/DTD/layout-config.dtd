@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.14 2003-07-27 04:59:07 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.15 2003-08-03 21:35:52 jacobsen Exp $ -->
 
 <!ELEMENT layout-config (connection | gui | programmer | perform |
 						preferences | turnouts | sensors | blocks | signals | 
@@ -30,10 +30,11 @@
   <!ATTLIST programmer defaultFile CDATA "Basic.xml">
   <!ATTLIST programmer verifyBeforeWrite (yes | no) "no" >
 
-<!--  Section identifies swing.Actions to invoke -->
+<!--  Section identifies items to invoke at startup -->
 <!ELEMENT perform EMPTY>
-  <!ATTLIST perform class CDATA #REQUIRED>
-  <!ATTLIST perform classname CDATA #REQUIRED>
+  <!ATTLIST perform classname CDATA #REQUIRED> <!-- selects XML class that will handle -->
+  <!ATTLIST perform type (Action | Automat | Siglet | XmlFile) "Action" >
+  <!ATTLIST perform name CDATA #REQUIRED> <!-- name of item to invoke -->
 
 <!ELEMENT sensors (sensor*) >
 
