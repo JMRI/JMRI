@@ -52,21 +52,29 @@ import javax.swing.JTextArea;
  * so that Jython code can easily use some of the methods.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 public class AbstractAutomaton implements Runnable {
 
     public AbstractAutomaton() {}
 
+    Thread currentThread = null;
     public void start() {
-        Thread t = new Thread(this);
-        t.start();
+        if (currentThread != null) log.error("Start with currentThread not null!");
+        currentThread = new Thread(this);
+        currentThread.start();
     }
 
     public void run() {
         inThread = true;
         init();
         while (handle()) {}
+    }
+
+    public void stop() {
+        if (currentThread == null) log.error("Stop with currentThread null!");
+        currentThread.stop();
+        currentThread = null;
     }
 
     /**
