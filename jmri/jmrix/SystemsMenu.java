@@ -10,9 +10,14 @@ import javax.swing.JMenu;
 
 /**
  * Provide a "Systems" menu containing the Jmri system-specific tools in submenus.
+ * <P>
+ * This contains all compiled systems, whether active or not.  For the
+ * set of currently-active system-specific tools, see
+ * {@link ActiveSystemsMenu}.
  *
+ * @see ActiveSystemsMenu
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class SystemsMenu extends JMenu {
     public SystemsMenu(String name) {
