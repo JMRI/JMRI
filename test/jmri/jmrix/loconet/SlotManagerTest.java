@@ -32,7 +32,7 @@ public class SlotManagerTest extends TestCase {
         Assert.assertEquals("key present", true,
             slotmanager.mLocoAddrHash.containsKey(new Integer(0x2134)));
         Assert.assertEquals("value present", true,
-            slotmanager.mLocoAddrHash.containsValue(p2));
+            slotmanager.mLocoAddrHash.contains(p2));
     }
 
     public void testGetSlotRcv() {
