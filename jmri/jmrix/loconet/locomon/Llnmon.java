@@ -32,7 +32,7 @@ import jmri.jmrix.loconet.*;
  * Reverse engineering of OPC_MULTI_SENSE was provided by Al Silverstein.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class Llnmon {
 
@@ -1264,6 +1264,8 @@ public class Llnmon {
                 if (l.getElement(0)==0xEE) message = "Write ALM ";
                 else message = "Read ALM ";
                 message = message+l.getElement(2)+" ATASK="+l.getElement(3);
+                if (l.getElement(3) == 2) message=message+" (RD)";
+                if (l.getElement(3) == 3) message=message+" (WR)";
                 message = message+" BLKL="+l.getElement(4)+" BLKH="+l.getElement(5);
                 message = message+" LOGIC="+l.getElement(6)+"\n      ";
                 message = message+" ARG1L=0x"+Integer.toHexString(l.getElement(7))
