@@ -39,8 +39,8 @@ import org.jdom.output.XMLOutputter;
  * The entries are stored in an ArrayList, sorted alphabetically.  That
  * sort is done manually each time an entry is added.
  *
- * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.19 $
+ * @author	Bob Jacobsen   Copyright (C) 2001;  Dennis Miller Copyright 2004
+ * @version	$Revision: 1.20 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -205,6 +205,54 @@ public class Roster extends XmlFile {
         Document doc = new Document(root);
         doc.setDocType(new DocType("roster-config","roster-config.dtd"));
 
+        //Check the Comment and Decoder Comment fields for line breaks and
+        //convert them to a processor directive for storage in XML
+        //Note: this is also done in the LocoFile.java class to do
+        //the same thing in the indidvidual locomotive roster files
+        //Note: these changes have to be undone after writing the file
+        //since the memory version of the roster is being changed to the
+        //file version for writing
+        for (int i=0; i<numEntries(); i++){
+
+          //Extract the RosterEntry at this index and inspect the Comment and
+          //Decoder Comment fields to change any \n characters to <?p?> processor
+          //directives so they can be stored in the xml file and converted
+          //back when the file is read.
+          RosterEntry r = (RosterEntry) (RosterEntry)_list.get(i);
+          String tempComment = r.getComment();
+          String xmlComment = new String();
+
+          //transfer tempComment to xmlComment one character at a time, except
+          //when \n is found.  In that case, insert <?p?>
+          for (int k = 0; k < tempComment.length(); k++) {
+            if (tempComment.startsWith("\n", k)) {
+              xmlComment = xmlComment + "<?p?>";
+            }
+            else {
+              xmlComment = xmlComment + tempComment.substring(k, k + 1);
+            }
+          }
+          r.setComment(xmlComment);
+
+          //Now do the same thing for the decoderComment field
+          String tempDecoderComment = r.getDecoderComment();
+          String xmlDecoderComment = new String();
+
+          for (int k = 0; k < tempDecoderComment.length(); k++) {
+            if (tempDecoderComment.startsWith("\n", k)) {
+              xmlDecoderComment = xmlDecoderComment + "<?p?>";
+            }
+            else {
+              xmlDecoderComment = xmlDecoderComment +
+                  tempDecoderComment.substring(k, k + 1);
+            }
+          }
+          r.setDecoderComment(xmlDecoderComment);
+
+        }
+        //All Comments and Decoder Comment line feeds have been changed to processor directives
+
+
         // add top-level elements
         Element values;
         root.addContent(values = new Element("roster"));
@@ -219,6 +267,43 @@ public class Roster extends XmlFile {
         fmt.setIndent(true);
         fmt.output(doc, o);
         o.close();
+
+        //Now that the roster has been rewritten in file form we need to
+        //restore the RosterEntry object to its normal \n state for the
+        //Comment and Decoder comment fields, otherwise it can cause problems in
+        //other parts of the program (e.g. in copying a roster)
+        for (int i=0; i<numEntries(); i++){
+          RosterEntry r = (RosterEntry) (RosterEntry)_list.get(i);
+          String xmlComment = r.getComment();
+          String tempComment = new String();
+
+          for (int k = 0; k < xmlComment.length(); k++) {
+            if (xmlComment.startsWith("<?p?>", k)) {
+              tempComment = tempComment + "\n";
+              k = k + 4;
+            }
+            else {
+              tempComment = tempComment + xmlComment.substring(k, k + 1);
+            }
+          }
+          r.setComment(tempComment);
+
+          String xmlDecoderComment = r.getDecoderComment();
+          String tempDecoderComment = new String();
+
+          for (int k = 0; k < xmlDecoderComment.length(); k++) {
+            if (xmlDecoderComment.startsWith("<?p?>", k)) {
+              tempDecoderComment = tempDecoderComment + "\n";
+              k = k + 4;
+            }
+            else {
+              tempDecoderComment = tempDecoderComment +
+                  xmlDecoderComment.substring(k, k + 1);
+            }
+          }
+          r.setDecoderComment(tempDecoderComment);
+
+        }
 
         // done - roster now stored, so can't be dirty
         setDirty(false);
@@ -244,6 +329,50 @@ public class Roster extends XmlFile {
             for (int i=0; i<l.size(); i++) {
                 addEntry(new RosterEntry((Element)l.get(i)));
             }
+
+            //Scan the object to check the Comment and Decoder Comment fields for
+            //any <?p?> processor directives and change them to back \n characters
+            for (int i = 0; i < numEntries(); i++) {
+              //Get a RosterEntry object for this index
+              RosterEntry r = (RosterEntry) (RosterEntry) _list.get(i);
+
+              //Extract the Comment field and create a new string for output
+              String tempComment = r.getComment();
+              String xmlComment = new String();
+
+              //transfer tempComment to xmlComment one character at a time, except
+              //when <?p?> is found.  In that case, insert a \n and skip over those
+              //characters in tempComment.
+              for (int k = 0; k < tempComment.length(); k++) {
+                if (tempComment.startsWith("<?p?>", k)) {
+                  xmlComment = xmlComment + "\n";
+                  k = k + 4;
+                }
+                else {
+                  xmlComment = xmlComment + tempComment.substring(k, k + 1);
+                }
+              }
+              r.setComment(xmlComment);
+
+              //Now do the same thing for the decoderComment field
+              String tempDecoderComment = r.getDecoderComment();
+              String xmlDecoderComment = new String();
+
+              for (int k = 0; k < tempDecoderComment.length(); k++) {
+                if (tempDecoderComment.startsWith("<?p?>", k)) {
+                  xmlDecoderComment = xmlDecoderComment + "\n";
+                  k = k + 4;
+                }
+                else {
+                  xmlDecoderComment = xmlDecoderComment +
+                      tempDecoderComment.substring(k, k + 1);
+                }
+              }
+
+              r.setDecoderComment(xmlDecoderComment);
+           }
+
+
         }
         else {
             log.error("Unrecognized roster file contents in file: "+name);
