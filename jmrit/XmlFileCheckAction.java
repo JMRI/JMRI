@@ -14,7 +14,7 @@ import org.jdom.input.*;
  * Make sure an XML file is readable, and validates OK
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: XmlFileCheckAction.java,v 1.3 2001-12-06 16:16:26 jacobsen Exp $
+ * @version			$Id: XmlFileCheckAction.java,v 1.4 2001-12-18 07:31:06 jacobsen Exp $
  * @see             jmri.jmrit.XmlFile
  */
 public class XmlFileCheckAction extends AbstractAction {
@@ -53,17 +53,11 @@ public class XmlFileCheckAction extends AbstractAction {
 	/**
 	 * Ask SAX to read and verify a file
 	 */
-	void readFile(File name) throws org.jdom.JDOMException, java.io.FileNotFoundException {
-		String rawpath = new File("xml"+File.separator+"DTD"+File.separator).getAbsolutePath();
-
-		if (log.isInfoEnabled()) log.info("readFile: "+name+" path: "+rawpath); 
-		// This is taken in large part from "Java and XML" page 354
-			
-		// Open and parse file
-		SAXBuilder builder = new SAXBuilder(true);  // argument controls validation, on for now
-		Document doc = builder.build(new BufferedInputStream(new FileInputStream(name)),rawpath+File.separator);
-		// find root
-		Element root = doc.getRootElement();
+	void readFile(File file) throws org.jdom.JDOMException, java.io.FileNotFoundException {
+		XmlFile xf = new XmlFile(){};   // odd syntax is due to XmlFile being abstract
+		
+		xf.rootFromFile(file);
+		
 	}
 		
 	

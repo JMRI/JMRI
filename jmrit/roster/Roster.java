@@ -9,7 +9,6 @@ import com.sun.java.util.collections.ArrayList;
 import com.sun.java.util.collections.List;
 import java.util.Date;
 import org.jdom.*;
-import org.jdom.input.*;
 import org.jdom.output.*;
 
 /** 
@@ -30,10 +29,10 @@ import org.jdom.output.*;
  * whether it should...
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: Roster.java,v 1.10 2001-12-10 15:32:28 jacobsen Exp $
+ * @version			$Id: Roster.java,v 1.11 2001-12-18 07:31:07 jacobsen Exp $
  * @see             jmri.jmrit.roster.RosterEntry
  */
-public class Roster {
+public class Roster extends XmlFile {
 	
 	private static Roster _instance = null;
 	public static synchronized Roster instance() {
@@ -137,7 +136,7 @@ public class Roster {
 	void writeFile(String name) throws java.io.IOException {
 		if (log.isInfoEnabled()) log.info("writeFile "+name);
 		// This is taken in large part from "Java and XML" page 368 
-		File file = new File(name);
+		File file = new File(prefsDir()+name);
 
 		// create root element
 		Element root = new Element("roster-config");
@@ -167,28 +166,8 @@ public class Roster {
 	 * clear any existing entries.
 	 */
 	void readFile(String name) throws org.jdom.JDOMException, java.io.FileNotFoundException {
-		String rawpath = new File("xml"+File.separator+"DTD"+File.separator).getAbsolutePath();
-		String apath = rawpath;
-        if (File.separatorChar != '/') {
-            apath = apath.replace(File.separatorChar, '/');
-        }
-        if (!apath.startsWith("/")) {
-            apath = "/" + apath;
-        }
-		String path = "file::"+apath;
-
-		if (log.isDebugEnabled()) log.debug("readFile: "+name+" path: "+rawpath); 
-		// This is taken in large part from "Java and XML" page 354
-				
-		// Open and parse file
-		// Namespace ns = Namespace.getNamespace("roster",
-		// 								"http://jmri.sourceforge.net/xml/roster");
-		SAXBuilder builder = new SAXBuilder(true);  // argument controls validation, on for now
-		Document doc = builder.build(new BufferedInputStream(new FileInputStream(new File(name))),rawpath+File.separator);
-		//Document doc = builder.build(new BufferedInputStream(new FileInputStream(new File(name))),path);
-		
 		// find root
-		Element root = doc.getRootElement();
+		Element root = rootFromName(name);
 		
 		if (log.isDebugEnabled()) XmlFile.dumpElement(root);
 		
@@ -218,7 +197,7 @@ public class Roster {
 	 * Store the roster in the default place, including making a backup if needed
 	 */
 	public static void writeRosterFile() {
-		Roster.instance().makeBackupFile();
+		Roster.instance().makeBackupFile(defaultRosterFilename());
 		try {
 			Roster.instance().writeFile(defaultRosterFilename());
 		} catch (Exception e) {
@@ -242,36 +221,14 @@ public class Roster {
 		}
 	}
 		
-	/** 
-	* Move original file to a backup. Use this before writing out a new version of the file
-	*/
-	protected void makeBackupFile() {
-		File roster = new File(defaultRosterFilename());
-		if (roster.exists()) {
-			roster.renameTo(backupFileName(rosterFileName));
-		}
-		else log.warn("No roster file to backup");
-	}
-	
-	/** 
-	* Return a File reference to a new, unique backup file. This is here so it can 
-	* be overridden during tests.
-	*/
-	protected File backupFileName(String name) {
-		// File.createTempFile is not available in java 1, so use millisecond time as unique string
-		File f =  new File(fileLocation+File.separator+name+"-"
-							+((new Date()).getTime()));
-		if (log.isDebugEnabled()) log.debug("backup file name is "+f.getAbsolutePath());
-		return f;
-	}
 	
 	/** 
 	* Return the filename String for the default roster file, including location.
 	* This is here to allow easy override in tests.
 	*/
-	protected static String defaultRosterFilename() { return fileLocation+File.separator+rosterFileName;}
+	protected static String defaultRosterFilename() { return fileLocation+rosterFileName;}
 
-	static protected String fileLocation  = "prefs";
+	static protected String fileLocation  = "";
 	static final protected String rosterFileName = "roster.xml";
 	
 	// initialize logging	

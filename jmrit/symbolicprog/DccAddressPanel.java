@@ -13,7 +13,7 @@ import com.sun.java.util.collections.List;
  * Provide a graphical representation of the DCC address, either long or short
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DccAddressPanel.java,v 1.5 2001-12-10 06:30:25 jacobsen Exp $
+ * @version			$Id: DccAddressPanel.java,v 1.6 2001-12-18 07:31:07 jacobsen Exp $
  */
 public class DccAddressPanel extends JPanel {
 
@@ -42,9 +42,11 @@ public class DccAddressPanel extends JPanel {
 		// connect to variables
 		primaryAddr = variableModel.findVar("Primary Address");
 		if (primaryAddr==null) log.error("DCC Address monitor did not find a Primary Address variable");
+		else primaryAddr.addPropertyChangeListener(dccNews);
 
 		extendAddr = variableModel.findVar("Extended Address");
 		if (extendAddr==null) log.warn("DCC Address monitor did not find an Extended Address variable");
+		else extendAddr.addPropertyChangeListener(dccNews);
 
 		addMode = (EnumVariableValue)variableModel.findVar("Address Format");
 		if (addMode==null) log.warn("DCC Address monitor didnt find an Address Format variable");
@@ -65,6 +67,56 @@ public class DccAddressPanel extends JPanel {
 			val.setDocument( ((JTextField)extendAddr.getValue()).getDocument());
 		}
 		
+		// start listening for changes to this value
+		val.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (addMode == null || extendAddr == null || !addMode.getValueString().equals("1")) {
+					// short address mode
+					((DecVariableValue)primaryAddr).updatedTextField();
+					val.setBackground(primaryAddr.getValue().getBackground());
+					if (log.isDebugEnabled()) log.debug("set color: "+primaryAddr.getValue().getBackground());
+				}
+				else {
+					// long address
+					((LongAddrVariableValue)extendAddr).updatedTextField();
+					val.setBackground(extendAddr.getValue().getBackground());
+					if (log.isDebugEnabled()) log.debug("set color: "+extendAddr.getValue().getBackground());
+				}	
+			}
+		});
+		val.addFocusListener(new FocusListener() {
+			public void focusGained(FocusEvent e) {
+				if (log.isDebugEnabled()) log.debug("focusGained");
+				enterField();
+			}
+			public void focusLost(FocusEvent e) {
+				if (log.isDebugEnabled()) log.debug("focusLost");
+				exitField();
+			}
+		});
+		
+	}
+
+	String oldContents = "";
+	
+	void enterField() {
+		oldContents = val.getText();
+	}
+	void exitField() {
+		if (!oldContents.equals(val.getText())) { 
+			if (addMode == null || extendAddr == null || !addMode.getValueString().equals("1")) {
+				// short address mode
+				((DecVariableValue)primaryAddr).updatedTextField();
+				val.setBackground(primaryAddr.getValue().getBackground());
+				if (log.isDebugEnabled()) log.debug("set color: "+primaryAddr.getValue().getBackground());
+			}
+			else {
+				// long address
+				((LongAddrVariableValue)extendAddr).updatedTextField();
+				val.setBackground(extendAddr.getValue().getBackground());
+				if (log.isDebugEnabled()) log.debug("set color: "+extendAddr.getValue().getBackground());
+			}	
+		}
 	}
 
 	void updateDccAddress() {
@@ -72,17 +124,18 @@ public class DccAddressPanel extends JPanel {
 			log.debug("updateDccAddress: primary "+(primaryAddr==null?"<null>":primaryAddr.getValueString())+
 						" extended "+(extendAddr==null?"<null>":extendAddr.getValueString())+
 						" mode "+(addMode==null?"<null>":addMode.getValueString()));
-		String newAddr = null;
 		if (addMode == null || extendAddr == null || !addMode.getValueString().equals("1")) {
 			// short address mode
 			val.setDocument( ((JTextField)primaryAddr.getValue()).getDocument());
+			val.setBackground(primaryAddr.getValue().getBackground());
+			if (log.isDebugEnabled()) log.debug("set color: "+primaryAddr.getValue().getBackground());
 		}
 		else {
 			// long address
 			val.setDocument( ((JTextField)extendAddr.getValue()).getDocument());
+			val.setBackground(extendAddr.getValue().getBackground());
+			if (log.isDebugEnabled()) log.debug("set color: "+extendAddr.getValue().getBackground());
 		}
-		// update if needed
-		if (newAddr!=null) val.setText(newAddr);
 	}
 				
 	// initialize logging	

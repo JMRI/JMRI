@@ -22,7 +22,7 @@ import javax.swing.JTextField;
  *
  * Description:		Represents a single CV value
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: CvValue.java,v 1.9 2001-12-09 17:59:44 jacobsen Exp $
+ * @version			$Id: CvValue.java,v 1.10 2001-12-18 07:31:07 jacobsen Exp $
  */
 public class CvValue extends AbstractValue implements ProgListener {
 
@@ -205,6 +205,7 @@ public class CvValue extends AbstractValue implements ProgListener {
 				// set & notify value directly to avoid state going to EDITTED
 				int old = _value;
 				_value = value;
+				_tableEntry.setText(Integer.toString(value));
 				notifyValueChange(value);
 				setState(READ);
 				if (log.isDebugEnabled()) log.debug("CV setting not busy on end read");

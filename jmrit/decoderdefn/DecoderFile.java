@@ -18,7 +18,7 @@ import org.jdom.Element;
  * decoder identification info _before_ the actual decoder file is read.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecoderFile.java,v 1.8 2001-12-07 07:12:12 jacobsen Exp $
+ * @version			$Id: DecoderFile.java,v 1.9 2001-12-18 07:31:07 jacobsen Exp $
  * @see jmri.jmrit.decoderdefn.DecoderIndexFile	
  */
 public class DecoderFile extends XmlFile {
@@ -133,7 +133,7 @@ public class DecoderFile extends XmlFile {
 		return getMfg()+" "+getModel();
 	}
 
-	static public String fileLocation = "xml"+File.separator+"decoders";
+	static public String fileLocation = "decoders"+File.separator;
 
 	// initialize logging	
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DecoderFile.class.getName());

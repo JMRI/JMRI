@@ -64,7 +64,7 @@ public class RosterTest extends TestCase {
 	public void testBackupFile() throws Exception {
 		// create a file in "temp"
 		Roster.fileLocation = "temp";
-		File f = new File("temp"+File.separator+"roster.xml");
+		File f = new File("prefs/temp"+File.separator+"roster.xml");
 		// remove it if its there
 		f.delete();
 		// load a new one
@@ -74,13 +74,13 @@ public class RosterTest extends TestCase {
 		
 		// now do the backup
 		Roster r = new Roster() {
-				protected File backupFileName(String name)
-						{ return new File("temp"+File.separator+"rosterBackupTest"); }
+				public String backupFileName(String name)
+						{ return "prefs"+File.separator+"temp"+File.separator+"rosterBackupTest"; }
 				};
-		r.makeBackupFile();
+		r.makeBackupFile("temp"+File.separator+"roster.xml");
 		
 		// and check
-		InputStream in = new FileInputStream(new File("temp"+File.separator+"rosterBackupTest"));
+		InputStream in = new FileInputStream(new File("prefs"+File.separator+"temp"+File.separator+"rosterBackupTest"));
 		Assert.assertEquals("read 0 ", contents.charAt(0), in.read());
 		Assert.assertEquals("read 1 ", contents.charAt(1), in.read());
 		Assert.assertEquals("read 2 ", contents.charAt(2), in.read());
@@ -90,7 +90,7 @@ public class RosterTest extends TestCase {
 	public void testReadWrite() throws Exception {
 		// store files in "temp"
 		Roster.fileLocation = "temp";
-		File f = new File("temp"+File.separator+"roster.xml");
+		File f = new File("prefs"+File.separator+"temp"+File.separator+"roster.xml");
 		// remove existing roster if its there
 		f.delete();
 

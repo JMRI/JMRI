@@ -192,7 +192,9 @@ public class LongAddrVariableValue extends VariableValue
 				case READING_SECOND:  // finally done, set not busy
 						if (log.isDebugEnabled()) log.debug("Busy goes false with state READING_SECOND");
 						_progState = IDLE;
-						super.setState(READ);
+						((CvValue)_cvVector.elementAt(getCvNum())).setState(READ);
+						((CvValue)_cvVector.elementAt(getCvNum()+1)).setState(READ);
+						//super.setState(READ);
 						setBusy(false);
 						return;
 				case WRITING_FIRST:  // no, just a CV update

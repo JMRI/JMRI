@@ -74,10 +74,11 @@ public class PaneProgAction 			extends AbstractAction {
 		// new Loco on programming track
 		JLabel last;
 		JPanel pane1 = new CombinedLocoSelPane(statusLabel){
-			protected void startProgrammer(DecoderFile decoderFile, String locoFile, RosterEntry re) {
+			protected void startProgrammer(DecoderFile decoderFile, String locoFile, RosterEntry re, String filename) {
 				String title = "Program new decoder";
 				if (re!=null) title = "Program "+re.getId();
-				JFrame p = new PaneProgFrame(decoderFile, locoFile, re, title);
+				JFrame p = new PaneProgFrame(decoderFile, locoFile, re, 
+												title, "programmers"+File.separator+filename+".xml");
 				p.pack();
 				p.show();
 				f.setVisible(false);

@@ -26,7 +26,7 @@ import org.jdom.Element;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecoderIndexFile.java,v 1.6 2001-12-09 17:59:44 jacobsen Exp $
+ * @version			$Id: DecoderIndexFile.java,v 1.7 2001-12-18 07:31:07 jacobsen Exp $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -150,7 +150,7 @@ public class DecoderIndexFile extends XmlFile {
 		if (log.isDebugEnabled()) log.debug("readFile "+name);
 
 		// read file, find root
-		Element root = rootFromFile(name);
+		Element root = rootFromName(name);
 			
 		// decode type, invoke proper processing routine if a decoder file
 		if (root.getChild("decoderIndex") != null) {
@@ -226,9 +226,8 @@ public class DecoderIndexFile extends XmlFile {
 	* Return the filename String for the default decoder index file, including location.
 	* This is here to allow easy override in tests.
 	*/
-	protected static String defaultDecoderIndexFilename() { return fileLocation+File.separator+decoderIndexFileName;}
+	protected static String defaultDecoderIndexFilename() { return decoderIndexFileName;}
 
-	static protected String fileLocation  = "xml";
 	static final protected String decoderIndexFileName = "decoderIndex.xml";
 	// initialize logging	
     static private org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DecoderIndexFile.class.getName());

@@ -25,6 +25,7 @@ public class AllTest extends TestCase  {
 	// Main entry point
 	static public void main(String[] args) { 
 		String[] testCaseName = {AllTest.class.getName()};
+  		log = org.apache.log4j.Category.getInstance("jmri");
 		//initLogging();
 		// initialize junit
 		junit.swingui.TestRunner.main(testCaseName);
@@ -61,6 +62,6 @@ public class AllTest extends TestCase  {
 		}
 	}
 		
-  	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance("jmri");
+  	static org.apache.log4j.Category log = null;
 
 }

@@ -29,7 +29,7 @@ import org.jdom.Attribute;
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: PaneProgPane.java,v 1.10 2001-12-10 06:30:25 jacobsen Exp $
+ * @version			$Id: PaneProgPane.java,v 1.11 2001-12-18 07:31:07 jacobsen Exp $
  */
 public class PaneProgPane extends javax.swing.JPanel 
 							implements java.beans.PropertyChangeListener  {
@@ -69,16 +69,12 @@ public class PaneProgPane extends javax.swing.JPanel
 		// for all "column" elements ...
 		List colList = pane.getChildren("column");
 		for (int i=0; i<colList.size(); i++) {
-			// add separators except at beginning
-			if (i != 0) p.add(new JSeparator(javax.swing.SwingConstants.VERTICAL));
 			// load each column
 			p.add(newColumn( ((Element)(colList.get(i)))));
 		}
 		// for all "row" elements ...
 		List rowList = pane.getChildren("row");
 		for (int i=0; i<rowList.size(); i++) {
-			// add separators except at beginning
-			if (i != 0) p.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
 			// load each row
 			p.add(newRow( ((Element)(rowList.get(i)))));
 		}
@@ -94,7 +90,7 @@ public class PaneProgPane extends javax.swing.JPanel
 		readButton.setToolTipText("Read current values from decoder. Warning: may take a long time!");
 		readButton.addActionListener( l1 = new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				readPane();
+				if (readButton.isSelected()) readPane();
 			}
 		});
 		confButton.setEnabled(false);
@@ -103,7 +99,7 @@ public class PaneProgPane extends javax.swing.JPanel
 		writeButton.setToolTipText("Write current values to decoder");
 		writeButton.addActionListener( l3 = new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				writePane();
+				if (writeButton.isSelected()) writePane();
 			}
 		});
 		bottom.add(readButton);
@@ -131,6 +127,7 @@ public class PaneProgPane extends javax.swing.JPanel
 	 */
 	public boolean readPane() {
 		if (log.isDebugEnabled()) log.debug("readPane starts");
+		readButton.setSelected(true);
 		for (int i=0; i<varList.size(); i++) {
 			int varNum = ((Integer)varList.get(i)).intValue();
 			int vState = _varModel.getState( varNum );
@@ -172,6 +169,7 @@ public class PaneProgPane extends javax.swing.JPanel
 	 */
 	public boolean writePane() {
 		if (log.isDebugEnabled()) log.debug("writePane starts");
+		writeButton.setSelected(true);
 		for (int i=0; i<varList.size(); i++) {
 			int varNum = ((Integer)varList.get(i)).intValue();
 			int vState = _varModel.getState( varNum );
@@ -213,8 +211,9 @@ public class PaneProgPane extends javax.swing.JPanel
 	}
 
 	/** 
-	 * get notification of a variable property change, specifically "busy" going to 
-	 * false at the end of a programming operation
+	 * Get notification of a variable property change, specifically "busy" going to 
+	 * false at the end of a programming operation. If we're in a programming
+	 * operation, we then continue it by reinvoking the readPane/writePane operation.
 	 */
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		// check for the right event
@@ -237,8 +236,9 @@ public class PaneProgPane extends javax.swing.JPanel
 		_programmingVar.removePropertyChangeListener(this);
 		_programmingVar = null;
 		// restart the operation
-		if (_read) readPane();
-		else writePane();
+		if (_read && readButton.isSelected()) readPane();
+		else if (writeButton.isSelected()) writePane();
+		else if (log.isDebugEnabled()) log.debug("No operation to restart");
 	}
 		
 	/**

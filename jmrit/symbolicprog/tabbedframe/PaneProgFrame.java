@@ -23,6 +23,7 @@ import jmri.ProgModePane;
 import jmri.jmrit.symbolicprog.*;
 import jmri.jmrit.decoderdefn.*;
 import jmri.jmrit.roster.*;
+import jmri.jmrit.XmlFile;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -30,9 +31,6 @@ import org.jdom.Attribute;
 import org.jdom.DocType;
 import org.jdom.output.XMLOutputter;
 import org.jdom.JDOMException;
-import org.jdom.input.DOMBuilder;
-import org.jdom.input.SAXBuilder;
-import org.xml.sax.InputSource;
 
 public class PaneProgFrame extends javax.swing.JFrame 
 							implements java.beans.PropertyChangeListener  {
@@ -47,6 +45,8 @@ public class PaneProgFrame extends javax.swing.JFrame
 	RosterEntryPane _rPane = null;
 	
 	List paneList = new ArrayList();
+	
+	String filename = null;
 	
 	// GUI member declarations
 	JTabbedPane tabPane = new JTabbedPane();
@@ -67,13 +67,13 @@ public class PaneProgFrame extends javax.swing.JFrame
 		readAllButton.setToolTipText("Read current values from decoder. Warning: may take a long time!");
 		readAllButton.addActionListener( l1 = new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				readAll();
+				if (readAllButton.isSelected()) readAll();
 			}
 		});
 		writeAllButton.setToolTipText("Write current values to decoder");
 		writeAllButton.addActionListener( l2 = new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				writeAll();
+				if (writeAllButton.isSelected()) writeAll();
 			}
 		});
 
@@ -118,8 +118,9 @@ public class PaneProgFrame extends javax.swing.JFrame
   	 * <LI> Create the programmer panes
   	 * </UL>
   	 */
-	public PaneProgFrame(DecoderFile decoderFile, String locoFile, RosterEntry r, String name) {
+	public PaneProgFrame(DecoderFile decoderFile, String locoFile, RosterEntry r, String name, String file) {
 		super(name);
+		filename = file;
 		installComponents();
 
 		if (locoFile != null) readLocoFile(locoFile);  // read, but don't process
@@ -176,7 +177,7 @@ public class PaneProgFrame extends javax.swing.JFrame
 		LocoFile lf = new LocoFile();  // used as a temporary
 		lroot = null;
 		try {
-			lroot = lf.rootFromFile(lf.fileLocation+File.separator+locoFile);
+			lroot = lf.rootFromName(lf.fileLocation+File.separator+locoFile);
 		} catch (Exception e) { log.error("Exception while loading loco XML file: "+e); }
   	}
   	
@@ -210,7 +211,7 @@ public class PaneProgFrame extends javax.swing.JFrame
   		}
 		
 		try {
-			decoderRoot = df.rootFromFile(df.fileLocation+File.separator+df.getFilename());
+			decoderRoot = df.rootFromName(df.fileLocation+df.getFilename());
 		} catch (Exception e) { log.error("Exception while loading decoder XML file: "+e); }
 		// load variables from decoder tree
 		df.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
@@ -218,31 +219,14 @@ public class PaneProgFrame extends javax.swing.JFrame
   	
   	protected void loadProgrammerFile(RosterEntry r) {
 		// Open and parse programmer file
-		String rawpath = new File("xml"+File.separator+"DTD"+File.separator).getAbsolutePath();
-		String apath = rawpath;
-        if (File.separatorChar != '/') {
-            apath = apath.replace(File.separatorChar, '/');
-        }
-        if (!apath.startsWith("/")) {
-            apath = "/" + apath;
-        }
-		String path = "file::"+apath;
-
-		if (log.isInfoEnabled()) log.info("readFile: "+"MultiPane.xml"); 
-		File pfile = new File("xml"+File.separator+"programmers"+File.separator+"MultiPane.xml");
-		SAXBuilder pbuilder = new SAXBuilder(true);  // argument controls validation, on for now
-		Document pdoc = null;
+		XmlFile pf = new XmlFile(){};  // XmlFile is abstract
 		try {
-			pdoc = pbuilder.build(new BufferedInputStream(new FileInputStream(pfile)),rawpath+File.separator);
+			programmerRoot = pf.rootFromName(filename);
+						
+			// load programmer config from programmer tree
+			readConfig(programmerRoot, r);
 		}
-		catch (Exception e) {
-			log.error("Exception in programmer SAXBuilder "+e);
-		}
-		// find root
-		programmerRoot = pdoc.getRootElement();
-					
-		// load programmer config from programmer tree
-		readConfig(programmerRoot, r);
+		catch (Exception e) {log.error("exception reading programmer file: "+e); }
   	}
   	
   	Element programmerRoot = null;
@@ -264,9 +248,13 @@ public class PaneProgFrame extends javax.swing.JFrame
 		mShown = true;
 	}
 
-	// Close the window when the close box is clicked
+	/**
+	 * Close box has been clicked; handle check for dirty with respect to 
+	 * decoder or file, then close.
+	 */
 	void thisWindowClosing(java.awt.event.WindowEvent e) {
 		// check for various types of dirty - first table data not written back
+		if (log.isDebugEnabled()) log.debug("Checking decoder dirty status. CV: "+cvModel.decoderDirty()+" variables:"+variableModel.decoderDirty());
 		if (cvModel.decoderDirty() || variableModel.decoderDirty() ) {
 			if (JOptionPane.showConfirmDialog(null, 
 		   		"Some changes have not been written to the decoder. They will be lost. Close window?", 
@@ -521,14 +509,15 @@ public class PaneProgFrame extends javax.swing.JFrame
 			_programmingPane.removePropertyChangeListener(this);
 			_programmingPane = null;
 			// restart the operation
-			if (_read) { 
+			if (_read && readAllButton.isSelected()) { 
 				if (log.isDebugEnabled()) log.debug("restart readAll");
 				readAll();
 			}
-			else {
+			else if (writeAllButton.isSelected()) {
 				if (log.isDebugEnabled()) log.debug("restart writeAll");
 				writeAll();
 			}
+			else if (log.isDebugEnabled()) log.debug("readAll/writeAll end because button is lifted");
 		}
 	}
 	
@@ -561,16 +550,11 @@ public class PaneProgFrame extends javax.swing.JFrame
 		
 		// do I/O
 		try {
-			String fullFilename = LocoFile.fileLocation+File.separator+filename;
+			String fullFilename = XmlFile.prefsDir()+LocoFile.fileLocation+filename;
 			File f = new File(fullFilename);
-			// make sure file doesn't exist
-			if (f.exists()) {
-				log.debug("Output locomotive file already exists: "+fullFilename);
-				f.renameTo(LocoFile.backupFileName(filename));
-				// name a new file object for the new file
-				f = new File(fullFilename);
-			}
-
+			// do backup
+			df.makeBackupFile(LocoFile.fileLocation+filename);
+			
 			// and finally write the file
 			df.writeFile(f, cvModel, variableModel, _rosterEntry);
 						

@@ -1,5 +1,5 @@
 /*
- * $Id: Resolver.java,v 1.1 2001-12-10 06:30:25 jacobsen Exp $
+ * $Id: Resolver.java,v 1.2 2001-12-18 07:32:56 jacobsen Exp $
  *
  * The Apache Software License, Version 1.1
  *
@@ -126,11 +126,11 @@ import org.xml.sax.*;
  *
  * @author David Brownell
  * @author Rajiv Mordani
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class Resolver implements EntityResolver
 {
-    private boolean		ignoringMIME = true;
+    private boolean		ignoringMIME = false;
 
     // table mapping public IDs to (local) URIs
     private Hashtable		id2uri;
@@ -369,7 +369,7 @@ public class Resolver implements EntityResolver
 
 	// ...and treat all URIs the same (as URLs for now). 
 	} else {
-	    URL			url;
+	    URL			url = null;
 	    URLConnection	conn;
 	    
 	    if (mappedURI != null)
@@ -377,26 +377,29 @@ public class Resolver implements EntityResolver
 	    else if (uri == null)
 		return null;
 		
-	    //try { url = new URL (uri);}
-	    //catch (Exception e) { System.out.println("URL exception "+e);}
-	    //conn = url.openConnection ();
-	    //uri = conn.getURL ().toString ();
-	    // System.out.println ("++ URL: " + url);
+	    try { url = new URL (uri);}
+	    catch (Exception e) { System.out.println("URL exception "+e);}
+	    System.out.println(" starting uri: "+uri);
+	    System.out.println(" resulting URL: "+url);
+	    conn = url.openConnection ();
+	    System.out.println(" connection: "+conn);
+	    uri = conn.getURL ().toString ();
+	    System.out.println ("++ URL: " + url);
 
-		retval = new InputSource(new java.io.BufferedInputStream(new FileInputStream(new File(uri))));
-	    //if (ignoringMIME) {
-	    //System.out.println("ignoringMIME at D");
-		//retval = new InputSource (
-		//	XmlReader.createReader (conn.getInputStream ()));
-	    //System.out.println("ignoringMIME retval:"+retval);
-	    //} else {
-		//String		contentType = conn.getContentType ();
-	    //System.out.println("not ignoring MIME, contentType:"+contentType);
-		//retval = createInputSource (contentType,
-		//	conn.getInputStream (),
-		//	false, url.getProtocol ());
-	    //System.out.println("not ignoringMIME retval:"+retval);
-	    //}
+		// retval = new InputSource(new java.io.BufferedInputStream(new FileInputStream(new File(uri))));
+	    if (ignoringMIME) {
+	    System.out.println("ignoringMIME at D");
+		retval = new InputSource (
+			XmlReader.createReader (conn.getInputStream ()));
+	    	System.out.println("ignoringMIME retval:"+retval);
+	    } else {
+		String		contentType = conn.getContentType ();
+	    System.out.println("not ignoring MIME, contentType:"+contentType);
+		retval = createInputSource (contentType,
+			conn.getInputStream (),
+			false, url.getProtocol ());
+	    System.out.println("not ignoringMIME retval:"+retval);
+	    }
 	}
 	retval.setSystemId (uri);
 	retval.setPublicId (name);

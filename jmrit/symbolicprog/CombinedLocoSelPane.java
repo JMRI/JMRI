@@ -2,10 +2,12 @@
 
 package jmri.jmrit.symbolicprog;
 
+import jmri.jmrit.XmlFile;
 import jmri.jmrit.roster.*;
 import jmri.jmrit.decoderdefn.*;
 
 import java.awt.*;
+import java.io.File;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
@@ -20,7 +22,7 @@ import com.sun.java.util.collections.List;
  * you're interested in.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: CombinedLocoSelPane.java,v 1.4 2001-12-10 15:32:28 jacobsen Exp $
+ * @version			$Id: CombinedLocoSelPane.java,v 1.5 2001-12-18 07:31:07 jacobsen Exp $
  */
 public class CombinedLocoSelPane extends javax.swing.JPanel  {
 		
@@ -101,6 +103,43 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 			pane1a.add(iddecoder);
 			pane1a.setAlignmentX(JLabel.RIGHT_ALIGNMENT);				
 		add(pane1a);
+		
+			JPanel pane3a = new JPanel();
+			pane3a.setLayout(new BoxLayout(pane3a, BoxLayout.X_AXIS));
+			pane3a.add(new JLabel("Programmer format: "));
+			
+			// create an array of file names from prefs/programmers, count entries
+			String[] sp = (new File(XmlFile.prefsDir()+"programmers")).list();
+			int i;
+			int np = 0;
+			for (i=0; i<sp.length; i++) {
+				if (sp[i].endsWith(".xml")) np++;
+			}
+			// create an array of file names from xml/programmers, count entries
+			String[] sx = (new File(XmlFile.xmlDir()+"programmers")).list();
+			int nx = 0;
+			for (i=0; i<sx.length; i++) {
+				if (sx[i].endsWith(".xml")) nx++;
+			}
+
+			// copy the programmer entries to the final array
+			// note: this results in duplicate entries if the same name is also local.
+			// But for now I can live with that.
+			String sbox[] = new String[np+nx];
+			int n=0;
+			for (i=0; i<sp.length; i++) {
+				if (sp[i].endsWith(".xml")) sbox[n++] = sp[i].substring(0, sp[i].length()-1-3);
+			}
+			for (i=0; i<sx.length; i++) {
+				if (sx[i].endsWith(".xml")) sbox[n++] = sx[i].substring(0, sx[i].length()-1-3);
+			}
+
+			// create the programmer box
+			programmerBox = new JComboBox(sbox);			
+			programmerBox.setSelectedIndex(0);
+			pane3a.add(programmerBox);
+			pane3a.setAlignmentX(JLabel.RIGHT_ALIGNMENT);				
+		add(pane3a);
 		
 		go2 = new JButton("Open Programmer");
 		go2.addActionListener( new ActionListener() {
@@ -189,6 +228,7 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 
 	private JComboBox locoBox = null;
 	private JComboBox decoderBox = null;
+	private JComboBox programmerBox = null;
 	private JToggleButton iddecoder;
 	private JToggleButton idloco;
 	private JButton go2;
@@ -216,7 +256,7 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 		String locoFile = Roster.instance().fileFromTitle((String)locoBox.getSelectedItem());
 		if (log.isDebugEnabled()) log.debug("loco file: "+locoFile);
 		
-		startProgrammer(null, locoFile, re);
+		startProgrammer(null, locoFile, re, (String)programmerBox.getSelectedItem());
 	}
 	
 	protected void openNewLoco() {
@@ -241,11 +281,11 @@ public class CombinedLocoSelPane extends javax.swing.JPanel  {
 		// add the new roster entry to the in-memory roster
 		Roster.instance().addEntry(re);
 		
-		startProgrammer(decoderFile, locoFile, re);
+		startProgrammer(decoderFile, locoFile, re, (String)programmerBox.getSelectedItem());
 	}
 
 	/** meant to be overridden to start the desired type of programmer */
-	protected void startProgrammer(DecoderFile decoderFile, String locoFile, RosterEntry r) {
+	protected void startProgrammer(DecoderFile decoderFile, String locoFile, RosterEntry r, String progName) {
 		log.error("startProgrammer method in CombinedLocoSelPane should have been overridden");
 	}
 	

@@ -25,7 +25,7 @@ public class XmlFileTest extends TestCase {
 		XmlFile x = new XmlFile() {
 		};
 		
-		Assert.assertTrue("existing file ", x.checkFile("xml/"));
+		Assert.assertTrue("existing file ", x.checkFile("DTD"));
 		Assert.assertTrue("non-existing file ", !x.checkFile("dummy file not expected to exist"));
 	}
 	

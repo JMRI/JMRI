@@ -21,15 +21,13 @@ import jmri.ProgListener;
 import jmri.ProgModePane;
 import jmri.jmrit.symbolicprog.*;
 import jmri.jmrit.decoderdefn.*;
+import jmri.jmrit.XmlFile;
 
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.DocType;
 import org.jdom.output.XMLOutputter;
 import org.jdom.JDOMException;
-import org.jdom.input.DOMBuilder;
-import org.jdom.input.SAXBuilder;
-import org.xml.sax.InputSource;
 
 public class SymbolicProgFrame extends javax.swing.JFrame  {
 
@@ -284,21 +282,12 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 	
 	void readAndParseConfigFile(File file) {
 		try {
-			// This is taken in large part from "Java and XML" page 354
-			
-			// Open and parse file
-
-			SAXBuilder builder = new SAXBuilder(true);  // argument controls validation, on for now
-			Document doc = builder.build(new BufferedInputStream(new FileInputStream(file)),"xml"+File.separator);
-			// find root
-			Element root = doc.getRootElement();
+			XmlFile xf = new XmlFile(){};  // XmlFile is abstract
+			Element root = xf.rootFromFile(file);
 			
 			// decode type, invoke proper processing routine if a decoder file
 			if (root.getChild("decoder") != null) processDecoderFile(root.getChild("decoder"));
 			else { // try again as a loco file
-				builder = new SAXBuilder(true);  // argument controls validation, on for now
-				doc = builder.build(new BufferedInputStream(new FileInputStream(file)),"xml"+File.separator);
-				root = doc.getRootElement();
 				if (root.getChild("locomotive") != null) processLocoFile(root.getChild("locomotive"));
 				else log.error("Unrecognized config file contents");
 			}

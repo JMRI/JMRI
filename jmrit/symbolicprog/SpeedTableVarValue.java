@@ -40,14 +40,13 @@ import com.sun.java.util.collections.ArrayList;
  *<P>
  * Description:		Extends VariableValue to represent a NMRA long address
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: SpeedTableVarValue.java,v 1.4 2001-12-05 23:28:10 jacobsen Exp $
+ * @version			$Id: SpeedTableVarValue.java,v 1.5 2001-12-18 07:31:07 jacobsen Exp $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
 
 	final int nValues = 28;
 	BoundedRangeModel[] models = new BoundedRangeModel[nValues];
-	JSlider[] sliders = new JSlider[nValues];
 		
 	/**
 	 * Create the object with a "standard format ctor".  Note that max and min are ignored.
@@ -83,7 +82,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
    	public SpeedTableVarValue() {}
 		
 	public Object rangeVal() {
-		log.warn("setIntValue doesn't make sense for a speed table");
+		log.warn("rangeVal doesn't make sense for a speed table");
 		return new String("Speed table");
 	}
 		
@@ -138,8 +137,12 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 	// to complete this class, fill in the routines to handle "Value" parameter
 	// and to read/write/hear parameter changes. 
 	public String getValueString() {
-		log.warn("setIntValue doesn't make sense for a speed table");
-		return "Speed table";
+		StringBuffer buf = new StringBuffer();
+		for (int i=0; i< models.length; i++) {
+			if (i!=0) buf.append(",");
+			buf.append(Integer.toString(models[i].getValue()));
+		}
+		return new String(buf);
 	}
 	public void setIntValue(int i) {
 		log.warn("setIntValue doesn't make sense for a speed table: "+i);
