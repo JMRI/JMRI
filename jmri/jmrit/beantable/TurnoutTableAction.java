@@ -7,7 +7,8 @@ import jmri.Manager;
 import jmri.NamedBean;
 import jmri.Turnout;
 import java.awt.event.ActionEvent;
-import java.util.*;
+import java.util.ResourceBundle;
+
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 
@@ -16,7 +17,7 @@ import javax.swing.JButton;
  * TurnoutTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
 public class TurnoutTableAction extends AbstractAction {

@@ -8,17 +8,17 @@ import jmri.Manager;
 import jmri.NamedBean;
 import jmri.Sensor;
 import java.awt.event.ActionEvent;
-import java.util.*;
+import java.util.ResourceBundle;
+
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
-import java.util.*;
 
 /**
  * Swing action to create and register a
  * SensorTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 public class SensorTableAction extends AbstractAction {

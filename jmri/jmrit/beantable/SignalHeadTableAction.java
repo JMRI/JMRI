@@ -7,7 +7,7 @@ import jmri.Manager;
 import jmri.NamedBean;
 import jmri.SignalHead;
 import java.awt.event.ActionEvent;
-import java.util.*;
+import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -17,7 +17,7 @@ import javax.swing.JButton;
  * SignalHeadTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class SignalHeadTableAction extends AbstractAction {
@@ -33,13 +33,13 @@ public class SignalHeadTableAction extends AbstractAction {
             public String getValue(String name) {
                 int val = InstanceManager.signalHeadManagerInstance().getBySystemName(name).getAppearance();
                 switch (val) {
-                case SignalHead.RED: return rbean.getString("SignalStateRed");
-                case SignalHead.YELLOW: return rbean.getString("SignalStateYellow");
-                case SignalHead.GREEN: return rbean.getString("SignalStateGreen");
-                case SignalHead.FLASHRED: return rbean.getString("SignalStateFlashing Red");
-                case SignalHead.FLASHYELLOW: return rbean.getString("SignalStateFlashing Yellow");
-                case SignalHead.FLASHGREEN: return rbean.getString("SignalStateFlashing Green");
-                case SignalHead.DARK: return rbean.getString("SignalStateDark");
+                case SignalHead.RED: return rbean.getString("SignalHeadStateRed");
+                case SignalHead.YELLOW: return rbean.getString("SignalHeadStateYellow");
+                case SignalHead.GREEN: return rbean.getString("SignalHeadStateGreen");
+                case SignalHead.FLASHRED: return rbean.getString("SignalHeadStateFlashing Red");
+                case SignalHead.FLASHYELLOW: return rbean.getString("SignalHeadStateFlashing Yellow");
+                case SignalHead.FLASHGREEN: return rbean.getString("SignalHeadStateFlashing Green");
+                case SignalHead.DARK: return rbean.getString("SignalHeadStateDark");
                 default: return "Unexpected value: "+val;
                 }
             }
