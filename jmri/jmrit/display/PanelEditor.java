@@ -7,6 +7,8 @@ import jmri.jmrit.catalog.NamedIcon;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
@@ -43,8 +45,8 @@ import com.sun.java.util.collections.ArrayList;
  * The title of the target and the editor panel are kept
  * consistent via the {#setTitle} method.
  *
- * @author Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
- * @version $Revision: 1.41 $
+ * @author Bob Jacobsen  Copyright: Copyright (c) 2002, 2003; modifications, Dennis Miller 2004
+ * @version $Revision: 1.42 $
  */
 
 public class PanelEditor extends JFrame {
@@ -99,7 +101,7 @@ public class PanelEditor extends JFrame {
         super(name);
         this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		self = this;
-		
+
         // common items
         JPanel common = new JPanel();
         common.setLayout(new FlowLayout());
@@ -119,7 +121,7 @@ public class PanelEditor extends JFrame {
         fileMenu.add(new jmri.configurexml.LoadXmlConfigAction(rb.getString("MenuItemLoad")));
         fileMenu.add(new jmri.configurexml.StoreXmlUserAction(rb.getString("MenuItemStore")));
         setJMenuBar(menuBar);
-		
+
 
         // allow naming the panel
         {
@@ -159,6 +161,7 @@ public class PanelEditor extends JFrame {
             JPanel panel = new JPanel();
             panel.setLayout(new FlowLayout());
             panel.add(labelAdd);
+            labelAdd.setEnabled(false);
             panel.add(nextLabel);
             labelAdd.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
@@ -166,6 +169,12 @@ public class PanelEditor extends JFrame {
                     }
                 }
                                         );
+            nextLabel.addKeyListener(new KeyAdapter() {
+                      public void keyReleased(KeyEvent a){
+                          if (nextLabel.getText().equals("")) labelAdd.setEnabled(false);
+                          else labelAdd.setEnabled(true);
+                      }
+                  });
             this.getContentPane().add(panel);
         }
 
@@ -184,11 +193,12 @@ public class PanelEditor extends JFrame {
             iconEditor = new MultiIconEditor(1);
             iconEditor.setIcon(0, "","resources/icons/smallschematics/tracksegments/block.gif");
             iconEditor.complete();
-            iconFrame = new JFrame("Edit icon");
+            iconFrame = new JFrame("Change icon");
+            iconFrame.getContentPane().add(new JLabel("  Select new file, then click on icon to change  "),BorderLayout.NORTH);
             iconFrame.getContentPane().add(iconEditor);
             iconFrame.pack();
 
-            JButton j = new JButton("Edit icon...");
+            JButton j = new JButton("Change icon...");
             j.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         iconFrame.show();
@@ -205,6 +215,7 @@ public class PanelEditor extends JFrame {
             JPanel panel = new JPanel();
             panel.setLayout(new FlowLayout());
             panel.add(turnoutAddR);
+            turnoutAddR.setEnabled(false);
             panel.add(nextTurnoutR);
             turnoutAddR.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
@@ -212,6 +223,13 @@ public class PanelEditor extends JFrame {
                     }
                 }
                                            );
+            nextTurnoutR.addKeyListener(new KeyAdapter() {
+                    public void keyReleased(KeyEvent a){
+                        if (nextTurnoutR.getText().equals("")) turnoutAddR.setEnabled(false);
+                        else turnoutAddR.setEnabled(true);
+                    }
+                });
+
 
             turnoutRIconEditor = new MultiIconEditor(4);
             turnoutRIconEditor.setIcon(0, "Closed:","resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif");
@@ -219,11 +237,12 @@ public class PanelEditor extends JFrame {
             turnoutRIconEditor.setIcon(2, "Inconsistent:", "resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif");
             turnoutRIconEditor.setIcon(3, "Unknown:","resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif");
             turnoutRIconEditor.complete();
-            turnoutRFrame = new JFrame("Edit RH turnout icons");
+            turnoutRFrame = new JFrame("Change RH turnout icons");
+            turnoutRFrame.getContentPane().add(new JLabel("  Select new file, then click on icon to change  "),BorderLayout.NORTH);
             turnoutRFrame.getContentPane().add(turnoutRIconEditor);
             turnoutRFrame.pack();
 
-            JButton j = new JButton("Edit icons...");
+            JButton j = new JButton("Change icons...");
             j.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         turnoutRFrame.show();
@@ -240,6 +259,7 @@ public class PanelEditor extends JFrame {
             JPanel panel = new JPanel();
             panel.setLayout(new FlowLayout());
             panel.add(turnoutAddL);
+            turnoutAddL.setEnabled(false);
             panel.add(nextTurnoutL);
             turnoutAddL.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
@@ -247,6 +267,13 @@ public class PanelEditor extends JFrame {
                     }
                 }
                                            );
+            nextTurnoutL.addKeyListener(new KeyAdapter() {
+                    public void keyReleased(KeyEvent a){
+                         if (nextTurnoutL.getText().equals("")) turnoutAddL.setEnabled(false);
+                         else turnoutAddL.setEnabled(true);
+                    }
+            });
+
 
             turnoutLIconEditor = new MultiIconEditor(4);
             turnoutLIconEditor.setIcon(0, "Closed:","resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif");
@@ -254,11 +281,12 @@ public class PanelEditor extends JFrame {
             turnoutLIconEditor.setIcon(2, "Inconsistent:", "resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif");
             turnoutLIconEditor.setIcon(3, "Unknown:","resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif");
             turnoutLIconEditor.complete();
-            turnoutLFrame = new JFrame("Edit LH turnout icons");
+            turnoutLFrame = new JFrame("Change LH turnout icons");
+            turnoutLFrame.getContentPane().add(new JLabel("  Select new file, then click on icon to change  "),BorderLayout.NORTH);
             turnoutLFrame.getContentPane().add(turnoutLIconEditor);
             turnoutLFrame.pack();
 
-            JButton j = new JButton("Edit icons...");
+            JButton j = new JButton("Change icons...");
             j.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         turnoutLFrame.show();
@@ -275,6 +303,7 @@ public class PanelEditor extends JFrame {
             JPanel panel = new JPanel();
             panel.setLayout(new FlowLayout());
             panel.add(sensorAdd);
+            sensorAdd.setEnabled(false);
             panel.add(nextSensor);
             sensorAdd.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
@@ -283,17 +312,26 @@ public class PanelEditor extends JFrame {
                 }
                                            );
 
+            nextSensor.addKeyListener(new KeyAdapter() {
+                public void keyReleased(KeyEvent a){
+                    if (nextSensor.getText().equals("")) sensorAdd.setEnabled(false);
+                    else sensorAdd.setEnabled(true);
+                }
+            });
+
+
             sensorIconEditor = new MultiIconEditor(4);
             sensorIconEditor.setIcon(0, "Active:","resources/icons/smallschematics/tracksegments/circuit-occupied.gif");
             sensorIconEditor.setIcon(1, "Inactive", "resources/icons/smallschematics/tracksegments/circuit-empty.gif");
             sensorIconEditor.setIcon(2, "Inconsistent:", "resources/icons/smallschematics/tracksegments/circuit-error.gif");
             sensorIconEditor.setIcon(3, "Unknown:","resources/icons/smallschematics/tracksegments/circuit-error.gif");
             sensorIconEditor.complete();
-            sensorFrame = new JFrame("Edit sensor icons");
+            sensorFrame = new JFrame("Change sensor icons");
+            sensorFrame.getContentPane().add(new JLabel("  Select new file, then click on icon to change  "),BorderLayout.NORTH);
             sensorFrame.getContentPane().add(sensorIconEditor);
             sensorFrame.pack();
 
-            JButton j = new JButton("Edit icons...");
+            JButton j = new JButton("Change icons...");
             j.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         sensorFrame.show();
@@ -310,6 +348,7 @@ public class PanelEditor extends JFrame {
             JPanel panel = new JPanel();
             panel.setLayout(new FlowLayout());
             panel.add(signalAdd);
+            signalAdd.setEnabled(false);
             panel.add(nextSignalHead);
             signalAdd.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
@@ -318,17 +357,26 @@ public class PanelEditor extends JFrame {
                 }
                                            );
 
+            nextSignalHead.addKeyListener(new KeyAdapter() {
+                public void keyReleased(KeyEvent a){
+                    if (nextSignalHead.getText().equals("")) signalAdd.setEnabled(false);
+                    else signalAdd.setEnabled(true);
+                }
+            });
+
+
             signalIconEditor = new MultiIconEditor(4);
             signalIconEditor.setIcon(0, "Red:","resources/icons/smallschematics/searchlights/left-red-marker.gif");
             signalIconEditor.setIcon(1, "Yellow", "resources/icons/smallschematics/searchlights/left-yellow-marker.gif");
             signalIconEditor.setIcon(2, "Flash yellow:", "resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif");
             signalIconEditor.setIcon(3, "Green:","resources/icons/smallschematics/searchlights/left-green-marker.gif");
             signalIconEditor.complete();
-            signalFrame = new JFrame("Edit signal icons");
+            signalFrame = new JFrame("Change signal icons");
+            signalFrame.getContentPane().add(new JLabel("  Select new file, then click on icon to change  "),BorderLayout.NORTH);
             signalFrame.getContentPane().add(signalIconEditor);
             signalFrame.pack();
 
-            JButton j = new JButton("Edit icons...");
+            JButton j = new JButton("Change icons...");
             j.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         signalFrame.show();
@@ -408,6 +456,8 @@ public class PanelEditor extends JFrame {
      * Add a turnout indicator to the target
      */
     void addTurnoutR() {
+        int errorCheck = checkEntry("Turnout" , nextTurnoutR.getText());
+        if (errorCheck != 0) return;
         TurnoutIcon l = new TurnoutIcon();
         l.setClosedIcon(turnoutRIconEditor.getIcon(0));
         l.setThrownIcon(turnoutRIconEditor.getIcon(1));
@@ -420,6 +470,8 @@ public class PanelEditor extends JFrame {
         putTurnout(l);
     }
     void addTurnoutL() {
+        int errorCheck = checkEntry("Turnout" , nextTurnoutL.getText());
+        if (errorCheck != 0) return;
         TurnoutIcon l = new TurnoutIcon();
         l.setClosedIcon(turnoutLIconEditor.getIcon(0));
         l.setThrownIcon(turnoutLIconEditor.getIcon(1));
@@ -438,11 +490,29 @@ public class PanelEditor extends JFrame {
         // reshow the panel
         target.validate();
     }
-
+    /**
+     * Check for valid names on input
+     */
+    int checkEntry(String type, String name) {
+      int errorFlag = 0;
+      String errorMessage = "";
+      if (name.equals("")) {
+        errorFlag = 1;
+        errorMessage = type + "name not valid. Requires a number or System Name or User Name.\n"
+            + "User Names must be predefined using " + type + " Table tool.\n";
+      }
+      if (errorFlag != 0) {
+        JOptionPane.showMessageDialog(this, errorMessage, "Input Error",
+                                      JOptionPane.ERROR_MESSAGE);
+      }
+      return errorFlag;
+    }
     /**
      * Add a sensor indicator to the target
      */
     void addSensor() {
+        int errorCheck = checkEntry("Sensor" , nextTurnoutL.getText());
+        if (errorCheck != 0) return;
         SensorIcon l = new SensorIcon();
         l.setActiveIcon(sensorIconEditor.getIcon(0));
         l.setInactiveIcon(sensorIconEditor.getIcon(1));
@@ -545,7 +615,7 @@ public class PanelEditor extends JFrame {
 
     JFrame frame;
 	PanelEditor self;
-	
+
     public ArrayList contents = new ArrayList();
 
     /**
@@ -641,7 +711,7 @@ public class PanelEditor extends JFrame {
      */
     public JFrame makeFrame(String name, int width, int height) {
         JFrame targetFrame = new JFrame(name);
-		
+
 		// arrange for scrolling and size services
         JLayeredPane targetPanel = new JLayeredPane(){
             // provide size services, even though a null layout manager is used
@@ -676,7 +746,7 @@ public class PanelEditor extends JFrame {
         targetFrame.getContentPane().setLayout(new BoxLayout(targetFrame.getContentPane(),BoxLayout.Y_AXIS));
         this.setFrame(targetFrame);
         this.setTarget(targetPanel);
-        
+
         // add menu
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
         JMenuBar menuBar = new JMenuBar();
@@ -688,7 +758,7 @@ public class PanelEditor extends JFrame {
                 }
             });
         targetFrame.setJMenuBar(menuBar);
-        
+
 		// set initial size, and force layout
         targetPanel.setSize(width, height);
         targetPanel.revalidate();
