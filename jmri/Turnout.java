@@ -23,7 +23,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  * @see         jmri.AbstractTurnout
  * @see         jmri.TurnoutManager
  * @see         jmri.InstanceManager
@@ -32,14 +32,6 @@ package jmri;
 public interface Turnout extends NamedBean {
 
     // states are parameters; 'both closed and thrown' is possible!
-
-    /**
-     * Constant representing an "unknown" state, indicating that the
-     * object's state is not necessarily that of the actual layout hardware.
-     * This is the initial state of a newly created object before
-     * communication with the layout.
-     */
-    public static final int UNKNOWN      = 0x01;
 
     /**
      * Constant representing an "closed" state, either in readback
@@ -52,12 +44,6 @@ public interface Turnout extends NamedBean {
      * or as a commanded state.
      */
     public static final int THROWN       = 0x04;
-
-    /**
-     * Constant representing an "inconsistent" state, indicating that
-     * some inconsistency has been detected in the hardware readback.
-     */
-    public static final int INCONSISTENT = 0x08;
 
     /**
      * Query the known state.  This is a bound parameter, so

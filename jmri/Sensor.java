@@ -7,15 +7,13 @@ package jmri;
  * types of sensors.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public interface Sensor extends NamedBean {
 
     // states are parameters; both closed and thrown is possible!
-    public static final int UNKNOWN      = 0x01;
     public static final int ACTIVE       = 0x02;
     public static final int INACTIVE     = 0x04;
-    public static final int INCONSISTENT = 0x08;
 
     /**
      * Known state on layout is a bound parameter
