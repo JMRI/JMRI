@@ -10,8 +10,12 @@ import jmri.Sensor;
  * <P>
  * System names are "NSnnn", where nnn is the sensor number without padding.
  * <P>
+ * This class is responsible for generating polling messages
+ * for the NceTrafficController,
+ * see nextAiuPoll()
+ * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class NceSensorManager extends jmri.AbstractSensorManager
                             implements NceListener {
@@ -103,7 +107,7 @@ public class NceSensorManager extends jmri.AbstractSensorManager
         log.warn("unexpected message");
     }
     public void reply(NceReply r) {
-        int bits = r.pollValue();
+        int bits = r.pollValue();  // bits is the value in hex from the message
         aiuArray[mNextIndex].markChanges(bits);
     }
 
