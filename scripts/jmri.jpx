@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--JBuilder XML Project-->
 <project>
+  <property category="debug.0" name="ShowBreakpointInNoTracingClass" value="0"/>
   <property category="editor.general" name="line_ending.style" value="3"/>
   <property category="idl" name="ProcessIDL" value="false"/>
+  <property category="jbuilder.debug"
+    name="ShowBreakpointInNoTracingClass" value="0"/>
   <property category="runtime" name="ConfigurationCount" value="4"/>
   <property category="runtime.0" name="RunnableType" value="com.borland.jbuilder.runtime.TestRunner"/>
   <property category="runtime.0" name="application.class" value="apps.JmriDemo.JMRIdemo"/>
@@ -79,7 +82,7 @@
   <property category="sys" name="TestPath" value="test"/>
   <property category="sys" name="Title" value=""/>
   <property category="sys" name="TitleLabel" value="Title:"/>
-  <property category="sys" name="Version" value="$Revision: 1.11 $"/>
+  <property category="sys" name="Version" value="$Revision: 1.12 $"/>
   <property category="sys" name="VersionLabel" value="@version"/>
   <property category="sys" name="WorkingDirectory" value="../"/>
   <node name="Additional Settings" type="Folder">
@@ -95,6 +98,7 @@
       <property category="idl" name="GenerateRMI" value="true"/>
     </file>
   </node>
+  <node name="DTD files" type="Folder"/>
   <node name="jmri" type="Package"/>
   <node name="org.apache" type="Package"/>
   <node name="xml" type="Package"/>
@@ -117,7 +121,7 @@
     <property category="nodeJavadoc" name="directory" value="doc"/>
     <property category="nodeJavadoc" name="displayAllOutput" value="1"/>
   </node>
-  <file path="src/jmri/configureXML/AbstractTurnoutManagerConfigXML.java"/>
   <file path="src/xml/DTD/decoder-config.dtd"/>
   <file path="../resources/decoderpro.gif"/>
+  <file path="../xml/DTD/names-config.dtd"/>
 </project>
