@@ -34,7 +34,7 @@ import org.jdom.Element;
  *  TODO: fix speed increments (14, 28)
  *
  * @author     glen
- * @version    $Revision: 1.28 $
+ * @version    $Revision: 1.29 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener
 {
@@ -56,7 +56,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	public int stopKey = 111; // numpad /
 	public int idleKey = 106; // numpad *
 
-	private static int MAX_SPEED = 128;
+          // LocoNet really only has 126 speed steps i.e. 0..127 - 1 for em stop
+	private static int MAX_SPEED = 126;
 	//TODO: correct always?
 
 	/**
@@ -170,13 +171,11 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 		sliderPanel.add(speedSlider, constraints);
 		this.getContentPane().add(sliderPanel, BorderLayout.CENTER);
 		speedSlider.setOrientation(JSlider.VERTICAL);
-		speedSlider.setMajorTickSpacing(MAX_SPEED/4);
-		speedSlider.setMinorTickSpacing(MAX_SPEED/16);
+		speedSlider.setMajorTickSpacing(MAX_SPEED/2);
 		com.sun.java.util.collections.Hashtable labelTable = new com.sun.java.util.collections.Hashtable();
-		labelTable.put(new Integer(MAX_SPEED/4), new JLabel("25%"));
 		labelTable.put(new Integer(MAX_SPEED/2), new JLabel("50%"));
-		labelTable.put(new Integer((3*MAX_SPEED)/4), new JLabel("75%"));
 		labelTable.put(new Integer(MAX_SPEED), new JLabel("100%"));
+                labelTable.put(new Integer(0), new JLabel("Stop"));
 		speedSlider.setLabelTable(labelTable);
 		speedSlider.setPaintTicks(true);
 		speedSlider.setPaintLabels(true);
@@ -189,7 +188,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                                     if ( !internalAdjust) {
 					if (!speedSlider.getValueIsAdjusting())
 					{
-						throttle.setSpeedSetting(speedSlider.getValue() / (MAX_SPEED*1.0f));
+                                                float newSpeed = (speedSlider.getValue() / ( MAX_SPEED * 1.0f ) ) ;
+                                                log.debug( "stateChanged: slider pos: " + speedSlider.getValue() + " speed: " + newSpeed );
+						throttle.setSpeedSetting( newSpeed );
 					}
 				   } else {
 					internalAdjust=false;
@@ -315,7 +316,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	 *  A KeyAdapter that listens for the keys that work the control pad buttons
 	 *
 	 * @author     glen
-         * @version    $Revision: 1.28 $
+         * @version    $Revision: 1.29 $
 	 */
 	class ControlPadKeyListener extends KeyAdapter
 	{
@@ -383,11 +384,14 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 		if (e.getPropertyName().equals("SpeedSetting")) {
 	           internalAdjust=true;
 		   float speed=((Float) e.getNewValue()).floatValue();
-		   speedSlider.setValue((int)(speed * MAX_SPEED));
+                    // add the 0.5 to handle float to int round for positive numbers
+                   int newSliderSetting = (int)(speed * MAX_SPEED + 0.5) ;
+                   log.debug( "propertyChange: new speed float: " + speed + " slider pos: " + newSliderSetting ) ;
+		   speedSlider.setValue( newSliderSetting );
 		} else if (e.getPropertyName().equals("IsForward")) {
 		   boolean Forward=((Boolean) e.getNewValue()).booleanValue();
 	           setIsForward(Forward);
-		}		
+		}
 	}
 
 
@@ -428,4 +432,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 		wp.setPreferences(this, window);
 	}
 
+        // initialize logging
+        static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ControlPanel.class.getName());
 }
