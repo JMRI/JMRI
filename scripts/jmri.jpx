@@ -19,7 +19,7 @@
   <property category="runtime.1" name="ConfigurationName" value="JMRI Demo"/>
   <property category="runtime.1" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
   <property category="runtime.1" name="application.class" value="apps.JmriDemo.JMRIdemo"/>
-  <property category="runtime.1" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw"/>
+  <property category="runtime.1" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw -Duser.region=UK"/>
   <property category="runtime.1" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.1" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
   <property category="runtime.1" name="appserver.servername" value="standard"/>
@@ -127,7 +127,7 @@
   <property category="sys" name="TestPath" value="test"/>
   <property category="sys" name="Title" value=""/>
   <property category="sys" name="TitleLabel" value=""/>
-  <property category="sys" name="Version" value="$Revision: 1.24 $"/>
+  <property category="sys" name="Version" value="$Revision: 1.25 $"/>
   <property category="sys" name="VersionLabel" value="@version"/>
   <property category="sys" name="WorkingDirectory" value="../"/>
   <property category="sys" name="max.package.levels" value="2"/>
@@ -147,12 +147,28 @@
   </node>
   <node name="DTD files" type="Folder"/>
   <node name="apps" type="Package"/>
+  <node name="apps.configurexml" type="Package"/>
   <node name="jmri" type="Package"/>
+  <node name="jmri.configurexml" type="Package"/>
   <node name="jmri.jmrit.display.configurexml" type="Package"/>
+  <node name="jmri.jmrit.symbolicprog.configurexml" type="Package"/>
+  <node name="jmri.jmrix.cmri.serial.configurexml" type="Package"/>
+  <node name="jmri.jmrix.cmri.serial.serialdriver.configurexml" type="Package"/>
+  <node name="jmri.jmrix.configurexml" type="Package"/>
   <node name="jmri.jmrix.easydcc.configurexml" type="Package"/>
+  <node name="jmri.jmrix.easydcc.serialdriver.configurexml" type="Package"/>
   <node name="jmri.jmrix.lenz.configurexml" type="Package"/>
+  <node name="jmri.jmrix.lenz.li100.configurexml" type="Package"/>
   <node name="jmri.jmrix.loconet.configurexml" type="Package"/>
+  <node name="jmri.jmrix.loconet.hexfile.configurexml" type="Package"/>
+  <node name="jmri.jmrix.loconet.locobuffer.configurexml" type="Package"/>
+  <node name="jmri.jmrix.loconet.locormi.configurexml" type="Package"/>
+  <node name="jmri.jmrix.loconet.ms100.configurexml" type="Package"/>
   <node name="jmri.jmrix.nce.configurexml" type="Package"/>
+  <node name="jmri.jmrix.nce.serialdriver.configurexml" type="Package"/>
+  <node name="jmri.jmrix.sprog.configurexml" type="Package"/>
+  <node name="jmri.jmrix.sprog.serialdriver.configurexml" type="Package"/>
+  <node name="jmri.managers.configurexml" type="Package"/>
   <node name="org.apache" type="Package"/>
   <node name="resources" type="Package"/>
   <node name="xml" type="Package"/>
@@ -176,14 +192,10 @@
     <property category="nodeJavadoc" name="directory" value="doc"/>
     <property category="nodeJavadoc" name="displayAllOutput" value="1"/>
   </node>
-  <file path="src/jmri/configurexml/AbstractSignalHeadManagerXml.java"/>
   <file path="test/apps/tests/AllTest.java"/>
   <file path="src/resources/decoderpro.gif"/>
   <file path="src/apps/DecoderPro/DecoderPro.java"/>
   <file path="src/apps/JmriDemo/JMRIdemo.java"/>
   <file path="src/apps/LocoTools/LocoTools.java"/>
   <file path="src/resources/logo.gif"/>
-  <file path="src/jmri/jmrix/cmri/serial/configurexml/SerialTurnoutManagerXml.java"/>
-  <file path="src/jmri/configurexml/TripleTurnoutSignalHeadXml.java"/>
-  <file path="src/jmri/Version.java"/>
 </project>
