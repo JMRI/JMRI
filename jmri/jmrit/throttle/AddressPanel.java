@@ -214,7 +214,7 @@ public class AddressPanel extends JInternalFrame
      */
     private void changeFontSizes()
     {
-        double fieldWidth = addressField.getSize().getWidth();
+        double fieldWidth = addressField.getSize().width;
         int stringWidth = addressField.getFontMetrics(addressField.getFont()).
                           stringWidth(LONGEST_STRING);
         int fontSize = addressField.getFont().getSize();

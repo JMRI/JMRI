@@ -151,7 +151,8 @@ public class FunctionButtonPropertyEditor extends JDialog
             button.setText(textField.getText());
             button.setIsLockable(lockableCheckBox.isSelected());
             button.setIdentity(Integer.parseInt(idField.getText()));
-            button.setFont(new Font(button.getFont().getFontName(),
+            String name = button.getFont().getName();
+            button.setFont(new Font(name,
                                     button.getFont().getStyle(),
                                     Integer.parseInt(fontField.getText())));
             button.setVisible(visibleCheckBox.isSelected());
