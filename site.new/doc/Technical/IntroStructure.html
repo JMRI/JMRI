@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: IntroStructure.html,v 1.1 2004-07-25 05:56:05 jacobsen Exp $ -->
+<!-- $Id: IntroStructure.html,v 1.2 2004-07-25 06:10:12 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -166,8 +166,28 @@ More specifically:
 
 
 (This should show apps using jmrit and jmrix also, but that's too hard to draw in ASCII)
-<PRE>
+</PRE>
 
+
+<P>
+Extensive use of Factory pattern via objects we call "Manager" objects.
+
+<P>
+<h3>Example: a Turnout</h3>
+Turnouts involve:
+<UL>
+<LI>Turnout - the basic interface. This is what you should expect to deal with
+ 				when writing your layout automation code; its what you get 
+ 				when you make a request from the TurnoutManager, etc.
+<LI>AbstractTurnout - provided for convenience when implementing the Turnout interface
+				for specific hardware, this provides the basic implementation.
+<LI>LnTurnout - a specific implementation for LocoNet-connected turnouts.
+</UL>
+
+<P>
+To get a specific Turnout instance that represents something on the layout, you
+make a request of a TurnoutManager.  This is also an interface, with a similar
+implementation pattern.
 
 
 
