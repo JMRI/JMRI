@@ -1,7 +1,7 @@
 package jmri.jmrit.display;
 
 import jmri.jmrit.catalog.NamedIcon;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.*;
@@ -9,7 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import javax.swing.AbstractAction;
+import javax.swing.*;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JLabel;
@@ -22,7 +22,7 @@ import javax.swing.JRadioButtonMenuItem;
  * PositionableLabel is a JLabel that can be dragged around the
  * inside of the enclosing Container using a right-drag.
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class PositionableLabel extends JLabel
@@ -253,7 +253,10 @@ public class PositionableLabel extends JLabel
     }
 
     public JMenuItem newStyleMenuItem(AbstractAction a, int mask) {
-        JCheckBoxMenuItem c = new JCheckBoxMenuItem(); ///!! (a);
+        // next two lines needed because JCheckBoxMenuItem(AbstractAction) not in 1.1.8
+        JCheckBoxMenuItem c = new JCheckBoxMenuItem((String)a.getValue(a.NAME));
+        c.addActionListener(a);
+
         if ( (mask & getFont().getStyle()) == mask ) c.setSelected(true);
         return c;
     }
