@@ -5,6 +5,7 @@
 
 <!--  Section identifies serial port info -->
 <!ELEMENT ThrottleFrame (window, ControlPanel, FunctionPanel, AddressPanel) >
+<!ATTLIST ThrottleFrame title CDATA #REQUIRED>
 
 <!ELEMENT ControlPanel (window) >
 
