@@ -18,6 +18,9 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.*;
+import java.util.StringTokenizer;
+import java.awt.Color;
+
 
 import org.jdom.Attribute;
 import org.jdom.Element;
@@ -33,7 +36,7 @@ import com.sun.java.util.collections.List;   // resolve ambiguity with package-l
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001; D Miller Copyright 2003
- * @version			$Revision: 1.24 $
+ * @version			$Revision: 1.25 $
  */
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
@@ -862,6 +865,9 @@ public class PaneProgPane extends javax.swing.JPanel
               w.write(s, 0, s.length());
               w.write(w.getCurrentLineNumber(),0,w.getCurrentLineNumber() + 1,0);
               w.write(w.getCurrentLineNumber(),w.getCharactersPerLine() + 1,w.getCurrentLineNumber() + 1,w.getCharactersPerLine() + 1);
+              //Draw horizontal dividing line for each Pane section
+              w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(),
+                      w.getCharactersPerLine()+1);
               s = "\n";
               w.write(s,0,s.length());
               w.setFontStyle(Font.BOLD + Font.ITALIC);
@@ -869,9 +875,6 @@ public class PaneProgPane extends javax.swing.JPanel
               w.write(s, 0, s.length());
               w.write(w.getCurrentLineNumber(),0,w.getCurrentLineNumber() + 1,0);
               w.write(w.getCurrentLineNumber(),w.getCharactersPerLine() + 1,w.getCurrentLineNumber() + 1,w.getCharactersPerLine() + 1);
-              //Draw horizontal dividing line for each Pane section
-              w.write(w.getCurrentLineNumber()-1, 0, w.getCurrentLineNumber()-1,
-                      w.getCharactersPerLine()+1);
               s = "\n";
               w.write(s,0,s.length());
             }
@@ -883,6 +886,8 @@ public class PaneProgPane extends javax.swing.JPanel
                 String name = var.label();
                 if (name == null) name = var.item();
                 String value = var.getTextValue();
+                String originalName = name;
+                String originalValue = value;
 
                //define index values for name and value substrings
                 int nameLeftIndex = 0;
@@ -944,7 +949,80 @@ public class PaneProgPane extends javax.swing.JPanel
                   s = "\n";
                   w.write(s,0,s.length());
                 }
-            }
+                // Check for a Speed Table output and create a graphic display
+                if (originalName.equals("Speed Table")) {
+                 // set the height of the speed table graph in lines
+                 int speedFrameLineHeight = 11;
+                 s = "\n";
+
+                 // check that there is enough room on the page; if not,
+                 // space down the rest of the page.
+                 // don't use page break because we want the table borders to be written
+                 // to the bottom of the page
+                 int pageSize = w.getLinesPerPage();
+                 int here = w.getCurrentLineNumber();
+                 if (pageSize - here < speedFrameLineHeight) {
+                   for (int j = 0; j < (pageSize - here); j++) {
+                     w.write(w.getCurrentLineNumber(),0,w.getCurrentLineNumber() + 1,0);
+                     w.write(w.getCurrentLineNumber(),w.getCharactersPerLine() + 1,w.getCurrentLineNumber() + 1,w.getCharactersPerLine() + 1);
+                     w.write(s,0,s.length());
+                   }
+                 }
+
+                 // Now that there is page space, create the window to hold the graphic speed table
+                 JWindow speedWindow = new JWindow();
+                 // Window size as wide as possible to allow for largest type size
+                 speedWindow.setSize(512,165);
+                 speedWindow.getContentPane().setBackground(Color.WHITE);
+                 speedWindow.getContentPane().setLayout(null);
+                 // in preparation for display, extract the speed table values into an array
+                 StringTokenizer valueTokens = new StringTokenizer(originalValue,",",false);
+                 int speedVals[] = new int[28];
+                 int k = 0;
+                 while (valueTokens.hasMoreTokens()) {
+                     speedVals[k] = Integer.parseInt(valueTokens.nextToken());
+                     k++;
+                 }
+
+                 // Now create a set of vertical progress basr whose length is based
+                 // on the speed table value (half height) and add them to the window
+                 for (int j = 0; j < 28; j++){
+                   JProgressBar printerBar = new JProgressBar(JProgressBar.VERTICAL,0,127);
+                   printerBar.setBounds(52+j*15, 19, 10, 127);
+                   printerBar.setValue(speedVals[j]/2);
+                   printerBar.setBackground(Color.WHITE);
+                   printerBar.setForeground(Color.LIGHT_GRAY);
+                   printerBar.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                   speedWindow.getContentPane().add(printerBar);
+                   // create a set of value labels at the top containing the speed table values
+                   JLabel barValLabel = new JLabel(Integer.toString(speedVals[j]), SwingConstants.CENTER);
+                   barValLabel.setBounds(50+j*15, 4, 15, 15);
+                   barValLabel.setFont(new java.awt.Font("Monospaced", 0,7));
+                   speedWindow.getContentPane().add(barValLabel);
+                   //Create a set of labels at the bottom with the CV numbers in them
+                   JLabel barCvLabel = new JLabel(Integer.toString(67+j),SwingConstants.CENTER);
+                   barCvLabel.setBounds(50+j*15, 150, 15, 15);
+                   barCvLabel.setFont(new java.awt.Font("Monospaced", 0,7));
+                   speedWindow.getContentPane().add(barCvLabel);
+                 }
+                 JLabel cvLabel = new JLabel("Value");
+                 cvLabel.setFont(new java.awt.Font("Monospaced", 0, 7));
+                 cvLabel.setBounds(25,4,26,15);
+                 speedWindow.getContentPane().add(cvLabel);
+                 JLabel valueLabel = new JLabel("CV");
+                 valueLabel.setFont(new java.awt.Font("Monospaced", 0, 7));
+                 valueLabel.setBounds(37,150,13,15);
+                 speedWindow.getContentPane().add(valueLabel);
+                 // pass the complete window to the printing class
+                 w.write(speedWindow);
+                 // Now need to write the borders on sides of table
+                 for (int j = 0; j < speedFrameLineHeight; j++) {
+                   w.write(w.getCurrentLineNumber(),0,w.getCurrentLineNumber() + 1,0);
+                   w.write(w.getCurrentLineNumber(),w.getCharactersPerLine() + 1,w.getCurrentLineNumber() + 1,w.getCharactersPerLine() + 1);
+                   w.write(s,0,s.length());
+                 }
+               }
+           }
 
             // index over CVs
             if (cvList.size() > 0){
