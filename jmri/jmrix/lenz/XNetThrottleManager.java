@@ -10,9 +10,9 @@ import java.util.Iterator;
 
 /**
  * XNet implementation of a ThrottleManager
- * @author     Paul Bender 
+ * @author     Paul Bender Copyright (C) 2002,2003
  * @created    December 20,2002
- * @version    $Revision: 1.4 $
+ * @version    $Revision: 1.5 $
  */
 
 public class XNetThrottleManager implements ThrottleManager,XNetListener

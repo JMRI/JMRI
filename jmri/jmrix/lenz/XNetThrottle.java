@@ -8,9 +8,9 @@ import jmri.jmrix.lenz.XNetTrafficController;
 /**
  * An implementation of DccThrottle with code specific to a 
  * XpressnetNet connection.
- * @author     Paul Bender
+ * @author     Paul Bender (C) 2002,2003
  * @created    December 20,2002
- * @version    $Revision: 1.5 $
+ * @version    $Revision: 1.6 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -445,14 +445,16 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 
     private int getDccAddressHigh()
     {
-	int temp=address & 0xFF00;
-	temp>>>=temp;
+        /* this isn't actually the hi bite, but the 100s and 1000s 
+           positions of the address */
+	int temp=address / 100;
 	return temp;
     }
 
     private int getDccAddressLow()
     {
-	int temp=address & 0x00FF;
+        /* this is actually the 10s and 100s position of the address */
+	int temp=address % 100;
 	return temp;
     }
 

@@ -2,8 +2,8 @@
  * XNetConstants.java
  *
  * Description:		Constants to represent values seen in XpressNet traffic
- * @author		Paul Bender  
- * @version             $ Revision: 1.3 $
+ * @author		Paul Bender  Copyright (C) 2003
+ * @version             $ Revision: 1.4 $
  *
  * Variable prefix abreviation keys:
  * ACC_ is for accessory messages
