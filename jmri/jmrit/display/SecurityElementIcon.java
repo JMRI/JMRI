@@ -15,7 +15,7 @@ import jmri.jmrix.loconet.SecurityElement;
  * explicitly add the code for Positionable
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class SecurityElementIcon extends JPanel
@@ -414,6 +414,73 @@ public class SecurityElementIcon extends JPanel
                                                                 javax.swing.JOptionPane.OK_CANCEL_OPTION);
                     if (newVal!=null) {
                         element.maxBrakingCA=Integer.parseInt(newVal);
+                    }
+                }
+            }
+                  );
+
+        popup.add(new AbstractAction("onAXreserve: "+element.onAXReservation) {
+                public void actionPerformed(ActionEvent e) {
+                    String newVal =
+                        javax.swing.JOptionPane.showInputDialog(popup,
+                                                                "On AX reservation (0 none, 1 stop opposite, 2 stop unreserved):",
+                                                                "On AX reservation in SE "+element.getNumber(),
+                                                                javax.swing.JOptionPane.OK_CANCEL_OPTION);
+                    if (newVal!=null) {
+                        element.onAXReservation=Integer.parseInt(newVal);
+                    }
+                }
+            }
+                  );
+        popup.add(new AbstractAction("onXAreserve: "+element.onAXReservation) {
+                public void actionPerformed(ActionEvent e) {
+                    String newVal =
+                        javax.swing.JOptionPane.showInputDialog(popup,
+                                                                "On XA reservation (0 none, 1 stop opposite, 2 stop unreserved):",
+                                                                "On XA reservation in SE "+element.getNumber(),
+                                                                javax.swing.JOptionPane.OK_CANCEL_OPTION);
+                    if (newVal!=null) {
+                        element.onXAReservation=Integer.parseInt(newVal);
+                    }
+                }
+            }
+                  );
+
+        popup.add(new AbstractAction("makeAreserve: "+element.makeAReservation) {
+                public void actionPerformed(ActionEvent e) {
+                    String newVal =
+                        javax.swing.JOptionPane.showInputDialog(popup,
+                                                                "Make A reservation (0 no, 1 yes):",
+                                                                "Make A reservation in SE "+element.getNumber(),
+                                                                javax.swing.JOptionPane.OK_CANCEL_OPTION);
+                    if (newVal!=null) {
+                        element.makeAReservation=(Integer.parseInt(newVal)==1);
+                    }
+                }
+            }
+                  );
+        popup.add(new AbstractAction("makeBreserve: "+element.makeBReservation) {
+                public void actionPerformed(ActionEvent e) {
+                    String newVal =
+                        javax.swing.JOptionPane.showInputDialog(popup,
+                                                                "Make B reservation (0 no, 1 yes):",
+                                                                "Make B reservation in SE "+element.getNumber(),
+                                                                javax.swing.JOptionPane.OK_CANCEL_OPTION);
+                    if (newVal!=null) {
+                        element.makeBReservation=(Integer.parseInt(newVal)==1);
+                    }
+                }
+            }
+                  );
+        popup.add(new AbstractAction("makeCreserve: "+element.makeCReservation) {
+                public void actionPerformed(ActionEvent e) {
+                    String newVal =
+                        javax.swing.JOptionPane.showInputDialog(popup,
+                                                                "Make C reservation (0 no, 1 yes):",
+                                                                "Make C reservation in SE "+element.getNumber(),
+                                                                javax.swing.JOptionPane.OK_CANCEL_OPTION);
+                    if (newVal!=null) {
+                        element.makeCReservation=(Integer.parseInt(newVal)==1);
                     }
                 }
             }

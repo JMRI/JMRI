@@ -12,7 +12,7 @@ import com.sun.java.util.collections.List;
  * configuring LnSecurityElementManager.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LnSecurityElementManagerXml implements XmlAdapter {
 
@@ -34,13 +34,36 @@ public class LnSecurityElementManagerXml implements XmlAdapter {
                 Element elem = new Element("securityelement");
                 elem.addAttribute("number", String.valueOf(se.mNumber));     // own SE number
 
-                if (se.mLogic==SecurityElement.ABS) elem.addAttribute("mode", "ABS");
-                else if (se.mLogic==SecurityElement.APB) elem.addAttribute("mode", "APB");
-                else if (se.mLogic==SecurityElement.HEADBLOCK) elem.addAttribute("mode", "head");
-
                 elem.addAttribute("dsSensor", String.valueOf(se.dsSensor));
                 elem.addAttribute("turnout", String.valueOf(se.turnout));
                 elem.addAttribute("auxInput", String.valueOf(se.auxInput));
+
+                if (se.mLogic==SecurityElement.ABS) elem.addAttribute("mode", "ABS");
+                else if (se.mLogic==SecurityElement.APB) elem.addAttribute("mode", "APB");
+                else if (se.mLogic==SecurityElement.HEADBLOCK) elem.addAttribute("mode", "head");
+                // specifics, which replace the mode (eventually)
+                String makeReservation = "";
+                if (se.makeAReservation) makeReservation+="A";
+                if (se.makeBReservation) makeReservation+="B";
+                if (se.makeCReservation) makeReservation+="C";
+                if (makeReservation.equals("")) makeReservation = "none";
+                elem.addAttribute("makeReservation", makeReservation);
+                String onAXReservation;
+                if (se.onAXReservation == SecurityElement.STOPOPPOSITE)
+                    onAXReservation = "stopOpposite";
+                else if (se.onAXReservation == SecurityElement.STOPUNRESERVED)
+                    onAXReservation = "stopUnreserved";
+                else
+                    onAXReservation = "none";
+                elem.addAttribute("onAXReservation", onAXReservation);
+                String onXAReservation;
+                if (se.onXAReservation == SecurityElement.STOPOPPOSITE)
+                    onXAReservation = "stopOpposite";
+                else if (se.onXAReservation == SecurityElement.STOPUNRESERVED)
+                    onXAReservation = "stopUnreserved";
+                else
+                    onXAReservation = "none";
+                elem.addAttribute("onXAReservation", onXAReservation);
 
                 elem.addAttribute("attachAnum", String.valueOf(se.attachAnum));
                 elem.addAttribute("attachAleg", String.valueOf(se.attachAleg));
@@ -134,6 +157,38 @@ public class LnSecurityElementManagerXml implements XmlAdapter {
                 se.maxBrakingCA = getIntValue(a);
             if ((a = current.getAttribute("maxBrakingBA")) !=null)
                 se.maxBrakingBA = getIntValue(a);
+
+            se.onAXReservation = SecurityElement.NONE;
+            if ((a = current.getAttribute("onAXReservation")) !=null) {
+                if (a.getValue().equals("stopOpposite"))
+                    se.onAXReservation = SecurityElement.STOPOPPOSITE;
+                else if (a.getValue().equals("stopUnreserved"))
+                    se.onAXReservation = SecurityElement.STOPUNRESERVED;
+                else
+                    se.onAXReservation = SecurityElement.NONE;
+            }
+
+            se.onXAReservation = SecurityElement.NONE;
+            if ((a = current.getAttribute("onXAReservation")) !=null) {
+                if (a.getValue().equals("stopOpposite"))
+                    se.onXAReservation = SecurityElement.STOPOPPOSITE;
+                else if (a.getValue().equals("stopUnreserved"))
+                    se.onXAReservation = SecurityElement.STOPUNRESERVED;
+                else
+                    se.onXAReservation = SecurityElement.NONE;
+            }
+
+            se.makeAReservation = false;
+            se.makeBReservation = false;
+            se.makeCReservation = false;
+            if ((a = current.getAttribute("makeReservation")) !=null) {
+                if (a.getValue().indexOf("A")!=-1)
+                    se.makeAReservation = true;
+                if (a.getValue().indexOf("B")!=-1)
+                    se.makeBReservation = true;
+                if (a.getValue().indexOf("C")!=-1)
+                    se.makeCReservation = true;
+            }
 
             // do mode last, as it overwrites the specific details
             if ((a= current.getAttribute("mode")) !=null) {
