@@ -12,7 +12,7 @@ import jmri.*;
  * when it hears commands from other places.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */public class SE8cSignalHead extends AbstractSignalHead implements LocoNetListener {
 
 
@@ -20,21 +20,24 @@ import jmri.*;
          mNumber = pNumber;
          mAppearance = RED;  // start turned off
          // At construction, register for messages
-         LnTrafficController.instance().addLocoNetListener(~0, this);
+         if (LnTrafficController.instance()!=null)
+            LnTrafficController.instance().addLocoNetListener(~0, this);
+        else
+            log.warn("No LocoNet connection, signal head won't update");
      }
 
-     public int getAppearance() { return mAppearance; }
+    public int getAppearance() { return mAppearance; }
     public void setAppearance(int newAppearance) {
         int oldAppearance = mAppearance;
         mAppearance = newAppearance;
         if (oldAppearance != newAppearance) forwardCommandChangeToLayout(mAppearance);
     }
 
-     public int getNumber() { return mNumber; }
-     public String getSystemName() { return "LH"+getNumber(); }
+    public int getNumber() { return mNumber; }
+    public String getSystemName() { return "LH"+getNumber(); }
 
-     // Handle a request to change state by sending a LocoNet command
-     protected void forwardCommandChangeToLayout(int s)  {
+    // Handle a request to change state by sending a LocoNet command
+    protected void forwardCommandChangeToLayout(int s)  {
          // send SWREQ for close
          LocoNetMessage l = new LocoNetMessage(4);
          l.setOpCode(LnConstants.OPC_SW_REQ);
