@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: index.html,v 1.29 2004-03-28 01:27:53 jacobsen Exp $ -->
+<!-- $Id: index.html,v 1.30 2004-05-04 03:41:34 plocher Exp $ -->
 <html>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -28,8 +28,8 @@ See also the
 
 You can download the most recent source code using:
 <PRE>
-cvs -d:pserver:anonymous@cvs.jmri.sourceforge.net:/cvsroot/jmri login
-cvs -d:pserver:anonymous@cvs.jmri.sourceforge.net:/cvsroot/jmri co all 
+cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/jmri login
+cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/jmri co all 
 </PRE>
 (If asked for a password, just hit return)
 <P>
@@ -103,14 +103,14 @@ To get a copy of the source for your own use, you can use "anonymous checkout".
 For a command line cvs client, make a new directory for the project,
 change to it, and tell CVS you exist with
 <PRE>
-cvs -d:pserver:anonymous@cvs.jmri.sourceforge.net:/cvsroot/jmri login
+cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/jmri login
 </PRE>
 This "login" line
 is only needed once; after that, it is remembered on your local machine.  You may
 be asked for a password. If so, just hit return, as the empty password will be accepted.
 You can then get a copy of the code with
 <PRE>
-cvs -d:pserver:anonymous@cvs.jmri.sourceforge.net:/cvsroot/jmri co TARGET
+cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/jmri co TARGET
 </PRE>
 where "TARGET" is either "jbuilder" or "ant", see below. 
 <P>
