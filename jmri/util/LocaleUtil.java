@@ -16,7 +16,7 @@ import java.util.Locale;
  * Java 1.1.8 system, or at least try to fake it.
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class LocaleUtil {
@@ -24,7 +24,7 @@ public class LocaleUtil {
     static public Locale[] getAvailableLocales() {
         try {
             return Locale.getAvailableLocales();
-        } catch (Exception e) {  // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
+        } catch (Throwable e) {  // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
             return  new Locale[] {  // just carry on with identified Locales
                 Locale.CANADA,
                 Locale.CANADA_FRENCH,

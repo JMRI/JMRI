@@ -16,7 +16,7 @@ import javax.swing.JTree;
  * Java 1.1.8 system, or at least try to fake it.
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class JTreeUtil {
@@ -25,7 +25,7 @@ public class JTreeUtil {
         try {   // following might not be present on Mac Classic, but
                 //doesn't have a big effect
             dTree.setExpandsSelectedPaths(value);
-        } catch (java.lang.NoSuchMethodError e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
+        } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
             // nothing to do here
         }
     }

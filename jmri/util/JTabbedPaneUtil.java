@@ -16,7 +16,7 @@ import javax.swing.JTabbedPane;
  * Java 1.1.8 system, or at least try to fake it.
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class JTabbedPaneUtil {
@@ -24,7 +24,7 @@ public class JTabbedPaneUtil {
     static public void setToolTipTextAt(JTabbedPane p, int i, String s) {
         try {
             p.setToolTipTextAt(i, s);
-        } catch (NoSuchMethodError e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
+        } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
             // nothing to do here, just skip
         }
         return;
