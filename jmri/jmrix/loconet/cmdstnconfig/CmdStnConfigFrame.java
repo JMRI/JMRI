@@ -1,8 +1,10 @@
 package jmri.jmrix.loconet.cmdstnconfig;
 
 import java.awt.*;
-
 import javax.swing.*;
+import javax.swing.border.*;
+
+import apps.Apps;
 
 import jmri.jmrix.loconet.*;
 
@@ -16,15 +18,13 @@ import jmri.jmrix.loconet.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Alex Shepherd   Copyright (C) 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
-public class CmdStnConfigFrame
-    extends javax.swing.JFrame
-    implements LocoNetListener {
+public class CmdStnConfigFrame extends javax.swing.JFrame implements LocoNetListener {
 
   static final int CONFIG_SLOT = 127 ;
   static final int MIN_OPTION = 1 ;
-  static final int MAX_OPTION = 56 ;
+  static final int MAX_OPTION = 72 ;
 
   LocoNetMessage ConfigSlotData = null;
 
@@ -35,6 +35,9 @@ public class CmdStnConfigFrame
   // internal members to hold widgets
   JButton readButton = new JButton("Read");
   JButton writeButton = new JButton("Write");
+  JRadioButton option1t = new JRadioButton("Op 1 t" );
+  JRadioButton option1c = new JRadioButton("Op 1 c" );
+  EmptyBorder border1 = new EmptyBorder(1,1,1,1);
 
   public void initComponents() {
 
@@ -46,8 +49,19 @@ public class CmdStnConfigFrame
       pane.setLayout(new FlowLayout());
       pane.add(readButton);
       pane.add(writeButton);
+      JPanel options = new JPanel();
+      options.setLayout(new FlowLayout());
+      JPanel p2 = createHorizontalPanel();
+      options.add(p2);
+      p2.setBorder( new TitledBorder(null, "Option 1", TitledBorder.LEFT, TitledBorder.TOP));
+      p2.setPreferredSize( new Dimension( 200, 60 ) );
+      p2.add( option1t ) ;
+      p2.add( option1c ) ;
+      option1t.setPreferredSize(new Dimension( 100, 40 ));
+      option1c.setPreferredSize(new Dimension( 100, 40 ));
 
       getContentPane().add(pane);
+      getContentPane().add(options);
     }
 
     // address
@@ -173,9 +187,24 @@ public class CmdStnConfigFrame
     tc.addLocoNetListener(~0, this);
   }
 
+  public JPanel createHorizontalPanel() {
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+        p.setAlignmentY(TOP_ALIGNMENT);
+        p.setAlignmentX(LEFT_ALIGNMENT);
+        return p;
+    }
+
+
+
   // private data
   private LnTrafficController tc = null;
 
   // initialize logging
   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance( CmdStnConfigFrame.class.getName());
+
+  public static void main(String args[]) {
+
+  }
+
 }
