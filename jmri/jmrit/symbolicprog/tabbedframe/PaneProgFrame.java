@@ -27,7 +27,7 @@ import java.io.IOException;
 /**
  * Frame providing a command station programmer from decoder definition files
  * @author			Bob Jacobsen   Copyright (C) 2001; D Miller Copyright 2003
- * @version			$Revision: 1.31 $
+ * @version			$Revision: 1.32 $
  */
 abstract public class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
@@ -292,7 +292,7 @@ abstract public class PaneProgFrame extends javax.swing.JFrame
         List l = DecoderIndexFile.instance().matchingDecoderList(null, decoderFamily, null, null, decoderModel);
         if (log.isDebugEnabled()) log.debug("found "+l.size()+" matches");
         if (l.size() == 0) {
-            log.warn("Loco uses "+decoderFamily+" "+decoderModel+" decoder, but no such decoder defined");
+            log.debug("Loco uses "+decoderFamily+" "+decoderModel+" decoder, but no such decoder defined");
             // fall back to use just the decoder name, not family
             l = DecoderIndexFile.instance().matchingDecoderList(null, null, null, null, decoderModel);
             if (log.isDebugEnabled()) log.debug("found "+l.size()+" matches without family key");
@@ -301,7 +301,10 @@ abstract public class PaneProgFrame extends javax.swing.JFrame
             DecoderFile d = (DecoderFile)l.get(0);
             loadDecoderFile(d);
         } else {
-            log.warn("no matching \""+decoderModel+"\" decoder found for loco, no decoder info loaded");
+            if (decoderModel.equals(""))
+                log.debug("blank decoderModel requested, so nothing loaded");
+            else
+                log.warn("no matching \""+decoderModel+"\" decoder found for loco, no decoder info loaded");
         }
     }
 
