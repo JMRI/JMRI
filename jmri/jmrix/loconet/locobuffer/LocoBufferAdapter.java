@@ -22,13 +22,12 @@ import javax.comm.SerialPortEventListener;
  * <P>
  * Normally controlled by the LocoBufferFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.23 $
+ * @version			$Revision: 1.24 $
  */
 public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
     public LocoBufferAdapter() {
         super();
-        mInstance = this;
     }
 
     Vector portNameVector = null;
@@ -231,8 +230,8 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         // find the baud rate value, configure comm options
         int baud = 19200;  // default, but also defaulted in the initial value of selectedSpeed
         for (int i = 0; i<validSpeeds.length; i++ )
-            if (validSpeeds[i].equals(mBaudRate))
-                baud = validSpeedValues[i];
+            if (validBaudRates()[i].equals(mBaudRate))
+                baud = validBaudNumber()[i];
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                                              SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
@@ -251,11 +250,19 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     }
 
     /**
-     * Get an array of valid baud rates. This is currently just a message
-     * saying its fixed
+     * Get an array of valid baud rates as strings. This allows subclasses
+     * to change the arrays of speeds.
      */
     public String[] validBaudRates() {
         return validSpeeds;
+    }
+
+    /**
+     * Get an array of valid baud rates as integers. This allows subclasses
+     * to change the arrays of speeds.
+     */
+    public int[] validBaudNumber() {
+        return validSpeedValues;
     }
 
     /**
@@ -308,10 +315,14 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 
     static public boolean hasInstance() { return (null!=mInstance); }
     static public LocoBufferAdapter instance() {
-        if (mInstance == null) mInstance = new LocoBufferAdapter();
+        if (mInstance == null) {
+        	mInstance = new LocoBufferAdapter();
+        	log.debug("new default instance in LocoBufferAdapter");
+        }
+        log.debug("LocoBufferAdapter.instance returns object of class "+mInstance.getClass().getName());
         return mInstance;
     }
-    static LocoBufferAdapter mInstance = null;
+    static private LocoBufferAdapter mInstance = null;
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoBufferAdapter.class.getName());
 
