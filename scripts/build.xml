@@ -1,6 +1,6 @@
 <!-- ugly first attempt at an ANT build.xml file for JMRI development -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.36 $ -->
+<!-- Revision $Revision: 1.37 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -179,9 +179,13 @@
            use="true"
            windowtitle="JMRI API">
       <group title="Core" packages="jmri"/>
-      <group title="Layout Connections" packages="jmri.jmrix:jmri.jmrix.*"/>
       <group title="Cross-system Tools" packages="jmri.jmrit:jmri.jmrit.*"/>
+      <group title="Layout Connections" packages="jmri.jmrix:jmri.jmrix.*"/>
+      <group title="Utilities" packages="jmri.util:jmri.util.*"/>
+      <group title="XML persistance" packages="jmri.configurexml:apps.configurexml"/>
       <group title="Applications" packages="apps:apps.*"/>
+      <group title="Implementations" packages="jmri.managers:jmri.progdebugger:jmri.layout"/>
+	  
       <classpath refid="project.class.path"    />
       <doctitle><![CDATA[<h1>JMRI Library API</h1>]]></doctitle>
       <bottom><![CDATA[<i>Copyright &#169; 2003 JMRI; All Rights Reserved.</i>
@@ -189,7 +193,7 @@
                        <A href="http://sourceforge.net"> 
                        <IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A>
                 ]]></bottom>
-      <link href="http://developer.java.sun.com/developer/products/xml/docs/api/"/>
+      <link href="http://java.sun.com/j2se/1.4.1/docs/api/" />
     </javadoc>
   </target>
 
