@@ -1,23 +1,22 @@
 // AbstractSignalHead.java
 
 package jmri;
-import jmri.Sensor;
 
  /**
- * Abstract class providing the basic logic of the Sensor interface
+ * Abstract class providing the basic logic of the SignalHead interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public abstract class AbstractSignalHead implements SignalHead, java.io.Serializable {
-    
+
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call
     //		public void firePropertyChange(String propertyName,
-    //										Object oldValue,
-    //										Object newValue)
+    //						Object oldValue,
+    //						Object newValue)
     // _once_ if anything has changed state
-    
-    
+
+
     // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
     // reflect to it
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
@@ -28,7 +27,7 @@ public abstract class AbstractSignalHead implements SignalHead, java.io.Serializ
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
-    
+
 }
 
 /* @(#)AbstractSignalHead.java */
