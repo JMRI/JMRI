@@ -22,7 +22,7 @@ import javax.comm.SerialPortEventListener;
  * <P>
  * Normally controlled by the LocoBufferFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -153,8 +153,9 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 
             opened = true;
 
-        }
-        catch (Exception ex) {
+        } catch (javax.comm.NoSuchPortException p) {
+            return handlePortNotFound(p, portName, log);
+        } catch (Exception ex) {
             log.error("Unexpected exception while opening port "+portName+" trace follows: "+ex);
             ex.printStackTrace();
             return "Unexpected error while opening port "+portName+": "+ex;
