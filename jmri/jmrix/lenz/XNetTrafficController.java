@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractMRListener;
  * method for locating the local implementation.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Revision: 2.1 $
+ * @version 		$Revision: 2.2 $
  *
  */
 public abstract class XNetTrafficController extends AbstractMRTrafficController implements XNetInterface {
@@ -57,12 +57,31 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
    abstract public void sendXNetMessage(XNetMessage m, XNetListener reply);
 
     /**
-     * Forward a preformatted XNetMessage to the actual interface.
-     * @param m Message to send; will be updated with CRC
+     * Forward a preformatted XNetMessage to a specific listener interface.
+     * @param m Message to send; 
      */
    public void forwardMessage(AbstractMRListener reply,AbstractMRMessage m){
           ((XNetListener)reply).message(new XNetReply((XNetMessage)m));
    }
+
+        /**
+         * Forward a preformatted XNetMessage to the registered
+         * XNetListeners.
+         * NOTE: this drops the packet if the checksum is bad.
+         * 
+         * @param m Message to send
+         # @parm client is the client getting the message
+         */
+        public void forwardReply(AbstractMRListener client,AbstractMRReply m) {
+	 	// check parity
+                /*if (!((XNetReply)m).checkParity()) {
+                    log.warn("Ignore packet with bad checksum: "+((XNetReply)m).toString());
+		} else*/ 
+		   ((XNetListener)client).message((XNetReply)m);
+        }
+
+ 	protected AbstractMRMessage pollMessage() { return null; }
+    	protected AbstractMRListener pollReplyHandler() { return null; }
 
    public synchronized void addXNetListener(int mask, XNetListener l) {
 	addListener(l);
@@ -72,19 +91,28 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
 	removeListener(l);
     }
 
-	/**
-	 * Forward a message to all registered listeners.
-     * @param m Message to forward. Listeners should not modify it!
-     * @param replyTo Listener for the reply to this message, doesn't get
-     *                the echo of it.
-	 */
-	protected void notify(XNetMessage m, XNetListener replyTo) {
-		notifyMessage((AbstractMRMessage)m,(AbstractMRListener) replyTo);
-        }
+    /**
+      * enterProgMode(); has to be available, even though it doesn't do 
+      * anything on lenz
+      */
+    protected AbstractMRMessage enterProgMode() { return ((AbstractMRMessage) (new XNetMessage(0))); }
 
-	protected void notify(XNetReply m, XNetListener replyTo) {
-		notifyMessage(new XNetMessage(m),(AbstractMRListener)replyTo);
-        }
+    /**
+      * enterNormalMode() returns the value of getExitProgModeMsg();
+      */
+    protected AbstractMRMessage enterNormalMode() { return mCommandStation.getExitProgModeMsg(); }
+
+    protected boolean endOfMessage(AbstractMRReply msg) { 
+           int len = (((XNetReply)msg).getElement(0)&0x0f)+2;  // opCode+Nbytes+ECC
+           log.debug("Message Length " +len +" Current Size " +msg.getNumDataElements());
+           if(msg.getNumDataElements()<len)
+		return false;                                 
+	   else {
+		return true; 
+	   }
+    }
+
+    protected AbstractMRReply newReply() { return new XNetReply(); }
 
     /** Reference to the command station in communication here */
     LenzCommandStation mCommandStation;

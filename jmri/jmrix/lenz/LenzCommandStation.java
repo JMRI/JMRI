@@ -10,7 +10,7 @@ package jmri.jmrix.lenz;
  * to the a Lenz Command Station, on an XPressNet network.
  *
  * @author			Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
- * @version			$Revision: 2.0 $
+ * @version			$Revision: 2.1 $
  */
 public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
 
@@ -370,6 +370,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
      */
     public XNetMessage getServiceModeResultsMsg() {
         XNetMessage m = new XNetMessage(3);
+	//m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setElement(0, XNetConstants.CS_REQUEST);
         m.setElement(1, XNetConstants.SERVICE_MODE_CSRESULT);
         return m;
@@ -384,6 +385,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
     
     public XNetMessage getReadPagedCVMsg(int cv) {
         XNetMessage m = new XNetMessage(4);
+	//m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setElement(0, XNetConstants.PROG_READ_REQUEST);
         m.setElement(1, XNetConstants.PROG_READ_MODE_PAGED);
         m.setElement(2, cv);
@@ -392,6 +394,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
     
     public XNetMessage getReadDirectCVMsg(int cv) {
         XNetMessage m = new XNetMessage(4);
+	//m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setElement(0, XNetConstants.PROG_READ_REQUEST);
         m.setElement(1, XNetConstants.PROG_READ_MODE_CV);
         m.setElement(2, cv);
@@ -400,6 +403,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
     
     public XNetMessage getWritePagedCVMsg(int cv, int val) {
         XNetMessage m = new XNetMessage(5);
+	//m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setElement(0, XNetConstants.PROG_WRITE_REQUEST);
         m.setElement(1, XNetConstants.PROG_WRITE_MODE_PAGED);
         m.setElement(2, cv);
@@ -409,6 +413,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
     
     public XNetMessage getWriteDirectCVMsg(int cv, int val) {
         XNetMessage m = new XNetMessage(5);
+	//m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setElement(0, XNetConstants.PROG_WRITE_REQUEST);
         m.setElement(1, XNetConstants.PROG_WRITE_MODE_CV);
         m.setElement(2, cv);
@@ -419,6 +424,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
     public XNetMessage getReadRegisterMsg(int reg) {
         if (reg>8) log.error("register number too large: "+reg);
         XNetMessage m = new XNetMessage(4);
+	//m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setElement(0, XNetConstants.PROG_READ_REQUEST);
         m.setElement(1, XNetConstants.PROG_READ_MODE_REGISTER);
         m.setElement(2, reg);
@@ -428,6 +434,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation {
     public XNetMessage getWriteRegisterMsg(int reg, int val) {
         if (reg>8) log.error("register number too large: "+reg);
         XNetMessage m = new XNetMessage(5);
+	//m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setElement(0, XNetConstants.PROG_WRITE_REQUEST);
         m.setElement(1, XNetConstants.PROG_WRITE_MODE_REGISTER);
         m.setElement(2, reg);
