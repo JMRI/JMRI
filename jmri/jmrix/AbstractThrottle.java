@@ -7,7 +7,7 @@ import jmri.DccThrottle;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author  Bob Jacobsen  Copyright (C) 2001
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 abstract public class AbstractThrottle implements DccThrottle {
     protected float speedSetting;
@@ -20,7 +20,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      * Is this object still usable?  Set false after dispose, this
      * variable is used to check for incorrect usage.
      */
-    private boolean active;
+    protected boolean active;
 
     public AbstractThrottle() {
         active = true;
@@ -130,9 +130,6 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * Dispose when finished with this object.  After this, further usage of
      * this Throttle object will result in a JmriException.
-     *
-     * This is quite problematic, because a using object doesn't know when
-     * it's the last user.
      */
     public void dispose() {
         if (!active) log.error("Dispose called when not active");
@@ -140,6 +137,16 @@ abstract public class AbstractThrottle implements DccThrottle {
 
         // and mark as unusable
         active = false;
+    }
+
+    public void dispatch() {
+        if (!active) log.warn("dispatch called when not active");
+        release();
+    }
+
+    public void release() {
+        if (!active) log.warn("release called when not active");
+        dispose();
     }
 
     public int getDccAddress() {
