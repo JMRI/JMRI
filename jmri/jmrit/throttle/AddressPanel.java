@@ -28,10 +28,10 @@ public class AddressPanel extends JInternalFrame
     private JTextField addressField;
     private int previousAddress;
     private int currentAddress;
-	private int requestedAddress;
-	
-	private JButton releaseButton;
-	private JButton dispatchButton;
+    private int requestedAddress;
+
+    private JButton releaseButton;
+    private JButton dispatchButton;
 
     /** The longest 4 character string. Used for resizing. */
     private static final String LONGEST_STRING = "mmmm";
@@ -254,16 +254,18 @@ public class AddressPanel extends JInternalFrame
 	 private void dispatchAddress()
 	 {
 		 // dispatch currentAddress
+                 throttle.dispatch();
 	 }
-	 
+
 	 /**
 	  * Release the current address.
 	  */
 	 private void releaseAddress()
 	 {
 		 // release currentAddress
+                 throttle.release();
 	 }
-	 
+
      /**
       * Create an Element of this object's preferences.
       * <ul>
