@@ -23,7 +23,7 @@ import javax.swing.*;
  * Base class for Jmri applications.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 public class Apps extends JPanel {
 
@@ -175,7 +175,12 @@ public class Apps extends JPanel {
                 // hsURL = HelpSet.findHelpSet(ClassLoader.getSystemClassLoader(), helpsetName);
                 hsURL = new URL("file:"+helpsetName);
                 globalHelpSet = new HelpSet(null, hsURL);
-            } catch (Exception ee) {
+            } catch (java.lang.NoClassDefFoundError ee) {
+                ee.printStackTrace();
+                System.out.println(ee.getMessage());
+                log.error("Help classes not found, help system omitted");
+                return;
+            } catch (java.lang.Exception e2) {
                 log.error("HelpSet "+helpsetName+" not found, help system omitted");
                 return;
             }
