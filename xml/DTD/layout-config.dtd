@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.21 2003-08-30 15:17:27 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.22 2003-09-03 14:15:14 jacobsen Exp $ -->
 
 <!-- This DTD is Copyright 2001, 2003 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -130,6 +130,9 @@
   <!ATTLIST paneleditor y			CDATA #REQUIRED>
   <!ATTLIST paneleditor height		CDATA #REQUIRED>
   <!ATTLIST paneleditor width		CDATA #REQUIRED>
+  <!ATTLIST paneleditor editable	(yes|no) "yes" >
+  <!ATTLIST paneleditor positionable	(yes|no) "yes" >
+  <!ATTLIST paneleditor controlling	(yes|no) "yes" >
 
   <!ELEMENT positionablelabel EMPTY>
     <!ATTLIST positionablelabel class	CDATA #REQUIRED>
