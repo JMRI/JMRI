@@ -12,7 +12,7 @@ import javax.swing.*;
  * Handle configuration for display.PanelEditor panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class PanelEditorXml implements XmlAdapter {
 
@@ -30,7 +30,7 @@ public class PanelEditorXml implements XmlAdapter {
         Element panel = new Element("paneleditor");
 
         panel.addAttribute("class", "jmri.jmrit.display.configurexml.PanelEditorXml");
-        panel.addAttribute("name", ""+p.getFrame().getName());
+        panel.addAttribute("name", ""+p.getFrame().getTitle());
         panel.addAttribute("x", ""+p.getFrame().getX());
         panel.addAttribute("y", ""+p.getFrame().getY());
         panel.addAttribute("height", ""+p.getFrame().getHeight());
@@ -106,7 +106,6 @@ public class PanelEditorXml implements XmlAdapter {
                 adapter.load(item, panel);
             } catch (Exception e) {
                 log.error("Exception while loading "+item.getName()+":"+e);
-                e.printStackTrace();
             }
         }
 
