@@ -10,7 +10,7 @@ import jmri.Turnout;
  * System names are "XTnnn", where nnn is the turnout number without padding.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 2.0 $
+ * @version			$Revision: 2.1 $
  */
 public class XNetTurnoutManager extends jmri.AbstractTurnoutManager implements XNetListener {
 
@@ -34,10 +34,9 @@ public class XNetTurnoutManager extends jmri.AbstractTurnoutManager implements X
     // listen for turnouts, creating them as needed
     public void message(XNetReply l) {
         // parse message type
-        int addr = XNetTrafficController.instance()
-            .getCommandStation().getTurnoutMsgAddr(l);
-        if (log.isDebugEnabled()) log.debug("message had address: "+addr);
+        int addr = l.getTurnoutMsgAddr();
         if (addr<=0)  return; // indicates no message
+        if (log.isDebugEnabled()) log.debug("message has address: "+addr);
         // reach here for switch command; make sure we know about this one
         String s = "XT"+addr;
         if (null == getBySystemName(s)) {

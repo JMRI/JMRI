@@ -15,7 +15,7 @@ import jmri.jmrix.lenz.*;
  *                 Track Voltage 
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 2.0 $
+ * @version			$Revision: 2.1 $
  */
 public class LZV100Frame extends JFrame implements XNetListener {
 
@@ -156,29 +156,29 @@ public class LZV100Frame extends JFrame implements XNetListener {
            (String)voltBox.getSelectedItem()!=null) {
           /* First, send the ops mode programing command to enter
           programing mode */
-	   XNetMessage msg=XNetTrafficController.instance().getCommandStation().getWriteOpsModeCVMsg(00,00,07,50);
+	   XNetMessage msg=XNetMessage.getWriteOpsModeCVMsg(00,00,07,50);
            XNetTrafficController.instance().sendXNetMessage(msg,this);
           /* Next, send the ops mode programing command for the voltage 
           we want */
-	   msg=XNetTrafficController.instance().getCommandStation().getWriteOpsModeCVMsg(00,00,07,validVoltageValues[voltBox.getSelectedIndex()]);
+	   msg=XNetMessage.getWriteOpsModeCVMsg(00,00,07,validVoltageValues[voltBox.getSelectedIndex()]);
            XNetTrafficController.instance().sendXNetMessage(msg,this);
         }
         if((String)eLineBox.getSelectedItem()!="" &&
            (String)eLineBox.getSelectedItem()!=null) {
           /* First, send the ops mode programing command to enter
           programing mode */
-	   XNetMessage msg=XNetTrafficController.instance().getCommandStation().getWriteOpsModeCVMsg(00,00,07,50);
+	   XNetMessage msg=XNetMessage.getWriteOpsModeCVMsg(00,00,07,50);
            XNetTrafficController.instance().sendXNetMessage(msg,this);
           /* Next, send the ops mode programing command for the E line 
              Status we want */
-	   msg=XNetTrafficController.instance().getCommandStation().getWriteOpsModeCVMsg(00,00,07,validELineStatusValues[eLineBox.getSelectedIndex()]);
+	   msg=XNetMessage.getWriteOpsModeCVMsg(00,00,07,validELineStatusValues[eLineBox.getSelectedIndex()]);
            XNetTrafficController.instance().sendXNetMessage(msg,this);
         }
     }
 
     // listen for responses from the LZV100
     synchronized public void message(XNetReply l) {
-    if(XNetTrafficController.instance().getCommandStation().isOkMessage(l)) {
+    if(l.isOkMessage()) {
 	  /* this was an "OK" message*/
        }
     }

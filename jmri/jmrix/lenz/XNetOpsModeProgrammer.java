@@ -13,7 +13,7 @@ import jmri.*;
  *
  * @see            jmri.Programmer
  * @author         Paul Bender Copyright (C) 2003
- * @version        $Revision: 2.0 $
+ * @version        $Revision: 2.1 $
  */
 
 public class XNetOpsModeProgrammer implements Programmer,XNetListener 
@@ -26,12 +26,8 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
     jmri.ProgListener progListener = null;
 
     public XNetOpsModeProgrammer(int pAddress) {
-	mAddressLow=XNetTrafficController.instance()
-                             .getCommandStation()
-                             .getDCCAddressLow(pAddress);
-	mAddressHigh=XNetTrafficController.instance()
-                             .getCommandStation()
-                             .getDCCAddressHigh(pAddress);
+	mAddressLow=LenzCommandStation.getDCCAddressLow(pAddress);
+	mAddressHigh=LenzCommandStation.getDCCAddressHigh(pAddress);
 
         // register as a listener
         XNetTrafficController.instance().addXNetListener(~0,this);
@@ -42,7 +38,7 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
      * Send an ops-mode write request to the XPressnet.
      */
     public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
-        XNetMessage msg=XNetTrafficController.instance().getCommandStation().getWriteOpsModeCVMsg(mAddressHigh,mAddressLow,CV,val);
+        XNetMessage msg=XNetMessage.getWriteOpsModeCVMsg(mAddressHigh,mAddressLow,CV,val);
 	XNetTrafficController.instance().sendXNetMessage(msg,this);
         /* we need to save the programer and value so we can send messages 
         back to the screen when the programing screen when we recieve 
@@ -106,7 +102,7 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
            // request, so just ignore anything that comes in
            return;
         } else if (progState==XNetProgrammer.REQUESTSENT) {
-            if(XNetTrafficController.instance().getCommandStation().isOkMessage(l)) {
+            if(l.isOkMessage()) {
 	  	  progListener.programmingOpReply(value,jmri.ProgListener.OK);
 	    } else {
               /* this is an error */

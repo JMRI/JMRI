@@ -10,7 +10,7 @@ import jmri.Sensor;
  * System names are "XSnnn", where nnn is the sensor number without padding.
  *
  * @author			Paul Bender Copyright (C) 2003
- * @version			$Revision: 2.0 $
+ * @version			$Revision: 2.1 $
  */
 public class XNetSensorManager extends jmri.AbstractSensorManager implements XNetListener {
 
@@ -41,15 +41,10 @@ public class XNetSensorManager extends jmri.AbstractSensorManager implements XNe
 
     // listen for sensors, creating them as needed
     public void message(XNetReply l) {
-	   if(XNetTrafficController.instance().getCommandStation()
-                                              .isFeedbackMessage(l) && 
-	     (XNetTrafficController.instance().getCommandStation()
-                                              .getFeedbackMessageType(l)==2)) {
+	   if(l.isFeedbackMessage() && (l.getFeedbackMessageType()==2)) {
               // This is a feedback encoder message. The address of the 
 	      // Feedback sensor is byte two of the message.
-              int address=XNetTrafficController.instance()
-                                            .getCommandStation()
-                                            .getFeedbackEncoderMsgAddr(l); 
+              int address=l.getFeedbackEncoderMsgAddr(); 
 	      if(log.isDebugEnabled()) 
 			log.debug("Message for feedback encoder " + address); 
 

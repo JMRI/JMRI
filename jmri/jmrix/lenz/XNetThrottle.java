@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
  * @author     Paul Bender (C) 2002,2003,2004
- * @version    $Revision: 2.0 $
+ * @version    $Revision: 2.1 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -591,15 +591,14 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	    	 if(log.isDebugEnabled()) { log.debug("Current throttle status is THROTTLECMDSENT"); }
 	    // For a Throttle Command, we're just looking for a return 
             // acknowledgment, Either a Success or Failure message.
-	     if(XNetTrafficController.instance().getCommandStation().isOkMessage(l)) 
+	     if(l.isOkMessage()) 
 		{
 	    	 if(log.isDebugEnabled()) { log.debug("Last Command processed successfully."); }
                  // Since we recieved an "ok",  we want to make sure 
                  // "isAvailable reflects we are in control
 		 setIsAvailable(true);
 		requestState=THROTTLEIDLE;
-	    } else if(XNetTrafficController.instance().getCommandStation()
-						      .isCommErrorMessage(l)) {
+	    } else if(l.isCommErrorMessage()) {
                      /* this is a communications error */
                      log.error("Communications error occured - message recieved was: " + l);
 		     requestState=THROTTLEIDLE;

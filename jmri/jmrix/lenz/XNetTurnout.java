@@ -3,7 +3,7 @@
  *
  * Description:		extend jmri.AbstractTurnout for XNet layouts
  * @author			Bob Jacobsen Copyright (C) 2001, Portions by Paul Bender Copyright (C) 2003 
- * @version			$Revision: 2.0 $
+ * @version			$Revision: 2.1 $
  */
 
 package jmri.jmrix.lenz;
@@ -39,7 +39,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         // find the command station
         LenzCommandStation cs = XNetTrafficController.instance().getCommandStation();
         // get the right packet
-        XNetMessage msg = cs.getTurnoutCommandMsg(mNumber,
+        XNetMessage msg = XNetMessage.getTurnoutCommandMsg(mNumber,
                                                   (s & CLOSED)!=0,
                                                   (s & THROWN)!=0,
                                                   true );
@@ -58,14 +58,12 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
       if(InternalState==OFFSENT) {
 	  // If an OFF was sent, we want to check for Communications 
           // errors before we try to do anything else. 
-	   if(XNetTrafficController.instance().getCommandStation()
-                                              .isCommErrorMessage(l)) {
+	   if(l.isCommErrorMessage()) {
             /* this is a communications error */
             log.error("Communications error occured - message recieved was: " + l);
 	    sendOffMessage();
             return;
-	  } else  if(XNetTrafficController.instance().getCommandStation()
-                                                     .isCSBusyMessage(l)) {
+	  } else  if(l.isCSBusyMessage()) {
             /* this is a communications error */
             log.error("Command station busy - message recieved was: " + l);
 	    sendOffMessage();
@@ -81,18 +79,14 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 	// see if the messages we recieve indicate this turnout chagned 
         // state
         if(getCommandedState()==getKnownState()) {
-	   if(XNetTrafficController.instance().getCommandStation()
-                                              .isFeedbackMessage(l)) {
+	   if(l.isFeedbackMessage()) {
            // This is a feedback message, we need to check and see if it
            // indicates this turnout is to change state or if it is for 
            // another turnout.
 	    parseFeedbackMessage(l);
            }
-	} else if(XNetTrafficController.instance().getCommandStation()
-                                                  .isFeedbackMessage(l)) {
-          int messageType= XNetTrafficController.instance()
-                                                .getCommandStation()
-                                                .getFeedbackMessageType(l);
+	} else if(l.isFeedbackMessage()) {
+          int messageType= l.getFeedbackMessageType();
 	  if(messageType == 1) {
 	     // The first case is that we recieve a message for this turnout
              // and this turnout provides feedback.
@@ -101,9 +95,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 	     if(!motionComplete(l)) {
              // If the motion is NOT complete, send a feedback request for
              // this nibble
-             XNetMessage msg =  XNetTrafficController.instance()
-                                                .getCommandStation()
-	   					.getFeedbackRequestMsg(mNumber,
+             XNetMessage msg =  XNetMessage.getFeedbackRequestMsg(mNumber,
                                                             ((mNumber%4)<=1));
              XNetTrafficController.instance().sendXNetMessage(msg, this);
              } else {
@@ -122,8 +114,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
             // We need to tell the turnout to shut off the output.
 	    sendOffMessage();
           }
-	} else if (XNetTrafficController.instance()
-                                        .getCommandStation().isOkMessage(l)) {
+	} else if (l.isOkMessage()) {
             // Finally, we may just recieve an OK message.
 	    sendOffMessage();
 	} else return;
@@ -132,9 +123,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     /* Send an "Off" message to the decoder for this output  */
     private void sendOffMessage() {
             // We need to tell the turnout to shut off the output.
-            XNetMessage msg =  XNetTrafficController.instance()
-                                                .getCommandStation()
-	   					.getTurnoutCommandMsg(mNumber,
+            XNetMessage msg =  XNetMessage.getTurnoutCommandMsg(mNumber,
                                                   getCommandedState()==CLOSED,
                                                   getCommandedState()==THROWN,
                                                   false );
@@ -157,36 +146,24 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         // right response from .getTurnoutMsgAddr.  If this is an even 
         // numbered turnout, we need to check the messages for the odd 
         // numbered turnout in the nibble as well.
-        if (mNumber%2==1 && (XNetTrafficController.instance()
-            .getCommandStation()
-            .getTurnoutMsgAddr(l) == mNumber)) {
+        if (mNumber%2==1 && (l.getTurnoutMsgAddr() == mNumber)) {
             // is for this object, parse the message
             if (log.isDebugEnabled()) log.debug("Message for turnout" + mNumber);
-            if(XNetTrafficController.instance()
-                                    .getCommandStation()
-                                    .getTurnoutStatus(l,1)==THROWN) {
+            if(l.getTurnoutStatus(1)==THROWN) {
                newCommandedState(THROWN);
                newKnownState(getCommandedState());
-            } else if(XNetTrafficController.instance()
-                                    .getCommandStation()
-                                    .getTurnoutStatus(l,1)==CLOSED) { 
+            } else if(l.getTurnoutStatus(1)==CLOSED) { 
                newCommandedState(CLOSED);
                newKnownState(getCommandedState());
             } else return -1;
         } else if (((mNumber%2)==0) && 
-                   (XNetTrafficController.instance()
-                                 .getCommandStation()
-                                 .getTurnoutMsgAddr(l) == mNumber-1)) {
+                   (l.getTurnoutMsgAddr() == mNumber-1)) {
             // is for this object, parse message type
             if (log.isDebugEnabled()) log.debug("Message for turnout" + mNumber);
-            if(XNetTrafficController.instance()
-                                    .getCommandStation()
-                                    .getTurnoutStatus(l,0)==THROWN) {
+            if(l.getTurnoutStatus(0)==THROWN) {
                newCommandedState(THROWN);
                newKnownState(getCommandedState());
-            } else if(XNetTrafficController.instance()
-                                    .getCommandStation()
-                                    .getTurnoutStatus(l,0)==CLOSED) { 
+            } else if(l.getTurnoutStatus(0)==CLOSED) { 
                newCommandedState(CLOSED);
                newKnownState(getCommandedState());
             } else return -1;
@@ -206,26 +183,18 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         // right response from .getTurnoutMsgAddr.  If this is an even 
         // numbered turnout, we need to check the messages for the odd 
         // numbered turnout in the nibble as well.
-        if (mNumber%2==1 && (XNetTrafficController.instance()
-            .getCommandStation()
-            .getTurnoutMsgAddr(l) == mNumber)) {
+        if (mNumber%2==1 && (l.getTurnoutMsgAddr() == mNumber)) {
             // is for this object, parse the message
-            int messageType= XNetTrafficController.instance()
-                                                .getCommandStation()
-                                                .getFeedbackMessageType(l);
+            int messageType= l.getFeedbackMessageType();
 	  if(messageType == 1) {
              int a2=l.getElement(2);
              if((a2 & 0x80)==0x80) { return false;
              } else { return true; }
 	  } else return false;
         } else if (((mNumber%2)==0) && 
-                   (XNetTrafficController.instance()
-                                 .getCommandStation()
-                                 .getTurnoutMsgAddr(l) == mNumber-1)) {
+                   (l.getTurnoutMsgAddr() == mNumber-1)) {
             // is for this object, parse the message
-          int messageType= XNetTrafficController.instance()
-                                                .getCommandStation()
-                                                .getFeedbackMessageType(l);
+          int messageType= l.getFeedbackMessageType();
 	  if(messageType == 1) {
              int a2=l.getElement(2);
              if((a2&0x80)==0x80) { return false;

@@ -14,7 +14,8 @@ import jmri.jmrix.AbstractMRListener;
  * method for locating the local implementation.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Revision: 2.2 $
+ * @author			Paul Bender  Copyright (C) 2004
+ * @version 		$Revision: 2.3 $
  *
  */
 public abstract class XNetTrafficController extends AbstractMRTrafficController implements XNetInterface {
@@ -74,9 +75,9 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
          */
         public void forwardReply(AbstractMRListener client,AbstractMRReply m) {
 	 	// check parity
-                /*if (!((XNetReply)m).checkParity()) {
+                if (!((XNetReply)m).checkParity()) {
                     log.warn("Ignore packet with bad checksum: "+((XNetReply)m).toString());
-		} else*/ 
+		} else 
 		   ((XNetListener)client).message((XNetReply)m);
         }
 
@@ -100,7 +101,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     /**
       * enterNormalMode() returns the value of getExitProgModeMsg();
       */
-    protected AbstractMRMessage enterNormalMode() { return mCommandStation.getExitProgModeMsg(); }
+    protected AbstractMRMessage enterNormalMode() { return XNetMessage.getExitProgModeMsg(); }
 
     protected boolean endOfMessage(AbstractMRReply msg) { 
            int len = (((XNetReply)msg).getElement(0)&0x0f)+2;  // opCode+Nbytes+ECC
@@ -113,6 +114,30 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     }
 
     protected AbstractMRReply newReply() { return new XNetReply(); }
+
+
+    /**
+     * Get characters from the input source, and file a message.
+     * <P>
+     * Returns only when the message is complete.
+     * <P>
+     * Only used in the Receive thread. 
+     *
+     * @param msg message to fill
+     * @param istream character source.  
+     * @throws IOException when presented by the input source.
+     */
+    protected void loadChars(AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
+        int i;
+        for (i = 0; i < msg.maxSize; i++) { 
+            byte char1 = istream.readByte();
+            msg.setElement(i, char1 &0xFF);
+            if (endOfMessage(msg)) {
+                break;
+            }
+        }
+    }
+
 
     /** Reference to the command station in communication here */
     LenzCommandStation mCommandStation;

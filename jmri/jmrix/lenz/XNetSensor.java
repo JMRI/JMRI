@@ -9,7 +9,7 @@ import jmri.Sensor;
  * Extend jmri.AbstractSensor for XPressNet layouts.
  * <P>
  * @author			Paul Bender Copyright (C) 2003
- * @version         $Revision: 2.0 $
+ * @version         $Revision: 2.1 $
  */
 public class XNetSensor extends AbstractSensor implements XNetListener {
 
@@ -77,10 +77,8 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
        // To do this, we send an XpressNet Accessory Decoder Information 
        // Request.
        // This works for Feedback modules and turnouts with feedback.
-       XNetMessage msg = XNetTrafficController.instance()
-                                              .getCommandStation()
-                                              .getFeedbackRequestMsg(baseaddress,
-                                                                    (nibble==0x00));
+       XNetMessage msg = XNetMessage.getFeedbackRequestMsg(baseaddress,
+                                                          (nibble==0x00));
        XNetTrafficController.instance().sendXNetMessage(msg, this);
     }
 
@@ -94,13 +92,9 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
      * @param l
      */
     public void message(XNetReply l) {
-	   if(XNetTrafficController.instance().getCommandStation()
-                                              .isFeedbackMessage(l) &&
-             (XNetTrafficController.instance().getCommandStation()
-                                              .getFeedbackMessageType(l)==2) &&
-              baseaddress==XNetTrafficController.instance()
-                                            .getCommandStation()
-                                            .getFeedbackEncoderMsgAddr(l) &&
+	   if(l.isFeedbackMessage() &&
+             (l.getFeedbackMessageType()==2) &&
+              baseaddress==l.getFeedbackEncoderMsgAddr() &&
 	      nibble == (l.getElement(2) & 0x10)) {
               if(log.isDebugEnabled())
                         log.debug("Message for sensor " + systemName  + 
