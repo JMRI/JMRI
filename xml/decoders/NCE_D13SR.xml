@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: NCE_D13SR.xml,v 1.5 2001-12-27 16:28:10 jacobsen Exp $ -->
+<!-- $Id: NCE_D13SR.xml,v 1.6 2002-01-01 01:49:53 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Bob Jacobsen" version="1" lastUpdated="20011209"/>
+		<version author="Bob Jacobsen" version="2" lastUpdated="20011229"/>
 
 <decoder>
 	<id family="NCE_D13SR" mfg="North Coast Engineering" mfgID="11" defnVersion="0"
@@ -140,10 +140,12 @@
 
 		<!-- NCE-specific variables -->	
 		
-		<variable name="Ditch light hold time" CV="118" mask="VVVVVVVV">
+		<variable name="Ditch light hold time" CV="118" mask="VVVVVVVV"
+					stdName="Global lighting option 1">
 			<decVal/>
 			</variable>
-		<variable name="Lighting Effects Page" CV="119" mask="VVVVVVVV" >
+		<variable name="Lighting Effects Page" CV="119" mask="VVVVVVVV"
+					stdName="Global lighting option 2">
 				<decVal/>
 			</variable>
 			
@@ -167,19 +169,16 @@
 				<enumChoice choice="Type 1 left ditch light, effect on if F0 and F2 on, bright if F0 on and F2 off, off if F0 off"/>
 				</enumVal>
 			</variable>
-		<variable name="Output 1 active in forward direction only" CV="120" mask="XXXXXXXV" minOut="1">
+		<variable name="Output 1 active" CV="120" mask="XXXXXXVV" minOut="1"
+					stdName="Output 1 behaviour">
 			<enumVal>
-				<enumChoice choice="No"/>
-				<enumChoice choice="Yes"/>
+				<enumChoice choice="Both directions"/>
+				<enumChoice choice="Only in forward"/>
+				<enumChoice choice="Only in reverse"/>
 				</enumVal>
 			</variable>
-		<variable name="Output 1 active in reverse direction only" CV="120" mask="XXXXXXVX" minOut="1">
-			<enumVal>
-				<enumChoice choice="No"/>
-				<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-		<variable name="Output 1 connected to" CV="120" mask="VXXXXXXX" minOut="1">
+		<variable name="Output 1 connected to" CV="120" mask="VXXXXXXX" minOut="1"
+					stdName="Output 1 options">
 			<enumVal>
 				<enumChoice choice="30-40mA incandescent bulb"/>
 				<enumChoice choice="LED and limiting resistor"/>
@@ -206,19 +205,16 @@
 				<enumChoice choice="Type 1 left ditch light, effect on if F0 and F2 on, bright if F0 on and F2 off, off if F0 off"/>
 				</enumVal>
 			</variable>
-		<variable name="Output 2 active in forward direction only" CV="121" mask="XXXXXXXV" minOut="2">
+		<variable name="Output 2 active" CV="121" mask="XXXXXXVV" minOut="2"
+					stdName="Output 2 behaviour">
 			<enumVal>
-				<enumChoice choice="No"/>
-				<enumChoice choice="Yes"/>
+				<enumChoice choice="Both directions"/>
+				<enumChoice choice="Only in forward"/>
+				<enumChoice choice="Only in reverse"/>
 				</enumVal>
 			</variable>
-		<variable name="Output 2 active in reverse direction only" CV="121" mask="XXXXXXVX" minOut="2">
-			<enumVal>
-				<enumChoice choice="No"/>
-				<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-		<variable name="Output 2 connected to" CV="121" mask="VXXXXXXX" minOut="2">
+		<variable name="Output 2 connected to" CV="121" mask="VXXXXXXX" minOut="2"
+					stdName="Output 2 options">
 			<enumVal>
 				<enumChoice choice="30-40mA incandescent bulb"/>
 				<enumChoice choice="LED and limiting resistor"/>
@@ -245,19 +241,16 @@
 				<enumChoice choice="Type 1 left ditch light, effect on if F0 and F2 on, bright if F0 on and F2 off, off if F0 off"/>
 				</enumVal>
 			</variable>
-		<variable name="Output 3 active in forward direction only" CV="122" mask="XXXXXXXV" minOut="3">
+		<variable name="Output 3 active" CV="122" mask="XXXXXXVV" minOut="3"
+					stdName="Output 3 behaviour">
 			<enumVal>
-				<enumChoice choice="No"/>
-				<enumChoice choice="Yes"/>
+				<enumChoice choice="Both directions"/>
+				<enumChoice choice="Only in forward"/>
+				<enumChoice choice="Only in reverse"/>
 				</enumVal>
 			</variable>
-		<variable name="Output 3 active in reverse direction only" CV="122" mask="XXXXXXVX" minOut="3">
-			<enumVal>
-				<enumChoice choice="No"/>
-				<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-		<variable name="Output 3 connected to" CV="120" mask="VXXXXXXX" minOut="3">
+		<variable name="Output 3 connected to" CV="122" mask="VXXXXXXX" minOut="3"
+					stdName="Output 3 options">
 			<enumVal>
 				<enumChoice choice="30-40mA incandescent bulb"/>
 				<enumChoice choice="LED and limiting resistor"/>
@@ -266,31 +259,5 @@
 	
 	</variables>
 </decoder>
-
-<pane name="NCE">
-	<column>
-		<display name="Ditch light hold time" />
-		<display name="Lighting Effects Page" />
-		
-		<label label=" "/>
-		<display name="Output 1 effect generated" />
-		<display name="Output 1 active in forward direction only" />
-		<display name="Output 1 active in reverse direction only" />
-		<display name="Output 1 connected to" />
-		
-		<label label=" "/>
-		<display name="Output 2 effect generated" />
-		<display name="Output 2 active in forward direction only" />
-		<display name="Output 2 active in reverse direction only" />
-		<display name="Output 2 connected to" />
-		
-		<label label=" "/>
-		<display name="Output 3 effect generated" />
-		<display name="Output 3 active in forward direction only" />
-		<display name="Output 3 active in reverse direction only" />
-		<display name="Output 3 connected to" />
-
-	</column>
-</pane>
 
 </decoder-config>

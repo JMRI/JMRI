@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_150.xml,v 1.7 2001-12-27 16:28:10 jacobsen Exp $ -->
+<!-- $Id: Digitrax_150.xml,v 1.8 2002-01-01 01:49:53 jacobsen Exp $ -->
 <decoder-config>
 		<version author="" version="" lastUpdated=""/>
 
@@ -20,10 +20,10 @@
 						comment="A value of 255 corresponds to 100%">
 			<decVal></decVal>
 			</variable>
-		<variable name="Acceleration Rate" CV="3">
+		<variable name="Acceleration Rate" CV="3" stdName="Accel">
 			<decVal max="31"/>
 			</variable>
-		<variable name="Deceleration Rate" CV="4">
+		<variable name="Deceleration Rate" CV="4" stdName="Decel">
 			<decVal max="31"/>
 			</variable>
 		<variable name="Maximum Voltage" CV="5" stdName="Vhigh">
@@ -32,10 +32,10 @@
 		<variable name="Midpoint Voltage" CV="6" stdName="Vmid">
 			<decVal/>
 			</variable>
-		<variable name="Version ID" CV="7" readOnly="yes" stdName="Manufacturer Version No">
+		<variable name="Version ID" CV="7" readOnly="yes" stdName="Decoder Version">
 				<decVal/>
 			</variable>
-		<variable name="Manufacturer ID" CV="8" readOnly="yes">
+		<variable name="Manufacturer" CV="8" readOnly="yes">
 				<decVal/>
 			</variable>
 		<variable name="F1 during DC operation" CV="13" mask="XXXXXXXV"
@@ -80,13 +80,15 @@
 				<enumChoice choice="On"/>
 				</enumVal>
 			</variable>
-		<variable name="F0 Forward during DC operation" CV="13" mask="XVXXXXXX">
+		<variable name="F0 Forward during DC operation" CV="13" mask="XVXXXXXX"
+						stdName="Analog Mode Function Status - FL(f)">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
 				</enumVal>
 			</variable>
-		<variable name="F0 Reverse during DC operation" CV="13" mask="VXXXXXXX">
+		<variable name="F0 Reverse during DC operation" CV="13" mask="VXXXXXXX"
+						stdName="Analog Mode Function Status - FL(r)">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
@@ -104,7 +106,8 @@
 				<enumChoice choice="reverse"/>
 				</enumVal>
 			</variable>
-		<variable name="Speed steps" CV="29" mask="XXXXXXVX">
+		<variable name="Speed steps" CV="29" mask="XXXXXXVX"
+					stdName="Speed Step Mode">
 			<enumVal>
 				<enumChoice choice="14"/>
 				<enumChoice choice="28/128"/>
@@ -130,7 +133,7 @@
 				<enumChoice choice="4 digit addressing"/>
 				</enumVal>
 			</variable>
-		<variable name="Forward light F0F effect generated" CV="49" mask="XXXXVVVV">
+		<variable name="Function F0F effect generated" CV="49" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Normal function of lead"/>
 				<enumChoice choice="Random flicker"/>
@@ -150,7 +153,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable name="Forward light F0F behaviour" CV="49" mask="VVVVXXXX">
+		<variable name="Function F0F behaviour" CV="49" mask="VVVVXXXX">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -170,7 +173,7 @@
 				<enumChoice choice="Reserved (0xF)"/>
 				</enumVal>
 			</variable>
-		<variable name="Reverse light F0R effect generated" CV="50" mask="XXXXVVVV">
+		<variable name="Function F0R effect generated" CV="50" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Normal function of lead"/>
 				<enumChoice choice="Random flicker"/>
@@ -190,7 +193,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable name="Reverse light F0R behaviour" CV="50" mask="VVVVXXXX">
+		<variable name="Function F0R behaviour" CV="50" mask="VVVVXXXX">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -376,7 +379,7 @@
 				<enumChoice choice="Split field/AC motor"/>
 				</enumVal>
 			</variable>
-		<variable name="Directional headlight" CV="61" mask="XXXXXXXV">
+		<variable name="Directional Headlights" CV="61" mask="XXXXXXXV">
 			<enumVal>
 				<enumChoice choice="Normal headlight operation"/>
 				<enumChoice choice="Reverse light lead controlled by F4"/>
@@ -396,14 +399,17 @@
 				</enumVal>
 			</variable>
 		<variable name="Lamp keep-alive voltage" CV="62" mask="VVVVXXXX"
+				stdName="Global lighting option 1"
 				comment="0 is no keep-alive, use with LEDs">
 				<decVal max="15"/>
 			</variable>
 		<variable name="FX rate and keep alive adjust" CV="62" mask="XXXXVVVV"
+				stdName="Global lighting option 2"
 				comment="0 is fast, 15 is slow, 4 is recommended for start">
 				<decVal max="15"/>
 			</variable>
 		<variable name="Ditch light hold-over time" CV="63"
+				stdName="Global lighting option 3"
 				comment="0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds">
 				<decVal/>
 			</variable>
@@ -417,11 +423,11 @@
 			<decVal/>
 			</variable>
 		<variable name="User Private ID #1" CV="105"
-					stdName="User Identification #1">
+					stdName="User Id #1">
 			<decVal/>
 			</variable>
 		<variable name="User Private ID #2" CV="106"
-					stdName="User Identification #2">
+					stdName="User Id #2">
 			<decVal/>
 			</variable>
 		<variable name="Speed Table" CV="67">
@@ -430,4 +436,13 @@
 	</variables>
 	
 </decoder>
+
+<pane name="Digitrax">
+	<column>
+		<display name="Split field motor" />		
+		<display name="Vstart/Vmid/Vfull in 128 step mode" />
+		<display name="Short-circuit protection" />
+	</column>
+</pane>
+
 </decoder-config>

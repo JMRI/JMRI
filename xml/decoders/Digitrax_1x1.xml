@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_1x1.xml,v 1.8 2001-12-27 16:28:10 jacobsen Exp $ -->
+<!-- $Id: Digitrax_1x1.xml,v 1.9 2002-01-01 01:49:53 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen" version="1" lastUpdated="20011207"/>
 
@@ -16,8 +16,7 @@
 	                     register="yes" ops="yes"></programming>
 
 	<variables>
-		<variable name="Primary Address" CV="1" comment="Short address"
-						stdName="Short Address"  default="03">
+		<variable name="Short Address" CV="1" default="03">
 			<decVal min="1" max="127"/></variable>
 		<variable name="Vstart" CV="2"
 						comment="A value of 255 corresponds to 100%">
@@ -76,26 +75,27 @@
 				<enumChoice choice="on"/>
 				</enumVal></variable>
 
-		<variable name="Long Address" CV="17" stdName="Extended Address">
+		<variable name="Long Address" CV="17">
 			<longAddressVal/>
 			</variable>
 
 		<variable name="Consist Address" CV="19">			<decVal/></variable>
 
-		<variable name="Normal direction of motion" CV="29" mask="XXXXXXXV" stdName="Locomotive Direction">
+		<variable name="Normal direction of motion" CV="29" mask="XXXXXXXV" 
+					stdName="Locomotive Direction">
 			<enumVal>
 				<enumChoice choice="forward"/>
 				<enumChoice choice="reverse"/>
 				</enumVal>
 			</variable>
-		<variable name="Speed steps" CV="29" mask="XXXXXXVX" stdName="Speed Step Mode" default="1">
+		<variable name="Speed steps" CV="29" mask="XXXXXXVX" 
+				stdName="Speed Step Mode" default="1">
 			<enumVal>
 				<enumChoice choice="14 speed step format"/>
 				<enumChoice choice="28 speed step format"/>
 				</enumVal>
 			</variable>
-		<variable name="Power Source Conversion" CV="29" mask="XXXXXVXX" default="1"
-					stdName="Analog (DC) Operation" >
+		<variable name="Analog (DC) Operation" CV="29" mask="XXXXXVXX" default="1">
 			<enumVal>
 				<enumChoice choice="NMRA Digital only"/>
 				<enumChoice choice="DC conversion enabled"/>
@@ -121,11 +121,11 @@
 			<decVal/>
 			</variable>
 		<variable name="User Private ID #1" CV="105"
-					stdName="User Identification #1">
+					stdName="User Id #1">
 			<decVal/>
 			</variable>
 		<variable name="User Private ID #2" CV="106"
-					stdName="User Identification #2">
+					stdName="User Id #2">
 			<decVal/>
 			</variable>
 		<variable name="Speed Table" CV="67">

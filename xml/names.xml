@@ -1,25 +1,78 @@
 <?xml version="1.0"?>
 <!DOCTYPE names-config SYSTEM "names-config.dtd">
-<!-- $Id: names.xml,v 1.4 2001-12-18 07:16:34 jacobsen Exp $ -->
+<!-- $Id: names.xml,v 1.5 2002-01-01 01:49:50 jacobsen Exp $ -->
 <names-config>
-		<version author="" version="" lastUpdated=""/>
+		<version author="jake@physics.berkeley.edu" 
+			version="6" lastUpdated="20011229"/>
 		
+	<!-- Note 1: NMRA-standard variables show a CV value -->
+	<!-- Note 2: The CV29 control bits are now spread to the relevant -->
+	<!--            sections, instead of being grouped -->
+	
+	<!-- The section headings are:				-->
+	<!--	Basic configuration variables       -->
+	<!-- 	Speed and motor-related variables   -->
+	<!-- 	Power conversion (analog)			-->
+	<!-- 		Function outputs in analog		-->
+	<!--	Identification						-->
+	<!--	Consisting variables				-->
+	<!--	BEMF variables						-->
+	<!--	Lighting section					-->
+	<!-- 		What each function does			-->
+	<!-- 		What each output does			-->
+	<!--		Map functions to/from outputs	-->
+	<!--	Sound section						-->
+	<!--		Foreground sound configuration	-->
+	<!--		Background sound configuration	-->
+	<!--		Volumes							-->
+	
+	
+	<!-- Basic configuration variables -->
 		<definition name="Short Address" CV="1" />
+
+		<definition name="Long Address" CV="17" />
+						
+		<definition name="Advanced Ack" CV="29" mask="XXXXVXXXX" />
+		<definition name="Address Format" CV="29" mask="XXVXXXXX" />
+		
+	<!-- Speed and motor-related variables -->
+	
 		<definition name="Vstart" CV="2" />
+		<definition name="Vmid" CV="6" />
+		<definition name="Vhigh" CV="5" />
+
 		<definition name="Accel" CV="3" />
 		<definition name="Decel" CV="4" />
-		<definition name="Vhigh" CV="5" />
-		<definition name="Vmid" CV="6" />
-		<definition name="Decoder Version" CV="7" />
-		<definition name="Manufacturer" CV="8" />
+
+		<definition name="Speed Table/Mid Range Cab Speed Step" CV="25" />
+
+		<definition name="Locomotive Direction" CV="29" mask="XXXXXXXV" />
+		<definition name="Speed Step Mode" CV="29" mask="XXXXXXVX" />
+		<definition name="Speed Table Definition" CV="29" mask="XXXVXXXX" />
+
+		<definition name="Kick Start" CV="65" />
+		<definition name="Forward Trim" CV="66" />
+		<definition name="Speed Table" CV="67" />
+		<definition name="Reverse Trim" CV="95" />
+
 		<definition name="Total PWM Period" CV="9" />
-		<definition name="EMF Feedback Cutout" CV="10" />
+
+	<!-- Power conversion (analog) -->
+
+		<definition name="Analog (DC) Operation" CV="29" mask="XXXXXVXX" />
+
 		<definition name="Packet Time-out Value" CV="11" />
+		<definition name="DC Brake Momentum" />
+
 		<definition name="Analog Power Conversion" CV="12" mask="XXXXXXXV" />
 		<definition name="Radio Power Conversion" CV="12" mask="XXXXXXVX" />
 		<definition name="Zero-1 Power Conversion" CV="12" mask="XXXXXVXX" />
 		<definition name="Trix Power Conversion" CV="12" mask="XXXXVXXX" />
 		<definition name="CTC/Railcommand Power Conversion" CV="12" mask="XXXVXXXX" />
+		
+		<!-- Function outputs in analog -->
+		<definition name="Analog Mode Function Status - FL(f)"/>
+		<definition name="Analog Mode Function Status - FL(r)"/>
 		<definition name="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" />
 		<definition name="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" />
 		<definition name="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" />
@@ -29,9 +82,19 @@
 		<definition name="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" />
 		<definition name="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" />
 		
-		<definition name="Long Address" CV="17" />
+	<!-- Identification -->
+	
+		<definition name="User Id #1" CV="105" />
+		<definition name="User Id #2" CV="106" />
 		
+		<definition name="Decoder Version" CV="7" />
+		<definition name="Manufacturer" CV="8" />
+
+	<!-- Consisting variables -->
+
 		<definition name="Consist Address" CV="19" />
+		<definition name="Consist Direction"/>
+		
 		<definition name="Consist Address Active For F1" CV="21" mask="XXXXXXXV" />
 		<definition name="Consist Address Active For F2" CV="21" mask="XXXXXXVX" />
 		<definition name="Consist Address Active For F3" CV="21" mask="XXXXXVXX" />
@@ -42,20 +105,120 @@
 		<definition name="Consist Address Active For F8" CV="21" mask="VXXXXXXX" />
 		<definition name="Consist Address Active For FL in Forward" CV="22" mask="XXXXXXXV" />
 		<definition name="Consist Address Active For FL in Reverse" CV="22" mask="XXXXXXVX" />
+		
 		<definition name="Consist Acceleration Adjustment" CV="23" mask="XVVVVVVV" />
 		<definition name="Consist Acceleration Adjustment Sign" CV="23" mask="VXXXXXXX" />
 		<definition name="Consist Deceleration Adjustment" CV="24" mask="XVVVVVVV" />
 		<definition name="Consist Deceleration Adjustment Sign" CV="24" mask="VXXXXXXX" />
-		
-		<definition name="Speed Table/Mid Range Cab Speed Step" CV="25" />
-		
-		<definition name="Locomotive Direction" CV="29" mask="XXXXXXXV" />
-		<definition name="Speed Step Mode" CV="29" mask="XXXXXXVX" />
-		<definition name="Analog (DC) Operation" CV="29" mask="XXXXXVXX" />
-		<definition name="Advanced Ack" CV="29" mask="XXXXVXXXX" />
-		<definition name="Speed Table Definition" CV="29" mask="XXXVXXXX" />
-		<definition name="Address Format" CV="29" mask="XXVXXXXX" />
 
+		<definition name="Consist Adjustments Active"/>
+
+
+	<!-- BEMF variables -->
+		
+		<definition name="EMF Feedback Cutout" CV="10" /> <!-- NMRA -->
+		<definition name="EMF Static Config" />
+		<definition name="EMF Dynamic Config" />
+		<definition name="EMF Droop Config" />
+		
+	<!-- Lighting section -->
+		
+		<definition name="Directional Headlights"/>
+		
+		<!-- Four placeholders for timing and intensity options -->
+		<definition name="Global lighting option 1"/>
+		<definition name="Global lighting option 2"/>
+		<definition name="Global lighting option 3"/>
+		<definition name="Global lighting option 4"/>
+
+		<!-- Configuring what each function does: -->
+		<!-- There are three variables per function.  "Effect generated" -->
+		<!-- is intended for variables that control what the lights do,  -->
+		<!-- while "behaviour" is meant for when they are present, and   -->
+		<!-- "options" for anything else -->
+		
+		<definition name="Function F0F effect generated"/>
+		<definition name="Function F0F behaviour"/>
+		<definition name="Function F0F options"/>
+
+		<definition name="Function F0R effect generated"/>
+		<definition name="Function F0R behaviour"/>
+		<definition name="Function F0R options"/>
+
+		<definition name="Function 1 effect generated"/>
+		<definition name="Function 1 behaviour"/>
+		<definition name="Function 1 options"/>
+
+		<definition name="Function 2 effect generated"/>
+		<definition name="Function 2 behaviour"/>
+		<definition name="Function 2 options"/>
+
+		<definition name="Function 3 effect generated"/>
+		<definition name="Function 3 behaviour"/>
+		<definition name="Function 3 options"/>
+
+		<definition name="Function 4 effect generated"/>
+		<definition name="Function 4 behaviour"/>
+		<definition name="Function 4 options"/>
+
+		<definition name="Function 5 effect generated"/>
+		<definition name="Function 5 behaviour"/>
+		<definition name="Function 5 options"/>
+
+		<definition name="Function 6 effect generated"/>
+		<definition name="Function 6 behaviour"/>
+		<definition name="Function 6 options"/>
+
+		<definition name="Function 7 effect generated"/>
+		<definition name="Function 7 behaviour"/>
+		<definition name="Function 7 options"/>
+
+		<definition name="Function 8 effect generated"/>
+		<definition name="Function 8 behaviour"/>
+		<definition name="Function 8 options"/>
+
+
+		<!-- Configuring what each output does: -->
+		<!-- There are three variables per output.  "Effect generated" -->
+		<!-- is intended for variables that control what the lights do,  -->
+		<!-- while "behaviour" is meant for when they are present, and   -->
+		<!-- "options" for anything else -->
+		<definition name="Output 1 effect generated"/>
+		<definition name="Output 1 behaviour"/>
+		<definition name="Output 1 options"/>
+
+		<definition name="Output 2 effect generated"/>
+		<definition name="Output 2 behaviour"/>
+		<definition name="Output 2 options"/>
+
+		<definition name="Output 3 effect generated"/>
+		<definition name="Output 3 behaviour"/>
+		<definition name="Output 3 options"/>
+
+		<definition name="Output 4 effect generated"/>
+		<definition name="Output 4 behaviour"/>
+		<definition name="Output 4 options"/>
+
+		<definition name="Output 5 effect generated"/>
+		<definition name="Output 5 behaviour"/>
+		<definition name="Output 5 options"/>
+
+		<definition name="Output 6 effect generated"/>
+		<definition name="Output 6 behaviour"/>
+		<definition name="Output 6 options"/>
+
+		<definition name="Output 7 effect generated"/>
+		<definition name="Output 7 behaviour"/>
+		<definition name="Output 7 options"/>
+
+		<definition name="Output 8 effect generated"/>
+		<definition name="Output 8 behaviour"/>
+		<definition name="Output 8 options"/>
+
+
+		<!-- Variables for mapping functions to and from outputs -->
+		<!-- These are also used in the _code_ for the fnmapping -->
+		<!-- element, so their names are somewhat fixed          -->
 		<definition name="FL(f) controls output 1" CV="33" mask="XXXXXXXV" />
 		<definition name="FL(f) controls output 2" CV="33" mask="XXXXXXVX" />
 		<definition name="FL(f) controls output 3" CV="33" mask="XXXXXVXX" />
@@ -182,53 +345,11 @@
 		<definition name="F12 controls output 13" CV="46" mask="XVXXXXXX" />
 		<definition name="F12 controls output 14" CV="46" mask="VXXXXXXX" />
 		
-		<definition name="Kick Start" CV="65" />
-		<definition name="Forward Trim" CV="66" />
-		<definition name="Speed Table" CV="67" />
-		<definition name="Reverse Trim" CV="95" />
-		<definition name="User Id #1" CV="105" />
-		<definition name="User Id #2" CV="106" />
+	<!-- Sound section -->
+	
+		<!-- foreground sound configuration -->
+		<!-- background sound configuration -->
+		<!-- Volumes -->
 		
-		<!-- Non-NMRA variables -->
-		
-		<definition name="EMF Static Config" />
-		<definition name="EMF Dynamic Config" />
-		<definition name="EMF Droop Config" />
-		<definition name="Function F0F effect generated"/>
-		<definition name="Function F0F behaviour"/>
-		<definition name="Function F0R effect generated"/>
-		<definition name="Function F0R behaviour"/>
-		<definition name="Function 1 effect generated"/>
-		<definition name="Function 1 behaviour"/>
-		<definition name="Function 2 effect generated"/>
-		<definition name="Function 2 behaviour"/>
-		<definition name="Function 3 effect generated"/>
-		<definition name="Function 3 behaviour"/>
-		<definition name="Function 4 effect generated"/>
-		<definition name="Function 4 behaviour"/>
-		<definition name="Function 5 effect generated"/>
-		<definition name="Function 5 behaviour"/>
-		<definition name="Function 6 effect generated"/>
-		<definition name="Function 6 behaviour"/>
-		<definition name="Function 7 effect generated"/>
-		<definition name="Function 7 behaviour"/>
-		<definition name="Function 8 effect generated"/>
-		<definition name="Function 8 behaviour"/>
-		
-		<definition name="Analog Mode Function Status - FL(f)"/>
-		<definition name="Analog Mode Function Status - FL(r)"/>
-
-		<definition name="Consist Direction"/>
-
-		<definition name="Directional Headlights"/>
-		
-		<definition name="Output 1 effect generated"/>
-		<definition name="Output 2 effect generated"/>
-		<definition name="Output 3 effect generated"/>
-		<definition name="Output 4 effect generated"/>
-		<definition name="Output 5 effect generated"/>
-		<definition name="Output 6 effect generated"/>
-		<definition name="Output 7 effect generated"/>
-		<definition name="Output 8 effect generated"/>
 
 </names-config>

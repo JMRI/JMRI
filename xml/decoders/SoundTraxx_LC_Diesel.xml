@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<!-- $Id: SoundTraxx_LC_Diesel.xml,v 1.1 2002-01-01 01:49:53 jacobsen Exp $ -->
+<decoder-config>
+		<version author="Bob Jacobsen" version="1" lastUpdated="20011231"/>
+
+<decoder>
+	<id family="LC Diesel" mfg="Throttle-Up" mfgID="141" defnVersion="1"></id>
+
+	<programming direct="yes" paged="yes" 
+	                     register="yes" ops="yes"></programming>
+
+	<variables>
+		<variable name="Primary Address" CV="1" comment="Short address"
+						stdName="Short Address"  default="03">
+			<decVal min="1" max="127"/></variable>
+
+		<variable name="Manufacturer Version No" CV="7" readOnly="yes"
+						stdName="Decoder Version"><decVal/></variable>
+		<variable name="Manufacturer ID" CV="8" readOnly="yes"
+						stdName="Manufacturer">			<decVal/></variable>
+
+			
+		<variable name="Extended Address" CV="17"
+						stdName="Long Address" >
+			<longAddressVal/></variable>
+
+		<variable name="Address Format" CV="29" mask="XXVXXXXX">
+			<enumVal>
+				<enumChoice choice="One byte (short) address"/>
+				<enumChoice choice="Two byte (extended) address"/>
+				</enumVal></variable>
+	
+	<!-- Sound section -->
+	
+		<variable name="Startup Mode" CV="113" mask="XXXXXXXV">
+			<enumVal>
+				<enumChoice choice="On at power up"/>
+				<enumChoice choice="On when locomotive selected"/>
+				</enumVal>
+			</variable>
+
+		<variable name="Dynamic Digital Exhaust" CV="113" mask="XXXXXXVX">
+			<enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+				</enumVal>
+			</variable>
+	
+		<variable name="Horn Select" CV="115" mask="XXXXXXVV">
+			<enumVal>
+				<enumChoice choice="1 chime"/>
+				<enumChoice choice="3 chime"/>
+				<enumChoice choice="5 chime"/>
+				</enumVal>
+			</variable>
+
+		<variable name="RPM Interlock" CV="116" mask="XXXVXXXX">
+			<enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+				</enumVal>
+			</variable>
+
+	<!-- Volumes section -->
+	
+		<variable name="Exhaust Throttle Rate" CV="116" mask="XXXXVVVV"
+				stdName="Sound Slider 1"
+				comment="Sets number of speed steps corresponding to one throttle notch">
+				<decVal max="15"/>
+			</variable>
+	
+		<variable name="Bell Rate" CV="114" mask="XXXXVVVV"
+				stdName="Sound Slider 2" 
+				comment="low values = fast, high values = slow">
+				<decVal max="15"/>
+			</variable>
+
+		<variable name="Bell Volume" CV="121" mask="VVVVVVVV"
+				stdName="Sound Slider 3" >
+				<decVal max="255"/>
+			</variable>
+
+		<variable name="Horn Volume" CV="120" mask="VVVVVVVV"
+				stdName="Sound Slider 4" >
+				<decVal max="255"/>
+			</variable>
+
+		<variable name="Exhaust Volume" CV="122" mask="VVVVVVVV"
+				stdName="Sound Slider 5" >
+				<decVal max="255"/>
+			</variable>
+
+		<variable name="Dynamic Brake Volume" CV="123" mask="VVVVVVVV"
+				stdName="Sound Slider 6" >
+				<decVal max="255"/>
+			</variable>
+
+
+	</variables>
+</decoder>
+</decoder-config>

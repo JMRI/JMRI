@@ -2,7 +2,7 @@
 <!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
 
 <programmer-config>
-<!-- $Id: Registers.xml,v 1.1 2001-12-18 07:16:37 jacobsen Exp $ -->
+<!-- $Id: Registers.xml,v 1.2 2002-01-01 01:49:53 jacobsen Exp $ -->
 		<version author="Bob Jacobsen" version="1" lastUpdated="20011214"/>
 
 <!-- A very basic programmer, containing only the variables that -->
@@ -10,7 +10,7 @@
 
 <programmer decoderFilePanes="no">
 
-	<pane name="Basic">
+	<pane name="Basic" nameFmt="stdName">
 		<column>
 
 	 		<display name="Short Address"/>

@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a DCC decoder as a component, esp. information -->
 <!-- on how to program it. -->
-<!-- $Id: decoder-config.dtd,v 1.12 2001-12-18 07:16:37 jacobsen Exp $ -->
+<!-- $Id: decoder-config.dtd,v 1.13 2002-01-01 01:49:53 jacobsen Exp $ -->
 
 <!ELEMENT decoder-config (version, decoder, pane*)>
 
@@ -114,6 +114,8 @@
 <!-- The pane sections define each tabbed pane of options -->
 <!ELEMENT pane (column*)>
 <!ATTLIST pane name CDATA #REQUIRED>  <!-- Name used for identification -->
+<!-- Which name to show in GUI? Mfg is the name field from the decoder file -->
+<!ATTLIST pane nameFmt (mfg | stdName) "mfg">
 
 <!-- The column section describes each column in the pane -->
 <!ELEMENT column ((display | label | separator | cvtable | fnmapping | dccaddress )*)>

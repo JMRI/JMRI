@@ -2,7 +2,7 @@
 <!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
 
 <programmer-config>
-<!-- $Id: MultiPane.xml,v 1.16 2001-12-18 07:16:37 jacobsen Exp $ -->
+<!-- $Id: MultiPane.xml,v 1.17 2002-01-01 01:49:53 jacobsen Exp $ -->
 		<version author="Mark Gurries, Bob Jacobsen" 
 					version="2" lastUpdated="20011206"/>
 
@@ -38,12 +38,13 @@
 			<display name="Accel"/>
 			<display name="Decel"/>
 			<label label=" "/>
+			<display name="DC Brake Momentum"/>
 			<display name="Total PWM Period"/>
 		</column>
 		<column>
-			<display name="EMF Static Config"/>  <!-- Not an NMRA S&RP term -->
-			<display name="EMF Dynamic Config"/>  <!-- Not an NMRA S&RP term -->
-			<display name="EMF Droop Config"/>  <!-- Not an NMRA S&RP term -->
+			<display name="EMF Static Config"/>
+			<display name="EMF Dynamic Config"/>
+			<display name="EMF Droop Config"/>
 			<display name="EMF Feedback Cutout"/>
 		</column>
 	</pane>
@@ -54,15 +55,15 @@
 					format="offradiobutton" layout="above" label=""/>
 			<row>
 				<column>
-					<display name="Vstart" layout="below" format="vslider"/>
+					<display name="Vstart" layout="below" format="vslider" label=""/>
 					<display name="Vstart" layout="below"/>
 				</column>
 				<column>
-					<display name="Vmid" layout="below" format="vslider"/>
+					<display name="Vmid" layout="below" format="vslider" label=""/>
 					<display name="Vmid" layout="below"/>
 				</column>
 				<column>
-					<display name="Vhigh" layout="below" format="vslider"/>
+					<display name="Vhigh" layout="below" format="vslider" label=""/>
 					<display name="Vhigh" layout="below"/>
 				</column>
 			</row>
@@ -85,46 +86,100 @@
 	<pane name="Lights">
 		<column>
 			<display name="Directional Headlights"/>
+			<display name="Global lighting option 1"/>
+			<display name="Global lighting option 2"/>
+			<display name="Global lighting option 3"/>
+			<display name="Global lighting option 4"/>
 			<label label=" "/>
 			
 			<display name="Function F0F effect generated"/>
 			<display name="Function F0F behaviour"/>
+			<display name="Function F0F options"/>
 			<label label=" "/>
 			
 			<display name="Function F0R effect generated"/>
 			<display name="Function F0R behaviour"/>
+			<display name="Function F0R options"/>
 			<label label=" "/>
 			
 			<display name="Function 1 effect generated"/>
 			<display name="Function 1 behaviour"/>
+			<display name="Function 1 options"/>
 			<label label=" "/>
 			
 			<display name="Function 2 effect generated"/>
 			<display name="Function 2 behaviour"/>
+			<display name="Function 2 options"/>
 			<label label=" "/>
 			
 			<display name="Function 3 effect generated"/>
 			<display name="Function 3 behaviour"/>
+			<display name="Function 3 options"/>
 			<label label=" "/>
 			
 			<display name="Function 4 effect generated"/>
 			<display name="Function 4 behaviour"/>
+			<display name="Function 4 options"/>
 			<label label=" "/>
 			
 			<display name="Function 5 effect generated"/>
 			<display name="Function 5 behaviour"/>
+			<display name="Function 5 options"/>
 			<label label=" "/>
 			
 			<display name="Function 6 effect generated"/>
 			<display name="Function 6 behaviour"/>
+			<display name="Function 6 options"/>
 			<label label=" "/>
 			
 			<display name="Function 7 effect generated"/>
 			<display name="Function 7 behaviour"/>
+			<display name="Function 7 options"/>
 			<label label=" "/>
 			
 			<display name="Function 8 effect generated"/>
 			<display name="Function 8 behaviour"/>
+			<display name="Function 8 options"/>
+		</column>
+		<column>
+			<display name="Output 1 effect generated"/>
+			<display name="Output 1 behaviour"/>
+			<display name="Output 1 options"/>
+			<label label=" "/>
+			
+			<display name="Output 2 effect generated"/>
+			<display name="Output 2 behaviour"/>
+			<display name="Output 2 options"/>
+			<label label=" "/>
+			
+			<display name="Output 3 effect generated"/>
+			<display name="Output 3 behaviour"/>
+			<display name="Output 3 options"/>
+			<label label=" "/>
+			
+			<display name="Output 4 effect generated"/>
+			<display name="Output 4 behaviour"/>
+			<display name="Output 4 options"/>
+			<label label=" "/>
+			
+			<display name="Output 5 effect generated"/>
+			<display name="Output 5 behaviour"/>
+			<display name="Output 5 options"/>
+			<label label=" "/>
+			
+			<display name="Output 6 effect generated"/>
+			<display name="Output 6 behaviour"/>
+			<display name="Output 6 options"/>
+			<label label=" "/>
+			
+			<display name="Output 7 effect generated"/>
+			<display name="Output 7 behaviour"/>
+			<display name="Output 7 options"/>
+			<label label=" "/>
+			
+			<display name="Output 8 effect generated"/>
+			<display name="Output 8 behaviour"/>
+			<display name="Output 8 options"/>
 		</column>
 		<column>
 			<display name="Analog Mode Function Status - FL(f)" format="checkbox"/>			
@@ -138,41 +193,21 @@
 			<display name="Analog Mode Function Status - F7" format="checkbox"/>			
 			<display name="Analog Mode Function Status - F8" format="checkbox"/>			
 		</column>
-		<column>
-			<display name="Output 1 effect generated"/>
-			<label label=" "/>
-			
-			<display name="Output 2 effect generated"/>
-			<label label=" "/>
-			
-			<display name="Output 3 effect generated"/>
-			<label label=" "/>
-			
-			<display name="Output 4 effect generated"/>
-			<label label=" "/>
-			
-			<display name="Output 5 effect generated"/>
-			<label label=" "/>
-			
-			<display name="Output 6 effect generated"/>
-			<label label=" "/>
-			
-			<display name="Output 7 effect generated"/>
-			<label label=" "/>
-			
-			<display name="Output 8 effect generated"/>
-		</column>
 	</pane>
 
 	<pane name="Consist">
 		<column>
 			<display name="Consist Address" />
 			<display name="Consist Direction" />
+			
 			<display name="Consist Acceleration Adjustment" />
 			<display name="Consist Acceleration Adjustment Sign" />
 			<display name="Consist Deceleration Adjustment" />
 			<display name="Consist Deceleration Adjustment Sign" />
+			<display name="Consist Adjustments Active" />
+
 			<separator/>
+			
 			<label label="Will decoder respond to function requests at consist address?"/>
 			<display name="Consist Address Active For F1" />
 			<display name="Consist Address Active For F2" />
@@ -202,12 +237,81 @@
 
 	<pane name="Sound">
 		<column>
+			<display name="Sound Option 1" />
+			<display name="Sound Option 2" />
+			<display name="Sound Option 3" />
+			<display name="Sound Option 4" />
+			<display name="Sound Option 5" />
+			<display name="Sound Option 6" />
+			<display name="Sound Option 7" />
+			<display name="Sound Option 8" />
+		</column>
+		<column>
+			<display name="Sound Group 1 Control" format="checkbox" />
+			<display name="Sound Group 1 Option 1" />
+			<display name="Sound Group 1 Option 2" />
+			<display name="Sound Group 1 Option 3" />
+			<display name="Sound Group 1 Option 4" />
+			<display name="Sound Group 1 Option 5" />
+			<display name="Sound Group 1 Option 6" />
+			<display name="Sound Group 1 Option 7" />
+			<display name="Sound Group 1 Option 8" />
+		</column>
+		<column>
+			<display name="Sound Group 2 Control" format="checkbox" />
+			<display name="Sound Group 2 Option 1" />
+			<display name="Sound Group 2 Option 2" />
+			<display name="Sound Group 2 Option 3" />
+			<display name="Sound Group 2 Option 4" />
+			<display name="Sound Group 2 Option 5" />
+			<display name="Sound Group 2 Option 6" />
+			<display name="Sound Group 2 Option 7" />
+			<display name="Sound Group 2 Option 8" />
 		</column>
 	</pane>
 
 	<pane name="Sound Levels">
-		<column>
-		</column>
+			<column>
+				<row>
+					<display name="Sound Slider 1" layout="above" label=""/>
+					<display name="Sound Slider 1" layout="above" format="hslider"/>
+				</row>
+				<label label=" "/>
+				<row>
+					<display name="Sound Slider 2" layout="above" label=""/>
+					<display name="Sound Slider 2" layout="above" format="hslider"/>
+				</row>
+				<label label=" "/>
+				<row>
+					<display name="Sound Slider 3" layout="above" label=""/>
+					<display name="Sound Slider 3" layout="above" format="hslider"/>
+				</row>
+				<label label=" "/>
+				<row>
+					<display name="Sound Slider 4" layout="above" label=""/>
+					<display name="Sound Slider 4" layout="above" format="hslider"/>
+				</row>
+				<label label=" "/>
+				<row>
+					<display name="Sound Slider 5" layout="above" label=""/>
+					<display name="Sound Slider 5" layout="above" format="hslider"/>
+				</row>
+				<label label=" "/>
+				<row>
+					<display name="Sound Slider 6" layout="above" label=""/>
+					<display name="Sound Slider 6" layout="above" format="hslider"/>
+				</row>
+				<label label=" "/>
+				<row>
+					<display name="Sound Slider 7" layout="above" label=""/>
+					<display name="Sound Slider 7" layout="above" format="hslider"/>
+				</row>
+				<label label=" "/>
+				<row>
+					<display name="Sound Slider 8" layout="above" label=""/>
+					<display name="Sound Slider 8" layout="above" format="hslider"/>
+				</row>
+			</column>
 	</pane>
 
 	<pane name="CVs">

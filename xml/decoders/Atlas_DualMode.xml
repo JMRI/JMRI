@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Atlas_DualMode.xml,v 1.4 2001-12-18 07:16:37 jacobsen Exp $ -->
+<!-- $Id: Atlas_DualMode.xml,v 1.5 2002-01-01 01:49:53 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen" version="1" lastUpdated="20011209"/>
 
@@ -89,13 +89,15 @@
 		
 		<!-- Atlas-specific variables -->
 
-		<variable name="Consist Accel and Decel Trims" CV="50" mask="XXXXXXVX">
+		<variable name="Consist Accel and Decel Trims" CV="50" mask="XXXXXXVX"
+					stdName="Consist Adjustments Active">
 			<enumVal>
 				<enumChoice choice="Not Active"/>
 				<enumChoice choice="Active"/>
 				</enumVal>
 			</variable>
-		<variable name="Brake Momentum on DC operation" CV="50" mask="XXXXXVXX">
+		<variable name="Brake Momentum on DC operation" CV="50" mask="XXXXXVXX"
+				stdName="DC Brake Momentum">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
@@ -107,25 +109,29 @@
 				<enumChoice choice="Headlights Independent, F0 front, F1 rear"/>
 				</enumVal>
 			</variable>
-		<variable name="Functional Headlight Dimming" CV="51" mask="XXXXXXVX">
+		<variable name="Functional Headlight Dimming" CV="51" mask="XXXXXXVX"
+				stdName="Global lighting option 1">
 			<enumVal>
 				<enumChoice choice="Dimming Disabled"/>
 				<enumChoice choice="Dimming Enabled. If headlights independent, F1 dims headlight"/>
 				</enumVal>
 			</variable>
-		<variable name="If Lights Independent, F4 dims F0" CV="51" mask="XXXXXVXX">
+		<variable name="If Lights Independent, F4 dims F0" CV="51" mask="XXXXXVXX"
+				stdName="Global lighting option 2">
 			<enumVal>
 				<enumChoice choice="No"/>
 				<enumChoice choice="Yes"/>
 				</enumVal>
 			</variable>
-		<variable name="If Lights Independent, F4 dims F1" CV="51" mask="XXXXVXXX">
+		<variable name="If Lights Independent, F4 dims F1" CV="51" mask="XXXXVXXX"
+				stdName="Global lighting option 3">
 			<enumVal>
 				<enumChoice choice="No"/>
 				<enumChoice choice="Yes"/>
 				</enumVal>
 			</variable>
-		<variable name="Dimming Value (CV52)" CV="52">
+		<variable name="Dimming Value (CV52)" CV="52"
+				stdName="Global lighting option 4">
 			<decVal/>
 			</variable>
 	
@@ -134,13 +140,7 @@
 
 <pane name="Atlas">
 	<column>
-		<display name="Consist Accel and Decel Trims" />
 		<display name="Brake Momentum on DC operation" />
-		<display name="Directional Headlights" />
-		<display name="Functional Headlight Dimming" />
-		<display name="If Lights Independent, F4 dims F0" />
-		<display name="If Lights Independent, F4 dims F1" />
-		<display name="Dimming Value (CV52)" />
 	</column>
 </pane>
 

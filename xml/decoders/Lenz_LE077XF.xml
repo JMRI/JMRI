@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Lenz_LE077XF.xml,v 1.1 2001-12-30 09:41:54 jacobsen Exp $ -->
+<!-- $Id: Lenz_LE077XF.xml,v 1.2 2002-01-01 01:49:53 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Joe Ellis filker@mindspring.com"
 			version="1.2" lastUpdated="2001/12/30"/>
@@ -14,22 +14,22 @@
 
 	<variables>
 
-		<variable name="Short Address" CV="1" stdName="Primary Address"
+		<variable name="Short Address" CV="1"
 		          default="03" comment="Range 1-127">
 			<decVal min="1" max="127"/>
 			</variable>
 
-		<variable name="Kick Start" CV="2" stdName="Start Voltage"
+		<variable name="Kick Start" CV="2"
 				comment="Range 0-31">
 			<decVal></decVal>
 			</variable>
 
-		<variable name="Accel" CV="3" stdName="Accelleration Rate"
+		<variable name="Accel" CV="3"
 				comment="Range 0-31">
 			<decVal max="31"/>
 			</variable>
 
-		<variable name="Decel" CV="4" stdName="Decelleration Rate"
+		<variable name="Decel" CV="4"
 				comment="Range 0-31">
 			<decVal max="31"/>
 			</variable>
@@ -47,8 +47,7 @@
 			</variable>
 
 
-		<variable name="Manufacturer ID - Reset" CV="8"
-				stdName="Manufacturer">
+		<variable name="Manufacturer ID - Reset" CV="8">
 			<decVal default="99"/>
 			</variable>
 
@@ -59,20 +58,20 @@
 			<longAddressVal/>
 			</variable>
 
-		<variable name="Advanced Consist address" CV="19"
+		<variable name="Advanced Consist Address" CV="19"
 				stdName="Consist Address"
 				comment="Allows permanent storage of consist address. Range 0-255">
 			<decVal/>
 			</variable>
 
 		<variable name="Acceleration Trim (range 0-255)" CV="23"
-				stdName="Acceleration Trim"
+				stdName="Consist Acceleration Adjustment"
 		        comment="Additional Acceleration rate info for fine-tuning. (Range 0-255)">
 			<decVal default="255" min="0" max="255"/>
 			</variable>
 
 		<variable name="Deceleration Trim (range 0-255)" CV="24"
-				stdName="Deceleration Trim"
+				stdName="Consist Deceleration Adjustment"
 		        comment="Additional Deceleration (braking) rate info for fine-tuning. (Range 0-255)">
 			<decVal default="255" min="0" max="255"/>
 			</variable>
@@ -86,7 +85,7 @@
 				</enumVal>
 			</variable>
 
-		<variable name="Speed steps" CV="29" mask="XXXXXXVX"
+		<variable name="Speed Steps" CV="29" mask="XXXXXXVX"
 				stdName="Speed Step Mode" default="1">
 			<enumVal>
 				<enumChoice choice="14"/>
@@ -119,7 +118,7 @@
 				</enumVal>
 			</variable>
 
-	<variable name="Accel/Decel Trim" CV="50" stdName="Brake Momentum"
+	<variable name="Accel/Decel Trim" CV="50"
 				mask="XXXXXXXV"
 	          	comment="Governs how loco acts in DC track block">
   			<enumVal>
@@ -130,7 +129,7 @@
 
 
 	<variable name="Brake Momentum on DC" CV="50" 
-				stdName="Brake Momentum" mask="XXXXXVXX"
+				stdName="DC Brake Momentum" mask="XXXXXVXX"
 	          	comment="Governs how loco acts in DC track block">
 			<enumVal>
 				<enumChoice choice="Loco runs under DC analog voltage control"/>
@@ -139,7 +138,6 @@
 			</variable>
 
 	<variable name="Directional Headlights" CV="51"
-				stdName="Directional Headlights Note: Dimming functions in Lenz menu."
 	          	comment="Controls how headlights respond to a change of direction"
                	mask="XXXXXXXV">
 		     <enumVal>
@@ -148,7 +146,8 @@
 		         </enumVal>
 			</variable>
 
-	<variable name="Function Dimming" CV="51" stdName="Function Dimming"
+	<variable name="Function Dimming" CV="51"
+				stdName="Global lighting option 1"
 	         	comment="Controls how headlights dim (CV 52 controls amount)"
               	mask="XXXXXXVX">
 		     <enumVal>
@@ -158,7 +157,7 @@
 			</variable>
 
 	<variable name="Rule 17 Headlights - Front" CV="51" 
-				stdName="Rule 17 Headlights - Front"
+				stdName="Global lighting option 2"
 	          	comment="Controls how front headlights dim"
                	mask="XXXXXVXX">
 		     <enumVal>
@@ -168,7 +167,7 @@
 			</variable>
 
 	<variable name="Rule 17 Headlights - Rear" CV="51" 
-				stdName="Rule 17 Headlights - Rear"
+				stdName="Global lighting option 3"
 	         	comment="Controls how rear headlights dim"
                	mask="XXXXVXXX">
 			<enumVal>
@@ -178,9 +177,8 @@
 			</variable>
 
 	<variable name="Dimmer Control (range 0-255)" CV="52"
-				stdName="Dimmer Control"
-	          	comment="Controls how much headlights dim (0-dark to
-255-max bright)">
+				stdName="Global lighting option 4"
+	          	comment="Controls how much headlights dim (0-dark to 255-max bright)">
 			<decVal min="0" max="255"/>
 			</variable>
 
@@ -219,6 +217,8 @@
 		<display name="Manufacturer ID - Reset" 
 			label="To restore ALL CVs to factory default values, set Manufacturer ID to 33"
 			layout="left"/>
+		<label label="" />
+		<display name="Accel/Decel Trim" />
 	</column>
 </pane>
 
