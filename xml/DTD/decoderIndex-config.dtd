@@ -1,5 +1,5 @@
 <!-- Defines XML documenting the list of available decoder definitions -->
-<!-- $Revision: 1.13 $ -->
+<!-- $Revision: 1.14 $ -->
 
 <!ELEMENT decoderIndex-config (decoderIndex)>
 <!ATTLIST decoderIndex-config>
@@ -46,6 +46,11 @@
 <!-- If only one is specified, only that single value is acceptable -->
 <!ATTLIST model lowVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
 <!ATTLIST model highVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
+<!-- Physical specifications -->
+<!ATTLIST model maxInputVolts 	CDATA #IMPLIED >  <!-- default blank means NMRA spec   -->
+<!ATTLIST model maxMotorCurrent 	CDATA #IMPLIED >  <!-- motor only   -->
+<!ATTLIST model maxTotalCurrent 	CDATA #IMPLIED >  <!-- motor plus functions   -->
+<!ATTLIST model formFactor          CDATA #IMPLIED >  <!-- mfg name for specific shape, etc -->
 
 <!ELEMENT versionCV EMPTY >
 <!-- lowVersionID, highVersionID define an inclusive range, with both endpoints included. -->
