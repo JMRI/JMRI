@@ -14,7 +14,7 @@ import junit.framework.TestSuite;
 /**
  Tests for the jmri.jmrix.lenz.XNetTurnoutManager class.
  * @author			Bob Jacobsen
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 public class XNetTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 
@@ -53,17 +53,17 @@ public class XNetTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
         // notify that somebody else changed it...
         XNetMessage m1 = new XNetMessage(4);
         m1.setElement(0, 0x42);
-        m1.setElement(1, 0x05);     // set CLOSED
-        m1.setElement(2, 0x10);
-        m1.setElement(3, 0x7b);
+        m1.setElement(1, 0x05);
+        m1.setElement(2, 0x02);
+        m1.setElement(3, 0x45);
         lnis.sendTestMessage(m1);
 
         // notify that somebody else changed it...
         XNetMessage m2 = new XNetMessage(4);
         m2.setElement(0, 0x42);
-        m2.setElement(1, 0x05);     // set CLOSED
-        m2.setElement(2, 0x12);
-        m2.setElement(3, 0x7a);
+        m2.setElement(1, 0x05);
+        m2.setElement(2, 0x04);
+        m2.setElement(3, 0x43);
         lnis.sendTestMessage(m2);
 
 
