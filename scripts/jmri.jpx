@@ -96,7 +96,7 @@
   <property category="sys" name="TestPath" value="test"/>
   <property category="sys" name="Title" value=""/>
   <property category="sys" name="TitleLabel" value=""/>
-  <property category="sys" name="Version" value="$Revision: 1.17 $"/>
+  <property category="sys" name="Version" value="$Revision: 1.18 $"/>
   <property category="sys" name="VersionLabel" value="@version"/>
   <property category="sys" name="WorkingDirectory" value="../"/>
   <property category="sys" name="max.package.levels" value="2"/>
@@ -146,9 +146,6 @@
   <file path="test/apps/tests/AllTest.java"/>
   <file path="src/resources/decoderpro.gif"/>
   <file path="src/resources/logo.gif"/>
-  <file path="src/resources/icons/smallschematics/tracksegments/circuit-empty.gif"/>
-  <file path="src/resources/icons/smallschematics/tracksegments/circuit-error.gif"/>
-  <file path="src/resources/icons/smallschematics/tracksegments/circuit-occupied.gif"/>
   <file path="src/apps/DecoderPro/DecoderPro.java"/>
   <file path="src/apps/JmriDemo/JMRIdemo.java"/>
   <file path="src/apps/LocoTools/LocoTools.java"/>
