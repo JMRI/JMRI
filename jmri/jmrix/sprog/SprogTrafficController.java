@@ -15,7 +15,7 @@ import java.util.Vector;
  * handled in an independent thread.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SprogTrafficController implements SprogInterface, Runnable {
 
@@ -89,7 +89,9 @@ public class SprogTrafficController implements SprogInterface, Runnable {
             SprogListener client = (SprogListener) v.elementAt(i);
             if (log.isDebugEnabled()) log.debug("notify client: "+client);
             try {
-              client.reply(r);
+              // skip forwarding to the last sender for now, we'll get them later
+              if (lastSender != client)
+                client.reply(r);
             }
             catch (Exception e)
             {
