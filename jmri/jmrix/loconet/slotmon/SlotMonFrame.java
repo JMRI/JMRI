@@ -8,14 +8,25 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
- * Frame provinging a command station slot manager
+ * Frame provinging a command station slot manager.
+ * <P>
+ * Slots 102 through 127 are normally not used for loco control,
+ * so are shown separately.
+ *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class SlotMonFrame extends javax.swing.JFrame {
 
-    // GUI member declarations
+    /**
+     * Controls whether not-in-use slots are shown
+     */
     javax.swing.JCheckBox 	showAllCheckBox = new javax.swing.JCheckBox();
+    /**
+     * Controls whether system slots (120-127) are shown
+     */
+    javax.swing.JCheckBox 	showSystemCheckBox = new javax.swing.JCheckBox();
+
     JButton                     estopAllButton  = new JButton("estop all");
     SlotMonDataModel		slotModel 	= new SlotMonDataModel(128,16);
     JTable			slotTable	= new JTable(slotModel);
@@ -24,16 +35,31 @@ public class SlotMonFrame extends javax.swing.JFrame {
     public SlotMonFrame() {
 
         // configure items for GUI
-        showAllCheckBox.setText("show all slots");
+        showAllCheckBox.setText("Show unused slots");
         showAllCheckBox.setVisible(true);
-        showAllCheckBox.setSelected(true);
+        showAllCheckBox.setSelected(false);
         showAllCheckBox.setToolTipText("if checked, even empty/idle slots will appear");
 
+        showSystemCheckBox.setText("Show system slots");
+        showSystemCheckBox.setVisible(true);
+        showSystemCheckBox.setSelected(false);
+        showSystemCheckBox.setToolTipText("if checked, slots reserved for system use will be shown");
 
         slotModel.configureTable(slotTable);
 
-        // add listener object so checkbox functions
-        showAllCheckBox.addActionListener(new CheckNotify(slotModel, showAllCheckBox));
+        // add listener object so checkboxes function
+        showAllCheckBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            slotModel.showAllSlots(showAllCheckBox.isSelected());
+            slotModel.fireTableDataChanged();
+            }
+        });
+        showSystemCheckBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            slotModel.showSystemSlots(showSystemCheckBox.isSelected());
+            slotModel.fireTableDataChanged();
+            }
+        });
 
         // add listener object so stop all button functions
         estopAllButton.addActionListener(new ActionListener() {
@@ -41,6 +67,10 @@ public class SlotMonFrame extends javax.swing.JFrame {
                 slotModel.estopAll();
             }
         });
+
+        // adjust model to default settings
+        slotModel.showAllSlots(showAllCheckBox.isSelected());
+        slotModel.showSystemSlots(showSystemCheckBox.isSelected());
 
         // general GUI config
         setTitle("Slot Monitor");
@@ -51,6 +81,7 @@ public class SlotMonFrame extends javax.swing.JFrame {
         pane1.setLayout(new FlowLayout());
 
         pane1.add(showAllCheckBox);
+        pane1.add(showSystemCheckBox);
         pane1.add(estopAllButton);
 
         getContentPane().add(pane1);
@@ -58,19 +89,6 @@ public class SlotMonFrame extends javax.swing.JFrame {
         pack();
         pane1.setMaximumSize(pane1.getSize());
         pack();
-    }
-
-    // inner class to handle messaging for the "show all slots" check box
-    class CheckNotify implements ActionListener {
-        private SlotMonDataModel _model;
-        javax.swing.JCheckBox _box;
-        public CheckNotify(SlotMonDataModel model, javax.swing.JCheckBox box)
-        {_model = model; _box=box;}
-        public void actionPerformed(ActionEvent ev) {
-            // checkbox action received; forward state
-            _model.showAllSlots(_box.isSelected());
-            _model.fireTableDataChanged();
-        }
     }
 
     private boolean mShown = false;
