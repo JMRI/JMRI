@@ -31,8 +31,6 @@ public class LocoMonAction 			extends AbstractAction {
 			}
 		f.show();	
 		
-		// connect to the LnTrafficController
-		LnTrafficController.instance().addLocoNetListener(~0, f);		
 	}
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoMonAction.class.getName());
