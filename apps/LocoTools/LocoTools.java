@@ -16,7 +16,7 @@ import javax.swing.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author			Bob Jacobsen
- * @version         $Revision: 1.9 $
+ * @version         $Revision: 1.10 $
  */
 public class LocoTools extends JPanel {
     public LocoTools() {
@@ -76,12 +76,15 @@ public class LocoTools extends JPanel {
         funcMenu.add(new jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlAction("Turnout Control"));
         funcMenu.add(new jmri.jmrit.powerpanel.PowerPanelAction("Power Control"));
         funcMenu.add(new jmri.jmrit.speedometer.SpeedometerAction( "Speedometer" ));
+        funcMenu.add(new jmri.jmrit.messager.MessageFrameAction( "Throttle Messages" ));
 
         JMenu locoMenu = new JMenu("LocoNet");
         menuBar.add(locoMenu);
         locoMenu.add(new jmri.jmrix.loconet.locomon.LocoMonAction("LocoNet Monitor"));
         locoMenu.add(new jmri.jmrix.loconet.slotmon.SlotMonAction("Slot Monitor"));
         locoMenu.add(new jmri.jmrix.loconet.locogen.LocoGenAction("Send Packet"));
+        locoMenu.add(new JSeparator());
+        locoMenu.add(new jmri.jmrix.loconet.almbrowser.AlmBrowserAction("Configuration Browser"));
         locoMenu.add(new JSeparator());
         locoMenu.add(new jmri.jmrix.loconet.locormi.LnMessageServerAction( "Start LocoNet Server" ));
 
@@ -109,6 +112,10 @@ public class LocoTools extends JPanel {
         pane2.add(new JLabel(" Java version "+System.getProperty("java.version","<unknown>")));
         pane1.add(pane2);
         add(pane1);
+
+        // start the test AlmImplementation for ALM 2
+        // new jmri.jmrix.loconet.Se8AlmImplementation(2, false);
+
     }
 
     // Main entry point
