@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_DSD_Diesel.xml,v 1.10 2002-05-11 03:53:11 mdavison Exp $ -->
+<!-- $Id: SoundTraxx_DSD_Diesel.xml,v 1.11 2002-06-13 17:45:55 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Robin Becker" version="6" lastUpdated="20020508"/>
 
@@ -10,7 +10,7 @@
 		<!--            corrected versionCVs -->
 		
 <decoder>
-	<family name="DSD Diesel" mfg="Throttle-Up">
+	<family name="Soundtrax DSD diesel decoders" mfg="Throttle-Up">
 		<model model="DSD Diesel" numOuts="4" numFns="8">
 			<versionCV lowVersionID="9" highVersionID="14"/>
 			<versionCV lowVersionID="21"/>

@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: NCE_D13SR.xml,v 1.10 2002-05-11 07:03:24 jacobsen Exp $ -->
+<!-- $Id: NCE_D13SR.xml,v 1.11 2002-06-13 17:45:55 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen" version="4" lastUpdated="20020509"/>
 
 	<!-- version 4 added D15, D14, DA-SR, P2K, KRS, SW9, D408 and more functions -->
 	
 <decoder>
-  <family name="D13SR Family" mfg="North Coast Engineering">
+  <family name="NCE Silent Drive decoders" mfg="North Coast Engineering">
     <model model="D15SR"  lowVersionID="32" numOuts="5" numFns="6" />
     <model model="D14SRP" lowVersionID="32" numOuts="4" numFns="6" />
     <model model="D13SR"  lowVersionID="32" numOuts="3" numFns="6" />

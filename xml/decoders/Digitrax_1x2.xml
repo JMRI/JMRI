@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_1x2.xml,v 1.14 2002-02-20 16:05:36 jacobsen Exp $ -->
+<!-- $Id: Digitrax_1x2.xml,v 1.15 2002-06-13 17:45:55 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
 					version="4" lastUpdated="20020216"/>
@@ -8,7 +8,7 @@
 		<!-- Version 4 - added wire colors -->
 		
 <decoder>
-	<family name="Digitrax 1x2" mfg="Digitrax" lowVersionID="240" highVersionID="242">
+	<family name="Digitrax FX decoders with BEMF" mfg="Digitrax" lowVersionID="240" highVersionID="242">
 		<model model="DH142" numOuts="4" numFns="2">
 			<output name="4" label="Violet"/> </model>
 		<model model="DN142" numOuts="4" numFns="2">

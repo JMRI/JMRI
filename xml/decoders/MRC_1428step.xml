@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: MRC_1428step.xml,v 1.1 2002-04-07 23:43:58 jacobsen Exp $ -->
+<!-- $Id: MRC_1428step.xml,v 1.2 2002-06-13 17:45:55 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen" version="1" lastUpdated="20020405"/>
 
 <decoder>
-	<family name="MRC 14/28 step" mfg="MRC">
+	<family name="MRC 14/28 step decoders" mfg="MRC">
 		<model model="AD310" />
 	</family>
 

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: TCS_Tx.xml,v 1.1 2002-03-12 05:36:06 jacobsen Exp $ -->
+<!-- $Id: TCS_Tx.xml,v 1.2 2002-06-13 17:45:56 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
 					version="1" lastUpdated="200200302"/>
@@ -8,7 +8,7 @@
 		<!-- Version 1 - made from NMRA & Digitrax examples -->
 		
 <decoder>
-	<family name="TCS Tx" mfg="Train Control Systems" lowVersionID="16">
+	<family name="TCS Tx series decoders" mfg="Train Control Systems" lowVersionID="16">
 		<model model="T1" numOuts="2" numFns="2" />
 		<model model="T2" numOuts="5" numFns="5">
 			<output name="4" label="Violet"/> </model>

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_120.xml,v 1.2 2002-02-20 16:05:36 jacobsen Exp $ -->
+<!-- $Id: Digitrax_120.xml,v 1.3 2002-06-13 17:45:55 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
 					version="3" lastUpdated="20020215"/>
@@ -12,7 +12,7 @@
 <!-- Version 3 - set ops mode programming to no -->
 
 <decoder>
-	<family name="Digitrax 120" mfg="Digitrax" lowVersionID="33" highVersionID="45">
+	<family name="Digitrax early decoders" mfg="Digitrax" lowVersionID="33" highVersionID="45">
 		<model model="DH120" numOuts="2" numFns="2"/>
 	</family>
 

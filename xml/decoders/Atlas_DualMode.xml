@@ -1,12 +1,11 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Atlas_DualMode.xml,v 1.8 2002-01-13 20:33:33 jacobsen Exp $ -->
+<!-- $Id: Atlas_DualMode.xml,v 1.9 2002-06-13 17:45:55 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen" version="2" lastUpdated="20020111"/>
 
 <decoder>
-	<family name="Atlas" mfg="Atlas">
-		<model model="Dual Mode" numOuts="2" numFns="0" />
+	<family name="Atlas Dual Mode" mfg="Atlas">
 	</family>
 
 	<programming direct="yes" paged="yes" 
@@ -139,14 +138,6 @@
 	<!-- Define the fixed Function-Output mapping -->
 	<constant label="FL(f) controls output 1" minOut="1" default="1" /> 
 	<constant label="FL(r) controls output 2" minOut="2" default="1" /> 
-	<constant label="F1 controls output 3" minOut="3" minFn="1" default="1" /> 
-	<constant label="F2 controls output 4" minOut="4" minFn="2" default="1" /> 
-	<constant label="F3 controls output 5" minOut="5" minFn="3" default="1" /> 
-	<constant label="F4 controls output 6" minOut="6" minFn="4" default="1" /> 
-	<constant label="F5 controls output 7" minOut="7" minFn="5" default="1" /> 
-	<constant label="F6 controls output 8" minOut="8" minFn="6" default="1" /> 
-	<constant label="F7 controls output 9" minOut="9" minFn="7" default="1" /> 
-	<constant label="F8 controls output 10" minOut="10" minFn="8" default="1" /> 
 	
 	</variables>
 </decoder>

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Lenz_LE077XF.xml,v 1.7 2002-04-08 03:24:48 jacobsen Exp $ -->
+<!-- $Id: Lenz_LE077XF.xml,v 1.8 2002-06-13 17:45:55 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Joe Ellis filker@mindspring.com"
 			version="3" lastUpdated="20020405" />
@@ -10,7 +10,7 @@
 <!-- These are the version 4.5 decoders, with "precision glide" and "XF" -->
 
 <decoder>
-	<family name="Lenz LE077XF" mfg="Lenz" lowVersionID="44" highVersionID="45">
+	<family name="Lenz XF, precision glide decoders" mfg="Lenz" lowVersionID="44" highVersionID="45">
 		<model model="LE062XF" numOuts="2" >
 			<output name="1" label="A - White" />
 			<output name="2" label="B - Yellow" /></model>

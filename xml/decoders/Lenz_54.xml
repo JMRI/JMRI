@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Lenz_54.xml,v 1.1 2002-04-08 03:24:48 jacobsen Exp $ -->
+<!-- $Id: Lenz_54.xml,v 1.2 2002-06-13 17:45:55 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen jake@physics.berkeley.edu"
 			version="1" lastUpdated="20020323" />
@@ -9,7 +9,7 @@
 <!-- and "XF & special" -->
 
 <decoder>
-	<family name="Lenz 5.4" mfg="Lenz" lowVersionID="54">
+	<family name="Lenz 5th gen BEMF decoders" mfg="Lenz" lowVersionID="54">
 		<model model="LE010XF" numOuts="2" >
 			<output name="1" label="A - White" />
 			<output name="2" label="B - Yellow" /></model>
