@@ -1,0 +1,16 @@
+This is the README file for the jmrix.Apps package.
+
+The jmrix Java package defines implementations for the JMRI interfaces. 
+
+The jmrix.Apps package contains directories for various applications.  This
+structuring is intended to reduce dependencies between and within the jmri.*
+and jmrix.* components.
+
+Defined applications:
+
+	LocoMonAppl:  A standalone LocoNet monitor program.
+	
+	
+
+	
+	
