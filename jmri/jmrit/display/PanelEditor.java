@@ -37,7 +37,7 @@ import jmri.jmrit.catalog.NamedIcon;
  *
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class PanelEditor extends JFrame {
@@ -66,6 +66,8 @@ public class PanelEditor extends JFrame {
     NamedIcon closedIconR;
     JButton thrownIconButtonR;
     NamedIcon thrownIconR;
+    NamedIcon inconsistentR;
+    NamedIcon unknownR;
 
     JButton turnoutAddL = new JButton("Add turnout:");
     JTextField nextTurnoutL = new JTextField(5);
@@ -168,6 +170,11 @@ public class PanelEditor extends JFrame {
             panel.add(turnoutAddR);
             TurnoutIcon to = new TurnoutIcon();
 
+            inconsistentR = new NamedIcon("resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif",
+                            "resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif");
+            unknownR = new NamedIcon("resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif",
+                            "resources/icons/smallschematics/tracksegments/os-rightthand-west-unknown.gif");
+
             closedIconR = new NamedIcon("resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif",
                             "resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif");
             closedIconButtonR = new JButton(closedIconR);
@@ -208,6 +215,11 @@ public class PanelEditor extends JFrame {
             panel.setLayout(new FlowLayout());
             panel.add(turnoutAddL);
             TurnoutIcon to = new TurnoutIcon();
+
+            NamedIcon inconsistentL = new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif",
+                            "resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif");
+            NamedIcon unknownL = new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif",
+                            "resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif");
 
             closedIconL = new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif",
                             "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif");
@@ -382,8 +394,11 @@ public class PanelEditor extends JFrame {
      */
     void addTurnoutR() {
         TurnoutIcon l = new TurnoutIcon();
-        if (closedIconR!=null) l.setClosedIcon(closedIconR);
-        if (thrownIconR!=null) l.setThrownIcon(thrownIconR);
+        if (closedIconR!=null) l.setClosedIcon(new NamedIcon(closedIconR));
+        if (thrownIconR!=null) l.setThrownIcon(new NamedIcon(thrownIconR));
+        if (inconsistentR!=null) l.setInconsistentIcon(new NamedIcon(inconsistentR));
+        if (unknownR!=null) l.setUnknownIcon(new NamedIcon(unknownR));
+
         l.setTurnout(null, nextTurnoutR.getText());
 
         log.debug("turnout height, width: "+l.getHeight()+" "+l.getWidth());
@@ -392,8 +407,8 @@ public class PanelEditor extends JFrame {
     }
     void addTurnoutL() {
         TurnoutIcon l = new TurnoutIcon();
-        if (closedIconL!=null) l.setClosedIcon(closedIconL);
-        if (thrownIconL!=null) l.setThrownIcon(thrownIconL);
+        if (closedIconL!=null) l.setClosedIcon(new NamedIcon(closedIconL));
+        if (thrownIconL!=null) l.setThrownIcon(new NamedIcon(thrownIconL));
         l.setTurnout(null, nextTurnoutL.getText());
 
         log.debug("turnout height, width: "+l.getHeight()+" "+l.getWidth());
@@ -413,8 +428,8 @@ public class PanelEditor extends JFrame {
      */
     void addSensor() {
         SensorIcon l = new SensorIcon();
-        if (activeIcon!=null) l.setActiveIcon(activeIcon);
-        if (inactiveIcon!=null) l.setInactiveIcon(inactiveIcon);
+        if (activeIcon!=null) l.setActiveIcon(new NamedIcon(activeIcon));
+        if (inactiveIcon!=null) l.setInactiveIcon(new NamedIcon(inactiveIcon));
         l.setSensor(null, nextSensor.getText());
         setNextLocation(l);
         putSensor(l);
@@ -446,7 +461,7 @@ public class PanelEditor extends JFrame {
      * Add an icon to the target
      */
     void addIcon() {
-        PositionableLabel l = new PositionableLabel(labelIcon );
+        PositionableLabel l = new PositionableLabel(new NamedIcon(labelIcon) );
         setNextLocation(l);
         putIcon(l);
     }
