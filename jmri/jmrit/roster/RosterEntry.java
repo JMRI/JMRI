@@ -25,7 +25,7 @@ import org.jdom.Element;
  * this entry.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  * @see jmri.jmrit.roster.LocoFile
  *
  */
@@ -246,18 +246,18 @@ public class RosterEntry {
         try {
             String s =
                  "\n   ID:                "+_id
-                +"\n   Filename:          "+(_fileName!=null?_fileName:"<null>")
-                +"\n   Road name:         "+_roadName
-                +"\n   Road number:       "+_roadNumber
-                +"\n   Manufacturer:      "+_mfg
-                +"\n   Owner:             "+_owner
-                +"\n   Model:             "+_model
-                +"\n   DCC Address:       "+_dccAddress
-                +"\n   Comment:           "+_comment
-                +"\n   Decoder Model:     "+_decoderModel
-                +"\n   Decoder Family:    "+_decoderFamily
-                +"\n   Decoder Comment:   "+_decoderComment
-                +"\n";
+                +"\n   Filename:          "+(_fileName!=null?_fileName:"<null>");
+            if (!(_roadName.equals("")))    s+="\n   Road name:         "+_roadName;
+            if (!(_roadNumber.equals("")))  s+="\n   Road number:       "+_roadNumber;
+            if (!(_mfg.equals("")))         s+="\n   Manufacturer:      "+_mfg;
+            if (!(_owner.equals("")))       s+="\n   Owner:             "+_owner;
+            if (!(_model.equals("")))       s+="\n   Model:             "+_model;
+            if (!(_dccAddress.equals("")))  s+="\n   DCC Address:       "+_dccAddress;
+            if (!(_comment.equals("")))     s+="\n   Comment:           "+_comment;
+            if (!(_decoderModel.equals(""))) s+="\n   Decoder Model:     "+_decoderModel;
+            if (!(_decoderFamily.equals(""))) s+="\n   Decoder Family:    "+_decoderFamily;
+            if (!(_decoderComment.equals(""))) s+="\n   Decoder Comment:   "+_decoderComment;
+            s+="\n";
             w.write(s, 0, s.length());
         } catch (IOException e) {
             log.error("Error printing RosterEntry: "+e);
