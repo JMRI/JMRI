@@ -17,8 +17,8 @@ import apps.JmriDemo.JmriDemoConfigAction;
  * the configuration file.  Note that this is just the name, not the path;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
- * @author			Bob Jacobsen   Copyright 2003
- * @version         $Revision: 1.1 $
+ * @author	Bob Jacobsen   Copyright 2003
+ * @version     $Revision: 1.2 $
  */
 public class CornwallRR extends JPanel {
     public CornwallRR() {
