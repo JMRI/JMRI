@@ -32,7 +32,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author  Bob Jacobsen   Copyright (C) 2003
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class SE8Frame extends JFrame implements LocoNetListener {
 
@@ -58,7 +58,7 @@ public class SE8Frame extends JFrame implements LocoNetListener {
         appendLine(panel2);
             panel2 = new JPanel();
             panel2.setLayout(new FlowLayout());
-            panel2.add(new JLabel("Cables 1-4 are "));
+            panel2.add(new JLabel("Cables 5-8 are "));
             panel2.add(section5to8mode);
         appendLine(panel2);
             panel2 = new JPanel();
@@ -112,6 +112,7 @@ public class SE8Frame extends JFrame implements LocoNetListener {
         // and prep for display
         pack();
         addrField.setText("1");
+        show();
     }
 
     /**
