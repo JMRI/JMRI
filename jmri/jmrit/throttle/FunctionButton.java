@@ -30,7 +30,7 @@ public class FunctionButton extends JToggleButton implements ActionListener
     private int identity; // F0, F1, etc?
     private boolean isOn;
     private boolean isLockable = true;
-	
+
 
     private JPopupMenu popup;
 
@@ -53,7 +53,7 @@ public class FunctionButton extends JToggleButton implements ActionListener
         this.setMargin(new Insets(2,2,2,2));
     }
 
-	
+
     /**
      * Set the function number this button will operate
      * @param id An integer from 0 to 9.
@@ -112,7 +112,7 @@ public class FunctionButton extends JToggleButton implements ActionListener
     public void actionPerformed(ActionEvent e)
     {
         FunctionButtonPropertyEditor editor =
-                InstanceManager.throttleFrameManagerInstance().getFunctionButtonEditor();
+                ThrottleFrameManager.instance().getFunctionButtonEditor();
         editor.setFunctionButton(this);
         editor.setLocation(this.getLocationOnScreen());
         editor.setVisible(true);
