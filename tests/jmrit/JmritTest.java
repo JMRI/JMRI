@@ -31,6 +31,10 @@ public class JmritTest extends TestCase {
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite("jmri.jmrit.JmritTest");   // no tests in this class itself
+		suite.addTest(jmri.jmrit.AbstractIdentifyTest.suite());
+		suite.addTest(jmri.jmrit.decoderdefn.DecoderDefnTest.suite());
+		suite.addTest(jmri.jmrit.roster.RosterTest.suite());
+		suite.addTest(jmri.jmrit.XmlFileTest.suite());
 		suite.addTest(jmri.jmrit.symbolicprog.SymbolicProgTest.suite());
 		suite.addTest(jmri.jmrit.powerpanel.PowerPanelTest.suite());
 		return suite;
