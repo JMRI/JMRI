@@ -12,7 +12,7 @@ import javax.swing.JTextField;
  * via a LnTcpDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
@@ -37,19 +37,19 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
     public JTextField port;
     String portNumber ="";
 
-    public String name() { return "LocoNetOverTcp server"; }
+    public String name() { return "LocoNetOverTcp LbServer"; }
 
     public void loadDetails(JPanel details) {
         JPanel temp = new JPanel();
         details.setLayout(new BoxLayout(details, BoxLayout.Y_AXIS));
         temp.setLayout(new BoxLayout(temp, BoxLayout.X_AXIS));
-        temp.add(new JLabel("Server hostname:"));
+        temp.add(new JLabel("Server Host Name:"));
         host = new JTextField(hostName);
         temp.add(host);
         details.add(temp);
         temp = new JPanel();
         temp.setLayout(new BoxLayout(temp, BoxLayout.X_AXIS));
-        temp.add(new JLabel("Port number:"));
+        temp.add(new JLabel("TCP Port Number:"));
         port = new JTextField(portNumber);
         temp.add(port);
         details.add(temp);
