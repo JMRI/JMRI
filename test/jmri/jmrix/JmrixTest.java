@@ -2,17 +2,14 @@
 
 package jmri.jmrix;
 
-import java.io.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.jdom.*;
-import org.jdom.output.*;
 
 /**
  * Set of tests for the jmri.jmrix package
  * @author			Bob Jacobsen
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class JmrixTest extends TestCase {
 
