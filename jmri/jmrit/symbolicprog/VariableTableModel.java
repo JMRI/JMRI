@@ -19,7 +19,7 @@ import org.jdom.Element;
  * Table data model for display of variables in symbolic programmer.
  * Also responsible for loading from the XML file...
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version      $Revision: 1.12 $
+ * @version      $Revision: 1.13 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -297,7 +297,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
                                        _status, item,
                                        highCV, factor, offset);
         } else {
-            log.error("Did not find a valid variable type");
+            reportBogus();
             return;
         }
 
@@ -316,6 +316,10 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             _cvModel.getCvByNumber(CV).setState(VariableValue.FROMFILE);  // correct for transition to "edited"
         }
 
+    }
+
+    void reportBogus() {
+        log.error("Did not find a valid variable type");
     }
 
     /**
