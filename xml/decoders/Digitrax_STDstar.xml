@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_STDstar.xml,v 1.2 2002-08-11 16:41:50 jacobsen Exp $ -->
+<!-- $Id: Digitrax_STDstar.xml,v 1.3 2002-08-11 16:44:08 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
 					version="1" lastUpdated="20020803"/>
@@ -14,7 +14,6 @@
 <decoder>
 	<family name="Basic STD*" mfg="Digitrax">
 		<model model="DN121" numOuts="2" numFns="2"/>
-		<model model="DN122" numOuts="2" numFns="2"/>
 		<model model="DN93" numOuts="3" numFns="4"/>
 	</family>
 
