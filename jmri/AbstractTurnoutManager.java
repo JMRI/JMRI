@@ -13,7 +13,7 @@ import com.sun.java.util.collections.Collections;
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public abstract class AbstractTurnoutManager
     implements TurnoutManager, java.beans.PropertyChangeListener {
@@ -78,6 +78,7 @@ public abstract class AbstractTurnoutManager
         for (i=0; i<arr.length; i++) out.add(arr[i]);
         return out;
     }
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractTurnoutManager.class.getName());
 }
 
