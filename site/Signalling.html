@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: Signalling.html,v 1.4 2003-11-07 22:13:11 jacobsen Exp $ -->
+<!-- $Id: Signalling.html,v 1.5 2004-02-20 04:32:39 jacobsen Exp $ -->
 <html>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -80,7 +80,7 @@ and the pages on the
 <A id="logic"><h3>Simple Signal Logic</h3></a>
 <A href="images/SigAdd.gif"><IMG SRC="images/SigAdd.gif" ALIGN=RIGHT WIDTH="220" HEIGHT="132" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
 
-Much of signalling can be boiled down to "a signal goes red when a train
+Much of basic signalling can be boiled down to "a signal goes red when a train
 can't safely enter the block it protects; it goes yellow when the following 
 block can't be entered". Although that's a simplication, it can serve
 as a powerful starting point for signalling logic.
@@ -126,7 +126,12 @@ and it's kin are meant to make it
 easy to write signal logic; a varient of these was used
 for the Cornwall Railroad.
 <P>
-More documentation on these is clearly needed...
+Although these require writing code, instead of just filling
+out a GUI form, the program handles all of the details of reading
+status changes from the layout, writing desired aspect changes
+back to the layout, and even the details of "which outputs do I have
+to set to get signal Apple Siding East to show yellow?".  You can
+concentrate on just the signal logic in the code you write.
 <A id="widgets"><h3>Toolkit</h3></a>
 The entire
 <A HREF="http://jmri.sourceforge.net/Technical/doc/">JMRI toolkit</A>
