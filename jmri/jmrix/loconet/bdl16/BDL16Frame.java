@@ -36,7 +36,7 @@ import javax.swing.JToggleButton;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class BDL16Frame extends JFrame implements LocoNetListener {
 
@@ -284,26 +284,26 @@ public class BDL16Frame extends JFrame implements LocoNetListener {
     JTextField addrField = new JTextField(4);
 
 
-    JCheckBox commonrail            = new JCheckBox("Common rail wiring");  // opsw 01
-    JCheckBox polarity              = new JCheckBox("Reverse polarity for detection"); // opsw 03
-    JCheckBox transpond             = new JCheckBox("Enable transponding"); // opsw 05
-    JCheckBox rx4connected1         = new JCheckBox("Reserved (Unset if RX4 connected)"); // opsw 06
-    JCheckBox rx4connected2         = new JCheckBox("Reserved (Unset if RX4 connected)"); // opsw 07
-    JCheckBox forceoccupied         = new JCheckBox("Show unoccupied when power off");  // opsw 09
-    JCheckBox section16qualpower    = new JCheckBox("Section 16 used to sense power");  // opsw 10
-    JCheckBox nomaster              = new JCheckBox("Do not allow BDL16 to be LocoNet master");  // opsw 11
-    JCheckBox noterminate           = new JCheckBox("Do not allow BDL16 to terminate LocoNet");  // opsw 12
-    JCheckBox delayhalfsecond       = new JCheckBox("Delay only 1/2 second at power up");  // opsw 13
-    JCheckBox highthreshold         = new JCheckBox("High threshold sense (10kohms)");  // opsw 19
-    JCheckBox drivefromswitch       = new JCheckBox("Drive LEDs from switch commands, not occupancy");  // opsw 25
-    JCheckBox decodefromloconet     = new JCheckBox("Decode switch commands from LocoNet");  // opsw 26
-    JCheckBox reserved36            = new JCheckBox("OpSw 36 (Reserved)");  // opsw 36
-    JCheckBox longdelay             = new JCheckBox("Long detection delay (BDL168 only)");  // opsw 37
-    JCheckBox extralongdelay        = new JCheckBox("Extra long detection delay (BDL168 only)OpSw 38 (Reserved)");  // opsw 38
-    JCheckBox transpondtrack        = new JCheckBox("Transponder Tracking (BDL168 only)");  // opsw 39
-    JCheckBox antichatfilt          = new JCheckBox("Anti-chatter filtering (BDL168 only)");  // opsw 39
-    JCheckBox antichatsens          = new JCheckBox("Anti-chatter filter sensitivity (BDL168 only)");  // opsw 39
-    JCheckBox setdefault            = new JCheckBox("Restore factory default, including address");  // opsw 40
+    JCheckBox commonrail            = new JCheckBox("OpSw 01: Common rail wiring");  // opsw 01
+    JCheckBox polarity              = new JCheckBox("OpSw 03: Reverse polarity for detection"); // opsw 03
+    JCheckBox transpond             = new JCheckBox("OpSw 05: Enable transponding"); // opsw 05
+    JCheckBox rx4connected1         = new JCheckBox("OpSw 06: Reserved (Unset if RX4 connected)"); // opsw 06
+    JCheckBox rx4connected2         = new JCheckBox("OpSw 07: Reserved (Unset if RX4 connected)"); // opsw 07
+    JCheckBox forceoccupied         = new JCheckBox("OpSw 09: Show unoccupied when power off");  // opsw 09
+    JCheckBox section16qualpower    = new JCheckBox("OpSw 10: Section 16 used to sense power");  // opsw 10
+    JCheckBox nomaster              = new JCheckBox("OpSw 11: Do not allow BDL16 to be LocoNet master");  // opsw 11
+    JCheckBox noterminate           = new JCheckBox("OpSw 12: Do not allow BDL16 to terminate LocoNet");  // opsw 12
+    JCheckBox delayhalfsecond       = new JCheckBox("OpSw 13: Delay only 1/2 second at power up");  // opsw 13
+    JCheckBox highthreshold         = new JCheckBox("OpSw 19: High threshold sense (10kohms)");  // opsw 19
+    JCheckBox drivefromswitch       = new JCheckBox("OpSw 25: Drive LEDs from switch commands, not occupancy");  // opsw 25
+    JCheckBox decodefromloconet     = new JCheckBox("OpSw 26: Decode switch commands from LocoNet");  // opsw 26
+    JCheckBox reserved36            = new JCheckBox("OpSw 36: Reserved");  // opsw 36
+    JCheckBox longdelay             = new JCheckBox("OpSw 37: Long detection delay (BDL168 only)");  // opsw 37
+    JCheckBox extralongdelay        = new JCheckBox("OpSw 38: Extra long detection delay (BDL168 only)");  // opsw 38
+    JCheckBox transpondtrack        = new JCheckBox("OpSw 39: Transponder Tracking (BDL168 only)");  // opsw 39
+    JCheckBox antichatfilt          = new JCheckBox("OpSw 43: Anti-chatter filtering (BDL168 only)");  // opsw 43
+    JCheckBox antichatsens          = new JCheckBox("OpSw 44: Anti-chatter filter sensitivity (BDL168 only)");  // opsw 44
+    JCheckBox setdefault            = new JCheckBox("OpSw 40: Restore factory default, including address");  // opsw 40
 
     JLabel status = new JLabel("The BDL16 should be in normal mode (Don't push the buttons on the BDL16)");
 
