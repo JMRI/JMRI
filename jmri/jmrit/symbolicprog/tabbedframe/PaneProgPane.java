@@ -37,7 +37,7 @@ import com.sun.java.util.collections.List;   // resolve ambiguity with package-l
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001; D Miller Copyright 2003
- * @version			$Revision: 1.29 $
+ * @version			$Revision: 1.30 $
  */
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
@@ -767,8 +767,9 @@ public class PaneProgPane extends javax.swing.JPanel
         if (i>= 0) {
             rep = getRep(i, format);
             rep.setMaximumSize(rep.getPreferredSize());
-            // set tooltip if specified
-            if ( (attr = var.getAttribute("tooltip")) != null && attr.getValue() != null)
+            // set tooltip if specified here & not overridden by defn in Variable
+            if ( (attr = var.getAttribute("tooltip")) != null && attr.getValue() != null
+                && rep.getToolTipText()==null)
                 rep.setToolTipText(attr.getValue());
         }
         return rep;

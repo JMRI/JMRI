@@ -19,7 +19,7 @@ import org.jdom.Element;
  * Table data model for display of variables in symbolic programmer.
  * Also responsible for loading from the XML file...
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version      $Revision: 1.14 $
+ * @version      $Revision: 1.15 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -302,6 +302,9 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         }
 
         // back to general processing
+        // add tooltip text if present
+        if ( (a = e.getAttribute("tooltip")) != null)
+            v.setTooltipText(a.getValue());
 
         // record new variable, update state, hook up listeners
         rowVector.addElement(v);
