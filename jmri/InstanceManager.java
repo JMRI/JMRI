@@ -12,7 +12,7 @@ package jmri;
  * non-system-specific code.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 public class InstanceManager {
 
@@ -45,6 +45,7 @@ public class InstanceManager {
 
     private InstanceManager() {
         turnoutManager = new jmri.managers.ProxyTurnoutManager();
+        sensorManager = new jmri.managers.ProxySensorManager();
     }
 
     /**
@@ -57,7 +58,7 @@ public class InstanceManager {
     static public void setPowerManager(PowerManager p) {
         instance().addPowerManager(p);
     }
-    public void addPowerManager(PowerManager p) {
+    protected void addPowerManager(PowerManager p) {
         if (p!=powerManager && powerManager!=null && log.isDebugEnabled()) log.debug("PowerManager instance is being replaced: "+p);
         if (p!=powerManager && powerManager==null && log.isDebugEnabled()) log.debug("PowerManager instance is being installed: "+p);
         powerManager = p;
@@ -67,7 +68,7 @@ public class InstanceManager {
     static public void setProgrammerManager(ProgrammerManager p) {
         instance().addProgrammerManager(p);
     }
-    public void addProgrammerManager(ProgrammerManager p) {
+    protected void addProgrammerManager(ProgrammerManager p) {
         if (p!=programmerManager && programmerManager!=null && log.isDebugEnabled()) log.debug("ProgrammerManager instance is being replaced: "+p);
         if (p!=programmerManager && programmerManager==null && log.isDebugEnabled()) log.debug("ProgrammerManager instance is being installed: "+p);
         programmerManager = p;
@@ -77,28 +78,23 @@ public class InstanceManager {
     static public void setSensorManager(SensorManager p) {
         instance().addSensorManager(p);
     }
-    public void addSensorManager(SensorManager p) {
-        if (p!=sensorManager && sensorManager!=null && log.isDebugEnabled()) log.debug("SensorManager instance is being replaced: "+p);
-        if (p!=sensorManager && sensorManager==null && log.isDebugEnabled()) log.debug("SensorManager instance is being installed: "+p);
-        sensorManager = p;
+    protected void addSensorManager(SensorManager p) {
+        ((jmri.managers.AbstractProxyManager)instance().sensorManager).addManager(p);
     }
 
     private TurnoutManager turnoutManager = null;
     static public void setTurnoutManager(TurnoutManager p) {
         instance().addTurnoutManager(p);
     }
-    public void addTurnoutManager(TurnoutManager p) {
-        ((jmri.managers.ProxyTurnoutManager)instance().turnoutManager).addManager(p);
-        // if (p!=turnoutManager && turnoutManager!=null && log.isDebugEnabled()) log.debug("TurnoutManager instance is being replaced: "+p);
-        // if (p!=turnoutManager && turnoutManager==null && log.isDebugEnabled()) log.debug("TurnoutManager instance is being installed: "+p);
-        // turnoutManager = p;
+    protected void addTurnoutManager(TurnoutManager p) {
+        ((jmri.managers.AbstractProxyManager)instance().turnoutManager).addManager(p);
     }
 
     private ConfigureManager configureManager = null;
     static public void setConfigureManager(ConfigureManager p) {
         instance().addConfigureManager(p);
     }
-    public void addConfigureManager(ConfigureManager p) {
+    protected void addConfigureManager(ConfigureManager p) {
         if (p!=configureManager && configureManager!=null && log.isDebugEnabled()) log.debug("ConfigureManager instance is being replaced: "+p);
         if (p!=configureManager && configureManager==null && log.isDebugEnabled()) log.debug("ConfigureManager instance is being installed: "+p);
         configureManager = p;
@@ -108,7 +104,7 @@ public class InstanceManager {
     static public void setThrottleManager(ThrottleManager p) {
         instance().addThrottleManager(p);
     }
-    public void addThrottleManager(ThrottleManager p) {
+    protected void addThrottleManager(ThrottleManager p) {
         if (p!=throttleManager && throttleManager!=null && log.isDebugEnabled()) log.debug("ThrottleManager instance is being replaced: "+p);
         if (p!=throttleManager && throttleManager==null && log.isDebugEnabled()) log.debug("ThrottleManager instance is being installed: "+p);
         throttleManager = p;
@@ -118,7 +114,7 @@ public class InstanceManager {
     static public void setSignalHeadManager(SignalHeadManager p) {
         instance().addSignalHeadManager(p);
     }
-    public void addSignalHeadManager(SignalHeadManager p) {
+    protected void addSignalHeadManager(SignalHeadManager p) {
         if (p!=signalHeadManager && signalHeadManager!=null && log.isDebugEnabled()) log.debug("SignalHeadManager instance is being replaced: "+p);
         if (p!=signalHeadManager && signalHeadManager==null && log.isDebugEnabled()) log.debug("SignalHeadManager instance is being installed: "+p);
         signalHeadManager = p;
@@ -128,7 +124,7 @@ public class InstanceManager {
     static public void setCommandStation(CommandStation p) {
         instance().addCommandStation(p);
     }
-    public void addCommandStation(CommandStation p) {
+    protected void addCommandStation(CommandStation p) {
         if (p!=commandStation && commandStation!=null && log.isDebugEnabled()) log.debug("CommandStation instance is being replaced: "+p);
         if (p!=commandStation && commandStation==null && log.isDebugEnabled()) log.debug("CommandStation instance is being installed: "+p);
         commandStation = p;
