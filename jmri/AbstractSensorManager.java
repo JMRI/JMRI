@@ -11,7 +11,7 @@ import com.sun.java.util.collections.List;
 /**
  * Abstract base implementation of the SensorManager interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public abstract class AbstractSensorManager implements SensorManager{
 
@@ -28,6 +28,26 @@ public abstract class AbstractSensorManager implements SensorManager{
     // implemented methods
     protected Hashtable _tsys = new Hashtable();   // stores known Sensor instances by system name
     protected Hashtable _tuser = new Hashtable();   // stores known Sensor instances by user name
+
+    /**
+     * Locate via user name, then system name if needed.
+     * If that fails, create a new sensor using this as a
+     * default name.
+     *
+     * @param name
+     * @return Never null under normal circumstances
+     */
+    public Sensor getSensor(String name) {
+        Sensor t = getByUserName(name);
+        if (t!=null) return t;
+
+        t = getBySystemName(name);
+        if (t!=null) return t;
+
+        // did not exist under either name; create via a default
+        // of either a valid system name, or a number that can create one
+        return newSensor(null, name);
+    }
 
     public Sensor getBySystemName(String key) {
         return (Sensor)_tsys.get(key);
