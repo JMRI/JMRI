@@ -12,7 +12,7 @@ import jmri.jmrit.display.*;
 /**
  * Frame providing access to a speedometer
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  *
  * Adapted for metric system - S.K. Bosch
  *
@@ -292,7 +292,7 @@ public class SpeedometerFrame extends javax.swing.JFrame {
                             if (log.isDebugEnabled()) log.debug("set stop "+stopTime1);
                             // calculate and show speed
                             double secs = (stopTime1-startTime)/1000.;
-                            double feet = Integer.parseInt(distance1.getText());
+                            double feet = Double.parseDouble(distance1.getText());
                             double speed;
                             if (dim == false) {
                               speed = (feet/5280.)*(3600./secs);
@@ -337,7 +337,7 @@ public class SpeedometerFrame extends javax.swing.JFrame {
                             if (log.isDebugEnabled()) log.debug("set stop "+stopTime2);
                             // calculate and show speed
                             double secs = (stopTime2-startTime)/1000.;
-                            double feet = Integer.parseInt(distance2.getText());
+                            double feet = Double.parseDouble(distance2.getText());
                             double speed;
                             if (dim == false) {
                               speed = (feet/5280.)*(3600./secs);
