@@ -10,13 +10,12 @@ import jmri.*;
 import jmri.jmrit.display.*;
 
 /**
- * Frame providing access to a speedometer.
- * <P>
- * The logic is actually here, so that this mixes the speedometer's model
- * and presentation; that should be improved.
- *
+ * Frame providing access to a speedometer
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
+ *
+ * Adapted for metric system - S.K. Bosch
+ *
  */
 public class SpeedometerFrame extends javax.swing.JFrame {
 
@@ -39,7 +38,14 @@ public class SpeedometerFrame extends javax.swing.JFrame {
     JTextField distance1 = new JTextField(5);
     JTextField distance2 = new JTextField(5);
 
+    JButton dimButton = new JButton("");   // content will be set to English during startup
     JButton startButton = new JButton("Start");
+
+    JLabel text1 = new JLabel("Distance 1 (scale feet):");
+    JLabel text2 = new JLabel("Distance 2 (scale feet):");
+    JLabel text3 = new JLabel("Speed 1 (scale MPH):");
+    JLabel text4 = new JLabel("Speed 2 (scale MPH):");
+
     JButton clearButton = new JButton("Clear");
 
     JLabel result1 = new JLabel(blank);
@@ -110,29 +116,34 @@ public class SpeedometerFrame extends javax.swing.JFrame {
 
         JPanel pane4 = new JPanel();
         pane4.setLayout(new FlowLayout());
-        pane4.add(new JLabel("Distance 1 (scale feet):"));
+        pane4.add(text1);
         pane4.add(distance1);
         getContentPane().add(pane4);
 
         JPanel pane5 = new JPanel();
         pane5.setLayout(new FlowLayout());
-        pane5.add(new JLabel("Distance 2 (scale feet):"));
+        pane5.add(text2);
         pane5.add(distance2);
         getContentPane().add(pane5);
 
-        getContentPane().add(startButton);
-        getContentPane().add(clearButton);
+        JPanel buttons = new JPanel();
+        buttons.add(dimButton);
+        dimButton.setToolTipText("Use this to choose between English and Metric");
+        buttons.add(startButton);
+        buttons.add(clearButton);
+        getContentPane().add(buttons);
+
         clearButton.setVisible(false);
 
         // see if there's a sensor manager, if not disable
         if (null == InstanceManager.sensorManagerInstance()) {
-            startButton.setEnabled(false);
-            startButton.setToolTipText("Sensors are not supported with this DCC connection");
+           startButton.setEnabled(false);
+           startButton.setToolTipText("Sensors are not supported with this DCC connection");
         }
 
         JPanel pane6 = new JPanel();
         pane6.setLayout(new FlowLayout());
-        pane6.add(new JLabel("Timer1 speed (scale MPH):"));
+        pane6.add(text3);
         pane6.add(result1);
         pane6.add(new JLabel("  Time (seconds):"));
         pane6.add(time1);
@@ -140,14 +151,22 @@ public class SpeedometerFrame extends javax.swing.JFrame {
 
         JPanel pane7 = new JPanel();
         pane7.setLayout(new FlowLayout());
-        pane7.add(new JLabel("Timer2 speed (scale MPH):"));
+        pane7.add(text4);
         pane7.add(result2);
         pane7.add(new JLabel("  Time (seconds):"));
         pane7.add(time2);
         getContentPane().add(pane7);
 
+        // set the units consistently
+        dim();
 
         // add the actions to the config button
+        dimButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    dim();
+                }
+            });
+
         startButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     setup();
@@ -187,6 +206,32 @@ public class SpeedometerFrame extends javax.swing.JFrame {
     long startTime = 0;
     long stopTime1 = 0;
     long stopTime2 = 0;
+
+    /**
+     * "Distance Is Metric": If true, metric distances are being used
+     */
+    boolean dim;
+
+    // establish whether English or Metric representation is wanted
+    void dim() {
+        dimButton.setEnabled(true);
+        if (dimButton.getText().equals ("To metric units")) {
+          dimButton.setText("To English units");
+          dim = true;
+          text1.setText("Distance 1 (scale cm):");
+          text2.setText("Distance 2 (scale cm):");
+          text3.setText("Timer 1 Speed (scale KMH):");
+          text4.setText("Timer 2 Speed (scale KMH):");
+          }
+        else {
+          dimButton.setText("To metric units");
+          dim = false;
+          text1.setText("Distance 1 (scale feet):");
+          text2.setText("Distance 2 (scale feet):");
+          text3.setText("Timer 1 Speed (scale MPH):");
+          text4.setText("Timer 2 Speed (scale MPH):");
+          }
+       }
 
     void setup() {
         startButton.setEnabled(false);
@@ -248,7 +293,13 @@ public class SpeedometerFrame extends javax.swing.JFrame {
                             // calculate and show speed
                             double secs = (stopTime1-startTime)/1000.;
                             double feet = Integer.parseInt(distance1.getText());
-                            double speed = (feet/5280.)*(3600./secs);
+                            double speed;
+                            if (dim == false) {
+                              speed = (feet/5280.)*(3600./secs);
+                              }
+                            else {
+                              speed = (feet/100000.)*(3600./secs);
+                              }
                             if (log.isDebugEnabled()) log.debug("calc from "+secs+","+feet+":"+speed);
                             result1.setText(String.valueOf(speed).substring(0,4));
                             String time = String.valueOf(secs);
@@ -271,7 +322,7 @@ public class SpeedometerFrame extends javax.swing.JFrame {
         }
         catch (Exception e) {
             // couldn't locate the sensor, that's an error, but for the second
-            // one that is no big deal
+            // one it's no big deal
             log.error("Stop 2 sensor NFG: "+stopSensor2.getText());
             return;
         }
@@ -287,7 +338,13 @@ public class SpeedometerFrame extends javax.swing.JFrame {
                             // calculate and show speed
                             double secs = (stopTime2-startTime)/1000.;
                             double feet = Integer.parseInt(distance2.getText());
-                            double speed = (feet/5280.)*(3600./secs);
+                            double speed;
+                            if (dim == false) {
+                              speed = (feet/5280.)*(3600./secs);
+                              }
+                            else {
+                              speed = (feet/100000.)*(3600./secs);
+                              }
                             if (log.isDebugEnabled()) log.debug("calc from "+secs+","+feet+":"+speed);
                             result2.setText(String.valueOf(speed).substring(0,4));
                             String time = String.valueOf(secs);
