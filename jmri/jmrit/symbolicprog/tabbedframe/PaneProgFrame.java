@@ -19,15 +19,15 @@ import java.io.IOException;
 
 import javax.swing.*;
 
-import org.jdom.Attribute;
-import org.jdom.Element;
 import com.sun.java.util.collections.ArrayList;
 import com.sun.java.util.collections.List;
+import org.jdom.Attribute;
+import org.jdom.Element;
 
 /**
  * Frame providing a command station programmer from decoder definition files.
  * @author			Bob Jacobsen   Copyright (C) 2001; D Miller Copyright 2003
- * @version			$Revision: 1.33 $
+ * @version			$Revision: 1.34 $
  */
 abstract public class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
