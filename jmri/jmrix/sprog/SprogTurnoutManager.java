@@ -1,63 +1,68 @@
-/**
- * SprogTurnoutManager.java
- *
- * Description:		Implement turnout manager for Sprog systems
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Id: SprogTurnoutManager.java,v 1.1 2003-01-27 05:24:00 jacobsen Exp $
- */
-
-// System names are "ETnnn", where nnn is the turnout number without padding.
+// SprogTurnoutManager.java
 
 package jmri.jmrix.sprog;
 
 import jmri.JmriException;
 import jmri.Turnout;
 
+/**
+ * Implement turnout manager for Sprog systems
+ * <P>
+ * System names are "STnnn", where nnn is the turnout number without padding.
+ *
+ * @author	Bob Jacobsen Copyright (C) 2001
+ * @version	$Revision: 1.2 $
+ */
 public class SprogTurnoutManager extends jmri.AbstractTurnoutManager {
 
-	// ABC implementations
+    final String prefix = "ST";
 
-	// to free resources when no longer used
-	public void dispose() throws JmriException {
-		super.dispose();
-	}
+    /**
+     * @return The system-specific prefix letter for a specific implementation
+     */
+    public char systemLetter() { return prefix.charAt(0); }
 
-	// Sprog-specific methods
+    // to free resources when no longer used
+    public void dispose() throws JmriException {
+        super.dispose();
+    }
 
-	public void putBySystemName(SprogTurnout t) {
-		String system = "ET"+t.getNumber();
-		_tsys.put(system, t);
-	}
+    // Sprog-specific methods
 
-	public Turnout newTurnout(String systemName, String userName) {
-		// if system name is null, supply one from the number in userName
-		if (systemName == null) systemName = "ET"+userName;
+    public void putBySystemName(SprogTurnout t) {
+        String system = prefix+t.getNumber();
+        _tsys.put(system, t);
+    }
 
-		// return existing if there is one
-		Turnout t;
-		if ( (userName != null) && ((t = getByUserName(userName)) != null)) return t;
-		if ( (t = getBySystemName(systemName)) != null) return t;
+    public Turnout newTurnout(String systemName, String userName) {
+        // if system name is null, supply one from the number in userName
+        if (systemName == null) systemName = prefix+userName;
 
-		// get number from name
-		if (!systemName.startsWith("ET")) {
-			log.error("Invalid system name for Sprog turnout: "+systemName);
-			return null;
-		}
-		int addr = Integer.valueOf(systemName.substring(2)).intValue();
-		t = new SprogTurnout(addr);
-		t.setUserName(userName);
+        // return existing if there is one
+        Turnout t;
+        if ( (userName != null) && ((t = getByUserName(userName)) != null)) return t;
+        if ( (t = getBySystemName(systemName)) != null) return t;
 
-		_tsys.put(systemName, t);
-		if (userName!=null) _tuser.put(userName, t);
-		t.addPropertyChangeListener(this);
+        // get number from name
+        if (!systemName.startsWith(prefix)) {
+            log.error("Invalid system name for Sprog turnout: "+systemName);
+            return null;
+        }
+        int addr = Integer.valueOf(systemName.substring(2)).intValue();
+        t = new SprogTurnout(addr);
+        t.setUserName(userName);
 
-		return t;
-	}
+        _tsys.put(systemName, t);
+        if (userName!=null) _tuser.put(userName, t);
+        t.addPropertyChangeListener(this);
 
-	public SprogTurnoutManager() {
-	}
+        return t;
+    }
 
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogTurnoutManager.class.getName());
+    public SprogTurnoutManager() {
+    }
+
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogTurnoutManager.class.getName());
 
 }
 
