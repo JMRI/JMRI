@@ -15,9 +15,9 @@ package jmri;
  * been changed via some other mechanism.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
-public class TripleTurnoutSignalHead extends AbstractSignalHead {
+public class TripleTurnoutSignalHead extends DefaultSignalHead {
 
     public TripleTurnoutSignalHead(String sys, String user, Turnout green, Turnout yellow, Turnout red) {
         super(sys, user);
@@ -32,30 +32,23 @@ public class TripleTurnoutSignalHead extends AbstractSignalHead {
         mYellow = yellow;
         mGreen = green;
     }
-
-    public void setAppearance(int newAppearance) {
-        int oldAppearance = mAppearance;
-        mAppearance = newAppearance;
-		updateOutput();
-		
-        // notify listeners, if any
-        firePropertyChange("Appearance", new Integer(oldAppearance), new Integer(newAppearance));
-    }
-
-	public void setLit(boolean newLit) {
-        // notify listeners, if any
-        boolean oldLit = mLit;
-        mLit = newLit;
-        updateOutput();
-        firePropertyChange("Lit", new Boolean(oldLit), new Boolean(newLit));
-	}
 	
 	protected void updateOutput() {
+	    // assumes that writing a turnout to an existing state is cheap!
 		if (mLit == false) {
             mRed.setCommandedState(Turnout.CLOSED);
             mYellow.setCommandedState(Turnout.CLOSED);
             mGreen.setCommandedState(Turnout.CLOSED);
 			return;
+        } else if ( !mFlashOn &&
+            ( (mAppearance == FLASHGREEN) ||
+            (mAppearance == FLASHYELLOW) ||
+            (mAppearance == FLASHRED) ) ) {
+                mRed.setCommandedState(Turnout.CLOSED);
+                mYellow.setCommandedState(Turnout.CLOSED);
+                mGreen.setCommandedState(Turnout.CLOSED);
+			    return;
+
 		} else {
         	switch (mAppearance) {
         		case RED:

@@ -16,9 +16,9 @@ package jmri;
  * been changed via some other mechanism.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
-public class DoubleTurnoutSignalHead extends AbstractSignalHead {
+public class DoubleTurnoutSignalHead extends DefaultSignalHead {
 
     public DoubleTurnoutSignalHead(String sys, String user, Turnout green, Turnout red) {
         super(sys, user);
@@ -32,23 +32,6 @@ public class DoubleTurnoutSignalHead extends AbstractSignalHead {
         mGreen = green;
     }
 
-    public void setAppearance(int newAppearance) {
-        int oldAppearance = mAppearance;
-        mAppearance = newAppearance;
-		updateOutput();
-		
-        // notify listeners, if any
-        firePropertyChange("Appearance", new Integer(oldAppearance), new Integer(newAppearance));
-    }
-
-	public void setLit(boolean newLit) {
-        // notify listeners, if any
-        boolean oldLit = mLit;
-        mLit = newLit;
-        updateOutput();
-        firePropertyChange("Lit", new Boolean(oldLit), new Boolean(newLit));
-	}
-	
 	protected void updateOutput() {
 		if (mLit == false) {
             mRed.setCommandedState(Turnout.CLOSED);

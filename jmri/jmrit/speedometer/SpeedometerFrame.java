@@ -24,9 +24,9 @@ import javax.swing.JTextField;
  * the speed is computed and displayed.
  * </UL>
  *
- * @author	Bob Jacobsen   Copyright (C) 2001
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2004
  * @author      Adapted for metric system - S.K. Bosch
- * @version	$Revision: 1.18 $
+ * @version	$Revision: 1.19 $
  */
 public class SpeedometerFrame extends javax.swing.JFrame {
 

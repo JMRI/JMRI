@@ -2,7 +2,7 @@
 
 package jmri.jmrix.loconet;
 
-import jmri.AbstractSignalHead;
+import jmri.DefaultSignalHead;
 
 /**
  * Extend jmri.SignalHead for signals implemented by an SE8c
@@ -21,8 +21,8 @@ import jmri.AbstractSignalHead;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.12 $
- */public class SE8cSignalHead extends AbstractSignalHead implements LocoNetListener {
+ * @version			$Revision: 1.13 $
+ */public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener {
 
     public SE8cSignalHead(int pNumber, String userName) {
         // create systemname
@@ -46,34 +46,11 @@ import jmri.AbstractSignalHead;
             log.warn("No LocoNet connection, signal head won't update");
     }
 
-    public int getAppearance() { return mAppearance; }
-    public void setAppearance(int newAppearance) {
-        int oldAppearance = mAppearance;
-        mAppearance = newAppearance;
-        if (oldAppearance != newAppearance) {
-            forwardCommandChangeToLayout();
-            // notify listeners, if any
-            firePropertyChange("Appearance", new Integer(oldAppearance), new Integer(newAppearance));
-        }
-
-    }
-
-    public void setLit(boolean newLit) {
-        boolean oldLit = mLit;
-        mLit = newLit;
-        if (oldLit != newLit) {
-            forwardCommandChangeToLayout();
-            // notify listeners, if any
-            firePropertyChange("Lit", new Boolean(oldLit), new Boolean(newLit));
-        }
-
-    }
-
     public int getNumber() { return mNumber; }
     public String getSystemName() { return "LH"+getNumber(); }
 
     // Handle a request to change state by sending a LocoNet command
-    protected void forwardCommandChangeToLayout()  {
+    protected void updateOutput()  {
          // send SWREQ for close
          LocoNetMessage l = new LocoNetMessage(4);
          l.setOpCode(LnConstants.OPC_SW_REQ);
