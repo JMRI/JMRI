@@ -19,7 +19,7 @@ import jmri.*;
  * Based on AbstractTurnoutManagerConfigXML
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class AbstractSignalHeadManagerXml implements XmlAdapter {
 
@@ -132,7 +132,7 @@ public class AbstractSignalHeadManagerXml implements XmlAdapter {
         // register new one with InstanceManager
         InstanceManager.setSignalHeadManager(pManager);
         // register new one for configuration
-        InstanceManager.configureManagerInstance().register(pManager);
+        InstanceManager.configureManagerInstance().registerConfig(pManager);
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractSignalHeadManagerXml.class.getName());

@@ -38,7 +38,7 @@ import com.sun.java.util.collections.*;
  *
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.30 $
+ * @version $Revision: 1.31 $
  */
 
 public class PanelEditor extends JFrame {
@@ -299,8 +299,8 @@ public class PanelEditor extends JFrame {
             this.getContentPane().add(panel);
         }
 
-        // register the result for later configuration
-        InstanceManager.configureManagerInstance().register(this);
+        // register the resulting panel for later configuration
+        InstanceManager.configureManagerInstance().registerUser(this);
 
         // move it off the panel's position
         setLocation(250,0);

@@ -16,7 +16,7 @@ import com.sun.java.util.collections.Collections;
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 abstract public class AbstractManager
     implements Manager, java.beans.PropertyChangeListener {
@@ -24,7 +24,7 @@ abstract public class AbstractManager
     public AbstractManager() {
         // register the result for later configuration
          if (InstanceManager.configureManagerInstance()!=null) {
-            InstanceManager.configureManagerInstance().register(this);
+            InstanceManager.configureManagerInstance().registerConfig(this);
             log.debug("register");
         }
     }

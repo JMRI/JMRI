@@ -20,14 +20,14 @@ import com.sun.java.util.collections.Collections;
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class AbstractSignalHeadManager extends AbstractManager
     implements SignalHeadManager, java.beans.PropertyChangeListener {
 
     public AbstractSignalHeadManager() {
         // register the result for later configuration
-        InstanceManager.configureManagerInstance().register(this);
+        InstanceManager.configureManagerInstance().registerConfig(this);
         log.debug("register");
     }
 
@@ -44,8 +44,8 @@ public class AbstractSignalHeadManager extends AbstractManager
     }
 
     // implemented methods
-    protected Hashtable _tsys = new Hashtable();   // stores known Turnout instances by system name
-    protected Hashtable _tuser = new Hashtable();   // stores known Turnout instances by user name
+    protected Hashtable _tsys = new Hashtable();   // stores known instances by system name
+    protected Hashtable _tuser = new Hashtable();   // stores known instances by user name
 
     public SignalHead getBySystemName(String key) {
         return (SignalHead)_tsys.get(key);
