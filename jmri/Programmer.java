@@ -7,7 +7,7 @@ import java.beans.PropertyChangeListener;
 
 /**
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public interface Programmer  {
 
@@ -64,6 +64,8 @@ public interface Programmer  {
      * @return True if the mode is available
      */
     public boolean hasMode(int mode);
+
+    public boolean getCanRead();
 
 	public void addPropertyChangeListener(PropertyChangeListener p);
 	public void removePropertyChangeListener(PropertyChangeListener p);
