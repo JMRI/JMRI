@@ -11,12 +11,12 @@
 package jmri.jmrix.nce;
 
 import jmri.Programmer;
-
+import jmri.jmrix.AbstractProgrammer;
 import java.util.Vector;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
-public class NceProgrammer implements NceListener, Programmer {
+public class NceProgrammer extends AbstractProgrammer implements NceListener {
 	
 	public NceProgrammer() { 
 		// error if more than one constructed?
@@ -54,21 +54,7 @@ public class NceProgrammer implements NceListener, Programmer {
 	public int getMode() { return _mode; }
 	
 
-// data members to hold contact with the property listeners
-	private Vector propListeners = new Vector();
-	
-	public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
-		// add only if not already registered
-		if (!propListeners.contains(l)) {
-			propListeners.addElement(l);
-		}
-	}
-
-	public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
-		if (propListeners.contains(l)) {
-			propListeners.removeElement(l);
-		}
-	}
+	// notify property listeners - see AbstractProgrammer for more
 
 	protected void notifyPropertyChange(String name, int oldval, int newval) {
 		// make a copy of the listener vector to synchronized not needed for transmit
@@ -104,6 +90,10 @@ public class NceProgrammer implements NceListener, Programmer {
 		progState = MODESENT;
 		_val = val;
 		_cv = CV;	
+
+		// start the error timer
+		startShortTimer();
+		
 		// format and send message to go to program mode
 		controller().sendNceMessage(NceMessage.getProgMode(), this);
 	}
@@ -120,6 +110,9 @@ public class NceProgrammer implements NceListener, Programmer {
 		// set commandPending state
 		progState = MODESENT;
 		_cv = CV;
+		
+		// start the error timer
+		startShortTimer();
 		
 		// format and send message to go to program mode
 		controller().sendNceMessage(NceMessage.getProgMode(), this);
@@ -157,7 +150,7 @@ public class NceProgrammer implements NceListener, Programmer {
 		log.error("message received unexpectedly: "+m.toString());
 	}
 	
-	public void reply(NceReply m) {
+	synchronized public void reply(NceReply m) {
 		if (progState == NOTPROGRAMMING) {
 			// we get the complete set of replies now, so ignore these
 			if (log.isDebugEnabled()) log.debug("reply in NOTPROGRAMMING state");
@@ -172,6 +165,7 @@ public class NceProgrammer implements NceListener, Programmer {
 			progState = COMMANDSENT;
 			// see why waiting
 			try {
+				startLongTimer();
 				if (_progRead) {
 					// read was in progress - send read command
 					controller().sendNceMessage(progTaskStart(getMode(), -1, _cv), this);
@@ -203,17 +197,33 @@ public class NceProgrammer implements NceListener, Programmer {
 					// read was in progress - get return value
 					_val = m.value();
 				}
+				startShortTimer();
 				controller().sendNceMessage(NceMessage.getExitProgMode(), this);
 			}
 		} else if (progState == RETURNSENT) {
 			if (log.isDebugEnabled()) log.debug("reply in RETURNSENT state");
 			// all done, notify listeners of completion
 			progState = NOTPROGRAMMING;
+			stopTimer();
 			// if this was a read, we cached the value earlier.  If its a 
 			// write, we're to return the original write value
 			notifyProgListenerEnd(_val, jmri.ProgListener.OK);
 		} else {
 			if (log.isDebugEnabled()) log.debug("reply in un-decoded state");
+		}
+	}
+	
+	/**
+	 * Internal routine to handle a timeout
+	 */
+	synchronized protected void timeout() {
+		if (progState != NOTPROGRAMMING) {
+			// we're programming, time to stop
+			if (log.isDebugEnabled()) log.debug("timeout!");
+			// perhaps no loco present? Fail back to end of programming
+			progState = NOTPROGRAMMING;
+			controller().sendNceMessage(NceMessage.getExitProgMode(), this);
+			notifyProgListenerEnd(_val, jmri.ProgListener.FailedTimeout);
 		}
 	}
 	

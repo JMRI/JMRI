@@ -223,9 +223,22 @@ public class NceTrafficController implements NceInterface, Runnable {
         	if (endCOMMAND(msg)) break;
         }
               	
-        // message is complete, dispatch it !!
+ 		// message is complete, dispatch it !!
         if (log.isDebugEnabled()) log.debug("dispatch reply of length "+i);
-        notifyReply(msg);
+   		{ 
+			final NceReply thisMsg = msg;
+			final NceTrafficController thisTC = this;
+			// return a notification via the queue to ensure end
+			Runnable r = new Runnable() {
+				NceReply msgForLater = thisMsg;
+				NceTrafficController myTC = thisTC;
+				public void run() { 
+					log.debug("Delayed notify starts");
+					myTC.notifyReply(msgForLater);
+				}
+			};
+			javax.swing.SwingUtilities.invokeLater(r);
+		}
 	}
 	
 	boolean endCOMMAND(NceReply msg) {
