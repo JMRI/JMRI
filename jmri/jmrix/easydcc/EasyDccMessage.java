@@ -1,9 +1,9 @@
-/** 
+/**
  * EasyDccMessage.java
  *
  * Description:		<describe the EasyDccMessage class here>
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Id: EasyDccMessage.java,v 1.1 2002-03-23 07:28:30 jacobsen Exp $
+ * @version			$Id: EasyDccMessage.java,v 1.2 2002-03-30 19:22:53 jacobsen Exp $
  */
 
 package jmri.jmrix.easydcc;
@@ -39,27 +39,16 @@ public class EasyDccMessage {
 	public int getNumDataElements() {return _nDataChars;}
 	public int getElement(int n) {return _dataChars[n];}
 	public void setElement(int n, int v) { _dataChars[n] = v; }
-	
-	// mode accessors
-	boolean _isBinary;
-	public boolean isBinary() { return _isBinary; }
-	public void setBinary(boolean b) { _isBinary = b; }
 
 	// display format
 	public String toString() {
 		String s = "";
 		for (int i=0; i<_nDataChars; i++) {
-			if (_isBinary) {
-				if (i!=0) s+=" ";
-				if (_dataChars[i] < 16) s+="0";
-				s+=Integer.toHexString(_dataChars[i]);
-			} else {
-				s+=(char)_dataChars[i];
-			}
+            s+=(char)_dataChars[i];
 		}
 		return s;
 	}
-	
+
 	// diagnose format
 	public boolean isKillMain() {
 		return getOpCode() == 'K';
@@ -68,74 +57,70 @@ public class EasyDccMessage {
 	public boolean isEnableMain() {
 		return getOpCode() == 'E';
 	}
-	
+
 
 	// static methods to return a formatted message
 	static public EasyDccMessage getEnableMain() {
 		EasyDccMessage m = new EasyDccMessage(1);
-		m.setBinary(false);
 		m.setOpCode('E');
 		return m;
 	}
-	
+
 	static public EasyDccMessage getKillMain() {
 		EasyDccMessage m = new EasyDccMessage(1);
-		m.setBinary(false);
 		m.setOpCode('K');
 		return m;
 	}
-		
+
 	static public EasyDccMessage getProgMode() {
 		EasyDccMessage m = new EasyDccMessage(1);
-		m.setBinary(false);
 		m.setOpCode('M');
 		return m;
 	}
-	
+
 	static public EasyDccMessage getExitProgMode() {
 		EasyDccMessage m = new EasyDccMessage(1);
-		m.setBinary(false);
 		m.setOpCode('X');
 		return m;
 	}
 
 	static public EasyDccMessage getReadPagedCV(int cv) { //Rxxx
-		EasyDccMessage m = new EasyDccMessage(4);
-		m.setBinary(false);
+		EasyDccMessage m = new EasyDccMessage(5);
 		m.setOpCode('R');
-		addIntAsThree(cv, m, 1);		
+        m.setElement(1, ' ');
+		addIntAsThree(cv, m, 2);
 		return m;
 	}
 
 	static public EasyDccMessage getWritePagedCV(int cv, int val) { //Pxxx xxx
-		EasyDccMessage m = new EasyDccMessage(8);
-		m.setBinary(false);
+		EasyDccMessage m = new EasyDccMessage(9);
 		m.setOpCode('P');
-		addIntAsThree(cv, m, 1);		
-		m.setElement(4,' ');
-		addIntAsThree(val, m, 5);
+        m.setElement(1, ' ');
+		addIntAsThree(cv, m, 2);
+		m.setElement(5,' ');
+		addIntAsThree(val, m, 6);
 		return m;
 	}
-		
+
 	static public EasyDccMessage getReadRegister(int reg) { //Vx
 		if (reg>8) log.error("register number too large: "+reg);
-		EasyDccMessage m = new EasyDccMessage(2);
-		m.setBinary(false);
+		EasyDccMessage m = new EasyDccMessage(3);
 		m.setOpCode('V');
 		String s = ""+reg;
-		m.setElement(1, s.charAt(s.length()-1));		
+        m.setElement(1, ' ');
+		m.setElement(2, s.charAt(s.length()-1));
 		return m;
 	}
 
 	static public EasyDccMessage getWriteRegister(int reg, int val) { //Sx xxx
 		if (reg>8) log.error("register number too large: "+reg);
-		EasyDccMessage m = new EasyDccMessage(6);
-		m.setBinary(false);
+		EasyDccMessage m = new EasyDccMessage(7);
 		m.setOpCode('S');
 		String s = ""+reg;
-		m.setElement(1, s.charAt(s.length()-1));		
-		m.setElement(2,' ');
-		addIntAsThree(val, m, 3);
+        m.setElement(1, ' ');
+		m.setElement(2, s.charAt(s.length()-1));
+		m.setElement(3,' ');
+		addIntAsThree(val, m, 4);
 		return m;
 	}
 
@@ -147,12 +132,12 @@ public class EasyDccMessage {
 		String s = ""+val;
 		if (s.length() != 3) s = "0"+s;  // handle <10
 		if (s.length() != 3) s = "0"+s;  // handle <100
-		m.setElement(offset,s.charAt(0));		
-		m.setElement(offset+1,s.charAt(1));		
+		m.setElement(offset,s.charAt(0));
+		m.setElement(offset+1,s.charAt(1));
 		m.setElement(offset+2,s.charAt(2));
 		return s;
 	}
-	
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccMessage.class.getName());
 
 }

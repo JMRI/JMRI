@@ -27,7 +27,6 @@ public class EasyDccMonFrameTest extends TestCase {
 
 	public void testMsg() {
 		EasyDccMessage m = new EasyDccMessage(3);
-		m.setBinary(false);
 		m.setOpCode('L');
 		m.setElement(1, '0');
 		m.setElement(2, 'A');
@@ -42,7 +41,6 @@ public class EasyDccMonFrameTest extends TestCase {
 
 	public void testReply() {
 		EasyDccReply m = new EasyDccReply();
-		m.setBinary(false);
 		m.setOpCode('C');
 		m.setElement(1, 'o');
 		m.setElement(2, ':');

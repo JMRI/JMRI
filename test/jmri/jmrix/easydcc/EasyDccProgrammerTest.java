@@ -35,13 +35,13 @@ public class EasyDccProgrammerTest extends TestCase {
 		Assert.assertEquals("mode message contents", "M",
 			((EasyDccMessage)(t.outbound.elementAt(0))).toString());
 		// reply from programmer arrives
-		EasyDccReply r = new EasyDccReply("**** PROGRAMMING MODE - MAIN TRACK NOW DISCONNECTED ****");
+		EasyDccReply r = new EasyDccReply("P");
 		t.sendTestReply(r);
 		Assert.assertEquals(" programmer listener not invoked", 0, rcvdInvoked);
 
 		// check write message sent
 		Assert.assertEquals("write message sent", 2, t.outbound.size());
-		Assert.assertEquals("write message contents", "P010 020",
+		Assert.assertEquals("write message contents", "P 010 020",
 			((EasyDccMessage)(t.outbound.elementAt(1))).toString());
 		// reply from programmer arrives
 		r = new EasyDccReply();
@@ -74,20 +74,26 @@ public class EasyDccProgrammerTest extends TestCase {
 		Assert.assertEquals("mode message contents", "M",
 			((EasyDccMessage)(t.outbound.elementAt(0))).toString());
 		// reply from programmer arrives
-		EasyDccReply r = new EasyDccReply("**** PROGRAMMING MODE - MAIN TRACK NOW DISCONNECTED ****");
+		EasyDccReply r = new EasyDccReply("P");
 		t.sendTestReply(r);
 		Assert.assertEquals(" programmer listener not invoked", 0, rcvdInvoked);
 
 
 		// check "read command" message sent
 		Assert.assertEquals("read message sent", 2, t.outbound.size());
-		Assert.assertEquals("read message contents", "R010",
+		Assert.assertEquals("read message contents", "R 010",
 			((EasyDccMessage)(t.outbound.elementAt(1))).toString());
 		// reply from programmer arrives
 		r = new EasyDccReply();
-		r.setElement(0, '0');
-		r.setElement(1, '2');
-		r.setElement(2, '0');
+		r.setElement(0, 'C');
+		r.setElement(1, 'V');
+		r.setElement(2, ' ');
+		r.setElement(3, '0');
+		r.setElement(4, '1');
+		r.setElement(5, '0');
+		r.setElement(6, ' ');
+		r.setElement(7, '1');
+		r.setElement(8, '4');
 		t.sendTestReply(r);
 		Assert.assertEquals(" programmer listener not invoked", 0, rcvdInvoked);
 

@@ -1,9 +1,9 @@
-/** 
+/**
  * EasyDccReplyTest.java
  *
  * Description:	    JUnit tests for the EasyDccReplyclass
  * @author			Bob Jacobsen
- * @version			
+ * @version
  */
 
 package jmri.jmrix.easydcc;
@@ -32,22 +32,11 @@ public class EasyDccReplyTest extends TestCase {
 		Assert.assertEquals("expected length ", 4, m.getNumDataElements());
 		m.setElement(5, 'A');
 		Assert.assertEquals("expected length ", 6, m.getNumDataElements());
-		
+
 	}
 
-	public void testBinaryToString() {
-		EasyDccReply m = new EasyDccReply();
-		m.setBinary(true);
-		m.setOpCode(0x81);
-		m.setElement(1, 0x02);
-		m.setElement(2, 0xA2);
-		m.setElement(3, 0x00);
-		Assert.assertEquals("string compare ", "81 02 a2 00", m.toString());
-	}
-	
 	public void testAsciiToString() {
 		EasyDccReply m = new EasyDccReply();
-		m.setBinary(false);
 		m.setOpCode('C');
 		m.setElement(1, 'o');
 		m.setElement(2, 'm');
@@ -57,7 +46,6 @@ public class EasyDccReplyTest extends TestCase {
 
 	public void testSkipWhiteSpace() {
 		EasyDccReply m = new EasyDccReply();
-		m.setBinary(false);
 		m.setElement(0, '0');
 		m.setElement(1, ' ');
 		m.setElement(2, ' ');
@@ -72,7 +60,6 @@ public class EasyDccReplyTest extends TestCase {
 
 	public void testSkipCOMMAND() {
 		EasyDccReply m = new EasyDccReply();
-		m.setBinary(false);
 		m.setElement(0, ' ');
 		m.setElement(1, ' ');
 		m.setElement(2, 'A');
@@ -94,7 +81,6 @@ public class EasyDccReplyTest extends TestCase {
 		Assert.assertEquals(" find & skip", 13, m.skipCOMMAND(4));
 		Assert.assertEquals(" not found", 0, m.skipCOMMAND(0));
 		m = new EasyDccReply();
-		m.setBinary(false);
 		m.setElement(0, 'C');
 		m.setElement(1, 'O');
 		m.setElement(2, 'M');
@@ -109,22 +95,20 @@ public class EasyDccReplyTest extends TestCase {
 		m.setElement(11, '7');
 		Assert.assertEquals(" start of reply ", 9, m.skipCOMMAND(0));
 	}
-			
+
 	public void testValue1() {
 		// value when just the string comes back
 		EasyDccReply m = new EasyDccReply();
-		m.setBinary(false);
 		m.setElement(0, '0');
 		m.setElement(1, '2');
 		m.setElement(2, '7');
 		m.setElement(3, ' ');
 		Assert.assertEquals("value ", 27, m.value());
 	}
-	
+
 	public void testValue2() {
 		// value with a "Command:" prefix
 		EasyDccReply m = new EasyDccReply();
-		m.setBinary(false);
 		m.setElement(0, 'C');
 		m.setElement(1, 'O');
 		m.setElement(2, 'M');
@@ -145,9 +129,9 @@ public class EasyDccReplyTest extends TestCase {
 		Assert.assertEquals("find ", 5, m.match("PROGRAMMING"));
 		Assert.assertEquals("not find ", -1, m.match("foo"));
 	}
-	
+
 	// from here down is testing infrastructure
-	
+
 	public EasyDccReplyTest(String s) {
 		super(s);
 	}
@@ -157,11 +141,11 @@ public class EasyDccReplyTest extends TestCase {
 		String[] testCaseName = {EasyDccReplyTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
-	
+
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite(EasyDccReplyTest.class);
 		return suite;
 	}
-	
+
 }

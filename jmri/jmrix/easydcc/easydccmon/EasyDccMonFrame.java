@@ -1,9 +1,9 @@
-/** 
+/**
  * EasyDccMonFrame.java
  *
  * Description:		Frame displaying (and logging) EasyDcc command messages
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: EasyDccMonFrame.java,v 1.1 2002-03-23 07:28:30 jacobsen Exp $
+ * @version			$Id: EasyDccMonFrame.java,v 1.2 2002-03-30 19:22:53 jacobsen Exp $
  */
 
 package jmri.jmrix.easydcc.easydccmon;
@@ -29,27 +29,23 @@ public class EasyDccMonFrame extends jmri.jmrix.AbstractMonFrame implements Easy
 	}
 
 	protected String title() { return "EasyDcc Command Monitor"; }
-	
+
 	protected void init() {
 		// connect to TrafficController
 		EasyDccTrafficController.instance().addEasyDccListener(this);
 	}
-  
+
 	public void dispose() {
 		EasyDccTrafficController.instance().removeEasyDccListener(this);
 	}
-			
+
 	public synchronized void message(EasyDccMessage l) {  // receive a message and log it
-		// EasyDccMessage rawMsg = new EasyDccMessage(l);
-		// rawMsg.setBinary();
 		nextLine("cmd: \""+l.toString()+"\"\n", "");
 	}
 	public synchronized void reply(EasyDccReply l) {  // receive a reply message and log it
-		EasyDccReply rawMsg = new EasyDccReply(l);
-		rawMsg.setBinary(true);
-		nextLine("rep: \""+l.toString()+"\"\n", "raw: \""+rawMsg.toString()+"\"\n");
+		nextLine("rep: \""+l.toString()+"\"\n", "");
 	}
-	
+
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccMonFrame.class.getName());
 
 }

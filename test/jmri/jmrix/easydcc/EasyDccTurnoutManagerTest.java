@@ -26,12 +26,12 @@ public class EasyDccTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 	}
 
 	public String getSystemName(int n) {
-		return "NT"+n;
+		return "ET"+n;
 	}
 
 	public void testAsAbstractFactory () {
 		// ask for a Turnout, and check type
-		Turnout o = l.newTurnout("NT21", "my name");
+		Turnout o = l.newTurnout("ET21", "my name");
 
 
 		if (log.isDebugEnabled()) log.debug("received turnout value "+o);
@@ -41,7 +41,7 @@ public class EasyDccTurnoutManagerTest extends jmri.AbstractTurnoutMgrTest  {
 		if (log.isDebugEnabled()) log.debug("by system name: "+l.getBySystemName("NT21"));
 		if (log.isDebugEnabled()) log.debug("by user name:   "+l.getByUserName("my name"));
 
-		assertTrue(null != l.getBySystemName("NT21"));
+		assertTrue(null != l.getBySystemName("ET21"));
 		assertTrue(null != l.getByUserName("my name"));
 
 	}

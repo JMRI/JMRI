@@ -1,9 +1,9 @@
-/** 
+/**
  * EasyDccMessageTest.java
  *
  * Description:	    JUnit tests for the EasyDccMessage class
  * @author			Bob Jacobsen
- * @version			
+ * @version
  */
 
 package jmri.jmrix.easydcc;
@@ -21,16 +21,6 @@ public class EasyDccMessageTest extends TestCase {
 		EasyDccMessage m = new EasyDccMessage(1);
 	}
 
-	public void testToBinaryString() {
-		EasyDccMessage m = new EasyDccMessage(4);
-		m.setOpCode(0x81);
-		m.setElement(1, 0x02);
-		m.setElement(2, 0xA2);
-		m.setElement(3, 0x00);
-		m.setBinary(true);
-		Assert.assertEquals("string compare ", "81 02 a2 00", m.toString());
-	}
-
 	public void testToASCIIString() {
 		EasyDccMessage m = new EasyDccMessage(5);
 		m.setOpCode(0x50);
@@ -38,10 +28,9 @@ public class EasyDccMessageTest extends TestCase {
 		m.setElement(2, 0x32);
 		m.setElement(3, 0x36);
 		m.setElement(4, 0x31);
-		m.setBinary(false);
 		Assert.assertEquals("string compare ", "P 261", m.toString());
 	}
-	
+
 	public void testGetEnable() {
 		EasyDccMessage m = EasyDccMessage.getEnableMain();
 		Assert.assertEquals("length", 1, m.getNumDataElements());
@@ -53,7 +42,7 @@ public class EasyDccMessageTest extends TestCase {
 		Assert.assertEquals("isEnableMain", true, m.isEnableMain());
 		Assert.assertEquals("isKillMain", false, m.isKillMain());
 	}
-	
+
 	public void testReadPagedCV() {
 		EasyDccMessage m = EasyDccMessage.getReadPagedCV(12);
 		Assert.assertEquals("string compare ", "R012", m.toString());
@@ -63,7 +52,7 @@ public class EasyDccMessageTest extends TestCase {
 		EasyDccMessage m = EasyDccMessage.getWritePagedCV(12, 251);
 		Assert.assertEquals("string compare ", "P012 251", m.toString());
 	}
-	
+
 	public void testReadRegister() {
 		EasyDccMessage m = EasyDccMessage.getReadRegister(2);
 		Assert.assertEquals("string compare ", "V2", m.toString());
@@ -73,9 +62,9 @@ public class EasyDccMessageTest extends TestCase {
 		EasyDccMessage m = EasyDccMessage.getWriteRegister(2, 251);
 		Assert.assertEquals("string compare ", "S2 251", m.toString());
 	}
-	
+
 	// from here down is testing infrastructure
-	
+
 	public EasyDccMessageTest(String s) {
 		super(s);
 	}
@@ -85,11 +74,11 @@ public class EasyDccMessageTest extends TestCase {
 		String[] testCaseName = {EasyDccMessageTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
-	
+
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite(EasyDccMessageTest.class);
 		return suite;
 	}
-	
+
 }

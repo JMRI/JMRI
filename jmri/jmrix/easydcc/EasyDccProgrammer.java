@@ -1,11 +1,11 @@
-/** 
+/**
  * EasyDccProgrammer.java
  *
  * Description:		<describe the EasyDccProgrammer class here>
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Id: EasyDccProgrammer.java,v 1.1 2002-03-23 07:28:30 jacobsen Exp $
+ * @version			$Id: EasyDccProgrammer.java,v 1.2 2002-03-30 19:22:53 jacobsen Exp $
  */
- 
+
  // Convert the jmri.Programmer interface into commands for the EasyDcc powerstation
 
 package jmri.jmrix.easydcc;
@@ -17,22 +17,22 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
 public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccListener {
-	
-	public EasyDccProgrammer() { 
+
+	public EasyDccProgrammer() {
 		// error if more than one constructed?
-		if (self != null) 
+		if (self != null)
 			log.error("Creating too many EasyDccProgrammer objects");
 
 		// register this as the default, register as the Programmer
-		self = this; 
+		self = this;
 		jmri.InstanceManager.setProgrammer(this);
-			
+
 		}
 
-	/* 
+	/*
 	 * method to find the existing EasyDccProgrammer object, if need be creating one
 	 */
-	static public final EasyDccProgrammer instance() { 
+	static public final EasyDccProgrammer instance() {
 		if (self == null) self = new EasyDccProgrammer();
 		return self;
 		}
@@ -40,7 +40,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
 
 	// handle mode
 	protected int _mode = Programmer.PAGEMODE;
-	
+
 	public void setMode(int mode) {
 		if (mode != _mode) {
 			notifyPropertyChange("Mode", _mode, mode);
@@ -52,7 +52,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
 		}
 	}
 	public int getMode() { return _mode; }
-	
+
 
 	// notify property listeners - see AbstractProgrammer for more
 
@@ -69,9 +69,9 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
 			client.propertyChange(new PropertyChangeEvent(this, name, new Integer(oldval), new Integer(newval)));
 		}
 	}
-	
+
 	// members for handling the programmer interface
-	
+
 	int progState = 0;
 		static final int NOTPROGRAMMING = 0;// is notProgramming
 		static final int MODESENT = 1; 		// waiting reply to command to go into programming mode
@@ -80,7 +80,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
 	boolean  _progRead = false;
 	int _val;	// remember the value being read/written for confirmative reply
 	int _cv;	// remember the cv being read/written
-		
+
 	// programming interface
 	public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
 		if (log.isDebugEnabled()) log.debug("writeCV "+CV+" listens "+p);
@@ -89,15 +89,15 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
 		// set commandPending state
 		progState = MODESENT;
 		_val = val;
-		_cv = CV;	
+		_cv = CV;
 
 		// start the error timer
 		startShortTimer();
-		
+
 		// format and send message to go to program mode
 		controller().sendEasyDccMessage(EasyDccMessage.getProgMode(), this);
 	}
-		
+
 	public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
 		readCV(CV, p);
 	}
@@ -110,17 +110,17 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
 		// set commandPending state
 		progState = MODESENT;
 		_cv = CV;
-		
+
 		// start the error timer
 		startShortTimer();
-		
+
 		// format and send message to go to program mode
 		controller().sendEasyDccMessage(EasyDccMessage.getProgMode(), this);
-		
+
 	}
 
 	private jmri.ProgListener _usingProgrammer = null;
-	
+
 	// internal method to remember who's using the programmer
 	protected void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
 		// test for only one!
@@ -133,7 +133,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
 			return;
 		}
 	}
-	
+
 	// internal method to create the EasyDccMessage for programmer task start
 	protected EasyDccMessage progTaskStart(int mode, int val, int cvnum) throws jmri.ProgrammerException {
 		// val = -1 for read command; mode is direct, etc
@@ -145,11 +145,11 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
 			return EasyDccMessage.getWritePagedCV(cvnum, val);
 		}
 	}
-	
+
 	public void message(EasyDccMessage m) {
 		log.error("message received unexpectedly: "+m.toString());
 	}
-	
+
 	synchronized public void reply(EasyDccReply m) {
 		if (progState == NOTPROGRAMMING) {
 			// we get the complete set of replies now, so ignore these
@@ -158,9 +158,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
 		} else if (progState == MODESENT) {
 			if (log.isDebugEnabled()) log.debug("reply in MODESENT state");
 			// see if reply is the acknowledge of program mode; if not, wait
-			if ( (m.match("PROGRAMMING MODE") == -1) && 
-				 (m.match("COMMAND NOT UNDERSTOOD") == -1)  // indicates already in program mode
-					) return;
+			if ( m.match("P") == -1 ) return;
 			// here ready to send the read/write command
 			progState = COMMANDSENT;
 			// see why waiting
@@ -205,14 +203,14 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
 			// all done, notify listeners of completion
 			progState = NOTPROGRAMMING;
 			stopTimer();
-			// if this was a read, we cached the value earlier.  If its a 
+			// if this was a read, we cached the value earlier.  If its a
 			// write, we're to return the original write value
 			notifyProgListenerEnd(_val, jmri.ProgListener.OK);
 		} else {
 			if (log.isDebugEnabled()) log.debug("reply in un-decoded state");
 		}
 	}
-	
+
 	/**
 	 * Internal routine to handle a timeout
 	 */
@@ -226,7 +224,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
 			notifyProgListenerEnd(_val, jmri.ProgListener.FailedTimeout);
 		}
 	}
-	
+
 	// internal method to notify of the final result
 	protected void notifyProgListenerEnd(int value, int status) {
 		if (log.isDebugEnabled()) log.debug("notifyProgListenerEnd value "+value+" status "+status);

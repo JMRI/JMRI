@@ -1,9 +1,9 @@
-/** 
+/**
  * EasyDccTrafficController.java
  *
  * Description:		Converts Stream-based I/O to/from EasyDcc messages
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Id: EasyDccTrafficController.java,v 1.1 2002-03-23 07:28:30 jacobsen Exp $
+ * @version			$Id: EasyDccTrafficController.java,v 1.2 2002-03-30 19:22:53 jacobsen Exp $
  */
 
 package jmri.jmrix.easydcc;
@@ -13,11 +13,11 @@ import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Vector;
 
-/** 
+/**
  * Converts Stream-based I/O to/from EasyDcc messages.  The "EasyDccInterface"
- * side sends/receives message objects.  The connection to 
+ * side sends/receives message objects.  The connection to
  * a EasyDccPortController is via a pair of *Streams, which then carry sequences
- * of characters for transmission.     Note that this processing is 
+ * of characters for transmission.     Note that this processing is
  * handled in an independent thread.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
@@ -28,16 +28,16 @@ public class EasyDccTrafficController implements EasyDccInterface, Runnable {
 		if (log.isDebugEnabled()) log.debug("setting instance: "+this);
 		self=this;
 	}
-	
+
 
 // The methods to implement the EasyDccInterface
 
 	protected Vector cmdListeners = new Vector();
-	
-	public boolean status() { return (ostream != null & istream != null); 
+
+	public boolean status() { return (ostream != null & istream != null);
 		}
 
-	public synchronized void addEasyDccListener(EasyDccListener l) { 
+	public synchronized void addEasyDccListener(EasyDccListener l) {
 			// add only if not already registered
 			if (l == null) throw new java.lang.NullPointerException();
 			if (!cmdListeners.contains(l)) {
@@ -80,9 +80,9 @@ public class EasyDccTrafficController implements EasyDccInterface, Runnable {
 	}
 
 	EasyDccListener lastSender = null;
-	
+
 	protected void notifyReply(EasyDccReply r) {
-		
+
 		// make a copy of the listener vector to synchronized (not needed for transmit?)
 		Vector v;
 		synchronized(this)
@@ -108,7 +108,7 @@ public class EasyDccTrafficController implements EasyDccInterface, Runnable {
 		// before a response is sent
 		if (lastSender != null) lastSender.reply(r);
 	}
-	
+
 
 	/**
 	 * Forward a preformatted message to the actual interface.
@@ -117,20 +117,20 @@ public class EasyDccTrafficController implements EasyDccInterface, Runnable {
 		if (log.isDebugEnabled()) log.debug("sendEasyDccMessage message: ["+m+"]");
 		// remember who sent this
 		lastSender = reply;
-		
+
 		// notify all _other_ listeners
 		notifyMessage(m, reply);
-		
+
 		// stream to port in single write, as that's needed by serial
 		int len = m.getNumDataElements();
-		int cr = 0;
-		if (! m.isBinary()) cr = 1;  // space for return
+		int cr = 1;  // space for carriage return
 
 		byte msg[] = new byte[len+cr];
 
 		for (int i=0; i< len; i++)
 			msg[i] = (byte) m.getElement(i);
-		if (! m.isBinary()) msg[len] = 0x0d;
+        msg[len] = 0x0d;
+
 		try {
 			if (ostream != null) {
 				if (log.isDebugEnabled()) log.debug("write message: "+msg);
@@ -148,7 +148,7 @@ public class EasyDccTrafficController implements EasyDccInterface, Runnable {
 
 // methods to connect/disconnect to a source of data in a LnPortController
 	private EasyDccPortController controller = null;
-	
+
 	/**
 	 * Make connection to existing PortController object.
 	 */
@@ -159,7 +159,7 @@ public class EasyDccTrafficController implements EasyDccInterface, Runnable {
 				log.warn("connectPort: connect called while connected");
 			controller = p;
 		}
-		
+
 	/**
 	 * Break connection to existing EasyDccPortController object. Once broken,
 	 * attempts to send via "message" member will fail.
@@ -171,30 +171,30 @@ public class EasyDccTrafficController implements EasyDccInterface, Runnable {
 				log.warn("disconnectPort: disconnect called from non-connected LnPortController");
 			controller = null;
 		}
-				
+
 	/**
 	 * static function returning the EasyDccTrafficController instance to use.
 	 * @return The registered EasyDccTrafficController instance for general use,
 	 *         if need be creating one.
 	 */
-	static public EasyDccTrafficController instance() { 
+	static public EasyDccTrafficController instance() {
 		if (self == null) {
 			if (log.isDebugEnabled()) log.debug("creating a new EasyDccTrafficController object");
 			self = new EasyDccTrafficController();
 		}
 		return self;
 	}
-	
+
 	static protected EasyDccTrafficController self = null;
-	
+
 // data members to hold the streams
 	DataInputStream istream = null;
 	OutputStream ostream = null;
 
-	
+
 	/**
 	 * Handle incoming characters.  This is a permanent loop,
-	 * looking for input messages in character form on the 
+	 * looking for input messages in character form on the
 	 * stream connected to the PortController via <code>connectPort</code>.
 	 * Terminates with the input stream breaking out of the try block.
 	 */
@@ -212,7 +212,7 @@ public class EasyDccTrafficController implements EasyDccInterface, Runnable {
 	void handleOneIncomingReply() throws java.io.IOException {
 		// we sit in this until the message is complete, relying on
 		// threading to let other stuff happen
-		
+
 		// Create output message
 		EasyDccReply msg = new EasyDccReply();
         // message exists, now fill it
@@ -220,19 +220,19 @@ public class EasyDccTrafficController implements EasyDccInterface, Runnable {
         for (i = 0; i < EasyDccReply.maxSize; i++) {
         	byte char1 = istream.readByte();
             msg.setElement(i, char1);
-        	if (endCOMMAND(msg)) break;
+        	if (endReply(msg)) break;
         }
-              	
+
  		// message is complete, dispatch it !!
         if (log.isDebugEnabled()) log.debug("dispatch reply of length "+i);
-   		{ 
+   		{
 			final EasyDccReply thisMsg = msg;
 			final EasyDccTrafficController thisTC = this;
 			// return a notification via the queue to ensure end
 			Runnable r = new Runnable() {
 				EasyDccReply msgForLater = thisMsg;
 				EasyDccTrafficController myTC = thisTC;
-				public void run() { 
+				public void run() {
 					log.debug("Delayed notify starts");
 					myTC.notifyReply(msgForLater);
 				}
@@ -240,21 +240,14 @@ public class EasyDccTrafficController implements EasyDccInterface, Runnable {
 			javax.swing.SwingUtilities.invokeLater(r);
 		}
 	}
-	
-	boolean endCOMMAND(EasyDccReply msg) {
-		// detect that the reply buffer ends with "COMMAND: " (note ending space)
-		int num = msg.getNumDataElements();
-		if ( num >= 9) {
-			// ptr is offset of last element in EasyDccReply
-			int ptr = num-1;
-			if (msg.getElement(ptr-1) != ':') return false;
-			if (msg.getElement(ptr)   != ' ') return false;
-			if (msg.getElement(ptr-2) != 'D') return false;
-			return true;
-		} 
-		else return false;
+
+	boolean endReply(EasyDccReply msg) {
+		// detect that the reply buffer ends with "\n"
+		int index = msg.getNumDataElements()-1;
+        if (msg.getElement(index) != 0x0d) return false;
+		else return true;
 	}
-	
+
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccTrafficController.class.getName());
 }
 

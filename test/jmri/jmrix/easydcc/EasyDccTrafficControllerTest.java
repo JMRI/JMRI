@@ -37,7 +37,6 @@ public class EasyDccTrafficControllerTest extends TestCase {
 
 		// send a message
 		EasyDccMessage m = new EasyDccMessage(3);
-		m.setBinary(false);
 		m.setOpCode('0');
 		m.setElement(1, '1');
 		m.setElement(2, '2');
@@ -47,27 +46,6 @@ public class EasyDccTrafficControllerTest extends TestCase {
 		Assert.assertEquals("Char 1", '1', tostream.readByte());
 		Assert.assertEquals("Char 2", '2', tostream.readByte());
 		Assert.assertEquals("EOM", 0x0d, tostream.readByte());
-		Assert.assertEquals("remaining ", 0, tostream.available());
-	}
-
-	public void testSendBinary() throws Exception {
-		EasyDccTrafficController c = new EasyDccTrafficController();
-
-		// connect to iostream via port controller
-		EasyDccPortControllerScaffold p = new EasyDccPortControllerScaffold();
-		c.connectPort(p);
-
-		// send a message
-		EasyDccMessage m = new EasyDccMessage(3);
-		m.setBinary(true);
-		m.setOpCode(0x81);
-		m.setElement(1, 0x12);
-		m.setElement(2, 0x34);
-		c.sendEasyDccMessage(m, new EasyDccListenerScaffold());
-		Assert.assertEquals("total length ", 3, tostream.available());
-		Assert.assertEquals("Char 0", 0x81, 0xFF & tostream.readByte());
-		Assert.assertEquals("Char 1", 0x12, tostream.readByte());
-		Assert.assertEquals("Char 2", 0x34, tostream.readByte());
 		Assert.assertEquals("remaining ", 0, tostream.available());
 	}
 
@@ -120,22 +98,13 @@ public class EasyDccTrafficControllerTest extends TestCase {
 		// that's already tested, so don't do here.
 
 		// now send reply
-		tistream.write('R');
+		tistream.write('P');
 		tistream.write(0x0d);
-		tistream.write('C');
-		tistream.write('O');
-		tistream.write('M');
-		tistream.write('M');
-		tistream.write('A');
-		tistream.write('N');
-		tistream.write('D');
-		tistream.write(':');
-		tistream.write(' ');
 
 		// drive the mechanism
 		c.handleOneIncomingReply();
 		Assert.assertTrue("reply received ", waitForReply());
-		Assert.assertEquals("first char of reply ", 'R', rcvdReply.getOpCode());
+		Assert.assertEquals("first char of reply ", 'P', rcvdReply.getOpCode());
 	}
 
 
