@@ -1,5 +1,6 @@
 package jmri.jmrit.throttle;
 
+import jmri.InstanceManager;
 import javax.swing.JButton;
 import javax.swing.JPopupMenu;
 import javax.swing.JMenuItem;
@@ -107,11 +108,10 @@ public class FunctionButton extends JButton implements ActionListener
      */
     public void actionPerformed(ActionEvent e)
     {
-        // display properties dialog
-        // TODO Manage a single dialog
-        FunctionButtonPropertyEditor editor = new FunctionButtonPropertyEditor();
+        FunctionButtonPropertyEditor editor =
+                InstanceManager.throttleManagerInstance().getFunctionButtonEditor();
         editor.setFunctionButton(this);
-        editor.setLocation(this.getLocation());
+        editor.setLocation(this.getLocationOnScreen());
         editor.setVisible(true);
     }
 
