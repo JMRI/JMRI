@@ -1,6 +1,6 @@
 <!-- ugly first attempt at an ANT build.xml file for JMRI development -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.37 $ -->
+<!-- Revision $Revision: 1.38 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -66,6 +66,23 @@
     </copy>
   </target>
 
+  <target name="debug" depends="init" description="compile source with debugging on, omitting tests">
+    <!-- Compile the java code from ${source} into ${target} -->
+    <javac srcdir="${source}" 
+           destdir="${target}" 
+           target="1.1" 
+           debug="yes" >
+       <classpath refid="project.class.path"    />
+    </javac>
+    <!-- Copy top level resources to include in jar file -->
+    <copy todir="${target}/resources/">
+      <fileset dir="src/resources" includes="*.gif"  /> 
+    </copy>
+    <copy todir="${target}">
+      <fileset dir="src/" includes="**/*.properties"  /> 
+    </copy>
+  </target>
+
   <target name="rmic" depends="compile" description="build RMI stubs and compile">
     <!-- Run rmic on specified classes -->
     <rmic includes="**/LnMessageBuffer.class, **/LnMessageServer.class"
@@ -77,7 +94,9 @@
   <target name="tests" depends="compile" description="compile test classes">
     <!-- Compile the test java code from ${source} into ${target} -->
     <javac srcdir="${test}" 
-           destdir="${target}" >
+           destdir="${target}"
+           target="1.1" 
+           debug="yes" >
        <classpath refid="project.class.path"    />
     </javac>
   </target>
