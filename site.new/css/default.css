@@ -498,7 +498,7 @@ hr {
 }
 #side li {
 	list-style: none;
-	background: transparent url(../images/w6.gif) top left no-repeat;
+	/* background: transparent url(../images/w6.gif) top left no-repeat; */
 	padding: 0 0 0.3em 11px;
 }
 
