@@ -21,7 +21,7 @@ import jmri.AbstractSignalHead;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */public class SE8cSignalHead extends AbstractSignalHead implements LocoNetListener {
 
     public SE8cSignalHead(int pNumber, String userName) {
@@ -99,6 +99,9 @@ import jmri.AbstractSignalHead;
          int hiadr = (address-1)/128;
          int loadr = (address-1)-hiadr*128;
          if (closed) hiadr |= 0x20;
+
+         // set "on" bit
+         hiadr |= 0x10;
 
          // store and send
          l.setElement(1,loadr);
