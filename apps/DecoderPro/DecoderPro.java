@@ -13,7 +13,7 @@ import jmri.util.oreilly.*;
  * DecoderPro application.
  *
  * @author                      Bob Jacobsen
- * @version                     $Revision: 1.30 $
+ * @version                     $Revision: 1.31 $
  */
 public class DecoderPro extends JPanel {
     public DecoderPro() {
@@ -61,6 +61,15 @@ public class DecoderPro extends JPanel {
         toolMenu.add(new jmri.jmrit.simpleprog.SimpleProgAction("Single CV Programmer"));
         toolMenu.add(new jmri.jmrit.speedometer.SpeedometerAction( "Speedometer" ));
         toolMenu.add(new JSeparator());
+
+        JMenu throttleMenu = new JMenu("Throttles");
+        throttleMenu.add(new jmri.jmrit.throttle.ThrottleCreationAction( "New Throttle..." ));
+        throttleMenu.add(new jmri.jmrit.throttle.StoreXmlThrottleAction( "Save Throttle Layout" ));
+        throttleMenu.add(new jmri.jmrit.throttle.LoadXmlThrottleAction( "Load Throttle Layout" ));
+        throttleMenu.add(new jmri.jmrit.throttle.EditThrottlePreferencesAction( "Edit Throttle Preferences" ));
+        toolMenu.add(throttleMenu);
+        toolMenu.add(new JSeparator());
+
         toolMenu.add(new jmri.jmrit.XmlFileCheckAction("Check XML File", this));
         toolMenu.add(new jmri.jmrit.decoderdefn.NameCheckAction("Check decoder names", this));
         toolMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.ProgCheckAction("Check programmer names", this));
