@@ -10,7 +10,7 @@ import jmri.jmrix.AbstractThrottle;
  * with values from 0 to 127.
  * <P>
  * @author  Glen Oberhauser, Bob Jacobsen  Copyright (C) 2003
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     private LocoNetSlot slot;
@@ -82,6 +82,18 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     }
 
     /**
+     * Convert a float speed value to a LocoNet speed integer
+     */
+    protected int intSpeed(float fSpeed) {
+      if (fSpeed == 0.f)
+        return 0;
+      else if (fSpeed < 0.f)
+        return 1;   // estop
+        // add the 0.5 to handle float to int round for positive numbers
+      return (int)(fSpeed * 126.f + 0.5) + 1 ;
+    }
+
+    /**
      * Send the LocoNet message to set the state of locomotive
      * direction and functions F0, F1, F2, F3, F4
      */
@@ -136,10 +148,8 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         LocoNetMessage msg = new LocoNetMessage(4);
         msg.setOpCode(LnConstants.OPC_LOCO_SPD);
         msg.setElement(1, slot.getSlot());
-        int value = (int)((127-1)*speed);     // -1 for rescale to avoid estop
-        if (value>0) value = value+1;  // skip estop
-        if (value>127) value = 127;    // max possible speed
-        if (value<0) value = 1;        // emergency stop
+        int value = intSpeed( speed );
+        log.debug( "setSpeedSetting: float speed: " + speed + " LocoNet speed: " + value );
         msg.setElement(2, value);
         network.sendLocoNetMessage(msg);
     }
@@ -235,8 +245,11 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
         // handle change in each state
         if (this.speedSetting != floatSpeed(slot.speed())) {
-            notifyPropertyChangeListener("SpeedSetting",
-                    new Float(this.speedSetting), new Float(this.speedSetting = floatSpeed(slot.speed())));
+          Float newSpeed = new Float( floatSpeed(slot.speed() ) ) ;
+          log.debug( "notifyChangedSlot: old speed: " + this.speedSetting + " new Speed: " + newSpeed );
+          notifyPropertyChangeListener("SpeedSetting",
+                    new Float(this.speedSetting), newSpeed );
+          this.speedSetting = newSpeed.floatValue() ;
         }
 
         if (this.isForward != slot.isForward()) {
