@@ -326,7 +326,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 				// get the file name
 				String mfg = decoder.getAttribute("mfg").getValue();
 				String model = decoder.getAttribute("model").getValue();
-				String filename = "xml/"+mfg+"_"+model+".xml";
+				String filename = "xml"+File.separator+mfg+"_"+model+".xml";
 				if (log.isInfoEnabled()) log.info("will read decoder info from "+filename);
 				readAndParseConfigFile(new File(filename));
 				if (log.isDebugEnabled()) log.debug("finished processing decoder file for loco file");
