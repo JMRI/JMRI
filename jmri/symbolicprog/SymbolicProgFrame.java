@@ -14,6 +14,7 @@ import javax.swing.*;
 import javax.swing.table.*;
 
 import java.io.File;
+import java.io.FileInputStream;
 import com.sun.java.util.collections.List;
 
 import jmri.Programmer;
@@ -273,7 +274,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 			Namespace ns = Namespace.getNamespace("decoder",
 										"http://jmri.sourceforge.net/xml/decoder");
 			SAXBuilder builder = new SAXBuilder(true);  // argument controls validation, on for now
-			Document doc = builder.build(file);
+			Document doc = builder.build(new FileInputStream(file),"xml"+File.separator);
 			// find root
 			Element root = doc.getRootElement();
 			
@@ -283,7 +284,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 				ns = Namespace.getNamespace("locomotive",
 										"http://jmri.sourceforge.net/xml/locomotive");
 				builder = new SAXBuilder(true);  // argument controls validation, on for now
-				doc = builder.build(file);
+				doc = builder.build(new FileInputStream(file),"xml"+File.separator);
 				root = doc.getRootElement();
 				if (root.getChild("locomotive", ns) != null) processLocoFile(root.getChild("locomotive", ns));
 				else log.error("Unrecognized config file contents");
