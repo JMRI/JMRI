@@ -34,7 +34,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * used with permission.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2003
- * @version			$Revision: 1.31 $
+ * @version			$Revision: 1.32 $
  */
 public class Llnmon {
 
@@ -1508,7 +1508,9 @@ public class Llnmon {
             int val = (l.getElement(4)&0x01);
             int wrd = (l.getElement(4)&0x70)/16;
             int opsw = (l.getElement(4)&0x7E)/2+1;
-            return device+(l.getElement(2)+1)+
+            int bdaddr = l.getElement(2)+1;
+            if ((l.getElement(1)&0x1) != 0 ) bdaddr += 128;
+            return device+bdaddr+
                 ( ((l.getElement(1)&0x10)!=0) ? " write config bit ":" read config bit ")
                 +wrd+","+bit+" (opsw "+opsw+") val="+val
                 +(val==1 ? " (closed) ":" (thrown) ")+"\n";
