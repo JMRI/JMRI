@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  * MemoryTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class MemoryTableAction extends AbstractTableAction {
@@ -50,7 +50,7 @@ public class MemoryTableAction extends AbstractTableAction {
 
     /**
      * Create the JTable DataModel, along with the changes
-     * for the specific case of Memorys
+     * for the specific case of Memory objects
      */
     void createModel() {
         m = new BeanTableDataModel() {
