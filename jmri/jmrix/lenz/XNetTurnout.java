@@ -3,7 +3,7 @@
  *
  * Description:		extend jmri.AbstractTurnout for XNet layouts
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 
 package jmri.jmrix.lenz;
@@ -62,19 +62,18 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
            // indicates this turnout is to change state or if it is for 
            // another turnout.
 		  parseFeedbackMessage(l);
-		newKnownState(getCommandedState());
            }
 	} else if(XNetTrafficController.instance().getCommandStation()
                                                   .isFeedbackMessage(l)) {
-           // XNetMessage msg =  XNetTrafficController.instance()
-           //                                     .getCommandStation()
-	   //					  .getTurnoutCommandMsg(mNumber,
-           //                                     getCommandedState()!=CLOSED,
-           //                                     getCommandedState()!=THROWN,
-           //                                       false );
-           //     XNetTrafficController.instance().sendXNetMessage(msg, this);
-		  parseFeedbackMessage(l);
-		newKnownState(getCommandedState());
+	    parseFeedbackMessage(l);
+            XNetMessage msg =  XNetTrafficController.instance()
+                                                .getCommandStation()
+	   					  .getTurnoutCommandMsg(mNumber,
+                                                  getCommandedState()==CLOSED,
+                                                  getCommandedState()==THROWN,
+                                                  false );
+            XNetTrafficController.instance().sendXNetMessage(msg, this);
+            XNetTrafficController.instance().sendXNetMessage(msg, this);
 
 	  // The first case is that we recieve a message for this turnout
           // and this turnout provides feedback.
@@ -105,12 +104,13 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                                     .getCommandStation()
                                     .getTurnoutStatus(l,1)==THROWN) {
                newCommandedState(THROWN);
+               newKnownState(getCommandedState());
             } else if(XNetTrafficController.instance()
                                     .getCommandStation()
                                     .getTurnoutStatus(l,1)==CLOSED) { 
                newCommandedState(CLOSED);
+               newKnownState(getCommandedState());
             } else return -1;
-            newKnownState(getCommandedState());
         } else if (((mNumber%2)==0) && 
                    (XNetTrafficController.instance()
                                  .getCommandStation()
@@ -121,12 +121,13 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                                     .getCommandStation()
                                     .getTurnoutStatus(l,0)==THROWN) {
                newCommandedState(THROWN);
+               newKnownState(getCommandedState());
             } else if(XNetTrafficController.instance()
                                     .getCommandStation()
                                     .getTurnoutStatus(l,0)==CLOSED) { 
                newCommandedState(CLOSED);
+               newKnownState(getCommandedState());
             } else return -1;
-            newKnownState(getCommandedState());
         }    
        return(-1);
     }
