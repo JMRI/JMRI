@@ -11,7 +11,7 @@ import jmri.*;
  *  of tu20, tu21, tu22. Includes additional routes.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class CrrSection18B extends CrrSection {
 
@@ -43,13 +43,15 @@ public class CrrSection18B extends CrrSection {
         boolean si96 = ( si[96].getCommandedState() == THROWN);
 
         int value = GREEN;
-        if ( !tu23 || bo27 )
+        if ( !tu23 )
+            value = RED;
+        else if ( bo27 )
             value = RED;
         else if ( !tu22 && bo24 )
             value = RED;
-        else if ( !tu22 && tu19 )
+        else if ( !tu22 && !tu18 && bo34 )
             value = RED;
-        else if ( !tu22 && !tu19 && !tu18 && bo34 )
+        else if ( !tu22 && tu18 && !tu19 )
             value = RED;
         else if ( tu22 && !tu21 && bo25 )
             value = RED;
