@@ -27,7 +27,7 @@ public abstract class AbstractProgrammer implements Programmer {
 		// add each code; terminate each string with "; " please.
 		if ((code & ProgListener.NoLocoDetected) != 0) sbuf.append("no locomotive detected; ");
 		if ((code & ProgListener.ProgrammerBusy) != 0) sbuf.append("programmer busy; ");
-		if ((code & ProgListener.NotImplemented) != 0) sbuf.append("requested capability not implemented; ");
+		if ((code & ProgListener.NotImplemented) != 0) sbuf.append("requested not implemented in command station; ");
 		if ((code & ProgListener.UserAborted) != 0) sbuf.append("aborted by user; ");
 		if ((code & ProgListener.ConfirmFailed) != 0) sbuf.append("confirm failed; ");
 		if ((code & ProgListener.FailedTimeout) != 0) sbuf.append("timeout talking to command station; ");

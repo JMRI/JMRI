@@ -26,7 +26,7 @@ import java.beans.PropertyChangeEvent;
  * <LI>Wait for Normal Operations Resumed broadcast
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -164,7 +164,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		_cv = CV;
 
 		// start the error timer
-		startLongTimer();
+		startShortTimer();
 
 		// format and send message to go to program mode
         if (_mode == Programmer.PAGEMODE)
@@ -208,8 +208,16 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 			    controller().sendXNetMessage(XNetTrafficController.instance()
                                     .getCommandStation().getServiceModeResultsMsg(),
                                     this);
+                return;
+            } else if (m.getElement(0)==0x61 && m.getElement(1)==0x82) {
+                // programming operation not supported by this command station
+			    progState = NOTPROGRAMMING;
+			    controller().sendXNetMessage(XNetTrafficController.instance()
+                                    .getCommandStation().getExitProgModeMsg(),
+                                    this);
+			    notifyProgListenerEnd(_val, jmri.ProgListener.NotImplemented);
+                return;
             }
-            return;
 
 		} else if (progState == INQUIRESENT) {
 			if (log.isDebugEnabled()) log.debug("reply in INQUIRESENT state");
