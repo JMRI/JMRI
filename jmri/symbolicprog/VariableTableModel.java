@@ -6,25 +6,27 @@
  * @version			
  */
 
-package symbolicprog;
-
-import ErrLoggerJ.ErrLog;
+package jmri.symbolicprog;
 
 import javax.swing.JButton;
 import java.util.Vector;
+import com.sun.java.util.collections.List;
 import org.jdom.Element;
 import org.jdom.Namespace;
 
 
 public class VariableTableModel extends javax.swing.table.AbstractTableModel {
 
-	String headers[] = new String[]  {
-		"Name", "Value", "Read", "Write", "Comment", "CV", "mask" };
+	String headers[] = null;
+
+	// values understood are: 	
+	//  "Name", "Value", "Read", "Write", "Comment", "CV", "Mask"
 	
 	int numRows = 0;                // must be zero until Vectors are initialized
 	Vector rowVector = new Vector();  // vector of row vectors
 	
-	VariableTableModel() {  
+	public VariableTableModel(String h[]) {  
+		headers = h;
 		}
 	
 	// basic methods for AbstractTableModel implementation
@@ -54,26 +56,49 @@ public class VariableTableModel extends javax.swing.table.AbstractTableModel {
 		row.removeAllElements();
 		for (int j=0; j<getColumnCount(); j++) row.addElement(null);
 
-		// start setting configured values in positions defined by headers
-		row.setElementAt(e.getAttribute("name").getValue(), 0);
-		if (e.getAttribute("comment") != null)
-			row.setElementAt(e.getAttribute("comment").getValue(), 4); 
-		row.setElementAt(e.getAttribute("CV").getValue(), 5);
-		row.setElementAt(e.getAttribute("mask").getValue(), 6);
-		
-		// add controls
-		
-		// handle value (temporary, until know how to add objects)
-		if (e.getChild("binaryVal", ns) != null )  {
-			row.setElementAt("binary", 1);
-		} else if (e.getChild("decVal", ns) != null )  {
-			row.setElementAt("decimal", 1);
-		} else if (e.getChild("hexVal", ns) != null )  {
-			row.setElementAt("hex", 1);
-		} else if (e.getChild("enumVal", ns) != null )  {
-			row.setElementAt("enum", 1);
+		for (int j=0; j<getColumnCount(); j++) {
+			// j is column; headers[j] is desired variable
+			// would prefer switch, but have to switch on int
+			String var = headers[j];
+			if (var == "Name") {
+				row.setElementAt(e.getAttribute("name").getValue(), j);
+			} else if (var == "Value") {
+				// handle value (temporary, until know how to add objects)
+				if (e.getChild("binaryVal", ns) != null )  {
+					row.setElementAt("binary: "+e.getChild("binaryVal", ns).getAttribute("phrasing").getValue(), j);
+				} else if (e.getChild("decVal", ns) != null )  {
+					row.setElementAt("decimal: "+e.getChild("decVal", ns).getAttribute("min").getValue()
+									 +"-"+e.getChild("decVal", ns).getAttribute("max").getValue(), j);
+				} else if (e.getChild("hexVal", ns) != null )  {
+					row.setElementAt("hex", j);
+				} else if (e.getChild("enumVal", ns) != null )  {
+					String temp = "enum: ";
+					List l = e.getChild("enumVal", ns).getChildren("enumEntry", ns);
+					for (int k=0; k< l.size(); k++)
+						temp += ((Element)l.get(k)).getAttribute("name");
+					row.setElementAt(temp, j);
+				} else if (e.getChild("speedTableVal", ns) != null )  {
+					row.setElementAt("speed table", j);
+				} else if (e.getChild("longAddressVal", ns) != null )  {
+					row.setElementAt("long address", j);
+				} else if (e.getChild("readOnlyVal", ns) != null )  {
+					row.setElementAt("read only value", j);
+				} else
+				row.setElementAt("unrecognized data type!!!", j);
+			} else if (var == "Read") {
+			} else if (var == "Write") {
+			} else if (var == "Comment") {
+				if (e.getAttribute("comment") != null)
+					row.setElementAt(e.getAttribute("comment").getValue(), j); 
+			} else if (var == "CV") {
+				row.setElementAt(e.getAttribute("CV").getValue(), j);
+			} else if (var == "Mask") {
+				row.setElementAt(e.getAttribute("mask").getValue(), j);
+			} else { // no match is an error
+				row.setElementAt("Unrecognized column name", j);
+			}
+			
 		}
-
 	}
 	
 	public void configDone() {

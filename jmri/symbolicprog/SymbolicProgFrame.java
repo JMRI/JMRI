@@ -6,11 +6,12 @@
  * @version			
  */
 
-package symbolicprog;
+package jmri.symbolicprog;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
 import java.io.File;
 import com.sun.java.util.collections.List;
 
@@ -34,9 +35,16 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 	// GUI member declarations
 	javax.swing.JButton selectFileButton = new javax.swing.JButton();
 
-	VariableTableModel		variableModel	= new VariableTableModel();
+	VariableTableModel		variableModel	= new VariableTableModel(
+					new String[]  {"Name", "Value", "Read", "Write", "CV", "Mask", "Comment" });
 	JTable					variableTable	= new JTable(variableModel);
 	JScrollPane 			variableScroll	= new JScrollPane(variableTable);
+
+	javax.swing.ButtonGroup modeGroup 			= new javax.swing.ButtonGroup();
+	javax.swing.JRadioButton pagedButton    	= new javax.swing.JRadioButton();
+	javax.swing.JRadioButton directByteButton   = new javax.swing.JRadioButton();
+	javax.swing.JRadioButton directBitButton    = new javax.swing.JRadioButton();
+	javax.swing.JRadioButton registerButton 	= new javax.swing.JRadioButton();
 		
 	// member to find and remember the configuration file
 	final JFileChooser fc = new JFileChooser("xml");
@@ -48,6 +56,11 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 		selectFileButton.setText("Select File");
 		selectFileButton.setVisible(true);
 		selectFileButton.setToolTipText("Press to select configuration file");
+
+		pagedButton.setText("Paged Mode");
+		directByteButton.setText("Direct Byte Mode");
+		directBitButton.setText("Direct Bit Mode");
+		registerButton.setText("Register Mode");
 
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
 		variableTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -65,6 +78,19 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 
 		// install items in GUI
 		getContentPane().add(selectFileButton);  
+
+		JPanel tPane2 = new JPanel();
+			tPane2.setLayout(new BoxLayout(tPane2, BoxLayout.Y_AXIS));
+			modeGroup.add(pagedButton);
+			modeGroup.add(directBitButton);
+			modeGroup.add(directByteButton);
+			modeGroup.add(registerButton);
+			tPane2.add(pagedButton);
+			tPane2.add(directBitButton);
+			tPane2.add(directByteButton);
+			tPane2.add(registerButton);
+		getContentPane().add(tPane2);
+
 		getContentPane().add(variableScroll);
 
 		pack();
@@ -77,10 +103,11 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 		// handle selection or cancel
 		if (retVal == JFileChooser.APPROVE_OPTION) {
 			File file = fc.getSelectedFile();
-			System.out.println("File found: "+file);
+			ErrLog.msg(ErrLog.routine, "SymbolicProgFrame", "selectFileButtonActionPerformed", "located file "+file+" for XML processing");
 			// handle the file (later should be outside this thread?)
 			readAndParseDecoderConfig(file);
-			System.out.println("Parsing done!");
+			ErrLog.msg(ErrLog.routine, "SymbolicProgFrame", "selectFileButtonActionPerformed", 
+					"parsing complete");
 
 		}
   	}	
@@ -125,7 +152,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 			// Open and parse file
 			ns = Namespace.getNamespace("decoder",
 										"http://jmri.sourceforge.net/xml/decoder");
-			SAXBuilder builder = new SAXBuilder(false);
+			SAXBuilder builder = new SAXBuilder(true);  // arugment controls validation, on for now
 			doc = builder.build(file);
 			
 			// find root
@@ -133,9 +160,6 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 		
 			// find decoder id, assuming first decoder is fine for now (e.g. one per file)
 			Element decoderID = root.getChild("decoder",ns).getChild("id",ns);
-			
-			// print attributes of ID
-			System.out.println("Model: "+decoderID.getAttribute("model").getValue());
 			
 			// start loading variables to table
 			List varList = root.getChild("decoder", ns).getChild("variables",ns).getChildren("variable",ns);
@@ -147,7 +171,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 			variableModel.configDone();
 			
 		} catch (Exception e) {
-			System.out.println("readAndParseDecoderConfig exception: "+e);
+			ErrLog.msg(ErrLog.error, "SymbolicProgFrame", "readAndParseDecoderConfig", "readAndParseDecoderConfig exception: "+e);
 		}
 
 	}
