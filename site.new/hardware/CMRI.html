@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CMRI.html,v 1.8 2004-12-31 01:26:48 jacobsen Exp $ -->
+<!-- $Id: CMRI.html,v 1.9 2005-01-27 20:31:14 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -91,10 +91,17 @@
 		    <li>Protocol as "C/MRI serial"
 		    <li>For serial port, select the one your hardware is attached to.
 		    <li>Select the baud rate your C/MRI system uses
-		    <li>Select "SMINI" from the initialization box
-		    <li>Click save, and say yes when it asks if you want to quit.
+		    <li>Click the "Configure C/MRI nodes" button. On the
+		        new panel that opens:
+		        <UL>
+		        <LI>Enter a node address (0 is typically used for the first card)
+    		    <li>Select "SMINI" from the initialization box
+    		    <li>Click "Add Node"
+    		    <LI>Click "Done"
+    		    </ul>
+		    <li>Back on the "Preferences..." panel, click "Save", and say yes when it asks if you want to quit.
 	        </ul>
-		<li>Restart the JMRIdemo program. Your SMINI's red and yellow
+		<li>Restart the program. Your SMINI's red and yellow
 		LEDs should now be flashing, indicating that the computer and
 		SMINI are talking.
 		<li>To check that everything is working, select "Turnout
@@ -108,45 +115,48 @@
 	<dt class=left>Use with other C/MRI hardware</dt>
 	<dd>
 	<p>A C/MRI system needs an initialization string before it can
-	communicate.  	Look at C/MRI in July 1986 MRr, which says the format
-	of the initialization message is:</p>
-
-	<p class=example>
-	    0x41  UA+65, starting with UA 0<br>
-	    0x49  "I" for initialization<br>
-	    0x4E  "N" CRC not enabled<br>
-	    0x01  delay MSByte<br>
-	    0x09  delay LSByte  (units are 10usec)<br>
-	    0x01  NS=1   Number of card-Sets-of-four<br>
-	    0x02  CT(1) = 2  (up to NS items appear here)<br>
-	            each CT value is set of 4 2-bit fields coded <br>
-	            0=no-card, 1=input-card, 2=output-card, 3=reserved<br>
-	            LS2bits is card in slot 1 of the set of four, <br>
-	            MS2bits is card in slot 4 of the set of four
-	</p>
-
-	<p>(The sofware puts the STX, DLE and ETX characters as needed to frame
-	the packet). More recent hardware, like the SMINI, use slightly
-	different messages. 
-
-	<p> For example, a system with 8 input cards would have:</p>
-	<p class=example>
-	     41 49 4E 01 09 02 55 55
-	</p>
-
-	<p>Nick Kulp's Cornwall Railroad has 2 output cards, then 2 input
-	cards, then three output cards, an input card, and one more output
-	cards.  It uses the string:
-	<p class=example>
-	 41 49 4E 00 0A 03 5A 9A 02
-	</p>
-
-	<p> Note that you're referring to the cards by the addresses set on
-	them, not by their position on the motherboard.  </p>
-
-	<p> Enter the initialization message for your system in the preferences
-	panel, and then restart the program.</p>
-
+	communicate. The program will automatically create that, but
+	you need to specify the details of how your C/MRI hardware
+	is set up.  To do this:
+	    <ol>
+		<li>Start the JMRIdemo program
+		<li>From the edit menu, select preferences and configure:
+	        <ul>
+		    <li>Protocol as "C/MRI serial"
+		    <li>For serial port, select the one your hardware is attached to.
+		    <li>Select the baud rate your C/MRI system uses
+		    <li>Click the "Configure C/MRI nodes" button. On the
+		        new panel that opens:
+		        <UL>
+		        <LI>Enter a node address (0 is typically used for the first card)
+                <LI>Select "USIC_SUIC" in the "node type box". 
+                <LI>Leave DL at zero.
+                <LI>Select "24-bit" or "32-bit" in "Card size", depending
+                    on whether you have the original 24 bit or newer 32 bit 
+                    DI and DO cards.
+                <LI> Configure your cards in the table below that.  
+                    For each card you've got installed, click where it 
+                    says "No Card" and select "Input 
+                    Card" or "Output Card"    		    
+                <li>Click "Add Node"
+    		    <li>If you have additional nodes, you can enter their address
+    		    and repeat the process now.  To make debugging
+    		    simpler if anything goes wrong, it might be better to just get
+    		    one working at first, and come back later to add the rest of the nodes.
+    		    <LI>Click "Done"
+    		    </ul>
+		    <li>Back on the "Preferences..." panel, click "Save", and say yes when it asks if you want to quit.
+	        </ul>
+		<li>Restart the program. The transmit and receive
+		LEDs on your C/MRI controller should now be flashing, indicating that the computer and
+		controller are talking.
+		<li>To check that everything is working, select "Turnout
+		Control" from the tools menu.  This will open a small window in
+		which you can select a turnout number (<a href="#numbers">see
+		below</a>), then click closed/thrown to change the state of
+		that output.
+	    </ol>
+	
 	</dd>
 
 	<dt class=left><a name=signals>Wiring Signals</a></dt>
