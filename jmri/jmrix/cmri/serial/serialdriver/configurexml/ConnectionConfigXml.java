@@ -19,7 +19,7 @@ import org.jdom.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -97,11 +97,11 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
             node.setNum2LSearchLights(num2l);
             
             for (int j = 0; j<slb.length(); j++) {
-            	node.setLocSearchLightBits(j, slb.charAt(j));
+            	node.setLocSearchLightBits(j, (slb.charAt(j)-'0') );
             }
             
             for  (int j = 0; j<ctl.length(); j++) {
-            	node.setCardTypeLocation(j, ctl.charAt(j));
+            	node.setCardTypeLocation(j, (ctl.charAt(j)-'0') );
             }
             
 
