@@ -8,13 +8,14 @@ import jmri.*;
  * Abstract base class for Cornwall RR automation.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public abstract class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
     static final int RED    = SignalHead.RED;
     static final int YELLOW = SignalHead.YELLOW;
     static final int GREEN  = SignalHead.GREEN;
     static final int DARK   = SignalHead.DARK;
+    static final int FLASHYELLOW = SignalHead.FLASHYELLOW;
 
     static final int ACTIVE   = Sensor.ACTIVE;
     static final int INACTIVE = Sensor.INACTIVE;
