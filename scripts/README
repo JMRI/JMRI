@@ -30,7 +30,7 @@ Start the demo by double-clicking on the "JMRI Demo" application icon.
 Macintosh MacOS X instructions:
 =====================================
 
-Under MacOS 10.1 and later, double-click the "JMRI MacOSX" icon
+Under MacOS 10.1.1 and later, double-click the "JMRI MacOSX" icon
 to run the demo natively under MacOS X. It will have the nice Aqua interface.  
 
 You will need drivers for the serial hardware you're using.  We test

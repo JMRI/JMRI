@@ -17,9 +17,9 @@ Making a distribution (substitute the release-name for 0.N throughout):
 		log4j.jar
 		xerces.jar
 		comm.jar
-		jdom-???.jar
+		jdom-jdk11.jar
 
-( ) Move the jmri.jar and jmriwin75.jar files to the distribution folder
+( ) Move the jmri.jar and JmriWin95.jar files to the distribution folder
 
 ( ) Update the various text files from the CVS scripts module. Change the
 	creator code of README to ttxt (SimpleText)
