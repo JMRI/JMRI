@@ -17,7 +17,7 @@ import javax.swing.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author			Bob Jacobsen   Copyright 2002
- * @version         $Revision: 1.42 $
+ * @version         $Revision: 1.43 $
  */
 public class JMRIdemo extends JPanel {
     public JMRIdemo() {
@@ -111,6 +111,7 @@ public class JMRIdemo extends JPanel {
         throttleMenu.add(new jmri.jmrit.throttle.ThrottleCreationAction( "New Throttle..." ));
         throttleMenu.add(new jmri.jmrit.throttle.StoreXmlThrottleAction( "Save Throttle Layout" ));
         throttleMenu.add(new jmri.jmrit.throttle.LoadXmlThrottleAction( "Load Throttle Layout" ));
+        throttleMenu.add(new jmri.jmrit.throttle.EditThrottlePreferencesAction( "Edit Throttle Preferences" ));
         locoMenu.add(throttleMenu);
 
         JMenu nceMenu = new JMenu("NCE");
