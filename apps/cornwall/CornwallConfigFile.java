@@ -16,12 +16,30 @@ import org.jdom.output.*;
  * JmriDemo application. Works with the CornwallConfigFrame
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  * @see apps.AbstractConfigFrame
  */
 public class CornwallConfigFile extends apps.AbstractConfigFile {
 
     protected String configFileName() { return "CornwallConfig.xml";}
+
+    protected void writeConnection(Element root, AbstractConfigFrame f) {
+        // add connection elements
+        root.addContent(f.getCommPane().getConnection());
+        root.addContent(((CornwallConfigFrame)f).getCommPane2().getConnection());
+    }
+
+    public Element getConnectionElement2() {
+        return _connection2;
+    }
+
+    protected void readConnection(Element root) {
+        List l = root.getChildren("connection");
+        if (l.size()!=2) log.error("wrong number of connection elements: "+l.size());
+        if (l.size()>=1) _connection = (Element)l.get(0);
+        if (l.size()>=2) _connection2 = (Element)l.get(1);
+    }
+    Element _connection2;
 
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CornwallConfigFile.class.getName());

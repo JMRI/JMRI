@@ -8,6 +8,8 @@ import java.util.*;
 import javax.swing.*;
 import org.jdom.Element;
 import org.jdom.Attribute;
+import apps.*;
+import jmri.*;
 
 /**
  * CornwallConfigFrame provides startup configuration, a GUI for setting
@@ -20,12 +22,26 @@ import org.jdom.Attribute;
  * stored in local variables.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
-public class CornwallConfigFrame extends apps.AbstractConfigFrame {
+public class CornwallConfigFrame extends AbstractConfigFrame {
 
     public CornwallConfigFrame(String name) {
         super(name);
+    }
+
+    protected void addCommPane() {
+        commPane = new DefaultCommConfigPane(availableProtocols());
+        getContentPane().add(commPane);
+        getContentPane().add(new JSeparator());
+        commPane2 = new DefaultCommConfigPane(availableProtocols());
+        getContentPane().add(commPane2);
+        getContentPane().add(new JSeparator());
+    }
+
+    protected DefaultCommConfigPane commPane2;
+    public DefaultCommConfigPane getCommPane2() {
+        return commPane2;
     }
 
     /**
@@ -37,6 +53,26 @@ public class CornwallConfigFrame extends apps.AbstractConfigFrame {
                               "LocoNet LocoBuffer","LocoNet MS100",
                               "LocoNet Server", "LocoNet HexFile"
         };
+    }
+
+    /**
+     * Command reading the configuration, and setting it into the application.
+     * Returns true if
+     * a configuration file was found and loaded OK.
+     * @param file Input configuration file
+     * @throws jmri.JmriException from internal code
+     * @return true if successful
+     */
+    public boolean configure(AbstractConfigFile file) throws jmri.JmriException {
+        boolean connected = commPane.configureConnection(file.getConnectionElement());
+        boolean connected2 = commPane2.configureConnection(((CornwallConfigFile)file).getConnectionElement2());
+        boolean gui = configureGUI(file.getGuiElement());
+        boolean programmer = configureProgrammer(file.getProgrammerElement());
+
+        // install custom TurnoutManager
+        InstanceManager.setTurnoutManager(new DoubleTurnoutManager());
+
+        return connected&&connected2&&gui&&programmer;
     }
 
     /**

@@ -8,7 +8,7 @@ import apps.*;
  * Swing action to create CornwallConfigFrame
  *
  * @author	Bob Jacobsen    Copyright (C) 2001
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class CornwallConfigAction extends AbstractConfigAction {
 
@@ -54,6 +54,9 @@ public class CornwallConfigAction extends AbstractConfigAction {
     protected void readFailed(Exception e) {
         super.readFailed(e);
     }
+
+    public String getCurrentProtocol2Name() { return (frame != null ? ((CornwallConfigFrame)frame).getCommPane2().getCurrentProtocolName():null); }
+    public String getCurrentPort2Name() { return (frame != null ? ((CornwallConfigFrame)frame).getCommPane2().getCurrentPortName():null); }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CornwallConfigAction.class.getName());
 }

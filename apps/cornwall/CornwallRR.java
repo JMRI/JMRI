@@ -14,7 +14,7 @@ import javax.swing.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class CornwallRR extends JPanel {
     public CornwallRR() {
@@ -115,6 +115,9 @@ public class CornwallRR extends JPanel {
         pane2.add(new JLabel(" "));
         pane2.add(new JLabel(" Connected via "+prefs.getCurrentProtocolName()));
         pane2.add(new JLabel(" on port "+prefs.getCurrentPortName()));
+        pane2.add(new JLabel(" "));
+        pane2.add(new JLabel(" and via "+prefs.getCurrentProtocol2Name()));
+        pane2.add(new JLabel(" on port "+prefs.getCurrentPort2Name()));
         pane2.add(new JLabel(" "));
         pane2.add(new JLabel(" JMRI version "+jmri.Version.name()));
         pane2.add(new JLabel(" Java version "+System.getProperty("java.version","<unknown>")));
