@@ -1,19 +1,15 @@
 /** 
- * AbstractTurnout.java
+ * AbstractSensor.java
  *
- * Description:		Abstract class providing the basic logic of the Turnout interface
+ * Description:		Abstract class providing the basic logic of the Sensor interface
  * @author			Bob Jacobsen Copyright (C) 2001
  * @version			
  */
 
 package jmri;
-import jmri.Turnout;
+import jmri.Sensor;
 
-public abstract class AbstractTurnout implements Turnout, java.io.Serializable {
-
-	// Abstract member to handle a request to change state, typically by 
-	// sending a message to the layout in some child class
-	abstract protected void forwardCommandChangeToLayout(int s) throws jmri.JmriException;
+public abstract class AbstractSensor implements Sensor, java.io.Serializable {
 	
 	// implementing classes will typically have a function/listener to get
 	// updates from the layout, which will then call 
@@ -21,35 +17,13 @@ public abstract class AbstractTurnout implements Turnout, java.io.Serializable {
 	//										Object oldValue,
 	//										Object newValue)	 
 	// _once_ if anything has changed state
-	
-	// the following sets a new Commanded state, if need be notifying the
-	// listeners, but does NOT send the command downstream.  This is used
-	// when a new commanded state is noticed from another command.
-	public void newCommandedState(int s) {
-		if (_commandedState != s) {
-			int oldState = _commandedState;
-			_commandedState = s;
-			firePropertyChange("CommandedState", new Integer(oldState), new Integer(_commandedState));
-			}
-	}
-	
+		
 	// interface function implementations
 
 	public String getID() {return _id;}
 	public void   setID(String s) {_id = s;}
 
 	public int getKnownState() {return _knownState;}
-
-	public void setCommandedState(int s) throws jmri.JmriException {
-		if (_commandedState != s) {
-			forwardCommandChangeToLayout(s);
-			newCommandedState(s);   
-			}
-	}
-	
-	public int getCommandedState() {return _commandedState;}
-		
-	public int getFeedbackType() {return _feedbackType;}
 	
 	// add a protected setKnownState() for implementations. Not intended for general use
 	protected void setKnownState(int s) {
@@ -62,9 +36,7 @@ public abstract class AbstractTurnout implements Turnout, java.io.Serializable {
 
 	// internal data members
 	private String _id;
-	private int _feedbackType   = UNKNOWN;
 	private int _knownState     = UNKNOWN;
-	private int _commandedState = UNKNOWN;
 	
 	// since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
 	// reflect to it
@@ -80,4 +52,4 @@ public abstract class AbstractTurnout implements Turnout, java.io.Serializable {
 }
 
 
-/* @(#)AbstractTurnout.java */
+/* @(#)AbstractSensor.java */
