@@ -22,7 +22,7 @@ import org.jdom.output.XMLOutputter;
  * directly. That's why this is not a public class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  * @see         jmri.jmrit.roster.RosterEntry
  * @see         jmri.jmrit.roster.Roster
  */
@@ -96,7 +96,7 @@ class LocoFile extends XmlFile {
      * @param r  RosterEntry providing name, etc, information
      */
     public void writeFile(File file, CvTableModel cvModel, VariableTableModel variableModel, RosterEntry r) {
-        if (log.isDebugEnabled()) log.debug("writeFile to "+file.getAbsoluteFile());
+        if (log.isDebugEnabled()) log.debug("writeFile to "+file.getAbsolutePath()+" "+file.getName());
         try {
             // This is taken in large part from "Java and XML" page 368
 
@@ -172,7 +172,7 @@ class LocoFile extends XmlFile {
      * @param pEntry RosterEntry providing name, etc, information
      */
     public void writeFile(File pFile, Element pRootElement, RosterEntry pEntry) {
-        if (log.isDebugEnabled()) log.debug("writeFile to "+pFile.getAbsoluteFile());
+        if (log.isDebugEnabled()) log.debug("writeFile to "+pFile.getAbsolutePath()+" "+pFile.getName());
         try {
             // This is taken in large part from "Java and XML" page 368
 
