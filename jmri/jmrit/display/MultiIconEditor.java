@@ -19,7 +19,7 @@ import javax.swing.JPanel;
  * {@link PanelEditor} for an example of how to use this.
  *
  * @author Bob Jacobsen  Copyright (c) 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @see jmri.jmrit.display.SensorIcon
  * @see jmri.jmrit.display.PanelEditor
  * @see jmri.jmrit.catalog
@@ -53,8 +53,13 @@ public class MultiIconEditor extends JPanel {
         this.add(p);
     }
 
+    /**
+     * Returns a new NamedIcon object for your own use.
+     * @param iconNum 0 to n-1
+     * @return Unique object
+     */
     public NamedIcon getIcon(int iconNum) {
-        return iconList[iconNum];
+        return new NamedIcon(iconList[iconNum]);
     }
 
     public void complete() {
