@@ -123,7 +123,10 @@ public class ControlPanel extends JInternalFrame
                 {
                    public void stateChanged(ChangeEvent e)
                    {
-                       throttle.setSpeedSetting(speedSlider.getValue());
+                       if (!speedSlider.getValueIsAdjusting())
+                       {
+                           throttle.setSpeedSetting(speedSlider.getValue());
+                       }
                    }
                 });
 
