@@ -11,7 +11,7 @@ import jmri.*;
  * update process.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 public abstract class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
     static final int RED    = SignalHead.RED;
@@ -107,7 +107,7 @@ public abstract class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
                 null,
                 tm.getByUserName("Cornwall Jct 1 tu(01)"),
                 tm.getByUserName("Ridge tu(02)"),
-                tm.getByUserName("unused tu(03)"),
+                tm.getByUserName("Cornwall Jct 3 tu(03)"),
                 tm.getByUserName("Reading Relay Track West Switch tu(04)"),
                 tm.getByUserName("Lickdale East tu(05)"),
                 tm.getByUserName("Colebrook West tu(06)"),

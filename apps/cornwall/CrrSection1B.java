@@ -10,13 +10,13 @@ import jmri.*;
  * Based on Crr0029.bas
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class CrrSection1B extends CrrSection {
 
     void defineIO() {
         sig  = InstanceManager.signalHeadManagerInstance().getByUserName("Signal 1B");
-        inputs = new NamedBean[]{ tu[1], tu[12], bo[4], si[21] };
+        inputs = new NamedBean[]{ tu[1], tu[3], tu[12], bo[4], bo[16], si[21], si[57] };
     }
 
     /**
@@ -24,19 +24,23 @@ public class CrrSection1B extends CrrSection {
      */
     void setOutput() {
         boolean bo4  = ( bo[ 4].getKnownState() == Sensor.ACTIVE);
+        boolean bo16 = ( bo[16].getKnownState() == Sensor.ACTIVE);
         boolean tu1  = ( tu[ 1].getKnownState() == Sensor.ACTIVE);
+        boolean tu3  = ( tu[ 3].getKnownState() == Sensor.ACTIVE);
         boolean tu12 = ( tu[12].getKnownState() == Sensor.ACTIVE);
         boolean si21 = ( si[21].getCommandedState() == THROWN);
+        boolean si57 = ( si[57].getCommandedState() == THROWN);
 
         int value = GREEN;
         if (
                 ( tu1)
-             || ( !tu1 && bo4 )
-             || ( !tu1 && !tu12 )
+             || ( !tu1 && !tu3 && ( bo4 || !tu12 ))
+             || ( !tu1 && tu3  && bo16 )
             )
             value = RED;
 
-        if (value==GREEN && si21)
+        if (    (value==GREEN && !tu3 && si21)
+             || (value==GREEN && tu3 && si57) )
             value = YELLOW;
 
         sig.setAppearance(value);

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE layout-config SYSTEM "layout-config.dtd">
-<!-- $Id: CornwallDefinitions.xml,v 1.6 2003-09-30 13:47:55 jacobsen Exp $ -->
+<!-- $Id: CornwallDefinitions.xml,v 1.7 2003-11-12 04:07:01 jacobsen Exp $ -->
 <!-- Cornwall RR configuration: turnout, sensor, signal definitions -->
 <layout-config>
 
   <turnouts class="jmri.jmrix.loconet.configurexml.LnTurnoutManagerXml">
     <turnout systemName="LT1"  userName="Cornwall Jct 1" />
     <turnout systemName="LT2"  userName="Ridge" />
+    <turnout systemName="LT3"  userName="Cornwall Jct 3" />
     <turnout systemName="LT4"  userName="Reading Relay Track West Switch" />
     <turnout systemName="LT5"  userName="Lickdale East" />
     <turnout systemName="LT6"  userName="Colebrook West" />
@@ -31,7 +32,7 @@
     <sensor systemName="CS3" userName="PRR Highline 2 bo(02)" />
     <sensor systemName="CS4" userName="PRR Highline 1 bo(03)" />
     <sensor systemName="CS5" userName="Ridge tu(02)" />
-    <sensor systemName="CS6" userName="unused tu(03)" />
+    <sensor systemName="CS6" userName="Cornwall Jct 3 tu(03)" />
     <sensor systemName="CS7" userName="Reading Relay Track 2 bo(04)" />
     <sensor systemName="CS8" userName="Ridge bo(05)" />
     <sensor systemName="CS9" userName="Reading Relay Track West Switch tu(04)" />
