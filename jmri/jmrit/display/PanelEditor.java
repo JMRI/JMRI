@@ -38,7 +38,7 @@ import com.sun.java.util.collections.*;
  *
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 
 public class PanelEditor extends JFrame {
@@ -53,50 +53,42 @@ public class PanelEditor extends JFrame {
 
     JTextField nextX = new JTextField("20",4);
     JTextField nextY = new JTextField("30",4);
-    
+
     JButton labelAdd = new JButton("Add text:");
     JTextField nextLabel = new JTextField(10);
 
     JButton iconAdd = new JButton("Add icon:");
-    JButton pickIcon = new JButton("pick");
-    NamedIcon labelIcon = null;
+    MultiIconEditor iconEditor;
+    JFrame iconFrame;
 
-    JButton turnoutAddR = new JButton("Add turnout:");
+    JButton turnoutAddR = new JButton("Add right-hand turnout:");
     JTextField nextTurnoutR = new JTextField(5);
-    JButton closedIconButtonR;
-    NamedIcon closedIconR;
-    JButton thrownIconButtonR;
-    NamedIcon thrownIconR;
-    NamedIcon inconsistentR;
-    NamedIcon unknownR;
+    MultiIconEditor turnoutRIconEditor;
+    JFrame turnoutRFrame;
 
-    JButton turnoutAddL = new JButton("Add turnout:");
+    JButton turnoutAddL = new JButton("Add left-hand turnout:");
     JTextField nextTurnoutL = new JTextField(5);
-    JButton closedIconButtonL;
-    NamedIcon closedIconL;
-    JButton thrownIconButtonL;
-    NamedIcon thrownIconL;
+    MultiIconEditor turnoutLIconEditor;
+    JFrame turnoutLFrame;
 
     JButton sensorAdd = new JButton("Add sensor:");
     JTextField nextSensor = new JTextField(5);
-    JButton activeIconButton;
-    NamedIcon activeIcon;
-    JButton inactiveIconButton;
-    NamedIcon inactiveIcon;
+    MultiIconEditor sensorIconEditor;
+    JFrame sensorFrame;
 
     JButton signalAdd = new JButton("Add signal:");
     JTextField nextSignalHead = new JTextField(5);
+    MultiIconEditor signalIconEditor;
+    JFrame signalFrame;
 
     JButton backgroundAddButton = new JButton("Pick background image...");
-
-    public CatalogPane catalog = new CatalogPane();
 
     public PanelEditor() { this("Panel Editor");}
 
     public PanelEditor(String name) {
         super(name);
         this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
-        
+
         // common items
         JPanel common = new JPanel();
         common.setLayout(new FlowLayout());
@@ -105,9 +97,9 @@ public class PanelEditor extends JFrame {
         common.add(new JLabel(" y:"));
         common.add(nextY);
         this.getContentPane().add(common);
-        
+
         this.getContentPane().add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
-        
+
         // add a background image
         {
             JPanel panel = new JPanel();
@@ -122,7 +114,7 @@ public class PanelEditor extends JFrame {
                                                    );
             this.getContentPane().add(panel);
         }
-        
+
         // add a text label
         {
             JPanel panel = new JPanel();
@@ -137,169 +129,149 @@ public class PanelEditor extends JFrame {
                                         );
             this.getContentPane().add(panel);
         }
-        
+
         this.getContentPane().add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
-        
-        // add an icon label
+
+        // Add icon label
         {
             JPanel panel = new JPanel();
             panel.setLayout(new FlowLayout());
             panel.add(iconAdd);
-            panel.add(pickIcon);
-            pickIcon.setToolTipText("Click to select new icon");
-            pickIcon.addActionListener( new ActionListener() {
-                    public void actionPerformed(ActionEvent a) {
-                        pickLabelIcon();
-                    }
-                }
-                                        );
             iconAdd.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         addIcon();
                     }
                 }
-                                       );
+                                           );
+
+            iconEditor = new MultiIconEditor(1);
+            iconEditor.setIcon(0, "","resources/icons/smallschematics/tracksegments/block.gif");
+            iconEditor.complete();
+            iconFrame = new JFrame("Edit icon");
+            iconFrame.getContentPane().add(iconEditor);
+            iconFrame.pack();
+
+            JButton j = new JButton("Edit icon...");
+            j.addActionListener( new ActionListener() {
+                    public void actionPerformed(ActionEvent a) {
+                        iconFrame.show();
+                    }
+                }
+                                           );
+            panel.add(j);
+
             this.getContentPane().add(panel);
-            
         }
-        
-        this.getContentPane().add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
-        
-        // Add a turnout indicator for right-bound
+
+        // Add a turnout indicator for right-hand
         {
             JPanel panel = new JPanel();
             panel.setLayout(new FlowLayout());
             panel.add(turnoutAddR);
-            TurnoutIcon to = new TurnoutIcon();
-            
-            inconsistentR = new NamedIcon("resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif",
-                                          "resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif");
-            unknownR = new NamedIcon("resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif",
-                                     "resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif");
-            
-            closedIconR = new NamedIcon("resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif",
-                                        "resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif");
-            closedIconButtonR = new JButton(closedIconR);
-            closedIconButtonR.setToolTipText("Icon for turnout closed. Click to select new icon");
-            
-            thrownIconR = new NamedIcon("resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif",
-                                        "resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif");
-            thrownIconButtonR = new JButton(thrownIconR);
-            thrownIconButtonR.setToolTipText("Icon for turnout thrown. Click to select new icon");
-            
             panel.add(nextTurnoutR);
-            panel.add(closedIconButtonR);
-            closedIconButtonR.addActionListener( new ActionListener() {
-                    public void actionPerformed(ActionEvent a) {
-                        pickClosedIconR();
-                    }
-                }
-                                                 );
-            panel.add(thrownIconButtonR);
-            thrownIconButtonR.addActionListener( new ActionListener() {
-                    public void actionPerformed(ActionEvent a) {
-                        pickThrownIconR();
-                    }
-                }
-                                                 );
             turnoutAddR.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         addTurnoutR();
                     }
                 }
                                            );
+
+            turnoutRIconEditor = new MultiIconEditor(4);
+            turnoutRIconEditor.setIcon(0, "Closed:","resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif");
+            turnoutRIconEditor.setIcon(1, "Thrown", "resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif");
+            turnoutRIconEditor.setIcon(2, "Inconsistent:", "resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif");
+            turnoutRIconEditor.setIcon(3, "Unknown:","resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif");
+            turnoutRIconEditor.complete();
+            turnoutRFrame = new JFrame("Edit RH turnout icons");
+            turnoutRFrame.getContentPane().add(turnoutRIconEditor);
+            turnoutRFrame.pack();
+
+            JButton j = new JButton("Edit icons...");
+            j.addActionListener( new ActionListener() {
+                    public void actionPerformed(ActionEvent a) {
+                        turnoutRFrame.show();
+                    }
+                }
+                                           );
+            panel.add(j);
+
             this.getContentPane().add(panel);
         }
-        
+
         // Add a turnout indicator for left-hand
         {
             JPanel panel = new JPanel();
             panel.setLayout(new FlowLayout());
             panel.add(turnoutAddL);
-            TurnoutIcon to = new TurnoutIcon();
-            
-            NamedIcon inconsistentL = new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif",
-                                                    "resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif");
-            NamedIcon unknownL = new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif",
-                                               "resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif");
-            
-            closedIconL = new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif",
-                                        "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif");
-            closedIconButtonL = new JButton(closedIconL);
-            closedIconButtonL.setToolTipText("Icon for turnout closed. Click to select new icon");
-            
-            thrownIconL = new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif",
-                                        "resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif");
-            thrownIconButtonL = new JButton(thrownIconL);
-            thrownIconButtonL.setToolTipText("Icon for turnout thrown. Click to select new icon");
-            
             panel.add(nextTurnoutL);
-            panel.add(closedIconButtonL);
-            closedIconButtonL.addActionListener( new ActionListener() {
-                    public void actionPerformed(ActionEvent a) {
-                        pickClosedIconL();
-                    }
-                }
-                                                 );
-            panel.add(thrownIconButtonL);
-            thrownIconButtonL.addActionListener( new ActionListener() {
-                    public void actionPerformed(ActionEvent a) {
-                        pickThrownIconL();
-                    }
-                }
-                                                 );
-            turnoutAddL.addActionListener( new ActionListener() {
+            turnoutAddR.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         addTurnoutL();
                     }
                 }
                                            );
+
+            turnoutLIconEditor = new MultiIconEditor(4);
+            turnoutLIconEditor.setIcon(0, "Closed:","resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif");
+            turnoutLIconEditor.setIcon(1, "Thrown", "resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif");
+            turnoutLIconEditor.setIcon(2, "Inconsistent:", "resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif");
+            turnoutLIconEditor.setIcon(3, "Unknown:","resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif");
+            turnoutLIconEditor.complete();
+            turnoutLFrame = new JFrame("Edit LH turnout icons");
+            turnoutLFrame.getContentPane().add(turnoutLIconEditor);
+            turnoutLFrame.pack();
+
+            JButton j = new JButton("Edit icons...");
+            j.addActionListener( new ActionListener() {
+                    public void actionPerformed(ActionEvent a) {
+                        turnoutLFrame.show();
+                    }
+                }
+                                           );
+            panel.add(j);
+
             this.getContentPane().add(panel);
         }
-        
+
         // Add a sensor indicator
         {
             JPanel panel = new JPanel();
             panel.setLayout(new FlowLayout());
-            
-            SensorIcon to = new SensorIcon();
-            activeIcon = to.getActiveIcon();
-            inactiveIcon = to.getInactiveIcon();
-            activeIconButton = new JButton(activeIcon);
-            activeIconButton.setToolTipText("Icon for sensor active. Click to select new icon");
-            inactiveIconButton = new JButton(inactiveIcon);
-            inactiveIconButton.setToolTipText("Icon for sensor inactive. Click to select new icon");
-            
             panel.add(sensorAdd);
             panel.add(nextSensor);
-            panel.add(activeIconButton);
-            activeIconButton.addActionListener( new ActionListener() {
-                    public void actionPerformed(ActionEvent a) {
-                        pickActiveIcon();
-                    }
-                }
-                                                );
-            panel.add(inactiveIconButton);
-            inactiveIconButton.addActionListener( new ActionListener() {
-                    public void actionPerformed(ActionEvent a) {
-                        pickInactiveIcon();
-                    }
-                }
-                                                  );
             sensorAdd.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         addSensor();
                     }
                 }
-                                         );
+                                           );
+
+            sensorIconEditor = new MultiIconEditor(4);
+            sensorIconEditor.setIcon(0, "Active:","resources/icons/smallschematics/tracksegments/circuit-occupied.gif");
+            sensorIconEditor.setIcon(1, "Inactive", "resources/icons/smallschematics/tracksegments/circuit-empty.gif");
+            sensorIconEditor.setIcon(2, "Inconsistent:", "resources/icons/smallschematics/tracksegments/circuit-error.gif");
+            sensorIconEditor.setIcon(3, "Unknown:","resources/icons/smallschematics/tracksegments/circuit-error.gif");
+            sensorIconEditor.complete();
+            sensorFrame = new JFrame("Edit sensor icons");
+            sensorFrame.getContentPane().add(sensorIconEditor);
+            sensorFrame.pack();
+
+            JButton j = new JButton("Edit icons...");
+            j.addActionListener( new ActionListener() {
+                    public void actionPerformed(ActionEvent a) {
+                        sensorFrame.show();
+                    }
+                }
+                                           );
+            panel.add(j);
+
             this.getContentPane().add(panel);
         }
-        
-        // add a signal head
+
+        // Add a signal indicator
         {
             JPanel panel = new JPanel();
             panel.setLayout(new FlowLayout());
-            
             panel.add(signalAdd);
             panel.add(nextSignalHead);
             signalAdd.addActionListener( new ActionListener() {
@@ -307,85 +279,38 @@ public class PanelEditor extends JFrame {
                         addSignalHead();
                     }
                 }
-                                         );
+                                           );
+
+            signalIconEditor = new MultiIconEditor(4);
+            signalIconEditor.setIcon(0, "Red:","resources/icons/smallschematics/searchlights/left-red-marker.gif");
+            signalIconEditor.setIcon(1, "Yellow", "resources/icons/smallschematics/searchlights/left-yellow-marker.gif");
+            signalIconEditor.setIcon(2, "Flash yellow:", "resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif");
+            signalIconEditor.setIcon(3, "Green:","resources/icons/smallschematics/searchlights/left-green-marker.gif");
+            signalIconEditor.complete();
+            signalFrame = new JFrame("Edit signal icons");
+            signalFrame.getContentPane().add(signalIconEditor);
+            signalFrame.pack();
+
+            JButton j = new JButton("Edit icons...");
+            j.addActionListener( new ActionListener() {
+                    public void actionPerformed(ActionEvent a) {
+                        signalFrame.show();
+                    }
+                }
+                                           );
+            panel.add(j);
+
             this.getContentPane().add(panel);
         }
-        
-        // allow for selection of icons
-        this.getContentPane().add(catalog);
-        
+
         // register the result for later configuration
         InstanceManager.configureManagerInstance().register(this);
-        
+
         // move it off the panel's position
         setLocation(250,0);
-        
+
     }  // end ctor
-    
-    /**
-     * Select the icon for an icon label
-     */
-    void pickLabelIcon() {
-        labelIcon = pickIcon();
-        pickIcon.setIcon(labelIcon);
-        pickIcon.setText(null);  // remove original "pick" label
-    }
-    
-    /**
-     * Select the icon for "thrown" right-bound
-     */
-    void pickThrownIconR() {
-        thrownIconR = pickIcon();
-        thrownIconButtonR.setIcon(thrownIconR);
-    }
-    
-    /**
-     * Select the image for "closed" right-bound
-     */
-    void pickClosedIconR() {
-        closedIconR = pickIcon();
-        closedIconButtonR.setIcon(closedIconR);
-    }
-    
-    /**
-     * Select the icon for "thrown" left-bound
-     */
-    void pickThrownIconL() {
-        thrownIconL = pickIcon();
-        thrownIconButtonL.setIcon(thrownIconL);
-    }
-    
-    /**
-     * Select the image for "closed" left-bound
-     */
-    void pickClosedIconL() {
-        closedIconL = pickIcon();
-        closedIconButtonL.setIcon(closedIconL);
-    }
-    
-    /**
-     * Select the icon for "active"
-     */
-    void pickActiveIcon() {
-        activeIcon = pickIcon();
-        activeIconButton.setIcon(activeIcon);
-    }
-    
-    /**
-     * Select the image for "inactive"
-     */
-    void pickInactiveIcon() {
-        inactiveIcon = pickIcon();
-        inactiveIconButton.setIcon(inactiveIcon);
-    }
-    
-    /**
-     * Select and create image for use in some icon
-     */
-    NamedIcon pickIcon() {
-        return catalog.getSelectedIcon();
-    }
-    
+
     /**
      * Button pushed, add a background image (do this early!)
      */
@@ -400,36 +325,38 @@ public class PanelEditor extends JFrame {
         l.setSize(icon.getIconWidth(), icon.getIconHeight());
         putBackground(l);
     }
-    
+
     public void putBackground(JLabel l) {
         target.add(l, BKG);
         contents.add(l);
         backgroundAddButton.setEnabled(false);   // theres only one
         target.revalidate();
     }
-    
+
     /**
      * Add a turnout indicator to the target
      */
     void addTurnoutR() {
         TurnoutIcon l = new TurnoutIcon();
-        if (closedIconR!=null) l.setClosedIcon(new NamedIcon(closedIconR));
-        if (thrownIconR!=null) l.setThrownIcon(new NamedIcon(thrownIconR));
-        if (inconsistentR!=null) l.setInconsistentIcon(new NamedIcon(inconsistentR));
-        if (unknownR!=null) l.setUnknownIcon(new NamedIcon(unknownR));
-        
+        l.setClosedIcon(turnoutRIconEditor.getIcon(0));
+        l.setThrownIcon(turnoutRIconEditor.getIcon(1));
+        l.setInconsistentIcon(turnoutRIconEditor.getIcon(2));
+        l.setUnknownIcon(turnoutRIconEditor.getIcon(3));
+
         l.setTurnout(null, nextTurnoutR.getText());
-        
+
         log.debug("turnout height, width: "+l.getHeight()+" "+l.getWidth());
         setNextLocation(l);
         putTurnout(l);
     }
     void addTurnoutL() {
         TurnoutIcon l = new TurnoutIcon();
-        if (closedIconL!=null) l.setClosedIcon(new NamedIcon(closedIconL));
-        if (thrownIconL!=null) l.setThrownIcon(new NamedIcon(thrownIconL));
+        l.setClosedIcon(turnoutLIconEditor.getIcon(0));
+        l.setThrownIcon(turnoutLIconEditor.getIcon(1));
+        l.setInconsistentIcon(turnoutLIconEditor.getIcon(2));
+        l.setUnknownIcon(turnoutLIconEditor.getIcon(3));
         l.setTurnout(null, nextTurnoutL.getText());
-        
+
         setNextLocation(l);
         putTurnout(l);
     }
@@ -440,14 +367,16 @@ public class PanelEditor extends JFrame {
         // reshow the panel
         target.validate();
     }
-    
+
     /**
      * Add a sensor indicator to the target
      */
     void addSensor() {
         SensorIcon l = new SensorIcon();
-        if (activeIcon!=null) l.setActiveIcon(new NamedIcon(activeIcon));
-        if (inactiveIcon!=null) l.setInactiveIcon(new NamedIcon(inactiveIcon));
+        l.setActiveIcon(sensorIconEditor.getIcon(0));
+        l.setInactiveIcon(sensorIconEditor.getIcon(1));
+        l.setInconsistentIcon(sensorIconEditor.getIcon(2));
+        l.setUnknownIcon(sensorIconEditor.getIcon(3));
         l.setSensor(null, nextSensor.getText());
         setNextLocation(l);
         putSensor(l);
@@ -459,12 +388,16 @@ public class PanelEditor extends JFrame {
         // reshow the panel
         target.validate();
     }
-    
+
     /**
      * Add a signal head to the target
      */
     void addSignalHead() {
         SignalHeadIcon l = new SignalHeadIcon();
+        l.setRedIcon(signalIconEditor.getIcon(0));
+        l.setYellowIcon(signalIconEditor.getIcon(1));
+        l.setFlashYellowIcon(signalIconEditor.getIcon(2));
+        l.setGreenIcon(signalIconEditor.getIcon(3));
         l.setSignalHead(nextSignalHead.getText());
         setNextLocation(l);
         putSignal(l);
@@ -477,7 +410,7 @@ public class PanelEditor extends JFrame {
         target.validate();
         log.debug("After val:"+l.getWidth()+" "+l.getHeight()+" "+getX()+" "+getY());
     }
-    
+
     /**
      * Add a label to the target
      */
@@ -492,12 +425,12 @@ public class PanelEditor extends JFrame {
         contents.add(l);
         target.validate();
     }
-    
+
     /**
      * Add an icon to the target
      */
     void addIcon() {
-        PositionableLabel l = new PositionableLabel(new NamedIcon(labelIcon) );
+        PositionableLabel l = new PositionableLabel(iconEditor.getIcon(0) );
         setNextLocation(l);
         putIcon(l);
     }
@@ -508,7 +441,7 @@ public class PanelEditor extends JFrame {
         // reshow the panel
         target.validate();
     }
-    
+
     /**
      * Set an objects location and size as it is created.
      * Size comes from the preferredSize; location comes
@@ -519,7 +452,7 @@ public class PanelEditor extends JFrame {
         int y = Integer.parseInt(nextY.getText());
         obj.setLocation(x,y);
     }
-    
+
     /**
      * Set the JLayeredPane containing the objects to be edited.
      */
@@ -528,7 +461,7 @@ public class PanelEditor extends JFrame {
     }
     public JLayeredPane getTarget() { return target;}
     public JLayeredPane target;
-    
+
     /**
      * Get the frame containing the results (not the editor)
      */
@@ -543,38 +476,38 @@ public class PanelEditor extends JFrame {
                 }
             });
     }
-    
+
     JFrame frame;
-    
+
     public ArrayList contents = new ArrayList();
-    
+
     /**
      * Clean up when its time to make it all go away
      */
     public void dispose() {
         // register the result for later configuration
         InstanceManager.configureManagerInstance().deregister(this);
-        
+
         // clean up local links to push GC
         contents.clear();
         target = null;
         frame = null;
-        
+
         // clean up GUI aspects
         this.removeAll();
         super.dispose();
     }
-    
+
     /**
      * The target window has been requested to close, so clean up
      */
     void targetWindowClosing(java.awt.event.WindowEvent e) {
         frame.setVisible(false);  // removes the target window
         this.setVisible(false);        // doesn't remove the editor!
-        
+
         dispose();
     }
-    
+
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PanelEditor.class.getName());
 }
