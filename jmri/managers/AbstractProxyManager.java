@@ -14,7 +14,7 @@ import jmri.*;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class AbstractProxyManager implements Manager {
 
@@ -26,11 +26,11 @@ public class AbstractProxyManager implements Manager {
 
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         for (int i = 0; i<mgrs.size(); i++)
-            ((TurnoutManager)mgrs.get(i)).addPropertyChangeListener(l);
+            ((Manager)mgrs.get(i)).addPropertyChangeListener(l);
     }
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         for (int i = 0; i<mgrs.size(); i++)
-            ((TurnoutManager)mgrs.get(i)).removePropertyChangeListener(l);
+            ((Manager)mgrs.get(i)).removePropertyChangeListener(l);
     }
 
     /**
@@ -60,7 +60,7 @@ public class AbstractProxyManager implements Manager {
     public List getSystemNameList() {
         ArrayList result = new ArrayList();
         for (int i = 0; i<mgrs.size(); i++)
-            result.addAll( ((TurnoutManager)mgrs.get(i)).getSystemNameList() );
+            result.addAll( ((Manager)mgrs.get(i)).getSystemNameList() );
         return result;
     }
 
