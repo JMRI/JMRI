@@ -30,7 +30,7 @@ import org.jdom.Attribute;
  * Although support for the "CV label column" is still here, its turned off now.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class FnMapPanel extends JPanel {
     // columns
@@ -96,8 +96,8 @@ public class FnMapPanel extends JPanel {
         
         labelAt(0,fnName, "Description");
         
-        labelAt( firstFn   , fnName, "Forward Headlight FL(f)");
-        labelAt( firstFn+ 1, fnName, "Reverse Headlight FL(r)");
+        labelAt( firstFn   , fnName, "Forward Headlight F0(F)");
+        labelAt( firstFn+ 1, fnName, "Reverse Headlight F0(R)");
         if (numFn>2) labelAt( firstFn+ 2, fnName, "Function 1");
         if (numFn>3) labelAt( firstFn+ 3, fnName, "Function 2");
         if (numFn>4) labelAt( firstFn+ 4, fnName, "Function 3");
@@ -175,7 +175,7 @@ public class FnMapPanel extends JPanel {
         try { if (a!=null) numOut = Integer.valueOf(a.getValue()).intValue();}
         catch (Exception e) {log.error("error handling decoder's numOuts value");}
         a = model.getAttribute("numFns");
-        try { if (a!=null) numFn = Integer.valueOf(a.getValue()).intValue()+2;}
+        try { if (a!=null) numFn = Integer.valueOf(a.getValue()).intValue();}
         catch (Exception e) {log.error("error handling decoder's numFns value");}
         if (log.isDebugEnabled()) log.debug("numFns, numOuts "+numFn+","+numOut);
         // take all "output" children
@@ -214,5 +214,4 @@ public class FnMapPanel extends JPanel {
     
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(FnMapPanel.class.getName());
-    
 }
