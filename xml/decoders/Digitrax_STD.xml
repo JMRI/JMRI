@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_STD.xml,v 1.4 2003-06-05 17:45:34 jacobsen Exp $ -->
+<!-- $Id: Digitrax_STD.xml,v 1.5 2004-10-05 14:33:32 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
-					version="7" lastUpdated="20030606"/>
+					version="8" lastUpdated="20041005"/>
 
 <!-- Represent the family of Digitrax decoders with STD (not STD*) outputs. -->
 
@@ -11,9 +11,10 @@
 <!-- Version 5 - renaming, adjust decoder models -->
 <!-- version 6 - move DN140 to Basic file -->
 <!-- version 7 - add consist direction - jake -->
+<!-- version 8 - high version 45 to 46, see bug 946665 -->
 
 <decoder>
-	<family name="Basic STD" mfg="Digitrax" lowVersionID="33" highVersionID="45">
+	<family name="Basic STD" mfg="Digitrax" lowVersionID="33" highVersionID="46">
 		<model model="DH121" numOuts="2" numFns="2"/>
 	</family>
 

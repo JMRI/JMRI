@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <!--Written by JMRI version 1.5.3 on Thu Aug 26 10:41:10 PDT 2004 $Id: decoderIndex.xml,v 1.69 2004-08-26 17:43:48 jacobsen Exp $-->
+  <!--Written by JMRI version 1.5.4 on Tue Oct 05 07:36:02 PDT 2004 $Id: decoderIndex.xml,v 1.70 2004-10-05 14:38:16 jacobsen Exp $-->
   <decoderIndex version="83">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -325,7 +325,7 @@
           <size length="1.2" width=".66" height="0.25" units="inches" />
         </model>
       </family>
-      <family name="Basic STD" mfg="Digitrax" lowVersionID="33" highVersionID="45" type="locomotive" file="Digitrax_STD.xml">
+      <family name="Basic STD" mfg="Digitrax" lowVersionID="33" highVersionID="46" type="locomotive" file="Digitrax_STD.xml">
         <model model="DH121" numOuts="2" numFns="2" connector="unspecified" nmraWarrant="no" />
       </family>
       <family name="Basic STD*" mfg="Digitrax" lowVersionID="1" highVersionID="1" type="locomotive" file="Digitrax_STDstar.xml">
