@@ -3,7 +3,7 @@
  *
  * Description:		Constants to represent values seen in XpressNet traffic
  * @author		Paul Bender  Copyright (C) 2003
- * @version             $ Revision: 1.8 $
+ * @version             $ Revision: 1.9 $
  *
  * Variable prefix abreviation keys:
  * ACC_ is for accessory messages
@@ -26,7 +26,7 @@ public final class XNetConstants {
 
 /* a few constants */
 public final static int SPEED_STEP_14_INCREMENT=9;
-public final static int SPEED_STEP_27_INCREMENT=4;
+public final static int SPEED_STEP_27_INCREMENT=5;
 public final static int SPEED_STEP_28_INCREMENT=4;
 public final static int SPEED_STEP_128_INCREMENT=1;
 
@@ -113,7 +113,7 @@ public final static int LOCO_INFO_DH_UNIT     = 0xE6;
 public final static int LOCO_INFO_RESPONSE    = 0xE3;
 
 /* responce types for LOCO_INFO_RESPONCE (byte two commands */
-public final static int LOCO_NOT_AVAILABE     = 0x40;
+public final static int LOCO_NOT_AVAILABLE     = 0x40;
 public final static int LOCO_FUNCTION_STATUS  = 0x50;
 
 /* responces for stack/database searches */

@@ -6,17 +6,19 @@ import jmri.jmrix.AbstractThrottle;
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
  * @author     Paul Bender (C) 2002,2003
- * @version    $Revision: 1.12 $
+ * @version    $Revision: 1.13 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
 {
-    private float speedSetting;
-    private float speedIncrement;
-    private int address;
-    private boolean isForward;
-    private boolean f0, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12;
-    private boolean isAvailable;
+    private boolean isAvailable;  // Flag  stating if the throttle is in 
+                                  // use or not.
+
+    static final int THROTTLEIDLE=0;  // Idle Throttle
+    static final int THROTTLESTATSENT=1;  // Sent Status request
+    static final int THROTTLECMDSENT=2;  // Sent command to locomotive
+
+    private int requestState=THROTTLEIDLE;
 
     /**
      * Constructor
@@ -25,7 +27,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     {
        super();
        XNetTrafficController.instance().addXNetListener(~0, this);
-       log.error("XnetThrottle constructor");
+       //log.error("XnetThrottle constructor");
     }
 
     /**
@@ -81,6 +83,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
        msg.setParity(); // Set the parity bit
        // now, we send the message to the command station
        XNetTrafficController.instance().sendXNetMessage(msg,this);
+       requestState=THROTTLECMDSENT;
     }
 
     /**
@@ -118,6 +121,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
        msg.setParity(); // Set the parity bit
        // now, we send the message to the command station
        XNetTrafficController.instance().sendXNetMessage(msg,this);
+       requestState=THROTTLECMDSENT;
     }
 
     /**
@@ -155,6 +159,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
        msg.setParity(); // Set the parity bit
        // now, we send the message to the command station
        XNetTrafficController.instance().sendXNetMessage(msg,this);
+       requestState=THROTTLECMDSENT;
     }
 
    /** speed - expressed as a value 0.0 -> 1.0. Negative means emergency stop.
@@ -180,9 +185,19 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	/* we're sending a speed to the locomotive */
        	 XNetMessage msg=new XNetMessage(6);
          msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
-	 msg.setElement(1,XNetConstants.LOCO_SPEED_128);
-                                    // currently we're going to assume 128
-			            // speed step mode
+	 if(getSpeedIncrement()==XNetConstants.SPEED_STEP_128_INCREMENT) {
+		 // We're in 128 speed step mode
+		 msg.setElement(1,XNetConstants.LOCO_SPEED_128);
+	 } else if(getSpeedIncrement()==XNetConstants.SPEED_STEP_28_INCREMENT) {
+		 // We're in 28 speed step mode
+		 msg.setElement(1,XNetConstants.LOCO_SPEED_28);
+	 } else if(getSpeedIncrement()==XNetConstants.SPEED_STEP_27_INCREMENT) {
+		 // We're in 27 speed step mode
+		 msg.setElement(1,XNetConstants.LOCO_SPEED_27);
+	 } else {
+		 // We're in 14 speed step mode
+		 msg.setElement(1,XNetConstants.LOCO_SPEED_14);
+	 }
       	 msg.setElement(2,this.getDccAddressHigh());// set to the upper
 						    // byte of the  DCC address
          msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
@@ -204,6 +219,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 
         // now, we send the message to the command station
         XNetTrafficController.instance().sendXNetMessage(msg,this);
+        requestState=THROTTLECMDSENT;
 	}
     }
 
@@ -222,6 +238,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         msg.setParity(); // Set the parity bit
         // now, we send the message to the command station
         XNetTrafficController.instance().sendXNetMessage(msg,this);
+        requestState=THROTTLECMDSENT;
  	}
 
 
@@ -420,13 +437,13 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 
 
     // register for notification if any of the properties change
-    public void removePropertyChangeListener(java.beans.PropertyChangeListener p)
-    {
-    }
+//    public void removePropertyChangeListener(java.beans.PropertyChangeListener p)
+//    {
+//    }
 
-    public void addPropertyChangeListener(java.beans.PropertyChangeListener p)
-    {
-    }
+//    public void addPropertyChangeListener(java.beans.PropertyChangeListener p)
+//    {
+//    }
 
     /**
      * Dispose when finished with this object.  After this, further usage of
@@ -501,6 +518,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
        msg.setParity(); // Set the parity bit
        // now, we send the message to the command station
        XNetTrafficController.instance().sendXNetMessage(msg,this);
+       requestState=THROTTLESTATSENT;
 
        /* next, send the request for function values */
        msg.setElement(0,XNetConstants.LOCO_STATUS_REQ);
@@ -512,6 +530,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
        msg.setParity(); // Set the parity bit
        // now, we send the message to the command station
        XNetTrafficController.instance().sendXNetMessage(msg,this);
+       requestState=THROTTLESTATSENT;
        return;
     }
 
@@ -522,136 +541,353 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         return speedIncrement;
     }
 
-    // implementing classes will typically have a function/listener to get
-    // updates from the layout, which will then call
-    //          public void firePropertyChange(String propertyName,
-    //
-    //
-    // _once_ if anything has changed state (or set the commanded state directly
+    // Handle incoming messages for This throttle.
     public void message(XNetMessage l) {
-        // check to see if this is a throttle message
-        //if (XNetTrafficController.instance()
-        //    .getCommandStation()
-        //    .isThrottleCommand(l) != true) return;
-        // this is a throttle message, we need to parse it
-        // log.error("Throttle - recieved message ");
-	if (l.getElement(0)==XNetConstants.LOCO_INFO_NORMAL_UNIT)
-	{
-                //log.error("Throttle - message is LOCO_INFO_NORMAL_UNIT ");
+	// First, we want to see if this throttle is waiting for a message 
+        //or not.
+        //log.error("Throttle - recieved message ");
+	if (requestState==THROTTLEIDLE) {
+	    //log.error("THROTTLEIDLE");
+	    // We haven't sent anything, but we might be told someone else 
+	    // has taken over this address
+	    if (l.getElement(0)==XNetConstants.LOCO_INFO_RESPONSE) {
+              //log.error("Throttle - message is LOCO_INFO_RESPONSE ");
+		if(l.getElement(1)==XNetConstants.LOCO_NOT_AVAILABLE) {
+	           /* the address is in bytes 3 and 4*/
+		   if(getDccAddressHigh()==l.getElement(2) && getDccAddressLow()==l.getElement(3)) {
+			//Set the Is available flag to "False"
+	              //log.error("Loco In use by another device");
+        	      notifyPropertyChangeListener("IsAvailable",
+                	                         new Boolean(this.isAvailable),
+                        	                 new Boolean(this.isAvailable = false));
+		   }
+	       }
+           }
+	} else if (requestState==THROTTLECMDSENT) {
+	    //log.error("THROTTLECMDSENT");
+	    // For a Throttle Command, we're just looking for a return 
+            // acknowledgment, Either a Success or Failure message.
+	    if(l.getElement(0)==XNetConstants.LI_MESSAGE_RESPONCE_HEADER &&
+	       l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONCE_SEND_SUCCESS) {
+		requestState=THROTTLEIDLE;
+	    } else if(l.getElement(0)==XNetConstants.LI_MESSAGE_RESPONCE_HEADER &&
+                     ((l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONCE_UNKNOWN_DATA_ERROR ||
+               	       l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONCE_CS_DATA_ERROR ||
+                       l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONCE_PC_DATA_ERROR ||
+                       l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONCE_TIMESLOT_ERROR))) {
+                     /* this is a communications error */
+		     requestState=THROTTLEIDLE;
+              } else if(l.getElement(0)==XNetConstants.CS_INFO &&
+                        l.getElement(2)==XNetConstants.CS_NOT_SUPPORTED) {
+                     /* The Command Station does not support this command */
+		     requestState=THROTTLEIDLE;
+              } else {
+                        /* this is an unknown error */
+		     requestState=THROTTLEIDLE;                        
+              }
+
+	} else if(requestState==THROTTLESTATSENT) {
+	    //log.error("THROTTLESTATSENT");
+	     // This throttle has requested status information, so we need 
+             // to process those messages.	
+	     if (l.getElement(0)==XNetConstants.LOCO_INFO_NORMAL_UNIT) {
+                //log.error("Throttle - message is LOCO_INFO_NORMAL_UNIT");
+                /* there is no address sent with this information */
+		int b1=l.getElement(1);
+		int b2=l.getElement(2);
+		int b3=l.getElement(3);
+		int b4=l.getElement(4);
+		
+		parseSpeedandAvailability(b1);
+		parseSpeedandDirection(b2);
+		parseFunctionInformation(b3,b4);
+
+                //We've processed this request, so set the status to Idle.
+		requestState=THROTTLEIDLE;
+	    } else if (l.getElement(0)==XNetConstants.LOCO_INFO_MUED_UNIT) {
+                //log.error("Throttle - message is LOCO_INFO_MUED_UNIT ");
+                /* there is no address sent with this information */
+		int b1=l.getElement(1);
+		int b2=l.getElement(2);
+		int b3=l.getElement(3);
+		int b4=l.getElement(4);
+                // Element 5 is the consist address, it can only be in the 
+                // range 1-99
+		int b5=l.getElement(5);
+
+		parseSpeedandAvailability(b1);
+		parseSpeedandDirection(b2);
+		parseFunctionInformation(b3,b4);
+
+                //We've processed this request, so set the status to Idle.
+		requestState=THROTTLEIDLE;
+
+	    } else if (l.getElement(0)==XNetConstants.LOCO_INFO_DH_UNIT) {
+                //log.error("Throttle - message is LOCO_INFO_DH_UNIT ");
                 /* there is no address sent with this information */
 		int b1=l.getElement(1);
 		int b2=l.getElement(2);
 		int b3=l.getElement(3);
 		int b4=l.getElement(4);
 
-		/* the first data bite indicates the speed step mode, and
-		if the locomotive is being controlled by another
-		throttle */
-		if((b1 & 0x08)==0x08) this.isAvailable=false;
-		   else this.isAvailable=true;
-		if((b1 & 0x01)==0x01)
-		{
-			this.speedIncrement=XNetConstants.SPEED_STEP_27_INCREMENT;
-		}
-		else if((b1 & 0x02)==0x02)
-		{
-			this.speedIncrement=XNetConstants.SPEED_STEP_28_INCREMENT;
-		}
-		else if((b1 & 0x04)==0x04)
-		{
-			this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;
-		}
-		else if((b1 & 0x04)==0x04)
-		{
-			this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;;
-		}
-		else
-		{
-			this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;
-		}
+   		// elements 5 and 6 contain the address of the other unit 
+		// in the DH
+		int b5=l.getElement(5);		
+		int b6=l.getElement(6);		
 
-		/* the second byte indicates the speed and direction setting */
+		parseSpeedandAvailability(b1);
+		parseSpeedandDirection(b2);
+		parseFunctionInformation(b3,b4);
 
-		if ((b2 & 0x80)==0x80 && this.isForward==false)
-		{
-		        log.error("Throttle - Direction Forward Locomotive:" +address);
-			notifyPropertyChangeListener("IsForward",
-				new Boolean(this.isForward),
-				new Boolean(this.isForward=true));
-		        if(this.isForward==true)
-				log.error("Throttle - Changed direction to Forward Locomotive:"+address);
-		}
-		else if ( this.isForward==true)
-		{
-		        log.error("Throttle - Direction Reverse Locomotive:" +address);
-			notifyPropertyChangeListener("IsForward",
-				new Boolean(this.isForward),
-				new Boolean(this.isForward=false));
-		        if(this.isForward==false)
-				log.error("Throttle - Changed direction to Reverse Locomotive:" +address);
-		}
-		if(this.speedIncrement==XNetConstants.SPEED_STEP_128_INCREMENT)
-		{
-			if(this.getSpeedSetting()!=(float)((b2 & 0x7f)-2)/126)
- 			{
-			  notifyPropertyChangeListener("SpeedSetting",
-                                  new Float(this.speedSetting),
-				  new Float(this.speedSetting = (float)((b2 & 0x7f)-2)/126));
-			}
-		}
-		else
-		{
-			if(this.getSpeedSetting()!=(float)(((b2 & 0x7f)-4)/(126/this.speedIncrement)))
-			{
-  			  notifyPropertyChangeListener("SpeedSetting",
-                                    new Float(this.speedSetting),
-			  	  new Float(this.speedSetting = (float)(((b2 & 0x7f)-4)/(126/this.speedIncrement))));
-			}
-		}
+                //We've processed this request, so set the status to Idle.
+		requestState=THROTTLEIDLE;
 
-		/* data byte 3 is the status of F0 F4 F3 F2 F1 */
-		if((b3 & 0x10)==0x10 && getF0()==false)
-		{
-	           notifyPropertyChangeListener("F0",
-                                                new Boolean(this.f0),
-                                                new Boolean(this.f0 = true));
-		}
-                else if (getF0()==true)
-		{
-	           notifyPropertyChangeListener("F0",new Boolean(this.f0),new Boolean(this.f0 = false));
-		   //this.f0=false;
-		}
+	    } else if (l.getElement(0)==XNetConstants.LOCO_INFO_MU_ADDRESS) {
+                //log.error("Throttle - message is LOCO_INFO_MU ADDRESS ");
+                /* there is no address sent with this information */
+		int b1=l.getElement(1);
+		int b2=l.getElement(2);
 
-		if((b3 &0x01)==0x01) this.f1=true;
-                   else this.f1=false;
-		if((b3 &0x02)==0x02) this.f2=true;
-                   else this.f2=false;
-		if((b3 &0x04)==0x04) this.f3=true;
-                   else this.f3=false;
-		if((b3 &0x08)==0x08) this.f4=true;
-                   else this.f4=false;
+		parseSpeedandAvailability(b1);
+		parseSpeedandDirection(b2);
 
-		/* data byte 4 is the status of F12 F11 F10 F9 F8 F7 F6 F5 */
-		if((b4 &0x01)==0x01) this.f5=true;
-                   else this.f5=false;
-		if((b4 &0x02)==0x02) this.f6=true;
-                   else this.f6=false;
-		if((b4 &0x04)==0x04) this.f7=true;
-                   else this.f7=false;
-		if((b4 &0x08)==0x08) this.f8=true;
-                   else this.f8=false;
-		if((b4 &0x10)==0x10) this.f9=true;
-                   else this.f9=false;
-		if((b4 &0x20)==0x20) this.f10=true;
-                   else this.f10=false;
-		if((b4 &0x40)==0x40) this.f11=true;
-                   else this.f11=false;
-		if((b4 &0x08)==0x80) this.f12=true;
-                   else this.f12=false;
+                //We've processed this request, so set the status to Idle.
+		requestState=THROTTLEIDLE;
+
+	    } else if (l.getElement(0)==XNetConstants.LOCO_INFO_RESPONSE) {
+                //log.error("Throttle - message is LOCO_INFO_RESPONSE ");
+		if(l.getElement(1)==XNetConstants.LOCO_NOT_AVAILABLE) {
+	           /* the address is in bytes 3 and 4*/
+		   if(getDccAddressHigh()==l.getElement(2) && getDccAddressLow()==l.getElement(3)) {
+			//Set the Is available flag to "False"
+	              //log.error("Loco In use by another device");
+        	      notifyPropertyChangeListener("IsAvailable",
+                	                           new Boolean(this.isAvailable),
+                        	                   new Boolean(this.isAvailable = false));
+		   }
+		} else if(l.getElement(1)==XNetConstants.LOCO_FUNCTION_STATUS) {
+		    /* Bytes 3 and 4 contain function status information */
+		    int b3=l.getElement(3);
+		    int b4=l.getElement(4);
+	            parseFunctionInformation(b3,b4);
+		}
+                //We've processed this request, so set the status to Idle.
+		requestState=THROTTLEIDLE;
+	    }
 	}
-
+	requestState=THROTTLEIDLE;
     }
 
+    // Status Information processing routines
+    // Used for return values from Status requests.
+
+    //Get SpeedStep and availability information
+    private void parseSpeedandAvailability(int b1)
+    {
+	/* the first data bite indicates the speed step mode, and
+	   if the locomotive is being controlled by another throttle */
+
+	if((b1 & 0x08)==0x08 && isAvailable==true)
+	{
+           //log.error("Loco In use by another device");
+           notifyPropertyChangeListener("IsAvailable",
+                                         new Boolean(this.isAvailable),
+                                         new Boolean(this.isAvailable = false));
+	} else if ((b1&0x08)==0x00 && isAvailable==false) {
+           //log.error("Loco Is Available");
+	   notifyPropertyChangeListener("IsAvailable",
+					new Boolean(this.isAvailable),
+					new Boolean(this.isAvailable = true));
+	}
+	if((b1 & 0x01)==0x01)
+	{
+           //log.error("Speed Step setting 27");
+	   this.speedIncrement=XNetConstants.SPEED_STEP_27_INCREMENT;
+	} else if((b1 & 0x02)==0x02) {
+           //log.error("Speed Step setting 28");
+           this.speedIncrement=XNetConstants.SPEED_STEP_28_INCREMENT;
+	} else if((b1 & 0x04)==0x04) {
+           //log.error("Speed Step setting 128");
+	   this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;;
+	} else {
+           //log.error("Speed Step setting 14");
+    	   this.speedIncrement=XNetConstants.SPEED_STEP_14_INCREMENT;
+	}
+    }
+
+    //Get Speed and Direction information
+    private void parseSpeedandDirection(int b2)
+    {
+	/* the second byte indicates the speed and direction setting */
+
+	if ((b2 & 0x80)==0x80 && this.isForward==false) {
+           //log.error("Throttle - Direction Forward Locomotive:" +address);
+   	   notifyPropertyChangeListener("IsForward",
+		 			new Boolean(this.isForward),
+					new Boolean(this.isForward=true));
+	   if(this.isForward==true)
+           {
+		//log.error("Throttle - Changed direction to Forward Locomotive:"+address);
+           }
+	} else if ((b2 & 0x80)==0x00 && this.isForward==true) {
+           //log.error("Throttle - Direction Reverse Locomotive:" +address);
+	   notifyPropertyChangeListener("IsForward",
+			 		new Boolean(this.isForward),
+					new Boolean(this.isForward=false));
+	   if(this.isForward==false) {
+		//log.error("Throttle - Changed direction to Reverse Locomotive:" +address);
+	   }
+	}
+	if(this.speedIncrement==XNetConstants.SPEED_STEP_128_INCREMENT) {
+	   if(this.getSpeedSetting()!=(float)((b2 & 0x7f)-2)/126) {
+	      notifyPropertyChangeListener("SpeedSetting",
+                      		            new Float(this.speedSetting),
+					    new Float(this.speedSetting = (float)((b2 & 0x7f)-2)/126));
+	   }
+	} else {
+	   if(this.getSpeedSetting()!=(float)(((b2 & 0x7f)-4)/(126/this.speedIncrement))) {
+  	      notifyPropertyChangeListener("SpeedSetting",
+                     	                   new Float(this.speedSetting),
+			  	  	   new Float(this.speedSetting = (float)(((b2 & 0x7f)-4)/(126/this.speedIncrement))));
+	   }
+	}
+    }
+
+    public void parseFunctionInformation(int b3,int b4)
+    {
+	/* data byte 3 is the status of F0 F4 F3 F2 F1 */
+	if((b3 & 0x10)==0x10 && getF0()==false) {
+	   notifyPropertyChangeListener("F0",
+                                        new Boolean(this.f0),
+					new Boolean(this.f0 = true));
+	} else if ((b3 &0x10)==0x00 && getF0()==true) {
+           notifyPropertyChangeListener("F0",
+					new Boolean(this.f0),
+					new Boolean(this.f0 = false));
+	}
+
+	if((b3 & 0x01)==0x01 && getF1()==false) {
+	   notifyPropertyChangeListener("F1",
+                                        new Boolean(this.f1),
+                                        new Boolean(this.f1 = true));
+	} else if ((b3 &0x01)==0x00 && getF1()==true) {
+           notifyPropertyChangeListener("F1",
+					new Boolean(this.f1),
+					new Boolean(this.f1 = false));
+	}
+
+	if((b3 & 0x02)==0x02 && getF2()==false) {
+           notifyPropertyChangeListener("F2",
+                                        new Boolean(this.f2),
+                                        new Boolean(this.f2 = true));
+	} else if ((b3 &0x02)==0x00 && getF2()==true) {
+	   notifyPropertyChangeListener("F2",
+			                new Boolean(this.f2),
+					new Boolean(this.f2 = false));
+	}
+	
+	if((b3 & 0x04)==0x04 && getF3()==false) {
+	   notifyPropertyChangeListener("F3",
+                                        new Boolean(this.f3),
+                                        new Boolean(this.f3 = true));
+	} else if ((b3 &0x04)==0x00 && getF3()==true) {
+	   notifyPropertyChangeListener("F3",
+				        new Boolean(this.f3),
+					new Boolean(this.f3 = false));
+	}
+
+	if((b3 & 0x08)==0x08 && getF4()==false) {
+	   notifyPropertyChangeListener("F4",
+                                        new Boolean(this.f4),
+                                        new Boolean(this.f4 = true));
+	} else if ((b4 &0x08)==0x00 && getF4()==true) {
+	   notifyPropertyChangeListener("F4",
+					new Boolean(this.f4),
+					new Boolean(this.f4 = false));
+	}
+
+	/* data byte 4 is the status of F12 F11 F10 F9 F8 F7 F6 F5 */
+
+	if((b4 & 0x01)==0x01 && getF5()==false)	{
+	   notifyPropertyChangeListener("F5",
+                                        new Boolean(this.f5),
+                                        new Boolean(this.f5 = true));
+	} else if ((b4 &0x01)==0x00 && getF5()==true) {
+	   notifyPropertyChangeListener("F5",
+					new Boolean(this.f5),
+					new Boolean(this.f5 = false));
+	}
+
+	if((b4 & 0x02)==0x02 && getF6()==false) {
+	   notifyPropertyChangeListener("F6",
+                                        new Boolean(this.f6),
+                                        new Boolean(this.f6 = true));
+	} else if ((b4 &0x02)==0x00 && getF6()==true) {
+	   notifyPropertyChangeListener("F6",
+					new Boolean(this.f6),
+					new Boolean(this.f6 = false));
+	} 
+
+	if((b4 & 0x04)==0x04 && getF7()==false) {
+           notifyPropertyChangeListener("F7",
+                                        new Boolean(this.f7),
+                                        new Boolean(this.f7 = true));
+	} else if ((b4 &0x04)==0x00 && getF7()==true) {
+	   notifyPropertyChangeListener("F7",
+					new Boolean(this.f7),
+					new Boolean(this.f7 = false));
+	}
+
+	if((b4 & 0x08)==0x08 && getF8()==false) {
+	   notifyPropertyChangeListener("F8",
+                                        new Boolean(this.f8),
+                                        new Boolean(this.f8 = true));
+	} else if ((b4 &0x08)==0x00 && getF8()==true) {
+	   notifyPropertyChangeListener("F8",
+					new Boolean(this.f8),
+					new Boolean(this.f8 = false));
+	}
+
+	if((b4 & 0x10)==0x10 && getF9()==false) {
+           notifyPropertyChangeListener("F9",
+                                        new Boolean(this.f9),
+                                        new Boolean(this.f9 = true));
+	} else if ((b4 &0x10)==0x00 && getF9()==true) {
+           notifyPropertyChangeListener("F9",
+					new Boolean(this.f9),
+					new Boolean(this.f9 = false));
+	}
+		
+	if((b4 & 0x20)==0x20 && getF10()==false) {
+	   notifyPropertyChangeListener("F10",
+                                        new Boolean(this.f10),
+                                        new Boolean(this.f10 = true));
+	} else if ((b4 &0x20)==0x00 && getF10()==true) {
+           notifyPropertyChangeListener("F10",
+	 				new Boolean(this.f10),
+					new Boolean(this.f10 = false));
+	}
+
+	if((b4 & 0x40)==0x40 && getF11()==false) {
+           notifyPropertyChangeListener("F11",
+                                        new Boolean(this.f11),
+                                        new Boolean(this.f11 = true));
+	} else if ((b4 &0x40)==0x00 && getF11()==true) {
+           notifyPropertyChangeListener("F11",
+					new Boolean(this.f11),
+					new Boolean(this.f11 = false));
+	}
+
+	if((b4 & 0x80)==0x80 && getF12()==false) {
+           notifyPropertyChangeListener("F12",
+                                        new Boolean(this.f12),
+                                        new Boolean(this.f12 = true));
+	} else if ((b4 &0x80)==0x00 && getF12()==true) {
+           notifyPropertyChangeListener("F12",
+					new Boolean(this.f12),
+					new Boolean(this.f12 = false));
+	}
+    }
 
     // information on consisting  (how do we set consisting?)
 
