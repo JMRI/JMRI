@@ -22,6 +22,18 @@ ant -a runtime antjava
 antjava  -a ant0 java
 ant0 -d java scripts build.xml
 
+# properties target; all the properties files
+properties \
+        apps/AppsBundle.properties \
+        apps/AppsBundle_de.properties \
+        jmri/jmrit/display/DisplayBundle.properties \
+        jmri/jmrit/JmritDebugBundle.properties \
+        jmri/jmrit/JmritToolsBundle.properties \
+        jmri/jmrit/roster/JmritRosterBundle.properties \
+        jmri/jmrit/roster/JmritRosterBundle_en_GB.properties \
+        jmri/jmrix/JmrixSystemsBundle.properties \
+        jmri/jmrix/loconet/LocoNetBundle.properties
+
 # we're still missing a CodeWarrior target
 # and due to repository mismatches (cant checkout two files from different
 # CVS directories to a single location) we cant load the default.lcf file
