@@ -15,7 +15,7 @@ import java.beans.PropertyChangeEvent;
  * counter-part of a LocoNet command station.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.10 $
+ * @version         $Revision: 1.11 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 
@@ -476,7 +476,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
     protected void notifyProgListenerEnd(int value, int status) {
         ProgListener p = _usingProgrammer;
         _usingProgrammer = null;
-        p.programmingOpReply(value, status);
+        if (p!=null) p.programmingOpReply(value, status);
     }
 
     // internal method to notify of the LACK result
