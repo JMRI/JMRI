@@ -7,6 +7,10 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JOptionPane;
 
 import java.awt.event.*;
+import java.awt.*;
+
+import org.jdom.Element;
+
 
 /**
  * A JButton to activate functions on the decoder. FunctionButtons
@@ -14,46 +18,55 @@ import java.awt.event.*;
  * <ul>
  * <li> Set the text
  * <li> Set the locking state
- * <li>
+ * <li> Set visibilty
+ * <li> Set Font
+ * <li> Set function number identity
  * </ul>
  */
 public class FunctionButton extends JButton implements ActionListener
 {
     private FunctionListener listener;
-    private int identity;
+    private int identity; // F0, F1, etc?
     private boolean isOn;
     private boolean isLockable = true;
 
     private JPopupMenu popup;
-    private JMenuItem setTextItem;
-    private JCheckBoxMenuItem changeLockStateItem;
 
     /**
      * Construct the FunctionButton.
-     * @param id An integer identifier for the button, probably relates
-     * to a Function number (i.e. F0, F1)
-     * @param isOn The state of the function. True if the function is
-     * activated.
      */
-    public FunctionButton(int id, boolean isOn)
+    public FunctionButton()
     {
-        this.identity = id;
-        this.isOn = isOn;
-
         popup = new JPopupMenu();
 
-        setTextItem = new JMenuItem("Change Text");
-        setTextItem.addActionListener(this);
-        popup.add(setTextItem);
-
-        changeLockStateItem = new JCheckBoxMenuItem("Lockable");
-        changeLockStateItem.addActionListener(this);
-        changeLockStateItem.setSelected(true);
-        popup.add(changeLockStateItem);
+        JMenuItem propertiesItem = new JMenuItem("Properties");
+        propertiesItem.addActionListener(this);
+        popup.add(propertiesItem);
 
         //Add listener to components that can bring up popup menus.
         MouseListener popupListener = new PopupListener();
         this.addMouseListener(popupListener);
+
+        this.setPreferredSize(new Dimension(54,36));
+        this.setMargin(new Insets(2,2,2,2));
+    }
+
+    /**
+     * Set the function number this button will operate
+     * @param id An integer from 0 to 9.
+     */
+    public void setIdentity(int id)
+    {
+        this.identity = id;
+    }
+
+    /**
+     * Get the function number this button operates
+     * @return An integer from 0 to 9.
+     */
+    public int getIdentity()
+    {
+        return identity;
     }
 
     /**
@@ -74,7 +87,6 @@ public class FunctionButton extends JButton implements ActionListener
     public void setIsLockable(boolean isLockable)
     {
         this.isLockable = isLockable;
-        changeLockStateItem.setSelected(isLockable);
     }
 
     /**
@@ -88,24 +100,19 @@ public class FunctionButton extends JButton implements ActionListener
         return isLockable;
     }
 
+
     /**
      * Handle the selection from the popup menu.
      * @param e The ActionEvent causing the action.
      */
     public void actionPerformed(ActionEvent e)
     {
-        if (e.getSource() == setTextItem)
-        {
-            editButtonText();
-        }
-        else if (e.getSource() == changeLockStateItem)
-        {
-            this.setIsLockable(!isLockable);
-            if (!getIsLockable())
-            {
-                isOn = false;
-            }
-        }
+        // display properties dialog
+        // TODO Manage a single dialog
+        FunctionButtonPropertyEditor editor = new FunctionButtonPropertyEditor();
+        editor.setFunctionButton(this);
+        editor.setLocation(this.getLocation());
+        editor.setVisible(true);
     }
 
     /**
@@ -119,23 +126,8 @@ public class FunctionButton extends JButton implements ActionListener
         {
             listener.notifyFunctionStateChanged(identity, isOn);
         }
-
     }
 
-    /**
-     * Present a dialog to allow the user to change the text
-     * of the button.
-     */
-    private void editButtonText()
-    {
-        Object input = JOptionPane.showInputDialog(this, "Enter text for this button",
-                                    "Change button text", JOptionPane.PLAIN_MESSAGE,
-                                    null, null, this.getText());
-        if (input != null)
-        {
-            this.setText(input.toString());
-        }
-    }
 
     /**
      * Add a listener to this button, probably some sort of keypad panel.
@@ -172,7 +164,7 @@ public class FunctionButton extends JButton implements ActionListener
             for mouse release to do popup. */
             else if (button.isEnabled() &&
                     ((e.getModifiers() & e.BUTTON1_MASK) > 0)
-                     && !getIsLockable())
+                     && !isLockable)
             {
                 changeState(true);
             }
@@ -195,7 +187,7 @@ public class FunctionButton extends JButton implements ActionListener
             }
             else if (button.isEnabled())
             {
-                if (!getIsLockable())
+                if (!isLockable)
                 {
                     changeState(false);
                 }
@@ -205,7 +197,54 @@ public class FunctionButton extends JButton implements ActionListener
                 }
             }
         }
+    }
 
+
+    /**
+     * Collect the prefs of this object into XML Element
+     * <ul>
+     * <li> identity
+     * <li> text
+     * <li> isLockable
+     * </ul>
+     * @return the XML of this object.
+     */
+    public Element getXml()
+    {
+        Element me = new Element("FunctionButton");
+        me.addAttribute("id", String.valueOf(this.getIdentity()));
+        me.addAttribute("text", this.getText());
+        me.addAttribute("isLockable", String.valueOf(this.getIsLockable()));
+        me.addAttribute("isVisible", String.valueOf(this.isVisible()));
+        me.addAttribute("fontSize", String.valueOf(this.getFont().getSize()));
+        return me;
+    }
+
+    /**
+     * Set the preferences based on the XML Element.
+     * <ul>
+     * <li> identity
+     * <li> text
+     * <li> isLockable
+      * </ul>
+     * @param e The Element for this object.
+     */
+    public void setXml(Element e)
+    {
+        try
+        {
+            this.setIdentity(e.getAttribute("id").getIntValue());
+            this.setText(e.getAttribute("text").getValue());
+            boolean isLockable = e.getAttribute("isLockable").getBooleanValue();
+            this.setIsLockable(isLockable);
+            boolean isVisible = e.getAttribute("isVisible").getBooleanValue();
+            this.setVisible(isVisible);
+            this.setFont(new Font("", Font.PLAIN, e.getAttribute("fontSize").getIntValue()));
+        }
+        catch (org.jdom.DataConversionException ex)
+        {
+            System.out.println("Ugh");
+        }
     }
 
 }
