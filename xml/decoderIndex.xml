@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <decoderIndex version="65">
+  <decoderIndex version="70">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -435,6 +435,24 @@
           <output name="2" label="B - Yellow" connection="unspecified" />
           <output name="3" label="C - Green" connection="unspecified" />
           <output name="4" label="D - Violet" connection="unspecified" />
+        </model>
+      </family>
+      <family name="MERG decoders" mfg="Public-domain and DIY" lowVersionID="104" type="locomotive" file="MERG_10.xml">
+        <model model="MERG 10" numOuts="5" numFns="3" connector="unspecified" nmraWarrant="no">
+          <output name="01" label="White" connection="unspecified" />
+          <output name="02" label="Yellow" connection="unspecified" />
+          <output name="03" label="Violet" connection="unspecified" />
+          <output name="04" label="Green" connection="unspecified" />
+          <output name="05" label="Brown" connection="unspecified" />
+        </model>
+      </family>
+      <family name="MERG HF PWM decoders" mfg="Public-domain and DIY" lowVersionID="133" type="locomotive" file="MERG_12A.xml">
+        <model model="MERG 12a" numOuts="5" numFns="3" connector="unspecified" nmraWarrant="no">
+          <output name="01" label="White" connection="unspecified" />
+          <output name="02" label="Yellow" connection="unspecified" />
+          <output name="03" label="Violet" connection="unspecified" />
+          <output name="04" label="Green" connection="unspecified" />
+          <output name="05" label="Brown" connection="unspecified" />
         </model>
       </family>
       <family name="DCCACC" mfg="MERG" comment="DCCACC is a stationary decoder, but it can be programmed in the usual way" type="locomotive" file="MERG_DCCACC.xml">
