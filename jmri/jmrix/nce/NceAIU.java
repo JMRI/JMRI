@@ -19,7 +19,7 @@ import jmri.Sensor;
  * that AIU is polled.
  *
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class NceAIU {
 
@@ -40,15 +40,15 @@ public class NceAIU {
     public void markChanges(int bits) {
         try {
             for (int i=0; i<14; i++) {
-                if ( (bits&1) !=0 ) {
-                    // bit set, considered ACTIVE
+                if ( (bits&1) ==0 ) {
+                    // bit reset, considered ACTIVE
                     if ( sensorArray[i]!=null &&
                             ( sensorLastSetting[i] != Sensor.ACTIVE) ) {
                         sensorLastSetting[i] = Sensor.ACTIVE;
                         sensorArray[i].setKnownState(Sensor.ACTIVE);
                     }
                 } else {
-                    // bit reset, considered INACTIVE
+                    // bit set, considered INACTIVE
                     if ( sensorArray[i]!=null &&
                             ( sensorLastSetting[i] != Sensor.INACTIVE) ) {
                         sensorLastSetting[i] = Sensor.INACTIVE;
