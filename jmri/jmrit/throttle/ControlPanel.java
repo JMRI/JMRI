@@ -1,4 +1,5 @@
 package jmri.jmrit.throttle;
+
 import jmri.DccThrottle;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
@@ -13,7 +14,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.*;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JSlider;
+import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -21,10 +29,12 @@ import org.jdom.Element;
 
 /**
  *  A JInternalFrame that contains a JSlider to control loco speed, and buttons
- *  for forward, reverse and STOP. TODO: fix speed increments (14, 28)
+ *  for forward, reverse and STOP.
+ *  <P>
+ *  TODO: fix speed increments (14, 28)
  *
  * @author     glen
- * @version    $Revision: 1.23 $
+ * @version    $Revision: 1.24 $
  */
 public class ControlPanel extends JInternalFrame
 {
@@ -157,13 +167,13 @@ public class ControlPanel extends JInternalFrame
 		sliderPanel.add(speedSlider, constraints);
 		this.getContentPane().add(sliderPanel, BorderLayout.CENTER);
 		speedSlider.setOrientation(JSlider.VERTICAL);
-		speedSlider.setMajorTickSpacing(32);
-		speedSlider.setMinorTickSpacing(8);
+		speedSlider.setMajorTickSpacing(MAX_SPEED/4);
+		speedSlider.setMinorTickSpacing(MAX_SPEED/16);
 		com.sun.java.util.collections.Hashtable labelTable = new com.sun.java.util.collections.Hashtable();
-		labelTable.put(new Integer(31), new JLabel("25%"));
-		labelTable.put(new Integer(63), new JLabel("50%"));
-		labelTable.put(new Integer(95), new JLabel("75%"));
-		labelTable.put(new Integer(127), new JLabel("100%"));
+		labelTable.put(new Integer(MAX_SPEED/4), new JLabel("25%"));
+		labelTable.put(new Integer(MAX_SPEED/2), new JLabel("50%"));
+		labelTable.put(new Integer((3*MAX_SPEED)/4), new JLabel("75%"));
+		labelTable.put(new Integer(MAX_SPEED), new JLabel("100%"));
 		speedSlider.setLabelTable(labelTable);
 		speedSlider.setPaintTicks(true);
 		speedSlider.setPaintLabels(true);
@@ -175,7 +185,7 @@ public class ControlPanel extends JInternalFrame
 				{
 					if (!speedSlider.getValueIsAdjusting())
 					{
-						throttle.setSpeedSetting(speedSlider.getValue() / 127.0f);
+						throttle.setSpeedSetting(speedSlider.getValue() / (MAX_SPEED*1.0f));
 					}
 				}
 			});
@@ -298,7 +308,7 @@ public class ControlPanel extends JInternalFrame
 	 *  A KeyAdapter that listens for the keys that work the control pad buttons
 	 *
 	 * @author     glen
-         * @version    $Revision: 1.23 $
+         * @version    $Revision: 1.24 $
 	 */
 	class ControlPadKeyListener extends KeyAdapter
 	{
