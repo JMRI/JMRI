@@ -15,7 +15,7 @@ import org.jdom.Element;
  *  Load throttles from XML
  *
  * @author     Glen Oberhauser
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class LoadXmlThrottleAction extends AbstractAction
 {
@@ -33,6 +33,10 @@ public class LoadXmlThrottleAction extends AbstractAction
 	         setEnabled(false);
 	   }
 	}
+
+        public LoadXmlThrottleAction() {
+            this("Load Throttle");
+        }
 
 	/**
 	 *  The action is performed. Let the user choose the file to load from. Read
@@ -107,7 +111,7 @@ public class LoadXmlThrottleAction extends AbstractAction
 	 *  An extension of the abstract XmlFile. No changes made to that class.
 	 *
 	 * @author     glen
-         * @version    $Revision: 1.9 $
+         * @version    $Revision: 1.10 $
 	 */
 	class ThrottlePrefs extends XmlFile
 	{
