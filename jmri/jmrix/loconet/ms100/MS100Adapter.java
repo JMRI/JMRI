@@ -10,6 +10,9 @@ import java.util.Vector;
 import java.io.DataOutputStream;
 import java.io.DataInputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
+
+import Serialio.*;
 
 import jmri.jmrix.loconet.*;
 
@@ -21,12 +24,11 @@ import jmri.jmrix.loconet.*;
  * Neither the baud rate configuration nor the "option 1" option are used.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
 	Vector portNameVector = null;
-	SerialPort activeSerialPort = null;
 
 	public Vector getPortNames() {
 		// first, check that the comm package can be opened and ports seen
@@ -41,70 +43,129 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
 		return portNameVector;
 	}
 
+    class InnerSerial {
+        public String openPort(String portName, String appName) throws java.io.IOException {
+			    // get and open the primary port
+			    SerialConfig config = new SerialConfig(portName);
+
+			    // try to set it for LocoNet direct (e.g. via MS100)
+			    // spec is 16600, says 16457 is OK also. We start with 16600,
+                // attempting to make that work.
+                config.setBitRate(16457);
+                config.setDataBits(SerialConfig.LN_8BITS);
+                config.setStopBits(SerialConfig.ST_1BITS);
+                config.setParity(SerialConfig.PY_NONE);
+                config.setHandshake(SerialConfig.HS_NONE);
+                Serialio.SerialPort activeSerialPort = new SerialPortLocal(config);
+
+			    // set RTS high, DTR low to power the MS100
+			    activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
+			    activeSerialPort.setDTR(false);		// pin 1 in DIN8; on main connector, this is DTR
+
+			    // get and save stream
+			    serialInStream = new SerInputStream(activeSerialPort);
+                serialOutStream = new SerOutputStream(activeSerialPort);
+
+			    // report status
+			    if (log.isInfoEnabled()) {
+				    log.info(portName+" port opened, sees "
+						    +" DSR: "+activeSerialPort.sigDSR()
+						    +" CTS: "+activeSerialPort.sigCTS()
+						    +"  CD: "+activeSerialPort.sigCD()
+					    );
+			    }
+            return null;
+        }
+    }
+
+    class InnerJavaComm  {
+        public String openPort(String portName, String appName) throws javax.comm.NoSuchPortException, javax.comm.UnsupportedCommOperationException,
+                                java.io.IOException {
+                // get and open the primary port
+                CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
+                javax.comm.SerialPort activeSerialPort = null;
+                try {
+                    activeSerialPort = (SerialPort) portID.open(appName, 100);  // name of program, msec to wait
+                }
+                catch (PortInUseException p) {
+                    log.error(portName+" port is in use: "+p.getMessage());
+                    return portName+" port is in use";
+                }
+
+                // try to set it for LocoNet direct (e.g. via MS100)
+                // spec is 16600, says 16457 is OK also. Try that as a second choice
+                try {
+                    activeSerialPort.setSerialPortParams(16600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+                } catch (javax.comm.UnsupportedCommOperationException e) {
+                    // assume that's a baudrate problem, fall back.
+                    log.warn("attempting to fall back to 16457 baud after 16600 failed");
+                    try {
+                        activeSerialPort.setSerialPortParams(16457, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+                    } catch (javax.comm.UnsupportedCommOperationException e2) {
+                        log.warn("trouble setting 16600 baud");
+                        javax.swing.JOptionPane.showMessageDialog(null,
+                                "Failed to set the correct baud rate for the MS100. Port is set to "
+                                +activeSerialPort.getBaudRate()+
+                                " baud. See the README file for more info.",
+                                "Connection failed", javax.swing.JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+
+                // set RTS high, DTR low to power the MS100
+                activeSerialPort.setRTS(true);          // not connected in some serial ports and adapters
+                activeSerialPort.setDTR(false);         // pin 1 in DIN8; on main connector, this is DTR
+
+                // disable flow control; hardware lines used for signalling, XON/XOFF might appear in data
+                activeSerialPort.setFlowControlMode(0);
+
+                // activeSerialPort.enableReceiveTimeout(1000);
+                log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
+                            +" "+activeSerialPort.isReceiveTimeoutEnabled());
+
+                // get and save stream
+                serialInStream = activeSerialPort.getInputStream();
+                serialOutStream = activeSerialPort.getOutputStream();
+
+                // report status?
+                if (log.isInfoEnabled()) {
+                    log.info(portName+" port opened at "
+                            +activeSerialPort.getBaudRate()+" baud, sees "
+                            +" DTR: "+activeSerialPort.isDTR()
+                            +" RTS: "+activeSerialPort.isRTS()
+                            +" DSR: "+activeSerialPort.isDSR()
+                            +" CTS: "+activeSerialPort.isCTS()
+                            +"  CD: "+activeSerialPort.isCD()
+                            );
+                }
+                return null;
+        }
+    }
+
 	public String openPort(String portName, String appName)  {
-		// open the primary and secondary ports in LocoNet mode, check ability to set moderators
-		try {
-			// get and open the primary port
-			CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
- 			try {
-	  			activeSerialPort = (SerialPort) portID.open(appName, 100);  // name of program, msec to wait
-	  			}
-			catch (PortInUseException p) {
-				log.error(portName+" port is in use: "+p.getMessage());
-				return portName+" port is in use";
-			}
+        try {
+            // this has to work through one of two sets of class. If
+            // Serialio.SerialConfig exists on this machine, we use that
+            // else we revert to javax.comm
+            try {
+                Class.forName("Serialio.SerialConfig");
+                log.debug("openPort using SerialIO");
+                InnerSerial inner = new InnerSerial();
+                String result = inner.openPort(portName, appName);
+                if (result!=null) return result;
+            } catch (ClassNotFoundException e) {
+                log.debug("openPort using javax.comm");
+                InnerJavaComm inner = new InnerJavaComm();
+                String result = inner.openPort(portName, appName);
+                if (result!=null) return result;
+            }
 
-			// try to set it for LocoNet direct (e.g. via MS100)
-			// spec is 16600, says 16457 is OK also. Try that as a second choice
-			try {
-				activeSerialPort.setSerialPortParams(16600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-			} catch (javax.comm.UnsupportedCommOperationException e) {
-				// assume that's a baudrate problem, fall back.
-				log.warn("attempting to fall back to 16457 baud after 16600 failed");
-				try {
-					activeSerialPort.setSerialPortParams(16457, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-				} catch (javax.comm.UnsupportedCommOperationException e2) {
-					log.warn("trouble setting 16600 baud");
-					javax.swing.JOptionPane.showMessageDialog(null,
-		   				"Failed to set the correct baud rate for the MS100. Port is set to "
-		   				+activeSerialPort.getBaudRate()+
-		   				" baud. See the README file for more info.",
-		   				 "Connection failed", javax.swing.JOptionPane.ERROR_MESSAGE);
-				}
-			}
-
-			// set RTS high, DTR low to power the MS100
-			activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-			activeSerialPort.setDTR(false);		// pin 1 in DIN8; on main connector, this is DTR
-
-			// disable flow control; hardware lines used for signalling, XON/XOFF might appear in data
-			activeSerialPort.setFlowControlMode(0);
-
-			// activeSerialPort.enableReceiveTimeout(1000);
-			log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
-						+" "+activeSerialPort.isReceiveTimeoutEnabled());
-
-			// get and save stream
-			serialStream = activeSerialPort.getInputStream();
-
+            // port is open, regardless of method, start work on the stream
 			// purge contents, if any
-			int count = serialStream.available();
+			int count = serialInStream.available();
 			log.debug("input stream shows "+count+" bytes available");
 			while ( count > 0) {
-				serialStream.skip(count);
-				count = serialStream.available();
-			}
-
-			// report status?
-			if (log.isInfoEnabled()) {
-				log.info(portName+" port opened at "
-						+activeSerialPort.getBaudRate()+" baud, sees "
-						+" DTR: "+activeSerialPort.isDTR()
-						+" RTS: "+activeSerialPort.isRTS()
-						+" DSR: "+activeSerialPort.isDSR()
-						+" CTS: "+activeSerialPort.isCTS()
-						+"  CD: "+activeSerialPort.isCD()
-					);
+				serialInStream.skip(count);
+				count = serialInStream.available();
 			}
 
 			opened = true;
@@ -116,6 +177,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
 
 		return null; // normal termination
 	}
+
 
 	/**
 	 * Can the port accept additional characters?
@@ -141,6 +203,8 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
 			// loconet.SlotManager to do that
 			if (jmri.InstanceManager.programmerInstance() == null)
 				jmri.jmrix.loconet.SlotManager.instance();
+            // set slot manager's read capability
+            jmri.jmrix.loconet.SlotManager.instance().setCanRead(mCanRead);
 
 			// If a jmri.PowerManager instance doesn't exist, create a
 			// loconet.LnPowerManager to do that
@@ -164,18 +228,15 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
 			log.error("called before load(), stream not available");
 			return null;
 		}
-		return new DataInputStream(serialStream);
+		return new DataInputStream(serialInStream);
 	}
 
 	public DataOutputStream getOutputStream() {
-		if (!opened) log.error("getOutputStream called before load(), stream not available");
-		try {
-     		return new DataOutputStream(activeSerialPort.getOutputStream());
-     		}
-     	catch (java.io.IOException e) {
-     		log.error("getOutputStream exception: "+e);
-     	}
-     	return null;
+		if (!opened) {
+            log.error("getOutputStream called before load(), stream not available");
+            return null;
+        }
+		return new DataOutputStream(serialOutStream);
 	}
 
 	public boolean status() {return opened;}
@@ -225,13 +286,20 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
 	/**
 	 * Set the second port option.  Only to be used after construction, but
 	 * before the openPort call
+     * @throws jmri.jmrix.SerialConfigException
 	 */
 	public void configureOption2(String value) throws jmri.jmrix.SerialConfigException {
+		log.debug("configureOption2: "+value);
+        if (value.equals("DB150 (Empire Builder)")) mCanRead = false;
+        else mCanRead = true;
     }
+
+    boolean mCanRead = true;
 
 // private control members
 	private boolean opened = false;
-	InputStream serialStream = null;
+	InputStream serialInStream = null;
+	OutputStream serialOutStream = null;
 
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(MS100Frame.class.getName());
 
