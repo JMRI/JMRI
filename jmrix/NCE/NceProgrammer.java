@@ -39,12 +39,16 @@ public class NceProgrammer implements NceListener, Programmer {
 	static private NceProgrammer self = null;
 
 	// handle mode
-	protected int _mode = 0;
+	protected int _mode = Programmer.PAGEMODE;
 	
 	public void setMode(int mode) {
 		if (mode != _mode) {
 			notifyPropertyChange("Mode", _mode, mode);
 			_mode = mode;
+		}
+		if (_mode != Programmer.PAGEMODE) {
+			_mode = Programmer.PAGEMODE;
+			notifyPropertyChange("Mode", mode, _mode);
 		}
 	}
 	public int getMode() { return _mode; }
@@ -217,7 +221,7 @@ public class NceProgrammer implements NceListener, Programmer {
 		// connect the first time
 		if (_controller == null) {
 			_controller = NceTrafficController.instance();
-			_controller.addNceListener(this);	
+			// _controller.addNceListener(this);	
 		}
 		return _controller;
 	}
