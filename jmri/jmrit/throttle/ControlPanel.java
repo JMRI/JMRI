@@ -55,13 +55,12 @@ public class ControlPanel extends JInternalFrame
 		throttle = null;
 	}
 
-	public void dispose()
+	public void destroy()
 	{
 		if (throttle != null)
 		{
 			throttle.setSpeedSetting(0);
 		}
-		super.dispose();
 	}
 	
 	/**

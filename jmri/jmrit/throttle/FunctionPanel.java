@@ -25,7 +25,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener
         initGUI();
     }
 
-	public void dispose()
+	public void destroy()
 	{
 		if (throttle != null)
 		{
@@ -43,7 +43,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener
 			throttle.setF11(false);
 			throttle.setF12(false);
 		}
-		super.dispose();
 	}
 
     /**

@@ -40,13 +40,12 @@ public class AddressPanel extends JInternalFrame
         initGUI();
     }
 
-	public void dipose()
+	public void destroy()
 	{
 		if (throttle != null)
 		{
 			throttle.release();
 		}
-		super.dispose();
 	}
 	
     /**
