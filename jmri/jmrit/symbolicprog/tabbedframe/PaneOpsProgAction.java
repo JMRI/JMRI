@@ -26,7 +26,7 @@ import jmri.*;
  * @see  jmri.jmrit.symbolicprog.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class PaneOpsProgAction 	extends AbstractAction {
 
@@ -77,7 +77,7 @@ public class PaneOpsProgAction 	extends AbstractAction {
 
             protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                                                 String filename) {
-                String title = "Program "+re.getId();
+                String title = "Program "+re.getId()+" on main track";
                 // find the ops-mode programmer
                 int address = Integer.parseInt(re.getDccAddress());
                 boolean longAddr = true;

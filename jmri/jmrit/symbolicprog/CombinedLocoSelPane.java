@@ -36,7 +36,7 @@ import com.sun.java.util.collections.List;
  * </UL>
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeListener {
 
@@ -83,7 +83,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         }
         iddecoder.addActionListener( new ActionListener() {
         	public void actionPerformed(java.awt.event.ActionEvent e) {
-        		if (log.isInfoEnabled()) log.info("identify decoder pressed");
+        		if (log.isDebugEnabled()) log.debug("identify decoder pressed");
         		startIdentifyDecoder();
         	}
         });
@@ -156,7 +156,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
             }
 			idloco.addActionListener( new ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					if (log.isInfoEnabled()) log.info("Identify locomotive pressed");
+					if (log.isDebugEnabled()) log.debug("Identify locomotive pressed");
 					startIdentifyLoco();
 				}
 			});
@@ -182,7 +182,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
 		go2 = new JButton("Open Programmer");
 		go2.addActionListener( new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				if (log.isInfoEnabled()) log.info("Open programmer pressed");
+				if (log.isDebugEnabled()) log.debug("Open programmer pressed");
 				openButton();
 			}
 		});
