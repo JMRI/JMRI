@@ -1,10 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: ESU_LokPilotDCC.xml,v 1.1 2003-05-24 04:13:42 jacobsen Exp $ -->
+<!-- $Id: ESU_LokPilotDCC.xml,v 1.2 2003-06-05 17:45:02 jacobsen Exp $ -->
 <decoder-config>
 		<version author="sip@euronet.nl"
-			version="1.0 beta" lastUpdated="20020808"/>
+			version="2" lastUpdated="20030606"/>
 			<!-- Based on the contribution of many others -->
+
+		<!-- version 2 - add consist direction - jake -->
 
 <decoder>
 	<family name="ESU LokPilot Silent BEMF decoders" mfg="ESU" lowVersionID="21">
@@ -71,9 +73,15 @@
 				item="Long Address">
 				<longAddressVal/></variable>
 			
-		<variable label="Consist Address" CV="19">
-				<decVal/></variable>
+		<variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
+			<decVal/></variable>
 		
+		<variable label="Consist Direction" CV="19" mask="VXXXXXXX">
+			<enumVal>
+				<enumChoice choice="Normal"></enumChoice>
+				<enumChoice choice="Reversed"></enumChoice>
+				</enumVal></variable>
+
 		<variable label="Normal Direction of Motion" CV="29"
 				mask="XXXXXXXV"
 		        item="Locomotive Direction">

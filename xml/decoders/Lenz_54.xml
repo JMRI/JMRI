@@ -1,9 +1,11 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Lenz_54.xml,v 1.3 2002-10-16 17:33:09 jacobsen Exp $ -->
+<!-- $Id: Lenz_54.xml,v 1.4 2003-06-05 17:45:10 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen jake@physics.berkeley.edu"
-			version="1" lastUpdated="20020323" />
+			version="2" lastUpdated="20030606" />
+
+		<!-- version 2 - add consist direction - jake -->
 
 <!-- These are the version 5.4 decoders, with "12 bit BEMF" or "5th gen BEMF " -->
 <!-- and "XF & special" -->
@@ -98,11 +100,14 @@
 			<longAddressVal/>
 			</variable>
 
-		<variable label="Advanced Consist Address" CV="19"
-				item="Consist Address"
-				comment="Allows permanent storage of consist address. Range 0-255">
-			<decVal/>
-			</variable>
+		<variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
+			<decVal/></variable>
+		
+		<variable label="Consist Direction" CV="19" mask="VXXXXXXX">
+			<enumVal>
+				<enumChoice choice="Normal"></enumChoice>
+				<enumChoice choice="Reversed"></enumChoice>
+				</enumVal></variable>
 
 		<variable label="Normal direction of motion" CV="29"
 				mask="XXXXXXXV"

@@ -1,15 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_CS.xml,v 1.7 2003-05-29 19:35:49 jacobsen Exp $ -->
+<!-- $Id: Digitrax_CS.xml,v 1.8 2003-06-05 17:45:34 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
-					version="5" lastUpdated="20021016"/>
+					version="6" lastUpdated="20030606"/>
 					
 		<!-- made from 150 file (Basic FX) -->
 		<!-- version 3 added BEMF, transponding control, short address -->
 		<!--   side effects -->
 		<!-- version 4 adjusts versionID range -->
 		<!-- version 5 correct BEMF defaults -->
+		<!-- version 6 - add consist direction - jake -->
 
 <decoder>
 	<family name="Basic CS" mfg="Digitrax" lowVersionID="225" highVersionID="239">
@@ -109,9 +110,16 @@
 		<variable label="Long Address" CV="17" item="Extended Address">
 			<longAddressVal/>
 			</variable>
-		<variable label="Advanced Consist address" CV="19" item="Consist Address">
-			<decVal/>
-			</variable>
+			
+		<variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
+			<decVal/></variable>
+		
+		<variable label="Consist Direction" CV="19" mask="VXXXXXXX">
+			<enumVal>
+				<enumChoice choice="Normal"></enumChoice>
+				<enumChoice choice="Reversed"></enumChoice>
+				</enumVal></variable>
+
 		<variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
 			<enumVal>
 				<enumChoice choice="forward"/>

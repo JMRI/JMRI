@@ -1,8 +1,10 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: QSI_Quantum.xml,v 1.1 2003-02-28 04:33:28 jacobsen Exp $ -->
+<!-- $Id: QSI_Quantum.xml,v 1.2 2003-06-05 17:44:40 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Bob Jacobsen" version="1" lastUpdated="20030210"/>
+		<version author="Bob Jacobsen" version="2" lastUpdated="20030606"/>
+
+		<!-- version 2 - add consist direction - jake -->
 
 <decoder>
 	<family name="Quantum" mfg="QSIndustries">
@@ -37,8 +39,15 @@
 						item="Long Address" >
 			<longAddressVal/></variable>
 			
-		<variable label="Consist Address" CV="19">			<decVal/></variable>
+		<variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
+			<decVal/></variable>
 		
+		<variable label="Consist Direction" CV="19" mask="VXXXXXXX">
+			<enumVal>
+				<enumChoice choice="Normal"></enumChoice>
+				<enumChoice choice="Reversed"></enumChoice>
+				</enumVal></variable>
+
 		<variable label="Consist Address Active For F1" CV="21" mask="XXXXXXXV">
 			<enumVal>
 				<enumChoice choice="Locomotive Address Only"/>

@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Revision: 1.1 $ -->
+<!-- $Revision: 1.2 $ -->
 <decoder-config>
 		<version author="peter.brandenburg@tiscalinet.de"
-			version="1.5beta" lastUpdated="02172003" />
+			version="2" lastUpdated="20030605" />
 
 		<!-- Based on the contribution of "sip@euronet.nl",Zimo_MX61_2000_11.xml-->
 
-			
+		<!-- version 2 - add consist direction - jake -->
 
 <decoder>
 	<family name="CT Elektronik DCX X0" mfg="CT Elektronik">
@@ -107,14 +107,14 @@
 			<longAddressVal/>
 			</variable>
 
-		<variable label="Consist Address" CV="19" default="0"
-				item="Consist Address"
-				comment="Allows permanent storage of consist address. Range 1-128">
-			<decVal/>
-			</variable>
-
+		<variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
+			<decVal/></variable>
 		
-		
+		<variable label="Consist Direction" CV="19" mask="VXXXXXXX">
+			<enumVal>
+				<enumChoice choice="Normal"></enumChoice>
+				<enumChoice choice="Reversed"></enumChoice>
+				</enumVal></variable>
 		
 		
 

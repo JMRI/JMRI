@@ -1,14 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: TCS_Tx.xml,v 1.7 2003-05-27 21:51:54 jacobsen Exp $ -->
+<!-- $Id: TCS_Tx.xml,v 1.8 2003-06-05 17:44:53 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
-					version="3" lastUpdated="200201016"/>
+					version="4" lastUpdated="20030606"/>
 
 		<!-- Version 1 - made from NMRA & Digitrax examples -->
 		<!-- Version 2 - moved TH141 here, add function map -->
 		<!-- Version 3 - updated the version IDs, hoping to distinguish among these -->
-		
+		<!-- version 4 - add consist direction - jake -->
+
+
 <decoder>
 	<family name="TCS Tx series decoders" mfg="Train Control Systems">
 		<model model="T1" numOuts="2" numFns="2" lowVersionID="16" highVersionID="16"/>
@@ -51,9 +53,17 @@
 		<variable label="Long Address" CV="17" item="Extended Address">
 			<longAddressVal/>
 			</variable>
-		<variable label="Advanced Consist address" CV="19" item="Consist Address">
-			<decVal/>
-			</variable>
+
+		<variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
+			<decVal/></variable>
+		
+		<variable label="Consist Direction" CV="19" mask="VXXXXXXX">
+			<enumVal>
+				<enumChoice choice="Normal"></enumChoice>
+				<enumChoice choice="Reversed"></enumChoice>
+				</enumVal></variable>
+
+
 		<variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
 			<enumVal>
 				<enumChoice choice="forward"/>

@@ -1,11 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Lenz_LE077XF.xml,v 1.11 2002-10-16 17:33:09 jacobsen Exp $ -->
+<!-- $Id: Lenz_LE077XF.xml,v 1.12 2003-06-05 17:45:10 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Joe Ellis filker@mindspring.com"
-			version="4" lastUpdated="20020703" />
+			version="5" lastUpdated="20030605" />
 			<!-- Updated to new names by jake@physics.berkeley.edu -->
 			<!-- Added CV 23, 24, and function mapping - Bob J -->
+
+		<!-- version 5 - add consist direction - jake -->
 
 <!-- These are the version 4.5 decoders, with "precision glide" and "XF" -->
 
@@ -88,11 +90,14 @@
 			<longAddressVal/>
 			</variable>
 
-		<variable label="Advanced Consist Address" CV="19"
-				item="Consist Address"
-				comment="Allows permanent storage of consist address. Range 0-255">
-			<decVal/>
-			</variable>
+		<variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
+			<decVal/></variable>
+		
+		<variable label="Consist Direction" CV="19" mask="VXXXXXXX">
+			<enumVal>
+				<enumChoice choice="Normal"></enumChoice>
+				<enumChoice choice="Reversed"></enumChoice>
+				</enumVal></variable>
 
 		<variable label="Acceleration Trim (range 0-255)" CV="23" default="255"
 				item="Consist Acceleration Adjustment"

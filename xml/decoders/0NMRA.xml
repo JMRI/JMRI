@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: 0NMRA.xml,v 1.3 2003-01-03 11:42:57 jacobsen Exp $ -->
+<!-- $Id: 0NMRA.xml,v 1.4 2003-06-05 17:44:13 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Bob Jacobsen" version="2" lastUpdated="20020111"/>
+		<version author="Bob Jacobsen" version="3" lastUpdated="20030605"/>
+		<!-- version 3 - add consist direction - jake -->
 
 <decoder>
 	<family name="NMRA standard CV definitions" mfg="NMRA">
@@ -104,7 +105,14 @@
 						item="Long Address" >
 			<longAddressVal/></variable>
 			
-		<variable label="Consist Address" CV="19">			<decVal/></variable>
+		<variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
+			<decVal/></variable>
+		
+		<variable label="Consist Direction" CV="19" mask="VXXXXXXX">
+			<enumVal>
+				<enumChoice choice="Normal"></enumChoice>
+				<enumChoice choice="Reversed"></enumChoice>
+				</enumVal></variable>
 		
 		<variable label="Consist Address Active For F1" CV="21" mask="XXXXXXXV">
 			<enumVal>

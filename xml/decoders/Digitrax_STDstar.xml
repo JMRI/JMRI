@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_STDstar.xml,v 1.6 2002-11-25 00:54:35 jacobsen Exp $ -->
+<!-- $Id: Digitrax_STDstar.xml,v 1.7 2003-06-05 17:45:34 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
-					version="3" lastUpdated="20021122"/>
+					version="4" lastUpdated="20030606"/>
 
 <!-- Represent the family of Digitrax decoders with STD* outputs. -->
 <!-- STD* means that the lights are reversing only, so -->
@@ -12,6 +12,7 @@
 <!-- Version 1 made from old 1x1 file -->
 <!-- Version 2 with versionID range -->
 <!-- Version 3 remove speed tables, not present -->
+<!-- Version 4 - add consist direction - jake -->
 
 <decoder>
 	<family name="Basic STD*" mfg="Digitrax" lowVersionID="1" highVersionID="1">
@@ -87,7 +88,14 @@
 			<longAddressVal/>
 			</variable>
 
-		<variable label="Consist Address" CV="19">			<decVal/></variable>
+		<variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
+			<decVal/></variable>
+		
+		<variable label="Consist Direction" CV="19" mask="VXXXXXXX">
+			<enumVal>
+				<enumChoice choice="Normal"></enumChoice>
+				<enumChoice choice="Reversed"></enumChoice>
+				</enumVal></variable>
 
 		<variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" 
 					item="Locomotive Direction">
