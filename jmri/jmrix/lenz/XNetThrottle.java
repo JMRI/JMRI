@@ -6,7 +6,7 @@ import jmri.jmrix.AbstractThrottle;
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
  * @author     Paul Bender (C) 2002,2003
- * @version    $Revision: 1.11 $
+ * @version    $Revision: 1.12 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -191,6 +191,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
          // Remember, the speed steps are identified as 0-127 (in 
 	 // 128 step mode), not 1-128.
          int element4value=(int)((speed)*(127)/speedIncrement);
+         // speed step 1 is reserved to indicate emergency stop, so we 
+	 // need to step over speed step 1
+         if(element4value==1) { element4value=2; }
          if(isForward)
  	 {
 	    /* the direction bit is always the most significant bit */
@@ -198,6 +201,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	 }
         msg.setElement(4,element4value);
         msg.setParity(); // Set the parity bit
+
         // now, we send the message to the command station
         XNetTrafficController.instance().sendXNetMessage(msg,this);
 	}

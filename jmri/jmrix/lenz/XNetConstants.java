@@ -3,7 +3,7 @@
  *
  * Description:		Constants to represent values seen in XpressNet traffic
  * @author		Paul Bender  Copyright (C) 2003
- * @version             $ Revision: 1.6 $
+ * @version             $ Revision: 1.7 $
  *
  * Variable prefix abreviation keys:
  * ACC_ is for accessory messages
@@ -157,7 +157,8 @@ public final static int ALL_ESTOP = 0x80;
 /* this is for a single locomotive.  With version 3 of expressnet, this is
 followed with a two byte address.  For version 2, this should be followed 
 by a 1 byte address */
-public final static int EMERGENCY_STOP = 0x91;
+public final static int EMERGENCY_STOP_XNETV1V2 = 0x91;
+public final static int EMERGENCY_STOP = 0x92;
 
 /* Program mode read requests */
 public final static int PROG_READ_REQUEST = 0x22;
