@@ -12,7 +12,7 @@ import javax.swing.JTextField;
  * via LocoNet RMI
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
@@ -46,7 +46,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
     /**
      * Reimplement this method to show the connected host,
      * rather than the usual port name.
-     * @return
+     * @return human-readable connection information
      */
     public String getInfo() {
         String t = host.getText();
