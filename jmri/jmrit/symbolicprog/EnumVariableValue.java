@@ -21,7 +21,7 @@ import com.sun.java.util.collections.ArrayList;
  * Extends VariableValue to represent a enumerated variable.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: EnumVariableValue.java,v 1.2 2002-08-08 13:12:28 jacobsen Exp $
+ * @version			$Id: EnumVariableValue.java,v 1.3 2002-08-28 16:16:16 jacobsen Exp $
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
@@ -164,7 +164,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     void setColor(Color c) {
         if (c != null) _value.setBackground(c);
         else _value.setBackground(_defaultColor);
-            prop.firePropertyChange("Value", null, null);
+            // prop.firePropertyChange("Value", null, null);
     }
 
     // member functions to control reading/writing the variables
@@ -203,7 +203,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * model between this object and the real JComboBox value.
      *
      * @author			Bob Jacobsen   Copyright (C) 2001
-     * @version         $Revision: 1.2 $
+     * @version         $Revision: 1.3 $
      */
     public class VarComboBox extends JComboBox {
 
