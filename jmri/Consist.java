@@ -16,6 +16,17 @@ import com.sun.java.util.collections.List;
  */
 public interface Consist {
 
+	// Constants for the ConsistType
+	// For Advanced Consists
+        public final static int ADVANCED_CONSIST = 0;
+
+	// For Command Station Consists
+        // This is for a: Digitrax Universal Consist, 
+        // or Lenz Double Header,or NCE "old Style Consist",etc
+        public final static int CS_CONSIST = 1;  
+
+
+
 	// Set the Consist Type
 	public void setConsistType(int consist_type);
 

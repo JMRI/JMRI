@@ -28,11 +28,6 @@ public class DccConsist implements Consist, ProgListener{
 					// each locomotive in the consist, 
 					// keyed by Loco Address.
 
-	public final static int ADVANCED_CONSIST = 0;
-	public final static int CS_CONSIST = 1;  // This is for a:
-					 // Digitrax Universal Consist
-					 // or Lenz Double Header
-					 // or NCE "old Style Consist"
         private int ConsistType = ADVANCED_CONSIST;
 
 	private int ConsistAddress = -1;
