@@ -1,6 +1,6 @@
 // NameFile.java
 
-package jmri.jmrit.symbolicprog;
+package jmri.jmrit;
 
 import jmri.jmrit.XmlFile;
 import java.io.File;
@@ -24,7 +24,7 @@ import org.jdom.Element;
  * locate the one associated with the "xml/names.xml" file.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: NameFile.java,v 1.3 2001-12-18 07:31:07 jacobsen Exp $
+ * @version			$Id: NameFile.java,v 1.4 2001-12-30 09:43:25 jacobsen Exp $
  */
 public class NameFile extends XmlFile {
 	
@@ -33,18 +33,14 @@ public class NameFile extends XmlFile {
 	protected List nameElementList = new ArrayList();
 	public int numNames() { return nameElementList.size(); }
 	
-	// map standard names to NMRA forms
-	protected Hashtable _nmraFromStdHash = new Hashtable(); 
-	protected Hashtable _StdFromNmraHash = new Hashtable(); 
+	// hold names in a Hashtable
+	protected Hashtable _nameHash = new Hashtable(); 
 	
-	public String nmraFromStd(String name) {
-		return (String)_nmraFromStdHash.get(name);
+	public Element elementFromName(String name) {
+		return (Element)_nameHash.get(name);
 	}
 	
-	public String stdFromNmra(String name) {
-		return (String)_StdFromNmraHash.get(name);
-	}
-	
+		
 	static NameFile _instance = null;
 	public synchronized static NameFile instance() {
 		if (_instance == null) {
@@ -62,6 +58,13 @@ public class NameFile extends XmlFile {
 	}
 	
 	/**
+	 * Check to see if a name is present in the file
+	 */
+	public boolean checkName(String name) {
+		return (elementFromName(name) != null);		
+	}
+	
+	/**
 	 * Read the contents of a NameFile XML file into this object. Note that this does not
 	 * clear any existing entries.
 	 */
@@ -76,22 +79,18 @@ public class NameFile extends XmlFile {
 
 	void readNames(Element root) {
 		
-		List l = root.getChildren("variable");
+		List l = root.getChildren("definition");
 		if (log.isDebugEnabled()) log.debug("readNames sees "+l.size()+" children");
 		for (int i=0; i<l.size(); i++) {
 			// handle each entry
 			Element el = (Element)l.get(i);
-			storeVariable(el);
+			storeDefinition(el);
 		}
 	}
 	
-	void storeVariable(Element el) {
+	void storeDefinition(Element el) {
 		String name = el.getAttribute("name").getValue();
-		Attribute attr = el.getAttribute("mfgID");
-		if (attr != null) {
-			// _mfgIdFromNameHash.put(mfg, attr.getValue());
-			// _mfgNameFromIdHash.put(attr.getValue(), mfg);
-		}
+		_nameHash.put(name, el);
 	}
 
 	/** 

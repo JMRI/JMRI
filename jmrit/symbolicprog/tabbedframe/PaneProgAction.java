@@ -38,7 +38,7 @@ public class PaneProgAction 			extends AbstractAction {
 			public void run() { 
 				Roster.instance();
 				DecoderIndexFile.instance();
-				NameFile.instance(); 
+				jmri.jmrit.NameFile.instance(); 
 				if (log.isInfoEnabled()) log.info("xml loading thread finishes reading Roster, DecoderIndexFIle, NameFile");
 			}
 		}, "read roster, decoderIndex, names");
