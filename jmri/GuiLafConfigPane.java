@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.util.Enumeration;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.UIManager;
@@ -17,7 +16,7 @@ import javax.swing.UIManager;
  * Provide GUI to configure Swing GUI LAF defaults
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class GuiLafConfigPane extends JPanel {
 
@@ -28,7 +27,6 @@ public class GuiLafConfigPane extends JPanel {
     public GuiLafConfigPane() {
         setLayout(new FlowLayout());
 
-        add(new JLabel("GUI style: "));
         // find L&F definitions
         UIManager.LookAndFeelInfo[] plafs = UIManager.getInstalledLookAndFeels();
         installedLAFs = new java.util.Hashtable(plafs.length);
