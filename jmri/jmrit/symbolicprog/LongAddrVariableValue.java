@@ -18,7 +18,7 @@ import javax.swing.text.Document;
 /**
  * Extends VariableValue to represent a NMRA long address
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  *
  */
 public class LongAddrVariableValue extends VariableValue
@@ -137,7 +137,7 @@ public class LongAddrVariableValue extends VariableValue
 	void setColor(Color c) {
 		if (c != null) _value.setBackground(c);
 		else _value.setBackground(_defaultColor);
-		prop.firePropertyChange("Value", null, null);
+		// prop.firePropertyChange("Value", null, null);
 	}
 
 	public Component getRep(String format)  {

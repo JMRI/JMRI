@@ -16,7 +16,7 @@ import javax.swing.text.Document;
  * split across two CVs. The original use is for addresses of stationary (accessory)
  * decoders
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  *
  */
 public class SplitVariableValue extends VariableValue
@@ -161,7 +161,7 @@ public class SplitVariableValue extends VariableValue
 	void setColor(Color c) {
 		if (c != null) _value.setBackground(c);
 		else _value.setBackground(_defaultColor);
-		prop.firePropertyChange("Value", null, null);
+		// prop.firePropertyChange("Value", null, null);
 	}
 
 	public Component getRep(String format)  {
@@ -277,7 +277,7 @@ public class SplitVariableValue extends VariableValue
 	 * an underlying variable
 	 *
 	 * @author	Bob Jacobsen   Copyright (C) 2001
-	 * @version     $Revision: 1.2 $
+	 * @version     $Revision: 1.3 $
 	 */
 	public class VarTextField extends JTextField {
 
