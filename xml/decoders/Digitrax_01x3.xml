@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_01x3.xml,v 1.19 2004-02-12 13:43:14 jacobsen Exp $ -->
+<!-- $Id: Digitrax_01x3.xml,v 1.20 2004-03-05 02:44:46 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Michael Mosher mjmx@comcast.net" 
-					version="11" lastUpdated="20040209"/>
+					version="12" lastUpdated="20040227"/>
 
 		<!-- Created from version 5 of the 1x2 file -->
 		<!-- V2: fix default values for CV56, 57 BEMF -->
@@ -15,8 +15,9 @@
 		<!-- V8: Function Output Map, CV's 33 to 46, defaults updated by Bob Blackwell, CV9 added -->
 		<!-- Version 9 - fix "rule 17" typos -->
 		<!-- Version 10 - remove DH123 (created new file for it), fixed decoder sizes -->
-        <!-- Version 10.1 - changed spelling of "behavior" (Jack Shall) -->
-        <!-- Version 11 - added DZ123 (Bob Jacobsen) -->
+      <!-- Version 10.1 - changed spelling of "behavior" (Jack Shall) -->
+      <!-- Version 11 - added DZ123 (Bob Jacobsen) -->
+      <!-- Version 12 - added some tooltips (Jack Shall) -->
 	
 <decoder>
 	<family name="Series 3 with FX3, silent, readback" 
@@ -1027,16 +1028,16 @@
 	<column>
 		<display item="Advanced consist droop compensation for speed stabilization" />
 		<display item="Speed Compensation Control" />
-		<display item="Transponding" tooltip="Controls Digitrax Transponding usage"/>
 		<display item="Split field motor" />		
 		<display item="Vstart/Vmid/Vfull in 128 step mode" />
 		<display item="Short-circuit protection" />
 		<display item="Switching speed enabled by F6" />
 		<display item="Torque compensation" />
-		<display item="Decoder Lock Feature" />
-		<display item="Decoder Lock ID number" />
+		<display item="Decoder Lock Feature" tooltip="Activates Decoder Locking feature" />
+		<display item="Decoder Lock ID number" tooltip="Set this decoder's unique locking ID number" />
 		
 	</column>
 </pane>
 
 </decoder-config>
+
