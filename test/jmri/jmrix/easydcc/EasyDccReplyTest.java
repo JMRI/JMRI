@@ -10,6 +10,7 @@ package jmri.jmrix.easydcc;
 
 import jmri.*;
 
+import apps.tests.Log4JFixture;
 import junit.framework.Test;
 import junit.framework.Assert;
 import junit.framework.TestCase;
@@ -99,29 +100,33 @@ public class EasyDccReplyTest extends TestCase {
 	public void testValue1() {
 		// value when just the string comes back
 		EasyDccReply m = new EasyDccReply();
-		m.setElement(0, '0');
-		m.setElement(1, '2');
-		m.setElement(2, '7');
-		m.setElement(3, ' ');
-		Assert.assertEquals("value ", 27, m.value());
+		m.setElement(0, 'C');
+		m.setElement(1, 'V');
+		m.setElement(2, ' ');
+		m.setElement(3, '0');
+		m.setElement(4, '0');
+		m.setElement(5, '1');
+		m.setElement(6, ' ');
+		m.setElement(7, '2');
+		m.setElement(8, '7');
+		m.setElement(9, ' ');
+		Assert.assertEquals("value ", 39, m.value());
 	}
 
 	public void testValue2() {
-		// value with a "Command:" prefix
+		// value when just the string comes back
 		EasyDccReply m = new EasyDccReply();
 		m.setElement(0, 'C');
-		m.setElement(1, 'O');
-		m.setElement(2, 'M');
-		m.setElement(3, 'M');
-		m.setElement(4, 'A');
-		m.setElement(5, 'N');
-		m.setElement(6, 'D');
-		m.setElement(7, ':');
-		m.setElement(8, ' ');
-		m.setElement(9, '0');
-		m.setElement(10, '2');
-		m.setElement(11, '7');
-		Assert.assertEquals("value ", 27, m.value());
+		m.setElement(1, 'V');
+		m.setElement(2, ' ');
+		m.setElement(3, '0');
+		m.setElement(4, '0');
+		m.setElement(5, '1');
+		m.setElement(6, ' ');
+		m.setElement(7, 'A');
+		m.setElement(8, 'B');
+		m.setElement(9, ' ');
+		Assert.assertEquals("value ", 10*16+11, m.value());
 	}
 
 	public void testMatch() {
@@ -147,5 +152,15 @@ public class EasyDccReplyTest extends TestCase {
 		TestSuite suite = new TestSuite(EasyDccReplyTest.class);
 		return suite;
 	}
+
+	Log4JFixture log4jfixtureInst = new Log4JFixture(this);
+
+    protected void setUp() {
+    	log4jfixtureInst.setUp();
+    }
+
+    protected void tearDown() {
+    	log4jfixtureInst.tearDown();
+    }
 
 }

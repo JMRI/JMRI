@@ -45,22 +45,22 @@ public class EasyDccMessageTest extends TestCase {
 
 	public void testReadPagedCV() {
 		EasyDccMessage m = EasyDccMessage.getReadPagedCV(12);
-		Assert.assertEquals("string compare ", "R012", m.toString());
+		Assert.assertEquals("string compare ", "R 012", m.toString());
 	}
 
 	public void testWritePagedCV() {
 		EasyDccMessage m = EasyDccMessage.getWritePagedCV(12, 251);
-		Assert.assertEquals("string compare ", "P012 251", m.toString());
+		Assert.assertEquals("string compare ", "P 012 251", m.toString());
 	}
 
 	public void testReadRegister() {
 		EasyDccMessage m = EasyDccMessage.getReadRegister(2);
-		Assert.assertEquals("string compare ", "V2", m.toString());
+		Assert.assertEquals("string compare ", "V 2", m.toString());
 	}
 
 	public void testWriteRegister() {
 		EasyDccMessage m = EasyDccMessage.getWriteRegister(2, 251);
-		Assert.assertEquals("string compare ", "S2 251", m.toString());
+		Assert.assertEquals("string compare ", "S 2 251", m.toString());
 	}
 
 	// from here down is testing infrastructure
