@@ -17,8 +17,8 @@ import javax.swing.border.*;
  * the configuration file.  Note that this is just the name, not the path;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
- * @author			Bob Jacobsen
- * @version         $Revision: 1.21 $
+ * @author			Bob Jacobsen   Copyright 2002
+ * @version         $Revision: 1.22 $
  */
 public class JMRIdemo extends JPanel {
 	public JMRIdemo() {
@@ -125,6 +125,22 @@ public class JMRIdemo extends JPanel {
 	        devMenu.add(new jmri.jmrit.decoderdefn.NameCheckAction("Check decoder names", this));
 	        devMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.ProgCheckAction("Check programmer names", this));
 	        devMenu.add(new jmri.jmrit.decoderdefn.DecoderIndexCreateAction("Create decoder index"));
+
+		// Label & text
+		JPanel pane1 = new JPanel();
+			pane1.setLayout(new FlowLayout());
+			pane1.add(new JLabel(new ImageIcon(ClassLoader.getSystemResource("resources/logo.gif"),"Decoder Pro label"), JLabel.LEFT));
+			JPanel pane2 = new JPanel();
+				pane2.setLayout(new BoxLayout(pane2, BoxLayout.Y_AXIS));
+				pane2.add(new JLabel(" JMRI Demo "+jmri.Version.name()+", part of the JRMI project "));
+				pane2.add(new JLabel("   http://jmri.sf.net/ "));
+				pane2.add(new JLabel(" "));
+				pane2.add(new JLabel(" Connected via "+prefs.getCurrentProtocolName()));
+				pane2.add(new JLabel(" on port "+prefs.getCurrentPortName()));
+				pane2.add(new JLabel(" "));
+				pane2.add(new JLabel(" Java version "+System.getProperty("java.version","<unknown>")));
+			pane1.add(pane2);
+		add(pane1);
 	}
 
 	// Main entry point
