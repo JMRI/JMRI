@@ -18,17 +18,25 @@ import jmri.Turnout;
  * <P>
  * Description:		Implement turnout manager for loconet
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.9 $
  */
 
 public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements LocoNetListener {
 
-    final String prefix = "LT";
+    // ctor has to register for LocoNet events
+    public LnTurnoutManager() {
+        prefix = "LT";
+        if (LnTrafficController.instance() != null)
+            LnTrafficController.instance().addLocoNetListener(~0, this);
+        else
+            log.error("No layout connection, turnout manager can't function");
+    }
 
-    /**
-     * @return The system-specific prefix letter for a specific implementation
-     */
-    public char systemLetter() { return prefix.charAt(0); }
+    public void dispose() {
+        if (LnTrafficController.instance() != null)
+            LnTrafficController.instance().removeLocoNetListener(~0, this);
+        super.dispose();
+    }
 
     // LocoNet-specific methods
 
@@ -60,14 +68,6 @@ public class LnTurnoutManager extends jmri.AbstractTurnoutManager implements Loc
         t.addPropertyChangeListener(this);
 
         return t;
-    }
-
-    // ctor has to register for LocoNet events
-    public LnTurnoutManager() {
-        if (LnTrafficController.instance() != null)
-            LnTrafficController.instance().addLocoNetListener(~0, this);
-        else
-            log.error("No layout connection, turnout manager can't function");
     }
 
     // listen for turnouts, creating them as needed

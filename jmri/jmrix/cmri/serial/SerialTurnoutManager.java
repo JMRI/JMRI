@@ -11,19 +11,16 @@ import jmri.Turnout;
  * System names are "CTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SerialTurnoutManager extends jmri.AbstractTurnoutManager {
 
-    final String prefix = "CT";
-
-    /**
-     * @return The system-specific prefix letter for a specific implementation
-     */
-    public char systemLetter() { return prefix.charAt(0); }
+    public SerialTurnoutManager() {
+        prefix = "CT";
+    }
 
     // to free resources when no longer used
-    public void dispose() throws JmriException {
+    public void dispose() {
         super.dispose();
     }
 
@@ -57,9 +54,6 @@ public class SerialTurnoutManager extends jmri.AbstractTurnoutManager {
         t.addPropertyChangeListener(this);
 
         return t;
-    }
-
-    public SerialTurnoutManager() {
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTurnoutManager.class.getName());

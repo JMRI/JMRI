@@ -3,7 +3,7 @@
  *
  * Description:		Implement turnout manager
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 
 // System names are "XTnnn", where nnn is the turnout number without padding.
@@ -15,15 +15,14 @@ import jmri.Turnout;
 
 public class XNetTurnoutManager extends jmri.AbstractTurnoutManager implements XNetListener {
 
-    final String prefix = "XT";
-
-    /**
-     * @return The system-specific prefix letter for a specific implementation
-     */
-    public char systemLetter() { return prefix.charAt(0); }
+	// ctor has to register for XNet events
+	public XNetTurnoutManager() {
+            prefix = "XT";
+            XNetTrafficController.instance().addXNetListener(~0, this);
+	}
 
 	// to free resources when no longer used
-	public void dispose() throws JmriException {
+	public void dispose() {
 	}
 
 	// XNet-specific methods
@@ -56,11 +55,6 @@ public class XNetTurnoutManager extends jmri.AbstractTurnoutManager implements X
 		t.addPropertyChangeListener(this);
 
 		return t;
-	}
-
-	// ctor has to register for XNet events
-	public XNetTurnoutManager() {
-		XNetTrafficController.instance().addXNetListener(~0, this);
 	}
 
 	// listen for turnouts, creating them as needed

@@ -3,7 +3,7 @@
  *
  * Description:		Implement turnout manager for EasyDcc systems
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Id: EasyDccTurnoutManager.java,v 1.5 2003-04-08 22:08:06 jacobsen Exp $
+ * @version			$Id: EasyDccTurnoutManager.java,v 1.6 2003-04-19 23:33:29 jacobsen Exp $
  */
 
 // System names are "ETnnn", where nnn is the turnout number without padding.
@@ -15,15 +15,12 @@ import jmri.Turnout;
 
 public class EasyDccTurnoutManager extends jmri.AbstractTurnoutManager {
 
-    final String prefix = "ET";
-
-    /**
-     * @return The system-specific prefix letter for a specific implementation
-     */
-    public char systemLetter() { return prefix.charAt(0); }
+    public EasyDccTurnoutManager() {
+        prefix = "ET";
+    }
 
 	// to free resources when no longer used
-	public void dispose() throws JmriException {
+	public void dispose() {
 		super.dispose();
 	}
 
@@ -57,9 +54,6 @@ public class EasyDccTurnoutManager extends jmri.AbstractTurnoutManager {
 		t.addPropertyChangeListener(this);
 
 		return t;
-	}
-
-	public EasyDccTurnoutManager() {
 	}
 
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccTurnoutManager.class.getName());
