@@ -38,7 +38,7 @@ import com.sun.java.util.collections.*;
  *
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  */
 
 public class PanelEditor extends JFrame {
@@ -334,9 +334,10 @@ public class PanelEditor extends JFrame {
         l.setInconsistentIcon(turnoutRIconEditor.getIcon(2));
         l.setUnknownIcon(turnoutRIconEditor.getIcon(3));
 
-        l.setTurnout(null, nextTurnoutR.getText());
+        Turnout t = InstanceManager.turnoutManagerInstance()
+            .provideTurnout(nextTurnoutR.getText());
+        l.setTurnout(t.getSystemName(), t.getUserName());
 
-        log.debug("turnout height, width: "+l.getHeight()+" "+l.getWidth());
         setNextLocation(l);
         putTurnout(l);
     }
@@ -347,7 +348,9 @@ public class PanelEditor extends JFrame {
         l.setInconsistentIcon(turnoutLIconEditor.getIcon(2));
         l.setUnknownIcon(turnoutLIconEditor.getIcon(3));
 
-        l.setTurnout(null, nextTurnoutL.getText());
+        Turnout t = InstanceManager.turnoutManagerInstance()
+            .provideTurnout(nextTurnoutL.getText());
+        l.setTurnout(t.getSystemName(), t.getUserName());
 
         setNextLocation(l);
         putTurnout(l);
@@ -369,7 +372,9 @@ public class PanelEditor extends JFrame {
         l.setInactiveIcon(sensorIconEditor.getIcon(1));
         l.setInconsistentIcon(sensorIconEditor.getIcon(2));
         l.setUnknownIcon(sensorIconEditor.getIcon(3));
-        l.setSensor(null, nextSensor.getText());
+        Sensor s = InstanceManager.sensorManagerInstance()
+                        .provideSensor(nextSensor.getText());
+        l.setSensor(s.getSystemName(), s.getUserName());
         setNextLocation(l);
         putSensor(l);
     }

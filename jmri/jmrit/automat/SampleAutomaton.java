@@ -19,7 +19,7 @@ import jmri.*;
  * created and invoked by a SampleAutomatonAction.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  * @see         jmri.jmrit.automat.SampleAutomatonAction
  */
 public class SampleAutomaton extends AbstractAutomaton {
@@ -43,10 +43,10 @@ public class SampleAutomaton extends AbstractAutomaton {
         // get references to sample layout objects
 
         turnout = InstanceManager.turnoutManagerInstance().
-                    newTurnout(null,"26");
+                    provideTurnout("26");
 
         sensor = InstanceManager.sensorManagerInstance().
-                    newSensor(null,"31");
+                    provideSensor("31");
 
         // set up the initial correlation
         now = sensor.getKnownState();

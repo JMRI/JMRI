@@ -12,7 +12,7 @@ import jmri.InstanceManager;
 /**
  * Frame controlling a single turnout
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.beans.PropertyChangeListener {
 
@@ -103,26 +103,13 @@ public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.b
         dispose();
     }
 
-    /**
-     * Find the system name for this turnout.  If
-     * it's a number, add the default prefix
-     * @return
-     */
-    String systemName() {
-        try {
-            int addr = Integer.valueOf(adrTextField.getText()).intValue();
-            return ""+InstanceManager.turnoutManagerInstance().systemLetter()+"T"+addr;
-        } catch ( java.lang.NumberFormatException ex ) {
-            return adrTextField.getText();
-        }
-    }
 
     public void closeButtonActionPerformed(java.awt.event.ActionEvent e) {
         // load address from switchAddrTextField
         try {
             if (turnout != null) turnout.removePropertyChangeListener(this);
             turnout = InstanceManager.turnoutManagerInstance().
-                newTurnout(systemName(),null);
+                provideTurnout(adrTextField.getText());
             turnout.addPropertyChangeListener(this);
             if (log.isDebugEnabled()) log.debug("about to command CLOSED");
             // and set commanded state to CLOSED
@@ -140,7 +127,7 @@ public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.b
         try {
             if (turnout != null) turnout.removePropertyChangeListener(this);
             turnout = InstanceManager.turnoutManagerInstance().
-                newTurnout(systemName(),null);
+                provideTurnout(adrTextField.getText());
             turnout.addPropertyChangeListener(this);
             if (log.isDebugEnabled()) log.debug("about to command THROWN");
             // and set commanded state to THROWN

@@ -19,7 +19,7 @@ import jmri.*;
  * created and invoked by a SampleAutomaton3Action.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  * @see         jmri.jmrit.automat.SampleAutomaton3Action
  */
 public class SampleAutomaton3 extends AbstractAutomaton {
@@ -50,10 +50,10 @@ public class SampleAutomaton3 extends AbstractAutomaton {
         // get references to sample layout objects
 
         fwdSensor = InstanceManager.sensorManagerInstance().
-                    newSensor(null,"182");
+                    provideSensor("182");
 
         revSensor = InstanceManager.sensorManagerInstance().
-                    newSensor(null,"178");
+                    provideSensor("178");
 
         throttle = getThrottle(77, false);
     }

@@ -20,7 +20,7 @@ import jmri.*;
  * created and invoked by a SampleAutomaton2Action.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  * @see         jmri.jmrit.automat.SampleAutomaton2Action
  */
 public class SampleAutomaton2 extends AbstractAutomaton {
@@ -42,7 +42,7 @@ public class SampleAutomaton2 extends AbstractAutomaton {
         // get references to sample layout objects
 
         sensor = InstanceManager.sensorManagerInstance().
-                    newSensor(null,"32");
+                    provideSensor("32");
 
         programmer = InstanceManager.programmerManagerInstance()
                         .getOpsModeProgrammer(true, 4321);
