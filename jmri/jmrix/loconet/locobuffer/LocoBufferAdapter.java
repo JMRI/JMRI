@@ -1,28 +1,21 @@
-/**
- * LocoBufferAdapter.java
- *
- * Title:			LocoBufferAdapter
- * Description:		Provide access to LocoNet via a LocoBuffer attached to a serial comm port.
- *					Normally controlled by the LocoBufferFrame class.
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.12 $
- */
+// LocoBufferAdapter.java
 
 package jmri.jmrix.loconet.locobuffer;
 
-import javax.comm.CommPortIdentifier;
-import javax.comm.PortInUseException;
-import javax.comm.SerialPortEventListener;
-import javax.comm.SerialPortEvent;
-import javax.comm.SerialPort;
-import java.util.Enumeration;
-import java.util.Vector;
-import java.io.DataOutputStream;
-import java.io.DataInputStream;
-import java.io.InputStream;
+import java.io.*;
+import java.util.*;
+
+import javax.comm.*;
 
 import jmri.jmrix.loconet.*;
 
+/**
+ * Provide access to LocoNet via a LocoBuffer attached to a serial comm port.
+ * <P>
+ * Normally controlled by the LocoBufferFrame class.
+ * @author			Bob Jacobsen   Copyright (C) 2001
+ * @version			$Revision: 1.13 $
+ */
 public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
     Vector portNameVector = null;
