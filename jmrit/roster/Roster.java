@@ -30,7 +30,7 @@ import org.jdom.output.*;
  * whether it should...
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: Roster.java,v 1.2 2001-11-12 21:53:27 jacobsen Exp $
+ * @version			$Id: Roster.java,v 1.3 2001-11-16 00:27:28 jacobsen Exp $
  * @see             jmri.jmrit.roster.RosterEntry
  */
 public class Roster {
@@ -68,8 +68,8 @@ public class Roster {
 	 * some information
 	 */
 	public JComboBox matchingComboBox(String roadName, String roadNumber, String dccAddress,
-									String mfg, String decoderMfgID, String decoderVersionID ) {
-		List l = matchingList(roadName, roadNumber, dccAddress, mfg, decoderMfgID, decoderVersionID );
+									String mfg, String decoderMfgID, String decoderVersionID, String id ) {
+		List l = matchingList(roadName, roadNumber, dccAddress, mfg, decoderMfgID, decoderVersionID, id );
 		JComboBox b = new JComboBox();
 		for (int i = 0; i < l.size(); i++) {
 			RosterEntry r = (RosterEntry)_list.get(i);
@@ -104,10 +104,10 @@ public class Roster {
 	 *	Get a List of entries matching some information
 	 */
 	public List matchingList(String roadName, String roadNumber, String dccAddress,
-									String mfg, String decoderMfgID, String decoderVersionID ) {
+									String mfg, String decoderMfgID, String decoderVersionID, String id ) {
 		List l = new ArrayList();
 		for (int i = 0; i < numEntries(); i++) {
-			if ( checkEntry(i, roadName, roadNumber, dccAddress, mfg, decoderMfgID, decoderVersionID ))
+			if ( checkEntry(i, roadName, roadNumber, dccAddress, mfg, decoderMfgID, decoderVersionID, id ))
 				l.add(_list.get(i));
 		}
 		return l;
@@ -119,8 +119,10 @@ public class Roster {
 	* 
 	*/
 	public boolean checkEntry(int i, String roadName, String roadNumber, String dccAddress,
-									String mfg, String decoderModel, String decoderFamily ) {
+									String mfg, String decoderModel, String decoderFamily,
+									String id ) {
 		RosterEntry r = (RosterEntry)_list.get(i);
+		if (id != null && id.equals(r.getId())) return false;
 		if (roadName != null && !roadName.equals(r.getRoadName())) return false;
 		if (roadNumber != null && !roadNumber.equals(r.getRoadNumber())) return false;
 		if (dccAddress != null && !dccAddress.equals(r.getDccAddress())) return false;

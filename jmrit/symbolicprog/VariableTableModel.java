@@ -79,11 +79,15 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 			return false;
 	}
 			
-	public String getName(int row) {  // name is text number
+	public VariableValue getVariable(int row) {
+		return ((VariableValue)rowVector.elementAt(row));
+	}
+			
+	public String getName(int row) {
 		return ((VariableValue)rowVector.elementAt(row)).name();
 	}
 	
-	public String getStdName(int row) {  // name is text number
+	public String getStdName(int row) {
 		return ((VariableValue)rowVector.elementAt(row)).stdName();
 	}
 	
@@ -97,6 +101,9 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 	public void setState(int row, int val) {
 		if (log.isDebugEnabled()) log.debug("setState row: "+row+" val: "+val);
 		((VariableValue)rowVector.elementAt(row)).setState(val);
+	}
+	public int getState(int row) {
+		return ((VariableValue)rowVector.elementAt(row)).getState();
 	}
 	
 	/*
@@ -281,18 +288,28 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		char b = e.getActionCommand().charAt(0);
 		int row = Integer.valueOf(e.getActionCommand().substring(1)).intValue();
 		if (log.isDebugEnabled()) log.debug("event on "+b+" row "+row);
-		VariableValue v = (VariableValue)rowVector.elementAt(row);
-		if (b=='R') {
+			if (b=='R') {
 			// read command
-			v.read();
+			read(row);
 		} else {
 			// write command
-			v.write();
+			write(row);
 		}
 	}
 	
+	public void read(int i) {
+		VariableValue v = (VariableValue)rowVector.elementAt(i);
+		v.read();
+	}
+
+	public void write(int i) {
+		VariableValue v = (VariableValue)rowVector.elementAt(i);
+		v.write();
+	}
+	
 	public void propertyChange(PropertyChangeEvent e) {
-		if (log.isDebugEnabled()) log.debug("prop changed "+e);
+		if (log.isDebugEnabled()) log.debug("prop changed "+e.getPropertyName()
+													+" new value: "+e.getNewValue());
 		setFileDirty(true);
 		fireTableDataChanged();	
 	}

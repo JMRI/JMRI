@@ -1,10 +1,4 @@
-/** 
- * CvValue.java
- *
- * Description:		Represents a single CV value
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			
- */
+// CvValue.java
 
 package jmri.jmrit.symbolicprog;
 
@@ -16,6 +10,20 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+
+/** 
+ * Encapsulate a single CV value and provide programming access to the decoder.
+ *
+ *<P>There are three relevant parameters:  Busy, Value, State.  Busy == true means
+ * that a read or write operation is going on.  When it transitions to "false", the
+ * operation is complete, and the Value and State are stable.  During a read
+ * operation, Value changes before State, so you can assume that Value is stable
+ * if notified of a State change.
+ *
+ * Description:		Represents a single CV value
+ * @author			Bob Jacobsen   Copyright (C) 2001
+ * @version			
+ */
 public class CvValue extends AbstractValue implements ProgListener {
 
 	public CvValue(int num) { 
@@ -30,18 +38,29 @@ public class CvValue extends AbstractValue implements ProgListener {
 	private JLabel _status = null;
 	
 	public int getValue()  { return _value; }
+	
+	protected void notifyValueChange(int value) {
+		prop.firePropertyChange("Value", null, new Integer(value)); 
+	}
+	/**
+	 * Edit a new value into the CV. Only use this for external edits, e.g. set form a GUI,
+	 * not for internal uses, as it sets the state to EDITTED
+	 */
 	public void setValue(int value) { 
 		setState(EDITTED);
 		if (_value != value) {
 			int old = _value;
 			_value = value;
 			_tableEntry.setText(""+value);
-			prop.firePropertyChange("Value", null, new Integer(value)); 
+			notifyValueChange(value); 
 		}
 	}
 	private int _value = 0;
 	
 	public int getState()  { return _state; }
+	/**
+	 * Set state value and send notification.  Also sets GUI color as needed.
+	 */
 	public void setState(int state) {
 		if (log.isDebugEnabled()) log.debug("set state from "+_state+" to "+state);
 		int oldstate = _state;
@@ -56,15 +75,31 @@ public class CvValue extends AbstractValue implements ProgListener {
 		}
 		if (oldstate != state) prop.firePropertyChange("State", new Integer(oldstate), new Integer(state));
 	}
+			
 	private int _state = 0;
 		
 	// read, write operations
 	public boolean isBusy() { return _busy; }
+	
+	/**
+	 * set the busy state and send notification. Should be used _only_ if 
+	 * this is the only thing changing
+	 */
 	private void setBusy(boolean busy) {
-		if (log.isDebugEnabled()) log.debug("set busy from "+_busy+" to "+busy+" state "+_state);
-		if (_busy != busy) prop.firePropertyChange("Busy", new Boolean(_busy), new Boolean(busy));
+		if (log.isDebugEnabled()) log.debug("setBusy from "+_busy+" to "+busy+" state "+_state);
+		boolean oldBusy = _busy;
 		_busy = busy;
+		notifyBusyChange(oldBusy, busy);
 	}
+	/**
+	 * Notify of changes to the busy state
+	 */
+	private void notifyBusyChange(boolean oldBusy, boolean newBusy) {
+		if (log.isDebugEnabled()) log.debug("notifyBusy from "+oldBusy+" to "+newBusy+" current state "+_state);
+		if (oldBusy != newBusy) prop.firePropertyChange("Busy", 
+			oldBusy ? Boolean.TRUE : Boolean.FALSE,
+			newBusy ? Boolean.TRUE : Boolean.FALSE);
+	}	
 	private boolean _busy = false;
 
 	// color management
@@ -90,7 +125,7 @@ public class CvValue extends AbstractValue implements ProgListener {
 		if (status != null) status.setText("Reading...");
 		Programmer p = InstanceManager.programmerInstance();
 		if (p != null) {
-			_busy = true;
+			setBusy(true);
 			_reading = true;
 			try {
 				p.readCV(_num, this);
@@ -111,7 +146,8 @@ public class CvValue extends AbstractValue implements ProgListener {
 		if (status != null) status.setText("Writing...");
 		Programmer p = InstanceManager.programmerInstance();
 		if (p != null) {
-			_busy = true;
+			boolean oldBusy = _busy;
+			setBusy(true);
 			_reading = false;
 			try {
 				p.writeCV(_num, _value, this);
@@ -131,22 +167,27 @@ public class CvValue extends AbstractValue implements ProgListener {
 		if (log.isDebugEnabled()) log.debug("CV progOpReply with retval "+retval
 											+" _reading "+_reading);
 		if (!_busy) log.error("opReply when not busy!");
-		setBusy(false);
+		boolean oldBusy = _busy;
 		if (retval == OK) {
 			if (_status != null) _status.setText("OK");
 			if (_reading) {
-				setState(READ);
 				// set & notify value directly to avoid state going to EDITTED
 				int old = _value;
 				_value = value;
-				if (log.isDebugEnabled()) log.debug("CV firePropChange Value "+old+" "+value);
-				prop.firePropertyChange("Value", null, new Integer(value)); 
+				notifyValueChange(value);
+				setState(READ);
+				_busy = false;
+				notifyBusyChange(oldBusy, _busy);
 			} else {  // writing
 				setState(STORED);
+				_busy = false;
+				notifyBusyChange(oldBusy, _busy);
 			}
 		} else {
 			if (_status != null) _status.setText("Programmer returned error status "+retval);
 			setState(UNKNOWN);
+			_busy = false;
+			notifyBusyChange(oldBusy, _busy);
 		}
 	}
 

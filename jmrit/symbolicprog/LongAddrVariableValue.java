@@ -137,7 +137,7 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 		if (log.isDebugEnabled()) log.debug("property changed event - name: "
 										+e.getPropertyName());
 		// notification from CV; check for Value being changed
-		if (e.getPropertyName().equals("Busy")) {
+		if (e.getPropertyName().equals("Busy") && ((Boolean)e.getNewValue()).equals(Boolean.FALSE)) {
 			// see if this was a read or write operation
 			if (log.isDebugEnabled()) log.debug("CV getBusy showing "
 												+((CvValue)_cvVector.elementAt(getCvNum())).isBusy());		

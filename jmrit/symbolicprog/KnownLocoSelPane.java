@@ -31,7 +31,7 @@ public class KnownLocoSelPane extends javax.swing.JPanel  {
 			pane2a.setAlignmentX(JLabel.LEFT_ALIGNMENT);				
 		add(pane2a);
 			
-		JComboBox co = Roster.instance().matchingComboBox(null, null, null, null, null, null);
+		JComboBox co = Roster.instance().matchingComboBox(null, null, null, null, null, null, null);
 		add(co);
 		
 		JButton go2 = new JButton("Open programmer");

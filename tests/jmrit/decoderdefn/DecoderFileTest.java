@@ -40,8 +40,9 @@ public class DecoderFileTest extends TestCase {
 		VariableTableModel		variableModel	= new VariableTableModel(progStatus,
 					new String[]  {"Name", "Value"},
 					cvModel);
+		DecoderFile d = new DecoderFile();
 		
-		DecoderFile.loadVariableModel(decoder, ns, variableModel, 999);
+		d.loadVariableModel(decoder, ns, variableModel);
 		Assert.assertEquals("read rows ", 3, variableModel.getRowCount());
 		Assert.assertEquals("first row name ", "Address", variableModel.getName(0));
 		Assert.assertEquals("third row name ", "Normal direction of motion", variableModel.getName(2));

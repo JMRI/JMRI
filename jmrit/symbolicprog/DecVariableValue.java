@@ -124,7 +124,7 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 		// notification from CV; check for Value being changed
 		if (log.isDebugEnabled()) log.debug("Property changed: "+e.getPropertyName());
 		if (e.getPropertyName().equals("Busy")) {
-			setBusy(false);
+			if (((Boolean)e.getNewValue()).equals(Boolean.FALSE)) setBusy(false);
 		}
 		else if (e.getPropertyName().equals("State")) {
 			CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
@@ -136,8 +136,6 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 			CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
 			int newVal = (cv.getValue() & maskVal(getMask())) >>> offsetVal(getMask());
 			setValue(newVal);  // check for duplicate done inside setVal
-			// state change due to CV state change, so propagate that
-			setState(cv.getState());
 		}
 	}
 

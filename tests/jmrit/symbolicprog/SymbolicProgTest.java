@@ -45,6 +45,7 @@ public class SymbolicProgTest extends TestCase {
 	// test suite from all defined tests, including others in the package
 	public static Test suite() {
 		TestSuite suite = new TestSuite(SymbolicProgTest.class);
+		suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.PaneProgPaneTest.suite());
 		suite.addTest(jmri.jmrit.symbolicprog.ComboCheckBoxTest.suite());
 		suite.addTest(jmri.jmrit.symbolicprog.ComboRadioButtonsTest.suite());
 		suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrameTest.suite());

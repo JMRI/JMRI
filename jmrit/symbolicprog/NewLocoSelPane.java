@@ -34,7 +34,7 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
 		last.setBorder(new EmptyBorder(6,0,6,0));
 		add(new JLabel("Copy settings from existing locomotive:"));
 
-		locoBox = Roster.instance().matchingComboBox(null, null, null, null, null, null);
+		locoBox = Roster.instance().matchingComboBox(null, null, null, null, null, null, null);
 		locoBox.addActionListener( new ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				matchDecoderToLoco();
@@ -138,7 +138,6 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
 
 		// find the decoderFile object
 		DecoderFile decoderFile = DecoderIndexFile.instance().fileFromTitle((String)decoderBox.getSelectedItem());
-		System.out.println("decoder file: "+decoderFile.getFilename());
 		if (log.isDebugEnabled()) log.debug("decoder file: "+decoderFile.getFilename());
 
 		startProgrammer(decoderFile, locoFile);

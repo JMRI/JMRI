@@ -15,12 +15,14 @@ import javax.swing.table.*;
 
 import java.io.*;
 import com.sun.java.util.collections.List;
+import com.sun.java.util.collections.ArrayList;
 
 import jmri.Programmer;
 import jmri.ProgListener;
 import jmri.ProgModePane;
 import jmri.jmrit.symbolicprog.*;
 import jmri.jmrit.decoderdefn.*;
+import jmri.jmrit.roster.*;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -33,7 +35,8 @@ import org.jdom.input.DOMBuilder;
 import org.jdom.input.SAXBuilder;
 import org.xml.sax.InputSource;
 
-public class PaneProgFrame extends javax.swing.JFrame  {
+public class PaneProgFrame extends javax.swing.JFrame 
+							implements java.beans.PropertyChangeListener  {
 
 	// members to contain working variable, CV values
 	JLabel 				progStatus     	= new JLabel("idle");
@@ -41,7 +44,8 @@ public class PaneProgFrame extends javax.swing.JFrame  {
 	VariableTableModel  variableModel	= new VariableTableModel(progStatus,
 														new String[]  {"Name", "Value"},
 														cvModel);
-
+	List paneList = new ArrayList();
+	
 	// GUI member declarations
 	JTabbedPane tabPane = new JTabbedPane();
 	JButton readAll = new JButton("Read all");
@@ -56,8 +60,17 @@ public class PaneProgFrame extends javax.swing.JFrame  {
 		// general GUI config
 		setTitle("Pane Programmer");
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+		readAll.addActionListener( new ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				readAll();
+			}
+		});
+		writeAll.addActionListener( new ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				writeAll();
+			}
+		});
 
-		// install items in GUI
 		// most of this is done from XML in readConfig() function
 		getContentPane().add(tabPane);
 		
@@ -79,12 +92,12 @@ public class PaneProgFrame extends javax.swing.JFrame  {
 		installComponents();
 	}
   		
-	public PaneProgFrame(DecoderFile decoderFile, String locoFile) {
+	public PaneProgFrame(DecoderFile decoderFile, String locoFile, RosterEntry r) {
 		super();
 		installComponents();
 		loadDecoderFile(decoderFile);
 		loadLocoFile(locoFile);
-		loadProgrammerFile();
+		loadProgrammerFile(r);
 	}
   	
   	protected void loadLocoFile(String locoFile) {
@@ -117,7 +130,7 @@ public class PaneProgFrame extends javax.swing.JFrame  {
 		df.loadVariableModel(droot.getChild("decoder", dns), dns, variableModel);
   	}
   	
-  	protected void loadProgrammerFile() {
+  	protected void loadProgrammerFile(RosterEntry r) {
 		// Open and parse programmer file
 		File pfile = new File("xml"+File.separator+"programmers"+File.separator+"MultiPane.xml");
 		Namespace pns = Namespace.getNamespace("programmer",
@@ -134,7 +147,7 @@ public class PaneProgFrame extends javax.swing.JFrame  {
 		Element proot = pdoc.getRootElement();
 					
 		// load programmer config from programmer tree
-		readConfig(proot, pns);
+		readConfig(proot, pns, r);
   	}
   	
 	// handle resizing when first shown
@@ -161,7 +174,7 @@ public class PaneProgFrame extends javax.swing.JFrame  {
 		dispose();	
 	}
 	
-	void readConfig(Element root, Namespace ns) {
+	void readConfig(Element root, Namespace ns, RosterEntry r) {
 		// check for "programmer" element at start
 		Element base;	
 		if ( (base = root.getChild("programmer", ns)) == null) {
@@ -176,189 +189,113 @@ public class PaneProgFrame extends javax.swing.JFrame  {
 			String name = ((Element)(paneList.get(i))).getAttribute("name").getValue();
 			newPane( name, ((Element)(paneList.get(i))), ns);
 		}
+		
+		// create the identification pane (not configured by file now; maybe later?
+		JPanel body = new JPanel();
+		body.setLayout(new BoxLayout(body, BoxLayout.Y_AXIS));
+		
+		// add the tab to the frame
+		tabPane.addTab("Info", body);
+
+		// add roster info
+		JPanel bottom = new RosterEntryPane(r);
+		bottom.setMaximumSize(bottom.getPreferredSize());
+		
+		body.add(bottom);
 	}
 	
 	public void newPane(String name, Element pane, Namespace ns) {
 	
 		// create a panel to hold columns
-		JPanel p = new JPanel();
-		p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+		JPanel p = new PaneProgPane(name, pane, ns, cvModel, variableModel);
 		
 		// add the tab to the frame
 		tabPane.addTab(name, p);
 		
-		// handle the xml definition
-		// for all "column" elements ...
-		List colList = pane.getChildren("column",ns);
-		for (int i=0; i<colList.size(); i++) {
-			// add separators except at beginning
-			if (i != 0) p.add(new JSeparator(javax.swing.SwingConstants.VERTICAL));
-			// load each column
-			newColumn( ((Element)(colList.get(i))), ns, p);
-		}
-		// add glue to the right to allow resize - but this isn't working as expected? Alignment?
-		p.add(Box.createHorizontalGlue());
-
-		// create the final body pane
-		JPanel body = new JPanel();
-		body.setLayout(new BoxLayout(body, BoxLayout.Y_AXIS));
-		
-		// add the tab to the frame
-		tabPane.addTab(name, body);
-
-		// add column pane
-		body.add(p);
-		// add buttons
-		JPanel bottom = new JPanel();
-		bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
-		bottom.add(new JButton("Read sheet"));
-		bottom.add(new JButton("Confirm sheet"));
-		bottom.add(new JButton("Write sheet"));
-		body.add(bottom);
+		// and remember it for programming
+		paneList.add(p);
 	}
 	
-	public void newColumn(Element column, Namespace ns, JComponent pane) {
-
-		// create a panel to add as a new column
-		JPanel c = new JPanel();
-		c.setLayout(new BoxLayout(c, BoxLayout.Y_AXIS));
-
-		// add to the pane
-		pane.add(c);
-		
-		// handle the xml definition
-		// for all elements in the column
-		List varList = column.getChildren();
-		for (int i=0; i<varList.size(); i++) {
-			Element e = (Element)(varList.get(i));
-			String name = e.getName();
-			// decode the type
-			if (name.equals("variable")) { // its a variable
-				// load the variable
-				newVariable( e, ns, c );
-			}
-			else if (name.equals("separator")) { // its a separator
-				c.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
-			}
-			else if (name.equals("label")) { // its  a label
-				JLabel l = new JLabel(e.getAttribute("label").getValue());
-				l.setAlignmentX(1.0f);
-				c.add(l);
-			}
-			else if (name.equals("cvtable")) {
-				// this is copied from SymbolicProgFrame
-				JTable			cvTable		= new JTable(cvModel);
-				JScrollPane 	cvScroll	= new JScrollPane(cvTable);
-				cvTable.setDefaultRenderer(JTextField.class, new ValueRenderer());
-				cvTable.setDefaultRenderer(JButton.class, new ValueRenderer());
-				cvTable.setDefaultEditor(JTextField.class, new ValueEditor());
-				cvTable.setDefaultEditor(JButton.class, new ValueEditor());
-				cvScroll.setColumnHeaderView(cvTable.getTableHeader());
-				// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-				// instead of forcing the columns to fill the frame (and only fill)
-				cvTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-				c.add(cvScroll);
-				
-			} else { // its a mistake
-				log.error("No code to handle element of type "+e.getName());
+	/**
+	 * invoked by "Read All" button, this sets in motion a 
+	 * continuing sequence of "read" operations on the 
+	 * panes. Each invocation of this method reads one [ane; completion
+	 * of that request will cause it to happen again, reading the next pane, until
+	 * there's nothing left to read.
+	 * <P>
+	 * Returns true is a read has been started, false if the operation is complete.
+	 */
+	public boolean readAll() {
+		if (log.isDebugEnabled()) log.debug("readAll starts");
+		for (int i=0; i<paneList.size(); i++) {
+			_programmingPane = (PaneProgPane)paneList.get(i);
+			if (_programmingPane.readPane()) {
+				// operation in progress, register to hear results, then stop loop
+			    _programmingPane.addPropertyChangeListener(this);
+				return true;
 			}
 		}
-		// add glue to the bottom to allow resize
-		c.add(Box.createVerticalGlue());
+		// nothing to program, end politely
+		_programmingPane = null;
+		if (log.isDebugEnabled()) log.debug("readAll found nothing to do");
+		return false;	
+	}
+
+	/**
+	 * invoked by "Write All" button, this sets in motion a 
+	 * continuing sequence of "write" operations on each pane.  
+	 * Each invocation of this method writes one pane; completion
+	 * of that request will cause it to happen again, writing the next pane, until
+	 * there's nothing left to write.
+	 * <P>
+	 * Returns true is a write has been started, false if the operation is complete.
+	 */
+	public boolean writeAll() {
+		if (log.isDebugEnabled()) log.debug("writeAll starts");
+		for (int i=0; i<paneList.size(); i++) {
+			_programmingPane = (PaneProgPane)paneList.get(i);
+			if (_programmingPane.writePane()) {
+				// operation in progress, register to hear results, then stop loop
+			    _programmingPane.addPropertyChangeListener(this);
+				return true;
+			}
+		}
+		// nothing to program, end politely
+		_programmingPane = null;
+		if (log.isDebugEnabled()) log.debug("writeAll found nothing to do");
+		return false;	
 	}
 	
-	public void newVariable( Element var, Namespace ns, JComponent col) {
-
-		// get the name
-		String name = var.getAttribute("name").getValue();
-
-		// if it doesn't exist, do nothing
-		if (findVarIndex(name)<0) {
-			if (log.isInfoEnabled()) log.info("Variable \""+name+"\" not found, omitted");
+	boolean _read = true;
+	PaneProgPane _programmingPane = null;
+	
+	/** 
+	 * get notification of a variable property change in the pane, specifically "busy" going to 
+	 * false at the end of a programming operation
+	 */
+	public void propertyChange(java.beans.PropertyChangeEvent e) {
+		// check for the right event
+		if (_programmingPane == null) {
+			log.warn("unexpected propertChange: "+e);
 			return;
+		} else if (log.isDebugEnabled()) log.debug("property changed: "+e.getPropertyName()
+													+" new value: "+e.getNewValue());
+		if (e.getSource() != _programmingPane ||
+			!e.getPropertyName().equals("Busy") ||
+			!((Boolean)e.getNewValue()).equals(Boolean.FALSE) )  { 
+				if (log.isDebugEnabled() && e.getPropertyName().equals("Busy")) 
+					log.debug("ignoring change of Busy "+((Boolean)e.getNewValue())
+								+" "+( ((Boolean)e.getNewValue()).equals(Boolean.FALSE)));
+				return;
 		}
-		
-		// create a panel to add as a new variable
-		JPanel v = new JPanel();
-		
-		// check label orientation
-		Attribute attr;
-		String layout ="left";
-		if ( (attr = var.getAttribute("layout")) != null && attr.getValue() != null)
-				layout = attr.getValue(); 
-		
-		// load label if specified, else use name
-		String label = name;
-		String temp ="";
-		if ( (attr = var.getAttribute("label")) != null 
-				&& (temp = attr.getValue()) != null )
-			label = temp;
-		JLabel l = new JLabel(label);
-
-		JComponent rep = getRepresentation(name, var, ns);
-		
-		// now handle the four orientations
-		// assemble v from label, rep
-		
-		if (layout.equals("left")) {
-			v.setLayout(new BoxLayout(v, BoxLayout.X_AXIS));
-			v.add(Box.createHorizontalGlue());
-			v.add(l);
-			v.add(rep);
-			v.setAlignmentX(1.0f);
-		} else if (layout.equals("right")) {
-			v.setLayout(new BoxLayout(v, BoxLayout.X_AXIS));
-			v.add(rep);
-			v.add(l);
-			v.add(Box.createHorizontalGlue());
-			v.setAlignmentX(0.0f);
-		} else if (layout.equals("above")) {
-			v.setLayout(new BoxLayout(v, BoxLayout.Y_AXIS));
-			v.add(l);
-			v.add(rep);
-			v.setAlignmentX(1.0f);
-		} else if (layout.equals("below")) {
-			v.setLayout(new BoxLayout(v, BoxLayout.Y_AXIS));
-			v.add(rep);
-			v.add(l);
-			v.setAlignmentX(1.0f);
-		} else {
-			log.error("layout internally inconsistent: "+layout);
-			return;
-		}
-
-		// add to column
-		col.add(v);
-		
-	}
-
-	public JComponent getRepresentation(String name, Element var, Namespace ns) {
-		int i = findVarIndex(name);
-		JComponent rep = null;
-		String format = "default";
-		Attribute attr;
-		if ( (attr = var.getAttribute("format")) != null && attr.getValue() != null) format = attr.getValue();
-
-		if (i>= 0) {
-			rep = getRep(i, format);
-			rep.setMaximumSize(rep.getPreferredSize());
-			// set tooltip if specified
-			if ( (attr = var.getAttribute("tooltip")) != null && attr.getValue() != null) 
-				rep.setToolTipText(attr.getValue());
-		}
-		return rep;
-	}
-
-	JComponent getRep(int i, String format) {
-		return (JComponent)(variableModel.getRep(i, format));
-	}
-	
-	int findVarIndex(String name) {
-		for (int i=0; i<variableModel.getRowCount(); i++) 
-			if (name.equals(variableModel.getStdName(i))) return i;
-		for (int i=0; i<variableModel.getRowCount(); i++) 
-			if (name.equals(variableModel.getName(i))) return i;
-		return -1;
+			
+		if (log.isDebugEnabled()) log.debug("correct event, restart operation");
+		// remove existing listener
+		_programmingPane.removePropertyChangeListener(this);
+		_programmingPane = null;
+		// restart the operation
+		if (_read) readAll();
+		else writeAll();
 	}
 			
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PaneProgFrame.class.getName());

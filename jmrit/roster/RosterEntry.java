@@ -5,15 +5,20 @@ package jmri.jmrit.roster;
 /** 
  * RosterEntry represents a single element in a locomotive roster, including
  * information on how to locate it from decoder information.
+ * <P>
+ * All the attributes have a content, not null.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: RosterEntry.java,v 1.2 2001-11-12 21:53:27 jacobsen Exp $
+ * @version			$Id: RosterEntry.java,v 1.3 2001-11-16 00:27:28 jacobsen Exp $
  */
 public class RosterEntry {
 
 	public RosterEntry(String fileName) {
 		_fileName = fileName;
 	}
+	
+	public void   setId(String s) { _id = s; }
+	public String getId() { return _id; }
 	
 	// no set method for fileName
 	public String getFileName() { return _fileName; }
@@ -36,6 +41,14 @@ public class RosterEntry {
 	public void   setDecoderFamily(String s) { _decoderFamily = s; }
 	public String getDecoderFamily() { return _decoderFamily; }
 	
+	
+	/**
+	 * Construct a blank object.
+	 *
+	 */
+	public RosterEntry() {
+	}
+
 	/**
 	 * Construct this Entry from XML. This member has to remain synchronized with the
 	 * detailed DTD in roster-config.xml
@@ -45,19 +58,15 @@ public class RosterEntry {
 	public RosterEntry(org.jdom.Element e, org.jdom.Namespace ns) {
 		if (log.isDebugEnabled()) log.debug("ctor from element "+e+" ns "+ns);
 		org.jdom.Attribute a;
+		if ((a = e.getAttribute("id")) != null )  _id = a.getValue();
+		else log.warn("no id attribute in locomotive element when reading roster");
 		if ((a = e.getAttribute("fileName")) != null )  _fileName = a.getValue();
 		else log.warn("no fileName attribute in locomotive element when reading roster");
-		_roadNumber = null;
 		if ((a = e.getAttribute("roadNumber")) != null )  _roadNumber = a.getValue();
-		_roadName = null;
 		if ((a = e.getAttribute("roadName")) != null )  _roadName = a.getValue();
-		_mfg = null;
 		if ((a = e.getAttribute("mfg")) != null )  _mfg = a.getValue();
-		_dccAddress = null;
 		if ((a = e.getAttribute("address")) != null )  _dccAddress = a.getValue();		
 		org.jdom.Element d = e.getChild("decoder", ns);
-		_decoderModel = null;
-		_decoderFamily = null;
 		if (d != null) {
 			if ((a = d.getAttribute("model")) != null )  _decoderModel = a.getValue();
 			if ((a = d.getAttribute("family")) != null )  _decoderFamily = a.getValue();
@@ -70,43 +79,46 @@ public class RosterEntry {
 	 */
 	org.jdom.Element store(org.jdom.Namespace ns) {
 		org.jdom.Element e = new org.jdom.Element("locomotive", ns);
+		e.addAttribute("id", getId());
 		e.addAttribute("fileName", getFileName());
-		if (getRoadNumber() != null) e.addAttribute("roadNumber",getRoadNumber());
-		if (getRoadName() != null) e.addAttribute("roadName",getRoadName());
-		if (getMfg() != null) e.addAttribute("mfg",getMfg());
+		e.addAttribute("roadNumber",getRoadNumber());
+		e.addAttribute("roadName",getRoadName());
+		e.addAttribute("mfg",getMfg());
 
 		org.jdom.Element d = new org.jdom.Element("decoder", ns);
-		if (getDecoderModel() != null) d.addAttribute("model",getDecoderModel());
-		if (getDecoderFamily() != null) d.addAttribute("family",getDecoderFamily());
+		d.addAttribute("model",getDecoderModel());
+		d.addAttribute("family",getDecoderFamily());
+
 		e.addContent(d);
 		
 		return e;
 	}
 	
 	public String titleString() {
-		return getRoadName()+" "+getRoadNumber();
+		return getId();
 	}
 	
 	public String toString() {
-		String out = "[RosterEntry: "+_fileName
-			+( (_roadName!=null) ? " "+_roadName : " <null>")
-			+( (_roadNumber!=null) ? " "+_roadNumber : " <null>")
-			+( (_dccAddress!=null) ? " "+_dccAddress : " <null>")
-			+( (_mfg!=null) ? " "+_mfg : " <null>")
-			+( (_decoderModel!=null) ? " "+_decoderModel : " <null>")
-			+( (_decoderFamily!=null) ? " "+_decoderFamily : " <null>")
+		String out = "[RosterEntry: "+_id+" "+_fileName
+			+" "+_roadName
+			+" "+_roadNumber
+			+" "+_dccAddress
+			+" "+_mfg
+			+" "+_decoderModel
+			+" "+_decoderFamily
 			+"]";
 		return out;
 	}
 		
 	// members to remember all the info
-	protected String _fileName;
-	protected String _roadName = null;
-	protected String _roadNumber = null;
-	protected String _dccAddress = null;
-	protected String _mfg = null;
-	protected String _decoderModel = null;
-	protected String _decoderFamily = null;
+	protected String _id = "";
+	protected String _fileName = "";
+	protected String _roadName = "";
+	protected String _roadNumber = "";
+	protected String _dccAddress = "";
+	protected String _mfg = "";
+	protected String _decoderModel = "";
+	protected String _decoderFamily = "";
 
 	// initialize logging	
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(RosterEntry.class.getName());

@@ -12,6 +12,7 @@ import java.awt.*;
 import java.io.*;
 import java.util.*;
 import javax.swing.*;
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -23,6 +24,7 @@ import jmri.*;
 import jmri.progdebugger.*;
 import jmri.jmrit.symbolicprog.*;
 import jmri.jmrit.decoderdefn.*;
+import jmri.jmrit.roster.*;
 
 public class PaneProgFrameTest extends TestCase {
 
@@ -38,39 +40,11 @@ public class PaneProgFrameTest extends TestCase {
 	
 		// invoke
 		result = null;
-		p.readConfig(root, ns);
+		p.readConfig(root, ns, new RosterEntry());
 		assertEquals("pane name", "Other", result);
+		Assert.assertEquals("paneList length ", 3, p.paneList.size());
 	}
 
-	// test creating columns in a pane
-	public void testColumn() {
-		setupDoc();
-				
-		// create test object with speciai implementation of the newColumn(String) operation
-		PaneProgFrame p = new PaneProgFrame() {
-				public void newColumn(Element e, Namespace ns, JComponent p) { colCount++; }
-			};
-	
-		// invoke
-		colCount = 0;
-		p.readConfig(root, ns);
-		assertEquals("column count", 4, colCount);
-	}
-
-	// test specifying variables in columns
-	public void testVariables() {
-		setupDoc();  // make sure XML document is ready
-		
-		// create test object with special implementation of the newVariable(String) operation
-		PaneProgFrame p = new PaneProgFrame() {
-				public void newVariable(Element e, Namespace ns, JComponent p) { varCount++; }
-			};
-	
-		// invoke
-		varCount = 0;
-		p.readConfig(root, ns);
-		assertEquals("variable defn count", 9, varCount);
-	}
 
 	// show me the specially-created frame
 	public void testFrame() {
@@ -83,63 +57,11 @@ public class PaneProgFrameTest extends TestCase {
 		DecoderFile df = new DecoderFile();  // used as a temporary
 		df.loadVariableModel(t.decoder, t.ns, p.variableModel);
 		
-		p.readConfig(root, ns);
+		p.readConfig(root, ns, new RosterEntry());
 		p.pack();
 		p.show();
 	}
 	
-	// show me a frame made from files
-	public void XtestFileFrame() {
-		// Open and parse decoder file
-		System.out.println("start decoder file");
-		File dfile = new File("xml"+File.separator+"decoders"+File.separator+"NMRA_All.xml");
-		Namespace dns = Namespace.getNamespace("decoder",
-										"http://jmri.sourceforge.net/xml/decoder");
-		SAXBuilder dbuilder = new SAXBuilder(true);  // argument controls validation, on for now
-		Document ddoc = null;
-		System.out.println("ctors done, do build");
-		try {
-			ddoc = dbuilder.build(new BufferedInputStream(new FileInputStream(dfile), 40000),"xml"+File.separator);
-		}
-		catch (Exception e) {
-			log.error("Exception in SAXBuilder "+e);
-		}
-		// find root
-		System.out.println("get root");
-		Element droot = ddoc.getRootElement();
-
-		// Open and parse programmer file
-		System.out.println("start programmer file");
-		File pfile = new File("xml"+File.separator+"programmers"+File.separator+"MultiPane.xml");
-		Namespace pns = Namespace.getNamespace("programmer",
-										"http://jmri.sourceforge.net/xml/programmer");
-		SAXBuilder pbuilder = new SAXBuilder(true);  // argument controls validation, on for now
-		Document pdoc = null;
-		try {
-			pdoc = pbuilder.build(new FileInputStream(pfile),"xml"+File.separator);
-		}
-		catch (Exception e) {
-			log.error("Exception in programmer SAXBuilder "+e);
-		}
-		// find root
-		Element proot = pdoc.getRootElement();
-
-		// create the pane programmer
-		PaneProgFrame p = new PaneProgFrame();
-			
-		// load its variables from decoder tree
-		System.out.println("decoder object "+droot.getChild("decoder", dns));
-		DecoderFile df = new DecoderFile();  // used as a temporary
-		df.loadVariableModel(droot.getChild("decoder", dns), dns, p.variableModel);
-		
-		// load its programmer config from programmer tree
-		System.out.println("programmer object "+proot);
-		p.readConfig(proot, pns);
-		
-		p.pack();
-		p.show();
-	}
-
 	// static variables for internal classes to report their interpretations
 	static String result = null;
 	static int colCount = -1;

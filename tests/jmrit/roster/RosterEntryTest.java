@@ -17,18 +17,19 @@ public class RosterEntryTest extends TestCase {
 	public void testCreate() {
 		RosterEntry r = new RosterEntry("file here");
 		Assert.assertEquals("file name ", "file here", r.getFileName());
-		Assert.assertEquals("DCC Address ", null, r.getDccAddress());
-		Assert.assertEquals("road name ", null, r.getRoadName());
-		Assert.assertEquals("road number ", null, r.getRoadNumber());
-		Assert.assertEquals("manufacturer ", null, r.getMfg());
-		Assert.assertEquals("model ", null, r.getDecoderModel());
-		Assert.assertEquals("family ", null, r.getDecoderFamily());
+		Assert.assertEquals("DCC Address ", "", r.getDccAddress());
+		Assert.assertEquals("road name ", "", r.getRoadName());
+		Assert.assertEquals("road number ", "", r.getRoadNumber());
+		Assert.assertEquals("manufacturer ", "", r.getMfg());
+		Assert.assertEquals("model ", "", r.getDecoderModel());
+		Assert.assertEquals("family ", "", r.getDecoderFamily());
 	}
 
 	public void testPartialLoad() {
 		// create Element
 		org.jdom.Namespace ns = org.jdom.Namespace.getNamespace("roster", "");
 		org.jdom.Element e = new org.jdom.Element("locomotive", ns)
+									.addAttribute("id","our id")
 									.addAttribute("fileName","file here")
 									.addAttribute("roadNumber","431")
 									.addAttribute("roadName","SP")
@@ -43,32 +44,34 @@ public class RosterEntryTest extends TestCase {
 		Assert.assertEquals("road name ", "SP", r.getRoadName());
 		Assert.assertEquals("road number ", "431", r.getRoadNumber());
 		Assert.assertEquals("manufacturer ", "Athearn", r.getMfg());
-		Assert.assertEquals("model ", null, r.getDecoderModel());
-		Assert.assertEquals("family ", null, r.getDecoderFamily());
+		Assert.assertEquals("model ", "", r.getDecoderModel());
+		Assert.assertEquals("family ", "", r.getDecoderFamily());
 	}
 
 	public void testEmptyLoad() {
 		// create Element
 		org.jdom.Namespace ns = org.jdom.Namespace.getNamespace("roster", "");
 		org.jdom.Element e = new org.jdom.Element("locomotive", ns)
+									.addAttribute("id","our id")
 									.addAttribute("fileName","file here")
 				; // end create element
 				
 		RosterEntry r = new RosterEntry(e, ns);
 		// check
 		Assert.assertEquals("file name ", "file here", r.getFileName());
-		Assert.assertEquals("DCC Address ", null, r.getDccAddress());
-		Assert.assertEquals("road name ", null, r.getRoadName());
-		Assert.assertEquals("road number ", null, r.getRoadNumber());
-		Assert.assertEquals("manufacturer ", null, r.getMfg());
-		Assert.assertEquals("model ", null, r.getDecoderModel());
-		Assert.assertEquals("family ", null, r.getDecoderFamily());
+		Assert.assertEquals("DCC Address ", "", r.getDccAddress());
+		Assert.assertEquals("road name ", "", r.getRoadName());
+		Assert.assertEquals("road number ", "", r.getRoadNumber());
+		Assert.assertEquals("manufacturer ", "", r.getMfg());
+		Assert.assertEquals("model ", "", r.getDecoderModel());
+		Assert.assertEquals("family ", "", r.getDecoderFamily());
 	}
 	
 	public void testFullLoad() {
 		// create Element
 		org.jdom.Namespace ns = org.jdom.Namespace.getNamespace("roster", "");
 		org.jdom.Element e = new org.jdom.Element("locomotive", ns)
+									.addAttribute("id","our id")
 									.addAttribute("fileName","file here")
 									.addAttribute("roadNumber","431")
 									.addAttribute("roadName","SP")
@@ -95,6 +98,7 @@ public class RosterEntryTest extends TestCase {
 		// create Element
 		org.jdom.Namespace ns = org.jdom.Namespace.getNamespace("roster", "");
 		org.jdom.Element e = new org.jdom.Element("locomotive", ns)
+									.addAttribute("id","our id")
 									.addAttribute("fileName","file here")
 									.addAttribute("roadNumber","431")
 									.addAttribute("roadName","SP")

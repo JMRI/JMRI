@@ -100,6 +100,7 @@ public abstract class VariableValueTest extends TestCase {
 	
 	// check a read operation
 	public void testVariableValueRead() {
+		log.debug("testVariableValueRead base starts");
 		// initialize the system
 		Programmer p = new ProgDebugger();
 		InstanceManager.setProgrammer(p);
@@ -132,6 +133,7 @@ public abstract class VariableValueTest extends TestCase {
 
 	// check a write operation to the variable
 	public void testVariableValueWrite() {
+		log.debug("testVariableValueWrite base starts");
 		// initialize the system
 		ProgDebugger p = new ProgDebugger();
 		InstanceManager.setProgrammer(p);

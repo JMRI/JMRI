@@ -35,8 +35,8 @@ public class RosterTest extends TestCase {
 		RosterEntry e = new RosterEntry("file name Bob");
 		e.setRoadNumber("123");
 		r.addEntry(e);
-		Assert.assertEquals("search not OK ", false, r.checkEntry(0, null, "321", null, null, null, null));
-		Assert.assertEquals("search OK ", true, r.checkEntry(0, null, "123", null, null, null, null));
+		Assert.assertEquals("search not OK ", false, r.checkEntry(0, null, "321", null, null, null, null, null));
+		Assert.assertEquals("search OK ", true, r.checkEntry(0, null, "123", null, null, null, null, null));
 	}
 		
 	public void testSearchList() {
@@ -56,9 +56,9 @@ public class RosterTest extends TestCase {
 		e.setRoadNumber("123");
 		e.setRoadName("UP");
 		r.addEntry(e);
-		Assert.assertEquals("search for 0 ", 0, r.matchingList(null, "321", null, null, null, null).size());
-		Assert.assertEquals("search for 1 ", 1, r.matchingList("UP", null,  null, null, null, null).size());
-		Assert.assertEquals("search for 3 ", 3, r.matchingList(null, "123", null, null, null, null).size());
+		Assert.assertEquals("search for 0 ", 0, r.matchingList(null, "321", null, null, null, null, null).size());
+		Assert.assertEquals("search for 1 ", 1, r.matchingList("UP", null,  null, null, null, null, null).size());
+		Assert.assertEquals("search for 3 ", 3, r.matchingList(null, "123", null, null, null, null, null).size());
 	}
 	
 	public void testBackupFile() throws Exception {
@@ -120,9 +120,9 @@ public class RosterTest extends TestCase {
 		t.readFile("temp"+File.separator+"roster.xml");
 		
 		// check contents
-		Assert.assertEquals("search for 0 ", 0, t.matchingList(null, "321", null, null, null, null).size());
-		Assert.assertEquals("search for 1 ", 1, t.matchingList("UP", null,  null, null, null, null).size());
-		Assert.assertEquals("search for 3 ", 3, t.matchingList(null, "123", null, null, null, null).size());
+		Assert.assertEquals("search for 0 ", 0, t.matchingList(null, "321", null, null, null, null, null).size());
+		Assert.assertEquals("search for 1 ", 1, t.matchingList("UP", null,  null, null, null, null, null).size());
+		Assert.assertEquals("search for 3 ", 3, t.matchingList(null, "123", null, null, null, null, null).size());
 	}
 
 	
@@ -141,6 +141,7 @@ public class RosterTest extends TestCase {
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite(RosterTest.class);
+		suite.addTest(jmri.jmrit.roster.RosterEntryPaneTest.suite());
 		suite.addTest(jmri.jmrit.roster.IdentifyLocoTest.suite());
 		suite.addTest(jmri.jmrit.roster.RosterEntryTest.suite());
 		return suite;

@@ -13,6 +13,7 @@ package jmri.jmrit.symbolicprog.tabbedframe;
 import jmri.jmrit.symbolicprog.KnownLocoSelPane;
 import jmri.jmrit.symbolicprog.NewLocoSelPane;
 import jmri.jmrit.decoderdefn.*;
+import jmri.jmrit.roster.*;
 
 import java.awt.event.*;
 
@@ -37,7 +38,8 @@ public class PaneProgAction 			extends AbstractAction {
 		JLabel last;
 		JPanel pane1 = new NewLocoSelPane(){
 			protected void startProgrammer(DecoderFile decoderFile, String locoFile) {
-				JFrame p = new PaneProgFrame(decoderFile, locoFile);
+				// start with no RosterEntry, as this is a new loco
+				JFrame p = new PaneProgFrame(decoderFile, locoFile, new RosterEntry());
 				p.pack();
 				p.show();
 			}
@@ -46,7 +48,7 @@ public class PaneProgAction 			extends AbstractAction {
 		// Known loco on programming track
 		JPanel pane2 = new KnownLocoSelPane(){
 			protected void startProgrammer(DecoderFile decoderFile, String locoFile) {
-				JFrame p = new PaneProgFrame(decoderFile, locoFile);
+				JFrame p = new PaneProgFrame(decoderFile, locoFile, null);
 				p.pack();
 				p.show();
 			}

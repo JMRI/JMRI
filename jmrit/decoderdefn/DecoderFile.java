@@ -86,13 +86,11 @@ public class DecoderFile extends XmlFile {
 		Element decoderID = decoderElement.getChild("id",ns);
 			
 		// start loading variables to table
-		System.out.println("loadVariableModel getNumFunctions = "+getNumFunctions());
 		List varList = decoderElement.getChild("variables",ns).getChildren("variable",ns);
 		for (int i=0; i<varList.size(); i++) {
 			Element e = (Element)(varList.get(i));
 			// if its associated with an inconsistent number of functions,
 			// skip creating it
-			System.out.println("loop "+getNumFunctions()+" "+e.getAttribute("minFn"));
 			if (getNumFunctions() >= 0 && e.getAttribute("minFn") != null
 				&& getNumFunctions() < Integer.valueOf(e.getAttribute("minFn").getValue()).intValue() )
 					continue;
