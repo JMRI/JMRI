@@ -22,7 +22,7 @@ import javax.swing.JTextField;
  * operation, Value changes before State, so you can assume that Value is stable
  * if notified of a State change.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class CvValue extends AbstractValue implements ProgListener {
 
@@ -203,7 +203,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         if (retval == OK) {
             if (_status != null) _status.setText("OK");
             if (_reading) {
-				// set & notify value directly to avoid state going to EDITED
+                // set & notify value directly to avoid state going to EDITED
                 int old = _value;
                 _value = value;
                 _tableEntry.setText(Integer.toString(value));

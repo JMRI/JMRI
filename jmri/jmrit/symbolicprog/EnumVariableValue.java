@@ -16,7 +16,7 @@ import com.sun.java.util.collections.List;
  * Extends VariableValue to represent a enumerated variable.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
@@ -182,6 +182,14 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         // prop.firePropertyChange("Value", null, null);
     }
 
+    /**
+     * Notify the connected CVs of a state change from above
+     * @param state
+     */
+    public void setCvState(int state) {
+        ((CvValue)_cvVector.elementAt(getCvNum())).setState(state);
+    }
+
     // member functions to control reading/writing the variables
     public void read() {
         setBusy(true);  // will be reset when value changes
@@ -218,7 +226,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * model between this object and the real JComboBox value.
      *
      * @author			Bob Jacobsen   Copyright (C) 2001
-     * @version         $Revision: 1.6 $
+     * @version         $Revision: 1.7 $
      */
     public class VarComboBox extends JComboBox {
 

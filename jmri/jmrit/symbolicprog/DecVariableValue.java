@@ -16,7 +16,7 @@ import com.sun.java.util.collections.ArrayList;
  * Decimal representation of a value.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  *
  */
 public class DecVariableValue extends VariableValue
@@ -168,6 +168,14 @@ public class DecVariableValue extends VariableValue
         if (c != null) _value.setBackground(c);
         else _value.setBackground(_defaultColor);
         // prop.firePropertyChange("Value", null, null);
+    }
+
+    /**
+     * Notify the connected CVs of a state change from above
+     * @param state
+     */
+    public void setCvState(int state) {
+        ((CvValue)_cvVector.elementAt(getCvNum())).setState(state);
     }
 
     public void read() {

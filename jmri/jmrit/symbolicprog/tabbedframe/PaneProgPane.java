@@ -19,7 +19,7 @@ import org.jdom.*;
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
@@ -89,7 +89,8 @@ public class PaneProgPane extends javax.swing.JPanel
         JPanel bottom = new JPanel();
         panelList.add(p);
         bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
-        readButton.setToolTipText("Read current values from decoder. Warning: may take a long time!");
+
+        readButton.setToolTipText("Read colored values from decoder.");
         if (cvModel.getProgrammer()!= null
             && !cvModel.getProgrammer().getCanRead()) {
             // can't read, disable the button
@@ -101,14 +102,31 @@ public class PaneProgPane extends javax.swing.JPanel
                     if (readButton.isSelected()) readPane();
                 }
             });
+
+        reReadButton.setToolTipText("Read all values from decoder. Warning: may take a long time!");
+        if (cvModel.getProgrammer()!= null
+            && !cvModel.getProgrammer().getCanRead()) {
+            // can't read, disable the button
+            reReadButton.setEnabled(false);
+            reReadButton.setToolTipText("Button disabled because configured command station can't read CVs");
+        }
+        reReadButton.addActionListener( l2 = new ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    if (reReadButton.isSelected()) reReadPane();
+                }
+            });
+
         writeButton.setToolTipText("Write current values to decoder");
         writeButton.addActionListener( l3 = new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     if (writeButton.isSelected()) writePane();
                 }
             });
+
         bottom.add(readButton);
         bottom.add(writeButton);
+        bottom.add(reReadButton);
+
         add(bottom);
     }
 
@@ -127,29 +145,80 @@ public class PaneProgPane extends javax.swing.JPanel
      */
     List cvList = new ArrayList();
 
-    JToggleButton readButton = new JToggleButton("Read sheet");
-    JToggleButton writeButton = new JToggleButton("Write sheet");
+    JToggleButton readButton   = new JToggleButton("Read sheet");
+    JToggleButton reReadButton = new JToggleButton("Reread sheet");
+    JToggleButton writeButton  = new JToggleButton("Write sheet");
 
     /**
      * invoked by "Read Pane" button, this sets in motion a
      * continuing sequence of "read" operations on the
      * variables & CVs in the Pane.  Only variables in states
      * UNKNOWN, EDITED, FROMFILE are read; states STORED and READ don't
-     * need to be.  Each invocation of this method reads on CV; completion
-     * of that request will cause it to happen again, reading the next CV, until
-     * there's nothing left to read.
-     * <P>
-     * Returns true is a read has been started, false if the pane is complete.
+     * need to be.
+     *
+     * @return true is a read has been started, false if the pane is complete.
      */
     public boolean readPane() {
         if (log.isDebugEnabled()) log.debug("readPane starts with "
                                             +varList.size()+" vars, "
                                             +cvList.size()+" cvs");
         readButton.setSelected(true);
+        return nextRead();
+    }
+
+    /**
+     * invoked by "Reread Pane" button, this sets in motion a
+     * continuing sequence of "read" operations on the
+     * variables & CVs in the Pane.  The read mechanism only reads
+     * variables in certain states (and needs to do that to handle error
+     * processing right now), so this is implemented by first
+     * setting all variables and CVs on this pane to FROMFILE
+     *
+     * @return true is a read has been started, false if the pane is complete.
+     */
+    public boolean reReadPane() {
+        if (log.isDebugEnabled()) log.debug("reReadPane starts with "
+                                            +varList.size()+" vars, "
+                                            +cvList.size()+" cvs");
+        reReadButton.setSelected(true);
+
+        // flag state of variables and CVs
+        setAllToRead();
+
+        // start operation
+        return nextRead();
+    }
+
+    /**
+     * Set states so that all variables and CVs on this pane will
+     * read when a readPane or reReadPane operation comes along.
+     */
+    void setAllToRead() {
+        for (int i=0; i<varList.size(); i++) {
+            int varNum = ((Integer)varList.get(i)).intValue();
+            _varModel.setState( varNum, VariableValue.UNKNOWN );
+        }
+        for (int i=0; i<cvList.size(); i++) {
+            int cvNum = ((Integer)cvList.get(i)).intValue();
+            _cvModel.getCvByRow(cvNum).setState(CvValue.UNKNOWN);
+        }
+    }
+
+    /**
+     * If there are any more read operations to be done on this pane,
+     * do the next one.
+     * <P>
+     * Each invocation of this method reads on CV; completion
+     * of that request will cause it to happen again, reading the next CV, until
+     * there's nothing left to read.
+     * <P>
+     * @return true is a read has been started, false if the pane is complete.
+     */
+    boolean nextRead() {
         for (int i=0; i<varList.size(); i++) {
             int varNum = ((Integer)varList.get(i)).intValue();
             int vState = _varModel.getState( varNum );
-            if (log.isDebugEnabled()) log.debug("readPane var index "+varNum+" state "+vState);
+            if (log.isDebugEnabled()) log.debug("nextRead var index "+varNum+" state "+vState);
             if (vState == VariableValue.UNKNOWN ||
                 vState == VariableValue.EDITED ||
                 vState == VariableValue.FROMFILE )  {
@@ -163,7 +232,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 // and make the read request
                 _programmingVar.read();
                 if (log.isDebugEnabled()) log.debug("return from starting var read");
-                // the request may have instantateously been satisfied...
+                // the request may have instantaneously been satisfied...
                 return true;  // only make one request at a time!
             }
         }
@@ -171,7 +240,7 @@ public class PaneProgPane extends javax.swing.JPanel
         for (int i=0; i<cvList.size(); i++) {
             int cvNum = ((Integer)cvList.get(i)).intValue();
             int cState = _cvModel.getCvByRow(cvNum).getState();
-            if (log.isDebugEnabled()) log.debug("readPane cv index "+cvNum+" state "+cState);
+            if (log.isDebugEnabled()) log.debug("nextRead cv index "+cvNum+" state "+cState);
             if (cState == CvValue.UNKNOWN ||
                 cState == CvValue.EDITED ||
                 cState == CvValue.FROMFILE )  {
@@ -190,8 +259,9 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         }
         // nothing to program, end politely
-        if (log.isDebugEnabled()) log.debug("readPane found nothing to do");
+        if (log.isDebugEnabled()) log.debug("nextRead found nothing to do");
         readButton.setSelected(false);
+        reReadButton.setSelected(false);  // reset both, as that's final state we want
         setBusy(false);
         return false;
     }
@@ -276,7 +346,7 @@ public class PaneProgPane extends javax.swing.JPanel
     /**
      * Get notification of a variable property change, specifically "busy" going to
      * false at the end of a programming operation. If we're in a programming
-     * operation, we then continue it by reinvoking the readPane/writePane operation.
+     * operation, we then continue it by reinvoking the nextRead/writePane operation.
      */
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         // check for the right event & condition
@@ -310,17 +380,21 @@ public class PaneProgPane extends javax.swing.JPanel
         _programmingVar.removePropertyChangeListener(this);
         _programmingVar = null;
         // restart the operation
-        if (_read && readButton.isSelected()) readPane();
-        else if (writeButton.isSelected()) writePane();
-        else if (log.isDebugEnabled()) log.debug("No operation to restart");
+        restartProgramming();
     }
+
     public void replyWhileProgrammingCV() {
         if (log.isDebugEnabled()) log.debug("correct event for programming CV, restart operation");
         // remove existing listener
         _programmingCV.removePropertyChangeListener(this);
         _programmingCV = null;
         // restart the operation
-        if (_read && readButton.isSelected()) readPane();
+        restartProgramming();
+    }
+
+    void restartProgramming() {
+        if (_read && readButton.isSelected()) nextRead();
+        else if (_read && reReadButton.isSelected()) nextRead();
         else if (writeButton.isSelected()) writePane();
         else if (log.isDebugEnabled()) log.debug("No operation to restart");
     }
@@ -673,7 +747,9 @@ public class PaneProgPane extends javax.swing.JPanel
         removeAll();
 
         readButton.removeActionListener(l1);
+        reReadButton.removeActionListener(l2);
         writeButton.removeActionListener(l3);
+        l1 = l2 = l3 = null;
 
         if (_programmingVar != null) _programmingVar.removePropertyChangeListener(this);
         if (_programmingCV != null) _programmingCV.removePropertyChangeListener(this);

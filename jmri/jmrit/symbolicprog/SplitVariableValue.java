@@ -16,7 +16,7 @@ import javax.swing.text.Document;
  * split across two CVs. The original use is for addresses of stationary (accessory)
  * decoders
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  *
  */
 public class SplitVariableValue extends VariableValue
@@ -164,6 +164,15 @@ public class SplitVariableValue extends VariableValue
 		// prop.firePropertyChange("Value", null, null);
 	}
 
+    /**
+     * Notify the connected CVs of a state change from above
+     * @param state
+     */
+    public void setCvState(int state) {
+        ((CvValue)_cvVector.elementAt(getCvNum())).setState(state);
+        ((CvValue)_cvVector.elementAt(getSecondCvNum())).setState(state);
+    }
+
 	public Component getRep(String format)  {
 		return new VarTextField(_value.getDocument(),_value.getText(), 5, this);
 	}
@@ -277,7 +286,7 @@ public class SplitVariableValue extends VariableValue
 	 * an underlying variable
 	 *
 	 * @author	Bob Jacobsen   Copyright (C) 2001
-	 * @version     $Revision: 1.3 $
+	 * @version     $Revision: 1.4 $
 	 */
 	public class VarTextField extends JTextField {
 

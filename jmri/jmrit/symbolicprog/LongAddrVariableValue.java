@@ -18,7 +18,7 @@ import javax.swing.text.Document;
 /**
  * Extends VariableValue to represent a NMRA long address
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  *
  */
 public class LongAddrVariableValue extends VariableValue
@@ -150,6 +150,15 @@ public class LongAddrVariableValue extends VariableValue
 	private static final int READING_SECOND = 2;
 	private static final int WRITING_FIRST = 3;
 	private static final int WRITING_SECOND = 4;
+
+    /**
+     * Notify the connected CVs of a state change from above
+     * @param state
+     */
+    public void setCvState(int state) {
+        ((CvValue)_cvVector.elementAt(getCvNum())).setState(state);
+        ((CvValue)_cvVector.elementAt(getCvNum()+1)).setState(state);
+    }
 
 	//
 	public void read() {

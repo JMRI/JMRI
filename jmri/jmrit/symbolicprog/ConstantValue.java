@@ -17,11 +17,11 @@ import java.awt.Color;
 import com.sun.java.util.collections.List;
 import com.sun.java.util.collections.ArrayList;
 
-/** 
+/**
  * Extends VariableValue to represent a constant enum-like-thing
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: ConstantValue.java,v 1.1 2002-02-28 20:30:16 jacobsen Exp $
+ * @version			$Id: ConstantValue.java,v 1.2 2003-01-04 11:54:15 jacobsen Exp $
  *
  */
 public class ConstantValue extends VariableValue {
@@ -37,15 +37,15 @@ public class ConstantValue extends VariableValue {
 			_value.addItem(""+0);
 		}
 	}
-	
-  	/** 
+
+  	/**
   	 * Create a null object.  Normally only used for tests and to pre-load classes.
-  	 */ 
+  	 */
    	public ConstantValue() {}
-  	
+
 	// stored value
 	JComboBox _value = null;
-	
+
 	// place to keep the items
 	String[] _itemArray = null;
 	int _nstored;
@@ -53,13 +53,13 @@ public class ConstantValue extends VariableValue {
 	private int _maxVal;
 	private int _minVal;
 	Color _defaultColor;
-	
+
 	public Object rangeVal() {
 		return new String("constant: "+_minVal+" - "+_maxVal);
 	}
-		
+
 	// to complete this class, fill in the routines to handle "Value" parameter
-	// and to read/write/hear parameter changes. 
+	// and to read/write/hear parameter changes.
 	public String getValueString() {
 		return ""+_value.getSelectedIndex();
 	}
@@ -69,12 +69,12 @@ public class ConstantValue extends VariableValue {
 	public int getIntValue() {
 		return _value.getSelectedIndex();
 	}
-	
+
 	public Component getValue()  { return _value; }
-	public void setValue(int value) { 
+	public void setValue(int value) {
 		int oldVal = _value.getSelectedIndex();
 		_value.setSelectedIndex(value);
-		if (oldVal != value || getState() == VariableValue.UNKNOWN) 
+		if (oldVal != value || getState() == VariableValue.UNKNOWN)
 			prop.firePropertyChange("Value", null, new Integer(value));
 	}
 
@@ -108,16 +108,24 @@ public class ConstantValue extends VariableValue {
 			return null;
 		}
 	}
-	
+
 	List comboCBs = new ArrayList();
 	List comboRBs = new ArrayList();
-	
+
 	// implement an abstract member to set colors
 	void setColor(Color c) {
 	}
 
+    /**
+     * Notify the connected CVs of a state change from above
+     * @param state
+     */
+    public void setCvState(int state) {
+        ((CvValue)_cvVector.elementAt(getCvNum())).setState(state);
+    }
+
 	/**
-	 * read() sets the state to READ so that you can 
+	 * read() sets the state to READ so that you can
 	 * have algorithms like "read all variables that aren't in READ state".
 	 * This is different from the 'normal' VariableValue objects, which
 	 * rely on the associated CV objects to drive state changes at the
@@ -130,7 +138,7 @@ public class ConstantValue extends VariableValue {
 		setBusy(false);
 	}
 	/**
-	 * write() sets the state to STORED so that you can 
+	 * write() sets the state to STORED so that you can
 	 * have algorithms like "write all variables that aren't in STORED state"
 	 * This is different from the 'normal' VariableValue objects, which
 	 * rely on the associated CV objects to drive state changes at the
@@ -142,20 +150,20 @@ public class ConstantValue extends VariableValue {
 		setBusy(true);
 		setBusy(false);
 	}
-	
+
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		log.warn("Unexpected propertyChange: "+e);
 	}
-	
+
 	// clean up connections when done
 	public void dispose() {
 		if (log.isDebugEnabled()) log.debug("dispose");
-		
+
 		_value = null;
 		// do something about the VarComboBox
 	}
 
-	// initialize logging	
+	// initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ConstantValue.class.getName());
-		
+
 }
