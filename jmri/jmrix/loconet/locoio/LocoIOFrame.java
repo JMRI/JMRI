@@ -4,6 +4,10 @@ package jmri.jmrix.loconet.locoio;
 
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
+import jmri.util.StringUtil;
+import jmri.jmrix.loconet.LnTrafficController;
+import jmri.jmrix.loconet.LocoNetMessage;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -17,7 +21,7 @@ import javax.swing.table.TableColumnModel;
  * Frame displaying and programming a LocoIO configuration.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class LocoIOFrame extends JFrame {
 
@@ -74,8 +78,12 @@ public class LocoIOFrame extends JFrame {
         addrField.setMaximumSize(addrField.getPreferredSize());
         p1.add(addrField);
         addrSetButton = new JButton("Set address");
-        addrSetButton.setEnabled(false);
         p1.add(addrSetButton);
+        addrSetButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                addrSet();
+            }
+        });
         p1.add(new JSeparator(JSeparator.VERTICAL));
 
         readAllButton = new JButton("Read All");
@@ -137,6 +145,37 @@ public class LocoIOFrame extends JFrame {
         pack();
     }
 
+    protected int cautionAddrSet() {
+        return JOptionPane.showOptionDialog(this,
+                                "This will set the address of all attached LocoIO boards",
+                                "Global operation!",
+                                0, JOptionPane.INFORMATION_MESSAGE, null,
+                                new Object[]{"Cancel", "OK"}, null );
+    }
+
+    /**
+     * set address button set
+     */
+    protected void addrSet() {
+        // caution user
+        log.info("Caution: Set locoio is a broadcast operation");
+        int retval = cautionAddrSet();
+        if (retval != 1 ) return; // user cancelled
+        int address = Integer.valueOf(addrField.getText(),16).intValue();
+        if ((address&0x7F00) != 0x0100) log.warn("High part of address should be 0x01, was "
+                                            +(address&0x7F00)/256);
+        // format a write message
+        int cv = 1;
+        int data = address & 0x7F;
+        int unitAddress = 0x1000; // LocoIO broadcast
+
+        int[] contents = {1,cv,0,data,  0,0,0,0};
+        LocoNetMessage msg = LocoNetMessage.makePeerXfr(0x1050, unitAddress,
+                                                        contents, 0x08);
+        // send message
+        LnTrafficController.instance().sendLocoNetMessage(msg);
+
+    }
     JTextField addrField = new JTextField("0151");
     JTextField status = null;
 
