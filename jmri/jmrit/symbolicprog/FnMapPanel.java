@@ -9,7 +9,7 @@ import com.sun.java.util.collections.List;
 import org.jdom.Element;
 import org.jdom.Attribute;
 
-/** 
+/**
  * Provide a graphical representation of the NMRA S&RP mapping between cab functions
  * and physical outputs.
  *<P>
@@ -30,7 +30,7 @@ import org.jdom.Attribute;
  * Although support for the "CV label column" is still here, its turned off now.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: FnMapPanel.java,v 1.1 2002-02-28 20:30:16 jacobsen Exp $
+ * @version			$Revision: 1.2 $
  */
 public class FnMapPanel extends JPanel {
 	// columns
@@ -43,29 +43,29 @@ public class FnMapPanel extends JPanel {
 	int outputNum = 1;
 	int outputLabel = 2;
 	int firstFn = 3;
-	
+
 	// these will eventually be passed in from the ctor
 	int numFn = 14;  // include FL(f) and FL(r) in the total
 	int numOut = 20;
 	int maxFn = 14;  // include FL(f) and FL(r) in the total
 	int maxOut = 14;
-	
+
 	GridBagLayout gl = null;
 	GridBagConstraints cs = null;
 	VariableTableModel _varModel;
-	
+
 	public FnMapPanel(VariableTableModel v, List varsUsed, Element model) {
 		if (log.isDebugEnabled()) log.debug("Function map starts");
 		_varModel = v;
-		
+
 		// configure number of channels, arrays
 		configOutputs(model);
-		
+
 		// initialize the layout
 		gl = new GridBagLayout();
 		cs = new GridBagConstraints();
 		setLayout(gl);
-		
+
 		{
 			JLabel l = new JLabel("Output wire or operation");
 			cs.gridy = outputName;
@@ -93,7 +93,7 @@ public class FnMapPanel extends JPanel {
 			labelAt( firstFn+12, cvNum, "45");
 			labelAt( firstFn+13, cvNum, "46");
 		}
-				
+
 		labelAt(0,fnName, "Description");
 
 		labelAt( firstFn   , fnName, "Forward Headlight FL(f)");
@@ -110,13 +110,13 @@ public class FnMapPanel extends JPanel {
 		if (numFn>11) labelAt( firstFn+11, fnName, "Function 10");
 		if (numFn>12) labelAt( firstFn+12, fnName, "Function 11");
 		if (numFn>13) labelAt( firstFn+13, fnName, "Function 12");
-		
+
 		// label outputs
 		for (int iOut=0; iOut<numOut; iOut++) {
 			labelAt( outputNum,   firstOut+iOut, outName[iOut]);
 			labelAt( outputLabel, firstOut+iOut, outLabel[iOut]);
 		}
-		
+
 		for (int iFn = 0; iFn < numFn; iFn++) {
 			for (int iOut = 0; iOut < numOut; iOut++) {
 				// find the variable using the output label
@@ -136,16 +136,16 @@ public class FnMapPanel extends JPanel {
 		}
 		if (log.isDebugEnabled()) log.debug("Function map complete");
 	}
-	
-	final String[] fnList = new String[] { "FL(f)", "FL(r)", "F1", "F2", "F3", "F4", "F5", "F6", "F7", 
+
+	final String[] fnList = new String[] { "FL(f)", "FL(r)", "F1", "F2", "F3", "F4", "F5", "F6", "F7",
 									"F8", "F9", "F10", "F11", "F12" };
 
 	final String[] outLabel = new String[] {"White", "Yellow", "Green", "Vlt/Brwn", "", "", "", "", "", "",
 									"", "", "", "", "","", "", "", "", ""  };
-									
+
 	final String[] outName = new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
 										 "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" };
-									
+
 	void saveAt(int row, int column, JComponent j) {
 		if (row<0 || column<0) return;
 		cs.gridy = row;
@@ -153,13 +153,13 @@ public class FnMapPanel extends JPanel {
 		gl.setConstraints(j, cs);
 		add(j);
 	}
-		
+
 	void labelAt(int row, int column, String name) {
 		if (row<0 || column<0) return;
 		JLabel t = new JLabel(" "+name+" ");
 		saveAt(row, column, t);
 	}
-	
+
 	/**
 	 * Use the "model" element from the decoder definition file
 	 * to configure the number of outputs and set up any that
@@ -169,20 +169,20 @@ public class FnMapPanel extends JPanel {
 		if (model==null) return;
 		// get numOuts, numFns or leave the defaults
 		Attribute a = model.getAttribute("numOuts");
-		try { if (a!=null) numOut = Integer.valueOf(a.getValue()).intValue();} 
+		try { if (a!=null) numOut = Integer.valueOf(a.getValue()).intValue();}
 			catch (Exception e) {log.error("error handling decoder's numOuts value");}
 		a = model.getAttribute("numFns");
-		try { if (a!=null) numFn = Integer.valueOf(a.getValue()).intValue()+2;} 
+		try { if (a!=null) numFn = Integer.valueOf(a.getValue()).intValue()+2;}
 			catch (Exception e) {log.error("error handling decoder's numFns value");}
 		if (log.isDebugEnabled()) log.debug("numFns, numOuts "+numFn+","+numOut);
 		// take all "output" children
-		List elemList = model.getChildren();
+		List elemList = model.getChildren("output");
 		if (log.isDebugEnabled()) log.debug("output scan starting with "+elemList.size()+" elements");
 		for (int i=0; i<elemList.size(); i++) {
 			Element e = (Element)(elemList.get(i));
 			String name = e.getAttribute("name").getValue();
 			// if this a number, or a character name?
-			try { 
+			try {
 				int outputNum = Integer.valueOf(name).intValue();
 				// yes, since it was converted.  All we do with
 				// these are store the label index (if it exists)
@@ -194,7 +194,7 @@ public class FnMapPanel extends JPanel {
 				if (numOut<maxOut) {
 					outName[numOut] = name;
 					Attribute at;
-					if ((at=e.getAttribute("label"))!=null)					
+					if ((at=e.getAttribute("label"))!=null)
 						outLabel[numOut] = at.getValue();
 					else
 						outLabel[numOut] ="";
@@ -203,13 +203,13 @@ public class FnMapPanel extends JPanel {
 			}
 		}
 	}
-	
+
 	/** clean up at end */
 	public void dispose() {
 		removeAll();
 	}
-	
-	// initialize logging	
+
+	// initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(FnMapPanel.class.getName());
-		
+
 }
