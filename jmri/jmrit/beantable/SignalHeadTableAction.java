@@ -24,7 +24,7 @@ import javax.swing.JTextField;
  * SignalHeadTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -60,6 +60,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
     		public Class getColumnClass(int col) {
     			if (col==LITCOL) return Boolean.class;
     			else return super.getColumnClass(col);
+		    }
+    		public int getPreferredWidth(int col) {
+    			if (col==LITCOL) return new JTextField(4).getPreferredSize().width;
+    			else return super.getPreferredWidth(col);
 		    }
     		public boolean isCellEditable(int row, int col) {
     			if (col==LITCOL) return true;
