@@ -20,7 +20,7 @@ import jmri.jmrix.lenz.*;
  * Commander or Compact)
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SystemInfoFrame extends JFrame implements XNetListener {
 
@@ -101,16 +101,7 @@ public class SystemInfoFrame extends JFrame implements XNetListener {
         msg.setParity(); // Set the parity bit
         //Then send to the controller
         XNetTrafficController.instance().sendXNetMessage(msg,this);
-        
-        /* Pause for a second before sending the next request message */
-        try {
-           java.lang.Thread.sleep((long)1000);
-           } catch(java.lang.InterruptedException ie){
-             /* for now, we're not going to do anything if there is an 
-             error */
-           }
-
-	XNetMessage msg2=new XNetMessage(2);
+       	XNetMessage msg2=new XNetMessage(2);
 	/* Second, we send a request for the Interface hardware and
 	software version */
 	msg2.setElement(0,XNetConstants.LI_VERSION_REQUEST);

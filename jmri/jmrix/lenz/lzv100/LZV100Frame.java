@@ -15,7 +15,7 @@ import jmri.jmrix.lenz.*;
  *                 Track Voltage 
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class LZV100Frame extends JFrame implements XNetListener {
 
@@ -158,12 +158,6 @@ public class LZV100Frame extends JFrame implements XNetListener {
           programing mode */
 	   XNetMessage msg=XNetTrafficController.instance().getCommandStation().getWriteOpsModeCVMsg(00,00,07,50);
            XNetTrafficController.instance().sendXNetMessage(msg,this);
-          /* Pause for a second before sending the next message */ 
-          try {
-           java.lang.Thread.sleep((long)1000);
-           } catch(java.lang.InterruptedException ie){
-             /* for now, we're not going to do anything */
-           }
           /* Next, send the ops mode programing command for the voltage 
           we want */
 	   msg=XNetTrafficController.instance().getCommandStation().getWriteOpsModeCVMsg(00,00,07,validVoltageValues[voltBox.getSelectedIndex()]);
@@ -171,22 +165,10 @@ public class LZV100Frame extends JFrame implements XNetListener {
         }
         if((String)eLineBox.getSelectedItem()!="" &&
            (String)eLineBox.getSelectedItem()!=null) {
-          /* Pause for a second before sending the next message */ 
-          try {
-           java.lang.Thread.sleep((long)1000);
-           } catch(java.lang.InterruptedException ie){
-             /* for now, we're not going to do anything */
-           }
           /* First, send the ops mode programing command to enter
           programing mode */
 	   XNetMessage msg=XNetTrafficController.instance().getCommandStation().getWriteOpsModeCVMsg(00,00,07,50);
            XNetTrafficController.instance().sendXNetMessage(msg,this);
-          /* Pause for a second before sending the next message */ 
-          try {
-           java.lang.Thread.sleep((long)1000);
-           } catch(java.lang.InterruptedException ie){
-             /* for now, we're not going to do anything */
-           }
           /* Next, send the ops mode programing command for the E line 
              Status we want */
 	   msg=XNetTrafficController.instance().getCommandStation().getWriteOpsModeCVMsg(00,00,07,validELineStatusValues[eLineBox.getSelectedIndex()]);
@@ -216,12 +198,6 @@ public class LZV100Frame extends JFrame implements XNetListener {
       zerothrottle.setSpeedSetting(0);
       for (int i=0;i<25;i++)
       {
-          /* Pause for a second before sending the next message */ 
-          try {
-           java.lang.Thread.sleep((long)1000);
-           } catch(java.lang.InterruptedException ie){
-             /* for now, we're not going to do anything */
-           }
         zerothrottle.setF4(true);
       }
       zerothrottle.dispose();
@@ -235,12 +211,6 @@ public class LZV100Frame extends JFrame implements XNetListener {
       zerothrottle.setSpeedSetting(0);
       for (int i=0;i<6;i++)
       {
-          /* Pause for a second before sending the next message */ 
-          try {
-           java.lang.Thread.sleep((long)1000);
-           } catch(java.lang.InterruptedException ie){
-             /* for now, we're not going to do anything */
-           }
         zerothrottle.setF1(true);
       }
       zerothrottle.dispose();
