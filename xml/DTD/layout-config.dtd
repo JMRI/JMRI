@@ -1,9 +1,10 @@
 <!-- Defines XML documenting a layout config, esp. information -->
 <!-- on hardware connections -->
-<!-- $Id: layout-config.dtd,v 1.6 2003-04-06 05:24:39 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.7 2003-04-08 22:17:14 jacobsen Exp $ -->
 
 <!ELEMENT layout-config (turnouts | sensors | blocks | signals | 
-						securityelements | aspectgenerator | paneleditor)*>
+						securityelements | aspectgenerator | paneleditor |
+						signalheads )*>
 
 <!ELEMENT turnouts (turnout*)>
   <!ATTLIST turnouts class		CDATA #REQUIRED>
@@ -11,6 +12,14 @@
   <!ELEMENT turnout EMPTY >
     <!ATTLIST turnout systemName	CDATA #REQUIRED>  <!-- defines system type -->
     <!ATTLIST turnout userName		CDATA #IMPLIED>
+
+<!ELEMENT signalheads (signalhead*)>
+  <!ATTLIST signalheads class		CDATA #REQUIRED>
+
+  <!ELEMENT signalhead (turnout*) >     <!-- different actual types carry different contents -->
+  	<!ATTLIST signalhead class		CDATA #REQUIRED>
+    <!ATTLIST signalhead systemName	CDATA #REQUIRED>  
+    <!ATTLIST signalhead userName	CDATA #IMPLIED>
 
 <!ELEMENT securityelements (securityelement*)>
   <!ATTLIST securityelements class		CDATA #REQUIRED>
