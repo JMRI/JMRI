@@ -25,7 +25,7 @@ import javax.swing.JPanel;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.41 $
+ * @version     $Revision: 1.42 $
  */
 public class DecoderPro extends Apps {
 
@@ -81,7 +81,10 @@ public class DecoderPro extends Apps {
         b1.addActionListener(serviceprog);
         b1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         j.add(b1);
-
+        if (jmri.InstanceManager.programmerManagerInstance()==null) {
+            b1.setEnabled(false);
+            b1.setToolTipText(rb.getString("MsgServiceButtonDisabled"));
+        }
         JButton m1 = new JButton(rb.getString("DpButtonProgramOnMainTrack"));
         m1.addActionListener(opsprog);
         m1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
