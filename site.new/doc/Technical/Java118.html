@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Java118.html,v 1.2 2004-07-25 06:27:45 jacobsen Exp $ -->
+<!-- $Id: Java118.html,v 1.3 2004-08-23 17:02:50 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -145,13 +145,30 @@ handled in the jmri.util package.
 </OL>
 
 <h2>Testing compatibility</h2>
-The Ant "check1.1.8" target does several things:
+The Ant configuration file "check.xml" contains several targets:
+<DL>
+<DT>compile<DD>Does a special compilation targeting the special needs of the
+1.1.8 JVM:
 <OL>
-<LI>Compile all files that are expected to be 1.1.8 compatible
-using those Java libraries.  This will catch compile time errors, 
-which typically consist of using a method that's not in 1.1.8.
-<LI>Run "alltest" on that code to ensure that it runs OK.
-</ol>
+<LI>Compile several files from the jmri.util package that must be compiled
+with Java 1.3 libraries.
+<LI>Use the "synchlist.csh" script to create an Ant file containing
+instructions to compile the files that need the "classic" compiler.  These
+are compiled against the 1.1.8 library jar files.
+<LI>Compile the remaing source files with the default (modern) compiler, using the
+1.1.8 library jar files.
+<LI>Complete the normal build process by copying properties files, etc.
+</OL>
+Compiling against the 1.1.8 jar files is done to ensure that only
+methods present in the 1.1.8 libraries are used during the compilation.  
+The few files in the jmri.util package that are allowed to use
+more modern methods also have extensive try/catch exception handling
+around those method invocations.
+<DT>check<DD>The main target, this does clears the existing build,
+then recompiles the src and test directories as needed for JVM 1.1.8,
+and then runs alltest.
+</DL>
+
 
 <!-- Footer -->
     <hr class="hide">
