@@ -2,6 +2,8 @@
 
 package jmri.jmrix.loconet;
 
+import java.io.Serializable;
+
 /**
  * Represents a single command or response on the LocoNet.
  *<P>
@@ -17,7 +19,7 @@ package jmri.jmrix.loconet;
  * ideas being tested there will eventually be moved back to here.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Id: LocoNetMessage.java,v 1.5 2002-03-28 02:18:59 jacobsen Exp $
+ * @version			$Id: LocoNetMessage.java,v 1.6 2002-03-28 02:40:15 jacobsen Exp $
  * @see             jmri.jrmix.nce.NceMessage
  *
  */
