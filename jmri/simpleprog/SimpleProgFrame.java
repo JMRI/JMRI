@@ -6,7 +6,7 @@
  * @version			
  */
 
-package simpleprog;
+package jmri.simpleprog;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -27,7 +27,8 @@ public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgList
 	
 	javax.swing.ButtonGroup modeGroup 		= new javax.swing.ButtonGroup();
 	javax.swing.JRadioButton pagedButton    = new javax.swing.JRadioButton();
-	javax.swing.JRadioButton directButton   = new javax.swing.JRadioButton();
+	javax.swing.JRadioButton directBitButton   = new javax.swing.JRadioButton();
+	javax.swing.JRadioButton directByteButton   = new javax.swing.JRadioButton();
 	javax.swing.JRadioButton registerButton = new javax.swing.JRadioButton();
 	
 	javax.swing.ButtonGroup radixGroup 		= new javax.swing.ButtonGroup();
@@ -47,8 +48,13 @@ public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgList
 		
 		pagedButton.setText("Paged Mode");
 		pagedButton.setSelected(true);
-		directButton.setText("Direct Mode");
+		directBitButton.setText("Direct Byte Mode");
+		directByteButton.setText("Direct Bit Mode");
 		registerButton.setText("Register Mode");
+		modeGroup.add(pagedButton);
+		modeGroup.add(directByteButton);
+		modeGroup.add(directBitButton);
+		modeGroup.add(registerButton);
 
 		hexButton.setText("Hexadecimal");
 		decButton.setText("Decimal");
@@ -99,10 +105,12 @@ public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgList
 		tPane2 = new JPanel();
 			tPane2.setLayout(new BoxLayout(tPane2, BoxLayout.Y_AXIS));
 			modeGroup.add(pagedButton);
-			modeGroup.add(directButton);
+			modeGroup.add(directBitButton);
+			modeGroup.add(directByteButton);
 			modeGroup.add(registerButton);
 			tPane2.add(pagedButton);
-			tPane2.add(directButton);
+			tPane2.add(directBitButton);
+			tPane2.add(directByteButton);
 			tPane2.add(registerButton);
 		tPane.add(tPane2);
 
@@ -149,7 +157,9 @@ public class SimpleProgFrame extends javax.swing.JFrame implements jmri.ProgList
   	private int getNewMode() {
   		if (pagedButton.isSelected())
 	  		return jmri.Programmer.PAGEMODE;
-	  	else if (directButton.isSelected())
+	  	else if (directBitButton.isSelected())
+	  		return jmri.Programmer.DIRECTMODE;
+	  	else if (directByteButton.isSelected())
 	  		return jmri.Programmer.DIRECTMODE;
 	  	else if (registerButton.isSelected())
 	  		return jmri.Programmer.REGISTERMODE;

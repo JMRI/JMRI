@@ -8,12 +8,12 @@
  * @version			
  */
 
-package simpleprog;
+package jmri.simpleprog;
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import ErrLoggerJ.ErrLog;
-import loconet.SlotManager;
+import jmri.jmrix.loconet.SlotManager;
 
 public class SimpleProgAction 			extends AbstractAction {
 
