@@ -1,123 +1,63 @@
-Making a combined JMRI/DecoderPro distribution (substitute the 
-release-number for M.N and M-N throughout):
+This is the HOWTO file to make a complete SourceForge downloadable
+distribution.
 
-( ) Copy and rename the last distribution
+Start with a directory, typically called "Distributions", that
+contains:
 
-( ) update the specific README files in site section in cvs to include 
-    any changes, esp. including updating the release name and URLs. 
+  Linux
+  	JMRI (the most recent distribution)
+  MacClassic
+  	JMRI (the most recent distribution)
+  MacOSX
+  	JMRI (the most recent distribution)
+  OS2
+  	JMRI (the most recent distribution)
 
-( ) apps.DecoderPro.DecoderPro needs to have the version number updated.
-
-( ) Commit all cvs source and tag "Release-App-M-N"
-
-( ) Make the jmri.jar file - there's some flux in how to do this, but for
-    now use CodeWarrior and ClassBrowser
-
-( ) Move the jmri.jar file to the distribution folder
-
-( ) Remove the .DS_Store, .FBCIndex, .FBCLockFolder files in the distribution
-
-( ) Update the various text files from the CVS scripts module. 
-
-( ) Create the two text README files from the site area. Change the
-	creator code of README to ttxt (SimpleText)
-
-( ) Update the xml subdirectory, removing the CVS subdirs
-
-( ) Make sure there's a clean "prefs" directory with a clean
-    "roster" subdir
-
-( ) Any new jar files that need to be put in the lib area? If so, the app
-	will have to change (next step).  Move them into the distribution lib
-	area now.
-
-( ) This step is only needed if you've changed any of the properties, classpath, etc.
-    Under MacOS 9, start MRJAppBuilder.
-		Properties:  Release properties
-		
-		(Warning - does this handle App.jar OK?)
-		
-		Output file:  App (in your target location; overwrite existing)
-		Merge files:  (none)
-    And then make the output app.  Copy that application file to the 
-    release (if you didn't create it there) and update its icon.
-    
-    A similar thing might be needed under MacOS X; consult the work log
-    for the exact setup needed. 
-	   
-( ) Make an opt-copy of the folder to the desktop, then into a CD.
-
-( ) Test CD on the test machine!
-
-( ) Test copied folder under Windows (use dropZip to create a transfer file)
-
-( ) Create the Macintosh distribution
-	( ) Create a clean copy of the folder on the desktop, with the same name
-	
-	( ) Drag folder onto DropStuff, which will create a file JMRI.M.N.hqx
-		(Preferences should be set for Macintosh, include linefeeds, remote .sit
-		suffix)
-
-	( ) Upload Mac distribution to sourceforge home via SSH
-
-( ) Upload original distribution folder to jmri.sourceforge.net via NiftyTelnet/SSH
-
-( ) Make the windows & OS/2 distribution:
-
-	( ) Start with a new copy of the distribution directory
-	
-	( ) Remove the Macintosh Apps and Mac-only jar files:
-
-    	cd JMRI.M.N
-    	rm Decoder\ Pro
-    	rm JmriDemo
-    	rm -rf DecoderProX.app
-    	rm -rf JmriDemoX.app
- 
-   	At this point, lib should contain only:
-     	collections.jar  crimson.jar  jdom-jdk11.jar  log4j.jar
+(Windows is separate)
+   scripts
+   ln -s scripts/build.xml build.xml
    
-	( ) Make a zip file
+This probably already exists....
 
-    	cd ..
-    	# now above the distribution directory
-    
-    	zip -rl JMRI.M.N.zip JMRI.M.N
-		zip JMRI.M.N.zip JMRI.M.N/*.jar JMRI.M.N/win32com.dll JMRI.M.N/lib/*.jar
+( ) Go to your working directory and
+	cvs tag Release-1-2-3 src test jmri.jpx build.xml
+
+( ) Come back to Distributions and 
+	ant -Drelease=Release-1-2-4 -Dnumber=1.2.4 release1
+
+	This will launch three StuffIt processes; click
+	each to proceed, and wait for them to complete.
 	
-		# the first line adds CR's, and the second replaces the .jar files so they
-		# don't have CR inserted
+	In the meantime, you can start building the Window installer
+
+( ) Once the three StuffIt processes are done
+	ant -Drelease=Release-1-2-4 -Dnumber=1.2.4 release2
 	
-( ) Make the Linux distribution from the distribution directory above:
-
-	( ) Update permissions
-
-    	chmod 755 JmriDemo.csh DecoderPro.csh
-    
-	( ) Make a .tar.gz
-
-		tar cf JMRI.M.N.tar JMRI.M.N
-		gzip JMRI.M.N.tar
+	This will launch one more (for MacClassic)
+	Wait for it to complete.
 	
-( ) Move to distribution site via SourceForge release:
+	Also, copy in the .exe for windows, with the complete name
+	
+( ) Once the three StuffIt processes are done
+	ant -Drelease=Release-1-2-4 -Dnumber=1.2.4 release3
 
-	ftp upload.sourceforge.net 
-		user: ftp 
-		password: me@myself.org 
-		cd incoming 
-		bin 
-		put JMRI.M.N.zip
-		put JMRI.M.N.tar.gz
-		put JMRI.M.N.hqx
+( ) When ready to upload:
+	ant -Drelease=Release-1-2-4 -Dnumber=1.2.4 release4
+
+
+	
+
 		
-	Login to SourceForge web 
+( ) Login to SourceForge web 
 	Go to the project home page, then admin page
 	Click on Edit/Release Files  & release each of the three files
 	in the order:
 	
 		linux
-		windows & OS/2
-		macintosh
+		OS/2
+		macintosh classic
+		MacOS X
+		Windows
 		
 	Be sure to update the top of the release note paragraph.
 	
@@ -125,37 +65,22 @@ release-number for M.N and M-N throughout):
 	
 	Be sure to select "preserve preformatted text"
 
-( ) Update web page source:
-	site/index.html - download links, demo release name
-	site/InstallJMRI.html - download instructions
-	site/demoFiles/DecoderPro.README.html - new README contents
-	site/demoFiles/JmriDemo.README.html - new README contents
-	
+( ) If this is a production release, create & upload a source .zip
+
+( ) mail announcement to jmriusers@yahoogroups.com
+
+( ) For a production version, update web page source:
+    	Linux install.html         
+    	MacOS Classic install.html 
+    	MacOS X install.html       
+    	OS2 install.html          
+    	Windows install.html
+		index.html
+		DecoderPro/index.html
+		README.html
+		
 ( ) commit site and update on server
 	
-( ) Update CVS copy
-
-    cd cvs
-    cvs -d cvs.jmri.sourceforge.net:/cvsroot/jmri update -d -r Release-App-M-N
-    
-( ) Create a snapshot in zip format
-
-	cd
-	zip -rl snapshot-JMRI-M-N.zip cvs
-	mv snapshot-JMRI-M-N.zip htdocs/Technical/snapshots/
-	
-( ) Create JavaDoc
-	Ensure that CW JavaDoc target has JavaDoc selected as prelinker
-	Build JavaDoc target
-
-( ) Upload JavaDoc
-
-	Upload the Development Project:Docs folder to htdocs/Technical/
-
-( ) Update the XML area
-
-( ) Wait for the files to appear in the upload area
-
 ( ) News item from JMRI sourceforge page
 
 	Title is of the form "JMRI M.N is available"

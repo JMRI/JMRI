@@ -1,6 +1,6 @@
 <!-- ugly first attempt at an ANT build.xml file for JMRI development -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.23 $ -->
+<!-- Revision $Revision: 1.24 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -280,6 +280,7 @@
     <move file="MacClassic/JMRI.hqx" tofile="JMRI.${number}.Classic.hqx" />
 
 	<echo message="end of part 3; part 4 will do the upload when ready"/>
+	<echo message="make sure Release.${number}.exe is present"/>
 
  </target>
  
