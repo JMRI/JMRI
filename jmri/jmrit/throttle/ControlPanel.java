@@ -10,6 +10,7 @@ public class ControlPanel extends JInternalFrame
     private ControlPanelListener listener;
     private JSlider speedSlider;
     private JRadioButton forwardButton, reverseButton;
+    private JButton stopButton;
 
     public ControlPanel(int initialSpeed, int speedIncrement,
                         int maxSpeed, boolean isForward)
@@ -21,6 +22,15 @@ public class ControlPanel extends JInternalFrame
         reverseButton.setSelected(!isForward);
 
         initGUI();
+    }
+
+    public void setEnabled(boolean isEnabled)
+    {
+        super.setEnabled(isEnabled);
+        forwardButton.setEnabled(isEnabled);
+        reverseButton.setEnabled(isEnabled);
+        stopButton.setEnabled(isEnabled);
+        speedSlider.setEnabled(isEnabled);
     }
 
     private void initGUI()
@@ -87,7 +97,7 @@ public class ControlPanel extends JInternalFrame
                     }
                  });
 
-        JButton stopButton = new JButton("STOP!");
+        stopButton = new JButton("STOP!");
         constraints.gridy = 3;
         this.getContentPane().add(stopButton, constraints);
         stopButton.addActionListener(

@@ -7,10 +7,20 @@ public class FunctionPanel extends JInternalFrame
 {
     //private FunctionListener listener;
     private FunctionButton functionButton[];
+    private static final int NUM_FUNCTION_BUTTONS = 10;
 
     public FunctionPanel()
     {
         initGUI();
+    }
+
+    public void setEnabled(boolean isEnabled)
+    {
+        super.setEnabled(isEnabled);
+        for (int i=0; i < NUM_FUNCTION_BUTTONS; i++)
+        {
+            functionButton[i].setEnabled(isEnabled);
+        }
     }
 
     private void initGUI()
@@ -18,8 +28,8 @@ public class FunctionPanel extends JInternalFrame
         JPanel mainPanel = new JPanel();
         this.setContentPane(mainPanel);
         mainPanel.setLayout(new GridLayout(4, 3));
-        functionButton = new FunctionButton[10];
-        for (int i=0; i<10; i++)
+        functionButton = new FunctionButton[NUM_FUNCTION_BUTTONS];
+        for (int i=0; i<NUM_FUNCTION_BUTTONS; i++)
         {
             functionButton[i] = new FunctionButton(i, false);
             functionButton[i].setText("F"+String.valueOf(i));
@@ -36,7 +46,7 @@ public class FunctionPanel extends JInternalFrame
     public void setFunctionListener(FunctionListener l)
     {
         //this.listener = l;
-        for (int i=0; i < 10; i++)
+        for (int i=0; i < NUM_FUNCTION_BUTTONS; i++)
         {
             functionButton[i].setFunctionListener(l);
         }
