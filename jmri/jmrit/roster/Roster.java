@@ -40,7 +40,7 @@ import org.jdom.output.XMLOutputter;
  * sort is done manually each time an entry is added.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.18 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -306,7 +306,8 @@ public class Roster extends XmlFile {
         else
             LocoFile.setFileLocation(f+File.separator+"roster");
     }
-    private static String getFileLocation() { return fileLocation; }
+    
+    static String getFileLocation() { return fileLocation; }
 
     /**
      * Absolute path to roster file location.
