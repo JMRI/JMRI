@@ -16,7 +16,7 @@ import org.jdom.output.XMLOutputter;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -158,11 +158,6 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
 
     protected Element initStore() {
-        // ensure that certain items from the InstanceManager are registered
-        // to be stored.  (Others are registered as they are created)
-        Object r = InstanceManager.turnoutManagerInstance();
-        if (r!=null) registerConfig(r);
-
         Element root = new Element("layout-config");
         return root;
     }
@@ -213,12 +208,11 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
 
     /**
-     * Writes prefs, config, tools and user to a file
+     * Writes config, tools and user to a file
      * @param file
      */
     public void store(File file) {
         Element root = initStore();
-        addPrefsStore(root);
         addConfigStore(root);
         addToolsStore(root);
         addUserStore(root);
