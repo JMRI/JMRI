@@ -15,8 +15,8 @@ import org.jdom.output.*;
  * Represents and manipulates the preferences information for the
  * JmriDemo application. Works with the JmriDemoConfigFrame
  *
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version		 	$Id: JmriDemoConfigFile.java,v 1.1 2002-02-28 17:24:20 jacobsen Exp $
+ * @author			Bob Jacobsen   Copyright (C) 2001, 2002
+ * @version		 	$Revision: 1.2 $
  * @see apps.AbstractConfigFrame
  */
 public class JmriDemoConfigFile extends apps.AbstractConfigFile {

@@ -6,7 +6,7 @@
  * Description:		Swing action to create DecoderProConfigFrame
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Id: DecoderProConfigAction.java,v 1.2 2002-02-28 17:24:16 jacobsen Exp $
+ * @version			$Revision: 1.3 $
  */
 
 package apps.DecoderPro;
@@ -18,11 +18,17 @@ import apps.AbstractConfigFile;
 
 public class DecoderProConfigAction 			extends apps.AbstractConfigAction {
 
-	protected AbstractConfigFile readFile() throws org.jdom.JDOMException, java.io.FileNotFoundException {
+	protected AbstractConfigFile readFile(String name)
+                throws org.jdom.JDOMException, java.io.FileNotFoundException {
 		DecoderProConfigFile file = new DecoderProConfigFile();
-		file.readFile(file.defaultConfigFilename());
-		return file;
+        if (name!=null) {
+            file.readFile(name);
+        } else {
+            file.readFile(file.defaultConfigFilename());
+        }
+        return file;
 	}
+
 	protected AbstractConfigFrame newFrame(String name){
 		return new DecoderProConfigFrame(name);
 	}

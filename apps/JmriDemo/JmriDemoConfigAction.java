@@ -6,7 +6,7 @@
  * Description:		Swing action to create JmriDemoConfigFrame
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Id: JmriDemoConfigAction.java,v 1.2 2002-03-09 23:32:36 jacobsen Exp $
+ * @version			$Revision: 1.3 $
  */
 
 package apps.JmriDemo;
@@ -18,17 +18,36 @@ import apps.AbstractConfigFile;
 
 public class JmriDemoConfigAction 			extends apps.AbstractConfigAction {
 
-	protected AbstractConfigFile readFile() throws org.jdom.JDOMException, java.io.FileNotFoundException {
+	protected AbstractConfigFile readFile(String name)
+                throws org.jdom.JDOMException, java.io.FileNotFoundException {
 		JmriDemoConfigFile file = new JmriDemoConfigFile();
-		file.readFile(file.defaultConfigFilename());
+        if (name!=null) {
+            log.debug("using file "+name);
+            file.readFile(name);
+        } else {
+            log.debug("for default file, use "+file.defaultConfigFilename());
+            file.readFile(file.defaultConfigFilename());
+        }
 		return file;
 	}
 	protected AbstractConfigFrame newFrame(String name){
 		return new JmriDemoConfigFrame(name);
 	}
 
-	public JmriDemoConfigAction(String s) {
- 		super(s);
+    /**
+     * Create an action object, reading configuration with the
+     * default filename.
+     */
+	public JmriDemoConfigAction(String actionName) {
+ 		super(actionName);
+	}
+
+    /**
+     * Create an action object, using a specific filename for
+     * configuration information.
+     */
+	public JmriDemoConfigAction(String actionName, String fileName) {
+ 		super(actionName, fileName);
 	}
 
 	/** not finding a file or having a config fail isn't

@@ -3,7 +3,7 @@
  *
  * Description:
  * @author			Bob Jacobsen
- * @version
+ * @version         $Revision: 1.16 $
  */
 
 package apps.JmriDemo;
@@ -13,6 +13,15 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
+/**
+ * Main program, intended to demonstrate the contents of the JMRI libraries.
+ * Since it contains everything, it's also used for testing.
+ * <P>
+ * If an argument is provided at startup, it will be used as the name of
+ * the configuration file.  Note that this is just the name, not the path;
+ * the file is searched for in the usual way, first in prefs/ and then in
+ * xml/
+ */
 public class JMRIdemo extends JPanel {
 	public JMRIdemo() {
 
@@ -25,8 +34,14 @@ public class JMRIdemo extends JPanel {
         menuBar.setBorder(new BevelBorder(BevelBorder.RAISED));
 
     // load preferences
-    	JmriDemoConfigAction prefs
-    				= new JmriDemoConfigAction("Preferences...");
+        JmriDemoConfigAction prefs = null;
+        if (configFile != null) {
+            log.debug("configure from specified file");
+    	    prefs = new JmriDemoConfigAction("Preferences...", configFile);
+        } else {
+            log.debug("configure from default file");
+    	    prefs = new JmriDemoConfigAction("Preferences...");
+        }
 
 	// populate GUI
         // create text box for advice
@@ -107,7 +122,7 @@ public class JMRIdemo extends JPanel {
 	}
 
 	// Main entry point
-    public static void main(String s[]) {
+    public static void main(String args[]) {
 
     	// initialize log4j - from logging control file (lcf) only
     	// if can find it!
@@ -122,6 +137,12 @@ public class JMRIdemo extends JPanel {
 		catch (java.lang.NoSuchMethodError e) { System.out.println("Exception starting logging: "+e); }
 
 		log.info("JMRIdemo starts");
+
+        // save the configuration filename if present on the command line
+        if (args.length>=1 && args[0]!=null) {
+            configFile = args[0];
+            log.debug("Config file was specified as: "+configFile);
+        }
 
     	// create the demo frame and menus
         JMRIdemo containedPane = new JMRIdemo();
@@ -138,6 +159,8 @@ public class JMRIdemo extends JPanel {
     }
 
 	static Action locoio = null;
+
+    static String configFile = null;
 
 	// GUI members
     private JMenuBar menuBar;

@@ -6,7 +6,7 @@
  * Description:		Abstract base action to create a ConfigFrame
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Id: AbstractConfigAction.java,v 1.3 2002-03-09 23:32:36 jacobsen Exp $
+ * @version			$Revision: 1.4 $
  */
 
 package apps;
@@ -16,15 +16,24 @@ import java.awt.event.ActionEvent;
 
 abstract public class AbstractConfigAction 			extends AbstractAction {
 
-	abstract protected AbstractConfigFile readFile()  throws org.jdom.JDOMException, java.io.FileNotFoundException;
+	abstract protected AbstractConfigFile readFile(String name)  throws org.jdom.JDOMException, java.io.FileNotFoundException;
 	abstract protected AbstractConfigFrame newFrame(String name);
 
-	public AbstractConfigAction(String s) {
-		super(s);
-		// see if the file can be read
+	public AbstractConfigAction(String actionName) {
+		super(actionName);
+        configure(null);
+	}
+
+	public AbstractConfigAction(String actionName, String fileName) {
+		super(actionName);
+        configure(fileName);
+	}
+
+    protected void configure(String fileName) {
+        // see if the file can be read
 		try {
 			jmri.jmrit.XmlFile.ensurePrefsPresent(jmri.jmrit.XmlFile.prefsDir());
-			AbstractConfigFile file = readFile();
+			AbstractConfigFile file = readFile(fileName);
 			log.debug("configuration file located and read");
 			frame = newFrame("Preferences");
 			log.debug("start configuration from file: "+file.defaultConfigFilename());
@@ -46,8 +55,7 @@ abstract public class AbstractConfigAction 			extends AbstractAction {
 		} catch (Exception e) {
 			readFailed(e);
 		}
-	}
-
+    }
     public void actionPerformed(ActionEvent e) {
 		frame.show();
 	}
