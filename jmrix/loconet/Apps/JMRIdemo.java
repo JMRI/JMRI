@@ -31,9 +31,11 @@ public class JMRIdemo extends JPanel {
         // Create menu categories and add to the menu bar, add actions to menus
         JMenu inputMenu = new JMenu("Input");
         menuBar.add(inputMenu);
-        	inputMenu.add(new jmri.jmrix.loconet.hexfile.LnHexFileAction("Hex File"));
+        	inputMenu.add(new jmri.jmrix.loconet.hexfile.LnHexFileAction("Loconet Hex File"));
         	inputMenu.add(new jmri.jmrix.loconet.ms100.MS100Action("MS100"));
         	inputMenu.add(new jmri.jmrix.loconet.locobuffer.LocoBufferAction("LocoBuffer"));
+        	inputMenu.add(new JSeparator());
+        	inputMenu.add(new jmri.jmrix.nce.serialdriver.SerialDriverAction("NCE Serial"));
 
         JMenu funcMenu = new JMenu("Tools");
         menuBar.add(funcMenu);
@@ -46,7 +48,12 @@ public class JMRIdemo extends JPanel {
         menuBar.add(locoMenu);
 	        locoMenu.add(new jmri.jmrix.loconet.locomon.LocoMonAction("LocoNet Monitor"));
     	    locoMenu.add(new jmri.jmrix.loconet.slotmon.SlotMonAction("Slot Monitor"));
-        	locoMenu.add(new jmri.jmrix.loconet.locogen.LocoGenAction("LocoNet Commands"));
+        	locoMenu.add(new jmri.jmrix.loconet.locogen.LocoGenAction("Send Packet"));
+
+        JMenu nceMenu = new JMenu("NCE");
+        menuBar.add(nceMenu);
+	        nceMenu.add(new jmri.jmrix.nce.ncemon.NceMonAction("Command Monitor"));
+	        nceMenu.add(new jmri.jmrix.nce.packetgen.NcePacketGenAction("Send Command"));
 	}
 
 	// Main entry point
