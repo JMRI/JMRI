@@ -45,9 +45,9 @@ public class JMRIdemo extends JPanel {
 	// create actions for user control
 		hexfileAction  = new LnHexFileAction("Hex File");
 		ms100Action    = new MS100Action("MS100");
-		locomonAction  = new LocoMonAction("Monitoring");
-		locogenAction  = new LocoGenAction("Commands");
-		locoechoAction = new LocoEchoAction("Echo Test");
+		locomonAction  = new LocoMonAction("LocoNet Monitor");
+		locogenAction  = new LocoGenAction("Layout Commands");
+		locoechoAction = new LocoEchoAction("Turnout Control");
 		slotmonAction  = new SlotMonAction("Slot Monitor");
 		simpleprogAction  = new SimpleProgAction("Simple Programmer");
 		
@@ -60,11 +60,11 @@ public class JMRIdemo extends JPanel {
 		// add actions to menus
         inputMenu.add(hexfileAction);
         inputMenu.add(ms100Action);
+        funcMenu.add(simpleprogAction);
+        funcMenu.add(locoechoAction);
         funcMenu.add(locomonAction);
         funcMenu.add(locogenAction);
         funcMenu.add(slotmonAction);
-        funcMenu.add(simpleprogAction);
-        funcMenu.add(locoechoAction);
 	}
 
 	// Main entry point

@@ -66,7 +66,7 @@ public class LocoGenFrame extends javax.swing.JFrame {
 		switchAddrTextField.setText("23");
 		switchAddrTextField.setLocation(new java.awt.Point(270, 70));
 		switchAddrTextField.setVisible(true);
-		switchAddrTextField.setToolTipText("Turnout number to throw (LocoNet number, one less than number on throttle)");
+		switchAddrTextField.setToolTipText("Turnout number to throw (throttle number, one more than number on LocoNet)");
 		switchAddrTextField.setSize(new java.awt.Dimension(50, 30));
 
 		thrownCheckBox.setText("Thrown");
@@ -171,8 +171,8 @@ public class LocoGenFrame extends javax.swing.JFrame {
 		LocoNetMessage l = new LocoNetMessage(4);
 		l.setOpCode(LnConstants.OPC_SW_REQ);
 		
-		// load address from switchAddrTextField
-		int adr = Integer.valueOf(switchAddrTextField.getText()).intValue();
+		// load LocoNet address from switchAddrTextField
+		int adr = Integer.valueOf(switchAddrTextField.getText()).intValue()-1;  // field is throttle number
 		int hiadr = adr/128;
 		int loadr = adr-hiadr*128;
 		

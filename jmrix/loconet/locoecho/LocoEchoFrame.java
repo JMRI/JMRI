@@ -31,10 +31,7 @@ public class LocoEchoFrame extends javax.swing.JFrame implements loconet.LocoNet
 	// GUI member declarations
 	javax.swing.JLabel textAdrLabel = new javax.swing.JLabel();
 	javax.swing.JTextField adrTextField = new javax.swing.JTextField();
-	
-	javax.swing.JCheckBox thrownCheckBox = new javax.swing.JCheckBox();
-	javax.swing.JCheckBox closedCheckBox = new javax.swing.JCheckBox();
-	
+		
 	javax.swing.JButton throwButton = new javax.swing.JButton();
 	javax.swing.JButton closeButton = new javax.swing.JButton();
 	
@@ -51,28 +48,18 @@ public class LocoEchoFrame extends javax.swing.JFrame implements loconet.LocoNet
 		adrTextField.setVisible(true);
 		adrTextField.setToolTipText("turnout number being controlled");
 
-		thrownCheckBox.setText("handle thrown");
-		thrownCheckBox.setVisible(true);
-		thrownCheckBox.setSelected(true);
-		thrownCheckBox.setToolTipText("if checked, this echo device handles the 'thrown' case");
-
-		closedCheckBox.setText("handle closed");
-		closedCheckBox.setVisible(true);
-		closedCheckBox.setSelected(true);
-		closedCheckBox.setToolTipText("if checked, this echo device handles the 'closed' case");
-
-		throwButton.setText("Throw input");
+		throwButton.setText("Thrown");
 		throwButton.setVisible(true);
-		throwButton.setToolTipText("Press to emulate 'throw' input going active");
+		throwButton.setToolTipText("Press to set turnout 'thrown'");
 		throwButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				throwButtonActionPerformed(e);
 			}
 		});
 
-		closeButton.setText("Close input");
+		closeButton.setText("Closed");
 		closeButton.setVisible(true);
-		closeButton.setToolTipText("Press to emulate 'close' input going active");
+		closeButton.setToolTipText("Press to set turnout 'closed'");
 		closeButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				closeButtonActionPerformed(e);
@@ -86,16 +73,12 @@ public class LocoEchoFrame extends javax.swing.JFrame implements loconet.LocoNet
 		nowStateLabel.setVisible(true);
 
 		// general GUI config
-		setTitle("LocoEcho testing");
+		setTitle("Turnout Control");
 		getContentPane().setLayout(new GridLayout(4,2));
 
 		// install items in GUI
 		getContentPane().add(textAdrLabel);
 		getContentPane().add(adrTextField);
-
-			// following are suppressed because they don't do anything here
-			//getContentPane().add(thrownCheckBox);
-			//getContentPane().add(closedCheckBox);
 
 		getContentPane().add(textStateLabel);
 		getContentPane().add(nowStateLabel);
