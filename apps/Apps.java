@@ -18,7 +18,7 @@ import javax.swing.*;
  * Base class for Jmri Apps
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class Apps extends JPanel {
 
@@ -52,14 +52,25 @@ public class Apps extends JPanel {
     }
 
     protected void createMenus(JMenuBar menuBar, JFrame frame) {
+        // the debugging statements in the following are
+        // for testing startup time
+        log.debug("start file menu");
         fileMenu(menuBar, frame);
+        log.debug("start edit menu");
         editMenu(menuBar, frame);
+        log.debug("start tools menu");
         toolsMenu(menuBar, frame);
+        log.debug("start roster menu");
         rosterMenu(menuBar, frame);
+        log.debug("start panel menu");
         panelMenu(menuBar, frame);
+        log.debug("start sys menu");
         systemsMenu(menuBar, frame);
+        log.debug("start deb menu");
         debugMenu(menuBar, frame);
+        log.debug("start dev menu");
         developmentMenu(menuBar, frame);
+        log.debug("end menus");
     }
 
     protected void fileMenu(JMenuBar menuBar, JFrame frame) {
@@ -78,13 +89,15 @@ public class Apps extends JPanel {
     }
 
     protected void editMenu(JMenuBar menuBar, JFrame frame) {
-        prefsFrame = new JFrame(rb.getString("MenuItemPreferences"));
-        prefsFrame.getContentPane().setLayout(new BoxLayout(prefsFrame.getContentPane(), BoxLayout.X_AXIS));
-        prefs = newPrefs();
-        prefsFrame.getContentPane().add(prefs);
-        prefsFrame.pack();
         AbstractAction prefsAction = new AbstractAction(rb.getString("MenuItemPreferences")) {
             public void actionPerformed(ActionEvent e) {
+                if (prefsFrame == null) {
+                    prefsFrame = new JFrame(rb.getString("MenuItemPreferences"));
+                    prefsFrame.getContentPane().setLayout(new BoxLayout(prefsFrame.getContentPane(), BoxLayout.X_AXIS));
+                    prefs = newPrefs();
+                    prefsFrame.getContentPane().add(prefs);
+                    prefsFrame.pack();
+                }
                 prefsFrame.show();
             }
         };
@@ -187,7 +200,7 @@ public class Apps extends JPanel {
         return pane1;
     }
 
-    protected JFrame prefsFrame;
+    protected JFrame prefsFrame = null;
     protected ResourceBundle rb;
     protected AppConfigPanel prefs;
 
