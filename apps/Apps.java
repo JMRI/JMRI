@@ -3,27 +3,27 @@
 package apps;
 
 import jmri.InstanceManager;
+import jmri.util.JmriJFrame;
 import jmri.jmrit.XmlFile;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.net.URL;
 import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import jmri.util.JmriJFrame;
 
-import javax.help.*;
+import javax.help.CSH;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
 import javax.swing.*;
-import java.net.*;
-import java.io.*;
 
 /**
  * Base class for Jmri applications.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 public class Apps extends JPanel {
 
@@ -330,6 +330,11 @@ public class Apps extends JPanel {
 
     // GUI members
     private JMenuBar menuBar;
+
+    static public String startupInfo(String program) {
+        return (program+" version "+jmri.Version.name()
+                +" starts under Java "+System.getProperty("java.version","<unknown>"));
+    }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(Apps.class.getName());
 }

@@ -20,7 +20,7 @@ import javax.swing.JMenuBar;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2002
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class PacketScript extends Apps {
 
@@ -49,7 +49,8 @@ public class PacketScript extends Apps {
         splash(true);
 
         initLog4J();
-        log.info("program starts");
+        log.info(apps.Apps.startupInfo("PacketScript"));
+
         setConfigFilename("PacketScriptConfig2.xml", args);
         JFrame f = new JFrame("PanelPro");
         createFrame(new PacketScript(f), f);

@@ -16,7 +16,7 @@ import javax.swing.JFrame;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.60 $
+ * @version     $Revision: 1.61 $
  */
 public class JMRIdemo extends Apps {
 
@@ -36,7 +36,8 @@ public class JMRIdemo extends Apps {
         splash(true);
 
         initLog4J();
-        log.info("program starts");
+        log.info(apps.Apps.startupInfo("JMRIdemo"));
+
         setConfigFilename("JmriDemoConfig2.xml", args);
         JFrame f = new JFrame("JmriDemo");
         createFrame(new JMRIdemo(f), f);
