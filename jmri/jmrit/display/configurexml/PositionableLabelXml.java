@@ -4,12 +4,13 @@ import jmri.configurexml.*;
 import jmri.jmrit.catalog.*;
 import jmri.jmrit.display.*;
 import org.jdom.*;
+import java.awt.Color;
 
 /**
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 
@@ -37,6 +38,11 @@ public class PositionableLabelXml implements XmlAdapter {
             element.addAttribute("text", p.getText());
             element.addAttribute("size", ""+p.getFont().getSize());
             element.addAttribute("style", ""+p.getFont().getStyle());
+            if (!p.getForeground().equals(Color.black)) {
+                element.addAttribute("red", ""+p.getForeground().getRed());
+                element.addAttribute("green", ""+p.getForeground().getGreen());
+                element.addAttribute("blue", ""+p.getForeground().getBlue());
+            }
         }
         if (p.isIcon() && p.getIcon()!=null) {
             NamedIcon icon = (NamedIcon)p.getIcon();
@@ -99,6 +105,18 @@ public class PositionableLabelXml implements XmlAdapter {
         } catch ( org.jdom.DataConversionException e) {
             log.error("failed to convert PanelEditor's attribute");
         }
+        // set color if needed
+        try {
+            int red = element.getAttribute("red").getIntValue();
+            int blue = element.getAttribute("blue").getIntValue();
+            int green = element.getAttribute("green").getIntValue();
+            l.setForeground(new Color(red, green, blue));
+        } catch ( org.jdom.DataConversionException e) {
+            log.warn("Could not parse color attributes!");
+        } catch ( NullPointerException e) {  // considered normal if the attributes are not present
+        }
+
+        // and activate the result
         l.setLocation(x,y);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         if (element.getAttribute("text")!=null) {

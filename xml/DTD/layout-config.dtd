@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a layout config, esp. information -->
 <!-- on hardware connections -->
-<!-- $Id: layout-config.dtd,v 1.10 2003-05-12 05:11:27 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.11 2003-07-09 18:47:39 jacobsen Exp $ -->
 
 <!ELEMENT layout-config (turnouts | sensors | blocks | signals | 
 						securityelements | aspectgenerator | paneleditor |
@@ -119,6 +119,10 @@
     <!ATTLIST positionablelabel icon	CDATA #IMPLIED>
     <!ATTLIST positionablelabel size	CDATA #IMPLIED>
     <!ATTLIST positionablelabel style	CDATA #IMPLIED>
+    <!ATTLIST positionablelabel red  	CDATA #IMPLIED>
+    <!ATTLIST positionablelabel green	CDATA #IMPLIED>
+    <!ATTLIST positionablelabel blue	CDATA #IMPLIED>
+    
 
   <!ELEMENT sensoricon EMPTY>
     <!ATTLIST sensoricon class		CDATA #REQUIRED>
