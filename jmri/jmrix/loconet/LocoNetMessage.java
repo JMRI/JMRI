@@ -17,11 +17,11 @@ package jmri.jmrix.loconet;
  * ideas being tested there will eventually be moved back to here.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Id: LocoNetMessage.java,v 1.4 2002-03-18 04:52:44 jacobsen Exp $
+ * @version			$Id: LocoNetMessage.java,v 1.5 2002-03-28 02:18:59 jacobsen Exp $
  * @see             jmri.jrmix.nce.NceMessage
  *
  */
-public class LocoNetMessage {
+public class LocoNetMessage implements Serializable {
 
 	/** Create a new object, representing a specific-length message.
 	 * @parameter len Total bytes in message, including opcode and error-detection byte.
