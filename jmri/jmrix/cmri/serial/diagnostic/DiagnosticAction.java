@@ -15,7 +15,7 @@ import jmri.jmrix.cmri.serial.SerialSensorManager;
  *       			DiagnosticFrame object
  *
  * @author                  Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class DiagnosticAction 	extends AbstractAction {
 
@@ -26,11 +26,6 @@ public class DiagnosticAction 	extends AbstractAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-// temporary for testing, remove when multiple serial nodes is operational
-        if (SerialTrafficController.instance().getSerialNode(0) == null) {
-            setUpTestConfiguration();
-        }
-//  end temporary
         DiagnosticFrame f = new DiagnosticFrame();
         try {
             f.initComponents();
@@ -40,20 +35,6 @@ public class DiagnosticAction 	extends AbstractAction {
         }
         f.show();
     }
-
-// temporary for testing, remove when multiple serial nodes is operational
-    protected synchronized void setUpTestConfiguration() {
-        // Define three SMINI's
-        SerialNode n0 = new SerialNode();
-        SerialNode n1 = new SerialNode(1,SerialNode.SMINI);
-        SerialNode n2 = new SerialNode(2,SerialNode.SMINI);
-        // Define a Sensor for each serial node (needed for polling)
-        SerialSensorManager m = SerialSensorManager.instance();
-        m.provideSensor("1");
-        m.provideSensor("1001");
-        m.provideSensor("2001");
-    }
-//  end temporary
 
    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DiagnosticAction.class.getName());
 }
