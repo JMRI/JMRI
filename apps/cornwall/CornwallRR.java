@@ -3,7 +3,6 @@
 package apps.cornwall;
 
 import apps.Apps;
-import apps.SplashWindow;
 
 import java.text.MessageFormat;
 
@@ -18,7 +17,7 @@ import javax.swing.JMenuBar;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 public class CornwallRR extends Apps {
 
@@ -34,8 +33,7 @@ public class CornwallRR extends Apps {
 
     protected void systemsMenu(JMenuBar menuBar, JFrame frame) {
         // separate C/MRI and LocoNet menus
-        menuBar.add(new jmri.jmrix.cmri.CMRIMenu());
-        menuBar.add(new jmri.jmrix.loconet.LocoNetMenu());
+        jmri.jmrix.ActiveSystemsMenu.addItems(menuBar);
     }
 
     protected String line1() {
@@ -55,7 +53,7 @@ public class CornwallRR extends Apps {
     public static void main(String args[]) {
 
         // show splash screen early
-        SplashWindow sp = new SplashWindow();
+        splash(true);
 
         initLog4J();
         log.info("program starts");
@@ -64,6 +62,7 @@ public class CornwallRR extends Apps {
         createFrame(new CornwallRR(f), f);
 
         log.info("main initialization done");
+        splash(false);
 
         // start automation
         if (configOK) {
