@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the XNetProgrammer class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 
 package jmri.jmrix.lenz;
@@ -31,7 +31,7 @@ public class XNetProgrammerTest extends TestCase {
 		p.writeCV(10, 20, l);
 		// check "prog mode" message sent
 		Assert.assertEquals("mode message sent", 1, t.outbound.size());
-        Assert.assertEquals("write message contents", "23 17 a 14 0 ", t.outbound.get(0).toString());
+        Assert.assertEquals("write message contents", "23 17 a 14 0 ", t.outbound.elementAt(0).toString());
 	}
 
 	public void testWriteRegisterSequence() throws JmriException {
@@ -49,7 +49,7 @@ public class XNetProgrammerTest extends TestCase {
 		p.writeCV(29, 12, l);
 		// check "prog mode" message sent
 		Assert.assertEquals("read message sent", 1, t.outbound.size());
-        Assert.assertEquals("write message contents", "23 12 5 c 0 ", t.outbound.get(0).toString());
+        Assert.assertEquals("write message contents", "23 12 5 c 0 ", t.outbound.elementAt(0).toString());
 
         // send reply
         XNetMessage mr1 = new XNetMessage(3);
@@ -59,7 +59,7 @@ public class XNetProgrammerTest extends TestCase {
         t.sendTestMessage(mr1);
 
 		Assert.assertEquals("enquire message sent", 2, t.outbound.size());
-        Assert.assertEquals("enquire message contents", "21 10 31 ", t.outbound.get(0).toString());
+        Assert.assertEquals("enquire message contents", "21 10 31 ", t.outbound.elementAt(0).toString());
 
 	}
 
@@ -75,7 +75,7 @@ public class XNetProgrammerTest extends TestCase {
 		p.readCV(10, l);
 		// check "prog mode" message sent
 		Assert.assertEquals("mode message sent", 1, t.outbound.size());
-        Assert.assertEquals("read message contents", "22 14 a 0 ", t.outbound.get(0).toString());
+        Assert.assertEquals("read message contents", "22 14 a 0 ", t.outbound.elementAt(0).toString());
 	}
 
 	public void testReadRegisterSequence() throws JmriException {
@@ -89,12 +89,12 @@ public class XNetProgrammerTest extends TestCase {
         // set register mode
         p.setMode(Programmer.REGISTERMODE);
 
-		// and do the read
-		p.readCV(29, l);
-		// check "prog mode" message sent
-		Assert.assertEquals("mode message sent", 1, t.outbound.size());
-        Assert.assertEquals("read message contents", "??", t.outbound.get(0).toString());
-	}
+        // and do the read
+        p.readCV(29, l);
+        // check "prog mode" message sent
+        Assert.assertEquals("mode message sent", 1, t.outbound.size());
+        Assert.assertEquals("read message contents", "??", t.outbound.elementAt(0).toString());
+    }
 
 	// internal class to simulate a XNetListener
 	class XNetListenerScaffold implements jmri.ProgListener {
