@@ -7,18 +7,17 @@ import javax.swing.Icon;
 import jmri.*;
 
 /**
- * <p>Title: TurnoutIcon provides a small icon to display a status of a turnout.</p>
- * <p>Description: </p>
- * <p>Copyright: Bob Jacobsen Copyright (c) 2002</p>
+ * TurnoutIcon provides a small icon to display a status of a turnout.</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
     public TurnoutIcon() {
         // super ctor call to make sure this is an icon label
-        super(new ImageIcon(ClassLoader.getSystemResource("resources/images19x16/X-red.gif")));
+        super(new ImageIcon(ClassLoader.getSystemResource("resources/images19x16/X-red.gif")),
+            "default turnout icon");
         displayState(turnoutState());
     }
 
