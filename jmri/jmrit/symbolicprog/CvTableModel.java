@@ -16,14 +16,14 @@ import jmri.*;
  * Programmer used to access it is a data member.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class CvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
     private int _numRows = 0;                // must be zero until Vectors are initialized
-    public static final int MAXCVNUM = 1024;
+    static final int MAXCVNUM = 1024;
     private Vector _cvDisplayVector = new Vector();  // vector of CvValue objects, in display order
-    private Vector _cvAllVector = new Vector(MAXCVNUM);  // vector of all possible CV objects
+    private Vector _cvAllVector = new Vector(MAXCVNUM+1);  // vector of all possible CV objects
     public Vector allCvVector() { return _cvAllVector; }
     private Vector _writeButtons = new Vector();
     private Vector _readButtons = new Vector();
@@ -47,8 +47,8 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         mProgrammer = pProgrammer;
         // save a place for notification
         _status = status;
-        // initialize the MAXCVNUM-length _cvAllVector;
-        for (int i=0; i<MAXCVNUM; i++) _cvAllVector.addElement(null);
+        // initialize the MAXCVNUM+1 long _cvAllVector;
+        for (int i=0; i<=MAXCVNUM; i++) _cvAllVector.addElement(null);
 
         // define just address CV at start, pending some variables
         addCV("1");
