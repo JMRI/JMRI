@@ -1,0 +1,8 @@
+<!-- The values section defines values for CVs and/or variables -->
+<!ELEMENT decoder:values (decoder:value)>
+<!ATTLIST decoder:value name CDATA #REQUIRED>            <!-- Name used for identification -->
+<!ATTLIST decoder:value type (CV | variable) #REQUIRED>  <!-- What is specified -->
+<!ATTLIST decoder:value value NUMBER #REQUIRED>          <!-- Value of specified CV/variable -->
+
+
+
