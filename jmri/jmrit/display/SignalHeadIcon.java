@@ -14,7 +14,7 @@ import javax.swing.*;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -26,7 +26,6 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         icon = true;
         text = false;
 
-        updateSize();
         displayState(SignalHead.RED);
     }
 
@@ -68,28 +67,24 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
     public NamedIcon getRedIcon() { return red; }
     public void setRedIcon(NamedIcon i) {
         red = i;
-        updateSize();
         displayState(headState());
     }
 
     public NamedIcon getYellowIcon() { return yellow; }
     public void setYellowIcon(NamedIcon i) {
         yellow = i;
-        updateSize();
         displayState(headState());
     }
 
     public NamedIcon getFlashYellowIcon() { return flashYellow; }
     public void setFlashYellowIcon(NamedIcon i) {
         flashYellow = i;
-        updateSize();
         displayState(headState());
     }
 
     public NamedIcon getGreenIcon() { return green; }
     public void setGreenIcon(NamedIcon i) {
         green = i;
-        updateSize();
         displayState(headState());
     }
 
@@ -179,6 +174,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
             log.debug("Display state "+state+", disconnected");
         else
             log.debug("Display state "+state+" for "+mHead.getSystemName());
+        updateSize();
         switch (state) {
         case SignalHead.RED:
             if (text) super.setText("<red>");

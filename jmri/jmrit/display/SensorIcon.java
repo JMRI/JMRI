@@ -9,7 +9,7 @@ import jmri.jmrit.catalog.*;
 /**
  * SensorIcon provides a small icon to display a status of a Sensor.</p>
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -67,28 +67,24 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     public NamedIcon getActiveIcon() { return active; }
     public void setActiveIcon(NamedIcon i) {
         active = i;
-        updateSize();
         displayState(sensorState());
     }
 
     public NamedIcon getInactiveIcon() { return inactive; }
     public void setInactiveIcon(NamedIcon i) {
         inactive = i;
-        updateSize();
         displayState(sensorState());
     }
 
     public NamedIcon getInconsistentIcon() { return inconsistent; }
     public void setInconsistentIcon(NamedIcon i) {
         inconsistent = i;
-        updateSize();
         displayState(sensorState());
     }
 
     public NamedIcon getUnknownIcon() { return unknown; }
     public void setUnknownIcon(NamedIcon i) {
         unknown = i;
-        updateSize();
         displayState(sensorState());
     }
 
@@ -159,6 +155,8 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
      * turnout.
      */
     void displayState(int state) {
+
+        updateSize();
 
         switch (state) {
         case Sensor.UNKNOWN:
