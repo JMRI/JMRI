@@ -39,7 +39,7 @@ import jmri.*;
  * a warning will be logged if they are used before the thread starts.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 abstract public class AbstractAutomaton implements Runnable {
 
@@ -271,28 +271,28 @@ abstract public class AbstractAutomaton implements Runnable {
     }
 
     /**
-     * Wait for one of a list of sensors to change.
+     * Wait for one of a list of NamedBeans (sensors, signal heads and/or turnouts) to change.
      * <P>
      * This works by registering a listener, which is likely to
      * run in another thread.  That listener then interrupts the automaton's
      * thread, who confirms the change.
      *
-     * @param mSensors Array of sensors to watch
+     * @param mInputs Array of NamedBeans to watch
      */
-    protected synchronized void waitSensorChange(Sensor[] mSensors){
-        if (!inThread) log.warn("waitSensorChange invoked from invalid context");
-        if (log.isDebugEnabled()) log.debug("waitSensorChange[] starts");
+    protected synchronized void waitChange(NamedBean[] mInputs){
+        if (!inThread) log.warn("waitChange invoked from invalid context");
+        if (log.isDebugEnabled()) log.debug("waitChange[] starts");
 
         // register listeners
         int i;
         java.beans.PropertyChangeListener[] listeners =
-                new java.beans.PropertyChangeListener[mSensors.length];
-        for (i=0; i<mSensors.length; i++) {
+                new java.beans.PropertyChangeListener[mInputs.length];
+        for (i=0; i<mInputs.length; i++) {
 
-            mSensors[i].addPropertyChangeListener(listeners[i] = new java.beans.PropertyChangeListener() {
+            mInputs[i].addPropertyChangeListener(listeners[i] = new java.beans.PropertyChangeListener() {
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     synchronized (self) {
-                        log.debug("notify waitSensorChange[] of property change");
+                        log.debug("notify waitChange[] of property change");
                         self.notify();
                     }
                 }
@@ -304,15 +304,28 @@ abstract public class AbstractAutomaton implements Runnable {
         try {
             super.wait();
         } catch (InterruptedException e) {
-            log.warn("waitSensorChange interrupted; this is unexpected");
+            log.warn("waitChange interrupted; this is unexpected");
         }
 
         // remove the listeners
-        for (i=0; i<mSensors.length; i++) {
-            mSensors[i].removePropertyChangeListener(listeners[i]);
+        for (i=0; i<mInputs.length; i++) {
+            mInputs[i].removePropertyChangeListener(listeners[i]);
         }
 
         return;
+    }
+
+    /**
+     * Wait for one of an array of sensors to change.
+     * <P>
+     * This is an older method, now superceded by waitChange, which can wait
+     * for any NamedBean.
+     *
+     * @param mSensors Array of sensors to watch
+     */
+    protected synchronized void waitSensorChange(Sensor[] mSensors){
+        waitChange(mSensors);
+       return;
     }
 
     /**
