@@ -19,7 +19,7 @@ package jmri;
  * be using the reserve/release interface.
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public interface ProgrammerManager  {
 
@@ -60,7 +60,7 @@ public interface ProgrammerManager  {
      * Return access to the Service Mode Programmer, so that it can
      * be used elsewhere.
      */
-    public void releaseOopsModeProgrammer(Programmer p);
+    public void releaseOpsModeProgrammer(Programmer p);
 
     /**
      * Convenience method to check whether you'll be able to get
