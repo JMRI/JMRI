@@ -32,7 +32,7 @@ import javax.swing.JOptionPane;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -147,6 +147,7 @@ public class LightTableAction extends AbstractTableAction {
     void addPressed(ActionEvent e) {
         if (addFrame==null) {
             addFrame = new JFrame( rb.getString("TitleAddLight") );
+            addFrame.setLocation(100,30);
             Container contentPane = addFrame.getContentPane();        
             contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
             JPanel panel1 = new JPanel(); 
@@ -393,7 +394,7 @@ public class LightTableAction extends AbstractTableAction {
             status2.setVisible(true);
             return;
         }
-        // check if requested Light uses the same bit as a Turnout
+        // check if requested Light uses the same address as a Turnout
         String testSN = sName.substring(0,1)+"T"+
                                             sName.substring(2,sName.length());
         Turnout testT = InstanceManager.turnoutManagerInstance().
@@ -422,8 +423,9 @@ public class LightTableAction extends AbstractTableAction {
         }
         // Get control information 
         if (setControlInformation(g)) {
-            // sucessful, change messages and activate Light
-            status1.setText( rb.getString("LightCreateInst") );
+            // successful, provide feedback to user
+            status1.setText( rb.getString("LightCreateFeedback")+" "+sName+", "+uName);
+            // change messages and activate Light
             status2.setText( rb.getString("LightEditInst") );
             status2.setVisible(true);
             g.activateLight();
@@ -539,7 +541,9 @@ public class LightTableAction extends AbstractTableAction {
             g.setUserName(uName);     
         }
         if (setControlInformation(g)) {
-            status1.setText( rb.getString("LightCreateInst") );
+            // provide feedback to user
+            status1.setText( rb.getString("LightUpdateFeedback")+
+                                                    " "+g.getSystemName()+", "+uName);
             status2.setText( rb.getString("LightEditInst") );
             status2.setVisible(true);
         }
