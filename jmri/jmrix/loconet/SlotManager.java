@@ -33,7 +33,7 @@ import java.util.Vector;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.26 $
+ * @version     $Revision: 1.27 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
@@ -520,8 +520,12 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             if (log.isDebugEnabled()) log.debug("timeout!");
             // perhaps no communications present? Fail back to end of programming
             progState = 0;
-            // and send the notification
-            notifyProgListenerEnd(_slots[124].cvval(), jmri.ProgListener.FailedTimeout);
+            // and send the notification; error code depends on state
+            if (progState == 2 && !mServiceMode) // ops mode command executing, 
+                // so did talk to command station at first
+                notifyProgListenerEnd(_slots[124].cvval(), jmri.ProgListener.NoAck);
+            else // all others
+                notifyProgListenerEnd(_slots[124].cvval(), jmri.ProgListener.FailedTimeout);
         }
     }
 
