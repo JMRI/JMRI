@@ -9,7 +9,7 @@ import javax.swing.JMenu;
 /**
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class PanelMenu extends JMenu {
     public PanelMenu() {
@@ -20,7 +20,7 @@ public class PanelMenu extends JMenu {
 
         add(new jmri.jmrit.display.PanelEditorAction(rb.getString("MenuItemNew")));
         add(new jmri.configurexml.LoadXmlConfigAction(rb.getString("MenuItemLoad")));
-        add(new jmri.configurexml.StoreXmlConfigAction(rb.getString("MenuItemStore")));
+        add(new jmri.configurexml.StoreXmlUserAction(rb.getString("MenuItemStore")));
 
     }
 }
