@@ -1,5 +1,5 @@
 <!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
-<!-- $Id: SimpleSignalExample.html,v 1.2 2003-09-03 03:28:41 jacobsen Exp $ -->
+<!-- $Id: SimpleSignalExample.html,v 1.3 2003-09-21 05:03:49 jacobsen Exp $ -->
 <html>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -16,7 +16,7 @@
 <h2>Example of JMRI Simple Signal Logic</h2>
 
 This page provides an example of using the JMRI "Simple Signal Logic"
-to control a signal on a layout.
+to control signals on a Digitrax SE8c.
 <P>
 Modeling railroad signalling on a layout can be done many different ways,
 ranging from "stoplights" to complete emulation of a particular prototype's
@@ -25,11 +25,11 @@ please see the
 <A HREF="Signalling.html">JMRI signalling page</A>.
 <P>
 
-<h2>Overview</h2>
-
 <h2>Predefined example</H2>
 
-A predefined example configuration is provided in the JMRI downloads.
+A predefined example signalling configuration is provided in the JMRI downloads
+(starting with version 1.3.0; see the
+<A HREF="README.html">README page</a> for information on downloading).
 To use it:
 <UL>
 <LI>Start the PanelPro program, and select Prefs from the Edit menu.
@@ -39,16 +39,99 @@ uses LocoNet addresses for signals, turnouts and sensors) even when
 your computer is not connected to a layout of any kind.
 <LI>Restart the program.
 <LI>From the "Panels" menu, select "Load" and navigate to 
-the file "SignalExample.xml" in the xml/layouts directory.
+the file "SE8cSignalExample.xml" in the xml/layout directory.
 Note that you may have to look around for this file; it's in the
 same place that you installed the program.
-<LI>You should now get a simple schematic panel with just a couple of
-blocks on it.  You can click on the icons to change the occupancy and
-turnout status, or use another top (e.g. the "turnout table") to do that.
+<LI>
+<IMG SRC="images/SE8cExampleInit.gif" ALIGN=RIGHT WIDTH="323" HEIGHT="137" HSPACE="0" VSPACE="0" ALT="Demo screen at startup">
+You should now see a simple schematic panel for a layout consisting of a loop
+of track and one passing siding.
+<P>
+Because there's no connection to a real layout, the status of the block detectors and
+turnouts isn't initially known.  This example shows that by displaying the
+block detectors as yellow, and the turnouts as "not connected either way".
+Since the signal logic isn't sure whether blocks are occupied nor how turnouts
+are set, it shows red on all the signals.
+<P>
+You can click on the icons to change the occupancy and
+turnout status, or use another tool (e.g. the "turnout table") to do that.
+<P>Click on each of the turnouts to set them closed. Click on the 
+block detectors to set them "unoccupied", which is shown as a 
+gray circle (it's supposed to look like an unlit LED; occupied is
+indicated by a red LED)
+<LI>
+<IMG SRC="images/SE8cExampleClear.gif" ALIGN=RIGHT WIDTH="320" HEIGHT="128" HSPACE="0" VSPACE="0" ALT="Demo screen in clear state">
+The display should now look like the image to the right. 
+The signals on the passing siding are red, as the turnouts are thrown against
+them.  All the signals on the mainline are green.
+<P>
+If you "hover" the cursor over an item, a tooltip will pop with information
+about the item. For example, a turnout might show "Turnout 1 (LT1)".
+LT1 is the "system name" for that turnout. In this case, it
+means "LocoNet Turnout with address 1".  "Turnout 1" is a "user name", 
+which can be anything you want it to be.  You can edit these with the
+"Turnout Table" in the Tools menu. Signal heads and block detectors
+work similarly.  There's more information on this on the
+<A HREF="Technical/Names.html">program page on naming</a>.
+
+<LI>
+<IMG SRC="images/SE8cExampleTrains.gif" ALIGN=RIGHT WIDTH="327" HEIGHT="138" HSPACE="0" VSPACE="0" ALT="Demo screen with two trains">
+You can now click on the block detectors to show how the signals would react
+to the presence of a train.  For example, the image to the right
+shows a train entering a passing siding from the left side. It's about
+to encounter a yellow signal upon entering the siding, which tells it to 
+be prepared to stop for a red signal at the far end of the 
+siding.
+Note that the rear of this train is protected by a red signal, which in
+turn is protected by a yellow signal in the previous block.
+Another train is just leaving
+onto the main going to the right.  
+
+<LI>
+If you're interested in how the program would communicate with a
+Digitrax SE8c signalling card, you can open the LocoNet Monitor
+tool from the Digitrax menu. Clicking on a turnout sends a
+LocoNet message to move the turnout. Clicking on a block detector
+causes a message as if a BDL16 block detector channel had seen
+a change in occupancy.  If either of those messages result in
+a change to the signals, the program will send 
+messages to those SE8c channels to change their output.
+For example, when the train in the previous image enters the
+block on the right side (block 1), the messages are:
+<PRE>
+   General sensor input report: contact 1 (DS54 0 ch1 Sw  input) (BDL16 0 A2) is Hi 
+   Requesting Switch at 290 to Thrown (output Off)
+   Requesting Switch at 284 to Thrown (output Off)
+   Requesting Switch at 281 to Thrown (output Off)
+</PRE>
+The three switch messages set signals 5B, D and 4C to red, red and yellow respectively.
+<LI>
+<A HREF="images/SE8cExampleLogic.gif"><IMG SRC="images/SE8cExampleLogic.gif" ALIGN=RIGHT WIDTH="345" HEIGHT="225" HSPACE="0" VSPACE="0" ALT="Demo screen with two trains"></a>
+To see how the signals are configured, open the 
+"Simple Signal Logic" item in the Tools menu.
+Enter a signal name, e.g. "Section 5A" in the top
+text field and hit return.  You should get something
+like the image to the right (click to expand it to full size).  
+Section 5A is the signal protecting
+turnout 2, the right-hand entrance to the passing siding.
+<UL>
+<LI>It's defined here as a "facing point" signal. 
+<LI>It protects sensor LS7 by turning red when the sensor
+detects a train in the block.
+<LI>It watches the status of turnout LT2. When that turnout is thrown,
+the signal will be yellow when signal LH263 at the entrance to the
+passing siding is red.  When the turnout is closed, a yellow signal
+will protect a red on signal LH261 on the mainline between the turnouts.
+<LI>
+The flashing yellow checkbox isn't selected here, but if it was, this signal
+would protect a yellow signal further on with a flashing yellow.
+</UL>
+You can change any of these setting and click "OK" to put them into
+effect, then click on the example panel to see how the new settings work.
 </UL>
 
-<h2>Setting up your own example</2>
-The complete set of steps involved in configuring this are:
+<h2>Setting up your own example</h2>
+The complete set of steps involved in creating this example were:
 <OL>
 <LI>Launch and configure the PanelPro application. Restart it to 
 have your preferences take effect.
@@ -67,7 +150,8 @@ PanelPro, please see the
       throttle or the "Power Control" in the Tools menu.
       The program will capture the sensor addresses from 
       the resulting LocoNet traffic.
-   <LI> For other layouts, use the "Add" button to ...
+   <LI> For other layouts, use the "Add" button to 
+   	  create the needed sensors.  
    </UL>
 
 <LI>Save your work by selecting "Store Panels..." from the "Panels" menu,
@@ -78,14 +162,17 @@ typing a filename, and hitting "Save".  (You might want to do this often!)
   <LI>From the Tools menu, open the "Turnout Table"
   	  tool.
   <LI>If you have a Digitrax DCC system, just
-      throw or close each turnout from a throtle.
+      throw or close each turnout from a throttle.
       The program will capture the throttle addresses from 
       the resulting LocoNet traffic.
-   <LI> For other layouts, use the "Add" button to ...
+   <LI>You can also use the "Add" button on the turnout table window to open a 
+      panel to enter new turnouts.
+   <LI>The "Turnout Control" in the Tools menu also creates a new
+      turnout entry for every turnout you operate.
    </UL>
 
 <LI>If you have signal heads connected to "turnout-type" outputs,
-tell it about those.  (SE8c users skip this step)
+tell the program about those turnouts also.  (SE8c users skip this step)
 
 <LI>Tell it how your signals are addressed.
 <A href="images/SigTable.gif"><IMG SRC="images/SigTable.gif" ALIGN=RIGHT WIDTH="170" HEIGHT="314" HSPACE="0" VSPACE="0" ALT="Signal Table Figure"></A>
@@ -142,7 +229,8 @@ tell it about those.  (SE8c users skip this step)
 
 You can try out your signal logic by operating your layout.
 <P>
-Although it's a lot less fun, you can also test it by changing turnout
+Although it's a lot less fun than actually running the layout, 
+you can also test the signal logic by changing turnout
 and sensor status in the computer itself.  Just click on the status
 information in the tables to change it.  For example, is turnout
 LT23 is showing "Thrown", click on that to change it to "Closed".  The
