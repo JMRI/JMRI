@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.22 $)
+distribution.  ($Revision: 1.23 $)
 
 Start with a directory, typically called "Distributions", that
 contains:
@@ -45,9 +45,10 @@ This probably already exists....
 ( ) Once they launch, you can start building the Windows installer.
 	Launch Installer Vise from the last build file.
 	"Update archive"; Check changes make sense.
-	Create and test.
-	"Save as..." the new name
-	Copy to Mac, copy to final Distributions; name should be OK
+	Click the "test archive" button (right one of the pair)
+	After the installer runs, run DecoderPro from desktop icon and check.
+	In IV, "Save as..." the VCT file as the new name
+	Drag-copy .exe to Mac, copy to final Distributions; name should be OK
 
 ( ) Once the three StuffIt processes are done
 	ant -Drelease=Release-1-2-3 -Dnumber=1.2.3 release2
