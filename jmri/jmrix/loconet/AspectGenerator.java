@@ -33,7 +33,7 @@ import jmri.*;
  * and Bob Jacobsen.  Some of the message formats are copyright Digitrax, Inc.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.9 $
  */
 public class AspectGenerator implements java.beans.PropertyChangeListener{
 
@@ -87,11 +87,11 @@ public class AspectGenerator implements java.beans.PropertyChangeListener{
         updateSpeed(heads[0], speed);
         updateDiverging(heads[0], heads[3]);
 
-        if (mSE.newTurnoutState==Turnout.CLOSED) speed = mSE.newSpeedXA;
+        if (mSE.newTurnoutStateHere==Turnout.CLOSED) speed = mSE.newSpeedXA;
         else speed = 0;
         updateSpeed(heads[1], speed);
 
-        if (mSE.newTurnoutState==Turnout.THROWN) speed = mSE.newSpeedXA;
+        if (mSE.newTurnoutStateHere==Turnout.THROWN) speed = mSE.newSpeedXA;
         else speed = 0;
         updateSpeed(heads[2], speed);
 
@@ -116,7 +116,7 @@ public class AspectGenerator implements java.beans.PropertyChangeListener{
      * @param hl lower (secondary) signal head on an A end
      */
     void updateDiverging(SignalHead hu, SignalHead hl) {
-        if (mSE.newTurnoutState==Turnout.CLOSED) {
+        if (mSE.newTurnoutStateHere==Turnout.CLOSED) {
             // non-diverging case
             hl.setAppearance(SignalHead.RED);
             return;

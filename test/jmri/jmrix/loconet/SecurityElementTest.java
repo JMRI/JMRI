@@ -13,7 +13,7 @@ import jmri.*;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class SecurityElementTest extends TestCase {
 
@@ -55,7 +55,7 @@ public class SecurityElementTest extends TestCase {
 
     public void testSpeedsForOccupied() {
         testSE10.newDsStateHere  = Sensor.ACTIVE;
-        testSE10.newTurnoutState = Turnout.CLOSED;
+        testSE10.newTurnoutStateHere = Turnout.CLOSED;
         testSE10.newSpeedAX = 99;
         testSE10.newSpeedXA = 99;
         testSE10.doUpdate();
@@ -63,13 +63,13 @@ public class SecurityElementTest extends TestCase {
         Assert.assertEquals("AX speed ", 0, testSE10.currentSpeedAX);
         Assert.assertEquals("XA speed ", 0, testSE10.currentSpeedXA);
         Assert.assertEquals("messages sent ", 1, controller.outbound.size());
-        Assert.assertEquals("message contents ","e4 9 0 a 0 5 0 0 0 ",
+        Assert.assertEquals("message contents ","e4 a 0 a 0 1 0 0 0 0 ",
                     controller.outbound.get(0).toString());
     }
 
     public void testSlowToBothSides() {
         testSE10.newDsStateHere  = Sensor.INACTIVE;
-        testSE10.newTurnoutState = Turnout.CLOSED;
+        testSE10.newTurnoutStateHere = Turnout.CLOSED;
         testSE10.newSpeedLimitFromA = 24;
         testSE10.newSpeedLimitFromB = 28;
         testSE10.newSpeedAX = 999;
@@ -79,7 +79,7 @@ public class SecurityElementTest extends TestCase {
         Assert.assertEquals("AX speed ", 48, testSE10.currentSpeedAX);
         Assert.assertEquals("XA speed ", 44, testSE10.currentSpeedXA);
         Assert.assertEquals("messages sent ", 1, controller.outbound.size());
-        Assert.assertEquals("message contents ","e4 9 0 a 0 1 c b 0 ",
+        Assert.assertEquals("message contents ","e4 a 0 a 0 0 0 30 2c 0 ",
                                             controller.outbound.get(0).toString());
     }
 
@@ -98,55 +98,55 @@ public class SecurityElementTest extends TestCase {
         testSE19.newDsStateHere  = Sensor.INACTIVE;
         testSE20.newDsStateHere  = Sensor.INACTIVE;
 
-        testSE10.newTurnoutState = Turnout.CLOSED;
-        testSE11.newTurnoutState = Turnout.CLOSED;
-        testSE12.newTurnoutState = Turnout.CLOSED;
-        testSE13.newTurnoutState = Turnout.CLOSED;
-        testSE14.newTurnoutState = Turnout.CLOSED;
-        testSE15.newTurnoutState = Turnout.CLOSED;
-        testSE16.newTurnoutState = Turnout.CLOSED;
-        testSE17.newTurnoutState = Turnout.CLOSED;
-        testSE18.newTurnoutState = Turnout.CLOSED;
-        testSE19.newTurnoutState = Turnout.CLOSED;
-        testSE20.newTurnoutState = Turnout.CLOSED;
+        testSE10.newTurnoutStateHere = Turnout.CLOSED;
+        testSE11.newTurnoutStateHere = Turnout.CLOSED;
+        testSE12.newTurnoutStateHere = Turnout.CLOSED;
+        testSE13.newTurnoutStateHere = Turnout.CLOSED;
+        testSE14.newTurnoutStateHere = Turnout.CLOSED;
+        testSE15.newTurnoutStateHere = Turnout.CLOSED;
+        testSE16.newTurnoutStateHere = Turnout.CLOSED;
+        testSE17.newTurnoutStateHere = Turnout.CLOSED;
+        testSE18.newTurnoutStateHere = Turnout.CLOSED;
+        testSE19.newTurnoutStateHere = Turnout.CLOSED;
+        testSE20.newTurnoutStateHere = Turnout.CLOSED;
 
         testSE15.doUpdate();
 
         Assert.assertEquals("AX speed ", 0, testSE15.currentSpeedAX);
         Assert.assertEquals("XA speed ", 0, testSE15.currentSpeedXA);
         Assert.assertEquals("messages sent ", 1, controller.outbound.size());
-        Assert.assertEquals("SE15 message contents ","e4 9 0 f 0 5 0 0 0 ",
+        Assert.assertEquals("SE15 message contents ","e4 a 0 f 0 1 0 0 0 0 ",
                                             controller.outbound.get(0).toString());
         // start the propagation
         controller.forwardMessage(0);
         Assert.assertEquals("messages sent ", 3, controller.outbound.size());
-        Assert.assertEquals("SE14 message contents ","e4 9 0 e 0 1 5 5 0 ",
+        Assert.assertEquals("SE14 message contents ","e4 a 0 e 0 4 0 14 14 0 ",
                                             controller.outbound.get(1).toString());
-        Assert.assertEquals("SE16 message contents ","e4 9 0 10 0 1 5 5 0 ",
+        Assert.assertEquals("SE16 message contents ","e4 a 0 10 0 2 0 14 14 0 ",
                                             controller.outbound.get(2).toString());
 
         // 1st message of 2nd turn
         controller.forwardMessage(1);  // from SE14
         Assert.assertEquals("messages sent ", 4, controller.outbound.size());
-        Assert.assertEquals("SE13 message contents ","e4 9 0 d 0 1 a 5 0 ",
+        Assert.assertEquals("SE13 message contents ","e4 a 0 d 0 0 0 28 14 0 ",
                                             controller.outbound.get(3).toString());
 
         // 2nd message of 2nd turn
         controller.forwardMessage(2);  // from SE16
         Assert.assertEquals("messages sent ", 5, controller.outbound.size());
-        Assert.assertEquals("SE17 message contents ","e4 9 0 11 0 1 5 a 0 ",
+        Assert.assertEquals("SE17 message contents ","e4 a 0 11 0 0 0 14 28 0 ",
                                             controller.outbound.get(4).toString());
 
         // 1st message of 3rd turn
         controller.forwardMessage(3);  // from SE13
         Assert.assertEquals("messages sent ", 7, controller.outbound.size());
-        Assert.assertEquals("SE12 message contents ","e4 9 0 c 0 1 f 5 0 ",
+        Assert.assertEquals("SE12 message contents ","e4 a 0 c 0 0 0 3c 14 0 ",
                                             controller.outbound.get(5).toString());
 
         // 2nd message of 3rd turn
         controller.forwardMessage(4);  // from SE14
         Assert.assertEquals("messages sent ", 9, controller.outbound.size());
-        Assert.assertEquals("SE18 message contents ","e4 9 0 e 0 1 5 a 0 ",
+        Assert.assertEquals("SE14 message contents ","e4 a 0 e 0 4 0 14 28 0 ",
                                             controller.outbound.get(6).toString());
 
         // enough detail, check final state
