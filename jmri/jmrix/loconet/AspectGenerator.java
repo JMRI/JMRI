@@ -26,25 +26,25 @@ import jmri.*;
  *  Red is less than 15
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class AspectGenerator implements java.beans.PropertyChangeListener{
-
-	protected AspectGenerator(SecurityElement pElement) {
+    
+    protected AspectGenerator(SecurityElement pElement) {
         // locate the SE
         mSE = pElement;
-
+        
         // listen to that for changes
         mSE.addPropertyChangeListener(this);
-
+        
         // load default values
-	}
-
+    }
+    
     public AspectGenerator(int se) {
         this(LnSecurityElementManager.instance().getSecurityElement(se));
         mSEName = ""+se;
     }
-
+    
     /**
      * Access the state of a specific head
      * @param num Head number 0 -> getNumHeads()-1
@@ -55,13 +55,13 @@ public class AspectGenerator implements java.beans.PropertyChangeListener{
                                             +"/"+num+", is "+heads[num].state);
         return heads[num].state;
     }
-
+    
     SecurityElement mSE;
     String mSEName;
     public String getSEName() { return mSEName; }
-
+    
     Head[] heads = new Head[]{new Head(), new Head(), new Head(), new Head()};
-
+    
     public int getNumHeads() {return heads.length;}
     /**
      * The associated SecurityElement has changed state, so update
@@ -73,37 +73,37 @@ public class AspectGenerator implements java.beans.PropertyChangeListener{
         int speed;
         speed = mSE.newSpeedAX;
         updateSpeed(heads[0], speed);
-
+        
         if (mSE.newTurnoutState==Turnout.CLOSED) speed = mSE.newSpeedXA;
         else speed = 0;
         updateSpeed(heads[1], speed);
-
+        
         if (mSE.newTurnoutState==Turnout.THROWN) speed = mSE.newSpeedXA;
         else speed = 0;
         updateSpeed(heads[2], speed);
-
+        
         // and pass on to our listeners
         if (update) firePropertyChange("Aspects", null, this);
     }
-
+    
     void updateSpeed(Head h, int speed) {
         if (speed>=55) h.state = SignalHead.GREEN;
         else if (speed>=35) h.state = SignalHead.FLASHYELLOW;
         else if (speed>=15) h.state = SignalHead.YELLOW;
         else h.state = SignalHead.RED;
     }
-	// to hear of changes
-	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-	public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-		pcs.addPropertyChangeListener(l);
-		}
-	protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
-	public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-		pcs.removePropertyChangeListener(l);
-		}
-
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AspectGenerator.class.getName());
-
+    // to hear of changes
+    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
+    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
+        pcs.addPropertyChangeListener(l);
+    }
+    protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
+    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
+        pcs.removePropertyChangeListener(l);
+    }
+    
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AspectGenerator.class.getName());
+    
     // for now, this is an internal class
     class Aspect {
         public Aspect(int speed, int appearance) {};
