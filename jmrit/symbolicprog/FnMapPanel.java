@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import jmri.jmrit.symbolicprog.*;
 import com.sun.java.util.collections.List;
+import org.jdom.Element;
+import org.jdom.Attribute;
 
 /** 
  * Provide a graphical representation of the NMRA S&RP mapping between cab functions
@@ -28,7 +30,7 @@ import com.sun.java.util.collections.List;
  * Although support for the "CV label column" is still here, its turned off now.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: FnMapPanel.java,v 1.6 2002-01-08 04:09:27 jacobsen Exp $
+ * @version			$Id: FnMapPanel.java,v 1.7 2002-02-04 07:32:07 jacobsen Exp $
  */
 public class FnMapPanel extends JPanel {
 	// columns
@@ -42,24 +44,30 @@ public class FnMapPanel extends JPanel {
 	int outputLabel = 2;
 	int firstFn = 3;
 	
-	// 
+	// these will eventually be passed in from the ctor
 	int numFn = 14;  // include FL(f) and FL(r) in the total
-	int numOut = 14;
+	int numOut = 20;
+	int maxFn = 14;  // include FL(f) and FL(r) in the total
+	int maxOut = 14;
 	
 	GridBagLayout gl = null;
 	GridBagConstraints cs = null;
 	VariableTableModel _varModel;
 	
-	public FnMapPanel(VariableTableModel v, List varsUsed) {
+	public FnMapPanel(VariableTableModel v, List varsUsed, Element model) {
 		if (log.isDebugEnabled()) log.debug("Function map starts");
 		_varModel = v;
+		
+		// configure number of channels, arrays
+		configOutputs(model);
+		
 		// initialize the layout
 		gl = new GridBagLayout();
 		cs = new GridBagConstraints();
 		setLayout(gl);
 		
 		{
-			JLabel l = new JLabel("Output wire");
+			JLabel l = new JLabel("Output wire or operation");
 			cs.gridy = outputName;
 			cs.gridx = 3;
 			cs.gridwidth = GridBagConstraints.REMAINDER;
@@ -90,29 +98,29 @@ public class FnMapPanel extends JPanel {
 
 		labelAt( firstFn   , fnName, "Forward Headlight FL(f)");
 		labelAt( firstFn+ 1, fnName, "Reverse Headlight FL(r)");
-		labelAt( firstFn+ 2, fnName, "Function 1");
-		labelAt( firstFn+ 3, fnName, "Function 2");
-		labelAt( firstFn+ 4, fnName, "Function 3");
-		labelAt( firstFn+ 5, fnName, "Function 4");
-		labelAt( firstFn+ 6, fnName, "Function 5");
-		labelAt( firstFn+ 7, fnName, "Function 6");
-		labelAt( firstFn+ 8, fnName, "Function 7");
-		labelAt( firstFn+ 9, fnName, "Function 8");
-		labelAt( firstFn+10, fnName, "Function 9");
-		labelAt( firstFn+11, fnName, "Function 10");
-		labelAt( firstFn+12, fnName, "Function 11");
-		labelAt( firstFn+13, fnName, "Function 12");
+		if (numFn>2) labelAt( firstFn+ 2, fnName, "Function 1");
+		if (numFn>3) labelAt( firstFn+ 3, fnName, "Function 2");
+		if (numFn>4) labelAt( firstFn+ 4, fnName, "Function 3");
+		if (numFn>5) labelAt( firstFn+ 5, fnName, "Function 4");
+		if (numFn>6) labelAt( firstFn+ 6, fnName, "Function 5");
+		if (numFn>7) labelAt( firstFn+ 7, fnName, "Function 6");
+		if (numFn>8) labelAt( firstFn+ 8, fnName, "Function 7");
+		if (numFn>9) labelAt( firstFn+ 9, fnName, "Function 8");
+		if (numFn>10) labelAt( firstFn+10, fnName, "Function 9");
+		if (numFn>11) labelAt( firstFn+11, fnName, "Function 10");
+		if (numFn>12) labelAt( firstFn+12, fnName, "Function 11");
+		if (numFn>13) labelAt( firstFn+13, fnName, "Function 12");
 		
 		// label outputs
 		for (int iOut=0; iOut<numOut; iOut++) {
-			labelAt( outputNum,   firstOut+iOut, Integer.toString(iOut+1));
+			labelAt( outputNum,   firstOut+iOut, outName[iOut]);
 			labelAt( outputLabel, firstOut+iOut, outLabel[iOut]);
 		}
 		
 		for (int iFn = 0; iFn < numFn; iFn++) {
 			for (int iOut = 0; iOut < numOut; iOut++) {
-				// find the variable
-				String name = fnList[iFn]+" controls output "+(iOut+1);
+				// find the variable using the output label
+				String name = fnList[iFn]+" controls output "+outName[iOut];
 				int iVar = _varModel.findVarIndex(name);
 				if (iVar>=0) {
 					if (log.isDebugEnabled()) log.debug("Process var: "+name+" as index "+iVar);
@@ -132,8 +140,11 @@ public class FnMapPanel extends JPanel {
 	final String[] fnList = new String[] { "FL(f)", "FL(r)", "F1", "F2", "F3", "F4", "F5", "F6", "F7", 
 									"F8", "F9", "F10", "F11", "F12" };
 
-	final String[] outLabel = new String[] {"White", "Yellow", "Green", "Violet", "", "", "", "", "",
-									"", "", "", "", "" };
+	final String[] outLabel = new String[] {"White", "Yellow", "Green", "Vlt/Brwn", "", "", "", "", "", "",
+									"", "", "", "", "","", "", "", "", ""  };
+									
+	final String[] outName = new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+										 "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" };
 									
 	void saveAt(int row, int column, JComponent j) {
 		if (row<0 || column<0) return;
@@ -145,9 +156,44 @@ public class FnMapPanel extends JPanel {
 		
 	void labelAt(int row, int column, String name) {
 		if (row<0 || column<0) return;
-		saveAt(row, column, new JLabel(" "+name+" "));
+		JLabel t = new JLabel(" "+name+" ");
+		saveAt(row, column, t);
 	}
-			
+	
+	/**
+	 * Use the "model" element from the decoder definition file
+	 * to configure the number of outputs and set up any that
+	 * are named instead of numbered.
+	 */
+	protected void configOutputs(Element model) {
+		if (model==null) return;
+		// get numOuts, numFns or leave the defaults
+		Attribute a = model.getAttribute("numOuts");
+		try { if (a!=null) numOut = Integer.valueOf(a.getValue()).intValue();} 
+			catch (Exception e) {log.error("error handling decoder's numOuts value");}
+		a = model.getAttribute("numFns");
+		try { if (a!=null) numFn = Integer.valueOf(a.getValue()).intValue()+2;} 
+			catch (Exception e) {log.error("error handling decoder's numFns value");}
+		if (log.isDebugEnabled()) log.debug("numFns, numOuts "+numFn+","+numOut);
+		// take all "output" children
+		List elemList = model.getChildren();
+		if (log.isDebugEnabled()) log.debug("output scan starting with "+elemList.size()+" elements");
+		for (int i=0; i<elemList.size(); i++) {
+			Element e = (Element)(elemList.get(i));
+			String name = e.getAttribute("name").getValue();
+			if (numOut<maxOut) {
+				outLabel[numOut] = "";
+				outName[numOut] = name;
+				numOut++;
+			}
+		}
+	}
+	
+	/** clean up at end */
+	public void dispose() {
+		removeAll();
+	}
+	
 	// initialize logging	
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(FnMapPanel.class.getName());
 		

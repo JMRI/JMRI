@@ -15,7 +15,7 @@ import java.beans.PropertyChangeListener;
  * an underlying variable; we return one of these in DecValVariable.getRep.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecVarSlider.java,v 1.2 2002-01-01 01:57:25 jacobsen Exp $
+ * @version			$Id: DecVarSlider.java,v 1.3 2002-02-04 07:32:07 jacobsen Exp $
  */
 public class DecVarSlider extends JSlider implements ChangeListener {
 
@@ -24,6 +24,8 @@ public class DecVarSlider extends JSlider implements ChangeListener {
 		_var = var;
 		// get the original color right
 		setBackground(_var.getColor());
+		// set the original value
+		setValue(Integer.valueOf(_var.getValueString()).intValue());
 		// listen for changes here
 		addChangeListener(this);
 		// listen for changes to associated variable

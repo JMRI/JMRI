@@ -177,7 +177,7 @@ public class PaneProgFrame extends javax.swing.JFrame
 				for (int i=0; i<paneList.size(); i++) {
 					// load each pane
 					String pname = ((Element)(paneList.get(i))).getAttribute("name").getValue();
-					newPane( pname, ((Element)(paneList.get(i))));
+					newPane( pname, ((Element)(paneList.get(i))), modelElem);
 				}
 			}
 		}
@@ -199,6 +199,11 @@ public class PaneProgFrame extends javax.swing.JFrame
 	}
   	
 	Element lroot = null;
+	
+	/**
+	 * Data element holding the 'model' element representing the decoder type
+	 */
+	Element modelElem = null;
 	
   	protected void readLocoFile(String locoFile) {
   		if (locoFile == null) {
@@ -246,6 +251,9 @@ public class PaneProgFrame extends javax.swing.JFrame
 		} catch (Exception e) { log.error("Exception while loading decoder XML file: "+df.getFilename()+" exception: "+e); }
 		// load variables from decoder tree
 		df.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
+		
+		// save the pointer to the model element
+		modelElem = df.getModelElement();
   	}
   	
   	protected void loadProgrammerFile(RosterEntry r) {
@@ -325,7 +333,7 @@ public class PaneProgFrame extends javax.swing.JFrame
 		for (int i=0; i<paneList.size(); i++) {
 			// load each pane
 			String name = ((Element)(paneList.get(i))).getAttribute("name").getValue();
-			newPane( name, ((Element)(paneList.get(i))));
+			newPane( name, ((Element)(paneList.get(i))), modelElem);
 		}
 
 	}
@@ -439,10 +447,10 @@ public class PaneProgFrame extends javax.swing.JFrame
 		if (newAddr!=null) _rPane.setDccAddress(newAddr);
 	}
 		
-	public void newPane(String name, Element pane) {
+	public void newPane(String name, Element pane, Element modelElem) {
 	
 		// create a panel to hold columns
-		JPanel p = new PaneProgPane(name, pane, cvModel, variableModel);
+		JPanel p = new PaneProgPane(name, pane, cvModel, variableModel, modelElem);
 		
 		// add the tab to the frame
 		tabPane.addTab(name, p);
@@ -605,11 +613,11 @@ public class PaneProgFrame extends javax.swing.JFrame
 	}
 	
 	/**
-	 * local dispose, which also invokes parent
+	 * local dispose, which also invokes parent. Note that
+	 * we remove the components (removeAll) before taking those
+	 * apart.
 	 */
 	public void dispose() {
-		if (log.isDebugEnabled()) log.debug("dispose superclass");
-		super.dispose();
 
 		if (log.isDebugEnabled()) log.debug("dispose local");
 		
@@ -647,6 +655,10 @@ public class PaneProgFrame extends javax.swing.JFrame
 		writeAllButton = null;
 		confirmAllButton = null;
 		
+		if (log.isDebugEnabled()) log.debug("dispose superclass");
+		removeAll();
+		super.dispose();
+
 	}
 	
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PaneProgFrame.class.getName());

@@ -40,7 +40,7 @@ import com.sun.java.util.collections.ArrayList;
  *<P>
  * Description:		Extends VariableValue to represent a NMRA long address
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: SpeedTableVarValue.java,v 1.6 2002-01-13 20:38:33 jacobsen Exp $
+ * @version			$Id: SpeedTableVarValue.java,v 1.7 2002-02-04 07:32:07 jacobsen Exp $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -211,17 +211,19 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 
 	void readNext() {
 		// read operation
-		_progState++;  // progState is the index of the CV to handle now
+		_progState++;  // progState is the index of the CV to handle now, do next
 		if (_progState >= nValues) {
+			// done, clean up and return to invoker
 			_progState = IDLE;
 			setBusy(false);
 			return;
 		}
+		// not done, proceed to do the next
 		CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()+_progState));
 		int state = cv.getState();		
 		if (log.isDebugEnabled()) log.debug("invoke CV read index "+_progState+" cv state "+state);
 		if (state == UNKNOWN || state == FROMFILE || state == EDITTED) cv.read(_status);
-		else readNext();
+		else readNext(); // repeat until end
 	}
 	
 	void writeNext() {

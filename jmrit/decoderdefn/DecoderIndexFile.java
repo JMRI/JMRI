@@ -31,7 +31,7 @@ import org.jdom.output.XMLOutputter;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecoderIndexFile.java,v 1.8 2002-01-13 20:38:33 jacobsen Exp $
+ * @version			$Id: DecoderIndexFile.java,v 1.9 2002-02-04 07:33:19 jacobsen Exp $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -221,7 +221,7 @@ public class DecoderIndexFile extends XmlFile {
 			int numOuts   = ((attr = decoder.getAttribute("numOuts"))     != null ? Integer.valueOf(attr.getValue()).intValue() : -1 );
 			DecoderFile df = new DecoderFile( mfg, mfgID,
 									( (attr = decoder.getAttribute("model"))     != null ? attr.getValue() : null ), 
-									loVersID, hiVersID, familyName, filename, numFns, numOuts); 
+									loVersID, hiVersID, familyName, filename, numFns, numOuts, decoder); 
 			// and store it
 			decoderList.add(df);
 		}

@@ -29,7 +29,7 @@ import org.jdom.Attribute;
  * when a variable changes its busy status at the end of a programming read/write operation
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: PaneProgPane.java,v 1.16 2002-01-13 20:38:33 jacobsen Exp $
+ * @version			$Id: PaneProgPane.java,v 1.17 2002-02-04 07:32:07 jacobsen Exp $
  */
 public class PaneProgPane extends javax.swing.JPanel 
 							implements java.beans.PropertyChangeListener  {
@@ -53,8 +53,9 @@ public class PaneProgPane extends javax.swing.JPanel
   	 * @parameter pane  The JDOM Element for the pane definition
    	 * @parameter cvModel Already existing TableModel containing the CV definitions
   	 * @parameter varModel Already existing TableModel containing the variable definitions
+  	 * @parameter modelElem "model" element from the Decoder Index, used to check what decoder options are present.
   	 */
-	public PaneProgPane(String name, Element pane, CvTableModel cvModel, VariableTableModel varModel) {
+	public PaneProgPane(String name, Element pane, CvTableModel cvModel, VariableTableModel varModel, Element modelElem) {
 	
 		_cvModel = cvModel;
 		_varModel = varModel;
@@ -72,6 +73,7 @@ public class PaneProgPane extends javax.swing.JPanel
 		}
 		// put the columns left to right in a panel
 		JPanel p = new JPanel();
+		panelList.add(p);
 		p.setLayout(new BoxLayout(p,BoxLayout.X_AXIS));
 				
 		// handle the xml definition
@@ -79,13 +81,13 @@ public class PaneProgPane extends javax.swing.JPanel
 		List colList = pane.getChildren("column");
 		for (int i=0; i<colList.size(); i++) {
 			// load each column
-			p.add(newColumn( ((Element)(colList.get(i))), showItem));
+			p.add(newColumn( ((Element)(colList.get(i))), showItem, modelElem));
 		}
 		// for all "row" elements ...
 		List rowList = pane.getChildren("row");
 		for (int i=0; i<rowList.size(); i++) {
 			// load each row
-			p.add(newRow( ((Element)(rowList.get(i))), showItem));
+			p.add(newRow( ((Element)(rowList.get(i))), showItem, modelElem));
 		}
 		
 		// add glue to the right to allow resize - but this isn't working as expected? Alignment?
@@ -95,6 +97,7 @@ public class PaneProgPane extends javax.swing.JPanel
 		
 		// add buttons in a new panel
 		JPanel bottom = new JPanel();
+		panelList.add(p);
 		bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
 		readButton.setToolTipText("Read current values from decoder. Warning: may take a long time!");
 		readButton.addActionListener( l1 = new ActionListener() {
@@ -253,10 +256,11 @@ public class PaneProgPane extends javax.swing.JPanel
 	/**
 	 * Create a single column from the JDOM column Element
 	 */
-	public JPanel newColumn(Element element, boolean showStdName) {
+	public JPanel newColumn(Element element, boolean showStdName, Element modelElem) {
 
 		// create a panel to add as a new column or row
 		JPanel c = new JPanel();
+		panelList.add(c);
 		GridBagLayout g = new GridBagLayout();
 		GridBagConstraints cs = new GridBagConstraints();
 		c.setLayout(g);
@@ -318,14 +322,16 @@ public class PaneProgPane extends javax.swing.JPanel
 				
 			}
 			else if (name.equals("fnmapping")) {
-				FnMapPanel l = new FnMapPanel(_varModel, varList);
+				FnMapPanel l = new FnMapPanel(_varModel, varList, modelElem);
+				fnMapList.add(l); // remember for deletion
 				cs.gridwidth = GridBagConstraints.REMAINDER;
 				g.setConstraints(l, cs);
 				c.add(l);
 				cs.gridwidth = 1;
 			} 
 			else if (name.equals("dccaddress")) {
-				JPanel l = new DccAddressPanel(_varModel);			
+				JPanel l = new DccAddressPanel(_varModel);
+				panelList.add(l);			
 				cs.gridwidth = GridBagConstraints.REMAINDER;
 				g.setConstraints(l, cs);
 				c.add(l);
@@ -342,7 +348,8 @@ public class PaneProgPane extends javax.swing.JPanel
 			else if (name.equals("row")) {
 				// nested "row" elements ...
 				cs.gridwidth = GridBagConstraints.REMAINDER;
-				JPanel l = newRow(e, showStdName);
+				JPanel l = newRow(e, showStdName, modelElem);
+				panelList.add(l);			
 				g.setConstraints(l, cs);
 				c.add(l);
 				cs.gridwidth = 1;
@@ -360,10 +367,11 @@ public class PaneProgPane extends javax.swing.JPanel
 	/**
 	 * Create a single row from the JDOM column Element
 	 */
-	public JPanel newRow(Element element, boolean showStdName) {
+	public JPanel newRow(Element element, boolean showStdName, Element modelElem) {
 
 		// create a panel to add as a new column or row
 		JPanel c = new JPanel();
+		panelList.add(c);			
 		GridBagLayout g = new GridBagLayout();
 		GridBagConstraints cs = new GridBagConstraints();
 		c.setLayout(g);
@@ -426,7 +434,8 @@ public class PaneProgPane extends javax.swing.JPanel
 				
 			}
 			else if (name.equals("fnmapping")) {
-				FnMapPanel l = new FnMapPanel(_varModel, varList);
+				FnMapPanel l = new FnMapPanel(_varModel, varList, modelElem);
+				fnMapList.add(l); // remember for deletion
 				cs.gridheight = GridBagConstraints.REMAINDER;
 				g.setConstraints(l, cs);
 				c.add(l);
@@ -434,6 +443,7 @@ public class PaneProgPane extends javax.swing.JPanel
 			} 
 			else if (name.equals("dccaddress")) {
 				JPanel l = new DccAddressPanel(_varModel);			
+				panelList.add(l);			
 				cs.gridheight = GridBagConstraints.REMAINDER;
 				g.setConstraints(l, cs);
 				c.add(l);
@@ -450,7 +460,8 @@ public class PaneProgPane extends javax.swing.JPanel
 			else if (name.equals("column")) {
 				// nested "column" elements ...
 				cs.gridheight = GridBagConstraints.REMAINDER;
-				JPanel l = newColumn(e, showStdName);
+				JPanel l = newColumn(e, showStdName, modelElem);
+				panelList.add(l);			
 				g.setConstraints(l, cs);
 				c.add(l);
 				cs.gridheight = 1;
@@ -477,7 +488,7 @@ public class PaneProgPane extends javax.swing.JPanel
 		// if it doesn't exist, do nothing
 		int i = _varModel.findVarIndex(name);
 		if (i<0) {
-			if (log.isInfoEnabled()) log.info("Variable \""+name+"\" not found, omitted");
+			if (log.isDebugEnabled()) log.debug("Variable \""+name+"\" not found, omitted");
 			return;
 		}
 		
@@ -577,8 +588,16 @@ public class PaneProgPane extends javax.swing.JPanel
 		return (JComponent)(_varModel.getRep(i, format));
 	}
 	
+	/** list of fnMapping objects to dispose */
+	ArrayList fnMapList = new ArrayList();
+	/** list of JPanel objects to removeAll */
+	ArrayList panelList = new ArrayList();
+	
 	public void dispose() {
 		if (log.isDebugEnabled()) log.debug("dispose");
+
+		// remove components
+		removeAll();
 
 		readButton.removeActionListener(l1);
 		writeButton.removeActionListener(l3);
@@ -590,6 +609,20 @@ public class PaneProgPane extends javax.swing.JPanel
 		
 		varList.clear();
 		varList = null;
+
+		// dispose of any fnMaps
+		for (int i=0; i<panelList.size(); i++) {
+			((JPanel)(panelList.get(i))).removeAll();
+		}
+		panelList.clear();
+		panelList = null;
+
+		// dispose of any fnMaps
+		for (int i=0; i<fnMapList.size(); i++) {
+			((FnMapPanel)(fnMapList.get(i))).dispose();
+		}
+		fnMapList.clear();
+		fnMapList = null;
 		
 		readButton = null;
 		confButton = null;
@@ -597,6 +630,7 @@ public class PaneProgPane extends javax.swing.JPanel
 		// these two are disposed elsewhere
 		_cvModel = null;
 		_varModel = null;
+		
 	}
 	
 	// handle outgoing parameter notification for the Busy parameter

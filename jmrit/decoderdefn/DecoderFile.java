@@ -18,7 +18,7 @@ import org.jdom.Element;
  * decoder identification info _before_ the actual decoder file is read.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecoderFile.java,v 1.10 2002-01-13 03:38:31 jacobsen Exp $
+ * @version			$Id: DecoderFile.java,v 1.11 2002-02-04 07:33:19 jacobsen Exp $
  * @see jmri.jmrit.decoderdefn.DecoderIndexFile	
  */
 public class DecoderFile extends XmlFile {
@@ -27,7 +27,7 @@ public class DecoderFile extends XmlFile {
 	
 	public DecoderFile(String mfg, String mfgID, String model, String lowVersionID,
 						String highVersionID, String family, String filename, 
-						int numFns, int numOuts) {
+						int numFns, int numOuts, Element decoder) {
 		_mfg = mfg;
 		_mfgID = mfgID;
 		_model = model;
@@ -37,6 +37,7 @@ public class DecoderFile extends XmlFile {
 		_filename = filename;
 		_numFns = numFns;
 		_numOuts = numOuts;
+		_element = decoder;
 	}
 	
 	// store indexing information
@@ -49,6 +50,7 @@ public class DecoderFile extends XmlFile {
 	String _filename  = null;
 	int _numFns  = -1;
 	int _numOuts  = -1;
+	Element _element = null;
 
 	public String getMfg()       { return _mfg; }	
 	public String getMfgID()     { return _mfgID; }	
@@ -59,6 +61,8 @@ public class DecoderFile extends XmlFile {
 	public String getFilename()  { return _filename; }	
 	public int getNumFunctions()  { return _numFns; }	
 	public int getNumOutputs()  { return _numOuts; }	
+	
+	public Element getModelElement() { return _element; }
 	
 	// static service methods - extract info from a given Element
 	public static String getMfgName(Element decoderElement) {
