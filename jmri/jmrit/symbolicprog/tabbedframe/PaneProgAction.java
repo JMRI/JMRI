@@ -21,7 +21,7 @@ import javax.swing.border.*;
  * is constructed on the fly here, and has no specific type.
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class PaneProgAction 			extends AbstractAction {
 
@@ -50,7 +50,6 @@ public class PaneProgAction 			extends AbstractAction {
 		Thread classLoadingThread = new Thread( new Runnable() {
 				public void run() {
 					// load classes by requesting objects
-					new PaneProgFrame();
 					new PaneProgPane();
 					new EnumVariableValue();
 					new SpeedTableVarValue();
