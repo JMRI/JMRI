@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_01x3.xml,v 1.20 2004-03-05 02:44:46 jacobsen Exp $ -->
+<!-- $Id: Digitrax_01x3.xml,v 1.21 2004-04-03 03:56:26 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Michael Mosher mjmx@comcast.net" 
 					version="12" lastUpdated="20040227"/>
@@ -127,6 +127,13 @@
 			<size length="3.875" width="3.374" height="0.157" units="inches" />
 			</model>
 		<model model="DN163K0A" numOuts="6" numFns="8"
+	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="N" >
+			<output name="4" label="Pad" connection="solder" /> 
+			<output name="5" label="Pad" connection="solder" />
+			<output name="6" label="Pad" connection="solder" />
+			<size length="2.2165" width="0.5485" height="0.1015" units="inches" />
+			</model>
+		<model model="DN163K0B" numOuts="6" numFns="8"
 	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="N" >
 			<output name="4" label="Pad" connection="solder" /> 
 			<output name="5" label="Pad" connection="solder" />
@@ -1040,4 +1047,4 @@
 </pane>
 
 </decoder-config>
-
+
