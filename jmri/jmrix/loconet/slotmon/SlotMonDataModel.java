@@ -11,7 +11,7 @@ import java.util.Vector;
 /**
  * Table data model for display of slot manager contents
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version		$Revision: 1.3 $
+ * @version		$Revision: 1.4 $
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener  {
 
@@ -65,7 +65,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         case STATCOLUMN: return "Use";
         case CONSCOLUMN: return "Consisted";
         case DIRCOLUMN: return "Direction";
-        case DISPCOLUMN: return "Dispatch";
+        case DISPCOLUMN: return "Release";
         case F0COLUMN: return "F0";
         case F1COLUMN: return "F1";
         case F2COLUMN: return "F2";
@@ -165,7 +165,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             }
         case DISPCOLUMN:  //
             if (s.slotStatus()==LnConstants.LOCO_IN_USE)
-                return "Dispatch";
+                return "Release";
             else
                 return null;
         case DIRCOLUMN:  //
@@ -239,7 +239,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             LocoNetSlot s = SlotManager.instance().slot(slotNum(row));
             if (s == null) log.error("slot pointer was null for slot row: "+row+" col: "+col);
             if (s.slotStatus()==LnConstants.LOCO_IN_USE) {
-                // send dispatch
+                // send status to common
                 LnTrafficController.instance().sendLocoNetMessage(
                         s.writeStatus(LnConstants.LOCO_COMMON
                     ));
