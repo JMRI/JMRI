@@ -13,7 +13,7 @@ import jmri.*;
  * Frame for configuring a NCE booster
  *
  * @author		Bob Jacobsen   Copyright (C) 2004
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class BoosterProgFrame extends javax.swing.JFrame {
     JTextField start = new JTextField(6);
@@ -74,14 +74,14 @@ public class BoosterProgFrame extends javax.swing.JFrame {
         pack();
     }
 
-    Programmer p = null;
+    static Programmer p = null;
     
-    void getProgrammer() {
+    static void getProgrammer() {
         p = InstanceManager.programmerManagerInstance().
                             getOpsModeProgrammer(true, 0);
     }
     
-    void releaseProgrammer() {
+    static void releaseProgrammer() {
         if (p!=null)
             InstanceManager.programmerManagerInstance().
                             releaseOpsModeProgrammer(p);
@@ -104,6 +104,42 @@ public class BoosterProgFrame extends javax.swing.JFrame {
         } finally { releaseProgrammer(); }
     }
     
+    static public void setStart(int val) {
+        getProgrammer();
+        
+        try {
+           p.writeCV(255, val, new ProgListener() {
+                public void programmingOpReply(int value, int retval) {
+                }
+            });
+        } catch (ProgrammerException e) {
+        } finally { releaseProgrammer(); }
+    }
+    
+    static public void setDuration(final int val) {
+        getProgrammer();
+        
+        try {
+           p.writeCV(253, val/256, new ProgListener() {
+                public void programmingOpReply(int value, int retval) {
+                    synchronized (this) {
+                        try {
+                            wait(1500);  // needed for booster to reset
+                        } catch (InterruptedException i) {}
+                    }
+                    try {
+                        p.writeCV(254, val % 256, new ProgListener() {
+                            public void programmingOpReply(int value, int retval) {}
+                        });
+                    } catch (ProgrammerException e) {
+                    } finally { releaseProgrammer(); }
+                }
+            });
+        } catch (ProgrammerException e) {
+            releaseProgrammer();
+        } 
+    }
+    
     void setDurationPushed() {
         getProgrammer();
         status.setText(res.getString("StatusProgramming"));
@@ -114,7 +150,7 @@ public class BoosterProgFrame extends javax.swing.JFrame {
                 public void programmingOpReply(int value, int retval) {
                     synchronized (this) {
                         try {
-                            wait(1500);
+                            wait(1500);  // needed for booster to reset
                         } catch (InterruptedException i) {}
                     }
                     durationPart2();
