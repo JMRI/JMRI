@@ -5,15 +5,15 @@ package jmri;
 /**
  * A Throttle object can be manipulated to change the speed, direction
  * and functions of a locomotive.
- *
+ * <P>
  * A Throttle implementation provides the actual control mechanism.  Clients
  * then provide GUI throttles, automated start/stop, etc.
- *
+ * <P>
  * What's the multiplicity of Throttle objects?  Entirely separate
  * locomotives, etc, need their own.  But can there be more than one
  * Throttle working with a single locomotive, e.g. for a buddy throttle,
  * or to display the status of a physical throttle on a screen.
- *
+ * <P>
  * Our working model was that there's _something_ in the control system
  * hardware that's the resource represented by a Throttle, so there's
  * a limited number of Throttle's available. A single Throttle object
@@ -22,7 +22,7 @@ package jmri;
  * and deassign locos from this throttle, but that doesn't seem right.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public interface Throttle {
 
