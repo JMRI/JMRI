@@ -21,7 +21,7 @@ import jmri.jmrix.loconet.*;
  * Neither the baud rate configuration nor the "option 1" option are used.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: MS100Adapter.java,v 1.2 2002-03-18 04:52:44 jacobsen Exp $
+ * @version			$Revision: 1.3 $
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
