@@ -2,7 +2,9 @@
 
 package jmri.jmrit.automat;
 
-import jmri.*;
+import jmri.InstanceManager;
+import jmri.Sensor;
+import jmri.Turnout;
 
 /**
  * This sample Automaton watches a Sensor, and adjusts the
@@ -19,7 +21,7 @@ import jmri.*;
  * created and invoked by a SampleAutomatonAction.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  * @see         jmri.jmrit.automat.SampleAutomatonAction
  */
 public class SampleAutomaton extends AbstractAutomaton {

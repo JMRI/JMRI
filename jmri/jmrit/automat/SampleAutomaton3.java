@@ -2,7 +2,9 @@
 
 package jmri.jmrit.automat;
 
-import jmri.*;
+import jmri.DccThrottle;
+import jmri.InstanceManager;
+import jmri.Sensor;
 
 /**
  * This sample Automaton runs a locomotive back and forth
@@ -19,7 +21,7 @@ import jmri.*;
  * created and invoked by a SampleAutomaton3Action.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  * @see         jmri.jmrit.automat.SampleAutomaton3Action
  */
 public class SampleAutomaton3 extends AbstractAutomaton {

@@ -2,7 +2,10 @@
 
 package jmri.jmrit.automat;
 
-import jmri.*;
+import jmri.InstanceManager;
+import jmri.JmriException;
+import jmri.Programmer;
+import jmri.Sensor;
 
 /**
  * This sample Automaton watches a Sensor, and adjusts
@@ -20,7 +23,7 @@ import jmri.*;
  * created and invoked by a SampleAutomaton2Action.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  * @see         jmri.jmrit.automat.SampleAutomaton2Action
  */
 public class SampleAutomaton2 extends AbstractAutomaton {
