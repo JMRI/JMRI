@@ -13,7 +13,7 @@ import jmri.*;
  *
  * @see            jmri.Programmer
  * @author         Paul Bender Copyright (C) 2003
- * @version        $Revision: 2.2 $
+ * @version        $Revision: 2.3 $
  */
 
 public class XNetOpsModeProgrammer implements Programmer,XNetListener 
@@ -26,12 +26,12 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
     jmri.ProgListener progListener = null;
 
     public XNetOpsModeProgrammer(int pAddress) {
+	if(log.isDebugEnabled()) log.debug("Creating Ops Mode Programmer for Address " + pAddress);
 	mAddressLow=LenzCommandStation.getDCCAddressLow(pAddress);
 	mAddressHigh=LenzCommandStation.getDCCAddressHigh(pAddress);
-
+	if(log.isDebugEnabled()) log.debug("High Address: " + mAddressHigh +" Low Address: " +mAddressLow);
         // register as a listener
         XNetTrafficController.instance().addXNetListener(~0,this);
-
     }
 
     /**
@@ -119,6 +119,10 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
 		        l.getElement(2)==XNetConstants.CS_NOT_SUPPORTED) {
 	                   progState=XNetProgrammer.NOTPROGRAMMING;
 		     	   progListener.programmingOpReply(value,jmri.ProgListener.NotImplemented);
+	      } else if(l.getElement(0)==XNetConstants.CS_INFO &&
+		        l.getElement(2)==XNetConstants.CS_BUSY) {
+	                   progState=XNetProgrammer.NOTPROGRAMMING;
+		     	   progListener.programmingOpReply(value,jmri.ProgListener.ProgrammerBusy);
               } else { 
                         /* this is an unknown error */
 	                progState=XNetProgrammer.NOTPROGRAMMING;
