@@ -1,0 +1,153 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- $Id: SimpleSignalExample.html,v 1.1 2003-08-16 14:10:56 jacobsen Exp $ -->
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Bob Jacobsen, LBL">
+   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>Example of JMRI Simple Signal Logic</title>
+</head>
+<body>
+
+
+<A HREF="index.html"><IMG SRC="images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0" ALT="JMRI logo"></a>
+
+<h2>Example of JMRI Simple Signal Logic</h2>
+
+This page provides an example of using the JMRI "Simple Signal Logic"
+to control a signal on a layout.
+<P>
+Modeling railroad signalling on a layout can be done many different ways,
+ranging from "stoplights" to complete emulation of a particular prototype's
+signalling logic. For more information on the various posibilities,
+please see the
+<A HREF="Signalling.html">JMRI signalling page</A>.
+<P>
+
+<h2>Overview</h2>
+The basic steps involved are:
+<OL>
+<LI>Launch and configure the PanelPro application. Restart it to 
+have your preferences take effect.
+
+For more information on launching and configuring 
+PanelPro, please see the
+<A HREF="PanelPro.html">PanelPro web page</a>.
+
+<LI>Tell it about your block detectors. 
+  <UL>
+  <LI>From the Tools menu, open the "Sensor Table"
+  	  tool.
+  <LI>If you have a Digitrax DCC system with your
+      occupancy detectors connected to LocoNet, just
+      power the track off and on using either a DT-series
+      throttle or the "Power Control" in the Tools menu.
+      The program will capture the sensor addresses from 
+      the resulting LocoNet traffic.
+   <LI> For other layouts, use the "Add" button to ...
+   </UL>
+
+<LI>Save your work by selecting "Store Panels..." from the "Panels" menu,
+typing a filename, and hitting "Save".  (You might want to do this often!)
+
+<LI>Tell it about your computer-driven turnouts.
+  <UL>
+  <LI>From the Tools menu, open the "Turnout Table"
+  	  tool.
+  <LI>If you have a Digitrax DCC system, just
+      throw or close each turnout from a throtle.
+      The program will capture the throttle addresses from 
+      the resulting LocoNet traffic.
+   <LI> For other layouts, use the "Add" button to ...
+   </UL>
+
+<LI>If you have signal heads connected to "turnout-type" outputs,
+tell it about those.  (SE8c users skip this step)
+
+<LI>Tell it how your signals are addressed.
+<A href="images/SigTable.gif"><IMG SRC="images/SigTable.gif" ALIGN=RIGHT WIDTH="170" HEIGHT="314" HSPACE="0" VSPACE="0" ALT="Signal Table Figure"></A>
+
+  <UL>
+  <LI>From the Tools menu, open the "Signal Table"
+  	  tool.
+  <LI>Click the "Add..." button to pop a frame
+      with two choices for the type of signal driver:
+      <DL>
+      <DT>Triple Turnout
+      <DD>This a signal head with red/yellow/green lights that
+      are driven by DCC turnout outputs.  To configure one of these,
+      enter it's name (typically something like IH2, , etc), and
+      the names of the three turnouts that drive the lamps.
+      <DT>SE8c 4 aspect
+      <DD>This is one signal head driven by a Digitrax SE8c.  Enter
+      the the lower of the two "turnout address" that this head
+      responds to.  For example, if it's the first head on the first
+      card, you can control it by setting turnout 257 and 258 with
+      your throttle.  Enter LT257 in the turnout control box.
+      </DL>
+      Once you've set the options, click "OK".  You can 
+      use this form repeatedly to enter as many as you'd like.
+  </UL>
+
+<LI>Configure your signal logic using the "Simple Signal Logic" tool
+	<UL>
+	<LI>Open the tool from the "Tools" menu.  You should get a frame
+	with a number of fields:
+	<A href="images/SigAdd.gif"><IMG SRC="images/SigAdd.gif" ALIGN=RIGHT WIDTH="220" HEIGHT="132" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
+	<LI>In the top box, enter the name of the signal you want to control.
+	<LI>If you want the signal to go red when a block detector shows
+	occupied (sensor active), enter the sensor name in the next box.
+	<LI>If this signal is protecting travel in the trailing point
+	direction through a turnout, you can have the signal show red if
+	the turnout is thrown against the train.  To do this, enter the
+	turnout number to be monitored in the 3rd box, and select whether
+	the signal should be red when the turnout is thrown or closed.
+	<LI>If you want multi-block logic, e.g. Absolute Block Signalling,
+	enter the name of the following signal in the last box.  When that
+	signal shows red, this one will be set to yellow to warn the engineer
+	that the train must be able to stop at the next signal.
+	<P>
+	If you'd like to give additional warning, click the "with flashing
+	yellow" checkbox.  In that case, the signal before a red will show
+	flashing yellow, and the signal before that flashing yellow will
+	show a steady yellow.
+    <li>Once you've set the options, click "OK".  You can 
+      use this form repeatedly to enter as many as you'd like.
+	</UL>
+<LI>Once you save your work, you're done!
+</OL>
+
+You can try out your signal logic by operating your layout.
+<P>
+Although it's a lot less fun, you can also test it by changing turnout
+and sensor status in the computer itself.  Just click on the status
+information in the tables to change it.  For example, is turnout
+LT23 is showing "Thrown", click on that to change it to "Closed".  The
+signal status will update to the new appearance.
+<P>
+You can create a small control panel to do this graphically. For more
+info on how to do that, see the 
+<A HREF="Panels.html">Panels page</a>.
+<HR>
+<BR>Site hosted by: <BR>
+<A href="http://sourceforge.net"> 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&amp;type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A> 
+ 
+
+<script language=javascript 
+src="http://ss.webring.com/navbar?f=j;y=bob_jacobsen15;u=100088115910095949" type="text/javascript">
+</script><noscript><center>
+<table  cellspacing="0"  style="background: #808080; border: solid #FF0000 2px"> <tr>
+<td><table cellpadding=2 cellspacing=0 border=0><tr><td align=center>
+<font face=arial size=-1>This site is a member of WebRing. 
+<br>To browse visit <a href="http://ss.webring.com/navbar?f=l;y=bob_jacobsen15;u=100088115910095949">
+Here</a>.</font></td></tr></table></td></tr></table>
+</center></noscript>
+
+<hr>
+Bob Jacobsen<BR>
+jake@physics.berkeley.edu
+
+</body>
+</html>
