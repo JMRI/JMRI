@@ -15,11 +15,18 @@ import javax.swing.JTextField;
 
 /**
  * Frame providing access to a speedometer.
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.17 $
+ * <P>
+ * This contains very simple debouncing logic:
+ * <UL>
+ * <LI>The clock starts when the "start" sensor makes
+ * the correct transition.
+ * <LI>When a "stop" sensor makes the correct transition,
+ * the speed is computed and displayed.
+ * </UL>
  *
- * Adapted for metric system - S.K. Bosch
- *
+ * @author	Bob Jacobsen   Copyright (C) 2001
+ * @author      Adapted for metric system - S.K. Bosch
+ * @version	$Revision: 1.18 $
  */
 public class SpeedometerFrame extends javax.swing.JFrame {
 
@@ -331,6 +338,7 @@ public class SpeedometerFrame extends javax.swing.JFrame {
             return;
         }
         s.addPropertyChangeListener(new java.beans.PropertyChangeListener(){
+                // handle change in stop sensor
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     SpeedometerFrame.log.debug("stop sensor fired");
                     if (e.getPropertyName().equals("KnownState")) {
