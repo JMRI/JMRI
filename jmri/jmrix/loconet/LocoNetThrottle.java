@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet;
 
 import jmri.jmrix.AbstractThrottle;
+import jmri.InstanceManager;
 
 /**
  * An implementation of DccThrottle via AbstractThrottle with code specific
@@ -9,8 +10,8 @@ import jmri.jmrix.AbstractThrottle;
  * Speed in the Throttle interfaces and AbstractThrottle is a float, but in LocoNet is an int
  * with values from 0 to 127.
  * <P>
- * @author  Glen Oberhauser, Bob Jacobsen  Copyright (C) 2003
- * @version $Revision: 1.13 $
+ * @author  Glen Oberhauser, Bob Jacobsen  Copyright (C) 2003, 2004
+ * @version $Revision: 1.14 $
  */
 public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     private LocoNetSlot slot;
@@ -131,7 +132,10 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     }
 
     protected void sendFunctionGroup3() {
-        // not implemented yet
+        byte[] result = jmri.NmraPacket.function9Through12Packet(address, (address>=100),
+                                         getF9(), getF10(), getF11(), getF12());
+
+        InstanceManager.commandStationInstance().sendPacket(result, 3);
     }
 
     /**
