@@ -96,7 +96,7 @@ public class DccConsist implements Consist, ProgListener{
 	public boolean contains(int address) {
 	   if(ConsistType==ADVANCED_CONSIST) {
 		String Address= Integer.toString(address);
-		return( (boolean) ConsistDir.contains(Address));
+		return( (boolean) ConsistList.contains(Address));
 	   } else {
 		log.error("Consist Type Not Supported");
 		notifyConsistListeners(0,ConsistListener.NotImplemented);
