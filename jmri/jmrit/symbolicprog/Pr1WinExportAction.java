@@ -15,7 +15,7 @@ import javax.swing.*;
  * it's not clear they will interoperate.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class Pr1WinExportAction  extends AbstractAction {
 
@@ -68,7 +68,14 @@ public class Pr1WinExportAction  extends AbstractAction {
                     CvValue cv4 = (CvValue)mModel.allCvVector().get(lowCvIndex);
                     int value4 = (cv4!=null) ? cv4.getValue() : 0;
 
-                    str.println("CV"+i+"="+(value1+value2*256+value3*256*256+value4*256*256*256));
+
+                    long lValue = value1 + (value2 << 8) + (value3 << 16) ;
+                    if( value4 > 127 )
+                      lValue = -2147483647 + lValue + (( value4 - 127 ) << 24) ;
+                    else
+                      lValue += value4 << 24 ;
+
+                    str.println("CV" + i+ "=" + lValue );
                 }
                 str.println("Version=0");
                 str.flush();
