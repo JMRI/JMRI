@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE layout-config SYSTEM "layout-config.dtd">
-<!-- $Id: CornwallDefinitions.xml,v 1.5 2003-09-05 04:14:45 jacobsen Exp $ -->
+<!-- $Id: CornwallDefinitions.xml,v 1.6 2003-09-30 13:47:55 jacobsen Exp $ -->
 <!-- Cornwall RR configuration: turnout, sensor, signal definitions -->
 <layout-config>
 
@@ -86,6 +86,7 @@
     <sensor systemName="CS58" userName="Lickdale Interchange SouthEast Switch tu(26)" />
     <sensor systemName="CS59" userName="Gate Power Interlock Gate" />
     <sensor systemName="CS60" userName="Conewago Interlocking bo(33)" />
+    <sensor systemName="CS61" userName="Conewago Pocket bo(34)" />
   </sensors>
   
   <!-- C/MRI turnouts actually drive signal LEDs on the layout -->
