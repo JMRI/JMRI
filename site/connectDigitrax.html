@@ -33,7 +33,9 @@ select the proper serial port in the second selection box.
 <P>
 The baud rate box will be fixed if you've selected an MS100.  There
 are two choices for the LocoBuffer; select the one the corresponds to the
-jumper settings on the LocoBuffer board.
+jumper settings on the LocoBuffer board. We recommend that you start with
+the 19,200 choice for the LocoBuffer, see
+<A HREF="#locobuffer">below</a> for more information.
 <P>
 The fourth box should be left on
 "hardware flow control" unless you later consistently get a message
@@ -59,7 +61,7 @@ Click "Save".  You'll be asked if it's OK for the program to quit, click "Yes".
 <P>
 Restart the program. You should be up and running.
 
-<h2>Information on the LocoBuffer and MS100</h2>
+<h2>Information on the LocoBuffer and MS100 adapters</h2>
 There are two hardware adapters available to connect to a LocoNet.  The
 LocoBuffer is the strongly preferred alternative, as it reduces the load 
 on the host computer and has a significantly smaller error rate.  The
@@ -71,35 +73,54 @@ the Digitrax PR1.  Neither of them will let you read CVs if you
 have an Empire Builder!  For that you need a Chief or Zephyr command
 station.  (We're working on PR1 support, and would welcome help).
 
-<P>
-The LocoBuffer was created by John Jabour 
+<h3>LocoBuffer</h3>
+
+<A ID="locobuffer">The LocoBuffer was created by John Jabour </a>
 (<a href="mailto:jjabour@optonline.net">jjabour@optonline.net</a>).
 More information is also available from the LocoNet_Info group, 
 <a href="http://groups.yahoo.com/group/loconet_hackers">http://groups.yahoo.com/group/loconet_hackers</a>
 The LocoBuffer should be configured with J1, J4 and J5 set on pins 1 and 2, 
-J2 and J3 set to pins 2 and 3. This configures it for a 19200 baud
+J2 and J3 set to pins 2 and 3. This configures it for a 19,200 baud
 connection, so select "19,200 baud" when configuring the connection.
 
 <P>
-Some computers can successfully communicate at 57600bps with a LocoBuffer.
+Some computers can successfully communicate at 57,600bps with a LocoBuffer.
 To do this, select "57,600 baud" when configuring
 and configure your LocoBuffer with J4 and J5 set on pins 1 and 2, 
 J1, J2 and J3 set to pins 2 and 3 (J1 is the one that determines the baud rate).
+But we strongly recommend that you try 19,200 and make sure that works first.
 
 <P>The LocoBuffer controller chip should
 contain version 1.4.6 or later of the LocoBuffer program. Note that
 LocoBuffer version 1.4.5 has a bug that prevents it from working with this program.
 
-<P>Some Windows versions, in particular Win2000, cannot handle the 
+<H3><A id="rs232leads">LocoBuffer flow control</a></h3>
+Some Windows versions, in particular Win2000, cannot handle the 
 LocoBuffer's control leads properly.  You'll see this as 
-JMRIdemo being unable to communicate with the command station, even though
+DecoderPro or JmriDemo being unable to communicate with the command station, even though
 you can see LocoNet traffic with the LocoNet monitor.  To fix this, 
-open the preferences and select "no flow control" option,
+try opening the preferences and select "no flow control" option,
 click save, then quit and restart the program.  Note that this
 problem is specific to certain Windows versions, and you generally should
-have "hardware flow control" selected.
-
+have "hardware flow control" selected.  
 <P>
+If the problem persists, please try jumpering-together the pins 5, 6 and 8 on the 
+LocoBuffer's 25-pin connector.
+These are the CTS, DSR, and DCD 
+leads in the LocoBuffers RS232 interface, and connecting them will (perhaps)
+fool your computer into accepting the LocoBuffers flow control signals.
+<p>
+That connector has a row of 12 pins and a row of 13.  Looking at the solder-side of the 
+board, pin 1 is at the end of the row of 13 (toward the center of the board), at the end 
+nearest the RJ12 LocoNet jack.  Next to that are pins 2, 3, 4 and 5 with traces on them.    
+Pin 6 is next to that, with nothing connected.  Pin 7 (ground) has a trace, then pin 8 does not.
+<P>
+So the suggestion is to connect pin 5 (with a trace) to pin 6 and 8 (without traces).  Be careful 
+not to short to pin 7, which is already connected.
+
+
+
+<h3><A id="oldermac">Serial ports on older Macintoshes and the MS100</a></h3>
 A standard Macintosh RS422 serial port will not work directly 
 with an MS100. Since it doesn't have two output status lines (DTR and RTS),
 it can't provide correct power to the MS100.  It may be possible to 
@@ -107,14 +128,14 @@ provide external power; if you're interested in trying this, we'd
 be happy to help work out a solution. A LocoBuffer will work fine
 with a standard Macintosh RS422 serial port.
 
-<P>
+<H3><a id="ms100check">Checking to see if the MS100 will work with your computer</a></h3>
 In MS100 mode, the program attempts to open the port at 16600 baud, 
 the LocoNet rate.  If this fails, it attempts to open the port at 16457 baud, 
 which is a standard rate that's close enough to work.  If this also
 fails, the program pops a dialog box to tell you that it can't
 set the port to a usable baud rate.  This will always happen on MacOS X, which
 is why the MS100 can't be used with MacOS X.  It has also happened
-on computers with Intel-based hardware.  
+on some computers with Intel-based hardware.  
 Because we can't be sure your computer will be able to talk to a 
 MS100 without trying it, you should test this before spending money
 on the MS100. To do that:
@@ -129,12 +150,14 @@ you will eventually be using.
 you won't be able to use your computer with a MS100.  You should use 
 a LocoBuffer.
 
-<P> 
+<h3><a id="usb">USB connections</a></h3> 
 DecoderPro is tested with both a MS100 and a LocoBuffer on 
 a USB Macintosh using a Keyspan PDA 
 Adapter to provide the serial port; for information please see 
 <a href="http://jmri.sourceforge.net/DigiTrax/KeyspanAdapters/KeyspanUSB.html">http://jmri.sourceforge.net/DigiTrax/KeyspanAdapters/KeyspanUSB.html</a>. 
- 
+Note that we've had a report that certain models of the PDA adapter don't work at 57,600 baud with
+the LocoBuffer,  so please try 19,200 baud if you're having trouble. See 
+<A href="#locobuffer">above</a> for instructions on how to set the LocoBuffer's speed.
 <P>
 For more information on the MS100, please see
 <a href="http://www.digitrax.com/computer.htm">http://www.digitrax.com/computer.htm</a>
