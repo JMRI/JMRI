@@ -15,13 +15,14 @@
 <!ATTLIST decoder:id type      ( stationary | locomotive ) "locomotive">
 <!ATTLIST decoder:id versionID CDATA "XX" >      <!-- CV07 value, default XX means any   -->
 <!ATTLIST decoder:id mfgID     CDATA #REQUIRED>  <!-- CV08 value, XX means any           -->
+<!ATTLIST decoder:id defnVersion CDATA #REQUIRED> <!-- version of the XML defining the decoder -->
 <!ATTLIST decoder:id comment   CDATA #IMPLIED>
 
 
 <!-- The programming section describes the decoders programming capabilities -->
 
 <!ELEMENT decoder:programming EMPTY>
-<!ATTLIST decoder:programming direct   ( no | bit | byte | both) "no" >  <!-- direct mode support -->
+<!ATTLIST decoder:programming direct   ( no | yes | bitOnly | byteOnly ) "no" >  <!-- direct mode support -->
 <!ATTLIST decoder:programming paged    ( no | yes ) "no" >               <!-- paged mode support -->
 <!ATTLIST decoder:programming register ( no | yes ) "no" >               <!-- register mode support -->
 <!ATTLIST decoder:programming ops      ( no | yes ) "no" >               <!-- operation mode support -->
@@ -34,7 +35,8 @@
 <!ELEMENT decoder:variables (decoder:variable*)>
 
 <!ELEMENT decoder:variable  (decoder:enumVal | decoder:binaryVal | 
-                             decoder:decVal | decoder:hexVal | decoder:speedTableVal ) >
+                             decoder:decVal | decoder:hexVal | 
+                             decoder:speedTableVal | decoder:longAddressVal ) >
 <!ATTLIST decoder:variable name CDATA #REQUIRED>  <!-- Name used for identification -->
 <!ATTLIST decoder:variable CV CDATA #REQUIRED>    <!-- CV number containing value -->
 <!ATTLIST decoder:variable mask CDATA "VVVVVVVV">    <!-- mask of bits within CV -->
@@ -43,6 +45,7 @@
                                            <!-- valid chars: -->
                                            <!--     X   not used     -->
                                            <!--     V   used bits    -->
+<!ATTLIST decoder:variable readOnly  (yes | no) "no" >
 <!ATTLIST decoder:variable comment   CDATA #IMPLIED>
 
 <!-- enumVal, binaryVal, decVal, hexVal are constraints on possible values -->
@@ -53,12 +56,12 @@
 
 <!ELEMENT decoder:decVal EMPTY>
 <!ATTLIST decoder:decVal min CDATA "0" >    <!-- if decimal/hex, smallest acceptable value -->
-<!ATTLIST decoder:decVal max CDATA #REQUIRED >  <!-- if decimal/hex, largest acceptable value -->
+<!ATTLIST decoder:decVal max CDATA "255" >  <!-- if decimal/hex, largest acceptable value -->
 <!ATTLIST decoder:decVal default CDATA #IMPLIED>
 
 <!ELEMENT decoder:hexVal EMPTY>
 <!ATTLIST decoder:hexVal min CDATA "0" >  <!-- if decimal/hex, smallest acceptable value -->
-<!ATTLIST decoder:hexVal max CDATA #REQUIRED>  <!-- if decimal/hex, largest acceptable value -->
+<!ATTLIST decoder:hexVal max CDATA "255">  <!-- if decimal/hex, largest acceptable value -->
 <!ATTLIST decoder:hexVal default CDATA #IMPLIED>
 
 <!ELEMENT decoder:enumVal (decoder:enumChoice*) >
@@ -70,8 +73,12 @@
 <!ATTLIST decoder:enumChoice comment CDATA #IMPLIED >
 
 <!ELEMENT decoder:speedTableVal (decoder:speedTableEntry*) >
+<!ATTLIST decoder:speedTableVal entries CDATA "28">        <!-- number of entries/CVs in table -->
 <!ATTLIST decoder:speedTableVal comment CDATA #IMPLIED>
 
 <!ELEMENT decoder:speedTableEntry EMPTY>
 <!ATTLIST decoder:speedTableEntry step  CDATA #REQUIRED >
 <!ATTLIST decoder:speedTableEntry value CDATA #REQUIRED >
+
+<!ELEMENT decoder:longAddressVal EMPTY >
+<!ATTLIST decoder:speedTableVal comment CDATA #IMPLIED>

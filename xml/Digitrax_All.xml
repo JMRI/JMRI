@@ -2,10 +2,10 @@
 <!DOCTYPE decoder:decoder-config SYSTEM "DTD/decoder-config.dtd">
 <decoder:decoder-config xmlns:decoder="http://jmri.sourceforge.net/xml/decoder">
 <decoder:decoder>
-	<decoder:id model="All" mfg="Digitrax" mfgID="129"
+	<decoder:id model="All" mfg="Digitrax" mfgID="129" defnVersion="0"
 				comment="Generic CVs for Digitrax decoders"></decoder:id>
 
-	<decoder:programming direct="byte" paged="yes" 
+	<decoder:programming direct="byteOnly" paged="yes" 
 	                     register="yes" ops="yes"></decoder:programming>
 
 	<decoder:variables>
@@ -28,6 +28,18 @@
 		<decoder:variable name="Midpoint voltage" CV="6">
 			<decoder:decVal/>
 			</decoder:variable>
+		<decoder:variable name="Version ID" CV="7" readOnly="yes">
+				<decoder:decVal max="31"/>
+			</decoder:variable>
+		<decoder:variable name="Manufacturer ID" CV="8" readOnly="yes">
+				<decoder:decVal max="31"/>
+			</decoder:variable>
+		<decoder:variable name="Long Address" CV="17">
+			<decoder:longAddressVal/>
+			</decoder:variable>
+		<decoder:variable name="Consist address" CV="19">
+			<decoder:decVal/>
+			</decoder:variable>
 		<decoder:variable name="Normal direction of motion" CV="29" mask="XXXXXXXV">
 			<decoder:enumVal>
 				<decoder:enumChoice choice="forward"/>
@@ -37,7 +49,7 @@
 		<decoder:variable name="Speed steps" CV="29" mask="XXXXXXVX">
 			<decoder:enumVal>
 				<decoder:enumChoice choice="14"/>
-				<decoder:enumChoice choice="28/128">
+				<decoder:enumChoice choice="28/128"/>
 				</decoder:enumVal>
 			</decoder:variable>
 		<decoder:variable name="Analog conversion mode" CV="29" mask="XXXXXVXX">
@@ -52,26 +64,29 @@
 				<decoder:enumChoice choice="4 digit addressing"/>
 				</decoder:enumVal>
 			</decoder:variable>
+		<decoder:variable name="Kick start value" CV="61">
+			<decoder:decVal/>
+			</decoder:variable>
+		<decoder:variable name="Transponding, directional headlight, split field motor et al" CV="65">
+			<decoder:hexVal/>
+			</decoder:variable>
 		<decoder:variable name="Kick start value" CV="65">
 			<decoder:decVal/>
 			</decoder:variable>
 		<decoder:variable name="Forward trim" CV="66">
-			<decoder:decVal></decoder:decVal>
-			</decoder:variable>
-		<decoder:variable name="Maximum speed table step" CV="94">
-			<decoder:decVal></decoder:decVal>
+			<decoder:decVal/>
 			</decoder:variable>
 		<decoder:variable name="Reverse trim" CV="95">
-			<decoder:decVal></decoder:decVal>
+			<decoder:decVal/>
 			</decoder:variable>
 		<decoder:variable name="User private ID #1" CV="105">
-			<decoder:decVal></decoder:decVal>
+			<decoder:decVal/>
 			</decoder:variable>
 		<decoder:variable name="User private ID #2" CV="106">
-			<decoder:decVal></decoder:decVal>
+			<decoder:decVal/>
 			</decoder:variable>
 		<decoder:variable name="Speed Table" CV="67">
-			<decoder:speedTableVal></decoder:speedTableVal>
+			<decoder:speedTableVal/>
 			</decoder:variable>
 	</decoder:variables>
 	

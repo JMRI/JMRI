@@ -4,8 +4,11 @@
 
 <decoderList:decoderList>
 
-	<decoderList:definition model="All" mfg="Digitrax" file="Digitrax_All.xml" >
-	</decoderList:definition>
+	<decoderList:definition mfg="Digitrax" 	model="All" 		file="Digitrax_All.xml" />
+		
+	<decoderList:definition mfg="Atlas" 	model="DualMode" 	file="Atlas_DualMode.xml" />
+		
+	<decoderList:definition mfg="NCE" 		model="D13SR" 		file="NCE_D13SR.xml" />
 		
 </decoderList:decoderList>
 </decoderList:decoderList-config>
