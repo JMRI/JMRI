@@ -22,7 +22,7 @@ import com.sun.java.util.collections.ArrayList;
  * Decimal representation of a value.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.11 $
+ * @version             $Revision: 1.12 $
  *
  */
 public class DecVariableValue extends VariableValue
@@ -52,6 +52,10 @@ public class DecVariableValue extends VariableValue
 
     int _maxVal;
     int _minVal;
+
+    public CvValue[] usesCVs() { 
+        return new CvValue[]{(CvValue)_cvVector.elementAt(getCvNum())};
+    }
 
     public Object rangeVal() {
         return new String("Decimal: "+_minVal+" - "+_maxVal);

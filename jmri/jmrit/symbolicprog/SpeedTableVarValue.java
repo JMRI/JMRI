@@ -58,7 +58,7 @@ import javax.swing.event.ChangeListener;
  * be removed.
  *<P>
  * @author	Bob Jacobsen, Alex Shepherd   Copyright (C) 2001, 2004
- * @version	$Revision: 1.21 $
+ * @version	$Revision: 1.22 $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -112,6 +112,14 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     public Object rangeVal() {
         log.warn("rangeVal doesn't make sense for a speed table");
         return new String("Speed table");
+    }
+
+    public CvValue[] usesCVs() { 
+        CvValue[] retval = new CvValue[nValues];
+        int i;
+        for (i=0; i<nValues; i++)
+            retval[i] = ((CvValue)_cvVector.elementAt(getCvNum()+i));
+        return retval;
     }
 
     /**

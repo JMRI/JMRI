@@ -18,7 +18,7 @@ import javax.swing.text.Document;
 /**
  * Extends VariableValue to represent a NMRA long address
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  *
  */
 public class LongAddrVariableValue extends VariableValue
@@ -43,6 +43,12 @@ public class LongAddrVariableValue extends VariableValue
         CvValue cv1 = ((CvValue)_cvVector.elementAt(getCvNum()+1));
         cv1.addPropertyChangeListener(this);
         cv1.setState(CvValue.FROMFILE);
+    }
+
+    public CvValue[] usesCVs() { 
+        return new CvValue[]{
+            (CvValue)_cvVector.elementAt(getCvNum()),
+            (CvValue)_cvVector.elementAt(getCvNum()+1)};
     }
 
     public void setTooltipText(String t) {

@@ -26,7 +26,7 @@ import javax.swing.text.Document;
  *</PRE>
  * decoders.
  * @author			Bob Jacobsen   Copyright (C) 2002, 2003, 2004
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  *
  */
 public class SplitVariableValue extends VariableValue
@@ -72,6 +72,12 @@ public class SplitVariableValue extends VariableValue
         CvValue cv1 = ((CvValue)_cvVector.elementAt(getSecondCvNum()));
         cv1.addPropertyChangeListener(this);
         cv1.setState(CvValue.FROMFILE);
+    }
+
+    public CvValue[] usesCVs() { 
+        return new CvValue[]{
+            (CvValue)_cvVector.elementAt(getCvNum()),
+            (CvValue)_cvVector.elementAt(mSecondCV+1)};
     }
 
     int mSecondCV;
@@ -346,7 +352,7 @@ public class SplitVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.9 $
+     * @version     $Revision: 1.10 $
      */
     public class VarTextField extends JTextField {
 

@@ -21,7 +21,7 @@ import com.sun.java.util.collections.ArrayList;
  * Extends VariableValue to represent a constant enum-like-thing
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
- * @version   $Revision: 1.7 $
+ * @version   $Revision: 1.8 $
  *
  */
 public class ConstantValue extends VariableValue {
@@ -42,6 +42,10 @@ public class ConstantValue extends VariableValue {
      * Create a null object.  Normally only used for tests and to pre-load classes.
      */
     public ConstantValue() {}
+
+    public CvValue[] usesCVs() { 
+        return new CvValue[]{(CvValue)_cvVector.elementAt(getCvNum())};
+    }
 
     // stored value
     JComboBox _value = null;

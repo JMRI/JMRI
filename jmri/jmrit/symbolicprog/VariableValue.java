@@ -14,7 +14,7 @@ import java.awt.Color;
 /**
  * Represents a single Variable value; abstract base class.
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2004
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  *
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
@@ -203,6 +203,11 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
         return (oldCv & ~mask) + ((newVal << offset) & mask);
     }
 
+    /** 
+     * Provide access to CVs referenced by this operation
+     */
+    abstract public CvValue[] usesCVs();
+    
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(VariableValue.class.getName());
 
