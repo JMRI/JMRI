@@ -1,7 +1,7 @@
 <!-- Defines XML for configuring the JMRIdemo and DecoderPro programs -->
-<!-- $Id: preferences-config.dtd,v 1.1 2002-02-20 16:05:36 jacobsen Exp $ -->
+<!-- $Id: preferences-config.dtd,v 1.2 2003-05-09 05:45:49 jacobsen Exp $ -->
 
-<!ELEMENT preferences-config (connection, gui, programmer)>
+<!ELEMENT preferences-config (connection*, gui, programmer)>
 <!ATTLIST preferences-config>
 
 <!--  Section identifies serial port info -->
