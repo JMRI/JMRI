@@ -3,7 +3,7 @@
 jbuilder -a xml lib jbuilderjava
 
 # build the java/ directory, which contains the actual JBuilder project
-jbuilderjava  -a jbuilderjava jbuilder0 jbuilder1 jbuilder2 jbuilder3
+jbuilderjava  -a jbuilder0 jbuilder1 jbuilder2 jbuilder3
 jbuilder0 -d java scripts jmri.jpx
 jbuilder1 -d java scripts JMRILibraries.library
 jbuilder2 -d java/src &jmri &apps &resources
