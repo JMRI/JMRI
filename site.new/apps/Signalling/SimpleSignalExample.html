@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SimpleSignalExample.html,v 1.3 2005-03-23 17:14:43 jacobsen Exp $ -->
+<!-- $Id: SimpleSignalExample.html,v 1.4 2005-03-23 17:20:58 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -237,19 +237,34 @@ tell the program about those turnouts also.  (SE8c users skip this step)
   <LI>From the Tools menu, open the "Signal Table"
   	  tool.
   <LI>Click the "Add..." button to pop a frame
-      with two choices for the type of signal driver:
+      with three choices for the type of signal driver:
       <DL>
       <DT>Triple Turnout
       <DD>This a signal head with red/yellow/green lights that
-      are driven by DCC turnout outputs.  To configure one of these,
-      enter it's name (typically something like IH2, etc), and
+      are driven by three DCC turnout outputs.  
+      <P>To configure one of these,
+      enter the name you want to give it (typically something like IH2, etc), and
       the names of the three turnouts that drive the lamps.
+      <DT>Double Turnout
+      <DD>This a signal head with lights that
+      are driven by two DCC turnout outputs.  
+      The two outputs drive red and green lights separately; the program
+      will turn them both on to make yellow.
+      <P>
+      To configure one of these,
+      enter the name you want to give it (typically something like IH2, etc), and
+      the names of the two turnouts that drive the lamps.
       <DT>SE8c 4 aspect
-      <DD>This is one signal head driven by a Digitrax SE8c.  Enter
-      the the lower of the two "turnout address" that this head
+      <DD>This is one signal head driven by a Digitrax SE8c.  
+      <P>
+      Enter
+      the lower of the two "turnout address" that this head
       responds to.  For example, if it's the first head on the first
       card, you can control it by setting turnout 257 and 258 with
       your throttle.  Enter LT257 in the turnout control box.
+      <P>
+      The SE8c should be configured so that the "4th aspect" is "dark";
+      the program will handle any flashing that's needed.
       </DL>
       Once you've set the options, click "OK".  You can 
       use this form repeatedly to enter as many as you'd like.
