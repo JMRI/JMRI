@@ -6,9 +6,12 @@ import jmri.*;
 
 /**
  * Abstract base class for Cornwall RR automation.
+ * <P>
+ * Defines useful constants, and handles basic structure of hte
+ * update process.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public abstract class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
     static final int RED    = SignalHead.RED;
