@@ -1,9 +1,9 @@
-/** 
+/**
  * LocoGenFrame.java
  *
  * Description:		Frame for user input of LocoNet messages
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			
+ * @version			$Revision: 1.2 $
  */
 
 
@@ -36,9 +36,9 @@ public class LocoGenFrame extends javax.swing.JFrame {
 		sendButton.setText("Send");
 		sendButton.setVisible(true);
 		sendButton.setToolTipText("Send packet");
-		
+
 		packetTextField.setToolTipText("Enter packet as hex pairs, e.g. 82 7D");
-		
+
 		setTitle("Send LocoNet Packet");
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
@@ -62,11 +62,11 @@ public class LocoGenFrame extends javax.swing.JFrame {
 		// pack to cause display
 		pack();
 	}
-  
+
   	public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
   		tc.sendLocoNetMessage(createPacket(packetTextField.getText()));
   	}
-  	
+
   	LocoNetMessage createPacket(String s) {
 		// gather bytes in result
 		int b[] = parseString(s);
@@ -75,7 +75,7 @@ public class LocoGenFrame extends javax.swing.JFrame {
 		for (int i=0; i<b.length; i++) m.setElement(i, b[i]);
   		return m;
   	}
-  	
+
   	int[] parseString(String s) {
 		String ts = s+"  "; // ensure blanks on end to make scan easier
 		int len = 0;
@@ -115,15 +115,15 @@ public class LocoGenFrame extends javax.swing.JFrame {
   		}
   		return b;
   	}
-  	
+
   	private boolean mShown = false;
-  	
+
 	public void addNotify() {
 		super.addNotify();
-		
+
 		if (mShown)
 			return;
-			
+
 		// resize frame to account for menubar
 		JMenuBar jMenuBar = getJMenuBar();
 		if (jMenuBar != null) {
@@ -143,14 +143,14 @@ public class LocoGenFrame extends javax.swing.JFrame {
 	// disconnect from LnTrafficController
 		tc = null;
 	}
-	
+
 	// connect to the LnTrafficController
 	public void connect(LnTrafficController t) {
 		tc = t;
-	}	
-	
-	
+	}
+
+
 	// private data
 	private LnTrafficController tc = null;
-	
+
 }
