@@ -14,7 +14,7 @@ import com.sun.java.util.collections.HashMap;
  *
  * @see SlotManager
  * @author		Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.13 $
+ * @version 		$Revision: 1.14 $
  */
 public class LnThrottleManager implements ThrottleManager, SlotListener {
     private SlotManager slotManager;
@@ -34,7 +34,7 @@ public class LnThrottleManager implements ThrottleManager, SlotListener {
      * @param address The decoder address desired.
      * @param l The ThrottleListener awaiting notification of a found throttle.
      * @return True if the request will continue, false if the request will not
-     * be made. False may be returned if a the throttle is already in use.
+     * be made. False may be returned if the throttle is already in use.
      */
     public boolean requestThrottle(int address, ThrottleListener l)
     {
