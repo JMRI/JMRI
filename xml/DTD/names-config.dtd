@@ -1,5 +1,5 @@
 <!-- Defines XML documenting standard names and aliases -->
-<!-- $Id: names-config.dtd,v 1.4 2001-12-20 15:14:45 jacobsen Exp $ -->
+<!-- $Id: names-config.dtd,v 1.5 2002-01-13 03:36:57 jacobsen Exp $ -->
 
 <!ELEMENT names-config (version, definition*)>
 
@@ -16,8 +16,7 @@
 <!-- and should be kept consistent -->
 
 <!ELEMENT definition EMPTY >
-<!ATTLIST definition name CDATA #REQUIRED>  <!-- Name used for identification -->
-<!ATTLIST definition stdName CDATA #IMPLIED>  <!-- standard name for this function if different -->
+<!ATTLIST definition item CDATA #REQUIRED>  <!-- item name used for identification -->
 
 <!ATTLIST definition comment   CDATA #IMPLIED>
 

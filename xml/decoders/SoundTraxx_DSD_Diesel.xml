@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_DSD_Diesel.xml,v 1.2 2002-01-02 20:37:18 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_DSD_Diesel.xml,v 1.3 2002-01-13 03:36:57 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Bob Jacobsen" version="1" lastUpdated="20011231"/>
+		<version author="Bob Jacobsen" version="2" lastUpdated="20020108"/>
 
 <decoder>
 	<id family="DSD/DSX Diesel" mfg="Throttle-Up" mfgID="141" defnVersion="1"
@@ -12,21 +12,21 @@
 	                     register="yes" ops="yes"></programming>
 
 	<variables>
-		<variable name="Primary Address" CV="1" comment="Short address"
-						stdName="Short Address"  default="03">
+		<variable label="Primary Address" CV="1" comment="Short address"
+						item="Short Address"  default="03">
 			<decVal min="1" max="127"/></variable>
 
-		<variable name="Manufacturer Version No" CV="7" readOnly="yes"
-						stdName="Decoder Version"><decVal/></variable>
-		<variable name="Manufacturer ID" CV="8" readOnly="yes"
-						stdName="Manufacturer">			<decVal/></variable>
+		<variable label="Manufacturer Version No" CV="7" readOnly="yes"
+						item="Decoder Version"><decVal/></variable>
+		<variable label="Manufacturer ID" CV="8" readOnly="yes"
+						item="Manufacturer">			<decVal/></variable>
 
 			
-		<variable name="Extended Address" CV="17"
-						stdName="Long Address" >
+		<variable label="Extended Address" CV="17"
+						item="Long Address" >
 			<longAddressVal/></variable>
 
-		<variable name="Address Format" CV="29" mask="XXVXXXXX">
+		<variable label="Address Format" CV="29" mask="XXVXXXXX">
 			<enumVal>
 				<enumChoice choice="One byte (short) address"/>
 				<enumChoice choice="Two byte (extended) address"/>
@@ -34,21 +34,21 @@
 	
 	<!-- Sound section -->
 	
-		<variable name="Startup Mode" CV="56" mask="XXXXXXXV">
+		<variable label="Startup Mode" CV="56" mask="XXXXXXXV">
 			<enumVal>
 				<enumChoice choice="On at power up"/>
 				<enumChoice choice="On when locomotive selected"/>
 				</enumVal>
 			</variable>
 	
-		<variable name="Compressor Pop Valve" CV="56" mask="XXXXXXVX">
+		<variable label="Compressor Pop Valve" CV="56" mask="XXXXXXVX">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
 				</enumVal>
 			</variable>
 
-		<variable name="RPM Interlock" CV="58" mask="XXXVXXXX">
+		<variable label="RPM Interlock" CV="58" mask="XXXVXXXX">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
@@ -57,35 +57,35 @@
 
 	<!-- Volumes section -->
 	
-		<variable name="Exhaust Throttle Rate" CV="58" mask="XXXXVVVV"
-				stdName="Sound Slider 1"
+		<variable label="Exhaust Throttle Rate" CV="58" mask="XXXXVVVV"
+				item="Sound Setting 1"
 				comment="Sets number of speed steps corresponding to one throttle notch">
 				<decVal max="15"/>
 			</variable>
 	
-		<variable name="Bell Rate" CV="59" mask="XXXXVVVV"
-				stdName="Sound Slider 2"
+		<variable label="Bell Rate" CV="59" mask="XXXXVVVV"
+				item="Sound Setting 2"
 				comment="low values = fast, high values = slow">
 				<decVal max="15"/>
 			</variable>
 
-		<variable name="Bell Volume" CV="60" mask="VVVVXXXX"
-				stdName="Sound Slider 3" >
+		<variable label="Bell Volume" CV="60" mask="VVVVXXXX"
+				item="Sound Setting 3" >
 				<decVal max="15"/>
 			</variable>
 
-		<variable name="Horn Volume" CV="60" mask="XXXXVVVV"
-				stdName="Sound Slider 4">
+		<variable label="Horn Volume" CV="60" mask="XXXXVVVV"
+				item="Sound Setting 4">
 				<decVal max="15"/>
 			</variable>
 
-		<variable name="Exhaust Volume" CV="61" mask="XXXXVVVV"
-				stdName="Sound Slider 5">
+		<variable label="Exhaust Volume" CV="61" mask="XXXXVVVV"
+				item="Sound Setting 5">
 				<decVal max="15"/>
 			</variable>
 
-		<variable name="Dynamic Brake Volume" CV="61" mask="VVVVXXXX"
-				stdName="Sound Slider 6">
+		<variable label="Dynamic Brake Volume" CV="61" mask="VVVVXXXX"
+				item="Sound Setting 6">
 				<decVal max="15"/>
 			</variable>
 

@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
+
+<!-- This is an example of how a club can create a programmer -->
+<!-- definition to ease standard programming of decoders      -->
+
+<programmer-config>
+<!-- $Id: Sample Club.xml,v 1.1 2002-01-13 03:36:57 jacobsen Exp $ -->
+		<version author="Bob Jacobsen" 
+					version="1" lastUpdated="20020112"/>
+
+<programmer decoderFilePanes="yes">
+
+	<pane name="Controls">
+		<column>
+
+			<dccaddress/>
+
+			<display item="Locomotive Direction" />
+			<display item="Analog (DC) Operation"/>
+			<separator/>
+			<display item="Speed Table Definition" format="radiobuttons"/>
+			<separator/>
+			<display item="Kick Start"/>
+			<display item="Accel"/>
+			<display item="Decel"/>
+		</column>
+		<column>
+			<row>
+				<column>
+					<display item="Vstart" layout="below" format="vslider" label=""/>
+					<display item="Vstart" layout="below"/>
+				</column>
+				<column>
+					<display item="Vmid" layout="below" format="vslider" label=""/>
+					<display item="Vmid" layout="below"/>
+				</column>
+				<column>
+					<display item="Vhigh" layout="below" format="vslider" label=""/>
+					<display item="Vhigh" layout="below"/>
+				</column>
+			</row>
+			<display item="Forward Trim"/>
+			<display item="Reverse Trim"/>
+		</column>
+	</pane>	
+	
+	<pane name="Speed Table">
+		<column>
+			<display item="Speed Table Definition" 
+					format="checkbox" layout="above" label=""/>
+			<display item="Speed Table" layout="above"/>
+		</column>
+	</pane>
+	
+</programmer>
+</programmer-config>

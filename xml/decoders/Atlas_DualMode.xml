@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Atlas_DualMode.xml,v 1.6 2002-01-02 20:37:18 jacobsen Exp $ -->
+<!-- $Id: Atlas_DualMode.xml,v 1.7 2002-01-13 03:36:57 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Bob Jacobsen" version="1" lastUpdated="20011209"/>
+		<version author="Bob Jacobsen" version="2" lastUpdated="20020111"/>
 
 <decoder>
 	<id family="Dual Mode" mfg="Atlas" mfgID="127" defnVersion="0"
@@ -12,147 +12,147 @@
 	                     register="yes" ops="yes"></programming>
 
 	<variables>
-		<variable name="Primary Address" CV="1" comment="Short address"
-						stdName="Short Address"  default="03">
+		<variable label="Primary Address" CV="1" comment="Short address"
+						item="Short Address"  default="03">
 			<decVal min="1" max="127"/></variable>
-		<variable name="Vstart" CV="2"
+		<variable label="Vstart" CV="2"
 						comment="A value of 255 corresponds to 100%">
 			<decVal/></variable>
-		<variable name="Acceleration momentum" CV="3"
-						stdName="Accel" >
+		<variable label="Acceleration momentum" CV="3"
+						item="Accel" >
 			<decVal max="31"/></variable>
-		<variable name="Brake momentum" CV="4"
-						stdName="Decel">
+		<variable label="Brake momentum" CV="4"
+						item="Decel">
 			<decVal max="31"/></variable>
-		<variable name="Manufacturer Version No" CV="7" readOnly="yes"
-						stdName="Decoder Version"><decVal/></variable>
-		<variable name="Manufacturer ID" CV="8" readOnly="yes"
-						stdName="Manufacturer">			<decVal/></variable>
+		<variable label="Manufacturer Version No" CV="7" readOnly="yes"
+						item="Decoder Version"><decVal/></variable>
+		<variable label="Manufacturer ID" CV="8" readOnly="yes"
+						item="Manufacturer">			<decVal/></variable>
 
-		<variable name="Extended Address" CV="17"
-						stdName="Long Address" >
+		<variable label="Extended Address" CV="17"
+						item="Long Address" >
 			<longAddressVal/></variable>
 			
-		<variable name="Consist Address" CV="19">			<decVal/></variable>
+		<variable label="Consist Address" CV="19">			<decVal/></variable>
 		
 
-		<variable name="Consist Acceleration Adjustment" CV="23" mask="XVVVVVVV">
+		<variable label="Consist Acceleration Adjustment" CV="23" mask="XVVVVVVV">
 				<decVal max="127"/>
 			</variable>
-		<variable name="Consist Acceleration Adjustment Sign" CV="23" mask="VXXXXXXX">
+		<variable label="Consist Acceleration Adjustment Sign" CV="23" mask="VXXXXXXX">
 			<enumVal>
 				<enumChoice choice="Adjustment Added"/>
 				<enumChoice choice="Adjustment Subtracted"/>
 				</enumVal></variable>
-		<variable name="Consist Deceleration Adjustment" CV="24" mask="XVVVVVVV">
+		<variable label="Consist Deceleration Adjustment" CV="24" mask="XVVVVVVV">
 				<decVal max="127"/>
 			</variable>
-		<variable name="Consist Deceleration Adjustment Sign" CV="24" mask="VXXXXXXX">
+		<variable label="Consist Deceleration Adjustment Sign" CV="24" mask="VXXXXXXX">
 			<enumVal>
 				<enumChoice choice="Adjustment Added"/>
 				<enumChoice choice="Adjustment Subtracted"/>
 				</enumVal></variable>
 
-		<variable name="Locomotive Direction" CV="29" mask="XXXXXXXV">
+		<variable label="Locomotive Direction" CV="29" mask="XXXXXXXV">
 			<enumVal>
 				<enumChoice choice="normal"/>
 				<enumChoice choice="reversed"/>
 				</enumVal></variable>
-		<variable name="FL Location" CV="29" mask="XXXXXXVX"
-					stdName="Speed Step Mode">
+		<variable label="FL Location" CV="29" mask="XXXXXXVX"
+					item="Speed Step Mode">
 			<enumVal>
 				<enumChoice choice="14 speed step format"/>
 				<enumChoice choice="28 speed step format"/>
 				</enumVal></variable>
-		<variable name="Power Source Conversion" CV="29" mask="XXXXXVXX"
-					stdName="Analog (DC) Operation" >
+		<variable label="Power Source Conversion" CV="29" mask="XXXXXVXX"
+					item="Analog (DC) Operation" >
 			<enumVal>
 				<enumChoice choice="NMRA Digital only"/>
 				<enumChoice choice="DC conversion enabled"/>
 				</enumVal></variable>
-		<variable name="Speed Table Definition" CV="29" mask="XXXVXXXX">
+		<variable label="Speed Table Definition" CV="29" mask="XXXVXXXX">
 			<enumVal>
 				<enumChoice choice="Use Vstart, Vmid, Vhigh"/>
 				<enumChoice choice="Use Table"/>
 				</enumVal></variable>
-		<variable name="Address Format" CV="29" mask="XXVXXXXX">
+		<variable label="Address Format" CV="29" mask="XXVXXXXX">
 			<enumVal>
 				<enumChoice choice="One byte (short) address"/>
 				<enumChoice choice="Two byte (extended) address"/>
 				</enumVal></variable>
 			
-		<variable name="Speed Table" CV="67">
+		<variable label="Speed Table" CV="67">
 			<speedTableVal/></variable>
 
-		<variable name="User Id #1" CV="105">			<decVal/></variable>
-		<variable name="User Id #2" CV="106">			<decVal/></variable>
+		<variable label="User Id #1" CV="105">			<decVal/></variable>
+		<variable label="User Id #2" CV="106">			<decVal/></variable>
 		
 		<!-- Atlas-specific variables -->
 
-		<variable name="Consist Accel and Decel Trims" CV="50" mask="XXXXXXVX"
-					stdName="Consist Adjustments Active">
+		<variable label="Consist Accel and Decel Trims" CV="50" mask="XXXXXXVX"
+					item="Consist Adjustments Active">
 			<enumVal>
 				<enumChoice choice="Not Active"/>
 				<enumChoice choice="Active"/>
 				</enumVal>
 			</variable>
-		<variable name="Brake Momentum on DC operation" CV="50" mask="XXXXXVXX"
-				stdName="DC Brake Momentum">
+		<variable label="Brake Momentum on DC operation" CV="50" mask="XXXXXVXX"
+				item="DC Brake Momentum">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
 				</enumVal>
 			</variable>
-		<variable name="Directional Headlights" CV="51" mask="XXXXXXXV">
+		<variable label="Directional Headlights" CV="51" mask="XXXXXXXV">
 			<enumVal>
 				<enumChoice choice="Headlights are Directional"/>
 				<enumChoice choice="Headlights Independent, F0 front, F1 rear"/>
 				</enumVal>
 			</variable>
-		<variable name="Functional Headlight Dimming" CV="51" mask="XXXXXXVX"
-				stdName="Global lighting option 1">
+		<variable label="Functional Headlight Dimming" CV="51" mask="XXXXXXVX"
+				item="Global lighting option 1">
 			<enumVal>
 				<enumChoice choice="Dimming Disabled"/>
 				<enumChoice choice="Dimming Enabled. If headlights independent, F1 dims headlight"/>
 				</enumVal>
 			</variable>
-		<variable name="If Lights Independent, F4 dims F0" CV="51" mask="XXXXXVXX"
-				stdName="Global lighting option 2">
+		<variable label="If Lights Independent, F4 dims F0" CV="51" mask="XXXXXVXX"
+				item="Global lighting option 2">
 			<enumVal>
 				<enumChoice choice="No"/>
 				<enumChoice choice="Yes"/>
 				</enumVal>
 			</variable>
-		<variable name="If Lights Independent, F4 dims F1" CV="51" mask="XXXXVXXX"
-				stdName="Global lighting option 3">
+		<variable label="If Lights Independent, F4 dims F1" CV="51" mask="XXXXVXXX"
+				item="Global lighting option 3">
 			<enumVal>
 				<enumChoice choice="No"/>
 				<enumChoice choice="Yes"/>
 				</enumVal>
 			</variable>
-		<variable name="Dimming Value (CV52)" CV="52"
-				stdName="Global lighting option 4">
+		<variable label="Dimming Value (CV52)" CV="52"
+				item="Global lighting option 4">
 			<decVal/>
 			</variable>
 
 	<!-- Define the fixed Function-Output mapping -->
-	<constant name="FL(f) controls output 1" minOut="1" default="1" /> 
-	<constant name="FL(r) controls output 2" minOut="2" default="1" /> 
-	<constant name="F1 controls output 3" minOut="3" minFn="1" default="1" /> 
-	<constant name="F2 controls output 4" minOut="4" minFn="2" default="1" /> 
-	<constant name="F3 controls output 5" minOut="5" minFn="3" default="1" /> 
-	<constant name="F4 controls output 6" minOut="6" minFn="4" default="1" /> 
-	<constant name="F5 controls output 7" minOut="7" minFn="5" default="1" /> 
-	<constant name="F6 controls output 8" minOut="8" minFn="6" default="1" /> 
-	<constant name="F7 controls output 9" minOut="9" minFn="7" default="1" /> 
-	<constant name="F8 controls output 10" minOut="10" minFn="8" default="1" /> 
+	<constant label="FL(f) controls output 1" minOut="1" default="1" /> 
+	<constant label="FL(r) controls output 2" minOut="2" default="1" /> 
+	<constant label="F1 controls output 3" minOut="3" minFn="1" default="1" /> 
+	<constant label="F2 controls output 4" minOut="4" minFn="2" default="1" /> 
+	<constant label="F3 controls output 5" minOut="5" minFn="3" default="1" /> 
+	<constant label="F4 controls output 6" minOut="6" minFn="4" default="1" /> 
+	<constant label="F5 controls output 7" minOut="7" minFn="5" default="1" /> 
+	<constant label="F6 controls output 8" minOut="8" minFn="6" default="1" /> 
+	<constant label="F7 controls output 9" minOut="9" minFn="7" default="1" /> 
+	<constant label="F8 controls output 10" minOut="10" minFn="8" default="1" /> 
 	
 	</variables>
 </decoder>
 
 <pane name="Atlas">
 	<column>
-		<display name="Brake Momentum on DC operation" />
+		<display item="Brake Momentum on DC operation" />
 	</column>
 </pane>
 

@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_DSD_Steam.xml,v 1.2 2002-01-02 20:37:18 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_DSD_Steam.xml,v 1.3 2002-01-13 03:36:57 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Bob Jacobsen" version="1" lastUpdated="20011231"/>
+		<version author="Bob Jacobsen" version="2" lastUpdated="20020110"/>
 
 <decoder>
 	<id family="DSD/DSX Steam" mfg="Throttle-Up" mfgID="141" defnVersion="1"
@@ -12,21 +12,21 @@
 	                     register="yes" ops="yes"></programming>
 
 	<variables>
-		<variable name="Primary Address" CV="1" comment="Short address"
-						stdName="Short Address"  default="03">
+		<variable label="Primary Address" CV="1" comment="Short address"
+						item="Short Address"  default="03">
 			<decVal min="1" max="127"/></variable>
 
-		<variable name="Manufacturer Version No" CV="7" readOnly="yes"
-						stdName="Decoder Version"><decVal/></variable>
-		<variable name="Manufacturer ID" CV="8" readOnly="yes"
-						stdName="Manufacturer">			<decVal/></variable>
+		<variable label="Manufacturer Version No" CV="7" readOnly="yes"
+						item="Decoder Version"><decVal/></variable>
+		<variable label="Manufacturer ID" CV="8" readOnly="yes"
+						item="Manufacturer">			<decVal/></variable>
 
 			
-		<variable name="Extended Address" CV="17"
-						stdName="Long Address" >
+		<variable label="Extended Address" CV="17"
+						item="Long Address" >
 			<longAddressVal/></variable>
 
-		<variable name="Address Format" CV="29" mask="XXVXXXXX">
+		<variable label="Address Format" CV="29" mask="XXVXXXXX">
 			<enumVal>
 				<enumChoice choice="One byte (short) address"/>
 				<enumChoice choice="Two byte (extended) address"/>
@@ -34,64 +34,64 @@
 	
 	<!-- Sound section -->
 		
-		<variable name="Event Clock Mode" CV="51" mask="XXXXXXXV"
-				stdName="Sound Group 1 Option 1">
+		<variable label="Event Clock Mode" CV="51" mask="XXXXXXXV"
+				item="Sound Group 1 Option 1">
 			<enumVal>
 				<enumChoice choice="Scale Time"/>
 				<enumChoice choice="Real Time"/>
 				</enumVal>
 			</variable>
 	
-		<variable name="AirPump" CV="51" mask="XXXXXXVX"
-				stdName="Sound Group 1 Option 2">
+		<variable label="AirPump" CV="51" mask="XXXXXXVX"
+				item="Sound Group 1 Option 2">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
 				</enumVal>
 			</variable>
 	
-		<variable name="Blower" CV="51" mask="XXXXXVXX"
-				stdName="Sound Group 1 Option 3">
+		<variable label="Blower" CV="51" mask="XXXXXVXX"
+				item="Sound Group 1 Option 3">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
 				</enumVal>
 			</variable>
 	
-		<variable name="Fireman Fred" CV="51" mask="XXXXVXXX"
-				stdName="Sound Group 1 Option 4">
+		<variable label="Fireman Fred" CV="51" mask="XXXXVXXX"
+				item="Sound Group 1 Option 4">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
 				</enumVal>
 			</variable>
 	
-		<variable name="Pneumatic Grease Gun" CV="51" mask="XXXVXXXX"
-				stdName="Sound Group 1 Option 5">
+		<variable label="Pneumatic Grease Gun" CV="51" mask="XXXVXXXX"
+				item="Sound Group 1 Option 5">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
 				</enumVal>
 			</variable>
 	
-		<variable name="Pop Valve Blowoff" CV="51" mask="XXVXXXXX"
-				stdName="Sound Group 1 Option 6">
+		<variable label="Pop Valve Blowoff" CV="51" mask="XXVXXXXX"
+				item="Sound Group 1 Option 6">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
 				</enumVal>
 			</variable>
 	
-		<variable name="Auto Blow Down" CV="51" mask="XVXXXXXX"
-				stdName="Sound Group 1 Option 7">
+		<variable label="Auto Blow Down" CV="51" mask="XVXXXXXX"
+				item="Sound Group 1 Option 7">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
 				</enumVal>
 			</variable>
 	
-		<variable name="Global Background Settings Enable" 
-					stdName="Sound Group 1 Control"
+		<variable label="Global Background Settings Enable" 
+					item="Sound Group 1 Control"
 					CV="51" mask="VXXXXXXX">
 			<enumVal>
 				<enumChoice choice="Off"/>
@@ -99,40 +99,40 @@
 				</enumVal>
 			</variable>
 	
-		<variable name="Articulated Exhaust" CV="52" mask="XXXXXXXV"
-				stdName="Sound Option 1">
+		<variable label="Articulated Exhaust" CV="52" mask="XXXXXXXV"
+				item="Sound Option 1">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
 				</enumVal>
 			</variable>
 	
-		<variable name="Dynamic Digital Exhaust" CV="52" mask="XXXXXXVX"
-				stdName="Sound Option 2">
+		<variable label="Dynamic Digital Exhaust" CV="52" mask="XXXXXXVX"
+				item="Sound Option 2">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
 				</enumVal>
 			</variable>
 	
-		<variable name="Cam Enable" CV="52" mask="XXXXXVXX"
-				stdName="Sound Option 3">
+		<variable label="Cam Enable" CV="52" mask="XXXXXVXX"
+				item="Sound Option 3">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
 				</enumVal>
 			</variable>
 	
-		<variable name="Dual Airpump" CV="52" mask="XXXXVXXX"
-				stdName="Sound Option 4">
+		<variable label="Dual Airpump" CV="52" mask="XXXXVXXX"
+				item="Sound Option 4">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
 				</enumVal>
 			</variable>
 	
-		<variable name="Startup Mode" CV="53" mask="XXXXXXXV"
-				stdName="Sound Option 5">
+		<variable label="Startup Mode" CV="53" mask="XXXXXXXV"
+				item="Sound Option 5">
 			<enumVal>
 				<enumChoice choice="On at power up"/>
 				<enumChoice choice="On when locomotive selected"/>
@@ -141,30 +141,30 @@
 	
 	<!-- Volumes section -->
 	
-		<variable name="Volume" CV="50" mask="VVVVVVVV"
-				stdName="Sound Slider 1" >
+		<variable label="Volume" CV="50" mask="VVVVVVVV"
+				item="Sound Setting 1" >
 				<decVal max="15"/>
 			</variable>
 
-		<variable name="Exhaust Cut-off/Auto-Chuff-Rate" CV="54" mask="VVVVVVVV"
-				stdName="Sound Slider 2"
+		<variable label="Exhaust Cut-off/Auto-Chuff-Rate" CV="54" mask="VVVVVVVV"
+				item="Sound Setting 2"
 				comment="When Cam input is selected, this sets the cut-off rate. When Auto Mode selected, this sets the Chuff Rate relative to throttle setting.">
 				<decVal max="63"/>
 			</variable>
 
-		<variable name="Exhaust Tone" CV="55" mask="XXVVVVVV"
-				stdName="Sound Slider 3"
+		<variable label="Exhaust Tone" CV="55" mask="XXVVVVVV"
+				item="Sound Setting 3"
 				comment="Higher value give more Steamy sound">
 				<decVal max="63"/>
 			</variable>
 	
-		<variable name="Exhaust Volume" CV="56" mask="VVVVVVVV"
-				stdName="Sound Slider 4">
+		<variable label="Exhaust Volume" CV="56" mask="VVVVVVVV"
+				item="Sound Setting 4">
 				<decVal max="255"/>
 			</variable>
 
-		<variable name="Bell Rate" CV="52" mask="VVVVXXXX"
-				stdName="Sound Slider 5"
+		<variable label="Bell Rate" CV="52" mask="VVVVXXXX"
+				item="Sound Setting 5"
 				comment="low values = fast, high values = slow">
 				<decVal max="15"/>
 			</variable>

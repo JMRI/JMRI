@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_150.xml,v 1.9 2002-01-02 20:37:18 jacobsen Exp $ -->
+<!-- $Id: Digitrax_150.xml,v 1.10 2002-01-13 03:36:57 jacobsen Exp $ -->
 <decoder-config>
-		<version author="" version="" lastUpdated=""/>
+		<version author="jake@physics.berkeley.edu" 
+					version="2" lastUpdated="20020112"/>
 
 <decoder>
 	<id family="Digitrax 150" mfg="Digitrax" mfgID="129" defnVersion="0"
@@ -13,127 +14,127 @@
 	                     register="yes" ops="yes"></programming>
 
 	<variables>
-		<variable name="Primary Address" CV="1" comment="Short address"
-						stdName="Short Address"  default="03">
+		<variable label="Primary Address" CV="1" comment="Short address"
+						item="Short Address"  default="03">
 			<decVal min="1" max="127"/></variable>
-		<variable name="Start voltage" CV="2" stdName="Vstart"
+		<variable label="Start voltage" CV="2" item="Vstart"
 						comment="A value of 255 corresponds to 100%">
 			<decVal></decVal>
 			</variable>
-		<variable name="Acceleration Rate" CV="3" stdName="Accel">
+		<variable label="Acceleration Rate" CV="3" item="Accel">
 			<decVal max="31"/>
 			</variable>
-		<variable name="Deceleration Rate" CV="4" stdName="Decel">
+		<variable label="Deceleration Rate" CV="4" item="Decel">
 			<decVal max="31"/>
 			</variable>
-		<variable name="Maximum Voltage" CV="5" stdName="Vhigh">
+		<variable label="Maximum Voltage" CV="5" item="Vhigh">
 			<decVal/>
 			</variable>
-		<variable name="Midpoint Voltage" CV="6" stdName="Vmid">
+		<variable label="Midpoint Voltage" CV="6" item="Vmid">
 			<decVal/>
 			</variable>
-		<variable name="Version ID" CV="7" readOnly="yes" stdName="Decoder Version">
+		<variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
 				<decVal/>
 			</variable>
-		<variable name="Manufacturer" CV="8" readOnly="yes">
+		<variable label="Manufacturer" CV="8" readOnly="yes">
 				<decVal/>
 			</variable>
-		<variable name="F1 during DC operation" CV="13" mask="XXXXXXXV"
-						 minFn="1" stdName="Analog Mode Function Status - F1">
+		<variable label="F1 during DC operation" CV="13" mask="XXXXXXXV"
+						 minFn="1" item="Analog Mode Function Status - F1">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
 				</enumVal>
 			</variable>
-		<variable name="F2 during DC operation" CV="13" mask="XXXXXXVX"
-						 minFn="2" stdName="Analog Mode Function Status - F2">
+		<variable label="F2 during DC operation" CV="13" mask="XXXXXXVX"
+						 minFn="2" item="Analog Mode Function Status - F2">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
 				</enumVal>
 			</variable>
-		<variable name="F3 during DC operation" CV="13" mask="XXXXXVXX"
-						 minFn="3" stdName="Analog Mode Function Status - F3">
+		<variable label="F3 during DC operation" CV="13" mask="XXXXXVXX"
+						 minFn="3" item="Analog Mode Function Status - F3">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
 				</enumVal>
 			</variable>
-		<variable name="F4 during DC operation" CV="13" mask="XXXXVXXX"
-						 minFn="4" stdName="Analog Mode Function Status - F4">
+		<variable label="F4 during DC operation" CV="13" mask="XXXXVXXX"
+						 minFn="4" item="Analog Mode Function Status - F4">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
 				</enumVal>
 			</variable>
-		<variable name="F5 during DC operation" CV="13" mask="XXXVXXXX"
-						 minFn="5" stdName="Analog Mode Function Status - F5">
+		<variable label="F5 during DC operation" CV="13" mask="XXXVXXXX"
+						 minFn="5" item="Analog Mode Function Status - F5">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
 				</enumVal>
 			</variable>
-		<variable name="F6 during DC operation" CV="13" mask="XXVXXXXX"
-						 minFn="6" stdName="Analog Mode Function Status - F6">
+		<variable label="F6 during DC operation" CV="13" mask="XXVXXXXX"
+						 minFn="6" item="Analog Mode Function Status - F6">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
 				</enumVal>
 			</variable>
-		<variable name="F0 Forward during DC operation" CV="13" mask="XVXXXXXX"
-						stdName="Analog Mode Function Status - FL(f)">
+		<variable label="F0 Forward during DC operation" CV="13" mask="XVXXXXXX"
+						item="Analog Mode Function Status - FL(f)">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
 				</enumVal>
 			</variable>
-		<variable name="F0 Reverse during DC operation" CV="13" mask="VXXXXXXX"
-						stdName="Analog Mode Function Status - FL(r)">
+		<variable label="F0 Reverse during DC operation" CV="13" mask="VXXXXXXX"
+						item="Analog Mode Function Status - FL(r)">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
 				</enumVal>
 			</variable>
-		<variable name="Long Address" CV="17" stdName="Extended Address">
+		<variable label="Long Address" CV="17" item="Extended Address">
 			<longAddressVal/>
 			</variable>
-		<variable name="Advanced Consist address" CV="19" stdName="Consist Address">
+		<variable label="Advanced Consist address" CV="19" item="Consist Address">
 			<decVal/>
 			</variable>
-		<variable name="Normal direction of motion" CV="29" mask="XXXXXXXV" stdName="Locomotive Direction">
+		<variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
 			<enumVal>
 				<enumChoice choice="forward"/>
 				<enumChoice choice="reverse"/>
 				</enumVal>
 			</variable>
-		<variable name="Speed steps" CV="29" mask="XXXXXXVX"
-					stdName="Speed Step Mode">
+		<variable label="Speed steps" CV="29" mask="XXXXXXVX"
+					item="Speed Step Mode">
 			<enumVal>
 				<enumChoice choice="14"/>
 				<enumChoice choice="28/128"/>
 				</enumVal>
 			</variable>
-		<variable name="Analog conversion mode" CV="29" mask="XXXXXVXX" stdName="Analog (DC) Operation">
+		<variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
 				</enumVal>
 			</variable>
-		<variable name="Use Speed Table" CV="29" mask="XXXVXXXX"
-					stdName="Speed Table Definition">
+		<variable label="Use Speed Table" CV="29" mask="XXXVXXXX"
+					item="Speed Table Definition">
 			<enumVal>
 				<enumChoice choice="Use Vstart, Vmid, Vhigh"/>
 				<enumChoice choice="Use Table"/>
 				</enumVal>
 			</variable>
-		<variable name="Addressing Mode" CV="29" mask="XXVXXXXX"
-					stdName="Address Format">
+		<variable label="Addressing Mode" CV="29" mask="XXVXXXXX"
+					item="Address Format">
 			<enumVal>
 				<enumChoice choice="2 digit addressing"/>
 				<enumChoice choice="4 digit addressing"/>
 				</enumVal>
 			</variable>
-		<variable name="Function F0F effect generated" CV="49" mask="XXXXVVVV">
+		<variable label="Function F0F effect generated" CV="49" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Normal function of lead"/>
 				<enumChoice choice="Random flicker"/>
@@ -153,7 +154,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable name="Function F0F behaviour" CV="49" mask="VVVVXXXX">
+		<variable label="Function F0F behaviour" CV="49" mask="VVVVXXXX">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -173,7 +174,7 @@
 				<enumChoice choice="Reserved (0xF)"/>
 				</enumVal>
 			</variable>
-		<variable name="Function F0R effect generated" CV="50" mask="XXXXVVVV">
+		<variable label="Function F0R effect generated" CV="50" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Normal function of lead"/>
 				<enumChoice choice="Random flicker"/>
@@ -193,7 +194,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable name="Function F0R behaviour" CV="50" mask="VVVVXXXX">
+		<variable label="Function F0R behaviour" CV="50" mask="VVVVXXXX">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -213,7 +214,7 @@
 				<enumChoice choice="Reserved (0xF)"/>
 				</enumVal>
 			</variable>
-		<variable name="Function 1 effect generated" CV="50" mask="XXXXVVVV">
+		<variable label="Function 1 effect generated" CV="50" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Normal function of lead"/>
 				<enumChoice choice="Random flicker"/>
@@ -233,7 +234,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable name="Function 1 behaviour" CV="50" mask="VVVVXXXX">
+		<variable label="Function 1 behaviour" CV="50" mask="VVVVXXXX">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -253,7 +254,7 @@
 				<enumChoice choice="Reserved (0xF)"/>
 				</enumVal>
 			</variable>
-		<variable name="Function 2 effect generated" CV="52" mask="XXXXVVVV">
+		<variable label="Function 2 effect generated" CV="52" mask="XXXXVVVV">
 			<enumVal>
 				<enumChoice choice="Normal function of lead"/>
 				<enumChoice choice="Random flicker"/>
@@ -273,7 +274,7 @@
 				<enumChoice choice="Reserved (0x0F)"/>
 				</enumVal>
 			</variable>
-		<variable name="Function 2 behaviour" CV="52" mask="VVVVXXXX">
+		<variable label="Function 2 behaviour" CV="52" mask="VVVVXXXX">
 			<enumVal>
 				<enumChoice choice="Forward direction, ON with function ON, phase A"/>
 				<enumChoice choice="Reverse direction, ON with function ON, phase B"/>
@@ -294,72 +295,72 @@
 				</enumVal>
 			</variable>
 
-		<variable name="Directional Headlights" CV="61" mask="XXXXXXXV">
+		<variable label="Directional Headlights" CV="61" mask="XXXXXXXV">
 			<enumVal>
 				<enumChoice choice="Normal headlight operation"/>
 				<enumChoice choice="Reverse light lead controlled by F4"/>
 				</enumVal>
 			</variable>
-		<variable name="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXXVXXXX">
+		<variable label="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXXVXXXX">
 			<enumVal>
 				<enumChoice choice="enabled"/>
 				<enumChoice choice="disabled"/>
 				</enumVal>
 			</variable>
-		<variable name="Short-circuit protection" CV="61" mask="XVXXXXXX"
+		<variable label="Short-circuit protection" CV="61" mask="XVXXXXXX"
 				comment="Undocumented feature, occasionally requested by Digitrax tech support">
 			<enumVal>
 				<enumChoice choice="Enabled"/>
 				<enumChoice choice="Disabled"/>
 				</enumVal>
 			</variable>
-		<variable name="Lamp keep-alive voltage" CV="62" mask="VVVVXXXX"
-				stdName="Global lighting option 1"
+		<variable label="Lamp keep-alive voltage" CV="62" mask="VVVVXXXX"
+				item="Global lighting option 1"
 				comment="0 is no keep-alive, use with LEDs">
 				<decVal max="15"/>
 			</variable>
-		<variable name="FX rate adjust" CV="62" mask="XXXXVVVV"
-				stdName="Global lighting option 2"
+		<variable label="FX rate adjust" CV="62" mask="XXXXVVVV"
+				item="Global lighting option 2"
 				comment="0 is fast, 15 is slow, 4 is recommended for start">
 				<decVal max="15"/>
 			</variable>
-		<variable name="Ditch light hold-over time" CV="63"
-				stdName="Global lighting option 3"
+		<variable label="Ditch light hold-over time" CV="63"
+				item="Global lighting option 3"
 				comment="0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds">
 				<decVal/>
 			</variable>
-		<variable name="Kick Start" CV="65">
+		<variable label="Kick Start" CV="65">
 			<decVal/>
 			</variable>
-		<variable name="Forward Trim" CV="66">
+		<variable label="Forward Trim" CV="66">
 			<decVal/>
 			</variable>
-		<variable name="Reverse Trim" CV="95">
+		<variable label="Reverse Trim" CV="95">
 			<decVal/>
 			</variable>
-		<variable name="User Private ID #1" CV="105"
-					stdName="User Id #1">
+		<variable label="User Private ID #1" CV="105"
+					item="User Id #1">
 			<decVal/>
 			</variable>
-		<variable name="User Private ID #2" CV="106"
-					stdName="User Id #2">
+		<variable label="User Private ID #2" CV="106"
+					item="User Id #2">
 			<decVal/>
 			</variable>
-		<variable name="Speed Table" CV="67">
+		<variable label="Speed Table" CV="67">
 			<speedTableVal/>
 			</variable>
 
 	<!-- Define the fixed Function-Output mapping -->
-	<constant name="FL(f) controls output 1" minOut="1" default="1" /> 
-	<constant name="FL(r) controls output 2" minOut="2" default="1" /> 
-	<constant name="F1 controls output 3" minOut="3" minFn="1" default="1" /> 
-	<constant name="F2 controls output 4" minOut="4" minFn="2" default="1" /> 
-	<constant name="F3 controls output 5" minOut="5" minFn="3" default="1" /> 
-	<constant name="F4 controls output 6" minOut="6" minFn="4" default="1" /> 
-	<constant name="F5 controls output 7" minOut="7" minFn="5" default="1" /> 
-	<constant name="F6 controls output 8" minOut="8" minFn="6" default="1" /> 
-	<constant name="F7 controls output 9" minOut="9" minFn="7" default="1" /> 
-	<constant name="F8 controls output 10" minOut="10" minFn="8" default="1" /> 
+	<constant label="FL(f) controls output 1" minOut="1" default="1" /> 
+	<constant label="FL(r) controls output 2" minOut="2" default="1" /> 
+	<constant label="F1 controls output 3" minOut="3" minFn="1" default="1" /> 
+	<constant label="F2 controls output 4" minOut="4" minFn="2" default="1" /> 
+	<constant label="F3 controls output 5" minOut="5" minFn="3" default="1" /> 
+	<constant label="F4 controls output 6" minOut="6" minFn="4" default="1" /> 
+	<constant label="F5 controls output 7" minOut="7" minFn="5" default="1" /> 
+	<constant label="F6 controls output 8" minOut="8" minFn="6" default="1" /> 
+	<constant label="F7 controls output 9" minOut="9" minFn="7" default="1" /> 
+	<constant label="F8 controls output 10" minOut="10" minFn="8" default="1" /> 
 
 	</variables>
 	
@@ -367,9 +368,8 @@
 
 <pane name="Digitrax">
 	<column>
-		<display name="Split field motor" />		
-		<display name="Vstart/Vmid/Vfull in 128 step mode" />
-		<display name="Short-circuit protection" />
+		<display item="Vstart/Vmid/Vfull in 128 step mode" />
+		<display item="Short-circuit protection" />
 	</column>
 </pane>
 

@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Lenz_LE077XF.xml,v 1.3 2002-01-02 20:37:18 jacobsen Exp $ -->
+<!-- $Id: Lenz_LE077XF.xml,v 1.4 2002-01-13 03:36:57 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Joe Ellis filker@mindspring.com"
-			version="1.2" lastUpdated="2001/12/30"/>
+			version="2" lastUpdated="20020112" />
+			<!-- Updated to new names by jake@physics.berkeley.edu -->
 
 <decoder>
 	<id family="Lenz" mfg="Lenz" mfgID="" defnVersion=""
@@ -14,111 +15,111 @@
 
 	<variables>
 
-		<variable name="Short Address" CV="1"
+		<variable label="Short Address" CV="1"
 		          default="03" comment="Range 1-127">
 			<decVal min="1" max="127"/>
 			</variable>
 
-		<variable name="Kick Start" CV="2"
+		<variable label="Kick Start" CV="2"
 				comment="Range 0-31">
 			<decVal></decVal>
 			</variable>
 
-		<variable name="Accel" CV="3"
+		<variable label="Accel" CV="3"
 				comment="Range 0-31">
 			<decVal max="31"/>
 			</variable>
 
-		<variable name="Decel" CV="4"
+		<variable label="Decel" CV="4"
 				comment="Range 0-31">
 			<decVal max="31"/>
 			</variable>
 
 <!-- deleted max and mid voltage-->
 
-		<variable name="Version ID" CV="7" readOnly="yes"
-				stdName="Decoder Version" >
+		<variable label="Version ID" CV="7" readOnly="yes"
+				item="Decoder Version" >
 			<decVal/>
 			</variable>
 
-		<variable name="Manufacturer ID" CV="8" readOnly="yes"
-				stdName="Manufacturer">
+		<variable label="Manufacturer ID" CV="8" readOnly="yes"
+				item="Manufacturer">
 			<decVal default="99"/>
 			</variable>
 
 
-		<variable name="Manufacturer ID - Reset" CV="8">
+		<variable label="Manufacturer ID - Reset" CV="8">
 			<decVal default="99"/>
 			</variable>
 
 <!-- Deleted all CV 13 references-->
 
-		<variable name="Long Address" CV="17" stdName="Extended Address"
+		<variable label="Long Address" CV="17" item="Extended Address"
 		        comment="4 digit address (Range 0001-9999)">
 			<longAddressVal/>
 			</variable>
 
-		<variable name="Advanced Consist Address" CV="19"
-				stdName="Consist Address"
+		<variable label="Advanced Consist Address" CV="19"
+				item="Consist Address"
 				comment="Allows permanent storage of consist address. Range 0-255">
 			<decVal/>
 			</variable>
 
-		<variable name="Acceleration Trim (range 0-255)" CV="23"
-				stdName="Consist Acceleration Adjustment"
+		<variable label="Acceleration Trim (range 0-255)" CV="23"
+				item="Consist Acceleration Adjustment"
 		        comment="Additional Acceleration rate info for fine-tuning. (Range 0-255)">
 			<decVal default="255" min="0" max="255"/>
 			</variable>
 
-		<variable name="Deceleration Trim (range 0-255)" CV="24"
-				stdName="Consist Deceleration Adjustment"
+		<variable label="Deceleration Trim (range 0-255)" CV="24"
+				item="Consist Deceleration Adjustment"
 		        comment="Additional Deceleration (braking) rate info for fine-tuning. (Range 0-255)">
 			<decVal default="255" min="0" max="255"/>
 			</variable>
 
-		<variable name="Normal direction of motion" CV="29"
+		<variable label="Normal direction of motion" CV="29"
 				mask="XXXXXXXV"
-		        stdName="Locomotive Direction">
+		        item="Locomotive Direction">
 			<enumVal>
 				<enumChoice choice="Forward"/>
 				<enumChoice choice="Reverse"/>
 				</enumVal>
 			</variable>
 
-		<variable name="Speed Steps" CV="29" mask="XXXXXXVX"
-				stdName="Speed Step Mode" default="1">
+		<variable label="Speed Steps" CV="29" mask="XXXXXXVX"
+				item="Speed Step Mode" default="1">
 			<enumVal>
 				<enumChoice choice="14"/>
 				<enumChoice choice="28/128 (recommended)"/>
 				</enumVal>
 			</variable>
 
-		<variable name="Analog conversion mode" CV="29"
+		<variable label="Analog conversion mode" CV="29"
 				mask="XXXXXVXX" default="1"
-				stdName="Analog (DC) Operation">
+				item="Analog (DC) Operation">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
 				</enumVal>
 			</variable>
 
-		<variable name="Use Speed Table" CV="29" mask="XXXVXXXX"
-				stdName="Speed Table Definition">
+		<variable label="Use Speed Table" CV="29" mask="XXXVXXXX"
+				item="Speed Table Definition">
 			<enumVal>
 				<enumChoice choice="Use Vstart, Vmid, Vhigh"/>
 				<enumChoice choice="Use Table"/>
 				</enumVal>
 			</variable>
 
-		<variable name="Addressing Mode" CV="29" mask="XXVXXXXX"
-				stdName="Address Format">
+		<variable label="Addressing Mode" CV="29" mask="XXVXXXXX"
+				item="Address Format">
 			<enumVal>
 				<enumChoice choice="2 digit addressing"/>
 				<enumChoice choice="4 digit addressing"/>
 				</enumVal>
 			</variable>
 
-	<variable name="Accel/Decel Trim" CV="50"
+	<variable label="Accel/Decel Trim" CV="50"
 				mask="XXXXXXXV"
 	          	comment="Governs how loco acts in DC track block">
   			<enumVal>
@@ -128,8 +129,8 @@
 			</variable>
 
 
-	<variable name="Brake Momentum on DC" CV="50" 
-				stdName="DC Brake Momentum" mask="XXXXXVXX"
+	<variable label="Brake Momentum on DC" CV="50" 
+				item="DC Brake Momentum" mask="XXXXXVXX"
 	          	comment="Governs how loco acts in DC track block">
 			<enumVal>
 				<enumChoice choice="Loco runs under DC analog voltage control"/>
@@ -137,7 +138,7 @@
 		        </enumVal>
 			</variable>
 
-	<variable name="Directional Headlights" CV="51"
+	<variable label="Directional Headlights" CV="51"
 	          	comment="Controls how headlights respond to a change of direction"
                	mask="XXXXXXXV">
 		     <enumVal>
@@ -146,8 +147,8 @@
 		         </enumVal>
 			</variable>
 
-	<variable name="Function Dimming" CV="51"
-				stdName="Global lighting option 1"
+	<variable label="Function Dimming" CV="51"
+				item="Global lighting option 1"
 	         	comment="Controls how headlights dim (CV 52 controls amount)"
               	mask="XXXXXXVX">
 		     <enumVal>
@@ -156,8 +157,8 @@
 		         </enumVal>
 			</variable>
 
-	<variable name="Rule 17 Headlights - Front" CV="51" 
-				stdName="Global lighting option 2"
+	<variable label="Rule 17 Headlights - Front" CV="51" 
+				item="Global lighting option 2"
 	          	comment="Controls how front headlights dim"
                	mask="XXXXXVXX">
 		     <enumVal>
@@ -166,8 +167,8 @@
 		         </enumVal>
 			</variable>
 
-	<variable name="Rule 17 Headlights - Rear" CV="51" 
-				stdName="Global lighting option 3"
+	<variable label="Rule 17 Headlights - Rear" CV="51" 
+				item="Global lighting option 3"
 	         	comment="Controls how rear headlights dim"
                	mask="XXXXVXXX">
 			<enumVal>
@@ -176,39 +177,39 @@
 		         </enumVal>
 			</variable>
 
-	<variable name="Dimmer Control (range 0-255)" CV="52"
-				stdName="Global lighting option 4"
+	<variable label="Dimmer Control (range 0-255)" CV="52"
+				item="Global lighting option 4"
 	          	comment="Controls how much headlights dim (0-dark to 255-max bright)">
 			<decVal min="0" max="255"/>
 			</variable>
 
 
-		<variable name="User Private ID #1" CV="105"
-					stdName="User Id #1">
+		<variable label="User Private ID #1" CV="105"
+					item="User Id #1">
 			<decVal/>
 			</variable>
 
-		<variable name="User Private ID #2" CV="106"
-					stdName="User Id #2">
+		<variable label="User Private ID #2" CV="106"
+					item="User Id #2">
 			<decVal/>
 			</variable>
 
-		<variable name="Speed Table" CV="67">
+		<variable label="Speed Table" CV="67">
 			<speedTableVal/>
 			</variable>
 
 
 	<!-- Define the fixed Function-Output mapping -->
-	<constant name="FL(f) controls output 1" minOut="1" default="1" /> 
-	<constant name="FL(r) controls output 2" minOut="2" default="1" /> 
-	<constant name="F1 controls output 3" minOut="3" minFn="1" default="1" /> 
-	<constant name="F2 controls output 4" minOut="4" minFn="2" default="1" /> 
-	<constant name="F3 controls output 5" minOut="5" minFn="3" default="1" /> 
-	<constant name="F4 controls output 6" minOut="6" minFn="4" default="1" /> 
-	<constant name="F5 controls output 7" minOut="7" minFn="5" default="1" /> 
-	<constant name="F6 controls output 8" minOut="8" minFn="6" default="1" /> 
-	<constant name="F7 controls output 9" minOut="9" minFn="7" default="1" /> 
-	<constant name="F8 controls output 10" minOut="10" minFn="8" default="1" /> 
+	<constant label="FL(f) controls output 1" minOut="1" default="1" /> 
+	<constant label="FL(r) controls output 2" minOut="2" default="1" /> 
+	<constant label="F1 controls output 3" minOut="3" minFn="1" default="1" /> 
+	<constant label="F2 controls output 4" minOut="4" minFn="2" default="1" /> 
+	<constant label="F3 controls output 5" minOut="5" minFn="3" default="1" /> 
+	<constant label="F4 controls output 6" minOut="6" minFn="4" default="1" /> 
+	<constant label="F5 controls output 7" minOut="7" minFn="5" default="1" /> 
+	<constant label="F6 controls output 8" minOut="8" minFn="6" default="1" /> 
+	<constant label="F7 controls output 9" minOut="9" minFn="7" default="1" /> 
+	<constant label="F8 controls output 10" minOut="10" minFn="8" default="1" /> 
 
 	</variables>
 
@@ -216,11 +217,11 @@
 
 <pane name="Lenz">
 	<column>
-		<display name="Manufacturer ID - Reset" 
+		<display item="Manufacturer ID - Reset" 
 			label="To restore ALL CVs to factory default values, set Manufacturer ID to 33"
 			layout="left"/>
 		<label label="" />
-		<display name="Accel/Decel Trim" />
+		<display item="Accel/Decel Trim" />
 	</column>
 </pane>
 

@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE names-config SYSTEM "names-config.dtd">
-<!-- $Id: names.xml,v 1.5 2002-01-01 01:49:50 jacobsen Exp $ -->
+<!-- $Id: names.xml,v 1.6 2002-01-13 03:36:52 jacobsen Exp $ -->
 <names-config>
 		<version author="jake@physics.berkeley.edu" 
-			version="6" lastUpdated="20011229"/>
+			version="7" lastUpdated="20020112"/>
 		
 	<!-- Note 1: NMRA-standard variables show a CV value -->
 	<!-- Note 2: The CV29 control bits are now spread to the relevant -->
@@ -22,114 +22,115 @@
 	<!-- 		What each output does			-->
 	<!--		Map functions to/from outputs	-->
 	<!--	Sound section						-->
-	<!--		Foreground sound configuration	-->
-	<!--		Background sound configuration	-->
-	<!--		Volumes							-->
+	<!-- 		Sound group 1, typically foreground sound configuration -->
+	<!-- 		Sound group 2, typically background sound configuration -->
+	<!-- 		Volumes and other analog settings -->		
+	<!-- 		Global sound options 			-->
 	
 	
 	<!-- Basic configuration variables -->
-		<definition name="Short Address" CV="1" />
+		<definition item="Short Address" CV="1" />
 
-		<definition name="Long Address" CV="17" />
+		<definition item="Long Address" CV="17" />
 						
-		<definition name="Advanced Ack" CV="29" mask="XXXXVXXXX" />
-		<definition name="Address Format" CV="29" mask="XXVXXXXX" />
+		<definition item="Advanced Ack" CV="29" mask="XXXXVXXXX" />
+		<definition item="Address Format" CV="29" mask="XXVXXXXX" />
 		
 	<!-- Speed and motor-related variables -->
 	
-		<definition name="Vstart" CV="2" />
-		<definition name="Vmid" CV="6" />
-		<definition name="Vhigh" CV="5" />
+		<definition item="Vstart" CV="2" />
+		<definition item="Vmid" CV="6" />
+		<definition item="Vhigh" CV="5" />
 
-		<definition name="Accel" CV="3" />
-		<definition name="Decel" CV="4" />
+		<definition item="Accel" CV="3" />
+		<definition item="Decel" CV="4" />
 
-		<definition name="Speed Table/Mid Range Cab Speed Step" CV="25" />
+		<definition item="Speed Table/Mid Range Cab Speed Step" CV="25" />
 
-		<definition name="Locomotive Direction" CV="29" mask="XXXXXXXV" />
-		<definition name="Speed Step Mode" CV="29" mask="XXXXXXVX" />
-		<definition name="Speed Table Definition" CV="29" mask="XXXVXXXX" />
+		<definition item="Locomotive Direction" CV="29" mask="XXXXXXXV" />
+		<definition item="Speed Step Mode" CV="29" mask="XXXXXXVX" />
+		<definition item="Speed Table Definition" CV="29" mask="XXXVXXXX" />
 
-		<definition name="Kick Start" CV="65" />
-		<definition name="Forward Trim" CV="66" />
-		<definition name="Speed Table" CV="67" />
-		<definition name="Reverse Trim" CV="95" />
+		<definition item="Kick Start" CV="65" />
+		<definition item="Forward Trim" CV="66" />
+		<definition item="Speed Table" CV="67" />
+		<definition item="Reverse Trim" CV="95" />
 
-		<definition name="Total PWM Period" CV="9" />
+		<definition item="Total PWM Period" CV="9" />
 
 	<!-- Power conversion (analog) -->
 
-		<definition name="Analog (DC) Operation" CV="29" mask="XXXXXVXX" />
+		<definition item="Analog (DC) Operation" CV="29" mask="XXXXXVXX" />
 
-		<definition name="Packet Time-out Value" CV="11" />
-		<definition name="DC Brake Momentum" />
+		<definition item="Packet Time-out Value" CV="11" />
+		<definition item="DC Brake Momentum" />
 
-		<definition name="Analog Power Conversion" CV="12" mask="XXXXXXXV" />
-		<definition name="Radio Power Conversion" CV="12" mask="XXXXXXVX" />
-		<definition name="Zero-1 Power Conversion" CV="12" mask="XXXXXVXX" />
-		<definition name="Trix Power Conversion" CV="12" mask="XXXXVXXX" />
-		<definition name="CTC/Railcommand Power Conversion" CV="12" mask="XXXVXXXX" />
+		<definition item="Analog Power Conversion" CV="12" mask="XXXXXXXV" />
+		<definition item="Radio Power Conversion" CV="12" mask="XXXXXXVX" />
+		<definition item="Zero-1 Power Conversion" CV="12" mask="XXXXXVXX" />
+		<definition item="Trix Power Conversion" CV="12" mask="XXXXVXXX" />
+		<definition item="CTC/Railcommand Power Conversion" CV="12" mask="XXXVXXXX" />
 		
 		<!-- Function outputs in analog -->
-		<definition name="Analog Mode Function Status - FL(f)"/>
-		<definition name="Analog Mode Function Status - FL(r)"/>
-		<definition name="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" />
-		<definition name="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" />
-		<definition name="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" />
-		<definition name="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" />
-		<definition name="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" />
-		<definition name="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" />
-		<definition name="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" />
-		<definition name="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" />
+		<definition item="Analog Mode Function Status - FL(f)"/>
+		<definition item="Analog Mode Function Status - FL(r)"/>
+		<definition item="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" />
+		<definition item="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" />
+		<definition item="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" />
+		<definition item="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" />
+		<definition item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" />
+		<definition item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" />
+		<definition item="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" />
+		<definition item="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" />
 		
 	<!-- Identification -->
 	
-		<definition name="User Id #1" CV="105" />
-		<definition name="User Id #2" CV="106" />
+		<definition item="User Id #1" CV="105" />
+		<definition item="User Id #2" CV="106" />
 		
-		<definition name="Decoder Version" CV="7" />
-		<definition name="Manufacturer" CV="8" />
+		<definition item="Decoder Version" CV="7" />
+		<definition item="Manufacturer" CV="8" />
 
 	<!-- Consisting variables -->
 
-		<definition name="Consist Address" CV="19" />
-		<definition name="Consist Direction"/>
+		<definition item="Consist Address" CV="19" />
+		<definition item="Consist Direction"/>
 		
-		<definition name="Consist Address Active For F1" CV="21" mask="XXXXXXXV" />
-		<definition name="Consist Address Active For F2" CV="21" mask="XXXXXXVX" />
-		<definition name="Consist Address Active For F3" CV="21" mask="XXXXXVXX" />
-		<definition name="Consist Address Active For F4" CV="21" mask="XXXXVXXX" />
-		<definition name="Consist Address Active For F5" CV="21" mask="XXXVXXXX" />
-		<definition name="Consist Address Active For F6" CV="21" mask="XXVXXXXX" />
-		<definition name="Consist Address Active For F7" CV="21" mask="XVXXXXXX" />
-		<definition name="Consist Address Active For F8" CV="21" mask="VXXXXXXX" />
-		<definition name="Consist Address Active For FL in Forward" CV="22" mask="XXXXXXXV" />
-		<definition name="Consist Address Active For FL in Reverse" CV="22" mask="XXXXXXVX" />
+		<definition item="Consist Address Active For F1" CV="21" mask="XXXXXXXV" />
+		<definition item="Consist Address Active For F2" CV="21" mask="XXXXXXVX" />
+		<definition item="Consist Address Active For F3" CV="21" mask="XXXXXVXX" />
+		<definition item="Consist Address Active For F4" CV="21" mask="XXXXVXXX" />
+		<definition item="Consist Address Active For F5" CV="21" mask="XXXVXXXX" />
+		<definition item="Consist Address Active For F6" CV="21" mask="XXVXXXXX" />
+		<definition item="Consist Address Active For F7" CV="21" mask="XVXXXXXX" />
+		<definition item="Consist Address Active For F8" CV="21" mask="VXXXXXXX" />
+		<definition item="Consist Address Active For FL in Forward" CV="22" mask="XXXXXXXV" />
+		<definition item="Consist Address Active For FL in Reverse" CV="22" mask="XXXXXXVX" />
 		
-		<definition name="Consist Acceleration Adjustment" CV="23" mask="XVVVVVVV" />
-		<definition name="Consist Acceleration Adjustment Sign" CV="23" mask="VXXXXXXX" />
-		<definition name="Consist Deceleration Adjustment" CV="24" mask="XVVVVVVV" />
-		<definition name="Consist Deceleration Adjustment Sign" CV="24" mask="VXXXXXXX" />
+		<definition item="Consist Acceleration Adjustment" CV="23" mask="XVVVVVVV" />
+		<definition item="Consist Acceleration Adjustment Sign" CV="23" mask="VXXXXXXX" />
+		<definition item="Consist Deceleration Adjustment" CV="24" mask="XVVVVVVV" />
+		<definition item="Consist Deceleration Adjustment Sign" CV="24" mask="VXXXXXXX" />
 
-		<definition name="Consist Adjustments Active"/>
+		<definition item="Consist Adjustments Active"/>
 
 
 	<!-- BEMF variables -->
 		
-		<definition name="EMF Feedback Cutout" CV="10" /> <!-- NMRA -->
-		<definition name="EMF Static Config" />
-		<definition name="EMF Dynamic Config" />
-		<definition name="EMF Droop Config" />
+		<definition item="EMF Feedback Cutout" CV="10" /> <!-- NMRA -->
+		<definition item="EMF Static Config" />
+		<definition item="EMF Dynamic Config" />
+		<definition item="EMF Droop Config" />
 		
 	<!-- Lighting section -->
 		
-		<definition name="Directional Headlights"/>
+		<definition item="Directional Headlights"/>
 		
 		<!-- Four placeholders for timing and intensity options -->
-		<definition name="Global lighting option 1"/>
-		<definition name="Global lighting option 2"/>
-		<definition name="Global lighting option 3"/>
-		<definition name="Global lighting option 4"/>
+		<definition item="Global lighting option 1"/>
+		<definition item="Global lighting option 2"/>
+		<definition item="Global lighting option 3"/>
+		<definition item="Global lighting option 4"/>
 
 		<!-- Configuring what each function does: -->
 		<!-- There are three variables per function.  "Effect generated" -->
@@ -137,45 +138,45 @@
 		<!-- while "behaviour" is meant for when they are present, and   -->
 		<!-- "options" for anything else -->
 		
-		<definition name="Function F0F effect generated"/>
-		<definition name="Function F0F behaviour"/>
-		<definition name="Function F0F options"/>
+		<definition item="Function F0F effect generated"/>
+		<definition item="Function F0F behaviour"/>
+		<definition item="Function F0F options"/>
 
-		<definition name="Function F0R effect generated"/>
-		<definition name="Function F0R behaviour"/>
-		<definition name="Function F0R options"/>
+		<definition item="Function F0R effect generated"/>
+		<definition item="Function F0R behaviour"/>
+		<definition item="Function F0R options"/>
 
-		<definition name="Function 1 effect generated"/>
-		<definition name="Function 1 behaviour"/>
-		<definition name="Function 1 options"/>
+		<definition item="Function 1 effect generated"/>
+		<definition item="Function 1 behaviour"/>
+		<definition item="Function 1 options"/>
 
-		<definition name="Function 2 effect generated"/>
-		<definition name="Function 2 behaviour"/>
-		<definition name="Function 2 options"/>
+		<definition item="Function 2 effect generated"/>
+		<definition item="Function 2 behaviour"/>
+		<definition item="Function 2 options"/>
 
-		<definition name="Function 3 effect generated"/>
-		<definition name="Function 3 behaviour"/>
-		<definition name="Function 3 options"/>
+		<definition item="Function 3 effect generated"/>
+		<definition item="Function 3 behaviour"/>
+		<definition item="Function 3 options"/>
 
-		<definition name="Function 4 effect generated"/>
-		<definition name="Function 4 behaviour"/>
-		<definition name="Function 4 options"/>
+		<definition item="Function 4 effect generated"/>
+		<definition item="Function 4 behaviour"/>
+		<definition item="Function 4 options"/>
 
-		<definition name="Function 5 effect generated"/>
-		<definition name="Function 5 behaviour"/>
-		<definition name="Function 5 options"/>
+		<definition item="Function 5 effect generated"/>
+		<definition item="Function 5 behaviour"/>
+		<definition item="Function 5 options"/>
 
-		<definition name="Function 6 effect generated"/>
-		<definition name="Function 6 behaviour"/>
-		<definition name="Function 6 options"/>
+		<definition item="Function 6 effect generated"/>
+		<definition item="Function 6 behaviour"/>
+		<definition item="Function 6 options"/>
 
-		<definition name="Function 7 effect generated"/>
-		<definition name="Function 7 behaviour"/>
-		<definition name="Function 7 options"/>
+		<definition item="Function 7 effect generated"/>
+		<definition item="Function 7 behaviour"/>
+		<definition item="Function 7 options"/>
 
-		<definition name="Function 8 effect generated"/>
-		<definition name="Function 8 behaviour"/>
-		<definition name="Function 8 options"/>
+		<definition item="Function 8 effect generated"/>
+		<definition item="Function 8 behaviour"/>
+		<definition item="Function 8 options"/>
 
 
 		<!-- Configuring what each output does: -->
@@ -183,173 +184,210 @@
 		<!-- is intended for variables that control what the lights do,  -->
 		<!-- while "behaviour" is meant for when they are present, and   -->
 		<!-- "options" for anything else -->
-		<definition name="Output 1 effect generated"/>
-		<definition name="Output 1 behaviour"/>
-		<definition name="Output 1 options"/>
+		<definition item="Output 1 effect generated"/>
+		<definition item="Output 1 behaviour"/>
+		<definition item="Output 1 options"/>
 
-		<definition name="Output 2 effect generated"/>
-		<definition name="Output 2 behaviour"/>
-		<definition name="Output 2 options"/>
+		<definition item="Output 2 effect generated"/>
+		<definition item="Output 2 behaviour"/>
+		<definition item="Output 2 options"/>
 
-		<definition name="Output 3 effect generated"/>
-		<definition name="Output 3 behaviour"/>
-		<definition name="Output 3 options"/>
+		<definition item="Output 3 effect generated"/>
+		<definition item="Output 3 behaviour"/>
+		<definition item="Output 3 options"/>
 
-		<definition name="Output 4 effect generated"/>
-		<definition name="Output 4 behaviour"/>
-		<definition name="Output 4 options"/>
+		<definition item="Output 4 effect generated"/>
+		<definition item="Output 4 behaviour"/>
+		<definition item="Output 4 options"/>
 
-		<definition name="Output 5 effect generated"/>
-		<definition name="Output 5 behaviour"/>
-		<definition name="Output 5 options"/>
+		<definition item="Output 5 effect generated"/>
+		<definition item="Output 5 behaviour"/>
+		<definition item="Output 5 options"/>
 
-		<definition name="Output 6 effect generated"/>
-		<definition name="Output 6 behaviour"/>
-		<definition name="Output 6 options"/>
+		<definition item="Output 6 effect generated"/>
+		<definition item="Output 6 behaviour"/>
+		<definition item="Output 6 options"/>
 
-		<definition name="Output 7 effect generated"/>
-		<definition name="Output 7 behaviour"/>
-		<definition name="Output 7 options"/>
+		<definition item="Output 7 effect generated"/>
+		<definition item="Output 7 behaviour"/>
+		<definition item="Output 7 options"/>
 
-		<definition name="Output 8 effect generated"/>
-		<definition name="Output 8 behaviour"/>
-		<definition name="Output 8 options"/>
+		<definition item="Output 8 effect generated"/>
+		<definition item="Output 8 behaviour"/>
+		<definition item="Output 8 options"/>
 
 
 		<!-- Variables for mapping functions to and from outputs -->
 		<!-- These are also used in the _code_ for the fnmapping -->
 		<!-- element, so their names are somewhat fixed          -->
-		<definition name="FL(f) controls output 1" CV="33" mask="XXXXXXXV" />
-		<definition name="FL(f) controls output 2" CV="33" mask="XXXXXXVX" />
-		<definition name="FL(f) controls output 3" CV="33" mask="XXXXXVXX" />
-		<definition name="FL(f) controls output 4" CV="33" mask="XXXXVXXX" />
-		<definition name="FL(f) controls output 5" CV="33" mask="XXXVXXXX" />
-		<definition name="FL(f) controls output 6" CV="33" mask="XXVXXXXX" />
-		<definition name="FL(f) controls output 7" CV="33" mask="XVXXXXXX" />
-		<definition name="FL(f) controls output 8" CV="33" mask="VXXXXXXX" />
+		<definition item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" />
+		<definition item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" />
+		<definition item="FL(f) controls output 3" CV="33" mask="XXXXXVXX" />
+		<definition item="FL(f) controls output 4" CV="33" mask="XXXXVXXX" />
+		<definition item="FL(f) controls output 5" CV="33" mask="XXXVXXXX" />
+		<definition item="FL(f) controls output 6" CV="33" mask="XXVXXXXX" />
+		<definition item="FL(f) controls output 7" CV="33" mask="XVXXXXXX" />
+		<definition item="FL(f) controls output 8" CV="33" mask="VXXXXXXX" />
 
-		<definition name="FL(r) controls output 1" CV="34" mask="XXXXXXXV" />
-		<definition name="FL(r) controls output 2" CV="34" mask="XXXXXXVX" />
-		<definition name="FL(r) controls output 3" CV="34" mask="XXXXXVXX" />
-		<definition name="FL(r) controls output 4" CV="34" mask="XXXXVXXX" />
-		<definition name="FL(r) controls output 5" CV="34" mask="XXXVXXXX" />
-		<definition name="FL(r) controls output 6" CV="34" mask="XXVXXXXX" />
-		<definition name="FL(r) controls output 7" CV="34" mask="XVXXXXXX" />
-		<definition name="FL(r) controls output 8" CV="34" mask="VXXXXXXX" />
+		<definition item="FL(r) controls output 1" CV="34" mask="XXXXXXXV" />
+		<definition item="FL(r) controls output 2" CV="34" mask="XXXXXXVX" />
+		<definition item="FL(r) controls output 3" CV="34" mask="XXXXXVXX" />
+		<definition item="FL(r) controls output 4" CV="34" mask="XXXXVXXX" />
+		<definition item="FL(r) controls output 5" CV="34" mask="XXXVXXXX" />
+		<definition item="FL(r) controls output 6" CV="34" mask="XXVXXXXX" />
+		<definition item="FL(r) controls output 7" CV="34" mask="XVXXXXXX" />
+		<definition item="FL(r) controls output 8" CV="34" mask="VXXXXXXX" />
 
-		<definition name="F1 controls output 1" CV="35" mask="XXXXXXXV" />
-		<definition name="F1 controls output 2" CV="35" mask="XXXXXXVX" />
-		<definition name="F1 controls output 3" CV="35" mask="XXXXXVXX" />
-		<definition name="F1 controls output 4" CV="35" mask="XXXXVXXX" />
-		<definition name="F1 controls output 5" CV="35" mask="XXXVXXXX" />
-		<definition name="F1 controls output 6" CV="35" mask="XXVXXXXX" />
-		<definition name="F1 controls output 7" CV="35" mask="XVXXXXXX" />
-		<definition name="F1 controls output 8" CV="35" mask="VXXXXXXX" />
+		<definition item="F1 controls output 1" CV="35" mask="XXXXXXXV" />
+		<definition item="F1 controls output 2" CV="35" mask="XXXXXXVX" />
+		<definition item="F1 controls output 3" CV="35" mask="XXXXXVXX" />
+		<definition item="F1 controls output 4" CV="35" mask="XXXXVXXX" />
+		<definition item="F1 controls output 5" CV="35" mask="XXXVXXXX" />
+		<definition item="F1 controls output 6" CV="35" mask="XXVXXXXX" />
+		<definition item="F1 controls output 7" CV="35" mask="XVXXXXXX" />
+		<definition item="F1 controls output 8" CV="35" mask="VXXXXXXX" />
 
-		<definition name="F2 controls output 1" CV="36" mask="XXXXXXXV" />
-		<definition name="F2 controls output 2" CV="36" mask="XXXXXXVX" />
-		<definition name="F2 controls output 3" CV="36" mask="XXXXXVXX" />
-		<definition name="F2 controls output 4" CV="36" mask="XXXXVXXX" />
-		<definition name="F2 controls output 5" CV="36" mask="XXXVXXXX" />
-		<definition name="F2 controls output 6" CV="36" mask="XXVXXXXX" />
-		<definition name="F2 controls output 7" CV="36" mask="XVXXXXXX" />
-		<definition name="F2 controls output 8" CV="36" mask="VXXXXXXX" />
+		<definition item="F2 controls output 1" CV="36" mask="XXXXXXXV" />
+		<definition item="F2 controls output 2" CV="36" mask="XXXXXXVX" />
+		<definition item="F2 controls output 3" CV="36" mask="XXXXXVXX" />
+		<definition item="F2 controls output 4" CV="36" mask="XXXXVXXX" />
+		<definition item="F2 controls output 5" CV="36" mask="XXXVXXXX" />
+		<definition item="F2 controls output 6" CV="36" mask="XXVXXXXX" />
+		<definition item="F2 controls output 7" CV="36" mask="XVXXXXXX" />
+		<definition item="F2 controls output 8" CV="36" mask="VXXXXXXX" />
 
-		<definition name="F3 controls output 1" CV="37" mask="XXXXXXXV" />
-		<definition name="F3 controls output 2" CV="37" mask="XXXXXXVX" />
-		<definition name="F3 controls output 3" CV="37" mask="XXXXXVXX" />
-		<definition name="F3 controls output 4" CV="37" mask="XXXXVXXX" />
-		<definition name="F3 controls output 5" CV="37" mask="XXXVXXXX" />
-		<definition name="F3 controls output 6" CV="37" mask="XXVXXXXX" />
-		<definition name="F3 controls output 7" CV="37" mask="XVXXXXXX" />
-		<definition name="F3 controls output 8" CV="37" mask="VXXXXXXX" />
+		<definition item="F3 controls output 1" CV="37" mask="XXXXXXXV" />
+		<definition item="F3 controls output 2" CV="37" mask="XXXXXXVX" />
+		<definition item="F3 controls output 3" CV="37" mask="XXXXXVXX" />
+		<definition item="F3 controls output 4" CV="37" mask="XXXXVXXX" />
+		<definition item="F3 controls output 5" CV="37" mask="XXXVXXXX" />
+		<definition item="F3 controls output 6" CV="37" mask="XXVXXXXX" />
+		<definition item="F3 controls output 7" CV="37" mask="XVXXXXXX" />
+		<definition item="F3 controls output 8" CV="37" mask="VXXXXXXX" />
 
-		<definition name="F4 controls output 4" CV="38" mask="XXXXXXXV" />
-		<definition name="F4 controls output 5" CV="38" mask="XXXXXXVX" />
-		<definition name="F4 controls output 6" CV="38" mask="XXXXXVXX" />
-		<definition name="F4 controls output 7" CV="38" mask="XXXXVXXX" />
-		<definition name="F4 controls output 8" CV="38" mask="XXXVXXXX" />
-		<definition name="F4 controls output 9" CV="38" mask="XXVXXXXX" />
-		<definition name="F4 controls output 10" CV="38" mask="XVXXXXXX" />
-		<definition name="F4 controls output 11" CV="38" mask="VXXXXXXX" />
+		<definition item="F4 controls output 4" CV="38" mask="XXXXXXXV" />
+		<definition item="F4 controls output 5" CV="38" mask="XXXXXXVX" />
+		<definition item="F4 controls output 6" CV="38" mask="XXXXXVXX" />
+		<definition item="F4 controls output 7" CV="38" mask="XXXXVXXX" />
+		<definition item="F4 controls output 8" CV="38" mask="XXXVXXXX" />
+		<definition item="F4 controls output 9" CV="38" mask="XXVXXXXX" />
+		<definition item="F4 controls output 10" CV="38" mask="XVXXXXXX" />
+		<definition item="F4 controls output 11" CV="38" mask="VXXXXXXX" />
 			
-		<definition name="F5 controls output 4" CV="39" mask="XXXXXXXV" />
-		<definition name="F5 controls output 5" CV="39" mask="XXXXXXVX" />
-		<definition name="F5 controls output 6" CV="39" mask="XXXXXVXX" />
-		<definition name="F5 controls output 7" CV="39" mask="XXXXVXXX" />
-		<definition name="F5 controls output 8" CV="39" mask="XXXVXXXX" />
-		<definition name="F5 controls output 9" CV="39" mask="XXVXXXXX" />
-		<definition name="F5 controls output 10" CV="39" mask="XVXXXXXX" />
-		<definition name="F5 controls output 11" CV="39" mask="VXXXXXXX" />
+		<definition item="F5 controls output 4" CV="39" mask="XXXXXXXV" />
+		<definition item="F5 controls output 5" CV="39" mask="XXXXXXVX" />
+		<definition item="F5 controls output 6" CV="39" mask="XXXXXVXX" />
+		<definition item="F5 controls output 7" CV="39" mask="XXXXVXXX" />
+		<definition item="F5 controls output 8" CV="39" mask="XXXVXXXX" />
+		<definition item="F5 controls output 9" CV="39" mask="XXVXXXXX" />
+		<definition item="F5 controls output 10" CV="39" mask="XVXXXXXX" />
+		<definition item="F5 controls output 11" CV="39" mask="VXXXXXXX" />
 			
-		<definition name="F6 controls output 4" CV="40" mask="XXXXXXXV" />
-		<definition name="F6 controls output 5" CV="40" mask="XXXXXXVX" />
-		<definition name="F6 controls output 6" CV="40" mask="XXXXXVXX" />
-		<definition name="F6 controls output 7" CV="40" mask="XXXXVXXX" />
-		<definition name="F6 controls output 8" CV="40" mask="XXXVXXXX" />
-		<definition name="F6 controls output 9" CV="40" mask="XXVXXXXX" />
-		<definition name="F6 controls output 10" CV="40" mask="XVXXXXXX" />
-		<definition name="F6 controls output 11" CV="40" mask="VXXXXXXX" />
+		<definition item="F6 controls output 4" CV="40" mask="XXXXXXXV" />
+		<definition item="F6 controls output 5" CV="40" mask="XXXXXXVX" />
+		<definition item="F6 controls output 6" CV="40" mask="XXXXXVXX" />
+		<definition item="F6 controls output 7" CV="40" mask="XXXXVXXX" />
+		<definition item="F6 controls output 8" CV="40" mask="XXXVXXXX" />
+		<definition item="F6 controls output 9" CV="40" mask="XXVXXXXX" />
+		<definition item="F6 controls output 10" CV="40" mask="XVXXXXXX" />
+		<definition item="F6 controls output 11" CV="40" mask="VXXXXXXX" />
 			
-		<definition name="F7 controls output 4" CV="41" mask="XXXXXXXV" />
-		<definition name="F7 controls output 5" CV="41" mask="XXXXXXVX" />
-		<definition name="F7 controls output 6" CV="41" mask="XXXXXVXX" />
-		<definition name="F7 controls output 7" CV="41" mask="XXXXVXXX" />
-		<definition name="F7 controls output 8" CV="41" mask="XXXVXXXX" />
-		<definition name="F7 controls output 9" CV="41" mask="XXVXXXXX" />
-		<definition name="F7 controls output 10" CV="41" mask="XVXXXXXX" />
-		<definition name="F7 controls output 11" CV="41" mask="VXXXXXXX" />
+		<definition item="F7 controls output 4" CV="41" mask="XXXXXXXV" />
+		<definition item="F7 controls output 5" CV="41" mask="XXXXXXVX" />
+		<definition item="F7 controls output 6" CV="41" mask="XXXXXVXX" />
+		<definition item="F7 controls output 7" CV="41" mask="XXXXVXXX" />
+		<definition item="F7 controls output 8" CV="41" mask="XXXVXXXX" />
+		<definition item="F7 controls output 9" CV="41" mask="XXVXXXXX" />
+		<definition item="F7 controls output 10" CV="41" mask="XVXXXXXX" />
+		<definition item="F7 controls output 11" CV="41" mask="VXXXXXXX" />
 			
-		<definition name="F8 controls output 4" CV="42" mask="XXXXXXXV" />
-		<definition name="F8 controls output 5" CV="42" mask="XXXXXXVX" />
-		<definition name="F8 controls output 6" CV="42" mask="XXXXXVXX" />
-		<definition name="F8 controls output 7" CV="42" mask="XXXXVXXX" />
-		<definition name="F8 controls output 8" CV="42" mask="XXXVXXXX" />
-		<definition name="F8 controls output 9" CV="42" mask="XXVXXXXX" />
-		<definition name="F8 controls output 10" CV="42" mask="XVXXXXXX" />
-		<definition name="F8 controls output 11" CV="42" mask="VXXXXXXX" />
+		<definition item="F8 controls output 4" CV="42" mask="XXXXXXXV" />
+		<definition item="F8 controls output 5" CV="42" mask="XXXXXXVX" />
+		<definition item="F8 controls output 6" CV="42" mask="XXXXXVXX" />
+		<definition item="F8 controls output 7" CV="42" mask="XXXXVXXX" />
+		<definition item="F8 controls output 8" CV="42" mask="XXXVXXXX" />
+		<definition item="F8 controls output 9" CV="42" mask="XXVXXXXX" />
+		<definition item="F8 controls output 10" CV="42" mask="XVXXXXXX" />
+		<definition item="F8 controls output 11" CV="42" mask="VXXXXXXX" />
 			
-		<definition name="F9 controls output 7" CV="43" mask="XXXXXXXV" />
-		<definition name="F9 controls output 8" CV="43" mask="XXXXXXVX" />
-		<definition name="F9 controls output 9" CV="43" mask="XXXXXVXX" />
-		<definition name="F9 controls output 10" CV="43" mask="XXXXVXXX" />
-		<definition name="F9 controls output 11" CV="43" mask="XXXVXXXX" />
-		<definition name="F9 controls output 12" CV="43" mask="XXVXXXXX" />
-		<definition name="F9 controls output 13" CV="43" mask="XVXXXXXX" />
-		<definition name="F9 controls output 14" CV="43" mask="VXXXXXXX" />
+		<definition item="F9 controls output 7" CV="43" mask="XXXXXXXV" />
+		<definition item="F9 controls output 8" CV="43" mask="XXXXXXVX" />
+		<definition item="F9 controls output 9" CV="43" mask="XXXXXVXX" />
+		<definition item="F9 controls output 10" CV="43" mask="XXXXVXXX" />
+		<definition item="F9 controls output 11" CV="43" mask="XXXVXXXX" />
+		<definition item="F9 controls output 12" CV="43" mask="XXVXXXXX" />
+		<definition item="F9 controls output 13" CV="43" mask="XVXXXXXX" />
+		<definition item="F9 controls output 14" CV="43" mask="VXXXXXXX" />
 			
-		<definition name="F10 controls output 7" CV="44" mask="XXXXXXXV" />
-		<definition name="F10 controls output 8" CV="44" mask="XXXXXXVX" />
-		<definition name="F10 controls output 9" CV="44" mask="XXXXXVXX" />
-		<definition name="F10 controls output 10" CV="44" mask="XXXXVXXX" />
-		<definition name="F10 controls output 11" CV="44" mask="XXXVXXXX" />
-		<definition name="F10 controls output 12" CV="44" mask="XXVXXXXX" />
-		<definition name="F10 controls output 13" CV="44" mask="XVXXXXXX" />
-		<definition name="F10 controls output 14" CV="44" mask="VXXXXXXX" />
+		<definition item="F10 controls output 7" CV="44" mask="XXXXXXXV" />
+		<definition item="F10 controls output 8" CV="44" mask="XXXXXXVX" />
+		<definition item="F10 controls output 9" CV="44" mask="XXXXXVXX" />
+		<definition item="F10 controls output 10" CV="44" mask="XXXXVXXX" />
+		<definition item="F10 controls output 11" CV="44" mask="XXXVXXXX" />
+		<definition item="F10 controls output 12" CV="44" mask="XXVXXXXX" />
+		<definition item="F10 controls output 13" CV="44" mask="XVXXXXXX" />
+		<definition item="F10 controls output 14" CV="44" mask="VXXXXXXX" />
 			
-		<definition name="F11 controls output 7" CV="45" mask="XXXXXXXV" />
-		<definition name="F11 controls output 8" CV="45" mask="XXXXXXVX" />
-		<definition name="F11 controls output 9" CV="45" mask="XXXXXVXX" />
-		<definition name="F11 controls output 10" CV="45" mask="XXXXVXXX" />
-		<definition name="F11 controls output 11" CV="45" mask="XXXVXXXX" />
-		<definition name="F11 controls output 12" CV="45" mask="XXVXXXXX" />
-		<definition name="F11 controls output 13" CV="45" mask="XVXXXXXX" />
-		<definition name="F11 controls output 14" CV="45" mask="VXXXXXXX" />
+		<definition item="F11 controls output 7" CV="45" mask="XXXXXXXV" />
+		<definition item="F11 controls output 8" CV="45" mask="XXXXXXVX" />
+		<definition item="F11 controls output 9" CV="45" mask="XXXXXVXX" />
+		<definition item="F11 controls output 10" CV="45" mask="XXXXVXXX" />
+		<definition item="F11 controls output 11" CV="45" mask="XXXVXXXX" />
+		<definition item="F11 controls output 12" CV="45" mask="XXVXXXXX" />
+		<definition item="F11 controls output 13" CV="45" mask="XVXXXXXX" />
+		<definition item="F11 controls output 14" CV="45" mask="VXXXXXXX" />
 			
-		<definition name="F12 controls output 7" CV="46" mask="XXXXXXXV" />
-		<definition name="F12 controls output 8" CV="46" mask="XXXXXXVX" />
-		<definition name="F12 controls output 9" CV="46" mask="XXXXXVXX" />
-		<definition name="F12 controls output 10" CV="46" mask="XXXXVXXX" />
-		<definition name="F12 controls output 11" CV="46" mask="XXXVXXXX" />
-		<definition name="F12 controls output 12" CV="46" mask="XXVXXXXX" />
-		<definition name="F12 controls output 13" CV="46" mask="XVXXXXXX" />
-		<definition name="F12 controls output 14" CV="46" mask="VXXXXXXX" />
+		<definition item="F12 controls output 7" CV="46" mask="XXXXXXXV" />
+		<definition item="F12 controls output 8" CV="46" mask="XXXXXXVX" />
+		<definition item="F12 controls output 9" CV="46" mask="XXXXXVXX" />
+		<definition item="F12 controls output 10" CV="46" mask="XXXXVXXX" />
+		<definition item="F12 controls output 11" CV="46" mask="XXXVXXXX" />
+		<definition item="F12 controls output 12" CV="46" mask="XXVXXXXX" />
+		<definition item="F12 controls output 13" CV="46" mask="XVXXXXXX" />
+		<definition item="F12 controls output 14" CV="46" mask="VXXXXXXX" />
 		
 	<!-- Sound section -->
 	
-		<!-- foreground sound configuration -->
-		<!-- background sound configuration -->
-		<!-- Volumes -->
+		<!-- Sound group 1, typically foreground sound configuration -->
+		<definition item="Sound Group 1 Control" />
+		<definition item="Sound Group 1 Option 1" />
+		<definition item="Sound Group 1 Option 2" />
+		<definition item="Sound Group 1 Option 3" />
+		<definition item="Sound Group 1 Option 4" />
+		<definition item="Sound Group 1 Option 5" />
+		<definition item="Sound Group 1 Option 6" />
+		<definition item="Sound Group 1 Option 7" />
+		<definition item="Sound Group 1 Option 8" />
 		
+		<!-- Sound group 2, typically background sound configuration -->
+		<definition item="Sound Group 2 Control" />
+		<definition item="Sound Group 2 Option 1" />
+		<definition item="Sound Group 2 Option 2" />
+		<definition item="Sound Group 2 Option 3" />
+		<definition item="Sound Group 2 Option 4" />
+		<definition item="Sound Group 2 Option 5" />
+		<definition item="Sound Group 2 Option 6" />
+		<definition item="Sound Group 2 Option 7" />
+		<definition item="Sound Group 2 Option 8" />
+		
+		<!-- Volumes and other analog settings -->
+		<definition item="Sound Setting 1" />
+		<definition item="Sound Setting 2" />
+		<definition item="Sound Setting 3" />
+		<definition item="Sound Setting 4" />
+		<definition item="Sound Setting 5" />
+		<definition item="Sound Setting 6" />
+		<definition item="Sound Setting 7" />
+		<definition item="Sound Setting 8" />
+		
+		<!-- Global sound options -->
+		<definition item="Sound Option 1" />
+		<definition item="Sound Option 2" />
+		<definition item="Sound Option 3" />
+		<definition item="Sound Option 4" />
+		<definition item="Sound Option 5" />
+		<definition item="Sound Option 6" />
+		<definition item="Sound Option 7" />
+		<definition item="Sound Option 8" />
 
 </names-config>

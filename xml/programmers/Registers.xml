@@ -2,32 +2,32 @@
 <!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
 
 <programmer-config>
-<!-- $Id: Registers.xml,v 1.2 2002-01-01 01:49:53 jacobsen Exp $ -->
-		<version author="Bob Jacobsen" version="1" lastUpdated="20011214"/>
+<!-- $Id: Registers.xml,v 1.3 2002-01-13 03:36:57 jacobsen Exp $ -->
+		<version author="Bob Jacobsen" version="2" lastUpdated="20020112"/>
 
 <!-- A very basic programmer, containing only the variables that -->
 <!-- register-mode decoders have. -->
 
 <programmer decoderFilePanes="no">
 
-	<pane name="Basic" nameFmt="stdName">
+	<pane name="Basic" nameFmt="item">
 		<column>
 
-	 		<display name="Short Address"/>
+	 		<display item="Short Address"/>
 			<label label=" "/>
 
-			<display name="Analog (DC) Operation"/>
-			<display name="Speed Step Mode"/>
-			<display name="Locomotive Direction"/>
+			<display item="Analog (DC) Operation"/>
+			<display item="Speed Step Mode"/>
+			<display item="Locomotive Direction"/>
 			<label label=" "/>
 
-	 		<display name="Vstart"/>
+	 		<display item="Vstart"/>
 			<label label=" "/>
 
-	 		<display name="Accel"/>
+	 		<display item="Accel"/>
 			<label label=" "/>
 
-	 		<display name="Decel"/>
+	 		<display item="Decel"/>
 			<label label=" "/>
 
 		</column>

@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a DCC decoder as a component, esp. information -->
 <!-- on how to program it. -->
-<!-- $Id: decoder-config.dtd,v 1.14 2002-01-08 03:52:27 jacobsen Exp $ -->
+<!-- $Id: decoder-config.dtd,v 1.15 2002-01-13 03:36:57 jacobsen Exp $ -->
 
 <!ELEMENT decoder-config (version, decoder, pane*)>
 
@@ -49,7 +49,7 @@
 <!ELEMENT variable  (enumVal |
                              decVal | hexVal | 
                              speedTableVal | longAddressVal ) >
-<!ATTLIST variable name CDATA #REQUIRED>  <!-- Name used for identification -->
+<!ATTLIST variable label CDATA #REQUIRED>  <!-- manufacturere name used for identification -->
 <!ATTLIST variable CV CDATA #REQUIRED>    <!-- CV number containing value -->
 <!ATTLIST variable mask CDATA "VVVVVVVV">    <!-- mask of bits within CV -->
                                            <!-- mask is up to 16 characters long, each -->
@@ -60,7 +60,7 @@
 <!ATTLIST variable readOnly  (yes | no) "no" >
 <!ATTLIST variable default		CDATA #IMPLIED >
 <!ATTLIST variable comment		CDATA #IMPLIED>
-<!ATTLIST variable stdName		CDATA #IMPLIED>  <!-- "standard name" for this function if different -->
+<!ATTLIST variable item			CDATA #IMPLIED>  <!--item name for this function if different -->
 <!ATTLIST variable minFn		CDATA #IMPLIED>  <!-- min number of fns in decoder for this to be valid -->
 <!ATTLIST variable minOut		CDATA #IMPLIED>  <!-- min number of fns in decoder for this to be valid -->
 <!ATTLIST variable inOptions 	CDATA #IMPLIED>  <!-- variable present if any of the options are present -->
@@ -102,10 +102,10 @@
 <!-- A constant represents a fixed value, but is treated -->
 <!-- much like a variable at runtime -->
 <!ELEMENT constant  EMPTY >
-<!ATTLIST constant	name CDATA #REQUIRED>  <!-- Name used for identification -->
+<!ATTLIST constant	label 		CDATA #REQUIRED>  <!-- Mfg's label, generally displayed at the item label -->
 <!ATTLIST constant 	default		CDATA #IMPLIED >
 <!ATTLIST constant 	comment		CDATA #IMPLIED>
-<!ATTLIST constant	stdName		CDATA #IMPLIED>  <!-- "standard name" for this function if different -->
+<!ATTLIST constant	item		CDATA #IMPLIED>  <!-- item name for this function if different from label -->
 <!ATTLIST constant	minFn		CDATA #IMPLIED>  <!-- min number of fns in decoder for this to be valid -->
 <!ATTLIST constant	minOut		CDATA #IMPLIED>  <!-- min number of fns in decoder for this to be valid -->
 <!ATTLIST constant	inOptions 	CDATA #IMPLIED>  <!-- variable present if any of the options are present -->
@@ -115,7 +115,7 @@
 <!ELEMENT pane (column*)>
 <!ATTLIST pane name CDATA #REQUIRED>  <!-- Name used for identification -->
 <!-- Which name to show in GUI? Mfg is the name field from the decoder file -->
-<!ATTLIST pane nameFmt (mfg | stdName) "mfg">
+<!ATTLIST pane nameFmt (label | item) "label">
 
 <!-- The column section describes each column in the pane -->
 <!ELEMENT column ((display | label | separator | cvtable | fnmapping | dccaddress )*)>
@@ -140,7 +140,7 @@
 <!-- in the column and how they are displayed -->
 
 <!ELEMENT display EMPTY >
-<!ATTLIST display name CDATA #REQUIRED>  <!-- Name used for identification -->
+<!ATTLIST display item CDATA #REQUIRED>  <!-- Name used for identification -->
 <!ATTLIST display label CDATA  #IMPLIED>  <!-- optional, default is from name -->
 <!ATTLIST display tooltip CDATA #IMPLIED>  <!-- optional, default is from variable tooltip -->
 <!ATTLIST display layout ( left | above | below | right ) "left" > <!-- label position -->

@@ -1,6 +1,6 @@
 <!-- Defines XML documenting on a locomotive, esp. information -->
 <!-- on how it is programmed. -->
-<!-- $Id: locomotive-config.dtd,v 1.10 2001-12-18 07:16:37 jacobsen Exp $ -->
+<!-- $Id: locomotive-config.dtd,v 1.11 2002-01-13 03:36:57 jacobsen Exp $ -->
 
 <!ELEMENT locomotive-config (locomotive)>
 <!ATTLIST locomotive-config>
@@ -32,12 +32,13 @@
 <!ELEMENT decoderDef (varValue*) >   <!-- Where the variable definitions came from -->
 		  						
 <!ELEMENT CVvalue EMPTY>
-<!ATTLIST CVvalue name CDATA #REQUIRED>            <!-- Name used for identification -->
+<!ATTLIST CVvalue name CDATA #IMPLIED>            <!-- CV number, used for identification -->
 <!ATTLIST CVvalue value CDATA #REQUIRED>           <!-- Value of specified CV -->
 <!ATTLIST CVvalue comment   CDATA #IMPLIED>
 
 <!ELEMENT varValue EMPTY>
-<!ATTLIST varValue name CDATA #REQUIRED>            <!-- Name used for identification -->
+<!ATTLIST varValue item CDATA #IMPLIED>            <!-- item name used for identification -->
+<!ATTLIST varValue name CDATA #IMPLIED>            <!-- old form of item name, for compatibility -->
 <!ATTLIST varValue value CDATA #REQUIRED>           <!-- Value of specified variable -->
 <!ATTLIST varValue comment   CDATA #IMPLIED>
 
