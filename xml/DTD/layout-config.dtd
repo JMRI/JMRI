@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.41 2004-12-29 04:12:14 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.42 2005-01-03 16:44:31 jacobsen Exp $ -->
 
 <!-- This DTD is Copyright 2001, 2003 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -13,7 +13,7 @@
 			preferences | turnouts | sensors | lights | blocks | signals | routes |
 						securityelements | aspectgenerator | paneleditor |
 						signalheads | application | blocks | reporters |
-						memories | timebase )*>
+						memories | memorys | timebase )*>
 
 <!-- Overall application configuration -->
 <!ELEMENT application (connection*, gui*, programmer, roster?, perform*)>
@@ -101,6 +101,10 @@
   <!ELEMENT reporter EMPTY >
     <!ATTLIST reporter systemName	CDATA #REQUIRED>  <!-- defines system type -->
     <!ATTLIST reporter userName		CDATA #IMPLIED>
+
+<!ELEMENT memorys (memory*)>  
+  <!ATTLIST memorys class		CDATA #IMPLIED>
+<!-- now replaced by memories element, here to allow validate of old files -->
 
 <!ELEMENT memories (memory*)>
   <!ATTLIST memories class		CDATA #REQUIRED>
