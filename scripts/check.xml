@@ -1,6 +1,6 @@
 <!-- Special build file for doing Java 1.1.8 compatibility tests -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.9 $ -->
+<!-- Revision $Revision: 1.10 $ -->
 
 <project name="JMRI" default="check" basedir=".">
 
@@ -19,6 +19,11 @@
   <property name="jartarget" value=".."/>
   <property name="jarname" value="jmri.jar"/>
 
+  <!-- get properties from environment.  Env.JDK and Env.JDK1 are desired -->
+  <property environment="Env" />
+  <property name="Env.JDK" value="javac" />
+  <property name="Env.JDK1" value="oldjavac" />
+  
   <path id="project.class.path">
     <pathelement location="../lib/collections.jar" />
     <pathelement location="../lib/crimson.jar" />
@@ -56,7 +61,11 @@
   
   <!-- some targets to make sure setup still OK -->
 
-
+  <target name="version">
+    <echo message="${java.version}"/>
+    <echo message="${Env.JDK}"/>
+    <echo message="${Env.JDK1}"/>
+  </target>
 
 
   <target name="libcheck">
@@ -91,7 +100,9 @@
                  jmri/util/StringUtil.java, 
                  jmri/util/SwingUtil.java, 
                  jmri/util/com/sun/TableSorter.java"
-           target="1.1" 
+           target="1.1"
+           fork="yes"
+           executable="${Env.JDK}"
            debug="yes" >
        <classpath refid="project.class.path"    />
     </javac>
@@ -116,6 +127,8 @@
     <javac srcdir="${source}" 
            destdir="${target}" 
            target="1.1" 
+           fork="yes"
+           executable="${Env.JDK1}"
            debug="yes" >
        <bootclasspath refid="compile1.1.8.path" />
        <classpath refid="project.class.path"    />
@@ -140,6 +153,8 @@
     <javac srcdir="${test}" 
            destdir="${target}"
            target="1.1" 
+           fork="yes"
+           executable="${Env.JDK1}"
            debug="no" >
        <bootclasspath refid="compile1.1.8.path" />
        <classpath refid="project.class.path"    />

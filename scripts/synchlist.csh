@@ -37,7 +37,6 @@ echo '</description>' >>ClassicCompile.xml
 echo '' >>ClassicCompile.xml
 
 echo '<\!-- Force use of 1.1/1.2 compiler to avoid problem with synchronized keyword -->' >>ClassicCompile.xml
-echo '<property name="build.compiler" value="classic" />' >>ClassicCompile.xml
 echo '' >>ClassicCompile.xml
 
 echo '  <path id="project.class.path">						' >>ClassicCompile.xml
@@ -65,6 +64,7 @@ echo '  <target name="ClassicCompile" description="compile files requiring Java 
 echo '    <\!-- Compile specific classes with regular path --> 	' >>ClassicCompile.xml
 echo '    <javac srcdir="${source}" target="1.1" 				' >>ClassicCompile.xml
 echo '      destdir="${target}" debug="no"  					' >>ClassicCompile.xml
+echo '      fork="yes" executable="${Env.JDK1}"  				' >>ClassicCompile.xml
 echo '      includes =" ' >>ClassicCompile.xml
 
 # now write the output filenames
