@@ -34,7 +34,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * used with permission.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2003
- * @version			$Revision: 1.28 $
+ * @version			$Revision: 1.29 $
  */
 public class Llnmon {
 
@@ -119,6 +119,7 @@ public class Llnmon {
 
 	int minutes;  // temporary time values
 	int hours;
+        int frac_mins;
 
 
         switch (l.getOpCode()) {
@@ -649,7 +650,7 @@ public class Llnmon {
             else if ((l.getElement(2)&0x0F) == 0x06) zone = "D";
             else zone="<unknown "+(l.getElement(2)&0x0F)+">";
 			int section = (l.getElement(2)/16)+(l.getElement(1)&0x1F)*16;
-			
+
             switch (type) {
             case LnConstants.OPC_MULTI_SENSE_POWER:
                 return powerMultiSenseMessage(l);
@@ -940,6 +941,7 @@ public class Llnmon {
                     hours   = ((256 - hours_24)& 0x7f) % 24;
                     hours   = (24 - hours) % 24;
                     minutes = (60 - minutes) % 60;
+                    frac_mins = 0x3FFF - ( frac_minsl + ( frac_minsh << 7 ) ) ;
 
                     /* check track status value and display */
                     if ((trackStatus != track_stat) || showTrackStatus) {
@@ -954,7 +956,7 @@ public class Llnmon {
                             +")\n\t"
                             +(clk_rate != 0 ? "Running" : "Frozen")
                             +", rate is "+clk_rate
-                            +":1. Day "+days+", "+hours+":"+minutes
+                            +":1. Day "+days+", "+hours+":"+minutes+"."+frac_mins
                             +". Last set by ID "+idString(id1, id2)
                             +"\n\tMaster controller "
                             +((track_stat & LnConstants.GTRK_MLOK1)!=0 ? "implements LocoNet 1.1" : "is a DT-200")
@@ -1500,7 +1502,7 @@ public class Llnmon {
             else if ( (l.getElement(3)&0x7) == 1) device = "BD ";
             else if ( (l.getElement(3)&0x7) == 2) device = "SE ";
             else device = "(unknown type) ";
-            
+
             int bit = (l.getElement(4)&0x0E)/2;
             int val = (l.getElement(4)&0x01);
             int wrd = (l.getElement(4)&0x70)/16;
