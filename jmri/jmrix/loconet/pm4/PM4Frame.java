@@ -2,13 +2,15 @@
 
 package jmri.jmrix.loconet.pm4;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-
-import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LnTrafficController;
+import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
+
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.*;
 
 /**
  * Frame displaying and programming a PM4 configuration.
@@ -26,7 +28,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class PM4Frame extends JFrame implements LocoNetListener {
 
@@ -40,14 +42,14 @@ public class PM4Frame extends JFrame implements LocoNetListener {
             pane0.add(addrField);
             pane0.add(readAllButton);
             pane0.add(writeAllButton);
-        getContentPane().add(pane0);
+        appendLine(pane0);
 
         JPanel panec = new JPanel();
         panec.setLayout(new FlowLayout());
             panec.add(new JLabel("Current limit: "));
             panec.add(current);
             current.setSelectedIndex(1);
-        getContentPane().add(panec);
+        appendLine(panec);
 
         JPanel pane1 = new JPanel();
         pane1.setLayout(new FlowLayout());
@@ -55,7 +57,7 @@ public class PM4Frame extends JFrame implements LocoNetListener {
             pane1.add(slow1);
             pane1.add(new JLabel(" Autoreversing "));
             pane1.add(rev1);
-        getContentPane().add(pane1);
+        appendLine(pane1);
 
         JPanel pane2 = new JPanel();
         pane2.setLayout(new FlowLayout());
@@ -63,7 +65,7 @@ public class PM4Frame extends JFrame implements LocoNetListener {
             pane2.add(slow2);
             pane2.add(new JLabel(" Autoreversing "));
             pane2.add(rev2);
-        getContentPane().add(pane2);
+        appendLine(pane2);
 
         JPanel pane3 = new JPanel();
         pane3.setLayout(new FlowLayout());
@@ -71,7 +73,7 @@ public class PM4Frame extends JFrame implements LocoNetListener {
             pane3.add(slow3);
             pane3.add(new JLabel(" Autoreversing "));
             pane3.add(rev3);
-        getContentPane().add(pane3);
+        appendLine(pane3);
 
         JPanel pane4 = new JPanel();
         pane4.setLayout(new FlowLayout());
@@ -79,10 +81,9 @@ public class PM4Frame extends JFrame implements LocoNetListener {
             pane4.add(slow4);
             pane4.add(new JLabel(" Autoreversing "));
             pane4.add(rev4);
-        getContentPane().add(pane4);
+        appendLine(pane4);
 
-        status.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
-        getContentPane().add(status);
+        appendLine(status);
 
         // install read all, write all button handlers
         readAllButton.addActionListener( new ActionListener() {
@@ -113,6 +114,16 @@ public class PM4Frame extends JFrame implements LocoNetListener {
 
         // and prep for display
         pack();
+    }
+
+    /**
+     * Handle layout details during construction.
+     * <P>
+     * @param c component to put on a single line
+     */
+    void appendLine(JComponent c) {
+        c.setAlignmentX(0.f);
+        getContentPane().add(c);
     }
 
     boolean read = false;
@@ -268,18 +279,22 @@ public class PM4Frame extends JFrame implements LocoNetListener {
     JCheckBox slow4 = new JCheckBox();
     JCheckBox rev4  = new JCheckBox();
 
-    JLabel status = new JLabel("The PM4 should be on and in normal mode. (Don't push the buttons on the PM4)");
+    JLabel status = new JLabel("The PM4 should be in normal mode. (Don't push the buttons on the PM4)");
 
     JToggleButton readAllButton = new JToggleButton("Read from PM4");
     JToggleButton writeAllButton = new JToggleButton("Write to PM4");
 
-    // Close the window when the close box is clicked
+    // Destroy the window when the close box is clicked, as there is no
+    // way to get it to show again
     void thisWindowClosing(java.awt.event.WindowEvent e) {
         setVisible(false);
         dispose();
     }
 
     public void dispose() {
+        // Drop loconet connection
+        if (LnTrafficController.instance()!=null)
+            LnTrafficController.instance().removeLocoNetListener(~0, this);
         // take apart the JFrame
         super.dispose();
     }
