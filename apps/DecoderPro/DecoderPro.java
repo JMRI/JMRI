@@ -17,6 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
+import jmri.util.JmriJFrame;
+
 /**
  * The JMRI application for configuring DCC decoders.
  * <P>
@@ -25,7 +27,7 @@ import javax.swing.JPanel;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.45 $
+ * @version     $Revision: 1.46 $
  */
 public class DecoderPro extends Apps {
 
@@ -99,7 +101,7 @@ public class DecoderPro extends Apps {
         log.info(apps.Apps.startupInfo("DecoderPro"));
 
         setConfigFilename("DecoderProConfig2.xml", args);
-        JFrame f = new JFrame("DecoderPro");
+        JmriJFrame f = new JmriJFrame("DecoderPro");
         createFrame(new DecoderPro(f), f);
 
         log.info("main initialization done");

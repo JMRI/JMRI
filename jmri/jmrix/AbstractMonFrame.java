@@ -17,12 +17,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.text.*;
 
+import jmri.util.JmriJFrame;
+
 /**
  * Abstact base class for Frames displaying communications monitor information
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
-public abstract class AbstractMonFrame extends JFrame  {
+public abstract class AbstractMonFrame extends JmriJFrame  {
 
     // template functions to fill in
     protected abstract String title();    // provide the title for the frame
@@ -55,6 +57,7 @@ public abstract class AbstractMonFrame extends JFrame  {
     final javax.swing.JFileChooser logFileChooser = new JFileChooser(" ");
 
     public AbstractMonFrame() {
+	super();
     }
 
     public void initComponents() throws Exception {

@@ -22,13 +22,21 @@ import java.awt.*;
  *
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class JmriJFrame extends JFrame {
 
+    public JmriJFrame() {
+	super();
+	// Set the image for use when minimized
+	setIconImage(getToolkit().getImage("resources/jmri32x32.gif"));
+    }
+
     public JmriJFrame(String name) {
         super(name);
+	// Set the image for use when minimized
+	setIconImage(getToolkit().getImage("resources/jmri32x32.gif"));
     }
 
     public Dimension getMaximumSize() {
