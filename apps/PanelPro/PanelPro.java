@@ -18,7 +18,7 @@ import javax.swing.JMenuBar;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class PanelPro extends Apps {
 
@@ -38,6 +38,10 @@ public class PanelPro extends Apps {
 
         // debug, but not development
         debugMenu(menuBar, frame);
+    }
+
+    protected String logo() {
+        return "resources/PanelPro.gif";
     }
 
     protected String line1() {
