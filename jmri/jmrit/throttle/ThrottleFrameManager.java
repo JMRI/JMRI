@@ -11,7 +11,7 @@ import java.util.Iterator;
  *
  * @author     Glen Oberhauser
  * @created    March 25, 2003
- * @version    $Revision: 1.6 $
+ * @version    $Revision: 1.7 $
  */
 public class ThrottleFrameManager
 {
@@ -60,6 +60,10 @@ public class ThrottleFrameManager
 		{
 			throttleFrames.remove(throttleFrames.indexOf(frame));
 			destroyThrottleFrame(frame);
+			if (throttleFrames.size() > 0)
+			{
+				requestFocusForNextFrame();
+			}
 		}
 	}
 
@@ -119,6 +123,24 @@ public class ThrottleFrameManager
 		return throttleFramePropertyEditor;
 	}
 
+	private void requestFocusForNextFrame()
+	{
+		activeFrame = (activeFrame + 1) % throttleFrames.size();
+		ThrottleFrame tf = (ThrottleFrame) throttleFrames.get(activeFrame);
+		tf.requestFocus();
+	}
+	
+	private void requestFocusForPreviousFrame()
+	{
+		activeFrame--;
+		if (activeFrame < 0)
+		{
+			activeFrame = throttleFrames.size() - 1;
+		}
+		ThrottleFrame tf = (ThrottleFrame) throttleFrames.get(activeFrame);
+		tf.requestFocus();
+	}
+
 	/**
 	 *  Description of the Class
 	 *
@@ -136,19 +158,11 @@ public class ThrottleFrameManager
 		{
 			if (e.isShiftDown() && e.getKeyCode() == NEXT_THROTTLE_KEY)
 			{
-				activeFrame = (activeFrame + 1) % throttleFrames.size();
-				ThrottleFrame tf = (ThrottleFrame) throttleFrames.get(activeFrame);
-				tf.requestFocus();
+				requestFocusForNextFrame();
 			}
 			else if (e.isShiftDown() && e.getKeyCode() == PREV_THROTTLE_KEY)
 			{
-				activeFrame--;
-				if (activeFrame < 0)
-				{
-					activeFrame = throttleFrames.size() - 1;
-				}
-				ThrottleFrame tf = (ThrottleFrame) throttleFrames.get(activeFrame);
-				tf.requestFocus();
+				requestFocusForPreviousFrame();
 			}
 		}
 	}
