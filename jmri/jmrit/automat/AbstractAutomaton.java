@@ -3,6 +3,7 @@
 package jmri.jmrit.automat;
 
 import jmri.*;
+import javax.swing.*;
 
 /**
  * Abstract base for user automaton classes, which provide
@@ -36,7 +37,7 @@ import jmri.*;
  * a warning will be logged if they are used before the thread starts.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 abstract public class AbstractAutomaton implements Runnable {
 
@@ -68,6 +69,12 @@ abstract public class AbstractAutomaton implements Runnable {
     abstract public boolean handle();
 
     /**
+     * Control optional debugging prompt.  If this is set true,
+     * each call to wait() will prompt the user whether to continue.
+     */
+    protected boolean promptOnWait = false;
+
+    /**
      * Wait for an interval, in a simple form.
      * <P>
      * This handles exceptions internally,
@@ -82,6 +89,7 @@ abstract public class AbstractAutomaton implements Runnable {
         } catch (InterruptedException e) {
             // do nothing for now
         }
+        if (promptOnWait) debuggingWait();
     }
 
     /**
@@ -135,7 +143,113 @@ abstract public class AbstractAutomaton implements Runnable {
         return now;
     }
 
+    /**
+     * Wait for a sensor to become active.
+     * <P>
+     * This works by registering a listener, which is likely to
+     * run in another thread.  That listener then interrupts the automaton's
+     * thread, who confirms the change.
+     *
+     * @param mSensor Sensor to watch
+     */
+    public synchronized void waitSensorActive(Sensor mSensor){
+        if (!inThread) log.warn("waitSensorActive invoked from invalid context");
+        if (mSensor.getKnownState() == Sensor.ACTIVE) return;
+        if (log.isDebugEnabled()) log.debug("waitSensorActive starts: "+mSensor.getID());
+        // register a listener
+        java.beans.PropertyChangeListener l;
+        mSensor.addPropertyChangeListener(l = new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                synchronized (self) {
+                    self.notify();
+                }
+            }
+        });
+
+        while (Sensor.INACTIVE != mSensor.getKnownState()) {
+            try {
+                super.wait(10000);
+            } catch (InterruptedException e) {
+                log.warn("waitSensorActive interrupted; this is unexpected");
+            }
+        }
+
+        // remove the listener & report new state
+        mSensor.removePropertyChangeListener(l);
+
+        return;
+    }
+
+    /**
+     * Wait for one of a list of sensors to be active.
+     * <P>
+     * This works by registering a listener, which is likely to
+     * run in another thread.  That listener then interrupts the automaton's
+     * thread, who confirms the change.
+     *
+     * @param mSensors Array of sensors to watch
+     */
+    public synchronized void waitSensorActive(Sensor[] mSensors){
+        if (!inThread) log.warn("waitSensorActive invoked from invalid context");
+        if (log.isDebugEnabled()) log.debug("waitSensorActive[] starts");
+
+        // do a quick check first, just in case
+        if (checkForActive(mSensors)) {
+            log.debug("returns immediately");
+            return;
+        }
+        // register listeners
+        int i;
+        java.beans.PropertyChangeListener[] listeners =
+                new java.beans.PropertyChangeListener[mSensors.length];
+        for (i=0; i<mSensors.length; i++) {
+
+            mSensors[i].addPropertyChangeListener(listeners[i] = new java.beans.PropertyChangeListener() {
+                public void propertyChange(java.beans.PropertyChangeEvent e) {
+                    synchronized (self) {
+                        log.debug("notify waitSensorActive[] of property change");
+                        self.notify();
+                    }
+                }
+            });
+
+        }
+
+        while (!checkForActive(mSensors)) {
+            try {
+                super.wait(10000);
+            } catch (InterruptedException e) {
+                log.warn("waitSensorChange interrupted; this is unexpected");
+            }
+        }
+
+        // remove the listeners
+        for (i=0; i<mSensors.length; i++) {
+            mSensors[i].removePropertyChangeListener(listeners[i]);
+        }
+
+        return;
+    }
+
+    /**
+     * Check an array of sensors to see if any are active
+     * @param mSensors Array to check
+     * @return true if any are ACTIVE
+     */
+    private boolean checkForActive(Sensor[] mSensors) {
+        for (int i=0; i<mSensors.length; i++) {
+            if (mSensors[i].getKnownState() == Sensor.ACTIVE) return true;
+        }
+        return false;
+    }
+
     private DccThrottle throttle;
+    /**
+     * Obtains a DCC throttle, including waiting for the command station response.
+     * @param address
+     * @param longAddress true if this is a long address, false for a short address
+     * @return A usable throttle, or null if error
+     */
     public DccThrottle getThrottle(int address, boolean longAddress) {
         if (!inThread) log.warn("getThrottle invoked from invalid context");
         throttle = null;
@@ -151,12 +265,55 @@ abstract public class AbstractAutomaton implements Runnable {
         // now wait for reply from identified throttle
         while (throttle == null) {
             log.debug("waiting for throttle");
-            wait(10000);
+            try {
+                synchronized (self) {
+                    super.wait(10000);
+                }
+            } catch (InterruptedException e) {
+                log.warn("getThrottle got unexpected interrupt");
+            }
             if (throttle == null) log.warn("Still waiting for throttle!");
         }
         return throttle;
     }
 
+    JFrame debugWaitFrame = null;
+
+    /**
+     * Wait for the user to OK moving forward. This is complicated
+     * by not running in the GUI thread, and by not wanting to use
+     * a modal dialog.
+     */
+    private void debuggingWait() {
+        // post an event to the GUI pane
+        Runnable r = new Runnable() {
+            public void run() {
+                // create a prompting frame
+                if (debugWaitFrame==null) {
+                    debugWaitFrame = new JFrame("Automaton paused");
+                    JButton b = new JButton("Continue");
+                    debugWaitFrame.getContentPane().add(b);
+                    b.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent e) {
+                            synchronized (self) {
+                                self.notify();
+                            }
+                            debugWaitFrame.hide();
+                        }
+                    });
+                    debugWaitFrame.pack();
+                }
+                debugWaitFrame.show();
+            }
+        };
+        javax.swing.SwingUtilities.invokeLater(r);
+        // wait to proceed
+        try {
+            super.wait();
+        }  catch (InterruptedException e) {
+            log.warn("Interrupted during debugging wait, not expected");
+        }
+    }
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractAutomaton.class.getName());
 
