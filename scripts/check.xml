@@ -1,6 +1,6 @@
 <!-- Special build file for doing Java 1.1.8 compatibility tests -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.3 $ -->
+<!-- Revision $Revision: 1.4 $ -->
 
 <project name="JMRI" default="check" basedir=".">
 
@@ -20,6 +20,8 @@
   <property name="source" value="src"/>
   <property name="test" value="test"/>
   <property name="target" value="classes"/>
+  <property name="jartarget" value=".."/>
+
   <path id="project.class.path">
     <pathelement location="../lib/collections.jar" />
     <pathelement location="../lib/crimson.jar" />
@@ -32,9 +34,6 @@
     <pathelement location="../lib/jython.jar" />
     <pathelement location="classes/" />
   </path>
-
-  <!-- Force use of 1.1/1.2 compiler in case there are any issues (none known yet!) -->
-  <property name="build.compiler" value="javac1.2" />
 
   <!-- special path including Java 1.1.8 libraries -->
   <path id="compile1.1.8.path">
@@ -57,6 +56,8 @@
   <target name="rmic">
     <ant target="rmic" antfile="build.xml" />
   </target>
+  
+  <!-- some targets to make sure setup still OK -->
 
 
 
@@ -75,10 +76,9 @@
   	<fail message="lib118/JDKClasses.zip not present" />
   </target>
   
-  <target name="nativecompile" description="compile files requiring Java 1.3">
+  <target name="nativecompile" description="compile files requiring Java 1.3 libraries">
     <!-- Compile specific classes with regular path -->
     <ant target="compilefiles" antfile="build.xml">
-      <property name="project.class.path" value="${compile1.1.8.path}"/>
       <property name="files" 
           value="jmri/util/StringUtil.java, 
                  jmri/util/FontUtil.java,
@@ -87,12 +87,13 @@
                  jmri/util/JTreeUtil.java,
                  jmri/util/LocaleUtil.java,
                  jmri/util/JTabbedPaneUtil.java,
+                 jmri/util/JTableUtil.java,
                  jmri/util/com/sun/TableSorter.java,
                  jmri/util/PythonInterp.java" />
     </ant>
   </target>
 
-  <target name="compile" description="build code for 1.1.8 compatibility">
+  <target name="compile" description="compile for 1.1.8 JVM, with all its oddities">
     <!-- Check and initialize -->
     <antcall target="libcheck"/>
     <antcall target="clean"/>
@@ -102,6 +103,11 @@
     <antcall target="nativecompile"/>
 
     <!-- Compile the java 1.1.8 code from ${source} into ${target} -->
+    <echo message="Create compile command for 1.1.8 files"/>
+    <exec executable="./synchlist.csh" />
+    <echo message="and run the resulting Ant task" />
+    <ant target="ClassicCompile" antfile="ClassicCompile.xml"/>	
+	
     <javac srcdir="${source}" 
            destdir="${target}" 
            target="1.1" 
@@ -113,10 +119,13 @@
     <!-- Do the rest of normal compilation -->
     <ant target="compile" antfile="build.xml" />
   </target>
-  
+
+  <!-- and now the main "check" target, the reason for this file -->
+    
   <target name="tests" description="compile tests for 1.1.8 compatibility check"
                 depends="init">
     <!-- compile tests -->
+	<echo message="Compile tests"/>
     <javac srcdir="${test}" 
            destdir="${target}"
            target="1.1" 
