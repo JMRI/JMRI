@@ -3,7 +3,7 @@
  *
  * Description:		utilities for handling sensor addresses
  * @author			Bob Jacobsen Copyright (C) 2001, 2002
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 
 package jmri.jmrix.loconet;
@@ -17,7 +17,7 @@ public class LnSensorAddress {
 	boolean _valid;
 
 	public LnSensorAddress(int sw1, int sw2) {
-		_as = sw2&0x40;		// should be a LocoNet constant?
+		_as = sw2&0x20;		// should be a LocoNet constant?
 		_high = sw2&0x0F;
 		_low = sw1&0x7F;
 		_valid = true;
@@ -31,7 +31,7 @@ public class LnSensorAddress {
 			// parse out and decode the name
 			if (s.charAt(s.length()-1)=='A') {
 				// DS54 addressing, Aux input
-				_as = 0x40;
+				_as = 0x20;
 				int n = Integer.parseInt(s.substring(2, s.length()-1));
 				_high = n/128;
 				_low = n&0x7F;
@@ -58,14 +58,14 @@ public class LnSensorAddress {
 								+Integer.parseInt(s.substring(s.length()-1, s.length()));
 					_high = n/128;
 					_low = (n&0x7F)/2;
-					_as = (n&0x01)*0x40;
+					_as = (n&0x01)*0x20;
 					_valid = true;
 				} else {
 					// assume that its LSnnn style
 					int n = Integer.parseInt(s.substring(2, s.length()));
 					_high = n/256;
 					_low = (n&0xFE)/2;
-					_as = (n&0x01)*0x40;
+					_as = (n&0x01)*0x20;
 					_valid = true;
 				}
 			}
@@ -88,7 +88,7 @@ public class LnSensorAddress {
 	public boolean matchAddress(int a1, int a2) { // a1 is byte 1 of ln msg, a2 is byte 2
 		if (getHighBits() != (a2&0x0f)) return false;
 		if (getLowBits() != (a1&0x7f)) return false;
-		if (getASBit() != (a2&0x40)) return false;
+		if (getASBit() != (a2&0x20)) return false;
 		return true;
 	}
 

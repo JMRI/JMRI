@@ -19,7 +19,7 @@ import java.io.Serializable;
  * ideas being tested there will eventually be moved back to here.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  * @see             jmri.jmrix.nce.NceMessage
  *
  */
@@ -192,7 +192,7 @@ public class LocoNetMessage implements Serializable {
     public int sensorAddr() {
         int sw1 = getElement(1);
         int sw2 = getElement(2);
-		int as = sw2&0x40;		// should be a LocoNet constant?
+		int as = sw2&0x20;		// should be a LocoNet constant?
         int high = sw2&0x0F;
 		int low = sw1&0x7F;
 		return high*256+low*2+(as!=0 ? 1 : 0);
