@@ -2,7 +2,6 @@
 
 package jmri.jmrix.cmri.serial;
 
-import jmri.JmriException;
 import jmri.Sensor;
 
 /**
@@ -15,10 +14,22 @@ import jmri.Sensor;
  * see nextAiuPoll()
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class SerialSensorManager extends jmri.AbstractSensorManager
                             implements SerialListener {
+
+    /**
+     * Number of sensors per UA in the naming scheme.
+     * <P>
+     * The first UA (node) uses sensors from 1 to SENSORSPERUA-1,
+     * the second from SENSORSPERUA+1 to SENSORSPERUA+(SENSORSPERUA-1), etc.
+     * <P>
+     * Must be more than, and is generally one more than,
+     * {@link SerialNode#MAXSENSORS}
+     *
+     */
+    static final int SENSORSPERUA = 1000;
 
     public SerialSensorManager() {
         super();
@@ -44,7 +55,7 @@ public class SerialSensorManager extends jmri.AbstractSensorManager
             s = new SerialSensor(systemName, userName);
 
         // ensure the serial node exists
-        int index = (number/128);
+        int index = (number/SENSORSPERUA);
         if (nodeArray[index] == null) {
             if (log.isDebugEnabled()) log.debug("New SerialNode index:"+index+" number:"+number);
             nodeArray[index] = new SerialNode();
@@ -52,7 +63,7 @@ public class SerialSensorManager extends jmri.AbstractSensorManager
         nodesPresent = true;
 
         // register this sensor with the SerialNode
-        nodeArray[index].registerSensor((SerialSensor)s, number-index*128-1);
+        nodeArray[index].registerSensor((SerialSensor)s, number-index*SENSORSPERUA-1);
 
         return s;
     }
