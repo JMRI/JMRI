@@ -2,19 +2,19 @@
 
 package jmri.jmrit.roster;
 
-import jmri.jmrit.*;
-import java.awt.event.*;
-import java.io.*;
+import jmri.jmrit.XmlFile;
+import java.awt.event.ActionEvent;
+import java.io.File;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
 
-import org.jdom.*;
+import org.jdom.Element;
 
 /**
- * Recreate the roster index file if it's been damaged or lost
+ * Recreate the roster index file if it's been damaged or lost.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class RecreateRosterAction extends AbstractAction {
 
@@ -108,7 +108,7 @@ public class RecreateRosterAction extends AbstractAction {
         }
         //the resulting array is now sorted on file-name to make it easier
         // for humans to read
-        java.util.Arrays.sort(sbox);
+        jmri.util.StringUtil.sort(sbox);
 
         return sbox;
     }

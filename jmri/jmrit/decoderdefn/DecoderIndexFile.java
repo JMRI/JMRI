@@ -8,19 +8,21 @@ import java.util.Enumeration;
 
 import javax.swing.JComboBox;
 
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.Hashtable;
-import com.sun.java.util.collections.List;
 import org.jdom.Attribute;
 import org.jdom.DocType;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
+import com.sun.java.util.collections.ArrayList;
+import com.sun.java.util.collections.Hashtable;
+import com.sun.java.util.collections.List;
 
 // try to limit the JDOM to this class, so that others can manipulate...
 
 /**
- * DecoderIndex represents a decoderIndex.xml file in memory, allowing a program
+ * DecoderIndex represents a decoderIndex.xml file in memory.
+ * <P>
+ * This allows a program
  * to navigate to various decoder descriptions without having to
  * manipulate files.
  *<P>
@@ -31,7 +33,7 @@ import org.jdom.output.XMLOutputter;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -264,7 +266,7 @@ public class DecoderIndexFile extends XmlFile {
 
         //the resulting array is now sorted on file-name to make it easier
         // for humans to read
-        java.util.Arrays.sort(sbox);
+        jmri.util.StringUtil.sort(sbox);
 
         // create a new decoderIndex
         // the existing version is used, so that a new master file
@@ -424,9 +426,9 @@ public class DecoderIndexFile extends XmlFile {
         while (keys.hasMoreElements()) {
             l.add((String)keys.nextElement());
         }
-        Object[] s = l.toArray();
+        String[] s = (String[])l.toArray();
         // all of the above mess was to get something we can sort into alpha order
-        java.util.Arrays.sort(s);
+        jmri.util.StringUtil.sort(s);
         for (int i=0; i<s.length; i++) {
             String mfgName = (String)s[i];
             if (!mfgName.equals("NMRA")){

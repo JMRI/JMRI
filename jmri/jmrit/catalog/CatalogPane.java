@@ -2,14 +2,18 @@
 
 package jmri.jmrit.catalog;
 
-import java.awt.*;
 import java.io.File;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.tree.*;
-import javax.swing.border.*;
-import javax.swing.event.*;
-import jmri.jmrit.XmlFile;
+
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeSelectionModel;
+import javax.swing.tree.TreePath;
 
 /**
  * Create a JPanel containing a tree of resources.
@@ -21,7 +25,7 @@ import jmri.jmrit.XmlFile;
  * files in the distribution directory are _not_ included.
  *
  * @author			Bob Jacobsen  Copyright 2002
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class CatalogPane extends JPanel {
     public CatalogPane() {
@@ -37,10 +41,7 @@ public class CatalogPane extends JPanel {
         dTree.setRootVisible(false);
         dTree.setShowsRootHandles(true);
         dTree.setScrollsOnExpand(true);
-        try {   // following might not be present on Mac Classic, but
-                //doesn't have a big effect
-            dTree.setExpandsSelectedPaths(true);
-        } catch (java.lang.NoSuchMethodError e) {}
+        jmri.util.JTreeUtil.setExpandsSelectedPaths(dTree, true);
 
         dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
 
