@@ -23,7 +23,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 abstract public class AbstractMRTrafficController {
 
@@ -106,8 +106,27 @@ abstract public class AbstractMRTrafficController {
     public static final int NORMALMODE=1;
     public static final int PROGRAMINGMODE=4;
 
+    /*
+     * enterProgMode() and enterNormalMode() return any message that 
+     * needs to be returned to the command station to change modes.
+     * 
+     * If no message is needed, you may return null.
+     * 
+     * If the programmerIdle() function returns true, enterNormalMode() is 
+     * called after a timeout while in IDLESTATE durring programing to 
+     * return the system to normal mode.  
+     * 
+     */
     abstract protected AbstractMRMessage enterProgMode();
     abstract protected AbstractMRMessage enterNormalMode();
+
+    // Use this function to check and see if the programmer is idle 
+    // Override in the system specific code if necessary (see notes for 
+    // enterNormalMode() Above).
+    protected boolean programmerIdle() {	    
+		return true; 
+    }
+	
 
     volatile protected int mCurrentState;
     public static final int IDLESTATE = 10;        // nothing happened
@@ -247,18 +266,22 @@ abstract public class AbstractMRTrafficController {
                     log.error("left timeout in unexpected state: "+mCurrentState);
                 if (mCurrentState == IDLESTATE) {
                     // went around with nothing to do; leave programming state if in it
-                    if (mCurrentMode == PROGRAMINGMODE) {
+                    if (mCurrentMode == PROGRAMINGMODE && programmerIdle() ) {
                         log.debug("timeout causes leaving programming mode");
                         mCurrentState = WAITREPLYINNORMMODESTATE;
                         AbstractMRMessage msg = enterNormalMode();
-                        forwardToPort(msg, null);
-                        // wait for reply
-                        try {
-                            synchronized(xmtRunnable) {
-                                xmtRunnable.wait(msg.getTimeout());
-                            }
-                        } catch (InterruptedException e) { log.error("interrupted while leaving programming mode"); }
-                        // and go around again
+                        // if the enterNormalMode() message is null, we
+                        // don't want to try to send it to the port.
+                        if (msg!=null) {
+			   forwardToPort(msg, null);
+                           // wait for reply
+                           try {
+                               synchronized(xmtRunnable) {
+                                   xmtRunnable.wait(msg.getTimeout());
+                               }
+                           } catch (InterruptedException e) { log.error("interrupted while leaving programming mode"); }
+                           // and go around again
+			}
                     } else if (mCurrentMode == NORMALMODE) {
                         // We may need to poll
                         AbstractMRMessage msg = pollMessage();
