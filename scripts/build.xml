@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.55 $ -->
+<!-- Revision $Revision: 1.56 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -91,7 +91,7 @@
     </rmic>
   </target>
 
-  <target name="tests" depends="compile" description="compile test classes">
+  <target name="tests" depends="debug" description="compile test classes">
     <!-- Compile the test java code from ${source} into ${target} -->
     <javac srcdir="${test}" 
            destdir="${target}"
