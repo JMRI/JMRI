@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Interface for allocating and deallocating throttles frames. Not to be confused
  * with ThrottleManager
  * @author			Glen Oberhauser
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class ThrottleFrameManager
 {
@@ -18,7 +18,7 @@ public class ThrottleFrameManager
      * Tell this manager that a new ThrottleFrame was created.
      * @param tf The new ThrottleFrame.
      */
-    public void notifyNewThrottleFrame(ThrottleFrame tf)
+    public void notifyCreateThrottleFrame(ThrottleFrame tf)
     {
         if (throttleFrames == null)
         {
@@ -26,6 +26,11 @@ public class ThrottleFrameManager
         }
         throttleFrames.add(tf);
     }
+	
+	public void notifyDestroyThrottleFrame(ThrottleFrame tf)
+	{
+		throttleFrames.remove(throttleFrames.indexOf(tf));
+	}
 
     /**
      * Retrieve an Iterator over all the ThrottleFrames in existence.

@@ -30,8 +30,6 @@ public class ThrottleCreationAction extends AbstractAction {
         ThrottleFrame tf = new ThrottleFrame();
         tf.pack();
         tf.setVisible(true);
-        ThrottleFrameManager manager = InstanceManager.throttleFrameManagerInstance();
-        manager.notifyNewThrottleFrame(tf);
 
     }
 
