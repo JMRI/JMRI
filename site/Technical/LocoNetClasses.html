@@ -16,6 +16,11 @@
 
 <H2>Information on the JMRI LocoNet implementation</H2>
 
+This page describes various high-level structures of the JMRI LocoNet implementation.
+Please see also the 
+<A HREF="Docs/jmri/jmrix/package-loconet.html">JavaDocs for specific classes in the jmrix.loconet package</A>.
+
+<h3>LocoNet-specific values</h3>
 The LnConstants class provides static, final constants to represent
 various fields and values in LocoNet messages.  At some point, some of this
 should be built into to the specific classes (i.e. LocoNetMessage) so the coding and 
@@ -23,24 +28,61 @@ decoding algorithms don't have to appear in so many places.
 
 <h3>LocoNet traffic handling</h3>
 
-Note that the current implementation is not as robust as we really need it to be.
-In particular, back-off and retransmit is not being checked.
+Note that the current MS100 implementation is not as robust as we really need it to be.
+In particular, back-off and retransmit is not being checked.  The best solution
+available right now is to use a LocoBuffer instead of an MS100 for access to the
+LocoNet; that has a PIC in it that handles all this properly.
+<P>
 
-The LocoNetMessage class represents the basic message.  Currently (July 2001), this 
+The 
+<A HREF="Docs/jmri/jmrix/loconet/loconetmessage.html">LocoNetMessage</A> class
+represents the basic message.  Currently (July 2001), this 
 class doesn't really help other code construct and decode LocoNet packets, but
 rather just contains them.  This should be improved.
 <P>
-Classes that want to receive inbound LocoNet packets should implement the 
-LocoNetListener interface, and register their desire to listen 
-via an object with a LocoNetInterface interface.
+The steps to send a message to the LocoNet are:
+<OL>
+<LI>Create a <A HREF="Docs/jmri/jmrix/loconet/loconetmessage.html">LocoNetMessage</A> object,
+and fill it with the message you want to send.  Its not necessary to fill in the
+error-check byte; that will be done as part of sending.
+<LI>Locate an object providing a 
+<A HREF="Docs/jmri/jmrix/loconet/loconetinterface.html">LocoNetInterface</A>
+interface.  In many cases, the 
+<A HREF="Docs/jmri/jmrix/loconet/lntrafficcontroller.html">LnTrafficController</A> is providing this, and the
+object can be located with
+	<PRE>
+		LocoNetInterface l = LnTrafficController.instance();
+	</PRE>
+<LI>Send the message:
+	<PRE>
+		l.sendLocoNetMessage(msg);
+	</PRE>
+</OL>
 
+<P>
+Classes that want to receive inbound LocoNet packets should implement the 
+<A HREF="Docs/jmri/jmrix/loconet/loconetlistener.html">LocoNetListener</A> interface, 
+and register their desire to listen 
+via an object with a 
+<A HREF="Docs/jmri/jmrix/loconet/loconetinterface.html">LocoNetInterface</A> interface.  
+Its important to note that
+listener objects can't assume that they receive incoming LocoNet messages 
+in any specific thread.  In particular, they should not assume that they 
+receive these messages in a GUI thread, so they'll have to forward any
+changes to the user interface.
+<P>
+When a LocoNetListener 
 <P>
 Implementing communication with a real LocoNet is handled by two classes:
 <UL>
-<LI>LnPortController - Abstract class, works at the level of character streams.
+<LI>
+<A HREF="Docs/jmri/jmrix/loconet/lnportcontroller.html">LnPortController</A> - Abstract class, works at the level of character streams.
 Implemented by MS100Adapter to provide character-stream connections to a MS100 
-unit via a serial port.
-<LI>LnTrafficController - Concrete class, works at the level of messages.
+unit via a serial port, with a similar LocoBufferAdapter class handling the
+serial interface for LocoBuffers.
+<LI>
+<A HREF="Docs/jmri/jmrix/loconet/lntrafficcontroller.html">LnTrafficController</A> - Concrete class, 
+works at the level of messages.
 </UL>
 These communicate through Java streams which carry the LocoNet messages as 
 character sequences.  
@@ -49,7 +91,7 @@ The HexFile class also provides a LocoNetInterface. This is intended for playing
 recorded traffic as a way of debugging.
 
 <h3>Startup</h3>
-There are two "action" classes that connect to an input source.   The main 
+There are "action" classes that connect to an input source.   The main 
 program puts these in a menu, on a button, etc, so that the user can select the
 connection desired.
 
@@ -61,8 +103,8 @@ via a MS100.  When triggered, it creates a visible MS100Frame object.
 In turn, the MS100Frame creates an MS100Adapter object, 
 then shows the available comm ports, allowing the user to pick one.
 The MS100Adapter object implements the LnPortController interface, so 
-it can eventually a LnTrafficController to a serial port and MS100.
-<A>
+it can eventually connect an LnTrafficController to a serial port and MS100.
+<P>
 When the "Open MS100 port" button is pressed, the MS100Frame object
 <UL>
 <LI>passes the selected communication port
@@ -77,10 +119,36 @@ method
 messages asynchronously.
 </UL>
 
+<h4>LocoBuffer</h4>
+
+Very similar to the MS100 case, with the same sequence of operations.  The port setup
+is somewhat different. Classes are in the jmrix.loconet.locobuffer package.
+
 <h4>HexFile</h4>
 
-The basic procedure for HexFile is similar to MS100. It starts with a 
-HexFileAction object (package jmrix.loconet.hexfile)
+The HexFile classes (package jmrix.loconet.hexfile) are meant to
+simulate a LocoNet connection from a data file.  The data file feeds in messages
+as if they came from an outside connection.  
+
+<P>Initialization is provided by the HexFileAction class.
+When triggered, it creates a visible HexFileFrame object. 
+This provides a button the user can use to select an input file.
+<P>
+When a file is selected, the HexFileFrame object
+<UL>
+<LI>creates a HexFileAdapter object
+connected to that file
+<LI>then makes sure that
+a LnTrafficController object exists by calling the LnTrafficController.instance
+method
+<LI>connects that LnTrafficController instance to the HexFileAdapter (subclass of LnPortController)
+<LI>starts LnTrafficController in a new thread so that it can handle inbound
+messages asynchronously.
+</UL>
+<P>
+Unlike the
+MS100Frame and LocoBufferFrame objects, the HexFileFrame object stays
+visible so that it can control the flow of messages from the file.
 
 <h3>Slot and Programmer management</h3>
 
