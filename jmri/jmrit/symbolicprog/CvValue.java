@@ -22,10 +22,10 @@ import javax.swing.JTextField;
  * operation, Value changes before State, so you can assume that Value is stable
  * if notified of a State change.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class CvValue extends AbstractValue implements ProgListener {
-
+    
     public CvValue(int num, Programmer pProgrammer) {
         _num = num;
         mProgrammer = pProgrammer;
@@ -35,15 +35,15 @@ public class CvValue extends AbstractValue implements ProgListener {
     }
     public int number() { return _num; }
     private int _num;
-
+    
     private JLabel _status = null;
-
+    
     private Programmer mProgrammer;
-
+    
     public int getValue()  { return _value; }
-
+    
     Color getColor() { return _tableEntry.getBackground(); }
-
+    
     protected void notifyValueChange(int value) {
         prop.firePropertyChange("Value", null, new Integer(value));
     }
