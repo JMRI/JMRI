@@ -16,7 +16,7 @@ import javax.swing.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author			Bob Jacobsen
- * @version         $Revision: 1.11 $
+ * @version         $Revision: 1.12 $
  */
 public class LocoTools extends JPanel {
     public LocoTools() {
@@ -66,6 +66,13 @@ public class LocoTools extends JPanel {
 
         menuBar.add(new jmri.jmrit.roster.RosterMenu("Roster", jmri.jmrit.roster.RosterMenu.MAINMENU, this));
 
+        JMenu throttleMenu = new JMenu("Throttles");
+        throttleMenu.add(new jmri.jmrit.throttle.ThrottleCreationAction( "New Throttle..." ));
+        throttleMenu.add(new jmri.jmrit.throttle.StoreXmlThrottleAction( "Save Throttle Layout" ));
+        throttleMenu.add(new jmri.jmrit.throttle.LoadXmlThrottleAction( "Load Throttle Layout" ));
+        throttleMenu.add(new jmri.jmrit.throttle.EditThrottlePreferencesAction( "Edit Throttle Preferences" ));
+        menuBar.add(throttleMenu);
+
         JMenu paneMenu = new JMenu("Panel");
         menuBar.add(paneMenu);
         paneMenu.add(new jmri.jmrit.display.PanelEditorAction( "New panel ..." ));
@@ -114,6 +121,8 @@ public class LocoTools extends JPanel {
         pane1.add(pane2);
         add(pane1);
 
+        // start the test AlmImplementation for ALM 2
+        new jmri.jmrix.loconet.Se8AlmImplementation(2, false);
     }
 
     // Main entry point

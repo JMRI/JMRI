@@ -20,34 +20,34 @@ import org.jdom.Attribute;
  * stored in local variables.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class LocoToolsConfigFrame extends apps.AbstractConfigFrame {
-
-	public LocoToolsConfigFrame(String name) {
-		super(name);
-	}
-
+    
+    public LocoToolsConfigFrame(String name) {
+        super(name);
+    }
+    
     /**
      * LocoTools only supports the LocoNet protocols, so the parent member is overloaded
      */
     public String[] availableProtocols() {
         return  new String[] {"(None selected)",
-                                "LocoNet LocoBuffer","LocoNet MS100",
-                                "LocoNet Server", "LocoNet HexFile"
-                                };
+                              "LocoNet LocoBuffer","LocoNet MS100",
+                              "LocoNet Server", "LocoNet HexFile"
+        };
     }
-	/**
-	 * Abstract method to save the data
-	 */
-	public void saveContents() {
-		LocoToolsConfigFile f = new LocoToolsConfigFile();
-		f.makeBackupFile(f.defaultConfigFilename());
-		f.writeFile(f.defaultConfigFilename(), this);
-	}
-
-
-	// initialize logging
+    /**
+     * Abstract method to save the data
+     */
+    public void saveContents() {
+        LocoToolsConfigFile f = new LocoToolsConfigFile();
+        f.makeBackupFile(f.defaultConfigFilename());
+        f.writeFile(f.defaultConfigFilename(), this);
+    }
+    
+    
+    // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoToolsConfigFrame.class.getName());
-
+    
 }
