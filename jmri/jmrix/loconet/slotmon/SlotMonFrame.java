@@ -10,12 +10,13 @@ import javax.swing.*;
 /**
  * Frame provinging a command station slot manager
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SlotMonFrame extends javax.swing.JFrame {
 
     // GUI member declarations
     javax.swing.JCheckBox 	showAllCheckBox = new javax.swing.JCheckBox();
+    JButton                     estopAllButton  = new JButton("estop all");
     SlotMonDataModel		slotModel 	= new SlotMonDataModel(128,16);
     JTable			slotTable	= new JTable(slotModel);
     JScrollPane 		slotScroll	= new JScrollPane(slotTable);
@@ -34,12 +35,25 @@ public class SlotMonFrame extends javax.swing.JFrame {
         // add listener object so checkbox functions
         showAllCheckBox.addActionListener(new CheckNotify(slotModel, showAllCheckBox));
 
+        // add listener object so stop all button functions
+        estopAllButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                slotModel.estopAll();
+            }
+        });
+
         // general GUI config
         setTitle("Slot Monitor");
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         // install items in GUI
-        getContentPane().add(showAllCheckBox);
+        JPanel pane1 = new JPanel();
+        pane1.setLayout(new FlowLayout());
+
+        pane1.add(showAllCheckBox);
+        pane1.add(estopAllButton);
+
+        getContentPane().add(pane1);
         getContentPane().add(slotScroll);
         pack();
     }
