@@ -19,7 +19,7 @@ import com.sun.java.util.collections.List;
 /**
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
- * @version		$Revision: 1.4 $
+ * @version		$Revision: 1.5 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -194,6 +194,6 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         }
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(BeanTableDataModel.class.getName());
+    static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(BeanTableDataModel.class.getName());
 
 }
