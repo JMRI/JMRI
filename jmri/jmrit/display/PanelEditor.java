@@ -13,7 +13,7 @@ import java.awt.event.*;
  * (Specific location) layout manager, so you have to specify these.
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Id: PanelEditor.java,v 1.2 2002-04-06 05:18:58 jacobsen Exp $
+ * @version $Id: PanelEditor.java,v 1.3 2002-06-26 03:43:06 jacobsen Exp $
  */
 
 public class PanelEditor extends JPanel {
@@ -229,7 +229,7 @@ public class PanelEditor extends JPanel {
     /**
      * Set the frame to be editted.
      */
-    void setTarget(JPanel f) {
+    public void setTarget(JPanel f) {
         target = f;
     }
 
