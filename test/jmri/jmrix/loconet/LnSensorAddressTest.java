@@ -9,6 +9,7 @@
 package jmri.jmrix.loconet;
 
 import java.io.*;
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -58,10 +59,10 @@ public class LnSensorAddressTest extends TestCase {
 		assertTrue(a.isValid());
 
 		a = new LnSensorAddress("LS257D3");  // 0x101F
-		assert(a.getLowBits() == 15);
-		assert(a.getHighBits() == 32);
-		assert(a.getASBit() == 0x40);
-		assert(a.isValid());
+		Assert.assertTrue(a.getLowBits() == 15);
+		Assert.assertTrue(a.getHighBits() == 32);
+		Assert.assertTrue(a.getASBit() == 0x40);
+		Assert.assertTrue(a.isValid());
 
 	}
 
@@ -69,16 +70,16 @@ public class LnSensorAddressTest extends TestCase {
 		LnSensorAddress a;
 
 		a = new LnSensorAddress("LS130");
-		assert(a.getLowBits() == 65);
-		assert(a.getHighBits() == 0);
-		assert(a.getASBit() == 0x00);
-		assert(a.isValid());
+		Assert.assertTrue(a.getLowBits() == 65);
+		Assert.assertTrue(a.getHighBits() == 0);
+		Assert.assertTrue(a.getASBit() == 0x00);
+		Assert.assertTrue(a.isValid());
 
 		a = new LnSensorAddress("LS257");
-		assert(a.getLowBits() == 0);
-		assert(a.getHighBits() == 1);
-		assert(a.getASBit() == 0x40);
-		assert(a.isValid());
+		Assert.assertTrue(a.getLowBits() == 0);
+		Assert.assertTrue(a.getHighBits() == 1);
+		Assert.assertTrue(a.getASBit() == 0x40);
+		Assert.assertTrue(a.isValid());
 
 	}
 
@@ -88,9 +89,9 @@ public class LnSensorAddressTest extends TestCase {
 		a = new LnSensorAddress(0x15, 0x60); // LS043
 		log.debug("0x15, 0x60 shows as "+a.getNumericAddress()+" "+
 							a.getDS54Address()+" "+a.getBDL16Address());
-		assert(a.getNumericAddress().equals("LS43"));
-		assert(a.getDS54Address().equals("LS21A"));
-		assert(a.getBDL16Address().equals("LS2C3"));
+		Assert.assertTrue(a.getNumericAddress().equals("LS43"));
+		Assert.assertTrue(a.getDS54Address().equals("LS21A"));
+		Assert.assertTrue(a.getBDL16Address().equals("LS2C3"));
 
 	}
 

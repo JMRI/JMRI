@@ -1,11 +1,11 @@
-/** 
+/**
  * AbstractTurnoutMgrTest.java
  *
  * Description:	    AbsBaseClass for TurnoutManager tests in specific jmrix. packages
  * @author			Bob Jacobsen
- * @version			
+ * @version
  */
- 
+
 /**
  * This is not itself a test class, e.g. should not be added to a suite.  Instead,
  * this forms the base for test classes, including providing some common tests
@@ -28,11 +28,11 @@ public abstract class AbstractTurnoutMgrTest extends TestCase {
 	//
 	abstract public void setUp();    	// load t with actual object; create scaffolds as needed
 	abstract public String getSystemName(int i);
-	
+
 	public AbstractTurnoutMgrTest(String s) {
 		super(s);
 	}
-		
+
 	protected TurnoutManager l = null;	// holds objects under test
 
 	static protected boolean listenerResult = false;
@@ -41,24 +41,24 @@ public abstract class AbstractTurnoutMgrTest extends TestCase {
 			listenerResult = true;
 		}
 	}
-	
+
 	// start of common tests
-	
+
 	// test creation - real work is in the setup() routine
 	public void testCreate() {
 	}
-	
+
 	public void testDispose() throws JmriException {
 		l.dispose();  // all we're really doing here is making sure the method exists
-	}	
-	
+	}
+
 	public void testTurnoutPutGet() {
 		// create
 		Turnout t = l.newTurnout(getSystemName(21), "mine");
 		// check
 		Assert.assertTrue("real object ", t != null);
 		Assert.assertTrue("user name ", t == l.getByUserName("mine"));
-		Assert.assertTrue("system name ", t == l.getBySystemName(getSystemName(21)));				
+		Assert.assertTrue("system name ", t == l.getBySystemName(getSystemName(21)));
 	}
 
 	public void testDefaultSystemName() {
@@ -67,7 +67,7 @@ public abstract class AbstractTurnoutMgrTest extends TestCase {
 		// check
 		Assert.assertTrue("real object ", t != null);
 		Assert.assertTrue("user name ", t == l.getByUserName("21"));
-		Assert.assertTrue("system name ", t == l.getBySystemName(getSystemName(21)));				
+		Assert.assertTrue("system name ", t == l.getBySystemName(getSystemName(21)));
 	}
 
 	public void testSingleObject() {
@@ -76,7 +76,7 @@ public abstract class AbstractTurnoutMgrTest extends TestCase {
 		Assert.assertTrue("t1 real object ", t1 != null);
 		Assert.assertTrue("same by user ", t1 == l.getByUserName("mine"));
 		Assert.assertTrue("same by system ", t1 == l.getBySystemName(getSystemName(21)));
-		
+
 		Turnout t2 = l.newTurnout(getSystemName(21), "mine");
 		Assert.assertTrue("t2 real object ", t2 != null);
 		// check
@@ -86,11 +86,11 @@ public abstract class AbstractTurnoutMgrTest extends TestCase {
 	public void testMisses() {
 		// sample address object
 		TurnoutAddress a = new TurnoutAddress(getSystemName(31), "user");
-		
+
 		// try to get nonexistant turnouts
-		assert(null == l.getByAddress(a));				
-		assert(null == l.getByUserName("foo"));				
-		assert(null == l.getBySystemName("bar"));				
+		Assert.assertTrue(null == l.getByAddress(a));
+		Assert.assertTrue(null == l.getByUserName("foo"));
+		Assert.assertTrue(null == l.getBySystemName("bar"));
 	}
 
 	public void testRename() {

@@ -1,9 +1,9 @@
-/** 
+/**
  * CvValueTest.java
  *
- * Description:	
+ * Description:
  * @author			Bob Jacobsen
- * @version			
+ * @version
  */
 
 package jmri.jmrit.symbolicprog;
@@ -24,13 +24,13 @@ public class CvValueTest extends TestCase {
 	public void testStart() {
 		new CvValue(12);
 	}
-	
+
 	// can we create one and manipulate info?
 	public void testCvValCreate() {
 		CvValue cv = new CvValue(19);
-		assert(cv.number() == 19);
+		Assert.assertTrue(cv.number() == 19);
 		cv.setValue(23);
-		assert(cv.getValue() == 23);
+		Assert.assertTrue(cv.getValue() == 23);
 	}
 
 	// check a read operation
@@ -38,7 +38,7 @@ public class CvValueTest extends TestCase {
 		// initialize the system
 		ProgDebugger p = new ProgDebugger();
 		InstanceManager.setProgrammer(p);
-		
+
 		// create the CV value
 		CvValue cv = new CvValue(91);
 		cv.read(null);
@@ -53,18 +53,18 @@ public class CvValueTest extends TestCase {
 		if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+cv.getValue()+" state="+cv.getState());
 		if (i==0) log.warn("textCvValRead saw an immediate return from isBusy");
 
-		assert(i<100);
-		assert(cv.getValue() == 123);
-		assert(cv.getState() == CvValue.READ);
+		Assert.assertTrue(i<100);
+		Assert.assertTrue(cv.getValue() == 123);
+		Assert.assertTrue(cv.getState() == CvValue.READ);
 	}
-	
+
 	// check a confirm operation
 	public void testCvValConfirmFail() {
 		// initialize the system
 		ProgDebugger p = new ProgDebugger();
 		InstanceManager.setProgrammer(p);
 		p._confirmOK = false;
-		
+
 		// create the CV value
 		CvValue cv = new CvValue(66);
 		cv.setValue(91);
@@ -85,14 +85,14 @@ public class CvValueTest extends TestCase {
 		Assert.assertEquals("CV value ", 91, cv.getValue());
 		Assert.assertEquals("CV state ", CvValue.UNKNOWN, cv.getState());
 	}
-	
+
 	// check a confirm operation
 	public void testCvValConfirmPass() {
 		// initialize the system
 		ProgDebugger p = new ProgDebugger();
 		p._confirmOK = true;
 		InstanceManager.setProgrammer(p);
-		
+
 		// create the CV value
 		CvValue cv = new CvValue(66);
 		cv.setValue(123);
@@ -113,17 +113,17 @@ public class CvValueTest extends TestCase {
 		Assert.assertEquals("CV value ", 123, cv.getValue());
 		Assert.assertEquals("CV state ", CvValue.READ, cv.getState());
 	}
-	
+
 	// check a write operation
 	public void testCvValWrite() {
 		// initialize the system
 		ProgDebugger p = new ProgDebugger();
 		InstanceManager.setProgrammer(p);
-		
+
 		// create the CV value
 		CvValue cv = new CvValue(91);
 		cv.setValue(12);
-		cv.write(null); 
+		cv.write(null);
 		// wait for reply (normally, done by callback; will check that later)
 		int i = 0;
 		while ( cv.isBusy() && i++ < 100 )  {
@@ -140,31 +140,31 @@ public class CvValueTest extends TestCase {
 		Assert.assertEquals("cv state ", CvValue.STORED, cv.getState());
 		Assert.assertEquals("last value written ", 12, p.lastWrite());
 	}
-	
+
 	// check the state diagram
 	public void testCvValStates() {
 		CvValue cv = new CvValue(21);
-		assert(cv.getState() == CvValue.UNKNOWN);
+		Assert.assertTrue(cv.getState() == CvValue.UNKNOWN);
 		cv.setValue(23);
-		assert(cv.getState() == CvValue.EDITTED);
+		Assert.assertTrue(cv.getState() == CvValue.EDITTED);
 	}
-		
+
 	// check the initial color
 	public void testInitialColor() {
 		CvValue cv = new CvValue(21);
 		Assert.assertEquals("initial color", CvValue.COLOR_UNKNOWN, cv.getTableEntry().getBackground());
 	}
-		
+
 	// check color update for EDITTED
 	public void testEdittedColor() {
 		CvValue cv = new CvValue(21);
 		cv.setValue(23);
 		Assert.assertEquals("editted color", CvValue.COLOR_EDITTED, cv.getTableEntry().getBackground());
 	}
-		
+
 
 	// from here down is testing infrastructure
-	
+
 	public CvValueTest(String s) {
 		super(s);
 	}
@@ -174,13 +174,13 @@ public class CvValueTest extends TestCase {
 		String[] testCaseName = {CvValueTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
-	
+
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite(CvValueTest.class);
 		return suite;
 	}
-	
+
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CvValue.class.getName());
 
 }

@@ -1,9 +1,9 @@
-/** 
+/**
  * VariableValueTest.java
  *
  * Description:	 base for tests of classes inheriting from VariableValue abstract class
  * @author			Bob Jacobsen
- * @version			
+ * @version
  */
 
 package jmri.jmrit.symbolicprog;
@@ -12,6 +12,7 @@ import java.io.*;
 import java.util.*;
 import javax.swing.*;
 import java.awt.Component;
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -25,16 +26,16 @@ public abstract class VariableValueTest extends TestCase {
 	abstract VariableValue makeVar(String label, String comment, boolean readOnly,
 							int cvNum, String mask, int minVal, int maxVal,
 							Vector v, JLabel status, String item);
-	
+
 	abstract void setValue(VariableValue var, String value);
 	abstract void checkValue(VariableValue var, String comment, String value);
-	
+
 	// we have separate fns for ReadOnly, as they may have different "value" object types
 	abstract void setReadOnlyValue(VariableValue var, String value);
 	abstract void checkReadOnlyValue(VariableValue var, String comment, String value);
-	
+
 	// start of base tests
-	
+
 	// check label, item from ctor
 	public void testVariableNaming() {
 		Vector v = createCvVector();
@@ -60,7 +61,7 @@ public abstract class VariableValueTest extends TestCase {
 
 		// pretend you've editted the value & manually notify
 		setValue(variable, "5");
-		
+
 		// check value
 		checkValue(variable, "value object contains ", "5");
 
@@ -79,13 +80,13 @@ public abstract class VariableValueTest extends TestCase {
 		Assert.assertTrue("getValue not null ", variable.getValue() != null);
 		setValue(variable, "5");
 		checkValue(variable, "variable value", "5");
-		
+
 		// change the CV, expect to see a change in the variable value
 		cv.setValue(7*4+1);
 		checkValue(variable, "value after CV set", "7");
 		Assert.assertEquals("cv after CV set ", 7*4+1, cv.getValue());
 	}
-	
+
 	// Do we get the right return from a readOnly == true DecVariable?
 	public void testVariableReadOnly() {
 		Vector v = createCvVector();
@@ -94,18 +95,18 @@ public abstract class VariableValueTest extends TestCase {
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, loaded as 5
 		VariableValue variable = makeVar("label", "comment", true, 81, "XXVVVVXX", 0, 255, v, null, null);
-		assert( variable.getValue() != null);
+		Assert.assertTrue( variable.getValue() != null);
 		setReadOnlyValue(variable, "5");
 		checkReadOnlyValue(variable, "value", "5");
 	}
-	
+
 	// check a read operation
 	public void testVariableValueRead() {
 		log.debug("testVariableValueRead base starts");
 		// initialize the system
 		Programmer p = new ProgDebugger();
 		InstanceManager.setProgrammer(p);
-		
+
 		Vector v = createCvVector();
 		CvValue cv = new CvValue(81);
 		v.setElementAt(cv, 81);
@@ -138,7 +139,7 @@ public abstract class VariableValueTest extends TestCase {
 		// initialize the system
 		ProgDebugger p = new ProgDebugger();
 		InstanceManager.setProgrammer(p);
-		
+
 		Vector v = createCvVector();
 		CvValue cv = new CvValue(81);
 		v.setElementAt(cv, 81);
@@ -146,7 +147,7 @@ public abstract class VariableValueTest extends TestCase {
 		VariableValue variable = makeVar("label", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
 		setValue(variable, "5");
 
-		variable.write(); 
+		variable.write();
 		// wait for reply (normally, done by callback; will check that later)
 		int i = 0;
 		while ( variable.isBusy() && i++ < 100  )  {
@@ -164,14 +165,14 @@ public abstract class VariableValueTest extends TestCase {
 		Assert.assertEquals("cv state ", AbstractValue.STORED, cv.getState());
 		Assert.assertEquals("last program write ", 5*4, p.lastWrite());
 	}
-	
+
 	// check synch during a write operation to the CV
 	public void testVariableCvWrite() {
 		if (log.isDebugEnabled()) log.debug("start testVariableCvWrite test");
 		// initialize the system
 		ProgDebugger p = new ProgDebugger();
 		InstanceManager.setProgrammer(p);
-		
+
 		Vector v = createCvVector();
 		CvValue cv = new CvValue(81);
 		v.setElementAt(cv, 81);
@@ -180,7 +181,7 @@ public abstract class VariableValueTest extends TestCase {
 		setValue(variable, "5");
 
 		JLabel statusLabel = new JLabel("nothing");
-		cv.write(statusLabel);  // JLabel is for reporting status, ignored here 
+		cv.write(statusLabel);  // JLabel is for reporting status, ignored here
 		// wait for reply (normally, done by callback; will check that later)
 		int i = 0;
 		while ( cv.isBusy() && i++ < 100  )  {
@@ -200,13 +201,13 @@ public abstract class VariableValueTest extends TestCase {
 		Assert.assertEquals("status label ", "OK", statusLabel.getText());
 		if (log.isDebugEnabled()) log.debug("end testVariableCvWrite test");
 	}
-	
+
 	// check the state diagram
 	public void testVariableValueStates() {
 		// initialize the system
 		Programmer p = new ProgDebugger();
 		InstanceManager.setProgrammer(p);
-		
+
 		Vector v = createCvVector();
 		CvValue cv = new CvValue(81);
 		v.setElementAt(cv, 81);
@@ -224,7 +225,7 @@ public abstract class VariableValueTest extends TestCase {
 		// initialize the system
 		Programmer p = new ProgDebugger();
 		InstanceManager.setProgrammer(p);
-		
+
 		Vector v = createCvVector();
 		CvValue cv = new CvValue(81);
 		v.setElementAt(cv, 81);
@@ -235,13 +236,13 @@ public abstract class VariableValueTest extends TestCase {
 		cv.setState(CvValue.UNKNOWN);
 		Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, variable.getValue().getBackground() );
 	}
-	
+
 	// check the state <-> color connection for rep when var changes
 	public void testVariableRepStateColor() {
 		// initialize the system
 		Programmer p = new ProgDebugger();
 		InstanceManager.setProgrammer(p);
-		
+
 		Vector v = createCvVector();
 		CvValue cv = new CvValue(81);
 		v.setElementAt(cv, 81);
@@ -249,7 +250,7 @@ public abstract class VariableValueTest extends TestCase {
 		VariableValue variable = makeVar("label", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
 		// get a representation
 		JTextField rep = (JTextField)variable.getRep("");
-		
+
 		Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, variable.getValue().getBackground() );
 		Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, rep.getBackground() );
 
@@ -263,13 +264,13 @@ public abstract class VariableValueTest extends TestCase {
 		Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, variable.getValue().getBackground() );
 		Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, rep.getBackground() );
 	}
-	
+
 	// check the state <-> color connection for var when rep changes
 	public void testVariableVarChangeColorRep() {
 		// initialize the system
 		Programmer p = new ProgDebugger();
 		InstanceManager.setProgrammer(p);
-		
+
 		Vector v = createCvVector();
 		CvValue cv = new CvValue(81);
 		v.setElementAt(cv, 81);
@@ -277,26 +278,26 @@ public abstract class VariableValueTest extends TestCase {
 		VariableValue variable = makeVar("label", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
 		// get a representation
 		JTextField rep = (JTextField)variable.getRep("");
-		
+
 		Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, variable.getValue().getBackground() );
 		Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, rep.getBackground() );
 
 		cv.setState(CvValue.UNKNOWN);
 		Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, variable.getValue().getBackground() );
 		Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, rep.getBackground() );
-		
+
 		rep.setText("9");
 		rep.postActionEvent();
 		Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, variable.getValue().getBackground() );
 		Assert.assertEquals("EDITTED color", VariableValue.COLOR_EDITTED, rep.getBackground() );
 	}
-	
+
 	// check synchonization of value, representations
 	public void testVariableSynch() {
 		// initialize the system
 		ProgDebugger p = new ProgDebugger();
 		InstanceManager.setProgrammer(p);
-		
+
 		Vector v = createCvVector();
 		CvValue cv = new CvValue(81);
 		v.setElementAt(cv, 81);
@@ -310,21 +311,21 @@ public abstract class VariableValueTest extends TestCase {
 		// now get rep, check
 		JTextField rep1 = (JTextField) variable.getRep("");
 		Assert.assertEquals("initial rep ", "5", rep1.getText());
-		
+
 		// update via value
 		setValue(variable, "2");
-		
+
 		// check again with existing reference
 		Assert.assertEquals("same value object ", val1, variable.getValue());
 		Assert.assertEquals("1 saved rep ", "2", rep1.getText());
 		// pick up new references and check
 		checkValue(variable, "1 new value ", "2");
 		Assert.assertEquals("1 new rep ", "2", ((JTextField) variable.getRep("")).getText());
-		
+
 		// update via rep
 		rep1.setText("9");
 		rep1.postActionEvent();
-		
+
 		// check again with existing references
 		Assert.assertEquals("2 saved value ", "9", ((JTextField)val1).getText());
 		Assert.assertEquals("2 saved rep ", "9", rep1.getText());
@@ -339,7 +340,7 @@ public abstract class VariableValueTest extends TestCase {
 		// initialize the system
 		ProgDebugger p = new ProgDebugger();
 		InstanceManager.setProgrammer(p);
-		
+
 		Vector v = createCvVector();
 		CvValue cv = new CvValue(81);
 		v.setElementAt(cv, 81);
@@ -348,7 +349,7 @@ public abstract class VariableValueTest extends TestCase {
 		VariableValue var2 = makeVar("alternate", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
 		setValue(var1, "5");
 
-		var1.write(); 
+		var1.write();
 		// wait for reply (normally, done by callback; will check that later)
 		int i = 0;
 		while ( var1.isBusy() && i++ < 100  )  {
@@ -368,9 +369,9 @@ public abstract class VariableValueTest extends TestCase {
 		Assert.assertEquals("value written to programmer ",5*4, p.lastWrite());
 		if (log.isDebugEnabled()) log.debug("end testWriteSynch2 test");
 	}
-	
+
 	// end of common tests
-	
+
 	// this next is just preserved here; note not being invoked.
 	// test that you're not using too much space when you call for a value
 	public void XtestSpaceUsage() {  // leading X prevents test from being called
@@ -398,14 +399,14 @@ public abstract class VariableValueTest extends TestCase {
 		System.out.println("free, total memory after loop = "+Runtime.getRuntime().freeMemory()
 							+" "+Runtime.getRuntime().totalMemory());
 		long usedAfter = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
-		
+
 		Runtime.getRuntime().gc();
 		long usedAfterGC = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
 		System.out.println("free, total memory after gc = "+Runtime.getRuntime().freeMemory()
 							+" "+Runtime.getRuntime().totalMemory());
 		System.out.println("used & kept = "+(usedAfterGC-usedStart)+" used before reclaim = "+(usedAfter-usedStart));
 	}
-	
+
 	protected Vector createCvVector() {
 		Vector v = new Vector(512);
 		for (int i=0; i < 512; i++) v.addElement(null);
@@ -413,13 +414,13 @@ public abstract class VariableValueTest extends TestCase {
 	}
 
 	// from here down is testing infrastructure
-	
+
 	public VariableValueTest(String s) {
 		super(s);
 	}
 
 	// abstract class has no main entry point, test suite
-	
+
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(VariableValueTest.class.getName());
 
 }
