@@ -9,6 +9,7 @@ jbuilder1 -d java scripts JMRILibraries.library
 jbuilder2 -d java/src &jmri &apps &resources
 jbuilder3 -d java &test
 jbuilder4 -d java &xml
+jbuilder5 -d java &lib
 
 # ant target - Ant directory in standard form
 # Note that this does not work from JBuilder itself!
