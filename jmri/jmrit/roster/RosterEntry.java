@@ -29,7 +29,7 @@ import org.jdom.Element;
  * organize the roster into directories.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  * @see jmri.jmrit.roster.LocoFile
  *
  */
@@ -307,7 +307,7 @@ public class RosterEntry {
     protected String _roadName = "";
     protected String _roadNumber = "";
     protected String _mfg = "";
-    protected String _owner;
+    protected String _owner = _defaultOwner;
     protected String _model = "";
     protected String _dccAddress = "";
     protected String _comment = "";
