@@ -33,7 +33,7 @@ import java.util.Vector;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.24 $
+ * @version     $Revision: 1.25 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
@@ -239,7 +239,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 log.debug("LACK in state "+progState+" message: "+m.toString());
             if (m.getElement(1) == 0x6F && progState == 1 ) {
                 // check status byte
-                if (m.getElement(2) == 1) { // task accepted
+                if ((m.getElement(2) == 1) // task accepted
+                    || (m.getElement(2) == 0x7F)) { // not implemented (op on main)
                     // move to commandExecuting state
                     if (_progRead || _progConfirm)
                         startLongTimer();
@@ -254,14 +255,6 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                     // notify user ProgListener
                     stopTimer();
                     notifyProgListenerLack(jmri.ProgListener.ProgrammerBusy);
-                    return i;
-                }
-                else if (m.getElement(2) == 0x7F) { // not implemented
-                    // move to not programming state
-                    progState = 0;
-                    // notify user ProgListener
-                    stopTimer();
-                    notifyProgListenerLack(jmri.ProgListener.NotImplemented);
                     return i;
                 }
                 else if (m.getElement(2) == 0x40) { // task accepted blind
