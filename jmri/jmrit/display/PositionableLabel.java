@@ -12,7 +12,7 @@ import jmri.jmrit.catalog.NamedIcon;
  * <p>Description: </p>
  * <p>Copyright: Bob Jacobsen Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class PositionableLabel extends JLabel
@@ -56,16 +56,16 @@ public class PositionableLabel extends JLabel
         xClick = e.getX();
         yClick = e.getY();
         if (debug) log.debug("Pressed: "+where(e));
-        if (debug) log.debug("MouseEvent: " + e.toString() );
-        if (e.isPopupTrigger() || ( ( e.getModifiers() & MouseEvent.META_MASK ) != 0 ) ) {
+    }
+
+    public void mouseReleased(MouseEvent e) {
+        if (debug) log.debug("Release: "+where(e));
+        if (e.isPopupTrigger()) {
             if (debug) log.debug("show popup");
             showPopUp(e);
         }
     }
-    public void mouseReleased(MouseEvent e) {
-        if (debug) log.debug("Release: "+where(e));
-        if (debug && e.isPopupTrigger()) log.debug("Released was pop up trigger");
-    }
+
     public void mouseClicked(MouseEvent e) {
         if (debug) log.debug("Clicked: "+where(e));
         if (debug && e.isPopupTrigger()) log.debug("Clicked was pop up trigger");
