@@ -2,7 +2,7 @@
 
 package jmri;
 
-import java.util.Hashtable;
+import com.sun.java.util.collections.Hashtable;
 import java.util.Enumeration;
 import com.sun.java.util.collections.List;
 import com.sun.java.util.collections.ArrayList;
@@ -16,7 +16,7 @@ import com.sun.java.util.collections.Collections;
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 abstract public class AbstractManager
     implements Manager, java.beans.PropertyChangeListener {
@@ -128,4 +128,4 @@ abstract public class AbstractManager
 
 }
 
-/* @(#)AbstractSignalHeadManager.java */
+/* @(#)AbstractManager.java */

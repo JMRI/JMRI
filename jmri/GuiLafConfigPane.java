@@ -27,7 +27,7 @@ import javax.swing.UIManager;
  * GUI (and perhaps LAF) configuration item.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class GuiLafConfigPane extends JPanel {
 
@@ -76,7 +76,7 @@ public class GuiLafConfigPane extends JPanel {
         JPanel panel = new JPanel();
         // add JComboBoxen for language and country
         panel.setLayout(new FlowLayout());
-        locales = Locale.getAvailableLocales();
+        locales = jmri.util.LocaleUtil.getAvailableLocales();
         localeNames = new String[locales.length];
         for (int i = 0; i<locales.length; i++) {
             localeNames[i] = locales[i].getDisplayName();

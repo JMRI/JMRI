@@ -1,15 +1,11 @@
 package jmri.layout;
 
-/**
- * Title:
- * Description:
- * Copyright:    Copyright (c) 2002
- * Company:
- * @author
- * @version $Revision: 1.2 $
- */
+import com.sun.java.util.collections.TreeMap;
 
-import java.util.TreeMap;
+/**
+ * @author Alex Shepherd  Copyright (c) 2002
+ * @version $Revision: 1.3 $
+ */
 
 public class LayoutElement extends javax.swing.tree.DefaultMutableTreeNode implements LayoutEventInterface
 {
