@@ -35,13 +35,15 @@ import org.jdom.output.*;
  * sort is done manually each time an entry is added.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  * @see             jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
 
     /** record the single instance of Roster **/
     private static Roster _instance = null;
+
+    public synchronized static void resetInstance() { _instance = null; }
 
     /**
      * Locate the single instance of Roster, loading it if need be
@@ -287,7 +289,7 @@ public class Roster extends XmlFile {
      * Return the filename String for the default roster file, including location.
      * This is here to allow easy override in tests.
      */
-    protected static String defaultRosterFilename() { return fileLocation+rosterFileName;}
+    public static String defaultRosterFilename() { return fileLocation+rosterFileName;}
 
     static protected String fileLocation  = "";
     static final protected String rosterFileName = "roster.xml";
