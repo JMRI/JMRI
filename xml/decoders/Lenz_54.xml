@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Lenz_54.xml,v 1.5 2003-08-01 20:15:40 jacobsen Exp $ -->
+<!-- $Id: Lenz_54.xml,v 1.6 2003-08-02 00:24:27 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Phil Grainger (phil.grainger@ca.com)"
 			version="4" lastUpdated="20030731" />
@@ -189,7 +189,7 @@
 		         </enumVal>
 			</variable>
 
-	<variable label="Front headlight (Output A) dimming" CV="51" 
+	<variable label="Output A dimming" CV="51" 
 	          	comment="Controls how front headlights dim"
                	mask="XXXXXVXX">
 		     <enumVal>
@@ -236,7 +236,7 @@
 			</variable>
 
 
-	<variable label="Back headlight (Output B) dimming control" CV="57"
+	<variable label="Output B dimming control" CV="57"
               	mask="XXXXXXVX">
 		     <enumVal>
 		         <enumChoice choice="Always dim"/>
@@ -382,6 +382,9 @@
 			<speedTableVal/>
 			</variable>
 
+		<variable label="Decoder Software Version" CV="128" readOnly="yes" default="2">
+			<decVal/>
+			</variable>
 
 	<!-- Define the fixed Function-Output mapping -->
 	<constant label="FL(f) controls output 1" minOut="1" default="1" /> 
@@ -395,10 +398,15 @@
 	<column>
 
 	<display item="Back EMF control" />
-	<label label=""/>
-	<label label=""/>
+	<display item="Decoder Software Version" />
+	</column>
+	
+	<column>	
+	<display item="Directional Headlights" />
 
-	<display item="Front headlight (Output A) dimming" />
+	<label label=" "/>
+
+	<display item="Output A dimming" />
 	<display item="Output A dimming control" />
 	<display item="Output A is Gyrolight" format="checkbox" />
 	<display item="Output A is Mars light" format="checkbox" />
@@ -408,7 +416,7 @@
 
 	<label label=""/>
 
-	<display item="Back headlight (Output B) dimming control" />
+	<display item="Output B dimming" />
 	<display item="Output B dimming control" />
 	<display item="Output B is Gyrolight" format="checkbox" />
 	<display item="Output B is Mars light" format="checkbox"  />
@@ -429,3 +437,4 @@
 </decoder-config>
 
 
+

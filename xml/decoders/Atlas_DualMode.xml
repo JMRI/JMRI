@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Atlas_DualMode.xml,v 1.14 2003-08-01 20:15:40 jacobsen Exp $ -->
+<!-- $Id: Atlas_DualMode.xml,v 1.15 2003-08-02 00:24:27 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Michael Mosher" version="5" lastUpdated="20030706"/>
 		
@@ -84,8 +84,8 @@
 				</enumVal></variable>
 		<variable label="Speed Table Definition" CV="29" mask="XXXVXXXX">
 			<enumVal>
-				<enumChoice choice="Use Vstart, Vmid, Vhigh"/>
-				<enumChoice choice="Use Table"/>
+				<enumChoice choice="Don't use Speed Table"/>
+				<enumChoice choice="Use Speed Table"/>
 				</enumVal></variable>
 		<variable label="Address Format" CV="29" mask="XXVXXXXX">
 			<enumVal>
@@ -164,4 +164,4 @@
 </pane>
 
 </decoder-config>
-
+
