@@ -48,7 +48,7 @@ public class SymbolicProgTest extends TestCase {
 		
 		// create the CV value
 		CvValue cv = new CvValue(91);
-		cv.read();
+		cv.read(null);
 		// wait for reply (normally, done by callback; will check that later)
 		int i = 0;
 		while ( cv.isBusy() && i++ < 100 )  {
@@ -74,7 +74,7 @@ public class SymbolicProgTest extends TestCase {
 		// create the CV value
 		CvValue cv = new CvValue(91);
 		cv.setValue(12);
-		cv.write(); 
+		cv.write(null); 
 		// wait for reply (normally, done by callback; will check that later)
 		int i = 0;
 		while ( cv.isBusy() && i++ < 100 )  {
@@ -115,7 +115,7 @@ public class SymbolicProgTest extends TestCase {
 		cv.setValue(3);
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, check name
-		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v);
+		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null);
 		assert(var.name() == "name");
 		// pretend you've editted the value, check its in same object
 		((JTextField)var.getValue()).setText("5");
@@ -133,7 +133,7 @@ public class SymbolicProgTest extends TestCase {
 		cv.setValue(3);
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, loaded as 5
-		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v);
+		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null);
 		assert( ((JTextField)var.getValue()) != null);
 		var.setValue(5);
 		assert( ((JTextField)var.getValue()).getText().equals("5"));
@@ -151,7 +151,7 @@ public class SymbolicProgTest extends TestCase {
 		cv.setValue(3);
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, loaded as 5
-		DecVariableValue var = new DecVariableValue("name", "comment", true, 81, "XXVVVVXX", 0, 255, v);
+		DecVariableValue var = new DecVariableValue("name", "comment", true, 81, "XXVVVVXX", 0, 255, v, null);
 		// notice type cast in next line
 		assert( ((JLabel)var.getValue()) != null);
 		var.setValue(5);
@@ -168,7 +168,7 @@ public class SymbolicProgTest extends TestCase {
 		CvValue cv = new CvValue(81);
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, loaded as 5, manually notified
-		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v);
+		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null);
 		((JTextField)var.getValue()).setText("5");
 		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 
@@ -200,7 +200,7 @@ public class SymbolicProgTest extends TestCase {
 		CvValue cv = new CvValue(81);
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, loaded as 5, manually notified
-		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v);
+		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null);
 		((JTextField)var.getValue()).setText("5");
 		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 
@@ -232,7 +232,7 @@ public class SymbolicProgTest extends TestCase {
 		CvValue cv = new CvValue(81);
 		v.setElementAt(cv, 81);
 		// create a variable pointed at CV 81, loaded as 5, manually notified
-		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v);
+		DecVariableValue var = new DecVariableValue("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null);
 		assert(var.getState() == VariableValue.UNKNOWN);
 		((JTextField)var.getValue()).setText("5");
 		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
@@ -249,7 +249,7 @@ public class SymbolicProgTest extends TestCase {
 		v.setElementAt(cv17, 17);
 		v.setElementAt(cv18, 18);
 		// create a variable pointed at CV 17&18, check name
-		LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "VVVVVVVV", 0, 255, v);
+		LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "VVVVVVVV", 0, 255, v, null);
 		assert(var.name() == "name");
 		// pretend you've editted the value, check its in same object
 		((JTextField)var.getValue()).setText("1029");
@@ -271,7 +271,7 @@ public class SymbolicProgTest extends TestCase {
 		v.setElementAt(cv17, 17);
 		v.setElementAt(cv18, 18);
 		// create a variable pointed at CV 81, loaded as 5
-		LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "VVVVVVVV", 0, 255, v);
+		LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "VVVVVVVV", 0, 255, v, null);
 		((JTextField)var.getValue()).setText("1029");
 		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 
@@ -296,7 +296,7 @@ public class SymbolicProgTest extends TestCase {
 		v.setElementAt(cv17, 17);
 		v.setElementAt(cv18, 18);
 
-		LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "XXVVVVXX", 0, 255, v);
+		LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "XXVVVVXX", 0, 255, v, null);
 		// set to specific value
 		((JTextField)var.getValue()).setText("5");
 		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
@@ -332,7 +332,7 @@ public class SymbolicProgTest extends TestCase {
 		v.setElementAt(cv17, 17);
 		v.setElementAt(cv18, 18);
 
-		LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "XXVVVVXX", 0, 255, v);
+		LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "XXVVVVXX", 0, 255, v, null);
 		((JTextField)var.getValue()).setText("1029");
 		var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 
@@ -365,13 +365,13 @@ public class SymbolicProgTest extends TestCase {
 	// Can we create a table?
 	public void testVarTableCreate() {
 		String[] args = {"CV", "Name"};
-		VariableTableModel t = new VariableTableModel(args, null);  // CvTableModel ref is null for this test
+		VariableTableModel t = new VariableTableModel(null, args, null);  // CvTableModel ref is null for this test
 	}
 
 	// Check column count member fn, column names
 	public void testVarTableColumnCount() {
 		String[] args = {"CV", "Name"};
-		VariableTableModel t = new VariableTableModel(args, null);
+		VariableTableModel t = new VariableTableModel(null, args, null);
 		assert(t.getColumnCount() == 2);
 		assert(t.getColumnName(1) == "Name");
 	}
@@ -379,7 +379,7 @@ public class SymbolicProgTest extends TestCase {
 	// Check loading two columns, three rows
 	public void testVarTableLoad_2_3() {
 		String[] args = {"CV", "Name"};
-		VariableTableModel t = new VariableTableModel(args, new CvTableModel());
+		VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null));
 		
 		// create a JDOM tree with just some elements
 		Namespace ns = Namespace.getNamespace("decoder", "http://www.slac.stanford.edu/BFROOT/java/streamcalc");
@@ -440,7 +440,7 @@ public class SymbolicProgTest extends TestCase {
 	// Check creating a longaddr type, walk through its programming
 	public void testVarTableLoadLongAddr() {
 		String[] args = {"CV", "Name"};
-		VariableTableModel t = new VariableTableModel(args, new CvTableModel());
+		VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null));
 		
 		// create a JDOM tree with just some elements
 		Namespace ns = Namespace.getNamespace("decoder", "http://www.slac.stanford.edu/BFROOT/java/streamcalc");
@@ -485,7 +485,7 @@ public class SymbolicProgTest extends TestCase {
 		// Check creating bogus XML (unknown variable type)
 	public void testVarTableLoadBogus() {
 		String[] args = {"CV", "Name"};
-		VariableTableModel t = new VariableTableModel(args, new CvTableModel());
+		VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null));
 		
 		// create a JDOM tree with just some elements
 		Namespace ns = Namespace.getNamespace("decoder", "http://www.slac.stanford.edu/BFROOT/java/streamcalc");
