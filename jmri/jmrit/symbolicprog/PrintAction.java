@@ -2,14 +2,11 @@
 
 package jmri.jmrit.symbolicprog;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
 import jmri.util.davidflanagan.*;
-import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.table.*;
 import jmri.jmrit.symbolicprog.tabbedframe.*;
+import java.awt.event.*;
+
+import javax.swing.*;
 
 /**
  * Action to print the information in a VariableTable and CV table.
@@ -18,7 +15,7 @@ import jmri.jmrit.symbolicprog.tabbedframe.*;
  * Macintosh MRJ
  *
  * @author			Bob Jacobsen   Copyright (C) 2003
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class PrintAction  extends AbstractAction {
 
