@@ -1,11 +1,3 @@
-/**
- * LocoNetTest.java
- *
- * Description:	    tests for the jmri.jmrix.loconet package
- * @author			Bob Jacobsen Copyright 2001
- * @version         $Revision: 1.7 $
- */
-
 package jmri.jmrix.loconet;
 
 import java.io.*;
@@ -17,6 +9,11 @@ import org.jdom.output.*;
 
 import jmri.jmrix.loconet.locogen.*;
 
+/**
+ * Tests for the jmri.jmrix.loconet package
+ * @author			Bob Jacobsen Copyright 2001
+ * @version         $Revision: 1.8 $
+ */
 public class LocoNetTest extends TestCase {
 
     // from here down is testing infrastructure
@@ -37,6 +34,7 @@ public class LocoNetTest extends TestCase {
         suite.addTest(jmri.jmrix.loconet.locoio.LocoIOTest.suite());
         suite.addTest(new TestSuite(SecurityElementTest.class));
         suite.addTest(new TestSuite(SlotManagerTest.class));
+        suite.addTest(new TestSuite(LocoNetSlotTest.class));
         suite.addTest(new TestSuite(LnOpsModeProgrammerTest.class));
         suite.addTest(new TestSuite(LocoNetMessageTest.class));
         suite.addTest(new TestSuite(LnTrafficControllerTest.class));
