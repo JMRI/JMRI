@@ -1,10 +1,9 @@
-Todo as of 12/24/2003
+Todo as of 8/22/2004
 
    Should we ask if the consist should be cleared when the consist is 
      deleted or the window is closed?
 
-   Need to build a method to recall a consist, both between sessions and 
-     durring a single sesion of the program.
+   Need to build a method to recall a consist between sessions
      (should this be stored in XML, or recalled from the Command Station
      if possible?)
 
@@ -14,6 +13,9 @@ Todo as of 12/24/2003
    The selection buttons for Advanced/CS Consist is present, but does not
      do anything yet
 
-   The Current Tool has a limit of 4 locomotives in the consist.  This is 
-     artificial, since the back end does not have a limit.
+   Need to add a  method to restrict the number of locomotives in a consist
+   if the consisting method limits the number of units in a consist on a 
+   particular system.
 
+   Table in tool has a slot for roster entry, this needs to be filled in 
+   or removed.
