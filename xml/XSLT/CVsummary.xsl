@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: CVsummary.xsl,v 1.1 2003-08-11 00:43:35 jacobsen Exp $ -->
+<!-- $Id: CVsummary.xsl,v 1.2 2005-01-02 01:29:36 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert JMRI decoder definitions to -->
 <!-- a huge HTML table of CV values -->
@@ -100,8 +100,8 @@
 			<xsl:if test="$cv = @CV">
 				<!-- here current element is to be displayed, -->
 				<!-- as it defines our CV -->
-				<xsl: select="@label"/>
-				<xsl:text>;</xsl:text>
+				<xsl:value-of select="@label"/>
+				<xsl:text><br/></xsl:text>
 			</xsl:if>
 		</xsl:for-each>
 		</td>
