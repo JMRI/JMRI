@@ -34,7 +34,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  * used with permission.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2003
- * @version			$Revision: 1.26 $
+ * @version			$Revision: 1.27 $
  */
 public class Llnmon {
 
@@ -368,7 +368,8 @@ public class Llnmon {
                 }
 
             case (LnConstants.OPC_SW_STATE):
-                return "LONG_ACK: Response to switch state message 0x"+Integer.toHexString(ack1)+"\n";
+                return "LONG_ACK: Command station response to switch state request 0x"+Integer.toHexString(ack1)
+                		+( ((ack1&0x20)!=0) ? " (Closed)" : " (Thrown)")+"\n";
 
             case (LnConstants.OPC_MOVE_SLOTS):
                 if (ack1 == 0) {
@@ -397,7 +398,7 @@ public class Llnmon {
             default:
                 // forceHex = TRUE;
                 return "LONG_ACK: Response "+ack1+" (0x"+Integer.toHexString(ack1)
-                    +") to opcode 0x"+Integer.toHexString(opcode)+" not available in plain english\n";
+                    +") to opcode 0x"+Integer.toHexString(opcode)+" not decoded\n";
             }
 
             /********************************************************************************************
@@ -1493,12 +1494,18 @@ public class Llnmon {
                 +"\n";
         } else if (pCMD == 0x70) {
             // programming
+            String device;
+            if ( (l.getElement(3)&0x7) == 0) device = "PM ";
+            else if ( (l.getElement(3)&0x7) == 1) device = "BD ";
+            else if ( (l.getElement(3)&0x7) == 2) device = "SE ";
+            else device = "(unknown type) ";
+            
             int bit = (l.getElement(4)&0x0E)/2;
             int val = (l.getElement(4)&0x01);
             int wrd = (l.getElement(4)&0x70)/16;
             int opsw = (l.getElement(4)&0x7E)/2+1;
-            return "PM4 "+(l.getElement(2)+1)+
-                ( (l.getElement(2)&0x10)!=0 ? " wr ":" rd ")
+            return device+(l.getElement(2)+1)+
+                ( ((l.getElement(1)&0x10)!=0) ? " write config bit ":" read config bit ")
                 +wrd+","+bit+" (opsw "+opsw+") val="+val
                 +(val==1 ? " (closed) ":" (thrown) ")+"\n";
         } else  // beats me
