@@ -49,10 +49,11 @@ public class LocoMonFrame extends javax.swing.JFrame implements LocoNetListener 
 		jScrollPane1.getViewport().add(locoMonTextPane);
 
 		locoMonTextPane.setVisible(true);
-		locoMonTextPane.setPreferredSize(new java.awt.Dimension(40,100));
 		locoMonTextPane.setToolTipText("LocoNet monitoring information appears here");
 		locoMonTextPane.setEditable(false);
-
+		// size set to fit  "General sensor input report: 3 Aux input (BDL16 0 B3) is Hi"
+		locoMonTextPane.setText("\n\n\n                                                           ");
+		
 		startLogButton.setText("Start log file");
 		startLogButton.setVisible(true);
 		startLogButton.setToolTipText("start logging to file");
@@ -74,7 +75,7 @@ public class LocoMonFrame extends javax.swing.JFrame implements LocoNetListener 
 		hexCheckBox.setMaximumSize(openFileChooserButton.getMaximumSize());
 		startLogButton.setMaximumSize(openFileChooserButton.getMaximumSize());
 		stopLogButton.setMaximumSize(openFileChooserButton.getMaximumSize());
-
+		
 		setTitle("LocoNet monitoring");
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		
@@ -126,6 +127,9 @@ public class LocoMonFrame extends javax.swing.JFrame implements LocoNetListener 
 		
 		// set file chooser to a default
 		logFileChooser.setSelectedFile(new File("LocoNetLog.txt"));
+		
+		//
+		pack();
 	}
   
   	private boolean mShown = false;
