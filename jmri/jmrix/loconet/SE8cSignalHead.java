@@ -21,26 +21,39 @@ import jmri.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */public class SE8cSignalHead extends AbstractSignalHead implements LocoNetListener {
 
+    public SE8cSignalHead(int pNumber, String sys) {
+        super(""+pNumber, sys);
+        init(pNumber);
+    }
 
-     public SE8cSignalHead(int pNumber) {
+    public SE8cSignalHead(int pNumber) {
         super(""+pNumber);
-         mNumber = pNumber;
-         mAppearance = RED;  // start turned off
-         // At construction, register for messages
-         if (LnTrafficController.instance()!=null)
+        init(pNumber);
+    }
+
+    void init(int pNumber) {
+        mNumber = pNumber;
+        mAppearance = RED;  // start turned off
+        // At construction, register for messages
+        if (LnTrafficController.instance()!=null)
             LnTrafficController.instance().addLocoNetListener(~0, this);
         else
             log.warn("No LocoNet connection, signal head won't update");
-     }
+    }
 
     public int getAppearance() { return mAppearance; }
     public void setAppearance(int newAppearance) {
         int oldAppearance = mAppearance;
         mAppearance = newAppearance;
-        if (oldAppearance != newAppearance) forwardCommandChangeToLayout(mAppearance);
+        if (oldAppearance != newAppearance) {
+            forwardCommandChangeToLayout(mAppearance);
+            // notify listeners, if any
+            firePropertyChange("Appearance", new Integer(oldAppearance), new Integer(newAppearance));
+        }
+
     }
 
     public int getNumber() { return mNumber; }
