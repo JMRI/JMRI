@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: Signalling.html,v 1.5 2004-02-20 04:32:39 jacobsen Exp $ -->
+<!-- $Id: Signalling.html,v 1.6 2004-07-09 03:43:54 jacobsen Exp $ -->
 <html>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -15,9 +15,9 @@
 
 <h2>Using JMRI for signal logic</h2>
 
-Modeling railroad signalling on a layout can be done many different ways,
+Modeling railroad signaling on a layout can be done many different ways,
 ranging from "stoplights" to complete emulation of a particular prototype's
-signalling logic.
+signaling logic.
 <P>
 JMRI provides several different things that can help with this:
 <OL>
@@ -29,7 +29,7 @@ debugging, for example.
 <LI>The JMRI 
 <A HREF="#logic">"Simple Signal Logic"</A>
 tool can provide simple versions
-of block and interlocking signalling.
+of block and interlocking signaling.
 <LI>The JMRI 
 <A HREF="#automat">Automation classes</A>
 makes it easy to code your own signal
@@ -47,10 +47,10 @@ As you move down that list, the task becomes more and more technical,
 but you have more freedom to model exactly what you want.  
 
 <P>
-In addition, there are people working on more advanced signalling
+In addition, there are people working on more advanced signaling
 logic within the JMRI project.  Although it's too early to talk
 in detail, the idea is to provide ways of driving semi-prototypical
-signalling logic, including CTC dispatching and interlocking, 
+signaling logic, including CTC dispatching and interlocking, 
 without requiring the user to write any Java code.  The 
 <a href="http://groups.yahoo.com/group/jmriusers/">jmriusers discussion group</A>
 will have more info on this as it becomes available.
@@ -80,10 +80,10 @@ and the pages on the
 <A id="logic"><h3>Simple Signal Logic</h3></a>
 <A href="images/SigAdd.gif"><IMG SRC="images/SigAdd.gif" ALIGN=RIGHT WIDTH="220" HEIGHT="132" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
 
-Much of basic signalling can be boiled down to "a signal goes red when a train
+Much of basic signaling can be boiled down to "a signal goes red when a train
 can't safely enter the block it protects; it goes yellow when the following 
 block can't be entered". Although that's a simplication, it can serve
-as a powerful starting point for signalling logic.
+as a powerful starting point for signaling logic.
 <P>
 The Simple Signal Logic tool allows you to configure JMRI to 
 use that type of logic to set the appearance of a signal. 
@@ -101,7 +101,7 @@ when the turnout is set against this track
 the signal will be set yellow if the next signal is
 red.  If the checkbox is checked, the signal will be set
 flashing yellow (not all types can show that!) if the
-next signal is yellow, thereby giving four-block signalling.
+next signal is yellow, thereby giving four-block signaling.
 </ul>
 The case of a facing point switch which can lead 
 to two different "next signals" is also yet covered
@@ -111,9 +111,9 @@ although the figure doesn't show it.
 a separate page.
 <P>
 It's clear that this won't cover complicated interlockings
-and similar situations, nor will it cover the speed-signalling
+and similar situations, nor will it cover the speed-signaling
 seen on some prototypes.  But for simple block and route 
-signalling, it will do pretty well.
+signaling, it will do pretty well.
 <A id="automat"><h3>Automation classes</h3></a>
 
 JMRI provides classes to help you write Java code to control
