@@ -2,12 +2,12 @@
 
 package jmri.jmrit.roster;
 
-import jmri.jmrit.XmlFile;
+import jmri.jmrit.*;
 import java.io.*;
+
 import javax.swing.*;
-import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.List;
-import java.util.Date;
+
+import com.sun.java.util.collections.*;
 import org.jdom.*;
 import org.jdom.output.*;
 
@@ -28,15 +28,15 @@ import org.jdom.output.*;
  * This predates the "XmlFile" base class, so doesn't use it.  Not sure
  * whether it should...
  * <P>
- * The only bound property is the list of RoterEntrys; a PropertyChangedEvent
+ * The only bound property is the list of RosterEntrys; a PropertyChangedEvent
  * is fired every time that changes.
  * <P>
  * The entries are stored in an ArrayList, sorted alphabetically.  That
  * sort is done manually each time an entry is added.
  *
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.10 $
- * @see             jmri.jmrit.roster.RosterEntry
+ * @author	Bob Jacobsen   Copyright (C) 2001
+ * @version	$Revision: 1.11 $
+ * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
 

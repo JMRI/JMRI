@@ -2,22 +2,19 @@
 
 package jmri.jmrit.roster;
 
-import javax.swing.AbstractAction;
-import java.awt.event.ActionEvent;
-
+import jmri.jmrit.*;
+import java.awt.event.*;
 import java.io.*;
-import javax.swing.*;
-import org.jdom.*;
-import org.jdom.input.*;
-import com.sun.java.util.collections.List;
 
-import jmri.jmrit.XmlFile;
+import javax.swing.*;
+
+import org.jdom.*;
 
 /**
  * Recreate the roster index file if it's been damaged or lost
  *
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @author	Bob Jacobsen   Copyright (C) 2001
+ * @version	$Revision: 1.2 $
  */
 public class RecreateRosterAction extends AbstractAction {
 

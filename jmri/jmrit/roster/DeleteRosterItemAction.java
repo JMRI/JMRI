@@ -2,17 +2,12 @@
 
 package jmri.jmrit.roster;
 
-import jmri.jmrit.XmlFile;
-
-import javax.swing.AbstractAction;
-import java.awt.event.ActionEvent;
-
+import jmri.jmrit.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.*;
+
 import javax.swing.*;
-import java.awt.Component;
-import org.jdom.*;
-import org.jdom.input.*;
-import com.sun.java.util.collections.List;
 
 /**
  * Remove a locomotive from the roster.  In case of error, this
@@ -20,9 +15,9 @@ import com.sun.java.util.collections.List;
  * a dialog box to select the loco to be deleted, and then posts
  * an "are you sure" dialog box before acting.
  *
- * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.2 $
- * @see             jmri.jmrit.XmlFile
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2002
+ * @version	$Revision: 1.3 $
+ * @see         jmri.jmrit.XmlFile
  */
 public class DeleteRosterItemAction extends AbstractAction {
 
@@ -31,12 +26,12 @@ public class DeleteRosterItemAction extends AbstractAction {
      * @param who Component that action is associated with, used
      *              to ensure proper position in of dialog boxes
      */
-	public DeleteRosterItemAction(String s, Component who) {
-		super(s);
-		_who = who;
-	}
+    public DeleteRosterItemAction(String s, Component who) {
+        super(s);
+        _who = who;
+    }
 
-	Component _who;
+    Component _who;
 
     public void actionPerformed(ActionEvent event) {
 
@@ -46,14 +41,14 @@ public class DeleteRosterItemAction extends AbstractAction {
         Component parent = null;
         if ( event.getSource() instanceof Component) parent = (Component)event.getSource();
 
-		// create a dialog to select the roster entry
+        // create a dialog to select the roster entry
         JComboBox selections = roster.matchingComboBox(null,null, null, null, null,null,null);
         int retval = JOptionPane.showOptionDialog(_who,
-                        "Select one roster entry", "Select roster entry",
-                        0, JOptionPane.INFORMATION_MESSAGE, null,
-                        new Object[]{"Cancel", "OK", selections}, null );
+                                                  "Select one roster entry", "Select roster entry",
+                                                  0, JOptionPane.INFORMATION_MESSAGE, null,
+                                                  new Object[]{"Cancel", "OK", selections}, null );
         log.debug("Dialog value "+retval+" selected "+selections.getSelectedIndex()+":"
-                    +selections.getSelectedItem());
+                  +selections.getSelectedItem());
         if (retval != 1) return;
         String entry = (String) selections.getSelectedItem();
 
@@ -70,23 +65,23 @@ public class DeleteRosterItemAction extends AbstractAction {
         roster.writeRosterFile();
 
         // backup the file & delete it
-		try {
+        try {
             // ensure preferences will be found
             XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+LocoFile.fileLocation);
 
-			// do backup
+            // do backup
             LocoFile df = new LocoFile();   // need a dummy object to do this operation in next line
-			df.makeBackupFile(LocoFile.fileLocation+filename);
+            df.makeBackupFile(LocoFile.fileLocation+filename);
 
             // locate the file and delete
-			File f = new File(fullFilename);
+            File f = new File(fullFilename);
             f.delete();
 
-		} catch (Exception ex) {
-			log.error("error during locomotive file output: "+ex);
-		}
+        } catch (Exception ex) {
+            log.error("error during locomotive file output: "+ex);
+        }
 
-	}
+    }
 
     /**
      * Can provide some mechanism to prompt for user for one
@@ -95,12 +90,12 @@ public class DeleteRosterItemAction extends AbstractAction {
      */
     boolean userOK(String entry, String filename, String fullFileName) {
         return ( JOptionPane.YES_OPTION ==
-                    JOptionPane.showConfirmDialog(_who,
-                    "Delete entry "+entry+" and file "+fullFileName+"?",
-                    "Delete entry "+entry+"?", JOptionPane.YES_NO_OPTION));
+                 JOptionPane.showConfirmDialog(_who,
+                                               "Delete entry "+entry+" and file "+fullFileName+"?",
+                                               "Delete entry "+entry+"?", JOptionPane.YES_NO_OPTION));
     }
 
-	// initialize logging
+    // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(DeleteRosterItemAction.class.getName());
 
     /**
@@ -115,15 +110,15 @@ public class DeleteRosterItemAction extends AbstractAction {
     	// if can find it!
     	String logFile = "default.lcf";
     	try {
-	    	if (new java.io.File(logFile).canRead()) {
-	   	 		org.apache.log4j.PropertyConfigurator.configure("default.lcf");
-	    	} else {
-		    	org.apache.log4j.BasicConfigurator.configure();
-	    	}
-	    }
-		catch (java.lang.NoSuchMethodError e) { System.out.println("Exception starting logging: "+e); }
+            if (new java.io.File(logFile).canRead()) {
+                org.apache.log4j.PropertyConfigurator.configure("default.lcf");
+            } else {
+                org.apache.log4j.BasicConfigurator.configure();
+            }
+        }
+        catch (java.lang.NoSuchMethodError e) { System.out.println("Exception starting logging: "+e); }
 
-		// log.info("DeleteRosterItemAction starts");
+        // log.info("DeleteRosterItemAction starts");
 
         // fire the action
         Action a = new DeleteRosterItemAction("Delete Roster Item", null);

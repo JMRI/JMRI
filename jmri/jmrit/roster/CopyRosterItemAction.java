@@ -2,30 +2,27 @@
 
 package jmri.jmrit.roster;
 
-import jmri.jmrit.XmlFile;
-
-import javax.swing.AbstractAction;
-import java.awt.event.ActionEvent;
-
+import jmri.jmrit.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.*;
+
 import javax.swing.*;
-import java.awt.Component;
+
 import org.jdom.*;
-import org.jdom.input.*;
-import com.sun.java.util.collections.List;
 
 /**
  * Copy a roster element, including the definition file.
  *
- * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.3 $
- * @see             jmri.jmrit.XmlFile
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2002
+ * @version	$Revision: 1.4 $
+ * @see         jmri.jmrit.XmlFile
  */
 public class CopyRosterItemAction extends AbstractRosterItemAction {
 
-	public CopyRosterItemAction(String pName, Component pWho) {
-		super(pName, pWho);
-	}
+    public CopyRosterItemAction(String pName, Component pWho) {
+        super(pName, pWho);
+    }
 
     boolean selectFrom() {
         return selectExistingFromEntry();
@@ -68,13 +65,13 @@ public class CopyRosterItemAction extends AbstractRosterItemAction {
         newLocoFile.writeFile(fout, lroot, mToEntry);
 
         return true;
-	}
+    }
 
     void updateRoster() {
         addToEntryToRoster();
     }
 
-	// initialize logging
+    // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(CopyRosterItemAction.class.getName());
 
     /**
@@ -89,15 +86,15 @@ public class CopyRosterItemAction extends AbstractRosterItemAction {
     	// if can find it!
     	String logFile = "default.lcf";
     	try {
-	    	if (new java.io.File(logFile).canRead()) {
-	   	 		org.apache.log4j.PropertyConfigurator.configure("default.lcf");
-	    	} else {
-		    	org.apache.log4j.BasicConfigurator.configure();
-	    	}
-	    }
-		catch (java.lang.NoSuchMethodError e) { System.out.println("Exception starting logging: "+e); }
+            if (new java.io.File(logFile).canRead()) {
+                org.apache.log4j.PropertyConfigurator.configure("default.lcf");
+            } else {
+                org.apache.log4j.BasicConfigurator.configure();
+            }
+        }
+        catch (java.lang.NoSuchMethodError e) { System.out.println("Exception starting logging: "+e); }
 
-		// log.info("CopyRosterItemAction starts");
+        // log.info("CopyRosterItemAction starts");
 
         // fire the action
         Action a = new CopyRosterItemAction("Copy Roster Item", null);

@@ -2,13 +2,11 @@
 
 package jmri.jmrit.roster;
 
+import jmri.jmrit.*;
+import jmri.jmrit.symbolicprog.*;
 import java.io.*;
 
-import jmri.jmrit.symbolicprog.VariableTableModel;
-import jmri.jmrit.symbolicprog.CvTableModel;
-import jmri.jmrit.XmlFile;
-
-import org.jdom.Element;
+import org.jdom.*;
 
 /**
  * RosterEntry represents a single element in a locomotive roster, including
@@ -24,8 +22,8 @@ import org.jdom.Element;
  * A null value for it indicates that no physical file is (yet) associated with
  * this entry.
  *
- * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.9 $
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2002
+ * @version	$Revision: 1.10 $
  * @see jmri.jmrit.roster.LocoFile
  *
  */

@@ -3,6 +3,7 @@
 package jmri.jmrit.roster;
 
 import java.awt.*;
+
 import javax.swing.*;
 
 /**
@@ -10,7 +11,7 @@ import javax.swing.*;
  * <P>
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */

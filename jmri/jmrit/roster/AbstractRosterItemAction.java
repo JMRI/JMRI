@@ -2,33 +2,27 @@
 
 package jmri.jmrit.roster;
 
-import jmri.jmrit.XmlFile;
-
-import javax.swing.AbstractAction;
-import java.awt.event.ActionEvent;
-
+import java.awt.*;
+import java.awt.event.*;
 import java.io.*;
+
 import javax.swing.*;
-import java.awt.Component;
-import org.jdom.*;
-import org.jdom.input.*;
-import com.sun.java.util.collections.List;
 
 /**
  * Base class for Actions to copy, export and import RosterEntrys
  *
- * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.3 $
- * @see             jmri.jmrit.XmlFile
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2002
+ * @version	$Revision: 1.4 $
+ * @see         jmri.jmrit.XmlFile
  */
 abstract public class AbstractRosterItemAction extends AbstractAction {
 
-	public AbstractRosterItemAction(String pName, Component pWho) {
-		super(pName);
-		mParent = pWho;
-	}
+    public AbstractRosterItemAction(String pName, Component pWho) {
+        super(pName);
+        mParent = pWho;
+    }
 
-	Component mParent;
+    Component mParent;
     Roster roster = Roster.instance();
 
     public void actionPerformed(ActionEvent event) {
@@ -51,28 +45,28 @@ abstract public class AbstractRosterItemAction extends AbstractAction {
     abstract void updateRoster();
 
     // variables to communicate the "from" entry, file, etc
-        String mFromID = null;
-        RosterEntry mFromEntry = null;
-        File mFromFile = null;
-        String mFromFilename = null;
-        String mFullFromFilename = null;  // includes path to preferences
+    String mFromID = null;
+    RosterEntry mFromEntry = null;
+    File mFromFile = null;
+    String mFromFilename = null;
+    String mFullFromFilename = null;  // includes path to preferences
 
     // variables to communicate the "to" entry, file, etc.
-        String mToID = null;
-        RosterEntry mToEntry = null;
-        File mToFile = null;
-        String mToFilename = null;
-        String mFullToFilename = null;  // includes path to preferences
+    String mToID = null;
+    RosterEntry mToEntry = null;
+    File mToFile = null;
+    String mToFilename = null;
+    String mFullToFilename = null;  // includes path to preferences
 
     boolean selectExistingFromEntry() {
-		// create a dialog to select the roster entry to copy
+        // create a dialog to select the roster entry to copy
         JComboBox selections = roster.matchingComboBox(null, null, null, null, null, null, null);
         int retval = JOptionPane.showOptionDialog(mParent,
-                        "Select one roster entry", "Select roster entry",
-                        0, JOptionPane.INFORMATION_MESSAGE, null,
-                        new Object[]{"Cancel", "OK", selections}, null );
+                                                  "Select one roster entry", "Select roster entry",
+                                                  0, JOptionPane.INFORMATION_MESSAGE, null,
+                                                  new Object[]{"Cancel", "OK", selections}, null );
         log.debug("Dialog value "+retval+" selected "+selections.getSelectedIndex()+":\""
-                    +selections.getSelectedItem()+"\"");
+                  +selections.getSelectedItem()+"\"");
         if (retval!=1) return false;  // user didn't select
 
         mFromID = (String) selections.getSelectedItem();
@@ -96,7 +90,7 @@ abstract public class AbstractRosterItemAction extends AbstractAction {
 
             // here it is a duplicate, reprompt
             JOptionPane.showMessageDialog(mParent,
-                                    "That entry already exists, please choose another");
+                                          "That entry already exists, please choose another");
 
         } while (true);
         return true;
@@ -105,30 +99,30 @@ abstract public class AbstractRosterItemAction extends AbstractAction {
     javax.swing.JFileChooser fileChooser = new JFileChooser(jmri.jmrit.XmlFile.prefsDir());
 
     boolean selectNewFromFile() {
-		int retVal = fileChooser.showOpenDialog(mParent);
+        int retVal = fileChooser.showOpenDialog(mParent);
 
-		// handle selection or cancel
-		if (retVal != JFileChooser.APPROVE_OPTION) return false;  // give up if no file selected
+        // handle selection or cancel
+        if (retVal != JFileChooser.APPROVE_OPTION) return false;  // give up if no file selected
 
-		// call load to process the file
-		mFromFile = fileChooser.getSelectedFile();
-		mFromFilename = mFromFile.getName();
-		mFullFromFilename = mFromFile.getAbsolutePath();
+        // call load to process the file
+        mFromFile = fileChooser.getSelectedFile();
+        mFromFilename = mFromFile.getName();
+        mFullFromFilename = mFromFile.getAbsolutePath();
         log.debug("New from file: "+mFromFilename+" at "+mFullFromFilename);
         return true;
     }
 
     boolean selectNewToFile() {
         fileChooser.setSelectedFile(new File(mFromFilename));
-		int retVal = fileChooser.showSaveDialog(mParent);
+        int retVal = fileChooser.showSaveDialog(mParent);
 
-		// handle selection or cancel
-		if (retVal != JFileChooser.APPROVE_OPTION) return false;  // give up if no file selected
+        // handle selection or cancel
+        if (retVal != JFileChooser.APPROVE_OPTION) return false;  // give up if no file selected
 
-		// call load to process the file
-		mToFile = fileChooser.getSelectedFile();
-		mToFilename = mToFile.getName();
-		mFullToFilename = mToFile.getAbsolutePath();
+        // call load to process the file
+        mToFile = fileChooser.getSelectedFile();
+        mToFilename = mToFile.getName();
+        mFullToFilename = mToFile.getAbsolutePath();
         log.debug("New to file: "+mToFilename+" at "+mFullToFilename);
         return true;
     }
@@ -139,8 +133,8 @@ abstract public class AbstractRosterItemAction extends AbstractAction {
         roster.writeRosterFile();
     }
 
-	// initialize logging
+    // initialize logging
     static org.apache.log4j.Category log
-            = org.apache.log4j.Category.getInstance(AbstractRosterItemAction.class.getName());
+        = org.apache.log4j.Category.getInstance(AbstractRosterItemAction.class.getName());
 
 }

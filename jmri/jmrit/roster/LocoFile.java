@@ -2,14 +2,11 @@
 
 package jmri.jmrit.roster;
 
-import com.sun.java.util.collections.List;
+import jmri.jmrit.*;
+import jmri.jmrit.symbolicprog.*;
 import java.io.*;
-import java.util.Date;
-import jmri.jmrit.XmlFile;
-import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.symbolicprog.VariableTableModel;
-import jmri.jmrit.symbolicprog.CvTableModel;
-import jmri.jmrit.symbolicprog.CvValue;
+
+import com.sun.java.util.collections.*;
 import org.jdom.*;
 import org.jdom.output.*;
 
@@ -20,10 +17,10 @@ import org.jdom.output.*;
  * This class is intended for use by RosterEntry only; you should not use it
  * directly. That's why this is not a public class.
  *
- * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version		 	$Revision: 1.9 $
- * @see jmri.jmrit.roster.RosterEntry
- * @see jmri.jmrit.roster.Roster
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2002
+ * @version     $Revision: 1.10 $
+ * @see         jmri.jmrit.roster.RosterEntry
+ * @see         jmri.jmrit.roster.Roster
  */
 class LocoFile extends XmlFile {
 

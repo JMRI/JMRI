@@ -2,13 +2,12 @@
 
 package jmri.jmrit.roster;
 
+import jmri.util.davidflanagan.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
-import jmri.util.davidflanagan.*;
+
 import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.table.*;
+
 import com.sun.java.util.collections.List;
 
 
@@ -19,7 +18,7 @@ import com.sun.java.util.collections.List;
  * Macintosh MRJ
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class PrintRosterAction  extends AbstractAction {
 

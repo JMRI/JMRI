@@ -17,16 +17,16 @@ import com.sun.java.util.collections.List;
 /**
  * Export a roster element as a new definition file.
  *
- * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.1 $
- * @see             jmri.jmrit.roster.AbstractRosterItemAction
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2002
+ * @version	$Revision: 1.2 $
+ * @see         jmri.jmrit.roster.AbstractRosterItemAction
  * @see             jmri.jmrit.XmlFile
  */
 public class ExportRosterItemAction extends AbstractRosterItemAction  {
 
-	public ExportRosterItemAction(String pName, Component pWho) {
-		super(pName, pWho);
-	}
+    public ExportRosterItemAction(String pName, Component pWho) {
+        super(pName, pWho);
+    }
 
     boolean selectFrom() {
         return selectExistingFromEntry();
@@ -67,13 +67,13 @@ public class ExportRosterItemAction extends AbstractRosterItemAction  {
         newLocoFile.writeFile(mToFile, lroot, mToEntry);
 
         return true;
-	}
+    }
 
     void updateRoster() {
         // exported entry is NOT added to Roster
     }
 
-	// initialize logging
+    // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ExportRosterItemAction.class.getName());
 
     /**
@@ -88,15 +88,15 @@ public class ExportRosterItemAction extends AbstractRosterItemAction  {
     	// if can find it!
     	String logFile = "default.lcf";
     	try {
-	    	if (new java.io.File(logFile).canRead()) {
-	   	 		org.apache.log4j.PropertyConfigurator.configure("default.lcf");
-	    	} else {
-		    	org.apache.log4j.BasicConfigurator.configure();
-	    	}
-	    }
-		catch (java.lang.NoSuchMethodError e) { System.out.println("Exception starting logging: "+e); }
+            if (new java.io.File(logFile).canRead()) {
+                org.apache.log4j.PropertyConfigurator.configure("default.lcf");
+            } else {
+                org.apache.log4j.BasicConfigurator.configure();
+            }
+        }
+        catch (java.lang.NoSuchMethodError e) { System.out.println("Exception starting logging: "+e); }
 
-		// log.info("CopyRosterItemAction starts");
+        // log.info("CopyRosterItemAction starts");
 
         // fire the action
         Action a = new ExportRosterItemAction("Export Roster Item", null);
