@@ -16,10 +16,10 @@ import jmri.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class CornwallRR extends JPanel {
-    public CornwallRR() {
+    public CornwallRR(JFrame frame) {
 
         super(true);
 
@@ -44,6 +44,7 @@ public class CornwallRR extends JPanel {
         // Create menu categories and add to the menu bar, add actions to menus
         JMenu fileMenu = new JMenu("File");
         menuBar.add(fileMenu);
+        fileMenu.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(frame));
         fileMenu.add(new AbstractAction("Quit"){
                 public void actionPerformed(ActionEvent e) {
                     System.exit(0);
@@ -133,8 +134,11 @@ public class CornwallRR extends JPanel {
         });
         pane1.add(pane2);
         add(pane1);
+
+        configOK = prefs.configOK;
     }
 
+    boolean configOK;
     // Main entry point
     public static void main(String args[]) {
 
@@ -160,8 +164,8 @@ public class CornwallRR extends JPanel {
         }
 
     	// create the demo frame and menus
-        CornwallRR containedPane = new CornwallRR();
         JFrame frame = new JFrame("Cornwall main panel");
+        CornwallRR containedPane = new CornwallRR(frame);
         frame.addWindowListener(new jmri.util.oreilly.BasicWindowMonitor());
         frame.setJMenuBar(containedPane.menuBar);
         frame.getContentPane().add(containedPane);
@@ -169,14 +173,18 @@ public class CornwallRR extends JPanel {
         frame.setVisible(true);
         log.info("main initialization done");
 
-        // load definitions
-        loadFile("CornwallDefinitions.xml");
+        if (containedPane.configOK) {
+            // load definitions
+            loadFile("CornwallDefinitions.xml");
 
-        // start automation (whith will work in parallel)
-        new CrrInit().start();
+            // start automation (whith will work in parallel)
+            new CrrInit().start();
 
-        // show panel
-        loadFile("CornwallMain.xml");
+            // show panel
+            loadFile("CornwallMain.xml");
+        } else {
+            log.warn("Truncating startup because couldn't connect to layout");
+        }
 
     }
 
