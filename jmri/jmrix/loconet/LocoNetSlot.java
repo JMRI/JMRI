@@ -17,7 +17,7 @@ import java.util.*;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 public class LocoNetSlot {
 
@@ -77,7 +77,8 @@ public class LocoNetSlot {
         case LnConstants.OPC_SL_RD_DATA: {
             if ( l.getElement(1) != 0x0E ) return;  // not an appropriate reply
             // valid, so fill contents
-            if (slot != l.getElement(1)) log.error("Asked to handle message not for this slot "+l);
+            if (slot != l.getElement(2)) log.error("Asked to handle message not for this slot ("
+                                                    +slot+") "+l);
             stat = l.getElement(3);
             _pcmd = l.getElement(4);
             addr = l.getElement(4)+128*l.getElement(9);
