@@ -23,8 +23,12 @@ Inside packets on the LocoNet, output turnouts are addressed with numbers from 0
 Throttles, however, address these with numbers from 1 to 4096. To avoid user
 confusion, JMRI uses the same numbering as the throttles:  LT1 to LT4096.
 <P>
-Note that the LocoNet monitor panel shows the contents of the LocoNet packets, hence
-0 to 4095.  Yes, that's confusing, but there has to be some confusion somewhere, given
+Note that when the LocoNet monitor panel shows the contents of the LocoNet packets
+in text, it uses the same addressing, hence
+1 to 4096.  This is then 
+different from the raw bytes that are displayed, but
+at least it's consistent with what users expect to see.
+We agree that's confusing, but there has to be some confusion somewhere, given
 the way this was set up.
 
 <h2>Addressing LocoNet sensors in JMRI</h2>
@@ -39,11 +43,10 @@ locomotive onto the block you're interested in.  You'll see the
 LocoNet message, complete with number, in the window that looks 
 something like this:
 <PRE>
-   General sensor input report: contact 161 (DS54 20 ch1 Sw  input)
-        (BDL16 10 A2) is Lo
+   General sensor input report: contact 161 (DS54 switch 81 Aux input) (BDL16 11,1) is Hi 
 </PRE>
-The contact number, 161 in this case, is the LocoNet address of the sensor.
-Add one to that to get the sensor name, e.g. LS162 in this case.
+The contact number, 161 in this case, is the address of the sensor.
+Prefix that with LS that to get the sensor name, e.g. LS161 in this case.
 <P>
 
 <h2>Addressing Transponding in JMRI</h2>
