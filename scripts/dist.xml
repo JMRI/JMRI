@@ -1,8 +1,8 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.2 $ -->
+<!-- Revision $Revision: 1.3 $ -->
 
-<project name="JMRI" basedir=".">
+<project name="JMRI" basedir="." default="init">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
 <!-- in the project.  We expect that lib et al will be present in -->
 <!-- .. from there -->
@@ -60,7 +60,7 @@
     <delete dir="${release}" />
     <mkdir dir="${release}"/>
     <echo message="cvs checkout" />
-    <cvs package="ant" dest="${release}" tag="${release}"/>
+    <cvs package="ant" quiet="true" dest="${release}" tag="${release}"/>
 
     <echo message="test" />
     <ant antfile="build.xml" dir="${release}/java" target="alltest" />
@@ -74,8 +74,9 @@
 
  <target name="x-rel-1.1.8-build" depends=""
  					description="create jar files for Java 1.1">
-    <echo message="make 1.1 distribution jar" />
+    <echo message="make Java 1.1 distribution jar" />
     <ant antfile="build.xml" dir="${release}/java" target="clean" />
+    <ant antfile="build.xml" dir="${release}/java" target="init" />
     <ant antfile="build.xml" dir="${release}/java" target="dist">
   		<property name="build.compiler" value="javac1.2" />
     </ant>
@@ -101,8 +102,8 @@
     <delete dir="Windows/JMRI/help" />
     <cvs command="export" quiet="true" package="help" dest="Windows/JMRI" tag="${release}"/>
     <delete dir="Windows/JMRI/jython" />
-    <cvs command="export" package="jython" dest="Windows/JMRI" tag="${release}"/>
-    <cvs command="export" package="scripts" dest="Windows/JMRI" tag="${release}"/>
+    <cvs command="export" quiet="true" package="jython" dest="Windows/JMRI" tag="${release}"/>
+    <cvs command="export" quiet="true" package="scripts" dest="Windows/JMRI" tag="${release}"/>
     <move todir="Windows/JMRI">
 		<fileset dir="Windows/JMRI/scripts" >
       		<include name="*.bat"/>
@@ -131,13 +132,13 @@
     <delete file="MacOSX/JMRI/lib/jh.1.1.2.jar" />
     <delete file="MacOSX/JMRI/lib/Serialio.jar" />
     <delete dir="MacOSX/JMRI/xml" />
-    <cvs command="export" package="xml" dest="MacOSX/JMRI" tag="${release}"/>
+    <cvs command="export" quiet="true" package="xml" dest="MacOSX/JMRI" tag="${release}"/>
     <delete dir="MacOSX/JMRI/resources" />
-    <cvs command="export" package="resources" dest="MacOSX/JMRI" tag="${release}"/>
+    <cvs command="export" quiet="true" package="resources" dest="MacOSX/JMRI" tag="${release}"/>
     <delete dir="MacOSX/JMRI/help" />
-    <cvs command="export" package="help" dest="MacOSX/JMRI" tag="${release}"/>
+    <cvs command="export" quiet="true" package="help" dest="MacOSX/JMRI" tag="${release}"/>
     <delete dir="MacOSX/JMRI/jython" />
-    <cvs command="export" package="jython" dest="MacOSX/JMRI" tag="${release}"/>
+    <cvs command="export" quiet="true" package="jython" dest="MacOSX/JMRI" tag="${release}"/>
 </target>
 
 <target name="x-rel-create-linux" depends=""
@@ -151,14 +152,14 @@
     <delete file="Linux/JMRI/lib/junit.jar" />
     <delete file="Linux/JMRI/lib/Serialio.jar" />
     <delete dir="Linux/JMRI/xml" />
-    <cvs command="export" package="xml" dest="Linux/JMRI" tag="${release}"/>
+    <cvs command="export" quiet="true" package="xml" dest="Linux/JMRI" tag="${release}"/>
     <delete dir="Linux/JMRI/resources" />
-    <cvs command="export" package="resources" dest="Linux/JMRI" tag="${release}"/>
+    <cvs command="export" quiet="true" package="resources" dest="Linux/JMRI" tag="${release}"/>
     <delete dir="Linux/JMRI/help" />
-    <cvs command="export" package="help" dest="Linux/JMRI" tag="${release}"/>
+    <cvs command="export" quiet="true" package="help" dest="Linux/JMRI" tag="${release}"/>
     <delete dir="Linux/JMRI/jython" />
-    <cvs command="export" package="jython" dest="Linux/JMRI" tag="${release}"/>
-    <cvs command="export" package="scripts" dest="Linux/JMRI" tag="${release}"/>
+    <cvs command="export" quiet="true" package="jython" dest="Linux/JMRI" tag="${release}"/>
+    <cvs command="export" quiet="true" package="scripts" dest="Linux/JMRI" tag="${release}"/>
     <move todir="Linux/JMRI">
 		<fileset dir="Linux/JMRI/scripts" >
       		<include name="*.csh"/>
@@ -183,13 +184,13 @@
     <delete file="MacClassic/JMRI/lib/jh.jar" />
     <delete file="MacClassic/JMRI/lib/Serialio.jar" />
     <delete dir="MacClassic/JMRI/xml" />
-    <cvs command="export" package="xml" dest="MacClassic/JMRI" tag="${release}"/>
+    <cvs command="export" quiet="true" package="xml" dest="MacClassic/JMRI" tag="${release}"/>
     <delete dir="MacClassic/JMRI/resources" />
-    <cvs command="export" package="resources" dest="MacClassic/JMRI" tag="${release}"/>
+    <cvs command="export" quiet="true" package="resources" dest="MacClassic/JMRI" tag="${release}"/>
     <delete dir="MacClassic/JMRI/help" />
-    <cvs command="export" package="help" dest="MacClassic/JMRI" tag="${release}"/>
+    <cvs command="export" quiet="true" package="help" dest="MacClassic/JMRI" tag="${release}"/>
     <delete dir="MacClassic/JMRI/jython" />
-    <cvs command="export" package="jython" dest="MacClassic/JMRI" tag="${release}"/>
+    <cvs command="export" quiet="true" package="jython" dest="MacClassic/JMRI" tag="${release}"/>
 </target>
 
 <target name="x-rel-create-os2" depends=""
@@ -203,13 +204,13 @@
     <delete file="OS2/JMRI/lib/junit.jar" />
     <delete file="OS2/JMRI/lib/Serialio.jar" />
     <delete dir="OS2/JMRI/xml" />
-    <cvs command="export" package="xml" dest="OS2/JMRI" tag="${release}"/>
+    <cvs command="export" quiet="true" package="xml" dest="OS2/JMRI" tag="${release}"/>
     <delete dir="OS2/JMRI/resources" />
-    <cvs command="export" package="resources" dest="OS2/JMRI" tag="${release}"/>
+    <cvs command="export" quiet="true" package="resources" dest="OS2/JMRI" tag="${release}"/>
     <delete dir="OS2/JMRI/help" />
-    <cvs command="export" package="help" dest="OS2/JMRI" tag="${release}"/>
+    <cvs command="export" quiet="true" package="help" dest="OS2/JMRI" tag="${release}"/>
     <delete dir="OS2/JMRI/jython" />
-    <cvs command="export" package="jython" dest="OS2/JMRI" tag="${release}"/>
+    <cvs command="export" quiet="true" package="jython" dest="OS2/JMRI" tag="${release}"/>
 </target>
 
 <target name="x-rel-installer-osx" depends=""

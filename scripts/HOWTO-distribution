@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.29 $)
+distribution.  ($Revision: 1.30 $)
 
 Start with a directory, typically called "Distributions", that
 contains:
@@ -46,13 +46,7 @@ To actually create the distribution:
 ( ) Go to your working directory and
 	cvs tag Release-1-2-3 src test build.xml jmri.jpx JMRILibraries.library manifest
 	cd ..
-	cvs tag Release-1-2-3 help jython resources xml
-	
-	cd lib
-	cvs tag Release-1-2-3 collections.jar comm.jar crimson.jar jdom-jdk11.jar jh.jar log4j.jar security.policy
-	
-	The following two tags are needed for the build & test process:
-	cvs tag Release-1-2-3 Serialio.jar junit.jar
+	cvs tag Release-1-2-3 help jython resources xml lib
 
 ( ) Come back to Distributions and 
     cd scripts
@@ -61,7 +55,7 @@ To actually create the distribution:
 	cvs tag Release-1-2-3
     cd ..
     
-	ant -Drelease=Release-1-2-3 -Dnumber=1.2.3 release1
+	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release1
 	
 	Ensure tests pass!
 	
@@ -81,13 +75,13 @@ To actually create the distribution:
 	Drag-copy .exe to Mac, copy to final Distributions; name should be OK
 
 ( ) Once the three StuffIt processes are done
-	ant -Drelease=Release-1-2-3 -Dnumber=1.2.3 release2
+	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release2
 	
 	This will launch one more StuffIt process (for MacClassic)
 	Wait for it to complete.
 	
 ( ) Once the 4th StuffIt process is done, start uploading via
-	ant -Drelease=Release-1-2-3 -Dnumber=1.2.3 release3
+	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release3
 
 ( ) Create and upload the XSLT pages. This can be done at any time,
     but doing it now works well in parallel
@@ -99,7 +93,7 @@ To actually create the distribution:
 ( ) The Windows .exe must be present before the next step
 	
 ( ) When ready to upload the Windows version:
-	ant -Drelease=Release-1-2-3 -Dnumber=1.2.3 release4
+	ant -f dist.xml -Drelease=Release-1-2-3 -Dnumber=1.2.3 release4
 	
     This also creates and uploads the JavaDocs as a last step
 		
