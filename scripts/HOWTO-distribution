@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.35 $)
+distribution.  ($Revision: 1.36 $)
 
 Start with a directory, typically called "Distributions", that
 contains:
@@ -37,11 +37,13 @@ Make sure everything is up-to-date:
     (launch JHelpDev, e.g. "open jhelpdev.jar")
     (navigate to JHelpDev.xml & open it)
     
+( ) Check that the Version.java file has been updated and committed
+
 ( ) To ensure that you've got the HEAD of CVS, in your test area do:
 
-    cvs -q update -d help jython lib resources xml
+    cvs -q update -dA help jython lib resources xml
     cd java
-    cvs -q update -d build.xml jmri.jpx JMRILibraries.library lib manifest src test
+    cvs -q update -dA build.xml jmri.jpx JMRILibraries.library lib manifest src test
 
     
     cd Distributions/scripts
