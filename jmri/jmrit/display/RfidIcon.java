@@ -14,7 +14,7 @@ import javax.swing.JPopupMenu;
  * An icon to display info from RFID reader.<P>
  *
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class RfidIcon extends PositionableLabel {
@@ -22,7 +22,6 @@ public class RfidIcon extends PositionableLabel {
     public RfidIcon() {
         // super ctor call to make sure this is an icon label
         super("-------");
-        System.out.println("rfid ctor");
         setText("+++++++");
     }
 
