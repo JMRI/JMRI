@@ -40,7 +40,7 @@ import org.jdom.output.XMLOutputter;
  * sort is done manually each time an entry is added.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -196,8 +196,10 @@ public class Roster extends XmlFile {
     void writeFile(String name) throws java.io.IOException {
         if (log.isDebugEnabled()) log.debug("writeFile "+name);
         // This is taken in large part from "Java and XML" page 368
-        File file = new File(prefsDir()+name);
-
+        File file = findFile(name);
+        if (file == null) {
+            file = new File(prefsDir()+name);
+        }
         // create root element
         Element root = new Element("roster-config");
         Document doc = new Document(root);
