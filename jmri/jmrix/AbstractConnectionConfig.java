@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 abstract public class AbstractConnectionConfig  implements jmri.jmrix.ConnectionConfig {
 
@@ -83,6 +83,7 @@ abstract public class AbstractConnectionConfig  implements jmri.jmrix.Connection
         Vector v = adapter.getPortNames();
         log.debug("Found "+v.size()+" ports");
         String portName;
+        portBox.removeAllItems();
         for (int i=0; i<v.size(); i++) {
             if (i==0) portName = (String) v.elementAt(i);
                 portBox.addItem(v.elementAt(i));
