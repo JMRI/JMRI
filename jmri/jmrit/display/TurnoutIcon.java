@@ -11,7 +11,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 /**
- * Anicon to display a status of a turnout.<P>
+ * An icon to display a status of a turnout.<P>
  * This responds to only KnownState, leaving CommandedState to some other
  * graphic representation later.
  * <P>
@@ -22,7 +22,7 @@ import javax.swing.JPopupMenu;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -41,19 +41,18 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
 
     /**
      * Attached a named turnout to this display item
-     * @param pUserName Used as a user name to lookup the turnout object
-     * @param pSystemName Used as a system name to lookup the turnout object
+     * @param pName Used as a system/user name to lookup the turnout object
      */
-    public void setTurnout(String pSystemName, String pUserName) {
+    public void setTurnout(String pName) {
         if (InstanceManager.turnoutManagerInstance()!=null) {
             turnout = InstanceManager.turnoutManagerInstance().
-                newTurnout(pSystemName, pUserName);
+                provideTurnout(pName);
             if (turnout != null) {
                 displayState(turnoutState());
                 turnout.addPropertyChangeListener(this);
                 setProperToolTip();
             } else {
-                log.error("Turnout '"+pSystemName+"' not available, icon won't see changes");
+                log.error("Turnout '"+pName+"' not available, icon won't see changes");
             }
         } else {
             log.error("No TurnoutManager for this protocol, icon won't see changes");

@@ -9,10 +9,10 @@ import org.jdom.Attribute;
 import org.jdom.Element;
 
 /**
- * Handle configuration for display.TurnoutIcon objects
+ * Handle configuration for display.TurnoutIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class TurnoutIconXml implements XmlAdapter {
 
@@ -95,7 +95,7 @@ public class TurnoutIconXml implements XmlAdapter {
             }
         } catch (org.jdom.DataConversionException e) {}
 
-        l.setTurnout(element.getAttribute("turnout").getValue(), null);
+        l.setTurnout(element.getAttribute("turnout").getValue());
 
         // find coordinates
         int x = 0;
