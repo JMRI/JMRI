@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the {@link jmri.jmrix.lenz.XNetTurnout} class.
  * @author	    Bob Jacobsen
- * @version         $Revision: 2.0 $
+ * @version         $Revision: 2.1 $
  */
 public class XNetTurnoutTest extends jmri.AbstractTurnoutTest {
 
@@ -42,18 +42,18 @@ public class XNetTurnoutTest extends jmri.AbstractTurnoutTest {
 	public void checkIncoming() {
 		// notify the object that somebody else changed it...
 		XNetReply m = new XNetReply();
-		m.setOpCode(0xb0);
-		m.setElement(1, 0x14);     // set CLOSED
-		m.setElement(2, 0x30);
-		m.setElement(3, 0x00);
+		m.setElement(0, 0x42);
+		m.setElement(1, 0x05);
+		m.setElement(2, 0x04);     // set CLOSED
+		m.setElement(3, 0x43);
 		lnis.sendTestMessage(m);
 		Assert.assertTrue(t.getCommandedState() == jmri.Turnout.CLOSED);
 
 		m = new XNetReply();
-		m.setOpCode(0xb0);
-		m.setElement(1, 0x14);     // set THROWN
-		m.setElement(2, 0x10);
-		m.setElement(3, 0x00);
+		m.setElement(0, 0x42);
+		m.setElement(1, 0x05);
+		m.setElement(2, 0x08);     // set THROWN
+		m.setElement(3, 0x4F);
 		lnis.sendTestMessage(m);
 		Assert.assertTrue(t.getCommandedState() == jmri.Turnout.THROWN);
 	}
@@ -70,10 +70,10 @@ public class XNetTurnoutTest extends jmri.AbstractTurnoutTest {
 
 		// notify that somebody else changed it...
 		XNetReply m = new XNetReply();
-		m.setOpCode(0x1);
-		m.setElement(1, 0x14);     // set CLOSED
-		m.setElement(2, 0x20);
-		m.setElement(3, 0x7b);
+		m.setElement(0, 0x42);
+		m.setElement(1, 0x05);
+		m.setElement(2, 0x04);     // set CLOSED
+		m.setElement(3, 0x43);
 		lnis.sendTestMessage(m);
 		Assert.assertTrue(t.getCommandedState() == jmri.Turnout.CLOSED);
 
