@@ -1,18 +1,19 @@
-/** 
+/**
  * AbstractProgrammer.java
  *
  * Common implementations for the Programmer interface
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			
+ * @version
  */
- 
+
  // Convert the jmri.Programmer interface into commands for the NCE powerstation
 
 package jmri.jmrix;
 
 import jmri.Programmer;
 import jmri.ProgListener;
+import jmri.ProgrammerException;
 
 import java.util.Vector;
 import java.beans.PropertyChangeListener;
@@ -35,16 +36,16 @@ public abstract class AbstractProgrammer implements Programmer {
 
 		// remove trailing separators
 		if (sbuf.length() > 2) sbuf.setLength(sbuf.length()-2);
-		
+
 		String retval = sbuf.toString();
-		if (retval.equals("")) 
+		if (retval.equals(""))
 			return "unknown status code: "+code;
 		else return retval;
 	}
 
 	// data members to hold contact with the property listeners
 	protected Vector propListeners = new Vector();
-	
+
 	public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
 		// add only if not already registered
 		if (!propListeners.contains(l)) {
@@ -57,21 +58,21 @@ public abstract class AbstractProgrammer implements Programmer {
 			propListeners.removeElement(l);
 		}
 	}
-		
+
 	/**
 	 * Internal routine to start timer to protect the mode-change.
 	 */
 	protected void startShortTimer() {
 		restartTimer(SHORT_TIMEOUT);
 	}
-	
+
 	/**
 	 * Internal routine to restart timer with a long delay
 	 */
 	protected void startLongTimer() {
 		restartTimer(LONG_TIMEOUT);
 	}
-	
+
 	/**
 	 * Internal routine to stop timer, as all is well
 	 */
@@ -95,17 +96,35 @@ public abstract class AbstractProgrammer implements Programmer {
 		timer.setRepeats(false);
 		timer.start();
 	}
-	
+
+    /**
+     * Find the register number that corresponds to a specific
+     * CV number, or thrown a
+     */
+
+    public int registerFromCV(int cv) throws ProgrammerException {
+        if (cv<=4) return cv;
+        switch (cv) {
+            case 29:
+                return 5;
+            case 7:
+                return 7;
+            case 8:
+                return 8;
+        }
+        throw new ProgrammerException();
+     }
+
 	/**
 	 * Internal routine to handle a timeout, should be synchronized!
 	 */
 	abstract protected void timeout();
-	
+
 	static private int SHORT_TIMEOUT=2000;
 	static private int LONG_TIMEOUT=60000;
-	
+
 	javax.swing.Timer timer = null;
-	
+
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractProgrammer.class.getName());
 
 }
