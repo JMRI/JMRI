@@ -32,7 +32,7 @@ import jmri.jmrix.loconet.*;
  * Reverse engineering of OPC_MULTI_SENSE was provided by Al Silverstein.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public class Llnmon {
 
@@ -947,7 +947,8 @@ public class Llnmon {
                             +"\n\tMaster controller "
                             +((track_stat & LnConstants.GTRK_MLOK1)!=0 ? "implements LocoNet 1.1" : "is a DT-200")
                             +",\n\tTrack Status is "
-                            +((track_stat & LnConstants.GTRK_IDLE)!=0  ? "On" : "Off")
+                            +((track_stat & LnConstants.GTRK_POWER)!=0  ? " On," : " Off,")
+                            +((track_stat & LnConstants.GTRK_IDLE)!=0  ? " Paused " : " Running ")
                             +",\n\tProgramming Track is "
                             +((track_stat & LnConstants.GTRK_PROG_BUSY)!=0 ? "Busy" : "Available")
                             +"\n";
