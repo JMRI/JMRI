@@ -1,9 +1,9 @@
-/** 
+/**
  * ValueEditor.java
  *
  * Description:		Represents an enum table cell
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			
+ * @version
  */
 
 package jmri.jmrit.symbolicprog;
@@ -42,7 +42,7 @@ public class ValueEditor extends JComboBox implements TableCellEditor {
 
 	// CellEditor methods
 	public void cancelCellEditing() {
-		if (log.isDebugEnabled()) log.debug("cancelCellEditting");
+		if (log.isDebugEnabled()) log.debug("cancelCellEditing");
 		fireEditingCanceled();
 	}
 
@@ -52,13 +52,13 @@ public class ValueEditor extends JComboBox implements TableCellEditor {
 	}
 
 	public boolean isCellEditable(EventObject eo) {return true;}
-  
+
 	public boolean shouldSelectCell(EventObject eo) {
 		return true;
 	}
 
 	public boolean stopCellEditing() {
-		if (log.isDebugEnabled()) log.debug("stopCellEditting");
+		if (log.isDebugEnabled()) log.debug("stopCellEditing");
 		fireEditingStopped();
 		return true;
 	}
@@ -66,7 +66,7 @@ public class ValueEditor extends JComboBox implements TableCellEditor {
 	public void addCellEditorListener(CellEditorListener cel) {
 		listeners.addElement(cel);
 	}
-  
+
 	public void removeCellEditorListener(CellEditorListener cel) {
 		listeners.removeElement(cel);
 	}
@@ -88,6 +88,6 @@ public class ValueEditor extends JComboBox implements TableCellEditor {
 		}
 	}
 
-	// initialize logging	
+	// initialize logging
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ValueEditor.class.getName());
 }
