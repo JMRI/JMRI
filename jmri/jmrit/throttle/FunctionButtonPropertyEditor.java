@@ -156,6 +156,9 @@ public class FunctionButtonPropertyEditor extends JDialog
                                     button.getFont().getStyle(),
                                     Integer.parseInt(fontField.getText())));
             button.setVisible(visibleCheckBox.isSelected());
+            int butWidth = button.getFontMetrics(button.getFont()).stringWidth(button.getText());
+            if (butWidth < 34) butWidth = 34;
+            button.setPreferredSize(new Dimension(butWidth+20,30));
             finishEdit();
         }
     }
