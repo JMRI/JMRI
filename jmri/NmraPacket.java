@@ -28,7 +28,7 @@ package jmri;
  *            short vs long address type
  *
  * @author      Bob Jacobsen Copyright (C) 2001, 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class NmraPacket {
 
@@ -47,11 +47,11 @@ public class NmraPacket {
         // bits of the 9 bit address are bits 4-6 of the second data byte. By convention
         // these three bits are in ones complement. The use of bit 7 of the second byte
         // is reserved for future use.
-        
+
         // Note that A=1 is the first (lowest) valid address field, and the
         // largest is 512!  I don't know why this is, but it gets the
         // right hardware addresses
-        
+
         if (addr < 1 || addr>511) {
             log.error("invalid address "+addr);
             return null;
@@ -64,19 +64,19 @@ public class NmraPacket {
             log.error("invalid output channel "+addr);
             return null;
         }
-        
+
         int lowAddr = addr & 0x3F;
         int highAddr = ( (~addr) >> 6) & 0x07;
-        
+
         byte[] retVal = new byte[3];
-        
+
         retVal[0] = (byte) (0x80 | lowAddr);
         retVal[1] = (byte) (0x80 | (highAddr << 4 ) | ( active << 3) | outputChannel&0x07);
         retVal[2] = (byte) (retVal[0] ^ retVal[1]);
-        
+
         return retVal;
     }
-    
+
     static byte[] locoSpeed14S(int address, int speedStep, boolean F0 ) {
         if (log.isDebugEnabled()) log.debug("create "+address+" "+speedStep+" "+F0);
         if (speedStep < 0 || speedStep>14) {
@@ -89,7 +89,7 @@ public class NmraPacket {
         }
         return new byte[2];
     }
-    
+
     public static byte[] opsCvWriteByte(int address, boolean longAddr, int cvNum, int data ) {
         if (log.isDebugEnabled()) log.debug("opswrite "+address+" "+cvNum+" "+data);
         if (address < 0 ) {  // zero is valid broadcast
@@ -112,13 +112,13 @@ public class NmraPacket {
             log.error("invalid CV number "+cvNum);
             return null;
         }
-        
+
         // end sanity checks, format output
         byte[] retVal;
         int arg1 = 0xEC + (((cvNum-1)>>8)&0x03);
         int arg2 = (cvNum-1)&0xFF;
         int arg3 = data&0xFF;
-        
+
         if (longAddr) {
             // long address form
             retVal = new byte[6];
@@ -139,7 +139,133 @@ public class NmraPacket {
         }
         return retVal;
     }
-    
+
+    public static byte[] speedStep128Packet(int address, boolean longAddr, int speed, boolean fwd ) {
+        if (log.isDebugEnabled()) log.debug("128 step packet "+address+" "+speed);
+        if (address < 0 ) {  // zero is valid broadcast
+            log.error("invalid address "+address);
+            return null;
+        }
+        if (longAddr&& (address> (255+(231-192)*256)) ) {
+            log.error("invalid address "+address);
+            return null;
+        }
+        if (!longAddr&& (address> 127) ) {
+            log.error("invalid address "+address);
+            return null;
+        }
+        if (speed<0 || speed>127) {
+            log.error("invalid speed "+speed);
+            return null;
+        }
+
+        // end sanity checks, format output
+        byte[] retVal;
+        int arg1 = 0x3F;
+        int arg2 = (speed&0x7F) | (fwd ? 0x80 : 0);
+
+        if (longAddr) {
+            // long address form
+            retVal = new byte[5];
+            retVal[0] = (byte) (192+((address/256)&0x3F));
+            retVal[1] = (byte) (address&0xFF);
+            retVal[2] = (byte) arg1;
+            retVal[3] = (byte) arg2;
+            retVal[4] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]);
+        } else {
+            // short address form
+            retVal = new byte[4];
+            retVal[0] = (byte) (address&0xFF);
+            retVal[1] = (byte) arg1;
+            retVal[2] = (byte) arg2;
+            retVal[3] = (byte) (retVal[0]^retVal[1]^retVal[2]);
+        }
+        return retVal;
+    }
+
+    public static byte[] function0Through4Packet(int address, boolean longAddr,
+                        boolean f0, boolean f1, boolean f2, boolean f3, boolean f4 ) {
+        if (log.isDebugEnabled()) log.debug("f0 through f4 packet "+address);
+        if (address < 0 ) {  // zero is valid broadcast
+            log.error("invalid address "+address);
+            return null;
+        }
+        if (longAddr&& (address> (255+(231-192)*256)) ) {
+            log.error("invalid address "+address);
+            return null;
+        }
+        if (!longAddr&& (address> 127) ) {
+            log.error("invalid address "+address);
+            return null;
+        }
+
+        // end sanity checks, format output
+        byte[] retVal;
+        int arg1 = 0x80 |
+                    ( f0 ? 0x10 : 0) |
+                    ( f1 ? 0x01 : 0) |
+                    ( f2 ? 0x02 : 0) |
+                    ( f3 ? 0x04 : 0) |
+                    ( f4 ? 0x08 : 0);
+
+        if (longAddr) {
+            // long address form
+            retVal = new byte[4];
+            retVal[0] = (byte) (192+((address/256)&0x3F));
+            retVal[1] = (byte) (address&0xFF);
+            retVal[2] = (byte) arg1;
+            retVal[3] = (byte) (retVal[0]^retVal[1]^retVal[2]);
+        } else {
+            // short address form
+            retVal = new byte[3];
+            retVal[0] = (byte) (address&0xFF);
+            retVal[1] = (byte) arg1;
+            retVal[2] = (byte) (retVal[0]^retVal[1]);
+        }
+        return retVal;
+    }
+
+    public static byte[] function5Through8Packet(int address, boolean longAddr,
+                        boolean f5, boolean f6, boolean f7, boolean f8 ) {
+        if (log.isDebugEnabled()) log.debug("f5 through f8 packet "+address);
+        if (address < 0 ) {  // zero is valid broadcast
+            log.error("invalid address "+address);
+            return null;
+        }
+        if (longAddr&& (address> (255+(231-192)*256)) ) {
+            log.error("invalid address "+address);
+            return null;
+        }
+        if (!longAddr&& (address> 127) ) {
+            log.error("invalid address "+address);
+            return null;
+        }
+
+        // end sanity checks, format output
+        byte[] retVal;
+        int arg1 = 0xB0 |
+                    ( f8 ? 0x08 : 0) |
+                    ( f7 ? 0x04 : 0) |
+                    ( f6 ? 0x02 : 0) |
+                    ( f5 ? 0x01 : 0);
+
+        if (longAddr) {
+            // long address form
+            retVal = new byte[4];
+            retVal[0] = (byte) (192+((address/256)&0x3F));
+            retVal[1] = (byte) (address&0xFF);
+            retVal[2] = (byte) arg1;
+            retVal[3] = (byte) (retVal[0]^retVal[1]^retVal[2]);
+        } else {
+            // short address form
+            retVal = new byte[3];
+            retVal[0] = (byte) (address&0xFF);
+            retVal[1] = (byte) arg1;
+            retVal[2] = (byte) (retVal[0]^retVal[1]);
+        }
+        return retVal;
+    }
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NmraPacket.class.getName());
 }
 
