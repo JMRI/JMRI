@@ -41,6 +41,7 @@ properties -a \
         jmri/jmrit/powerpanel/PowerPanelBundle.properties \
         jmri/jmrit/roster/JmritRosterBundle.properties \
         jmri/jmrix/JmrixSystemsBundle.properties \
+        jmri/jmrix/cmri/CMRIBundle.properties \
         jmri/jmrix/lenz/XNetBundle.properties \
         jmri/jmrix/loconet/LocoNetBundle.properties \
         jmri/NamedBeanBundle.properties \
