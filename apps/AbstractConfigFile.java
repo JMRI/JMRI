@@ -15,42 +15,42 @@ import org.jdom.output.*;
  * application. Works with the AbstractConfigFrame
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version		 	$Revision: 1.4 $
+ * @version		 	$Revision: 1.5 $
  * @see apps.AbstractConfigFrame
  */
 abstract public class AbstractConfigFile extends XmlFile {
-
-	public void readFile(String name) throws java.io.FileNotFoundException, org.jdom.JDOMException {
-		Element root = rootFromName(name);
-		_connection = root.getChild("connection");
-		_gui = root.getChild("gui");
-		_programmer = root.getChild("programmer");
-	}
-
-	// access to the three elements
-	public Element getConnectionElement() {
-		return _connection;
-	}
-
-	public Element getGuiElement() {
-		return _gui;
-	}
-
-	public Element getProgrammerElement() {
-		return _programmer;
-	}
-
-	Element _connection;
-	Element _gui;
-	Element _programmer;
-
-	abstract public void writeFile(String name, AbstractConfigFrame f);
-
-	abstract protected String configFileName();
-
-	public String defaultConfigFilename() { return configFileName();}
-
-	// initialize logging
+    
+    public void readFile(String name) throws java.io.FileNotFoundException, org.jdom.JDOMException {
+        Element root = rootFromName(name);
+        _connection = root.getChild("connection");
+        _gui = root.getChild("gui");
+        _programmer = root.getChild("programmer");
+    }
+    
+    // access to the three elements
+    public Element getConnectionElement() {
+        return _connection;
+    }
+    
+    public Element getGuiElement() {
+        return _gui;
+    }
+    
+    public Element getProgrammerElement() {
+        return _programmer;
+    }
+    
+    Element _connection;
+    Element _gui;
+    Element _programmer;
+    
+    abstract public void writeFile(String name, AbstractConfigFrame f);
+    
+    abstract protected String configFileName();
+    
+    public String defaultConfigFilename() { return configFileName();}
+    
+    // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractConfigFile.class.getName());
-
+    
 }
