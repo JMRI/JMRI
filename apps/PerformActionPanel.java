@@ -2,16 +2,18 @@
 
 package apps;
 
-import java.awt.*;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.util.*;
 
 /**
  * Provide a GUI for configuring PerformActionModel objects.
@@ -22,7 +24,7 @@ import java.util.*;
  *
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  * @see apps.PerformActionModel
  */
 public class PerformActionPanel extends JPanel {
@@ -40,7 +42,7 @@ public class PerformActionPanel extends JPanel {
 
         // add existing items
 
-        JButton addButton = new JButton(rb.getString("ButtonAdd"));
+        JButton addButton = new JButton(rb.getString("ButtonActionAdd"));
         JPanel panel = new JPanel();  // button is a horizontal item too; expands to fill BoxLayout
         panel.setLayout(new FlowLayout());
         panel.add(addButton);
@@ -69,7 +71,7 @@ public class PerformActionPanel extends JPanel {
     }
 
     public class Item extends JPanel implements ActionListener {
-        JButton removeButton = new JButton(rb.getString("ButtonRemove"));
+        JButton removeButton = new JButton(rb.getString("ButtonActionRemove"));
         Item() {
             setLayout(new FlowLayout());
             add(removeButton);
