@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a layout config, esp. information -->
 <!-- on hardware connections -->
-<!-- $Id: layout-config.dtd,v 1.1 2002-07-24 04:47:53 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.2 2002-07-25 05:49:46 jacobsen Exp $ -->
 
 <!ELEMENT layout-config (turnouts | sensors | blocks | signals | paneleditor)*>
 
@@ -11,21 +11,45 @@
     <!ATTLIST turnout systemName	CDATA #REQUIRED>  <!-- defines hardware type -->
     <!ATTLIST turnout userName		CDATA #IMPLIED>
 
-<!ELEMENT paneleditor (positionablelabel)* >
+<!ELEMENT paneleditor (positionablelabel|sensoricon|turnouticon)* >
   <!ATTLIST paneleditor class		CDATA #REQUIRED>
   <!ATTLIST paneleditor x			CDATA #REQUIRED>
   <!ATTLIST paneleditor y			CDATA #REQUIRED>
-  <!ATTLIST paneleditor height	CDATA #REQUIRED>
+  <!ATTLIST paneleditor height		CDATA #REQUIRED>
   <!ATTLIST paneleditor width		CDATA #REQUIRED>
 
   <!ELEMENT positionablelabel EMPTY>
-    <!ATTLIST positionablelabel class		CDATA #REQUIRED>
-    <!ATTLIST positionablelabel x			CDATA #REQUIRED>
-    <!ATTLIST positionablelabel y			CDATA #REQUIRED>
+    <!ATTLIST positionablelabel class	CDATA #REQUIRED>
+    <!ATTLIST positionablelabel x		CDATA #REQUIRED>
+    <!ATTLIST positionablelabel y		CDATA #REQUIRED>
     <!ATTLIST positionablelabel height	CDATA #REQUIRED>
-    <!ATTLIST positionablelabel width		CDATA #REQUIRED>
-    <!ATTLIST positionablelabel text		CDATA #IMPLIED>
-    <!ATTLIST positionablelabel icon		CDATA #IMPLIED>
+    <!ATTLIST positionablelabel width	CDATA #REQUIRED>
+    <!ATTLIST positionablelabel text	CDATA #IMPLIED>
+    <!ATTLIST positionablelabel icon	CDATA #IMPLIED>
+
+  <!ELEMENT sensoricon EMPTY>
+    <!ATTLIST sensoricon class		CDATA #REQUIRED>
+    <!ATTLIST sensoricon x			CDATA #REQUIRED>
+    <!ATTLIST sensoricon y			CDATA #REQUIRED>
+    <!ATTLIST sensoricon height		CDATA #REQUIRED>
+    <!ATTLIST sensoricon width		CDATA #REQUIRED>
+    <!ATTLIST sensoricon active		CDATA #IMPLIED>
+    <!ATTLIST sensoricon inactive	CDATA #IMPLIED>
+    <!ATTLIST sensoricon unknown	CDATA #IMPLIED>
+    <!ATTLIST sensoricon inconsistent		CDATA #IMPLIED>
+    <!ATTLIST sensoricon sensor		CDATA #IMPLIED>
+
+  <!ELEMENT turnouticon EMPTY>
+    <!ATTLIST turnouticon class		CDATA #REQUIRED>
+    <!ATTLIST turnouticon x			CDATA #REQUIRED>
+    <!ATTLIST turnouticon y			CDATA #REQUIRED>
+    <!ATTLIST turnouticon height	CDATA #REQUIRED>
+    <!ATTLIST turnouticon width		CDATA #REQUIRED>
+    <!ATTLIST turnouticon closed	CDATA #IMPLIED>
+    <!ATTLIST turnouticon thrown	CDATA #IMPLIED>
+    <!ATTLIST turnouticon unknown	CDATA #IMPLIED>
+    <!ATTLIST turnouticon inconsistent		CDATA #IMPLIED>
+    <!ATTLIST turnouticon turnout	CDATA #IMPLIED>
 
 <!ELEMENT sensors EMPTY >
 
