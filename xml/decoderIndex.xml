@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <!--Written by JMRI version 1.5.4 on Fri Oct 29 14:19:13 PDT 2004 $Id: decoderIndex.xml,v 1.73 2004-10-31 15:39:11 jacobsen Exp $-->
-  <decoderIndex version="88">
+  <!--Written by JMRI version 1.5.5 on Sun Nov 28 22:27:07 PST 2004 $Id: decoderIndex.xml,v 1.74 2004-11-29 06:29:34 jacobsen Exp $-->
+  <decoderIndex version="90">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -72,8 +72,14 @@
       <family name="Four Function Dual Mode" mfg="Atlas" lowVersionID="46" highVersionID="46" type="locomotive" file="Atlas_342.xml">
         <model model="Four Function Dual Mode" numOuts="4" numFns="8" connector="unspecified" nmraWarrant="no" />
       </family>
+      <family name="Four Function #345" mfg="Atlas" lowVersionID="46" highVersionID="46" type="locomotive" file="Atlas_345.xml">
+        <model model="Four Function #345" numOuts="4" numFns="4" connector="unspecified" nmraWarrant="no" />
+      </family>
       <family name="Dual Mode" mfg="Atlas" lowVersionID="45" highVersionID="45" type="locomotive" file="Atlas_DualMode.xml">
         <model model="Dual Mode" numOuts="2" numFns="0" connector="unspecified" nmraWarrant="no" />
+      </family>
+      <family name="Bachmann E-Z Command decoders" mfg="Bachmann Trains" type="locomotive" file="Bachmann_EZDCC.xml">
+        <model model="E-Z Command Locomotives" numOuts="2" numFns="0" lowVersionID="46" nmraWarrant="yes" connector="unspecified" />
       </family>
       <family name="CT Elektronik DCX X0" mfg="CT Elektronik" type="locomotive" file="CT Elektronik DCX X0.xml">
         <model model="DCX50" numOuts="7" numFns="8" maxMotorCurrent="1.2 Amp" maxTotalCurrent="1.2 Amp" connector="unspecified" nmraWarrant="no">
@@ -1044,7 +1050,7 @@
         </model>
       </family>
       <family name="TCS Tx series decoders" mfg="Train Control Systems" type="locomotive" file="TCS_Tx.xml">
-        <model model="T1" numOuts="2" numFns="2" lowVersionID="16" highVersionID="22" connector="unspecified" nmraWarrant="no" />
+        <model model="T1" numOuts="2" numFns="2" lowVersionID="16" highVersionID="27" connector="unspecified" nmraWarrant="no" />
         <model model="T2" numOuts="5" numFns="5" connector="unspecified" nmraWarrant="no">
           <output name="4" label="Violet" connection="unspecified" />
         </model>
@@ -1127,6 +1133,16 @@
           <output name="2" label="Yellow" connection="unspecified" />
           <output name="3" label="Brown" connection="unspecified" />
           <output name="4" label="Green" connection="unspecified" />
+          <output name="5" label="NC - Logic Level" connection="unspecified" />
+          <output name="6" label="NC - Logic Level" connection="unspecified" />
+        </model>
+      </family>
+      <family name="Zimo Silent BEMF decoders, early model" mfg="Zimo" type="locomotive" file="Zimo_MX61_N.xml">
+        <model model="MX61_N" lowVersionID="132" maxInputVolts="10-24V" maxMotorCurrent="0.8A (peak=2A, 5 sec.)" maxTotalCurrent="1.0A" formFactor="HO" numOuts="6" numFns="6" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="White" connection="unspecified" />
+          <output name="2" label="Yellow" connection="unspecified" />
+          <output name="3" label="Brown" connection="unspecified" />
+          <output name="4" label="NC - Logic Level" connection="unspecified" />
           <output name="5" label="NC - Logic Level" connection="unspecified" />
           <output name="6" label="NC - Logic Level" connection="unspecified" />
         </model>
