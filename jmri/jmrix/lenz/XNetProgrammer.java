@@ -26,11 +26,16 @@ import java.beans.PropertyChangeEvent;
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Paul Bender  Copyright (c) 2003,2004
- * @version $Revision: 2.7 $
+ * @version $Revision: 2.8 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
 	static private final int XNetProgrammerTimeout = 20000;
+
+	// keep track of whether or not the command station is in service 
+        // mode.  Used for determining if "OK" message is an aproriate 
+	// response to a request to a programming request. 
+	private boolean _service_mode = false;
 
 	public XNetProgrammer() {
 		// error if more than one constructed?
@@ -195,6 +200,21 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 	}
 
 	synchronized public void message(XNetReply m) {
+            	if (m.getElement(0)==XNetConstants.CS_INFO && 
+                     m.getElement(1)==XNetConstants.BC_SERVICE_MODE_ENTRY) {
+		     // the command station is in service mode.  An "OK" 
+		     // message can trigger a request for service mode 
+		     // results if progrstate is REQUESTSENT.
+		     _service_mode = true;		   
+		}
+		if(m.getElement(0)==XNetConstants.CS_INFO &&
+		   m.getElement(1)==XNetConstants.BC_NORMAL_OPERATIONS) {
+		     // the command station is not in service mode.  An 
+		     // "OK" message can not trigger a request for service 
+		     // mode results if progrstate is REQUESTSENT.
+		     _service_mode = false;
+		}
+
 		if (progState == NOTPROGRAMMING) {
 			// we get the complete set of replies now, so ignore these
 			return;
@@ -202,7 +222,8 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		} else if (progState == REQUESTSENT) {
 		   	if (log.isDebugEnabled()) log.debug("reply in REQUESTSENT state");
 			// see if reply is the acknowledge of program mode; if not, wait for next
-            		if (m.isOkMessage() || (m.getElement(0)==XNetConstants.CS_INFO && 
+            		if ( (_service_mode && m.isOkMessage()) || 
+			     (m.getElement(0)==XNetConstants.CS_INFO && 
                 	   (m.getElement(1)==XNetConstants.BC_SERVICE_MODE_ENTRY ||
 		            m.getElement(1)==XNetConstants.PROG_CS_READY )) ) {
 			       stopTimer();
