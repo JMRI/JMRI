@@ -15,7 +15,7 @@ import javax.swing.*;
  * Macintosh MRJ
  *
  * @author		Bob Jacobsen   Copyright (C) 2003; D Miller Copyright 2003
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 public class PrintCvAction  extends AbstractAction {
 
@@ -99,7 +99,7 @@ public class PrintCvAction  extends AbstractAction {
                 String numString = Integer.toString(num);
                 String valueString = Integer.toString(value);
                 String valueStringHex = Integer.toHexString(value).toUpperCase();
-                if (value<10) valueStringHex = "0"+ valueStringHex;
+                if (value<16) valueStringHex = "0"+ valueStringHex;
                 for (int j=1; j<3; j++){
                   if (numString.length() < 3) numString = " "+numString;
                 }

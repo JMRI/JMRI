@@ -32,8 +32,8 @@ import org.jdom.Element;
  * This class implements PropertyChangeListener so that it can be notified
  * when a variable changes its busy status at the end of a programming read/write operation
  *
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.21 $
+ * @author			Bob Jacobsen   Copyright (C) 2001; D Miller Copyright 2003
+ * @version			$Revision: 1.22 $
  */
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
@@ -975,7 +975,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 String numString = Integer.toString(num);
                 String valueString = Integer.toString(value);
                 String valueStringHex = Integer.toHexString(value).toUpperCase();
-                if (value < 10)
+                if (value < 16)
                   valueStringHex = "0" + valueStringHex;
                 for (int j = 1; j < 3; j++) {
                   if (numString.length() < 3)
