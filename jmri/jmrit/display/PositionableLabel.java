@@ -11,7 +11,7 @@ import jmri.jmrit.catalog.NamedIcon;
  * PositionableLabel is a JLabel that can be dragged around the
  * inside of the enclosing Container using a right-drag.
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class PositionableLabel extends JLabel
@@ -57,7 +57,7 @@ public class PositionableLabel extends JLabel
         // remember where we are
         xClick = e.getX();
         yClick = e.getY();
-        if (debug) log.debug("Pressed: "+where(e));
+        // if (debug) log.debug("Pressed: "+where(e));
         if (e.isPopupTrigger()) {
             if (debug) log.debug("show popup");
             showPopUp(e);
@@ -65,7 +65,7 @@ public class PositionableLabel extends JLabel
     }
 
     public void mouseReleased(MouseEvent e) {
-        if (debug) log.debug("Release: "+where(e));
+        // if (debug) log.debug("Release: "+where(e));
         if (e.isPopupTrigger()) {
             if (debug) log.debug("show popup");
             showPopUp(e);
@@ -82,10 +82,10 @@ public class PositionableLabel extends JLabel
         }
     }
     public void mouseExited(MouseEvent e) {
-        if (debug) log.debug("Exited:  "+where(e));
+        // if (debug) log.debug("Exited:  "+where(e));
     }
     public void mouseEntered(MouseEvent e) {
-        if (debug) log.debug("Entered: "+where(e));
+        // if (debug) log.debug("Entered: "+where(e));
     }
 
     public void mouseMoved(MouseEvent e) {
