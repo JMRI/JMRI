@@ -9,7 +9,7 @@ import org.jdom.*;
  * Handle configuration for display.TurnoutIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class TurnoutIconXml implements XmlAdapter {
 
@@ -104,11 +104,9 @@ public class TurnoutIconXml implements XmlAdapter {
             log.error("failed to convert positional attribute");
         }
         l.setLocation(x,y);
-        l.setSize(l.getIcon().getIconWidth(), l.getIcon().getIconHeight());
-        p.putTurnout(l);
 
+        p.putTurnout(l);
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TurnoutIconXml.class.getName());
-
 }

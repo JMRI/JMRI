@@ -9,7 +9,7 @@ import org.jdom.*;
  * Handle configuration for display.SignalHeadIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class SignalHeadIconXml implements XmlAdapter {
 
@@ -104,9 +104,8 @@ public class SignalHeadIconXml implements XmlAdapter {
             log.error("failed to convert positional attribute");
         }
         l.setLocation(x,y);
-        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
-        p.putSignal(l);
 
+        p.putSignal(l);
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SignalHeadIconXml.class.getName());

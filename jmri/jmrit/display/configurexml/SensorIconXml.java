@@ -9,7 +9,7 @@ import org.jdom.*;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class SensorIconXml implements XmlAdapter {
 
@@ -100,7 +100,7 @@ public class SensorIconXml implements XmlAdapter {
             log.error("failed to convert positional attribute");
         }
         l.setLocation(x,y);
-        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+
         p.putSensor(l);
     }
 
