@@ -52,30 +52,83 @@ import javax.swing.JTextArea;
  * so that Jython code can easily use some of the methods.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 public class AbstractAutomaton implements Runnable {
 
-    public AbstractAutomaton() {}
+    public AbstractAutomaton() {
+    	String className = this.getClass().getName();
+    	int lastdot = className.lastIndexOf(".");
+    	setName(className.substring(lastdot+1, className.length()));
+    }
+    public AbstractAutomaton(String name) {
+    	setName(name);
+    }
+
+    AutomatSummary summary = AutomatSummary.instance();
 
     Thread currentThread = null;
     public void start() {
         if (currentThread != null) log.error("Start with currentThread not null!");
         currentThread = new Thread(this);
         currentThread.start();
+    	summary.register(this);
+    	count = 0;
     }
 
     public void run() {
         inThread = true;
         init();
-        while (handle()) {}
+        // the real processing in the next statement is in handle();
+        // and the loop call is just doing accounting
+        while (handle()) {
+        	count++;
+        	summary.loop(this);
+        }
+        done();
     }
 
     public void stop() {
         if (currentThread == null) log.error("Stop with currentThread null!");
         currentThread.stop();
         currentThread = null;
+        done();
     }
+
+	/**
+	 * Common internal end-time processing
+	 */
+	void done() {
+		summary.remove(this);
+	}
+
+	private String name = null;
+
+	private int count;
+
+	/**
+	 *
+	 */
+	public int getCount() {
+		return count;
+	}
+
+	/**
+	 *
+	 */
+	public String getName() {
+		return name;
+	}
+	/**
+	 * name is not a bound parameter, so changed are not
+         * notified to listeners
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	void defaultName() {
+	}
 
     /**
      * User-provided initialization routine
@@ -100,7 +153,7 @@ public class AbstractAutomaton implements Runnable {
     public void waitMsec( int milliseconds ) {
     	this.wait(milliseconds);
     }
-    
+
     /**
      * Wait for an interval, in a simple form.
      * <P>
