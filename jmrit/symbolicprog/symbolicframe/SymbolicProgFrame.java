@@ -307,21 +307,13 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 		}
 	}
 		
-	void processDecoderFile(Element base, Namespace ns) {
-			// find decoder id, assuming first decoder is fine for now (e.g. one per file)
-			Element decoderID = base.getChild("id",ns);
-			
+	void processDecoderFile(Element decoderElem, Namespace ns) {
 			// store name, type
-			decoderMfg.setText(base.getChild("id",ns).getAttribute("mfg").getValue());
-			decoderModel.setText(base.getChild("id",ns).getAttribute("model").getValue());
+			decoderMfg.setText(DecoderFile.getMfgName(decoderElem, ns));
+			decoderModel.setText(DecoderFile.getModelName(decoderElem, ns));
 			
-			// start loading variables to table
-			List varList = base.getChild("variables",ns).getChildren("variable",ns);
-			for (int i=0; i<varList.size(); i++) {
-				// load each row
-				variableModel.setRow(i, (Element)(varList.get(i)), ns);
-				}
-			variableModel.configDone();
+			// load variables to table
+			DecoderFile.loadVariableModel(decoderElem, ns, variableModel);
 	}
 
 	void processLocoFile(Element loco) {

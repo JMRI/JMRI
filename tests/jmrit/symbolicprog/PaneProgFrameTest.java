@@ -98,7 +98,6 @@ public class PaneProgFrameTest extends TestCase {
 		doc.setDocType(new DocType("programmer:programmer-config","DTD/programmer-config.dtd"));
 		
 		// add some elements
-		Element el0, el1;
 		root.addContent(new Element("programmer",ns)
 					.addContent(new Element("pane", ns)
 									.addAttribute("name","Basic")
