@@ -2,7 +2,6 @@
 
 package jmri.jmrix.loconet.loconetovertcp;
 
-import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LnPortController;
 
 import java.io.DataInputStream;
@@ -17,7 +16,7 @@ import java.util.Vector;
  * Normally controlled by the LnTcpDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class LnTcpDriverAdapter extends LnPortController {
 
@@ -27,7 +26,7 @@ public class LnTcpDriverAdapter extends LnPortController {
      */
     public void configure() {
         // connect to a packetizing traffic controller
-        LnPacketizer packets = new LnPacketizer();
+        LnOverTcpPacketizer packets = new LnOverTcpPacketizer();
         packets.connectPort(this);
 
         // do the common manager config
