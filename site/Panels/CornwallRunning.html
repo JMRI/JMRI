@@ -1,0 +1,164 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Bob Jacobsen, LBL">
+   <meta name="GENERATOR" content="Mozilla/4.75C-CCK-MCD {C-UDP; EBM-APPLE} (Macintosh; U; PPC) [Netscape]">
+   <meta name="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>Running Nick Kulp's Cornwall RR Program</title>
+</head>
+<body>
+
+
+<IMG SRC="../images/logo.gif" ALIGN=RIGHT WIDTH="160" HEIGHT="135" HSPACE="0" VSPACE="0">
+
+JMRI was used to create the dispatcher control panel for Nick Kulp's
+<A href="http://kc.pennsyrr.com/layouts/kulp/index.html">Cornwall RR</a>.
+This page briefly describes how to run that so you can take a look 
+at that.
+Links to other pages with more detail are included, but many of those pages
+do not exist yet or are still under contruction.
+
+<P>
+<IMG src="SmallCornwallPanel.gif" WIDTH="502" HEIGHT="302" HSPACE="0" VSPACE="0">
+
+<h2><A href="http://kc.pennsyrr.com/layouts/kulp/index.html">The layout</a></h2>
+Nick's layout uses a mixture of
+C/MRI and DCC.  The block detectors, turnout position sensors, and 
+signals are all attached to a C/MRI serial system.  The locomotives
+are run using DIgitrax DCC.  Some turnouts are thrown manually, and
+some are operated by Tortoise motors connected to SwitchIt DCC decoders
+and thrown via the Digitrax system.
+<P>
+The layout has 45 signal heads controlled by the C/MRI system.  Most
+have red, yellow and green aspects; there are a couple that also indicate
+diverging routes with flashing yellow.  The signals respond to occupancy
+to provide an automatic interlocking system.
+<P>
+Originally, the dispatcher worked via applications on two computers.
+One ran the C/MRI system that showed block occupancy and drove the
+signals, while another application on a different laptop was used to
+throw turnouts.
+
+<h2>The new program</h2>
+Nick wanted a computer-based panel for his dispatcher that would
+make it easier to run the railroad.  It should clearly show which sections
+are occupied, how the turnouts will route the trains, and the appearance
+of the signals.  It should also allow the dispatcher to change motorized
+turnouts with a click.  And of course, it should look good.
+<P>
+The most recent version of Nick's program is included as an example
+in each JMRI download.  You can install and run it yourself if you'd
+like to see what it really looks like and play with the signals, etc.
+<h2>Download and install</h2>
+
+The CornwallRR sample program comes with all sufficiently-recent
+JMRI/DecoderPro free downloads.  To find out how to download a version
+for your specific type of computer, please see the 
+<A HREF="../README.html">README page</a>.
+Note that you need a version at least as recent as 1.1.13.
+
+<h2>Starting the program</h2>
+
+Starting the program varies with your computer system:
+<UL>
+<LI>On a Macintosh, find the "CornwallRR" application icon and double click
+it.
+<LI>On Linux, run the CornwallRR.csh script.
+<LI>On Windows, go to the Start menu. Pull down the programs submenu,
+and look for the JMRI group.  Select that group, and then select
+the CornwallRR icon.
+</ul>
+
+The first time you start the program, it will open a preferences
+panel.  From the top, select:
+<UL>
+<LI>Upper "Layout connection": "CMRI serial"
+<LI>Upper "Serial port":        (your com port)
+<LI>Lower "Layout connection": "LocoNet Hexfile"
+</Ul>
+<P>You can leave the rest of the settings at their default values.
+Click "Save", and when prompted if you want to quit the program
+say "yes".  Restart the program. From now on, it should successfully
+run Nick's dispatcher panel in a layout-independent mode.
+
+<h2>Working with the program</h2>
+Unfortunately, the download doesn't include Nick's actual railroad, just
+the control panel.  So you can't actually run his trains.  But you
+can click on the screen to change the program's idea of block occupancy
+and turnout positions, and watch how the signals will respond on the actual
+layout.
+<p>
+The occupancy indicators look like 
+<IMG src="REDLED.gif"> if the section is occupied, and 
+<IMG src="GRAYLED.gif"> if it's not.  If you click on one of these,
+it will flip the state.  If you "hover" the mouse pointer over it,
+a tooltip will pop up that tells you it's exact name in Nick's
+terms (a human-readable "user name"), and in the programs 
+naming convention (a 
+<a href="../Technical/Names.html">"system name"</a>).
+
+<P>
+You can also click on many of the turnouts in the black and white
+schematic section to flip their state.  (Some of them are not
+connected to the C/MRI system yet, and so are inert on the panel).
+In some cases, there are several turnouts connected together to form a 
+crossing, so flipping one will cause the others to follow.
+<P>
+Note that the indicators by the levers in the green part of the panel
+follow the turnouts in the schematic; this is because they are both
+responding to C/MRI readback from the layout, and your clicks are
+fooling that into thinking the input has changed (in the absence of
+a C/MRI system responding on the serial port).
+<P>
+If you click on a lever, the lever will flip to the other position
+and a DCC command to change the turnout will be sent.  If you're running
+this without Nick's layout, however, this command won't actually move
+a turnout and send feedback via C/MRI, so the turnout indicator in the
+schematic won't change.
+<P>
+Notice that the signals change in response to the position of turnouts
+and occupancy on the schematic.  The program is doing this automatically
+by following logic that was copied from Nick's previous programs.
+This logic was translated by hand from QBASIC to Java, and embedded in
+the Cornwall program.  We're working on more general approaches to this
+to make it easier for other people to create their own logic.
+
+<h2>Summary</H2>
+JMRI provides tools for creating custom control panels for a model
+railroad.  It's flexible enough to do whatever you want, or at least
+whatever you're willing to spend the time to create.  For more information
+on JMRI see the 
+<A HREF="..">main web page</a>.  For links to download and 
+install instructions for various computer types, see the
+<A HREF="../README.html">README page</a>.
+Note that you have to have a recent version (1.1.13 or later) of
+JMRI to run Nick's program; the most recent one (whatever it is) is
+preferred.
+<P>
+<A HREF="../Acknowledgements.html">Many people</a>
+have contributed to this effort, and we thank 
+<A HREF="../Acknowledgements.html">all of them</a>.
+
+<HR>
+<BR>Site hosted by: <BR>
+<A href="http://sourceforge.net"> 
+<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A>
+ 
+
+<script language=javascript 
+src="http://ss.webring.com/navbar?f=j;y=bob_jacobsen15;u=100088115910095949">
+</script><noscript><center>
+<table bgcolor=gray cellspacing=0 border=2 bordercolor=red><tr>
+<td><table cellpadding=2 cellspacing=0 border=0><tr><td align=center>
+<font face=arial size=-1>This site is a member of WebRing. 
+<br>To browse visit <a href="http://ss.webring.com/navbar?f=l;y=bob_jacobsen15;u=100088115910095949">
+Here</a>.</font></td></tr></table></td></tr></table>
+</center></noscript>
+
+<hr>
+Bob Jacobsen<BR>
+jake@physics.berkeley.edu
+
+</body>
+</html>
