@@ -12,7 +12,7 @@ import java.io.*;
  * and post them to a JTextArea for display
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
  class PipeListener extends Thread {
     private PipedReader pr;
@@ -25,8 +25,12 @@ import java.io.*;
 
     public void run() {
         try {
+            char[] c = new char[1];
             while (true) {
-                ta.append(Character.toString((char)pr.read()));
+                c[0] = (char)pr.read();
+                ta.append(new String(c));  // odd way to do this, but only
+                                            // way I could think of with only one
+                                            // new object created
             }
         } catch (IOException ex) {
             ta.append("PipeListener Exiting on IOException");
