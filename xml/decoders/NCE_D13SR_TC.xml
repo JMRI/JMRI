@@ -1,14 +1,18 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: NCE_D13SR_TC.xml,v 1.1 2004-01-26 04:08:51 jacobsen Exp $ -->
+<!-- $Id: NCE_D13SR_TC.xml,v 1.2 2004-03-05 02:46:57 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Michael Mosher" version="1" lastUpdated="20031116"/>
-	<!-- version 1 created by modifing NCE_SR.xml ver 7 removed CV9, 23, 24, 65, 119 
-			and added CV 16, 95, 116, 117 -->
-	
+		<version author="Michael Mosher" version="3" lastUpdated="20040229"/>
+		<!-- version 1 created by modifing NCE_SR.xml ver 7 removed CV9, 23, 24, 65, 119 
+				and added CV 16, 95, 116, 117 -->
+      <!-- Version 2 - added version comment (Jack Shall) -->
+      <!-- Version 3 - removed CV29 bit-3, added CV11, minor formatting changes,
+				added D15SRP and ATLS4 decoders,	added some tooltips and comments (Jack Shall) -->
+
 <decoder>
   <family name="Silent Running w/ Torque Compensation" mfg="North Coast Engineering" 
-  			lowVersionID="35" highVersionID="35">
+  			lowVersionID="35" highVersionID="35"
+			comment="These are the version 3.5 decoders released after September 2003">
     <model model="D13SR"  numOuts="3" numFns="3" 
     		maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
 			<output name="1" label="White" connection="wire" maxcurrent="40 mA" /> 
@@ -16,7 +20,7 @@
 			<output name="3" label="Green" connection="wire" maxcurrent="40 mA" /> 
 			<size length="1.65" width="0.63" height="0.12" units="inches" />
 		</model>
-   <model model="D13SRP"  numOuts="3" numFns="3" connector="NMRAmedium" 
+    <model model="D13SRP"  numOuts="3" numFns="3" connector="NMRAmedium" 
     		maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
 			<output name="1" label="White" connection="plug" maxcurrent="40 mA" /> 
 			<output name="2" label="Yellow" connection="plug" maxcurrent="40 mA" /> 
@@ -24,7 +28,7 @@
 			<output name="4" label="Violet" connection="wire" maxcurrent="40 mA" />
 			<size length="1.65" width="0.63" height="0.12" units="inches" />
 		</model>
-   <model model="D13SRJ"  numOuts="4" numFns="6" 
+    <model model="D13SRJ"  numOuts="4" numFns="6" 
     		maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
 			<output name="1" label="White" connection="wire" maxcurrent="40 mA" /> 
 			<output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" /> 
@@ -51,6 +55,20 @@
 			<output name="5" label="Pad" connection="solder" maxcurrent="40 mA" /> 
 			<size length="1.08" width="0.63" height="0.275" units="inches" />
 		</model>
+    <model model="D15SRP"  numOuts="5" numFns="6" connector="NMRAmedium"
+    		maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
+			<output name="1" label="White" connection="wire" maxcurrent="40 mA" /> 
+			<output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" /> 
+			<output name="3" label="Green" connection="wire" maxcurrent="40 mA" /> 
+			<output name="4" label="Violet" connection="wire" maxcurrent="40 mA" />
+			<output name="5" label="Pad" connection="solder" maxcurrent="40 mA" /> 
+			<size length="1.08" width="0.63" height="0.275" units="inches" />
+		</model>
+    <model model="ATLS4"  numOuts="2" numFns="3" 
+    		maxMotorCurrent="1A (peak=1.25A)" formFactor="HO">
+			<output name="1" label="Pad" connection="solder" maxcurrent="40 mA" />
+			<output name="2" label="Pad" connection="solder" maxcurrent="40 mA" /> 
+		</model>
     <model model="DA-SR"  numOuts="5" numFns="6" 
     		maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
 			<output name="1" label="Tab 1" connection="solder" maxcurrent="40 mA" /> 
@@ -60,6 +78,14 @@
 			<output name="5" label="Optional" connection="solder" maxcurrent="40 mA" /> 
 			<size length="2.85" width="0.66" height="0.12" units="inches" />
 		</model>
+    <model model="KRS-SR" numOuts="4" numFns="6" connector="NMRAmedium"
+    		maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
+			<output name="1" label="Pin 6" connection="plug" maxcurrent="40 mA" /> 
+			<output name="2" label="Pin 2" connection="plug" maxcurrent="40 mA" /> 
+			<output name="3" label="Pad A" connection="solder" maxcurrent="40 mA" />
+			<output name="4" label="Pad B" connection="solder" maxcurrent="40 mA" /> 
+			<size length="1.9" width="0.65" height="0.125" units="inches" />
+		</model>
     <model model="P2K-SR" numOuts="5" numFns="6" connector="NMRAmedium"
     		maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
 			<output name="1" label="Pin 6" connection="plug" maxcurrent="40 mA" /> 
@@ -68,14 +94,6 @@
 			<output name="4" label="Pad B" connection="solder" maxcurrent="40 mA" /> 
 			<output name="5" label="Pad" connection="solder" maxcurrent="40 mA" /> 
 			<size length="1.92" width="0.63" height="0.12" units="inches" />
-		</model>
-    <model model="KRS-SR" numOuts="4" numFns="6" connector="NMRAmedium"
-    		maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
-			<output name="1" label="Pin 6" connection="plug" maxcurrent="40 mA" /> 
-			<output name="2" label="Pin 2" connection="plug" maxcurrent="40 mA" /> 
-			<output name="3" label="Pad A" connection="solder" maxcurrent="40 mA" />
-			<output name="4" label="Pad B" connection="solder" maxcurrent="40 mA" /> 
-			<size length="1.9" width="0.65" height="0.125" units="inches" />
 		</model>
     <model model="SW9-SR" numOuts="3" numFns="3" 
     		maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
@@ -109,28 +127,6 @@
 			<output name="8" label="Screw" connection="other" /> 
 			<size length="3.75" width="1.45" height="0.625" units="inches" />
 		</model>
-    <model model="NIMFT-A" numOuts="2" numFns="3" 
-    		maxMotorCurrent="1A (peak=1.25A)" formFactor="N">
-			<output name="1" label="Pad 1" connection="solder" />
-			<output name="2" label="Pad 2" connection="solder" /> 
-		</model>
-    <model model="NIMFT-B" numOuts="2" numFns="3" 
-    		maxMotorCurrent="1A (peak=1.25A)" formFactor="N">
-			<output name="1" label="Pad 1" connection="solder" />
-			<output name="2" label="Pad 2" connection="solder" /> 
-		</model>
-    <model model="N12SR" numOuts="2" numFns="3" 
-    		maxMotorCurrent="1A (peak=1.25A)" formFactor="N">
-			<output name="1" label="White" connection="wire" maxcurrent="40 mA" /> 
-			<output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" /> 
-			<size length="0.70" width="0.34" height="0.12" units="inches" />
-		</model>
-    <model model="N12SRP" numOuts="2" numFns="3" connector="NMRAmedium"
-    		maxMotorCurrent="1A (peak=1.25A)" formFactor="N">
-			<output name="1" label="White" connection="wire" maxcurrent="40 mA" /> 
-			<output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" /> 
-			<size length="0.70" width="0.34" height="0.12" units="inches" />
-		</model>
     <model model="N12A0" numOuts="2" numFns="3" 
     		maxMotorCurrent="1.3A (peak=2A)" formFactor="N">
 			<output name="1" label="LED 1" connection="solder" />
@@ -148,10 +144,31 @@
 			<output name="1" label="LED 1" connection="solder" />
 			<output name="2" label="LED 2" connection="solder" /> 
 		</model>
+    <model model="N12SR" numOuts="2" numFns="3" 
+    		maxMotorCurrent="1A (peak=1.25A)" formFactor="N">
+			<output name="1" label="White" connection="wire" maxcurrent="40 mA" /> 
+			<output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" /> 
+			<size length="0.70" width="0.34" height="0.12" units="inches" />
+		</model>
+    <model model="N12SRP" numOuts="2" numFns="3" connector="NMRAmedium"
+    		maxMotorCurrent="1A (peak=1.25A)" formFactor="N">
+			<output name="1" label="White" connection="wire" maxcurrent="40 mA" /> 
+			<output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" /> 
+			<size length="0.70" width="0.34" height="0.12" units="inches" />
+		</model>
+    <model model="NIMFT-A" numOuts="2" numFns="3" 
+    		maxMotorCurrent="1A (peak=1.25A)" formFactor="N">
+			<output name="1" label="Pad 1" connection="solder" />
+			<output name="2" label="Pad 2" connection="solder" /> 
+		</model>
+    <model model="NIMFT-B" numOuts="2" numFns="3" 
+    		maxMotorCurrent="1A (peak=1.25A)" formFactor="N">
+			<output name="1" label="Pad 1" connection="solder" />
+			<output name="2" label="Pad 2" connection="solder" /> 
+		</model>
   </family>
 
-	<programming direct="yes" paged="yes" 
-	                     register="yes" ops="yes"></programming>
+	<programming direct="yes" paged="yes" register="yes" ops="yes"></programming>
 
 	<variables>
 		<variable label="Primary Address" CV="1" comment="Short address"
@@ -168,12 +185,17 @@
 			<decVal max="31"/></variable>
 		<variable label="Vhigh" CV="5">					<decVal/></variable>
 		<variable label="Vmid" CV="6">					<decVal/></variable>
-		<variable label="Manufacturer Version No" CV="7" readOnly="yes"
-						item="Decoder Version"><decVal/></variable>
-		<variable label="Manufacturer ID" CV="8" readOnly="yes"
-						item="Manufacturer">			<decVal/></variable>
+		<variable label="Decoder Version No: " CV="7" readOnly="yes"
+						item="Decoder Version" default="35">  <decVal/></variable>
+		<variable label="Manufacturer ID: " CV="8" readOnly="yes"
+						item="Manufacturer" default="11">			<decVal/></variable>
+		<variable label="Packet Time-out Value (0=Don't Brake)" CV="11"
+						item="Packet Time-out Value"
+						tooltip="Time the decoder will wait before braking to a stop after running into a section of track with DC power">
+			<decVal/></variable>
 			
-		<variable label="Decoder Lock ID number" CV="16" mask="XXXXXVVV" default="0">
+		<variable label="Decoder Lock ID number" CV="16" mask="XXXXXVVV" default="0"
+						tooltip="Set this decoder's unique locking ID number">
 			<decVal/>
 			</variable>
 
@@ -247,9 +269,10 @@
 				<enumChoice choice="reversed"/>
 				</enumVal></variable>
 		<variable label="FL Location" CV="29" mask="XXXXXXVX"
-					item="Speed Step Mode" default="1">
+					item="Speed Step Mode" default="1"
+					tooltip="14 Speed Step Mode not supported in this decoder">
 			<enumVal>
-				<enumChoice choice="Not Suported"/>
+				<enumChoice choice="Not Supported"/>
 				<enumChoice choice="28 speed step format"/>
 				</enumVal></variable>
 		<variable label="Power Source Conversion" CV="29" mask="XXXXXVXX"
@@ -257,12 +280,6 @@
 			<enumVal>
 				<enumChoice choice="NMRA Digital only"/>
 				<enumChoice choice="DC conversion enabled"/>
-				</enumVal></variable>
-		<variable label="Advanced Decoder Acknowledgement" CV="29" mask="XXXXVXXX"
-					item="Advanced Ack">
-			<enumVal>
-				<enumChoice choice="disabled"/>
-				<enumChoice choice="enabled"/>
 				</enumVal></variable>
 		<variable label="Speed Table Definition" CV="29" mask="XXXVXXXX">
 			<enumVal>
@@ -276,7 +293,7 @@
 				</enumVal></variable>
 
 		<variable label="Decoder Reset" CV="30" mask="XXXXXXVX"
-				  default="0">
+				  default="0" tooltip="When activated, will reset all values in decoder to factory defaults" >
 			<enumVal >
 				<enumChoice choice="System Normal"/>
 				<enumChoice choice="Reset to defaults"/>
@@ -455,11 +472,12 @@
 			<speedTableVal/></variable>
 
 		<variable label="Reverse Trim Adjustment" CV="95" mask="XVVVVVVV"
-			 	item="Forward Trim" >
+			 	item="Forward Trim" tooltip="Adjustment amount used to equalize the speed in each direction" >
 				<decVal max="127"/>
 			</variable>
 		<variable label="Reverse Trim Sign" CV="95" mask="VXXXXXXX"
-				item="Reverse Trim" >
+				item="Reverse Trim"
+				tooltip="Determines whether to add the adjustment amount to the forward or reverse direction" >
 			<enumVal>
 				<enumChoice choice="Added to reverse direction"/>
 				<enumChoice choice="Added to forward direction"/>
@@ -479,17 +497,20 @@
 		<!-- NCE-specific variables -->	
 		
 		<variable label="Torque Kick Rate" CV="116" mask="VVVVVVVV"
-				item="Dither frequency">
+				item="Dither frequency"
+				tooltip="How frequently the motor is kicked with voltage pulses" >
 			<decVal/>
 			</variable>
 			
 		<variable label="Torque Kick Strength" CV="117" mask="VVVVVVVV"
-				item="Dither option" >
+				item="Dither option"
+				tooltip="How much voltage is used to kick the motor at low speeds" >
 			<decVal/>
 			</variable>
 
 		<variable label="Ditch light hold time" CV="118" mask="VVVVVVVV"
-					item="Global lighting option 1" default="20" >
+					item="Global lighting option 1" default="20"
+					tooltip="Value in 1/4 second increments after F2 goes off" >
 			<decVal/>
 			</variable>
 			
@@ -798,12 +819,15 @@
 	<column>
 
 		<display item="Decoder Lock ID number" />
+		<label label="Tip: you must set CV15 equal to this number to unlock the decoder for programming"/>
+		<label label=" "/>
 		<separator/>
+		<label label=" "/>
 		<display item="Decoder Reset" />
-		<label label="Reset only works if done on the program track (not OPS)"/>
+		<label label="Reset only works when done on the programming track (not OPS)"/>
 
 	</column>
 </pane>
 
 </decoder-config>
-
+
