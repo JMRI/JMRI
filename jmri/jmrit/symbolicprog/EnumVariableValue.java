@@ -16,7 +16,7 @@ import com.sun.java.util.collections.List;
  * Extends VariableValue to represent a enumerated variable.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
@@ -119,23 +119,55 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         return ""+_value.getSelectedIndex();
     }
     public void setIntValue(int i) {
-        _value.setSelectedIndex(i);  // automatically fires a change event
+        selectValue(i);
     }
+
+    /**
+     * Set to a specific value.
+     * <P>
+     * This searches for the displayed value, and sets the
+     * enum to that particular one.  It used to work off an index,
+     * but now it looks for the value.
+     * <P>
+     * If the value is larger than any defined, a new one is created.
+     * @param value
+     */
+    protected void selectValue(int value) {
+        if (value>256) log.error("Saw unreasonable internal value: "+value);
+        for (int i = 0; i<_valueArray.length; i++)
+            if (_valueArray[i]==value) {
+                //found it, select it
+                _value.setSelectedIndex(value);
+                return;
+            }
+
+        // We can be commanded to a number that hasn't been defined.
+        // But that's OK for certain applications.  Instead, we add them as needed
+        log.debug("Create new item with value "+value+" count was "+_value.getItemCount()
+                        +" in "+label());
+        _value.addItem("Reserved value "+value);
+        // and value array is too short
+        int[] oldArray = _valueArray;
+        _valueArray = new int[oldArray.length+1];
+        for (int i = 0; i<oldArray.length; i++) _valueArray[i] = oldArray[i];
+        _valueArray[oldArray.length] = value;
+
+        _value.setSelectedIndex(oldArray.length);
+    }
+
     public int getIntValue() {
+        if (_value.getSelectedIndex()>=_valueArray.length)
+            log.error("trying to get value "+_value.getSelectedIndex()+" too large"
+                    +" for array length "+_valueArray.length);
         return _valueArray[_value.getSelectedIndex()];
     }
 
     public Component getValue()  { return _value; }
 
     public void setValue(int value) {
-        int oldVal = _value.getSelectedIndex();
-        // We can be commanded to a number larger than
-        // has been enumerated.  But that's OK for
-        // certain applications.  Instead, we add them as needed
-        if (value>256) log.error("Saw unreasonable internal value: "+value);
-        while (_value.getItemCount()<value+1)
-            _value.addItem("Reserved value "+_value.getItemCount());
-        _value.setSelectedIndex(value);
+        int oldVal = getIntValue();
+        selectValue(value);
+
         if (oldVal != value || getState() == VariableValue.UNKNOWN)
             prop.firePropertyChange("Value", null, new Integer(value));
     }
@@ -226,7 +258,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * model between this object and the real JComboBox value.
      *
      * @author			Bob Jacobsen   Copyright (C) 2001
-     * @version         $Revision: 1.7 $
+     * @version         $Revision: 1.8 $
      */
     public class VarComboBox extends JComboBox {
 
