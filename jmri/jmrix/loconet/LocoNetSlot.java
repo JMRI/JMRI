@@ -52,8 +52,8 @@ public class LocoNetSlot {
 	// global track status should be reference through SlotManager
 	
 // create a specific slot
-	public void LocoNetSlot(int slotNum)  { slot = slotNum;}
-	public void LocoNetSlot(LocoNetMessage l) throws LocoNetException { 
+	public LocoNetSlot(int slotNum)  { slot = slotNum;}
+	public LocoNetSlot(LocoNetMessage l) throws LocoNetException { 
 		slot = l.getElement(1);
 		setSlot(l);
 	}
