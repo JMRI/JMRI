@@ -43,7 +43,7 @@ import com.sun.java.util.collections.ArrayList;
  * consistent via the {#setTitle} method.
  *
  * @author Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
- * @version $Revision: 1.38 $
+ * @version $Revision: 1.39 $
  */
 
 public class PanelEditor extends JFrame {
@@ -400,9 +400,7 @@ public class PanelEditor extends JFrame {
         l.setInconsistentIcon(turnoutRIconEditor.getIcon(2));
         l.setUnknownIcon(turnoutRIconEditor.getIcon(3));
 
-        Turnout t = InstanceManager.turnoutManagerInstance()
-            .provideTurnout(nextTurnoutR.getText());
-        l.setTurnout(t.getSystemName(), t.getUserName());
+        l.setTurnout(nextTurnoutR.getText());
 
         setNextLocation(l);
         putTurnout(l);
@@ -414,9 +412,7 @@ public class PanelEditor extends JFrame {
         l.setInconsistentIcon(turnoutLIconEditor.getIcon(2));
         l.setUnknownIcon(turnoutLIconEditor.getIcon(3));
 
-        Turnout t = InstanceManager.turnoutManagerInstance()
-            .provideTurnout(nextTurnoutL.getText());
-        l.setTurnout(t.getSystemName(), t.getUserName());
+        l.setTurnout(nextTurnoutL.getText());
 
         setNextLocation(l);
         putTurnout(l);
@@ -438,9 +434,7 @@ public class PanelEditor extends JFrame {
         l.setInactiveIcon(sensorIconEditor.getIcon(1));
         l.setInconsistentIcon(sensorIconEditor.getIcon(2));
         l.setUnknownIcon(sensorIconEditor.getIcon(3));
-        Sensor s = InstanceManager.sensorManagerInstance()
-                        .provideSensor(nextSensor.getText());
-        l.setSensor(s.getSystemName(), s.getUserName());
+        l.setSensor(nextSensor.getText());
         setNextLocation(l);
         putSensor(l);
     }
