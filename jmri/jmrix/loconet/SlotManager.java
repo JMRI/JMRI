@@ -1,13 +1,4 @@
-/** 
- * SlotManager.java
- *
- * Description:		<describe the SlotManager class here>
- * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			
- */
- 
- // This is a collection of LocoNetSlots, plus support for coordinating
- // them with the controller
+/* SlotManager.java */
 
 package jmri.jmrix.loconet;
 
@@ -19,36 +10,43 @@ import java.util.Vector;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
+/**
+ * Controls a collection of slots, acting as the
+ * counter-part of a LocoNet command station.
+ *
+ * @author			Bob Jacobsen  Copyright (C) 2001
+ * @version         $Revision: 1.2 $
+ */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 
 	private LocoNetSlot _slots[] = new LocoNetSlot[128];
 
 	public LocoNetSlot slot(int i) {return _slots[i];}
-	
-	public SlotManager() { 
+
+	public SlotManager() {
 		// error if more than one constructed?
-		if (self != null) 
+		if (self != null)
 			log.warn("Creating too many SlotManager objects");
 
 		// initialize slot array
-		for (int i=0; i<=127; i++) _slots[i] = new LocoNetSlot();
-		
+		for (int i=0; i<=127; i++) _slots[i] = new LocoNetSlot(i);
+
 		// register this as the default, register as the Programmer
-		self = this; 
+		self = this;
 		jmri.InstanceManager.setProgrammer(this);
-			
+
 		// listen to the LocoNet
-		LnTrafficController.instance().addLocoNetListener(~0, this);	
+		LnTrafficController.instance().addLocoNetListener(~0, this);
 		}
 
 	// obtain a slot for a particular loco address
 	// this will actually require a delayed return value - what impact does that have?
 	LocoNetSlot fromLocoAddress(int i) { return null; }
-	
-	/* 
+
+	/*
 	 * method to find the existing SlotManager object, if need be creating one
 	 */
-	static public final SlotManager instance() { 
+	static public final SlotManager instance() {
 		if (self == null) self = new SlotManager();
 		return self;
 		}
@@ -56,7 +54,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 
 	// handle mode
 	protected int _mode = Programmer.PAGEMODE;
-	
+
 	public void setMode(int mode) {
 		if (mode != _mode) {
 			notifyPropertyChange("Mode", _mode, mode);
@@ -64,11 +62,11 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 		}
 	}
 	public int getMode() { return _mode; }
-	
+
 	// data members to hold contact with the slot listeners
 	private Vector slotListeners = new Vector();
-	
-	public synchronized void addSlotListener(SlotListener l) { 
+
+	public synchronized void addSlotListener(SlotListener l) {
 			// add only if not already registered
 			if (!slotListeners.contains(l)) {
 					slotListeners.addElement(l);
@@ -98,7 +96,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 			client.notifyChangedSlot(s);
 						}
 	}
-	
+
 	protected void notifyPropertyChange(String name, int oldval, int newval) {
 		// make a copy of the listener vector to synchronized not needed for transmit
 		Vector v;
@@ -116,7 +114,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 			client.propertyChange(new PropertyChangeEvent(this, name, new Integer(oldval), new Integer(newval)));
 						}
 	}
-	
+
 	// listen to the LocoNet
 	public void message(LocoNetMessage m) {
 		int i = 0;
@@ -127,20 +125,20 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 			case LnConstants.OPC_SL_RD_DATA:
 				i = m.getElement(2);
 				break;
-							
+
 			case LnConstants.OPC_LOCO_DIRF:
 			case LnConstants.OPC_LOCO_SND:
-			case LnConstants.OPC_LOCO_SPD: 
-			case LnConstants.OPC_SLOT_STAT1: 
+			case LnConstants.OPC_LOCO_SPD:
+			case LnConstants.OPC_SLOT_STAT1:
 				i = m.getElement(1);
 				break;
 
 			case LnConstants.OPC_MOVE_SLOTS:  // handle the follow-on message when it comes
 				return; // need to cope with that!!
-			
+
 			case LnConstants.OPC_LONG_ACK:
 				// handle if reply to slot. There's no slot number in the LACK, unfortunately.
-				// If this is a LACK to a Slot op, and progState is command pending, 
+				// If this is a LACK to a Slot op, and progState is command pending,
 				// assume its for us...
 				if (log.isDebugEnabled())
 							log.debug("LACK in state "+progState+" message: "+m.toString());
@@ -185,13 +183,13 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 							}
 					}
 				else return;
-				
-			default: 
+
+			default:
 				// nothing here for us
 				return;
-			}	
-			
-		// if here, i holds the slot number, and we expect to be able to parse		
+			}
+
+		// if here, i holds the slot number, and we expect to be able to parse
 		// and have the slot handle the message
 		if (i>=_slots.length || i<0) log.error("Received slot number "+i+
 				" is greater than array length "+_slots.length+" Message was "
@@ -206,7 +204,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 			}
 		// notify listeners that slots may have changed
 		notify(_slots[i]);
-		
+
 		// start checking for programming operations
 		if (i == 124) {
 			// here its an operation on the programmer slot
@@ -221,12 +219,12 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 					break;
 				case 2:   // commandExecuting
 					// waiting for slot read, is it present?
-					if (m.getOpCode() == LnConstants.OPC_SL_RD_DATA) {	
+					if (m.getOpCode() == LnConstants.OPC_SL_RD_DATA) {
 						// yes, this is the end
 						// move to not programming state
 						stopTimer();
 						progState = 0;
-						
+
 						// parse out value returned
 						int value = -1;
 						int status = 0;
@@ -240,15 +238,15 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 							value = _slots[i].cvval();
 							}
 						// parse out status
-							if ( (_slots[i].pcmd() & LnConstants.PSTAT_NO_DECODER ) != 0 )  
+							if ( (_slots[i].pcmd() & LnConstants.PSTAT_NO_DECODER ) != 0 )
 							status = (status | jmri.ProgListener.NoLocoDetected);
-						if ( (_slots[i].pcmd() & LnConstants.PSTAT_WRITE_FAIL ) != 0 )  
+						if ( (_slots[i].pcmd() & LnConstants.PSTAT_WRITE_FAIL ) != 0 )
 							status = (status | jmri.ProgListener.NoAck);
-						if ( (_slots[i].pcmd() & LnConstants.PSTAT_READ_FAIL ) != 0 )  
+						if ( (_slots[i].pcmd() & LnConstants.PSTAT_READ_FAIL ) != 0 )
 							status = (status | jmri.ProgListener.NoAck);
-						if ( (_slots[i].pcmd() & LnConstants.PSTAT_USER_ABORTED ) != 0 )  
+						if ( (_slots[i].pcmd() & LnConstants.PSTAT_USER_ABORTED ) != 0 )
 							status = (status | jmri.ProgListener.UserAborted);
-						
+
 						// and send the notification
 						notifyProgListenerEnd(value, status);
 					}
@@ -261,7 +259,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 	}
 
 	// members for handling the programmer interface
-	
+
 	/**
 	 * Internal routine to handle a timeout
 	 */
@@ -275,7 +273,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 			notifyProgListenerEnd(_slots[124].cvval(), jmri.ProgListener.FailedTimeout);
 		}
 	}
-	
+
 	int progState = 0;
 		// 1 is commandPending
 		// 2 is commandExecuting
@@ -283,7 +281,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 	boolean _progRead = false;
 	boolean _progConfirm = false;
 	int _confirmVal;
-	
+
 	public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
 		if (log.isDebugEnabled()) log.debug("writeCV: "+CV);
 		useProgrammer(p);
@@ -291,23 +289,23 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 		_progConfirm = false;
 		// set commandPending state
 		progState = 1;
-		
+
 		// format and send message
 		startShortTimer();
 		LnTrafficController.instance().sendLocoNetMessage(progTaskStart(getMode(), val, CV, true));
 
 		}
-		
+
 	public void confirmCV(int CV, int val, ProgListener p) throws jmri.ProgrammerException {
 		if (log.isDebugEnabled()) log.debug("confirmCV: "+CV);
 		useProgrammer(p);
 		_progRead = false;
 		_progConfirm = true;
 		_confirmVal = val;
-		
+
 		// set commandPending state
 		progState = 1;
-		
+
 		// format and send message
 		startShortTimer();
 		LnTrafficController.instance().sendLocoNetMessage(progTaskStart(getMode(), -1, CV, false));
@@ -320,14 +318,14 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 		_progConfirm = false;
 		// set commandPending state
 		progState = 1;
-		
+
 		// format and send message
 		startShortTimer();
 		LnTrafficController.instance().sendLocoNetMessage(progTaskStart(getMode(), -1, CV, false));
 	}
 
 	private jmri.ProgListener _usingProgrammer = null;
-	
+
 	// internal method to remember who's using the programmer
 	protected void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
 		// test for only one!
@@ -340,18 +338,18 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 			return;
 		}
 	}
-	
+
 	// internal method to create the LocoNetMessage for programmer task start
 	protected LocoNetMessage progTaskStart(int mode, int val, int cvnum, boolean write) throws jmri.ProgrammerException {
-	
+
 		int addr = cvnum-1;    // cvnum is in human readable form; addr is what's sent over loconet
-		
+
 		LocoNetMessage m = new LocoNetMessage(14);
 
 		m.setOpCode(0xEF);
 		m.setElement(1, 0x0E);
 		m.setElement(2, 0x7C);
-		
+
 		// parse the programming command
 		int pcmd = 0;
 		if (write) pcmd = pcmd | 0x40;  // write command
@@ -360,24 +358,24 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 		else if (mode == jmri.Programmer.REGISTERMODE) pcmd = pcmd | 0x10;
 		else throw new jmri.ProgrammerException("mode not supported");
 		m.setElement(3, pcmd);
-		
+
 		// set zero, then zero HOPSA, LOPSA, TRK
 		m.setElement(4, 0);
 		m.setElement(5, 0);
 		m.setElement(6, 0);
 		m.setElement(7, 0);
-		
+
 		// store address in CVH, CVL. Note CVH format is truely wierd...
 		m.setElement(8, (addr&0x300)/16 + (addr&0x80)/128 + (val&0x80)/128*2 );
 		m.setElement(9,addr & 0x7F);
-		
-		// store low bits of CV value 
+
+		// store low bits of CV value
 		m.setElement(10, val&0x7F);
-		
+
 		return m;
 	}
-	
-	
+
+
 	// internal method to notify of the final result
 	protected void notifyProgListenerEnd(int value, int status) {
 		ProgListener p = _usingProgrammer;
@@ -392,7 +390,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener {
 		_usingProgrammer = null;
 	}
 
-	// initialize logging	
+	// initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SlotManager.class.getName());
 }
 

@@ -1,32 +1,31 @@
-/** 
- * LocoNetSlot.java
- *
- * Description:		<describe the LocoNetSlot class here>
- * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			
- */
+// LocoNetSlot.java
 
 package jmri.jmrix.loconet;
 
+/**
+ * Represents the contents of a single slot in the LocoNet command station
+ * @author			Bob Jacobsen  Copyright (C) 2001
+ * @version         $Revision: 1.3 $
+ */
 public class LocoNetSlot {
 
 // accessors to specific information
 	public int getSlot() { return slot;}  // cannot modify the slot number once created
-	
+
 // status accessors
 	// decoder mode
-	// possible values are  DEC_MODE_128A, DEC_MODE_28A, DEC_MODE_128, 
-	//						DEC_MODE_14, DEC_MODE_28TRI, DEC_MODE_28  
+	// possible values are  DEC_MODE_128A, DEC_MODE_28A, DEC_MODE_128,
+	//						DEC_MODE_14, DEC_MODE_28TRI, DEC_MODE_28
 	public int decoderType() 	{ return stat&LnConstants.DEC_MODE_MASK;}
-	
+
 	// slot status
-	// possible values are LOCO_IN_USE, LOCO_IDLE, LOCO_COMMON, LOCO_FREE 
-	public int slotStatus() 	{ return stat&LnConstants.LOCOSTAT_MASK; }	
+	// possible values are LOCO_IN_USE, LOCO_IDLE, LOCO_COMMON, LOCO_FREE
+	public int slotStatus() 	{ return stat&LnConstants.LOCOSTAT_MASK; }
 
 	// consist status
 	// possible values are CONSIST_MID, CONSIST_TOP, CONSIST_SUB, CONSIST_NO
-	public int consistStatus() 	{ return stat&LnConstants.CONSIST_MASK; }	
-	
+	public int consistStatus() 	{ return stat&LnConstants.CONSIST_MASK; }
+
 	// direction and functions
 	public boolean isForward()	{ return 0==(dirf&LnConstants.DIRF_DIR); }
 	public boolean isF0()		{ return 0!=(dirf&LnConstants.DIRF_F0); }
@@ -38,31 +37,31 @@ public class LocoNetSlot {
 	public boolean isF6()		{ return 0!=(snd&LnConstants.SND_F6); }
 	public boolean isF7()		{ return 0!=(snd&LnConstants.SND_F7); }
 	public boolean isF8()		{ return 0!=(snd&LnConstants.SND_F8); }
-	
+
 	// loco address, speed
 	public int locoAddr()   { return addr; }
 	public int speed()      { return spd; }
-	
+
 	public int id()			{ return id; }
-	
+
 	// programmer track special case accessors
 	public int pcmd()          	{ return _pcmd; }
 	public int cvval()          { return snd+(ss2&2)*64; }
-	
+
 	// global track status should be reference through SlotManager
-	
+
 // create a specific slot
 	public LocoNetSlot(int slotNum)  { slot = slotNum;}
-	public LocoNetSlot(LocoNetMessage l) throws LocoNetException { 
+	public LocoNetSlot(LocoNetMessage l) throws LocoNetException {
 		slot = l.getElement(1);
 		setSlot(l);
 	}
 
-// methods to interact with LocoNet 
-	public void setSlot(LocoNetMessage l) throws LocoNetException { // exception if message can't be parsed 
+// methods to interact with LocoNet
+	public void setSlot(LocoNetMessage l) throws LocoNetException { // exception if message can't be parsed
 		// sort out valid messages, handle
 		switch (l.getOpCode()) {
-			case LnConstants.OPC_WR_SL_DATA: 
+			case LnConstants.OPC_WR_SL_DATA:
 			case LnConstants.OPC_SL_RD_DATA: {
 				if ( l.getElement(1) != 0x0E ) return;  // not an appropriate reply
 				// valid, so fill contents
@@ -79,32 +78,32 @@ public class LocoNetSlot {
 				id =   l.getElement(11)+128*l.getElement(12);
 				return;
 				}
-			case LnConstants.OPC_SLOT_STAT1: 
+			case LnConstants.OPC_SLOT_STAT1:
 				slot = l.getElement(1);
 				stat = l.getElement(2);
 				return;
 			case LnConstants.OPC_LOCO_SND: {
 				// set sound functions in slot - first, clear bits
-				snd &= ~(LnConstants.SND_F5 | LnConstants.SND_F6 
+				snd &= ~(LnConstants.SND_F5 | LnConstants.SND_F6
 						| LnConstants.SND_F7 | LnConstants.SND_F8);
 				// and set them as masked
-				snd |= ((LnConstants.SND_F5 | LnConstants.SND_F6 
+				snd |= ((LnConstants.SND_F5 | LnConstants.SND_F6
 						| LnConstants.SND_F7 | LnConstants.SND_F8) & l.getElement(2));
 				return;
 				}
 			case  LnConstants.OPC_LOCO_DIRF: {
 				// set direction, functions in slot - first, clear bits
-				dirf &= ~(LnConstants.DIRF_DIR | LnConstants.DIRF_F0 
+				dirf &= ~(LnConstants.DIRF_DIR | LnConstants.DIRF_F0
 						| LnConstants.DIRF_F1 | LnConstants.DIRF_F2
 						| LnConstants.DIRF_F3 | LnConstants.DIRF_F4);
 				// and set them as masked
-				dirf += ((LnConstants.DIRF_DIR | LnConstants.DIRF_F0 
+				dirf += ((LnConstants.DIRF_DIR | LnConstants.DIRF_F0
 						| LnConstants.DIRF_F1 | LnConstants.DIRF_F2
 						| LnConstants.DIRF_F3 | LnConstants.DIRF_F4) & l.getElement(2));
 				return;
 				}
 			case LnConstants.OPC_MOVE_SLOTS: {
-				// change in slot status will be reported by the reply, 
+				// change in slot status will be reported by the reply,
 				// so don't need to do anything here (but could)
 				return;
 				}
@@ -115,9 +114,9 @@ public class LocoNetSlot {
 				}
 			}
 		}
-		
-	public LocoNetMessage writeSlot() { 
-		LocoNetMessage l = new LocoNetMessage(13); 
+
+	public LocoNetMessage writeSlot() {
+		LocoNetMessage l = new LocoNetMessage(13);
 		l.setOpCode( LnConstants.OPC_WR_SL_DATA );
 		l.setElement(1, 0x0E);
 		l.setElement(2, slot);
@@ -144,9 +143,9 @@ public class LocoNetSlot {
 	private int trk;	// <TRK> is the global track status
 	private int ss2;	// <SS2> is the an additional slot status
 	private int snd; 	// <SND> is the settings for functions F5-F8
-	private int id;		// throttle id, made from 
+	private int id;		// throttle id, made from
 						//     <ID1> and <ID2> normally identify the throttle controlling the loco
-						
+
 	private int _pcmd;  // hold pcmd and pstat for programmer
 }
 
