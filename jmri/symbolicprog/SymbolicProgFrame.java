@@ -33,7 +33,8 @@ import org.xml.sax.InputSource;
 public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgListener {
 
 	// GUI member declarations
-	JButton selectFileButton = new javax.swing.JButton();
+	JButton selectFileButton = new JButton();
+	JButton storeFileButton = new JButton();
 
 	CvTableModel		cvModel	= new CvTableModel();
 	JTable					cvTable	= new JTable(cvModel);
@@ -46,7 +47,16 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 	JScrollPane 			variableScroll	= new JScrollPane(variableTable);
 	
 	JButton  newCvButton = new JButton();
+	JLabel   newCvLabel  = new JLabel();
 	JTextField newCvNum  = new JTextField();
+
+	JButton  newVarButton = new JButton();
+	JLabel   newVarNameLabel  = new JLabel();
+	JTextField newVarName  = new JTextField();
+	JLabel   newVarCvLabel  = new JLabel();
+	JTextField newVarCv  = new JTextField();
+	JLabel   newVarMaskLabel  = new JLabel();
+	JTextField newVarMask  = new JTextField();
 
 	ProgModePane   modePane = new ProgModePane(BoxLayout.X_AXIS);
 			
@@ -60,9 +70,13 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 	public SymbolicProgFrame() {
 
 		// configure GUI elements
-		selectFileButton.setText("Select File");
+		selectFileButton.setText("Read File");
 		selectFileButton.setVisible(true);
-		selectFileButton.setToolTipText("Press to select configuration file");
+		selectFileButton.setToolTipText("Press to select & read a configuration file");
+		
+		storeFileButton.setText("Store File");
+		storeFileButton.setVisible(true);
+		storeFileButton.setToolTipText("Press to store the configuration file");
 		
 		variableTable.setDefaultRenderer(JTextField.class, new ValueRenderer());
 		variableTable.setDefaultRenderer(JButton.class, new ValueRenderer());
@@ -80,8 +94,17 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 		// instead of forcing the columns to fill the frame (and only fill)
 		cvTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		
-		newCvButton.setText("new CV:");
+		newCvButton.setText("Create new CV");
+		newCvLabel.setText("CV number:");
 		newCvNum.setText("");
+		
+		newVarButton.setText("Create new variable");
+		newVarNameLabel.setText("Name:");
+		newVarName.setText("");
+		newVarCvLabel.setText("Cv number:");
+		newVarCv.setText("");
+		newVarMaskLabel.setText("Bit mask:");
+		newVarMask.setText("VVVVVVVV");
 		
 		// add actions to buttons
 		selectFileButton.addActionListener(new java.awt.event.ActionListener() {
@@ -89,9 +112,19 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 				selectFileButtonActionPerformed(e);
 			}
 		});
+		storeFileButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				JOptionPane.showMessageDialog(storeFileButton, "Sorry, not yet implemented");
+			}
+		});
 		newCvButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				cvModel.addCV(newCvNum.getText());
+			}
+		});
+		newVarButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				newVarButtonPerformed();
 			}
 		});
 			
@@ -103,29 +136,48 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 		JPanel tPane3 = new JPanel();
 			tPane3.setLayout(new BoxLayout(tPane3, BoxLayout.X_AXIS));
 			tPane3.add(selectFileButton);  
+			tPane3.add(Box.createHorizontalGlue());
 			tPane3.add(new JLabel(" Vendor: "));
 			tPane3.add(vendor);
 			tPane3.add(new JLabel(" Model: "));
 			tPane3.add(model);
+			tPane3.add(Box.createHorizontalGlue());
+			tPane3.add(storeFileButton);  
+			tPane3.add(Box.createHorizontalGlue());
 		getContentPane().add(tPane3);
 
 		getContentPane().add(modePane);
 			
 		getContentPane().add(variableScroll);
+		
+		getContentPane().add(cvScroll);
+
 		JPanel tPane4 = new JPanel();
 			tPane4.setLayout(new BoxLayout(tPane4, BoxLayout.X_AXIS));
 			tPane4.add(newCvButton);
+			tPane4.add(newCvLabel);
 			tPane4.add(newCvNum);
+			tPane4.add(Box.createHorizontalGlue());
 		getContentPane().add(tPane4);
-		
-		getContentPane().add(cvScroll);
+
+		tPane4 = new JPanel();
+			tPane4.setLayout(new BoxLayout(tPane4, BoxLayout.X_AXIS));
+			tPane4.add(newVarButton);
+			tPane4.add(newVarNameLabel);
+			tPane4.add(newVarName);
+			tPane4.add(newVarCvLabel);
+			tPane4.add(newVarCv);
+			tPane4.add(newVarMaskLabel);
+			tPane4.add(newVarMask);
+			tPane4.add(Box.createHorizontalGlue());
+		getContentPane().add(tPane4);
 		
 		// for debugging
 		
 		pack();
 	}
   	
-  	void selectFileButtonActionPerformed(java.awt.event.ActionEvent e) {
+  	protected void selectFileButtonActionPerformed(java.awt.event.ActionEvent e) {
 		// show dialog
 		int retVal = fc.showOpenDialog(this);
 
@@ -140,6 +192,16 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 		}
   	}	
 
+	protected void newVarButtonPerformed()  {
+		String name = newVarName.getText();
+		int CV = Integer.valueOf(newVarCv.getText()).intValue();
+		String mask = newVarMask.getText();
+		
+		// ask Table model to do the actuall add
+		variableModel.newDecVariableValue(name, CV, mask);
+		variableModel.configDone();
+	}
+	
 	// handle resizing when first shown
   	private boolean mShown = false;
 	public void addNotify() {
@@ -203,7 +265,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame implements jmri.ProgLi
 			variableModel.configDone();
 			
 		} catch (Exception e) {
-			if (log.isInfoEnabled()) log.info("readAndParseDecoderConfig: readAndParseDecoderConfig exception: "+e);
+			if (log.isInfoEnabled()) log.warn("readAndParseDecoderConfig: readAndParseDecoderConfig exception: "+e);
 		}
 
 	}

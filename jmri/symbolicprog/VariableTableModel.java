@@ -113,7 +113,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 	// Read from an Element to configure the row
 	public void setRow(int i, Element e, Namespace ns) {
 		// get the values for the VariableValue ctor
-
+		if (log.isDebugEnabled()) log.debug("Starting to setRow("+i+")");
 		String name = e.getAttribute("name").getValue();
 		String comment = null;
 		if (e.getAttribute("comment") != null)
@@ -184,11 +184,23 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		v.addPropertyChangeListener(this);
 	}
 	
+	public void newDecVariableValue(String name, int CV, String mask) {
+		String comment = "";
+		boolean readOnly = false;
+		int minVal = 0;
+		int maxVal = 255;
+		_cvModel.addCV(""+CV);
+		VariableValue v = new DecVariableValue(name, comment, readOnly, 
+								CV, mask, minVal, maxVal, _cvModel.allCvVector());
+		rowVector.addElement(v);
+		v.addPropertyChangeListener(this);
+	}
+	
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("action command: "+e.getActionCommand());
+		if (log.isDebugEnabled()) log.debug("action command: "+e.getActionCommand());
 		char b = e.getActionCommand().charAt(0);
 		int row = Integer.valueOf(e.getActionCommand().substring(1)).intValue();
-		System.out.println("event "+b+" row "+row);
+		if (log.isDebugEnabled()) log.debug("event on "+b+" row "+row);
 		VariableValue v = (VariableValue)rowVector.elementAt(row);
 		if (b=='R') {
 			// read command
