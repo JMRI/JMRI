@@ -8,7 +8,7 @@ package jmri.jmrix.loconet.ms100;
  * via an LocoNet MS100Adapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
@@ -26,7 +26,16 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
         super();
     }
 
-    public String name() { return "LocoNet MS100"; }
+	/** 
+	 * Provide this adapter name, if it's available on this system.
+	 * @return null if this is a MacOS X system that can't run MS100
+	 */
+    public String name() { 
+    	if (System.getProperty("os.name","<unknown>").equals("Mac OS X"))
+    		return "(LocoNet MS100 not available)";
+    	else
+    		return "LocoNet MS100"; 
+    }
 
     protected void setInstance() { adapter = MS100Adapter.instance(); }
 }
