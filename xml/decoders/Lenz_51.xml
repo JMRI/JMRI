@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Lenz_51.xml,v 1.1 2004-07-17 18:48:02 jacobsen Exp $ -->
+<!-- $Id: Lenz_51.xml,v 1.2 2004-07-19 15:38:02 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Michael Greene mgreene@cedarlane.com"
 			version="2" lastUpdated="20040716" />
@@ -172,7 +172,7 @@
 
 	<variable label="Speed Table" CV="67">
 			<speedTableVal entries="15"
-			 max="64"/>
+			 max="63"/>
 			</variable>
 
 
