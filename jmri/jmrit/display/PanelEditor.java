@@ -46,7 +46,7 @@ import com.sun.java.util.collections.ArrayList;
  * consistent via the {#setTitle} method.
  *
  * @author Bob Jacobsen  Copyright: Copyright (c) 2002, 2003; modifications, Dennis Miller 2004
- * @version $Revision: 1.44 $
+ * @version $Revision: 1.45 $
  */
 
 public class PanelEditor extends JFrame {
@@ -739,9 +739,9 @@ public class PanelEditor extends JFrame {
             public Component add(Component c, int i) {
                 if (log.isDebugEnabled()) log.debug("size was "+w+","+h);
                 int hnew = (int)Math.max(h,
-                        c.getLocation().getY()+c.getSize().getHeight());
+                        c.getLocation().y+c.getSize().height);
                 int wnew = (int)Math.max(w,
-                        c.getLocation().getX()+c.getSize().getWidth());
+                        c.getLocation().x+c.getSize().width);
                 setSize(wnew,hnew);
                 return super.add(c, i);
             }
@@ -750,9 +750,9 @@ public class PanelEditor extends JFrame {
                 super.add(c, o);
                 if (log.isDebugEnabled()) log.debug("in Object add, was "+w+","+h);
                 int hnew = (int)Math.max(h,
-                        c.getLocation().getY()+c.getSize().getHeight());
+                        c.getLocation().y+c.getSize().height);
                 int wnew = (int)Math.max(w,
-                        c.getLocation().getX()+c.getSize().getWidth());
+                        c.getLocation().x+c.getSize().width);
                 setSize(wnew,hnew);
             }
         };
