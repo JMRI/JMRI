@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.cmri.serial package.
  * @author      Bob Jacobsen  Copyright 2003
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class SerialTest extends TestCase {
 
@@ -41,6 +41,7 @@ public class SerialTest extends TestCase {
         suite.addTest(jmri.jmrix.cmri.serial.SerialNodeTest.suite());
         suite.addTest(jmri.jmrix.cmri.serial.SerialMessageTest.suite());
         suite.addTest(jmri.jmrix.cmri.serial.SerialTrafficControllerTest.suite());
+        suite.addTest(jmri.jmrix.cmri.serial.SerialAddressTest.suite());
         return suite;
     }
 

@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the SerialTrafficController class
  * @author			Bob Jacobsen
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 package jmri.jmrix.cmri.serial;
@@ -50,16 +50,16 @@ public class SerialTrafficControllerTest extends TestCase {
         Assert.assertTrue("must Send", g.mustSend() );
         g.resetMustSend();
         Assert.assertTrue("must Send off", !(g.mustSend()) );
-        c.setSerialOutput("CN5B2",false);
-        c.setSerialOutput("CN5B1",false);
-        c.setSerialOutput("CN5B23",false);
-        c.setSerialOutput("CN5B41",false);
-        c.setSerialOutput("CN5B25",false);
-        c.setSerialOutput("CN5B2",true);
-        c.setSerialOutput("CN5B19",false);
-        c.setSerialOutput("CN5B5",false);
-        c.setSerialOutput("CN5B26",false);
-        c.setSerialOutput("CN5B48",false);
+        c.setSerialOutput("CL5B2",false);
+        c.setSerialOutput("CL5B1",false);
+        c.setSerialOutput("CL5B23",false);
+        c.setSerialOutput("CL5B41",false);
+        c.setSerialOutput("CL5B25",false);
+        c.setSerialOutput("CL5B2",true);
+        c.setSerialOutput("CL5B19",false);
+        c.setSerialOutput("CL5B5",false);
+        c.setSerialOutput("CL5B26",false);
+        c.setSerialOutput("CL5B48",false);
         Assert.assertTrue("must Send on", g.mustSend() );
         SerialMessage m = g.createOutPacket();
         Assert.assertEquals("packet size", 9, m.getNumDataElements() );
