@@ -177,7 +177,7 @@ public class DccConsist implements Consist, ProgListener{
 		}
 
 		InstanceManager.programmerManagerInstance()
-                               .releaseOopsModeProgrammer(opsProg);
+                               .releaseOpsModeProgrammer(opsProg);
 	}
 
         /*
@@ -198,7 +198,7 @@ public class DccConsist implements Consist, ProgListener{
 			// Don't do anything with this yet
 		}
 		InstanceManager.programmerManagerInstance()
-                               .releaseOopsModeProgrammer(opsProg);
+                               .releaseOpsModeProgrammer(opsProg);
 	}
 
 	// This class is to be registerd as a programmer listener, so we 
