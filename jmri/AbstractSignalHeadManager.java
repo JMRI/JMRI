@@ -20,9 +20,9 @@ import com.sun.java.util.collections.Collections;
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
-public class AbstractSignalHeadManager
+public class AbstractSignalHeadManager extends AbstractManager
     implements SignalHeadManager, java.beans.PropertyChangeListener {
 
     public AbstractSignalHeadManager() {
@@ -31,9 +31,13 @@ public class AbstractSignalHeadManager
         log.debug("register");
     }
 
+    public char systemLetter() { return 'I'; }
+    public char typeLetter() { return 'H'; }
+
+
     // abstract methods to be extended by subclasses
     // to free resources when no longer used
-    public void dispose() throws JmriException {
+    public void dispose() {
         InstanceManager.configureManagerInstance().deregister(this);
         _tsys.clear();
         _tuser.clear();
