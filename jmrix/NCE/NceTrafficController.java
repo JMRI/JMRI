@@ -55,13 +55,15 @@ public class NceTrafficController implements NceInterface, Runnable {
 	 */
 	public void sendNceMessage(NceMessage m) {
 		// stream to port in single write, as that's needed by serial
-		int len = 0;
-		byte msg[] = new byte[len];
+		int len = m.getNumDataElements();
+		byte msg[] = new byte[len+1];
 		for (int i=0; i< len; i++)
 			msg[i] = (byte) m.getElement(i);
+		msg[len] = 0x0d;
 		try {
-			if (ostream != null)
+			if (ostream != null) {
 				ostream.write(msg);
+			}
 			else {
 				// no stream connected
 				log.warn("sendMessage: no connection established");
