@@ -4,7 +4,7 @@ import jmri.jmrit.catalog.NamedIcon;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -22,7 +22,7 @@ import javax.swing.JRadioButtonMenuItem;
  * PositionableLabel is a JLabel that can be dragged around the
  * inside of the enclosing Container using a right-drag.
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class PositionableLabel extends JLabel
@@ -222,11 +222,11 @@ public class PositionableLabel extends JLabel
     }
 
     void addFontMenuEntry(JMenu menu, final int size) {
-        AbstractAction a = new AbstractAction(""+size) {
+        JRadioButtonMenuItem r = new JRadioButtonMenuItem(""+size);
+        r.addActionListener(new ActionListener() {
             final float desiredSize = size+0.f;
             public void actionPerformed(ActionEvent e) { setFontSize(desiredSize); }
-        };
-        JRadioButtonMenuItem r = new JRadioButtonMenuItem(a);
+        });
         fontButtonGroup.add(r);
         if (getFont().getSize() == size) r.setSelected(true);
         else r.setSelected(false);
@@ -234,17 +234,18 @@ public class PositionableLabel extends JLabel
     }
 
     public void setFontSize(float newSize) {
-        setFont(getFont().deriveFont(newSize));
+        setFont(jmri.util.FontUtil.deriveFont(getFont(), newSize));
         setSize(getPreferredSize().width, getPreferredSize().height);
     }
 
     void addColorMenuEntry(JMenu menu, final String name, final Color color) {
-        AbstractAction a = new AbstractAction(name) {
+        ActionListener a = new ActionListener() {
             final String desiredName = name;
             final Color desiredColor = color;
             public void actionPerformed(ActionEvent e) { setForeground(desiredColor); }
         };
-        JRadioButtonMenuItem r = new JRadioButtonMenuItem(a);
+        JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
+        r.addActionListener(a);
         colorButtonGroup.add(r);
         if (getForeground() == color) r.setSelected(true);
         else r.setSelected(false);
@@ -252,7 +253,7 @@ public class PositionableLabel extends JLabel
     }
 
     public JMenuItem newStyleMenuItem(AbstractAction a, int mask) {
-        JCheckBoxMenuItem c = new JCheckBoxMenuItem(a);
+        JCheckBoxMenuItem c = new JCheckBoxMenuItem(); ///!! (a);
         if ( (mask & getFont().getStyle()) == mask ) c.setSelected(true);
         return c;
     }
@@ -266,7 +267,8 @@ public class PositionableLabel extends JLabel
         int styleValue = (getFont().getStyle() & ~dropStyle) | addStyle;
         if (bold != null) bold.setSelected( (styleValue & Font.BOLD) != 0);
         if (italic != null) italic.setSelected( (styleValue & Font.ITALIC) != 0);
-        setFont(getFont().deriveFont(styleValue));
+        setFont(jmri.util.FontUtil.deriveFont(getFont(),styleValue));
+
         setSize(getPreferredSize().width, getPreferredSize().height);
     }
 

@@ -5,7 +5,8 @@ import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.display.PanelEditor;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
-
+import java.awt.Dimension;
+import java.awt.Point;
 import com.sun.java.util.collections.List;
 import org.jdom.Element;
 
@@ -13,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.PanelEditor panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class PanelEditorXml implements XmlAdapter {
 
@@ -30,12 +31,15 @@ public class PanelEditorXml implements XmlAdapter {
         PanelEditor p = (PanelEditor)o;
         Element panel = new Element("paneleditor");
 
+        Dimension size = p.getFrame().getSize();
+        Point posn = p.getFrame().getLocation();
+
         panel.addAttribute("class", "jmri.jmrit.display.configurexml.PanelEditorXml");
         panel.addAttribute("name", ""+p.getFrame().getTitle());
-        panel.addAttribute("x", ""+p.getFrame().getX());
-        panel.addAttribute("y", ""+p.getFrame().getY());
-        panel.addAttribute("height", ""+p.getFrame().getHeight());
-        panel.addAttribute("width", ""+p.getFrame().getWidth());
+        panel.addAttribute("x", ""+posn.x);
+        panel.addAttribute("y", ""+posn.y);
+        panel.addAttribute("height", ""+size.height);
+        panel.addAttribute("width", ""+size.width);
 
         // include contents
 

@@ -15,7 +15,7 @@ import javax.swing.*;
  * explicitly add the code for Positionable
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class SecurityElementIcon extends JPanel
@@ -50,12 +50,11 @@ public class SecurityElementIcon extends JPanel
         add(lrspeed = new JLabel("????"));
 
         // set the labels to a smaller font
-        try {
-            float newsize = lrspeed.getFont().getSize() * 0.8f;
-            rlspeed.setFont(lrspeed.getFont().deriveFont(newsize));
-            lrspeed.setFont(lrspeed.getFont().deriveFont(newsize));
-            dir.setFont(lrspeed.getFont().deriveFont(newsize));
-        } catch (NoSuchMethodError e) {}  // just carry on with larger fonts
+        float newsize = lrspeed.getFont().getSize() * 0.8f;
+        Font f = jmri.util.FontUtil.deriveFont(lrspeed.getFont(), newsize);
+        rlspeed.setFont(f);
+        lrspeed.setFont(f);
+        dir.setFont(f);
 
         // and make movable
         connect();

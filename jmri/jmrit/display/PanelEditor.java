@@ -41,7 +41,7 @@ import com.sun.java.util.collections.ArrayList;
  *
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.32 $
+ * @version $Revision: 1.33 $
  */
 
 public class PanelEditor extends JFrame {
@@ -408,7 +408,6 @@ public class PanelEditor extends JFrame {
         contents.add(l);
         // reshow the panel
         target.validate();
-        log.debug("After val:"+l.getWidth()+" "+l.getHeight()+" "+getX()+" "+getY());
     }
 
     /**
