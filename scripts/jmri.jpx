@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--JBuilder XML Project-->
 <project>
+  <property category="debug.0" name="SmartStepRedefineClasses" value="0"/>
+  <property category="debug.0" name="SmartStepSkipStaticInitializers" value="0"/>
+  <property category="debug.0" name="SmartStepSkipSynthetics" value="0"/>
   <property category="editor.general" name="line_ending.style" value="3"/>
   <property category="idl" name="ProcessIDL" value="false"/>
   <property category="runtime" name="ConfigurationCount" value="5"/>
-  <property category="runtime.0" name="RunnableType" value="com.borland.jbuilder.runtime.TestRunner"/>
+  <property category="runtime.0" name="BuildTargetOnRun" value="com.borland.jbuilder.build.ProjectBuilder$ProjectBuildAction;make"/>
+  <property category="runtime.0" name="ConfigurationName" value="jmri"/>
+  <property category="runtime.0" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
   <property category="runtime.0" name="application.class" value="apps.JmriDemo.JMRIdemo"/>
   <property category="runtime.0" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.0" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
@@ -91,7 +96,7 @@
   <property category="sys" name="TestPath" value="test"/>
   <property category="sys" name="Title" value=""/>
   <property category="sys" name="TitleLabel" value=""/>
-  <property category="sys" name="Version" value="$Revision: 1.16 $"/>
+  <property category="sys" name="Version" value="$Revision: 1.17 $"/>
   <property category="sys" name="VersionLabel" value="@version"/>
   <property category="sys" name="WorkingDirectory" value="../"/>
   <property category="sys" name="max.package.levels" value="2"/>
@@ -111,7 +116,13 @@
   <node name="DTD files" type="Folder"/>
   <node name="apps" type="Package"/>
   <node name="jmri" type="Package"/>
+  <node name="jmri.jmrit.display.configurexml" type="Package"/>
+  <node name="jmri.jmrix.easydcc.configurexml" type="Package"/>
+  <node name="jmri.jmrix.lenz.configurexml" type="Package"/>
+  <node name="jmri.jmrix.loconet.configurexml" type="Package"/>
+  <node name="jmri.jmrix.nce.configurexml" type="Package"/>
   <node name="org.apache" type="Package"/>
+  <node name="resources" type="Package"/>
   <node name="xml" type="Package"/>
   <node name="jmri.jar file" type="Archive">
     <property category="archiving" name="archiverClass" value="com.borland.jbuilder.wizard.archive.ApplicationArchiver"/>
@@ -132,8 +143,14 @@
     <property category="nodeJavadoc" name="directory" value="doc"/>
     <property category="nodeJavadoc" name="displayAllOutput" value="1"/>
   </node>
-  <file path="src/xml/DTD/decoder-config.dtd"/>
-  <file path="../resources/decoderpro.gif"/>
-  <file path="../xml/DTD/names-config.dtd"/>
+  <file path="test/apps/tests/AllTest.java"/>
+  <file path="src/resources/decoderpro.gif"/>
+  <file path="src/resources/logo.gif"/>
+  <file path="src/resources/icons/smallschematics/tracksegments/circuit-empty.gif"/>
+  <file path="src/resources/icons/smallschematics/tracksegments/circuit-error.gif"/>
+  <file path="src/resources/icons/smallschematics/tracksegments/circuit-occupied.gif"/>
+  <file path="src/apps/DecoderPro/DecoderPro.java"/>
+  <file path="src/apps/JmriDemo/JMRIdemo.java"/>
+  <file path="src/apps/LocoTools/LocoTools.java"/>
   <file path="src/jmri/Version.java"/>
 </project>
