@@ -29,6 +29,7 @@ public class ControlPanel extends JInternalFrame
     private GridBagConstraints sliderConstraints;
     private JRadioButton forwardButton, reverseButton;
     private JButton stopButton;
+	private JButton idleButton;
     private JPanel buttonPanel;
     private int speedIncrement;
 
@@ -100,6 +101,7 @@ public class ControlPanel extends JInternalFrame
         forwardButton.setEnabled(isEnabled);
         reverseButton.setEnabled(isEnabled);
         stopButton.setEnabled(isEnabled);
+		idleButton.setEnabled(isEnabled);
         speedSlider.setEnabled(isEnabled);
     }
 
@@ -210,8 +212,21 @@ public class ControlPanel extends JInternalFrame
 
         stopButton = new JButton("STOP!");
         constraints.gridy = 3;
+		constraints.fill = GridBagConstraints.HORIZONTAL;
         buttonPanel.add(stopButton, constraints);
         stopButton.addActionListener(
+                 new ActionListener()
+                 {
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        speedSlider.setValue(-1);
+                    }
+                 });
+
+        idleButton = new JButton("Idle");
+        constraints.gridy = 4;
+        buttonPanel.add(idleButton, constraints);
+        idleButton.addActionListener(
                  new ActionListener()
                  {
                     public void actionPerformed(ActionEvent e)
@@ -219,7 +234,8 @@ public class ControlPanel extends JInternalFrame
                         speedSlider.setValue(0);
                     }
                  });
-        this.addComponentListener(
+				 
+		this.addComponentListener(
                 new ComponentAdapter()
         {
             public void componentResized(ComponentEvent e)
