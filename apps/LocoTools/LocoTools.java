@@ -17,7 +17,7 @@ import javax.swing.border.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author			Bob Jacobsen
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class LocoTools extends JPanel {
 	public LocoTools() {
@@ -41,10 +41,6 @@ public class LocoTools extends JPanel {
         }
 
 	// populate GUI
-        // create text box for advice
-        JLabel helpLabel1 = new JLabel();
-		add(helpLabel1, BorderLayout.NORTH);
-		helpLabel1.setText("Pick an input source from the input menu first");
 
         // Create menu categories and add to the menu bar, add actions to menus
         JMenu fileMenu = new JMenu("File");
@@ -77,18 +73,18 @@ public class LocoTools extends JPanel {
         menuBar.add(funcMenu);
 	        funcMenu.add(new jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlAction("Turnout Control"));
 	        funcMenu.add(new jmri.jmrit.powerpanel.PowerPanelAction("Power Control"));
+            funcMenu.add(new jmri.jmrit.speedometer.SpeedometerAction( "Speedometer" ));
 
         JMenu locoMenu = new JMenu("LocoNet");
         menuBar.add(locoMenu);
 	        locoMenu.add(new jmri.jmrix.loconet.locomon.LocoMonAction("LocoNet Monitor"));
     	    locoMenu.add(new jmri.jmrix.loconet.slotmon.SlotMonAction("Slot Monitor"));
         	locoMenu.add(new jmri.jmrix.loconet.locogen.LocoGenAction("Send Packet"));
+        	locoMenu.add(new JSeparator());
+          	locoMenu.add(new jmri.jmrix.loconet.locormi.LnMessageServerAction( "Start LocoNet Server" ));
 
         JMenu devMenu = new JMenu("Development");
         menuBar.add(devMenu);
-          	devMenu.add(new jmri.jmrix.loconet.locormi.LnMessageServerAction( "Start LocoNet Server" ));
-          	devMenu.add(new jmri.jmrix.loconet.locormi.LnMessageClientAction( "Start LocoNet Client" ));
-        	devMenu.add(new JSeparator());
 	        devMenu.add(new jmri.jmrit.MemoryFrameAction("Memory usage monitor"));
         	devMenu.add(new JSeparator());
 	        devMenu.add(new jmri.jmrit.XmlFileCheckAction("Check XML File", this));

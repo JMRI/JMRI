@@ -20,7 +20,7 @@ import org.jdom.Attribute;
  * stored in local variables.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class LocoToolsConfigFrame extends apps.AbstractConfigFrame {
 
@@ -34,7 +34,7 @@ public class LocoToolsConfigFrame extends apps.AbstractConfigFrame {
     public String[] availableProtocols() {
         return  new String[] {"(None selected)",
                                 "LocoNet LocoBuffer","LocoNet MS100",
-                                "LocoNet Server"
+                                "LocoNet Server", "LocoNet HexFile"
                                 };
     }
 	/**
