@@ -11,7 +11,7 @@ import javax.swing.*;
  * connect it to.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Id: PanelEditorAction.java,v 1.1 2002-03-31 19:02:46 jacobsen Exp $
+ * @version			$Revision: 1.2 $
  * @see             jmri.jmrit.display.PanelEditorAction
  */
 public class PanelEditorAction extends AbstractAction {

@@ -11,10 +11,10 @@ import jmri.*;
  * <p>Description: </p>
  * <p>Copyright: Bob Jacobsen Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version 1.0
+ * @version $Revision: 1.3 $
  */
 
-public class TurnoutIcon extends JLabel implements java.beans.PropertyChangeListener {
+public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
     public TurnoutIcon() {
         // super ctor call to make sure this is an icon label

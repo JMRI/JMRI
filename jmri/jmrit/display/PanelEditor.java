@@ -13,7 +13,7 @@ import java.awt.event.*;
  * (Specific location) layout manager, so you have to specify these.
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Id: PanelEditor.java,v 1.1 2002-03-31 19:02:46 jacobsen Exp $
+ * @version $Id: PanelEditor.java,v 1.2 2002-04-06 05:18:58 jacobsen Exp $
  */
 
 public class PanelEditor extends JPanel {
@@ -25,6 +25,11 @@ public class PanelEditor extends JPanel {
 
     JButton labelAdd = new JButton("add");
     JTextField nextLabel = new JTextField(10);
+
+    JButton iconAdd = new JButton("add");
+    JButton pickIcon = new JButton("pick");
+    JLabel nextIconLabel = new JLabel();
+    Icon labelIcon = null;
 
     JButton turnoutAdd = new JButton("add");
     JTextField nextTurnout = new JTextField(10);
@@ -71,6 +76,31 @@ public class PanelEditor extends JPanel {
 
         this.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
 
+        // add an icon
+        {
+            JPanel panel = new JPanel();
+            panel.setLayout(new FlowLayout());
+            panel.add(new JLabel("add icon: "));
+            panel.add(nextIconLabel);
+            panel.add(pickIcon);
+            pickIcon.addActionListener( new ActionListener() {
+                    public void actionPerformed(ActionEvent a) {
+                        pickLabelIcon();
+                    }
+                }
+            );
+            panel.add(iconAdd);
+            iconAdd.addActionListener( new ActionListener() {
+                    public void actionPerformed(ActionEvent a) {
+                        addIcon();
+                    }
+                }
+            );
+            this.add(panel);
+        }
+
+        this.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
+
         // Add a turnout indicator
         {
             JPanel panel = new JPanel();
@@ -104,6 +134,14 @@ public class PanelEditor extends JPanel {
         }
 
     }  // end ctor
+
+    /**
+     * Select the icon for an icon label
+     */
+    void pickLabelIcon() {
+        labelIcon = pickIcon();
+        nextIconLabel.setIcon(labelIcon);
+    }
 
     /**
      * Select the icon for "thrown"
@@ -154,7 +192,20 @@ public class PanelEditor extends JPanel {
      * Add a label to the target
      */
     void addLabel() {
-        JComponent l = new JLabel(nextLabel.getText());
+        JComponent l = new PositionableLabel(nextLabel.getText());
+        setNextLocation(l);
+        l.invalidate();
+        target.add(l);
+
+        // reshow the panel
+        target.validate();
+    }
+
+    /**
+     * Add an icon to the target
+     */
+    void addIcon() {
+        JComponent l = new PositionableLabel(labelIcon);
         setNextLocation(l);
         l.invalidate();
         target.add(l);
