@@ -17,19 +17,19 @@ import java.io.OutputStream;
  * device; it's just sending
  * <LI>It can work with the direct packets.
  * </UL>
- * This actually bears more similarity to a pure implementation 
+ * This actually bears more similarity to a pure implementation
  * of the CommandStation interface, which is where the real guts of it is.
  * In particular, note that transmission is not a threaded operation.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class TrafficController implements jmri.CommandStation {
 
     public TrafficController() {
         super();
     }
-    
+
     /**
      * static function returning the instance to use.
      * @return The registered instance for general use,
@@ -60,33 +60,34 @@ public class TrafficController implements jmri.CommandStation {
 
 		// convert packet (in byte form) into bits
 		int[] msgAsInt = MakePacket.createStream(packet);
-		
+
 		if (msgAsInt[0] == 0) {
 			// failed to make packet
 			log.error("Failed to convert packet to transmitable form: "+packet);
 			return;
 		}
-		
+
 		// have to recopy & reformat, as there's only a byte write in Java 1
 		// note that msgAsInt has 0th byte containing length still
 		byte[] msg = new byte[msgAsInt[0]];
-		for (int i = 1; i<msg.length; i++) msg[i] = (byte) (msgAsInt[i]&0xFF);
-		
+		for (int i = 0; i<msg.length; i++) msg[i] = (byte) (msgAsInt[i+1]&0xFF);
+
         // and stream the resulting byte array
-        try {
+          try {
             if (ostream != null) {
-                if (log.isDebugEnabled()) {
-                    String f = "write message: ";
-                    for (int i = 0; i<msg.length; i++) f=f+Integer.toHexString(0xFF&msg[i])+" ";
-                    log.debug(f);
-                }
-                ostream.write(msg);
+              if (log.isDebugEnabled()) {
+                String f = "write message: ";
+                for (int i = 0; i < msg.length; i++) f = f +
+                    Integer.toHexString(0xFF & msg[i]) + " ";
+                log.debug(f);
+              }
+              ostream.write(msg);
             }
             else {
-                // no stream connected
-                log.warn("sendMessage: no connection established");
+              // no stream connected
+              log.warn("sendMessage: no connection established");
             }
-        }
+          }
         catch (Exception e) {
             log.warn("sendMessage: Exception: "+e.toString());
         }
@@ -96,7 +97,7 @@ public class TrafficController implements jmri.CommandStation {
     // methods to connect/disconnect to a source of data in a AbstractPortController
     private AbstractPortController controller = null;
 
-    public boolean status() { 
+    public boolean status() {
     	return (ostream != null & istream != null);
     }
 
@@ -135,4 +136,5 @@ public class TrafficController implements jmri.CommandStation {
 
 
 /* @(#)TrafficController.java */
+
 
