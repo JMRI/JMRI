@@ -29,7 +29,7 @@ import com.sun.java.util.collections.List;
  * Based in part on SignalHeadTableAction.java by Bob Jacobson
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -47,6 +47,11 @@ public class RouteTableAction extends AbstractTableAction {
         if (jmri.InstanceManager.routeManagerInstance()==null) {
             setEnabled(false);
         }
+        
+        // check a constraint required by this implementation!
+        if ( Route.ONACTIVE != 0 || Route.ONINACTIVE != 1
+            || Route.VETOACTIVE != 2 || Route.VETOINACTIVE !=3 )
+            log.error("assumption invalid in RouteTable implementation");
     }
     public RouteTableAction() { this("Route Table");}
 
@@ -76,13 +81,18 @@ public class RouteTableAction extends AbstractTableAction {
         f.setTitle("Route Table");
     }
 
+    String[] sensorModes = new String[]{"On Active", "On Inactive", "Veto Active", "Veto Inactive"};
+    
     JFrame addFrame = null;
     TableModel routeTurnoutModel = null;
     JTextField name = new JTextField(10);
     JTextField userName = new JTextField(22);
     JTextField sensor1 = new JTextField(8);
+    JComboBox  sensor1mode = new JComboBox(sensorModes);
     JTextField sensor2 = new JTextField(8);
+    JComboBox  sensor2mode = new JComboBox(sensorModes);
     JTextField sensor3 = new JTextField(8);
+    JComboBox  sensor3mode = new JComboBox(sensorModes);
     JTextField cTurnout = new JTextField(8);
 
     JComboBox cTurnoutStateBox = new JComboBox();
@@ -240,8 +250,11 @@ public class RouteTableAction extends AbstractTableAction {
             JPanel p32 = new JPanel();
             p32.add(new JLabel("Sensors: "));
             p32.add(sensor1);
+            p32.add(sensor1mode);
             p32.add(sensor2);
+            p32.add(sensor2mode);
             p32.add(sensor3);
+            p32.add(sensor3mode);
             sensor1.setText("");
             sensor2.setText("");
             sensor3.setText("");
@@ -390,11 +403,13 @@ public class RouteTableAction extends AbstractTableAction {
             return;
         }
         // check if a Route with the same user name exists
-        g = jmri.InstanceManager.routeManagerInstance().getByUserName(uName);
-        if (g!=null) {
-            // Route with this user name already exists
-            status1.setText("Error - Route with this user name already exists.");
-            return;
+        if (!uName.equals("")) {
+            g = jmri.InstanceManager.routeManagerInstance().getByUserName(uName);
+            if (g!=null) {
+                // Route with this user name already exists
+                status1.setText("Error - Route with this user name already exists.");
+                return;
+            }
         }
         // Create the new Route
         g = jmri.InstanceManager.routeManagerInstance().createNewRoute(sName,uName);
@@ -411,6 +426,10 @@ public class RouteTableAction extends AbstractTableAction {
         status1.setText("New Route created: "+sName+", "+uName+", "+
                                                         numIncluded+" Turnouts");
         status2.setText(editInst);
+        // activate the route
+        g.activateRoute();
+        
+        // mark as dirty so save prompt displayed
         routeCreated = true;
     }
 
@@ -436,6 +455,22 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     /**
+     * Service routine to turn a Sensor mode string into a value
+     *
+     */
+    int sensorMode(JComboBox box) {
+        String mode = (String)box.getSelectedItem();
+        if (mode.equals(sensorModes[0])) return Route.ONACTIVE;
+        else if (mode.equals(sensorModes[1])) return Route.ONINACTIVE;
+        else if (mode.equals(sensorModes[2])) return Route.VETOACTIVE;
+        else if (mode.equals(sensorModes[3])) return Route.VETOINACTIVE;
+        else {
+            log.warn("unexpected mode string in sensorMode: "+mode);
+            throw new IllegalArgumentException();
+       }
+    }
+    
+    /**
      * Sets the Sensor and Turnout control information for adding or editting if any
      */
     void setControlInformation(Route g) {
@@ -444,7 +479,7 @@ public class RouteTableAction extends AbstractTableAction {
         if (sensorSystemName.length() > 2) {
             Sensor s1 = InstanceManager.sensorManagerInstance().
                             provideSensor(sensorSystemName);
-            if ( (s1==null) || (!g.addSensorToRoute(s1.getSystemName())) ) {
+            if ( (s1==null) || (!g.addSensorToRoute(s1.getSystemName(), sensorMode(sensor1mode))) ) {
                 log.error("Unexpected failure to add Sensor '"+sensorSystemName+
                                             "' to Route '"+g.getSystemName()+"'.");
             }
@@ -453,7 +488,7 @@ public class RouteTableAction extends AbstractTableAction {
         if (sensorSystemName.length() > 2) {
             Sensor s2 = InstanceManager.sensorManagerInstance().
                             provideSensor(sensorSystemName);
-            if ( (s2==null) || (!g.addSensorToRoute(s2.getSystemName())) ) {
+            if ( (s2==null) || (!g.addSensorToRoute(s2.getSystemName(), sensorMode(sensor2mode))) ) {
                 log.error("Unexpected failure to add Sensor '"+sensorSystemName+
                                             "' to Route '"+g.getSystemName()+"'.");
             }
@@ -462,7 +497,7 @@ public class RouteTableAction extends AbstractTableAction {
         if (sensorSystemName.length() > 2) {
             Sensor s3 = InstanceManager.sensorManagerInstance().
                             provideSensor(sensorSystemName);
-            if ( (s3==null) || (!g.addSensorToRoute(s3.getSystemName())) ) {
+            if ( (s3==null) || (!g.addSensorToRoute(s3.getSystemName(), sensorMode(sensor3mode))) ) {
                 log.error("Unexpected failure to add Sensor '"+sensorSystemName+
                                             "' to Route '"+g.getSystemName()+"'.");
             }
@@ -536,12 +571,17 @@ public class RouteTableAction extends AbstractTableAction {
         }
         // set up Sensors if there are any
         String[] temNames = new String[Route.MAX_CONTROL_SENSORS];
+        int[] temModes = new int[Route.MAX_CONTROL_SENSORS];
         for (int k = 0; k<Route.MAX_CONTROL_SENSORS; k++) {
-            temNames[k] = g.getRouteSensor(k);
+            temNames[k] = g.getRouteSensorName(k);
+            temModes[k] = g.getRouteSensorMode(k);
         }
         sensor1.setText(temNames[0]);
+        sensor1mode.setSelectedItem(sensorModes[temModes[0]]);
         sensor2.setText(temNames[1]);
+        sensor2mode.setSelectedItem(sensorModes[temModes[1]]);
         sensor3.setText(temNames[2]);
+        sensor3mode.setSelectedItem(sensorModes[temModes[2]]);
         // set up control Turnout if there is one
         cTurnout.setText(g.getControlTurnout()); 
         cTurnoutStateBox.setSelectedIndex(turnoutClosedIndex);
@@ -560,8 +600,6 @@ public class RouteTableAction extends AbstractTableAction {
         create.setVisible(false);
         fixedSystemName.setVisible(true);
         name.setVisible(false);
-        // reactivate the Route
-        curRoute.deActivateRoute();
         editMode = true;
     }
 
@@ -579,7 +617,7 @@ public class RouteTableAction extends AbstractTableAction {
         Route g = curRoute;
         // Check if the User Name has been changed
         String uName = userName.getText();
-        if ( !(uName.equals(g.getUserName())) ) {
+        if ( !(uName.equals(g.getUserName())) && !uName.equals("") ) {
             // user name has changed - check if already in use
             Route p = jmri.InstanceManager.routeManagerInstance().getByUserName(uName);
             if (p!=null) {
