@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE programmer:programmer-config SYSTEM "DTD/programmer-config.dtd">
 <programmer:programmer-config xmlns:programmer="http://jmri.sourceforge.net/xml/programmer">
+<!-- $Id: MultiPane.xml,v 1.7 2001-11-23 22:02:28 jacobsen Exp $ -->
 <programmer:programmer>
 
 	<programmer:pane name="Basic">
@@ -8,11 +9,16 @@
 			<programmer:variable name="Primary Address"/>
 			<programmer:variable name="Extended Address"/>
 			<programmer:variable name="Address Format"/>
-			<programmer:variable name="Power Source Conversion" format="radiobuttons"/>
-			<programmer:variable name="Locomotive Direction" format ="radiobuttons"/>
+			<programmer:variable name="Locomotive Direction" format ="radiobuttons" layout="left"/>
 			<programmer:variable name="User Identification #1"/>
 			<programmer:variable name="User Identification #2"/>
 			<programmer:variable name="FL Location" layout="above"/>
+			<programmer:variable name="Power Source Conversion" format="radiobuttons" layout="left"/>
+			<programmer:variable name="Analog Power Conversion" format="checkbox"/>
+			<programmer:variable name="Radio Power Conversion" format="checkbox"/>
+			<programmer:variable name="Zero-1 Power Conversion" format="checkbox"/>
+			<programmer:variable name="Trix Power Conversion" format="checkbox"/>
+			<programmer:variable name="CTC/Railcommand Power Conversion" format="checkbox"/>
 		</programmer:column>
 	</programmer:pane>
 	
@@ -21,6 +27,7 @@
 			<programmer:variable name="Kick Start"/>
 			<programmer:variable name="Acceleration Rate"/>
 			<programmer:variable name="Deceleration Rate"/>
+			<programmer:label label=" "/>
 			<programmer:variable name="Total PWM Period"/>
 		</programmer:column>
 		<programmer:column>
@@ -34,15 +41,15 @@
 	
 	<programmer:pane name="Speed Control">
 		<programmer:column>
-			<programmer:variable name="Speed Table Definition"/>
-			<programmer:variable name="Speed Table"/>
+			<programmer:variable name="Speed Table Definition" layout="above"/>
 			<programmer:variable name="Vstart"/>
 			<programmer:variable name="Vmid"/>
 			<programmer:variable name="Vhigh"/>
-		</programmer:column>
-		<programmer:column>
 			<programmer:variable name="Forward Trim"/>
 			<programmer:variable name="Reverse Trim"/>
+		</programmer:column>
+		<programmer:column>
+			<programmer:variable name="Speed Table"/>
 		</programmer:column>
 	</programmer:pane>
 
@@ -54,6 +61,36 @@
 
 	<programmer:pane name="Light FX">
 		<programmer:column>
+			<programmer:variable name="Function F0F effect generated"/>
+			<programmer:variable name="Function F0F behaviour"/>
+			<programmer:separator/>
+			<programmer:variable name="Function F0R effect generated"/>
+			<programmer:variable name="Function F0R behaviour"/>
+			<programmer:separator/>
+			<programmer:variable name="Function 1 effect generated"/>
+			<programmer:variable name="Function 1 behaviour"/>
+			<programmer:separator/>
+			<programmer:variable name="Function 2 effect generated"/>
+			<programmer:variable name="Function 2 behaviour"/>
+			<programmer:separator/>
+			<programmer:variable name="Function 3 effect generated"/>
+			<programmer:variable name="Function 3 behaviour"/>
+			<programmer:separator/>
+			<programmer:variable name="Function 4 effect generated"/>
+			<programmer:variable name="Function 4 behaviour"/>
+			<programmer:separator/>
+			<programmer:variable name="Function 5 effect generated"/>
+			<programmer:variable name="Function 5 behaviour"/>
+			<programmer:separator/>
+			<programmer:variable name="Function 6 effect generated"/>
+			<programmer:variable name="Function 6 behaviour"/>
+			<programmer:separator/>
+			<programmer:variable name="Function 7 effect generated"/>
+			<programmer:variable name="Function 7 behaviour"/>
+			<programmer:separator/>
+			<programmer:variable name="Function 8 effect generated"/>
+			<programmer:variable name="Function 8 behaviour"/>
+			<programmer:separator/>
 		</programmer:column>
 	</programmer:pane>
 
