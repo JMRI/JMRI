@@ -1,6 +1,6 @@
 <!-- Special build file for doing Java 1.1.8 compatibility tests -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.14 $ -->
+<!-- Revision $Revision: 1.15 $ -->
 
 <project name="JMRI" default="check" basedir=".">
 
@@ -34,6 +34,7 @@
     <pathelement location="../lib/Serialio.jar" />
     <pathelement location="../lib/junit.jar" />
     <pathelement location="../lib/jython.jar" />
+    <pathelement location="../lib/MRJAdapter.jar" />
     <pathelement location="classes/" />
   </path>
 
