@@ -38,7 +38,7 @@ public class DccConsistManager implements ConsistManager{
 	 **/
 	public Consist getConsist(int address){
 		String Address=Integer.toString(address);
-		if(ConsistTable.contains(Address)) {
+		if(ConsistTable.containsKey(Address)) {
 			return((Consist)ConsistTable.get(Address));
 		} else {
 			DccConsist consist;
