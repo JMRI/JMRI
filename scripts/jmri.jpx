@@ -9,7 +9,7 @@
   <property category="runtime.0" name="ConfigurationName" value="jmri"/>
   <property category="runtime.0" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
   <property category="runtime.0" name="application.class" value="apps.JmriDemo.JMRIdemo"/>
-  <property category="runtime.0" name="application.vmparameters" value="-Dsun.java2d.noddraw -Djava.security.policy=lib/security.policy"/>
+  <property category="runtime.0" name="application.vmparameters" value="-Dsun.java2d.noddraw -Djava.security.policy=lib/security.policy -Dapple.laf.useScreenMenuBar=true"/>
   <property category="runtime.0" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.0" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
   <property category="runtime.0" name="appserver.servername" value="standard"/>
@@ -19,7 +19,7 @@
   <property category="runtime.1" name="ConfigurationName" value="JMRI Demo"/>
   <property category="runtime.1" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
   <property category="runtime.1" name="application.class" value="apps.JmriDemo.JMRIdemo"/>
-  <property category="runtime.1" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw"/>
+  <property category="runtime.1" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw -Dapple.laf.useScreenMenuBar=true"/>
   <property category="runtime.1" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.1" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
   <property category="runtime.1" name="appserver.servername" value="standard"/>
@@ -29,7 +29,7 @@
   <property category="runtime.2" name="ConfigurationName" value="PanelPro"/>
   <property category="runtime.2" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
   <property category="runtime.2" name="application.class" value="apps.PanelPro.PanelPro"/>
-  <property category="runtime.2" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw"/>
+  <property category="runtime.2" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw -Dapple.laf.useScreenMenuBar=true"/>
   <property category="runtime.2" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.2" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
   <property category="runtime.2" name="appserver.servername" value="standard"/>
@@ -39,7 +39,7 @@
   <property category="runtime.3" name="ConfigurationName" value="Decoder Pro"/>
   <property category="runtime.3" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
   <property category="runtime.3" name="application.class" value="apps.DecoderPro.DecoderPro"/>
-  <property category="runtime.3" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw"/>
+  <property category="runtime.3" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw -Dapple.laf.useScreenMenuBar=true"/>
   <property category="runtime.3" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.3" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
   <property category="runtime.3" name="appserver.servername" value="standard"/>
@@ -49,7 +49,7 @@
   <property category="runtime.4" name="ConfigurationName" value="LocoTools"/>
   <property category="runtime.4" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
   <property category="runtime.4" name="application.class" value="apps.LocoTools.LocoTools"/>
-  <property category="runtime.4" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw"/>
+  <property category="runtime.4" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw -Dapple.laf.useScreenMenuBar=true"/>
   <property category="runtime.4" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.4" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
   <property category="runtime.4" name="appserver.servername" value="standard"/>
@@ -59,7 +59,7 @@
   <property category="runtime.5" name="ConfigurationName" value="CornwallRR"/>
   <property category="runtime.5" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
   <property category="runtime.5" name="application.class" value="apps.cornwall.CornwallRR"/>
-  <property category="runtime.5" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw"/>
+  <property category="runtime.5" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw -Dapple.laf.useScreenMenuBar=true"/>
   <property category="runtime.5" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.5" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
   <property category="runtime.5" name="appserver.servername" value="standard"/>
@@ -69,7 +69,7 @@
   <property category="runtime.6" name="ConfigurationName" value="PacketScript"/>
   <property category="runtime.6" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
   <property category="runtime.6" name="application.class" value="apps.PacketScript.PacketScript"/>
-  <property category="runtime.6" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw"/>
+  <property category="runtime.6" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw -Dapple.laf.useScreenMenuBar=true"/>
   <property category="runtime.6" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.6" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
   <property category="runtime.6" name="appserver.servername" value="standard"/>
@@ -79,7 +79,7 @@
   <property category="runtime.7" name="ConfigurationName" value="AllTest"/>
   <property category="runtime.7" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
   <property category="runtime.7" name="application.class" value="apps.tests.AllTest"/>
-  <property category="runtime.7" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw"/>
+  <property category="runtime.7" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw -Dapple.laf.useScreenMenuBar=true"/>
   <property category="runtime.7" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.7" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
   <property category="runtime.7" name="appserver.servername" value="standard"/>
@@ -90,7 +90,7 @@
   <property category="runtime.8" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
   <property category="runtime.8" name="application.class" value="apps.JmriDemo.JMRIdemo"/>
   <property category="runtime.8" name="application.parameters" value="JMRIClientConfig.xml"/>
-  <property category="runtime.8" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw"/>
+  <property category="runtime.8" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw -Dapple.laf.useScreenMenuBar=true"/>
   <property category="runtime.8" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.8" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
   <property category="runtime.8" name="appserver.servername" value="standard"/>
@@ -100,7 +100,7 @@
   <property category="runtime.9" name="ConfigurationName" value="Decoder Pro DE"/>
   <property category="runtime.9" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
   <property category="runtime.9" name="application.class" value="apps.DecoderPro.DecoderPro"/>
-  <property category="runtime.9" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw -Duser.language=de"/>
+  <property category="runtime.9" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw -Dapple.laf.useScreenMenuBar=true -Duser.language=de"/>
   <property category="runtime.9" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.9" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
   <property category="runtime.9" name="appserver.servername" value="standard"/>
@@ -128,7 +128,7 @@
   <property category="sys" name="ExcludeClassEnabled" value="0"/>
   <property category="sys" name="IncludeTestPath" value="1"/>
   <property category="sys" name="InstanceVisibility" value="0"/>
-  <property category="sys" name="JDK" value="java 1.3.1-root_1.3.1_020714-1246"/>
+  <property category="sys" name="JDK" value="current-root-010902-1851"/>
   <property category="sys" name="LastTag" value="0"/>
   <property category="sys" name="Libraries" value="JUnit;JMRILibraries"/>
   <property category="sys" name="MakeStable" value="0"/>
@@ -137,7 +137,7 @@
   <property category="sys" name="TestPath" value="test"/>
   <property category="sys" name="Title" value=""/>
   <property category="sys" name="TitleLabel" value=""/>
-  <property category="sys" name="Version" value="$Revision: 1.28 $"/>
+  <property category="sys" name="Version" value="$Revision: 1.29 $"/>
   <property category="sys" name="VersionLabel" value="@version"/>
   <property category="sys" name="WorkingDirectory" value="../"/>
   <property category="sys" name="max.package.levels" value="2"/>
