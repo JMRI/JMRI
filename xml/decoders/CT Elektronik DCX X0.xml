@@ -1,0 +1,547 @@
+<?xml version="1.0"?>
+<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<!-- $Revision: 1.1 $ -->
+<decoder-config>
+		<version author="peter.brandenburg@tiscalinet.de"
+			version="1.5beta" lastUpdated="02172003" />
+
+		<!-- Based on the contribution of "sip@euronet.nl",Zimo_MX61_2000_11.xml-->
+
+			
+
+<decoder>
+	<family name="CT Elektronik DCX X0" mfg="CT Elektronik">
+		<model model="DCX50" numOuts="7" numFns="8"
+		maxMotorCurrent="1.2 Amp" maxTotalCurrent="1.2 Amp" >
+		<versionCV lowVersionID="3" />
+		<output name="1" label="White" />
+	    	<output name="2" label="Yellow" />
+	    	<output name="3" label="Brown" />
+	    	<output name="4" label="Brown" />
+		<output name="5" label="NC-Logic Level" />
+		<output name="6" label="NC-Logic Level" />
+		<output name="7" label="NC-Logic Level" />
+		</model>
+		<model model="DCX70" numOuts="7" numFns="8"
+		maxMotorCurrent="0.8 Amp" maxTotalCurrent="0.8 Amp" >
+		<versionCV lowVersionID="3" />
+		<output name="1" label="White" />
+	    	<output name="2" label="Yellow" />
+	    	<output name="3" label="Brown" />
+	    	<output name="4" label="Brown" />
+		<output name="5" label="NC-Logic Level" />
+		<output name="6" label="NC-Logic Level" />
+		<output name="7" label="NC-Logic Level" />
+	  	</model>
+		<model model="DCX73" numOuts="2" numFns="8"
+		maxMotorCurrent="0.8 Amp" maxTotalCurrent="0.8 Amp" >
+		<versionCV lowVersionID="3" />
+		<output name="1" label="White" />
+	    	<output name="2" label="Yellow" />
+	    	
+	  	</model>
+
+	</family>
+
+	<programming direct="yes" paged="no"
+	                     register="yes" ops="yes"></programming>
+
+	<variables>
+
+		<variable label="Primary Address" CV="1" comment="Short address"
+						item="Short Address"  default="03">
+			<shortAddressVal/></variable>
+
+		<variable label="Vstart" CV="2" default="2"
+				comment="Range 0-252">
+			<decVal max="252"/>
+			</variable>
+		
+		<variable label="Acceleration" CV="3" default="1"
+				comment="Range 0-255">
+			<decVal max="255"/>
+			</variable>
+
+		<variable label="Deceleration" CV="4" default="1"
+				comment="Range 0-255">
+			<decVal max="255"/>
+			</variable>
+		
+		<variable label="Vhigh" CV="5" default="252"
+				comment="Range 0-252">
+			<decVal max="252"/>
+			</variable>
+		
+		<variable label="Vmid" CV="6" default="75"
+				comment="Range 0-252">
+			<decVal max="252"/>
+			</variable>
+
+
+		<variable label="Decoder Version   " CV="7" readOnly="yes"
+				item="Decoder Version" >
+			<decVal/>
+			</variable>
+
+		<variable label="Manufacturer ID" CV="8" readOnly="yes"
+				item="Manufacturer" default="117">
+			<decVal/>
+			</variable>
+		<variable label="Manufacturer ID - Reset" CV="8">
+			<decVal/>
+			</variable>
+
+		<variable label="Total PWM Period" CV="9" default="150"
+				comment="Range 13-63/141-191">
+			<decVal/>
+			</variable>
+			
+		
+	
+<!-- Deleted all CV 10 to 13 references-->
+
+		
+
+		<variable label="Long Address" CV="17" item="Extended Address"
+		        comment="4 digit address (Range 128-10240)">
+			<longAddressVal/>
+			</variable>
+
+		<variable label="Consist Address" CV="19" default="0"
+				item="Consist Address"
+				comment="Allows permanent storage of consist address. Range 1-128">
+			<decVal/>
+			</variable>
+
+		
+		
+		
+		
+
+		<variable label="Normal direction of motion" CV="29"
+				mask="XXXXXXXV"
+		        item="Locomotive Direction">
+			<enumVal>
+				<enumChoice choice="Forward"/>
+				<enumChoice choice="Reverse"/>
+				</enumVal>
+			</variable>
+
+		<variable label="Speed Steps" CV="29" mask="XXXXXXVX"
+				item="Speed Step Mode" default="1">
+			<enumVal>
+				<enumChoice choice="14"/>
+				<enumChoice choice="28/128 (recommended)"/>
+				</enumVal>
+			</variable>
+
+		<variable label="Analog conversion mode" CV="29"
+				mask="XXXXXVXX" default="0"
+				item="Analog (DC) Operation">
+			<enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+				</enumVal>
+			</variable>
+
+		<variable label="Use Speed Table" CV="29" mask="XXXVXXXX"
+				item="Speed Table Definition">
+			<enumVal>
+				<enumChoice choice="Use Vstart, Vmid, Vhigh (CV29, bit 4)"/>
+				<enumChoice choice="Use Table (CV's 67-94)"/>
+				</enumVal>
+			</variable>
+
+		<variable label="Addressing Mode" CV="29" mask="XXVXXXXX"
+				item="Address Format">
+			<enumVal>
+				<enumChoice choice="2 digit addressing"/>
+				<enumChoice choice="4 digit addressing"/>
+				</enumVal>
+			</variable>
+
+		<variable label="FL(f) controls output 1" CV="33" default="1" mask="XXXXXXXV" minOut="1"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="FL(f) controls output 4" CV="33" mask="XXXXVXXX" minOut="4"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="FL(f) controls output 5" CV="33" mask="XXXVXXXX" minOut="5"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="FL(f) controls output 6" CV="33" mask="XXVXXXXX" minOut="6"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="FL(f) controls output 7" CV="33" mask="XVXXXXXX" minOut="7"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+
+
+
+		<variable label="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="FL(r) controls output 2" CV="34" default="1" mask="XXXXXXVX" minOut="2"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="FL(r) controls output 5" CV="34" mask="XXXVXXXX" minOut="5"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="FL(r) controls output 6" CV="34" mask="XXVXXXXX" minOut="6"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="FL(r) controls output 7" CV="34" mask="XVXXXXXX" minOut="7"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+
+
+
+		<variable label="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="1"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F1 controls output 3" CV="35" default="1" mask="XXXXXVXX" minOut="3" minFn="1"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F1 controls output 4" CV="35" mask="XXXXVXXX" minOut="4" minFn="1"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F1 controls output 5" CV="35" mask="XXXVXXXX" minOut="5" minFn="1"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F1 controls output 6" CV="35" mask="XXVXXXXX" minOut="6" minFn="1"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F1 controls output 7" CV="35" mask="XVXXXXXX" minOut="7" minFn="1"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+
+
+
+		<variable label="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="2"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="2"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F2 controls output 4" CV="36" default="1" mask="XXXXVXXX" minOut="4" minFn="2"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F2 controls output 5" CV="36" mask="XXXVXXXX" minOut="5" minFn="2"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F2 controls output 6" CV="36" mask="XXVXXXXX" minOut="6" minFn="2"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F2 controls output 7" CV="36" mask="XVXXXXXX" minOut="7" minFn="2"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+
+
+		<variable label="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F3 controls output 4" CV="37" mask="XXXXVXXX" minOut="4" minFn="3"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F3 controls output 5" CV="37" default="1" mask="XXXVXXXX" minOut="5" minFn="3"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F3 controls output 6" CV="37" mask="XXVXXXXX" minOut="6" minFn="3"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F3 controls output 7" CV="37" mask="XVXXXXXX" minOut="7" minFn="3"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+
+
+
+		<variable label="F4 controls output 3" CV="38" mask="XXXXXXXV" minOut="3" minFn="4"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F4 controls output 4" CV="38" mask="XXXXXXVX" minOut="4" minFn="4"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F4 controls output 5" CV="38" mask="XXXXXVXX" minOut="5" minFn="4"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F4 controls output 6" CV="38" default="1" mask="XXXXVXXX" minOut="6" minFn="4"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F4 controls output 7" CV="38" mask="XXXVXXXX" minOut="7" minFn="4"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+
+
+
+		<variable label="F5 controls output 3" CV="39" mask="XXXXXXXV" minOut="3" minFn="5"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F5 controls output 4" CV="39" mask="XXXXXXVX" minOut="4" minFn="5"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F5 controls output 5" CV="39" mask="XXXXXVXX" minOut="5" minFn="5"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F5 controls output 6" CV="39" mask="XXXXVXXX" minOut="6" minFn="5"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F5 controls output 7" CV="39" default="1" mask="XXXVXXXX" minOut="7" minFn="5"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+
+
+		
+		<variable label="F6 controls output 3" CV="40" mask="XXXXXXXV" minOut="3" minFn="6"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F6 controls output 4" CV="40" mask="XXXXXXVX" minOut="4" minFn="6"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F6 controls output 5" CV="40" mask="XXXXXVXX" minOut="5" minFn="6"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F6 controls output 6" CV="40" mask="XXXXVXXX" minOut="6" minFn="6"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F6 controls output 7" CV="40" mask="XXXVXXXX" minOut="7" minFn="6"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+
+
+			
+		<variable label="Signal Dependent Acceleration" CV="61" default="0"
+				comment="Range 0-255">
+			<decVal max="255"/>
+			</variable>
+
+		<variable label="Signal Dependent Deceleration" CV="53" default="3"
+				comment="Range 0-255">
+			<decVal max="255"/>
+			</variable>
+
+		
+		<variable label="-U-" CV="60" default="40"
+				comment="Range 0-252">
+			<decVal max="252"/>
+			</variable>
+		
+		<variable label="-L-" CV="59" default="110"
+				comment="Range 0-252">
+			<decVal max="252"/>
+			</variable>
+		
+
+		<variable label="P adjustment" CV="51" default="80"
+				comment="Range 0-255">
+			<decVal max="255"/>
+			</variable>
+
+		<variable label="I adjustment" CV="52" default="35"
+				comment="Range 0-255">
+			<decVal max="255"/>
+			</variable>	
+
+		<variable label="Adjust EMK Voltage" CV="49" default="160"
+				comment="Range 0-255">
+			<decVal max="255"/>
+			</variable>
+		
+		<variable label="BEMF Pull" CV="50" default="255"
+	          	comment="Controls how much BEMF (0-no BEMF to 255-max)">
+			<decVal min="0" max="255" />
+			</variable>
+		
+		
+
+		<variable label="Output Reduction" CV="54" default="100"
+	          	comment="Controls function output voltage">
+			<decVal min="0" max="100"/>
+			</variable>
+		
+		
+		
+		
+
+		
+
+		
+
+		<variable label="Speed Table" CV="67">
+			<speedTableVal/>
+		</variable>
+
+		
+
+		<variable label="User Private ID #1" CV="105"
+			item="User Id #1">
+			<decVal/>
+			</variable>
+
+		<variable label="User Private ID #2" CV="106"
+			item="User Id #2">
+			<decVal/>
+			</variable>
+		
+		<variable label="Address Pulse" CV="29"
+				mask="XXXXVXXX" default="1">
+		      <enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+				</enumVal>
+			</variable>
+
+		<variable label="NMRA" CV="29"
+				mask="XVXXXXXX" default="1">
+		      <enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+				</enumVal>
+			</variable>
+
+		<variable label="PWM period low/high" CV="29"
+				mask="VXXXXXXX" default="1">
+		      <enumVal>
+				<enumChoice choice="30-150Hz"/>
+				<enumChoice choice="16kHz"/>
+				</enumVal>
+			</variable>
+		
+
+		
+		
+		<variable label="Dim Output 1" CV="57"
+				mask="XXXXXXXV" default="0">
+		      <enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+				</enumVal>
+			</variable>
+		<variable label="Dim Output 2" CV="57"
+				mask="XXXXXXVX" default="0">
+		      <enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+				</enumVal>
+			</variable>
+		<variable label="Dim Output 3" CV="57"
+				mask="XXXXXVXX" default="0">
+		      <enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+				</enumVal>
+			</variable>
+		<variable label="Dim Output 4" CV="57"
+				mask="XXXXVXXX" default="0">
+		      <enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+				</enumVal>
+			</variable>
+		<variable label="Dim Output 5" CV="57"
+				mask="XXXVXXXX" default="0">
+		      <enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+				</enumVal>
+			</variable>
+		<variable label="Dim Output 6" CV="57"
+				mask="XXVXXXXX" default="0">
+		      <enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+				</enumVal>
+			</variable>
+		<variable label="Dim Output 7" CV="57"
+				mask="XVXXXXXX" default="0">
+		      <enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+				</enumVal>
+			</variable>
+
+		<variable label="Coupler Control reduced voltage" CV="55" default="32"
+	          		comment="Controls Voltage to hold-
+				0=0%/100=100% Voltage">
+				<decVal min="0" max="100" />
+				</variable>
+
+		<variable label="Coupler Control time full voltage" CV="56" default="60"
+	          		comment="Controls Time with full voltage applied-
+				1/20 sec/0=0sec/60=3sec/255=12,5sec">
+				<decVal min="0" max="255" />
+				</variable>
+
+
+		<variable label="Coupler Output 1" CV="58"
+				mask="XXXXXXXV" default="0">
+		      <enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+				</enumVal>
+			</variable>
+		<variable label="Coupler Output 2" CV="58"
+				mask="XXXXXXVX" default="0">
+		      <enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+				</enumVal>
+			</variable>
+		<variable label="Coupler Output 3" CV="58"
+				mask="XXXXXVXX" default="0">
+		      <enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+				</enumVal>
+			</variable>
+		<variable label="Coupler Output 4" CV="58"
+				mask="XXXXVXXX" default="0">
+		      <enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+				</enumVal>
+			</variable>
+		<variable label="Coupler Output 5" CV="58"
+				mask="XXXVXXXX" default="0">
+		      <enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+				</enumVal>
+			</variable>
+		<variable label="Coupler Output 6" CV="58"
+				mask="XXVXXXXX" default="0">
+		      <enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+				</enumVal>
+			</variable>
+		<variable label="Coupler Output 7" CV="58"
+				mask="XVXXXXXX" default="0">
+		      <enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+				</enumVal>
+			</variable>
+
+		
+		
+		
+	</variables>
+</decoder>
+		
+
+		
+		
+		
+		
+		
+			
+		
+
+<pane name="Zimo">
+	<column>
+
+	<display item="Signal Dependent Acceleration" tooltip="CV 61" />
+	<display item="Signal Dependent Deceleration" tooltip="CV 53" />
+	</column>
+	
+	<column>
+	<display item="Address Pulse" tooltip="CV 29 bit 3" />
+	<display item="NMRA" tooltip="CV 29 bit 6" />
+	
+	</column>
+	
+	<column>
+	<label label="Signal Dependent Speed Limits" />
+	<separator />
+	<label label=" " /> 
+	
+	<display item="-U-" tooltip="60" />
+	
+	<display item="-L-" tooltip="59" />
+	
+	</column>
+			
+</pane>
+	
+</decoder-config>
+
+
+
