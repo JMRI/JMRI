@@ -6,7 +6,7 @@
  * Description:		Abstract base action to create a ConfigFrame
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Id: AbstractConfigAction.java,v 1.2 2002-03-01 01:19:12 jacobsen Exp $
+ * @version			$Id: AbstractConfigAction.java,v 1.3 2002-03-09 23:32:36 jacobsen Exp $
  */
 
 package apps;
@@ -30,15 +30,15 @@ abstract public class AbstractConfigAction 			extends AbstractAction {
 			log.debug("start configuration from file: "+file.defaultConfigFilename());
 
 			// try to configure
-			boolean ok = false;
-			try { ok = frame.configure(file); }
+            configOK = false;
+			try { configOK = frame.configure(file); }
 			  catch (java.lang.UnsatisfiedLinkError e) {
 					// failed badly - tell about it
 					log.error("unexpected error configuring application. Quit application, delete prefs/*Config.xml and try again\n"+e);
 					// make sure config frame is presented
-					ok = false;
+					configOK = false;
 			}
-			if ( !ok ) {
+			if ( !configOK ) {
 				// config failed, handle that
 				configFailed();
 			}
@@ -52,12 +52,15 @@ abstract public class AbstractConfigAction 			extends AbstractAction {
 		frame.show();
 	}
 
+    public boolean configOK;
+
 	/**
 	 * What action should be taken if there's
 	 * a failure while doing the configure?
 	 * Default is to show the frame.
 	 */
 	protected void configFailed() {
+        configOK = false;
 		frame.show();
 	}
 
@@ -68,6 +71,7 @@ abstract public class AbstractConfigAction 			extends AbstractAction {
 	 */
 	protected void readFailed(Exception e) {
 		// did not succeed, have to pop now
+        configOK = false;
 		log.info("configuration file could not be located and read");
 		log.debug("error was "+e);
 		// create an unconfigured Frame
