@@ -16,8 +16,8 @@
 
 <!-- Style -->
   <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="stylesheet" type="text/css" href="../../css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="../../css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
@@ -63,7 +63,7 @@
 	    <!-- -------- -->
 
 	    <div id="teaser">
-		<h1>New update</h1>
+		<h1>Update:</h1>
 
 		    <p class=important>
 		    	Actual code has been added below for 
@@ -89,7 +89,7 @@
 
 	    <H1>JMRI: Simple Signal Logic</H1>
 		<p class=subtitle>
-		    Introduction
+		    Background information of the logic used to control simple signals
 		</p>
 
 		<div class=para>
@@ -106,8 +106,7 @@
 		    </div>
 
 		    <div class=para>
-			<p class=example>
-<pre class=command>
+<pre class=code>
     void doSingleBlock() {
         int appearance = SignalHead.GREEN;
         int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
@@ -127,7 +126,7 @@
         if (appearance != oldAppearance)
             ((SignalHead)outputs[0]).setAppearance(appearance);
     }
-</pre></p></div>
+</pre></div>
 
 		    </div>
 
@@ -136,14 +135,13 @@
 
 		    <div class=para>
 		    <p>This signal is along the main route through a turnout, which is 
-		    defined as the direction  taken by trains when the turnout is closed. 
+		    defined as the direction taken by trains when the turnout is closed. 
 		    It's protecting the frog of the turnout so that trains will stop before 
 		    running through a turnout set against them.</p>
 		    </div>
 
 		    <div class=para>
-			<p class=example>
-<pre class=command>
+<pre class=code>
     void doTrailingMain() {
         int appearance = SignalHead.GREEN;
         int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
@@ -165,7 +163,7 @@
         if (appearance != oldAppearance)
             ((SignalHead)outputs[0]).setAppearance(appearance);
     }
-</pre></p></div>
+</pre></div>
 
 		    </div>
 
@@ -183,8 +181,7 @@
 		    </div>
 
 		    <div class=para>
-			<p class=example>
-<pre class=command>
+<pre class=code>
     void doTrailingDiverging() {
         int appearance = SignalHead.GREEN;
         int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
@@ -206,7 +203,7 @@
         if (appearance != oldAppearance)
             ((SignalHead)outputs[0]).setAppearance(appearance);
     }
-</pre></p></div>
+</pre></div>
 
 		    </div>
 
@@ -222,8 +219,7 @@
 		    </div>
 
 		    <div class=para>
-			<p class=example>
-<pre class=command>
+<pre class=code>
     void doFacing() {
         int appearance = SignalHead.GREEN;
         int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
@@ -249,7 +245,7 @@
         if (appearance != oldAppearance)
             ((SignalHead)outputs[0]).setAppearance(appearance);
     }
-</pre></p></div>
+</pre></div>
 
 		    </div>
 
