@@ -3,7 +3,7 @@
  *
  * Description:
  * @author			Bob Jacobsen
- * @version         $Revision: 1.16 $
+ * @version         $Revision: 1.17 $
  */
 
 package apps.JmriDemo;
@@ -59,6 +59,7 @@ public class JMRIdemo extends JPanel {
         	inputMenu.add(new jmri.jmrix.nce.serialdriver.SerialDriverAction("NCE Serial"));
         	inputMenu.add(new jmri.jmrix.easydcc.serialdriver.SerialDriverAction("EasyDcc Serial"));
         	inputMenu.add(new jmri.jmrix.cmri.serial.serialdriver.SerialDriverAction("CMRI Serial"));
+        	inputMenu.add(new jmri.jmrix.lenz.li100.LI100Action("XPressNet LI100"));
         	inputMenu.add(new JSeparator());
         	inputMenu.add(new AbstractAction("Quit"){
     				public void actionPerformed(ActionEvent e) {
@@ -101,6 +102,11 @@ public class JMRIdemo extends JPanel {
         menuBar.add(easydccMenu);
 	        easydccMenu.add(new jmri.jmrix.easydcc.easydccmon.EasyDccMonAction("Command Monitor"));
 	        easydccMenu.add(new jmri.jmrix.easydcc.packetgen.EasyDccPacketGenAction("Send Command"));
+
+        JMenu lenzMenu = new JMenu("XpressNet");
+        menuBar.add(lenzMenu);
+	        lenzMenu.add(new jmri.jmrix.lenz.mon.XNetMonAction("Command Monitor"));
+	        lenzMenu.add(new jmri.jmrix.lenz.packetgen.PacketGenAction("Send Command"));
 
         JMenu cmriMenu = new JMenu("CMRI");
         menuBar.add(cmriMenu);
