@@ -3,7 +3,7 @@
  *
  * Description:
  * @author			Bob Jacobsen
- * @version
+ * @version         $Revision: 1.2 $
  */
 
 package jmri.jmrit.symbolicprog.tabbedframe;

@@ -1,9 +1,9 @@
-/** 
+/**
  * PaneProgFrameTest.java
  *
- * Description:	
+ * Description:
  * @author			Bob Jacobsen
- * @version			
+ * @version			$Revision: 1.2 $
  */
 
 package jmri.jmrit.symbolicprog.tabbedframe;
@@ -31,7 +31,7 @@ public class PaneProgFrameTest extends TestCase {
 	// test creating a pane in config file
 	public void testPane() {
 		setupDoc();
-		
+
 		// create test object with speciai implementation of the newPane(String) operation
 		result = null;
 
@@ -39,7 +39,7 @@ public class PaneProgFrameTest extends TestCase {
 		//PaneProgFrame p = new PaneProgFrame() {
 		//		public void newPane(String s, Element e) { result = s; }
 		//	};
-	
+
 		// invoke
 		result = null;
 		p.readConfig(root, new RosterEntry());
@@ -51,34 +51,34 @@ public class PaneProgFrameTest extends TestCase {
 	public void testFrame() {
 		setupDoc();
 		PaneProgFrame p = new PaneProgFrame();
-		
+
 		// ugly, temporary way to load the decoder info
 		jmri.jmrit.decoderdefn.DecoderFileTest t = new jmri.jmrit.decoderdefn.DecoderFileTest("");
 		t.setupDecoder();
 		DecoderFile df = new DecoderFile();  // used as a temporary
 		df.loadVariableModel(t.decoder, p.variableModel);
-		
+
 		p.readConfig(root, new RosterEntry());
 		p.pack();
 		p.show();
 	}
-	
+
 	// static variables for internal classes to report their interpretations
 	static String result = null;
 	static int colCount = -1;
 	static int varCount = -1;
-	
+
 	// static variables for the test XML structures
 	Element root = null;
 	Document doc = null;
-	
+
 	// provide a test document in the above static variables
 	void setupDoc() {
 		// create a JDOM tree with just some elements
 		root = new Element("programmer-config");
 		doc = new Document(root);
 		doc.setDocType(new DocType("programmer-config","programmer-config.dtd"));
-		
+
 		// add some elements
 		root.addContent(new Element("programmer")
 					.addContent(new Element("pane")
@@ -130,12 +130,12 @@ public class PaneProgFrameTest extends TestCase {
 								)
 				)
 			; // end of adding contents
-		
+
 		return;
 	}
 
 	// from here down is testing infrastructure
-	
+
 	public PaneProgFrameTest(String s) {
 		super(s);
 	}
@@ -145,13 +145,13 @@ public class PaneProgFrameTest extends TestCase {
 		String[] testCaseName = {PaneProgFrameTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
-	
+
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite(PaneProgFrameTest.class);
 		return suite;
 	}
-	
+
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(PaneProgFrameTest.class.getName());
 
 }
