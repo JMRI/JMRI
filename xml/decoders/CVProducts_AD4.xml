@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: CVProducts_AD4.xml,v 1.7 2003-02-09 01:15:44 jacobsen Exp $ -->
+<!-- $Id: CVProducts_AD4.xml,v 1.8 2003-02-17 20:02:01 jacobsen Exp $ -->
 <decoder-config>
 		<version author="afticarr@sympatico.ca" 
-					version="3" lastUpdated="20021016"/>
+					version="4" lastUpdated="20030209"/>
 
 		<!-- Created from version 1 of the CVProducts_AD4 file -->
 		<!-- Added Manufacturer ID and Version Info - Read Only -->
@@ -11,13 +11,14 @@
 		<!-- Reformatted AD4 Pane Objects -->
 		<!-- Changed Input Line drop down menus to checkboxes -->
 		<!-- V3 changed version range -->
+		<!-- V4 removed ops mode, as accessory decoders not yet supported in JMRI -->
 		
 <decoder>
 	<family name="AD4" mfg="CVP Products" lowVersionID="40" highVersionID="65" type="stationary">
 		<model model="AD4" />
 	</family>
 
-	<programming direct="byteOnly" paged="no" register="no" ops="yes"></programming>
+	<programming direct="byteOnly" paged="no" register="no" ops="no"></programming>
 
 	<variables>
 		<variable label="Card Address" item="Short Address" CV="1" mask="XXVVVVVV">
