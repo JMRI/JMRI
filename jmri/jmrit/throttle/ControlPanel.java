@@ -288,33 +288,51 @@ public class ControlPanel extends JInternalFrame
 		{
 			if (e.getKeyChar() == accelerateKey)
 			{
-				if (speedSlider.getValue() != speedSlider.getMaximum())
+				if (speedSlider.isEnabled())
 				{
-					speedSlider.setValue(speedSlider.getValue() + 1);
+					if (speedSlider.getValue() != speedSlider.getMaximum())
+					{
+						speedSlider.setValue(speedSlider.getValue() + 1);
+					}
 				}
 			}
 			else if (e.getKeyChar() == decelerateKey)
 			{
-				if (speedSlider.getValue() != speedSlider.getMinimum())
+				if (speedSlider.isEnabled())
 				{
-					speedSlider.setValue(speedSlider.getValue() - 1);
+					if (speedSlider.getValue() != speedSlider.getMinimum())
+					{
+						speedSlider.setValue(speedSlider.getValue() - 1);
+					}
 				}
 			}
 			else if (e.getKeyCode() == forwardKey)
 			{
-				forwardButton.setSelected(true);
+				if (forwardButton.isEnabled())
+				{
+					forwardButton.setSelected(true);
+				}
 			}
 			else if (e.getKeyCode() == reverseKey)
 			{
-				reverseButton.setSelected(true);
+				if (reverseButton.isEnabled())
+				{
+					reverseButton.setSelected(true);
+				}
 			}
 			else if (e.getKeyChar() == stopKey)
 			{
-				stop();
+				if (speedSlider.isEnabled())
+				{
+					stop();
+				}
 			}
 			else if (e.getKeyChar() == idleKey)
 			{
-				speedSlider.setValue(0);
+				if (speedSlider.isEnabled())
+				{
+					speedSlider.setValue(0);
+				}
 			}
 		}
 	}
