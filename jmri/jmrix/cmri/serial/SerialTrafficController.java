@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.18 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -305,13 +305,6 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         int cr = 4;
         return len+cr;
     }
-
-//  this method is obsoleted by multiple node extension
-//      It is called in SerialDriverAdapter.java, and can be eliminated when
-//          that module is updated for multiple serial nodes.
-    static public void setInitMessage(SerialMessage s) {
-    }
-// end obsolete code
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialTrafficController.class.getName());
 }
