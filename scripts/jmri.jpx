@@ -4,7 +4,7 @@
   <property category="debug.0" name="SmartStepRedefineClasses" value="0"/>
   <property category="editor.general" name="line_ending.style" value="3"/>
   <property category="idl" name="ProcessIDL" value="false"/>
-  <property category="runtime" name="ConfigurationCount" value="6"/>
+  <property category="runtime" name="ConfigurationCount" value="8"/>
   <property category="runtime.0" name="BuildTargetOnRun" value="com.borland.jbuilder.build.ProjectBuilder$ProjectBuildAction;make"/>
   <property category="runtime.0" name="ConfigurationName" value="jmri"/>
   <property category="runtime.0" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
@@ -26,9 +26,9 @@
   <property category="runtime.1" name="appserver.vmparameters" value="-Dvbroker.agent.port=14000 -Djava.library.path=/BorlandEnterpriseServer/lib;/BorlandEnterpriseServer/bin -Dborland.enterprise.licenseDir=/BorlandEnterpriseServer/var/servers/tom/adm -Dejb.module_preload=true"/>
   <property category="runtime.1" name="jsprunner.launchuri" value="/"/>
   <property category="runtime.1" name="test.harness" value="junit.textui.TestRunner"/>
-  <property category="runtime.2" name="ConfigurationName" value="Decoder Pro"/>
+  <property category="runtime.2" name="ConfigurationName" value="PanelPro"/>
   <property category="runtime.2" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
-  <property category="runtime.2" name="application.class" value="apps.DecoderPro.DecoderPro"/>
+  <property category="runtime.2" name="application.class" value="apps.PanelPro.PanelPro"/>
   <property category="runtime.2" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw"/>
   <property category="runtime.2" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.2" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
@@ -36,9 +36,9 @@
   <property category="runtime.2" name="appserver.vmparameters" value="-Dvbroker.agent.port=14000 -Djava.library.path=/BorlandEnterpriseServer/lib;/BorlandEnterpriseServer/bin -Dborland.enterprise.licenseDir=/BorlandEnterpriseServer/var/servers/tom/adm -Dejb.module_preload=true"/>
   <property category="runtime.2" name="jsprunner.launchuri" value="/"/>
   <property category="runtime.2" name="test.harness" value="junit.textui.TestRunner"/>
-  <property category="runtime.3" name="ConfigurationName" value="LocoTools"/>
+  <property category="runtime.3" name="ConfigurationName" value="Decoder Pro"/>
   <property category="runtime.3" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
-  <property category="runtime.3" name="application.class" value="apps.LocoTools.LocoTools"/>
+  <property category="runtime.3" name="application.class" value="apps.DecoderPro.DecoderPro"/>
   <property category="runtime.3" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw"/>
   <property category="runtime.3" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.3" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
@@ -46,9 +46,9 @@
   <property category="runtime.3" name="appserver.vmparameters" value="-Dvbroker.agent.port=14000 -Djava.library.path=/BorlandEnterpriseServer/lib;/BorlandEnterpriseServer/bin -Dborland.enterprise.licenseDir=/BorlandEnterpriseServer/var/servers/tom/adm -Dejb.module_preload=true"/>
   <property category="runtime.3" name="jsprunner.launchuri" value="/"/>
   <property category="runtime.3" name="test.harness" value="junit.textui.TestRunner"/>
-  <property category="runtime.4" name="ConfigurationName" value="CornwallRR"/>
+  <property category="runtime.4" name="ConfigurationName" value="LocoTools"/>
   <property category="runtime.4" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
-  <property category="runtime.4" name="application.class" value="apps.cornwall.CornwallRR"/>
+  <property category="runtime.4" name="application.class" value="apps.LocoTools.LocoTools"/>
   <property category="runtime.4" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw"/>
   <property category="runtime.4" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.4" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
@@ -56,20 +56,19 @@
   <property category="runtime.4" name="appserver.vmparameters" value="-Dvbroker.agent.port=14000 -Djava.library.path=/BorlandEnterpriseServer/lib;/BorlandEnterpriseServer/bin -Dborland.enterprise.licenseDir=/BorlandEnterpriseServer/var/servers/tom/adm -Dejb.module_preload=true"/>
   <property category="runtime.4" name="jsprunner.launchuri" value="/"/>
   <property category="runtime.4" name="test.harness" value="junit.textui.TestRunner"/>
-  <property category="runtime.5" name="ConfigurationName" value="AllTest"/>
+  <property category="runtime.5" name="ConfigurationName" value="CornwallRR"/>
   <property category="runtime.5" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
-  <property category="runtime.5" name="application.class" value="apps.tests.AllTest"/>
+  <property category="runtime.5" name="application.class" value="apps.cornwall.CornwallRR"/>
   <property category="runtime.5" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw"/>
   <property category="runtime.5" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.5" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
   <property category="runtime.5" name="appserver.servername" value="standard"/>
-  <property category="runtime.5" name="appserver.vmparameters" value="-Dvbroker.agent.port=14000 -Djava.library.path=/BorlandEnterpriseServer/lib:/BorlandEnterpriseServer/bin -Dborland.enterprise.licenseDir=/BorlandEnterpriseServer/var/servers/adsl-216-102-218-99.dsl.snfc21.pacbell.net/adm -Dejb.module_preload=true"/>
+  <property category="runtime.5" name="appserver.vmparameters" value="-Dvbroker.agent.port=14000 -Djava.library.path=/BorlandEnterpriseServer/lib;/BorlandEnterpriseServer/bin -Dborland.enterprise.licenseDir=/BorlandEnterpriseServer/var/servers/tom/adm -Dejb.module_preload=true"/>
   <property category="runtime.5" name="jsprunner.launchuri" value="/"/>
   <property category="runtime.5" name="test.harness" value="junit.textui.TestRunner"/>
-  <property category="runtime.6" name="ConfigurationName" value="JMRI Demo w client config"/>
+  <property category="runtime.6" name="ConfigurationName" value="PacketScript"/>
   <property category="runtime.6" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
-  <property category="runtime.6" name="application.class" value="apps.JmriDemo.JMRIdemo"/>
-  <property category="runtime.6" name="application.parameters" value="JMRIClientConfig.xml"/>
+  <property category="runtime.6" name="application.class" value="apps.PacketScript.PacketScript"/>
   <property category="runtime.6" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw"/>
   <property category="runtime.6" name="appserver.ejbJarsSaved" value="1"/>
   <property category="runtime.6" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
@@ -77,6 +76,27 @@
   <property category="runtime.6" name="appserver.vmparameters" value="-Dvbroker.agent.port=14000 -Djava.library.path=/BorlandEnterpriseServer/lib;/BorlandEnterpriseServer/bin -Dborland.enterprise.licenseDir=/BorlandEnterpriseServer/var/servers/tom/adm -Dejb.module_preload=true"/>
   <property category="runtime.6" name="jsprunner.launchuri" value="/"/>
   <property category="runtime.6" name="test.harness" value="junit.textui.TestRunner"/>
+  <property category="runtime.7" name="ConfigurationName" value="AllTest"/>
+  <property category="runtime.7" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
+  <property category="runtime.7" name="application.class" value="apps.tests.AllTest"/>
+  <property category="runtime.7" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw"/>
+  <property category="runtime.7" name="appserver.ejbJarsSaved" value="1"/>
+  <property category="runtime.7" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
+  <property category="runtime.7" name="appserver.servername" value="standard"/>
+  <property category="runtime.7" name="appserver.vmparameters" value="-Dvbroker.agent.port=14000 -Djava.library.path=/BorlandEnterpriseServer/lib:/BorlandEnterpriseServer/bin -Dborland.enterprise.licenseDir=/BorlandEnterpriseServer/var/servers/adsl-216-102-218-99.dsl.snfc21.pacbell.net/adm -Dejb.module_preload=true"/>
+  <property category="runtime.7" name="jsprunner.launchuri" value="/"/>
+  <property category="runtime.7" name="test.harness" value="junit.textui.TestRunner"/>
+  <property category="runtime.8" name="ConfigurationName" value="JMRI Demo w client config"/>
+  <property category="runtime.8" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
+  <property category="runtime.8" name="application.class" value="apps.JmriDemo.JMRIdemo"/>
+  <property category="runtime.8" name="application.parameters" value="JMRIClientConfig.xml"/>
+  <property category="runtime.8" name="application.vmparameters" value="-Djava.security.policy=lib/security.policy -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw"/>
+  <property category="runtime.8" name="appserver.ejbJarsSaved" value="1"/>
+  <property category="runtime.8" name="appserver.parameters" value="-jts -jns -jss -jdb"/>
+  <property category="runtime.8" name="appserver.servername" value="standard"/>
+  <property category="runtime.8" name="appserver.vmparameters" value="-Dvbroker.agent.port=14000 -Djava.library.path=/BorlandEnterpriseServer/lib;/BorlandEnterpriseServer/bin -Dborland.enterprise.licenseDir=/BorlandEnterpriseServer/var/servers/tom/adm -Dejb.module_preload=true"/>
+  <property category="runtime.8" name="jsprunner.launchuri" value="/"/>
+  <property category="runtime.8" name="test.harness" value="junit.textui.TestRunner"/>
   <property category="sys" name="AuthorLabel" value="@author"/>
   <property category="sys" name="BackupPath" value="bak"/>
   <property category="sys" name="BeansInstantiate" value="false"/>
@@ -107,7 +127,7 @@
   <property category="sys" name="TestPath" value="test"/>
   <property category="sys" name="Title" value=""/>
   <property category="sys" name="TitleLabel" value=""/>
-  <property category="sys" name="Version" value="$Revision: 1.22 $"/>
+  <property category="sys" name="Version" value="$Revision: 1.23 $"/>
   <property category="sys" name="VersionLabel" value="@version"/>
   <property category="sys" name="WorkingDirectory" value="../"/>
   <property category="sys" name="max.package.levels" value="2"/>
