@@ -20,7 +20,7 @@ import javax.swing.table.TableColumnModel;
  * Frame displaying and programming a LocoIO configuration.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class LocoIOFrame extends JFrame {
 
@@ -145,6 +145,7 @@ public class LocoIOFrame extends JFrame {
     }
 
     protected int cautionAddrSet() {
+        log.info("Caution: Set locoio address is a broadcast operation");
         return JOptionPane.showOptionDialog(this,
                                 "This will set the address of all attached LocoIO boards",
                                 "Global operation!",
@@ -157,7 +158,6 @@ public class LocoIOFrame extends JFrame {
      */
     protected void addrSet() {
         // caution user
-        log.info("Caution: Set locoio is a broadcast operation");
         int retval = cautionAddrSet();
         if (retval != 1 ) return; // user cancelled
         int address = Integer.valueOf(addrField.getText(),16).intValue();
