@@ -1,9 +1,9 @@
-/** 
+/**
  * NceMessage.java
  *
  * Description:		<describe the NceMessage class here>
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			
+ * @version             $Revision: 1.2 $
  */
 
 package jmri.jmrix.nce;
@@ -14,8 +14,13 @@ package jmri.jmrix.nce;
 public class NceMessage {
 	// is this logically an abstract class?
 
+        public NceMessage() {
+            setBinary(false);
+        }
+
 	// create a new one
 	public  NceMessage(int i) {
+                this();
 		if (i<1)
 			log.error("invalid length in call to ctor");
 		_nDataChars = i;
@@ -24,6 +29,7 @@ public class NceMessage {
 
 	// copy one
 	public  NceMessage(NceMessage m) {
+                this();
 		if (m == null)
 			log.error("copy ctor of null message");
 		_nDataChars = m._nDataChars;
@@ -39,7 +45,7 @@ public class NceMessage {
 	public int getNumDataElements() {return _nDataChars;}
 	public int getElement(int n) {return _dataChars[n];}
 	public void setElement(int n, int v) { _dataChars[n] = v; }
-	
+
 	// mode accessors
 	boolean _isBinary;
 	public boolean isBinary() { return _isBinary; }
@@ -59,7 +65,7 @@ public class NceMessage {
 		}
 		return s;
 	}
-	
+
 	// diagnose format
 	public boolean isKillMain() {
 		return getOpCode() == 'K';
@@ -68,7 +74,7 @@ public class NceMessage {
 	public boolean isEnableMain() {
 		return getOpCode() == 'E';
 	}
-	
+
 
 	// static methods to return a formatted message
 	static public NceMessage getEnableMain() {
@@ -77,21 +83,21 @@ public class NceMessage {
 		m.setOpCode('E');
 		return m;
 	}
-	
+
 	static public NceMessage getKillMain() {
 		NceMessage m = new NceMessage(1);
 		m.setBinary(false);
 		m.setOpCode('K');
 		return m;
 	}
-		
+
 	static public NceMessage getProgMode() {
 		NceMessage m = new NceMessage(1);
 		m.setBinary(false);
 		m.setOpCode('M');
 		return m;
 	}
-	
+
 	static public NceMessage getExitProgMode() {
 		NceMessage m = new NceMessage(1);
 		m.setBinary(false);
@@ -103,7 +109,7 @@ public class NceMessage {
 		NceMessage m = new NceMessage(4);
 		m.setBinary(false);
 		m.setOpCode('R');
-		addIntAsThree(cv, m, 1);		
+		addIntAsThree(cv, m, 1);
 		return m;
 	}
 
@@ -111,19 +117,19 @@ public class NceMessage {
 		NceMessage m = new NceMessage(8);
 		m.setBinary(false);
 		m.setOpCode('P');
-		addIntAsThree(cv, m, 1);		
+		addIntAsThree(cv, m, 1);
 		m.setElement(4,' ');
 		addIntAsThree(val, m, 5);
 		return m;
 	}
-		
+
 	static public NceMessage getReadRegister(int reg) { //Vx
 		if (reg>8) log.error("register number too large: "+reg);
 		NceMessage m = new NceMessage(2);
 		m.setBinary(false);
 		m.setOpCode('V');
 		String s = ""+reg;
-		m.setElement(1, s.charAt(s.length()-1));		
+		m.setElement(1, s.charAt(s.length()-1));
 		return m;
 	}
 
@@ -133,7 +139,7 @@ public class NceMessage {
 		m.setBinary(false);
 		m.setOpCode('S');
 		String s = ""+reg;
-		m.setElement(1, s.charAt(s.length()-1));		
+		m.setElement(1, s.charAt(s.length()-1));
 		m.setElement(2,' ');
 		addIntAsThree(val, m, 3);
 		return m;
@@ -147,12 +153,12 @@ public class NceMessage {
 		String s = ""+val;
 		if (s.length() != 3) s = "0"+s;  // handle <10
 		if (s.length() != 3) s = "0"+s;  // handle <100
-		m.setElement(offset,s.charAt(0));		
-		m.setElement(offset+1,s.charAt(1));		
+		m.setElement(offset,s.charAt(0));
+		m.setElement(offset+1,s.charAt(1));
 		m.setElement(offset+2,s.charAt(2));
 		return s;
 	}
-	
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NceMessage.class.getName());
 
 }
