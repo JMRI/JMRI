@@ -32,8 +32,8 @@ import org.jdom.Element;
  * When the filePath attribute is non-null, the user has decided to
  * organize the roster into directories.
  *
- * @author	Bob Jacobsen   Copyright (C) 2001, 2002; Dennis Miller Copyright 2004
- * @version	$Revision: 1.16 $
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2004; Dennis Miller Copyright 2004
+ * @version	$Revision: 1.17 $
  * @see jmri.jmrit.roster.LocoFile
  *
  */
@@ -73,7 +73,12 @@ public class RosterEntry {
         _owner = pEntry._owner;
     }
 
-    public void   setId(String s) { _id = s; }
+    public void setId(String s) {
+        String oldID = _id;
+        _id = s;
+        if (! oldID.equals(s))
+            Roster.instance().entryIdChanged(this);
+    }
     public String getId() { return _id; }
 
     public void   setFileName(String s) { _fileName = s; }
