@@ -20,7 +20,7 @@ import jmri.*;
  * created and invoked by a SampleAutomaton2Action.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @see         jmri.jmrit.automat.SampleAutomaton2Action
  */
 public class SampleAutomaton2 extends AbstractAutomaton {
@@ -38,8 +38,7 @@ public class SampleAutomaton2 extends AbstractAutomaton {
      * By default, monitors sensor "32" and controls locomotive 1234(long).
      *
      */
-    public SampleAutomaton2() {
-        super();
+    public void init() {
         // get references to sample layout objects
 
         sensor = InstanceManager.sensorManagerInstance().
