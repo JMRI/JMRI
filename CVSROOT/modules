@@ -1,11 +1,12 @@
-#jbuilder -d java/src &jmri &apps &xml
+jbuilder -d java/src &jmri &apps &xml
 
-jbuilder -a src prx
-src -a djmri dapps dxml
-djmri -d java/src &jmri 
-dapps -d java/src &apps
-dxml -d java/src &xml
-prx -d java site index.html
+# the following works directly, but not from JBuilder
+#jbuilder -a src prx
+#src -a djmri dapps dxml
+#djmri -d java/src &jmri 
+#dapps -d java/src &apps
+#dxml -d java/src &xml
+#prx -d java site index.html
 
 #djmri -d java/src jmri
 #dapps -d java/src apps
