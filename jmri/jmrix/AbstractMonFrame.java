@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.*;
@@ -19,7 +20,7 @@ import javax.swing.text.*;
 /**
  * Abstact base class for Frames displaying communications monitor information
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public abstract class AbstractMonFrame extends JFrame  {
 
@@ -310,7 +311,7 @@ public abstract class AbstractMonFrame extends JFrame  {
     PrintStream logStream = null;
 
     // to get a time string
-    DateFormat df = DateFormat.getTimeInstance();
+    DateFormat df = new SimpleDateFormat("HH:mm:ss.SSS");
 
 	StringBuffer linesBuffer = new StringBuffer();
 	static private int MAX_LINES = 500 ;
