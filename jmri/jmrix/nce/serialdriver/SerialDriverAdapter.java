@@ -22,7 +22,7 @@ import jmri.jmrix.nce.*;
  * not use any other options at configuration time.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -192,6 +192,25 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
 	 * The first port option isn't used, so just ignore this call.
 	 */
 	public void configureOption1(String value) {}
+
+        /**
+	 * Get an array of valid values for "option 2"; used to display valid options.
+	 * May not be null, but may have zero entries
+	 */
+	public String[] validOption2() { return new String[]{""}; }
+
+	/**
+	 * Get a String that says what Option 2 represents
+	 * May be an empty string, but will not be null
+	 */
+	public String option2Name() { return ""; }
+
+	/**
+	 * Set the second port option.  Only to be used after construction, but
+	 * before the openPort call
+	 */
+	public void configureOption2(String value) throws jmri.jmrix.SerialConfigException {}
+
 
 // private control members
 	private boolean opened = false;

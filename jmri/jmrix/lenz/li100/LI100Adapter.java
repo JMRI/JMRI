@@ -5,7 +5,7 @@
  * Description:		Provide access to XPressNet via a LI100 on an attached serial comm port.
  *					Normally controlled by the lenz.li100.LI100Frame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 package jmri.jmrix.lenz.li100;
@@ -283,6 +283,25 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
 		log.debug("configureOption1: "+value);
 		selectedOption1 = value;
 	}
+
+        /**
+	 * Get an array of valid values for "option 2"; used to display valid options.
+	 * May not be null, but may have zero entries
+	 */
+	public String[] validOption2() { return new String[]{""}; }
+
+	/**
+	 * Get a String that says what Option 2 represents
+	 * May be an empty string, but will not be null
+	 */
+	public String option2Name() { return ""; }
+
+	/**
+	 * Set the second port option.  Only to be used after construction, but
+	 * before the openPort call
+	 */
+	public void configureOption2(String value) throws jmri.jmrix.SerialConfigException {}
+
 
 	protected String [] validSpeeds = new String[]{"9,600 baud", "19,200 baud"};
 	protected int [] validSpeedValues = new int[]{9600, 19200};

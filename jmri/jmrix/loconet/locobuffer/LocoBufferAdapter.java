@@ -5,7 +5,7 @@
  * Description:		Provide access to LocoNet via a LocoBuffer attached to a serial comm port.
  *					Normally controlled by the LocoBufferFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: LocoBufferAdapter.java,v 1.2 2002-03-18 04:52:44 jacobsen Exp $
+ * @version			$Id: LocoBufferAdapter.java,v 1.3 2002-06-26 03:53:09 jacobsen Exp $
  */
 
 package jmri.jmrix.loconet.locobuffer;
@@ -283,6 +283,26 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 		log.debug("configureOption1: "+value);
 		selectedOption1 = value;
 	}
+
+    /**
+	 * Get an array of valid values for "option 2"; used to display valid options.
+	 * May not be null, but may have zero entries
+	 */
+	public String[] validOption2() { return new String[]{"DB150 (Empire Builder)",
+                                            "DCS100 (Chief)", "DB50 (Zephyr)"}; }
+
+	/**
+	 * Get a String that says what Option 2 represents
+	 * May be an empty string, but will not be null
+	 */
+	public String option2Name() { return "Command station type: "; }
+
+	/**
+	 * Set the second port option.  Only to be used after construction, but
+	 * before the openPort call
+	 */
+	public void configureOption2(String value) throws jmri.jmrix.SerialConfigException {
+    }
 
 	protected String [] validSpeeds = new String[]{"19,200 baud (J1 on 1&2)", "57,600 baud (J1 on 2&3)"};
 	protected int [] validSpeedValues = new int[]{19200, 57600};

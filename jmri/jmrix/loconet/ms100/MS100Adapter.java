@@ -21,7 +21,7 @@ import jmri.jmrix.loconet.*;
  * Neither the baud rate configuration nor the "option 1" option are used.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -208,6 +208,26 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
 	 * The first port option isn't used, so just ignore this call.
 	 */
 	public void configureOption1(String value) {}
+
+    /**
+	 * Get an array of valid values for "option 2"; used to display valid options.
+	 * May not be null, but may have zero entries
+	 */
+	public String[] validOption2() { return new String[]{"DB150 (Empire Builder)",
+                                            "DCS100 (Chief)", "DB50 (Zephyr)"}; }
+
+	/**
+	 * Get a String that says what Option 2 represents
+	 * May be an empty string, but will not be null
+	 */
+	public String option2Name() { return "Command station type: "; }
+
+	/**
+	 * Set the second port option.  Only to be used after construction, but
+	 * before the openPort call
+	 */
+	public void configureOption2(String value) throws jmri.jmrix.SerialConfigException {
+    }
 
 // private control members
 	private boolean opened = false;

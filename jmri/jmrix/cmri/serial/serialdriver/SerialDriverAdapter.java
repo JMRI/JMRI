@@ -5,7 +5,7 @@
  * Description:		Provide access to C/MRI via a serial comm port.
  *					Normally controlled by the cmri.serial.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Id: SerialDriverAdapter.java,v 1.1 2002-03-03 05:50:45 jacobsen Exp $
+ * @version			$Id: SerialDriverAdapter.java,v 1.2 2002-06-26 03:53:09 jacobsen Exp $
  */
 
 package jmri.jmrix.cmri.serial.serialdriver;
@@ -269,6 +269,25 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 	protected String [] validSpeeds = new String[]{"9,600 baud","19,200 baud", "57,600 baud"};
 	protected int [] validSpeedValues = new int[]{9600, 19200, 57600};
 	protected String selectedSpeed=validSpeeds[0];
+
+        /**
+	 * Get an array of valid values for "option 2"; used to display valid options.
+	 * May not be null, but may have zero entries
+	 */
+	public String[] validOption2() { return new String[]{""}; }
+
+	/**
+	 * Get a String that says what Option 2 represents
+	 * May be an empty string, but will not be null
+	 */
+	public String option2Name() { return ""; }
+
+	/**
+	 * Set the second port option.  Only to be used after construction, but
+	 * before the openPort call
+	 */
+	public void configureOption2(String value) throws jmri.jmrix.SerialConfigException {
+    }
 
 // private control members
 	private boolean opened = false;
