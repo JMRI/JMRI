@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Examples.html,v 1.5 2004-12-12 12:13:04 jacobsen Exp $ -->
+<!-- $Id: Examples.html,v 1.6 2004-12-31 20:28:10 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -152,10 +152,56 @@ z = 0
 		</div>
 
 		<div class=section>
+		    <h2>Can a script wait for more than one thing to change?</h2>
+
+		    <div class=para>
+            If your script is based on a Siglet or AbstractAutomaton
+            class (e.g. if you're writing a "handle" routine", there's
+            a general "waitChange" routine which waits for any of 
+            several sensors to change before returning to you. Note that more 
+            than one may change at the same time, so you can't assume that just 
+            one has a different value! And you'll then have to check whether 
+            they've become some particular state.  It's written as:
+
+<PRE>
+    self.waitChange([self.sensorA, self.sensorB, self.sensorC])
+</PRE>
+            where you've previously defined each of those "self.sensorA" things 
+            via a line like:
+<PRE>
+    self.sensorA = sensors.provideSensor("21")
+</PRE>
+            You can then check for various combinations like:
+<PRE>
+   if self.sensorA.knownState == ACTIVE :
+	print "The plane! The plane!"
+   elif self.sensorB.knownState == INACTIVE :
+	print "Would you believe a really fast bird?"
+   else
+	print "Nothing to see here, move along..."
+</PRE>
+
+        (I haven't actually typed these into a script & run it, so there 
+        might be typos, sorry)
+
+
+    	    </div>
+
+		</div>
+
+		<div class=section>
 		    <h2>Listening to more than one Turnout</h2>
 
 		    <div class=para>
-		    
+		    JMRI objects (Turnouts, Sensors, etc) can have
+		    "Listeners" attached to them. These are then notified
+		    when the status of the object changes.
+		    If you're using the Automat or Siglet classes, you
+		    don't need to use this capability; those classes handle
+		    all the creationg and registering of listeners.
+		    But if you want to do something special, you may need
+		    to use that capability.
+		    <P>
 			A single routine can listen to more than one
 			Turnout, Sensor, etc.
 			<P>
