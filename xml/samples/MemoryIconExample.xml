@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE layout-config SYSTEM "layout-config.dtd">
+<!-- This is an example panel containing a MemoryIcon to display   -->
+<!-- images of digits as the value changes.  To see it work,       -->
+<!-- go to the Memory Table Tool and change the value              -->
 <layout-config>
   <memories class="jmri.configurexml.DefaultMemoryManagerXml">
     <memory systemName="IM12" userName="Foo" />
