@@ -1,0 +1,7 @@
+English JavaHelp files for JMRI
+
+The JHelpDev.xml file is a convenient project definition for
+JHelpDev (http:jhelpdev.sf.net), a tool for maintaining index,
+table of contents and map files.  These files may also be manually
+maintained in this directory.
+
