@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+
+<TITLE>Installing JMRI</TITLE>
+
+<META NAME="generator" CONTENT="BBEdit 4.5">
+
+</HEAD>
+<BODY>
+
+<H2>Installing the JMRI demos</H2>
+
+Download the zipped version of the WIRED client code (about 7M)
+to a fresh directory, such as c:\WiredBaBar.
+<UL>
+<LI>Through the web, you can find the file at the following location
+(make sure the save dialog maintains the file extension as .zip,
+some versions of NT have been seen to set this to .exe, you should force
+it back to .zip):
+<UL>
+<LI>
+For JDK1.1:
+<A HREF="http://www.slac.stanford.edu/~perl/babarwired/jdk1.1/BaBarClient.zip">
+http://www.slac.stanford.edu/~perl/babarwired/jdk1.1/BaBarClient.zip</A>
+<LI>
+For JDK1.2:
+<A HREF="http://www.slac.stanford.edu/~perl/babarwired/jdk1.2/BaBarClient.zip">
+http://www.slac.stanford.edu/~perl/babarwired/jdk1.2/BaBarClient.zip</A>
+<LI>
+For JDK1.3:
+<A HREF="http://www.slac.stanford.edu/~perl/babarwired/jdk1.3/BaBarClient.zip">
+http://www.slac.stanford.edu/~perl/babarwired/jdk1.3/BaBarClient.zip</A>
+</UL>
+<LI>Through afs, you can find the file at
+<UL>
+<LI>
+For JDK1.1:
+/afs/slac.stanford.edu/u/ey/perl/public_html/babarwired/jdk1.1/BaBarClient.zip
+<LI>
+For JDK1.1:
+/afs/slac.stanford.edu/u/ey/perl/public_html/babarwired/jdk1.2/BaBarClient.zip
+<LI>
+For JDK1.3:
+/afs/slac.stanford.edu/u/ey/perl/public_html/babarwired/jdk1.3/BaBarClient.zip
+</UL>
+</UL>
+<P>
+Unzip the file into that same directory.
+<UL>
+<LI>
+Special for Macintosh:
+<UL>
+<LI>
+Unpack the WiredBaBarForMac_sea.bin file with your favorite utility.
+A self-extracting archive will create a "Wired for Macintosh" folder.
+The README file in that directory will tell you how to complete the install.
+<LI>
+Note that for now only the CES_ANALYSIS and CES_BETA startup procedures will
+work as advertised, but once these applications are started you can change
+to any other server through the event chooser.
+</UL>
+<LI>
+Special for NT:
+<UL>
+<LI>
+Set the environment variable "WIRED_HOME" to
+the complete path of the top level Wired directory, such as "c:\WiredBaBar".
+There should be no colon or semicolon after this directory name.
+<LI>
+NT users who have administrative privileges on their machines can make
+this WIRED_HOME setting permanent by going to the
+<UL>
+<LI>
+Start Menu...Settings...Control Panel...System...Environment
+<LI>
+Add a new Variable, "WIRED_HOME" (careful, make it all Caps)
+<LI>
+Set the value to something like
+<LI>
+C:\WiredBaBar
+<LI>
+Then be sure to BOTH hit the Apply button and then the OK button.
+<LI>
+All new command windows will then have these settings
+(old ones will not get the new settings).
+<LI>
+To review the current settings in any command window, just type "set"
+</UL>
+</UL>
+<LI>
+Special for Unix or Linux:
+<UL>
+<LI>
+Set the environment variable "WIRED_HOME" to
+the complete path of the top level Wired directory, such as "c:/WiredBaBar".
+There should be no colon or semicolon after this directory name.
+<LI>
+Set the executable bits on for every directory
+in the application by going to the WiredBaBar directory and typing:
+<PRE>
+   find . -type d -exec chmod +x {} \;
+</PRE>
+</UL>
+</UL>
+
+<HR><H2><A NAME="applicationupgrade">
+To Upgrade to a Newer Copy of the BaBar WIRED Client Application</A></H2>
+The client application is entirely self-contained; it does not add or
+modify any files outside of its own file structure.
+The upgrade procedure is therefore very simple.
+<UL>
+<LI>Delete the entire file structure of the old client copy
+(if you have taken the defaults, this will be the structure that begins
+with WiredBaBar).
+<LI>Download a new client copy.
+<LI>Rerun the install procedure as described above.
+<LI>If you do the new installation to the same directory that had the old
+installation, there will be no need to redo any environment variable settings.
+</UL>
+
+
+<HR><H2><A NAME="applicationrun">
+To Run the BaBar WIRED Client Application</A></H2>
+
+<H3>Starting WIRED</H3>
+From the WiredBaBar/bin directory, start wired by typing the command:
+<PRE>
+   WiredBaBar/bin> wired
+</PRE>
+<UL>
+<LI>Special for SLAC Unix or Linux:
+<UL>
+<LI>If you have the standard BaBar setup,
+you can just type "wired" from any directory.
+</UL>
+<LI>Special for Macintosh:
+<UL>
+<LI>Just click on one of the application icons created by the
+installation procedure.
+<LI>
+Note that for now only the CES_ANALYSIS and CES_BETA startup procedures will
+work as advertised, but once these applications are started you can change
+to any other server through the event chooser.
+</UL>
+<LI>Special for NT:
+<UL>
+<LI>If you add the WiredBaBar/bin directory to your PATH
+(following the same procedure as was described earlier to
+<A HREF="index.html#setntenv">set CLASSPATH</A>),
+you can also start Wired by selecting
+"wired.bat" from the Start menu's "Wired BaBar" program group.
+</UL>
+</UL>
+
+</BODY>
+</HTML>
