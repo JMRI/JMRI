@@ -1,9 +1,9 @@
-/** 
+/**
  * EasyDccTurnout.java
  *
  * Description:		extend jmri.AbstractTurnout for EasyDcc layouts
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Id: EasyDccTurnout.java,v 1.1 2002-03-23 07:28:30 jacobsen Exp $
+ * @version			$Id: EasyDccTurnout.java,v 1.2 2002-04-05 07:16:56 jacobsen Exp $
  */
 
 /**
@@ -11,7 +11,7 @@
  *  it should be the only object that is sending messages for this turnout;
  *  more than one Turnout object pointing to a single device is not allowed.
  */
- 
+
 package jmri.jmrix.easydcc;
 
 import jmri.AbstractTurnout;
@@ -23,7 +23,7 @@ public class EasyDccTurnout extends AbstractTurnout {
 	/**
 	 * EasyDcc turnouts use the NMRA number (0-511) as their numerical identification.
 	 */
-	 
+
 	public EasyDccTurnout(int number) {
 		_number = number;
 		// At construction, register for messages
@@ -31,16 +31,16 @@ public class EasyDccTurnout extends AbstractTurnout {
 
 	public int getNumber() { return _number; }
 	public String getSystemName() { return "NT"+getNumber(); }
-	
+
 	// Handle a request to change state by sending a LocoNet command
-	protected void forwardCommandChangeToLayout(int s) throws jmri.JmriException {	
+	protected void forwardCommandChangeToLayout(int s) throws jmri.JmriException {
 		// implementing classes will typically have a function/listener to get
-		// updates from the layout, which will then call 
+		// updates from the layout, which will then call
 		//		public void firePropertyChange(String propertyName,
 		//										Object oldValue,
-		//										Object newValue)	 
+		//										Object newValue)
 		// _once_ if anything has changed state (or set the commanded state directly)
-		
+
 		// sort out states
 		if ( (s & Turnout.CLOSED) > 0) {
 			// first look for the double case, which we can't handle
@@ -57,12 +57,12 @@ public class EasyDccTurnout extends AbstractTurnout {
 			sendMessage(false);
 		}
 	}
-	
+
 	public void dispose() {}  // no connections need to be broken
-	
+
 	// data members
 	int _number;   // turnout number
-	
+
 	protected void sendMessage(boolean closed) {
 		// The address space in the packet starts with zero, not one
 
@@ -70,13 +70,13 @@ public class EasyDccTurnout extends AbstractTurnout {
 		// The lowest channel bit represents CLOSED (1) and THROWN (0)
 		int dBits = (( (_number-1) & 0x03) << 1 );  // without the low CLOSED vs THROWN bit
 		dBits = closed ? (dBits | 1) : dBits;
-		
+
 		// aBits is the "address" part of the nmra packet, which starts with 1
 		int aBits = (( (_number-1) & 0x1FC) >> 2 )+1;
-		
-		// cBit is the control bit, we're always setting it active 
+
+		// cBit is the control bit, we're always setting it active
 		int cBit = 1;
-		
+
 		// get the packet
 		if (log.isDebugEnabled()) log.debug("build packet from (addr, control, channel): "+aBits+" "+cBit+" "+dBits);
 		byte[] bl = NmraPacket.accDecoderPkt(aBits, cBit, dBits);
@@ -84,16 +84,13 @@ public class EasyDccTurnout extends AbstractTurnout {
 											+Integer.toHexString(0xFF & bl[0])
 											+" "+Integer.toHexString(0xFF & bl[1])
 											+" "+Integer.toHexString(0xFF & bl[2]));
-		
-		EasyDccMessage m = new EasyDccMessage(14);
+
+		EasyDccMessage m = new EasyDccMessage(9);
 		int i = 0; // counter to make it easier to format the message
-		m.setElement(i++, 'S');  // "S C02 " means sent it twice
-		m.setElement(i++, ' ');
-		m.setElement(i++, 'C');
+		m.setElement(i++, 'S');  // "S02 " means send it twice
 		m.setElement(i++, '0');
 		m.setElement(i++, '2');
-		m.setElement(i++, ' ');
-		String s = Integer.toHexString((int)bl[0]&0xFF);
+		String s = Integer.toHexString((int)bl[0]&0xFF).toUpperCase();
 		if (s.length() == 1) {
 			m.setElement(i++, '0');
 			m.setElement(i++, s.charAt(0));
@@ -101,8 +98,7 @@ public class EasyDccTurnout extends AbstractTurnout {
 			m.setElement(i++, s.charAt(0));
 			m.setElement(i++, s.charAt(1));
 		}
-		m.setElement(i++, ' ');
-		s = Integer.toHexString((int)bl[1]&0xFF);
+		s = Integer.toHexString((int)bl[1]&0xFF).toUpperCase();
 		if (s.length() == 1) {
 			m.setElement(i++, '0');
 			m.setElement(i++, s.charAt(0));
@@ -110,8 +106,7 @@ public class EasyDccTurnout extends AbstractTurnout {
 			m.setElement(i++, s.charAt(0));
 			m.setElement(i++, s.charAt(1));
 		}
-		m.setElement(i++, ' ');
-		s = Integer.toHexString((int)bl[2]&0xFF);
+		s = Integer.toHexString((int)bl[2]&0xFF).toUpperCase();
 		if (s.length() == 1) {
 			m.setElement(i++, '0');
 			m.setElement(i++, s.charAt(0));
@@ -119,11 +114,11 @@ public class EasyDccTurnout extends AbstractTurnout {
 			m.setElement(i++, s.charAt(0));
 			m.setElement(i++, s.charAt(1));
 		}
-		
+
 		EasyDccTrafficController.instance().sendEasyDccMessage(m, null);
-		
+
 	}
-	
+
 	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccTurnout.class.getName());
 
 }

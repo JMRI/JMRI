@@ -3,7 +3,7 @@
  *
  * Description:		<describe the EasyDccMessage class here>
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Id: EasyDccMessage.java,v 1.2 2002-03-30 19:22:53 jacobsen Exp $
+ * @version			$Id: EasyDccMessage.java,v 1.3 2002-04-05 07:16:56 jacobsen Exp $
  */
 
 package jmri.jmrix.easydcc;
@@ -38,7 +38,7 @@ public class EasyDccMessage {
 	// accessors to the bulk data
 	public int getNumDataElements() {return _nDataChars;}
 	public int getElement(int n) {return _dataChars[n];}
-	public void setElement(int n, int v) { _dataChars[n] = v; }
+	public void setElement(int n, int v) { _dataChars[n] = v&0x7F; }
 
 	// display format
 	public String toString() {
@@ -85,42 +85,36 @@ public class EasyDccMessage {
 	}
 
 	static public EasyDccMessage getReadPagedCV(int cv) { //Rxxx
-		EasyDccMessage m = new EasyDccMessage(5);
+		EasyDccMessage m = new EasyDccMessage(4);
 		m.setOpCode('R');
-        m.setElement(1, ' ');
-		addIntAsThree(cv, m, 2);
+		addIntAsThree(cv, m, 1);
 		return m;
 	}
 
 	static public EasyDccMessage getWritePagedCV(int cv, int val) { //Pxxx xxx
-		EasyDccMessage m = new EasyDccMessage(9);
+		EasyDccMessage m = new EasyDccMessage(6);
 		m.setOpCode('P');
-        m.setElement(1, ' ');
-		addIntAsThree(cv, m, 2);
-		m.setElement(5,' ');
-		addIntAsThree(val, m, 6);
+		addIntAsThree(cv, m, 1);
+		addIntAsTwoHex(val, m, 4);
 		return m;
 	}
 
 	static public EasyDccMessage getReadRegister(int reg) { //Vx
 		if (reg>8) log.error("register number too large: "+reg);
-		EasyDccMessage m = new EasyDccMessage(3);
+		EasyDccMessage m = new EasyDccMessage(2);
 		m.setOpCode('V');
 		String s = ""+reg;
-        m.setElement(1, ' ');
-		m.setElement(2, s.charAt(s.length()-1));
+		m.setElement(1, s.charAt(s.length()-1));
 		return m;
 	}
 
-	static public EasyDccMessage getWriteRegister(int reg, int val) { //Sx xxx
+	static public EasyDccMessage getWriteRegister(int reg, int val) { //Sx xx
 		if (reg>8) log.error("register number too large: "+reg);
-		EasyDccMessage m = new EasyDccMessage(7);
+		EasyDccMessage m = new EasyDccMessage(4);
 		m.setOpCode('S');
 		String s = ""+reg;
-        m.setElement(1, ' ');
-		m.setElement(2, s.charAt(s.length()-1));
-		m.setElement(3,' ');
-		addIntAsThree(val, m, 4);
+		m.setElement(1, s.charAt(s.length()-1));
+		addIntAsTwoHex(val, m, 2);
 		return m;
 	}
 
@@ -135,6 +129,14 @@ public class EasyDccMessage {
 		m.setElement(offset,s.charAt(0));
 		m.setElement(offset+1,s.charAt(1));
 		m.setElement(offset+2,s.charAt(2));
+		return s;
+	}
+
+    	private static String addIntAsTwoHex(int val, EasyDccMessage m, int offset) {
+		String s = ""+Integer.toHexString(val).toUpperCase();
+		if (s.length() != 2) s = "0"+s;  // handle <10
+		m.setElement(offset,s.charAt(0));
+		m.setElement(offset+1,s.charAt(1));
 		return s;
 	}
 

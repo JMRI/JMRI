@@ -59,44 +59,6 @@ public class EasyDccReplyTest extends TestCase {
 		Assert.assertEquals(" skip LF", 5, m.skipWhiteSpace(4));
 	}
 
-	public void testSkipCOMMAND() {
-		EasyDccReply m = new EasyDccReply();
-		m.setElement(0, ' ');
-		m.setElement(1, ' ');
-		m.setElement(2, 'A');
-		m.setElement(3, ' ');
-		m.setElement(4, 'C');
-		m.setElement(5, 'O');
-		m.setElement(6, 'M');
-		m.setElement(7, 'M');
-		m.setElement(8, 'A');
-		m.setElement(9, 'N');
-		m.setElement(10, 'D');
-		m.setElement(11, ':');
-		m.setElement(12, ' ');
-		m.setElement(13, 'X');
-		Assert.assertEquals(" too short", 13, m.skipCOMMAND(13));
-		Assert.assertEquals(" not found", 5, m.skipCOMMAND(5));
-		Assert.assertEquals(" too short", 6, m.skipCOMMAND(6));
-		Assert.assertEquals(" too short", 7, m.skipCOMMAND(7));
-		Assert.assertEquals(" find & skip", 13, m.skipCOMMAND(4));
-		Assert.assertEquals(" not found", 0, m.skipCOMMAND(0));
-		m = new EasyDccReply();
-		m.setElement(0, 'C');
-		m.setElement(1, 'O');
-		m.setElement(2, 'M');
-		m.setElement(3, 'M');
-		m.setElement(4, 'A');
-		m.setElement(5, 'N');
-		m.setElement(6, 'D');
-		m.setElement(7, ':');
-		m.setElement(8, ' ');
-		m.setElement(9, '0');
-		m.setElement(10, '2');
-		m.setElement(11, '7');
-		Assert.assertEquals(" start of reply ", 9, m.skipCOMMAND(0));
-	}
-
 	public void testValue1() {
 		// value when just the string comes back
 		EasyDccReply m = new EasyDccReply();

@@ -3,7 +3,7 @@
  *
  * Description:		Converts Stream-based I/O to/from EasyDcc messages
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Id: EasyDccTrafficController.java,v 1.2 2002-03-30 19:22:53 jacobsen Exp $
+ * @version			$Id: EasyDccTrafficController.java,v 1.3 2002-04-05 07:16:56 jacobsen Exp $
  */
 
 package jmri.jmrix.easydcc;
@@ -123,7 +123,7 @@ public class EasyDccTrafficController implements EasyDccInterface, Runnable {
 
 		// stream to port in single write, as that's needed by serial
 		int len = m.getNumDataElements();
-		int cr = 1;  // space for carriage return
+		int cr = 1;  // space for carriage return linefeed
 
 		byte msg[] = new byte[len+cr];
 

@@ -3,7 +3,7 @@
  *
  * Description:		Carries the reply to an EasyDccMessage
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Id: EasyDccReply.java,v 1.3 2002-03-31 19:04:09 jacobsen Exp $
+ * @version			$Id: EasyDccReply.java,v 1.4 2002-04-05 07:16:56 jacobsen Exp $
  */
 
 package jmri.jmrix.easydcc;
@@ -81,24 +81,6 @@ public class EasyDccReply {
 		while (index < getNumDataElements()-1 &&
 			((char)getElement(index) <= ' '))
 				index++;
-		return index;
-	}
-
-	int skipCOMMAND(int index) {
-		// start at index, passing any control characters at the start of the buffer
-		int len = "COMMAND: ".length();
-		if ( getNumDataElements() >= index+len-1
-			&& 'C'== (char)getElement(index)
-			&& 'O'== (char)getElement(index+1)
-			&& 'M'== (char)getElement(index+2)
-			&& 'M'== (char)getElement(index+3)
-			&& 'A'== (char)getElement(index+4)
-			&& 'N'== (char)getElement(index+5)
-			&& 'D'== (char)getElement(index+6)
-			&& ':'== (char)getElement(index+7)
-			&& ' '== (char)getElement(index+8)  ) {
-				index = index +"COMMAND: ".length();
-		}
 		return index;
 	}
 
