@@ -14,7 +14,7 @@ import org.jdom.*;
  *
  * @author     Glen Oberhauser
  * @created    March 27, 2003
- * @version
+ * @version     $Revision: 1.7 $
  */
 public class LoadXmlThrottleAction extends AbstractAction
 {

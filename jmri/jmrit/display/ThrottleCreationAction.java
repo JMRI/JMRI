@@ -8,8 +8,8 @@ import jmri.jmrit.throttle.ThrottleFrame;
 /**
  * Create a new throttle.
  *
- * @author			Glen Oberhauser
- * @version
+ * @author  Glen Oberhauser
+ * @version $Revision: 1.2 $
  */
 public class ThrottleCreationAction extends AbstractAction {
 

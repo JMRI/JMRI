@@ -8,7 +8,7 @@ import javax.swing.AbstractAction;
  * Create a new throttle.
  *
  * @author			Glen Oberhauser
- * @version
+ * @version     $Revision: 1.2 $
  */
 public class EditThrottlePreferencesAction extends AbstractAction {
 
@@ -24,7 +24,7 @@ public class EditThrottlePreferencesAction extends AbstractAction {
      * The action is performed. Create a new ThrottleFrame.
      * @param e The event causing the action.
      */
-    public void actionPerformed(ActionEvent e) 
+    public void actionPerformed(ActionEvent e)
 	{
 		javax.swing.JOptionPane.showMessageDialog(null, "Coming Soon!");
     }

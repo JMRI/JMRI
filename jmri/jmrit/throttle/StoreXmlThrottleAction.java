@@ -14,7 +14,7 @@ import org.jdom.output.*;
  * Save throttles to XML
  *
  * @author			Glen Oberhauser
- * @version
+ * @version     $Revision: 1.7 $
  */
 public class StoreXmlThrottleAction extends AbstractAction {
 

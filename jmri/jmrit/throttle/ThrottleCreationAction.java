@@ -9,7 +9,7 @@ import jmri.InstanceManager;
  * Create a new throttle.
  *
  * @author			Glen Oberhauser
- * @version
+ * @version     $Revision: 1.8 $
  */
 public class ThrottleCreationAction extends AbstractAction {
 

@@ -22,7 +22,7 @@ import org.jdom.Element;
  *
  * @author     Glen Oberhauser
  * @created    March 25, 2003
- * @version
+ * @version     $Revision: 1.18 $
  */
 public class ThrottleFrame extends JFrame implements AddressListener, ThrottleListener
 {
@@ -45,7 +45,7 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 	private JCheckBoxMenuItem viewControlPanel;
 	private JCheckBoxMenuItem viewFunctionPanel;
 	private JCheckBoxMenuItem viewAddressPanel;
-	
+
 	private DccThrottle throttle;
 
 	/**
@@ -74,14 +74,14 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
      */
     public void notifyAddressChosen(int address)
 	{
-		boolean throttleInUse = 
+		boolean throttleInUse =
 			InstanceManager.throttleManagerInstance().requestThrottle(address, this);
 		if (throttleInUse)
 		{
 			JOptionPane.showMessageDialog(this, "Address in use by another throttle.");
 		}
 	}
-	
+
 	/**
 	 * Receive notification that an address has been released or dispatched
 	 * @param address The address released/dispatched
@@ -94,7 +94,7 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 		addressPanel.notifyThrottleDisposed();
 		throttle = null;
 	}
-	
+
 	/**
 	 *  Place and initialize the GUI elements.
 	 *  <ul>
@@ -143,7 +143,7 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 		functionPanel.setLocation(100, 0);
 		functionPanel.setVisible(true);
 		functionPanel.setEnabled(false);
-		functionPanel.addInternalFrameListener(frameListener); 
+		functionPanel.addInternalFrameListener(frameListener);
 
 		addressPanel = new AddressPanel();
 		addressPanel.setResizable(true);
@@ -244,14 +244,14 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 
 	private void editPreferences()
 	{
-		ThrottleFramePropertyEditor editor = 
+		ThrottleFramePropertyEditor editor =
 			ThrottleFrameManager.instance().getThrottleFrameEditor();
 		editor.setThrottleFrame(this);
 		//editor.setLocation(this.getLocationOnScreen());
 		editor.setLocationRelativeTo(this);
 		editor.setVisible(true);
 	}
-	
+
 	/**
 	 *  Handle my own destruction.
 	 *  <ol>
@@ -267,14 +267,14 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 		functionPanel.destroy();
 		// dispose of this last because it will release and destroy throttle.
 		addressPanel.destroy();
-		
+
 		// Handle disposing of the throttle
 		if (throttle != null)
 		{
 			InstanceManager.throttleManagerInstance().
 				cancelThrottleRequest(throttle.getDccAddress(), this);
 		}
-		
+
 		super.dispose();
 	}
 
@@ -406,7 +406,7 @@ public class ThrottleFrame extends JFrame implements AddressListener, ThrottleLi
 		com.sun.java.util.collections.ArrayList children =
 				new com.sun.java.util.collections.ArrayList(1);
 		WindowPreferences wp = new WindowPreferences();
-		
+
 		children.add(wp.getPreferences(this));
 		children.add(controlPanel.getXml());
 		children.add(functionPanel.getXml());
