@@ -23,7 +23,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  * @see         jmri.AbstractTurnout
  * @see         jmri.TurnoutManager
  * @see         jmri.InstanceManager
@@ -69,37 +69,118 @@ public interface Turnout extends NamedBean {
     public int getCommandedState();
 
     /**
-     * Constant representing "no feedback method".  In this case,
+     * Constant representing "direct feedback method".  In this case,
      * the commanded state is provided when the known state is requested.
+     * The two states never differ.
+     * This mode is always possible!
      */
-    public static final int NONE     = 0;
+    public static final int DIRECT     = 1;
 
     /**
      * Constant representing "exact feedback method".  In this case,
-     * the hardware can sense both positions of the turnout, which is
+     * the layout hardware can sense both positions of the turnout, which is
      * used to set the known state.
      */
     public static final int EXACT    = 2;
 
     /**
      * Constant representing "indirect feedback".  In this case,
-     * the hardware can only sense one setting of the turnout. The known
+     * the layout hardware can only sense one setting of the turnout. The known
      * state is inferred from that info.
      */
-    public static final int INDIRECT = 3;  // only one side directly sensed
+    public static final int INDIRECT = 4;  // only one side directly sensed
 
     /**
      * Constant representing "feedback by monitoring sent commands".  In this case,
      * the known state tracks commands seen on the rails or bus.
      */
-    public static final int SENT     = 4;
+    public static final int MONITORING     = 8;
+
+    /**
+     * Constant representing "feedback by monitoring one sensor".  
+     * The sensor sets the state CLOSED when INACTIVE
+     * and THROWN when ACTIVE
+     */
+    public static final int ONESENSOR     = 16;
+
+    /**
+     * Constant representing "feedback by monitoring two sensors".  
+     * The first sensor sets the state THROWN when ACTIVE;
+     * the second sensor sets the state CLOSED when ACTIVE.
+     */
+    public static final int TWOSENSOR     =32;
 
     /**
      * Get a representation of the feedback type.  This is the OR of
-     * possible values: NONE, UNKNOWN, EXACT, INDIRECT, SENT.
+     * possible values: DIRECT, EXACT, etc.
      * The valid combinations depend on the implemented system.
      */
-    public int getFeedbackType();
+    public int getValidFeedbackTypes();
+    
+    /**
+     * Get a human readable
+     * representation of the feedback type.  
+     * The values depend on the implemented system.
+     */
+    public String[] getValidFeedbackNames();
+    
+    /**
+     * Set the feedback mode from a human readable name.
+     * This must be one of the names defined
+     * in a previous {@link #getValidFeedbackNames} call.
+     */
+    public void setFeedbackMode(String mode);
+
+    /**
+     * Set the feedback mode from a integer.
+     * This must be one of the bit values defined
+     * in a previous {@link #getValidFeedbackTypes} call.
+     * Having more than one bit set is an error.
+     */
+    public void setFeedbackMode(int mode);
+    
+    /**
+     * Get the feedback mode in human readable form.
+     * This will be one of the names defined
+     * in a {@link #getValidFeedbackNames} call.
+     */
+    public String getFeedbackModeName();
+    /**
+     * Get the feedback mode in machine readable form.
+     * This will be one of the bits defined
+     * in a {@link #getValidFeedbackTypes} call.
+     */
+    public int getFeedbackMode();
+
+    /**
+     * Provide Sensor objects needed for some feedback types.
+     *
+     * Since we defined two feeedback methods that require monitoring,
+     * we provide these methods to define those sensors to the Turnout.
+     *<P>
+     * The second sensor can be null if needed.
+     * <P>
+     * Sensor-based feedback will not function until these
+     * sensors have been provided.
+     */
+    public void provideFirstFeedbackSensor(Sensor s);
+    public void provideSecondFeedbackSensor(Sensor s);
+    
+    /**
+     * Get the first sensor, if defined.
+     *<P>
+     * Returns null if no Sensor recorded.
+     */
+    public Sensor getFirstSensor();
+    
+    /**
+     * Get the Second sensor, if defined.
+     *<P>
+     * Returns null if no Sensor recorded.
+     */
+    public Sensor getSecondSensor();
+    
+    
 }
 
 /* @(#)Turnout.java */
