@@ -15,7 +15,7 @@ import jmri.jmrix.loconet.LnPacketizer;
  * a .hex file, feeding the information to a LocoMonFrame (monitor) and
  * connecting to a LocoGenFrame (for sending a few commands).
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version                     $Revision: 1.10 $
+ * @version                     $Revision: 1.11 $
  */
 public class HexFileFrame extends javax.swing.JFrame {
 
@@ -150,6 +150,7 @@ public class HexFileFrame extends javax.swing.JFrame {
     public void openHexFileButtonActionPerformed(java.awt.event.ActionEvent e) {
         // select the file
         // start at current file, show dialog
+        inputFileChooser.rescanCurrentDirectory();
         int retVal = inputFileChooser.showOpenDialog(this);
 
         // handle selection or cancel

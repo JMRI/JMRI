@@ -12,7 +12,7 @@ import javax.swing.*;
  * Base class for Actions to copy, export and import RosterEntrys
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  * @see         jmri.jmrit.XmlFile
  */
 abstract public class AbstractRosterItemAction extends AbstractAction {
@@ -99,6 +99,8 @@ abstract public class AbstractRosterItemAction extends AbstractAction {
     javax.swing.JFileChooser fileChooser = new JFileChooser(jmri.jmrit.XmlFile.prefsDir());
 
     boolean selectNewFromFile() {
+        // refresh fileChooser view of directory, in case it changed
+        fileChooser.rescanCurrentDirectory();
         int retVal = fileChooser.showOpenDialog(mParent);
 
         // handle selection or cancel

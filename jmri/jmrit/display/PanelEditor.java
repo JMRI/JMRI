@@ -37,7 +37,7 @@ import com.sun.java.util.collections.*;
  *
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 
 public class PanelEditor extends JFrame {
@@ -393,15 +393,16 @@ public class PanelEditor extends JFrame {
      */
     void addBackground() {
         JFileChooser inputFileChooser = new JFileChooser(" ");
-		int retVal = inputFileChooser.showOpenDialog(this);
-		if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
+        int retVal = inputFileChooser.showOpenDialog(this);
+        if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
         log.debug("Open image file: "+inputFileChooser.getSelectedFile().getPath());
-		NamedIcon icon = new NamedIcon(inputFileChooser.getSelectedFile().getPath(),
+        NamedIcon icon = new NamedIcon(inputFileChooser.getSelectedFile().getPath(),
                                         inputFileChooser.getSelectedFile().getPath());
         JLabel l = new PositionableLabel(icon);
         l.setSize(icon.getIconWidth(), icon.getIconHeight());
         putBackground(l);
     }
+
     public void putBackground(JLabel l) {
         target.add(l, BKG);
         contents.add(l);
