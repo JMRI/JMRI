@@ -89,10 +89,10 @@ public final static int CS_STATUS_RESPONSE  = 0x22; /* command station status */
 /* Emergency Stop */
 public final static int BC_EMERGENCY_STOP = 0x81;
 /* byte 2 commands for Emergecy Stop messages */
-public final static int BC_EVERYTHING_STOP = 0x02;   /* broadcast of 
+public final static int BC_EVERYTHING_STOP = 0x00;   /* broadcast of 
 						     emergency stop */
 
-/* Feedback - this is basically a bitmask.  The second byte Indicates 
+/* Feedback - this is basically a bitmask.  The second nibble Indicates 
 how many address byte/data byte pairs follow the command */
 public final static int BC_FEEDBACK        =0x40;
 
