@@ -13,7 +13,7 @@ import java.io.File;
  * Store the JMRI config as XML
  *
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  * @see             jmri.jmrit.XmlFile
  */
 public class StoreXmlConfigAction extends AbstractAction {
@@ -31,6 +31,6 @@ public class StoreXmlConfigAction extends AbstractAction {
 	}
 
 	// initialize logging
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(StoreLayoutAction.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(StoreXmlConfigAction.class.getName());
 
 }

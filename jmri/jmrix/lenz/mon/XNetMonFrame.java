@@ -1,10 +1,4 @@
-/**
- * XNetMonFrame.java
- *
- * Description:		Frame displaying (and logging) XpressNet messages
- * @author			Bob Jacobsen   Copyright (C) 2002
- * @version         $Revision: 1.1 $
- */
+// XNetMonFrame.java
 
 package jmri.jmrix.lenz.mon;
 
@@ -21,7 +15,12 @@ import jmri.jmrix.lenz.XNetListener;
 import jmri.jmrix.lenz.XNetTrafficController;
 import jmri.jmrix.lenz.XNetMessage;
 
-public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
+/**
+ * Frame displaying (and logging) XpressNet messages
+ * @author			Bob Jacobsen   Copyright (C) 2002
+ * @version         $Revision: 1.2 $
+ */
+ public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
 	public XNetMonFrame() {
 		super();
@@ -53,7 +52,7 @@ public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetLis
 
 		// display the decoded data
 		// we use Llnmon to format, expect it to provide consistent \n after each line
-		nextLine(l.toString(), raw);
+		nextLine(l.toString()+"\n", raw);
 
 	}
 
