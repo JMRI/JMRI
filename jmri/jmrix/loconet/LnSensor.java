@@ -1,16 +1,15 @@
-/**
- * LnSensor.java
- *
- * Description:		extend jmri.AbstractSensor for LocoNet layouts
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version
- */
+// LnSensor.java
 
 package jmri.jmrix.loconet;
 
 import jmri.AbstractSensor;
 import jmri.Sensor;
 
+/**
+ * Extend jmri.AbstractSensor for LocoNet layouts
+ * @author			Bob Jacobsen Copyright (C) 2001
+ * @version         $Revision: 1.4 $
+ */
 public class LnSensor extends AbstractSensor implements LocoNetListener {
 
 	private LnSensorAddress a;
