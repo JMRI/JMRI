@@ -12,7 +12,7 @@ import jmri.jmrix.AbstractThrottle;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class NceThrottle extends AbstractThrottle
 {
@@ -41,7 +41,7 @@ public class NceThrottle extends AbstractThrottle
     /**
      * Send the message to set the state of functions F0, F1, F2, F3, F4
      */
-    private void sendLowerFunctions() {
+    protected void sendLowerFunctions() {
         byte[] result = jmri.NmraPacket.function0Through4Packet(address, (address>=100),
                                          getF0(), getF1(), getF2(), getF3(), getF4());
 
@@ -66,7 +66,7 @@ public class NceThrottle extends AbstractThrottle
      * Send the message to set the state of
      * functions F5, F6, F7, F8
      */
-    private void sendHigherFunctions() {
+    protected void sendHigherFunctions() {
 
         byte[] result = jmri.NmraPacket.function5Through8Packet(address, (address>=100),
                                          getF5(), getF6(), getF7(), getF8());
@@ -119,53 +119,6 @@ public class NceThrottle extends AbstractThrottle
     public void setIsForward(boolean forward) {
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
-    }
-
-    // functions - note that we use the naming for DCC, though that's not the implication;
-    // see also DccThrottle interface
-    public void setF0(boolean f0) {
-        this.f0 = f0;
-        sendLowerFunctions();
-    }
-
-    public void setF1(boolean f1) {
-        this.f1 = f1;
-        sendLowerFunctions();
-    }
-
-    public void setF2(boolean f2) {
-        this.f2 = f2;
-        sendLowerFunctions();
-    }
-
-    public void setF3(boolean f3) {
-        this.f3 = f3;
-        sendLowerFunctions();
-    }
-
-    public void setF4(boolean f4) {
-        this.f4 = f4;
-        sendLowerFunctions();
-    }
-
-    public void setF5(boolean f5) {
-        this.f5 = f5;
-        sendHigherFunctions();
-    }
-
-    public void setF6(boolean f6) {
-        this.f6 = f6;
-        sendHigherFunctions();
-    }
-
-    public void setF7(boolean f7) {
-        this.f7 = f7;
-        sendHigherFunctions();
-    }
-
-    public void setF8(boolean f8) {
-        this.f8 = f8;
-        sendHigherFunctions();
     }
 
     /**
