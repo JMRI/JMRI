@@ -28,7 +28,7 @@ package jmri;
  *            short vs long address type
  *
  * @author      Bob Jacobsen Copyright (C) 2001, 2003
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class NmraPacket {
 
@@ -248,6 +248,47 @@ public class NmraPacket {
                     ( f7 ? 0x04 : 0) |
                     ( f6 ? 0x02 : 0) |
                     ( f5 ? 0x01 : 0);
+
+        if (longAddr) {
+            // long address form
+            retVal = new byte[4];
+            retVal[0] = (byte) (192+((address/256)&0x3F));
+            retVal[1] = (byte) (address&0xFF);
+            retVal[2] = (byte) arg1;
+            retVal[3] = (byte) (retVal[0]^retVal[1]^retVal[2]);
+        } else {
+            // short address form
+            retVal = new byte[3];
+            retVal[0] = (byte) (address&0xFF);
+            retVal[1] = (byte) arg1;
+            retVal[2] = (byte) (retVal[0]^retVal[1]);
+        }
+        return retVal;
+    }
+
+    public static byte[] function9Through12Packet(int address, boolean longAddr,
+                        boolean f9, boolean f10, boolean f11, boolean f12 ) {
+        if (log.isDebugEnabled()) log.debug("f9 through f12 packet "+address);
+        if (address < 0 ) {  // zero is valid broadcast
+            log.error("invalid address "+address);
+            return null;
+        }
+        if (longAddr&& (address> (255+(231-192)*256)) ) {
+            log.error("invalid address "+address);
+            return null;
+        }
+        if (!longAddr&& (address> 127) ) {
+            log.error("invalid address "+address);
+            return null;
+        }
+
+        // end sanity checks, format output
+        byte[] retVal;
+        int arg1 = 0xA0 |
+                    ( f12 ? 0x08 : 0) |
+                    ( f11 ? 0x04 : 0) |
+                    ( f10 ? 0x02 : 0) |
+                    ( f9  ? 0x01 : 0);
 
         if (longAddr) {
             // long address form
