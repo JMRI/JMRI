@@ -10,7 +10,7 @@ import jmri.jmrix.lenz.XNetTrafficController;
  * XpressnetNet connection.
  * @author     Paul Bender (C) 2002,2003
  * @created    December 20,2002
- * @version    $Revision: 1.7 $
+ * @version    $Revision: 1.8 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -40,7 +40,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
        super();
        this.address=address;
        this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;
-       this.isForward=true;
+       //this.isForward=true;
        this.isAvailable=false;
        XNetTrafficController.instance().addXNetListener(~0, this);
        sendStatusInformationRequest();
@@ -182,7 +182,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	/* we're sending a speed to the locomotive */
        	 XNetMessage msg=new XNetMessage(6);
          msg.setElement(0,XNetConstants.LOCO_OPER_REQ);   
-	 msg.setElement(1,XNetConstants.LOCO_SPEED_127);
+	 msg.setElement(1,XNetConstants.LOCO_SPEED_128);
                                     // currently we're going to assume 128 
 			            // speed step mode
       	 msg.setElement(2,this.getDccAddressHigh());// set to the upper 
@@ -530,8 +530,10 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         //    .getCommandStation()
         //    .isThrottleCommand(l) != true) return;
         // this is a throttle message, we need to parse it
-	if (l.getOpCode()==XNetConstants.LOCO_INFO_NORMAL_UNIT)
+        // log.error("Throttle - recieved message ");
+	if (l.getElement(0)==XNetConstants.LOCO_INFO_NORMAL_UNIT)
 	{
+                //log.error("Throttle - message is LOCO_INFO_NORMAL_UNIT ");
                 /* there is no address sent with this information */
 		int b1=l.getElement(1);
 		int b2=l.getElement(2);
@@ -566,34 +568,54 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 
 		/* the second byte indicates the speed and direction setting */
 		
-		if ((b2 & 0x80)==0x80) this.isForward=true;
-		   else this.isForward=false;
+		if ((b2 & 0x80)==0x80 && this.isForward==false) 
+		{
+		        log.error("Throttle - Direction Forward Locomotive:" +address);
+			notifyPropertyChangeListener("IsForward",
+				new Boolean(this.isForward),
+				new Boolean(this.isForward=true));
+		        if(this.isForward==true)
+				log.error("Throttle - Changed direction to Forward Locomotive:"+address);
+		}
+		else if ( this.isForward==true)
+		{
+		        log.error("Throttle - Direction Reverse Locomotive:" +address);
+			notifyPropertyChangeListener("IsForward",
+				new Boolean(this.isForward),
+				new Boolean(this.isForward=false));
+		        if(this.isForward==false) 
+				log.error("Throttle - Changed direction to Reverse Locomotive:" +address);
+		}
 		if(this.speedIncrement==XNetConstants.SPEED_STEP_128_INCREMENT)
 		{
-			setSpeedSetting((float)((b2 & 0x7f)-2)/126);
-			notifyPropertyChangeListener("SpeedSetting",
+			if(this.getSpeedSetting()!=(float)((b2 & 0x7f)-2)/126)
+ 			{
+			  notifyPropertyChangeListener("SpeedSetting",
                                   new Float(this.speedSetting), 
-				  new Float(this.speedSetting = this.speedSetting));
-
+				  new Float(this.speedSetting = (float)((b2 & 0x7f)-2)/126));
+			}
 		}
 		else
 		{
-			setSpeedSetting((float)(((b2 & 0x7f)-4)/(126/this.speedIncrement)));
-			notifyPropertyChangeListener("SpeedSetting",
-                                  new Float(this.speedSetting), 
-				  new Float(this.speedSetting = this.speedSetting));
+			if(this.getSpeedSetting()!=(float)(((b2 & 0x7f)-4)/(126/this.speedIncrement)))
+			{
+  			  notifyPropertyChangeListener("SpeedSetting",
+                                    new Float(this.speedSetting), 
+			  	  new Float(this.speedSetting = (float)(((b2 & 0x7f)-4)/(126/this.speedIncrement))));
+			}
 		}
 	
 		/* data byte 3 is the status of F0 F4 F3 F2 F1 */
-		if((b3 & 0x10)==0x10)
+		if((b3 & 0x10)==0x10 && getF0()==false)
 		{
-	           notifyPropertyChangeListener("F0",new Boolean(this.f0),new Boolean(this.f0 = true));
-		   this.f0=true;
+	           notifyPropertyChangeListener("F0",
+                                                new Boolean(this.f0),
+                                                new Boolean(this.f0 = true));
 		}
-                else 
+                else if (getF0()==true)
 		{
 	           notifyPropertyChangeListener("F0",new Boolean(this.f0),new Boolean(this.f0 = false));
-		   this.f0=false;
+		   //this.f0=false;
 		}
 
 		if((b3 &0x01)==0x01) this.f1=true;

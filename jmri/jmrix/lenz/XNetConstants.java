@@ -3,7 +3,7 @@
  *
  * Description:		Constants to represent values seen in XpressNet traffic
  * @author		Paul Bender  Copyright (C) 2003
- * @version             $ Revision: 1.5 $
+ * @version             $ Revision: 1.6 $
  *
  * Variable prefix abreviation keys:
  * ACC_ is for accessory messages
@@ -213,7 +213,7 @@ public final static int LOCO_SPEED_27    = 0x11; /* speed and direction 27
 						speed steps */
 public final static int LOCO_SPEED_28    = 0x12; /* speed and direction 28 
 						speed steps */
-public final static int LOCO_SPEED_127   = 0x13; /* speed and direction 128 
+public final static int LOCO_SPEED_128   = 0x13; /* speed and direction 128 
 						speed steps */
 
 public final static int LOCO_SET_FUNC_GROUP1 = 0x20; /* set functions F0-F4*/
