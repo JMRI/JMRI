@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a DCC decoder as a component, esp. information -->
 <!-- on how to program it. -->
-<!-- $Revision: 1.23 $ -->
+<!-- $Revision: 1.24 $ -->
 
 <!ELEMENT decoder-config (version, decoder, pane*)>
 
@@ -126,8 +126,10 @@
 <!ELEMENT splitVal EMPTY >
 <!ATTLIST splitVal highCV  	CDATA #REQUIRED>	<!-- CV to hold high-order bits -->
 <!ATTLIST splitVal min CDATA "0" >				<!-- smallest acceptable value -->
-<!ATTLIST splitVal max CDATA "255" >			<!-- largest acceptable value -->
+<!ATTLIST splitVal max CDATA "255" >		
 <!ATTLIST splitVal default CDATA #IMPLIED>
+<!ATTLIST splitVal factor  CDATA "1">      <!-- cv*factor+offset is variable value -->
+<!ATTLIST splitVal offset  CDATA "0">
 <!ATTLIST splitVal comment CDATA #IMPLIED>
 
 
