@@ -22,7 +22,7 @@ import jmri.jmrit.roster.*;
 
 /**
  * @author	Bob Jacobsen Copyright 2001, 2002, 2003, 2004
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.8 $
  */
 public class PaneProgPaneTest extends TestCase {
 
@@ -192,6 +192,82 @@ public class PaneProgPaneTest extends TestCase {
         Assert.assertEquals("last cv written ", 2, p.lastWriteCv());
 
         if (log.isDebugEnabled()) log.debug("testPaneWrite ends ok");
+    }
+
+    // test counting of read operations needed
+    public void testPaneReadOpCount() {
+        if (log.isDebugEnabled()) log.debug("testPaneReadOpCount starts");
+        // initialize the system
+        setupDoc();  // make sure XML document is ready
+
+        CvTableModel cvModel = new CvTableModel(new JLabel(), p);
+        String[] args = {"CV", "Name"};
+        VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
+
+        // have to add a couple of defined variables
+        int row = 0;
+        
+        // note these +have+ to be on this pane, e.g. named in setupDoc
+        Element el0 = new Element("variable")
+            .addAttribute("CV","1")
+            .addAttribute("readOnly","no")
+            .addAttribute("mask","VVVVVVVV")
+            .addAttribute("label","Start voltage")
+            .addContent( new Element("decVal"));
+        varModel.setRow(row++, el0);
+
+        Element el1 = new Element("variable")
+            .addAttribute("CV","1")
+            .addAttribute("readOnly","no")
+            .addAttribute("mask","VVVVVVVV")
+            .addAttribute("label","Primary Address")
+            .addContent( new Element("decVal"));
+        varModel.setRow(row++, el1);
+
+        Element el2 = new Element("variable")
+            .addAttribute("CV","67")
+            .addAttribute("label","Normal direction of motion")
+            .addAttribute("readOnly","no")
+            .addAttribute("mask","VVVVVVVV")
+            .addContent( new Element("speedTableVal"));
+        varModel.setRow(row++, el2);
+        
+        Element el3 = new Element("variable")
+            .addAttribute("CV","68")
+            .addAttribute("readOnly","no")
+            .addAttribute("mask","VVVVVVVV")
+            .addAttribute("label","Address")
+            .addContent( new Element("decVal"));
+        varModel.setRow(row++, el3);
+
+        PaneProgPane progPane = new PaneProgPane("name", pane1, cvModel, varModel, null);
+
+        // start actual testing
+        Assert.assertEquals("number of all CVs to read ", 29, progPane.countOpsNeeded(true,false));
+        Assert.assertEquals("number of all CVs to write ", 29, progPane.countOpsNeeded(false,false));
+
+        Assert.assertEquals("number of changed CVs to read ", 0, progPane.countOpsNeeded(true,true));
+        Assert.assertEquals("number of changed CVs to write ", 0, progPane.countOpsNeeded(false,true));
+        
+        // mark some as needing to be written
+        ((CvValue)cvModel.allCvVector().get(1)).setValue(12);
+
+        Assert.assertEquals("modified all CVs to read ", 29, progPane.countOpsNeeded(true,false));
+        Assert.assertEquals("modified all CVs to write ", 29, progPane.countOpsNeeded(false,false));
+
+        Assert.assertEquals("modified changed CVs to read ", 1, progPane.countOpsNeeded(true,true));
+        Assert.assertEquals("modified changed CVs to write ", 1, progPane.countOpsNeeded(false,true));
+        
+        ((CvValue)cvModel.allCvVector().get(69)).setValue(12);
+            // careful - might change more than one CV!
+            
+        Assert.assertEquals("spdtbl all CVs to read ", 29, progPane.countOpsNeeded(true,false));
+        Assert.assertEquals("spdtbl all CVs to write ", 29, progPane.countOpsNeeded(false,false));
+
+        Assert.assertEquals("spdtbl changed CVs to read ", 2, progPane.countOpsNeeded(true,true));
+        Assert.assertEquals("spdtbl changed CVs to write ", 2, progPane.countOpsNeeded(false,true));
+
+        if (log.isDebugEnabled()) log.debug("testPaneReadOpCount ends ok");
     }
 
     // static variables for internal classes to report their interpretations
