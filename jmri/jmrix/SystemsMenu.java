@@ -4,14 +4,15 @@
 
 package jmri.jmrix;
 
-import javax.swing.*;
-import java.util.*;
+import java.util.ResourceBundle;
+
+import javax.swing.JMenu;
 
 /**
- * Create a "Systems" menu containing the Jmri system-specific tools in submenus
+ * Provide a "Systems" menu containing the Jmri system-specific tools in submenus
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SystemsMenu extends JMenu {
     public SystemsMenu(String name) {

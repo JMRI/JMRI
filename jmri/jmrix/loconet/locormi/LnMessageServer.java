@@ -5,21 +5,17 @@ package jmri.jmrix.loconet.locormi;
  * Description:
  * Copyright:    Copyright (c) 2002
  * Company:
- * @author
- * @version $Revision: 1.6 $
+ * @author  Alex Shepherd
+ * @version $Revision: 1.7 $
  */
 
  // -Djava.security.policy=lib/security.policy
 
-import java.rmi.Naming ;
-import java.rmi.RemoteException ;
+import java.rmi.Naming;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.rmi.registry.LocateRegistry ;
-import java.rmi.registry.Registry ;
-
-import java.io.Serializable;
-
-import jmri.jmrix.loconet.*;
 
 public class LnMessageServer extends UnicastRemoteObject implements LnMessageServerInterface
 {
@@ -28,7 +24,7 @@ public class LnMessageServer extends UnicastRemoteObject implements LnMessageSer
 
   private static LnMessageServer self = null ;
   static final String serviceName = "LocoNetServer" ;
-	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnMessageServer.class.getName());
+  static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnMessageServer.class.getName());
 
   private LnMessageServer() throws RemoteException
   {
