@@ -1,35 +1,31 @@
 <?xml version="1.0"?>
 <!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
 <programmer-config xmlns:programmer="http://jmri.sourceforge.net/xml/programmer">
-<!-- $Id: MultiPane.xml,v 1.8 2001-11-27 03:26:33 jacobsen Exp $ -->
+<!-- $Id: MultiPane.xml,v 1.9 2001-12-04 19:44:37 jacobsen Exp $ -->
 <programmer>
 
 	<pane name="Basic">
 		<column>
-			<variable name="Primary Address"/>
-			<variable name="Extended Address"/>
+			<variable name="Short Address"/>
+			<variable name="Long Address"/>
 			<variable name="Address Format"/>
 
 			<dccaddress/>
 			
-			<variable name="Locomotive Direction" format ="radiobuttons" layout="left"/>
-			<variable name="User Identification #1"/>
-			<variable name="User Identification #2"/>
-			<variable name="FL Location" layout="above"/>
+			<variable name="Locomotive Direction" format="radiobuttons" layout="left"/>
+			<variable name="User Id #1"/>
+			<variable name="User Id #2"/>
+			<variable name="Speed Step Mode" layout="above"/>
 			<variable name="Power Source Conversion" format="radiobuttons" layout="left"/>
-			<variable name="Analog Power Conversion" format="checkbox"/>
-			<variable name="Radio Power Conversion" format="checkbox"/>
-			<variable name="Zero-1 Power Conversion" format="checkbox"/>
-			<variable name="Trix Power Conversion" format="checkbox"/>
-			<variable name="CTC/Railcommand Power Conversion" format="checkbox"/>
+			<variable name="Analog (DC) Operation" format="checkbox"/>
 		</column>
 	</pane>
 	
 	<pane name="Motor">
 		<column>
 			<variable name="Kick Start"/>
-			<variable name="Acceleration Rate"/>
-			<variable name="Deceleration Rate"/>
+			<variable name="Accel"/>
+			<variable name="Decel"/>
 			<label label=" "/>
 			<variable name="Total PWM Period"/>
 		</column>
@@ -38,7 +34,6 @@
 			<variable name="EMF Dynamic Config"/>  <!-- Not an NMRA S&RP term -->
 			<variable name="EMF Droop Config"/>  <!-- Not an NMRA S&RP term -->
 			<variable name="EMF Feedback Cutout"/>
-			<variable name="DC Mode"/>  <!-- Not an NMRA S&RP term -->
 		</column>
 	</pane>
 	
@@ -95,10 +90,26 @@
 			<variable name="Function 8 behaviour"/>
 			<separator/>
 		</column>
+		<column>
+			<variable name="Analog Mode Function Status - F1" format="checkbox"/>			
+			<variable name="Analog Mode Function Status - F2" format="checkbox"/>			
+			<variable name="Analog Mode Function Status - F3" format="checkbox"/>			
+			<variable name="Analog Mode Function Status - F4" format="checkbox"/>			
+			<variable name="Analog Mode Function Status - F5" format="checkbox"/>			
+			<variable name="Analog Mode Function Status - F6" format="checkbox"/>			
+			<variable name="Analog Mode Function Status - F7" format="checkbox"/>			
+			<variable name="Analog Mode Function Status - F8" format="checkbox"/>			
+		</column>
 	</pane>
 
 	<pane name="Consist">
 		<column>
+			<variable name="Consist Address" />
+			<variable name="Consist Acceleration Adjustment" />
+			<variable name="Consist Acceleration Adjustment Sign" />
+			<variable name="Consist Deceleration Adjustment" />
+			<variable name="Consist Deceleration Adjustment Sign" />
+			<separator/>
 			<label label="Will decoder respond to function requests at consist address?"/>
 			<variable name="Consist Address Active For F1"  format="checkbox"/>
 			<variable name="Consist Address Active For F2"  format="checkbox"/>
@@ -113,6 +124,12 @@
 		</column>
 	</pane>
 	
+	<pane name="Communications">
+		<column>
+			<variable name="Advanced Ack" />
+		</column>
+	</pane>
+
 	<pane name="Sound">
 		<column>
 		</column>

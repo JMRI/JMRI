@@ -37,10 +37,11 @@ public class PaneProgAction 			extends AbstractAction {
 		Thread xmlThread = new Thread( new Runnable() {
 			public void run() { 
 				Roster.instance();
-				DecoderIndexFile.instance(); 
-				if (log.isInfoEnabled()) log.info("xml loading thread finishes reading Roster, DecoderIndexFIle");
+				DecoderIndexFile.instance();
+				NameFile.instance(); 
+				if (log.isInfoEnabled()) log.info("xml loading thread finishes reading Roster, DecoderIndexFIle, NameFile");
 			}
-		}, "read roster & decoderIndex");
+		}, "read roster, decoderIndex, names");
 		xmlThread.setPriority(Thread.NORM_PRIORITY-2);	
 		xmlThread.start();
 

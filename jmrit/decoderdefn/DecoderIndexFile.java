@@ -15,12 +15,6 @@ import org.jdom.Element;
 // try to limit the JDOM to this class, so that others can manipulate...
 
 /** 
- * DecoderIndexFile.java
- *
- * Description:		Manipulates the index of decoder definitions.
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: DecoderIndexFile.java,v 1.4 2001-11-27 03:27:15 jacobsen Exp $
- *
  * DecoderIndex represents a decoderIndex.xml file in memory, allowing a program
  * to navigate to various decoder descriptions without having to 
  * manipulate files.
@@ -30,6 +24,9 @@ import org.jdom.Element;
  *<P>
  * Multiple DecoderIndexFile objects don't make sense, so we use an "instance" member
  * to navigate to a single one.
+ *
+ * @author			Bob Jacobsen   Copyright (C) 2001
+ * @version			$Id: DecoderIndexFile.java,v 1.5 2001-12-04 19:41:07 jacobsen Exp $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -99,8 +96,32 @@ public class DecoderIndexFile extends XmlFile {
 		if (mfgName != null && !mfgName.equals(r.getMfg())) return false;
 		if (family != null && !family.equals(r.getFamily())) return false;
 		if (mfgID != null && !mfgID.equals(r.getMfgID())) return false;
-		if (decoderVersionID != null && !decoderVersionID.equals(r.getVersionID())) return false;
 		if (model != null && !model.equals(r.getModel())) return false;
+		// check version ID - no match if a range specified and out of range
+		if (decoderVersionID != null) {
+			int versionID = Integer.valueOf(decoderVersionID).intValue();
+			
+			// no match if both ends of range specified and out of range
+			if (r.getLowVersionID()!=null && r.getHighVersionID()!=null) {
+				int lowVersionID = Integer.valueOf(r.getLowVersionID()).intValue();
+				int highVersionID = Integer.valueOf(r.getHighVersionID()).intValue();
+				if ( versionID < lowVersionID || highVersionID < versionID ) return false;
+			}
+			
+			// else no match if only one specified and not equal
+			if (r.getLowVersionID()!=null && r.getHighVersionID()==null) {
+				int lowVersionID = Integer.valueOf(r.getLowVersionID()).intValue();
+				if ( versionID != lowVersionID ) return false;
+			}
+
+			if (r.getLowVersionID()==null && r.getHighVersionID()!=null) {
+				int highVersionID = Integer.valueOf(r.getHighVersionID()).intValue();
+				if ( highVersionID != versionID ) return false;
+			}
+
+			// no match if this decoder defines neither high nor low, and we're looking for a specific version
+			if (r.getLowVersionID()==null && r.getHighVersionID()==null) return false;
+		}
 		return true;
 	}
 
@@ -176,7 +197,8 @@ public class DecoderIndexFile extends XmlFile {
 	void readFamily(Element family) {
 		Attribute attr;
 		String filename = family.getAttribute("file").getValue();
-		String parentVersID = ((attr = family.getAttribute("versionID"))     != null ? attr.getValue() : null );
+		String parentLowVersID = ((attr = family.getAttribute("lowVersionID"))     != null ? attr.getValue() : null );
+		String parentHighVersID = ((attr = family.getAttribute("highVersionID"))     != null ? attr.getValue() : null );
 		String familyName   = ((attr = family.getAttribute("name"))     != null ? attr.getValue() : null );
 		String mfg   = ((attr = family.getAttribute("mfg"))     != null ? attr.getValue() : null );
 		String mfgID   = mfgIdFromName(mfg);
@@ -187,11 +209,13 @@ public class DecoderIndexFile extends XmlFile {
 		for (int i=0; i<l.size(); i++) {
 			// handle each entry by creating a DecoderFile object containing all it knows
 			Element decoder = (Element)l.get(i);
-			String versID = ( (attr = decoder.getAttribute("versionID"))     != null ? attr.getValue() : parentVersID); 
+			String loVersID = ( (attr = decoder.getAttribute("lowVersionID"))     != null ? attr.getValue() : parentLowVersID); 
+			String hiVersID = ( (attr = decoder.getAttribute("highVersionID"))     != null ? attr.getValue() : parentHighVersID); 
 			int numFns   = ((attr = decoder.getAttribute("numFns"))     != null ? Integer.valueOf(attr.getValue()).intValue() : -1 );
+			int numOuts   = ((attr = decoder.getAttribute("numOuts"))     != null ? Integer.valueOf(attr.getValue()).intValue() : -1 );
 			DecoderFile df = new DecoderFile( mfg, mfgID,
 									( (attr = decoder.getAttribute("model"))     != null ? attr.getValue() : null ), 
-									versID, familyName, filename, numFns); 
+									loVersID, hiVersID, familyName, filename, numFns, numOuts); 
 			// and store it
 			decoderList.add(df);
 		}

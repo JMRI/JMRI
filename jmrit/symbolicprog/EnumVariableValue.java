@@ -21,7 +21,7 @@ import com.sun.java.util.collections.ArrayList;
  * Extends VariableValue to represent a enumerated variable.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: EnumVariableValue.java,v 1.9 2001-12-02 05:46:42 jacobsen Exp $
+ * @version			$Id: EnumVariableValue.java,v 1.10 2001-12-04 19:41:12 jacobsen Exp $
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
@@ -99,7 +99,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 		return ""+_value.getSelectedIndex();
 	}
 	public void setIntValue(int i) {
-		_value.setSelectedIndex(i);
+		_value.setSelectedIndex(i);  // automatically fires a change event
 	}
 	
 	public Component getValue()  { return _value; }

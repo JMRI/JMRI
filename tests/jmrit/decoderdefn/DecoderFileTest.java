@@ -40,7 +40,8 @@ public class DecoderFileTest extends TestCase {
 		VariableTableModel		variableModel	= new VariableTableModel(progStatus,
 					new String[]  {"Name", "Value"},
 					cvModel);
-		DecoderFile d = new DecoderFile();
+		DecoderFile d = new DecoderFile("mfg", "mfgID", "model", "23", "24",
+										"family", "filename", 16, 16);
 		
 		d.loadVariableModel(decoder, variableModel);
 		Assert.assertEquals("read rows ", 3, variableModel.getRowCount());
@@ -48,6 +49,38 @@ public class DecoderFileTest extends TestCase {
 		Assert.assertEquals("third row name ", "Normal direction of motion", variableModel.getName(2));
 	}
 	
+	public void testMinOut() {
+		setupDecoder();
+
+		// this test should probably be done in terms of a test class instead of the real one...
+		JLabel progStatus       	= new JLabel(" OK ");
+		CvTableModel	cvModel		= new CvTableModel(progStatus);
+		VariableTableModel		variableModel	= new VariableTableModel(progStatus,
+					new String[]  {"Name", "Value"},
+					cvModel);
+		DecoderFile d = new DecoderFile("mfg", "mfgID", "model", "23", "24",
+										"family", "filename", 16, 3);
+		
+		d.loadVariableModel(decoder, variableModel);
+		Assert.assertEquals("read rows ", 2, variableModel.getRowCount());
+	}
+
+	public void testMinFn() {
+		setupDecoder();
+
+		// this test should probably be done in terms of a test class instead of the real one...
+		JLabel progStatus       	= new JLabel(" OK ");
+		CvTableModel	cvModel		= new CvTableModel(progStatus);
+		VariableTableModel		variableModel	= new VariableTableModel(progStatus,
+					new String[]  {"Name", "Value"},
+					cvModel);
+		DecoderFile d = new DecoderFile("mfg", "mfgID", "model", "23", "24",
+										"family", "filename", 3, 16);
+		
+		d.loadVariableModel(decoder, variableModel);
+		Assert.assertEquals("read rows ", 2, variableModel.getRowCount());
+	}
+
 	// static variables for the test XML structures
 	Element root = null;
 	public Element decoder = null;
@@ -79,6 +112,7 @@ public class DecoderFileTest extends TestCase {
 									.addContent(new Element("variable")
 										.addAttribute("name", "Address")
 										.addAttribute("CV", "1")
+										.addAttribute("minFn", "4")
 										.addAttribute("mask", "VVVVVVVV")
 										.addAttribute("readOnly", "no")
 										.addContent(new Element("decVal")
@@ -88,6 +122,7 @@ public class DecoderFileTest extends TestCase {
 									.addContent(new Element("variable")
 										.addAttribute("name", "Acceleration rate")
 										.addAttribute("CV", "3")
+										.addAttribute("minOut", "2")
 										.addAttribute("mask", "VVVVVVVV")
 										.addAttribute("readOnly", "no")
 										.addContent(new Element("decVal")
@@ -97,6 +132,8 @@ public class DecoderFileTest extends TestCase {
 									.addContent(new Element("variable")
 										.addAttribute("name", "Normal direction of motion")
 										.addAttribute("CV", "29")
+										.addAttribute("minFn", "2")
+										.addAttribute("minOut", "5")
 										.addAttribute("mask", "XXXXXXXV")
 										.addAttribute("readOnly", "no")
 										.addContent(new Element("enumVal")

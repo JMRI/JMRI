@@ -1,0 +1,216 @@
+<?xml version="1.0"?>
+<!DOCTYPE names-config SYSTEM "names-config.dtd">
+<!-- $Id: names.xml,v 1.1 2001-12-04 19:44:37 jacobsen Exp $ -->
+<names-config xmlns:names="http://jmri.sourceforge.net/xml/names">
+		<variable name="Short Address" CV="1" />
+		<variable name="Vstart" CV="2" />
+		<variable name="Accel" CV="3" />
+		<variable name="Decel" CV="4" />
+		<variable name="Vhigh" CV="5" />
+		<variable name="Vmid" CV="6" />
+		<variable name="Decoder Version" CV="7" />
+		<variable name="Manufacturer" CV="8" />
+		<variable name="Total PWM Period" CV="9" />
+		<variable name="EMF Feedback Cutout" CV="10" />
+		<variable name="Packet Time-out Value" CV="11" />
+		<variable name="Analog Power Conversion" CV="12" mask="XXXXXXXV" />
+		<variable name="Radio Power Conversion" CV="12" mask="XXXXXXVX" />
+		<variable name="Zero-1 Power Conversion" CV="12" mask="XXXXXVXX" />
+		<variable name="Trix Power Conversion" CV="12" mask="XXXXVXXX" />
+		<variable name="CTC/Railcommand Power Conversion" CV="12" mask="XXXVXXXX" />
+		<variable name="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" />
+		<variable name="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" />
+		<variable name="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" />
+		<variable name="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" />
+		<variable name="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" />
+		<variable name="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" />
+		<variable name="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" />
+		<variable name="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" />
+		
+		<variable name="Long Address" CV="17" />
+		
+		<variable name="Consist Address" CV="19" />
+		<variable name="Consist Address Active For F1" CV="21" mask="XXXXXXXV" />
+		<variable name="Consist Address Active For F2" CV="21" mask="XXXXXXVX" />
+		<variable name="Consist Address Active For F3" CV="21" mask="XXXXXVXX" />
+		<variable name="Consist Address Active For F4" CV="21" mask="XXXXVXXX" />
+		<variable name="Consist Address Active For F5" CV="21" mask="XXXVXXXX" />
+		<variable name="Consist Address Active For F6" CV="21" mask="XXVXXXXX" />
+		<variable name="Consist Address Active For F7" CV="21" mask="XVXXXXXX" />
+		<variable name="Consist Address Active For F8" CV="21" mask="VXXXXXXX" />
+		<variable name="Consist Address Active For FL in Forward" CV="22" mask="XXXXXXXV" />
+		<variable name="Consist Address Active For FL in Reverse" CV="22" mask="XXXXXXVX" />
+		<variable name="Consist Acceleration Adjustment" CV="23" mask="XVVVVVVV" />
+		<variable name="Consist Acceleration Adjustment Sign" CV="23" mask="VXXXXXXX" />
+		<variable name="Consist Deceleration Adjustment" CV="24" mask="XVVVVVVV" />
+		<variable name="Consist Deceleration Adjustment Sign" CV="24" mask="VXXXXXXX" />
+		
+		<variable name="Speed Table/Mid Range Cab Speed Step" CV="25" />
+		
+		<variable name="Locomotive Direction" CV="29" mask="XXXXXXXV" />
+		<variable name="Speed Step Mode" CV="29" mask="XXXXXXVX" />
+		<variable name="Analog (DC) Operation" CV="29" mask="XXXXXVXX" />
+		<variable name="Advanced Ack" CV="29" mask="XXXXVXXXX" />
+		<variable name="Speed Table Definition" CV="29" mask="XXXVXXXX" />
+		<variable name="Address Format" CV="29" mask="XXVXXXXX" />
+
+		<variable name="FL(f) controls output 1" CV="33" mask="XXXXXXXV" />
+		<variable name="FL(f) controls output 2" CV="33" mask="XXXXXXVX" />
+		<variable name="FL(f) controls output 3" CV="33" mask="XXXXXVXX" />
+		<variable name="FL(f) controls output 4" CV="33" mask="XXXXVXXX" />
+		<variable name="FL(f) controls output 5" CV="33" mask="XXXVXXXX" />
+		<variable name="FL(f) controls output 6" CV="33" mask="XXVXXXXX" />
+		<variable name="FL(f) controls output 7" CV="33" mask="XVXXXXXX" />
+		<variable name="FL(f) controls output 8" CV="33" mask="VXXXXXXX" />
+
+		<variable name="FL(r) controls output 1" CV="34" mask="XXXXXXXV" />
+		<variable name="FL(r) controls output 2" CV="34" mask="XXXXXXVX" />
+		<variable name="FL(r) controls output 3" CV="34" mask="XXXXXVXX" />
+		<variable name="FL(r) controls output 4" CV="34" mask="XXXXVXXX" />
+		<variable name="FL(r) controls output 5" CV="34" mask="XXXVXXXX" />
+		<variable name="FL(r) controls output 6" CV="34" mask="XXVXXXXX" />
+		<variable name="FL(r) controls output 7" CV="34" mask="XVXXXXXX" />
+		<variable name="FL(r) controls output 8" CV="34" mask="VXXXXXXX" />
+
+		<variable name="F1 controls output 1" CV="35" mask="XXXXXXXV" />
+		<variable name="F1 controls output 2" CV="35" mask="XXXXXXVX" />
+		<variable name="F1 controls output 3" CV="35" mask="XXXXXVXX" />
+		<variable name="F1 controls output 4" CV="35" mask="XXXXVXXX" />
+		<variable name="F1 controls output 5" CV="35" mask="XXXVXXXX" />
+		<variable name="F1 controls output 6" CV="35" mask="XXVXXXXX" />
+		<variable name="F1 controls output 7" CV="35" mask="XVXXXXXX" />
+		<variable name="F1 controls output 8" CV="35" mask="VXXXXXXX" />
+
+		<variable name="F2 controls output 1" CV="36" mask="XXXXXXXV" />
+		<variable name="F2 controls output 2" CV="36" mask="XXXXXXVX" />
+		<variable name="F2 controls output 3" CV="36" mask="XXXXXVXX" />
+		<variable name="F2 controls output 4" CV="36" mask="XXXXVXXX" />
+		<variable name="F2 controls output 5" CV="36" mask="XXXVXXXX" />
+		<variable name="F2 controls output 6" CV="36" mask="XXVXXXXX" />
+		<variable name="F2 controls output 7" CV="36" mask="XVXXXXXX" />
+		<variable name="F2 controls output 8" CV="36" mask="VXXXXXXX" />
+
+		<variable name="F3 controls output 1" CV="37" mask="XXXXXXXV" />
+		<variable name="F3 controls output 2" CV="37" mask="XXXXXXVX" />
+		<variable name="F3 controls output 3" CV="37" mask="XXXXXVXX" />
+		<variable name="F3 controls output 4" CV="37" mask="XXXXVXXX" />
+		<variable name="F3 controls output 5" CV="37" mask="XXXVXXXX" />
+		<variable name="F3 controls output 6" CV="37" mask="XXVXXXXX" />
+		<variable name="F3 controls output 7" CV="37" mask="XVXXXXXX" />
+		<variable name="F3 controls output 8" CV="37" mask="VXXXXXXX" />
+
+		<variable name="F4 controls output 4" CV="38" mask="XXXXXXXV" />
+		<variable name="F4 controls output 5" CV="38" mask="XXXXXXVX" />
+		<variable name="F4 controls output 6" CV="38" mask="XXXXXVXX" />
+		<variable name="F4 controls output 7" CV="38" mask="XXXXVXXX" />
+		<variable name="F4 controls output 8" CV="38" mask="XXXVXXXX" />
+		<variable name="F4 controls output 9" CV="38" mask="XXVXXXXX" />
+		<variable name="F4 controls output 10" CV="38" mask="XVXXXXXX" />
+		<variable name="F4 controls output 11" CV="38" mask="VXXXXXXX" />
+			
+		<variable name="F5 controls output 4" CV="39" mask="XXXXXXXV" />
+		<variable name="F5 controls output 5" CV="39" mask="XXXXXXVX" />
+		<variable name="F5 controls output 6" CV="39" mask="XXXXXVXX" />
+		<variable name="F5 controls output 7" CV="39" mask="XXXXVXXX" />
+		<variable name="F5 controls output 8" CV="39" mask="XXXVXXXX" />
+		<variable name="F5 controls output 9" CV="39" mask="XXVXXXXX" />
+		<variable name="F5 controls output 10" CV="39" mask="XVXXXXXX" />
+		<variable name="F5 controls output 11" CV="39" mask="VXXXXXXX" />
+			
+		<variable name="F6 controls output 4" CV="40" mask="XXXXXXXV" />
+		<variable name="F6 controls output 5" CV="40" mask="XXXXXXVX" />
+		<variable name="F6 controls output 6" CV="40" mask="XXXXXVXX" />
+		<variable name="F6 controls output 7" CV="40" mask="XXXXVXXX" />
+		<variable name="F6 controls output 8" CV="40" mask="XXXVXXXX" />
+		<variable name="F6 controls output 9" CV="40" mask="XXVXXXXX" />
+		<variable name="F6 controls output 10" CV="40" mask="XVXXXXXX" />
+		<variable name="F6 controls output 11" CV="40" mask="VXXXXXXX" />
+			
+		<variable name="F7 controls output 4" CV="41" mask="XXXXXXXV" />
+		<variable name="F7 controls output 5" CV="41" mask="XXXXXXVX" />
+		<variable name="F7 controls output 6" CV="41" mask="XXXXXVXX" />
+		<variable name="F7 controls output 7" CV="41" mask="XXXXVXXX" />
+		<variable name="F7 controls output 8" CV="41" mask="XXXVXXXX" />
+		<variable name="F7 controls output 9" CV="41" mask="XXVXXXXX" />
+		<variable name="F7 controls output 10" CV="41" mask="XVXXXXXX" />
+		<variable name="F7 controls output 11" CV="41" mask="VXXXXXXX" />
+			
+		<variable name="F8 controls output 4" CV="42" mask="XXXXXXXV" />
+		<variable name="F8 controls output 5" CV="42" mask="XXXXXXVX" />
+		<variable name="F8 controls output 6" CV="42" mask="XXXXXVXX" />
+		<variable name="F8 controls output 7" CV="42" mask="XXXXVXXX" />
+		<variable name="F8 controls output 8" CV="42" mask="XXXVXXXX" />
+		<variable name="F8 controls output 9" CV="42" mask="XXVXXXXX" />
+		<variable name="F8 controls output 10" CV="42" mask="XVXXXXXX" />
+		<variable name="F8 controls output 11" CV="42" mask="VXXXXXXX" />
+			
+		<variable name="F9 controls output 7" CV="43" mask="XXXXXXXV" />
+		<variable name="F9 controls output 8" CV="43" mask="XXXXXXVX" />
+		<variable name="F9 controls output 9" CV="43" mask="XXXXXVXX" />
+		<variable name="F9 controls output 10" CV="43" mask="XXXXVXXX" />
+		<variable name="F9 controls output 11" CV="43" mask="XXXVXXXX" />
+		<variable name="F9 controls output 12" CV="43" mask="XXVXXXXX" />
+		<variable name="F9 controls output 13" CV="43" mask="XVXXXXXX" />
+		<variable name="F9 controls output 14" CV="43" mask="VXXXXXXX" />
+			
+		<variable name="F10 controls output 7" CV="44" mask="XXXXXXXV" />
+		<variable name="F10 controls output 8" CV="44" mask="XXXXXXVX" />
+		<variable name="F10 controls output 9" CV="44" mask="XXXXXVXX" />
+		<variable name="F10 controls output 10" CV="44" mask="XXXXVXXX" />
+		<variable name="F10 controls output 11" CV="44" mask="XXXVXXXX" />
+		<variable name="F10 controls output 12" CV="44" mask="XXVXXXXX" />
+		<variable name="F10 controls output 13" CV="44" mask="XVXXXXXX" />
+		<variable name="F10 controls output 14" CV="44" mask="VXXXXXXX" />
+			
+		<variable name="F11 controls output 7" CV="45" mask="XXXXXXXV" />
+		<variable name="F11 controls output 8" CV="45" mask="XXXXXXVX" />
+		<variable name="F11 controls output 9" CV="45" mask="XXXXXVXX" />
+		<variable name="F11 controls output 10" CV="45" mask="XXXXVXXX" />
+		<variable name="F11 controls output 11" CV="45" mask="XXXVXXXX" />
+		<variable name="F11 controls output 12" CV="45" mask="XXVXXXXX" />
+		<variable name="F11 controls output 13" CV="45" mask="XVXXXXXX" />
+		<variable name="F11 controls output 14" CV="45" mask="VXXXXXXX" />
+			
+		<variable name="F12 controls output 7" CV="46" mask="XXXXXXXV" />
+		<variable name="F12 controls output 8" CV="46" mask="XXXXXXVX" />
+		<variable name="F12 controls output 9" CV="46" mask="XXXXXVXX" />
+		<variable name="F12 controls output 10" CV="46" mask="XXXXVXXX" />
+		<variable name="F12 controls output 11" CV="46" mask="XXXVXXXX" />
+		<variable name="F12 controls output 12" CV="46" mask="XXVXXXXX" />
+		<variable name="F12 controls output 13" CV="46" mask="XVXXXXXX" />
+		<variable name="F12 controls output 14" CV="46" mask="VXXXXXXX" />
+		
+		<variable name="Kick Start" CV="65" />
+		<variable name="Forward Trim" CV="66" />
+		<variable name="Speed Table" CV="67" />
+		<variable name="Reverse Trim" CV="95" />
+		<variable name="User Id #1" CV="105" />
+		<variable name="User Id #2" CV="106" />
+		
+		<!-- Non-NMRA variables -->
+		
+		<variable name="EMF Static Config" />
+		<variable name="EMF Dynamic Config" />
+		<variable name="EMF Droop Config" />
+		<variable name="Function F0F effect generated"/>
+		<variable name="Function F0F behaviour"/>
+		<variable name="Function F0R effect generated"/>
+		<variable name="Function F0R behaviour"/>
+		<variable name="Function 1 effect generated"/>
+		<variable name="Function 1 behaviour"/>
+		<variable name="Function 2 effect generated"/>
+		<variable name="Function 2 behaviour"/>
+		<variable name="Function 3 effect generated"/>
+		<variable name="Function 3 behaviour"/>
+		<variable name="Function 4 effect generated"/>
+		<variable name="Function 4 behaviour"/>
+		<variable name="Function 5 effect generated"/>
+		<variable name="Function 5 behaviour"/>
+		<variable name="Function 6 effect generated"/>
+		<variable name="Function 6 behaviour"/>
+		<variable name="Function 7 effect generated"/>
+		<variable name="Function 7 behaviour"/>
+		<variable name="Function 8 effect generated"/>
+		<variable name="Function 8 behaviour"/>
+
+</names-config>

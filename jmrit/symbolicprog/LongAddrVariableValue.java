@@ -31,7 +31,7 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 		super(name, comment, readOnly, cvNum, mask, v, status, stdname);
 		_maxVal = maxVal;
 		_minVal = minVal;
-		_value = new JTextField(5);
+		_value = new JTextField("0", 5);
 		_defaultColor = _value.getBackground();
 		_value.setBackground(COLOR_UNKNOWN);
 		// connect to the JTextField value, cv
@@ -73,7 +73,7 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 		return _value.getText();
 	}
 	public void setIntValue(int i) {
-		_value.setText(""+i);
+		setValue(i);
 	}
 	
 	public Component getValue()  { 
@@ -86,10 +86,12 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 	public void setValue(int value) { 
 		int oldVal;
 		try { oldVal = Integer.valueOf(_value.getText()).intValue(); }
-			catch (java.lang.NumberFormatException ex) { oldVal = 0; }	
-		if (oldVal != value || getState() == VariableValue.UNKNOWN) 
-			prop.firePropertyChange("Value", null, new Integer(value));
+			catch (java.lang.NumberFormatException ex) { oldVal = -999; }	
+		if (log.isDebugEnabled()) log.debug("setValue with new value "+value+" old value "+oldVal);
 		_value.setText(""+value);
+		if (oldVal != value || getState() == VariableValue.UNKNOWN) 
+			actionPerformed(null);
+			prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value));
 	}
 
 	Color _defaultColor;
@@ -145,24 +147,24 @@ public class LongAddrVariableValue extends VariableValue implements ActionListen
 						return;
 				case READING_FIRST:   // read first CV, now read second
 						if (log.isDebugEnabled()) log.debug("Busy goes false with state READING_FIRST");
-						super.setState(READ);
 						_progState = READING_SECOND;
 						((CvValue)_cvVector.elementAt(getCvNum()+1)).read(_status);
 						return;
 				case READING_SECOND:  // finally done, set not busy
 						if (log.isDebugEnabled()) log.debug("Busy goes false with state READING_SECOND");
 						_progState = IDLE;
+						super.setState(READ);
 						setBusy(false);
 						return;
 				case WRITING_FIRST:  // no, just a CV update
 						if (log.isDebugEnabled()) log.debug("Busy goes false with state WRITING_FIRST");
- 						super.setState(STORED);
 						_progState = WRITING_SECOND;
  						((CvValue)_cvVector.elementAt(getCvNum()+1)).write(_status);
 						return;
 				case WRITING_SECOND:  // now done with complete request
 						if (log.isDebugEnabled()) log.debug("Busy goes false with state WRITING_SECOND");
 						_progState = IDLE;
+ 						super.setState(STORED);
 						setBusy(false);
 						return;
 				default:  // unexpected!

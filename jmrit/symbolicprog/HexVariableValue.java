@@ -31,7 +31,7 @@ public class HexVariableValue extends VariableValue implements ActionListener, P
 		super(name, comment, readOnly, cvNum, mask, v, status, stdname);
 		_maxVal = maxVal;
 		_minVal = minVal;
-		_value = new JTextField(4);
+		_value = new JTextField("0",4);
 		_defaultColor = _value.getBackground();
 		_value.setBackground(COLOR_UNKNOWN);
 		// connect to the JTextField value, cv
@@ -64,7 +64,7 @@ public class HexVariableValue extends VariableValue implements ActionListener, P
 		return _value.getText();
 	}
 	public void setIntValue(int i) {
-		_value.setText(""+i);
+		setValue(i);
 	}
 	
 	public Component getValue()  { 
@@ -77,10 +77,12 @@ public class HexVariableValue extends VariableValue implements ActionListener, P
 	public void setValue(int value) { 
 		int oldVal;
 		try { oldVal = Integer.valueOf(_value.getText(), 16).intValue(); }
-			catch (java.lang.NumberFormatException ex) { oldVal = 0; }	
-		if (oldVal != value || getState() == VariableValue.UNKNOWN) 
-			prop.firePropertyChange("Value", null, new Integer(value));
+			catch (java.lang.NumberFormatException ex) { oldVal = -999; }	
+		if (log.isDebugEnabled()) log.debug("setValue with new value "+value+" old value "+oldVal);
 		_value.setText(Integer.toHexString(value));
+		if (oldVal != value || getState() == VariableValue.UNKNOWN) 
+			actionPerformed(null);
+			prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value));
 	}
 
 	public Component getRep(String format)  { 

@@ -150,7 +150,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
 		}
 		if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+((JTextField)var.getValue()).getText()+" state="+var.getState());
 		if (i==0) log.warn("testLongAddressRead saw an immediate return from isBusy");
-		assert(i<100);
+		Assert.assertTrue("wait satisfied ", i<100);
 		
 		int nBusyFalse = 0;
 		for (int k = 0; k < evtList.size(); k++) {
@@ -161,10 +161,10 @@ public class LongAddrVariableValueTest extends VariableValueTest {
 		}
 		Assert.assertEquals("only one Busy -> false transition ", 1, nBusyFalse);
 		
-		assert( ((JTextField)var.getValue()).getText().equals("15227") );  // 15227 = (1230x3f)*256+123
-		assert(var.getState() == CvValue.READ);
-		assert(cv17.getValue() == 123);
-		assert(cv18.getValue() == 123);
+		Assert.assertEquals("text value ", "15227", ((JTextField)var.getValue()).getText() );  // 15227 = (1230x3f)*256+123
+		Assert.assertEquals("Var state", AbstractValue.READ, var.getState() );
+		Assert.assertEquals("CV 17 value ", 251, cv17.getValue());  // 123 with 128 bit set
+		Assert.assertEquals("CV 18 value ", 123, cv18.getValue()); 
 	}
 
 	// check a long address write operation
@@ -197,11 +197,12 @@ public class LongAddrVariableValueTest extends VariableValueTest {
 															+" last write: "+p.lastWrite());
 		if (i==0) log.warn("testLongAddressWrite saw an immediate return from isBusy");
 
-		assert(cv17.getValue() == 210);
-		assert(cv18.getValue() == 189);
-		assert(i<100);
+		Assert.assertTrue("wait satisfied ", i<100);
+
+		Assert.assertEquals("CV 17 value ", 210, cv17.getValue());
+		Assert.assertEquals("CV 18 value ", 189, cv18.getValue());
 		assert( ((JTextField)var.getValue()).getText().equals("4797") );
-		assert(var.getState() == CvValue.STORED);
+		Assert.assertEquals("Var state", AbstractValue.STORED, var.getState() );
 		assert(p.lastWrite() == 189);
 		// how do you check separation of the two writes?  State model?
 	}

@@ -21,8 +21,7 @@ import org.jdom.output.*;
  * also responsible for the "dirty bit" handling to ensure it gets
  * written.  As a temporary reliability enhancement, all changes to
  * this structure are now being written to a backup file, and a copy
- * is made when the file is opened. Both of these are placed in the
- * "xml/backups/" directory.
+ * is made when the file is opened. 
  *<P>
  * Multiple Roster objects don't make sense, so we use an "instance" member
  * to navigate to a single one.
@@ -31,7 +30,7 @@ import org.jdom.output.*;
  * whether it should...
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: Roster.java,v 1.7 2001-12-02 05:46:42 jacobsen Exp $
+ * @version			$Id: Roster.java,v 1.8 2001-12-04 19:41:12 jacobsen Exp $
  * @see             jmri.jmrit.roster.RosterEntry
  */
 public class Roster {

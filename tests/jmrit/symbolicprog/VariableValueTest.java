@@ -56,6 +56,7 @@ public abstract class VariableValueTest extends TestCase {
 		// create a variable pointed at CV 81, check name
 		VariableValue variable = makeVar("name", "comment", false, 81, "XXVVVVXX", 0, 255, v, null, null);
 		Assert.assertEquals("name", "name", variable.name() );
+		checkValue(variable, "value object initially contains ", "0");
 
 		// pretend you've editted the value & manually notify
 		setValue(variable, "5");
@@ -126,9 +127,9 @@ public abstract class VariableValueTest extends TestCase {
 
 		Assert.assertTrue("wait time for message",i<100);
 		checkValue(variable, "text var value ", "14");
-		Assert.assertEquals("var state ", CvValue.READ, variable.getState());
+		Assert.assertEquals("var state ", AbstractValue.READ, variable.getState());
 		Assert.assertEquals("cv value", 123, cv.getValue());
-		Assert.assertEquals("CV state ", CvValue.READ, cv.getState());
+		Assert.assertEquals("CV state ", AbstractValue.READ, cv.getState());
 	}
 
 	// check a write operation to the variable
@@ -159,8 +160,8 @@ public abstract class VariableValueTest extends TestCase {
 
 		Assert.assertTrue("iterations ",i<100);
 		checkValue(variable, "value ","5");
-		Assert.assertEquals("var state ", CvValue.STORED, variable.getState());
-		Assert.assertEquals("cv state ", CvValue.STORED, cv.getState());
+		Assert.assertEquals("var state ", AbstractValue.STORED, variable.getState());
+		Assert.assertEquals("cv state ", AbstractValue.STORED, cv.getState());
 		Assert.assertEquals("last program write ", 5*4, p.lastWrite());
 	}
 	
@@ -193,8 +194,8 @@ public abstract class VariableValueTest extends TestCase {
 
 		Assert.assertTrue("iterations needed ", i<100);
 		checkValue(variable, "value ","5");
-		Assert.assertEquals("variable state ", CvValue.STORED, variable.getState() );
-		Assert.assertEquals("cv state ", CvValue.STORED, cv.getState());
+		Assert.assertEquals("variable state ", AbstractValue.STORED, variable.getState() );
+		Assert.assertEquals("cv state ", AbstractValue.STORED, cv.getState());
 		Assert.assertEquals("value written ", 5*4, p.lastWrite());
 		Assert.assertEquals("status label ", "OK", statusLabel.getText());
 		if (log.isDebugEnabled()) log.debug("end testVariableCvWrite test");
@@ -349,8 +350,8 @@ public abstract class VariableValueTest extends TestCase {
 		Assert.assertTrue("Number of iterations ",i<100);
 		checkValue(var1, "var 1 value","5");
 		checkValue(var2, "var 2 value","5");
-		Assert.assertEquals("1st variable state ", CvValue.STORED, var1.getState());
-		Assert.assertEquals("2nd variable state ", CvValue.STORED, var2.getState());
+		Assert.assertEquals("1st variable state ", AbstractValue.STORED, var1.getState());
+		Assert.assertEquals("2nd variable state ", AbstractValue.STORED, var2.getState());
 		Assert.assertEquals("value written to programmer ",5*4, p.lastWrite());
 		if (log.isDebugEnabled()) log.debug("end testWriteSynch2 test");
 	}

@@ -400,6 +400,8 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
 	}
 
 	void writeFile() {
+		log.warn("SymbolicProgFrame writeFile invoked - is this still right, or should the LocoFile method be used?");
+		log.warn("Note use of VersionID attribute...");
 		try {
 			// get the file
 			int retVal = fco.showSaveDialog(this);

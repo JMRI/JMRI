@@ -1,0 +1,26 @@
+<!-- Defines XML documenting standard names and aliases -->
+<!-- $Id: names-config.dtd,v 1.1 2001-12-04 19:44:37 jacobsen Exp $ -->
+
+<!ELEMENT names-config (variable*)>
+<!ATTLIST names-config xmlns:names CDATA "">
+
+<!-- The following are very similar to the definitions in decoder-config.dtd, -->
+<!-- and should be kept consistent -->
+
+<!ELEMENT variable EMPTY >
+<!ATTLIST variable name CDATA #REQUIRED>  <!-- Name used for identification -->
+<!ATTLIST variable stdName CDATA #IMPLIED>  <!-- "standard name" for this function if different -->
+
+<!ATTLIST variable comment   CDATA #IMPLIED>
+
+<!-- The CV and mask attributes are still under consideration. They are not used in the  -->
+<!-- programs, and are currently here just for mapping to the definitions elsewhere -->
+<!ATTLIST variable CV CDATA #IMPLIED>    <!-- CV number containing value -->
+<!ATTLIST variable mask CDATA "VVVVVVVV">    <!-- mask of bits within CV -->
+                                           <!-- mask is up to 16 characters long, each -->
+                                           <!-- representing one bit in the result -->
+                                           <!-- valid chars: -->
+                                           <!--     X   not used     -->
+                                           <!--     V   used bits    -->
+
+

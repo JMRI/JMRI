@@ -28,7 +28,10 @@ public class IdentifyLocoTest extends TestCase {
 		jmri.InstanceManager.setProgrammer(p);
 
 		// create our test object
-		IdentifyLoco i = new IdentifyLoco();
+		IdentifyLoco i = new IdentifyLoco() {
+			public void message(String m) {}
+			public void done(int i) {}
+		};
 		
 		i.start();
 		Assert.assertEquals("step 1 reads CV ", 29, cvRead);
@@ -56,7 +59,10 @@ public class IdentifyLocoTest extends TestCase {
 		jmri.InstanceManager.setProgrammer(p);
 
 		// create our test object
-		IdentifyLoco i = new IdentifyLoco();
+		IdentifyLoco i = new IdentifyLoco() {
+			public void message(String m) {}
+			public void done(int i) {}
+		};
 		
 		i.start();
 		Assert.assertEquals("step 1 reads CV ", 29, cvRead);

@@ -31,7 +31,7 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 		super(name, comment, readOnly, cvNum, mask, v, status, stdname);
 		_maxVal = maxVal;
 		_minVal = minVal;
-		_value = new JTextField(4);
+		_value = new JTextField("0",4);
 		_defaultColor = _value.getBackground();
 		_value.setBackground(COLOR_UNKNOWN);
 		// connect to the JTextField value, cv
@@ -67,7 +67,7 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 	}
 	
 	public void setIntValue(int i) {
-		_value.setText(""+i);
+		setValue(i);
 	}
 	
 	public Component getValue()  { 
@@ -93,9 +93,10 @@ public class DecVariableValue extends VariableValue implements ActionListener, P
 			}
 			catch (java.lang.NumberFormatException ex) { oldVal = -999; }	
 		if (log.isDebugEnabled()) log.debug("setValue with new value "+value+" old value "+oldVal);
-		if (oldVal != value || getState() == VariableValue.UNKNOWN) 
-			prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value));
 		_value.setText(""+value);
+		if (oldVal != value || getState() == VariableValue.UNKNOWN) 
+			actionPerformed(null);
+			prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value));
 	}
 
 	Color _defaultColor;

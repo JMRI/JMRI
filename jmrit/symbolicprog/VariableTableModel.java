@@ -207,10 +207,10 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		_cvModel.addCV(""+CV);
 		
 		// have to handle various value types, see "snippet"
+		Attribute a;
 		Element child;
 		VariableValue v = null;
 		if ( (child = e.getChild("decVal")) != null) {
-			Attribute a;
 			if ( (a = child.getAttribute("min")) != null)
 				minVal = Integer.valueOf(a.getValue()).intValue();
 			if ( (a = child.getAttribute("max")) != null)
@@ -219,7 +219,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 								CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, stdname);
 								
 		} else if ( (child = e.getChild("hexVal")) != null) {
-			Attribute a;
 			if ( (a = child.getAttribute("min")) != null)
 				minVal = Integer.valueOf(a.getValue(),16).intValue();
 			if ( (a = child.getAttribute("max")) != null)
@@ -238,7 +237,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 			v1.lastItem();
 			
 		} else if ( (child = e.getChild("speedTableVal")) != null) {
-			log.warn("Speed tables are still experimental!");
 			// ensure all 28 CVs exist
 			for (int i=0; i<28; i++) { _cvModel.addCV(""+(CV+i)); }
 	
@@ -255,9 +253,19 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 		}
 
 		// back to general processing
-		// record new variable, hook up listeners
+				
+		// record new variable, update state, hook up listeners
 		rowVector.addElement(v);
+		v.setState(VariableValue.FROMFILE);
 		v.addPropertyChangeListener(this);
+		
+		// set to default value if specified (CV load will later override this)
+		if ( (a = e.getAttribute("default")) != null) {
+			String val = a.getValue();
+			if (log.isInfoEnabled()) log.info("Found default value: "+val+" for "+name);
+			v.setIntValue(Integer.valueOf(val).intValue());
+		}
+		
 	}
 	
 	public void newDecVariableValue(String name, int CV, String mask) {

@@ -24,16 +24,17 @@ import com.sun.java.util.collections.List;
  *							 with higher numbered functions in higher numbered columns.
  *  <DT>Column firstOut  <DD> Column for leftmost numbered output
  *</dl>
- *
+ *<P>
+ * Although support for the "CV label column" is still here, its turned off now.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: FnMapPanel.java,v 1.2 2001-12-02 05:46:42 jacobsen Exp $
+ * @version			$Id: FnMapPanel.java,v 1.3 2001-12-04 19:41:12 jacobsen Exp $
  */
 public class FnMapPanel extends JPanel {
 	// columns
-	int cvNum = 0;
-	int fnName = 1;
-	int firstOut = 2;
+	int cvNum = -1;
+	int fnName = 0;
+	int firstOut = 1;
 
 	// rows
 	int outputLabel = 0;
@@ -67,23 +68,25 @@ public class FnMapPanel extends JPanel {
 			cs.gridwidth = 1;
 		}
 		// dummy structure until we figure out how to convey CV numbers programmatically
-		labelAt( 0, 0, "CV");
-		labelAt( firstFn   , cvNum, "33");
-		labelAt( firstFn+ 1, cvNum, "34");
-		labelAt( firstFn+ 2, cvNum, "35");
-		labelAt( firstFn+ 3, cvNum, "36");
-		labelAt( firstFn+ 4, cvNum, "37");
-		labelAt( firstFn+ 5, cvNum, "38");
-		labelAt( firstFn+ 6, cvNum, "39");
-		labelAt( firstFn+ 7, cvNum, "40");
-		labelAt( firstFn+ 8, cvNum, "41");
-		labelAt( firstFn+ 9, cvNum, "42");
-		labelAt( firstFn+10, cvNum, "43");
-		labelAt( firstFn+11, cvNum, "44");
-		labelAt( firstFn+12, cvNum, "45");
-		labelAt( firstFn+13, cvNum, "46");
-		
-		labelAt(0,1, "Description");
+		if (cvNum>=0) {
+			labelAt( 0, 0, "CV");
+			labelAt( firstFn   , cvNum, "33");
+			labelAt( firstFn+ 1, cvNum, "34");
+			labelAt( firstFn+ 2, cvNum, "35");
+			labelAt( firstFn+ 3, cvNum, "36");
+			labelAt( firstFn+ 4, cvNum, "37");
+			labelAt( firstFn+ 5, cvNum, "38");
+			labelAt( firstFn+ 6, cvNum, "39");
+			labelAt( firstFn+ 7, cvNum, "40");
+			labelAt( firstFn+ 8, cvNum, "41");
+			labelAt( firstFn+ 9, cvNum, "42");
+			labelAt( firstFn+10, cvNum, "43");
+			labelAt( firstFn+11, cvNum, "44");
+			labelAt( firstFn+12, cvNum, "45");
+			labelAt( firstFn+13, cvNum, "46");
+		}
+				
+		labelAt(0,fnName, "Description");
 
 		labelAt( firstFn   , fnName, "Forward Headlight FL(f)");
 		labelAt( firstFn+ 1, fnName, "Reverse Headlight FL(r)");

@@ -1,0 +1,26 @@
+<!-- Defines XML for configuring the DecoderPro program -->
+<!-- $Id: DecoderPro-config.dtd,v 1.1 2001-12-04 19:44:37 jacobsen Exp $ -->
+
+<!ELEMENT DecoderPro-config (connection, gui, programmer)>
+<!ATTLIST DecoderPro-config xmlns:JMRIdemo CDATA "">
+
+<!--  Section identifies serial port info -->
+<!ELEMENT connection EMPTY>
+<!ATTLIST connection class CDATA #REQUIRED>
+<!ATTLIST connection port CDATA #REQUIRED>
+
+<!--  Section identifies GUI info, e.g. look&feel info-->
+<!ELEMENT gui EMPTY>
+<!ATTLIST gui LAFclass CDATA #IMPLIED>  <!-- default means use system default -->
+
+<!--  Section identifies programmer options -->
+<!ELEMENT programmer EMPTY>
+<!ATTLIST programmer defaultFile CDATA "Basic.xml">
+<!ATTLIST programmer verifyBeforeWrite (yes | no) "no" >
+
+
+
+
+
+
+

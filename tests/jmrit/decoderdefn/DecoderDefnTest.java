@@ -34,6 +34,7 @@ public class DecoderDefnTest extends TestCase {
 		TestSuite suite = new TestSuite("jmri.jmrit.decoderdefn");
 		suite.addTest(jmri.jmrit.decoderdefn.IdentifyDecoderTest.suite());
 		suite.addTest(jmri.jmrit.decoderdefn.DecoderIndexFileTest.suite());
+		suite.addTest(jmri.jmrit.decoderdefn.DecoderFileTest.suite());
 		return suite;
 	}
 	
