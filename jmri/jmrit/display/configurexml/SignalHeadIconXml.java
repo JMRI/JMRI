@@ -15,7 +15,7 @@ import javax.swing.*;
  * Handle configuration for display.SignalHeadIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SignalHeadIconXml implements XmlAdapter {
 
@@ -30,7 +30,6 @@ public class SignalHeadIconXml implements XmlAdapter {
      */
     public Element store(Object o) {
         Element element = new Element("signalheadicon");
-        element.addAttribute("class", "jmri.jmrit.display.configurexml.SignalHeadIconXml");
 
         // include contents
         SignalHeadIcon p = (SignalHeadIcon)o;
@@ -38,12 +37,12 @@ public class SignalHeadIconXml implements XmlAdapter {
         element.addAttribute("head", ""+p.getHeadNumber());
         element.addAttribute("x", ""+p.getX());
         element.addAttribute("y", ""+p.getY());
-        element.addAttribute("height", ""+p.getHeight());
-        element.addAttribute("width", ""+p.getWidth());
         element.addAttribute("red", p.getRedIcon().getName());
         element.addAttribute("yellow", p.getYellowIcon().getName());
         element.addAttribute("flashyellow", p.getFlashYellowIcon().getName());
         element.addAttribute("green", p.getGreenIcon().getName());
+
+        element.addAttribute("class", "jmri.jmrit.display.configurexml.SignalHeadIconXml");
 
         return element;
     }
@@ -79,6 +78,8 @@ public class SignalHeadIconXml implements XmlAdapter {
 
         name = element.getAttribute("green").getValue();
         l.setGreenIcon(p.catalog.getIconByName(name));
+
+        l.displayState(l.headState());
 
         // find coordinates
         int x = 0;
