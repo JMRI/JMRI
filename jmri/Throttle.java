@@ -2,7 +2,7 @@
 
 package jmri;
 
-/** 
+/**
  * A Throttle object can be manipulated to change the speed, direction
  * and functions of a locomotive.
  *
@@ -22,51 +22,51 @@ package jmri;
  * and deassign locos from this throttle, but that doesn't seem right.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Id: Throttle.java,v 1.2 2002-02-04 07:36:36 jacobsen Exp $
+ * @version			$Id: Throttle.java,v 1.3 2003-03-24 02:12:51 jacobsen Exp $
  */
 public interface Throttle {
 
-	/** speed - expressed as a value 0.0 -> 1.0. Negative means emergency stop.
+	/** Speed - expressed as a value 0.0 -> 1.0. Negative means emergency stop.
 	 * This is an bound parameter.
 	 */
 	public float getSpeedSetting();
 	public void setSpeedSetting(float speed);
-		
+
 	/** direction
 	 * This is an bound parameter.
 	 */
 	public boolean getIsForward();
 	public void setIsForward(boolean forward);
-	
+
 	// functions - note that we use the naming for DCC, though that's not the implication;
 	// see also DccThrottle interface
 	public boolean getF0();
 	public void setF0(boolean f0);
-	
+
 	public boolean getF1();
 	public void setF1(boolean f1);
-	
+
 	public boolean getF2();
 	public void setF2(boolean f2);
-	
+
 	public boolean getF3();
 	public void setF3(boolean f3);
-	
+
 	public boolean getF4();
 	public void setF4(boolean f4);
-	
+
 	public boolean getF5();
 	public void setF5(boolean f5);
-	
+
 	public boolean getF6();
 	public void setF6(boolean f6);
-	
+
 	public boolean getF7();
 	public void setF7(boolean f7);
-	
+
 	public boolean getF8();
 	public void setF8(boolean f8);
-	
+
 	/**
 	 * Locomotive identification.  The exact format is defined by the
 	 * specific implementation, but its intended that this is a user-specified
@@ -75,7 +75,7 @@ public interface Throttle {
 	 * This is an unbound parameter.
 	 */
 	public String getLocoIdentification();
-	
+
 	/**
 	 * Locomotive address.  The exact format is defined by the
 	 * specific implementation, but for DCC systems it is intended that this
@@ -85,7 +85,7 @@ public interface Throttle {
 	 * This is an unbound parameter.
 	 */
 	public String getLocoAddress();
-		
+
 	// register for notification if any of the properties change
 	public void removePropertyChangeListener(java.beans.PropertyChangeListener p);
 	public void addPropertyChangeListener(java.beans.PropertyChangeListener p);
@@ -96,7 +96,7 @@ public interface Throttle {
 	 *
 	 * This is quite problematic, because a using object doesn't know when
 	 * it's the last user.
-	 */	
+	 */
 	public void dispose();
 
 }
