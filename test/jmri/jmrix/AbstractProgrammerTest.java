@@ -9,7 +9,7 @@ import jmri.*;
  * JUnit tests for the AbstractProgrammer class
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class AbstractProgrammerTest extends TestCase {
 
@@ -29,6 +29,7 @@ public class AbstractProgrammerTest extends TestCase {
         public void confirmCV(int i, int j, ProgListener l) {}
         public void readCV(int i, ProgListener l) {}
         public void setMode(int i) {}
+        public boolean hasMode(int i) { return false; }
         public int getMode() { return 0;}
         public void timeout() {}
     };
