@@ -40,7 +40,7 @@ import org.jdom.output.XMLOutputter;
  * sort is done manually each time an entry is added.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -190,7 +190,7 @@ public class Roster extends XmlFile {
      * Write the entire roster to a file. This does not do backup; that has
      * to be done separately. See writeRosterFile() for a function that
      * finds the default location, does a backup and then calls this.
-     * @param name Filename for new file
+     * @param name Filename for new file, including path info as needed.
      * @throws IOException
      */
     void writeFile(String name) throws java.io.IOException {
@@ -198,7 +198,7 @@ public class Roster extends XmlFile {
         // This is taken in large part from "Java and XML" page 368
         File file = findFile(name);
         if (file == null) {
-            file = new File(prefsDir()+name);
+            file = new File(name);
         }
         // create root element
         Element root = new Element("roster-config");
@@ -292,12 +292,32 @@ public class Roster extends XmlFile {
      * Return the filename String for the default roster file, including location.
      * This is here to allow easy override in tests.
      */
-    public static String defaultRosterFilename() { return fileLocation+rosterFileName;}
-    public static void setFileLocation(String f) { fileLocation = f; }
-    public static String getFileLocation() { return fileLocation; }
+    public static String defaultRosterFilename() { return getFileLocation()+rosterFileName;}
 
-    static String fileLocation  = "";  // includes final file separator if needed
-    static String rosterFileName = "roster.xml";
+    /**
+     * Set the default location for the Roster file, and all
+     * individual locomotive files.
+     * @param f Absolute pathname to use
+     */
+    public static void setFileLocation(String f) {
+        fileLocation = f;
+        if (f.endsWith(File.separator))
+            LocoFile.setFileLocation(f+"roster");
+        else
+            LocoFile.setFileLocation(f+File.separator+"roster");
+    }
+    private static String getFileLocation() { return fileLocation; }
+
+    /**
+     * Absolute path to roster file location.
+     * <P>
+     * Default is in the prefsDir, but can be set to anything.
+     * @see XmlFile.prefsDir()
+     */
+    private static String fileLocation  = XmlFile.prefsDir();
+
+    public static void setRosterFileName(String name) { rosterFileName = name; }
+    private static String rosterFileName = "roster.xml";
 
     // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
     // reflect to it.

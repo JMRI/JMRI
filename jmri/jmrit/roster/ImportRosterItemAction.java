@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Import a locomotive XML file as a new RosterEntry.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  * @see         jmri.jmrit.roster.AbstractRosterItemAction
  * @see         jmri.jmrit.XmlFile
  */
@@ -39,7 +39,7 @@ public class ImportRosterItemAction extends AbstractRosterItemAction  {
 
         // ensure preferences will be found for read
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+LocoFile.fileLocation);
+        XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
 
         // locate the file
         File f = new File(mFullFromFilename);
@@ -64,7 +64,7 @@ public class ImportRosterItemAction extends AbstractRosterItemAction  {
 
         // transfer the contents to a new file
         LocoFile newLocoFile = new LocoFile();
-        File fout = new File(XmlFile.prefsDir()+LocoFile.fileLocation+mToEntry.getFileName());
+        File fout = new File(LocoFile.getFileLocation()+mToEntry.getFileName());
         newLocoFile.writeFile(fout, lroot, mToEntry);
 
         return true;

@@ -13,10 +13,10 @@ import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
 
 /**
- * XmlFile contains various member implementations for handling aspects of XML files.
+ * Handle common aspects of XML files.
  *
- * @author		Bob Jacobsen   Copyright (C) 2001, 2002
- * @version		$Revision: 1.8 $
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2002
+ * @version	$Revision: 1.9 $
  */
 public abstract class XmlFile {
 
@@ -63,13 +63,12 @@ public abstract class XmlFile {
      *          exception should be thrown if anything goes wrong.
      */
     public Element rootFromStream(InputStream stream) throws org.jdom.JDOMException, java.io.FileNotFoundException {
-        String rawpath = new File("xml"+File.separator+"DTD"+File.separator).getAbsolutePath();
-        String apath = rawpath;
+        // get full pathname to the DTD directory (apath is an absolute path)
+        String apath = new File("xml"+File.separator+"DTD"+File.separator).getAbsolutePath();
+
+        // convert the absolute path to a valid file: URL
         if (File.separatorChar != '/') {
             apath = apath.replace(File.separatorChar, '/');
-        }
-        if (!apath.startsWith("/")) {
-            apath = "/" + apath;
         }
         if (!apath.endsWith("/")) {
             apath = apath+"/";
@@ -80,9 +79,6 @@ public abstract class XmlFile {
         // This is taken in large part from "Java and XML" page 354
 
         // Open and parse file
-
-        // DOMBuilder builder = new DOMBuilder(verify);  // argument controls validation, on for now
-        // Document doc = builder.build(new BufferedInputStream(stream));
 
         SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation, on for now
         Document doc = builder.build(new BufferedInputStream(stream),path);
@@ -128,7 +124,7 @@ public abstract class XmlFile {
      * <LI>If not found look in prefsDir
      * <LI>If still not found, look in xmlDir()
      * </OL>
-     * @param name Filename without path information, but perhaps containing
+     * @param name Filename perhaps containing
      *               subdirectory information (e.g. "decoders/Mine.xml")
      * @return null if file found, otherwise the located File
      */
@@ -170,7 +166,7 @@ public abstract class XmlFile {
     public void makeBackupFile(String name) {
         File file = findFile(name);
         if (file!=null) {
-            file.renameTo(new File(backupFileName(name)));
+            file.renameTo(new File(backupFileName(file.getAbsolutePath())));
         }
         else log.info("No "+name+" file to backup");
     }
@@ -183,8 +179,7 @@ public abstract class XmlFile {
      * @return Complete filename, including path information into preferences directory
      */
     public String backupFileName(String name) {
-        // File.createTempFile is not available in java 1, so use millisecond time as unique string
-        String f = prefsDir()+name+".bak";
+        String f = name+".bak";
         if (log.isDebugEnabled()) log.debug("backup file name is "+f);
         return f;
     }

@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Copy a roster element, including the definition file.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  * @see         jmri.jmrit.XmlFile
  */
 public class CopyRosterItemAction extends AbstractRosterItemAction {
@@ -35,10 +35,10 @@ public class CopyRosterItemAction extends AbstractRosterItemAction {
     boolean doTransfer() {
 
         // read the from file, change the ID, and write it out
+        log.debug("doTransfer starts");
 
         // ensure preferences will be found
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+LocoFile.fileLocation);
+        XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
 
         // locate the file
         File f = new File(mFullFromFilename);
@@ -61,7 +61,7 @@ public class CopyRosterItemAction extends AbstractRosterItemAction {
 
         // transfer the contents to a new file
         LocoFile newLocoFile = new LocoFile();
-        File fout = new File(XmlFile.prefsDir()+LocoFile.fileLocation+mToEntry.getFileName());
+        File fout = new File(LocoFile.getFileLocation()+mToEntry.getFileName());
         newLocoFile.writeFile(fout, lroot, mToEntry);
 
         return true;

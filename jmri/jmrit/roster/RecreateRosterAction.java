@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Recreate the roster index file if it's been damaged or lost.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class RecreateRosterAction extends AbstractAction {
 
@@ -33,7 +33,7 @@ public class RecreateRosterAction extends AbstractAction {
             LocoFile lf = new LocoFile();  // used as a temporary
             Element lroot = null;
             try {
-                lroot = lf.rootFromName(LocoFile.fileLocation+fullFromFilename);
+                lroot = lf.rootFromName(LocoFile.getFileLocation()+fullFromFilename);
             } catch (Exception ex) {
                 log.error("Exception while loading loco XML file: "+fullFromFilename+" exception: "+ex);
                 continue;
@@ -65,14 +65,14 @@ public class RecreateRosterAction extends AbstractAction {
     String[] getFileNames() {
         // ensure preferences will be found for read
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+LocoFile.fileLocation);
+        XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
 
         // create an array of file names from roster dir in preferences, count entries
         int i;
         int np = 0;
         String[] sp = null;
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+LocoFile.fileLocation);
-        File fp = new File(XmlFile.prefsDir()+LocoFile.fileLocation);
+        XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
+        File fp = new File(LocoFile.getFileLocation());
         if (fp.exists()) {
             sp = fp.list();
             for (i=0; i<sp.length; i++) {
@@ -83,7 +83,7 @@ public class RecreateRosterAction extends AbstractAction {
             log.warn(XmlFile.prefsDir()+"roster directory was missing, though tried to create it");
         }
         // create an array of file names from xml/roster, count entries
-        String[] sx = (new File(XmlFile.xmlDir()+LocoFile.fileLocation)).list();
+        String[] sx = (new File(LocoFile.getFileLocation())).list();
         if (sx == null) sx = new String[0];
 
         int nx = 0;

@@ -17,7 +17,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.roster package & jmrit.roster.Roster class.
  * @author	Bob Jacobsen     Copyright (C) 2001, 2002
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public class RosterTest extends TestCase {
 
@@ -73,7 +73,7 @@ public class RosterTest extends TestCase {
         // create a file in "temp"
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
-        Roster.fileLocation = "temp";
+        Roster.setFileLocation("temp");
         File f = new File(XmlFile.prefsDir()+"temp"+File.separator+"roster.xml");
         // remove it if its there
         f.delete();
@@ -111,7 +111,6 @@ public class RosterTest extends TestCase {
         Assert.assertEquals("search for 3 ", 3, t.matchingList(null, "123", null, null, null, null, null).size());
     }
 
-
     public static Roster createTestRoster() throws java.io.IOException {
         // this uses explicit filenames intentionally, to ensure that
         // the resulting files go into the test tree area.
@@ -119,8 +118,8 @@ public class RosterTest extends TestCase {
         // store files in "temp"
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
-        Roster.fileLocation = "temp"+File.separator;
-        Roster.rosterFileName="rosterTest.xml";
+        Roster.setFileLocation("temp");
+        Roster.setRosterFileName("rosterTest.xml");
 
         File f = new File(XmlFile.prefsDir()+"temp"+File.separator+"rosterTest.xml");
         // remove existing roster if its there

@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.roster.RosterEntry class.
  * @author	Bob Jacobsen     Copyright (C) 2001, 2002
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class RosterEntryTest extends TestCase {
 
@@ -122,7 +122,7 @@ public class RosterEntryTest extends TestCase {
         Assert.assertEquals("initial filename ", null, r.getFileName());
         r.setId("test Roster Entry 123456789ABC");
         Assert.assertEquals("initial ID ", "test Roster Entry 123456789ABC", r.getId());
-        File f = new File(XmlFile.prefsDir()+LocoFile.fileLocation+File.separator+"test_Roster_Entry_123456789ABC.xml");
+        File f = new File(LocoFile.getFileLocation()+"test_Roster_Entry_123456789ABC.xml");
         if (f.exists()) f.delete();
         r.ensureFilenameExists();
         Assert.assertEquals("final filename ", "test_Roster_Entry_123456789ABC.xml", r.getFileName());
@@ -130,18 +130,20 @@ public class RosterEntryTest extends TestCase {
     }
 
     public void testEnsureFilenameExistsOld() throws IOException {
+        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+        XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
         RosterEntry r = new RosterEntry();
         Assert.assertEquals("initial filename ", null, r.getFileName());
         r.setId("test Roster Entry 123456789ABC");
         Assert.assertEquals("initial ID ", "test Roster Entry 123456789ABC", r.getId());
-        File f1 = new File(XmlFile.prefsDir()+LocoFile.fileLocation+File.separator+"test_Roster_Entry_123456789ABC.xml");
+        File f1 = new File(LocoFile.getFileLocation()+"test_Roster_Entry_123456789ABC.xml");
         if (!f1.exists()) {
             // create a dummy
             FileOutputStream f = new FileOutputStream(f1);
             f.write(0);
             f.close();
         }
-        File f2 = new File(XmlFile.prefsDir()+LocoFile.fileLocation+File.separator+"test_Roster_Entry_123456789ABC0.xml");
+        File f2 = new File(LocoFile.getFileLocation()+"test_Roster_Entry_123456789ABC0.xml");
         if (!f2.exists()) {
             // create a dummy
             FileOutputStream f = new FileOutputStream(f2);

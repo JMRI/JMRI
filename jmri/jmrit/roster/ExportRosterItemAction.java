@@ -21,7 +21,7 @@ import org.jdom.Element;
  * imported via {@link ImportRosterItemAction} on another system.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  * @see         jmri.jmrit.roster.ImportRosterItemAction
  * @see         jmri.jmrit.XmlFile
  */
@@ -45,7 +45,7 @@ public class ExportRosterItemAction extends AbstractRosterItemAction  {
 
         // ensure preferences will be found for read
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+LocoFile.fileLocation);
+        XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
 
         // locate the file
         File f = new File(mFullFromFilename);

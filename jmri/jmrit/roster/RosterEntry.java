@@ -29,7 +29,7 @@ import org.jdom.Element;
  * organize the roster into directories.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  * @see jmri.jmrit.roster.LocoFile
  *
  */
@@ -91,10 +91,9 @@ public class RosterEntry {
                                             .replace('\\', '-')
                                             .replace(':', '-');
             String newFilename = nameWithoutSpecialChars+".xml";
-
             // we don't want to overwrite a file that exists, whether or not
             // it's in the roster
-            File testFile = new File(XmlFile.prefsDir()+LocoFile.fileLocation+newFilename);
+            File testFile = new File(LocoFile.getFileLocation()+newFilename);
             int count = 0;
             String oldFilename = newFilename;
             while (testFile.exists()) {
@@ -102,7 +101,7 @@ public class RosterEntry {
                 newFilename = oldFilename.substring(0, oldFilename.length()-4)+count+".xml";
                 count++;
                 log.debug("try to use "+newFilename+" as filename instead of "+oldFilename);
-                testFile = new File(XmlFile.prefsDir()+LocoFile.fileLocation+newFilename);
+                testFile = new File(LocoFile.getFileLocation()+newFilename);
             }
             setFileName(newFilename);
             log.debug("new filename: "+getFileName());
@@ -228,13 +227,13 @@ public class RosterEntry {
         LocoFile df = new LocoFile();
 
         // do I/O
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+LocoFile.fileLocation);
+        XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
 
         try {
-            String fullFilename = XmlFile.prefsDir()+LocoFile.fileLocation+getFileName();
+            String fullFilename = LocoFile.getFileLocation()+getFileName();
             File f = new File(fullFilename);
             // do backup
-            df.makeBackupFile(LocoFile.fileLocation+getFileName());
+            df.makeBackupFile(LocoFile.getFileLocation()+getFileName());
 
             // and finally write the file
             df.writeFile(f, cvModel, variableModel, this);
@@ -296,7 +295,7 @@ public class RosterEntry {
 
         LocoFile lf = new LocoFile();  // used as a temporary
         try {
-            mRootElement = lf.rootFromName(lf.fileLocation+File.separator+getFileName());
+            mRootElement = lf.rootFromName(lf.getFileLocation()+getFileName());
         } catch (Exception e) { log.error("Exception while loading loco XML file: "+getFileName()+" exception: "+e); }
     }
 

@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
  * an "are you sure" dialog box before acting.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  * @see         jmri.jmrit.XmlFile
  */
 public class DeleteRosterItemAction extends AbstractAction {
@@ -59,7 +59,7 @@ public class DeleteRosterItemAction extends AbstractAction {
 
         // find the file for the selected entry
         String filename = roster.fileFromTitle(entry);
-        String fullFilename = XmlFile.prefsDir()+LocoFile.fileLocation+filename;
+        String fullFilename = LocoFile.getFileLocation()+filename;
         log.debug("resolves to \""+filename+"\", \""+fullFilename+"\"");
 
         // prompt for one last chance
@@ -72,11 +72,11 @@ public class DeleteRosterItemAction extends AbstractAction {
         // backup the file & delete it
         try {
             // ensure preferences will be found
-            XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+LocoFile.fileLocation);
+            XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
 
             // do backup
             LocoFile df = new LocoFile();   // need a dummy object to do this operation in next line
-            df.makeBackupFile(LocoFile.fileLocation+filename);
+            df.makeBackupFile(LocoFile.getFileLocation()+filename);
 
             // locate the file and delete
             File f = new File(fullFilename);

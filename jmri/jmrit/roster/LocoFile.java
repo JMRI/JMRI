@@ -2,13 +2,17 @@
 
 package jmri.jmrit.roster;
 
-import jmri.jmrit.*;
-import jmri.jmrit.symbolicprog.*;
-import java.io.*;
+import jmri.jmrit.XmlFile;
+import jmri.jmrit.symbolicprog.CvTableModel;
+import jmri.jmrit.symbolicprog.CvValue;
+import jmri.jmrit.symbolicprog.VariableTableModel;
+import java.io.File;
 
-import com.sun.java.util.collections.*;
-import org.jdom.*;
-import org.jdom.output.*;
+import com.sun.java.util.collections.List;
+import org.jdom.DocType;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.output.XMLOutputter;
 
 /**
  * Represents and manipulates a locomotive definition, both as a file and
@@ -18,7 +22,7 @@ import org.jdom.output.*;
  * directly. That's why this is not a public class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  * @see         jmri.jmrit.roster.RosterEntry
  * @see         jmri.jmrit.roster.Roster
  */
@@ -92,6 +96,7 @@ class LocoFile extends XmlFile {
      * @param r  RosterEntry providing name, etc, information
      */
     public void writeFile(File file, CvTableModel cvModel, VariableTableModel variableModel, RosterEntry r) {
+        if (log.isDebugEnabled()) log.debug("writeFile to "+file.getAbsoluteFile());
         try {
             // This is taken in large part from "Java and XML" page 368
 
@@ -167,6 +172,7 @@ class LocoFile extends XmlFile {
      * @param pEntry RosterEntry providing name, etc, information
      */
     public void writeFile(File pFile, Element pRootElement, RosterEntry pEntry) {
+        if (log.isDebugEnabled()) log.debug("writeFile to "+pFile.getAbsoluteFile());
         try {
             // This is taken in large part from "Java and XML" page 368
 
@@ -194,7 +200,15 @@ class LocoFile extends XmlFile {
      * Defines the preferences subdirectory in which LocoFiles are kept
      * by default.
      */
-    static public String fileLocation = "roster"+File.separator;
+    static private String fileLocation = XmlFile.prefsDir()+File.separator+"roster"+File.separator;
+
+    static public String getFileLocation() { return fileLocation; }
+
+    static public void setFileLocation(String loc) {
+        fileLocation = loc;
+        if (!fileLocation.endsWith(File.separator))
+            fileLocation = fileLocation+File.separator;
+    }
 
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoFile.class.getName());

@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  * different that it doesn't use this base class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  * @see         jmri.jmrit.XmlFile
  */
 abstract public class AbstractRosterItemAction extends AbstractAction {
@@ -87,7 +87,7 @@ abstract public class AbstractRosterItemAction extends AbstractAction {
         // find the file for the selected entry to copy
         mFromEntry = Roster.instance().entryFromTitle(mFromID);
         mFromFilename = Roster.instance().fileFromTitle(mFromID);
-        mFullFromFilename = LocoFile.fileLocation+mFromFilename;
+        mFullFromFilename = LocoFile.getFileLocation()+mFromFilename;
         log.debug(" from resolves to \""+mFromFilename+"\", \""+mFullFromFilename+"\"");
         return true;
     }

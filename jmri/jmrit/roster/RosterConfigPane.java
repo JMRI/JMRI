@@ -20,7 +20,7 @@ import javax.swing.JTextField;
  *
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class RosterConfigPane extends JPanel {
 
@@ -38,6 +38,7 @@ public class RosterConfigPane extends JPanel {
         b.addActionListener(new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
                 fc.setDialogTitle("Find desired roster.xml file");
+                fc.rescanCurrentDirectory();
                 fc.showOpenDialog(null);
                 if (fc.getSelectedFile()==null) return; // cancelled
                 filename.setText(fc.getSelectedFile().getParent()+File.separator);
