@@ -20,7 +20,7 @@ import org.jdom.*;
 /**
  * Frame providing a command station programmer from decoder definition files
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.24 $
+ * @version			$Revision: 1.25 $
  */
 abstract public class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
@@ -86,7 +86,8 @@ abstract public class PaneProgFrame extends javax.swing.JFrame
         // some of the names are so long, and we expect more formats
         JMenu exportSubMenu = new JMenu("Export");
         fileMenu.add(exportSubMenu);
-        exportSubMenu.add(new Pr1ExportAction("PR1 file...", cvModel));
+        exportSubMenu.add(new CsvExportAction("CSV file...", cvModel, this));
+        exportSubMenu.add(new Pr1ExportAction("PR1 file...", cvModel, this));
 
         // to control size, we need to insert a single
         // JPanel, then have it laid out with BoxLayout
