@@ -18,7 +18,7 @@ import org.jdom.Element;
  * and the default Locale.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  * @see jmri.GuiLafConfigPane
  */
 public class GuiLafConfigPaneXml implements XmlAdapter {
@@ -110,7 +110,6 @@ public class GuiLafConfigPaneXml implements XmlAdapter {
      * @param o  ignored
      */
     public void load(Element element, Object o) {
-        // jmri.jmrit.symbolicprog.CombinedLocoSelPane.setDefaultProgFile(element.getAttribute("defaultFile").getValue());
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
