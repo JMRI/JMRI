@@ -36,6 +36,28 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
 		// interface?
 	}
 
+    /**
+     * User request to set the state, which means that we broadcast that to
+     * all listeners by putting it out on LocoNet.
+     * In turn, the code in this class should use setOwnState to handle
+     * internal sets and bean notifies.
+     * @param s
+     * @throws JmriException
+     */
+	public void setKnownState(int s) throws jmri.JmriException {
+		// send OPC_INPUT_REP with new state to this address
+		LocoNetMessage l = new LocoNetMessage(4);
+		l.setOpCode(LnConstants.OPC_INPUT_REP);
+        a.insertAddress(l);
+		// set state
+        if (s==Sensor.ACTIVE) {
+            l.setElement(2, l.getElement(2)|0x10);
+        } // otherwise is already OK
+
+        // send
+		LnTrafficController.instance().sendLocoNetMessage(l);
+	}
+
 	// implementing classes will typically have a function/listener to get
 	// updates from the layout, which will then call
 	//		public void firePropertyChange(String propertyName,
@@ -56,10 +78,10 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
                                 +getKnownState()+" new packet "+state);
 					if ( state !=0 && getKnownState() != Sensor.ACTIVE) {
                         if (log.isDebugEnabled()) log.debug("Set ACTIVE");
-						setKnownState(Sensor.ACTIVE);
+						setOwnState(Sensor.ACTIVE);
 					} else if ( state ==0 && getKnownState() != Sensor.INACTIVE) {
                         if (log.isDebugEnabled()) log.debug("Set INACTIVE");
-						setKnownState(Sensor.INACTIVE);
+						setOwnState(Sensor.INACTIVE);
 					}
 				}
 			}
@@ -67,6 +89,17 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
 				return;
 			}
 		// reach here only in error
+	}
+
+    /**
+     * Set out internal state information, and notify bean listeners.
+     */
+	public void setOwnState(int s) {
+		if (_knownState != s) {
+			int oldState = _knownState;
+			_knownState = s;
+			firePropertyChange("KnownState", new Integer(oldState), new Integer(_knownState));
+        }
 	}
 
     public void dispose() {}

@@ -27,8 +27,10 @@ public abstract class AbstractSensor implements Sensor, java.io.Serializable {
 
 	public int getKnownState() {return _knownState;}
 
-	// add a protected setKnownState() for implementations. Not intended for general use
-	protected void setKnownState(int s) {
+	// setKnownState() for implementations that can't
+    // actually do it on the layout. Not intended for use by implementations
+    // that can
+	public void setKnownState(int s) throws jmri.JmriException {
 		if (_knownState != s) {
 			int oldState = _knownState;
 			_knownState = s;
@@ -38,7 +40,7 @@ public abstract class AbstractSensor implements Sensor, java.io.Serializable {
 
 	// internal data members
 	private String _id;
-	private int _knownState     = UNKNOWN;
+	protected int _knownState     = UNKNOWN;
 
 	// since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
 	// reflect to it

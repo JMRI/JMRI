@@ -2,8 +2,8 @@
  * LnSensorAddress.java
  *
  * Description:		utilities for handling sensor addresses
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version
+ * @author			Bob Jacobsen Copyright (C) 2001, 2002
+ * @version         $Revision: 1.3 $
  */
 
 package jmri.jmrix.loconet;
@@ -75,6 +75,15 @@ public class LnSensorAddress {
 		}
 	}
 
+    /**
+     * Update a LocoNet message to have this address.
+     * @param msg
+     */
+    public void insertAddress(LocoNetMessage m) {
+        m.setElement(1, getLowBits());
+        m.setElement(2, getHighBits() | getASBit());
+    }
+
 	// convenient calculations
 	public boolean matchAddress(int a1, int a2) { // a1 is byte 1 of ln msg, a2 is byte 2
 		if (getHighBits() != (a2&0x0f)) return false;
@@ -99,11 +108,18 @@ public class LnSensorAddress {
                 +getBDL16Address();
     }
 
-	// accessors for formatted names
+	/**
+     * Name in the 1-4095 space
+     * @return LSnnn
+     */
 	public String getNumericAddress() {
 		return "LS"+asInt();
 	}
 
+	/**
+     * Name in the DS54 space
+     * @return LSnnnA or LSnnnS, depending on Aux or Switch input
+     */
 	public String getDS54Address() {
 		if (_as != 0 )
 			return "LS"+(_high*128+_low)+"A";
@@ -111,6 +127,11 @@ public class LnSensorAddress {
 			return "LS"+(_high*128+_low)+"S";
 	}
 
+	/**
+     * Name in the BDL16 space
+     * @return e.g. LSnnnA3, with nnn the BDL16 number,
+     *              A the section number, and 3 the channel number
+     */
 	public String getBDL16Address() {
 		String letter = null;
 		String digit = null;

@@ -7,7 +7,7 @@ package jmri;
  * types of sensors.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public interface Sensor {
 
@@ -20,9 +20,12 @@ public interface Sensor {
 	public static final int INACTIVE     = 0x04;
 	public static final int INCONSISTENT = 0x08;
 
-	// known state on layout is a bound parameter -
-	// always returns a answer, if need be the commanded state
+	// known state on layout is a bound parameter
 	public int getKnownState();
+
+	// potentially allow the user to set the known state on the layout
+    // this might not always be available
+	public void setKnownState(int newState) throws jmri.JmriException;
 
 	// request an update from the layout soft/hardware.  May not even
 	// happen, and if it does it will happen later; listen for the result.
