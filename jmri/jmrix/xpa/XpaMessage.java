@@ -9,7 +9,7 @@ package jmri.jmrix.xpa;
  * class handles the response from the command station.
  *
  * @author	Paul Bender  Copyright (C) 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class XpaMessage {
 
@@ -129,7 +129,7 @@ public class XpaMessage {
        to a specific locomotive on the layout.  
     */
     static XpaMessage getDirForwardMsg(int Address){
-	XpaMessage m=new XpaMessage("ATDT#" + Address +"*2;");
+	XpaMessage m=new XpaMessage("ATDT#" + Address +"*02;");
 	return m;
     }
 
@@ -138,7 +138,7 @@ public class XpaMessage {
        to a specific locomotive on the layout.  
     */
     static XpaMessage getDirReverseMsg(int Address){
-	XpaMessage m=new XpaMessage("ATDT#" + Address +"*8;");
+	XpaMessage m=new XpaMessage("ATDT#" + Address +"*08;");
 	return m;
     }
 
