@@ -1,8 +1,8 @@
 <!-- Special build file for doing Java 1.1.8 compatibility tests -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.1 $ -->
+<!-- Revision $Revision: 1.2 $ -->
 
-<project name="JMRI" default="compile" basedir=".">
+<project name="JMRI" default="check" basedir=".">
 
 <!-- much of this works by setting properties before invoking a target -->
 <!-- in the usual build.xml file.    -->
@@ -15,9 +15,28 @@
   Check JMRI for Java 1.1.8 compatibility
   </description>
 
-  <!-- Force use of 1.1/1.2 compiler to avoid hang in synchronized(this){} on MRJ 2.2 -->
+  <!-- set global properties for this build -->
+  <!-- still needed, as we dont (yet) defer everything to build.xml -->
+  <property name="source" value="src"/>
+  <property name="test" value="test"/>
+  <property name="target" value="classes"/>
+  <path id="project.class.path">
+    <pathelement location="../lib/collections.jar" />
+    <pathelement location="../lib/crimson.jar" />
+    <pathelement location="../lib/comm.jar" />
+    <pathelement location="../lib/jdom-jdk11.jar" />
+    <pathelement location="../lib/log4j.jar" />
+    <pathelement location="../lib/jh.jar" />
+    <pathelement location="../lib/Serialio.jar" />
+    <pathelement location="../lib/junit.jar" />
+    <pathelement location="../lib/jython.jar" />
+    <pathelement location="classes/" />
+  </path>
+
+  <!-- Force use of 1.1/1.2 compiler in case there are any issues (none known yet!) -->
   <property name="build.compiler" value="javac1.2" />
 
+  <!-- special path including Java 1.1.8 libraries -->
   <path id="compile1.1.8.path">
       <pathelement location="lib/JDKClasses.zip"/>
       <pathelement location="lib/swingall.jar"/>
@@ -35,21 +54,48 @@
     <ant target="clean" antfile="build.xml" />
   </target>
 
-  <target name="check1.1.8" depends="clean, init" description="compile source against 1.1.8 libs and run alltest with 1.
-1.8">
+  <target name="compile">
+    <ant target="compile" antfile="build.xml" />
+  </target>
+
+  <target name="libcheck">
+    <available file="lib/JDKClasses.zip" property="jdk.present"/>
+    <available file="lib/swingall.jar" property="swingall.present"/>
+    <antcall target="swingcheck" />
+    <antcall target="jdkcheck" />
+  </target>
+  
+  <target name="swingcheck" unless="swingall.present">
+  	<fail message="lib/swingall.jar not present" />
+  </target>
+  <target name="jdkcheck" unless="jdk.present">
+  	<fail message="lib/JDKClasses.zip not present" />
+  </target>
+  
+  <target name="nativecompile" description="compile files requiring Java 1.3">
     <!-- Compile specific classes with regular path -->
-    <javac  srcdir = "${source}"
-           destdir="${target}" 
-           includes="jmri/util/StringUtil.java, 
+    <ant target="compilefiles" antfile="build.xml">
+      <property name="project.class.path" value="${compile1.1.8.path}"/>
+      <property name="files" 
+          value="jmri/util/StringUtil.java, 
                  jmri/util/FontUtil.java,
+                 jmri/util/FileUtil.java,
                  jmri/util/JmriJFrame.java,
                  jmri/util/JTreeUtil.java,
                  jmri/util/LocaleUtil.java,
-                 jmri/util/JTabbedPaneUtil.java"
-           target="1.1" 
-           debug="no" >
-       <classpath refid="project.class.path"    />
-    </javac>
+                 jmri/util/JTabbedPaneUtil.java" />
+    </ant>
+  </target>
+
+  <target name="check" description="check for 1.1.8 compatibility">
+    <!-- Check and initialize -->
+    <antcall target="libcheck"/>
+    <antcall target="clean"/>
+    <antcall target="init"/>
+
+    <!-- Compile specific classes with regular path -->
+    <antcall target="nativecompile"/>
+
     <!-- Compile the java 1.1.8 code from ${source} into ${target} -->
     <javac srcdir="${source}" 
            destdir="${target}" 
@@ -58,13 +104,10 @@
        <bootclasspath refid="compile1.1.8.path" />
        <classpath refid="project.class.path"    />
     </javac>
-    <!-- Copy top level resources to include in jar file -->
-    <copy todir="${target}/resources/">
-      <fileset dir="src/resources" includes="*.gif"  /> 
-    </copy>
-    <copy todir="${target}">
-      <fileset dir="src/" includes="**/*.properties"  /> 
-    </copy>
+
+    <!-- Do the rest of normal compilation -->
+    <antcall target="compile"/>
+
     <!-- compile tests -->
     <javac srcdir="${test}" 
            destdir="${target}"
