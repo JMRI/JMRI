@@ -21,7 +21,7 @@ import javax.swing.border.*;
  * is constructed on the fly here, and has no specific type.
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class PaneProgAction 			extends AbstractAction {
 
@@ -86,21 +86,9 @@ public class PaneProgAction 			extends AbstractAction {
 			}
 		};
 
-		// update roster button
-		JPanel pane4 = new JPanel();
-			JButton updateRoster;
-			pane4.add(updateRoster = new JButton("Update Roster"));
-			pane4.setBorder(new EmptyBorder(6,6,6,6));
-			pane4.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
-			updateRoster.setEnabled(false);
-			updateRoster.setToolTipText("disable because not yet implemented");
-
 		// load primary frame
 		pane1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 		f.getContentPane().add(pane1);
-		f.getContentPane().add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
-		pane4.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-		f.getContentPane().add(pane4);
 		f.getContentPane().add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
 
         jmri.ProgModePane   modePane    = new jmri.ProgModePane(BoxLayout.X_AXIS);
