@@ -18,7 +18,7 @@ import javax.swing.border.*;
  * the file is searched for in the usual way, first in prefs/ and then in
  * xml/
  * @author			Bob Jacobsen
- * @version         $Revision: 1.18 $
+ * @version         $Revision: 1.19 $
  */
 public class JMRIdemo extends JPanel {
 	public JMRIdemo() {
@@ -29,7 +29,7 @@ public class JMRIdemo extends JPanel {
 		setLayout(new BorderLayout());
         // Create a menu bar and give it a bevel border
         menuBar = new JMenuBar();
-        menuBar.setBorder(new BevelBorder(BevelBorder.RAISED));
+        // menuBar.setBorder(new BevelBorder(BevelBorder.RAISED));
 
     // load preferences
         JmriDemoConfigAction prefs = null;

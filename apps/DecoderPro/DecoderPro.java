@@ -12,7 +12,7 @@ import jmri.util.oreilly.BasicWindowMonitor;
  * DecoderPro application.
  *
  * @author			Bob Jacobsen
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public class DecoderPro extends JPanel {
 	public DecoderPro() {
@@ -23,7 +23,7 @@ public class DecoderPro extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // Create a menu bar and give it a bevel border
         menuBar = new JMenuBar();
-        menuBar.setBorder(new BevelBorder(BevelBorder.RAISED));
+        // menuBar.setBorder(new BevelBorder(BevelBorder.RAISED));
 
     // load preferences
     	DecoderProConfigAction prefs
