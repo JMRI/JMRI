@@ -38,11 +38,11 @@
 		<dt>Techniques and Standards</dt>
 		<dd>
 			<ul>
+			<LI><a href="RP.html">Recommended Practices</a>
 			<LI><a href="I8N.html">Internationalization</a>
 			<LI><a href="Logging.html">Logging &amp; Error Handling</a>
 			<LI><a href="Java118.html">Working with Java 1.1.8</a>
 			<LI><a href="JUnit.html">Unit testing with JUnit</a>
-			<LI><a href=""></a>
 			</ul>
 		</dd>
 
