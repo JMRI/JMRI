@@ -11,7 +11,7 @@ import jmri.*;
  * SlotManager object.
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class LnOpsModeProgrammer implements Programmer  {
 
@@ -41,8 +41,13 @@ public class LnOpsModeProgrammer implements Programmer  {
     }
 
     public void setMode(int mode) {
-        if (mode!=Programmer.OPSBYTEMODE)
-            log.error("Can't switch to mode "+mode);
+        if (mode!=Programmer.OPSBYTEMODE) {
+            reportBadMode(mode);
+        }
+    }
+
+    void reportBadMode(int mode) {
+        log.error("Can't switch to mode "+mode);
     }
 
     public int  getMode() {

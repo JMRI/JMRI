@@ -25,7 +25,7 @@ package jmri.jmrix.loconet;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2002
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 public class LnSensorAddress {
 
@@ -91,8 +91,12 @@ public class LnSensorAddress {
             }
         } else {
             // didn't find a leading LS, complain
-            log.error("Can't parse sensor address string: "+s);
+            reportParseError(s);
         }
+    }
+
+    void reportParseError(String s) {
+        log.error("Can't parse sensor address string: "+s);
     }
 
     /**
