@@ -6,9 +6,8 @@ import jmri.Programmer;
 import jmri.InstanceManager;
 import jmri.ProgListener;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.event.ActionEvent;
+import java.awt.*;
+import java.awt.event.*;
 import java.beans.PropertyChangeListener;
 import java.util.Vector;
 import javax.swing.*;
@@ -17,14 +16,14 @@ import javax.swing.event.*;
 import com.sun.java.util.collections.List;
 import com.sun.java.util.collections.ArrayList;
 
-/** 
+/**
  * SpeedTableVarValue.java
  *<P>
  *_value is a holdover from the LongAddrVariableValue, which this was copied from; it should
  * be removed. _maxVal, _minVal are also redundant.
  *
  *<P> Color (hence state) of individual sliders (hence CVs) are directly coupled to the
- * state of those CVs. 
+ * state of those CVs.
  *<P> The state of this variable has to be a composite of all the sliders, hence CVs.
  *The mapping is (in order):
  *<UL>
@@ -40,14 +39,14 @@ import com.sun.java.util.collections.ArrayList;
  *<P>
  * Description:		Extends VariableValue to represent a NMRA long address
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Id: SpeedTableVarValue.java,v 1.1 2002-02-28 20:30:16 jacobsen Exp $
+ * @version			$Revision: 1.2 $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
 
 	final int nValues = 28;
 	BoundedRangeModel[] models = new BoundedRangeModel[nValues];
-		
+
 	/**
 	 * Create the object with a "standard format ctor".  Note that max and min are ignored.
 	 */
@@ -55,8 +54,8 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 							int cvNum, String mask, int minVal, int maxVal,
 							Vector v, JLabel status, String stdname) {
 		super(name, comment, readOnly, cvNum, mask, v, status, stdname);
-		
-		// create the set of models 
+
+		// create the set of models
 		for (int i=0; i<nValues; i++) {
 			// create each model
 			DefaultBoundedRangeModel j = new DefaultBoundedRangeModel(255*i/nValues, 0, 0, 255);
@@ -75,35 +74,35 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 
 		_defaultColor = (new JSlider()).getBackground();
 	}
-	
-  	/** 
+
+  	/**
   	 * Create a null object.  Normally only used for tests and to pre-load classes.
-  	 */ 
+  	 */
    	public SpeedTableVarValue() {}
-		
+
 	public Object rangeVal() {
 		log.warn("rangeVal doesn't make sense for a speed table");
 		return new String("Speed table");
 	}
-		
+
 	public void stateChanged(ChangeEvent e) {
 		// called for new values of a slider - set the CV(s) as needed
 		// e.getSource() points to the JSlider object - find it in the list
 		JSlider j = (JSlider) e.getSource();
 		BoundedRangeModel r = j.getModel();
-		
+
 		for (int i=0; i<nValues; i++) {
 			if (r == models[i]) {
 				// found it, and i is useful!
-				setModel(i, r.getValue());				
+				setModel(i, r.getValue());
 				break; // no need to continue loop
 			}
 		}
 
 	}
-	
+
 	void setModel(int i, int value) {  // value is 0 to 255
-		if (models[i].getValue() != value) 
+		if (models[i].getValue() != value)
 			models[i].setValue(value);
 		// update the CV
 		((CvValue)_cvVector.elementAt(getCvNum()+i)).setValue(value);
@@ -120,22 +119,22 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 
 	public int getState()  {
 		int i;
-		for (i=0; i<nValues; i++) 
+		for (i=0; i<nValues; i++)
 				if (((CvValue)_cvVector.elementAt(getCvNum()+i)).getState() == UNKNOWN ) return UNKNOWN;
-		for (i=0; i<nValues; i++) 
+		for (i=0; i<nValues; i++)
 				if (((CvValue)_cvVector.elementAt(getCvNum()+i)).getState() == EDITTED ) return EDITTED;
-		for (i=0; i<nValues; i++) 
+		for (i=0; i<nValues; i++)
 				if (((CvValue)_cvVector.elementAt(getCvNum()+i)).getState() == FROMFILE ) return FROMFILE;
-		for (i=0; i<nValues; i++) 
+		for (i=0; i<nValues; i++)
 				if (((CvValue)_cvVector.elementAt(getCvNum()+i)).getState() == READ ) return READ;
-		for (i=0; i<nValues; i++) 
+		for (i=0; i<nValues; i++)
 				if (((CvValue)_cvVector.elementAt(getCvNum()+i)).getState() == STORED ) return STORED;
 		log.error("getState did not decode a possible state");
 		return UNKNOWN;
 	}
 
 	// to complete this class, fill in the routines to handle "Value" parameter
-	// and to read/write/hear parameter changes. 
+	// and to read/write/hear parameter changes.
 	public String getValueString() {
 		StringBuffer buf = new StringBuffer();
 		for (int i=0; i< models.length; i++) {
@@ -147,13 +146,13 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 	public void setIntValue(int i) {
 		log.warn("setIntValue doesn't make sense for a speed table: "+i);
 	}
-	
-	public Component getValue()  { 
+
+	public Component getValue()  {
 		log.warn("getValue not implemented yet");
 	 	return new JLabel("speed table");
 	}
 
-	public void setValue(int value) { 
+	public void setValue(int value) {
 		log.warn("setValue doesn't make sense for a speed table: "+value);
 	}
 
@@ -162,21 +161,53 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 	void setColor(Color c) {
 		prop.firePropertyChange("Value", null, null);
 	}
-	
-	public Component getRep(String format)  { 
+
+	public Component getRep(String format)  {
 		// put together a new panel in scroll pane
 		JPanel j = new JPanel();
-		j.setLayout(new BoxLayout(j, BoxLayout.X_AXIS));
+
+		GridBagLayout g = new GridBagLayout();
+		GridBagConstraints cs = new GridBagConstraints();
+		j.setLayout(g);
+
+		// j.setLayout(new GridLayout(nValues,2));
 
 		for (int i=0; i<nValues; i++) {
-			JSlider s = new VarSlider(models[i], ((CvValue)_cvVector.elementAt(getCvNum()+i)));
+			cs.gridy = 0;
+			cs.gridx = i;
+
+            CvValue cv = (CvValue)_cvVector.elementAt(getCvNum()+i);
+			JSlider s = new VarSlider(models[i], cv);
 			s.setOrientation(JSlider.VERTICAL);
 			s.addChangeListener(this);
+
+            int currentState = cv.getState();
+            int currentValue = cv.getValue();
+
+            DecVariableValue decVal = new DecVariableValue("val"+i,"", false,
+							getCvNum()+i, "VVVVVVVV", 0, 255,
+							_cvVector, _status, "");
+            decVal.setValue(currentValue);
+            decVal.setState(currentState);
+
+            Component v = decVal.getValue();
+
+            g.setConstraints(v, cs);
+
+            if (i==0) log.info("Font size "+v.getFont().getSize());
+            float newSize = (v.getFont().getSize()+0.5f)/2.f;
+            v.setFont(v.getFont().deriveFont(newSize));
+
+			j.add ( v );
+
+			cs.gridy++;
+            g.setConstraints(s, cs);
+
 			j.add(s);
 		}
 		return j;
 	}
-	
+
 	/**
 	 * IDLE if a read/write operation is not in progress.  During an operation, it
 	 * indicates the index of the CV to handle when the current programming operation
@@ -185,18 +216,18 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 	private int _progState = IDLE;
 	private static final int IDLE = -1;
 	boolean isReading;
-	
-	// 
+
+	//
 	public void read() {
 		if (log.isDebugEnabled()) log.debug("longAddr read() invoked");
  		setBusy(true);  // will be reset when value changes
 		if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in read()");
 		isReading = true;
 		_progState = -1;
-		if (log.isDebugEnabled()) log.debug("start series of read operations");		
+		if (log.isDebugEnabled()) log.debug("start series of read operations");
 		readNext();
 	}
-	
+
  	public void write() {
 		if (log.isDebugEnabled()) log.debug("write() invoked");
  		if (getReadOnly()) log.error("unexpected write operation when readOnly is set");
@@ -205,7 +236,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 		if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in write()");
 		isReading = false;
 		_progState = -1;
-		if (log.isDebugEnabled()) log.debug("start series of write operations");		
+		if (log.isDebugEnabled()) log.debug("start series of write operations");
  		writeNext();
  	}
 
@@ -220,12 +251,12 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 		}
 		// not done, proceed to do the next
 		CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()+_progState));
-		int state = cv.getState();		
+		int state = cv.getState();
 		if (log.isDebugEnabled()) log.debug("invoke CV read index "+_progState+" cv state "+state);
 		if (state == UNKNOWN || state == FROMFILE || state == EDITTED) cv.read(_status);
 		else readNext(); // repeat until end
 	}
-	
+
 	void writeNext() {
 		// write operation
 		_progState++;  // progState is the index of the CV to handle now
@@ -235,12 +266,12 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 			return;
 		}
 		CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()+_progState));
-		int state = cv.getState();		
+		int state = cv.getState();
 		if (log.isDebugEnabled()) log.debug("invoke CV write index "+_progState+" cv state "+state);
 		if (state == UNKNOWN || state == FROMFILE || state == EDITTED) cv.write(_status);
 		else writeNext();
 	}
-	
+
 	// handle incoming parameter notification
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (log.isDebugEnabled()) log.debug("property changed event - name: "
@@ -249,7 +280,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 		if (e.getPropertyName().equals("Busy") && ((Boolean)e.getNewValue()).equals(Boolean.FALSE)) {
 			// busy transitions drive an ongoing programming operation
 			// see if actually done
-			
+
 			if (isReading) readNext();
 			else writeNext();
 		}
@@ -273,16 +304,16 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 		}
 	}
 
-	/* Internal class extends a JSlider so that its color is consistent with 
+	/* Internal class extends a JSlider so that its color is consistent with
 	 * an underlying CV; we return one of these in getRep.
 	 *<P>
 	 * Unlike similar cases elsewhere, this doesn't have to listen to
 	 * value changes.  Those are handled automagically since we're sharing the same
-	 * model between this object and others.  And this is listening to 
+	 * model between this object and others.  And this is listening to
 	 * a CV state, not a variable.
 	 *
 	 * @author			Bob Jacobsen   Copyright (C) 2001
-	 * @version			
+	 * @version
 	 */
 	public class VarSlider extends JSlider {
 
@@ -296,19 +327,19 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 				public void propertyChange(java.beans.PropertyChangeEvent e) {
 					originalPropertyChanged(e);
 				}
-			});		
+			});
 		}
 
 		CvValue _var;
-	
+
 		void originalPropertyChanged(java.beans.PropertyChangeEvent e) {
 			if (log.isDebugEnabled()) log.debug("VarSlider saw property change: "+e);
 			// update this color from original state
 			if (e.getPropertyName().equals("State")) {
 				setBackground(_var.getColor());
-			}	
+			}
 		}
-	
+
 	}
 
 	// clean up connections when done
@@ -318,11 +349,11 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 		for (int i=0; i<nValues; i++) {
 			((CvValue)_cvVector.elementAt(getCvNum()+i)).removePropertyChangeListener(this);
 		}
-		
+
 		// do something about the VarSlider objects
 	}
 
-	// initialize logging	
+	// initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SpeedTableVarValue.class.getName());
-		
+
 }
