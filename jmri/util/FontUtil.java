@@ -16,10 +16,14 @@ import java.awt.Font;
  * Java 1.1.8 system, or at least try to fake it.
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class FontUtil {
+
+    static public boolean canRestyle() {
+        return true;
+    }
 
     static public Font deriveFont(Font f, int style) {
         try {
@@ -27,6 +31,10 @@ public class FontUtil {
         } catch (NoSuchMethodError e) {
             return f;
         }  // just carry on with original fonts
+    }
+
+    static public boolean canResize() {
+        return true;
     }
 
     static public Font deriveFont(Font f, float size) {

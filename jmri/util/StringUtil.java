@@ -11,7 +11,7 @@ package jmri.util;
  * information.
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class StringUtil {
@@ -96,4 +96,29 @@ public class StringUtil {
             }
         }
     }
+
+    /**
+     *
+     * @param values
+     */
+    static public void sort(Object[] values) {
+        try {
+            java.util.Arrays.sort(values);
+        } catch (NoSuchMethodError e) {
+            // no Java sort, so ugly bubble sort
+            for (int i=0; i<=values.length-2; i++) { // stop sort early to save time!
+                for (int j=values.length-2; j>=i; j--) {
+                    // check that the jth value is smaller than j+1th,
+                    // else swap
+                    if (0 < ((String)values[j]).compareTo((String)values[j+1])) {
+                        // swap
+                        Object temp = values[j];
+                        values[j] = values[j+1];
+                        values[j+1] = temp;
+                    }
+                }
+            }
+        }
+    }
+
 }
