@@ -16,7 +16,7 @@ import jmri.*;
  * the file is searched for in the usual way, first in the preferences tree and then in
  * xml/
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class CornwallRR extends JPanel {
     public CornwallRR() {
@@ -66,6 +66,12 @@ public class CornwallRR extends JPanel {
         funcMenu.add(new jmri.jmrit.powerpanel.PowerPanelAction("Power Control"));
         funcMenu.add(new jmri.jmrit.speedometer.SpeedometerAction( "Speedometer" ));
 
+        JMenu throttleMenu = new JMenu("Throttles");
+        throttleMenu.add(new jmri.jmrit.throttle.ThrottleCreationAction( "New Throttle..." ));
+        throttleMenu.add(new jmri.jmrit.throttle.StoreXmlThrottleAction( "Save Throttle Layout" ));
+        throttleMenu.add(new jmri.jmrit.throttle.LoadXmlThrottleAction( "Load Throttle Layout" ));
+        funcMenu.add(throttleMenu);
+
         menuBar.add(new jmri.jmrit.roster.RosterMenu("Roster", jmri.jmrit.roster.RosterMenu.MAINMENU, this));
 
         JMenu diagMenu = new JMenu("Panels");
@@ -84,12 +90,6 @@ public class CornwallRR extends JPanel {
         locoMenu.add(new jmri.jmrix.loconet.bdl16.BDL16Action("BDL16 Programmer"));
         locoMenu.add(new jmri.jmrit.messager.MessageFrameAction( "Throttle Messages" ));
         locoMenu.add(new jmri.jmrix.loconet.locormi.LnMessageServerAction( "Start LocoNet Server" ));
-
-        JMenu throttleMenu = new JMenu("Throttles");
-        throttleMenu.add(new jmri.jmrit.throttle.ThrottleCreationAction( "New Throttle..." ));
-        throttleMenu.add(new jmri.jmrit.throttle.StoreXmlThrottleAction( "Save Throttle Layout" ));
-        throttleMenu.add(new jmri.jmrit.throttle.LoadXmlThrottleAction( "Load Throttle Layout" ));
-        locoMenu.add(throttleMenu);
 
         JMenu cmriMenu = new JMenu("CMRI");
         menuBar.add(cmriMenu);
