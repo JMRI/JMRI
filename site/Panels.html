@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: Panels.html,v 1.5 2003-07-24 21:26:28 jacobsen Exp $ -->
+<!-- $Id: Panels.html,v 1.6 2003-08-10 04:19:25 jacobsen Exp $ -->
 <html>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -21,7 +21,7 @@ contain a rudimentary system for creating control panels.
 This first appeared in the 1.0.1 development version of July 2002; it
 is not in the 1.0 release on the original CD.
 <h3>Contents of a panel</h3>
-<IMG SRC="images/panel.gif" ALT="Screen shot of panel" WIDTH="292" HEIGHT="107" HSPACE="0" VSPACE="0">
+<A HREF="images/panel.gif"><IMG SRC="images/panel.gif" ALT="Screen shot of panel" ALIGN=RIGHT WIDTH="292" HEIGHT="107" HSPACE="0" VSPACE="0"></A>
 
 <P>
 Clicking on a turnout symbol flips it from closed to thrown and vice-versa.
@@ -46,7 +46,7 @@ to represent turnouts, sensors (on some systems) and trackwork.
 You start the editor by selecting "New panel..." from the "Panel" menu
 in the JmriDemo program.  You'll get a blank control panel, plus the
 editor window:
-<IMG SRC="images/paneleditor.gif" ALT="Screen shot of slot monitor" WIDTH="274" HEIGHT="565" HSPACE="0" VSPACE="0">
+<A HREF="images/paneleditor.gif"><IMG SRC="images/paneleditor.gif" ALT="Screen shot of panel editor" ALIGN=RIGHT WIDTH="191" HEIGHT="160" HSPACE="0" VSPACE="0"></A>
 <P>
 From the top, this contains:
 <UL>
@@ -61,21 +61,25 @@ for a JMRI control panel.
 <LI>A button to add a text label.  Put the desired text in the field and click the button. You can 
 slide the label around after inserting it, but you currently can't edit the text later.
 
-<LI>A button to add an icon as a label.  This is a way to add track symbols, etc. To select the
-icon, use the tree in the bottom of the window (see below for details), then click the "pick" button
-to load the selected icon.  This is a general mechanism:  Any icon on the editor window
-can be replaced by selecting the desired new one and clicking on the icon to replace.
+<LI>A button to add an icon as a label.  This is a way to add track symbols, etc. To 
+see or select the
+icon, click on the "Edit icon..." button.
 
 <LI>Two sections for adding left- and right-bound turnouts.  These actually work the same
 way, only with different icons to represent the states of the turnouts.  Enter the turnout number
 (e.g. 23) and click "Add turnout:".  If you'd prefer a different graphic for the closed
-and thrown states, you can change their icons as described above.
+and thrown states, you can change their icons with the "Edit icon..." button.
 
-<LI>A section for adding a sensor.  Note that only LocoNet currently has sensors implemented.
-Type the sensor number (e.g. 74) in the field and click "Add sensor:".
-<LI>The tree of available icons, see below.
+<LI>A section for adding a sensor.  
+Type the sensor number (e.g. 74 or LS74) in the field and click "Add sensor:".
+
+<LI>A section for adding a signal head.  
+Type the signal head number in the field and click "Add sensor:".
 </UL>
 
+<P>
+Each of these also has a "Edit icons..." button, which allows you to select
+which icons will be shown for the turnout, sensor, etc that you are about to add.
 <P>
 After getting the panel the way you want, you can use the "Store panel..." 
 entry in the "Panels" menu
