@@ -154,6 +154,7 @@ public class AddressPanel extends JInternalFrame
                      for (int i=0; i<listeners.size(); i++)
                      {
                          AddressListener l = (AddressListener)listeners.get(i);
+                         log.debug("Notify address listener "+l);
                          l.notifyAddressChanged(previousAddress, currentAddress);
                      }
                  }
@@ -208,6 +209,6 @@ public class AddressPanel extends JInternalFrame
          changeOfAddress();
 
      }
-
+    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AddressPanel.class.getName());
 
 }
