@@ -1,6 +1,4 @@
-/**
- * SystemsMenu.java
- */
+// SystemsMenu.java
 
 package jmri.jmrix;
 
@@ -17,7 +15,7 @@ import javax.swing.JMenu;
  *
  * @see ActiveSystemsMenu
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class SystemsMenu extends JMenu {
     public SystemsMenu(String name) {
@@ -39,6 +37,7 @@ public class SystemsMenu extends JMenu {
         add(new jmri.jmrix.nce.NceMenu());
         add(new jmri.jmrix.sprog.SPROGMenu());
         add(new jmri.jmrix.lenz.XNetMenu());
+        add(new jmri.jmrix.wangrow.WangrowMenu());
         add(new jmri.jmrix.zimo.Mx1Menu());
 
     }
