@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <decoderIndex version="34">
+  <decoderIndex version="35">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
       <manufacturer mfg="Arnold" mfgID="173" />
       <manufacturer mfg="Atlas" mfgID="127" />
       <manufacturer mfg="AuroTrains" mfgID="170" />
+      <manufacturer mfg="CML Systems" mfgID="1" />
       <manufacturer mfg="CT Elektronik" mfgID="117" />
       <manufacturer mfg="CVP Products" mfgID="135" />
       <manufacturer mfg="Computer Dialysis France" mfgID="123" />
@@ -44,41 +45,10 @@
       <family name="Dual Mode" mfg="Atlas" type="locomotive" file="Atlas_DualMode.xml">
         <model model="Dual Mode" numOuts="4" numFns="8" />
       </family>
-      <family name="Digitrax 150-series decoders" mfg="Digitrax" lowVersionID="107" type="locomotive" file="Digitrax_150.xml">
-        <model model="DH150" numOuts="5" numFns="3" />
+      <family name="AD4" mfg="CVP Products" lowVersionID="2" highVersionID="6" type="locomotive" file="CVProducts_AD4.xml">
+        <model model="AD4" />
       </family>
-      <family name="Digitrax STD decoders" mfg="Digitrax" lowVersionID="33" highVersionID="45" type="locomotive" file="Digitrax_1x1.xml">
-        <model model="DH121" numOuts="2" numFns="2" />
-        <model model="DN140" numOuts="4" numFns="2" />
-        <model model="DN144K" numOuts="4" numFns="2" />
-        <model model="DN145K" numOuts="4" numFns="2" />
-        <model model="DN146A" numOuts="4" numFns="2" lowVersionID="106" highVersionID="106" />
-        <model model="DN146" numOuts="4" numFns="2" />
-        <model model="DN147A" numOuts="4" numFns="2" />
-        <model model="DN148K" numOuts="4" numFns="2" />
-      </family>
-      <family name="Digitrax FX decoders with BEMF" mfg="Digitrax" lowVersionID="240" highVersionID="249" type="locomotive" file="Digitrax_1x2.xml">
-        <model model="DH142" numOuts="4" numFns="2">
-          <output name="4" label="Violet" />
-        </model>
-        <model model="DN142" numOuts="4" numFns="2">
-          <output name="4" label="Violet" />
-        </model>
-        <model model="DN149K2" numOuts="4" numFns="2">
-          <output name="4" label="Violet" />
-        </model>
-        <model model="DN141K2" numOuts="4" numFns="2">
-          <output name="4" label="Violet" />
-        </model>
-        <model model="DN141E2" numOuts="4" numFns="2">
-          <output name="4" label="Violet" />
-        </model>
-        <model model="DH083" numOuts="5" numFns="2">
-          <output name="4" label="Violet" />
-          <output name="5" label="Pad" />
-        </model>
-      </family>
-      <family name="Digitrax FX3 decoders" mfg="Digitrax" lowVersionID="49" highVersionID="49" type="locomotive" file="Digitrax_1x3.xml">
+      <family name="Series 3 with FX3, silent, readback" mfg="Digitrax" lowVersionID="49" highVersionID="49" type="locomotive" file="Digitrax_01x3.xml">
         <model model="DH163P" numOuts="6" numFns="12">
           <output name="4" label="Violet" />
           <output name="5" label="Pad" />
@@ -88,12 +58,65 @@
           <output name="4" label="Violet" />
           <output name="5" label="Pad" />
         </model>
+        <model model="DG583" numOuts="8" numFns="12">
+          <output name="4" label="Violet" />
+          <output name="5" label="Pad" />
+        </model>
+        <model model="DN143" numOuts="4" numFns="12">
+          <output name="4" label="Violet" />
+          <output name="5" label="Pad" />
+        </model>
+        <model model="DN163" numOuts="4" numFns="12">
+          <output name="4" label="Violet" />
+          <output name="5" label="Pad" />
+        </model>
         <model model="DZ143" numOuts="4" numFns="12">
           <output name="4" label="Violet" />
           <output name="5" label="Pad" />
         </model>
       </family>
-      <family name="Digitrax early decoders" mfg="Digitrax" lowVersionID="33" highVersionID="45" type="locomotive" file="Digitrax_early.xml">
+      <family name="Premium FX with BEMF" mfg="Digitrax" lowVersionID="240" highVersionID="249" type="locomotive" file="Digitrax_1x2.xml">
+        <model model="DH142" numOuts="4" numFns="2">
+          <output name="4" label="Violet" />
+        </model>
+        <model model="DN141" numOuts="4" numFns="2">
+          <output name="4" label="Violet" />
+        </model>
+        <model model="DN142" numOuts="4" numFns="2">
+          <output name="4" label="Violet" />
+        </model>
+        <model model="DN141K2" numOuts="4" numFns="2">
+          <output name="4" label="Violet" />
+        </model>
+        <model model="DN141E2" numOuts="4" numFns="2">
+          <output name="4" label="Violet" />
+        </model>
+        <model model="DN149K2" numOuts="4" numFns="2">
+          <output name="4" label="Violet" />
+        </model>
+      </family>
+      <family name="Basic FX" mfg="Digitrax" lowVersionID="107" type="locomotive" file="Digitrax_Basic.xml">
+        <model model="DH083" numOuts="5" numFns="3" />
+        <model model="DH150" numOuts="5" numFns="3" />
+        <model model="DH380" numOuts="8" numFns="12" />
+        <model model="DH580" numOuts="8" numFns="12" />
+        <model model="DG380" numOuts="8" numFns="12" />
+        <model model="DG580" numOuts="8" numFns="12" />
+        <model model="DN144" numOuts="4" numFns="3" />
+        <model model="DN145" numOuts="4" numFns="3" />
+        <model model="DN146" numOuts="4" numFns="3" lowVersionID="106" highVersionID="106" />
+        <model model="DN147" numOuts="4" numFns="3" />
+        <model model="DN148" numOuts="4" numFns="3" />
+      </family>
+      <family name="Basic STD" mfg="Digitrax" lowVersionID="33" highVersionID="45" type="locomotive" file="Digitrax_STD.xml">
+        <model model="DH121" numOuts="2" numFns="2" />
+        <model model="DN140" numOuts="4" numFns="2" />
+      </family>
+      <family name="Basic STD*" mfg="Digitrax" type="locomotive" file="Digitrax_STDstar.xml">
+        <model model="DN121" numOuts="2" numFns="2" />
+        <model model="DN122" numOuts="2" numFns="2" />
+      </family>
+      <family name="Early decoders" mfg="Digitrax" lowVersionID="33" highVersionID="45" type="locomotive" file="Digitrax_xearly.xml">
         <model model="DH120" numOuts="2" numFns="2" />
       </family>
       <family name="Lenz 5th gen BEMF decoders" mfg="Lenz" lowVersionID="54" type="locomotive" file="Lenz_54.xml">
@@ -197,35 +220,6 @@
         <model model="SW9-SR" lowVersionID="32" numOuts="4" numFns="8" />
         <model model="D408SR" lowVersionID="32" numOuts="7" numFns="12" />
       </family>
-      <family name="LC diesel decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_100LC_Diesel.xml">
-        <model model="100LC Diesel" numOuts="2" numFns="8">
-          <versionCV lowVersionID="34" />
-          <output name="Horn" />
-          <output name="Bell" />
-          <!--output name="3" label="FX1/grn" /-->
-          <!--output name="4" label="FX2/brwn" /-->
-          <output name="DynBrake" />
-          <output name="RPM+" />
-          <output name="RPM-" />
-          <output name="Dim" />
-          <output name="Mute" />
-          <!-- The four electrical outputs are front headlight, back -->
-          <!-- headlight, FX1, FX2 -->
-        </model>
-      </family>
-      <family name="LC steam decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_100LC_Steam.xml">
-        <model model="100LC Steam" numOuts="2" numFns="8">
-          <versionCV lowVersionID="32" />
-          <output name="Whistle" />
-          <output name="Bell" />
-          <!--output name="3" label="FX1/grn" /-->
-          <!--output name="4" label="FX2/brwn" /-->
-          <output name="Dim" />
-          <output name="Mute" />
-          <!-- The two electical outputs are front headlight, back -->
-          <!-- headlight-->
-        </model>
-      </family>
       <family name="DSD diesel" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_DSD_Diesel.xml">
         <model model="DSD diesel" numOuts="4" numFns="8">
           <versionCV lowVersionID="9" highVersionID="14" />
@@ -293,6 +287,35 @@
           <!-- for the DSX version -->
         </model>
       </family>
+      <family name="LC diesel decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_LC_Diesel.xml">
+        <model model="100LC Diesel" numOuts="2" numFns="8">
+          <versionCV lowVersionID="34" />
+          <output name="Horn" />
+          <output name="Bell" />
+          <!--output name="3" label="FX1/grn" /-->
+          <!--output name="4" label="FX2/brwn" /-->
+          <output name="DynBrake" />
+          <output name="RPM+" />
+          <output name="RPM-" />
+          <output name="Dim" />
+          <output name="Mute" />
+          <!-- The four electrical outputs are front headlight, back -->
+          <!-- headlight, FX1, FX2 -->
+        </model>
+      </family>
+      <family name="LC steam decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_LC_Steam.xml">
+        <model model="100LC Steam" numOuts="2" numFns="8">
+          <versionCV lowVersionID="32" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <!--output name="3" label="FX1/grn" /-->
+          <!--output name="4" label="FX2/brwn" /-->
+          <output name="Dim" />
+          <output name="Mute" />
+          <!-- The two electical outputs are front headlight, back -->
+          <!-- headlight-->
+        </model>
+      </family>
       <family name="Plug&amp;Play LC diesel decoders" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_pnpLC_Diesel.xml">
         <model model="C628LC Diesel" numOuts="4" numFns="8">
           <versionCV lowVersionID="37" />
@@ -319,12 +342,32 @@
           <output name="Dim" />
           <output name="Mute" />
         </model>
+        <model model="LL110LC Diesel" numOuts="2" numFns="8">
+          <versionCV lowVersionID="36" />
+          <output name="Horn" />
+          <output name="Bell" />
+          <output name="DynBrake" />
+          <output name="RPM+" />
+          <output name="RPM-" />
+          <output name="Dim" />
+          <output name="Mute" />
+        </model>
         <model model="AT100LC/KT100LC Diesel" numOuts="2" numFns="8">
           <versionCV lowVersionID="35" />
           <output name="Horn" />
           <output name="Bell" />
           <!--output name="3" label="FX1/grn" /-->
           <!--output name="4" label="FX2/brwn" /-->
+          <output name="DynBrake" />
+          <output name="RPM+" />
+          <output name="RPM-" />
+          <output name="Dim" />
+          <output name="Mute" />
+        </model>
+        <model model="090LC Diesel" numOuts="2" numFns="8">
+          <versionCV lowVersionID="36" />
+          <output name="Horn" />
+          <output name="Bell" />
           <output name="DynBrake" />
           <output name="RPM+" />
           <output name="RPM-" />
@@ -344,6 +387,50 @@
           <!-- The two electical outputs are front headlight, back -->
           <!-- headlight-->
         </model>
+        <model model="B3TSLC Steam" numOuts="2" numFns="8">
+          <versionCV lowVersionID="33" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <!--output name="3" label="FX1/grn" /-->
+          <!--output name="4" label="FX2/brwn" /-->
+          <output name="Dim" />
+          <output name="Mute" />
+          <!-- The two electical outputs are front headlight, back -->
+          <!-- headlight-->
+        </model>
+        <model model="B210LC Steam" numOuts="2" numFns="8">
+          <versionCV lowVersionID="33" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <!--output name="3" label="FX1/grn" /-->
+          <!--output name="4" label="FX2/brwn" /-->
+          <output name="Dim" />
+          <output name="Mute" />
+          <!-- The two electical outputs are front headlight, back -->
+          <!-- headlight-->
+        </model>
+        <model model="LL080LC Steam" numOuts="2" numFns="8">
+          <versionCV lowVersionID="33" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <!--output name="3" label="FX1/grn" /-->
+          <!--output name="4" label="FX2/brwn" /-->
+          <output name="Dim" />
+          <output name="Mute" />
+          <!-- The two electical outputs are front headlight, back -->
+          <!-- headlight-->
+        </model>
+        <model model="090LC Steam" numOuts="2" numFns="8">
+          <versionCV lowVersionID="33" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <!--output name="3" label="FX1/grn" /-->
+          <!--output name="4" label="FX2/brwn" /-->
+          <output name="Dim" />
+          <output name="Mute" />
+          <!-- The two electical outputs are front headlight, back -->
+          <!-- headlight-->
+        </model>
       </family>
       <family name="TCS 150 series decoders" mfg="Train Control Systems" type="locomotive" file="TCS_TH150DP.xml">
         <model model="TH150DP" numOuts="5" numFns="6">
@@ -352,13 +439,13 @@
         <model model="TH150W" numOuts="5" numFns="6">
           <output name="4" label="Violet" />
         </model>
-        <model model="TH141" numOuts="4" numFns="2">
-          <output name="4" label="Violet" />
-        </model>
       </family>
       <family name="TCS Tx series decoders" mfg="Train Control Systems" lowVersionID="16" type="locomotive" file="TCS_Tx.xml">
         <model model="T1" numOuts="2" numFns="2" />
         <model model="T2" numOuts="5" numFns="5">
+          <output name="4" label="Violet" />
+        </model>
+        <model model="TH141" numOuts="4" numFns="2">
           <output name="4" label="Violet" />
         </model>
       </family>
