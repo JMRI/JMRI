@@ -7,10 +7,10 @@ import java.awt.event.ActionEvent;
 
 /**
  * Swing action to create and register a
- * PowerPanel object
+ * SampleAutomaton object
  *
  * @author	    Bob Jacobsen    Copyright (C) 2003
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class SampleAutomatonAction extends AbstractAction {
 
@@ -18,7 +18,7 @@ public class SampleAutomatonAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
         // create a SampleAutomaton
-        SampleAutomaton f = new SampleAutomaton();
+        AbstractAutomaton f = new SampleAutomaton();
         f.start();
     }
 }
