@@ -22,7 +22,7 @@ import javax.swing.JTextField;
  * operation, Value changes before State, so you can assume that Value is stable
  * if notified of a State change.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class CvValue extends AbstractValue implements ProgListener {
 
@@ -67,7 +67,7 @@ public class CvValue extends AbstractValue implements ProgListener {
      * Set state value and send notification.  Also sets GUI color as needed.
      */
     public void setState(int state) {
-        if (log.isDebugEnabled()) log.debug("set state from "+_state+" to "+state);
+        if (log.isDebugEnabled()) log.debug("cv "+number()+" set state from "+_state+" to "+state);
         int oldstate = _state;
         _state = state;
         switch (state) {
