@@ -12,7 +12,7 @@ import jmri.jmrix.loconet.LnTurnoutManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LnTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -31,10 +31,8 @@ public class LnTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManage
     public void load(Element turnouts) {
         // create the master object
         LnTurnoutManager mgr = new LnTurnoutManager();
-        // register it with InstanceManager
-        InstanceManager.setTurnoutManager(mgr);
-        // register it for configuration
-        InstanceManager.configureManagerInstance().register(mgr);
+        replaceTurnoutManager(mgr);
+
         // load individual turnouts
         loadTurnouts(turnouts);
     }
