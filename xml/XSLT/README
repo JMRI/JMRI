@@ -1,0 +1,9 @@
+README for xml/XSLT in the JMRI distribution.
+
+See COPYING for license information.
+
+This contains XSLT transformations of the XML information maintained
+by the JMRI project.  build.xml is the ant build control file for
+performing these transformations. In general, these transformations put 
+their results in "pages" subdirectory that is not present in CVS.
+
