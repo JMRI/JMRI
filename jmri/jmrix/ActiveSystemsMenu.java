@@ -17,7 +17,7 @@ import javax.swing.JMenuBar;
  * existing menu.
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class ActiveSystemsMenu extends JMenu {
     public ActiveSystemsMenu(String name) {
@@ -53,6 +53,8 @@ public class ActiveSystemsMenu extends JMenu {
             m.add(new jmri.jmrix.lenz.XNetMenu());
         if (jmri.jmrix.sprog.serialdriver.SerialDriverAdapter.hasInstance())
             m.add(new jmri.jmrix.sprog.SPROGMenu());
+        if (jmri.jmrix.zimo.mx1.Mx1Adapter.hasInstance())
+            m.add(new jmri.jmrix.zimo.Mx1Menu());
     }
 
     static public void addItems(JMenuBar m) {
@@ -72,5 +74,7 @@ public class ActiveSystemsMenu extends JMenu {
             m.add(new jmri.jmrix.lenz.XNetMenu());
         if (jmri.jmrix.sprog.serialdriver.SerialDriverAdapter.hasInstance())
             m.add(new jmri.jmrix.sprog.SPROGMenu());
+        if (jmri.jmrix.zimo.mx1.Mx1Adapter.hasInstance())
+            m.add(new jmri.jmrix.zimo.Mx1Menu());
     }
 }
