@@ -12,7 +12,7 @@ import jmri.jmrit.display.*;
 /**
  * Frame providing access to a speedometer
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  *
  * Adapted for metric system - S.K. Bosch
  *
@@ -245,7 +245,7 @@ public class SpeedometerFrame extends javax.swing.JFrame {
         Sensor s;
         try {
             s = InstanceManager.sensorManagerInstance().
-                 newSensor(null, startSensor.getText());
+                    provideSensor(startSensor.getText());
             if (s==null) throw new Exception();
         }
         catch (Exception e) {
@@ -267,12 +267,12 @@ public class SpeedometerFrame extends javax.swing.JFrame {
                     }
                 }
             });
-        startSensorIcon.setSensor(null, startSensor.getText());
+        startSensorIcon.setSensor(s.getSystemName(), s.getUserName());
 
         // set stop sensor1
         try {
             s = InstanceManager.sensorManagerInstance().
-                 newSensor(null, stopSensor1.getText());
+                    provideSensor(stopSensor1.getText());
             if (s==null) throw new Exception();
         }
         catch (Exception e) {
@@ -312,12 +312,12 @@ public class SpeedometerFrame extends javax.swing.JFrame {
                     }
                 }
             });
-        stopSensorIcon1.setSensor(null, stopSensor1.getText());
+        stopSensorIcon1.setSensor(s.getSystemName(), s.getUserName());
 
         // set stop sensor2
         try {
             s = InstanceManager.sensorManagerInstance().
-                 newSensor(null, stopSensor2.getText());
+                    provideSensor(stopSensor2.getText());
             if (s==null) throw new Exception();
         }
         catch (Exception e) {
@@ -357,7 +357,7 @@ public class SpeedometerFrame extends javax.swing.JFrame {
                     }
                 }
             });
-        stopSensorIcon2.setSensor(null, stopSensor2.getText());
+        stopSensorIcon2.setSensor(s.getSystemName(), s.getUserName());
 
     }
 
