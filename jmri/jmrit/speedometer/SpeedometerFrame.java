@@ -12,7 +12,7 @@ import jmri.jmrit.display.*;
 /**
  * Frame providing access to a speedometer
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  *
  * Adapted for metric system - S.K. Bosch
  *
@@ -291,14 +291,14 @@ public class SpeedometerFrame extends javax.swing.JFrame {
                             stopTime1 = System.currentTimeMillis();  // milliseconds
                             if (log.isDebugEnabled()) log.debug("set stop "+stopTime1);
                             // calculate and show speed
-                            double secs = (stopTime1-startTime)/1000.;
-                            double feet = Double.parseDouble(distance1.getText());
-                            double speed;
+                            float secs = (stopTime1-startTime)/1000.f;
+                            float feet = Float.valueOf(distance1.getText()).floatValue();
+                            float speed;
                             if (dim == false) {
-                              speed = (feet/5280.)*(3600./secs);
+                              speed = (feet/5280.f)*(3600.f/secs);
                               }
                             else {
-                              speed = (feet/100000.)*(3600./secs);
+                              speed = (feet/100000.f)*(3600.f/secs);
                               }
                             if (log.isDebugEnabled()) log.debug("calc from "+secs+","+feet+":"+speed);
                             result1.setText(String.valueOf(speed).substring(0,4));
@@ -336,14 +336,15 @@ public class SpeedometerFrame extends javax.swing.JFrame {
                             stopTime2 = System.currentTimeMillis();  // milliseconds
                             if (log.isDebugEnabled()) log.debug("set stop "+stopTime2);
                             // calculate and show speed
-                            double secs = (stopTime2-startTime)/1000.;
-                            double feet = Double.parseDouble(distance2.getText());
-                            double speed;
+                            float secs = (stopTime2-startTime)/1000.f;
+                            float feet = Float.valueOf(distance2.getText()).floatValue();
+
+                            float speed;
                             if (dim == false) {
-                              speed = (feet/5280.)*(3600./secs);
+                              speed = (feet/5280.f)*(3600.f/secs);
                               }
                             else {
-                              speed = (feet/100000.)*(3600./secs);
+                              speed = (feet/100000.f)*(3600.f/secs);
                               }
                             if (log.isDebugEnabled()) log.debug("calc from "+secs+","+feet+":"+speed);
                             result2.setText(String.valueOf(speed).substring(0,4));
