@@ -3,9 +3,11 @@
 package jmri;
 
 /**
- * Description:		<describe the DccThrottle interface here>
+ * Provide DCC-specific extensions to Throttle interface.
+ *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
+ * @see Throttle
  */
 public interface DccThrottle extends Throttle {
 

@@ -3,7 +3,9 @@
 package jmri;
 
 /**
- * "Programmer" is a capability to program decoders.  These come in two types:
+ * Get access to available {@link Programmer} objects.
+ * <P>
+ * Programmers come in two types:
  * <UL>
  * <LI>Service Mode, e.g. on a programming track
  * <LI>Ops Mode, e.g. "programming on the main"
@@ -17,7 +19,7 @@ package jmri;
  * be using the reserve/release interface.
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public interface ProgrammerManager  {
 

@@ -6,7 +6,9 @@ import jmri.ProgListener;
 import java.beans.PropertyChangeListener;
 
 /**
- * "Programmer" is a capability to program decoders.  These come in two types:
+ * Provide access to the hardware DCC decoder programming capability.
+ * <P>
+ * Programmers come in two types:
  * <UL>
  * <LI>Service Mode, e.g. on a programming track
  * <LI>Ops Mode, e.g. "programming on the main"
@@ -14,11 +16,11 @@ import java.beans.PropertyChangeListener;
  * depending on which type you have, only certain modes can
  * be set.
  * <P>
- * You get a Programmer object from a ProgrammerManager,
- * which in turn can be located from the InstanceManager.
+ * You get a Programmer object from a {@link ProgrammerManager},
+ * which in turn can be located from the {@link InstanceManager}.
  * @see         jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public interface Programmer  {
 

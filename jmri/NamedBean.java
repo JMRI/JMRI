@@ -3,8 +3,8 @@
 package jmri;
 
 /**
- * The NamedBean interface provides common services for classes representing objects
- * on the layout, and allows the of common code by their Managers.
+ * Provides common services for classes representing objects
+ * on the layout, and allows a common form of access by their Managers.
  * <P>
  * Each object has a two names.  The "user" name is entirely free form, and
  * can be used for any purpose.  The "system" name is provided by the system-specific
@@ -12,7 +12,7 @@ package jmri;
  * (e.g. LocoNet, NCE, etc) and address within that system.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  * @see         jmri.AbstractManager
  * @see         jmri.AbstractNamedBean
  */

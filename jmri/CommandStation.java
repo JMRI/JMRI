@@ -3,13 +3,13 @@
 package jmri;
 
 /**
- * Interface for objects representing DCC command stations.
+ * Represents a DCC command station.
  * <P>
  * System-specific implementations can be obtained via the InstanceManager
  * class.
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public interface CommandStation {
 

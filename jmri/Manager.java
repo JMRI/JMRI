@@ -9,12 +9,19 @@ import com.sun.java.util.collections.ArrayList;
 import com.sun.java.util.collections.Collections;
 
 /**
- * Basic interface for managers.
+ * Basic interface for access to named, managed objects.
  * <P>
- * Right now, it just contains the members needed by InstanceManager to handle
+ * {@link NamedBean} objects represent various real elements, and
+ * have a "system name" and perhaps "user name".  A specific Manager
+ * object provides access to them by name, and serves as a factory for
+ * new objects.
+ * <P>
+ * Right now, this interface just contains the members needed
+ * by {@link InstanceManager} to handle
  * managers for more than one system.
  * <P>
- * Although they are not defined here because their return type differs, an individual manager
+ * Although they are not defined here because their return type differs, any
+ * specific Manager subclass
  * provides "get" methods to locate specific objects, and a "new" method
  * to create a new one via the Factory pattern.
  * The "get" methods will
@@ -23,7 +30,7 @@ import com.sun.java.util.collections.Collections;
  * that system name.
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public interface Manager {
 

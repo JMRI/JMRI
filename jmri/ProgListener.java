@@ -3,14 +3,13 @@
 package jmri;
 
 /**
- * Interface to be implemented by classes using Programmer.
- * This allows a Programmer object to return delayed status, including
+ * Allow notification of the completion of programming operations.
+ * <P>
+ * This allows a {@link Programmer} object to return delayed status, including
  * the CV value from a read operation.
  *
- * Callbacks are guaranteed to be in the Swing execution thread.
- *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public interface ProgListener extends java.util.EventListener{
 	/** Receive a callback at the end of a programming operation.

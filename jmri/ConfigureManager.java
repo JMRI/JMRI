@@ -2,11 +2,10 @@
 
 package jmri;
 
-import java.beans.PropertyChangeListener;
 import java.io.File;
 
 /**
- * Interface to general configuration capabilities.
+ * Provide load/store capabilities for general configuration.
  * <P>
  * Areas of responsibility:
  * <UL>
@@ -25,9 +24,11 @@ import java.io.File;
  *last during startup
  *</OL>
  *<P>
- *The configuration manager is generally located through the InstanceManager
+ *The configuration manager is generally located through the InstanceManager.
+ *<P>
+ *The original implementation was via the {@link jmri.configurexml} package.
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  * @see jmri.InstanceManager
  * @see jmri.configurexml.ConfigXmlManager
  */
