@@ -20,7 +20,7 @@ import org.jdom.*;
 /**
  * Frame providing a command station programmer from decoder definition files
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.26 $
+ * @version			$Revision: 1.27 $
  */
 abstract public class PaneProgFrame extends javax.swing.JFrame
 							implements java.beans.PropertyChangeListener  {
@@ -323,7 +323,9 @@ abstract public class PaneProgFrame extends javax.swing.JFrame
             // load programmer config from programmer tree
             readConfig(programmerRoot, r);
         }
-        catch (Exception e) {log.error("exception reading programmer file: "+filename+" exception: "+e); }
+        catch (Exception e) {
+            log.error("exception reading programmer file: "+filename+" exception: "+e);
+        }
     }
 
     Element programmerRoot = null;
