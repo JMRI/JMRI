@@ -9,6 +9,11 @@ or contact Bob Jacobsen (jake@physics.berkeley.edu).
 For more installation information, please 
 see http://jmri.sourceforge.net/InstallJmri.html
 
+Note that there are four distributions for JMRI, with different contents.
+The basic Java code is the same, but because of the specific features of
+various system's support for Java, its necessary to handle the details in
+different ways.  More information on the details of the various packages is 
+available at http://jmri.sourceforge.net/Technical/Packaging.html
 
 Macintosh instructions:
 =======================
@@ -71,18 +76,23 @@ You can get this from Sun at
 For information on installing Java, please see 
   http://jmri.sourceforge.net/Java/InstallJava.html
 
-To communicate with a LocoNet, you need to have a version of the javax.comm package 
-installed on your computer.  One is available at 
+To communicate with a LocoNet or NCE system, you need to have a version 
+of the javax.comm package installed on your computer.  One is available at 
   http://java.sun.com/products/javacomm/
 
 Download the JMRI.demo.0.8.zip file and expand it with WinZip or similar.
 Change to the directory just created and do
 
-  java -jar jmri.jar -classpath lib/log4j.jar;lib/xerces.jar;lib/jdom-jdk11.jar;${CLASSPATH}
+  java -jar jmri.jar
   
   
 LocoNet Hardware Connection:
-===================
+============================
+
+There are two hardware adapters available to connect to a LocoNet.  The
+LocoBuffer is the strongly preferred alternative, as it reduces the load 
+on the host computer and has a significantly smaller error rate.  The
+Digitrax MS100 interface adapter is also supported.
 
 Connect a LocoBuffer or Digitrax MS100 interface to a serial port, using 
 an adapter cable as needed.  For more information on the MS100, please see
@@ -99,14 +109,25 @@ contact us for more information.
 
 See below if you don't have a hardware connection to a LocoNet layout available.
 
+NCE System Hardware Connection:
+===============================
+
+The demo program is tested on a USB Macintosh using a Keyspan PDA Adapter to 
+provide the serial port; for information please see 
+http://jmri.sourceforge.net/DigiTrax/KeyspanAdapters/KeyspanUSB.html.  
+Its not known if a standard Macintosh RS422 serial port will work directly 
+with an NCE system; if you have a pre-USB Macintosh and want to use this demo, please 
+contact us for more information.
+
 Operating the demo (all platforms):
 ===================================
 
-After the program starts, pull down the left "Input" menu 
-and select "MS100" or "LocoBuffer", depending on your hardware. (See 
-below if you don't have a hardware connection to a LocoNet layout available)
+After the program starts, pull down the left "Input" menu  and select a
+connection protocol.  If you have an NCE system, select "NCE Serial". If
+you have a Digitrax LocoNet, select either "MS100" or "LocoBuffer" depending
+on the hardware adapter you have connected.
 
-Select the name of the port connected to your LocoNet.
+Select the name of the serial port connected to your layout.
 
 Click "Open LocoNet port"
 
