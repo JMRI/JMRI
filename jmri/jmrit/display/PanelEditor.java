@@ -37,7 +37,7 @@ import com.sun.java.util.collections.*;
  *
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 
 public class PanelEditor extends JFrame {
@@ -84,8 +84,7 @@ public class PanelEditor extends JFrame {
     NamedIcon inactiveIcon;
 
     JButton signalAdd = new JButton("Add signal:");
-    JTextField nextSignalSE = new JTextField(5);
-    JTextField nextSignalHead = new JTextField(2);
+    JTextField nextSignalHead = new JTextField(5);
 
     JButton backgroundAddButton = new JButton("Pick background image...");
 
@@ -301,8 +300,6 @@ public class PanelEditor extends JFrame {
             panel.setLayout(new FlowLayout());
 
             panel.add(signalAdd);
-            panel.add(nextSignalSE);
-            panel.add(new JLabel("head:"));
             panel.add(nextSignalHead);
             signalAdd.addActionListener( new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
@@ -467,7 +464,7 @@ public class PanelEditor extends JFrame {
      */
     void addSignalHead() {
         SignalHeadIcon l = new SignalHeadIcon();
-        l.setSignalHead(nextSignalSE.getText(), Integer.parseInt(nextSignalHead.getText()));
+        l.setSignalHead(nextSignalHead.getText());
         setNextLocation(l);
         putSignal(l);
     }
@@ -477,6 +474,7 @@ public class PanelEditor extends JFrame {
         contents.add(l);
         // reshow the panel
         target.validate();
+        log.debug("After val:"+l.getWidth()+" "+l.getHeight()+" "+getX()+" "+getY());
     }
 
     /**
@@ -518,8 +516,7 @@ public class PanelEditor extends JFrame {
     void setNextLocation(JComponent obj) {
         int x = Integer.parseInt(nextX.getText());
         int y = Integer.parseInt(nextY.getText());
-        //obj.setLocation(x,y);
-        obj.setBounds(x,y,obj.getWidth(),obj.getHeight());
+        obj.setLocation(x,y);
     }
 
     /**

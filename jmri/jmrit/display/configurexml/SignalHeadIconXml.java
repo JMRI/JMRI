@@ -9,7 +9,7 @@ import org.jdom.*;
  * Handle configuration for display.SignalHeadIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class SignalHeadIconXml implements XmlAdapter {
 
@@ -30,8 +30,7 @@ public class SignalHeadIconXml implements XmlAdapter {
         Element element = new Element("signalheadicon");
 
         // include contents
-        element.addAttribute("aspectgenerator", p.getAspectGenerator().getSEName());
-        element.addAttribute("head", ""+p.getHeadNumber());
+        element.addAttribute("signalhead", ""+p.getSignalHead().getSystemName());
         element.addAttribute("x", ""+p.getX());
         element.addAttribute("y", ""+p.getY());
         element.addAttribute("red", p.getRedIcon().getName());
@@ -61,9 +60,13 @@ public class SignalHeadIconXml implements XmlAdapter {
         String name;
 
         SignalHeadIcon l = new SignalHeadIcon();
-        l.setSignalHead(element.getAttribute("aspectgenerator").getValue(),
-                    Integer.parseInt(element.getAttribute("head").getValue())
-                    );
+        // handle old format!
+        if (element.getAttribute("signalhead") == null) {
+            log.error("incorrect information for signal head; must use signalhead name");
+            return;
+        }
+
+        l.setSignalHead(element.getAttribute("signalhead").getValue());
 
         NamedIcon red;
         name = element.getAttribute("red").getValue();

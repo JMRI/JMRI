@@ -1,10 +1,10 @@
 package jmri.jmrit.display;
 
-import javax.swing.*;
-import java.awt.event.*;
-import jmri.jmrit.catalog.NamedIcon;
 import jmri.*;
-import jmri.jmrix.loconet.AspectGenerator;
+import jmri.jmrit.catalog.*;
+import java.awt.event.*;
+
+import javax.swing.*;
 
 /**
  * SignalHeadIcon provides a small icon to display a status of a SignalHead.
@@ -14,7 +14,7 @@ import jmri.jmrix.loconet.AspectGenerator;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -26,28 +26,28 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         icon = true;
         text = false;
 
+        updateSize();
         displayState(SignalHead.RED);
     }
 
-    // the associated AspectGenerator object
-    AspectGenerator mGenerator;
-    int mHead;
+    private SignalHead mHead;
 
     /**
      * Attached a numbered element to this display item
      * @param name Used as a number to lookup the AspectGenerator object
      * @param number Number of the head on the generator
      */
-    public void setSignalHead(String pName, int pNumber) {
-        mGenerator = jmri.jmrix.loconet.LnSecurityElementManager.instance()
-            .getAspectGenerator(pName);
-        mHead = pNumber;
-        mGenerator.addPropertyChangeListener(this);
+    public void setSignalHead(String pName) {
+        mHead = InstanceManager.signalHeadManagerInstance().getBySystemName(pName);
+        if (mHead == null) log.warn("did not find a SignalHead named "+pName);
+        displayState(headState());
+        mHead.addPropertyChangeListener(this);
+        setProperToolTip();
     }
 
-    public AspectGenerator getAspectGenerator() { return mGenerator; }
-
-    public int getHeadNumber() { return mHead; }
+    public SignalHead getSignalHead() {
+        return mHead;
+    }
 
     // display icons
     String redName = "resources/icons/smallschematics/searchlights/left-red-marker.gif";
@@ -112,8 +112,8 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
      * @return An appearance variable from a SignalHead, e.g. SignalHead.RED
      */
     public int headState() {
-        if (mGenerator==null) return 0;
-        else return mGenerator.getHeadState(mHead);
+        if (mHead==null) return 0;
+        else return mHead.getAppearance();
     }
 
     // update icon as state of turnout changes
@@ -129,9 +129,11 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
 
     String getNameString() {
         String name;
-        if (mGenerator == null) name = "<Not connected>";
+        if (mHead == null) name = "<Not connected>";
+        else if (mHead.getUserName() == null)
+            name = mHead.getSystemName();
         else
-            name = "AG"+mGenerator.getSEName()+" head "+this.mHead;
+            name = mHead.getUserName()+" ("+mHead.getSystemName()+")";
         return name;
     }
 
@@ -170,6 +172,10 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
      * turnout.
      */
     public void displayState(int state) {
+        if (mHead == null)
+            log.debug("Display state "+state+", disconnected");
+        else
+            log.debug("Display state "+state+" for "+mHead.getSystemName());
         switch (state) {
         case SignalHead.RED:
             if (text) super.setText("<red>");
@@ -195,8 +201,8 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
     }
 
     public void dispose() {
-        mGenerator.removePropertyChangeListener(this);
-        mGenerator = null;
+        mHead.removePropertyChangeListener(this);
+        mHead = null;
 
         red = null;
         yellow = null;
