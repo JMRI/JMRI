@@ -18,7 +18,7 @@ import java.util.Vector;
  * without traffic over the connection.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Id: LnTrafficRouter.java,v 1.1 2002-03-18 04:52:44 jacobsen Exp $
+ * @version 		$Id: LnTrafficRouter.java,v 1.2 2002-03-28 04:21:46 jacobsen Exp $
  *
  */
 public class LnTrafficRouter extends LnTrafficController implements LocoNetListener {
@@ -38,8 +38,6 @@ public class LnTrafficRouter extends LnTrafficController implements LocoNetListe
 	/**
 	 * Forward a preformatted LocoNetMessage to the actual interface.
 	 *
-	 * Checksum is computed and overwritten here, then the message
-	 * is converted to a byte array and queue for transmission
      * @param m Message to send; will be updated with CRC
 	 */
 	public void sendLocoNetMessage(LocoNetMessage m) {
