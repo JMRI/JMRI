@@ -128,6 +128,11 @@ public class SerialDriverFrame extends javax.swing.JFrame {
 			if (jmri.InstanceManager.powerManagerInstance() == null) 
 				jmri.InstanceManager.setPowerManager(new jmri.jmrix.nce.NcePowerManager());
 				
+			// If a jmri.TurnoutManager instance doesn't exist, create a 
+			// nce.NcePowerManager to do that
+			if (jmri.InstanceManager.turnoutManagerInstance() == null) 
+				jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.nce.NceTurnoutManager());
+				
 			// start operation
 			// sourceThread = new Thread(p);
 			// sourceThread.start();

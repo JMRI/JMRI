@@ -54,10 +54,8 @@ public abstract class AbstractTurnout implements Turnout, java.io.Serializable {
 	public int getKnownState() {return _knownState;}
 
 	public void setCommandedState(int s) throws jmri.JmriException {
-		if (_commandedState != s) {
-			forwardCommandChangeToLayout(s);
-			newCommandedState(s);   
-			}
+		forwardCommandChangeToLayout(s);
+		newCommandedState(s);   
 	}
 	
 	public int getCommandedState() {return _commandedState;}

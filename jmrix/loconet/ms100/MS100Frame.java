@@ -115,6 +115,11 @@ public class MS100Frame extends javax.swing.JFrame {
 			if (jmri.InstanceManager.powerManagerInstance() == null) 
 				jmri.InstanceManager.setPowerManager(new jmri.jmrix.loconet.LnPowerManager());
 
+			// If a jmri.TurnoutManager instance doesn't exist, create a 
+			// loconet.LnTurnoutManager to do that
+			if (jmri.InstanceManager.turnoutManagerInstance() == null) 
+				jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager());
+
 			// start operation
 			// sourceThread = new Thread(p);
 			// sourceThread.start();

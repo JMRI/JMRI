@@ -11,20 +11,11 @@ package jmri.simpleturnoutctrl;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.util.Date;
-import java.text.DateFormat;
-import java.io.File;
 
-import jmri.jmrix.loconet.LocoNetListener;
-import jmri.jmrix.loconet.LnTrafficController;
-import jmri.jmrix.loconet.LocoNetMessage;
-import jmri.jmrix.loconet.LnConstants;
-import jmri.jmrix.loconet.LnTurnout;
+import jmri.Turnout;
+import jmri.InstanceManager;
 
-import java.io.PrintStream;
-import java.io.FileOutputStream;
-
-public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame {
+public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.beans.PropertyChangeListener {
 
 	// GUI member declarations
 	javax.swing.JLabel textAdrLabel = new javax.swing.JLabel();
@@ -64,7 +55,7 @@ public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame {
 			}
 		});
 
-		textStateLabel.setText("current state:");
+		textStateLabel.setText("current state: ");
 		textStateLabel.setVisible(true);
 
 		nowStateLabel.setText("<unknown>");
@@ -88,8 +79,6 @@ public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame {
 		
 	}
   
-  	LnTurnout t;
-  	
   	private boolean mShown = false;
   	
 	public void addNotify() {
@@ -116,54 +105,69 @@ public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame {
 	}
 	
 
-public void closeButtonActionPerformed(java.awt.event.ActionEvent e) {
-	// create a new LnTurnout item and ask it to handle this
+	public void closeButtonActionPerformed(java.awt.event.ActionEvent e) {
+		// find the right Turnout object and ask it to handle this
 
-	// load address from switchAddrTextField
-	int adr;
-	try {
-		adr = Integer.valueOf(adrTextField.getText()).intValue();
-		LnTurnout tmp = new LnTurnout(adr);
-		tmp.setCommandedState(LnTurnout.CLOSED);
+		// load address from switchAddrTextField
+		try {
+			if (turnout != null) turnout.removePropertyChangeListener(this);
+			turnout = InstanceManager.turnoutManagerInstance().
+						newTurnout(null,adrTextField.getText());
+			turnout.addPropertyChangeListener(this);
+			if (log.isDebugEnabled()) log.debug("about to command CLOSED");
+			turnout.setCommandedState(Turnout.CLOSED);
 		}
-	catch (Exception ex)
-		{
-			log.error("closeButtonActionPerformed, exception: "+ex.toString());
-			return;
-		}
-	return;
+		catch (Exception ex) {
+				log.error("closeButtonActionPerformed, exception: "+ex.toString());
+				return;
+			}
+		return;
 	}
 
-public void throwButtonActionPerformed(java.awt.event.ActionEvent e) {
-	// create a new LnTurnout item and ask it to handle this
+	public void throwButtonActionPerformed(java.awt.event.ActionEvent e) {
+		// find the right Turnout object and ask it to handle this
 
-	// load address from switchAddrTextField
-	int adr;
-	try {
-		adr = Integer.valueOf(adrTextField.getText()).intValue();
-		LnTurnout tmp = new LnTurnout(adr);
-		tmp.setCommandedState(LnTurnout.THROWN);
-		}
-	catch (Exception ex)
-		{
-			log.error("throwButtonActionPerformed, exception: "+ex.toString());
-			return;
-		}
-	return;
+		// load address from switchAddrTextField
+		try {
+			if (turnout != null) turnout.removePropertyChangeListener(this);
+			turnout = InstanceManager.turnoutManagerInstance().
+						newTurnout(null,adrTextField.getText());
+			turnout.addPropertyChangeListener(this);
+			if (log.isDebugEnabled()) log.debug("about to command THROWN");
+			turnout.setCommandedState(Turnout.THROWN);
+			}
+		catch (Exception ex)
+			{
+				log.error("throwButtonActionPerformed, exception: "+ex.toString());
+				return;
+			}
+		return;
 	}
 
-private boolean myAddress(int a1, int a2) { 
-	try {
-		return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1) 
-			== Integer.valueOf(adrTextField.getText()).intValue(); 
-		}
-	catch (java.lang.NumberFormatException e) 
-		{
-			return false;
+	// keep track of Turnout user name changes
+	public void propertyChange(java.beans.PropertyChangeEvent e) {
+		if (e.getPropertyName().equals("CommandedState")) {
+			int now = ((Integer) e.getNewValue()).intValue();
+			switch (now) {
+				case Turnout.UNKNOWN: 
+					nowStateLabel.setText("<unknown>");
+					return;
+				case Turnout.CLOSED: 
+					nowStateLabel.setText("Closed");
+					return;
+				case Turnout.THROWN: 
+					nowStateLabel.setText("Thrown");
+					return;
+				default:
+					nowStateLabel.setText("<inconsistent>");
+					return;
+			}
 		}
 	}
 
-static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SimpleTurnoutCtrlFrame.class.getName());
+	Turnout turnout = null;
+	
+	static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SimpleTurnoutCtrlFrame.class.getName());
 
 String newState = "";
 }

@@ -30,6 +30,9 @@ public class NceTurnoutManager extends jmri.AbstractTurnoutManager {
 	}
 	
 	public Turnout newTurnout(String systemName, String userName) {
+		// if system name is null, supply one from the number in userName
+		if (systemName == null) systemName = "NT"+userName;
+		
 		// return existing if there is one
 		Turnout t;
 		if ( (t = getByUserName(userName)) != null) return t;
