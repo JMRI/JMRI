@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_01x3.xml,v 1.8 2003-05-31 04:53:54 jacobsen Exp $ -->
+<!-- $Id: Digitrax_01x3.xml,v 1.9 2003-05-31 23:28:24 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Simon.Ginsburg@freesurf.ch" 
 					version="" lastUpdated="20030118"/>
@@ -672,6 +672,10 @@
 				</enumVal>
 			</variable>
 
+		<variable label="Decoder Lock ID number" CV="16" mask="XXXXXVVV" default="0">
+			<decVal/>
+			</variable>
+
 		<variable label="Kick Start" CV="65">
 			<decVal/>
 			</variable>
@@ -947,6 +951,7 @@
 		<display item="Switching speed enabled by F6" />
 		<display item="Torque compensation" />
 		<display item="Decoder Lock Feature" />
+		<display item="Decoder Lock ID number" />
 		
 	</column>
 </pane>
