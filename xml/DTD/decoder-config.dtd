@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a DCC decoder as a component, esp. information -->
 <!-- on how to program it. -->
-<!-- $Id: decoder-config.dtd,v 1.13 2002-01-01 01:49:53 jacobsen Exp $ -->
+<!-- $Id: decoder-config.dtd,v 1.14 2002-01-08 03:52:27 jacobsen Exp $ -->
 
 <!ELEMENT decoder-config (version, decoder, pane*)>
 
@@ -15,8 +15,8 @@
 <!ELEMENT decoder (id, programming, variables)>
 
 <!-- The id section identifies the decoder. It must be kept consistent -->
-<!-- with the family element in the decoderIndex-config.dtd (though names -->
-<!-- may vary a little) -->
+<!-- with the family & decoder elements in the decoderIndex-config.dtd (though -->
+<!-- the "file" attribute is added) -->
 <!ELEMENT id EMPTY>
 <!ATTLIST id family     	CDATA #REQUIRED>  <!--family name used for identification -->
 <!ATTLIST id mfg       		CDATA #REQUIRED>  <!-- mfg name used for identification   -->
@@ -143,7 +143,7 @@
 <!ATTLIST display name CDATA #REQUIRED>  <!-- Name used for identification -->
 <!ATTLIST display label CDATA  #IMPLIED>  <!-- optional, default is from name -->
 <!ATTLIST display tooltip CDATA #IMPLIED>  <!-- optional, default is from variable tooltip -->
-<!ATTLIST display layout ( left | above | below | right ) "right" > <!-- label position -->
+<!ATTLIST display layout ( left | above | below | right ) "left" > <!-- label position -->
 <!ATTLIST display format  (default | slider | radiobuttons | checkbox |
 							onradiobutton | offradiobutton) "default" >
 

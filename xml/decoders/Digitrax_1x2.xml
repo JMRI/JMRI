@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_1x2.xml,v 1.10 2002-01-02 20:37:18 jacobsen Exp $ -->
+<!-- $Id: Digitrax_1x2.xml,v 1.11 2002-01-08 03:52:42 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" version="2" lastUpdated="20011221"/>
 
@@ -406,7 +406,8 @@
 				<enumChoice choice="F5 On disables speed compensation"/>
 				</enumVal>
 			</variable>
-		<variable name="Transponding" CV="61" mask="XXXXXXVX">
+		<variable name="Digitrax Transponding" CV="61" mask="XXXXXXVX"
+			stdName="Advanced Ack">
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
