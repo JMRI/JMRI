@@ -12,7 +12,7 @@ import jmri.jmrix.lenz.XNetTurnoutManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class XNetTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -30,8 +30,7 @@ public class XNetTurnoutManagerXml extends jmri.configurexml.AbstractTurnoutMana
 
     public void load(Element turnouts) {
         // create the master object
-        XNetTurnoutManager mgr = new XNetTurnoutManager();
-        replaceTurnoutManager(mgr);
+        XNetTurnoutManager mgr = XNetTurnoutManager.instance();
         // load individual turnouts
         loadTurnouts(turnouts);
     }
