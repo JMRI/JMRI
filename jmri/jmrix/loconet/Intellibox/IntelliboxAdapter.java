@@ -9,7 +9,7 @@ import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
  * operates correctly with the Intellibox on-board serial port
 
  * @author			Alex Shepherd   Copyright (C) 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class IntelliboxAdapter extends LocoBufferAdapter {
 
@@ -17,8 +17,8 @@ public class IntelliboxAdapter extends LocoBufferAdapter {
     public IntelliboxAdapter() {
         super();
 
-        validSpeeds = new String[]{"2400", "4800", "9600", "19200", "57600"};
-        validSpeedValues = new int[]{2400, 4800,9600, 19200, 57600};
+        validSpeeds = new String[]{"19200", "38400"};
+        validSpeedValues = new int[]{19200, 38400};
 
         m2Instance = this;
     }
