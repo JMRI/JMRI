@@ -135,7 +135,8 @@ The JBuilder install adds another version of Java and sets it as current.  When 
 Java program starts, e.g. DecoderPro, it looks for it's libraries in the current Java 
 install.  So the files (from the original DecoderPro install) are still there, but it's looking 
 in a different place now, and can't run.  Reinstalling DecoderPro will put the libraries 
-in the current Java install, and should fix this.Once you have it installed, start it up 
+in the current Java install, and should fix this.
+<P>Once you have JBuilder installed, start it up 
 once to go through the
 licensing procedure. 
 The steps to get a working project are then:
@@ -146,6 +147,24 @@ module from our repository (see above). This will create a "java" subdirectory
 where the JBuilder IDE will run, and load it with source, tests and resources.
 It will also create and populate directories for xml and libraries in the 
 project directory.
+<LI>The personal edition of JBuilder insists that libraries be in specific place.
+Because that place changes from computer to computer, we haven't been able to
+create an installer smart enough to handle it. You have to do the following steps
+manually, but just once per computer (if you check out a new copy of the source,
+this should still be ok):
+<UL>
+<LI>Find the .jbuilder directory.  This is probably in or near your "home"
+directory.  On a linux or MacOS X system, look in "~".  On Windows, you should
+search for it.
+<LI>In the java directory that you just checked out, there's a "lib" directory.
+Copy that "lib" directory and its contents to the .jbuilder directory.
+<LI>Check to make sure that the lib directory in the .jbuilder directory contains
+the files README, Serialio.jar, collections.jar, 
+lib/comm.jar, lib/crimson.jar, lib/jdom-jdk11.jar, 
+lib/junit.jar, lib/log4j.jar, and lib/security.policy
+<LI>In the java directory that you just checked out, there's a JMRILibraries.library
+file.  Copy that file to the .jbuilder directory.
+</UL>
 <LI>Change to the newly created java subdirectory. Start JBuilder with the 
 jmri.jpx file you'll find there.
 <LI>Click run, and sit back to watch it go.
@@ -154,9 +173,7 @@ jmri.jpx file you'll find there.
 <P>
 JBuilder can become confused, in which case you'll have problems with seemingly
 missing files, wrong class names, etc.  When that happens, remove the "classes"
-folder from the project's "java" directory (where the jmri.jpx file is located),
-and also the .jbuilder folder from your home directory (on some systems, this is a
-hidden file; you may have to search for it).
+folder from the project's "java" directory.
 <H3>Using ant to build JMRI</h3>
 <A id="ant">
 Those of you who prefer a command line approach might want to investigate "ant", a
