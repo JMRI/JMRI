@@ -7,10 +7,10 @@ import jmri.*;
 /**
  * Automate section 22A of the Cornwall RR.
  * <P>
- * Based on Crr0029.bas
+ * Based on Crr0029.bas, though now include tu13 in the yellow signal logic
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class CrrSection22A extends CrrSection {
 
