@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a DCC decoder as a component, esp. information -->
 <!-- on how to program it. -->
-<!-- $Id: decoder-config.dtd,v 1.20 2002-05-09 05:04:33 jacobsen Exp $ -->
+<!-- $Revision: 1.21 $ -->
 
 <!ELEMENT decoder-config (version, decoder, pane*)>
 
@@ -50,10 +50,12 @@
 <!-- If only one is specified, only that single value is acceptable -->
 <!ATTLIST versionCV lowVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
 <!ATTLIST versionCV highVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
+<!ATTLIST versionCV comment CDATA #IMPLIED>
 
 <!ELEMENT output EMPTY >
 <!ATTLIST output name     	CDATA #REQUIRED>  <!-- output name used for identification -->
 <!ATTLIST output label     	CDATA #IMPLIED>  <!-- optional label, e.g. wire color -->
+<!ATTLIST output comment   	CDATA #IMPLIED>
 
 <!-- The programming section describes the decoders programming capabilities -->
 
@@ -95,11 +97,13 @@
 <!ATTLIST decVal min CDATA "0" >    <!-- if decimal/hex, smallest acceptable value -->
 <!ATTLIST decVal max CDATA "255" >  <!-- if decimal/hex, largest acceptable value -->
 <!ATTLIST decVal default CDATA #IMPLIED>
+<!ATTLIST decVal comment CDATA #IMPLIED>
 
 <!ELEMENT hexVal EMPTY>
 <!ATTLIST hexVal min CDATA "0" >    <!-- if decimal/hex, smallest acceptable value -->
 <!ATTLIST hexVal max CDATA "ff" >  <!-- if decimal/hex, largest acceptable value -->
 <!ATTLIST hexVal default CDATA #IMPLIED>
+<!ATTLIST hexVal comment CDATA #IMPLIED>
 
 <!ELEMENT enumVal (enumChoice*) >
 <!ATTLIST enumVal default CDATA #IMPLIED>
@@ -107,8 +111,8 @@
 
 <!ELEMENT enumChoice EMPTY>
 <!ATTLIST enumChoice choice CDATA #REQUIRED >
-<!ATTLIST enumChoice comment CDATA #IMPLIED >
 <!ATTLIST enumChoice value CDATA "" >
+<!ATTLIST enumChoice comment CDATA #IMPLIED >
 
 <!ELEMENT speedTableVal (speedTableEntry*) >
 <!ATTLIST speedTableVal entries CDATA "28">        <!-- number of entries/CVs in table -->
@@ -117,9 +121,10 @@
 <!ELEMENT speedTableEntry EMPTY>
 <!ATTLIST speedTableEntry step  CDATA #REQUIRED >
 <!ATTLIST speedTableEntry value CDATA #REQUIRED >
+<!ATTLIST speedTableEntry comment CDATA #IMPLIED>
 
 <!ELEMENT longAddressVal EMPTY >
-<!ATTLIST speedTableVal comment CDATA #IMPLIED>
+<!ATTLIST longAddressVal comment CDATA #IMPLIED>
 
 
 
@@ -140,6 +145,7 @@
 <!ATTLIST pane name CDATA #REQUIRED>  <!-- Name used for identification -->
 <!-- Which name to show in GUI? Mfg is the name field from the decoder file -->
 <!ATTLIST pane nameFmt (label | item) "label">
+<!ATTLIST pane comment CDATA #IMPLIED >
 
 <!-- The column section describes each column in the pane -->
 <!ELEMENT column ((row | display | label | separator | cvtable | fnmapping | dccaddress )*)>
@@ -160,6 +166,7 @@
 <!-- The label items describes an arbitrary text string -->
 <!ELEMENT label EMPTY >
 <!ATTLIST label label CDATA #REQUIRED>
+<!ATTLIST label comment CDATA #IMPLIED >
 
 <!-- These display attributes define each identified variables -->
 <!-- in the column and how they are displayed -->
@@ -171,4 +178,4 @@
 <!ATTLIST display layout ( left | above | below | right ) "left" > <!-- label position -->
 <!ATTLIST display format  (default | slider | radiobuttons | checkbox |
 							onradiobutton | offradiobutton) "default" >
-
+<!ATTLIST display comment CDATA #IMPLIED >

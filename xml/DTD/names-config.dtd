@@ -1,5 +1,5 @@
 <!-- Defines XML documenting standard names and aliases -->
-<!-- $Id: names-config.dtd,v 1.6 2002-07-13 02:55:12 jacobsen Exp $ -->
+<!-- $Revision: 1.7 $ -->
 
 <!ELEMENT names-config (version, (definitiongroup | definition)*)>
 
@@ -20,9 +20,7 @@
 
 <!ELEMENT definition EMPTY >
 <!ATTLIST definition item CDATA #REQUIRED>  <!-- item name used for identification -->
-
 <!ATTLIST definition comment   CDATA #IMPLIED>
-
 <!-- The CV and mask attributes are still under consideration. They are not used in the  -->
 <!-- programs, and are currently here just for mapping to the definitions elsewhere -->
 <!ATTLIST definition CV CDATA #IMPLIED>    <!-- CV number containing value -->

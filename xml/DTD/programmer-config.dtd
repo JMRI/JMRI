@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a CV programmer format -->
-<!-- $Id: programmer-config.dtd,v 1.14 2002-01-13 03:36:57 jacobsen Exp $ -->
+<!-- $Revision: 1.15 $ -->
 
 <!ELEMENT programmer-config (version, programmer)>
 

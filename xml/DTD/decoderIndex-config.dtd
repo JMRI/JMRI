@@ -1,5 +1,5 @@
 <!-- Defines XML documenting the list of available decoder definitions -->
-<!-- $Id: decoderIndex-config.dtd,v 1.12 2002-07-05 03:06:59 jacobsen Exp $ -->
+<!-- $Revision: 1.13 $ -->
 
 <!ELEMENT decoderIndex-config (decoderIndex)>
 <!ATTLIST decoderIndex-config>
@@ -52,7 +52,9 @@
 <!-- If only one is specified, only that single value is acceptable -->
 <!ATTLIST versionCV lowVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
 <!ATTLIST versionCV highVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
+<!ATTLIST versionCV comment   	CDATA #IMPLIED>
 
 <!ELEMENT output EMPTY >
 <!ATTLIST output name     	CDATA #REQUIRED>  <!-- output name used for identification -->
 <!ATTLIST output label     	CDATA #IMPLIED>  <!-- optional label, e.g. wire color -->
+<!ATTLIST output comment   	CDATA #IMPLIED>
