@@ -10,7 +10,7 @@ import javax.swing.*;
  * Provide a graphical representation of the DCC address, either long or short
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class DccAddressPanel extends JPanel {
 
@@ -22,12 +22,20 @@ public class DccAddressPanel extends JPanel {
 
     VariableTableModel variableModel = null;
 
+    /**
+     * Ctor using default label for the address.
+     * @param mod The current table of variables, used to locate the
+     * status information needed.
+     */
     public DccAddressPanel(VariableTableModel mod) {
+        this(mod, "Active DCC Address: ");
+    }
+    public DccAddressPanel(VariableTableModel mod, String label) {
         variableModel = mod;
 
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
-        add(new JLabel("DCC Address: "));
+        add(new JLabel(label));
         val.setToolTipText("This field shows the DCC address currently in use. CV1 provides the short address; CV17 & 18 provide the long address");
         add(val);
 
@@ -51,12 +59,11 @@ public class DccAddressPanel extends JPanel {
 
         // show the selection
         if (addMode != null) {
-            add(new JLabel("  Extended Addressing: "));
-            add(addMode.getRep("checkbox"));
+            add(addMode.getRep("radiobuttons"));
         }
 
         // update initial contents & color
-        if (addMode == null || extendAddr == null || addMode.getIntValue()==0) {
+        if (addMode == null || extendAddr == null || !addMode.getValueString().equals("1")) {
             if (primaryAddr!=null) {
                 // short address
                 val.setBackground(primaryAddr.getValue().getBackground());
@@ -102,9 +109,18 @@ public class DccAddressPanel extends JPanel {
 
     String oldContents = "";
 
+    /**
+     * Handle focus entering the address field by recording the contents.
+     */
     void enterField() {
         oldContents = val.getText();
     }
+
+    /**
+     * Handle focus leaving the address field by checking to see if the
+     * contents changed.  We do this because we want to record that change
+     * even if it hasn't been "entered" via return key et al.
+     */
     void exitField() {
         if (!oldContents.equals(val.getText())) {
             if (addMode == null || extendAddr == null || !addMode.getValueString().equals("1")) {
@@ -124,6 +140,12 @@ public class DccAddressPanel extends JPanel {
         }
     }
 
+    /**
+     * Handle a (possible) update to the active DCC address, either because
+     * the state changed or the address mode changed.  Note that value changes
+     * of the active address are directly reflected, so we don't have to do
+     * anything on those, but we still go ahead and update the state color.
+     */
     void updateDccAddress() {
         if (log.isDebugEnabled())
             log.debug("updateDccAddress: short "+(primaryAddr==null?"<null>":primaryAddr.getValueString())+
