@@ -12,7 +12,7 @@ import com.sun.java.util.collections.List;
  * configuring LnSecurityElementManager.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class LnSecurityElementManagerXml implements XmlAdapter {
 
@@ -110,10 +110,11 @@ public class LnSecurityElementManagerXml implements XmlAdapter {
         LnSecurityElementManager sem = LnSecurityElementManager.instance();
 
         for (int i=0; i<elementList.size(); i++) {
-            // create SecurityElement
+            // create SecurityElement & aspect generator
             Element current = (Element)(elementList.get(i));
             int number = Integer.parseInt(current.getAttribute("number").getValue());
             SecurityElement se = sem.getSecurityElement(number);
+            AspectGenerator ag = sem.getAspectGenerator(number);
 
             // brute force the parameters
             Attribute a;
