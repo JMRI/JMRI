@@ -4,9 +4,13 @@ import jmri.jmrit.throttle.ThrottleFrame;
 import java.util.Iterator;
 
 /**
- * Interface for controlling throttles
+ * Interface for allocating and deallocating throttles.
+ * <P>
+ * "Address" is interpreted in the context of the DCC implementation.
+ * Different systems will distrinquish between short and long addresses
+ * in different ways.
  * @author			Glen Oberhauser
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public interface ThrottleManager
 {
