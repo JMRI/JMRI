@@ -3,13 +3,15 @@
 package jmri.jmrit.beantable;
 
 import jmri.InstanceManager;
-import jmri.Manager;
+import jmri.*;
+import java.awt.*;
+import java.awt.event.*;
 import jmri.NamedBean;
 import jmri.Turnout;
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
+import java.util.*;
 
-import javax.swing.AbstractAction;
+import javax.swing.*;
 import javax.swing.JButton;
 
 /**
@@ -17,19 +19,27 @@ import javax.swing.JButton;
  * TurnoutTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 
-public class TurnoutTableAction extends AbstractAction {
+public class TurnoutTableAction extends AbstractTableAction {
 
-    public TurnoutTableAction(String s) { super(s);}
+    /**
+     * Create an action with a specific title.
+     * <P>
+     * Note that the argument is the Action title, not the title of the
+     * resulting frame.  Perhaps this should be changed?
+     * @param s
+     */
     public TurnoutTableAction() { this("Turnout Table");}
+    public TurnoutTableAction(String s) { super(s);}
 
-    public void actionPerformed(ActionEvent e) {
-        final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
-
-        // create the model, with modifications for Turnouts
-        BeanTableDataModel m = new BeanTableDataModel() {
+    /**
+     * Create the JTable DataModel, along with the changes
+     * for the specific case of Sensors
+     */
+    void createModel() {
+        m = new BeanTableDataModel() {
             public String getValue(String name) {
                 int val = InstanceManager.turnoutManagerInstance().getBySystemName(name).getKnownState();
                 switch (val) {
@@ -51,12 +61,51 @@ public class TurnoutTableAction extends AbstractAction {
                 return new JButton("Thrown");
             }
         };
-        // create the frame
-        BeanTableFrame f = new BeanTableFrame(m);
-        f.setTitle(f.rb.getString("TitleTurnoutTable"));
-        f.show();
     }
-}
 
+    void setTitle() {
+        f.setTitle(f.rb.getString("TitleTurnoutTable"));
+    }
+    JFrame addFrame = null;
+    JTextField sysName = new JTextField(5);
+    JTextField userName = new JTextField(5);
+    JLabel sysNameLabel = new JLabel("System name:");
+    JLabel userNameLabel = new JLabel("User name:");
+
+    void addPressed(ActionEvent e) {
+        if (addFrame==null) {
+            addFrame = new JFrame(rb.getString("TitleAddSensor"));
+            addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
+            JPanel p;
+            p = new JPanel(); p.setLayout(new FlowLayout());
+            p.add(sysNameLabel);
+            p.add(sysName);
+            addFrame.getContentPane().add(p);
+
+            p = new JPanel(); p.setLayout(new FlowLayout());
+            p.add(userNameLabel);
+            p.add(userName);
+            addFrame.getContentPane().add(p);
+
+            JButton ok;
+            addFrame.getContentPane().add(ok = new JButton(rb.getString("ButtonOK")));
+            ok.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    okPressed(e);
+                }
+            });
+        }
+        addFrame.pack();
+        addFrame.show();
+    }
+
+    void okPressed(ActionEvent e) {
+        String user = userName.getText();
+        if (user.equals("")) user=null;
+        InstanceManager.turnoutManagerInstance().newTurnout(sysName.getText(), user);
+    }
+
+    static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(TurnoutTableAction.class.getName());
+}
 
 /* @(#)TurnoutTableAction.java */

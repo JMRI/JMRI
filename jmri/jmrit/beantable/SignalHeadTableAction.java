@@ -12,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 
-import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -26,19 +25,31 @@ import javax.swing.JTextField;
  * SignalHeadTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
-public class SignalHeadTableAction extends AbstractAction {
+public class SignalHeadTableAction extends AbstractTableAction {
 
-    public SignalHeadTableAction(String s) { super(s);}
-    public SignalHeadTableAction() { this("SignalHead Table");}
+    public SignalHeadTableAction() {
+        super();
+    }
+    /**
+     * Create an action with a specific title.
+     * <P>
+     * Note that the argument is the Action title, not the title of the
+     * resulting frame.  Perhaps this should be changed?
+     * @param s
+     */
+    public SignalHeadTableAction(String s) {
+        super(s);
+    }
 
-    public void actionPerformed(ActionEvent e) {
-        final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
-
-        // create the model, with modifications for SignalHeads
-        BeanTableDataModel m = new BeanTableDataModel() {
+    /**
+     * Create the JTable DataModel, along with the changes
+     * for the specific case of SignalHeads
+     */
+    void createModel() {
+        m = new BeanTableDataModel() {
             public String getValue(String name) {
                 int val = InstanceManager.signalHeadManagerInstance().getBySystemName(name).getAppearance();
                 switch (val) {
@@ -73,71 +84,83 @@ public class SignalHeadTableAction extends AbstractAction {
                 return new JButton("Yellow");
             }
         };
-        // create the frame
-        BeanTableFrame f = new BeanTableFrame(m){
-            /**
-             * Include an "add" button
-             */
-            void extras() {
-                JButton addButton = new JButton(rb.getString("ButtonAdd"));
-                this.getContentPane().add(addButton);
-                addButton.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        addPressed(e);
-                    }
-                });
-            }
-        };
+    }
+
+    void setTitle() {
         f.setTitle(f.rb.getString("TitleSignalTable"));
-        f.show();
     }
 
     JFrame addFrame = null;
     JComboBox typeBox;
-    JTextField name = new JTextField();
-    JTextField to1 = new JTextField();
-    JTextField to2 = new JTextField();
-    JTextField to3 = new JTextField();
+    JTextField name = new JTextField(5);
+    JTextField to1 = new JTextField(5);
+    JTextField to2 = new JTextField(5);
+    JTextField to3 = new JTextField(5);
+    JLabel nameLabel = new JLabel("Name:");
+    JLabel v1Label = new JLabel("Value1:");
+    JLabel v2Label = new JLabel("Value2:");
+    JLabel v3Label = new JLabel("Value3:");
 
     String SE8c4Aspect = "SE8c 4 aspect";
     String TripleTurnout = "Triple Turnout";
     void addPressed(ActionEvent e) {
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
         if (addFrame==null) {
             addFrame = new JFrame(rb.getString("TitleAddSignal"));
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             addFrame.getContentPane().add(typeBox = new JComboBox(new String[]{
                 SE8c4Aspect, TripleTurnout
             }));
+            typeBox.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e) {
+                    typeChanged();
+                }
+            });
             JPanel p;
             p = new JPanel(); p.setLayout(new FlowLayout());
-            p.add(new JLabel("Name:"));
+            p.add(nameLabel);
             p.add(name);
             addFrame.getContentPane().add(p);
 
             p = new JPanel(); p.setLayout(new FlowLayout());
-            p.add(new JLabel("Value1:"));
+            p.add(v1Label);
             p.add(to1);
             addFrame.getContentPane().add(p);
 
             p = new JPanel(); p.setLayout(new FlowLayout());
-            p.add(new JLabel("Value2:"));
+            p.add(v2Label);
             p.add(to2);
             addFrame.getContentPane().add(p);
 
             p = new JPanel(); p.setLayout(new FlowLayout());
-            p.add(new JLabel("Value3:"));
+            p.add(v3Label);
             p.add(to3);
             addFrame.getContentPane().add(p);
             JButton ok;
-            addFrame.getContentPane().add(ok = new JButton("OK"));
+            addFrame.getContentPane().add(ok = new JButton(rb.getString("ButtonOK")));
             ok.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     okPressed(e);
                 }
             });
         }
+        typeBox.setSelectedIndex(1);  // force GUI status consistent
+        addFrame.pack();
         addFrame.show();
+    }
+
+    void typeChanged() {
+        if (SE8c4Aspect.equals(typeBox.getSelectedItem())) {
+            nameLabel.setText("User name:");
+            v1Label.setText("Turnout number");
+            v2Label.setText("");to2.setVisible(false);
+            v3Label.setText("");to3.setVisible(false);
+
+        } else if (TripleTurnout.equals(typeBox.getSelectedItem())) {
+            nameLabel.setText("System name:");
+            v1Label.setText("Green turnout ID:");
+            v2Label.setText("Yellow turnout ID:");to2.setVisible(true);
+            v3Label.setText("Red Turnout ID:");to3.setVisible(true);
+        } else log.error("Unexpected type in typeChanged: "+typeBox.getSelectedItem());
     }
 
     void okPressed(ActionEvent e) {
