@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Examples.html,v 1.6 2004-12-31 20:28:10 jacobsen Exp $ -->
+<!-- $Id: Examples.html,v 1.7 2005-02-02 05:06:46 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -238,6 +238,66 @@ class MyListener(java.beans.PropertyChangeListener):
 			retrieve the systemName, userName (or even other types
 			of status).
 			
+		    </div>
+
+		    <h2>Playing a sound</h2>
+
+		    <div class=para>
+
+			The jython/SampleSound.py file shows how to play a 
+			sound within a script. Briefly, you load a sound into a variable 
+            ("snd" in this case), then call "play()" to play it once, etc.
+            <P>
+            Note that if more than one sound is playing at a time, the
+            program combines them as best it can.  Generally, it does
+            a pretty good job.
+            <P>
+            You can combine the play() call with other logic to play a sound
+            when a Sensor changes, etc.
+            
+            Ron McKinnon provided an example of doing this. It plays
+            a railroad crossing bell when the sensor goes active.
+
+<pre>
+# It listens for changes to a sensor,
+# and then plays a sound file when sensor active
+
+import jarray
+import jmri
+
+# create the sound object by loading a file
+snd = jmri.jmrit.Sound("resources/sounds/Crossing.wav")
+
+class SensndExample(jmri.jmrit.automat.Siglet) :
+
+	# Modify this to define all of your turnouts, sensors and 
+	# signal heads.
+	def defineIO(self):
+		
+		# get the sensor 
+		self.Sen1Sensor = sensors.provideSensor("473")
+				
+ 		# Register the inputs so setOutput will be called when needed.
+ 		self.setInputs(jarray.array([self.Sen1Sensor], jmri.NamedBean))
+
+		return
+
+	# setOutput is called when one of the inputs changes, and is
+	# responsible for setting the correct output
+	#
+	# Modify this to do your calculation.
+	def setOutput(self):
+				
+		if self.Sen1Sensor.knownState==ACTIVE:
+			snd.play()
+
+		return
+	
+# end of class definition
+
+# start one of these up
+SensndExample().start()
+</pre>
 		    </div>
 
 		</div>

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: FAQ.html,v 1.10 2005-01-24 05:13:31 jacobsen Exp $ -->
+<!-- $Id: FAQ.html,v 1.11 2005-02-02 05:06:47 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -133,6 +133,78 @@
 		    See also the 
 		    <a href="Examples.html">examples page</a>.
 		    </div>
+
+		</div>
+
+		<div class=section>
+		    <h2>What do those words like 
+		    "<code>import</code>",
+		    "<code>class</code>", etc, in the example files mean?
+		    </h2>
+
+		    <div class=para>
+            They're part of the jython language used for the scripting.
+            <P>
+            The imports allow you to refer to things by shorter names, 
+            essentially telling jython "search the jarray, jmri packages and 
+            recognize all the names there".   For somebody trying to understand 
+            this script, you can just treat them as "ensuring the program can 
+            find parts we want".
+            <P>
+            "class" means "start the definition of a group of things that go 
+            together"  (all you other experts, please don't jump on me about 
+            this; I understand both intrinsic/extrinsic polymorphism, I'm just 
+            trying to get the general idea across).  T
+            For example, in the SigletExample.py file is a description of a 
+            "class" called SigletExample, which contains two 
+            routines/functions/members:  A subroutine called "defineIO", and one 
+            called "setOutput"
+            <P>
+            This "class" is associated with another called "Siglet" (actually 
+            jmri.jmrit.automat.Siglet; that's that long naming thing again), 
+            which knows when to invoke routines by those two names to get done 
+            what you want.
+            <P>
+            Essentially, you're defining two parts ("defineIO" & "setOutput") 
+            that plug into a pre-existing structure to drive signals.  That 
+            pre-existing structure is very powerful, and lets you do all sorts of 
+            things, but also provides this method to try to keep it simpler.
+            <P>
+            OK, at this point most people's eyes are  fully glazed over.  Your 
+            best bet when starting with this stuff is to use the "copy and 
+            modify" approach to software development.  It's good to try to 
+            understand the entire content of the file, but don't worry about 
+            understanding it well enough to be able to recreate it from scratch. 
+            Instead, just modify little bits and play with it.
+		    </div>
+
+		</div>
+
+		<div class=section>
+		    <h2>Are there required naming conventions?</h2>
+
+		    <div class=para>
+            In many of the sample files, turnouts are referred to by the name "toxx", signals by "sixx",
+            and sensors by "boxx". These conventions grew out of how some older code was
+            written, and then can make the code clearer.  But they are in no way required; the
+            program doesn't care what you call variables.
+            <P>
+            For example, "self.to12" is just the name of a variable.  You can call it anything 
+            you want, e.g. self.MyBigFatNameForTheLeftTurnout
+            <P>
+            The "self" part makes it completely local; "self" refers to "an 
+            object of the particular class I'm defining right now".  Alternately, 
+            you can define a global variable, but that's not recommended.  If you 
+            have multiple scripts running (and you can have as many as you'd 
+            like; I recommend that you put each signal head in a separate one), 
+            the variables can get confused if you use the same variable name to 
+            mean too different things.  Using "self" like this one does makes 
+            sure that doesn't happen.
+            <P>
+            Note that turnouts, etc, do have "System Names" that look like 
+            "LT12".  You'll see those occasionally, but that's something 
+            different from the variable names in a script file.		   
+            </div>
 
 		</div>
 
