@@ -1,15 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_pnpLC_Steam.xml,v 1.1 2002-04-08 06:06:40 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_pnpLC_Steam.xml,v 1.2 2002-05-11 03:53:11 mdavison Exp $ -->
 <decoder-config>
-		<version author="Robin Becker" version="4" lastUpdated="20020217"/>
+		<version author="Robin Becker" version="5" lastUpdated="20020508"/>
 
 		<!-- version 4: updates to minOut usage, function mapping -->
+		<!-- version 5: removed erroneous CV19 definition, corrected VersionID -->
 
 <decoder>
-	<family name="LC Steam" mfg="Throttle-Up"
-				lowVersionID="32" highVersionID="33">
+	<family name="LC Steam" mfg="Throttle-Up">
 		<model model="B280LC Steam" numOuts="2" numFns="8">
+			<versionCV lowVersionID="33"/>
 			<output name="Whistle"/>
 			<output name="Bell"/> 
 			<!--output name="3" label="FX1/grn" /-->
@@ -54,11 +55,9 @@
 		<variable label="Extended Address" CV="17"
 						item="Long Address" >
 			<longAddressVal/></variable>
-		<variable label="Advanced Consist address" CV="19" item="Consist Address">
-			<decVal/>
-			</variable>
 
-		<variable label="Consist Address" CV="19" mask="XVVVVVVV"><decVal/></variable>
+		<variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
+			<decVal/></variable>
 		
 		<variable label="Consist Direction" CV="19" mask="VXXXXXXX">
 			<enumVal>

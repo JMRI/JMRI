@@ -1,15 +1,18 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_pnpLC_Diesel.xml,v 1.1 2002-04-08 06:06:40 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_pnpLC_Diesel.xml,v 1.2 2002-05-11 03:53:11 mdavison Exp $ -->
 <decoder-config>
-		<version author="Robin Becker" version="4" lastUpdated="20020217"/>
+		<version author="Robin Becker" version="5" lastUpdated="20020508"/>
 
 		<!-- version 4: updates to minOut usage, function mapping -->
+		<!-- version 5: added LL100LC -->
+		<!--            removed erroneous CV19 definition, corrected VersionID -->
 
 <decoder>
-	<family name="LC Diesel" mfg="Throttle-Up"
-			lowVersionID="34" highVersionID="37">
+	<family name="LC Diesel" mfg="Throttle-Up">
+
 		<model model="C628LC Diesel" numOuts="4" numFns="8">
+			<versionCV lowVersionID="37"/>
 			<output name="Horn"/> 
 			<output name="Bell"/> 
 			<output name="3" label="FX1/grn" />
@@ -20,18 +23,21 @@
 			<output name="Dim"/>
 			<output name="Mute"/> 
 			</model>
-		<model model="AT100LC Diesel" numOuts="2" numFns="8">
+		<model model="LL100LC Diesel" numOuts="4" numFns="8">
+		<!-- note: The LL100LC has an FX2 output but no FX1 output -->
+			<versionCV lowVersionID="36"/>
 			<output name="Horn"/> 
 			<output name="Bell"/> 
-			<!--output name="3" label="FX1/grn" /-->
-			<!--output name="4" label="FX2/brwn" /-->
+			<output name="3" label="none" />
+			<output name="4" label="FX2/brwn" />
 			<output name="DynBrake"/> 
 			<output name="RPM+"/> 
 			<output name="RPM-"/> 
 			<output name="Dim"/>
 			<output name="Mute"/> 
 			</model>
-		<model model="KT100LC Diesel" numOuts="2" numFns="8">
+		<model model="AT100LC/KT100LC Diesel" numOuts="2" numFns="8">
+			<versionCV lowVersionID="35"/>
 			<output name="Horn"/> 
 			<output name="Bell"/> 
 			<!--output name="3" label="FX1/grn" /-->
@@ -77,11 +83,9 @@
 		<variable label="Extended Address" CV="17"
 						item="Long Address" >
 			<longAddressVal/></variable>
-		<variable label="Advanced Consist address" CV="19" item="Consist Address">
-			<decVal/>
-			</variable>
 
-		<variable label="Consist Address" CV="19" mask="XVVVVVVV"><decVal/></variable>
+		<variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
+			<decVal/></variable>
 		
 		<variable label="Consist Direction" CV="19" mask="VXXXXXXX">
 			<enumVal>
