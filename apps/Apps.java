@@ -25,7 +25,7 @@ import javax.swing.*;
  * Base class for Jmri applications.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.22 $
+ * @version     $Revision: 1.23 $
  */
 public class Apps extends JPanel {
 
@@ -68,7 +68,7 @@ public class Apps extends JPanel {
      * later.  The default implementation here just creates an
      * empty space for these to be added to.
      */
-    void setButtonSpace() {
+    protected void setButtonSpace() {
         _buttonSpace = new JPanel();
         _buttonSpace.setLayout(new FlowLayout());
     }
