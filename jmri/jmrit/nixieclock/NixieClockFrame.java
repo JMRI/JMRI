@@ -21,7 +21,7 @@ import jmri.jmrit.catalog.*;
  * Modified by Dennis Miller for resizing Nov, 2004
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class NixieClockFrame extends javax.swing.JFrame implements java.beans.PropertyChangeListener {
 
@@ -95,18 +95,14 @@ public class NixieClockFrame extends javax.swing.JFrame implements java.beans.Pr
         update();
         pack();
 
-        // start timer
-         if (timer==null) {
-            timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent e) {
+        // request callback to update time
+        clock.addMinuteChangeListener( new java.beans.PropertyChangeListener() {
+                    public void propertyChange(java.beans.PropertyChangeEvent e) {
                         update();
                     }
                 });
-        }
-        timer.stop();
-        timer.setInitialDelay(delay);
-        timer.setRepeats(true);
-        timer.start();
+
+
         // Add component listener to handle frame resizing event
         this.addComponentListener(
                         new ComponentAdapter()

@@ -17,7 +17,7 @@ import javax.swing.border.Border;
  * Frame for user configuration of Simple Timebase
  *
  * @author	Dave Duchamp   Copyright (C) 2004
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SimpleClockFrame extends javax.swing.JFrame 
 	implements java.beans.PropertyChangeListener {
@@ -166,18 +166,12 @@ public class SimpleClockFrame extends javax.swing.JFrame
         // listen for changes to the timebase parameters
         clock.addPropertyChangeListener(this);
 
-        // start timer to update the time
-         if (timer==null) {
-            timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent e) {
+        // request callback to update time
+        clock.addMinuteChangeListener( new java.beans.PropertyChangeListener() {
+                    public void propertyChange(java.beans.PropertyChangeEvent e) {
                         updateTime();
                     }
                 });
-        }
-        timer.stop();
-        timer.setInitialDelay(delay);
-        timer.setRepeats(true);
-        timer.start();
         
         return true;
     }
