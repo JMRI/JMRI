@@ -15,7 +15,7 @@ import jmri.*;
  * <UL>
  * <LI>Turnout commands, feedback
  * <LI>Sensor status
- * <LI>SE status (short form only)
+ * <LI>SE status
  * </UL>
  * <P>
  * Note that the SE message turnout bit is set for CLOSED  or no
@@ -25,8 +25,10 @@ import jmri.*;
  * this SE.  Note that this combination results in an extra complement; if looking
  * at a remote SE's A leg and it is reserved in the AX direction,
  * that it NOT coming toward us.
- *
- * <P>The algorithms in this class are a collaborative effort of Digitrax, Inc
+ * <P>
+ * SE messages include addresses coded as 0-4095, not 1-4096.
+ * <P>
+ * The algorithms in this class are a collaborative effort of Digitrax, Inc
  * and Bob Jacobsen.
  * <P>Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project.  That permission
@@ -36,7 +38,7 @@ import jmri.*;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.14 $
+ * @version         $Revision: 1.15 $
  */
 public class SecurityElement implements LocoNetListener {
 
@@ -54,6 +56,8 @@ public class SecurityElement implements LocoNetListener {
     // also NONE for no connection
 
     // configuration information ===============================================
+
+    public boolean calculates = true; // if false, no updates
 
     public int mNumber;     // own SE number
 
@@ -273,6 +277,16 @@ public class SecurityElement implements LocoNetListener {
                 case 0x0:
                     // fall off end, and handle this!
             }
+            if (!calculates) {
+                // is addressed here?
+                if ( ((l.getElement(2)*128)+l.getElement(3)+1) != mNumber ) return;
+
+                // not calculating, so just record values
+                seMessageForHere(l);
+                // notify listeners
+                firePropertyChange("SecurityElement", null, this);
+                return;
+            }
             // be careful - you can be multiply connected! Check all legs
             if (element == attachAnum) {
                 newSpeedLimitFromA = getLimitFromMsg(l, attachAleg);
@@ -312,7 +326,7 @@ public class SecurityElement implements LocoNetListener {
         }
         case LnConstants.OPC_INPUT_REP: {
             // is this from the associated sensor?
-            if (l.inputRepAddr() == dsSensor) {
+            if (l.inputRepAddr()+1 == dsSensor) {   // input definitions are in 1-4096 space
                 // yes, save new state
                 int sw2 = l.getElement(2);
                 int state = sw2 & 0x10;
@@ -457,6 +471,7 @@ public class SecurityElement implements LocoNetListener {
 
     /**
      * Update the calculation of speeds and direction.
+     * <P>
      * This is the real core of the class, which does
      * the entire computation when anything changes.
      *<P>
@@ -465,23 +480,27 @@ public class SecurityElement implements LocoNetListener {
      * output values.  See sendUpdate and firePropertyChange.
      */
     void doUpdate() {
-        if (debug) log.debug("SE "+mNumber+" starts. Neighbor speeds: "
+        if (calculates) {
+            if (debug) log.debug("SE "+mNumber+" starts. Neighbor speeds: "
                              +newSpeedLimitFromA+","+newSpeedLimitFromB
                              +","+newSpeedLimitFromC
                              +" res: "+newDirection);
 
-        // update the current reservation state
-        makeReservationsHere();
-        // calculate the effect on speed of geometry and braking
-        doCalculateBaseSpeed();
-        // adjust speed for reservations
-        adjustForReservations();
-        // adjust speed for conditions in the Aux SE
-        adjustForAuxState();
+            // update the current reservation state
+            makeReservationsHere();
+            // calculate the effect on speed of geometry and braking
+            doCalculateBaseSpeed();
+            // adjust speed for reservations
+            adjustForReservations();
+            // adjust speed for conditions in the Aux SE
+            adjustForAuxState();
 
-        // and propagate as needed
-        sendUpdate();
-        firePropertyChange("SecurityElement", null, this);
+            // and propagate as needed
+            sendUpdate();
+
+            // notify listeners
+            firePropertyChange("SecurityElement", null, this);
+        }
     }
 
     void makeReservationsHere() {
@@ -690,6 +709,57 @@ public class SecurityElement implements LocoNetListener {
         currentSpeedAX           = newSpeedAX;
         currentSpeedXA           = newSpeedXA;
         currentDirection         = newDirection;
+    }
+
+    /**
+     * SE status message should be copied into our local memory
+     */
+    void seMessageForHere(LocoNetMessage m1) {
+
+        // format the status word
+        int seStat1 = m1.getElement(5);
+        int seStat2 = m1.getElement(6);
+
+        // turnout status bits
+        if ( (seStat2 & 0x01) != 0 ) newTurnoutStateHere = Turnout.THROWN;
+        else newTurnoutStateHere = Turnout.CLOSED;
+
+        if ( (seStat2 & 0x02) != 0 ) newTurnoutStateOnA = Turnout.THROWN;
+        else newTurnoutStateOnA = Turnout.CLOSED;
+
+        if ( (seStat2 & 0x04) != 0 ) newTurnoutStateOnB = Turnout.THROWN;
+        else newTurnoutStateOnB = Turnout.CLOSED;
+
+        if ( (seStat2 & 0x08) != 0 ) newTurnoutStateOnC = Turnout.THROWN;
+        else newTurnoutStateOnC = Turnout.CLOSED;
+
+        // occupancy bits
+        if ( (seStat1 & 0x01) != 0 ) newDsStateHere = Sensor.ACTIVE;
+        else newDsStateHere = Sensor.INACTIVE;
+
+        if ( (seStat1 & 0x02) != 0 ) newDsStateOnA = Sensor.ACTIVE;
+        else newDsStateOnA = Sensor.INACTIVE;
+
+        if ( (seStat1 & 0x04) != 0 ) newDsStateOnB = Sensor.ACTIVE;
+        else newDsStateOnB = Sensor.INACTIVE;
+
+        if ( (seStat1 & 0x08) != 0 ) newDsStateOnC = Sensor.ACTIVE;
+        else newDsStateOnC = Sensor.INACTIVE;
+
+        newSpeedAX = m1.getElement(7);  // SE SPD_AX
+        newSpeedXA = m1.getElement(8);  // SE SPD_XA
+
+        // and update copies
+        currentDsStateHere       = newDsStateHere;
+        currentTurnoutStateHere  = newTurnoutStateHere;
+        currentDsStateOnA        = newDsStateOnA;
+        currentDsStateOnB        = newDsStateOnB;
+        currentDsStateOnC        = newDsStateOnC;
+        currentDsStateOnAux      = newDsStateOnAux;
+
+        currentSpeedAX           = newSpeedAX;
+        currentSpeedXA           = newSpeedXA;
+
     }
 
     public void dispose() {}
