@@ -27,11 +27,56 @@ You can use anything you want for this:  Road number, type, even
 "That crummy old model I need to repaint".
 
 <P>
-You can edit the contents of a roster entry with the DecoderPro programmer panes...
+You can edit the contents of a roster entry with the DecoderPro programmer panes.
+When you first open a DecoderPro programmer, you'll see a "Roster Entry" pane.
+On it is displayed:
 
-<h3>Roster Pane</h3>
+<UL>
+<LI>ID
+<P>
+The ID for this entry.  You can change it if you want, in 
+which case it will appear in selection boxes, etc, with the
+new ID name.  
+
+<LI>Road Name, Road Number, Manufacturer, Model
+<P>
+Use these for whatever you want.
+
+<LI>DCC Address
+<P>
+This is filled in based on how the decoder is configured.
+You can't edit it here, so you have to go to another pane
+to change the addressing.
+
+<LI>Comment
+<P>
+Use this for whatever you want.  
+
+<LI>Decoder Family, Decoder Model
+<P>
+These are filled in based on the decoder that was selected when
+the entry was created.  It can't be editted after that.
+
+<LI>Decoder Comment
+<P>
+You can put anything you want here.  Some people have 
+used it to record whether a NMRA plug was used, whether the
+decoder was soldered in, etc.
+
+<LI>Filename
+<P>
+This is here for information; you can't change it, and
+you don't have to worry about it. Note that
+even if you change the ID for this entry, the original file 
+will still be used.  
+
+</UL>
 
 <h3>Roster Menu</h3>
+Both the main DecoderPro window and the "start programmer" window
+has a "Roster" menu available.  That menu allows you to 
+manage the entries in your roster with commands:
+
 <UL>
 
 <LI>Copy ...
@@ -61,30 +106,25 @@ it's best to put a ".xml" extension on the name.
 
 <LI>Import ...
 <P>
+The combination of "Export" then "Import" allows you to bring a locomotives
+roster entry when you move to another layout, with it's own DecoderPro installation.
+<P>
+When you select "Import ...", you'll be asked to locate an XML file
+to import. It should have been created by an "Export" command.  You'll
+also be asked for the ID of the new roster entry to be created.  
+This can be the same as it was before it was exported, or you can 
+give it a new ID.
 
 <LI>Delete ...
 <P>
-
+This completely removes a roster entry.  You're asked if you're sure
+and a backup is made, in case of mistakes.
 </UL>
 
 <HR>
 <BR>Site hosted by: <BR>
 <A href="http://sourceforge.net"> 
 <IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A>
-
-<!-- Begin Small Box -->
-<form method="POST" action="http://mindit.netmind.com/mindit.shtml">
-<input type="hidden" name="FORM" value="C">
-<table border="0" cellpadding="5" cellspacing="0" bgcolor="#666666"><tr><td align="center">
-<font face="arial,helvetica" size="-1" color="#ffffff"><b>Click to receive email <br>when this page changes</b></font></td>
-</tr><tr><td align="center">
-<input type="image" src="http://mindit.netmind.com/images/mindit.gif" border="0"></td>
-</tr><tr bgcolor="#FFFFCC"><td align="center">
-<font face="arial,helvetica" size="-2">&#149;<b> Powered by <a href="http://www.netmind.com"><font color="#000000">NetMind</font></a> </b>&#149;</font>
-</td></tr></table>
-<input type=hidden value="http://jmri.sourceforge.net/PaneProg/ConfigFile.html" name="REDIRECT"> 
-</form>
-<!-- End Small Box -->
  
 <script language=javascript 
 src="http://ss.webring.com/navbar?f=j;y=bob_jacobsen15;u=100088115910095949">
