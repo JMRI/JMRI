@@ -1,14 +1,13 @@
-/**
- * AbstractSensor.java
- *
- * Description:		Abstract class providing the basic logic of the Sensor interface
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version
- */
+// AbstractSensor.java
 
 package jmri;
 import jmri.Sensor;
 
+/**
+ * Abstract class providing the basic logic of the Sensor interface
+ * @author			Bob Jacobsen Copyright (C) 2001
+ * @version         $Revision: 1.5 $
+ */
 public abstract class AbstractSensor implements Sensor, java.io.Serializable {
 
 	// ctor takes a system-name string for initialization
