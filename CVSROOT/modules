@@ -1,24 +1,27 @@
 
 # build a JBuilder project directory in standard form
 # Note that this does not work from JBuilder itself!
-jbuilder -a xml lib resources scripts/default.lcf jbuilderjava
+jbuilder -a xml lib resources defaultlcf jbuilderjava
 # build the java/ directory, which contains the actual JBuilder project
-jbuilderjava  -a jbuilder0 jbuilder1 jbuilder2 jbuilder3 jbuilder4
+jbuilderjava  -a jbuilder0 jbuilder1 jbuilder2 jbuilder3 jbuilder4 defaultlcf
 jbuilder0 -d java scripts jmri.jpx
 jbuilder1 -d java scripts JMRILibraries.library
 jbuilder2 -d java/src &jmri &apps &resources
 jbuilder3 -d java &test
 jbuilder4 -d java &lib
 
+defaultlcf scripts default.lcf
+
 # ant target - Ant directory in standard form
 # Note that this does not work from JBuilder itself!
-ant -a xml lib antjava
+ant -a xml lib resources defaultlcf antjava
 # build the java/ directory, which contains the actual code & build.xml
-antjava  -a ant0 ant1 ant2 ant3
+antjava  -a ant0 ant1 ant2 ant3 ant4
 ant0 -d java scripts build.xml
 ant1 -d java/src &jmri &apps &resources
 ant2 -d java &test
 ant3 -d java &xml
+ant4 -d java &lib
 
 # we're still missing a CodeWarrior target
 
