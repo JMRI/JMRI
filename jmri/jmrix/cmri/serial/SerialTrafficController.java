@@ -21,7 +21,7 @@ import java.util.Vector;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -29,7 +29,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         super();
 
         // entirely poll driven, so reduce interval
-        mWaitBeforePoll = 20;
+        mWaitBeforePoll = 25;  // default = 25
     }
 
     boolean mustInit = true;
@@ -63,11 +63,15 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         int loc = (number-1)/8;
         if (loc>highByte) highByte=loc;
         int bit = 1<<((number-1) % 8);
+
         // update that bit
         int oldValue = outputArray[loc];
-        if (closed) outputArray[loc] |= bit;
+
+        // closed is a 0 in the output
+        if (!closed) outputArray[loc] |= bit;
         else outputArray[loc] &= (~bit);
         if (log.isDebugEnabled()) log.debug("setOutputState n="+number+" loc="+loc+" bit="+bit);
+
         // force a send next time if the value changed
         synchronized (this) {
             if (oldValue != outputArray[loc])
