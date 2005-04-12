@@ -15,7 +15,7 @@ import jmri.Sensor;
  * see nextAiuPoll()
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class NceSensorManager extends jmri.AbstractSensorManager
                             implements NceListener {
@@ -78,13 +78,11 @@ public class NceSensorManager extends jmri.AbstractSensorManager
         }
 
         // format the message
-        String s;
-        if (mNextIndex<10)
-            s = "I 0"+mNextIndex;
-        else
-            s = "I "+mNextIndex;
-        NceMessage m = new NceMessage(s);
-        m.setBinary(false);
+        NceMessage m = new NceMessage(2);
+        m.setBinary(true);
+        m.setReplyLen(4);
+        m.setElement(0, 0x8A);
+        m.setElement(1, mNextIndex);
 
         return m;
     }
