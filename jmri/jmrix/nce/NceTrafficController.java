@@ -20,7 +20,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface {
 
@@ -67,11 +67,15 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * Forward a preformatted message to the actual interface.
      */
     public void sendNceMessage(NceMessage m, NceListener reply) {
-        replyBinary = m.isBinary();
-        replyLen = m.getReplyLen();
         sendMessage(m, reply);
     }
 
+    protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
+        replyBinary = m.isBinary();
+        replyLen = ((NceMessage)m).getReplyLen();
+        super.forwardToPort(m, reply);
+    }
+    
     protected int replyLen;
     protected boolean replyBinary;
     
@@ -98,14 +102,18 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     static protected NceTrafficController self = null;
     protected void setInstance() { self = this; }
 
-    protected AbstractMRReply newReply() { return new NceReply(); }
+    protected AbstractMRReply newReply() { 
+        NceReply reply = new NceReply();
+        reply.setBinary(replyBinary);
+        return reply;
+    }
 
     protected boolean endOfMessage(AbstractMRReply msg) {
         // first try boolean
         if (replyBinary) {
-            if (msg.getNumDataElements() >= replyLen )
+            if (msg.getNumDataElements() >= replyLen ) {
                 return true;
-            else 
+            } else 
                 return false;
         } else {
             // detect that the reply buffer ends with "COMMAND: " (note ending space)
