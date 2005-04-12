@@ -26,7 +26,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 abstract public class AbstractMRTrafficController {
 
@@ -350,7 +350,7 @@ abstract public class AbstractMRTrafficController {
     /**
      * Actually transmits the next message to the port
      */
-     private void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
+     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         if (log.isDebugEnabled()) log.debug("forwardToPort message: ["+m+"]");
         // remember who sent this
         mLastSender = reply;
