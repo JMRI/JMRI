@@ -9,7 +9,7 @@ package jmri.jmrix.nce;
  * class handles the response from the command station.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -40,7 +40,9 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
      * command station.  Used in binary mode, where there's
      * no end-of-reply string to look for.
      */
-    public void setReplyLen(int len) { replyLen = len; }
+    public void setReplyLen(int len) { 
+        replyLen = len;
+    }
     public int getReplyLen() { return replyLen; }
 
     // diagnose format
