@@ -18,7 +18,7 @@ package jmri;
  * Based in part on SignalHead.java
  *
  * @author			Dave Duchamp Copyright (C) 2004
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public interface Light extends NamedBean {
 
@@ -30,6 +30,7 @@ public interface Light extends NamedBean {
     public static final int SENSOR_CONTROL          = 0x01;
     public static final int FAST_CLOCK_CONTROL      = 0x02;
     public static final int TURNOUT_STATUS_CONTROL  = 0x03;
+    public static final int TIMED_ON_CONTROL		= 0x04;
     public static final int NO_CONTROL              = 0x00;
 
     /**
@@ -56,6 +57,8 @@ public interface Light extends NamedBean {
     public int getFastClockOffMin();            // off Minute if FAST_CLOCK_CONTROL
     public String getControlTurnoutSystemName(); // turnout whose status is shown if TURNOUT_STATUS_CONTROL
     public int getControlTurnoutState();        // turnout state corresponding to this Light ON
+	public String getControlTimedOnSensorSystemName(); // trigger Sensor if TIMED_ON_CONTROL
+	public int getTimedOnDuration();            // duration (milliseconds) if TIMED_ON_CONTROL
 
     public void setControlSensor(String sensorSystemName);  // controlling Sensor if SENSOR_CONTROL
     public void setControlSensorSense(int sense);       // sense of Sensor for Light ON
@@ -63,6 +66,8 @@ public interface Light extends NamedBean {
     public void setFastClockControlSchedule(int onHour,int onMin,int offHour, int offMin);
     public void setControlTurnout(String turnoutSystemName); // turnout whose status is shown if TURNOUT_STATUS_CONTROL
     public void setControlTurnoutState(int ts);         // turnout state corresponding to this Light ON
+	public void setControlTimedOnSensor(String sensorSystemName); // trigger Sensor if TIMED_ON_CONTROL
+	public void setTimedOnDuration(int duration);   // duration (milliseconds) if TIMED_ON_CONTROL
     
     /**
      * Activates a light by control type.  This method tests the 

@@ -22,7 +22,7 @@ import org.jdom.Element;
  * Based on AbstractSensorManagerConfigXML.java
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
 
@@ -67,6 +67,10 @@ public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
                 else if (type==Light.TURNOUT_STATUS_CONTROL) {
                     elem.addAttribute("controlTurnout", lgt.getControlTurnoutSystemName() );
                     elem.addAttribute("turnoutState", ""+lgt.getControlTurnoutState() );
+                }
+                else if (type==Light.TIMED_ON_CONTROL) {
+                    elem.addAttribute("timedControlSensor", lgt.getControlTimedOnSensorSystemName() );
+                    elem.addAttribute("duration", ""+lgt.getTimedOnDuration() );
                 }
                 log.debug("store light "+sname+":"+uname);
                 lights.addContent(elem);
@@ -140,6 +144,12 @@ public abstract class AbstractLightManagerConfigXML implements XmlAdapter {
                                             getAttribute("controlTurnout").getValue());
                     lgt.setControlTurnoutState( Integer.parseInt(((Element)(lightList.get(i))).
                                                     getAttribute("turnoutState").getValue()) );
+                }
+                else if (type==Light.TIMED_ON_CONTROL) {
+                    lgt.setControlTimedOnSensor(((Element)(lightList.get(i))).
+                                            getAttribute("timedControlSensor").getValue() );
+                    lgt.setTimedOnDuration( Integer.parseInt(((Element)(lightList.get(i))).
+                                                    getAttribute("duration").getValue()) );
                 }
 				lgt.activateLight();
             }

@@ -32,7 +32,7 @@ import javax.swing.JOptionPane;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -99,7 +99,7 @@ public class LightTableAction extends AbstractTableAction {
                ((Light)t).setState(newState);
             }
             public JButton configureButton() {
-                return new JButton(rbean.getString("LightStateOff"));
+                return new JButton(" "+rbean.getString("LightStateOff")+" ");
             }
         };
     }
@@ -117,6 +117,7 @@ public class LightTableAction extends AbstractTableAction {
     String sensorControl = rb.getString("LightSensorControl");
     String fastClockControl = rb.getString("LightFastClockControl");
     String turnoutStatusControl = rb.getString("LightTurnoutStatusControl");
+    String timedOnControl = rb.getString("LightTimedOnControl");
 
     // fixed part of add frame
     JTextField systemName = new JTextField(10);
@@ -129,6 +130,7 @@ public class LightTableAction extends AbstractTableAction {
     int sensorControlIndex;
     int fastClockControlIndex;
     int turnoutStatusControlIndex;
+	int timedOnControlIndex;
     JButton create;
     JButton edit;
     JButton update;
@@ -138,8 +140,10 @@ public class LightTableAction extends AbstractTableAction {
     JTextField field1a = new JTextField(10);  // Sensor 
     JTextField field1b = new JTextField(8);  // Fast Clock
     JTextField field1c = new JTextField(10);  // Turnout
+	JTextField field1d = new JTextField(10);  // Timed ON
     JLabel f1Label = new JLabel( rb.getString("LightSensor") );
-    JTextField field2 = new JTextField(8);
+    JTextField field2a = new JTextField(8);  // Fast Clock
+    JTextField field2b = new JTextField(8); // Timed ON
     JLabel f2Label = new JLabel( rb.getString("LightSensorSense") );
     JComboBox stateBox;
     int sensorActiveIndex;
@@ -178,11 +182,12 @@ public class LightTableAction extends AbstractTableAction {
             panel31.setLayout(new FlowLayout());
             panel31.add(typeBoxLabel);
             panel31.add(typeBox = new JComboBox(new String[]{
-                    sensorControl,fastClockControl,turnoutStatusControl
+                    sensorControl,fastClockControl,turnoutStatusControl,timedOnControl
             }));
             sensorControlIndex = 0;
             fastClockControlIndex = 1;
             turnoutStatusControlIndex = 2;   // eventually should be 4
+			timedOnControlIndex = 3;
             typeBox.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
                     controlTypeChanged();
@@ -195,11 +200,14 @@ public class LightTableAction extends AbstractTableAction {
             panel32.add(field1a);
             panel32.add(field1b);
             panel32.add(field1c);
+            panel32.add(field1d);
             field1a.setText("");
             field1b.setText("00:00");
             field1c.setText("");
+			field1d.setText("");
             field1b.setVisible(false);
             field1c.setVisible(false);
+            field1d.setVisible(false);
             field1a.setToolTipText( rb.getString("LightSensorHint") );
             JPanel panel33 = new JPanel();
             panel33.setLayout(new FlowLayout());
@@ -208,9 +216,12 @@ public class LightTableAction extends AbstractTableAction {
                 rbean.getString("SensorStateActive"),rbean.getString("SensorStateInactive"),
             }));
             stateBox.setToolTipText( rb.getString("LightSensorSenseHint") );
-            panel33.add(field2);
-            field2.setText("00:00");
-            field2.setVisible(false);
+            panel33.add(field2a);
+            panel33.add(field2b);
+            field2a.setText("00:00");
+            field2a.setVisible(false);
+            field2b.setText("0");
+            field2b.setVisible(false);
             panel3.add(panel31);
             panel3.add(panel32);
             panel3.add(panel33);
@@ -316,7 +327,9 @@ public class LightTableAction extends AbstractTableAction {
             field1a.setVisible(true);
             field1b.setVisible(false);
             field1c.setVisible(false);
-            field2.setVisible(false);
+            field1d.setVisible(false);
+            field2a.setVisible(false);
+            field2b.setVisible(false);
             stateBox.setVisible(true);
         } 
         else if (fastClockControl.equals(ctype) ) {
@@ -324,12 +337,14 @@ public class LightTableAction extends AbstractTableAction {
             f1Label.setText( rb.getString("LightScheduleOn") );
             field1b.setToolTipText( rb.getString("LightScheduleHint") );
             f2Label.setText( rb.getString("LightScheduleOff") );
-            field2.setToolTipText( rb.getString("LightScheduleHint") );
+            field2a.setToolTipText( rb.getString("LightScheduleHint") );
             f2Label.setVisible(true);
             field1a.setVisible(false);
             field1b.setVisible(true);
             field1c.setVisible(false);
-            field2.setVisible(true);
+			field1d.setVisible(false);
+            field2a.setVisible(true);
+			field2b.setVisible(false);
             stateBox.setVisible(false);
         }
         else if (turnoutStatusControl.equals(ctype) ) {
@@ -347,9 +362,26 @@ public class LightTableAction extends AbstractTableAction {
             field1a.setVisible(false);
             field1b.setVisible(false);
             field1c.setVisible(true);
-            field2.setVisible(false);
+            field1d.setVisible(false);
+            field2a.setVisible(false);
+            field2b.setVisible(false);
             stateBox.setVisible(true);
         }
+        else if ( timedOnControl.equals(ctype) ) {
+            // set up window for sensor control
+            f1Label.setText( rb.getString("LightTimedSensor") );
+            field1d.setToolTipText( rb.getString("LightTimedSensorHint") );
+            f2Label.setText( rb.getString("LightTimedDurationOn") );
+            field2b.setToolTipText( rb.getString("LightTimedDurationOnHint") );
+            f2Label.setVisible(true);
+            field1a.setVisible(false);
+            field1b.setVisible(false);
+            field1c.setVisible(false);
+            field1d.setVisible(true);
+            field2a.setVisible(false);
+            field2b.setVisible(true);
+            stateBox.setVisible(false);
+        } 
         else log.error("Unexpected control type in controlTypeChanged: "+ctype);
     }
     
@@ -516,7 +548,7 @@ public class LightTableAction extends AbstractTableAction {
                 int offHour = g.getFastClockOffHour();
                 int offMin = g.getFastClockOffMin();
                 field1b.setText(formatTime(onHour,onMin));
-                field2.setText(formatTime(offHour,offMin));
+                field2a.setText(formatTime(offHour,offMin));
                 break;
             case Light.TURNOUT_STATUS_CONTROL:
                 setUpControlType(turnoutStatusControl);
@@ -526,6 +558,13 @@ public class LightTableAction extends AbstractTableAction {
                 if (g.getControlTurnoutState()==Turnout.THROWN) {
                     stateBox.setSelectedIndex(turnoutThrownIndex);
                 }
+                break;
+            case Light.TIMED_ON_CONTROL:
+                setUpControlType(timedOnControl);
+                typeBox.setSelectedIndex(timedOnControlIndex);
+                int duration = g.getTimedOnDuration();
+                field1d.setText(g.getControlTimedOnSensorSystemName());
+                field2b.setText(Integer.toString(duration));
                 break;
             case Light.NO_CONTROL:
                 // Set up as undefined sensor control
@@ -593,6 +632,10 @@ public class LightTableAction extends AbstractTableAction {
             String sensorSystemName = field1a.getText();
             Sensor s = InstanceManager.sensorManagerInstance().
                             provideSensor(sensorSystemName);
+			if (s!=null) {
+				// update sensor system name in case it changed
+				sensorSystemName = s.getSystemName();
+			}
             int sState = Sensor.ACTIVE;
             if ( stateBox.getSelectedItem().equals(rbean.getString
                                                     ("SensorStateInactive")) ) {
@@ -647,7 +690,7 @@ public class LightTableAction extends AbstractTableAction {
                     error = true;
                 }
             }
-            s = field2.getText();
+            s = field2a.getText();
             if ( (s.length() != 5) || (s.charAt(2) != ':') ) {
                 status1.setText( rb.getString("LightError12") );
                 error = true;
@@ -708,6 +751,10 @@ public class LightTableAction extends AbstractTableAction {
                 t = InstanceManager.turnoutManagerInstance().
                                     provideTurnout(turnoutSystemName);
             }
+			if (t!=null) {
+				// update turnout system name in case it changed
+				turnoutSystemName = t.getSystemName();
+			}
             // Initialize the requested Turnout State
             int tState = Turnout.CLOSED;
             if ( stateBox.getSelectedItem().equals(rbean.getString
@@ -721,6 +768,40 @@ public class LightTableAction extends AbstractTableAction {
                 if (!error) {
                     status2.setText( rb.getString("LightEditInst") );
                 }
+                status2.setVisible(true);
+                return (false);
+            }
+        }
+        else if (timedOnControl.equals(typeBox.getSelectedItem())) {
+            // Set type of control
+            g.setControlType(Light.TIMED_ON_CONTROL);
+            // Get trigger sensor control information
+            String triggerSensorSystemName = field1d.getText();
+            Sensor s = InstanceManager.sensorManagerInstance().
+                            provideSensor(triggerSensorSystemName);
+			if (s!=null) {
+				// update sensor system name in case it changed
+				triggerSensorSystemName = s.getSystemName();
+			}
+            g.setControlTimedOnSensor(triggerSensorSystemName);
+			int dur = 0;       
+			try 
+			{
+				dur = Integer.parseInt(field2b.getText());
+			}
+			catch (Exception e)
+			{
+				if (s!=null) {
+					status1.setText(rb.getString("LightWarn9") );
+					status2.setText( rb.getString("LightEditInst") );
+					status2.setVisible(true);
+					return (false);
+				}
+			}
+			g.setTimedOnDuration(dur);
+            if (s==null) {
+                status1.setText( rb.getString("LightWarn8") );
+                status2.setText( rb.getString("LightEditInst") );
                 status2.setVisible(true);
                 return (false);
             }

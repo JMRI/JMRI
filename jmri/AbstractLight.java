@@ -1,6 +1,8 @@
 // AbstractLight.java
 
 package jmri;
+import javax.swing.Timer;
+import java.util.Date;
 
  /**
  * Abstract class providing partial implementation of the basic 
@@ -19,7 +21,7 @@ package jmri;
  * Based in concept on AbstractSignalHead.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public abstract class AbstractLight extends AbstractNamedBean
     implements Light, java.io.Serializable {
@@ -44,6 +46,8 @@ public abstract class AbstractLight extends AbstractNamedBean
     protected int mFastClockOffMin = 0;
     protected String mControlTurnoutSystemName = "";
     protected int mTurnoutState = Turnout.CLOSED;
+    protected String mTimedSensorSystemName = "";
+	protected int mTimeOnDuration = 0;
     
     /**
      *  System independent operational instance variables (not saved between runs)
@@ -51,8 +55,18 @@ public abstract class AbstractLight extends AbstractNamedBean
     protected boolean mActive = false;
     protected Sensor mControlSensor = null;
     protected java.beans.PropertyChangeListener mSensorListener = null;
+	protected java.beans.PropertyChangeListener mTimebaseListener = null;
+	protected Timebase mClock = null;
+	protected int mTimeOn = 0;
+	protected int mTimeOff = 0;
     protected Turnout mControlTurnout = null;
     protected java.beans.PropertyChangeListener mTurnoutListener = null;
+    protected boolean mTimedActive = false;
+    protected Sensor mTimedControlSensor = null;
+    protected java.beans.PropertyChangeListener mTimedSensorListener = null;
+	protected Timer mTimedControlTimer = null;
+	protected java.awt.event.ActionListener mTimedControlListener = null;
+	protected boolean mLightOnTimerActive = false;
     
     /**
      *  Return the control type of this Light
@@ -64,7 +78,8 @@ public abstract class AbstractLight extends AbstractNamedBean
     public void setControlType(int controlType) {
         if ( (controlType==SENSOR_CONTROL) || 
                 (controlType==FAST_CLOCK_CONTROL) ||
-                (controlType==TURNOUT_STATUS_CONTROL) ) {
+                (controlType==TURNOUT_STATUS_CONTROL) ||
+				(controlType==TIMED_ON_CONTROL) ) {
             mControlType = controlType;
         }
         else {
@@ -173,9 +188,69 @@ public abstract class AbstractLight extends AbstractNamedBean
             mTurnoutState = ts;
         }
     }
+    /**
+     *  Return the trigger Sensor system name. This is the Sensor which triggers
+     *     the Timed ON state of the light when it moves from inactive to active.
+     */    
+	public String getControlTimedOnSensorSystemName() {
+		return mTimedSensorSystemName;
+	}
+    /**
+     *  Set the trigger Sensor system name. This is the Sensor which triggers
+     *     the Timed ON state of the light when it moves from inactive to active.
+     */    
+	public void setControlTimedOnSensor(String sensorSystemName) {
+		mTimedSensorSystemName = sensorSystemName;
+	}
+    /**
+     *  Return the duration (milliseconds) light is to remain ON after
+     *    it has been triggered.
+     */    
+	public int getTimedOnDuration() { return mTimeOnDuration; }            
+    /**
+     *  Set the duration (milliseconds) light is to remain ON after
+     *    it has been triggered.
+     */    
+	public void setTimedOnDuration(int duration) {
+		mTimeOnDuration = duration;
+	}
 
 	abstract public void setState(int value);
-	
+
+    /**
+	 *  Updates the status of a Light under FAST_CLOCK_CONTROL.  This
+	 *   method is called every FastClock minute.
+	 */
+	public void updateClockControlLight() {
+		if (mClock!=null) {
+			Date now = mClock.getTime();
+			int timeNow = now.getHours() * 60 + now.getMinutes();
+			int state = getState();
+			if (mTimeOn <= mTimeOff) {
+				// on and off the same day
+				if ( (timeNow<mTimeOn) || (timeNow>=mTimeOff) ) {
+					// Light should be OFF
+					if (state == ON) setState(OFF);
+				}
+				else { 
+					// Light should be ON
+					if (state == OFF) setState(ON);
+				}
+			}
+			else {
+				// on and off - different days
+				if ( (timeNow>=mTimeOn) || (timeNow<mTimeOff) ) {
+					// Light should be ON
+					if (state == OFF) setState(ON);
+				}
+				else { 
+					// Light should be OFF
+					if (state == ON) setState(OFF);
+				}
+			}
+		}
+	}
+	 
     /**
      * Activates a light by control type.  This method tests the 
      *   control type, and set up a control mechanism, appropriate 
@@ -231,6 +306,19 @@ public abstract class AbstractLight extends AbstractNamedBean
                     break;
                     
                 case FAST_CLOCK_CONTROL:
+					if (mClock==null) {
+						mClock = InstanceManager.timebaseInstance();
+					}
+					// set up time as minutes in a day
+					mTimeOn = mFastClockOnHour * 60 + mFastClockOnMin;
+					mTimeOff = mFastClockOffHour * 60 + mFastClockOffMin;
+					// set up to listen for time changes on a minute basis
+					mClock.addMinuteChangeListener( mTimebaseListener = 
+						new java.beans.PropertyChangeListener() {
+							public void propertyChange(java.beans.PropertyChangeEvent e) {
+								updateClockControlLight();
+							}
+						});
                     break;
                 case TURNOUT_STATUS_CONTROL:
                     mControlTurnout = InstanceManager.turnoutManagerInstance().
@@ -273,6 +361,42 @@ public abstract class AbstractLight extends AbstractNamedBean
                         return;
                     }
                     break;
+                case TIMED_ON_CONTROL:
+                    mTimedControlSensor = InstanceManager.sensorManagerInstance().
+                                            provideSensor(mTimedSensorSystemName);
+                    if (mTimedControlSensor!=null) {
+                        mTimedControlSensor.addPropertyChangeListener(mTimedSensorListener =
+                                                new java.beans.PropertyChangeListener() {
+                                public void propertyChange(java.beans.PropertyChangeEvent e) {
+                                    if (e.getPropertyName().equals("KnownState")) {
+                                        int now = mTimedControlSensor.getKnownState();
+										if (!mLightOnTimerActive) {
+											if (now==Sensor.ACTIVE) { 
+                                                // Turn light on
+                                                setState(ON);
+												// Create a timer if one does not exist
+												if (mTimedControlTimer==null) {
+													mTimedControlListener = new TimeLight();
+													mTimedControlTimer = new Timer(mTimeOnDuration,
+															mTimedControlListener);
+												}
+												// Start the Timer to turn the light OFF
+												mLightOnTimerActive = true;
+												mTimedControlTimer.start();
+                                            }
+                                        }
+                                    }
+                                }
+                        });
+                        mActive = true;
+                    }
+                    else {
+                        // timed control sensor does not exist
+                        log.error("Light "+getSystemName()+" is linked to a Sensor that does not exist: "+
+                                             mTimedSensorSystemName);
+                        return;
+                    }
+                    break;
                 case NO_CONTROL:
                     // No control mechanism specified
                     break;
@@ -301,12 +425,33 @@ public abstract class AbstractLight extends AbstractNamedBean
                     }
                     break;
                 case FAST_CLOCK_CONTROL:
+					if ( (mClock!=null) && (mTimebaseListener!=null) ){
+						mClock.removeMinuteChangeListener(mTimebaseListener);
+						mTimebaseListener = null;
+					}
                     break;
                 case TURNOUT_STATUS_CONTROL:
                     if (mTurnoutListener!=null) {
                         mControlTurnout.removePropertyChangeListener(mTurnoutListener);
                         mTurnoutListener = null;
                     }
+                    break;
+                case TIMED_ON_CONTROL:
+                    if (mTimedSensorListener!=null) {
+                        mTimedControlSensor.removePropertyChangeListener(mTimedSensorListener);
+                        mTimedSensorListener = null;
+                    }
+					if (mLightOnTimerActive) {
+						mTimedControlTimer.stop();
+						mLightOnTimerActive = false;
+					}
+					if (mTimedControlTimer!=null) {
+						if (mTimedControlListener!=null) {
+							mTimedControlTimer.removeActionListener(mTimedControlListener);
+							mTimedControlListener = null;
+						}
+						mTimedControlTimer = null;
+					}
                     break;
                 case NO_CONTROL:
                     // No control mechanism specified
@@ -317,6 +462,20 @@ public abstract class AbstractLight extends AbstractNamedBean
             mActive = false;
         }    
     }
+	/**
+	 *	Class for defining ActionListener for TIMED_ON_CONTROL
+	 */
+	class TimeLight implements java.awt.event.ActionListener 
+	{
+		public void actionPerformed(java.awt.event.ActionEvent event)
+		{
+			// Turn Light OFF
+			setState(OFF);
+			// Turn Timer OFF
+			mTimedControlTimer.stop();
+			mLightOnTimerActive = false;
+		}
+	}
 }
 
 /* @(#)AbstractLight.java */
