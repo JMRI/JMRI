@@ -6,7 +6,7 @@ package jmri;
  * Class providing the basic logic of the Route interface.
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class DefaultRoute extends AbstractNamedBean
     implements Route, java.io.Serializable {
@@ -396,7 +396,7 @@ class SetRouteThread extends Thread
 	/**
 	 * Constructs the thread
 	 */
-	public SetRouteThread (Route aRoute) {
+	public SetRouteThread (DefaultRoute aRoute) {
 		r = aRoute;
 	}
 	
@@ -425,7 +425,7 @@ class SetRouteThread extends Thread
 		r.setRouteNotBusy();
 	}
 	
-	private Route r;
+	private DefaultRoute r;
 }
 
 /* @(#)DefaultRoute.java */

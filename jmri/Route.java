@@ -16,7 +16,7 @@ package jmri;
  * invoked by one or more Sensors (up to the maximum allowed).
  *
  * @author			Dave Duchamp Copyright (C) 2004
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public interface Route extends NamedBean {
 
@@ -122,24 +122,6 @@ public interface Route extends NamedBean {
      * Deactivates Route based on a list of Sensors
      */
     public void deActivateRoute();
-
-    /**
-     * Method to set Route busy when commands are being issued to 
-     *   Route turnouts
-	 */
-    public void setRouteBusy();
-
-    /**
-     * Method to set Route not busy when all commands have been
-     *   issued to Route turnouts
-	 */
-    public void setRouteNotBusy();
-
-    /**
-     * Method to query if Route is busy (returns true if commands are
-     *   being issued to Route turnouts)
-	 */
-    public boolean isRouteBusy();
 
     /**
      * Method to get the 'k'th Turnout of the Route.
