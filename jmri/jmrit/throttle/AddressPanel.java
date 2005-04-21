@@ -230,7 +230,7 @@ public class AddressPanel extends JInternalFrame
         int fontSize = addressField.getFont().getSize();
         if (stringWidth > fieldWidth) // component has shrunk.
         {
-            while (stringWidth > fieldWidth)
+            while ( (stringWidth > fieldWidth) && (fontSize>12) )
             {
                 fontSize -= 2;
                 Font f = new Font("", Font.PLAIN, fontSize);
@@ -241,7 +241,7 @@ public class AddressPanel extends JInternalFrame
         }
         else // component has grown
         {
-            while (fieldWidth - stringWidth > 10)
+            while ( (fieldWidth - stringWidth > 10) && (fontSize<48) )
             {
                 fontSize += 2;
                 Font f = new Font("", Font.PLAIN, fontSize);
@@ -250,7 +250,6 @@ public class AddressPanel extends JInternalFrame
                               stringWidth(LONGEST_STRING);
             }
         }
-
     }
 
     /**
