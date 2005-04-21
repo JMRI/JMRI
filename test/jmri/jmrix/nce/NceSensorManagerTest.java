@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the NceAIU class.
  * @author	Bob Jacobsen Copyright 2002
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class NceSensorManagerTest extends TestCase {
 
@@ -24,30 +24,24 @@ public class NceSensorManagerTest extends TestCase {
         NceSensorManager s = new NceSensorManager();
         s.provideSensor("3");
         NceMessage m = s.nextAiuPoll();
-        Assert.assertEquals("opcode I ", 'I', m.getElement(0));
-        Assert.assertEquals("space ", ' ', m.getElement(1));
-        Assert.assertEquals("0 ", '0', m.getElement(2));
-        Assert.assertEquals("1 ", '1', m.getElement(3));
+        Assert.assertEquals("opcode ", 0x8A, m.getElement(0));
+        Assert.assertEquals("AIU ", 1, m.getElement(1));
     }
 
     public void testScan3() {
         NceSensorManager s = new NceSensorManager();
         s.provideSensor("17");
         NceMessage m = s.nextAiuPoll();
-        Assert.assertEquals("opcode I ", 'I', m.getElement(0));
-        Assert.assertEquals("space ", ' ', m.getElement(1));
-        Assert.assertEquals("0 ", '0', m.getElement(2));
-        Assert.assertEquals("2 ", '2', m.getElement(3));
+        Assert.assertEquals("opcode ", 0x8A, m.getElement(0));
+        Assert.assertEquals("AIU ", 2, m.getElement(1));
     }
 
     public void testScan4() {
         NceSensorManager s = new NceSensorManager();
         s.provideSensor("172");
         NceMessage m = s.nextAiuPoll();
-        Assert.assertEquals("opcode I ", 'I', m.getElement(0));
-        Assert.assertEquals("space ", ' ', m.getElement(1));
-        Assert.assertEquals("1 ", '1', m.getElement(2));
-        Assert.assertEquals("0 ", '1', m.getElement(3));
+        Assert.assertEquals("opcode ", 0x8A, m.getElement(0));
+        Assert.assertEquals("AIU ", 11, m.getElement(1));
     }
 
     public void testScan5() {
@@ -55,20 +49,14 @@ public class NceSensorManagerTest extends TestCase {
         s.provideSensor("17");
         s.provideSensor("172");
         NceMessage m = s.nextAiuPoll();
-        Assert.assertEquals("opcode I ", 'I', m.getElement(0));
-        Assert.assertEquals("space ", ' ', m.getElement(1));
-        Assert.assertEquals("0 ", '0', m.getElement(2));
-        Assert.assertEquals("2 ", '2', m.getElement(3));
+        Assert.assertEquals("opcode ", 0x8A, m.getElement(0));
+        Assert.assertEquals("AIU ", 2, m.getElement(1));
         m = s.nextAiuPoll();
-        Assert.assertEquals("opcode I ", 'I', m.getElement(0));
-        Assert.assertEquals("space ", ' ', m.getElement(1));
-        Assert.assertEquals("1 ", '1', m.getElement(2));
-        Assert.assertEquals("0 ", '1', m.getElement(3));
+        Assert.assertEquals("opcode ", 0x8A, m.getElement(0));
+        Assert.assertEquals("AIU ", 11, m.getElement(1));
         m = s.nextAiuPoll();
-        Assert.assertEquals("opcode I ", 'I', m.getElement(0));
-        Assert.assertEquals("space ", ' ', m.getElement(1));
-        Assert.assertEquals("0 ", '0', m.getElement(2));
-        Assert.assertEquals("2 ", '2', m.getElement(3));
+        Assert.assertEquals("opcode ", 0x8A, m.getElement(0));
+        Assert.assertEquals("AIU ", 2, m.getElement(1));
     }
 
     // from here down is testing infrastructure
