@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
  * @author     Paul Bender (C) 2002,2003,2004
- * @version    $Revision: 2.3 $
+ * @version    $Revision: 2.4 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -17,7 +17,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     private javax.swing.Timer statTimer; // Timer used to periodically get 
                                          // current status of the throttle 
                                          // when throttle not available.
-    static final int statTimeoutValue = 100; // Interval to check the 
+    static final int statTimeoutValue = 1000; // Interval to check the 
                                              // status of the throttle
 
     static final int THROTTLEIDLE=0;  // Idle Throttle
@@ -524,7 +524,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
        msg.setElement(3,this.getDccAddressLow()); // set to the lower byte
 						    //of the DCC address
        msg.setParity(); // Set the parity bit
-
+       msg.setRetries(1); // Since we repeat this ourselves, don't ask the 
+			  // traffic controller to do this for us.
        // now, we send the message to the command station
        XNetTrafficController.instance().sendXNetMessage(msg,this);
        requestState=THROTTLESTATSENT;     
