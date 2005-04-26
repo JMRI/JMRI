@@ -14,7 +14,7 @@ import java.awt.Color;
 /**
  * Represents a single Variable value; abstract base class.
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2004
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  *
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
@@ -39,19 +39,41 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
 
     abstract public void setIntValue(int i);
 
-    // methods to command a read from / write to the decoder of the underlying CVs
+    /**
+     * Always read the contents of this Variable
+     */
     abstract public void readAll();
+    /**
+     * Always write the contents of this Variable
+     */
     abstract public void writeAll();
+    
+    /**
+     * Read the contents of this Variable if it's in a state
+     * that indicates it was "changed"
+     * @see #isChanged
+     */
     abstract public void readChanges();
+
+    /**
+     * Write the contents of this Variable if it's in a state
+     * that indicates it was "changed"
+     * @see #isChanged
+     */
     abstract public void writeChanges();
 
+    /**
+     * Determine whether this Variable is "changed", so that
+     * "read changes" and "write changes" will act on it.
+     * @see #considerChanged
+     */
     abstract public boolean isChanged();
 
     /**
-     * Used by subclasses to tell if a variable meets a common definition
-     * of "changed". Now, this means that the variable is in the
-     * "EDITTED" state, e.g. it has been explicitly changed.
-     *
+     * Default implementation for subclasses to tell if a CV meets a common definition
+     * of "changed".  This implementation will only 
+     * consider a variable to be changed if the underlying CV(s) state is
+     * EDITTED, e.g. if the CV(s) has been manually editted.
      * @param c CV to be examined
      * @return true if to be considered changed
      */
