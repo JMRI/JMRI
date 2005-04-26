@@ -14,7 +14,7 @@ import java.awt.Color;
 /**
  * Represents a single Variable value; abstract base class.
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2004
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  *
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
@@ -48,8 +48,10 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     abstract public boolean isChanged();
 
     /**
-     * Used by subclasses to tell if a CV meets a common definition
-     * of "changed"
+     * Used by subclasses to tell if a variable meets a common definition
+     * of "changed". Now, this means that the variable is in the
+     * "EDITTED" state, e.g. it has been explicitly changed.
+     *
      * @param c CV to be examined
      * @return true if to be considered changed
      */
