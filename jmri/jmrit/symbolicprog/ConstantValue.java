@@ -21,7 +21,7 @@ import com.sun.java.util.collections.ArrayList;
  * Extends VariableValue to represent a constant enum-like-thing
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
- * @version   $Revision: 1.8 $
+ * @version   $Revision: 1.9 $
  *
  */
 public class ConstantValue extends VariableValue {
@@ -163,6 +163,7 @@ public class ConstantValue extends VariableValue {
      */
     public void readAll() {
         if (log.isDebugEnabled()) log.debug("read invoked");
+        setToRead(false);
         setState(READ);
         setBusy(true);
         setBusy(false);
@@ -178,6 +179,7 @@ public class ConstantValue extends VariableValue {
      */
     public void writeAll() {
         if (log.isDebugEnabled()) log.debug("write invoked");
+        setToWrite(false);
         setState(STORED);
         setBusy(true);
         setBusy(false);
