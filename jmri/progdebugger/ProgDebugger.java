@@ -13,7 +13,7 @@ import jmri.ProgrammerException;
 /**
  * Debugging implementation of Programmer interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.16 $
+ * @version         $Revision: 1.17 $
  */
 public class ProgDebugger implements Programmer  {
 
@@ -35,7 +35,7 @@ public class ProgDebugger implements Programmer  {
     {
         final ProgListener m = p;
         // log out the request
-        log.debug("write CV: "+CV+" to: "+val+" mode: "+getMode());
+        log.info("write CV: "+CV+" to: "+val+" mode: "+getMode());
         _lastWriteVal = val;
         _lastWriteCv = CV;
         // save for later retrieval
@@ -63,7 +63,7 @@ public class ProgDebugger implements Programmer  {
 
     public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
         final ProgListener m = p;
-        log.debug("confirm CV: "+CV+" mode: "+getMode()+" will read pass: "+_confirmOK);
+        log.info("confirm CV: "+CV+" mode: "+getMode()+" will read pass: "+_confirmOK);
         _lastReadCv = CV;
         // return a notification via the queue to ensure end
         Runnable r = new Runnable() {
@@ -86,7 +86,7 @@ public class ProgDebugger implements Programmer  {
         Integer saw = ((Integer)mValues.get(new Integer(CV)));
         if (saw!=null) _nextRead = saw.intValue();
 
-        log.debug("read CV: "+CV+" mode: "+getMode()+" will read "+_nextRead);
+        log.info("read CV: "+CV+" mode: "+getMode()+" will read "+_nextRead);
 
         // return a notification via the queue to ensure end
         Runnable r = new Runnable() {
