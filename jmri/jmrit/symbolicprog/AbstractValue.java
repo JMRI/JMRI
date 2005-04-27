@@ -6,14 +6,18 @@ import java.awt.Color;
 
 /**
  * Define common base class methods for CvValue and VariableValue classes
- *
- * Presently, this is just static definitions for states and
- * presentation colors, but other stuff may move in here
- * due to refactoring.
+ * <P>
+ * The ToRead parameter (boolean, unbound) is used to remember whether
+ * this object has been read during a "read all" operation.  This allows
+ * removal of duplicate operations.
+ * <P>
+ * The ToWrite parameter (boolean, unbound) is used to remember whether
+ * this object has been read during a "write all" operation.  This allows
+ * removal of duplicate operations.
  *
  * Description:		Represents a single CV value
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @author			Bob Jacobsen   Copyright (C) 2001, 2005
+ * @version			$Revision: 1.5 $
  */
 public abstract class AbstractValue {
 
@@ -53,4 +57,12 @@ public abstract class AbstractValue {
 	/** Define color to denote FROMFILE state.  null means to use default for the component */
 	static final Color COLOR_FROMFILE = Color.yellow;
 
+    public void setToRead(boolean state) { _toRead = state; }
+    public boolean isToRead() { return _toRead; }
+    private boolean _toRead = false;
+    
+    public void setToWrite(boolean state) { _toWrite = state; }
+    public boolean isToWrite() { return _toWrite; }
+    private boolean _toWrite = false;
+    
 }
