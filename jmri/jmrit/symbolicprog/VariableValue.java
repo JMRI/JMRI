@@ -14,14 +14,12 @@ import java.awt.Color;
 /**
  * Represents a single Variable value; abstract base class.
  *
- * <p>The "dirty" parameter is used to indicate whether this VariableValue object
- * needs to be read or written.  It is set at the beginning of a mass read/write
- * operation, and reset when this object is explicitly read or written.  Most 
- * importantly, it is also reset when the underlying storage (CVs, etc) are
- * read or written successfully.  This allows combining multiple operations into one.
+ * <p>The "changed" parameter (non-bound, accessed via isChanged)
+ * indicates whether a "write changes" or "read changes" operation
+ * should handle this object.
  *
- * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2004
- * @version     $Revision: 1.17 $
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2004, 2005
+ * @version     $Revision: 1.18 $
  *
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
@@ -113,13 +111,6 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     protected VariableValue() {}
 
 
-    final public boolean isDirty() {return _dirty;}
-    private boolean _dirty = false;
-    final public void setDirty(boolean d) { 
-        if (log.isDebugEnabled()) log.debug("Variable "+_label+"sets dirty "+_dirty);
-        _dirty = d;
-    }
-    
     // common information - none of these are bound
     public String label() { return _label; }
     public String item() { return _item; }
