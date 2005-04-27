@@ -21,8 +21,8 @@ import javax.swing.JTextField;
  * operation is complete, and the Value and State are stable.  During a read
  * operation, Value changes before State, so you can assume that Value is stable
  * if notified of a State change.
- * @author			Bob Jacobsen   Copyright (C) 2001, 2003, 2004
- * @version			$Revision: 1.11 $
+ * @author			Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005
+ * @version			$Revision: 1.12 $
  */
 public class CvValue extends AbstractValue implements ProgListener {
 
