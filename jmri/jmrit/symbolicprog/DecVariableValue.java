@@ -22,7 +22,7 @@ import com.sun.java.util.collections.ArrayList;
  * Decimal representation of a value.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.12 $
+ * @version             $Revision: 1.13 $
  *
  */
 public class DecVariableValue extends VariableValue
@@ -212,17 +212,18 @@ public class DecVariableValue extends VariableValue
     }
 
     public void readAll() {
+        setToRead(false);
         setBusy(true);  // will be reset when value changes
         //super.setState(READ);
         ((CvValue)_cvVector.elementAt(getCvNum())).read(_status);
     }
 
     public void writeAll() {
+        setToWrite(false);
         if (getReadOnly()) {
             log.error("unexpected write operation when readOnly is set");
         }
         setBusy(true);  // will be reset when value changes
-        //super.setState(STORED);
         ((CvValue)_cvVector.elementAt(getCvNum())).write(_status);
     }
 
@@ -231,14 +232,19 @@ public class DecVariableValue extends VariableValue
         // notification from CV; check for Value being changed
         if (log.isDebugEnabled()) log.debug("Property changed: "+e.getPropertyName());
         if (e.getPropertyName().equals("Busy")) {
-            if (((Boolean)e.getNewValue()).equals(Boolean.FALSE)) setBusy(false);
+            if (((Boolean)e.getNewValue()).equals(Boolean.FALSE)) {
+                setToRead(false);
+                setToWrite(false);  // some programming operation just finished
+                setBusy(false);
+            }
         }
         else if (e.getPropertyName().equals("State")) {
             CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
+            if (cv.getState() == STORED) setToWrite(false);
+            if (cv.getState() == READ) setToRead(false);
             setState(cv.getState());
         }
         else if (e.getPropertyName().equals("Value")) {
-            //setBusy(false);
             // update value of Variable
             CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
             int newVal = (cv.getValue() & maskVal(getMask())) >>> offsetVal(getMask());
