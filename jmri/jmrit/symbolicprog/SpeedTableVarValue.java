@@ -58,7 +58,7 @@ import javax.swing.event.ChangeListener;
  * be removed.
  *<P>
  * @author	Bob Jacobsen, Alex Shepherd   Copyright (C) 2001, 2004
- * @version	$Revision: 1.22 $
+ * @version	$Revision: 1.23 $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -479,6 +479,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     public void readAll() {
         if (log.isDebugEnabled()) log.debug("readAll() invoked");
         onlyChanges = false;
+        setToRead(false);
         setBusy(true);  // will be reset when value changes
         if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in read()");
         isReading = true;
@@ -492,6 +493,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         if (log.isDebugEnabled()) log.debug("writeAll() invoked");
         onlyChanges = false;
         if (getReadOnly()) log.error("unexpected write operation when readOnly is set");
+        setToWrite(false);
         setBusy(true);  // will be reset when value changes
         super.setState(STORED);
         if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in write()");
