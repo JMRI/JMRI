@@ -18,7 +18,7 @@ import javax.swing.text.Document;
 /**
  * Extends VariableValue to represent a NMRA long address
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  *
  */
 public class LongAddrVariableValue extends VariableValue
@@ -188,8 +188,8 @@ public class LongAddrVariableValue extends VariableValue
 
     public void readAll() {
         if (log.isDebugEnabled()) log.debug("longAddr read() invoked");
+        setToRead(false);
         setBusy(true);  // will be reset when value changes
-        //super.setState(READ);
         if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in read()");
         _progState = READING_FIRST;
         if (log.isDebugEnabled()) log.debug("invoke CV read");
@@ -199,8 +199,8 @@ public class LongAddrVariableValue extends VariableValue
     public void writeAll() {
         if (log.isDebugEnabled()) log.debug("write() invoked");
         if (getReadOnly()) log.error("unexpected write operation when readOnly is set");
+        setToWrite(false);
         setBusy(true);  // will be reset when value changes
-        //super.setState(STORED);
         if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in write()");
         _progState = WRITING_FIRST;
         if (log.isDebugEnabled()) log.debug("invoke CV write");
