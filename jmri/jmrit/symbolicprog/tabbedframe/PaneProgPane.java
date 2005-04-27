@@ -38,8 +38,29 @@ import com.sun.java.util.collections.List;   // resolve ambiguity with package-l
  * This class implements PropertyChangeListener so that it can be notified
  * when a variable changes its busy status at the end of a programming read/write operation
  *
- * @author			Bob Jacobsen   Copyright (C) 2001, 2003, 2004; D Miller Copyright 2003
- * @version			$Revision: 1.37 $
+ * There are four read and write operation types, all of which have to be handled carefully:
+ * <DL>
+ * <DT>Write Changes<DD>This must write changes that occur after the operation
+ *                      starts, because the act of writing a variable/CV may
+ *                      change another.  For example, writing CV 1 will mark CV 29 as changed.
+ *           <P>The definition of "changed" is operationally in the 
+ *              {@link jmri.jmrit.symbolicprog.VariableValue#isChanged} member function.
+ *
+ * <DT>Write All<DD>Like write changes, this might have to go back and re-write a variable
+ *                  depending on what has previously happened.  It should write every
+ *              variable (at least) once.
+ * <DT>Read All<DD>This should read every variable once.
+ * <DT>Read Changes<DD>This should read every variable that's marked as changed.
+ *          Currently, we use a common definition of changed with the write operations,
+ *      and that someday might have to change.
+ *
+ * </DL>
+ *
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005
+ * @author  D Miller Copyright 2003
+ * @version	$Revision: 1.38 $
+ * @see jmri.jmrit.symbolicprog.VariableValue#isChanged
+ *
  */
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
@@ -167,6 +188,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * is the index of the Variable in the VariableTable.
      */
     List varList = new ArrayList();
+    
     /**
      * This remembers the CVs on this pane for the Read/Write sheet
      * operation.  They are stored as a list of Integer objects, each of which
@@ -238,11 +260,10 @@ public class PaneProgPane extends javax.swing.JPanel
     boolean justChanges;
     
     /**
-     * invoked by "Read changes on sheet" button, this sets in motion a
+     * Invoked by "Read changes on sheet" button, this sets in motion a
      * continuing sequence of "read" operations on the
      * variables & CVs in the Pane.  Only variables in states
-     * UNKNOWN, EDITED are read; states FROMFILE, STORED and READ don't
-     * need to be.
+     * marked as "changed" will be read.
      *
      * @return true is a read has been started, false if the pane is complete.
      */
@@ -256,12 +277,12 @@ public class PaneProgPane extends javax.swing.JPanel
     }
 
     /**
-     * invoked by "Read Full Sheet" button, this sets in motion a
+     * Invoked by "Read Full Sheet" button, this sets in motion a
      * continuing sequence of "read" operations on the
      * variables & CVs in the Pane.  The read mechanism only reads
      * variables in certain states (and needs to do that to handle error
      * processing right now), so this is implemented by first
-     * setting all variables and CVs on this pane to FROMFILE
+     * setting all variables and CVs on this pane to TOREAD
      *
      * @return true is a read has been started, false if the pane is complete.
      */
@@ -271,10 +292,68 @@ public class PaneProgPane extends javax.swing.JPanel
                                             +cvList.size()+" cvs");
         readAllButton.setSelected(true);
         justChanges = false;
+        
+        setToRead(true);
         // start operation
         return nextRead();
     }
 
+    /**
+     * Set the "ToRead" parameter in all variables and CVs on this pane
+     */
+    void setToRead(boolean stat) {
+        for (int i=0; i<varList.size(); i++) {
+            int varNum = ((Integer)varList.get(i)).intValue();
+            VariableValue var = _varModel.getVariable(varNum);
+            var.setToRead(stat);
+        }
+        for (int i=0; i<cvList.size(); i++) {
+            int cvNum = ((Integer)cvList.get(i)).intValue();
+            CvValue cv = _cvModel.getCvByRow(cvNum);
+            cv.setToRead(stat);
+        }
+    }
+        
+    /**
+     * Set the "ToWrite" parameter in all variables and CVs on this pane
+     */
+    void setToWrite(boolean stat) {
+        for (int i=0; i<varList.size(); i++) {
+            int varNum = ((Integer)varList.get(i)).intValue();
+            VariableValue var = _varModel.getVariable(varNum);
+            var.setToWrite(stat);
+        }
+        for (int i=0; i<cvList.size(); i++) {
+            int cvNum = ((Integer)cvList.get(i)).intValue();
+            CvValue cv = _cvModel.getCvByRow(cvNum);
+            cv.setToWrite(stat);
+        }
+    }
+        
+    void executeRead(VariableValue var) {
+        setBusy(true);
+        var.setToRead(false);
+        if (_programmingVar != null) log.error("listener already set at read start");
+        _programmingVar = var;
+        _read = true;
+        // get notified when that state changes so can repeat
+        _programmingVar.addPropertyChangeListener(this);
+        // and make the read request
+        _programmingVar.readAll();
+    }
+    
+    void executeWrite(VariableValue var) {
+        setBusy(true);
+        var.setToWrite(false);
+        if (_programmingVar != null) log.error("listener already set at write start");
+        _programmingVar = var;
+        _read = false;
+        // get notified when that state changes so can repeat
+        _programmingVar.addPropertyChangeListener(this);
+        // and make the write request
+        _programmingVar.writeAll();
+    }
+    
     /**
      * If there are any more read operations to be done on this pane,
      * do the next one.
@@ -285,24 +364,20 @@ public class PaneProgPane extends javax.swing.JPanel
      * <P>
      * @return true is a read has been started, false if the pane is complete.
      */
-    boolean nextRead() {
+    boolean nextRead() {        
+        // look for possible variables
         for (int i=0; i<varList.size(); i++) {
             int varNum = ((Integer)varList.get(i)).intValue();
             int vState = _varModel.getState( varNum );
             if (log.isDebugEnabled()) log.debug("nextRead var index "+varNum+" state "+vState);
             VariableValue var = _varModel.getVariable(varNum);
             if ( ( justChanges && var.isChanged() )
-                    || ( !justChanges && (vState!=VariableValue.READ) )
+                    || ( !justChanges && var.isToRead() )
                 ) {
+
                 if (log.isDebugEnabled()) log.debug("start read of variable "+_varModel.getLabel(varNum));
-                setBusy(true);
-                if (_programmingVar != null) log.error("listener already set at read start");
-                _programmingVar = _varModel.getVariable(varNum);
-                _read = true;
-                // get notified when that state changes so can repeat
-                _programmingVar.addPropertyChangeListener(this);
-                // and make the read request
-                _programmingVar.readAll();
+                executeRead(var);
+                
                 if (log.isDebugEnabled()) log.debug("return from starting var read");
                 // the request may have instantaneously been satisfied...
                 return true;  // only make one request at a time!
@@ -337,15 +412,13 @@ public class PaneProgPane extends javax.swing.JPanel
     }
 
     /**
-     * invoked by "Write changes on sheet" button, this sets in motion a
+     * Invoked by "Write changes on sheet" button, this sets in motion a
      * continuing sequence of "write" operations on the
-     * variables in the Pane.  Only variables in states
-     * UNKNOWN, EDITED are read; states FROMFILE, STORED and READ don't
-     * need to be.  Each invocation of this method writes one CV; completion
-     * of that request will cause it to happen again, writing the next CV, until
-     * there's nothing left to write.
+     * variables in the Pane.  Only variables in isChanged states
+     * are written; other states don't
+     * need to be.
      * <P>
-     * Returns true is a write has been started, false if the pane is complete.
+     * Returns true if a write has been started, false if the pane is complete.
      */
     public boolean writePaneChanges() {
         if (log.isDebugEnabled()) log.debug("writePaneChanges starts");
@@ -355,16 +428,18 @@ public class PaneProgPane extends javax.swing.JPanel
     }
 
     /**
-     * Invoked by "Write full sheet" button to write all CVs
+     * Invoked by "Write full sheet" button to write all CVs.
      */
     public boolean writePaneAll() {
         if (log.isDebugEnabled()) log.debug("reWritePane starts");
         writeAllButton.setSelected(true);
         justChanges = false;
+        setToWrite(true);
         return nextWrite();
     }
 
     boolean nextWrite() {
+        // look for possible variables
         for (int i=0; i<varList.size(); i++) {
             int varNum = ((Integer)varList.get(i)).intValue();
             int vState = _varModel.getState( varNum );
@@ -372,17 +447,12 @@ public class PaneProgPane extends javax.swing.JPanel
             VariableValue var = _varModel.getVariable(varNum);
             if ( !var.getReadOnly()
                  &&  ( justChanges && var.isChanged())
-                        || ( !justChanges && ( vState!=VariableValue.STORED ))
+                        || ( !justChanges && var.isToWrite())
                ) {
                 log.debug("start write of variable "+_varModel.getLabel(varNum));
-                setBusy(true);
-                if (_programmingVar != null) log.error("listener already set at write start");
-                _programmingVar = _varModel.getVariable(varNum);
-                _read = false;
-                // get notified when that state changes so can repeat
-                _programmingVar.addPropertyChangeListener(this);
-                // and make the write request
-                _programmingVar.writeAll();
+
+                executeWrite(var);
+
                 if (log.isDebugEnabled()) log.debug("return from starting var write");
                 return true;  // only make one request at a time!
             }
