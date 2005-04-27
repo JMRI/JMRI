@@ -26,7 +26,7 @@ import javax.swing.text.Document;
  *</PRE>
  * decoders.
  * @author			Bob Jacobsen   Copyright (C) 2002, 2003, 2004
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  *
  */
 public class SplitVariableValue extends VariableValue
@@ -250,6 +250,7 @@ public class SplitVariableValue extends VariableValue
 
     public void readAll() {
         if (log.isDebugEnabled()) log.debug("longAddr read() invoked");
+        setToRead(false);
         setBusy(true);  // will be reset when value changes
         //super.setState(READ);
         if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in read()");
@@ -261,8 +262,8 @@ public class SplitVariableValue extends VariableValue
     public void writeAll() {
         if (log.isDebugEnabled()) log.debug("write() invoked");
         if (getReadOnly()) log.error("unexpected write operation when readOnly is set");
+        setToWrite(false);
         setBusy(true);  // will be reset when value changes
-        //super.setState(STORED);
         if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in write()");
         _progState = WRITING_FIRST;
         if (log.isDebugEnabled()) log.debug("invoke CV write");
@@ -352,7 +353,7 @@ public class SplitVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.10 $
+     * @version     $Revision: 1.11 $
      */
     public class VarTextField extends JTextField {
 
