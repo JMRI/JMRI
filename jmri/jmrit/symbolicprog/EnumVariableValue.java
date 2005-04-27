@@ -16,7 +16,7 @@ import com.sun.java.util.collections.List;
  * Extends VariableValue to represent a enumerated variable.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
@@ -254,11 +254,13 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     }
 
     public void readAll() {
+        setToRead(false);
         setBusy(true);  // will be reset when value changes
         ((CvValue)_cvVector.elementAt(getCvNum())).read(_status);
     }
 
     public void writeAll() {
+        setToWrite(false);
         if (getReadOnly()) log.error("unexpected write operation when readOnly is set");
         setBusy(true);  // will be reset when value changes
         ((CvValue)_cvVector.elementAt(getCvNum())).write(_status);
@@ -268,9 +270,15 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         // notification from CV; check for Value being changed
         if (e.getPropertyName().equals("Busy")) {
-            if (((Boolean)e.getNewValue()).equals(Boolean.FALSE)) setBusy(false);
+            if (((Boolean)e.getNewValue()).equals(Boolean.FALSE)) {
+                setToRead(false);
+                setToWrite(false);  // some programming operation just finished
+                setBusy(false);
+            }
         } else if (e.getPropertyName().equals("State")) {
             CvValue cv = (CvValue)_cvVector.elementAt(getCvNum());
+            if (cv.getState() == STORED) setToWrite(false);
+            if (cv.getState() == READ) setToRead(false);
             setState(cv.getState());
         } else if (e.getPropertyName().equals("Value")) {
             // update value of Variable
@@ -288,7 +296,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * model between this object and the real JComboBox value.
      *
      * @author			Bob Jacobsen   Copyright (C) 2001
-     * @version         $Revision: 1.13 $
+     * @version         $Revision: 1.14 $
      */
     public class VarComboBox extends JComboBox {
 
