@@ -13,7 +13,7 @@ import java.io.Serializable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2003,2004
- * @version			$Revision: 2.6 $
+ * @version			$Revision: 2.7 $
  *
  */
 public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Serializable {
@@ -169,7 +169,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         // The rest of the upper nibble should be zeros.
         // The LSB of the lower nibble says weather or not the
         // information request is for the upper or lower nibble.
-        if (pLowerNibble) { l.setElement(1,0x80);
+        if (pLowerNibble) { l.setElement(2,0x80);
 	} else { l.setElement(2,0x81); }
         
         return l;

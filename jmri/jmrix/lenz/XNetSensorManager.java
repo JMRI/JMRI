@@ -10,7 +10,7 @@ import jmri.Sensor;
  * System names are "XSnnn", where nnn is the sensor number without padding.
  *
  * @author			Paul Bender Copyright (C) 2003
- * @version			$Revision: 2.2 $
+ * @version			$Revision: 2.3 $
  */
 public class XNetSensorManager extends jmri.AbstractSensorManager implements XNetListener {
 
@@ -48,7 +48,7 @@ public class XNetSensorManager extends jmri.AbstractSensorManager implements XNe
 	      if(log.isDebugEnabled()) 
 			log.debug("Message for feedback encoder " + address); 
 
-	      int firstaddress=((address-1)*8)+1;
+	      int firstaddress=((address)*8)+1;
 	      // Each Feedback encoder includes 8 addresses, so register 
 	      // a sensor for each address.
 	      for(int i=0;i<8;i++) {

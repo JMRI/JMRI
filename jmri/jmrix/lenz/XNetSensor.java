@@ -9,7 +9,7 @@ import jmri.Sensor;
  * Extend jmri.AbstractSensor for XPressNet layouts.
  * <P>
  * @author			Paul Bender Copyright (C) 2003
- * @version         $Revision: 2.2 $
+ * @version         $Revision: 2.3 $
  */
 public class XNetSensor extends AbstractSensor implements XNetListener {
 
@@ -40,7 +40,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
 	systemName=new String(id);
         address = Integer.parseInt(id.substring(2,id.length()));
 	// calculate the base address, the nibble, and the bit to examine
-	baseaddress = ((address-1) / 8) + 1;
+	baseaddress = ((address-1) / 8);
 	int temp = (address-1) % 8;
 	if(temp<4) {
 	   // This address is in the lower nibble
@@ -62,7 +62,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
         if (log.isDebugEnabled())
         	log.debug("Created Sensor " + systemName  + 
  				  " (Address " + baseaddress + 
-                                  " possition " + (address - (baseaddress-1)*8) +
+                                  " possition " + ((address % 8) + 1) +
 				  ")");
         // At construction, register for messages
         XNetTrafficController.instance().addXNetListener(~0, this);
@@ -76,9 +76,13 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
     public void requestUpdateFromLayout() {
        // To do this, we send an XpressNet Accessory Decoder Information 
        // Request.
-       // This works for Feedback modules and turnouts with feedback.
+       // The generated message works for Feedback modules and turnouts 
+       // with feedback, but the address passed is translated as though it 
+       // is a turnout address.  As a result, we substitute our base 
+       // address in for the address. after the message is returned.
        XNetMessage msg = XNetMessage.getFeedbackRequestMsg(baseaddress,
                                                           (nibble==0x00));
+       msg.setElement(1,baseaddress);
        XNetTrafficController.instance().sendXNetMessage(msg, this);
     }
 
