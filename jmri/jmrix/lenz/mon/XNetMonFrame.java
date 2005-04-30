@@ -20,7 +20,7 @@ import jmri.jmrix.lenz.XNetConstants;
 /**
  * Frame displaying (and logging) XpressNet messages
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version         $Revision: 2.9 $
+ * @version         $Revision: 2.10 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
@@ -245,6 +245,77 @@ import jmri.jmrix.lenz.XNetConstants;
 		               break;
 			default:
 				text = text + l.getElement(1);
+			}
+		// Feedback Response Messages
+		} else if (l.isFeedbackMessage() ) {
+			text = new String("Feedback Response:");
+			switch(l.getFeedbackMessageType()) {
+				case 0:
+					text = text + "Turnout with out Feedback "+
+					" Turnout: " +l.getTurnoutMsgAddr() +
+					" State: ";
+					if((l.getElement(2)&0x03)==0x00) {
+						text = text + "Not Operated";
+					} else if((l.getElement(2)&0x03)==0x01) {
+						text = text + "Thrown Left";
+					} else if((l.getElement(2)&0x03)==0x02){
+						text = text + "Thrown Right";
+					} else if((l.getElement(2)&0x03)==0x03){
+						text = text + "<Invalid>";
+					} else text = text + "<Unknown>";
+					text = text + "; Turnout: " +(l.getTurnoutMsgAddr() +1) +
+					" State: ";
+					if((l.getElement(2)&0x0C)==0x00) {
+						text = text + "Not Operated";
+					} else if((l.getElement(2)&0x0C)==0x04) {
+						text = text + "Thrown Left";
+					} else if((l.getElement(2)&0x0C)==0x08){
+						text = text + "Thrown Right";
+					} else if((l.getElement(2)&0x0C)==0x0C){
+						text = text + "<Invalid>";
+					} else text = text + "<Unknown>";
+					break;
+				case 1:
+					text = text + "Turnout with Feedback "+
+					" Turnout: " +l.getTurnoutMsgAddr() +
+					" State: ";
+					if((l.getElement(2)&0x03)==0x00) {
+						text = text + "Not Operated";
+					} else if((l.getElement(2)&0x03)==0x01) {
+						text = text + "Thrown Left";
+					} else if((l.getElement(2)&0x03)==0x02){
+						text = text + "Thrown Right";
+					} else if((l.getElement(2)&0x03)==0x03){
+						text = text + "<Invalid>";
+					} else text = text + "<Unknown>";
+					text = text + "; Turnout: " +(l.getTurnoutMsgAddr() +1) +
+					" State: ";
+					if((l.getElement(2)&0x0C)==0x00) {
+						text = text + "Not Operated";
+					} else if((l.getElement(2)&0x0C)==0x04) {
+						text = text + "Thrown Left";
+					} else if((l.getElement(2)&0x0C)==0x08){
+						text = text + "Thrown Right";
+					} else if((l.getElement(2)&0x0C)==0x0C){
+						text = text + "<Invalid>";
+					} else text = text + "<Unknown>";
+					break;
+				case 2:
+					text = text + "Feedback Encoder " +
+					"Base Address: " + 
+					l.getFeedbackEncoderMsgAddr();
+					boolean highnibble = ((l.getElement(2) &0x10)==0x10);
+					text = text + " Contact: " + (highnibble?1:5);
+					text = text + " State: " + (((l.getElement(2) &0x01)==0x01)?"On;":"Off;");
+					text = text + " Contact: " + (highnibble?2:6);
+					text = text + " State: " + (((l.getElement(2) &0x02)==0x02)?"On;":"Off;");
+					text = text + " Contact: " + (highnibble?3:7);
+					text = text + " State: " + (((l.getElement(2) &0x04)==0x04)?"On;":"Off;");
+					text = text + " Contact: " + (highnibble?4:8);
+					text = text + " State: " + (((l.getElement(2) &0x08)==0x08)?"On;":"Off;");
+					break;
+				default:
+					text = text + l.getElement(1);
 			}
 		} else {
 		     text = l.toString();
@@ -577,6 +648,21 @@ import jmri.jmrix.lenz.XNetConstants;
 			} else {
 			   text = text + "Establish Double Header with " + loco1 + " and " + loco2;
 			}
+		// Accessory Info Request message
+		} else if(l.getElement(0)==XNetConstants.ACC_INFO_REQ){
+			text = "Accessory Decoder/Feedback Encoder Status Request: "+
+			       "Base Address " + l.getElement(1) + ",";
+			text = text + (((l.getElement(2)&0x01)==0x01)?"Upper":"Lower") + " Nibble.";
+		} else if(l.getElement(0)==XNetConstants.ACC_OPER_REQ){
+			 text = "Accessory Decoder Operations Request: ";
+			 int baseaddress = l.getElement(1);
+			 int subaddress = ((l.getElement(2)&0x06)>>1);
+			 int address = (baseaddress*4)+subaddress+1;
+			 text = text + "Turnout Address " + address + "(" +
+			       "Base Address " + l.getElement(1) + "," +
+			       "Sub Address " + ((l.getElement(2)&0x06)>>1) + ") ";
+			 text = text + "Turn Output " + (l.getElement(2)&0x01) + 
+			       " " + (((l.getElement(2)&0x08)==0x08)?"On.":"Off.");
 		} else {
 		     text = l.toString();
 		}
