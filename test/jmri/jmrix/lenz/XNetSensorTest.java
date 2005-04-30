@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.lenz.XNetSensor class.
  * @author	    Paul Bender  Copyright 2004
- * @version         $Revision: 2.1 $
+ * @version         $Revision: 2.2 $
  */
 public class XNetSensorTest extends TestCase {
 
@@ -33,21 +33,21 @@ public class XNetSensorTest extends TestCase {
 
         m = new XNetReply();
 	m.setElement(0, 0x42);     // Opcode for feedback response
-        m.setElement(1, 0x06);     // The feedback encoder address
+        m.setElement(1, 0x05);     // The feedback encoder address
         m.setElement(2, 0x48);     // A bit pattern telling which
                                     // bits of the lower nibble
                                     // are on in the message.
-        m.setElement(3, 0x0c);     // The XOR of everything above
+        m.setElement(3, 0x0f);     // The XOR of everything above
         xnis.sendTestMessage(m);
         Assert.assertEquals("Known state after activate ", jmri.Sensor.ACTIVE, t.getKnownState());
 
         m = new XNetReply();
 	m.setElement(0, 0x42);     // Opcode for feedback response
-        m.setElement(1, 0x06);     // The feedback encoder address
+        m.setElement(1, 0x05);     // The feedback encoder address
         m.setElement(2, 0x40);     // A bit pattern telling which
                                     // bits of the lower nibble
                                     // are on in the message.
-        m.setElement(3, 0x04);     // The XOR of everything above
+        m.setElement(3, 0x07);     // The XOR of everything above
         xnis.sendTestMessage(m);
 
         Assert.assertEquals("Known state after inactivate ", jmri.Sensor.INACTIVE, t.getKnownState());
