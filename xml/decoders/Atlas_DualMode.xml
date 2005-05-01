@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Atlas_DualMode.xml,v 1.15 2003-08-02 00:24:27 jacobsen Exp $ -->
+<!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id: Atlas_DualMode.xml,v 1.16 2005-05-01 23:25:41 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Michael Mosher" version="5" lastUpdated="20030706"/>
 		
@@ -164,4 +166,5 @@
 </pane>
 
 </decoder-config>
-
+
+

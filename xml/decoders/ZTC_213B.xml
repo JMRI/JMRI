@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: ZTC_213B.xml,v 1.1 2005-03-25 21:40:52 jacobsen Exp $ -->
+<!-- Copyright (C) JMRI 2003, 2005 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id: ZTC_213B.xml,v 1.2 2005-05-01 23:25:42 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Phil Grainger (phil.grainger@ca.com)"
 			version="1" lastUpdated="20030805" />

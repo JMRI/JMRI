@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: CVProducts_AD4.xml,v 1.9 2003-07-06 17:04:29 jacobsen Exp $ -->
+<!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id: CVProducts_AD4.xml,v 1.10 2005-05-01 23:25:41 jacobsen Exp $ -->
 <decoder-config>
 		<version author="afticarr@sympatico.ca" 
 					version="4" lastUpdated="20030209"/>

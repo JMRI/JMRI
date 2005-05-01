@@ -1,8 +1,10 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Atlas_VO1000.xml,v 1.1 2005-03-25 23:22:58 pbender Exp $ -->
+<!-- Copyright (C) JMRI 2004 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id: Atlas_VO1000.xml,v 1.2 2005-05-01 23:25:41 jacobsen Exp $ -->
 <decoder-config>
-		<version author="Paul Bednder (paul.bender@acm.org)"
+		<version author="Paul Bender (paul.bender@acm.org)"
 			version="1" lastUpdated="20040802" />
 
 <decoder>

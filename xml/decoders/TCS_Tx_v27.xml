@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: TCS_Tx_v27.xml,v 1.1 2004-12-16 23:04:50 jacobsen Exp $ -->
+<!-- Copyright (C) JMRI 2004 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id: TCS_Tx_v27.xml,v 1.2 2005-05-01 23:25:42 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jsalemi@speakeasy.net"
 					version="1.2" lastUpdated="20041213"/>

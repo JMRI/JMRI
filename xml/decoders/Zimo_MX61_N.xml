@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Zimo_MX61_N.xml,v 1.1 2004-11-26 06:38:28 jacobsen Exp $ -->
+<!-- Copyright (C) JMRI 2004 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id: Zimo_MX61_N.xml,v 1.2 2005-05-01 23:25:43 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Michael Greene (mgreene@cedarlane.com)"
 			version="1" lastUpdated="20041020" />

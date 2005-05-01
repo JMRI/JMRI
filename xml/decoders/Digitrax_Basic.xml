@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_Basic.xml,v 1.12 2005-01-23 20:49:28 jacobsen Exp $ -->
+<!-- Copyright (C) JMRI 2003, 2005 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id: Digitrax_Basic.xml,v 1.13 2005-05-01 23:25:41 jacobsen Exp $ -->
 <decoder-config>
 		<version author="phil.grainger@ca.com" 
 					version="9" lastUpdated="20050112"/>

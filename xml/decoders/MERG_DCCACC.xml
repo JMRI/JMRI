@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: MERG_DCCACC.xml,v 1.2 2003-07-06 17:04:46 jacobsen Exp $ -->
+<!-- Copyright (C) JMRI 2002, 2004 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id: MERG_DCCACC.xml,v 1.3 2005-05-01 23:25:42 jacobsen Exp $ -->
 <decoder-config>
 		<version author="dave@bayworld.com" version="1" lastUpdated="20021128"/>
 					

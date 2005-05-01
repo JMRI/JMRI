@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Revision: 1.1 $ -->
+<!-- Copyright (C) JMRI 2004 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Revision: 1.2 $ -->
 <decoder-config>
 		<version author="peter.brandenburg@t-online.de"
 			version="3" lastUpdated="20042912" />

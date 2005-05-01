@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: ESU_LokSound2_21.xml,v 1.7 2005-01-23 20:58:48 jacobsen Exp $ -->
+<!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id: ESU_LokSound2_21.xml,v 1.8 2005-05-01 23:25:41 jacobsen Exp $ -->
 <decoder-config>
 		<version author="wsthompson@earthlink.netl"
 			version="5" lastUpdated="20041116"/>

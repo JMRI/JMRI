@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: TCS_Mfamily.xml,v 1.1 2005-03-25 21:54:04 jacobsen Exp $ -->
+<!-- Copyright (C) JMRI 2003, 2005 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id: TCS_Mfamily.xml,v 1.2 2005-05-01 23:25:42 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
 					version="2" lastUpdated="20030803"/>

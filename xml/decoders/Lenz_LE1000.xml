@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Lenz_LE1000.xml,v 1.1 2004-08-24 03:53:22 pbender Exp $ -->
+<!-- Copyright (C) JMRI 2004 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id: Lenz_LE1000.xml,v 1.2 2005-05-01 23:25:42 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Paul Bednder (paul.bender@acm.org)"
 			version="1" lastUpdated="20040326" />

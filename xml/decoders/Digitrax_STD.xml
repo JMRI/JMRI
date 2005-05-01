@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Digitrax_STD.xml,v 1.5 2004-10-05 14:33:32 jacobsen Exp $ -->
+<!-- Copyright (C) JMRI 2002, 2004 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id: Digitrax_STD.xml,v 1.6 2005-05-01 23:25:41 jacobsen Exp $ -->
 <decoder-config>
 		<version author="jake@physics.berkeley.edu" 
 					version="8" lastUpdated="20041005"/>

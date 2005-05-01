@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: 0NMRA_test.xml,v 1.4 2004-06-13 21:53:52 jacobsen Exp $ -->
+<!-- Copyright (C) JMRI 2002, 2004 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id: 0NMRA_test.xml,v 1.5 2005-05-01 23:25:41 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Robin Becker n3ix@earthlink.net" 
 					version="1" lastUpdated="20021016"/>

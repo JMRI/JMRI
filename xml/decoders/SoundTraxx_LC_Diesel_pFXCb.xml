@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: SoundTraxx_LC_Diesel_pFXCb.xml,v 1.4 2003-10-18 23:51:55 jacobsen Exp $ -->
+<!-- Copyright (C) JMRI 2003 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id: SoundTraxx_LC_Diesel_pFXCb.xml,v 1.5 2005-05-01 23:25:42 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Michael Mosher" version="10.1" lastUpdated="20031008"/>
 		<!-- version 9: moved LL100LC here from LC_Diesel_pnp file -->

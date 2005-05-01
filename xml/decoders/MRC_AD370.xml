@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: MRC_AD370.xml,v 1.2 2004-02-13 02:20:00 jacobsen Exp $ -->
+<!-- Copyright (C) JMRI 2004 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id: MRC_AD370.xml,v 1.3 2005-05-01 23:25:42 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Glen Colbert" version=".5" lastUpdated="20040125"/>
 

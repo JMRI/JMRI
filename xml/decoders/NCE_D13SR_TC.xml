@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: NCE_D13SR_TC.xml,v 1.3 2005-02-10 01:57:23 jacobsen Exp $ -->
+<!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id: NCE_D13SR_TC.xml,v 1.4 2005-05-01 23:25:42 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Michael Mosher" version="3" lastUpdated="20040229"/>
 		<!-- version 1 created by modifing NCE_SR.xml ver 7 removed CV9, 23, 24, 65, 119 

@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: MRC_1428step.xml,v 1.3 2002-10-16 17:33:09 jacobsen Exp $ -->
+<!-- Copyright (C) JMRI 2002 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id: MRC_1428step.xml,v 1.4 2005-05-01 23:25:42 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen" version="1" lastUpdated="20020405"/>
 

@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: MERG_ACC4.xml,v 1.1 2005-02-10 01:58:28 jacobsen Exp $ -->
+<!-- Copyright (C) JMRI 2005 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id: MERG_ACC4.xml,v 1.2 2005-05-01 23:25:42 jacobsen Exp $ -->
 <decoder-config>
 		<version author="len@len-royles.co.uk" version="3" lastUpdated="20050204"/>
 					

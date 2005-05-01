@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- THIS IS A COMMENT -->
+<!-- Copyright (C) JMRI 2005 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id: ESU_LokSoundV3_0.xml,v 1.2 2005-05-01 23:25:42 jacobsen Exp $ -->
 <decoder-config>
 		<version author="nac@erwbant.freeserve.co.uk"
 			version="1" lastUpdated="20050118"/>

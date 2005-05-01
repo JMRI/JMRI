@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: Atlas_345.xml,v 1.1 2004-11-25 19:33:12 jacobsen Exp $ -->
+<!-- Copyright (C) JMRI 2004 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id: Atlas_345.xml,v 1.2 2005-05-01 23:25:41 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Joe Salemi"
 			version="1" lastUpdated="20041105" />
@@ -325,4 +327,5 @@
 
 </decoder-config>
 
-
+
+
