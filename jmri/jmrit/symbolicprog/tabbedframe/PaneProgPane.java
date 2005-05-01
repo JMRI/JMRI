@@ -58,7 +58,7 @@ import com.sun.java.util.collections.List;   // resolve ambiguity with package-l
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005
  * @author  D Miller Copyright 2003
- * @version	$Revision: 1.38 $
+ * @version	$Revision: 1.39 $
  * @see jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -277,12 +277,28 @@ public class PaneProgPane extends javax.swing.JPanel
     }
 
     /**
+     * Prepare this pane for a readAll operation.
+     * <P>The read mechanism only reads
+     * variables in certain states (and needs to do that to handle error
+     * processing right now), so this is implemented by first
+     * setting all variables and CVs on this pane to TOREAD via this method
+     *
+     */
+    public void prepReadPaneAll() {
+        readAllButton.setSelected(true);
+        justChanges = false;
+        
+        setToRead(true);
+    }
+
+    /**
      * Invoked by "Read Full Sheet" button, this sets in motion a
      * continuing sequence of "read" operations on the
      * variables & CVs in the Pane.  The read mechanism only reads
      * variables in certain states (and needs to do that to handle error
      * processing right now), so this is implemented by first
      * setting all variables and CVs on this pane to TOREAD
+     * in prepReadPaneAll, then starting the execution.
      *
      * @return true is a read has been started, false if the pane is complete.
      */
@@ -290,10 +306,23 @@ public class PaneProgPane extends javax.swing.JPanel
         if (log.isDebugEnabled()) log.debug("readAllPane starts with "
                                             +varList.size()+" vars, "
                                             +cvList.size()+" cvs");
-        readAllButton.setSelected(true);
-        justChanges = false;
-        
-        setToRead(true);
+        prepReadPaneAll();
+        // start operation
+        return nextRead();
+    }
+
+    /**
+     * Invoked by "Read Full All Sheets" button, this sets in motion a
+     * continuing sequence of "read" operations on the
+     * variables & CVs in the Pane.  The read all operation must have been
+     * previously prepared via a vall to prepReadPaneAll in this pane.
+     *
+     * @return true is a read has been started, false if the pane is complete.
+     */
+    public boolean readPanesFull() {
+        if (log.isDebugEnabled()) log.debug("readPanesFull starts with "
+                                            +varList.size()+" vars, "
+                                            +cvList.size()+" cvs");
         // start operation
         return nextRead();
     }
@@ -388,7 +417,7 @@ public class PaneProgPane extends javax.swing.JPanel
             int cvNum = ((Integer)cvList.get(i)).intValue();
             CvValue cv = _cvModel.getCvByRow(cvNum);
             if (log.isDebugEnabled()) log.debug("nextRead cv index "+cvNum+" state "+cv.getState());
-            if (( !justChanges && cv.getState()!=CvValue.READ )|| (justChanges && VariableValue.considerChanged(cv)) )  {
+            if (( !justChanges && cv.isToRead() )|| (justChanges && VariableValue.considerChanged(cv)) )  {
                if (log.isDebugEnabled()) log.debug("start read of cv "+cvNum);
                 setBusy(true);
                 if (_programmingCV != null) log.error("listener already set at read start");
@@ -397,6 +426,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 // get notified when that state changes so can repeat
                 _programmingCV.addPropertyChangeListener(this);
                 // and make the read request
+                _programmingCV.setToRead(false);
                 _programmingCV.read(_cvModel.getStatusLabel());
                 if (log.isDebugEnabled()) log.debug("return from starting CV read");
                 // the request may have instantateously been satisfied...
@@ -429,12 +459,28 @@ public class PaneProgPane extends javax.swing.JPanel
 
     /**
      * Invoked by "Write full sheet" button to write all CVs.
+     * <P>
+     * Returns true if a write has been started, false if the pane is complete.
      */
     public boolean writePaneAll() {
-        if (log.isDebugEnabled()) log.debug("reWritePane starts");
+        prepWritePaneAll();
+        return nextWrite();
+    }
+
+    /**
+     * Prepare a "write full sheet" operation.
+     */
+    public void prepWritePaneAll() {
         writeAllButton.setSelected(true);
         justChanges = false;
         setToWrite(true);
+    }
+
+    /**
+     * Invoked by "Write full sheet" button to write all CVs.
+     */
+    public boolean writePanesFull() {
+        if (log.isDebugEnabled()) log.debug("writePanesFull starts");
         return nextWrite();
     }
 
@@ -446,8 +492,8 @@ public class PaneProgPane extends javax.swing.JPanel
             if (log.isDebugEnabled()) log.debug("nextWrite var index "+varNum+" state "+vState);
             VariableValue var = _varModel.getVariable(varNum);
             if ( !var.getReadOnly()
-                 &&  ( justChanges && var.isChanged())
-                        || ( !justChanges && var.isToWrite())
+                 &&  (( justChanges && var.isChanged())
+                        || ( !justChanges && var.isToWrite()) )
                ) {
                 log.debug("start write of variable "+_varModel.getLabel(varNum));
 
@@ -463,7 +509,7 @@ public class PaneProgPane extends javax.swing.JPanel
             CvValue cv = _cvModel.getCvByRow( cvNum );
             if (log.isDebugEnabled()) log.debug("nextWrite cv index "+cvNum+" state "+cv.getState());
             if ( !cv.getReadOnly() &&
-                (( !justChanges && cv.getState()!=CvValue.STORED )|| (justChanges && VariableValue.considerChanged(cv)) ))  {
+                (( !justChanges && cv.isToWrite() )|| (justChanges && VariableValue.considerChanged(cv)) ))  {
                 if (log.isDebugEnabled()) log.debug("start write of cv index "+cvNum);
                 setBusy(true);
                 if (_programmingCV != null) log.error("listener already set at write start");
@@ -471,7 +517,8 @@ public class PaneProgPane extends javax.swing.JPanel
                 _read = false;
                 // get notified when that state changes so can repeat
                 _programmingCV.addPropertyChangeListener(this);
-                // and make the read request
+                // and make the write request
+                _programmingCV.setToWrite(false);
                 _programmingCV.write(_cvModel.getStatusLabel());
                 if (log.isDebugEnabled()) log.debug("return from starting cv write");
                 return true;  // only make one request at a time!

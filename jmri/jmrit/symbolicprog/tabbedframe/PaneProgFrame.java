@@ -27,8 +27,9 @@ import org.jdom.Element;
 
 /**
  * Frame providing a command station programmer from decoder definition files.
- * @author			Bob Jacobsen   Copyright (C) 2001, 2004; D Miller Copyright 2003
- * @version			$Revision: 1.46 $
+ * @author	Bob Jacobsen Copyright (C) 2001, 2004, 2005
+ * @author  D Miller Copyright 2003
+ * @version $Revision: 1.47 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
 							implements java.beans.PropertyChangeListener  {
@@ -580,6 +581,13 @@ abstract public class PaneProgFrame extends JmriJFrame
     public boolean readAll() {
         if (log.isDebugEnabled()) log.debug("readAll starts");
         justChanges = false;
+        
+        // prepare for common reads by doing a compare on all panes
+        for (int i=0; i<paneList.size(); i++) {
+            if (log.isDebugEnabled()) log.debug("doPrep on "+i);
+            ((PaneProgPane)paneList.get(i)).prepReadPaneAll();
+        }
+        // start operation
         return doRead();
     }
 
@@ -594,7 +602,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             if (justChanges)
                 running = _programmingPane.readPaneChanges();
             else
-                running = _programmingPane.readPaneAll();
+                running = _programmingPane.readPanesFull();
 
             if (running) {
 				// operation in progress, stop loop until called back
@@ -624,6 +632,12 @@ abstract public class PaneProgFrame extends JmriJFrame
     public boolean writeAll() {
         if (log.isDebugEnabled()) log.debug("writeAll starts");
         justChanges = false;
+
+        // prepare for common writes by doing a compare on all panes
+        for (int i=0; i<paneList.size(); i++) {
+            if (log.isDebugEnabled()) log.debug("doPrep on "+i);
+            ((PaneProgPane)paneList.get(i)).prepWritePaneAll();
+        }
         return doWrite();
     }
 
@@ -653,7 +667,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             if (justChanges)
                 running = _programmingPane.writePaneChanges();
             else
-                running = _programmingPane.writePaneAll();
+                running = _programmingPane.writePanesFull();
 
             if (running) {
 				// operation in progress, stop loop until called back
@@ -726,19 +740,19 @@ abstract public class PaneProgFrame extends JmriJFrame
             // restart the operation
             if (_read && readChangesButton.isSelected()) {
                 if (log.isDebugEnabled()) log.debug("restart readChanges");
-                readChanges();
+                doRead();
             }
             else if (_read && readAllButton.isSelected()) {
                 if (log.isDebugEnabled()) log.debug("restart readAll");
-                readAll();
+                doRead();
             }
             else if (writeChangesButton.isSelected()) {
                 if (log.isDebugEnabled()) log.debug("restart writeChanges");
-                writeChanges();
+                doWrite();
             }
             else if (writeAllButton.isSelected()) {
                 if (log.isDebugEnabled()) log.debug("restart writeAll");
-                writeAll();
+                doWrite();
             }
             else if (log.isDebugEnabled()) log.debug("read/write end because button is lifted");
         }
