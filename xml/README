@@ -27,5 +27,9 @@ The JMRI web page is located at http://jmri.sourceforge.net/
 More information on these configuration file is available at
   http://jmri.sourceforge.net/PaneProg/ConfigFile.html
 
-See the COPYING file for the license.
+All the files in this directory are copyrighted (C) by their various
+authors.  The COPYING file describes the terms under which you
+can use them.  Note that you MUST give JMRI credit if you use
+all or part of these files.  For more information, please see
+http://jmri.sourceforge.net/Copyright.html
 
