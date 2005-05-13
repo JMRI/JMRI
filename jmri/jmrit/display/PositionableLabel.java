@@ -4,6 +4,7 @@ import jmri.jmrit.catalog.NamedIcon;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -23,7 +24,7 @@ import javax.swing.JRadioButtonMenuItem;
  * PositionableLabel is a JLabel that can be dragged around the
  * inside of the enclosing Container using a right-drag.
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class PositionableLabel extends JLabel
@@ -256,7 +257,7 @@ public class PositionableLabel extends JLabel
         JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
         r.addActionListener(a);
         colorButtonGroup.add(r);
-        if (getForeground() == color) r.setSelected(true);
+        if (getForeground().getRGB() == color.getRGB())  r.setSelected(true);
         else r.setSelected(false);
         menu.add(r);
     }
@@ -321,9 +322,11 @@ public class PositionableLabel extends JLabel
      * Removes this object from display and persistance
      */
     void remove() {
+        Point p = this.getLocation();
+        int w = this.getWidth();
+        int h = this.getHeight();
         Container parent = this.getParent();
         parent.remove(this);
-
         // force redisplay
         parent.validate();
         parent.repaint((int)p.getX(),(int)p.getY(),w,h);
