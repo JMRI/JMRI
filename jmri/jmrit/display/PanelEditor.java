@@ -47,7 +47,7 @@ import com.sun.java.util.collections.ArrayList;
  * consistent via the {#setTitle} method.
  *
  * @author Bob Jacobsen  Copyright: Copyright (c) 2002, 2003; modifications, Dennis Miller 2004
- * @version $Revision: 1.46 $
+ * @version $Revision: 1.47 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -101,7 +101,7 @@ public class PanelEditor extends JmriJFrame {
     public PanelEditor(String name) {
         super(name);
         this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
-		self = this;
+        self = this;
 
         // common items
         JPanel common = new JPanel();
@@ -112,13 +112,13 @@ public class PanelEditor extends JmriJFrame {
         common.add(nextY);
         this.getContentPane().add(common);
 
-		// add menu - not using PanelMenu, because it now
-		// has other stuff in it?
+        // add menu - not using PanelMenu, because it now
+        // has other stuff in it?
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
         menuBar.add(fileMenu);
-		fileMenu.add(new jmri.jmrit.display.PanelEditorAction(rb.getString("MenuItemNew")));
+        fileMenu.add(new jmri.jmrit.display.PanelEditorAction(rb.getString("MenuItemNew")));
         fileMenu.add(new jmri.configurexml.LoadXmlConfigAction(rb.getString("MenuItemLoad")));
         fileMenu.add(new jmri.configurexml.StoreXmlUserAction(rb.getString("MenuItemStore")));
         setJMenuBar(menuBar);
@@ -615,7 +615,7 @@ public class PanelEditor extends JmriJFrame {
     }
 
     JFrame frame;
-	PanelEditor self;
+    PanelEditor self;
 
     public ArrayList contents = new ArrayList();
 
@@ -713,7 +713,7 @@ public class PanelEditor extends JmriJFrame {
     public JmriJFrame makeFrame(String name) {
         JmriJFrame targetFrame = new JmriJFrame(name);
 
-		// arrange for scrolling and size services
+        // arrange for scrolling and size services
         JLayeredPane targetPanel = new JLayeredPane(){
             // provide size services, even though a null layout manager is used
             public void setSize(int w, int h) {
@@ -760,8 +760,8 @@ public class PanelEditor extends JmriJFrame {
         targetPanel.setLayout(null);
 
         JScrollPane js = new JScrollPane(targetPanel);
-        js.setHorizontalScrollBarPolicy(js.HORIZONTAL_SCROLLBAR_ALWAYS);
-        js.setVerticalScrollBarPolicy(js.VERTICAL_SCROLLBAR_ALWAYS);
+        js.setHorizontalScrollBarPolicy(js.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        js.setVerticalScrollBarPolicy(js.VERTICAL_SCROLLBAR_AS_NEEDED);
 
         JPanel p1 = new JPanel();
         p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
@@ -779,12 +779,12 @@ public class PanelEditor extends JmriJFrame {
         menuBar.add(editMenu);
         editMenu.add(new AbstractAction("Open editor"){
                 public void actionPerformed(ActionEvent e) {
-					self.show();
+                    self.show();
                 }
             });
         targetFrame.setJMenuBar(menuBar);
 
-		// set initial size, and force layout
+        // set initial size, and force layout
         targetPanel.setSize(200, 200);
         targetPanel.revalidate();
 
