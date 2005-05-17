@@ -47,7 +47,7 @@ import com.sun.java.util.collections.ArrayList;
  * consistent via the {#setTitle} method.
  *
  * @author Bob Jacobsen  Copyright: Copyright (c) 2002, 2003; modifications, Dennis Miller 2004
- * @version $Revision: 1.47 $
+ * @version $Revision: 1.48 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -495,18 +495,18 @@ public class PanelEditor extends JmriJFrame {
      * Check for valid names on input
      */
     int checkEntry(String type, String name) {
-      int errorFlag = 0;
-      String errorMessage = "";
-      if (name.equals("")) {
-        errorFlag = 1;
-        errorMessage = type + "name not valid. Requires a number or System Name or User Name.\n"
-            + "User Names must be predefined using " + type + " Table tool.\n";
-      }
-      if (errorFlag != 0) {
-        JOptionPane.showMessageDialog(this, errorMessage, "Input Error",
-                                      JOptionPane.ERROR_MESSAGE);
-      }
-      return errorFlag;
+        int errorFlag = 0;
+        String errorMessage = "";
+        if (name.equals("")) {
+            errorFlag = 1;
+            errorMessage = type + "name not valid. Requires a number or System Name or User Name.\n"
+                + "User Names must be predefined using " + type + " Table tool.\n";
+        }
+        if (errorFlag != 0) {
+            JOptionPane.showMessageDialog(this, errorMessage, "Input Error",
+                                          JOptionPane.ERROR_MESSAGE);
+        }
+        return errorFlag;
     }
     /**
      * Add a sensor indicator to the target
