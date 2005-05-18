@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.56 $ -->
+<!-- Revision $Revision: 1.57 $ -->
 
 <project name="JMRI" default="compile" basedir=".">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -155,6 +155,16 @@
     </java>
  </target>
 
+  <target name="faceless" depends="compile" description="build and run faceless app">
+    <java classname="apps.FacelessApp"
+          dir=".." 
+	  fork="yes" >
+       <classpath refid="project.class.path"    />
+       <sysproperty key="java.security.policy" value="lib/security.policy"/> 
+       <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
+    </java>
+ </target>
+
   <!-- this really doesn't work, as it doesn't hook up stdin right -->
   <target name="packetpro" depends="compile" description="build and run PacketPro app">
     <exec executable="csh" dir="${jartarget}">
@@ -219,7 +229,7 @@
                     <br>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.</i>
                        <br>Site hosted by: 
                        <A href="http://sourceforge.net"> 
-                       <IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge Logo"> </A>
+                       <IMG src="http://sourceforge.net/sflogo.php?group_id=26788&type=1" width="88" height="31" border="0" alt="SourceForge_Logo"> </A>
                 ]]></bottom>
       <link href="http://java.sun.com/j2se/1.4.1/docs/api/" />
     </javadoc>
