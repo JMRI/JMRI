@@ -12,7 +12,7 @@ import jmri.jmrix.AbstractThrottle;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, modified 2004 by Kelly Loyd
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class EasyDccThrottle extends AbstractThrottle
 {
@@ -161,6 +161,10 @@ public class EasyDccThrottle extends AbstractThrottle
         setSpeedSetting(speedSetting);  // send the command
     }
 
+    boolean isLongAddr(int address) {
+        return address>=100;
+    }
+    
     /**
      * Finished with this throttle.  Right now, this does nothing,
      * but it could set the speed to zero, turn off functions, etc.
@@ -175,23 +179,34 @@ public class EasyDccThrottle extends AbstractThrottle
         // before releasing the locomotive.
         // setSpeedSetting(0);
         int value = 0;
-        byte[] result = jmri.NmraPacket.speedStep128Packet(address, (address>=100), value, isForward);
+ 
+        byte[] result = jmri.NmraPacket.speedStep128Packet(address, isLongAddr(address), value, isForward);
     	// KSL 20040409 - this is messy, as I only wanted 
     	// the address to be sent. 
-    	EasyDccMessage m = new EasyDccMessage(5);
+    	EasyDccMessage m = new EasyDccMessage(7);
         // for EasyDCC, release the loco.
         // D = Dequeue
         // Cx xx (address)
         int i = 0;  // message index counter
         m.setElement(i++, 'D');
 
-        for (int j = 0; j<2; j++) {
-            //m.setElement(i++, ' ');
-            m.addIntAsTwoHex(result[j]&0xFF,i);
+        if (isLongAddr(address)) {
+            m.setElement(i++, ' ');
+            m.addIntAsTwoHex(result[0]&0xFF,i);
             i = i+2;
-            //i++;
-        }
+            m.setElement(i++, ' ');
+            m.addIntAsTwoHex(result[1]&0xFF,i);
+            i = i+2;
 
+        } else { // short address
+            m.setElement(i++, ' ');
+            m.addIntAsTwoHex(0,i);
+            i = i+2;
+            m.setElement(i++, ' ');
+            m.addIntAsTwoHex(result[0]&0xFF,i);
+            i = i+2;
+        }
+        
         EasyDccTrafficController.instance().sendEasyDccMessage(m, null);
         
         // KSL 20040409 - 'Releasing' the loco address should not
