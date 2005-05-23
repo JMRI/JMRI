@@ -6,7 +6,7 @@ package jmri;
  * Abstract partial implementation of a MemoryManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public abstract class AbstractMemoryManager extends AbstractManager
     implements MemoryManager {
@@ -58,7 +58,9 @@ public abstract class AbstractMemoryManager extends AbstractManager
             return s;
         }
         if ( (s = getBySystemName(systemName)) != null) {
-            if (userName != null) log.warn("Found Memory via system name ("+systemName
+			if ((s.getUserName() == null) && (userName != null))
+				s.setUserName(userName);
+            else if (userName != null) log.warn("Found memory via system name ("+systemName
                                     +") with non-null user name ("+userName+")");
             return s;
         }

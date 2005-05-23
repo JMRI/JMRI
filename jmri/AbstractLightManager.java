@@ -14,7 +14,7 @@ import com.sun.java.util.collections.Collections;
  * Based on AbstractSignalHeadManager.java and AbstractSensorManager.java
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public abstract class AbstractLightManager extends AbstractManager
     implements LightManager, java.beans.PropertyChangeListener {
@@ -123,7 +123,9 @@ public abstract class AbstractLightManager extends AbstractManager
             return s;
         }
         if ( (s = getBySystemName(systemName)) != null) {
-            if (userName != null) log.warn("Found sensor via system name ("+systemName
+			if ((s.getUserName() == null) && (userName != null))
+				s.setUserName(userName);
+            else if (userName != null) log.warn("Found light via system name ("+systemName
                                     +") with non-null user name ("+userName+")");
             return s;
         }
