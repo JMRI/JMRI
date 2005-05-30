@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.20 $
+ * @version	$Revision: 1.21 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -204,6 +204,9 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     protected synchronized AbstractMRMessage pollMessage() {
         // ensure validity of call
         if (numNodes<=0) return null;
+        
+        // move to a new node
+        curSerialNodeIndex ++;
         if (curSerialNodeIndex>=numNodes) {
             curSerialNodeIndex = 0;
         }
@@ -228,18 +231,32 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
             // Some sensors are active for this node, issue poll
             SerialMessage m = SerialMessage.getPoll(
                                 nodeArray[curSerialNodeIndex].getNodeAddress());
-            curSerialNodeIndex ++;
             if (curSerialNodeIndex>=numNodes) curSerialNodeIndex = 0;
             return m;
         }
         else {
             // no Sensors (inputs) are active for this node
-            curSerialNodeIndex ++;
-            if (curSerialNodeIndex==numNodes) curSerialNodeIndex = 0;
             return null;
         }
     }
 
+    protected void handleTimeout(AbstractMRMessage m) {
+        // don't use super behavior, as timeout to init, transmit message is normal
+
+        // inform node, and if it resets then reinitialize        
+        if (nodeArray[curSerialNodeIndex].handleTimeout(m)) 
+            mustInit[curSerialNodeIndex] = true;
+        
+    }
+    
+    protected void resetTimeout(AbstractMRMessage m) {
+        // don't use super behavior, as timeout to init, transmit message is normal
+
+        // and inform node
+        nodeArray[curSerialNodeIndex].resetTimeout(m);
+        
+    }
+    
     protected AbstractMRListener pollReplyHandler() {
         return mSensorManager;
     }

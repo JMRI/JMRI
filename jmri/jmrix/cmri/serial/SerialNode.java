@@ -4,6 +4,7 @@ package jmri.jmrix.cmri.serial;
 
 import jmri.JmriException;
 import jmri.Sensor;
+import jmri.jmrix.AbstractMRMessage;
 
 /**
  * Models a serial C/MRI node, consisting of a (S)USIC and attached cards.
@@ -24,7 +25,7 @@ import jmri.Sensor;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.18 $
+ * @version	$Revision: 1.19 $
  */
 public class SerialNode {
 
@@ -188,6 +189,10 @@ public class SerialNode {
      * Public to reset state of needSend flag.
      */
     public void resetMustSend() { needSend = false; }
+    /**
+     * Public to set state of needSend flag.
+     */
+    public void setMustSend() { needSend = true; }
 
     /**
      * Public method to return number of input cards.
@@ -719,6 +724,33 @@ public class SerialNode {
         }
     }
 
+    int timeout = 0;
+    /**
+     *
+     * @return true if initialization required
+     */
+    boolean handleTimeout(AbstractMRMessage m) {
+        timeout++;
+        // normal to timeout in response to init, output
+        if (m.getElement(1)!=0x50) return false;
+        
+        // see how many polls missed
+        if (log.isDebugEnabled()) log.warn("Timeout to poll for UA="+nodeAddress+": consecutive timeouts: "+timeout);
+        
+        if (timeout>5) { // enough, reinit
+            // reset timeout count to zero to give polls another try
+            timeout = 0;
+            // reset poll and send control so will retry initialization
+            setMustSend();
+            return true;   // tells caller to force init
+        } 
+        else return false;
+    }
+    void resetTimeout(AbstractMRMessage m) {
+        if (timeout>0) log.debug("Reset "+timeout+" timeout count");
+        timeout = 0;
+    }
+    
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SerialNode.class.getName());
 }
 
