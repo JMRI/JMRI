@@ -22,7 +22,7 @@ import javax.swing.JTextField;
  * operation, Value changes before State, so you can assume that Value is stable
  * if notified of a State change.
  * @author			Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class CvValue extends AbstractValue implements ProgListener {
 
@@ -145,6 +145,7 @@ public class CvValue extends AbstractValue implements ProgListener {
 
     public void read(JLabel status) {
         if (log.isDebugEnabled()) log.debug("read call with Cv number "+_num);
+        setToRead(false);
         // get a programmer reference and write
         _status = status;
         if (status != null) status.setText("Reading CV"+_num+"...");
@@ -189,6 +190,7 @@ public class CvValue extends AbstractValue implements ProgListener {
 
     public void write(JLabel status) {
         if (log.isDebugEnabled()) log.debug("write call with Cv number "+_num);
+        setToWrite(false);
         // get a programmer reference and write
         _status = status;
         if (status != null) status.setText("Writing CV"+_num+"...");
