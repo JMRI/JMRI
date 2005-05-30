@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  * ReporterTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class ReporterTableAction extends AbstractTableAction {
@@ -69,6 +69,10 @@ public class ReporterTableAction extends AbstractTableAction {
         		if (col==VALUECOL) return "Report";
         		return super.getColumnName(col);
         	}
+    		public Class getColumnClass(int col) {
+    			if (col==VALUECOL) return String.class;
+    			else return super.getColumnClass(col);
+		    }
     		public void configureTable(JTable table) {
         		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -77,10 +81,6 @@ public class ReporterTableAction extends AbstractTableAction {
 			boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
 				return (e.getPropertyName().indexOf("Report")>=0);
 			}
-    		public boolean isCellEditable(int row, int col) {
-        		if (col==VALUECOL) return false;
-        		return super.isCellEditable(row,col);
-		    }
 			public JButton configureButton() {
 				this.log.error("configureButton should not have been called");
 				return null;

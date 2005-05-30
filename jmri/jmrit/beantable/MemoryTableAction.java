@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  * MemoryTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 public class MemoryTableAction extends AbstractTableAction {
@@ -77,6 +77,10 @@ public class MemoryTableAction extends AbstractTableAction {
         		if (col==VALUECOL) return "Value";
         		return super.getColumnName(col);
         	}
+    		public Class getColumnClass(int col) {
+    			if (col==VALUECOL) return String.class;
+    			else return super.getColumnClass(col);
+		    }
     		public void configureTable(JTable table) {
         		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
