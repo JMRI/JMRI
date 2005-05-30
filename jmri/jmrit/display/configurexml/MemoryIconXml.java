@@ -13,7 +13,7 @@ import com.sun.java.util.collections.List;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class MemoryIconXml implements XmlAdapter {
 
@@ -38,7 +38,8 @@ public class MemoryIconXml implements XmlAdapter {
         element.addAttribute("y", ""+p.getY());
 
         element.addAttribute("class", "jmri.jmrit.display.configurexml.MemoryIconXml");
-        element.addAttribute("defaulticon", p.getDefaultIcon().getName());
+        if (p.getDefaultIcon()!=null)
+            element.addAttribute("defaulticon", p.getDefaultIcon().getName());
 
 		// include contents
 		com.sun.java.util.collections.HashMap map = p.getMap();
