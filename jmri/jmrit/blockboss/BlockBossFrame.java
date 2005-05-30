@@ -30,7 +30,7 @@ import javax.swing.*;
  * The individual items all share data models to simplify the logic.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 public class BlockBossFrame extends JFrame {
@@ -108,8 +108,8 @@ public class BlockBossFrame extends JFrame {
         fFlashBox.setModel(sFlashBox.getModel());
 
         buttonSingle = new JRadioButton("On Single Block");
-        buttonTrailMain = new JRadioButton("On Main Leg of Trailing-Point Turnout");
-        buttonTrailDiv = new JRadioButton("On Diverging Leg of Trailing-Point Turnout");
+        buttonTrailMain = new JRadioButton("Main Leg of Trailing-Point Turnout");
+        buttonTrailDiv = new JRadioButton("Diverging Leg of Trailing-Point Turnout");
         buttonFacing = new JRadioButton("On Facing-Point Turnout");
         ButtonGroup g = new ButtonGroup();
         g.add(buttonSingle);
@@ -233,9 +233,9 @@ public class BlockBossFrame extends JFrame {
         modeTrailMain.add(line);
 
         line = new JPanel();
-        line.add(new JLabel("Protects Against Turnout "));
+        line.add(new JLabel("Red When Turnout "));
         line.add(tmProtectTurnoutField);
-        line.add(new JLabel("Thrown"));
+        line.add(new JLabel("Is Thrown"));
         modeTrailMain.add(line);
 
         line = new JPanel();
@@ -260,9 +260,9 @@ public class BlockBossFrame extends JFrame {
         modeTrailDiv.add(line);
 
         line = new JPanel();
-        line.add(new JLabel("Protects Against Turnout "));
+        line.add(new JLabel("Red When Turnout "));
         line.add(tdProtectTurnoutField);
-        line.add(new JLabel("Closed"));
+        line.add(new JLabel("Is Closed"));
         modeTrailDiv.add(line);
 
         line = new JPanel();
