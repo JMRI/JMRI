@@ -13,11 +13,10 @@ import javax.swing.JPopupMenu;
 /**
  * An icon to display a status of a Memory.<P>
  * <P>
- * The value of the memory can't be changed with this icon; you'll
- * have to subclass to do that.
+ * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -30,7 +29,6 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         // have to do following explicitly, after the ctor
         resetDefaultIcon();
         
-        setMap();
         icon = true;
         text = false;
     }
@@ -88,6 +86,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     // display icons
 
     public void addKeyAndIcon(NamedIcon icon, String keyValue) {
+        if (map == null) setMap(); // initialize if needed
     	map.put(keyValue, icon);
     	// drop size cache
     	height = -1;
@@ -103,10 +102,15 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     protected int maxHeight() {
     	// cached?
     	if (height > 0) return height;
-    	// no, loop to update
-    	if (map == null) setMap();
+    	// no, start with default icon size
     	if (defaultIcon == null) resetDefaultIcon();
     	height = defaultIcon.getIconHeight();
+    	
+    	// include the text if any
+    	height = Math.max(height, (new javax.swing.JLabel(this.getText())).getPreferredSize().height);
+
+    	// if there's a map of alternate icons, use largest
+    	if (map == null) return height;
     	com.sun.java.util.collections.Collection collection = map.values();
     	com.sun.java.util.collections.Iterator iterator = collection.iterator();
     	while (iterator.hasNext()) {
@@ -126,9 +130,15 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     	// cached?
     	if (width > 0) return width;
     	// no, loop to update
-    	if (map == null) setMap();
     	if (defaultIcon == null) resetDefaultIcon();
     	width = defaultIcon.getIconWidth();
+    	
+    	// include the text if any
+    	width = Math.max(width, (new javax.swing.JLabel(this.getText())).getPreferredSize().width);
+
+    	if (map == null) return width;
+
+    	// if there's a map of alternate icons, use largest
     	com.sun.java.util.collections.Collection collection = map.values();
     	com.sun.java.util.collections.Iterator iterator = collection.iterator();
     	while (iterator.hasNext()) {
@@ -203,23 +213,66 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
      */
     void displayState() {
         log.debug("displayState");
-    	if (memory == null) {
+    	if (memory == null) {  // use default if not connected yet
     		setIcon(defaultIcon);
+    		updateSize();
     		return;
     	}
-        updateSize();
 		Object key = memory.getValue();
 		if (key != null) {
-			NamedIcon icon = (NamedIcon) map.get(key.toString());
-			if (icon!=null) {
-				super.setIcon(icon);
-				return;
-			}
-		}
-		// if fall through to here, set icon to default.
-		super.setIcon(defaultIcon);
+		    if (map == null) {
+		        // no map, attempt to show object directly
+                Object val = memory.getValue();
+                if (val instanceof String) {
+                    setText((String) memory.getValue());
+                    setIcon(null);
+                    text = true;
+                    icon = false;
+    		        updateSize();
+                    return;
+                } else if (val instanceof javax.swing.ImageIcon) {
+                    setIcon((javax.swing.ImageIcon) memory.getValue());
+                    setText(null);
+                    text = false;
+                    icon = true;
+    		        updateSize();
+                    return;
+                } else log.warn("can't display current value of "+memory.getSystemName());
+		    } else {
+		        // map exists, use it
+			    NamedIcon newicon = (NamedIcon) map.get(key.toString());
+			    if (newicon!=null) {
+                    setText(null);
+				    super.setIcon(newicon);
+                    text = false;
+                    icon = true;
+    		        updateSize();
+				    return;
+			    } else {
+			        // no match, use default
+		            setIcon(defaultIcon);
+                    setText(null);
+                    text = false;
+                    icon = true;
+    		        updateSize();
+			    }
+		    }
+		} else {
+		    // If fall through to here, no Memory value, set icon to default.
+		    setIcon(defaultIcon);
+            setText(null);
+            text = false;
+            icon = true;
+    		updateSize();
+        }
     }
 
+    public void updateSize() {
+    	height = -1;
+    	width = -1;
+        super.updateSize();
+    }
+    
     /**
      * Clicks are ignored
      * @param e
