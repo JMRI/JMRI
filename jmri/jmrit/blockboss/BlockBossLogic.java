@@ -19,19 +19,22 @@ import java.util.Hashtable;
  * <OL>
  * <LI>SIMPLEBLOCK - A simple block, without a turnout.
  * <LI>TRAILINGMAIN - This signal is protecting a trailing point turnout,
- * which can only be passed when the turnout is closed.
+ * which can only be passed when the turnout is closed. It can also be used
+ * for the upper head of a two head signal on the facing end of the turnout.
  * <LI>TRAILINGDIVERGING - This signal is protecting a trailing point turnout,
- * which can only be passed when the turnout is thrown.
+ * which can only be passed when the turnout is thrown. It can also be used
+ * for the lower head of a two head signal on the facing end of the turnout.
  * <LI>FACING - This signal protects a facing point turnout, which
  * may therefore have two next signals for the closed and thrown
  * states of the turnout.
  * </OL><P>
  * Note that these four possibilities logically require that certain
  * information be configured consistently; e.g. not specifying a turnout
- * in TRAILINGMAIN doesn't make any sense.
+ * in TRAILINGMAIN doesn't make any sense. That's not enforced explicitly, 
+ * but violating it can result in confusing behavior.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 
 public class BlockBossLogic extends Siglet {
@@ -451,6 +454,9 @@ public class BlockBossLogic extends Siglet {
         }
     }
 
+    /**
+     * Ensure that this BlockBossLogic object is available for later retrieval
+     */
     public void retain() {
         smap.put(driveSignal.getSystemName(), this);
         if (driveSignal.getUserName()!=null)
