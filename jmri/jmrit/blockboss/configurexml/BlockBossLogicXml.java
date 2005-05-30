@@ -10,8 +10,8 @@ import org.jdom.Element;
 /**
  * Handle XML persistance of Simple Signal Logic objects.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.3 $
+ * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2005
+ * @version $Revision: 1.4 $
  */
 public class BlockBossLogicXml implements XmlAdapter {
 
@@ -53,8 +53,14 @@ public class BlockBossLogicXml implements XmlAdapter {
             if (p.getWatchedSignal1()!=null) {
                 block.addAttribute("watchedsignal1", p.getWatchedSignal1());
             }
+             if (p.getWatchedSignal1Alt()!=null) {
+                block.addAttribute("watchedsignal1alt", p.getWatchedSignal1Alt());
+            }
             if (p.getWatchedSignal2()!=null) {
                 block.addAttribute("watchedsignal2", p.getWatchedSignal2());
+            }
+           if (p.getWatchedSignal2Alt()!=null) {
+                block.addAttribute("watchedsignal2alt", p.getWatchedSignal2Alt());
             }
             block.addAttribute("useflashyellow", ""+p.getUseFlash());
             blocks.addContent(block);
@@ -95,8 +101,12 @@ public class BlockBossLogicXml implements XmlAdapter {
                 if (block.getAttribute("watchedsignal1")!=null)
                     bb.setWatchedSignal1(block.getAttributeValue("watchedsignal1"),
                                         block.getAttribute("useflashyellow").getBooleanValue());
+                if (block.getAttribute("watchedsignal1alt")!=null)
+                    bb.setWatchedSignal1Alt(block.getAttributeValue("watchedsignal1alt"));
                 if (block.getAttribute("watchedsignal2")!=null)
                     bb.setWatchedSignal2(block.getAttributeValue("watchedsignal2"));
+                if (block.getAttribute("watchedsignal2alt")!=null)
+                    bb.setWatchedSignal2Alt(block.getAttributeValue("watchedsignal2alt"));
             } catch (org.jdom.DataConversionException e) {
                 log.warn("error reading blocks from file"+e);
             }
