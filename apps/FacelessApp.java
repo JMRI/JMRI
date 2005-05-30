@@ -10,8 +10,8 @@ import java.io.File;
 /**
  * A simple example of a "Faceless" (no gui) application
  * <P>
- * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.1 $
+ * @author	Bob Jacobsen   Copyright 2003, 2005
+ * @version     $Revision: 1.2 $
  */
 public class FacelessApp {
 	static String name = "Faceless App";
@@ -25,6 +25,10 @@ public class FacelessApp {
         new FacelessApp(args);   // start the application class itself
 
         log.info("main initialization done");
+        
+        // You could put your own code here,
+        // for example.  The layout connection
+        // is working at this point.
     }
 
 	/**
@@ -74,26 +78,6 @@ public class FacelessApp {
     }
 
 
-	/**
-	 * Decide the configuration file name based on program arguments
-	 * and a default value.
-	 * <P>
-	 * If there is an argument present, its used as the 
-	 * configuration file name in the preferences directory, 
-	 * otherwise the default filename is used.
-	 *
-	 */
-    protected void setConfigFilename(String def, String args[]) {
-        // save the configuration filename if present on the command line
-        if (args.length>=1 && args[0]!=null) {
-            configFilename = args[0];
-            log.info("Config file was specified as: "+configFilename);
-        } else{
-            configFilename = def;
-        }
-    }
-
-
 	protected void codeConfig(String[] args) {
 		jmri.jmrix.SerialPortAdapter adapter =  jmri.jmrix.lenz.li100.LI100Adapter.instance();
 
@@ -109,22 +93,12 @@ public class FacelessApp {
 
 		adapter.openPort(portName, "JMRI app");
         adapter.configure();
+
+        InstanceManager.setConfigureManager(new jmri.configurexml.ConfigXmlManager());
+
+
 	}
 	
-    protected void loadFile(){
-        if (configFilename != null) {
-            log.debug("configure from specified file "+configFilename);
-        } else {
-            configFilename = "jmriprefs.xml";
-            log.debug("configure from default file "+configFilename);
-        }
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-        File file = new File(XmlFile.prefsDir()+configFilename);
-        InstanceManager.setConfigureManager(new jmri.configurexml.ConfigXmlManager());
-        InstanceManager.configureManagerInstance().load(file);
-    }
-
-    protected String configFilename = null;
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(FacelessApp.class.getName());
 }
