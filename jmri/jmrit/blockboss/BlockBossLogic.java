@@ -17,7 +17,7 @@ import java.util.Hashtable;
  * <P>
  * There are four situations that this logic can handle:
  * <OL>
- * <LI>SIMPLEBLOCK - a simple block, without a turnout.
+ * <LI>SIMPLEBLOCK - A simple block, without a turnout.
  * <LI>TRAILINGMAIN - This signal is protecting a trailing point turnout,
  * which can only be passed when the turnout is closed.
  * <LI>TRAILINGDIVERGING - This signal is protecting a trailing point turnout,
@@ -30,8 +30,8 @@ import java.util.Hashtable;
  * information be configured consistently; e.g. not specifying a turnout
  * in TRAILINGMAIN doesn't make any sense.
  *
- * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.8 $
+ * @author	Bob Jacobsen    Copyright (C) 2003, 2005
+ * @version     $Revision: 1.9 $
  */
 
 public class BlockBossLogic extends Siglet {
@@ -148,6 +148,7 @@ public class BlockBossLogic extends Siglet {
     public int getMode() {
         return mode;
     }
+    
     public void setWatchedSignal1(String name, boolean useFlash) {
         if (name == null || name.equals("")) {
             watchedSignal1 = null;
@@ -158,7 +159,7 @@ public class BlockBossLogic extends Siglet {
         protectWithFlashing = useFlash;
     }
     /**
-     * Return the system name of the primary signal being monitored
+     * Return the system name of the signal being monitored for first route
      * @return system name; null if no primary signal configured
      */
     public String getWatchedSignal1() {
@@ -166,8 +167,21 @@ public class BlockBossLogic extends Siglet {
         return watchedSignal1.getSystemName();
     }
 
-    public boolean getUseFlash() {
-        return protectWithFlashing;
+    public void setWatchedSignal1Alt(String name) {
+        if (name == null || name.equals("")) {
+            watchedSignal1Alt = null;
+            return;
+        }
+        watchedSignal1Alt = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
+        if (watchedSignal1Alt == null) log.warn("Signal "+name+" was not found!");
+    }
+    /**
+     * Return the system name of the alternate signal being monitored for first route
+     * @return system name; null if no signal configured
+     */
+    public String getWatchedSignal1Alt() {
+        if (watchedSignal1Alt == null) return null;
+        return watchedSignal1Alt.getSystemName();
     }
 
     public void setWatchedSignal2(String name) {
@@ -179,12 +193,33 @@ public class BlockBossLogic extends Siglet {
         if (watchedSignal2 == null) log.warn("Signal "+name+" was not found!");
     }
     /**
-     * Return the system name of the secondary signal being monitored
-     * @return system name; null if no secondary signal configured
+     * Return the system name of the signal being monitored for the 2nd route
+     * @return system name; null if no signal configured
      */
     public String getWatchedSignal2() {
         if (watchedSignal2 == null) return null;
         return watchedSignal2.getSystemName();
+    }
+
+    public void setWatchedSignal2Alt(String name) {
+        if (name == null || name.equals("")) {
+            watchedSignal2Alt = null;
+            return;
+        }
+        watchedSignal2Alt = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
+        if (watchedSignal2Alt == null) log.warn("Signal "+name+" was not found!");
+    }
+    /**
+     * Return the system name of the secondary signal being monitored for the 2nd route
+     * @return system name; null if no secondary signal configured
+     */
+    public String getWatchedSignal2Alt() {
+        if (watchedSignal2Alt == null) return null;
+        return watchedSignal2Alt.getSystemName();
+    }
+
+    public boolean getUseFlash() {
+        return protectWithFlashing;
     }
 
     String name;
@@ -195,7 +230,9 @@ public class BlockBossLogic extends Siglet {
     Sensor watchSensor4 = null;
     Turnout watchTurnout = null;
     SignalHead watchedSignal1 = null;
+    SignalHead watchedSignal1Alt = null;
     SignalHead watchedSignal2 = null;
+    SignalHead watchedSignal2Alt = null;
     boolean protectWithFlashing = false;
 
     /**
@@ -230,8 +267,16 @@ public class BlockBossLogic extends Siglet {
             tempArray[n]= watchedSignal1;
             n++;
         }
+        if (watchedSignal1Alt != null) {
+            tempArray[n]= watchedSignal1Alt;
+            n++;
+        }
         if (watchedSignal2 != null) {
             tempArray[n]= watchedSignal2;
+            n++;
+        }
+        if (watchedSignal2Alt != null) {
+            tempArray[n]= watchedSignal2Alt;
             n++;
         }
 
@@ -267,13 +312,47 @@ public class BlockBossLogic extends Siglet {
         }
     }
 
+    int fastestColor1() {
+        int result = SignalHead.RED;
+        // special case:  GREEN if no next signal
+        if (watchedSignal1==null && watchedSignal1Alt==null ) 
+            result = SignalHead.GREEN;
+        
+        if (watchedSignal1!=null && watchedSignal1.getAppearance()==SignalHead.YELLOW)
+            result = SignalHead.YELLOW;
+        if (watchedSignal1Alt!=null && watchedSignal1Alt.getAppearance()==SignalHead.YELLOW)
+            result = SignalHead.YELLOW;
+        if (watchedSignal1!=null && watchedSignal1.getAppearance()==SignalHead.GREEN)
+            result = SignalHead.GREEN;
+        if (watchedSignal1Alt!=null && watchedSignal1Alt.getAppearance()==SignalHead.GREEN)
+            result = SignalHead.GREEN;
+        return result;
+    }
+    
+    int fastestColor2() {
+        int result = SignalHead.RED;
+        // special case:  GREEN if no next signal
+        if (watchedSignal2==null && watchedSignal2Alt==null ) 
+            result = SignalHead.GREEN;
+
+        if (watchedSignal2!=null && watchedSignal2.getAppearance()==SignalHead.YELLOW)
+            result = SignalHead.YELLOW;
+        if (watchedSignal2Alt!=null && watchedSignal2Alt.getAppearance()==SignalHead.YELLOW)
+            result = SignalHead.YELLOW;
+        if (watchedSignal2!=null && watchedSignal2.getAppearance()==SignalHead.GREEN)
+            result = SignalHead.GREEN;
+        if (watchedSignal2Alt!=null && watchedSignal2Alt.getAppearance()==SignalHead.GREEN)
+            result = SignalHead.GREEN;
+        return result;
+    }
+    
     void doSingleBlock() {
         int appearance = SignalHead.GREEN;
         int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
         // check for yellow, flashing yellow overriding green
-        if (watchedSignal1!=null && protectWithFlashing && watchedSignal1.getAppearance()==SignalHead.YELLOW)
+        if (protectWithFlashing && fastestColor1()==SignalHead.YELLOW)
             appearance = SignalHead.FLASHYELLOW;
-        if (watchedSignal1!=null && watchedSignal1.getAppearance()==SignalHead.RED)
+        if (fastestColor1()==SignalHead.RED)
             appearance = SignalHead.YELLOW;
 
         // check for red overriding yellow or green
@@ -291,9 +370,9 @@ public class BlockBossLogic extends Siglet {
         int appearance = SignalHead.GREEN;
         int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
         // check for yellow, flashing yellow overriding green
-        if (watchedSignal1!=null && protectWithFlashing && watchedSignal1.getAppearance()==SignalHead.YELLOW)
+        if (protectWithFlashing && fastestColor1()==SignalHead.YELLOW)
             appearance = SignalHead.FLASHYELLOW;
-        if (watchedSignal1!=null && watchedSignal1.getAppearance()==SignalHead.RED)
+        if (fastestColor1()==SignalHead.RED)
             appearance = SignalHead.YELLOW;
 
         // check for red overriding yellow or green
@@ -313,9 +392,9 @@ public class BlockBossLogic extends Siglet {
         int appearance = SignalHead.GREEN;
         int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
         // check for yellow, flashing yellow overriding green
-        if (watchedSignal1!=null && protectWithFlashing && watchedSignal1.getAppearance()==SignalHead.YELLOW)
+        if (protectWithFlashing && fastestColor1()==SignalHead.YELLOW)
             appearance = SignalHead.FLASHYELLOW;
-        if (watchedSignal1!=null && watchedSignal1.getAppearance()==SignalHead.RED)
+        if (fastestColor1()==SignalHead.RED)
             appearance = SignalHead.YELLOW;
 
         // check for red overriding yellow or green

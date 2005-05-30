@@ -29,8 +29,8 @@ import javax.swing.*;
  * the code just flips from one to the other as the user selects a mode.
  * The individual items all share data models to simplify the logic.
  *
- * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.3 $
+ * @author	Bob Jacobsen    Copyright (C) 2003, 2005
+ * @version     $Revision: 1.4 $
  */
 
 public class BlockBossFrame extends JFrame {
@@ -42,6 +42,7 @@ public class BlockBossFrame extends JFrame {
     JTextField sSensorField3        = new JTextField(6);
     JTextField sSensorField4        = new JTextField(6);
     JTextField sNextSignalField1    = new JTextField(6);
+    JTextField sNextSignalField1Alt = new JTextField(6);
     JCheckBox sFlashBox;
 
     JPanel modeTrailMain                = new JPanel();
@@ -52,6 +53,7 @@ public class BlockBossFrame extends JFrame {
     JTextField tmSensorField4           = new JTextField(6);
     JTextField tmProtectTurnoutField    = new JTextField(6);
     JTextField tmNextSignalField1       = new JTextField(6);
+    JTextField tmNextSignalField1Alt    = new JTextField(6);
     JCheckBox tmFlashBox;
 
     JPanel modeTrailDiv                 = new JPanel();
@@ -62,6 +64,7 @@ public class BlockBossFrame extends JFrame {
     JTextField tdSensorField4           = new JTextField(6);
     JTextField tdProtectTurnoutField    = new JTextField(6);
     JTextField tdNextSignalField1       = new JTextField(6);
+    JTextField tdNextSignalField1Alt    = new JTextField(6);
     JCheckBox tdFlashBox;
 
     JPanel modeFacing               = new JPanel();
@@ -72,7 +75,9 @@ public class BlockBossFrame extends JFrame {
     JTextField fSensorField4        = new JTextField(6);
     JTextField fProtectTurnoutField = new JTextField(6);
     JTextField fNextSignalField1    = new JTextField(6);
+    JTextField fNextSignalField1Alt = new JTextField(6);
     JTextField fNextSignalField2    = new JTextField(6);
+    JTextField fNextSignalField2Alt = new JTextField(6);
     JCheckBox fFlashBox;
 
     JTextField outSignalField;
@@ -143,8 +148,11 @@ public class BlockBossFrame extends JFrame {
         fProtectTurnoutField.setDocument(tmProtectTurnoutField.getDocument());
 
         tdNextSignalField1.setDocument(sNextSignalField1.getDocument());
+        tdNextSignalField1Alt.setDocument(sNextSignalField1Alt.getDocument());
         tmNextSignalField1.setDocument(sNextSignalField1.getDocument());
+        tmNextSignalField1Alt.setDocument(sNextSignalField1Alt.getDocument());
         fNextSignalField1.setDocument(sNextSignalField1.getDocument());
+        fNextSignalField1Alt.setDocument(sNextSignalField1Alt.getDocument());
 
         // add top part of GUI, holds signal head name to drive
         JPanel line = new JPanel();
@@ -206,6 +214,7 @@ public class BlockBossFrame extends JFrame {
         line = new JPanel();
         line.add(new JLabel("Protects Signal "));
         line.add(sNextSignalField1);
+        line.add(sNextSignalField1Alt);
         line.add(sFlashBox);
         modeSingle.add(line);
 
@@ -232,6 +241,7 @@ public class BlockBossFrame extends JFrame {
         line = new JPanel();
         line.add(new JLabel("Protects Signal "));
         line.add(tmNextSignalField1);
+        line.add(tmNextSignalField1Alt);
         line.add(tmFlashBox);
         modeTrailMain.add(line);
 
@@ -258,6 +268,7 @@ public class BlockBossFrame extends JFrame {
         line = new JPanel();
         line.add(new JLabel("Protects Signal "));
         line.add(tdNextSignalField1);
+        line.add(tdNextSignalField1Alt);
         line.add(tdFlashBox);
         modeTrailDiv.add(line);
 
@@ -283,12 +294,14 @@ public class BlockBossFrame extends JFrame {
         line = new JPanel();
         line.add(new JLabel("To Protect Signal "));
         line.add(fNextSignalField1);
+        line.add(fNextSignalField1Alt);
         line.add(new JLabel("When Turnout is Closed"));
          modeFacing.add(line);
 
         line = new JPanel();
         line.add(new JLabel("And Protect Signal "));
         line.add(fNextSignalField2);
+        line.add(fNextSignalField2Alt);
         line.add(new JLabel("When Turnout is Thrown"));
         modeFacing.add(line);
 
@@ -323,6 +336,7 @@ public class BlockBossFrame extends JFrame {
         b.setMode(BlockBossLogic.SINGLEBLOCK);
 
         b.setWatchedSignal1(sNextSignalField1.getText(), sFlashBox.isSelected());
+        b.setWatchedSignal1Alt(sNextSignalField1Alt.getText());
         b.retain();
         b.start();
     }
@@ -337,6 +351,7 @@ public class BlockBossFrame extends JFrame {
         b.setTurnout(tmProtectTurnoutField.getText());
 
         b.setWatchedSignal1(tmNextSignalField1.getText(), tmFlashBox.isSelected());
+        b.setWatchedSignal1Alt(tmNextSignalField1Alt.getText());
         b.retain();
         b.start();
     }
@@ -350,6 +365,7 @@ public class BlockBossFrame extends JFrame {
         b.setTurnout(tdProtectTurnoutField.getText());
 
         b.setWatchedSignal1(tdNextSignalField1.getText(), tdFlashBox.isSelected());
+        b.setWatchedSignal1Alt(tdNextSignalField1Alt.getText());
         b.retain();
         b.start();
     }
@@ -363,7 +379,9 @@ public class BlockBossFrame extends JFrame {
         b.setTurnout(fProtectTurnoutField.getText());
 
         b.setWatchedSignal1(fNextSignalField1.getText(), fFlashBox.isSelected());
+        b.setWatchedSignal1Alt(fNextSignalField1Alt.getText());
         b.setWatchedSignal2(fNextSignalField2.getText());
+        b.setWatchedSignal2Alt(fNextSignalField2Alt.getText());
         b.retain();
         b.start();
     }
@@ -380,8 +398,10 @@ public class BlockBossFrame extends JFrame {
         tmProtectTurnoutField.setText(b.getTurnout());
 
         sNextSignalField1.setText(b.getWatchedSignal1());
+        sNextSignalField1Alt.setText(b.getWatchedSignal1Alt());
 
         fNextSignalField2.setText(b.getWatchedSignal2());
+        fNextSignalField2Alt.setText(b.getWatchedSignal2Alt());
 
         sFlashBox.setSelected(b.getUseFlash());
 
