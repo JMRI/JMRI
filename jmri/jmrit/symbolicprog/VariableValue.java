@@ -19,7 +19,7 @@ import java.awt.Color;
  * should handle this object.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2004, 2005
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  *
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
@@ -167,6 +167,27 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
         _state = state;
     }
     private int _state = UNKNOWN;
+
+    /**
+     * Simple implementation for the case of a single CV. Intended
+     * to be sufficient for many subclasses.
+     */
+    public void setToRead(boolean state) { ((CvValue)_cvVector.elementAt(getCvNum())).setToRead(state); }
+    /**
+     * Simple implementation for the case of a single CV. Intended
+     * to be sufficient for many subclasses.
+     */
+    public boolean isToRead() { return ((CvValue)_cvVector.elementAt(getCvNum())).isToRead(); }
+    /**
+     * Simple implementation for the case of a single CV. Intended
+     * to be sufficient for many subclasses.
+     */
+    public void setToWrite(boolean state) { ((CvValue)_cvVector.elementAt(getCvNum())).setToWrite(state); }
+    /**
+     * Simple implementation for the case of a single CV. Intended
+     * to be sufficient for many subclasses.
+     */
+    public boolean isToWrite() { return ((CvValue)_cvVector.elementAt(getCvNum())).isToWrite(); }
 
     /**
      * Propogate a state change here to the CVs that are related, which will
