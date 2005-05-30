@@ -26,7 +26,7 @@ import com.sun.java.util.collections.LinkedList;
  * and the port is waiting to do something.
  *
  * @author			Bob Jacobsen  Copyright (C) 2003
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  */
 abstract public class AbstractMRTrafficController {
 
@@ -256,8 +256,11 @@ abstract public class AbstractMRTrafficController {
                         xmtRunnable.wait(m.getTimeout());
                     }
                 } catch (InterruptedException e) { log.error("transmitLoop interrupted"); }
-                if (mCurrentState == WAITMSGREPLYSTATE)
-                    log.warn("Timeout on reply to message: "+m.toString());
+                if (mCurrentState == WAITMSGREPLYSTATE) {
+                    handleTimeout(m);
+                } else {
+                    resetTimeout(m);
+                }
             } else {
                 // nothing to do
                 if (mCurrentState!=IDLESTATE) log.debug("Setting IDLESTATE");
@@ -303,6 +306,11 @@ abstract public class AbstractMRTrafficController {
                                 }
                             } catch (InterruptedException e) { log.error("interrupted while leaving programming mode"); }
                             // and go around again
+                            if (mCurrentState == WAITMSGREPLYSTATE) {
+                                handleTimeout(msg);
+                            } else {
+                                resetTimeout(msg);
+                            }
                        } else {
                             // no, just wait
                         }
@@ -312,6 +320,17 @@ abstract public class AbstractMRTrafficController {
         }   // end of permanent loop; go around again
     }
 
+    private int timeouts = 0;
+    protected void handleTimeout(AbstractMRMessage msg) {
+        log.warn("Timeout on reply to message: "+msg.toString()+
+                " consecutive="+timeouts);
+        timeouts++;
+    }
+    protected void resetTimeout(AbstractMRMessage msg) {
+        if (timeouts>0) log.debug("Reset timeout after "+timeouts+" timeouts");
+        timeouts=0;
+    }
+    
     /**
      * Add header to the outgoing byte stream.
      * @param msg  The output byte stream
