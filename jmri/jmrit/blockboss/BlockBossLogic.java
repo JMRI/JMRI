@@ -33,8 +33,13 @@ import java.util.Hashtable;
  * in TRAILINGMAIN doesn't make any sense. That's not enforced explicitly, 
  * but violating it can result in confusing behavior.
  *
+ * <P>
+ * The "hold" unbound parameter can be used to set this 
+ * logic to show red, regardless of input.  That's intended for
+ * use with CTC logic, etc.
+ *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 
 public class BlockBossLogic extends Siglet {
@@ -225,6 +230,13 @@ public class BlockBossLogic extends Siglet {
         return protectWithFlashing;
     }
 
+    boolean mHold = false;
+    public boolean getHold() {return mHold;}
+    public void setHold(boolean m) { 
+        mHold = m;
+        setOutput();  // to invoke the new state
+    }
+    
     String name;
     SignalHead driveSignal = null;
     Sensor watchSensor1 = null;
@@ -296,7 +308,16 @@ public class BlockBossLogic extends Siglet {
      * and apply it.
      */
     public void setOutput() {
+        // make sure init is complete
+        if ( (outputs == null) || (outputs[0]==null) ) return;
 
+        // if "hold" is true, must show red
+        if (getHold()) {
+            ((SignalHead)outputs[0]).setAppearance(SignalHead.RED);
+            return;
+        }
+        
+        // otherwise, process algorithm
         switch (mode) {
         case SINGLEBLOCK:
             doSingleBlock();
