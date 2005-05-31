@@ -23,13 +23,16 @@ import javax.swing.table.*;
 
 import com.sun.java.util.collections.List;
 
+import jmri.util.com.sun.Comparator;
+
+
 /**
  * Swing action to create and register a Route Table
  
  * Based in part on SignalHeadTableAction.java by Bob Jacobson
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 
 public class RouteTableAction extends AbstractTableAction {

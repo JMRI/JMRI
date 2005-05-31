@@ -16,11 +16,14 @@ import java.awt.event.ActionEvent;
 import jmri.util.JTableUtil;
 import jmri.util.com.sun.TableSorter;
 
+import jmri.util.com.sun.Comparator;
+
+
 /**
  * Frame providing a table of NamedBeans.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class BeanTableFrame extends javax.swing.JFrame {
 
