@@ -14,7 +14,7 @@ import javax.swing.*;
  * stored in two arrays for simplicity.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  *
  */
 public class ShortAddrVariableValue extends DecVariableValue {
@@ -54,9 +54,9 @@ public class ShortAddrVariableValue extends DecVariableValue {
             if (cvNumbers[i]!=cv.number())
                 log.error("CV numbers don't match: "
                           +cvNumbers[i]+" "+cv.number());
-            if (cv!=null && cv.getValue()!=newValues[i]
-                && cv.getState()!=CvValue.EDITED)
-                cv.setState(CvValue.EDITED);
+            cv.setToWrite(true);
+            cv.setState(EDITED);
+            System.out.println("Mark to write "+cv.number());
         }
     }
     
@@ -65,8 +65,17 @@ public class ShortAddrVariableValue extends DecVariableValue {
     int[] cvNumbers = new int[maxCVs];
     int[] newValues = new int[maxCVs];
     
-    public void write() {
-        if (getReadOnly()) log.error("unexpected write operation when readOnly is set");
+    public void writeChanges() {
+        if (getReadOnly()) log.error("unexpected writeChanges operation when readOnly is set");
+        setBusy(true);  // will be reset when value changes
+        // mark other CVs as possibly needing write
+        updateCvForAddrChange();
+        // and change the value of this one
+        ((CvValue)_cvVector.elementAt(getCvNum())).write(_status);
+    }
+
+    public void writeAll() {
+        if (getReadOnly()) log.error("unexpected writeAll operation when readOnly is set");
         setBusy(true);  // will be reset when value changes
         // mark other CVs as possibly needing write
         updateCvForAddrChange();
