@@ -58,7 +58,7 @@ import com.sun.java.util.collections.List;   // resolve ambiguity with package-l
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005
  * @author  D Miller Copyright 2003
- * @version	$Revision: 1.39 $
+ * @version	$Revision: 1.40 $
  * @see jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -1314,17 +1314,25 @@ public class PaneProgPane extends javax.swing.JPanel
         panelList.add(l);
         // make sure this will get read/written, even if real vars not on pane
         int iVar;
-        iVar = _varModel.findVarIndex("Address Format");
-        if (iVar>=0) varList.add(new Integer(iVar));
-        else log.debug("addDccAddressPanel did not find Address Format");
 
+        // note we want Short Address first, as it might change others
         iVar = _varModel.findVarIndex("Short Address");
         if (iVar>=0) varList.add(new Integer(iVar));
         else log.debug("addDccAddressPanel did not find Short Address");
 
+        iVar = _varModel.findVarIndex("Address Format");
+        if (iVar>=0) varList.add(new Integer(iVar));
+        else log.debug("addDccAddressPanel did not find Address Format");
+
         iVar = _varModel.findVarIndex("Long Address");
         if (iVar>=0) varList.add(new Integer(iVar));
         else log.debug("addDccAddressPanel did not find Long Address");
+
+        // included here because CV1 can modify it, even if it doesn't show on pane;
+        iVar = _varModel.findVarIndex("Consist Address");
+        if (iVar>=0) varList.add(new Integer(iVar));
+        else log.debug("addDccAddressPanel did not find CV19 Consist Address");
+
         return l;
     }
 
