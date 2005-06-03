@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <!--Written by JMRI version 1.5.7 on Thu Jun 02 23:53:49 PDT 2005 $Id: decoderIndex.xml,v 1.76 2005-06-03 13:26:21 jacobsen Exp $-->
+  <!--Written by JMRI version 1.5.7 on Thu Jun 02 23:53:49 PDT 2005 $Id: decoderIndex.xml,v 1.77 2005-06-03 14:20:52 jacobsen Exp $-->
   <decoderIndex version="94">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
