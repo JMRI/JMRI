@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <!--Written by JMRI version 1.5.6 on Sat Jan 01 22:14:06 PST 2005 $Id: decoderIndex.xml,v 1.75 2005-01-02 21:17:05 jacobsen Exp $-->
-  <decoderIndex version="92">
+  <!--Written by JMRI version 1.5.7 on Thu Jun 02 23:53:49 PDT 2005 $Id: decoderIndex.xml,v 1.76 2005-06-03 13:26:21 jacobsen Exp $-->
+  <decoderIndex version="94">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
+      <manufacturer mfg="" mfgID="" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
+      <manufacturer mfg="AMW" mfgID="19" />
+      <manufacturer mfg="Advanced IC Engineering, Inc." mfgID="17" />
       <manufacturer mfg="Arnold" mfgID="173" />
       <manufacturer mfg="Atlas" mfgID="127" />
       <manufacturer mfg="AuroTrains" mfgID="170" />
@@ -25,8 +28,10 @@
       <manufacturer mfg="Gebr. Fleishmann GmbH Co." mfgID="155" />
       <manufacturer mfg="Haber and Koenig Electronics GmbH" mfgID="111" />
       <manufacturer mfg="Intelligent Command Control" mfgID="133" />
+      <manufacturer mfg="JMRI" mfgID="18" />
       <manufacturer mfg="Kuehn Ing." mfgID="157" />
       <manufacturer mfg="LGB" mfgID="159" />
+      <manufacturer mfg="Lahti Associates" mfgID="14" />
       <manufacturer mfg="Lenz" mfgID="99" />
       <manufacturer mfg="MAWE Elektronik" mfgID="68" />
       <manufacturer mfg="MERG" mfgID="165" />
@@ -47,6 +52,7 @@
       <manufacturer mfg="Roco Modelspielwaren" mfgID="161" />
       <manufacturer mfg="Sanda Kan Industrial" mfgID="95" />
       <manufacturer mfg="Signalinng Solution" mfgID="119" />
+      <manufacturer mfg="Tams Elektronik GmbH" mfgID="62" />
       <manufacturer mfg="Throttle-Up (SoundTraxx)" mfgID="141" />
       <manufacturer mfg="Train Control Systems" mfgID="153" />
       <manufacturer mfg="Trix Modelleisenbahn" mfgID="131" />
@@ -78,8 +84,14 @@
       <family name="Dual Mode" mfg="Atlas" lowVersionID="45" highVersionID="45" type="locomotive" file="Atlas_DualMode.xml">
         <model model="Dual Mode" numOuts="2" numFns="0" connector="unspecified" nmraWarrant="no" />
       </family>
+      <family name="Atlas N-Scale" mfg="Atlas" lowVersionID="46" highVersionID="46" type="locomotive" file="Atlas_VO1000.xml">
+        <model model="VO1000" numOuts="2" numFns="0" lowVersionID="46" highVersionID="46" connector="unspecified" nmraWarrant="no" />
+      </family>
       <family name="Bachmann E-Z Command decoders" mfg="Bachmann Trains" type="locomotive" file="Bachmann_EZDCC.xml">
         <model model="E-Z Command Locomotives" numOuts="2" numFns="0" lowVersionID="46" nmraWarrant="yes" connector="unspecified" />
+      </family>
+      <family name="Bachmann 4-function decoders" mfg="Bachmann Trains" type="locomotive" file="Bachmann_EZDCC_4fn.xml">
+        <model model="Bachmann 4-function decoders" numOuts="4" numFns="8" connector="unspecified" nmraWarrant="no" />
       </family>
       <family name="Function Decoder" mfg="CT Elektronik" type="locomotive" file="CT_Elektronik_DCX_30_V.xml">
         <model model="DCX30" numOuts="8" numFns="6" maxMotorCurrent="0.8 Amp per group" maxTotalCurrent="1.6 Amp" connector="unspecified" nmraWarrant="no">
@@ -275,6 +287,12 @@
           <output name="6" label="Pad" connection="solder" />
           <size length="3.875" width="3.374" height="0.157" units="inches" />
         </model>
+        <model model="DN163I0" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" connector="unspecified" nmraWarrant="no">
+          <output name="4" label="Pad" connection="solder" />
+          <output name="5" label="Pad" connection="solder" />
+          <output name="6" label="Pad" connection="solder" />
+          <size length="3.0015" width="0.374" height="0.157" units="inches" />
+        </model>
         <model model="DN163K0A" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" connector="unspecified" nmraWarrant="no">
           <output name="4" label="Pad" connection="solder" />
           <output name="5" label="Pad" connection="solder" />
@@ -288,6 +306,12 @@
           <size length="2.2165" width="0.5485" height="0.1015" units="inches" />
         </model>
         <model model="DN163K1A" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" connector="unspecified" nmraWarrant="no">
+          <output name="4" label="Pad" connection="solder" />
+          <output name="5" label="Pad" connection="solder" />
+          <output name="6" label="Pad" connection="solder" />
+          <size length="3.11" width="0.426" height="0.195" units="inches" />
+        </model>
+        <model model="DN163K1B" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" connector="unspecified" nmraWarrant="no">
           <output name="4" label="Pad" connection="solder" />
           <output name="5" label="Pad" connection="solder" />
           <output name="6" label="Pad" connection="solder" />
@@ -413,6 +437,18 @@
           <output name="13" label="Soundslot 8" connection="unspecified" />
         </model>
       </family>
+      <family name="ESU LokSound V3.0 Silent BEMF/Sound decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="59" highVersionID="59" type="locomotive" file="ESU_LokSoundV3_0.xml">
+        <model model="ESU_LokSound3" numOuts="8" numFns="12" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="Front lights" connection="unspecified" />
+          <output name="2" label="Rear lights" connection="unspecified" />
+          <output name="3" label="AUX 1" connection="unspecified" />
+          <output name="4" label="AUX 2" connection="unspecified" />
+          <output name="5" label="AUX 3" connection="unspecified" />
+          <output name="6" label="AUX 4" connection="unspecified" />
+          <output name="7" label="AUX 5" connection="unspecified" />
+          <output name="8" label="AUX 6" connection="unspecified" />
+        </model>
+      </family>
       <family name="Lenz 4th gen BEMF decoders" mfg="Lenz" lowVersionID="51" type="locomotive" file="Lenz_51.xml">
         <model model="LE030" maxInputVolts="16V" maxMotorCurrent="0.7A" maxTotalCurrent="0.7A" numOuts="2" formFactor="N" connector="unspecified" nmraWarrant="no">
           <output name="1" label="A - White" connection="unspecified" />
@@ -507,6 +543,18 @@
         </model>
         <model model="LE1014" numOuts="4" numFns="8" connector="unspecified" nmraWarrant="no" />
       </family>
+      <family name="Lenz Gold with 6th gen BEMF" mfg="Lenz" lowVersionID="61" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" type="locomotive" file="Lenz_Gold.xml">
+        <model model="Gold Mini" numOuts="2" numFns="8" maxMotorCurrent="0.5A (peak=0.8A)" formFactor="N" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="A - White" connection="unspecified" />
+          <output name="2" label="B - Yellow" connection="unspecified" />
+        </model>
+        <model model="Gold" numOuts="4" numFns="12" maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="A - White" connection="unspecified" />
+          <output name="2" label="B - Yellow" connection="unspecified" />
+          <output name="3" label="C - Green" connection="unspecified" />
+          <output name="4" label="D - Violet" connection="unspecified" />
+        </model>
+      </family>
       <family name="Lenz XF, precision glide decoders" mfg="Lenz" lowVersionID="44" highVersionID="45" type="locomotive" file="Lenz_LE077XF.xml">
         <model model="LE062XF" numOuts="2" connector="unspecified" nmraWarrant="no">
           <output name="1" label="A - White" connection="unspecified" />
@@ -570,7 +618,7 @@
           <output name="4" label="D - Violet" connection="unspecified" />
         </model>
       </family>
-      <family name="MERG decoders" mfg="Public-domain and DIY" lowVersionID="104" type="locomotive" file="MERG_10.xml">
+      <family name="MERG decoders" mfg="MERG" lowVersionID="104" type="locomotive" file="MERG_10.xml">
         <model model="MERG 10" numOuts="5" numFns="3" connector="unspecified" nmraWarrant="no">
           <output name="01" label="White" connection="unspecified" />
           <output name="02" label="Yellow" connection="unspecified" />
@@ -579,7 +627,7 @@
           <output name="05" label="Brown" connection="unspecified" />
         </model>
       </family>
-      <family name="MERG HF PWM decoders" mfg="Public-domain and DIY" lowVersionID="133" type="locomotive" file="MERG_12A.xml">
+      <family name="MERG HF PWM decoders" mfg="MERG" lowVersionID="133" type="locomotive" file="MERG_12A.xml">
         <model model="MERG 12a" numOuts="5" numFns="3" connector="unspecified" nmraWarrant="no">
           <output name="01" label="White" connection="unspecified" />
           <output name="02" label="Yellow" connection="unspecified" />
@@ -588,14 +636,41 @@
           <output name="05" label="Brown" connection="unspecified" />
         </model>
       </family>
+      <family name="ACC Decoders" mfg="MERG" lowVersionID="4" comment="DCCACC4 is a standard MERG stationary decoder, but the software has been modified so that it can be programmed via CV1 to 33 and/or CV513 to 545. There is also a Lenz Toggle Mode for compatability with Lenz Systems." type="locomotive" file="MERG_ACC4.xml">
+        <model model="DCCACC4" connector="unspecified" nmraWarrant="no" />
+      </family>
       <family name="DCCACC" mfg="MERG" comment="DCCACC is a stationary decoder, but it can be programmed in the usual way" type="locomotive" file="MERG_DCCACC.xml">
         <model model="DCCACC" connector="unspecified" nmraWarrant="no" />
+      </family>
+      <family name="MERG decoders" mfg="Public-domain and DIY" lowVersionID="104" type="locomotive" file="MERG_DIY_10.xml">
+        <model model="MERG-DIY 10" numOuts="5" numFns="3" connector="unspecified" nmraWarrant="no">
+          <output name="01" label="White" connection="unspecified" />
+          <output name="02" label="Yellow" connection="unspecified" />
+          <output name="03" label="Violet" connection="unspecified" />
+          <output name="04" label="Green" connection="unspecified" />
+          <output name="05" label="Brown" connection="unspecified" />
+        </model>
+      </family>
+      <family name="MERG HF PWM decoders" mfg="Public-domain and DIY" lowVersionID="133" type="locomotive" file="MERG_DIY_12A.xml">
+        <model model="MERG-DIY 12a" numOuts="5" numFns="3" connector="unspecified" nmraWarrant="no">
+          <output name="01" label="White" connection="unspecified" />
+          <output name="02" label="Yellow" connection="unspecified" />
+          <output name="03" label="Violet" connection="unspecified" />
+          <output name="04" label="Green" connection="unspecified" />
+          <output name="05" label="Brown" connection="unspecified" />
+        </model>
       </family>
       <family name="MRC 14/28 step decoders" mfg="MRC" type="locomotive" file="MRC_1428step.xml">
         <model model="AD310" connector="unspecified" nmraWarrant="no" />
       </family>
       <family name="MRC 14 step decoders" mfg="MRC" type="locomotive" file="MRC_14step.xml">
         <model model="AD305" comment="14 step only" connector="unspecified" nmraWarrant="no" />
+      </family>
+      <family name="Sound Decoders" mfg="MRC" lowVersionID="1" highVersionID="1" type="locomotive" file="MRC_1626.xml">
+        <model model="Synch Diesel Sound 1626" numOuts="4" numFns="12" connector="unspecified" nmraWarrant="no" />
+      </family>
+      <family name="Sound Decoders" mfg="MRC" lowVersionID="31" highVersionID="31" type="locomotive" file="MRC_1627.xml">
+        <model model="Synch Steam Sound 1627" numOuts="2" numFns="12" connector="unspecified" nmraWarrant="no" />
       </family>
       <family name="MRC AD370 Sound decoders" mfg="MRC" comment="MRC Sound Decoders" lowVersionID="32" type="locomotive" file="MRC_AD370.xml">
         <model model="AD370" numOuts="4" numFns="8" connector="unspecified" nmraWarrant="no">
@@ -668,6 +743,15 @@
           <output name="3" label="Green" connection="wire" maxcurrent="40 mA" />
           <output name="4" label="Violet" connection="wire" maxcurrent="40 mA" />
           <size length="1.65" width="0.63" height="0.12" units="inches" />
+        </model>
+        <model model="D14SR" numOuts="6" numFns="6" connector="NMRAmedium" maxMotorCurrent="1A (peak=1.5A)" formFactor="HO" nmraWarrant="no">
+          <output name="1" label="White" connection="plug" maxcurrent="40 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="40 mA" />
+          <output name="3" label="Pad 3" connection="solder" maxcurrent="40 mA" />
+          <output name="4" label="Pad 4" connection="solder" maxcurrent="40 mA" />
+          <output name="5" label="Pad 5" connection="solder" maxcurrent="40 mA" />
+          <output name="6" label="Pad 6" connection="solder" maxcurrent="40 mA" />
+          <size length="0.82" width="0.63" height="0.275" units="inches" />
         </model>
         <model model="D14SRP" numOuts="6" numFns="6" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" nmraWarrant="no">
           <output name="1" label="White" connection="plug" maxcurrent="40 mA" />
@@ -1062,6 +1146,14 @@
           <size length="0.500" width="0.375" height="0.125" units="inches" />
         </model>
       </family>
+      <family name="TCS Mx series decoders" mfg="Train Control Systems" type="locomotive" file="TCS_Mfamily.xml">
+        <model model="M1" numOuts="2" numFns="6" lowVersionID="24" highVersionID="24" connector="unspecified" nmraWarrant="no">
+          <size length="0.500" width="0.375" height="0.125" units="inches" />
+        </model>
+        <model model="M2" numOuts="3" numFns="6" lowVersionID="29" highVersionID="29" connector="unspecified" nmraWarrant="no">
+          <size length="0.500" width="0.375" height="0.125" units="inches" />
+        </model>
+      </family>
       <family name="TCS 150 series decoders" mfg="Train Control Systems" type="locomotive" file="TCS_TH150DP.xml">
         <model model="TH150DP" numOuts="5" numFns="6" connector="unspecified" nmraWarrant="no">
           <output name="4" label="Violet" connection="unspecified" />
@@ -1141,6 +1233,91 @@
           <output name="2" maxcurrent="100 mA" connection="unspecified" />
           <output name="3" maxcurrent="100 mA" connection="unspecified" />
           <output name="4" maxcurrent="100 mA" connection="unspecified" />
+        </model>
+      </family>
+      <family name="ZTC213/213A" mfg="ZTC" lowVersionID="0" highVersionID="255" type="locomotive" file="ZTC_213.xml">
+        <model model="ZTC213" numOuts="2" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="White" connection="unspecified" />
+          <output name="2" label="Yellow" connection="unspecified" />
+        </model>
+        <model model="ZTC213A" numOuts="2" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="White" connection="unspecified" />
+          <output name="2" label="Yellow" connection="unspecified" />
+        </model>
+      </family>
+      <family name="ZTC213B" mfg="ZTC" lowVersionID="0" highVersionID="255" type="locomotive" file="ZTC_213B.xml">
+        <model model="ZTC213B" numOuts="4" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="White" connection="unspecified" />
+          <output name="2" label="Yellow" connection="unspecified" />
+          <output name="3" label="Green" connection="unspecified" />
+          <output name="4" label="Violet" connection="unspecified" />
+        </model>
+      </family>
+      <family name="ZTC215/215B" mfg="ZTC" lowVersionID="0" highVersionID="255" type="locomotive" file="ZTC_215.xml">
+        <model model="ZTC215" numOuts="2" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="White" connection="unspecified" />
+          <output name="2" label="Yellow" connection="unspecified" />
+        </model>
+        <model model="ZTC215B" numOuts="2" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="White" connection="unspecified" />
+          <output name="2" label="Yellow" connection="unspecified" />
+        </model>
+      </family>
+      <family name="ZTC 415" mfg="ZTC" lowVersionID="49" highVersionID="49" type="locomotive" file="ZTC_415.xml">
+        <model model="ZTC 415" numOuts="4" numFns="8" lowVersionID="64" highVersionID="65" maxMotorCurrent="1.5A (peak=2A)" formFactor="Z" connector="unspecified" nmraWarrant="no">
+          <output name="4" label="Violet" connection="wire" />
+          <size length="0.55" width="0.36" height="0.13" units="inches" />
+        </model>
+      </family>
+      <family name="ZTC Speed Stabilised (B)" mfg="ZTC" lowVersionID="0" highVersionID="255" type="locomotive" file="ZTC_B_Stabilized.xml">
+        <model model="ZTC216B" numOuts="2" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="White" connection="unspecified" />
+          <output name="2" label="Yellow" connection="unspecified" />
+        </model>
+        <model model="ZTC226B" numOuts="4" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="White" connection="unspecified" />
+          <output name="2" label="Yellow" connection="unspecified" />
+          <output name="3" label="Green" connection="unspecified" />
+          <output name="4" label="Violet" connection="unspecified" />
+        </model>
+        <model model="ZTC227B" numOuts="6" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="White" connection="unspecified" />
+          <output name="2" label="Yellow" connection="unspecified" />
+          <output name="3" label="Green" connection="unspecified" />
+          <output name="4" label="Violet" connection="unspecified" />
+          <output name="5" label="Pink" connection="unspecified" />
+          <output name="6" label="Brown" connection="unspecified" />
+        </model>
+      </family>
+      <family name="Legacy" mfg="ZTC" lowVersionID="0" highVersionID="255" type="locomotive" file="ZTC_Legacy.xml">
+        <model model="ZTC202" numOuts="3" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="White" connection="unspecified" />
+          <output name="2" label="Yellow" connection="unspecified" />
+          <output name="3" label="Violet" connection="unspecified" />
+        </model>
+        <model model="ZTC203" numOuts="5" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="White" connection="unspecified" />
+          <output name="2" label="Yellow" connection="unspecified" />
+          <output name="3" label="Violet" connection="unspecified" />
+          <output name="4" label="Pink" connection="unspecified" />
+          <output name="5" label="Brown" connection="unspecified" />
+        </model>
+        <model model="ZTC211" numOuts="0" connector="unspecified" nmraWarrant="no" />
+        <model model="ZTC211A" numOuts="0" connector="unspecified" nmraWarrant="no" />
+        <model model="ZTC214" numOuts="0" connector="unspecified" nmraWarrant="no" />
+        <model model="ZTC214A" numOuts="0" connector="unspecified" nmraWarrant="no" />
+        <model model="ZTC215" numOuts="0" connector="unspecified" nmraWarrant="no" />
+      </family>
+      <family name="ZTC Speed Stabilised" mfg="ZTC" lowVersionID="0" highVersionID="255" type="locomotive" file="ZTC_Stabilized.xml">
+        <model model="ZTC216" numOuts="2" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="White" connection="unspecified" />
+          <output name="2" label="Yellow" connection="unspecified" />
+        </model>
+        <model model="ZTC226" numOuts="4" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="White" connection="unspecified" />
+          <output name="2" label="Yellow" connection="unspecified" />
+          <output name="1" label="Green" connection="unspecified" />
+          <output name="2" label="Violet" connection="unspecified" />
         </model>
       </family>
       <family name="Zimo Silent BEMF decoders, early model" mfg="Zimo" type="locomotive" file="Zimo_MX61_1.xml">
