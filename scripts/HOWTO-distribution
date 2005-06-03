@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.41 $)
+distribution.  ($Revision: 1.42 $)
 
 Start with a directory, typically called "Distributions", that
 contains:
@@ -44,7 +44,7 @@ Make sure everything is up-to-date:
 
     cvs -q update -dA help jython lib lib118 resources xml
     cd java
-    cvs -q update -dA build.xml jmri.jpx JMRILibraries.library lib manifest src test
+    cvs -q update -dA build.xml check.xml jmri.jpx JMRILibraries.library lib manifest src test
 
     
     cd Distributions/scripts
@@ -53,7 +53,7 @@ Make sure everything is up-to-date:
 To actually create the distribution:
 
 ( ) Go to your working directory and
-	cvs tag Release-1-2-3 src test build.xml jmri.jpx JMRILibraries.library manifest
+	cvs tag Release-1-2-3 src test build.xml check.xml jmri.jpx JMRILibraries.library manifest
 	cd ..
 	cvs tag Release-1-2-3 help jython resources xml lib lib118
 
@@ -192,6 +192,7 @@ To actually create the distribution:
 		digitrax@yahoogroups.com
 		2 NCE groups
 		EasyDCC group
+		Model_TRAINS_DCC_Software@yahoogroups.com
 		Lenz group
 		linux-dcc@yahoogroups.com
 		rrsoftware@yahoogroups.com
