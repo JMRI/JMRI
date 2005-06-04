@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.html,v 1.24 2005-03-30 15:18:29 jacobsen Exp $ -->
+<!-- $Id: index.html,v 1.25 2005-06-04 14:15:58 jacobsen Exp $ -->
 <html lang="en">
 
 <head>
@@ -90,6 +90,7 @@
 	    </UL>
 	    <li>Development Versions</li>
 	    <UL>
+	    <LI><A href="../releasenotes/jmri1.5.7.html">JMRI 1.5.7</a>
 	    <LI><A href="../releasenotes/jmri1.5.6.html">JMRI 1.5.6</a>
 	    <LI><A href="../releasenotes/jmri1.5.5.html">JMRI 1.5.5</a>
 	    <LI><A href="../releasenotes/jmri1.5.4.html">JMRI 1.5.4</a>
@@ -138,18 +139,20 @@
     <div id="teaser">
 	<h2>Latest News</h2>
 	<dl>
-	    <dt>Test version 1.5.6 released</dt>
+	    <dt>Test version 1.5.7 released</dt>
 	    <dd>
-	    <p>On January 2 2005, test version 1.5.6 was made available.</p>
+	    <p>On June 3 2005, test version 1.5.7 was made available.</p>
 	    
-	    <p>Version 1.5.6 has a long list of updates. For more
+	    <p>Version 1.5.7 has a long list of updates. For more
 	    information, see the
 	    <A HREF="#latest">note</a>
 	    later on this page. 
 	    <P>
 	    Version 1.4 remains the current "production" version, recommended
 	    for first-time users. Please see the next section for download and install
-	    information.
+	    information.  We hope to make a new production version ("1.6") based
+	    on version 1.5.7 in the near future, so let us know whether version 1.5.7 
+	    does what you need.
 	    
 	</dl>
     </div>
@@ -234,20 +237,27 @@
 
 	<dt class="im"><img src="../images/ico-jmri.gif" width="34" height="34" alt="JMRI logo"></dt>
     <A ID="latest"/>
-	<dt>JMRI Developer Release 1.5.6</dt>
+	<dt>JMRI Developer Release 1.5.7</dt>
 	<dd>
-	    <p>On January 2, 2005 test version 1.5.6 was made available.</p>
+	    <p>On June 3, 2005 test version 1.5.7 was made available.</p>
 	    
-	    <p>Version 1.5.6 has a long list of updates over the previous 1.5.5
+	    <p>Version 1.5.7 has a long list of updates over the previous 1.5.6
 	    test version, including:
 	    <UL>
 	    
-	    <LI>Updates to TCS and CT Electronik decoders
-	    <LI>Signals now can flash if desired
-	    <LI>Provide more powerful triggers for Routes; fix some Route bugs
-	    <LI>Provide better turnout feedback
-	    <LI>Improved icon selection when editing a panel
-	    
+	    <LI>Updates to Atlas, Bachmann, 
+	    <LI>Fixes to bugs in the panel editor. These avoid problems
+	    adding sensors, ensure that panels reload at the proper size, and
+	    improves handling of scrollbars.
+	    <LI>Improvements to the configuration tables, including
+	    more powerful sorting, ability to edit the values of more types,
+	    and better formatting.
+	    <LI>Improvements to the DecoderPro logic that controls which
+	    CVs and variables need to be read and written.  This should 
+	    result in significantly faster operation.
+	    <LI>Improvements to the infrastructure for Lenz, Digitrax and NCE
+	    communications.
+	    <LI>And <A HREF="../releasenotes/jmri1.5.7.html">more</a>!
 	    </UL>
 	    
 	    <P>
@@ -255,16 +265,17 @@
 	    and it's likely that bugs have been introduced.
 
 	    <p class="dl">For the complete list of changes, see:
-	    <A href="../releasenotes/jmri1.5.6.html">JMRI 1.5.6 Release Notes</a></p>
+	    <A href="../releasenotes/jmri1.5.7.html">JMRI 1.5.7 Release Notes</a></p>
 	    
-	    <p class="dl">Test version 1.5.5 also includes all the improvements
-	    on production version 1.4 that first appeared in test version 1.5.2 through 1.5.5; for
+	    <p class="dl">Test version 1.5.7 also includes all the improvements
+	    on production version 1.4 that first appeared in test version 1.5.2 through 1.5.6; for
 	    a list of those, see the
 	    <A href="../releasenotes/jmri1.5.2.html">JMRI 1.5.2 Release Notes</a>,
 	    <A href="../releasenotes/jmri1.5.3.html">JMRI 1.5.3 Release Notes</a>,
 	    <A href="../releasenotes/jmri1.5.4.html">JMRI 1.5.4 Release Notes</a>
+	    <A href="../releasenotes/jmri1.5.5.html">JMRI 1.5.5 Release Notes</a>
 	    and
-	    <A href="../releasenotes/jmri1.5.5.html">JMRI 1.5.5 Release Notes</a>.
+	    <A href="../releasenotes/jmri1.5.5.html">JMRI 1.5.6 Release Notes</a>.
 	    </p>
 	</dd>
 
