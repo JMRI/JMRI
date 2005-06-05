@@ -33,7 +33,7 @@ import org.jdom.Element;
  * organize the roster into directories.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2004; Dennis Miller Copyright 2004
- * @version	$Revision: 1.18 $
+ * @version	$Revision: 1.19 $
  * @see jmri.jmrit.roster.LocoFile
  *
  */
@@ -425,11 +425,11 @@ public class RosterEntry {
         {
           //Piece too long to fit. Extract a piece the size of the textSpace
           //and check for farthest right space for word wrapping.
-          System.out.println("token: /"+commentToken+"/");
+          if (log.isDebugEnabled()) log.debug("token: /"+commentToken+"/");
           while (startIndex < commentToken.length())
           {
             String tokenPiece = commentToken.substring(startIndex, startIndex + textSpace);
-            System.out.println("loop: /"+tokenPiece+"/ "+tokenPiece.lastIndexOf(" "));
+            if (log.isDebugEnabled()) log.debug("loop: /"+tokenPiece+"/ "+tokenPiece.lastIndexOf(" "));
             if (tokenPiece.lastIndexOf(" ") == -1)
             {
               //If no spaces, put the whole piece in the vector and add a line feed, then
@@ -443,7 +443,7 @@ public class RosterEntry {
               //If there is at least one space, extract up to and including the
               //last space and put in the vector as well as a line feed
               endIndex = tokenPiece.lastIndexOf(" ") + 1;
-              System.out.println("/"+tokenPiece+"/ "+startIndex+" "+endIndex);
+              if (log.isDebugEnabled()) log.debug("/"+tokenPiece+"/ "+startIndex+" "+endIndex);
               textVector.addElement(tokenPiece.substring(0, endIndex));
               textVector.addElement(newLine);
               startIndex += endIndex;
