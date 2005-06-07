@@ -20,7 +20,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface {
 
@@ -118,15 +118,34 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         } else {
             // detect that the reply buffer ends with "COMMAND: " (note ending space)
             int num = msg.getNumDataElements();
-            if ( num >= 9) {
-                // ptr is offset of last element in NceReply
-                int ptr = num-1;
-                if (msg.getElement(ptr-1) != ':') return false;
-                if (msg.getElement(ptr)   != ' ') return false;
-                if (msg.getElement(ptr-2) != 'D') return false;
-                return true;
-            }
-            else return false;
+            // ptr is offset of last element in NceReply
+            int ptr = num-1;
+            if ( (num >= 9) && 
+                (msg.getElement(ptr)   == ' ') &&
+                (msg.getElement(ptr-1) == ':') &&
+                (msg.getElement(ptr-2) == 'D') )
+                    return true;
+                    
+            // this got harder with the new PROM at the beginning of 2005.
+            // It doesn't always send the "COMMAND: " prompt at the end
+            // of each response. Try for the error message:
+            else if ( (num >= 19) && 
+                // don't check space,NL at end of buffer
+                (msg.getElement(ptr-2)  == '*') &&
+                (msg.getElement(ptr-3)  == '*') &&
+                (msg.getElement(ptr-4)  == '*') &&
+                (msg.getElement(ptr-5)  == '*') &&
+                (msg.getElement(ptr-6)  == ' ') &&
+                (msg.getElement(ptr-7)  == 'D') &&
+                (msg.getElement(ptr-8)  == 'O') &&
+                (msg.getElement(ptr-9)  == 'O') &&
+                (msg.getElement(ptr-10) == 'T') &&
+                (msg.getElement(ptr-11) == 'S') &&
+                (msg.getElement(ptr-12) == 'R') )
+                    return true;
+            
+            // otherwise, it's not the end
+            return false;
         }
     }
 

@@ -1,3 +1,0 @@
-Manifest-Version: 1.0
-Main-Class: apps.JmriDemo.JMRIdemo
-Class-Path: lib/log4j.jar lib/collections.jar lib/crimson.jar lib/jh.jar lib/jdom-jdk11.jar lib/Serialio.jar

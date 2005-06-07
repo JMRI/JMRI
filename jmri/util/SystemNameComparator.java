@@ -2,6 +2,8 @@ package jmri.util;
 
 import java.util.*;
 
+import jmri.util.com.sun.Comparator;
+
 /**
  * Comparator for JMRI System Names.  
  * <P> A System Name is two letters
@@ -10,7 +12,7 @@ import java.util.*;
  *
  * @author	Bob Jacobsen   Copyright (C) 2004
  * @author  Howard Penny
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 
 public class SystemNameComparator implements Comparator {
