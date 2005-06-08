@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a CV programmer format -->
-<!-- $Revision: 1.17 $ -->
+<!-- $Revision: 1.18 $ -->
 
 <!-- This DTD is Copyright 2001, 2003 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -32,14 +32,17 @@
 <!ATTLIST pane nameFmt (label | item) "label">
 
 <!-- The column and row sections describe the layout of a pane -->
-<!ELEMENT column ((row | display | label | separator | cvtable | fnmapping | dccaddress )*)>
-<!ELEMENT row ((column | display | label | separator | cvtable | fnmapping | dccaddress )*)>
+<!ELEMENT column ((row | display | label | separator | cvtable | indxcvtable | fnmapping | dccaddress )*)>
+<!ELEMENT row ((column | display | label | separator | cvtable | indxcvtable | fnmapping | dccaddress )*)>
 
 <!-- Insert a separator line -->
 <!ELEMENT separator EMPTY>
 
 <!-- Insert a cv table -->
 <!ELEMENT cvtable EMPTY>
+
+<!-- Insert an indexed cv table -->
+<!ELEMENT indxcvtable EMPTY>
 
 <!-- Insert a function mapping display/edit panel -->
 <!ELEMENT fnmapping EMPTY>

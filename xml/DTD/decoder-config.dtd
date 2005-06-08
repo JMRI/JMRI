@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a DCC decoder as a component, esp. information -->
 <!-- on how to program it. -->
-<!-- $Revision: 1.36 $ -->
+<!-- $Revision: 1.37 $ -->
 
 <!-- This DTD is Copyright 1999, 2000, 2001, 2003, 2004 Bob Jacobsen & JMRI. -->
 <!-- You may freely use it subject to the Open Source Artistic               -->
@@ -15,11 +15,11 @@
 <!-- clauses appear in other DTD files; check consistency. -->
 <!ELEMENT version EMPTY>
 <!ATTLIST version author     	CDATA #IMPLIED>
-<!ATTLIST version version     	CDATA #IMPLIED>
-<!ATTLIST version lastUpdated   	CDATA #IMPLIED>
-<!ATTLIST version comment     	CDATA #IMPLIED>
+<!ATTLIST version version     CDATA #IMPLIED>
+<!ATTLIST version lastUpdated CDATA #IMPLIED>
+<!ATTLIST version comment     CDATA #IMPLIED>
 
-<!ELEMENT decoder (family, programming, variables)>
+<!ELEMENT decoder (family, programming, variables, resets*)>
 
 <!-- The family element identifies the decoder. It must be kept consistent -->
 <!-- with the family & decoder elements in the decoderIndex-config.dtd (though -->
@@ -50,12 +50,13 @@
 <!-- lowVersionID, highVersionID define an inclusive range, with both endpoints included. -->
 <!-- If only one is specified, only that single value is acceptable -->
 <!ATTLIST model lowVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
-<!ATTLIST model highVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
+<!ATTLIST model highVersionID CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
+<!ATTLIST model productID     CDATA #IMPLIED >  <!-- default blank means any   -->
 <!-- Physical specifications -->
 <!ATTLIST model maxInputVolts 	CDATA #IMPLIED >  <!-- default blank means NMRA spec   -->
-<!ATTLIST model maxMotorCurrent 	CDATA #IMPLIED >  <!-- motor only   -->
-<!ATTLIST model maxTotalCurrent 	CDATA #IMPLIED >  <!-- motor plus functions   -->
-<!ATTLIST model formFactor          CDATA #IMPLIED >  <!-- mfg name for specific shape, etc -->
+<!ATTLIST model maxMotorCurrent CDATA #IMPLIED >  <!-- motor only   -->
+<!ATTLIST model maxTotalCurrent CDATA #IMPLIED >  <!-- motor plus functions   -->
+<!ATTLIST model formFactor      CDATA #IMPLIED >  <!-- mfg name for specific shape, etc -->
 <!-- NMRA Conformance status -->
 <!ATTLIST model nmraWarrant  (yes|no) "no" >
 <!ATTLIST model nmraWarrantEnd CDATA #IMPLIED >  <!-- end date of current warrant, if any -->
@@ -78,7 +79,7 @@
 <!ATTLIST output connection ( plug | solder | wire | other | unspecified ) "unspecified" >
 
 <!ELEMENT size EMPTY>
-<!ATTLIST size length    CDATA #IMPLIED >
+<!ATTLIST size length   CDATA #IMPLIED >
 <!ATTLIST size width    CDATA #IMPLIED >
 <!ATTLIST size height   CDATA #IMPLIED >
 <!ATTLIST size units  	( inches | cm | mm ) #REQUIRED >
@@ -100,29 +101,51 @@
 <!-- The variables element defines the list of identified variables -->
 <!-- and how they are encoded into CVs -->
 
-<!ELEMENT variables (variable*, constant*)>
+<!ELEMENT variables (variable*, constant*, ivariable*)>
 
-<!ELEMENT variable  (enumVal |
-                             decVal | hexVal | 
-                             speedTableVal | 
-                             longAddressVal | shortAddressVal |
-                             splitVal ) >
-<!ATTLIST variable label CDATA #REQUIRED>  <!-- manufacturere name used for identification -->
-<!ATTLIST variable CV CDATA #REQUIRED>    <!-- CV number containing value -->
-<!ATTLIST variable mask CDATA "VVVVVVVV">    <!-- mask of bits within CV -->
+<!ELEMENT variable  (enumVal | decVal | hexVal | speedTableVal |
+                     longAddressVal | shortAddressVal | splitVal) >
+<!ATTLIST variable label CDATA #REQUIRED>  <!-- manufacturer's name used for identification -->
+<!ATTLIST variable CV    CDATA #REQUIRED>  <!-- CV number containing value -->
+<!ATTLIST variable mask  CDATA "VVVVVVVV"> <!-- mask of bits within CV -->
                                            <!-- mask is up to 16 characters long, each -->
                                            <!-- representing one bit in the result -->
                                            <!-- valid chars: -->
                                            <!--     X   not used     -->
                                            <!--     V   used bits    -->
-<!ATTLIST variable readOnly  (yes | no) "no" >
-<!ATTLIST variable default		CDATA #IMPLIED >
-<!ATTLIST variable comment		CDATA #IMPLIED>
-<!ATTLIST variable item			CDATA #IMPLIED>  <!--item name for this function if different -->
-<!ATTLIST variable minFn		CDATA #IMPLIED>  <!-- min number of fns in decoder for this to be valid -->
-<!ATTLIST variable minOut		CDATA #IMPLIED>  <!-- min number of fns in decoder for this to be valid -->
-<!ATTLIST variable inOptions 	CDATA #IMPLIED>  <!-- variable present if any of the options are present -->
-<!ATTLIST variable tooltip      CDATA #IMPLIED>  <!-- variable-specific tooltip, see also programmer DTD -->
+<!ATTLIST variable readOnly  (yes | no) "no">
+<!ATTLIST variable writeOnly (yes | no) "no">
+<!ATTLIST variable default   CDATA #IMPLIED >
+<!ATTLIST variable comment   CDATA #IMPLIED >
+<!ATTLIST variable item      CDATA #IMPLIED > <!-- item name for this function if different -->
+<!ATTLIST variable minFn     CDATA #IMPLIED > <!-- min number of fns in decoder for this to be valid -->
+<!ATTLIST variable minOut    CDATA #IMPLIED > <!-- min number of fns in decoder for this to be valid -->
+<!ATTLIST variable inOptions CDATA #IMPLIED > <!-- variable present if any of the options are present -->
+<!ATTLIST variable tooltip   CDATA #IMPLIED > <!-- variable-specific tooltip, see also programmer DTD -->
+
+<!ELEMENT ivariable  (ienumVal | indexedVal) >
+<!ATTLIST ivariable label  CDATA #REQUIRED>  <!-- manufacturer's name used for identification -->
+<!ATTLIST ivariable CVname CDATA #REQUIRED>  <!-- CV name of an indexed value -->
+<!ATTLIST ivariable CV     CDATA #REQUIRED>  <!-- CV number containing value  -->
+<!ATTLIST ivariable PI     CDATA #REQUIRED>  <!-- index value for PI -->
+<!ATTLIST ivariable SI     CDATA #IMPLIED >  <!-- index value for SI -->
+<!ATTLIST ivariable mask   CDATA "VVVVVVVV"> <!-- mask of bits within CV -->
+                                             <!-- mask is up to 16 characters long, each -->
+                                             <!-- representing one bit in the result -->
+                                             <!-- valid chars: -->
+                                             <!--     X   not used     -->
+                                             <!--     V   used bits    -->
+<!ATTLIST ivariable readOnly  (yes | no) "no">
+<!ATTLIST ivariable infoOnly  (yes | no) "no">
+<!ATTLIST ivariable opsOnly   (yes | no) "no">
+<!ATTLIST ivariable writeOnly (yes | no) "no">
+<!ATTLIST ivariable default	  CDATA #IMPLIED >
+<!ATTLIST ivariable comment	  CDATA #IMPLIED >
+<!ATTLIST ivariable item      CDATA #IMPLIED > <!-- item name for this function if different -->
+<!ATTLIST ivariable minFn     CDATA #IMPLIED > <!-- min number of fns in decoder for this to be valid -->
+<!ATTLIST ivariable minOut	  CDATA #IMPLIED > <!-- min number of fns in decoder for this to be valid -->
+<!ATTLIST ivariable inOptions CDATA #IMPLIED > <!-- variable present if any of the options are present -->
+<!ATTLIST ivariable tooltip   CDATA #IMPLIED > <!-- variable-specific tooltip, see also programmer DTD -->
 
 <!-- enumVal, decVal, hexval, speedTableVal, longAddressVal are constraints -->
 <!-- on both the possible values and the preferred way to present them -->
@@ -134,26 +157,34 @@
 
 <!ELEMENT hexVal EMPTY>
 <!ATTLIST hexVal min CDATA "0" >    <!-- smallest acceptable value -->
-<!ATTLIST hexVal max CDATA "ff" >  <!-- largest acceptable value -->
+<!ATTLIST hexVal max CDATA "ff" >   <!-- largest acceptable value -->
 <!ATTLIST hexVal comment CDATA #IMPLIED>
 
 <!ELEMENT enumVal (enumChoice*) >
 <!ATTLIST enumVal comment CDATA #IMPLIED>
 
 <!ELEMENT enumChoice EMPTY>
-<!ATTLIST enumChoice choice CDATA #REQUIRED >
-<!ATTLIST enumChoice value CDATA #IMPLIED >  <!-- if present, must be numeric -->
-<!ATTLIST enumChoice comment CDATA #IMPLIED >
+<!ATTLIST enumChoice choice   CDATA #REQUIRED >
+<!ATTLIST enumChoice value    CDATA #IMPLIED >  <!-- if present, must be numeric -->
+<!ATTLIST enumChoice comment  CDATA #IMPLIED >
+
+<!ELEMENT ienumVal (ienumChoice*) >
+<!ATTLIST ienumVal comment CDATA #IMPLIED>
+
+<!ELEMENT ienumChoice EMPTY>
+<!ATTLIST ienumChoice choice   CDATA #REQUIRED >
+<!ATTLIST ienumChoice value    CDATA #IMPLIED >  <!-- if present, must be numeric -->
+<!ATTLIST ienumChoice comment  CDATA #IMPLIED >
 
 <!ELEMENT speedTableVal (speedTableEntry*) >
-<!ATTLIST speedTableVal entries CDATA "28">        <!-- number of entries/CVs in table -->
+<!ATTLIST speedTableVal entries CDATA "28">     <!-- number of entries/CVs in table -->
 <!ATTLIST speedTableVal comment CDATA #IMPLIED>
-<!ATTLIST speedTableVal min CDATA "0" >    <!-- smallest acceptable value -->
-<!ATTLIST speedTableVal max CDATA "255" >  <!-- largest acceptable value -->
+<!ATTLIST speedTableVal min CDATA "0" >         <!-- smallest acceptable value -->
+<!ATTLIST speedTableVal max CDATA "255" >       <!-- largest acceptable value -->
 
 <!ELEMENT speedTableEntry EMPTY>
-<!ATTLIST speedTableEntry step  CDATA #REQUIRED >
-<!ATTLIST speedTableEntry value CDATA #REQUIRED >
+<!ATTLIST speedTableEntry step    CDATA #REQUIRED >
+<!ATTLIST speedTableEntry value   CDATA #REQUIRED >
 <!ATTLIST speedTableEntry comment CDATA #IMPLIED>
 
 <!ELEMENT longAddressVal EMPTY >
@@ -165,26 +196,63 @@
 <!ATTLIST shortAddressChanges cv CDATA #REQUIRED>
 
 <!ELEMENT splitVal EMPTY >
-<!ATTLIST splitVal highCV  	CDATA #REQUIRED>	<!-- CV to hold high-order bits -->
-<!ATTLIST splitVal min CDATA "0" >				<!-- smallest acceptable value -->
-<!ATTLIST splitVal max CDATA "255" >		
+<!ATTLIST splitVal highCV  	CDATA #REQUIRED>	 <!-- CV to hold high-order bits -->
+<!ATTLIST splitVal min CDATA "0" >				     <!-- smallest acceptable value -->
+<!ATTLIST splitVal max CDATA "255" >
 <!ATTLIST splitVal default CDATA #IMPLIED>
-<!ATTLIST splitVal factor  CDATA "1">      <!-- cv*factor+offset is variable value -->
+<!ATTLIST splitVal factor  CDATA "1">          <!-- cv*factor+offset is variable value -->
 <!ATTLIST splitVal offset  CDATA "0">
 <!ATTLIST splitVal comment CDATA #IMPLIED>
-<!ATTLIST splitVal upperMask CDATA "VVVVVVVV">    <!-- mask of bits within upper CV -->
+<!ATTLIST splitVal upperMask CDATA "VVVVVVVV"> <!-- mask of bits within upper CV -->
+
+<!ELEMENT indexedVal EMPTY >
+<!ATTLIST indexedVal min CDATA "0" >          <!-- smallest acceptable value  -->
+<!ATTLIST indexedVal max CDATA "255" >        <!-- largest acceptable value   -->
+<!ATTLIST indexedVal comment CDATA #IMPLIED>
 
 
 <!-- A constant represents a fixed value, but is treated -->
 <!-- much like a variable at runtime -->
 <!ELEMENT constant  EMPTY >
 <!ATTLIST constant	label 		CDATA #REQUIRED>  <!-- Mfg's label, generally displayed at the item label -->
-<!ATTLIST constant 	default		CDATA #IMPLIED >
+<!ATTLIST constant 	default		CDATA #IMPLIED>
 <!ATTLIST constant 	comment		CDATA #IMPLIED>
-<!ATTLIST constant	item		CDATA #IMPLIED>  <!-- item name for this function if different from label -->
-<!ATTLIST constant	minFn		CDATA #IMPLIED>  <!-- min number of fns in decoder for this to be valid -->
+<!ATTLIST constant	item		  CDATA #IMPLIED>  <!-- item name for this function if different from label -->
+<!ATTLIST constant	minFn		  CDATA #IMPLIED>  <!-- min number of fns in decoder for this to be valid -->
 <!ATTLIST constant	minOut		CDATA #IMPLIED>  <!-- min number of fns in decoder for this to be valid -->
-<!ATTLIST constant	inOptions 	CDATA #IMPLIED>  <!-- variable present if any of the options are present -->
+<!ATTLIST constant	inOptions CDATA #IMPLIED>  <!-- variable present if any of the options are present -->
+
+<!-- An index constant represents a fixed value, but is treated -->
+<!-- much like a variable at runtime -->
+<!ELEMENT iconstant  EMPTY >
+<!ATTLIST iconstant	label 		CDATA #REQUIRED>  <!-- Mfg's label, generally displayed at the item label -->
+<!ATTLIST iconstant default		CDATA #IMPLIED>
+<!ATTLIST iconstant comment		CDATA #IMPLIED>
+<!ATTLIST iconstant	item		  CDATA #IMPLIED>  <!-- item name for this function if different from label -->
+<!ATTLIST iconstant	minFn		  CDATA #IMPLIED>  <!-- min number of fns in decoder for this to be valid -->
+<!ATTLIST iconstant	minOut		CDATA #IMPLIED>  <!-- min number of fns in decoder for this to be valid -->
+<!ATTLIST iconstant	inOptions CDATA #IMPLIED>  <!-- variable present if any of the options are present -->
+
+<!ELEMENT resets (factReset*, ifactReset*)>
+
+<!ELEMENT factReset EMPTY >
+<!ATTLIST factReset label   CDATA #REQUIRED>  <!-- manufacturer's name used for identification -->
+<!ATTLIST factReset CV      CDATA #REQUIRED>  <!-- CV number containing value  -->
+<!ATTLIST factReset default CDATA #REQUIRED>
+<!ATTLIST factReset comment CDATA #IMPLIED >
+<!ATTLIST factReset item	  CDATA #IMPLIED >  <!-- item name for this function if different -->
+
+<!ELEMENT ifactReset EMPTY >
+<!ATTLIST ifactReset label   CDATA #REQUIRED>  <!-- manufacturer's name used for identification -->
+<!ATTLIST ifactReset CVname  CDATA #REQUIRED>  <!-- CV name of an indexed value -->
+<!ATTLIST ifactReset CV      CDATA #REQUIRED>  <!-- CV number containing value  -->
+<!ATTLIST ifactReset PI      CDATA #REQUIRED>  <!-- index value for PI -->
+<!ATTLIST ifactReset SI      CDATA #IMPLIED >  <!-- index value for SI -->
+<!ATTLIST ifactReset default CDATA #REQUIRED>
+<!ATTLIST ifactReset comment CDATA #IMPLIED >
+<!ATTLIST ifactReset item	   CDATA #IMPLIED >  <!-- item name for this function if different -->
+
+
 
 
 <!-- The pane elements define each tabbed pane of options -->
@@ -195,15 +263,18 @@
 <!ATTLIST pane comment CDATA #IMPLIED >
 
 <!-- The column element describes each column in the pane -->
-<!ELEMENT column ((row | display | label | separator | cvtable | fnmapping | dccaddress )*)>
+<!ELEMENT column ((row | display | label | separator | cvtable | indxcvtable | fnmapping | dccaddress )*)>
 <!-- The row element describes each row in the pane -->
-<!ELEMENT row ((column | display | label | separator | cvtable | fnmapping | dccaddress )*)>
+<!ELEMENT row ((column | display | label | separator | cvtable | indxcvtable | fnmapping | dccaddress )*)>
 
 <!-- Insert a separator line -->
 <!ELEMENT separator EMPTY>
 
 <!-- Insert a cv table -->
 <!ELEMENT cvtable EMPTY>
+
+<!-- Insert an indexed cv table -->
+<!ELEMENT indxcvtable EMPTY>
 
 <!-- Insert a function mapping display/edit panel -->
 <!ELEMENT fnmapping EMPTY>
@@ -220,10 +291,10 @@
 <!-- in the column and how they are displayed -->
 
 <!ELEMENT display EMPTY >
-<!ATTLIST display item CDATA #REQUIRED>  <!-- Name used for identification -->
-<!ATTLIST display label CDATA  #IMPLIED>  <!-- optional, default is from name -->
-<!ATTLIST display tooltip CDATA #IMPLIED>  <!-- optional, default is from variable tooltip -->
+<!ATTLIST display item    CDATA #REQUIRED>  <!-- Name used for identification -->
+<!ATTLIST display label   CDATA #IMPLIED>   <!-- optional, default is from name -->
+<!ATTLIST display tooltip CDATA #IMPLIED>   <!-- optional, default is from variable tooltip -->
 <!ATTLIST display layout ( left | above | below | right ) "left" > <!-- label position -->
-<!ATTLIST display format  (default | vslider | hslider | radiobuttons | checkbox |
-							onradiobutton | offradiobutton) "default" >
+<!ATTLIST display format ( default | vslider | hslider | radiobuttons | checkbox |
+							             onradiobutton | offradiobutton) "default" >
 <!ATTLIST display comment CDATA #IMPLIED >

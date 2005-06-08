@@ -1,6 +1,6 @@
 <!-- Defines XML documenting on a locomotive, esp. information -->
 <!-- on how it is programmed. -->
-<!-- $Id: locomotive-config.dtd,v 1.15 2003-08-08 15:48:09 jacobsen Exp $ -->
+<!-- $Id: locomotive-config.dtd,v 1.16 2005-06-08 02:44:09 innkeeper Exp $ -->
 
 <!-- This DTD is Copyright 2001, 2003 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -17,35 +17,43 @@
 <!-- This copy is used if we have to import an existing file into a roster -->
 
 <!ELEMENT locomotive (decoder, values*) >
-<!ATTLIST locomotive id		CDATA #REQUIRED>          
-<!ATTLIST locomotive roadName	CDATA #IMPLIED>          
+<!ATTLIST locomotive id		      CDATA #REQUIRED>          
+<!ATTLIST locomotive roadName	  CDATA #IMPLIED>          
 <!ATTLIST locomotive roadNumber	CDATA #IMPLIED>          
-<!ATTLIST locomotive mfg	CDATA #IMPLIED>
-<!ATTLIST locomotive owner	CDATA #IMPLIED>
-<!ATTLIST locomotive model	CDATA #IMPLIED>
+<!ATTLIST locomotive mfg	      CDATA #IMPLIED>
+<!ATTLIST locomotive owner	    CDATA #IMPLIED>
+<!ATTLIST locomotive model	    CDATA #IMPLIED>
 <!ATTLIST locomotive dccAddress	CDATA #IMPLIED>	<!-- long or short address -->
-<!ATTLIST locomotive comment	CDATA #IMPLIED>
+<!ATTLIST locomotive comment	  CDATA #IMPLIED>
 
 <!-- The decoder optional section defines the type of the installed decoder -->
 <!ELEMENT decoder EMPTY >
-<!ATTLIST decoder model     CDATA #REQUIRED>  <!-- used for identification -->
-<!ATTLIST decoder family    CDATA #REQUIRED>  <!-- used for identification   -->
-<!ATTLIST decoder comment   CDATA #IMPLIED>
+<!ATTLIST decoder model   CDATA #REQUIRED>  <!-- used for identification -->
+<!ATTLIST decoder family  CDATA #REQUIRED>  <!-- used for identification   -->
+<!ATTLIST decoder comment CDATA #IMPLIED>
 
 <!-- The values section defines values for CVs and/or variables -->
-<!ELEMENT values (decoderDef, (CVvalue | varValue)*)>
+<!ELEMENT values (decoderDef, (CVvalue | varValue)*, indexedCVvalue* )>
 
 <!ELEMENT decoderDef (varValue*) >   <!-- Where the variable definitions came from -->
 		  						
 <!ELEMENT CVvalue EMPTY>
-<!ATTLIST CVvalue name CDATA #IMPLIED>            <!-- CV number, used for identification -->
-<!ATTLIST CVvalue value CDATA #REQUIRED>           <!-- Value of specified CV -->
-<!ATTLIST CVvalue comment   CDATA #IMPLIED>
+<!ATTLIST CVvalue name    CDATA #IMPLIED>         <!-- CV number, used for identification -->
+<!ATTLIST CVvalue value   CDATA #REQUIRED>        <!-- Value of specified CV -->
+<!ATTLIST CVvalue comment CDATA #IMPLIED>
+
+<!ELEMENT indexedCVvalue EMPTY>
+<!ATTLIST indexedCVvalue name    CDATA #REQUIRED> <!-- Indexed CV name, used for identification -->
+<!ATTLIST indexedCVvalue piCv    CDATA #REQUIRED> <!-- Primary index for Indexed CV -->
+<!ATTLIST indexedCVvalue piVal   CDATA #REQUIRED> <!-- Primary index value for Indexed CV -->
+<!ATTLIST indexedCVvalue siCv    CDATA #REQUIRED> <!-- Secondary index for Indexed CV -->
+<!ATTLIST indexedCVvalue siVal   CDATA #REQUIRED> <!-- Secondary index value for Indexed CV -->
+<!ATTLIST indexedCVvalue iCv     CDATA #REQUIRED> <!-- Indexed CV number -->
+<!ATTLIST indexedCVvalue value   CDATA #REQUIRED> <!-- Value of specified Indexed CV -->
+<!ATTLIST indexedCVvalue comment CDATA #IMPLIED>
 
 <!ELEMENT varValue EMPTY>
-<!ATTLIST varValue item CDATA #IMPLIED>            <!-- item name used for identification -->
-<!ATTLIST varValue name CDATA #IMPLIED>            <!-- old form of item name, for compatibility -->
-<!ATTLIST varValue value CDATA #REQUIRED>           <!-- Value of specified variable -->
-<!ATTLIST varValue comment   CDATA #IMPLIED>
-
-
+<!ATTLIST varValue item    CDATA #IMPLIED>        <!-- item name used for identification -->
+<!ATTLIST varValue name    CDATA #IMPLIED>        <!-- old form of item name, for compatibility -->
+<!ATTLIST varValue value   CDATA #REQUIRED>       <!-- Value of specified variable -->
+<!ATTLIST varValue comment CDATA #IMPLIED>

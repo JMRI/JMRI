@@ -2,10 +2,9 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2002, 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Digitrax_01x3.xml,v 1.26 2005-05-01 23:25:41 jacobsen Exp $ -->
+<!-- $Id: Digitrax_01x3.xml,v 1.27 2005-06-08 02:44:53 innkeeper Exp $ -->
 <decoder-config>
-		<version author="Michael Mosher mjmx@comcast.net" 
-					version="14" lastUpdated="20050113"/>
+		<version author="Howard G. Penny" version="15" lastUpdated="20050422"/>
 
 		<!-- Created from version 5 of the 1x2 file -->
 		<!-- V2: fix default values for CV56, 57 BEMF -->
@@ -17,11 +16,12 @@
 		<!-- V8: Function Output Map, CV's 33 to 46, defaults updated by Bob Blackwell, CV9 added -->
 		<!-- Version 9 - fix "rule 17" typos -->
 		<!-- Version 10 - remove DH123 (created new file for it), fixed decoder sizes -->
-      <!-- Version 10.1 - changed spelling of "behavior" (Jack Shall) -->
-      <!-- Version 11 - added DZ123 (Bob Jacobsen) -->
-      <!-- Version 12 - added some tooltips (Jack Shall) -->
-      <!-- Version 13 - added DN163K1B and DN163I0 (Simon Ginsburg) -->
-      <!-- Version 14 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" - Bob Jacobsen -->
+    <!-- Version 10.1 - changed spelling of "behavior" (Jack Shall) -->
+    <!-- Version 11 - added DZ123 (Bob Jacobsen) -->
+    <!-- Version 12 - added some tooltips (Jack Shall) -->
+    <!-- Version 13 - added DN163K1B and DN163I0 (Simon Ginsburg) -->
+    <!-- Version 14 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" - Bob Jacobsen -->
+    <!-- Version 15 - added factory reset menu items (Howard G. Penny) -->
 	
 <decoder>
 	<family name="Series 3 with FX3, silent, readback" 
@@ -74,6 +74,7 @@
 			</model>
 		<model model="DH163L0" numOuts="6" numFns="8"
 	    		maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" >
+			<output name="3" label="Pad" connection="solder" /> 
 			<output name="4" label="Pad" connection="solder" /> 
 			<output name="5" label="Pad" connection="solder" /> 
 			<output name="6" label="Pad" connection="solder" />
@@ -1048,6 +1049,11 @@
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 
 	</variables>
+
+  <resets>
+  	<factReset label="Reset All CVs" CV="8" default="8"/>
+  	<factReset label="Reset All CVs except speed table" CV="8" default="9"/>
+  </resets>
 
 </decoder>
 

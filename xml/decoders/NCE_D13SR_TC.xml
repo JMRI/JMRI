@@ -2,14 +2,15 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: NCE_D13SR_TC.xml,v 1.4 2005-05-01 23:25:42 jacobsen Exp $ -->
+<!-- $Id: NCE_D13SR_TC.xml,v 1.5 2005-06-08 02:44:53 innkeeper Exp $ -->
 <decoder-config>
-		<version author="Michael Mosher" version="3" lastUpdated="20040229"/>
+		<version author="Howard G. Penny" version="4" lastUpdated="20050607"/>
 		<!-- version 1 created by modifing NCE_SR.xml ver 7 removed CV9, 23, 24, 65, 119 
 				and added CV 16, 95, 116, 117 -->
-      <!-- Version 2 - added version comment (Jack Shall) -->
-      <!-- Version 3 - removed CV29 bit-3, added CV11, minor formatting changes,
+    <!-- Version 2 - added version comment (Jack Shall) -->
+    <!-- Version 3 - removed CV29 bit-3, added CV11, minor formatting changes,
 				added D15SRP and ATLS4 decoders,	added some tooltips and comments (Jack Shall) -->
+		<!-- Version 4 - added factory reset menu item (Howard G. Penny) -->
 
 <decoder>
   <family name="Silent Running w/ Torque Compensation" mfg="North Coast Engineering" 
@@ -824,6 +825,10 @@
 			</variable>
 	
 	</variables>
+
+  <resets>
+  	<factReset label="Reset All CVs" CV="30" default="2"/>
+  </resets>
 
 </decoder>
 

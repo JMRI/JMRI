@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config.dtd,v 1.44 2005-05-30 00:51:35 jacobsen Exp $ -->
+<!-- $Id: layout-config.dtd,v 1.45 2005-06-08 02:44:09 innkeeper Exp $ -->
 
 <!-- This DTD is Copyright 2001, 2003 JMRI.  You may freely use    -->
 <!-- it subject to the Open Source Artistic License, a copy of     -->
@@ -197,7 +197,7 @@
 
 <!ELEMENT paneleditor (positionablelabel|sensoricon|turnouticon|
 						securityelementicon | signalheadicon |
-						reportericon | memoryicon )* >
+						reportericon | memoryicon | fastclock)* >
   <!ATTLIST paneleditor class		CDATA #REQUIRED>
   <!ATTLIST paneleditor name		CDATA #IMPLIED>
   <!ATTLIST paneleditor x			CDATA #REQUIRED>
@@ -262,26 +262,23 @@
     <!ATTLIST memorystate value	CDATA #REQUIRED>
     <!ATTLIST memorystate icon	CDATA #REQUIRED>
 
-  <!ELEMENT pane EMPTY>
-    <!ATTLIST pane class	 CDATA #REQUIRED> <!-- class to load/store this pane -->
-    <!ATTLIST pane paneclass CDATA #REQUIRED> <!-- class of pane -->
-    <!ATTLIST pane x		 CDATA #REQUIRED>
-    <!ATTLIST pane y		 CDATA #REQUIRED>
-    <!ATTLIST pane height	 CDATA #IMPLIED>
-    <!ATTLIST pane width	 CDATA #IMPLIED>
-    
+  <!ELEMENT fastclock EMPTY>
+    <!ATTLIST fastclock class CDATA #REQUIRED>
+    <!ATTLIST fastclock x     CDATA #REQUIRED>
+    <!ATTLIST fastclock y     CDATA #REQUIRED>
+
   <!ELEMENT signalheadicon EMPTY>
-    <!ATTLIST signalheadicon class		CDATA #REQUIRED>
+    <!ATTLIST signalheadicon class	CDATA #REQUIRED>
     <!ATTLIST signalheadicon x			CDATA #REQUIRED>
     <!ATTLIST signalheadicon y			CDATA #REQUIRED>
-    <!ATTLIST signalheadicon height		CDATA #IMPLIED> <!-- deprecated -->
-    <!ATTLIST signalheadicon width		CDATA #IMPLIED> <!-- deprecated -->
+    <!ATTLIST signalheadicon height	CDATA #IMPLIED> <!-- deprecated -->
+    <!ATTLIST signalheadicon width	CDATA #IMPLIED> <!-- deprecated -->
     <!ATTLIST signalheadicon rotate  	CDATA #IMPLIED>
-    <!ATTLIST signalheadicon red		CDATA #IMPLIED>
-    <!ATTLIST signalheadicon yellow		CDATA #IMPLIED>
-    <!ATTLIST signalheadicon flashyellow	CDATA #IMPLIED>
-    <!ATTLIST signalheadicon green		CDATA #IMPLIED>
-    <!ATTLIST signalheadicon signalhead		CDATA #IMPLIED>
+    <!ATTLIST signalheadicon red         CDATA #IMPLIED>
+    <!ATTLIST signalheadicon yellow      CDATA #IMPLIED>
+    <!ATTLIST signalheadicon flashyellow CDATA #IMPLIED>
+    <!ATTLIST signalheadicon green       CDATA #IMPLIED>
+    <!ATTLIST signalheadicon signalhead  CDATA #IMPLIED>
     
     <!-- the next two (aspectgenerator and head) are obsolete, and -->
     <!-- are only retained until JMRI 3 so that old files can be read -->
@@ -316,12 +313,10 @@
 <!ELEMENT block (sensor*) >
   <!ATTLIST block signal 			  CDATA #REQUIRED >
   <!ATTLIST block mode				  CDATA #IMPLIED>
-  <!ATTLIST block watchedsensor       CDATA #IMPLIED><!-- deprecated, replaced by sensor elements -->
+  <!ATTLIST block watchedsensor       CDATA #IMPLIED>
   <!ATTLIST block watchedturnout      CDATA #IMPLIED>
-  <!ATTLIST block watchedsignal1      CDATA #IMPLIED><!-- signal on main path -->
-  <!ATTLIST block watchedsignal1alt   CDATA #IMPLIED><!-- 2nd head on main path -->
-  <!ATTLIST block watchedsignal2      CDATA #IMPLIED><!-- signal on secondary path -->
-  <!ATTLIST block watchedsignal2alt   CDATA #IMPLIED><!-- 2nd head on secondary path -->
+  <!ATTLIST block watchedsignal1      CDATA #IMPLIED>
+  <!ATTLIST block watchedsignal2      CDATA #IMPLIED>
   <!ATTLIST block useflashyellow      CDATA #IMPLIED>
 
 <!ELEMENT signals EMPTY >
