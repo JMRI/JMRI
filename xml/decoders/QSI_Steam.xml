@@ -1,15 +1,18 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: QSI_Steam.xml,v 1.1 2005-06-08 02:44:53 innkeeper Exp $ -->
+<!-- $Id: QSI_Steam.xml,v 1.2 2005-06-08 13:21:37 innkeeper Exp $ -->
 <decoder-config>
-  <version author="Howard G. Penny" version="1" lastUpdated="20050606"/>
+  <version author="Howard G. Penny" version="1" lastUpdated="20050608"/>
 
 <!-- version 1 - modified for QSI CV.PI.SI format - Howard -->
+<!-- version 2 - added new models                 - Howard -->
 
 <decoder>
   <family name="QSI Steam" mfg="QSIndustries" lowVersionID="1" highVersionID="6">
     <model model="BLI ATSF 3751 4-8-4" lowVersionID="5" 
                   numFns="14" numOuts="14" productID="305"/>
+    <model model="BLI ATSF 3800 Class 2-10-2 2-10-4" lowVersionID="6"
+                  numFns="14" numOuts="14" productID="316"/>
     <model model="BLI C-O T1 Texas 2-10-4" lowVersionID="5"
                   numFns="14" numOuts="14" productID="310"/>
     <model model="BLI Hudson 4-6-4" lowVersionID="1" highVersionID="5"
@@ -48,6 +51,8 @@
                   numFns="14" numOuts="14" productID="304"/>
     <model model="BLI UP Mountian 4-8-2" lowVersionID="6"
                   numFns="14" numOuts="14" productID="307"/>
+    <model model="P2K USRA 0-8-0" lowVersionID="6"
+                  numFns="14" numOuts="14" productID="315"/>
   </family>
 
   <programming direct="yes" paged="yes"
@@ -485,28 +490,6 @@
       <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 
     <!-- QSI-specific below here -->
-<!--    
-    <variable label="Primary Index" CV="49">
-      <decVal/></variable>
-
-    <variable label="Secondary Index" CV="50">
-      <decVal/></variable>
-
-    <variable label="QSI Sound Control" CV="51">
-      <decVal/></variable>
-
-    <variable label="QSI Individual Sound Volume Control" CV="52">
-      <decVal/></variable>
-
-    <variable label="QSI Output Feature Assignment" CV="53">
-      <decVal/></variable>
-
-    <variable label="QSI Feature Configuration" CV="55">
-      <decVal/></variable>
-
-    <variable label="QSI Configuration" CV="56">
-      <decVal/></variable>
--->
     <variable label="Programming Verbal Acknowledgement" CV="62"
       comment="CV62" item="CV62 QSI Control" default="1">
       <enumVal>
@@ -575,10 +558,6 @@
       <indexedVal max="15"/> </ivariable>
     <ivariable label="Steam Dynamo" CVname="52.26" CV="52" PI="26" default="8" comment="QSI" item="CV52.26">
       <indexedVal max="15"/> </ivariable>
-<!--
-    <ivariable label="Dynamic Brakes" CVname="52.28" CV="52" PI="28" default="8" comment="QSI" item="CV52.28">
-      <indexedVal max="15"/> </ivariable>
--->
     <ivariable label="Boiler Pop-off" CVname="52.29" CV="52" PI="29" default="11" comment="QSI" item="CV52.29">
       <indexedVal max="15"/> </ivariable>
     <ivariable label="Blow Down" CVname="52.30" CV="52" PI="30" default="11" comment="QSI" item="CV52.30">
@@ -587,10 +566,7 @@
       <indexedVal max="15"/> </ivariable>
     <ivariable label="Coupler Sounds" CVname="52.34" CV="52" PI="34" default="11" comment="QSI" item="CV52.34">
       <indexedVal max="15"/> </ivariable>
-<!--
-    <ivariable label="Air Brakes" CVname="52.37" CV="52" PI="37" default="11" comment="QSI" item="CV52.37">
-      <indexedVal max="15"/> </ivariable>
--->
+
     <ivariable label="Output 1 - Forward/Reverse Only" CVname="53.1.0" CV="53" PI="1" SI="0"
      default="96" comment="QSI" item="CV53.1.0" infoOnly="yes">
       <ienumVal>
@@ -1052,7 +1028,7 @@
         <ienumChoice choice="Pumps" value="217"/>
       </ienumVal>
     </ivariable>
-<!--
+
     <ivariable label="Throttle Mode" CVname="56.4" CV="56" PI="4" default="1"
      comment="QSI" item="CV56.4" mask="XXXXXXVV">
       <ienumVal>
@@ -1061,17 +1037,15 @@
         <ienumChoice choice="Regulated Throttle Control"/>
       </ienumVal>
     </ivariable>
--->
-<!--
+
     <ivariable label="Speed Step to Scale MPH Scale Factor" CVname="56.10" CV="56" PI="10" default="64"
      comment="QSI" item="CV56.10">
       <indexedVal max="128"/> </ivariable>
--->
-<!--
+
     <ivariable label="Chuff Interval Scale Factor" CVname="56.12" CV="56" PI="12" default="32"
      comment="QSI" item="CV56.12">
       <indexedVal max="128"/> </ivariable>
--->
+
 <!-- CV 56.129 Engine ID Access (for ops mode) - TBD -->
 
 <!-- CV 56.254 About Quantum Decoder -->
