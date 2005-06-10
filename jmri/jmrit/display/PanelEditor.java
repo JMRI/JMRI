@@ -47,7 +47,7 @@ import com.sun.java.util.collections.ArrayList;
  * consistent via the {#setTitle} method.
  *
  * @author Bob Jacobsen  Copyright: Copyright (c) 2002, 2003; modifications, Dennis Miller 2004
- * @version $Revision: 1.48 $
+ * @version $Revision: 1.49 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -59,6 +59,7 @@ public class PanelEditor extends JmriJFrame {
     final public static Integer TURNOUTS  = new Integer(7);
     final public static Integer SIGNALS   = new Integer(9);
     final public static Integer SENSORS   = new Integer(10);
+    final public static Integer CLOCK     = new Integer(10);
 
     JTextField nextX = new JTextField("20",4);
     JTextField nextY = new JTextField("30",4);
@@ -93,6 +94,8 @@ public class PanelEditor extends JmriJFrame {
     JTextField nextSignalHead = new JTextField(5);
     MultiIconEditor signalIconEditor;
     JFrame signalFrame;
+
+    JButton clockAdd = new JButton("Add Fast clock:");
 
     JButton backgroundAddButton = new JButton("Pick background image...");
 
@@ -388,6 +391,22 @@ public class PanelEditor extends JmriJFrame {
 
             this.getContentPane().add(panel);
         }
+
+        // add a fast clock indicator
+        {
+            JPanel panel = new JPanel();
+            panel.setLayout(new FlowLayout());
+            panel.add(clockAdd);
+            clockAdd.setEnabled(true);
+            clockAdd.addActionListener( new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                    addClock();
+                    clockAdd.setEnabled(false);
+                }
+            });
+            this.getContentPane().add(panel);
+        }
+
         // edit, position, control controls
         {
             JPanel p;
@@ -550,6 +569,28 @@ public class PanelEditor extends JmriJFrame {
         contents.add(l);
         // reshow the panel
         target.validate();
+    }
+
+    /**
+     * Add a fast clock
+     */
+    void addClock(){
+        AnalogClock2Display l = new AnalogClock2Display(this);
+        l.setOpaque(false);
+        l.update();
+        l.setDisplayLevel(CLOCK);
+        setNextLocation(l);
+        putClock(l);
+    }
+    public void putClock(AnalogClock2Display c) {
+        c.invalidate();
+        target.add(c, c.getDisplayLevel());
+        contents.add(c);
+        // reshow the panel
+        target.validate();
+    }
+    void clockAddEnable(boolean enable) {
+        clockAdd.setEnabled(enable);
     }
 
     /**
