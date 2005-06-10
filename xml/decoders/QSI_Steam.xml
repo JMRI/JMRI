@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: QSI_Steam.xml,v 1.2 2005-06-08 13:21:37 innkeeper Exp $ -->
+<!-- $Id: QSI_Steam.xml,v 1.3 2005-06-10 12:12:33 innkeeper Exp $ -->
 <decoder-config>
   <version author="Howard G. Penny" version="1" lastUpdated="20050608"/>
 
@@ -1097,12 +1097,13 @@
   </resets>
 </decoder>
 
-<pane name="QSI Sound / Volume Control">
+<pane name="Sound / Volume Control">
   <column>
     <row>
       <column>
         <label label=" "/>
         <label label="If nothing shows up in this tab, upgrade to JMRI 1.7"/>
+        <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
         <label label=" "/>
         <display item="CV51.0" format="hslider" tooltip="Sets CV 51.0 (0 - 127)"/>
         <label label=" "/>
@@ -1157,13 +1158,14 @@
   </column>
 </pane>
 
-<pane name="QSI Function Output">
+<pane name="Function Output">
   <column>
     <row>
   		<column>
-            <label label=" "/>
-            <label label="If nothing shows up in this tab, upgrade to JMRI 1.7"/>
-   		    <label label=" "/>
+        <label label=" "/>
+        <label label="If nothing shows up in this tab, upgrade to JMRI 1.7"/>
+        <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
+   		  <label label=" "/>
 	    	<label label="The first four Outputs are pre-assigned and can't be changed"/>
 	    	<label label="Do NOT assign a Function to more than one Output"/>
 		    <label label=" "/>
@@ -1213,6 +1215,7 @@
 	<column>
         <label label=" "/>
         <label label="If nothing shows up in this tab, upgrade to JMRI 1.7"/>
+        <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
         <label label=" "/>
 		<indxcvtable/>
 	</column>
@@ -1220,6 +1223,8 @@
 
 <pane name="QSI Misc.">
   <column>
+    <label label="When programming in Ops-mode, set Verbal Acknowledgement to disable"/>
+    <label label=" "/>
     <display item="CV62 QSI Control"/>
   </column>
 </pane>
