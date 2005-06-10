@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.html,v 1.13 2005-03-26 22:11:53 pbender Exp $ -->
+<!-- $Id: index.html,v 1.14 2005-06-10 01:51:21 pbender Exp $ -->
 <html lang="en">
 <head>
 <TITLE>
@@ -161,14 +161,20 @@ this page</p>
 	<li>The Lenz LI100F is an improved version of the LI100.  It supports
 	serial port speeds of 9600 and 19,200 baud.  The Factory default is
 	9600 baud.
-	<li>The Lenz LI101 is Lenz's latest computer interface.  It is
-	significantly different than the LI100 and LI100F in physical
-	apearance, and in the method by which the device is configured.  The
-	device is configured via a softwaretool provided by Lenz which runs on
-	Windows only.  We have included a configuration tool with JMRI that
-	will allow users of other operating systems to configure thier LI101 as
-	well.  The LI101 supports serial port speeds of 19,200, 38,400, 57,600,
-	and 115,200 baud.  The factory default is 19,200 baud
+	<li>The Lenz LI101F is Lenz's latest serial port based 
+	computer interface.  It is significantly different than the LI100 and 
+	LI100F in physical apearance, and in the method by which the device is
+	configured.  The device is configured via a softwaretool provided 
+	by Lenz which runs on Windows only.  We have included a configuration 
+	tool with JMRI that will allow users of other operating systems to 
+	configure thier LI101F as well.  The LI101F supports serial port 
+	speeds of 19,200, 38,400, 57,600, and 115,200 baud.  The factory 
+	default is 19,200 baud.
+	<li>The Lenz LIUSB is Lenz's first USB based computer interface.
+	Internally, the device contains a USB to RS232 serial adapter, and 
+	an XPressNet interface circuit similar to that of the LI101F.  The 
+	device is configured via a software tool provided by Lenz which 
+	runs on Windows Only.
 	<li>In addition to the Lenz purpose built computer interfaces, we have
 	also included support for using an XPressNet Phone Adapter (XPA) as an
 	interface to the an XPressNet based DCC system.  This interface is
@@ -199,7 +205,7 @@ this page</p>
 	<p>If you have an Atlas Commander, and would like to use it 
         to control your layout from the computer, an XPA and Hayes 
         Compatible Modem may be a more cost effective solution than the 
-	LI100,LI100F, or LI101F</p>
+	LI100,LI100F,LI101F,or LIUSB</p>
 
 	</dd>
 
@@ -207,8 +213,8 @@ this page</p>
 	<dd>
 	<p>We have a pretty good handle on what instructions each Lenz Command
 	station should support. If you find that you cannot perform a function you
-	think you should be able to using a Lenz system and the LI100 or LI101F,
-	Please let us know.</p>
+	think you should be able to using a Lenz system and the LI100, 
+	LI101F or LIUSB, Please let us know.</p>
 
 	<p>LZ100 and LZV100 based systems support the full range of JMRI 
         functionality.  The LZ100 is the command station used in the 
@@ -227,7 +233,7 @@ this page</p>
 	<p>If you have either an LH200 or a Compact, and wish to add 
 	computer control to your layout, an XPA and Hayes Compatible 
 	Modem may be a more cost effective solution than the LI100, 
-	LI100F, or LI101F</p>
+	LI100F, LI101F, or LIUSB</p>
 	
 	</dd>
 	<dt class=left>Roco</dt>
@@ -235,7 +241,9 @@ this page</p>
 	<p>The Roco LocoMaus 2 (Roco Part number 10760) has been shown to 
 	support operating equipment on a layout (running trains and throwing 
 	switches) as well as programming locomotives on the programming 
-	track.</p>  
+	track.</p>
+	<p>For programming in service mode, the LocoMaus2 appears to only 
+	be able to write to CVs.</p>
 	<p>It is not known at this point in time if the LocoMaus 2 
 	supports Operations Mode Programming.</p>
 
@@ -317,7 +325,77 @@ this page</p>
 
     <li><P> Restart the program. You should be up and running.</p>
 </ol>
+<html>
+<H2>Connecting to an XPressNet based DCC System using a Lenz LIUSB</H2>
+<ol>
+    <li><p> To connect your computer to one of these XPressNet based DCC
+    systems, you can use a Lenz LIUSB interface unit.  Connect the LIUSB 
+    to your DCC command station via their XpressNet connections.  Then
+    connect the LIUSB to your computer's USB port using the supplied
+    cable.</p>
 
+    <li><P> In order to use the LIUSB with JMRI, you must first install a
+    software driver on your computer.  Internally, the device contains a
+    FTDI FT232BM USB to Serial converter.  There are two drivers available
+    for this device, make sure you obtain the Virtual Comm Port (VCP)
+    driver.</P>
+
+    <P> The device drivers for Windows are included on the CD that
+    comes with the device.</p>
+
+    <p> The device drivers for Linux are included with recent versions of
+    the Linux kernel</p>
+
+    <p> Device drivers for Linux, and MacOS (8,9 and X ) and Windows are
+    available from the <a href="http://www.ftdichip.com/">FTDI  website</a>.
+    (A direct link to the drivers that is current as of this writing is <a 
+    href="http://www.ftdichip.com/Drivers/FT232-FT245Drivers.htm">http://www.ftdichip.com/Drivers/FT232-FT245Drivers.htm</a>)
+    </P>
+
+    <P> When the device drivers are installed, and the LIUSB is connected
+    to both your PC and your DCC system, the LIUSB should have a Red
+    LED turned on, indicating the XPressNet connection is OK, and a green 
+    LED turned on, indicating the USB connection is OK.</P>
+
+    <li><P>NOTE: If you have installed the Lenz software, make sure none
+    of it is running.  This includes the LI-Server, which may be running
+    in the background.</P>
+
+    <li><P> Once the drivers are installed, you are ready to configure
+    JMRI.  Start one of the JMRI-based programs, Then go to the
+    preferences panel. This opens automatically the first time a program
+    is run, or you can select it from the "Edit" menu.  </p>
+
+    <li><P> Select "Lenz LIUSB" from the top selection box. You can
+    then select the proper serial port in the second selection box.
+    </p>
+    
+    <li><P> The baud rate selection box should be set to 57,600 baud.</p>
+    
+    <li><P> The fourth box should be left on "hardware flow control"
+    unless you later consistently get a message about the LIUSB control
+    leads being improperly set up, in which case you might want to try to
+    bypass that by selecting "no flow control".</p>
+
+    <li><P> Check Buffer Status when sending?  Should be set to "yes"
+    unless you are using MacOS 8 or 9.</P>
+
+    <li><P> The series of radio buttons labelled "GUI style" allows you to
+    select how the program will look.  "Metal" is the native Java look
+    available on all types.  Other choices will vary with your computer
+    type. "Motif", "Windows", "MacOS" and "MacOS Adaptive" look native
+    on Linux, Windows, MacOS "Classic" and MacOS X respectively.</p>
+
+    <li><P> In the bottom selection box, you can pick the default
+    programmer format. You can override this each time you open the
+    programmer, so this is here just for convenience.</p>
+
+    <li><P> Click "Save".  You'll be asked if it's OK for the program to  
+    quit, click "Yes".</p>
+
+    <li><P> Restart the program. You should be up and running.</p>
+</ol>
+</html>
 
 <H2>Connectiong to an XPressNet based DCC System using the XPA and a modem</H2>
 
