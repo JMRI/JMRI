@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CreateDecoder.html,v 1.13 2005-01-01 00:28:12 jacobsen Exp $ -->
+<!-- $Id: CreateDecoder.html,v 1.14 2005-06-12 03:09:07 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -132,7 +132,7 @@ HREF="../xml/Digitrax_1x2.xml">XXX FIXME XXX Digitrax_1x2.xml</a> file):
 <p class=example>
 &lt;?xml version="1.0"?&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;!DOCTYPE decoder-config SYSTEM "decoder-config.dtd"&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- $Id: CreateDecoder.html,v 1.13 2005-01-01 00:28:12 jacobsen Exp $ --&gt;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- $Id: CreateDecoder.html,v 1.14 2005-06-12 03:09:07 jacobsen Exp $ --&gt;<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;decoder-config&gt;<BR>
 </p>
 
@@ -252,6 +252,7 @@ programmer uses this information to select the programming mode to
 use when working with a decoder.</p>
 </dd>
 
+<A id="variable"/>
 <dt class=left> File contents: Variable names</dt>
 <dd>
 <p>The next part of the file consists of a set of 'variable' elements
@@ -259,9 +260,15 @@ defining specific variables, nested inside a 'variables' (note the
 extra "s") element. An example:</p>
 
 <p class=example>
-&lt;variable label="Short Address" CV="1" item="Primary Address" default="03"&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;decVal min="1" max="127"/&gt;<BR>
-&lt;/variable&gt;
+&lt;variables&gt;<BR>
+  &nbsp;&nbsp;&lt;variable label="Short Address" CV="1" item="Primary Address" default="03"&gt;<BR>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;decVal min="1" max="127"/&gt;<BR>
+  &nbsp;&nbsp;&lt;/variable&gt;<BR>
+  <BR>
+  &nbsp;&nbsp;(followed by more &lt;variable&gt; entries)<BR>
+  <BR>
+  &nbsp;&nbsp;(Insert new ones at the end)<BR>
+&lt;/variables&gt;  
 </p>
 
 <p>Each variable represents one thing to configure.  They can represent a
@@ -274,9 +281,13 @@ different order.</p>
 
 <p> The attributes include:
 <ul>
-<li><dfn>label</dfn> - The name for this variable.
-<li><dfn>item</dfn> - An alternative, 'standard' name. See below for
-more information on this.
+<li><dfn>label</dfn> - The name for this variable. This is generally what
+the decoder manufacturer calls this item, even if other manufacturers or the
+NMRA use a different name for similar things.
+<li><dfn>item</dfn> - An alternative, 'standard' name. See the
+<A HREF="Programmer.html#id">discussion on the programmer definition page</a> 
+for more information on this.  Generally, look at the Comprehensive programmer
+to find something similar, and use the "name" attribute of that.
 <li><dfn>CV</dfn> - Which CV contains the configuration information
 for this variable.
 <li><dfn>mask</dfn> - A pattern like "XXXVVVXX" which controls which

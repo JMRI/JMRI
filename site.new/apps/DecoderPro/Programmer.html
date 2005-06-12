@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Programmer.html,v 1.10 2004-12-31 20:23:43 jacobsen Exp $ -->
+<!-- $Id: Programmer.html,v 1.11 2005-06-12 03:09:07 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -142,6 +142,7 @@ implemented yet, but you should include them in your programmer
 definitions as they will work soon)
 </ul>
 
+<A id="display"/>
 <p> Which name to display is controlled by the pane's  'nameFmt'
 attribute, and the 'label' attribute on each display element (variable).</p>
 
@@ -210,6 +211,45 @@ you're writing a very basic programmer, you might want to hide them.</p>
 </dd>
 
 </dl>
+
+<A id="id"/>
+<h3>How variables in a decoder file match up with the programmer file</h3>
+
+Each decoder file defines 
+<A HREF="CreateDecoder.html#variable">variables</a> that describe specific controls within the
+decoder.  The programmer file then describes how to place those on
+panes so that the user can find and manipulate them.
+<P>
+Each "display" element in the programmer file defines one thing to show.
+But which one?  That's controlled by the "name" attribute
+of the "display" element.  DecoderPro takes that "name" and looks through
+the decoder definition for a "variable" element that has either the
+same "item" or "label" attribute.
+<P>
+This has some nice effects:
+<OL>
+<LI>The "name" in the "display" element is effectively a "standard name", that 
+can be used in decoder definition files from many different
+manufacturers.  Since this is separate from the "label" on the decoder
+variable, it's possible to have a generic programmer file that works for
+many types of different decoders, while still displaying specific variable
+names.  For more on this, please
+<A HREF="#display">see above</a>.
+<LI>
+It lets you use very generic names to control where somewhat different
+things go.  For example, different sound decoders provide different
+controls.  One might have "Airpump", while another doesn't have that
+at all, and instead has "Brake Squeal".  We don't want to have 
+the programmer files contain zillions of "display" elements to
+handle every possible option.  Instead, we use elements with more
+generic names, like "Sound Option 1", for the display name.
+<P>
+The decoder definition then has a "label" of "Airpump" or whatever, and
+an "item" of "Sound Option 1". Everything matches up properly, and
+"Airpump" appears on the computer's screen.
+</OL>
+<P>
+
 
 </div>
 
