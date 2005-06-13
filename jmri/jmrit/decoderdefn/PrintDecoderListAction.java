@@ -19,7 +19,7 @@ import com.sun.java.util.collections.List;
  * Macintosh MRJ
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class PrintDecoderListAction  extends AbstractAction {
 
@@ -59,7 +59,7 @@ public class PrintDecoderListAction  extends AbstractAction {
         String lastFamily = "";
 
         DecoderIndexFile f = DecoderIndexFile.instance();
-        List l = f.matchingDecoderList(null, null, null, null, null); // take all
+        List l = f.matchingDecoderList(null, null, null, null, null, null); // take all
         int i=-1;
         log.debug("Roster list size: "+l.size());
         for (i = 0; i<l.size(); i++) {
