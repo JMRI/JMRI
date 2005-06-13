@@ -46,8 +46,10 @@ import com.sun.java.util.collections.ArrayList;
  * The title of the target and the editor panel are kept
  * consistent via the {#setTitle} method.
  *
- * @author Bob Jacobsen  Copyright: Copyright (c) 2002, 2003; modifications, Dennis Miller 2004
- * @version $Revision: 1.49 $
+ * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
+ * @author  Dennis Miller 2004
+ * @author  Howard G. Penny Copyright: Copyright (c) 2005
+ * @version $Revision: 1.50 $
  */
 
 public class PanelEditor extends JmriJFrame {
