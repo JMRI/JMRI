@@ -16,7 +16,7 @@ import org.jdom.Element;
  * Scans the roster directory for xml files, including any that are found.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class RecreateRosterAction extends AbstractAction {
 
@@ -79,8 +79,11 @@ public class RecreateRosterAction extends AbstractAction {
         if (fp.exists()) {
             sp = fp.list();
             for (i=0; i<sp.length; i++) {
-                if (sp[i].endsWith(".xml") || sp[i].endsWith(".XML"))
-                    np++;
+                if (sp[i].endsWith(".xml") || sp[i].endsWith(".XML")) {
+                    if (!sp[i].equals((String) "roster.xml")) {
+                        np++;
+                    }
+                }
             }
         } else {
             log.warn(XmlFile.prefsDir()+"roster directory was missing, though tried to create it");
@@ -91,8 +94,11 @@ public class RecreateRosterAction extends AbstractAction {
         int n=0;
         if (sp != null && np> 0)
             for (i=0; i<sp.length; i++) {
-                if (sp[i].endsWith(".xml") || sp[i].endsWith(".XML"))
-                    sbox[n++] = sp[i];
+                if (sp[i].endsWith(".xml") || sp[i].endsWith(".XML")) {
+                    if (!sp[i].equals((String) "roster.xml")) {
+                        sbox[n++] = sp[i];
+                    }
+                }
             }
         // The resulting array is now sorted on file-name to make it easier
         // for humans to read
