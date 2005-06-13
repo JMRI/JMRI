@@ -2,7 +2,7 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: QSI_Steam.xml,v 1.4 2005-06-10 13:02:00 innkeeper Exp $ -->
+<!-- $Id: QSI_Steam.xml,v 1.5 2005-06-13 23:39:13 innkeeper Exp $ -->
 <decoder-config>
   <version author="Howard G. Penny" version="4" lastUpdated="20050610"/>
 
@@ -247,7 +247,7 @@
     <variable label="Speed Table Definition" CV="29" mask="XXXVXXXX">
       <enumVal>
         <enumChoice choice="Use Straight-Line Response"/>
-        <enumChoice choice="Use QSI table or User table in CVs 66 through 95"/>
+        <enumChoice choice="Use QSI table or User table in CVs 67 through 94"/>
       </enumVal></variable>
     <variable label="Address Format" CV="29" mask="XXVXXXXX">
       <enumVal>
