@@ -18,8 +18,10 @@ import org.jdom.Element;
 /**
  * Table data model for display of variables in symbolic programmer.
  * Also responsible for loading from the XML file...
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version      $Revision: 1.19 $
+ *
+ * @author    Bob Jacobsen   Copyright (C) 2001
+ * @author    Howard G. Penny   Copyright (C) 2005
+ * @version   $Revision: 1.20 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -27,6 +29,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
     private Vector rowVector = new Vector();  // vector of Variable items
     private CvTableModel _cvModel = null;          // reference to external table model
+    private IndexedCvTableModel _indxCvModel = null;
     private Vector _writeButtons = new Vector();
     private Vector _readButtons = new Vector();
     private JLabel _status = null;
@@ -34,10 +37,11 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     /** Defines the columns; values understood are:
      *  "Name", "Value", "Range", "Read", "Write", "Comment", "CV", "Mask", "State"
      */
-    public VariableTableModel(JLabel status, String h[], CvTableModel cvModel) {
+    public VariableTableModel(JLabel status, String h[], CvTableModel cvModel, IndexedCvTableModel iCvModel) {
         super();
-	_status = status;
+        _status = status;
         _cvModel = cvModel;
+        _indxCvModel = iCvModel;
         headers = h;
     }
 
@@ -97,10 +101,12 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     public void setIntValue(int row, int val) {
         ((VariableValue)rowVector.elementAt(row)).setIntValue(val);
     }
+
     public void setState(int row, int val) {
         if (log.isDebugEnabled()) log.debug("setState row: "+row+" val: "+val);
         ((VariableValue)rowVector.elementAt(row)).setState(val);
     }
+
     public int getState(int row) {
         return ((VariableValue)rowVector.elementAt(row)).getState();
     }
@@ -119,11 +125,11 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         VariableValue v = (VariableValue)rowVector.elementAt(row);
         if (headers[col].equals("Value"))
             return v.getValue();
-        else if (headers[col].equals("Read")) {
+        else if (headers[col].equals("Read"))
             return _readButtons.elementAt(row);
-        } else if (headers[col].equals("Write")) {
+        else if (headers[col].equals("Write"))
             return _writeButtons.elementAt(row);
-        } else if (headers[col].equals("CV"))
+        else if (headers[col].equals("CV"))
             return ""+v.getCvNum();
         else if (headers[col].equals("Name"))
             return ""+v.label();
@@ -134,11 +140,11 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         else if (headers[col].equals("State")) {
             int state = v.getState();
             switch (state) {
-            case CvValue.UNKNOWN:  	return "Unknown";
-            case CvValue.READ:  	return "Read";
-            case CvValue.EDITED:  	return "Edited";
-            case CvValue.STORED:  	return "Stored";
-            case CvValue.FROMFILE:  return "From file";
+            case CvValue.UNKNOWN:  return "Unknown";
+            case CvValue.READ:     return "Read";
+            case CvValue.EDITED:   return "Edited";
+            case CvValue.STORED:   return "Stored";
+            case CvValue.FROMFILE: return "From file";
             default: return "inconsistent";
             }
         }
@@ -181,24 +187,59 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if (e.getAttribute("readOnly") != null) {
             readOnly = e.getAttribute("readOnly").getValue().equals("yes") ? true : false;
             if (log.isDebugEnabled()) log.debug("found readOnly "+e.getAttribute("readOnly").getValue());
-            if (readOnly) { // readOnly, config write, read buttons
-                JButton bw = new JButton();
-                _writeButtons.addElement(bw);
-            } else { // not readOnly, config write, read buttons
-                JButton bw = new JButton("Write");
-                bw.setActionCommand("W"+row);
-                bw.addActionListener(this);
-                _writeButtons.addElement(bw);
-            }
         } else {
             log.warn("Element missing readOnly attribute: "+name);
         }
 
-        // config read button
+        boolean infoOnly = false;
+        if (e.getAttribute("infoOnly") != null) {
+            readOnly = e.getAttribute("infoOnly").getValue().equals("yes") ? true : false;
+            if (log.isDebugEnabled()) log.debug("found readOnly "+e.getAttribute("infoOnly").getValue());
+        } else {
+            log.warn("Element missing readOnly attribute: "+name);
+        }
+
+        boolean writeOnly = false;
+        if (e.getAttribute("writeOnly") != null) {
+            writeOnly = e.getAttribute("writeOnly").getValue().equals("yes") ? true : false;
+            if (log.isDebugEnabled()) log.debug("found writeOnly "+e.getAttribute("writeOnly").getValue());
+        } else {
+            log.warn("Element missing readOnly attribute: "+name);
+        }
+
+        boolean opsOnly = false;
+        if (e.getAttribute("opsOnly") != null) {
+            opsOnly = e.getAttribute("opsOnly").getValue().equals("yes") ? true : false;
+            if (log.isDebugEnabled()) log.debug("found opsOnly "+e.getAttribute("opsOnly").getValue());
+        } else {
+            log.warn("Element missing readOnly attribute: "+name);
+        }
+
+       JButton bw = new JButton("Write");
+        _writeButtons.addElement(bw);
         JButton br = new JButton("Read");
-        br.setActionCommand("R"+row);
-        br.addActionListener(this);
         _readButtons.addElement(br);
+        if (infoOnly || readOnly) {
+            bw.setEnabled(false);
+            if (infoOnly) {
+                br.setEnabled(false);
+            } else {
+                br.setEnabled(true);
+                br.setActionCommand("R"+row);
+                br.addActionListener(this);
+            }
+        } else {
+            bw.setEnabled(true);
+            bw.setActionCommand("W"+row);
+            bw.addActionListener(this);
+            if (writeOnly) {
+                br.setEnabled(false);
+            } else {
+                br.setEnabled(true);
+                br.setActionCommand("R" + row);
+                br.addActionListener(this);
+            }
+       }
 
         if (_cvModel == null) {
             log.error("CvModel reference is null; cannot add variables");
@@ -215,7 +256,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
                 minVal = Integer.valueOf(a.getValue()).intValue();
             if ( (a = child.getAttribute("max")) != null)
                 maxVal = Integer.valueOf(a.getValue()).intValue();
-            v = new DecVariableValue(name, comment, readOnly,
+            v = new DecVariableValue(name, comment, readOnly, infoOnly, writeOnly, opsOnly,
                                      CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item);
 
         } else if ( (child = e.getChild("hexVal")) != null) {
@@ -223,12 +264,12 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
                 minVal = Integer.valueOf(a.getValue(),16).intValue();
             if ( (a = child.getAttribute("max")) != null)
                 maxVal = Integer.valueOf(a.getValue(),16).intValue();
-            v = new HexVariableValue(name, comment, readOnly,
+            v = new HexVariableValue(name, comment, readOnly, infoOnly, writeOnly, opsOnly,
                                      CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item);
 
         } else if ( (child = e.getChild("enumVal")) != null) {
             List l = child.getChildren("enumChoice");
-            EnumVariableValue v1 = new EnumVariableValue(name, comment, readOnly,
+            EnumVariableValue v1 = new EnumVariableValue(name, comment, readOnly, infoOnly, writeOnly, opsOnly,
                                                          CV, mask, 0, l.size()-1, _cvModel.allCvVector(), _status, item);
             v = v1;
             v1.nItems(l.size());
@@ -259,15 +300,15 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             // ensure all CVs exist
             for (int i=0; i<entries; i++) { _cvModel.addCV(""+(CV+i), readOnly); }
 
-            v = new SpeedTableVarValue(name, comment, readOnly,
+            v = new SpeedTableVarValue(name, comment, readOnly, infoOnly, writeOnly, opsOnly,
                                        CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item, entries);
 
         } else if ( (child = e.getChild("longAddressVal")) != null) {
             _cvModel.addCV(""+(CV+1), readOnly);  // ensure 2nd CV exists
-            v = new LongAddrVariableValue(name, comment, readOnly,
+            v = new LongAddrVariableValue(name, comment, readOnly, infoOnly, writeOnly, opsOnly,
                                           CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item);
         } else if ( (child = e.getChild("shortAddressVal")) != null) {
-            ShortAddrVariableValue v1 = new ShortAddrVariableValue(name, comment, readOnly,
+            ShortAddrVariableValue v1 = new ShortAddrVariableValue(name, comment, readOnly, infoOnly, writeOnly, opsOnly,
                                      CV, mask, _cvModel.allCvVector(), _status, item);
             v = v1;
             // get specifics if any
@@ -299,7 +340,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
                 uppermask = a.getValue();
 
             _cvModel.addCV(""+(highCV), readOnly);  // ensure 2nd CV exists
-            v = new SplitVariableValue(name, comment, readOnly,
+            v = new SplitVariableValue(name, comment, readOnly, infoOnly, writeOnly, opsOnly,
                                        CV, mask, minVal, maxVal, _cvModel.allCvVector(),
                                        _status, item,
                                        highCV, factor, offset, uppermask);
@@ -326,6 +367,141 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             _cvModel.getCvByNumber(CV).setState(VariableValue.FROMFILE);  // correct for transition to "edited"
         }
 
+    }
+
+    private int _piCv = -1;
+    public int piCv() {return _piCv;}
+    private int _siCv = -1;
+    public int siCv() {return _siCv;}
+
+    public int setIndxRow(int row, Element e) {
+        // get the values for the VariableValue ctor
+        String name = e.getAttribute("label").getValue(); 	// Note the name variable is actually the label attribute
+        if (log.isDebugEnabled()) log.debug("Starting to setRow \""+name+"\"");
+        String cvName = e.getAttributeValue("CVname");
+        String item = ( e.getAttribute("item")!=null ?
+                        e.getAttribute("item").getValue() :
+                        null);
+        String comment = null;
+        if (e.getAttribute("comment") != null)
+            comment = e.getAttribute("comment").getValue();
+        int piVal = Integer.valueOf(e.getAttribute("PI").getValue()).intValue();
+        int siVal = ( e.getAttribute("SI") != null ?
+                      Integer.valueOf(e.getAttribute("SI").getValue()).intValue() :
+                      -1);
+        int cv = Integer.valueOf(e.getAttribute("CV").getValue()).intValue();
+        String mask = null;
+        if (e.getAttribute("mask") != null)
+            mask = e.getAttribute("mask").getValue();
+        else {
+            log.warn("Element missing mask attribute: "+name);
+            mask ="VVVVVVVV";
+        }
+
+        int minVal = 0;
+        int maxVal = 255;
+
+        boolean readOnly = e.getAttribute("readOnly").getValue().equals("yes") ? true : false;
+        boolean infoOnly = e.getAttribute("infoOnly").getValue().equals("yes") ? true : false;
+        boolean writeOnly = e.getAttribute("writeOnly").getValue().equals("yes") ? true : false;
+        boolean opsOnly = e.getAttribute("opsOnly").getValue().equals("yes") ? true : false;
+
+        JButton br = new JButton("Read");
+        _readButtons.addElement(br);
+        JButton bw = new JButton("Write");
+        _writeButtons.addElement(bw);
+
+        if (readOnly || infoOnly) { // readOnly, config write, read buttons
+            bw.setEnabled(false);
+            if (infoOnly) {
+                br.setEnabled(false);
+            } else {
+                br.setActionCommand("R"+row);
+                br.addActionListener(this);
+            }
+        } else { // not readOnly or infoOnly, config write, read buttons
+            bw.setActionCommand("W" + row);
+            bw.addActionListener(this);
+            if (writeOnly) {
+                br.setEnabled(false);
+            } else {
+                br.setActionCommand("R" + row);
+                br.addActionListener(this);
+            }
+        }
+
+        if (_indxCvModel == null) {
+            log.error("IndexedCvModel reference is null; can not add variables");
+            return -1;
+        }
+
+        int _newRow = _indxCvModel.addIndxCV(row, cvName, _piCv, piVal, _siCv, siVal, cv, readOnly, infoOnly, writeOnly);
+        if( _newRow != row) {
+            row = _newRow;
+        }
+
+        // have to handle various value types, see "snippet"
+        Attribute a;
+        Element child;
+        VariableValue iv = null;
+        if ( (child = e.getChild("indexedVal")) != null) {
+            if ( (a = child.getAttribute("min")) != null)
+                minVal = Integer.valueOf(a.getValue()).intValue();
+            if ( (a = child.getAttribute("max")) != null)
+                maxVal = Integer.valueOf(a.getValue()).intValue();
+            iv = new IndexedVariableValue(row, name, comment,
+                                          readOnly, infoOnly, writeOnly, opsOnly,
+                                          cv, mask, minVal, maxVal, _indxCvModel.allIndxCvVector(),
+                                          _status, item );
+
+        } else if ( (child = e.getChild("ienumVal")) != null) {
+            List l = child.getChildren("ienumChoice");
+            IndexedEnumVariableValue v1 = new IndexedEnumVariableValue(row, name, comment,
+                readOnly, infoOnly, writeOnly, opsOnly,
+                cv, mask, _indxCvModel.allIndxCvVector(),
+                _status, item);
+            iv = v1;
+            v1.nItems(l.size());
+            for (int k=0; k< l.size(); k++) {
+                Element enumChElement = (Element)l.get(k);
+                // is a value specified?
+                Attribute valAttr = enumChElement.getAttribute("value");
+                if ( valAttr==null)
+                    v1.addItem(enumChElement.getAttribute("choice").getValue());
+                else {
+                    v1.addItem(enumChElement.getAttribute("choice").getValue(),
+                               Integer.parseInt(valAttr.getValue()));
+               }
+           }
+           v1.lastItem();
+
+        } else {
+            reportBogus();
+            return -1;
+        }
+
+        // back to general processing
+        // add tooltip text if present
+        if ( (a = e.getAttribute("tooltip")) != null) {
+            iv.setTooltipText(a.getValue());
+        }
+        // record new variable, update state, hook up listeners
+        rowVector.addElement(iv);
+        iv.setState(VariableValue.FROMFILE);
+        iv.addPropertyChangeListener(this);
+
+        // set to default value if specified (CV load may later override this)
+        if ( (a = e.getAttribute("default")) != null) {
+            String val = a.getValue();
+            if (log.isDebugEnabled()) log.debug("Found default value: "+val+" for "+name);
+            iv.setIntValue(Integer.valueOf(val).intValue());
+            if (_indxCvModel.getCvByNumber(row).getInfoOnly()) {
+                _indxCvModel.getCvByNumber(row).setState(VariableValue.READ);
+            } else {
+                _indxCvModel.getCvByNumber(row).setState(VariableValue.FROMFILE); // correct for transition to "edited"
+            }
+        }
+        return row;
     }
 
     void reportBogus() {
@@ -367,11 +543,16 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             String val = a.getValue();
             if (log.isDebugEnabled()) log.debug("Found default value: "+val+" for "+name);
             defaultVal = Integer.valueOf(val).intValue();
+            if ( name.compareTo("PICV") == 0 ) {
+                _piCv = Integer.valueOf(val).intValue();
+            } else if ( name.compareTo("SICV") == 0 ) {
+                _siCv = Integer.valueOf(val).intValue();
+            }
         }
 
         // create the specific object
 
-        ConstantValue v = new ConstantValue(name, comment, true,
+        ConstantValue v = new ConstantValue(name, comment, true, true, false, false,
                                             0, mask, defaultVal, defaultVal,
                                             _cvModel.allCvVector(), _status, stdname);
 
@@ -386,10 +567,10 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             if (log.isDebugEnabled()) log.debug("Found default value: "+val+" for "+name);
             v.setIntValue(defaultVal);
         }
-
     }
 
-    public void newDecVariableValue(String name, int CV, String mask, boolean readOnly) {
+    public void newDecVariableValue(String name, int CV, String mask,
+                                    boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly) {
         setFileDirty(true);
         String comment = "";
         int minVal = 0;
@@ -410,7 +591,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         br.addActionListener(this);
         _readButtons.addElement(br);
 
-        VariableValue v = new DecVariableValue(name, comment, readOnly,
+        VariableValue v = new DecVariableValue(name, comment, readOnly, infoOnly, writeOnly, opsOnly,
                                                CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, null);
         rowVector.addElement(v);
         v.addPropertyChangeListener(this);
@@ -530,6 +711,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         rowVector = null;
 
         _cvModel = null;
+        _indxCvModel = null;
 
         _writeButtons.removeAllElements();
         _writeButtons = null;

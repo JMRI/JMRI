@@ -58,7 +58,7 @@ import javax.swing.event.ChangeListener;
  * be removed.
  *<P>
  * @author	Bob Jacobsen, Alex Shepherd   Copyright (C) 2001, 2004
- * @version	$Revision: 1.23 $
+ * @version	$Revision: 1.24 $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -72,10 +72,11 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     /**
      * Create the object with a "standard format ctor".
      */
-    public SpeedTableVarValue(String name, String comment, boolean readOnly,
+    public SpeedTableVarValue(String name, String comment,
+                              boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                               int cvNum, String mask, int minVal, int maxVal,
                               Vector v, JLabel status, String stdname, int entries) {
-        super(name, comment, readOnly, cvNum, mask, v, status, stdname);
+        super(name, comment, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
 
         nValues = entries;
         _min = minVal;
@@ -114,7 +115,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         return new String("Speed table");
     }
 
-    public CvValue[] usesCVs() { 
+    public CvValue[] usesCVs() {
         CvValue[] retval = new CvValue[nValues];
         int i;
         for (i=0; i<nValues; i++)
@@ -161,8 +162,8 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      * @param i number (index) of the entry
      * @param value  new value
      */
-	void adjust(int i, int value) {
-	    // check the neighbors, and force them if needed
+        void adjust(int i, int value) {
+            // check the neighbors, and force them if needed
         if (i>0) {
             // left neighbour
             if (models[i-1].getValue() > value)  {
@@ -175,7 +176,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
                 setModel(i+1, value);
             }
         }
-	}
+        }
 
     public int getState()  {
         int i;
@@ -242,7 +243,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             int currentState = cv.getState();
             int currentValue = cv.getValue();
 
-            DecVariableValue decVal = new DecVariableValue("val"+i,"", false,
+            DecVariableValue decVal = new DecVariableValue("val"+i,"", false, false, false, false,
                                                            getCvNum()+i, "VVVVVVVV", _min, _max,
                                                            _cvVector, _status, "");
             decVal.setValue(currentValue);
@@ -422,20 +423,15 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     boolean isReading;
     boolean isWriting;
 
+    boolean onlyChanges = false;
 
     /**
      * Notify the connected CVs of a state change from above
      * @param state
      */
     public void setCvState(int state) {
-        // set every element of vector
-        for (int i=0; i<nValues; i++) {
-            CvValue c = (CvValue)_cvVector.elementAt(getCvNum()+i);
-            c.setState(state);
-        }
+        ((CvValue)_cvVector.elementAt(getCvNum())).setState(state);
     }
-
-    boolean onlyChanges = false;
 
     public boolean isChanged() {
         for (int i=0; i<nValues; i++) {

@@ -50,7 +50,7 @@ import com.sun.java.util.collections.List;
  * for further information.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.23 $
+ * @version			$Revision: 1.24 $
  */
 public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeListener {
 
@@ -71,11 +71,11 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         JPanel pane1a = new JPanel();
         pane1a.setLayout(new BoxLayout(pane1a, BoxLayout.X_AXIS));
         pane1a.add(new JLabel("Decoder installed: "));
-        decoderBox = DecoderIndexFile.instance().matchingComboBox(null, null, null, null, null);
+        decoderBox = DecoderIndexFile.instance().matchingComboBox(null, null, null, null, null, null);
         decoderBox.insertItemAt("<from locomotive settings>",0);
         decoderBox.setSelectedIndex(0);
         decoderBox.addActionListener(new ActionListener() {
-        	public void actionPerformed(java.awt.event.ActionEvent e) {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
                     if (decoderBox.getSelectedIndex()!=0) {
                         // reset and disable loco selection
                         locoBox.setSelectedIndex(0);
@@ -87,7 +87,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
                         go2.setEnabled(false);
                         go2.setToolTipText("Select a locomotive or decoder to enable");
                     }
-        	}
+                }
             });
         pane1a.add(decoderBox);
         iddecoder= new JToggleButton("Ident");
@@ -100,10 +100,10 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
             iddecoder.setToolTipText("Button disabled because configured command station can't read CVs");
         }
         iddecoder.addActionListener( new ActionListener() {
-        	public void actionPerformed(java.awt.event.ActionEvent e) {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
                     if (log.isDebugEnabled()) log.debug("identify decoder pressed");
                     startIdentifyDecoder();
-        	}
+                }
             });
         pane1a.add(iddecoder);
         pane1a.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
@@ -252,9 +252,9 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         final CombinedLocoSelPane me = this;
         IdentifyDecoder id = new IdentifyDecoder() {
                 private CombinedLocoSelPane who = me;
-                protected void done(int mfg, int model) {
+                protected void done(int mfg, int model, int productID) {
                     // if Done, updated the selected decoder
-                    who.selectDecoder(mfg, model);
+                    who.selectDecoder(mfg, model, productID);
                 }
                 protected void message(String m) {
                     if (_statusLabel != null) _statusLabel.setText(m);
@@ -310,12 +310,14 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      * locomotive GUI.
      * @param mfgID the decoder's manufacturer ID value from CV8
      * @param modelID the decoder's model ID value from CV7
+     * @param productID the decoder's product ID
      */
-    protected void selectDecoder(int mfgID, int modelID) {
+    protected void selectDecoder(int mfgID, int modelID, int productID) {
+        String sz_productID = (productID != -1 ? Integer.toString(productID) : null);
         // raise the button again
         iddecoder.setSelected(false);
         // locate a decoder like that.
-        List temp = DecoderIndexFile.instance().matchingDecoderList(null, null, Integer.toString(mfgID), Integer.toString(modelID), null);
+        List temp = DecoderIndexFile.instance().matchingDecoderList(null, null, Integer.toString(mfgID), Integer.toString(modelID), sz_productID, null);
         if (log.isDebugEnabled()) log.debug("selectDecoder found "+temp.size()+" matches");
         // install all those in the JComboBox in place of the longer, original list
         if (temp.size() > 0) {
@@ -352,7 +354,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         log.warn(msg);
         _statusLabel.setText(msg);
         // try to select all decoders from that MFG
-        JComboBox temp = DecoderIndexFile.instance().matchingComboBox(null, null, Integer.toString(pMfgID), null, null);
+        JComboBox temp = DecoderIndexFile.instance().matchingComboBox(null, null, Integer.toString(pMfgID), null, null, null);
         if (log.isDebugEnabled()) log.debug("mfg-only selectDecoder found "+temp.getItemCount()+" matches");
         // install all those in the JComboBox in place of the longer, original list
         if (temp.getItemCount() > 0) {
@@ -361,7 +363,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
             decoderBox.setSelectedIndex(1);
         } else {
             // if there are none from this mfg, go back to showing everything
-            temp = DecoderIndexFile.instance().matchingComboBox(null, null, null, null, null);
+            temp = DecoderIndexFile.instance().matchingComboBox(null, null, null, null, null, null);
             decoderBox.setModel(temp.getModel());
             decoderBox.insertItemAt("<from locomotive settings>",0);
             decoderBox.setSelectedIndex(1);
@@ -372,7 +374,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      */
     void updateForDecoderNotID(int pMfgID, int pModelID) {
         log.warn("Found mfg "+pMfgID+" version "+pModelID+"; no such manufacterer defined");
-        JComboBox temp = DecoderIndexFile.instance().matchingComboBox(null, null, null, null, null);
+        JComboBox temp = DecoderIndexFile.instance().matchingComboBox(null, null, null, null, null, null);
         decoderBox.setModel(temp.getModel());
         decoderBox.insertItemAt("<from locomotive settings>",0);
         decoderBox.setSelectedIndex(1);

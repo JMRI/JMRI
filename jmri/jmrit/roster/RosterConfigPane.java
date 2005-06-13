@@ -20,12 +20,12 @@ import javax.swing.JTextField;
  *
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class RosterConfigPane extends JPanel {
 
     JLabel filename;
-    JTextField owner = new JTextField(10);
+    JTextField owner = new JTextField(20);
     JFileChooser fc = new JFileChooser();
 
     public RosterConfigPane() {
@@ -37,11 +37,12 @@ public class RosterConfigPane extends JPanel {
         JButton b = new JButton("Set ...");
         b.addActionListener(new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                fc.setDialogTitle("Find desired roster.xml file");
+                fc.setDialogTitle("Find desired roster directory"); //  .xml file");
+                fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 fc.rescanCurrentDirectory();
                 fc.showOpenDialog(null);
                 if (fc.getSelectedFile()==null) return; // cancelled
-                filename.setText(fc.getSelectedFile().getParent()+File.separator);
+                filename.setText(fc.getSelectedFile()+File.separator);//.getParent()+File.separator);
                 validate();
                 if (getTopLevelAncestor()!=null) ((JFrame)getTopLevelAncestor()).pack();
             }

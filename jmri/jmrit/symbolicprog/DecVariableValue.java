@@ -22,16 +22,17 @@ import com.sun.java.util.collections.ArrayList;
  * Decimal representation of a value.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.13 $
+ * @version             $Revision: 1.14 $
  *
  */
 public class DecVariableValue extends VariableValue
     implements ActionListener, PropertyChangeListener, FocusListener {
 
-    public DecVariableValue(String name, String comment, boolean readOnly,
+    public DecVariableValue(String name, String comment,
+                            boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                             int cvNum, String mask, int minVal, int maxVal,
                             Vector v, JLabel status, String stdname) {
-        super(name, comment, readOnly, cvNum, mask, v, status, stdname);
+        super(name, comment, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
         _value = new JTextField("0",3);
@@ -53,7 +54,7 @@ public class DecVariableValue extends VariableValue
     int _maxVal;
     int _minVal;
 
-    public CvValue[] usesCVs() { 
+    public CvValue[] usesCVs() {
         return new CvValue[]{(CvValue)_cvVector.elementAt(getCvNum())};
     }
 
@@ -94,7 +95,7 @@ public class DecVariableValue extends VariableValue
         }
         catch (java.lang.NumberFormatException ex) { newVal = 0; }
         int newCv = newValue(oldCv, newVal, getMask());
-		if (oldCv != newCv)
+                if (oldCv != newCv)
                     cv.setValue(newCv);
     }
 

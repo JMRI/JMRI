@@ -26,18 +26,18 @@ import javax.swing.text.Document;
  *</PRE>
  * decoders.
  * @author			Bob Jacobsen   Copyright (C) 2002, 2003, 2004
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  *
  */
 public class SplitVariableValue extends VariableValue
     implements ActionListener, PropertyChangeListener, FocusListener {
 
-    public SplitVariableValue(String name, String comment, boolean readOnly,
+    public SplitVariableValue(String name, String comment,
+                              boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                               int cvNum, String mask, int minVal, int maxVal,
                               Vector v, JLabel status, String stdname,
-                              int pSecondCV,
-                              int pFactor, int pOffset, String uppermask) {
-        super(name, comment, readOnly, cvNum, mask, v, status, stdname);
+                              int pSecondCV, int pFactor, int pOffset, String uppermask) {
+        super(name, comment, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
         _value = new JTextField("0", 5);
@@ -74,7 +74,7 @@ public class SplitVariableValue extends VariableValue
         cv1.setState(CvValue.FROMFILE);
     }
 
-    public CvValue[] usesCVs() { 
+    public CvValue[] usesCVs() {
         return new CvValue[]{
             (CvValue)_cvVector.elementAt(getCvNum()),
             (CvValue)_cvVector.elementAt(mSecondCV+1)};
@@ -215,15 +215,6 @@ public class SplitVariableValue extends VariableValue
         // prop.firePropertyChange("Value", null, null);
     }
 
-    /**
-     * Notify the connected CVs of a state change from above
-     * @param state
-     */
-    public void setCvState(int state) {
-        ((CvValue)_cvVector.elementAt(getCvNum())).setState(state);
-        ((CvValue)_cvVector.elementAt(getSecondCvNum())).setState(state);
-    }
-
     public Component getRep(String format)  {
         return updateRepresentation(new VarTextField(_value.getDocument(),_value.getText(), 5, this));
     }
@@ -233,6 +224,14 @@ public class SplitVariableValue extends VariableValue
     private static final int READING_SECOND = 2;
     private static final int WRITING_FIRST = 3;
     private static final int WRITING_SECOND = 4;
+
+    /**
+     * Notify the connected CVs of a state change from above
+     * @param state
+     */
+    public void setCvState(int state) {
+        ((CvValue)_cvVector.elementAt(getCvNum())).setState(state);
+    }
 
     public boolean isChanged() {
         CvValue cv1 = ((CvValue)_cvVector.elementAt(getCvNum()));
@@ -353,7 +352,7 @@ public class SplitVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.11 $
+     * @version     $Revision: 1.12 $
      */
     public class VarTextField extends JTextField {
 

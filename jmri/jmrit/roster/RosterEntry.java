@@ -4,6 +4,7 @@ package jmri.jmrit.roster;
 
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.CvTableModel;
+import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import java.io.File;
 import java.io.IOException;
@@ -32,9 +33,10 @@ import org.jdom.Element;
  * When the filePath attribute is non-null, the user has decided to
  * organize the roster into directories.
  *
- * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2004; Dennis Miller Copyright 2004
- * @version	$Revision: 1.19 $
- * @see jmri.jmrit.roster.LocoFile
+ * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004
+ * @author    Dennis Miller Copyright 2004
+ * @version   $Revision: 1.20 $
+ * @see       jmri.jmrit.roster.LocoFile
  *
  */
 public class RosterEntry {
@@ -232,7 +234,7 @@ public class RosterEntry {
      * @param variableModel Variable contents to include in file
      *
      */
-    public void writeFile(CvTableModel cvModel, VariableTableModel variableModel) {
+    public void writeFile(CvTableModel cvModel, IndexedCvTableModel iCvModel, VariableTableModel variableModel) {
         LocoFile df = new LocoFile();
 
         // do I/O
@@ -245,7 +247,7 @@ public class RosterEntry {
             df.makeBackupFile(LocoFile.getFileLocation()+getFileName());
 
             // and finally write the file
-            df.writeFile(f, cvModel, variableModel, this);
+            df.writeFile(f, cvModel, iCvModel, variableModel, this);
 
         } catch (Exception e) {
             log.error("error during locomotive file output: "+e);
@@ -263,10 +265,10 @@ public class RosterEntry {
      * of this entry
      * @param cvModel Model to load, must exist
      */
-    public void loadCvModel(CvTableModel cvModel) {
+    public void loadCvModel(CvTableModel cvModel, IndexedCvTableModel iCvModel) {
         if (cvModel == null) log.error("loadCvModel must be given a non-null argument");
         if (mRootElement == null) log.error("loadCvModel called before readFile() succeeded");
-        LocoFile.loadCvModel(mRootElement.getChild("locomotive"), cvModel);
+        LocoFile.loadCvModel(mRootElement.getChild("locomotive"), cvModel, iCvModel);
     }
 
     /**

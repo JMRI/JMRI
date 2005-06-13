@@ -18,7 +18,7 @@ import junit.framework.TestSuite;
  * Test PaneProgFrame
  *
  * @author			Bob Jacobsen
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class PaneProgFrameTest extends TestCase {
 
@@ -31,7 +31,7 @@ public class PaneProgFrameTest extends TestCase {
 
         PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
                                             "test frame", "programmers/Basic.xml",
-                                            new jmri.progdebugger.ProgDebugger()) {
+                                            new jmri.progdebugger.ProgDebugger(), false) {
                 // dummy implementations
                 JPanel getModePane() { return new JPanel(); }
             };
@@ -48,7 +48,8 @@ public class PaneProgFrameTest extends TestCase {
     public void testFrame() {
         setupDoc();
         PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
-                                            "test frame", "programmers/Basic.xml", new jmri.progdebugger.ProgDebugger()) {
+                                            "test frame", "programmers/Basic.xml",
+                                            new jmri.progdebugger.ProgDebugger(), false) {
                 // dummy implementations
                 JPanel getModePane() { return null; }
             };

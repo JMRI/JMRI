@@ -4,12 +4,12 @@ package jmri.jmrit.roster;
 
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.CvTableModel;
+import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.CvValue;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import java.io.File;
 
 import com.sun.java.util.collections.List;
-import org.jdom.DocType;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
@@ -21,10 +21,12 @@ import org.jdom.output.XMLOutputter;
  * This class is intended for use by RosterEntry only; you should not use it
  * directly. That's why this is not a public class.
  *
- * @author	Bob Jacobsen   Copyright (C) 2001, 2002;  Dennis Miller Copyright 2004
- * @version     $Revision: 1.15 $
- * @see         jmri.jmrit.roster.RosterEntry
- * @see         jmri.jmrit.roster.Roster
+ * @author    Bob Jacobsen     Copyright (C) 2001, 2002
+ * @author    Dennis Miller    Copyright (C) 2004
+ * @author    Howard G. Penny  Copyright (C) 2005
+ * @version   $Revision: 1.16 $
+ * @see       jmri.jmrit.roster.RosterEntry
+ * @see       jmri.jmrit.roster.Roster
  */
 class LocoFile extends XmlFile {
 
@@ -42,7 +44,7 @@ class LocoFile extends XmlFile {
      *                 the CVs from the loco Element appended.  It is
      *                 intended, but not required, that this be empty.
      */
-    public static void loadCvModel(Element loco, CvTableModel cvModel){
+    public static void loadCvModel(Element loco, CvTableModel cvModel, IndexedCvTableModel iCvModel){
         CvValue cvObject;
         // get the CVs and load
         Element values = loco.getChild("values");
@@ -76,6 +78,40 @@ class LocoFile extends XmlFile {
                 cvObject.setValue(Integer.valueOf(value).intValue());
                 cvObject.setState(CvValue.FROMFILE);
             }
+            elementList = values.getChildren("indexedCVvalue");
+            if (log.isDebugEnabled()) log.debug("Found "+elementList.size()+" indexedCVvalues");
+            for (int i=0; i<elementList.size(); i++) {
+                if ( ((Element)(elementList.get(i))).getAttribute("name") == null) {
+                    if (log.isDebugEnabled()) log.debug("unexpected null in name "+((Element)(elementList.get(i)))+" "+((Element)(elementList.get(i))).getAttributes());
+                    break;
+                }
+                if ( ((Element)(elementList.get(i))).getAttribute("value") == null) {
+                    if (log.isDebugEnabled()) log.debug("unexpected null in value "+((Element)(elementList.get(i)))+" "+((Element)(elementList.get(i))).getAttributes());
+                    break;
+                }
+
+                String name  = ((Element)(elementList.get(i))).getAttribute("name").getValue();
+                int piCv  = Integer.valueOf(((Element)(elementList.get(i))).getAttribute("piCv").getValue()).intValue();
+                int piVal = Integer.valueOf(((Element)(elementList.get(i))).getAttribute("piVal").getValue()).intValue();
+                int siCv  = Integer.valueOf(((Element)(elementList.get(i))).getAttribute("siCv").getValue()).intValue();
+                int siVal = Integer.valueOf(((Element)(elementList.get(i))).getAttribute("siVal").getValue()).intValue();
+                int iCv   = Integer.valueOf(((Element)(elementList.get(i))).getAttribute("iCv").getValue()).intValue();
+                String value = ((Element)(elementList.get(i))).getAttribute("value").getValue();
+                if (log.isDebugEnabled()) log.debug("CV: "+i+"th entry, CV number "+name+" has value: "+value);
+
+                cvObject = (CvValue)(iCvModel.allIndxCvVector().elementAt(i));
+                if (cvObject == null) {
+                    log.warn("Indexed CV "+name+" was in loco file, but not defined by the decoder definition");
+                    iCvModel.addIndxCV(i, name, piCv, piVal, siCv, siVal, iCv, false, false, false);
+                    cvObject = (CvValue)(iCvModel.allIndxCvVector().elementAt(i));
+                }
+                cvObject.setValue(Integer.valueOf(value).intValue());
+                if ( cvObject.getInfoOnly() ) {
+                    cvObject.setState(CvValue.READ);
+                } else {
+                    cvObject.setState(CvValue.FROMFILE);
+                }
+            }
         } else log.error("no values element found in config file; CVs not configured");
 
         // ugly hack - set CV17 back to fromFile if present
@@ -92,10 +128,11 @@ class LocoFile extends XmlFile {
      *
      * @param file Destination file. This file is overwritten if it exists.
      * @param cvModel provides the CV numbers and contents
+     * @param iCvModel provides the Indexed CV numbers and contents
      * @param variableModel provides the variable names and contents
      * @param r  RosterEntry providing name, etc, information
      */
-    public void writeFile(File file, CvTableModel cvModel, VariableTableModel variableModel, RosterEntry r) {
+    public void writeFile(File file, CvTableModel cvModel, IndexedCvTableModel iCvModel, VariableTableModel variableModel, RosterEntry r) {
         if (log.isDebugEnabled()) log.debug("writeFile to "+file.getAbsolutePath()+" "+file.getName());
         try {
             // This is taken in large part from "Java and XML" page 368
@@ -103,7 +140,6 @@ class LocoFile extends XmlFile {
             // create root element
             Element root = new Element("locomotive-config");
             Document doc = newDocument(root, "locomotive-config.dtd");
-
 
             //Before adding the roster locomotive values, scan the Comment and
             //Decoder Comment fields to change any \n to a <?p?> processor directive.
@@ -118,24 +154,24 @@ class LocoFile extends XmlFile {
             String tempComment =  r.getComment();
             String xmlComment = new String();
             for (int k = 0; k < tempComment.length(); k++) {
-              if (tempComment.startsWith("\n",k)){
-                xmlComment = xmlComment + "<?p?>";
-              }
-              else {
-                xmlComment = xmlComment + tempComment.substring(k,k+1);
-              }
+                if (tempComment.startsWith("\n",k)){
+                    xmlComment = xmlComment + "<?p?>";
+                }
+                else {
+                    xmlComment = xmlComment + tempComment.substring(k,k+1);
+                }
             }
 
             //Now do the same thing for the Decoder Comment field
             String tempDecoderComment =  r.getDecoderComment();
             String xmlDecoderComment = new String();
             for (int k = 0; k < tempDecoderComment.length(); k++) {
-              if (tempDecoderComment.startsWith("\n",k)){
-                xmlDecoderComment = xmlDecoderComment + "<?p?>";
-              }
-              else {
-                xmlDecoderComment = xmlDecoderComment + tempDecoderComment.substring(k,k+1);
-              }
+                if (tempDecoderComment.startsWith("\n",k)){
+                    xmlDecoderComment = xmlDecoderComment + "<?p?>";
+                }
+                else {
+                    xmlDecoderComment = xmlDecoderComment + tempDecoderComment.substring(k,k+1);
+                }
             }
 
 
@@ -155,8 +191,7 @@ class LocoFile extends XmlFile {
                                         .addAttribute("comment",xmlDecoderComment)
                                         )
                             .addContent(values = new Element("values"))
-                            )
-                ;
+                );
 
             // Append a decoderDef element to values
             Element decoderDef;
@@ -166,14 +201,26 @@ class LocoFile extends XmlFile {
                 decoderDef.addContent(new Element("varValue")
                                       .addAttribute("item", variableModel.getLabel(i))
                                       .addAttribute("value", variableModel.getValString(i))
-                                      );
+                    );
             }
             // add the CV values to the values Element
             for (int i = 0; i < cvModel.getRowCount(); i++) {
                 values.addContent(new Element("CVvalue")
                                   .addAttribute("name", cvModel.getName(i))
                                   .addAttribute("value", cvModel.getValString(i))
-                                  );
+                    );
+            }
+            // add the Indexed CV values to the
+            for (int i = 0; i < iCvModel.getRowCount(); i++) {
+                values.addContent(new Element("indexedCVvalue")
+                                  .addAttribute("name", iCvModel.getName(i))
+                                  .addAttribute("piCv", ""+((CvValue)iCvModel.getCvByRow(i)).piCv())
+                                  .addAttribute("piVal", ""+((CvValue)iCvModel.getCvByRow(i)).piVal())
+                                  .addAttribute("siCv", ""+((CvValue)iCvModel.getCvByRow(i)).siCv())
+                                  .addAttribute("siVal", ""+((CvValue)iCvModel.getCvByRow(i)).siVal())
+                                  .addAttribute("iCv", ""+((CvValue)iCvModel.getCvByRow(i)).iCv())
+                                  .addAttribute("value", iCvModel.getValString(i))
+                    );
             }
 
             // write the result to selected file

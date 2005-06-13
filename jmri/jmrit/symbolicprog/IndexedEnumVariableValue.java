@@ -16,16 +16,17 @@ import com.sun.java.util.collections.List;
  * Extends VariableValue to represent a enumerated indexed variable.
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  *
  */
 public class IndexedEnumVariableValue extends VariableValue
     implements ActionListener, PropertyChangeListener {
 
-    public IndexedEnumVariableValue(int row, String name, String comment, boolean readOnly,
-                             int cvNum, String mask,
-                             Vector v, JLabel status, String stdname) {
-        super(name, comment, readOnly, cvNum, mask, v, status, stdname);
+    public IndexedEnumVariableValue(int row, String name, String comment,
+                                    boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
+                                    int cvNum, String mask,
+                                    Vector v, JLabel status, String stdname) {
+        super(name, comment, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _row    = row;
     }
 
@@ -231,14 +232,6 @@ public class IndexedEnumVariableValue extends VariableValue
         }
     }
 
-    /**
-     * Notify the connected CVs of a state change from above
-     * @param state
-     */
-    public void setCvState(int state) {
-        ((CvValue)_cvVector.elementAt(_row)).setState(state);
-    }
-
     private int _progState = 0;
     private static final int IDLE = 0;
     private static final int WRITING_PI4R = 1;
@@ -247,6 +240,26 @@ public class IndexedEnumVariableValue extends VariableValue
     private static final int WRITING_SI4W = 4;
     private static final int READING_CV = 5;
     private static final int WRITING_CV = 6;
+
+    /**
+     * Notify the connected CVs of a state change from above
+     * @param state
+     */
+    public void setCvState(int state) {
+        ((CvValue)_cvVector.elementAt(getCvNum())).setState(state);
+    }
+
+    public void setToRead(boolean state) {
+        if (getInfoOnly() || getWriteOnly()) state = false;
+        ((CvValue)_cvVector.elementAt(_row)).setToRead(state);
+    }
+    public boolean isToRead() { return ((CvValue)_cvVector.elementAt(_row)).isToRead(); }
+
+    public void setToWrite(boolean state) {
+        if (getInfoOnly() || getReadOnly()) state = false;
+        ((CvValue)_cvVector.elementAt(_row)).setToWrite(state);
+    }
+    public boolean isToWrite() { return ((CvValue)_cvVector.elementAt(_row)).isToWrite(); }
 
     public boolean isChanged() {
         CvValue cv = ((CvValue)_cvVector.elementAt(_row));
@@ -355,7 +368,7 @@ public class IndexedEnumVariableValue extends VariableValue
      * model between this object and the real JComboBox value.
      *
      * @author  Bob Jacobsen   Copyright (C) 2001
-     * @version $Revision: 1.1 $
+     * @version $Revision: 1.2 $
      */
     public class iVarComboBox extends JComboBox {
 

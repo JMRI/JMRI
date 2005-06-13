@@ -11,10 +11,10 @@ import javax.swing.JPanel;
  * Extend the PaneProgFrame to handle ops mode operations
  *
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class PaneOpsProgFrame extends PaneProgFrame
-							implements java.beans.PropertyChangeListener  {
+                                                        implements java.beans.PropertyChangeListener  {
 
     // commented out for now, as we only have the one ops mode
     // jmri.ProgModePane   modePane        = new jmri.ProgModePane(BoxLayout.X_AXIS);
@@ -36,7 +36,7 @@ public class PaneOpsProgFrame extends PaneProgFrame
      */
     public PaneOpsProgFrame(DecoderFile decoderFile, RosterEntry r,
                             String name, String file, Programmer p) {
-        super(decoderFile, r, name, file, p);
+        super(decoderFile, r, name, file, p, true);
 
         if (log.isDebugEnabled()) log.debug("PaneOpsProgFrame \""+name
                                             +"\" constructed");

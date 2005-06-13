@@ -14,10 +14,10 @@ import org.jdom.Element;
  * Extend the PaneProgFrame to handle service mode operations
  *
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class PaneServiceProgFrame extends PaneProgFrame
-							implements java.beans.PropertyChangeListener  {
+                                                        implements java.beans.PropertyChangeListener  {
 
     jmri.ProgModeSelector  modePane;
 
@@ -47,7 +47,7 @@ public class PaneServiceProgFrame extends PaneProgFrame
      */
     public PaneServiceProgFrame(DecoderFile decoderFile, RosterEntry r,
                                 String name, String file, Programmer pProg) {
-        super(decoderFile, r, name, file, pProg);
+        super(decoderFile, r, name, file, pProg, false);
 
         // set the programming mode
         if (jmri.InstanceManager.programmerManagerInstance() != null) {

@@ -39,18 +39,18 @@ import com.sun.java.util.collections.List;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
 
-	public CombinedLocoSelTreePane(JLabel s) {
-		super(s);
-	}
+        public CombinedLocoSelTreePane(JLabel s) {
+                super(s);
+        }
 
-	public CombinedLocoSelTreePane() {
+        public CombinedLocoSelTreePane() {
 
-		super();
-	}
+                super();
+        }
 
     JTree dTree;
     DefaultTreeModel dModel;
@@ -76,7 +76,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
         };
         dTree.setToolTipText("");
 
-        List decoders = DecoderIndexFile.instance().matchingDecoderList(null, null, null, null, null);
+        List decoders = DecoderIndexFile.instance().matchingDecoderList(null, null, null, null, null, null);
         int len = decoders.size();
         DefaultMutableTreeNode mfgElement = null;
         DefaultMutableTreeNode familyElement = null;
@@ -178,9 +178,9 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
             iddecoder.setToolTipText("Button disabled because configured command station can't read CVs");
         }
         iddecoder.addActionListener( new ActionListener() {
-        	public void actionPerformed(java.awt.event.ActionEvent e) {
-        		startIdentifyDecoder();
-        	}
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                        startIdentifyDecoder();
+                }
         });
         pane1a.add(iddecoder);
         pane1a.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
@@ -206,7 +206,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
         String item = ((DecoderFile)pList.get(0)).getModel();
         // if this is a family listing plus one specific decoder, take the decoder
         if (pList.size()==2 && item.equals(((DecoderFile)pList.get(0)).getFamily()) )
-                item = ((DecoderFile)pList.get(1)).getModel();
+            item = ((DecoderFile)pList.get(1)).getModel();
         dTree.clearSelection();
         Enumeration e = dRoot.breadthFirstEnumeration();
         while (e.hasMoreElements()) {

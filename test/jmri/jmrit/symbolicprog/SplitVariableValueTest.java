@@ -17,7 +17,7 @@ import junit.framework.*;
  *
  * @todo need a check of the MIXED state model for long address
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 
@@ -27,14 +27,15 @@ public class SplitVariableValueTest extends VariableValueTest {
     ProgDebugger p = new ProgDebugger();
 
     // abstract members invoked by tests in parent VariableValueTest class
-    VariableValue makeVar(String label, String comment, boolean readOnly,
+    VariableValue makeVar(String label, String comment,
+                          boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                           int cvNum, String mask, int minVal, int maxVal,
                           Vector v, JLabel status, String item) {
         // make sure next CV exists
         CvValue cvNext = new CvValue(cvNum+offset, p);
         cvNext.setValue(0);
         v.setElementAt(cvNext, cvNum+offset);
-        return new SplitVariableValue(label, comment, readOnly,
+        return new SplitVariableValue(label, comment, readOnly, infoOnly, writeOnly, opsOnly,
                                       cvNum, "XXXXVVVV", minVal, maxVal, v, status, item,
                                       cvNum+offset, 1, 0, "VVVVVVVV");
     }
@@ -78,7 +79,7 @@ public class SplitVariableValueTest extends VariableValueTest {
         v.setElementAt(cv1, lowCV);
         v.setElementAt(cv2, lowCV+offset);
         // create a variable pointed at CVs
-        SplitVariableValue var = new SplitVariableValue("name", "comment", false, lowCV,
+        SplitVariableValue var = new SplitVariableValue("name", "comment", false, false, false, false, lowCV,
                                                         "VVVVVVVV", 0, 255, v, null, null,
                                                         lowCV+offset, 1, 0, "VVVVVVVV");
 
@@ -105,7 +106,7 @@ public class SplitVariableValueTest extends VariableValueTest {
         v.setElementAt(cv1, lowCV);
         v.setElementAt(cv2, lowCV+offset);
         // create a variable pointed at CVs
-        SplitVariableValue var = new SplitVariableValue("name", "comment", false, lowCV,
+        SplitVariableValue var = new SplitVariableValue("name", "comment", false, false, false, false, lowCV,
                                                         "XXXXVVVV", 0, 255, v, null, null,
                                                         lowCV+offset, 1, 0, "VVVVVVVV");
 
@@ -132,7 +133,7 @@ public class SplitVariableValueTest extends VariableValueTest {
         v.setElementAt(cv1, lowCV);
         v.setElementAt(cv2, lowCV+offset);
         // create a variable pointed at CVs
-        SplitVariableValue var = new SplitVariableValue("name", "comment", false, lowCV,
+        SplitVariableValue var = new SplitVariableValue("name", "comment", false, false, false, false, lowCV,
                                                         "VVVVVVVV", 0, 255, v, null, null,
                                                         lowCV+offset, 1, 0, "XXVVVVXX");
 
@@ -159,7 +160,7 @@ public class SplitVariableValueTest extends VariableValueTest {
         v.setElementAt(cv1, lowCV);
         v.setElementAt(cv2, lowCV+offset);
         // create a variable pointed at CVs
-        SplitVariableValue var = new SplitVariableValue("name", "comment", false, lowCV,
+        SplitVariableValue var = new SplitVariableValue("name", "comment", false, false, false, false, lowCV,
                                                         "XVVVVVVX", 0, 255, v, null, null,
                                                         lowCV+offset, 1, 0, "XVVVVVXX");
 
@@ -192,7 +193,7 @@ public class SplitVariableValueTest extends VariableValueTest {
         v.setElementAt(cv1, lowCV);
         v.setElementAt(cv2, lowCV+offset);
 
-        SplitVariableValue var = new SplitVariableValue("name", "comment", false,
+        SplitVariableValue var = new SplitVariableValue("name", "comment", false, false, false, false,
                                                         lowCV, "XXVVVVVV", 0, 255, v, null, null,
                                                         lowCV+offset, 1, 0, "VVVVVVVV");
         // register a listener for parameter changes
@@ -247,8 +248,8 @@ public class SplitVariableValueTest extends VariableValueTest {
         v.setElementAt(cv1, lowCV);
         v.setElementAt(cv2, lowCV+offset);
 
-        SplitVariableValue var = new SplitVariableValue("name", "comment",
-                                                        false, lowCV, "XXVVVVVV", 0, 255, v, null, null,
+        SplitVariableValue var = new SplitVariableValue("name", "comment", false, false, false, false,
+                                                        lowCV, "XXVVVVVV", 0, 255, v, null, null,
                                                         lowCV+offset, 1, 0, "VVVVVVVV");
         ((JTextField)var.getValue()).setText("4797");
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));

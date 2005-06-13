@@ -16,15 +16,16 @@ import com.sun.java.util.collections.List;
  * Extends VariableValue to represent a enumerated variable.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
 
-    public EnumVariableValue(String name, String comment, boolean readOnly,
+    public EnumVariableValue(String name, String comment,
+                             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                              int cvNum, String mask, int minVal, int maxVal,
                              Vector v, JLabel status, String stdname) {
-        super(name, comment, readOnly, cvNum, mask, v, status, stdname);
+        super(name, comment, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
     }
@@ -34,7 +35,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      */
     public EnumVariableValue() {}
 
-    public CvValue[] usesCVs() { 
+    public CvValue[] usesCVs() {
         return new CvValue[]{(CvValue)_cvVector.elementAt(getCvNum())};
     }
 
@@ -296,7 +297,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * model between this object and the real JComboBox value.
      *
      * @author			Bob Jacobsen   Copyright (C) 2001
-     * @version         $Revision: 1.14 $
+     * @version         $Revision: 1.15 $
      */
     public class VarComboBox extends JComboBox {
 
@@ -326,7 +327,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         }
 
         public void dispose() {
-	    if (_var != null && _l != null ) _var.removePropertyChangeListener(_l);
+            if (_var != null && _l != null ) _var.removePropertyChangeListener(_l);
             _l = null;
             _var = null;
         }

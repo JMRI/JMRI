@@ -28,10 +28,11 @@ import com.sun.java.util.collections.List;
  * overridden (e.g. in a local anonymous class) to create the programmer frame
  * you're interested in.
  *
- * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.5 $
- * @see             jmri.jmrit.decoderdefn.IdentifyDecoder
- * @see             jmri.jmrit.roster.IdentifyLoco
+ * @author  Bob Jacobsen   Copyright (C) 2001, 2002
+ * @author  Howard G. Penny Copyright (C) 2005
+ * @version $Revision: 1.6 $
+ * @see     jmri.jmrit.decoderdefn.IdentifyDecoder
+ * @see     jmri.jmrit.roster.IdentifyLoco
  */
 public class NewLocoSelPane extends javax.swing.JPanel  {
 
@@ -53,11 +54,11 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
 
         locoBox = Roster.instance().fullRosterComboBox();
         locoBox.addActionListener( new ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (log.isInfoEnabled()) log.info("Locomotive selected changed");
-                    matchDecoderToLoco();
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                if (log.isInfoEnabled()) log.info("Locomotive selected changed");
+                matchDecoderToLoco();
+            }
+        });
         locoBox.insertItemAt("<none>",0);
         locoBox.setSelectedIndex(0);
         add(locoBox);
@@ -67,26 +68,26 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
         pane1a.add(new JLabel("Decoder installed:"));
         JButton iddecoder= new JButton("Identify decoder");
         iddecoder.addActionListener( new ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (log.isInfoEnabled()) log.info("identify decoder pressed");
-                    startIdentify();
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                if (log.isInfoEnabled()) log.info("identify decoder pressed");
+                startIdentify();
+            }
+        });
         pane1a.add(iddecoder);
         pane1a.setAlignmentX(JLabel.LEFT_ALIGNMENT);
         add(pane1a);
 
-        decoderBox = DecoderIndexFile.instance().matchingComboBox(null, null, null, null, null);
+        decoderBox = DecoderIndexFile.instance().matchingComboBox(null, null, null, null, null, null);
         add(decoderBox);
 
         // Open programmer button
         JButton go1 = new JButton("Open programmer");
         go1.addActionListener( new ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (log.isInfoEnabled()) log.info("Open programmer pressed");
-                    openButton();
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                if (log.isInfoEnabled()) log.info("Open programmer pressed");
+                openButton();
+            }
+        });
         add(go1);
         setBorder(new EmptyBorder(6,6,6,6));
     }
@@ -97,22 +98,23 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
         // start identifying a decoder
         final NewLocoSelPane me = this;
         IdentifyDecoder id = new IdentifyDecoder() {
-                private NewLocoSelPane who = me;
-                protected void done(int mfg, int model) {
-                    // if Done, updated the selected decoder
-                    who.selectDecoder(mfg, model);
-                }
-                protected void message(String m) {
-                    if (_statusLabel != null) _statusLabel.setText(m);
-                }
-                public void error() {}
-            };
+            private NewLocoSelPane who = me;
+            protected void done(int mfg, int model, int productID) {
+                // if Done, updated the selected decoder
+                who.selectDecoder(mfg, model, productID);
+            }
+            protected void message(String m) {
+                if (_statusLabel != null) _statusLabel.setText(m);
+            }
+            public void error() {}
+        };
         id.start();
     }
 
-    private void selectDecoder(int mfgID, int modelID) {
+    private void selectDecoder(int mfgID, int modelID, int productID) {
+        String sz_productID = (productID != -1 ? Integer.toString(productID) : null);
         // locate a decoder like that.
-        JComboBox temp = DecoderIndexFile.instance().matchingComboBox(null, null, Integer.toString(mfgID), Integer.toString(modelID), null);
+        JComboBox temp = DecoderIndexFile.instance().matchingComboBox(null, null, Integer.toString(mfgID), Integer.toString(modelID), sz_productID, null);
         if (log.isDebugEnabled()) log.debug("selectDecoder found "+temp.getItemCount()+" matches");
         // install all those in the JComboBox in place of the longer, original list
         if (temp.getItemCount() > 0) {
@@ -130,7 +132,7 @@ public class NewLocoSelPane extends javax.swing.JPanel  {
         String decoderFamily = r.getDecoderFamily();
         if (log.isDebugEnabled()) log.debug("selected loco uses decoder "+decoderFamily+" "+decoderModel);
         // locate a decoder like that.
-        List l = DecoderIndexFile.instance().matchingDecoderList(null, decoderFamily, null, null, decoderModel);
+        List l = DecoderIndexFile.instance().matchingDecoderList(null, decoderFamily, null, null, null, decoderModel);
         if (log.isDebugEnabled()) log.debug("found "+l.size()+" matches");
         if (l.size() > 0) {
             DecoderFile d = (DecoderFile)l.get(0);

@@ -6,6 +6,7 @@ import java.io.*;
 import com.sun.java.util.collections.List;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.VariableTableModel;
+import jmri.jmrit.symbolicprog.ResetTableModel;
 import org.jdom.Element;
 
 // try to limit the JDOM to this class, so that others can manipulate...
@@ -17,9 +18,10 @@ import org.jdom.Element;
  * This object is created by DecoderIndexFile to represent the
  * decoder identification info _before_ the actual decoder file is read.
  *
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.8 $
- * @see jmri.jmrit.decoderdefn.DecoderIndexFile
+ * @author    Bob Jacobsen   Copyright (C) 2001
+ * @author    Howard G. Penny   Copyright (C) 2005
+ * @version   $Revision: 1.9 $
+ * @see       jmri.jmrit.decoderdefn.DecoderIndexFile
  */
 public class DecoderFile extends XmlFile {
 
@@ -87,11 +89,12 @@ public class DecoderFile extends XmlFile {
     public String getModel()     { return _model; }
     public String getFamily()    { return _family; }
     public String getFilename()  { return _filename; }
-    public int getNumFunctions()  { return _numFns; }
-    public int getNumOutputs()  { return _numOuts; }
+    public int getNumFunctions() { return _numFns; }
+    public int getNumOutputs()   { return _numOuts; }
 
     public String getModelComment() { return _element.getAttributeValue("comment"); }
     public String getFamilyComment() { return _element.getParent().getAttributeValue("comment"); }
+    public String getProductID() { return _element.getAttributeValue("productID"); }
 
     public Element getModelElement() { return _element; }
 
@@ -150,7 +153,50 @@ public class DecoderFile extends XmlFile {
             // load each row
             variableModel.setConstant(e);
         }
+        int row = 0;
+        List iVarList = decoderElement.getChild("variables").getChildren("ivariable");
+        for (int i=0; i<iVarList.size(); i++) {
+            Element e = (Element)(iVarList.get(i));
+            try {
+                // if its associated with an inconsistent number of functions,
+                // skip creating it
+                if (getNumFunctions() >= 0 && e.getAttribute("minFn") != null
+                    && getNumFunctions() < Integer.valueOf(e.getAttribute("minFn").getValue()).intValue() )
+                    continue;
+                // if its associated with an inconsistent number of outputs,
+                // skip creating it
+                if (getNumOutputs() >= 0 && e.getAttribute("minOut") != null
+                    && getNumOutputs() < Integer.valueOf(e.getAttribute("minOut").getValue()).intValue() )
+                    continue;
+            } catch (Exception ex) {
+                log.warn("Problem parsing minFn or minOut in decoder file, variable "
+                         +e.getAttribute("item")+" exception: "+ex);
+            }
+            // load each row
+            if (variableModel.setIndxRow(row, e) == row) {
+                // if this one existed, we will not update the row count.
+                row++;
+            }
+        }
+
         variableModel.configDone();
+    }
+
+    // use the decoder Element from the file to load a VariableTableModel for programming.
+    public void loadResetModel(Element decoderElement,
+                               ResetTableModel resetModel) {
+        if (decoderElement.getChild("resets") != null) {
+            List resetList = decoderElement.getChild("resets").getChildren("factReset");
+            for (int i=0; i<resetList.size(); i++) {
+                Element e = (Element)(resetList.get(i));
+                resetModel.setRow(i,e);
+            }
+            List iresetList = decoderElement.getChild("resets").getChildren("ifactReset");
+            for (int i=0; i<iresetList.size(); i++) {
+                Element e = (Element)(iresetList.get(i));
+                resetModel.setIndxRow(i,e);
+            }
+        }
     }
 
     /**

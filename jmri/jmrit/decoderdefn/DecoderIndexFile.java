@@ -33,7 +33,7 @@ import com.sun.java.util.collections.List;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.22 $
+ * @version			$Revision: 1.23 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -64,10 +64,10 @@ public class DecoderIndexFile extends XmlFile {
     /**
      *	Get a List of decoders matching some information
      */
-    public List matchingDecoderList(String mfg, String family, String decoderMfgID, String decoderVersionID, String model ) {
+    public List matchingDecoderList(String mfg, String family, String decoderMfgID, String decoderVersionID, String decoderProductID, String model ) {
         List l = new ArrayList();
         for (int i = 0; i < numDecoders(); i++) {
-            if ( checkEntry(i, mfg, family, decoderMfgID, decoderVersionID, model )) {
+            if ( checkEntry(i, mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model )) {
                 l.add(decoderList.get(i));
             }
         }
@@ -78,8 +78,8 @@ public class DecoderIndexFile extends XmlFile {
      * Get a JComboBox representing the choices that match
      * some information
      */
-    public JComboBox matchingComboBox(String mfg, String family, String decoderMfgID, String decoderVersionID, String model ) {
-        List l = matchingDecoderList(mfg, family, decoderMfgID, decoderVersionID, model );
+    public JComboBox matchingComboBox(String mfg, String family, String decoderMfgID, String decoderVersionID, String decoderProductID, String model ) {
+        List l = matchingDecoderList(mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model );
         return jComboBoxFromList(l);
     }
 
@@ -121,7 +121,7 @@ public class DecoderIndexFile extends XmlFile {
      * Don't bother asking about the model number...
      *
      */
-    public boolean checkEntry(int i, String mfgName, String family, String mfgID, String decoderVersionID, String model) {
+    public boolean checkEntry(int i, String mfgName, String family, String mfgID, String decoderVersionID, String decoderProductID, String model) {
         DecoderFile r = (DecoderFile)decoderList.get(i);
         if (mfgName != null && !mfgName.equals(r.getMfg())) return false;
         if (family != null && !family.equals(r.getFamily())) return false;
@@ -132,6 +132,7 @@ public class DecoderIndexFile extends XmlFile {
             int versionID = Integer.valueOf(decoderVersionID).intValue();
             if (!r.isVersion(versionID)) return false;
         }
+        if (decoderProductID != null && !decoderProductID.equals(r.getProductID())) return false;
         return true;
     }
 

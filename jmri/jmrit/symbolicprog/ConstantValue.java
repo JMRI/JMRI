@@ -21,15 +21,16 @@ import com.sun.java.util.collections.ArrayList;
  * Extends VariableValue to represent a constant enum-like-thing
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
- * @version   $Revision: 1.9 $
+ * @version   $Revision: 1.10 $
  *
  */
 public class ConstantValue extends VariableValue {
 
-    public ConstantValue(String name, String comment, boolean readOnly,
+    public ConstantValue(String name, String comment,
+                         boolean readOnly, boolean infoOnly, boolean writeOnly,  boolean opsOnly,
                          int cvNum, String mask, int minVal, int maxVal,
                          Vector v, JLabel status, String stdname) {
-        super(name, comment, readOnly, cvNum, mask, v, status, stdname);
+        super(name, comment, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
         _value = new JComboBox();
@@ -43,7 +44,7 @@ public class ConstantValue extends VariableValue {
      */
     public ConstantValue() {}
 
-    public CvValue[] usesCVs() { 
+    public CvValue[] usesCVs() {
         return new CvValue[]{(CvValue)_cvVector.elementAt(getCvNum())};
     }
 
@@ -129,6 +130,14 @@ public class ConstantValue extends VariableValue {
     void setColor(Color c) {
     }
 
+    /**
+     * Notify the connected CVs of a state change from above
+     * @param state
+     */
+    public void setCvState(int state) {
+        ((CvValue)_cvVector.elementAt(getCvNum())).setState(state);
+    }
+
     public boolean isChanged() {
         CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()));
         return considerChanged(cv);
@@ -140,16 +149,6 @@ public class ConstantValue extends VariableValue {
 
     public void writeChanges() {
          if (isChanged()) writeAll();
-    }
-
-    /**
-     * Notify the connected CVs of a state change from above
-     * @param state
-     */
-    public void setCvState(int state) {
-        CvValue cv = ((CvValue)_cvVector.elementAt(getCvNum()));
-        if (cv!=null) cv.setState(state);
-        else log.error("try to set state on CV "+getCvNum()+" with null entry");
     }
 
     /**

@@ -27,18 +27,25 @@ import org.jdom.Element;
 
 /**
  * Frame providing a command station programmer from decoder definition files.
- * @author	Bob Jacobsen Copyright (C) 2001, 2004, 2005
- * @author  D Miller Copyright 2003
- * @version $Revision: 1.47 $
+ * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005
+ * @author    D Miller Copyright 2003
+ * @author    Howard G. Penny   Copyright (C) 2005
+ * @version   $Revision: 1.48 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
-							implements java.beans.PropertyChangeListener  {
+    implements java.beans.PropertyChangeListener  {
 
-    // members to contain working variable, CV values
-    JLabel              progStatus     	= new JLabel("idle");
-    CvTableModel        cvModel         = null;
+    // members to contain working variable, CV values, Indexed CV values
+    JLabel              progStatus   = new JLabel("idle");
+    CvTableModel        cvModel      = null;
+    IndexedCvTableModel iCvModel     = null;
     VariableTableModel  variableModel;
+
+    ResetTableModel     resetModel   = null;
+    JMenu               resetMenu    = null;
+
     Programmer          mProgrammer;
+    boolean             _opsMode;
 
     RosterEntry         _rosterEntry    = null;
     RosterEntryPane     _rPane          = null;
@@ -75,6 +82,13 @@ abstract public class PaneProgFrame extends JmriJFrame
         JMenu fileMenu = new JMenu("File");
         menuBar.add(fileMenu);
 
+        // add a "Factory Reset" menu
+        if (!_opsMode) {
+            resetMenu = new JMenu("Reset");
+            menuBar.add(resetMenu);
+            resetMenu.add(new FactoryResetAction("Factory Reset ...", resetModel, this));
+            resetMenu.setEnabled(false);
+        }
         // Add a save item
         fileMenu.add(new AbstractAction("Save...") {
             public void actionPerformed(ActionEvent e) {
@@ -209,15 +223,20 @@ abstract public class PaneProgFrame extends JmriJFrame
      * @param pProg             Programmer object to be used to access CVs
      */
     public PaneProgFrame(DecoderFile pDecoderFile, RosterEntry pRosterEntry,
-                        String pFrameTitle, String pProgrammerFile, Programmer pProg) {
+                        String pFrameTitle, String pProgrammerFile, Programmer pProg, boolean opsMode) {
         super(pFrameTitle);
 
+        _opsMode = opsMode;
+
         // create the tables
-        mProgrammer     = pProg;
-        cvModel         = new CvTableModel(progStatus, mProgrammer);
-        variableModel	= new VariableTableModel(progStatus,
-                                                                 new String[]  {"Name", "Value"},
-                                                                 cvModel);
+        mProgrammer   = pProg;
+        cvModel       = new CvTableModel(progStatus, mProgrammer);
+        iCvModel      = new IndexedCvTableModel(progStatus, mProgrammer);
+
+        variableModel = new VariableTableModel(progStatus, new String[]  {"Name", "Value"},
+                                                 cvModel, iCvModel);
+
+        resetModel    = new ResetTableModel(progStatus, mProgrammer);
 
         // handle the roster entry
         _rosterEntry =  pRosterEntry;
@@ -230,18 +249,26 @@ abstract public class PaneProgFrame extends JmriJFrame
             _rosterEntry.readFile();  // read, but don't yet process
         }
 
-        if (pDecoderFile != null) loadDecoderFile(pDecoderFile);
-        else			 loadDecoderFromLoco(pRosterEntry);
+        if (pDecoderFile != null)
+            loadDecoderFile(pDecoderFile);
+        else
+            loadDecoderFromLoco(pRosterEntry);
 
         // save default values
         saveDefaults();
 
         // finally fill the CV values from the specific loco file
-        if (_rosterEntry.getFileName() != null) _rosterEntry.loadCvModel(cvModel);
+        if (_rosterEntry.getFileName() != null) _rosterEntry.loadCvModel(cvModel, iCvModel);
 
         // mark file state as consistent
         variableModel.setFileDirty(false);
 
+        // if the Reset Table was used lets enable the menu item
+        if (!_opsMode) {
+            if (resetModel.getRowCount() > 0) {
+                resetMenu.setEnabled(true);
+            }
+        }
         // and build the GUI
         loadProgrammerFile(pRosterEntry);
 
@@ -249,11 +276,11 @@ abstract public class PaneProgFrame extends JmriJFrame
         Attribute a;
         if ( (a = programmerRoot.getChild("programmer").getAttribute("decoderFilePanes")) != null
              && a.getValue().equals("yes")) {
-	    if (decoderRoot != null) {
-	        List paneList = decoderRoot.getChildren("pane");
+            if (decoderRoot != null) {
+                List paneList = decoderRoot.getChildren("pane");
                 if (log.isDebugEnabled()) log.debug("will process "+paneList.size()+" pane definitions from decoder file");
-		for (int i=0; i<paneList.size(); i++) {
-		    // load each pane
+                for (int i=0; i<paneList.size(); i++) {
+                    // load each pane
                     String pname = ((Element)(paneList.get(i))).getAttribute("name").getValue();
                     newPane( pname, ((Element)(paneList.get(i))), modelElem, true);  // show even if empty
                 }
@@ -289,12 +316,12 @@ abstract public class PaneProgFrame extends JmriJFrame
         String decoderFamily = r.getDecoderFamily();
         if (log.isDebugEnabled()) log.debug("selected loco uses decoder "+decoderFamily+" "+decoderModel);
         // locate a decoder like that.
-        List l = DecoderIndexFile.instance().matchingDecoderList(null, decoderFamily, null, null, decoderModel);
+        List l = DecoderIndexFile.instance().matchingDecoderList(null, decoderFamily, null, null, null, decoderModel);
         if (log.isDebugEnabled()) log.debug("found "+l.size()+" matches");
         if (l.size() == 0) {
             log.debug("Loco uses "+decoderFamily+" "+decoderModel+" decoder, but no such decoder defined");
             // fall back to use just the decoder name, not family
-            l = DecoderIndexFile.instance().matchingDecoderList(null, null, null, null, decoderModel);
+            l = DecoderIndexFile.instance().matchingDecoderList(null, null, null, null, null, decoderModel);
             if (log.isDebugEnabled()) log.debug("found "+l.size()+" matches without family key");
         }
         if (l.size() > 0) {
@@ -321,6 +348,14 @@ abstract public class PaneProgFrame extends JmriJFrame
         } catch (Exception e) { log.error("Exception while loading decoder XML file: "+df.getFilename()+" exception: "+e); }
         // load variables from decoder tree
         df.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
+        // load reset from decoder tree
+        if (variableModel.piCv() >= 0) {
+            resetModel.setPiCv(variableModel.piCv());
+        }
+        if (variableModel.siCv() >= 0) {
+            resetModel.setSiCv(variableModel.siCv());
+        }
+        df.loadResetModel(decoderRoot.getChild("decoder"), resetModel);
 
         // save the pointer to the model element
         modelElem = df.getModelElement();
@@ -418,7 +453,6 @@ abstract public class PaneProgFrame extends JmriJFrame
             String name = ((Element)(paneList.get(i))).getAttribute("name").getValue();
             newPane( name, ((Element)(paneList.get(i))), modelElem, false);  // dont force showing if empty
         }
-
     }
 
     /**
@@ -433,10 +467,18 @@ abstract public class PaneProgFrame extends JmriJFrame
                                      +" but didn't find the CV object");
             else cv.setValue(defaultCvValues[i]);
         }
+        n = defaultIndexedCvValues.length;
+        for (int i=0; i<n; i++) {
+            CvValue cv = iCvModel.getCvByRow(i);
+            if (cv == null) log.warn("Trying to set default in indexed CV from row "+i
+                                     +" but didn't find the CV object");
+            else cv.setValue(defaultIndexedCvValues[i]);
+        }
     }
 
     int defaultCvValues[] = null;
     int defaultCvNumbers[] = null;
+    int defaultIndexedCvValues[] = null;
 
     /**
      * Save all CV values.  These stored values are used by
@@ -451,6 +493,14 @@ abstract public class PaneProgFrame extends JmriJFrame
             CvValue cv = cvModel.getCvByRow(i);
             defaultCvValues[i] = cv.getValue();
             defaultCvNumbers[i] = cv.number();
+        }
+
+        n = iCvModel.getRowCount();
+        defaultIndexedCvValues = new int[n];
+
+        for (int i=0; i<n; i++) {
+            CvValue cv = iCvModel.getCvByRow(i);
+            defaultIndexedCvValues[i] = cv.getValue();
         }
     }
 
@@ -532,10 +582,10 @@ abstract public class PaneProgFrame extends JmriJFrame
     public void newPane(String name, Element pane, Element modelElem, boolean enableEmpty) {
 
         // create a panel to hold columns
-        PaneProgPane p = new PaneProgPane(name, pane, cvModel, variableModel, modelElem);
+        PaneProgPane p = new PaneProgPane(name, pane, cvModel, iCvModel, variableModel, modelElem);
 
         // how to handle the tab depends on whether it has contents and option setting
-        if ( enableEmpty || (p.cvList.size()!=0) || (p.varList.size()!=0) ) {
+        if ( enableEmpty || (p.cvList.size()!=0) || (p.varList.size()!=0 || (p.indxCvList.size()!=0)) ) {
             tabPane.addTab(name, p);  // always add if not empty
         } else if (getShowEmptyPanes()) {
             // here empty, but showing anyway as disabled
@@ -581,7 +631,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     public boolean readAll() {
         if (log.isDebugEnabled()) log.debug("readAll starts");
         justChanges = false;
-        
+
         // prepare for common reads by doing a compare on all panes
         for (int i=0; i<paneList.size(); i++) {
             if (log.isDebugEnabled()) log.debug("doPrep on "+i);
@@ -605,7 +655,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                 running = _programmingPane.readPanesFull();
 
             if (running) {
-				// operation in progress, stop loop until called back
+                                // operation in progress, stop loop until called back
                 if (log.isDebugEnabled()) log.debug("doRead expecting callback from readPane "+i);
                 return true;
             }
@@ -670,7 +720,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                 running = _programmingPane.writePanesFull();
 
             if (running) {
-				// operation in progress, stop loop until called back
+                                // operation in progress, stop loop until called back
                 if (log.isDebugEnabled()) log.debug("writeChanges expecting callback from writePane "+i);
                 return true;
             }
@@ -780,7 +830,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         String filename = _rosterEntry.getFileName();
 
         // create the RosterEntry to its file
-        _rosterEntry.writeFile(cvModel, variableModel );
+        _rosterEntry.writeFile(cvModel, iCvModel, variableModel );
 
         // mark this as a success
         variableModel.setFileDirty(false);
@@ -822,10 +872,12 @@ abstract public class PaneProgFrame extends JmriJFrame
         _rPane.dispose();
         variableModel.dispose();
         cvModel.dispose();
+        iCvModel.dispose();
 
         // remove references to everything we remember
         progStatus = null;
         cvModel = null;
+        iCvModel = null;
         variableModel = null;
         _rosterEntry = null;
         _rPane = null;

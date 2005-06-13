@@ -17,8 +17,9 @@ import jmri.*;
  * <P>This represents the contents of a single decoder, so the
  * Programmer used to access it is a data member.
  *
- * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.14 $
+ * @author    Bob Jacobsen   Copyright (C) 2001, 2002
+ * @author    Howard G. Penny   Copyright (C) 2005
+ * @version   $Revision: 1.15 $
  */
 public class CvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -95,7 +96,13 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
     public boolean isCellEditable(int row, int col) {
         switch (col) {
         case NUMCOLUMN: return false;
-        case VALCOLUMN: return true;
+        case VALCOLUMN:
+            if ( ((CvValue)_cvDisplayVector.elementAt(row)).getReadOnly() ||
+                 ((CvValue)_cvDisplayVector.elementAt(row)).getInfoOnly() ) {
+                return false;
+            } else {
+                return true;
+            }
         case STATECOLUMN: return false;
         case READCOLUMN: return true;
         case WRITECOLUMN: return true;
@@ -171,21 +178,25 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
     public void addCV(String s, boolean readOnly) {
         int num = Integer.valueOf(s).intValue();
         if (_cvAllVector.elementAt(num) == null) {
-            JButton bw = new JButton("Write");
-            bw.setActionCommand("W"+_numRows);
-            bw.addActionListener(this);
-            _writeButtons.addElement(bw);
-            JButton br = new JButton("Read");
-            br.setActionCommand("R"+_numRows);
-            br.addActionListener(this);
-            _readButtons.addElement(br);
-            _numRows++;
             CvValue cv = new CvValue(num, mProgrammer);
             cv.setReadOnly(readOnly);
             _cvAllVector.setElementAt(cv, num);
             _cvDisplayVector.addElement(cv);
             // connect to this CV to ensure the table display updates
             cv.addPropertyChangeListener(this);
+            JButton bw = new JButton("Write");
+            _writeButtons.addElement(bw);
+            JButton br = new JButton("Read");
+            _readButtons.addElement(br);
+            if (readOnly) {
+                bw.setEnabled(false);
+            } else {
+                bw.setActionCommand("W" + _numRows);
+                bw.addActionListener(this);
+            }
+            br.setActionCommand("R"+_numRows);
+            br.addActionListener(this);
+            _numRows++;
             fireTableDataChanged();
         }
         // make sure readonly set true if required

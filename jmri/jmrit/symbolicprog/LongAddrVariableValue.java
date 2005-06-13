@@ -18,16 +18,17 @@ import javax.swing.text.Document;
 /**
  * Extends VariableValue to represent a NMRA long address
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  *
  */
 public class LongAddrVariableValue extends VariableValue
     implements ActionListener, PropertyChangeListener, FocusListener {
 
-    public LongAddrVariableValue(String name, String comment, boolean readOnly,
+    public LongAddrVariableValue(String name, String comment,
+                                 boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                                  int cvNum, String mask, int minVal, int maxVal,
                                  Vector v, JLabel status, String stdname) {
-        super(name, comment, readOnly, cvNum, mask, v, status, stdname);
+        super(name, comment, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
         _value = new JTextField("0", 5);
@@ -45,7 +46,7 @@ public class LongAddrVariableValue extends VariableValue
         cv1.setState(CvValue.FROMFILE);
     }
 
-    public CvValue[] usesCVs() { 
+    public CvValue[] usesCVs() {
         return new CvValue[]{
             (CvValue)_cvVector.elementAt(getCvNum()),
             (CvValue)_cvVector.elementAt(getCvNum()+1)};
@@ -169,7 +170,6 @@ public class LongAddrVariableValue extends VariableValue
      */
     public void setCvState(int state) {
         ((CvValue)_cvVector.elementAt(getCvNum())).setState(state);
-        ((CvValue)_cvVector.elementAt(getCvNum()+1)).setState(state);
     }
 
     public boolean isChanged() {

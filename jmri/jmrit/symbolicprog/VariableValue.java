@@ -2,14 +2,9 @@
 
 package jmri.jmrit.symbolicprog;
 
-import jmri.Programmer;
-import jmri.InstanceManager;
-import jmri.ProgListener;
-
 import java.util.Vector;
 import java.awt.Component;
 import javax.swing.*;
-import java.awt.Color;
 
 /**
  * Represents a single Variable value; abstract base class.
@@ -18,9 +13,9 @@ import java.awt.Color;
  * indicates whether a "write changes" or "read changes" operation
  * should handle this object.
  *
- * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2004, 2005
- * @version     $Revision: 1.19 $
- *
+ * @author   Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2004, 2005
+ * @author   Howard G. Penny Copyright (C) 2005
+ * @version  $Revision: 1.20 $
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
 
@@ -52,7 +47,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * Always write the contents of this Variable
      */
     abstract public void writeAll();
-    
+
     /**
      * Read the contents of this Variable if it's in a state
      * that indicates it was "changed"
@@ -76,7 +71,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
 
     /**
      * Default implementation for subclasses to tell if a CV meets a common definition
-     * of "changed".  This implementation will only 
+     * of "changed".  This implementation will only
      * consider a variable to be changed if the underlying CV(s) state is
      * EDITTED, e.g. if the CV(s) has been manually editted.
      * @param c CV to be examined
@@ -93,11 +88,15 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     abstract public Object rangeVal();
 
     // methods implemented here:
-    public VariableValue(String label, String comment, boolean readOnly,
+    public VariableValue(String label, String comment,
+                         boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                          int cvNum, String mask, Vector v, JLabel status, String item) {
         _label = label;
         _comment = comment;
         _readOnly = readOnly;
+        _infoOnly = infoOnly;
+        _writeOnly = writeOnly;
+        _opsOnly = opsOnly;
         _cvNum = cvNum;
         _mask = mask;
         _cvVector = v;
@@ -109,7 +108,6 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * Create a null object.  Normally only used for tests and to pre-load classes.
      */
     protected VariableValue() {}
-
 
     // common information - none of these are bound
     public String label() { return _label; }
@@ -147,6 +145,15 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     public boolean getReadOnly() { return _readOnly; }
     private boolean _readOnly;
 
+    public boolean getInfoOnly() { return _infoOnly; }
+    private boolean _infoOnly;
+
+    public boolean getWriteOnly() { return _writeOnly; }
+    private boolean _writeOnly;
+
+    public boolean getOpsOnly() { return _opsOnly; }
+    private boolean _opsOnly;
+
     public int getCvNum() { return _cvNum; }
     private int _cvNum;
 
@@ -157,11 +164,11 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     public void setState(int state) {
         switch (state) {
         case UNKNOWN : setColor(COLOR_UNKNOWN ); break;
-        case EDITED : setColor(COLOR_EDITED ); break;
+        case EDITED  : setColor(COLOR_EDITED  ); break;
         case READ    : setColor(COLOR_READ    ); break;
         case STORED  : setColor(COLOR_STORED  ); break;
         case FROMFILE: setColor(COLOR_FROMFILE); break;
-        default:      log.error("Inconsistent state: "+_state);
+        default: log.error("Inconsistent state: "+_state);
         }
         if (_state != state || _state == UNKNOWN) prop.firePropertyChange("State", new Integer(_state), new Integer(state));
         _state = state;
@@ -172,17 +179,26 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * Simple implementation for the case of a single CV. Intended
      * to be sufficient for many subclasses.
      */
-    public void setToRead(boolean state) { ((CvValue)_cvVector.elementAt(getCvNum())).setToRead(state); }
+    public void setToRead(boolean state) {
+        if (getInfoOnly()) state = false;
+        ((CvValue)_cvVector.elementAt(getCvNum())).setToRead(state);
+    }
     /**
      * Simple implementation for the case of a single CV. Intended
      * to be sufficient for many subclasses.
      */
     public boolean isToRead() { return ((CvValue)_cvVector.elementAt(getCvNum())).isToRead(); }
+
     /**
      * Simple implementation for the case of a single CV. Intended
      * to be sufficient for many subclasses.
      */
-    public void setToWrite(boolean state) { ((CvValue)_cvVector.elementAt(getCvNum())).setToWrite(state); }
+    public void setToWrite(boolean state) {
+        if (getInfoOnly() || getReadOnly()) {
+            state = false;
+        }
+        ((CvValue)_cvVector.elementAt(getCvNum())).setToWrite(state);
+    }
     /**
      * Simple implementation for the case of a single CV. Intended
      * to be sufficient for many subclasses.
@@ -254,11 +270,11 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
         return (oldCv & ~mask) + ((newVal << offset) & mask);
     }
 
-    /** 
+    /**
      * Provide access to CVs referenced by this operation
      */
     abstract public CvValue[] usesCVs();
-    
+
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(VariableValue.class.getName());
 

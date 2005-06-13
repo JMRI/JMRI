@@ -18,7 +18,7 @@ import jmri.progdebugger.*;
  * DecoderFileTest.java
  *
  * @author			Bob Jacobsen, Copyright (C) 2001, 2002
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class DecoderFileTest extends TestCase {
 
@@ -95,11 +95,12 @@ public class DecoderFileTest extends TestCase {
         setupDecoder();
 
         // this test should probably be done in terms of a test class instead of the real one...
-        JLabel progStatus       	= new JLabel(" OK ");
-        CvTableModel	cvModel		= new CvTableModel(progStatus, p);
-        VariableTableModel		variableModel	= new VariableTableModel(progStatus,
-                                                                                 new String[]  {"Name", "Value"},
-                                                                                 cvModel);
+        JLabel progStatus            = new JLabel(" OK ");
+        CvTableModel cvModel         = new CvTableModel(progStatus, p);
+        IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
+        VariableTableModel variableModel = new VariableTableModel(progStatus,
+                                                                  new String[]  {"Name", "Value"},
+                                                                  cvModel, icvModel);
         DecoderFile d = new DecoderFile("mfg", "mfgID", "model", "23", "24",
                                         "family", "filename", 16, 16, null);
 
@@ -113,11 +114,12 @@ public class DecoderFileTest extends TestCase {
         setupDecoder();
 
         // this test should probably be done in terms of a test class instead of the real one...
-        JLabel progStatus       	= new JLabel(" OK ");
-        CvTableModel	cvModel		= new CvTableModel(progStatus, p);
-        VariableTableModel		variableModel	= new VariableTableModel(progStatus,
-                                                                                 new String[]  {"Name", "Value"},
-                                                                                 cvModel);
+        JLabel progStatus            = new JLabel(" OK ");
+        CvTableModel cvModel         = new CvTableModel(progStatus, p);
+        IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
+        VariableTableModel variableModel = new VariableTableModel(progStatus,
+                                                                  new String[]  {"Name", "Value"},
+                                                                  cvModel, icvModel);
         DecoderFile d = new DecoderFile("mfg", "mfgID", "model", "23", "24",
                                         "family", "filename", 16, 3, null);
 
@@ -129,11 +131,12 @@ public class DecoderFileTest extends TestCase {
         setupDecoder();
 
         // this test should probably be done in terms of a test class instead of the real one...
-        JLabel progStatus       	= new JLabel(" OK ");
-        CvTableModel	cvModel		= new CvTableModel(progStatus, p);
-        VariableTableModel		variableModel	= new VariableTableModel(progStatus,
-                                                                                 new String[]  {"Name", "Value"},
-                                                                                 cvModel);
+        JLabel progStatus            = new JLabel(" OK ");
+        CvTableModel cvModel         = new CvTableModel(progStatus, p);
+        IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
+        VariableTableModel variableModel = new VariableTableModel(progStatus,
+                                                                  new String[]  {"Name", "Value"},
+                                                                  cvModel, icvModel);
         DecoderFile d = new DecoderFile("mfg", "mfgID", "model", "23", "24",
                                         "family", "filename", 3, 16, null);
 

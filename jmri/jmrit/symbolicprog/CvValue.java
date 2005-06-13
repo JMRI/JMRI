@@ -24,7 +24,7 @@ import javax.swing.JTextField;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.14 $
+ * @version   $Revision: 1.15 $
  */
 public class CvValue extends AbstractValue implements ProgListener {
 
@@ -211,6 +211,20 @@ public class CvValue extends AbstractValue implements ProgListener {
     public boolean getWriteOnly() {
         return _writeOnly;
     }
+
+    public void setToRead(boolean state) {
+        if (getInfoOnly() || getWriteOnly()) state = false;
+        _toRead = state;
+    }
+    public boolean isToRead() { return _toRead; }
+    private boolean _toRead = false;
+
+    public void setToWrite(boolean state) {
+        if (getInfoOnly() || getReadOnly()) state = false;
+        _toWrite = state;
+    }
+    public boolean isToWrite() { return _toWrite; }
+    private boolean _toWrite = false;
 
     // read, write support
     private boolean _reading = false;

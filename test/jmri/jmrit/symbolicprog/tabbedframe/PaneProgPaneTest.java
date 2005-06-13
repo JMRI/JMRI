@@ -24,7 +24,7 @@ import com.sun.java.util.collections.Vector;
 
 /**
  * @author	Bob Jacobsen Copyright 2001, 2002, 2003, 2004
- * @version         $Revision: 1.9 $
+ * @version         $Revision: 1.10 $
  */
 public class PaneProgPaneTest extends TestCase {
 
@@ -34,9 +34,10 @@ public class PaneProgPaneTest extends TestCase {
     public void testColumn() {
         setupDoc();
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
+        IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         if (log.isDebugEnabled()) log.debug("CvTableModel ctor complete");
         String[] args = {"CV", "Name"};
-        VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
+        VariableTableModel varModel = new VariableTableModel(null, args, cvModel, icvModel);
         if (log.isDebugEnabled()) log.debug("VariableTableModel ctor complete");
 
         // create test object with special implementation of the newColumn(String) operation
@@ -52,8 +53,9 @@ public class PaneProgPaneTest extends TestCase {
     public void testVariables() {
         setupDoc();  // make sure XML document is ready
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
+        IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
-        VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
+        VariableTableModel varModel = new VariableTableModel(null, args, cvModel, icvModel);
         if (log.isDebugEnabled()) log.debug("VariableTableModel ctor complete");
 
         // create test object with special implementation of the newVariable(String) operation
@@ -70,8 +72,9 @@ public class PaneProgPaneTest extends TestCase {
     public void testVarListFill() {
         setupDoc();  // make sure XML document is ready
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
+        IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
-        VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
+        VariableTableModel varModel = new VariableTableModel(null, args, cvModel, icvModel);
         if (log.isDebugEnabled()) log.debug("VariableTableModel ctor complete");
         // have to add a couple of defined variables
         Element el0 = new Element("variable")
@@ -107,8 +110,9 @@ public class PaneProgPaneTest extends TestCase {
         setupDoc();  // make sure XML document is ready
 
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
+        IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
-        VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
+        VariableTableModel varModel = new VariableTableModel(null, args, cvModel, icvModel);
         if (log.isDebugEnabled()) log.debug("VariableTableModel ctor complete");
         // have to add a couple of defined variables
         Element el0 = new Element("variable")
@@ -154,8 +158,9 @@ public class PaneProgPaneTest extends TestCase {
         setupDoc();  // make sure XML document is ready
 
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
+        IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
-        VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
+        VariableTableModel varModel = new VariableTableModel(null, args, cvModel, icvModel);
         if (log.isDebugEnabled()) log.debug("VariableTableModel ctor complete");
         // have to add a couple of defined variables
         Element el0 = new Element("variable")
@@ -203,12 +208,13 @@ public class PaneProgPaneTest extends TestCase {
         setupDoc();  // make sure XML document is ready
 
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
+        IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
-        VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
+        VariableTableModel varModel = new VariableTableModel(null, args, cvModel, icvModel);
 
         // have to add a couple of defined variables
         int row = 0;
-        
+
         // note these +have+ to be on this pane, e.g. named in setupDoc
         Element el0 = new Element("variable")
             .addAttribute("CV","1")
@@ -233,7 +239,7 @@ public class PaneProgPaneTest extends TestCase {
             .addAttribute("mask","VVVVVVVV")
             .addContent( new Element("speedTableVal"));
         varModel.setRow(row++, el2);
-        
+
         Element el3 = new Element("variable")
             .addAttribute("CV","68")
             .addAttribute("readOnly","no")
@@ -250,7 +256,7 @@ public class PaneProgPaneTest extends TestCase {
 
         Assert.assertEquals("number of changed CVs to read ", 0, progPane.countOpsNeeded(true,true));
         Assert.assertEquals("number of changed CVs to write ", 0, progPane.countOpsNeeded(false,true));
-        
+
         // mark some as needing to be written
         ((CvValue)cvModel.allCvVector().elementAt(1)).setValue(12);
 
@@ -259,10 +265,10 @@ public class PaneProgPaneTest extends TestCase {
 
         Assert.assertEquals("modified changed CVs to read ", 1, progPane.countOpsNeeded(true,true));
         Assert.assertEquals("modified changed CVs to write ", 1, progPane.countOpsNeeded(false,true));
-        
+
         ((CvValue)cvModel.allCvVector().elementAt(69)).setValue(12);
             // careful - might change more than one CV!
-            
+
         Assert.assertEquals("spdtbl all CVs to read ", 29, progPane.countOpsNeeded(true,false));
         Assert.assertEquals("spdtbl all CVs to write ", 29, progPane.countOpsNeeded(false,false));
 

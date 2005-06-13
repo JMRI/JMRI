@@ -19,21 +19,22 @@ import junit.framework.TestSuite;
  *
  * @todo need a check of the MIXED state model for long address
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class LongAddrVariableValueTest extends VariableValueTest {
 
     ProgDebugger p = new ProgDebugger();
 
     // abstract members invoked by tests in parent VariableValueTest class
-    VariableValue makeVar(String label, String comment, boolean readOnly,
+    VariableValue makeVar(String label, String comment,
+                          boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                           int cvNum, String mask, int minVal, int maxVal,
                           Vector v, JLabel status, String item) {
         // make sure next CV exists
         CvValue cvNext = new CvValue(cvNum+1,p);
         cvNext.setValue(0);
         v.setElementAt(cvNext, cvNum+1);
-        return new LongAddrVariableValue(label, comment, readOnly, cvNum, mask, minVal, maxVal, v, status, item);
+        return new LongAddrVariableValue(label, comment, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, item);
     }
 
 
@@ -74,7 +75,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
         v.setElementAt(cv17, 17);
         v.setElementAt(cv18, 18);
         // create a variable pointed at CV 17&18, check name
-        LongAddrVariableValue var = new LongAddrVariableValue("label", "comment", false, 17, "VVVVVVVV", 0, 255, v, null, null);
+        LongAddrVariableValue var = new LongAddrVariableValue("label", "comment", false, false, false, false, 17, "VVVVVVVV", 0, 255, v, null, null);
         Assert.assertTrue(var.label() == "label");
         // pretend you've edited the value, check its in same object
         ((JTextField)var.getValue()).setText("4797");
@@ -96,7 +97,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
         v.setElementAt(cv17, 17);
         v.setElementAt(cv18, 18);
         // create a variable pointed at CV 17 & 18
-        LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "VVVVVVVV", 0, 255, v, null, null);
+        LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, false, false, false, 17, "VVVVVVVV", 0, 255, v, null, null);
         ((JTextField)var.getValue()).setText("1029");
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 
@@ -121,7 +122,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
         v.setElementAt(cv17, 17);
         v.setElementAt(cv18, 18);
 
-        LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "XXVVVVXX", 0, 255, v, null, null);
+        LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, false, false, false, 17, "XXVVVVXX", 0, 255, v, null, null);
         // register a listener for parameter changes
         java.beans.PropertyChangeListener listen = new java.beans.PropertyChangeListener() {
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -173,7 +174,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
         v.setElementAt(cv17, 17);
         v.setElementAt(cv18, 18);
 
-        LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, 17, "XXVVVVXX", 0, 255, v, null, null);
+        LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", false, false, false, false, 17, "XXVVVVXX", 0, 255, v, null, null);
         ((JTextField)var.getValue()).setText("4797");
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 

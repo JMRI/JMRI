@@ -3,7 +3,7 @@
  *
  * Description:
  * @author			Bob Jacobsen
- * @version    $Revision: 1.5 $
+ * @version    $Revision: 1.6 $
  */
 
 package jmri.jmrit.symbolicprog;
@@ -23,21 +23,22 @@ public class VariableTableModelTest extends TestCase {
         new VariableTableModel(
                                new JLabel(""),
                                new String[] {"Name", "Value"},
-                               new CvTableModel(new JLabel(""), p)
-                                   );
+                               new CvTableModel(new JLabel(""), p),
+                               new IndexedCvTableModel(new JLabel(""), p)
+                               );
     }
 
 
     // Can we create a table?
     public void testVarTableCreate() {
         String[] args = {"CV", "Name"};
-        VariableTableModel t = new VariableTableModel(null, args, null);  // CvTableModel ref is null for this test
+        VariableTableModel t = new VariableTableModel(null, args, null, null);  // CvTableModel ref is null for this test
     }
 
     // Check column count member fn, column names
     public void testVarTableColumnCount() {
         String[] args = {"CV", "Name"};
-        VariableTableModel t = new VariableTableModel(null, args, null);
+        VariableTableModel t = new VariableTableModel(null, args, null, null);
         Assert.assertTrue(t.getColumnCount() == 2);
         Assert.assertTrue(t.getColumnName(1) == "Name");
     }
@@ -45,7 +46,7 @@ public class VariableTableModelTest extends TestCase {
     // Check loading two columns, three rows
     public void testVarTableLoad_2_3() {
         String[] args = {"CV", "Name"};
-        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p));
+        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p), null);
 
         // create a JDOM tree with just some elements
         Element root = new Element("decoder-config");
@@ -114,7 +115,7 @@ public class VariableTableModelTest extends TestCase {
     // Check creating a longaddr type, walk through its programming
     public void testVarTableLoadLongAddr() {
         String[] args = {"CV", "Name"};
-        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p));
+        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p), null);
 
         // create a JDOM tree with just some elements
         Element root = new Element("decoder-config");
@@ -158,7 +159,7 @@ public class VariableTableModelTest extends TestCase {
     // Check creating a speed table, then finding it by name
     public void testVarSpeedTable() {
         String[] args = {"CV", "Name"};
-        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p));
+        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p), null);
 
         // create a JDOM tree with just some elements
         Element root = new Element("decoder-config");
@@ -195,7 +196,7 @@ public class VariableTableModelTest extends TestCase {
     // Check creating bogus XML (unknown variable type)
     public void testVarTableLoadBogus() {
         String[] args = {"CV", "Name"};
-        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p)){
+        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p), null){
             void reportBogus(){}
         };
 
