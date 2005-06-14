@@ -19,7 +19,7 @@ import jmri.*;
  * Programmer used to access it is a data member.
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -306,7 +306,13 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
             JButton br = new JButton("Read");
             _indxReadButtons.addElement(br);
             if (infoOnly || readOnly) {
-                bw.setEnabled(false);
+                if (writeOnly) {
+                    bw.setEnabled(true);
+                    bw.setActionCommand("W"+_numRows);
+                    bw.addActionListener(this);
+                } else {
+                    bw.setEnabled(false);
+                }
                 if (infoOnly) {
                     br.setEnabled(false);
                 } else {

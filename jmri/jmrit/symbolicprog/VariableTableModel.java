@@ -21,7 +21,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.20 $
+ * @version   $Revision: 1.21 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -193,7 +193,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
         boolean infoOnly = false;
         if (e.getAttribute("infoOnly") != null) {
-            readOnly = e.getAttribute("infoOnly").getValue().equals("yes") ? true : false;
+            infoOnly = e.getAttribute("infoOnly").getValue().equals("yes") ? true : false;
             if (log.isDebugEnabled()) log.debug("found readOnly "+e.getAttribute("infoOnly").getValue());
         } else {
             log.warn("Element missing readOnly attribute: "+name);
@@ -215,37 +215,41 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             log.warn("Element missing readOnly attribute: "+name);
         }
 
-       JButton bw = new JButton("Write");
+        JButton bw = new JButton("Write");
         _writeButtons.addElement(bw);
         JButton br = new JButton("Read");
         _readButtons.addElement(br);
-        if (infoOnly || readOnly) {
-            bw.setEnabled(false);
+
+        if (readOnly || infoOnly) { // readOnly or infoOnly, config write, read buttons
+            if (writeOnly){
+                bw.setEnabled(true);
+                bw.setActionCommand("W" + row);
+                bw.addActionListener(this);
+            } else {
+                bw.setEnabled(false);
+            }
             if (infoOnly) {
                 br.setEnabled(false);
             } else {
-                br.setEnabled(true);
                 br.setActionCommand("R"+row);
                 br.addActionListener(this);
             }
-        } else {
-            bw.setEnabled(true);
-            bw.setActionCommand("W"+row);
+        } else { // not readOnly or infoOnly, config write, read buttons
+            bw.setActionCommand("W" + row);
             bw.addActionListener(this);
             if (writeOnly) {
                 br.setEnabled(false);
             } else {
-                br.setEnabled(true);
                 br.setActionCommand("R" + row);
                 br.addActionListener(this);
             }
-       }
+        }
 
         if (_cvModel == null) {
             log.error("CvModel reference is null; cannot add variables");
             return;
         }
-        _cvModel.addCV(""+CV, readOnly);
+        _cvModel.addCV(""+CV, readOnly, infoOnly, writeOnly);
 
         // have to handle various value types, see "snippet"
         Attribute a;
@@ -298,13 +302,13 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             } catch (org.jdom.DataConversionException e1) {}
 
             // ensure all CVs exist
-            for (int i=0; i<entries; i++) { _cvModel.addCV(""+(CV+i), readOnly); }
+            for (int i=0; i<entries; i++) { _cvModel.addCV(""+(CV+i), readOnly, infoOnly, writeOnly); }
 
             v = new SpeedTableVarValue(name, comment, readOnly, infoOnly, writeOnly, opsOnly,
                                        CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item, entries);
 
         } else if ( (child = e.getChild("longAddressVal")) != null) {
-            _cvModel.addCV(""+(CV+1), readOnly);  // ensure 2nd CV exists
+            _cvModel.addCV(""+(CV+1), readOnly, infoOnly, writeOnly);  // ensure 2nd CV exists
             v = new LongAddrVariableValue(name, comment, readOnly, infoOnly, writeOnly, opsOnly,
                                           CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item);
         } else if ( (child = e.getChild("shortAddressVal")) != null) {
@@ -339,7 +343,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             if ( (a = child.getAttribute("upperMask")) != null)
                 uppermask = a.getValue();
 
-            _cvModel.addCV(""+(highCV), readOnly);  // ensure 2nd CV exists
+            _cvModel.addCV(""+(highCV), readOnly, infoOnly, writeOnly);  // ensure 2nd CV exists
             v = new SplitVariableValue(name, comment, readOnly, infoOnly, writeOnly, opsOnly,
                                        CV, mask, minVal, maxVal, _cvModel.allCvVector(),
                                        _status, item,
@@ -411,8 +415,14 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         JButton bw = new JButton("Write");
         _writeButtons.addElement(bw);
 
-        if (readOnly || infoOnly) { // readOnly, config write, read buttons
-            bw.setEnabled(false);
+        if (readOnly || infoOnly) { // readOnly or infoOnly, config write, read buttons
+            if (writeOnly){
+                bw.setEnabled(true);
+                bw.setActionCommand("W" + row);
+                bw.addActionListener(this);
+            } else {
+                bw.setEnabled(false);
+            }
             if (infoOnly) {
                 br.setEnabled(false);
             } else {
@@ -575,7 +585,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         String comment = "";
         int minVal = 0;
         int maxVal = 255;
-        _cvModel.addCV(""+CV, readOnly);
+        _cvModel.addCV(""+CV, readOnly, infoOnly, writeOnly);
 
         int row = getRowCount();
 

@@ -19,7 +19,7 @@ import jmri.*;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.15 $
+ * @version   $Revision: 1.16 $
  */
 public class CvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -54,7 +54,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         for (int i=0; i<=MAXCVNUM; i++) _cvAllVector.addElement(null);
 
         // define just address CV at start, pending some variables
-        addCV("1", false);
+        addCV("1", false, false, false);
     }
 
     /**
@@ -175,7 +175,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         fireTableDataChanged();
     }
 
-    public void addCV(String s, boolean readOnly) {
+    public void addCV(String s, boolean readOnly, boolean infoOnly, boolean writeOnly) {
         int num = Integer.valueOf(s).intValue();
         if (_cvAllVector.elementAt(num) == null) {
             CvValue cv = new CvValue(num, mProgrammer);
@@ -188,20 +188,44 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
             _writeButtons.addElement(bw);
             JButton br = new JButton("Read");
             _readButtons.addElement(br);
-            if (readOnly) {
-                bw.setEnabled(false);
+            if (infoOnly || readOnly) {
+                if (writeOnly) {
+                    bw.setEnabled(true);
+                    bw.setActionCommand("W"+_numRows);
+                    bw.addActionListener(this);
+                } else {
+                    bw.setEnabled(false);
+                }
+                if (infoOnly) {
+                    br.setEnabled(false);
+                } else {
+                    br.setEnabled(true);
+                    br.setActionCommand("R"+_numRows);
+                    br.addActionListener(this);
+                }
             } else {
-                bw.setActionCommand("W" + _numRows);
+                bw.setEnabled(true);
+                bw.setActionCommand("W"+_numRows);
                 bw.addActionListener(this);
-            }
-            br.setActionCommand("R"+_numRows);
-            br.addActionListener(this);
+                if (writeOnly) {
+                    br.setEnabled(false);
+                } else {
+                    br.setEnabled(true);
+                    br.setActionCommand("R" + _numRows);
+                    br.addActionListener(this);
+                }
+           }
             _numRows++;
             fireTableDataChanged();
         }
         // make sure readonly set true if required
         CvValue cv = (CvValue) _cvAllVector.elementAt(num);
         if (readOnly) cv.setReadOnly(readOnly);
+        if (infoOnly) {
+            cv.setReadOnly(infoOnly);
+            cv.setInfoOnly(infoOnly);
+        }
+        if (writeOnly) cv.setWriteOnly(writeOnly);
     }
 
     public boolean decoderDirty() {
