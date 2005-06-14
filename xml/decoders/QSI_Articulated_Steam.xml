@@ -1,0 +1,1272 @@
+<?xml version="1.0"?>
+<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<!-- $Id: QSI_Articulated_Steam.xml,v 1.1 2005-06-14 00:13:54 innkeeper Exp $ -->
+<decoder-config>
+  <version author="Howard G. Penny" version="1" lastUpdated="20050613"/>
+
+<!-- version 1 - modified for QSI CV.PI.SI format - Howard -->
+
+<decoder>
+  <family name="QSI Articulated Steam" mfg="QSIndustries" lowVersionID="1" highVersionID="6" >
+    <model model="BLI AC5 Cab Forward 4-8-8-2" lowVersionID="5" 
+           numFns="14" numOuts="14" productID="403" >
+      <output name="1" label="Plug" connection="other" />
+      <output name="2" label="Plug" connection="other" />
+      <output name="3" label="Snd" connection="other" />
+      <output name="4" label="Snd" connection="other" />
+      <output name="5" label="Snd" connection="other" />
+      <output name="6" label="Snd" connection="other" />
+      <output name="7" label="Snd" connection="other" />
+      <output name="8" label="Snd" connection="other" />
+      <output name="9" label="Snd" connection="other" />
+      <output name="10" label="Snd" connection="other" />
+      <output name="11" label="Snd" connection="other" />
+      <output name="12" label="Snd" connection="other" />
+      <output name="13" label="Snd" connection="other" />
+      <output name="14" label="Snd" connection="other" />
+    </model>
+    <model model="BLI N-W Class A 2-6-6-4" lowVersionID="2" highVersionID="5"
+           numFns="14" numOuts="14"  productID="400" >
+      <output name="1" label="Plug" connection="other" />
+      <output name="2" label="Plug" connection="other" />
+      <output name="3" label="Snd" connection="other" />
+      <output name="4" label="Snd" connection="other" />
+      <output name="5" label="Snd" connection="other" />
+      <output name="6" label="Snd" connection="other" />
+      <output name="7" label="Snd" connection="other" />
+      <output name="8" label="Snd" connection="other" />
+      <output name="9" label="Snd" connection="other" />
+      <output name="10" label="Snd" connection="other" />
+      <output name="11" label="Snd" connection="other" />
+      <output name="12" label="Snd" connection="other" />
+      <output name="13" label="Snd" connection="other" />
+      <output name="14" label="Snd" connection="other" />
+    </model>
+    <model model="BLI Pensy Duplex T1 4-4-4-4" lowVersionID="5"
+           numFns="14" numOuts="14"  productID="401" >
+      <output name="1" label="Plug" connection="other" />
+      <output name="2" label="Plug" connection="other" />
+      <output name="3" label="Snd" connection="other" />
+      <output name="4" label="Snd" connection="other" />
+      <output name="5" label="Snd" connection="other" />
+      <output name="6" label="Snd" connection="other" />
+      <output name="7" label="Snd" connection="other" />
+      <output name="8" label="Snd" connection="other" />
+      <output name="9" label="Snd" connection="other" />
+      <output name="10" label="Snd" connection="other" />
+      <output name="11" label="Snd" connection="other" />
+      <output name="12" label="Snd" connection="other" />
+      <output name="13" label="Snd" connection="other" />
+      <output name="14" label="Snd" connection="other" />
+    </model>
+    <model model="Lionel Challenger 4-6-6-4" lowVersionID="4"
+           numFns="14" numOuts="14" productID="402" >
+      <output name="1" label="Plug" connection="other" />
+      <output name="2" label="Plug" connection="other" />
+      <output name="3" label="Snd" connection="other" />
+      <output name="4" label="Snd" connection="other" />
+      <output name="5" label="Snd" connection="other" />
+      <output name="6" label="Snd" connection="other" />
+      <output name="7" label="Snd" connection="other" />
+      <output name="8" label="Snd" connection="other" />
+      <output name="9" label="Snd" connection="other" />
+      <output name="10" label="Snd" connection="other" />
+      <output name="11" label="Snd" connection="other" />
+      <output name="12" label="Snd" connection="other" />
+      <output name="13" label="Snd" connection="other" />
+      <output name="14" label="Snd" connection="other" />
+    </model>
+    <model model="Life Like USRA 2-8-8-2" lowVersionID="6"
+           numFns="14" numOuts="14"  productID="404" >
+      <output name="1" label="Plug" connection="other" />
+      <output name="2" label="Plug" connection="other" />
+      <output name="3" label="Snd" connection="other" />
+      <output name="4" label="Snd" connection="other" />
+      <output name="5" label="Snd" connection="other" />
+      <output name="6" label="Snd" connection="other" />
+      <output name="7" label="Snd" connection="other" />
+      <output name="8" label="Snd" connection="other" />
+      <output name="9" label="Snd" connection="other" />
+      <output name="10" label="Snd" connection="other" />
+      <output name="11" label="Snd" connection="other" />
+      <output name="12" label="Snd" connection="other" />
+      <output name="13" label="Snd" connection="other" />
+      <output name="14" label="Snd" connection="other" />
+    </model>
+  </family>
+
+  <programming direct="yes" paged="yes"
+               register="yes" ops="yes"></programming>
+
+  <variables>
+    <variable label="Primary Address" CV="1" comment="Short address"
+              item="Short Address"  default="03">
+      <shortAddressVal/></variable>
+    <variable label="Vstart" CV="2" default="32"
+              tooltip="QSI uses this only if speed tables are used"
+              comment="A value of 255 corresponds to 100%">
+      <decVal/></variable>
+    <variable label="Acceleration Rate" CV="3" item="Accel" >
+      <decVal max="31"/></variable>
+    <variable label="Deceleration Rate" CV="4" item="Decel">
+      <decVal max="31"/></variable>
+    <variable label="Max Volts" CV="5" item="Vhigh" default="1"
+              tooltip="range 2-255, 1 = not used">
+      <decVal min="1" max="255"/></variable>
+
+    <variable label="Manufacturer Version No" CV="7" readOnly="yes"
+              item="Decoder Version"><decVal/></variable>
+    <variable label="Manufacturer ID" CV="8" readOnly="yes"
+              item="Manufacturer" default="113"><decVal/></variable>
+
+    <variable label="Packet Time-out Value" CV="11">
+      <decVal/></variable>
+
+    <variable label="Extended Address" CV="17" item="Long Address" >
+      <longAddressVal/></variable>
+
+    <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
+      <decVal/></variable>
+
+    <variable label="Consist Direction" CV="19" mask="VXXXXXXX">
+      <enumVal>
+        <enumChoice choice="Normal"></enumChoice>
+        <enumChoice choice="Reversed"></enumChoice>
+      </enumVal></variable>
+
+    <variable label="Consist Address Active For F1" CV="21" mask="XXXXXXXV"
+              tooltip="F1 = Bell; Recommendation: Lead = ON, Mid = OFF, End = OFF">
+      <enumVal>
+        <enumChoice choice="Locomotive Address Only"/>
+        <enumChoice choice="Respond to Consist Address"/>
+      </enumVal></variable>
+    <variable label="Consist Address Active For F2" CV="21" mask="XXXXXXVX"
+              tooltip="F2 = Horn / Whistle; Recommendation: Lead = ON, Mid = OFF, End = OFF">
+      <enumVal>
+        <enumChoice choice="Locomotive Address Only"/>
+        <enumChoice choice="Respond to Consist Address"/>
+      </enumVal></variable>
+    <variable label="Consist Address Active For F3" CV="21" mask="XXXXXVXX"
+              tooltip="F3 = Coupler Clash (default); Recommendation: Lead = OFF, Mid = OFF, End = ON">
+      <enumVal>
+        <enumChoice choice="Locomotive Address Only"/>
+        <enumChoice choice="Respond to Consist Address"/>
+      </enumVal></variable>
+    <variable label="Consist Address Active For F4" CV="21" mask="XXXXVXXX"
+              tooltip="F4 = Blower Hiss / Fan (default); Recommendation: Lead = ON, Mid = ON, End = ON">
+      <enumVal>
+        <enumChoice choice="Locomotive Address Only"/>
+        <enumChoice choice="Respond to Consist Address"/>
+      </enumVal></variable>
+    <variable label="Consist Address Active For F5" CV="21" mask="XXXVXXXX"
+              tooltip="F5 = Dynamic Brakes (default); Recommendation: Lead = ON, Mid = ON, End = ON">
+      <enumVal>
+        <enumChoice choice="Locomotive Address Only"/>
+        <enumChoice choice="Respond to Consist Address"/>
+      </enumVal></variable>
+    <variable label="Consist Address Active For F6" CV="21" mask="XXVXXXXX"
+              tooltip="F6 = Doppler (Startup) (default); Recommendation: Lead = ON, Mid = ON, End = ON">
+      <enumVal>
+        <enumChoice choice="Locomotive Address Only"/>
+        <enumChoice choice="Respond to Consist Address"/>
+      </enumVal></variable>
+    <variable label="Consist Address Active For F7" CV="21" mask="XVXXXXXX"
+              tooltip="F7 = Brake Squeal and Air Brakes (default); Recommendation: Lead = ON, Mid = ON, End = ON">
+      <enumVal>
+        <enumChoice choice="Locomotive Address Only"/>
+        <enumChoice choice="Respond to Consist Address"/>
+      </enumVal></variable>
+    <variable label="Consist Address Active For F8" CV="21" mask="VXXXXXXX"
+              tooltip="F8 = Audio Mute (default); Recommendation: Lead = ON, Mid = ON, End = ON">
+      <enumVal>
+        <enumChoice choice="Locomotive Address Only"/>
+        <enumChoice choice="Respond to Consist Address"/>
+      </enumVal></variable>
+
+    <variable label="Consist Address Active For FL in Forward" CV="22" mask="XXXXXXXV"
+              tooltip="FL(f) = Directional Lighting; Recommendation: Lead = ON, Mid = OFF, End = OFF">
+      <enumVal>
+        <enumChoice choice="Locomotive Address Only"/>
+        <enumChoice choice="Respond to Consist Address"/>
+      </enumVal></variable>
+    <variable label="Consist Address Active For FL in Reverse" CV="22" mask="XXXXXXVX"
+              tooltip="FL(r) = Directional Lighting; Recommendation: Lead = ON, Mid = OFF, End = OFF">
+      <enumVal>
+        <enumChoice choice="Locomotive Address Only"/>
+        <enumChoice choice="Respond to Consist Address"/>
+      </enumVal></variable>
+    <variable label="Consist Address Active For F9" CV="22" mask="XXXXXVXX"
+              tooltip="F9 = Cruise Ctrl (Shut Down) (default); Recommendation: Lead = ON, Mid = ON, End = ON">
+      <enumVal>
+        <enumChoice choice="Locomotive Address Only"/>
+        <enumChoice choice="Respond to Consist Address"/>
+      </enumVal></variable>
+    <variable label="Consist Address Active For F10" CV="22" mask="XXXXVXXX"
+              tooltip="F10 = SMPH Report (Status Report) (default); Recommendation: Lead = ON, Mid = OFF, End = OFF">
+      <enumVal>
+        <enumChoice choice="Locomotive Address Only"/>
+        <enumChoice choice="Respond to Consist Address"/>
+      </enumVal></variable>
+    <variable label="Consist Address Active For F11" CV="22" mask="XXXVXXXX"
+              tooltip="F11 = Number Board Lights (default); Recommendation: Lead = ON, Mid = ON, End = ON">
+      <enumVal>
+        <enumChoice choice="Locomotive Address Only"/>
+        <enumChoice choice="Respond to Consist Address"/>
+      </enumVal></variable>
+    <variable label="Consist Address Active For F12" CV="22" mask="XXVXXXXX"
+              tooltip="F12 = Cab Lights (default); Recommendation: Lead = OFF, Mid = OFF, End = OFF">
+      <enumVal>
+        <enumChoice choice="Locomotive Address Only"/>
+        <enumChoice choice="Respond to Consist Address"/>
+      </enumVal></variable>
+
+    <variable label="Consist Acceleration Adjustment" CV="23" mask="XVVVVVVV">
+        <decVal max="127"/>
+      </variable>
+    <variable label="Consist Acceleration Adjustment Sign" CV="23" mask="VXXXXXXX">
+      <enumVal>
+        <enumChoice choice="Adjustment Added"/>
+        <enumChoice choice="Adjustment Subtracted"/>
+      </enumVal></variable>
+    <variable label="Consist Deceleration Adjustment" CV="24" mask="XVVVVVVV">
+        <decVal max="127"/>
+      </variable>
+    <variable label="Consist Deceleration Adjustment Sign" CV="24" mask="VXXXXXXX">
+      <enumVal>
+        <enumChoice choice="Adjustment Added"/>
+        <enumChoice choice="Adjustment Subtracted"/>
+      </enumVal></variable>
+
+    <variable label="Quantum Speed Table" CV="25" item="Speed Table Selection"
+              default="2" comment="value is applied">
+      <enumVal>
+        <enumChoice choice="User Defined Speed Table" value="1"/>
+        <enumChoice choice="Linear Curve"/>
+        <enumChoice choice="Fast start 1 (close to linear)"/>
+        <enumChoice choice="Fast start 2"/>
+        <enumChoice choice="Fast start 3"/>
+        <enumChoice choice="Fast start 4"/>
+        <enumChoice choice="Fast start 5 (greatest curvature)"/>
+        <enumChoice choice="Slow start 1 (close to linear)" value="67"/>
+        <enumChoice choice="Slow start 2"/>
+        <enumChoice choice="Slow start 3"/>
+        <enumChoice choice="Slow start 4"/>
+        <enumChoice choice="Slow start 5 (greatest curavture"/>
+      </enumVal>
+    </variable>
+
+    <variable label="Locomotive Direction" CV="29" mask="XXXXXXXV">
+      <enumVal>
+        <enumChoice choice="normal"/>
+        <enumChoice choice="reversed"/>
+      </enumVal></variable>
+    <variable label="FL Location" CV="29" mask="XXXXXXVX"
+              item="Speed Step Mode" default="1">
+      <enumVal>
+        <enumChoice choice="14 speed step format"/>
+        <enumChoice choice="28/128 speed step format"/>
+      </enumVal></variable>
+    <variable label="Power Source Conversion" CV="29" mask="XXXXXVXX"
+              item="Analog (DC) Operation" >
+      <enumVal>
+        <enumChoice choice="NMRA Digital only"/>
+        <enumChoice choice="DC conversion enabled"/>
+      </enumVal></variable>
+<!-- This bit is not used by QSI
+    <variable label="Advanced Decoder Acknowledgement" CV="29" mask="XXXXVXXX"
+          item="Advanced Ack">
+      <enumVal>
+        <enumChoice choice="disabled"/>
+        <enumChoice choice="enabled"/>
+      </enumVal></variable>
+-->
+    <variable label="Speed Table Definition" CV="29" mask="XXXVXXXX">
+      <enumVal>
+        <enumChoice choice="Use Straight-Line Response"/>
+        <enumChoice choice="Use QSI table or User table in CVs 67 through 94"/>
+      </enumVal></variable>
+    <variable label="Address Format" CV="29" mask="XXVXXXXX">
+      <enumVal>
+        <enumChoice choice="One byte (short) address"/>
+        <enumChoice choice="Two byte (extended) address"/>
+      </enumVal></variable>
+
+    <variable label="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2" default="1"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="FL(f) controls output 4" CV="33" mask="XXXXVXXX" minOut="4"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="FL(f) controls output 5" CV="33" mask="XXXVXXXX" minOut="5"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="FL(f) controls output 6" CV="33" mask="XXVXXXXX" minOut="6"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="FL(f) controls output 7" CV="33" mask="XVXXXXXX" minOut="7"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="FL(f) controls output 8" CV="33" mask="VXXXXXXX" minOut="8"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+    <variable label="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1" default="1"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" default="1"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="FL(r) controls output 5" CV="34" mask="XXXVXXXX" minOut="5"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="FL(r) controls output 6" CV="34" mask="XXVXXXXX" minOut="6"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="FL(r) controls output 7" CV="34" mask="XVXXXXXX" minOut="7"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="FL(r) controls output 8" CV="34" mask="VXXXXXXX" minOut="8"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+    <variable label="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="1"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="1" default="1"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F1 controls output 4" CV="35" mask="XXXXVXXX" minOut="4" minFn="1"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F1 controls output 5" CV="35" mask="XXXVXXXX" minOut="5" minFn="1"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F1 controls output 6" CV="35" mask="XXVXXXXX" minOut="6" minFn="1"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F1 controls output 7" CV="35" mask="XVXXXXXX" minOut="7" minFn="1"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F1 controls output 8" CV="35" mask="VXXXXXXX" minOut="8" minFn="1"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+    <variable label="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="2"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="2"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F2 controls output 4" CV="36" mask="XXXXVXXX" minOut="4" minFn="2" default="1"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F2 controls output 5" CV="36" mask="XXXVXXXX" minOut="5" minFn="2"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F2 controls output 6" CV="36" mask="XXVXXXXX" minOut="6" minFn="2"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F2 controls output 7" CV="36" mask="XVXXXXXX" minOut="7" minFn="2"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F2 controls output 8" CV="36" mask="VXXXXXXX" minOut="8" minFn="2"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+    <variable label="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="3"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" minFn="3"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F3 controls output 4" CV="37" mask="XXXXVXXX" minOut="4" minFn="3"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F3 controls output 5" CV="37" mask="XXXVXXXX" minOut="5" minFn="3" default="1"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F3 controls output 6" CV="37" mask="XXVXXXXX" minOut="6" minFn="3"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F3 controls output 7" CV="37" mask="XVXXXXXX" minOut="7" minFn="3"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F3 controls output 8" CV="37" mask="VXXXXXXX" minOut="8" minFn="3"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+    <variable label="F4 controls output 4" CV="38" mask="XXXXXXXV" minOut="4" minFn="4"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F4 controls output 5" CV="38" mask="XXXXXXVX" minOut="5" minFn="4"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F4 controls output 6" CV="38" mask="XXXXXVXX" minOut="6" minFn="4" default="1"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F4 controls output 7" CV="38" mask="XXXXVXXX" minOut="7" minFn="4"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F4 controls output 8" CV="38" mask="XXXVXXXX" minOut="8" minFn="4"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F4 controls output 9" CV="38" mask="XXVXXXXX" minOut="9" minFn="4"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F4 controls output 10" CV="38" mask="XVXXXXXX" minOut="10" minFn="4"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F4 controls output 11" CV="38" mask="VXXXXXXX" minOut="11" minFn="4"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+    <variable label="F5 controls output 4" CV="39" mask="XXXXXXXV" minOut="4" minFn="5"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F5 controls output 5" CV="39" mask="XXXXXXVX" minOut="5" minFn="5"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F5 controls output 6" CV="39" mask="XXXXXVXX" minOut="6" minFn="5"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F5 controls output 7" CV="39" mask="XXXXVXXX" minOut="7" minFn="5" default="1"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F5 controls output 8" CV="39" mask="XXXVXXXX" minOut="8" minFn="5"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F5 controls output 9" CV="39" mask="XXVXXXXX" minOut="9" minFn="5"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F5 controls output 10" CV="39" mask="XVXXXXXX" minOut="10" minFn="5"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F5 controls output 11" CV="39" mask="VXXXXXXX" minOut="11" minFn="5"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+    <variable label="F6 controls output 4" CV="40" mask="XXXXXXXV" minOut="4" minFn="6"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F6 controls output 5" CV="40" mask="XXXXXXVX" minOut="5" minFn="6"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F6 controls output 6" CV="40" mask="XXXXXVXX" minOut="6" minFn="6"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F6 controls output 7" CV="40" mask="XXXXVXXX" minOut="7" minFn="6"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F6 controls output 8" CV="40" mask="XXXVXXXX" minOut="8" minFn="6" default="1"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F6 controls output 9" CV="40" mask="XXVXXXXX" minOut="9" minFn="6"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F6 controls output 10" CV="40" mask="XVXXXXXX" minOut="10" minFn="6"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F6 controls output 11" CV="40" mask="VXXXXXXX" minOut="11" minFn="6"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+    <variable label="F7 controls output 4" CV="41" mask="XXXXXXXV" minOut="4" minFn="7"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F7 controls output 5" CV="41" mask="XXXXXXVX" minOut="5" minFn="7"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F7 controls output 6" CV="41" mask="XXXXXVXX" minOut="6" minFn="7"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F7 controls output 7" CV="41" mask="XXXXVXXX" minOut="7" minFn="7"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F7 controls output 8" CV="41" mask="XXXVXXXX" minOut="8" minFn="7"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F7 controls output 9" CV="41" mask="XXVXXXXX" minOut="9" minFn="7" default="1"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F7 controls output 10" CV="41" mask="XVXXXXXX" minOut="10" minFn="7"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F7 controls output 11" CV="41" mask="VXXXXXXX" minOut="11" minFn="7"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+    <variable label="F8 controls output 4" CV="42" mask="XXXXXXXV" minOut="4" minFn="8"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F8 controls output 5" CV="42" mask="XXXXXXVX" minOut="5" minFn="8"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F8 controls output 6" CV="42" mask="XXXXXVXX" minOut="6" minFn="8"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F8 controls output 7" CV="42" mask="XXXXVXXX" minOut="7" minFn="8"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F8 controls output 8" CV="42" mask="XXXVXXXX" minOut="8" minFn="8"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F8 controls output 9" CV="42" mask="XXVXXXXX" minOut="9" minFn="8"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F8 controls output 10" CV="42" mask="XVXXXXXX" minOut="10" minFn="8" default="1"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F8 controls output 11" CV="42" mask="VXXXXXXX" minOut="11" minFn="8"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+    <variable label="F9 controls output 7" CV="43" mask="XXXXXXXV" minOut="7" minFn="9"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F9 controls output 8" CV="43" mask="XXXXXXVX" minOut="8" minFn="9"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F9 controls output 9" CV="43" mask="XXXXXVXX" minOut="9" minFn="9"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F9 controls output 10" CV="43" mask="XXXXVXXX" minOut="10" minFn="9"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F9 controls output 11" CV="43" mask="XXXVXXXX" minOut="11" minFn="9" default="1"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F9 controls output 12" CV="43" mask="XXVXXXXX" minOut="12" minFn="9"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F9 controls output 13" CV="43" mask="XVXXXXXX" minOut="13" minFn="9"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F9 controls output 14" CV="43" mask="VXXXXXXX" minOut="14" minFn="9"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+    <variable label="F10 controls output 7" CV="44" mask="XXXXXXXV" minOut="7" minFn="10"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F10 controls output 8" CV="44" mask="XXXXXXVX" minOut="8" minFn="10"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F10 controls output 9" CV="44" mask="XXXXXVXX" minOut="9" minFn="10"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F10 controls output 10" CV="44" mask="XXXXVXXX" minOut="10" minFn="10"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F10 controls output 11" CV="44" mask="XXXVXXXX" minOut="11" minFn="10"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F10 controls output 12" CV="44" mask="XXVXXXXX" minOut="12" minFn="10" default="1"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F10 controls output 13" CV="44" mask="XVXXXXXX" minOut="13" minFn="10"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F10 controls output 14" CV="44" mask="VXXXXXXX" minOut="14" minFn="10"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+    <variable label="F11 controls output 7" CV="45" mask="XXXXXXXV" minOut="7" minFn="11"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F11 controls output 8" CV="45" mask="XXXXXXVX" minOut="8" minFn="11"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F11 controls output 9" CV="45" mask="XXXXXVXX" minOut="9" minFn="11"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F11 controls output 10" CV="45" mask="XXXXVXXX" minOut="10" minFn="11"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F11 controls output 11" CV="45" mask="XXXVXXXX" minOut="11" minFn="11"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F11 controls output 12" CV="45" mask="XXVXXXXX" minOut="12" minFn="11"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F11 controls output 13" CV="45" mask="XVXXXXXX" minOut="13" minFn="11" default="1"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F11 controls output 14" CV="45" mask="VXXXXXXX" minOut="14" minFn="11"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+    <variable label="F12 controls output 7" CV="46" mask="XXXXXXXV" minOut="7" minFn="12"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F12 controls output 8" CV="46" mask="XXXXXXVX" minOut="8" minFn="12"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F12 controls output 9" CV="46" mask="XXXXXVXX" minOut="9" minFn="12"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F12 controls output 10" CV="46" mask="XXXXVXXX" minOut="10" minFn="12"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F12 controls output 11" CV="46" mask="XXXVXXXX" minOut="11" minFn="12"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F12 controls output 12" CV="46" mask="XXVXXXXX" minOut="12" minFn="12"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F12 controls output 13" CV="46" mask="XVXXXXXX" minOut="13" minFn="12"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+    <variable label="F12 controls output 14" CV="46" mask="VXXXXXXX" minOut="14" minFn="12" default="1"> <enumVal>
+      <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+    <!-- QSI-specific below here -->
+    <variable label="Programming Verbal Acknowledgement" CV="62"
+              comment="CV62" item="CV62 QSI Control" default="1">
+      <enumVal>
+        <enumChoice choice="Disable"/>
+        <enumChoice choice="Enable" />
+      </enumVal>
+    </variable>
+
+    <!-- need to make this work for indexed CVs as well - TBD -->
+<!--
+    <variable label="Verbal CV Inquiry" CV="64" comment="CV64" item="Verbal CV Inquiry">
+      <decVal/>
+    </variable>
+-->
+
+    <variable label="Forward Trim" CV="66" default="128">
+      <decVal/>
+    </variable>
+
+    <variable label="Speed Table" CV="67">
+      <speedTableVal/>
+    </variable>
+
+    <variable label="Reverse Trim" CV="95" default="128">
+      <decVal/>
+    </variable>
+
+    <constant label="PICV" default="49" comment="CV used for Primary Index"/>
+    <constant label="SICV" default="50" comment="CV used for Secondary Index"/>
+
+    <!-- QSI CV.PI.SI formatted items -->
+
+    <!-- Sound control -->
+    <ivariable label="System Volume" CVname="51.0" CV="51" PI="0" default="127"
+               comment="QSI" item="CV51.0">
+      <indexedVal max="127"/>
+    </ivariable>
+    <ivariable label="Mute Volume" CVname="51.1" CV="51" PI="1" default="0"
+               comment="QSI" item="CV51.1">
+      <indexedVal max="63"/>
+    </ivariable>
+
+    <ivariable label="Horn Triggered Doppler" CVname="51.2" CV="51" PI="2" default="1"
+               comment="QSI" item="CV51.2" mask="XXXXXXXV">
+      <ienumVal> <ienumChoice choice="No"/> <ienumChoice choice="Yes"/> </ienumVal>
+    </ivariable>
+
+    <!-- Sound volumes -->
+    <ivariable label="Whistle Volume" CVname="52.0" CV="52" PI="0" default="11" comment="QSI" item="CV52.0">
+      <indexedVal max="15"/> </ivariable>
+    <ivariable label="Bell Volume" CVname="52.8" CV="52" PI="8" default="11" comment="QSI" item="CV52.8">
+      <indexedVal max="15"/> </ivariable>
+    <ivariable label="Chuff Volume" CVname="52.10" CV="52" PI="10" default="11" comment="QSI" item="CV52.10">
+      <indexedVal max="15"/> </ivariable>
+    <ivariable label="Air Pump 1 Volume" CVname="52.16" CV="52" PI="16" default="11" comment="QSI" item="CV52.16">
+      <indexedVal max="15"/> </ivariable>
+    <ivariable label="Air Pump 2 Volume" CVname="52.17" CV="52" PI="17" default="11" comment="QSI" item="CV52.17">
+      <indexedVal max="15"/> </ivariable>
+    <ivariable label="Steam Blower (hiss)" CVname="52.19" CV="52" PI="19" default="8" comment="QSI" item="CV52.19">
+      <indexedVal max="15"/> </ivariable>
+    <ivariable label="Long Air Let-off" CVname="52.21" CV="52" PI="21" default="11" comment="QSI" item="CV52.21">
+      <indexedVal max="15"/> </ivariable>
+    <ivariable label="Short Air Let-off" CVname="52.22" CV="52" PI="22" default="11" comment="QSI" item="CV52.22">
+      <indexedVal max="15"/> </ivariable>
+    <ivariable label="Squealing Brakes" CVname="52.24" CV="52" PI="24" default="11" comment="QSI" item="CV52.24">
+      <indexedVal max="15"/> </ivariable>
+    <ivariable label="Steam Dynamo" CVname="52.26" CV="52" PI="26" default="8" comment="QSI" item="CV52.26">
+      <indexedVal max="15"/> </ivariable>
+    <ivariable label="Boiler Pop-off" CVname="52.29" CV="52" PI="29" default="11" comment="QSI" item="CV52.29">
+      <indexedVal max="15"/> </ivariable>
+    <ivariable label="Blow Down" CVname="52.30" CV="52" PI="30" default="11" comment="QSI" item="CV52.30">
+      <indexedVal max="15"/> </ivariable>
+    <ivariable label="Injector" CVname="52.31" CV="52" PI="31" default="11" comment="QSI" item="CV52.31">
+      <indexedVal max="15"/> </ivariable>
+    <ivariable label="Coupler Sounds" CVname="52.34" CV="52" PI="34" default="11" comment="QSI" item="CV52.34">
+      <indexedVal max="15"/> </ivariable>
+
+    <ivariable label="Output 1 - Forward/Reverse Only" CVname="53.1.0" CV="53" PI="1" SI="0"
+               default="96" comment="QSI" item="CV53.1.0" infoOnly="yes">
+      <ienumVal>
+        <ienumChoice choice="Directional Headlight" value="96"/>
+      </ienumVal>
+    </ivariable>
+    <ivariable label=" - Neutral Only" CVname="53.1.1" CV="53" PI="1" SI="1"
+               default="96" comment="QSI" item="CV53.1.1" infoOnly="yes">
+      <ienumVal>
+        <ienumChoice choice="Directional Headlight" value="96"/>
+      </ienumVal>
+    </ivariable>
+
+    <ivariable label="Output 2 - Forward/Reverse Only" CVname="53.2.0" CV="53" PI="2" SI="0"
+               default="97" comment="QSI" item="CV53.2.0" infoOnly="yes">
+      <ienumVal>
+        <ienumChoice choice="Directional Reverse Light" value="97"/>
+      </ienumVal>
+    </ivariable>
+    <ivariable label=" - Neutral Only" CVname="53.2.1" CV="53" PI="2" SI="1"
+               default="97" comment="QSI" item="CV53.2.1" infoOnly="yes">
+      <ienumVal>
+        <ienumChoice choice="Directional Reverse Light" value="97"/>
+      </ienumVal>
+    </ivariable>
+
+    <ivariable label="Output 3 - Forward/Reverse Only" CVname="53.3.0" CV="53" PI="3" SI="0"
+               default="3" comment="QSI" item="CV53.3.0" infoOnly="yes">
+      <ienumVal>
+        <ienumChoice choice="Bell" value="3"/>
+      </ienumVal>
+    </ivariable>
+    <ivariable label=" - Neutral Only" CVname="53.3.1" CV="53" PI="3" SI="1"
+               default="3" comment="QSI" item="CV53.3.1" infoOnly="yes">
+      <ienumVal>
+        <ienumChoice choice="Bell" value="3"/>
+      </ienumVal>
+    </ivariable>
+
+    <ivariable label="Output 4 - Forward/Reverse Only" CVname="53.4.0" CV="53" PI="4" SI="0"
+               default="1" comment="QSI" item="CV53.4.0" infoOnly="yes">
+      <ienumVal>
+        <ienumChoice choice="Whistle/Horn" value="1"/>
+      </ienumVal>
+    </ivariable>
+    <ivariable label=" - Neutral Only" CVname="53.4.1" CV="53" PI="4" SI="1"
+               default="1" comment="QSI" item="CV53.4.1" infoOnly="yes">
+      <ienumVal>
+        <ienumChoice choice="Whistle/Horn" value="1"/>
+      </ienumVal>
+    </ivariable>
+
+    <ivariable label="Outout 5 - Forward/Reverse Only" CVname="53.5.0" CV="53" PI="5" SI="0"
+               default="211" comment="QSI" item="CV53.5.0">
+      <ienumVal>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Headlight" value="98"/>
+        <ienumChoice choice="Dim Headlight"/>
+        <ienumChoice choice="Reverse Light"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Cruise Control" value="177"/>
+        <ienumChoice choice="Scale mph Report"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Squealing Brakes" value="215"/>
+      </ienumVal>
+    </ivariable>
+    <ivariable label=" - Neutral Only" CVname="53.5.1" CV="53" PI="5" SI="1"
+               default="211" comment="QSI" item="CV53.5.1">
+      <ienumVal>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Pop-off" value="12"/>
+        <ienumChoice choice="Blow down"/>
+        <ienumChoice choice="Injector"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Headlight" value="98"/>
+        <ienumChoice choice="Dim Headlight"/>
+        <ienumChoice choice="Reverse Light"/>
+        <ienumChoice choice="Start Up" value="144"/>
+        <ienumChoice choice="Shut Down"/>
+        <ienumChoice choice="Status Report" value="178"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Pumps" value="217"/>
+      </ienumVal>
+    </ivariable>
+
+    <ivariable label="Outout 6 - Forward/Reverse Only" CVname="53.6.0" CV="53" PI="6" SI="0"
+               default="8" comment="QSI" item="CV53.6.0">
+      <ienumVal>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Headlight" value="98"/>
+        <ienumChoice choice="Dim Headlight"/>
+        <ienumChoice choice="Reverse Light"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Cruise Control" value="177"/>
+        <ienumChoice choice="Scale mph Report"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Squealing Brakes" value="215"/>
+      </ienumVal>
+    </ivariable>
+    <ivariable label=" - Neutral Only" CVname="53.6.1" CV="53" PI="6" SI="1"
+               default="8" comment="QSI" item="CV53.6.1">
+      <ienumVal>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Pop-off" value="12"/>
+        <ienumChoice choice="Blow down"/>
+        <ienumChoice choice="Injector"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Headlight" value="98"/>
+        <ienumChoice choice="Dim Headlight"/>
+        <ienumChoice choice="Reverse Light"/>
+        <ienumChoice choice="Start Up" value="144"/>
+        <ienumChoice choice="Shut Down"/>
+        <ienumChoice choice="Status Report" value="178"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Pumps" value="217"/>
+      </ienumVal>
+    </ivariable>
+
+    <ivariable label="Outout 7 - Forward/Reverse Only" CVname="53.7.0" CV="53" PI="7" SI="0"
+               default="5" comment="QSI" item="CV53.7.0">
+      <ienumVal>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Headlight" value="98"/>
+        <ienumChoice choice="Dim Headlight"/>
+        <ienumChoice choice="Reverse Light"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Cruise Control" value="177"/>
+        <ienumChoice choice="Scale mph Report"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Squealing Brakes" value="215"/>
+      </ienumVal>
+    </ivariable>
+    <ivariable label=" - Neutral Only" CVname="53.7.1" CV="53" PI="7" SI="1"
+               default="5" comment="QSI" item="CV53.7.1">
+      <ienumVal>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Pop-off" value="12"/>
+        <ienumChoice choice="Blow down"/>
+        <ienumChoice choice="Injector"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Headlight" value="98"/>
+        <ienumChoice choice="Dim Headlight"/>
+        <ienumChoice choice="Reverse Light"/>
+        <ienumChoice choice="Start Up" value="144"/>
+        <ienumChoice choice="Shut Down"/>
+        <ienumChoice choice="Status Report" value="178"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Pumps" value="217"/>
+      </ienumVal>
+    </ivariable>
+
+    <ivariable label="Outout 8 - Forward/Reverse Only" CVname="53.8.0" CV="53" PI="8" SI="0"
+               default="65" comment="QSI" item="CV53.8.0">
+      <ienumVal>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Headlight" value="98"/>
+        <ienumChoice choice="Dim Headlight"/>
+        <ienumChoice choice="Reverse Light"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Cruise Control" value="177"/>
+        <ienumChoice choice="Scale mph Report"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Squealing Brakes" value="215"/>
+      </ienumVal>
+    </ivariable>
+    <ivariable label=" - Neutral Only" CVname="53.8.1" CV="53" PI="8" SI="1"
+               default="144" comment="QSI" item="CV53.8.1">
+      <ienumVal>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Pop-off" value="12"/>
+        <ienumChoice choice="Blow down"/>
+        <ienumChoice choice="Injector"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Headlight" value="98"/>
+        <ienumChoice choice="Dim Headlight"/>
+        <ienumChoice choice="Reverse Light"/>
+        <ienumChoice choice="Start Up" value="144"/>
+        <ienumChoice choice="Shut Down"/>
+        <ienumChoice choice="Status Report" value="178"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Pumps" value="217"/>
+      </ienumVal>
+    </ivariable>
+
+    <ivariable label="Outout 9 - Forward/Reverse Only" CVname="53.9.0" CV="53" PI="9" SI="0"
+               default="215" comment="QSI" item="CV53.9.0">
+      <ienumVal>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Headlight" value="98"/>
+        <ienumChoice choice="Dim Headlight"/>
+        <ienumChoice choice="Reverse Light"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Cruise Control" value="177"/>
+        <ienumChoice choice="Scale mph Report"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Squealing Brakes" value="215"/>
+      </ienumVal>
+    </ivariable>
+    <ivariable label=" - Neutral Only" CVname="53.9.1" CV="53" PI="9" SI="1"
+               default="14" comment="QSI" item="CV53.9.1">
+      <ienumVal>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Pop-off" value="12"/>
+        <ienumChoice choice="Blow down"/>
+        <ienumChoice choice="Injector"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Headlight" value="98"/>
+        <ienumChoice choice="Dim Headlight"/>
+        <ienumChoice choice="Reverse Light"/>
+        <ienumChoice choice="Start Up" value="144"/>
+        <ienumChoice choice="Shut Down"/>
+        <ienumChoice choice="Status Report" value="178"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Pumps" value="217"/>
+      </ienumVal>
+    </ivariable>
+
+    <ivariable label="Outout 10 - Forward/Reverse Only" CVname="53.10.0" CV="53" PI="10" SI="0"
+               default="64" comment="QSI" item="CV53.10.0">
+      <ienumVal>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Headlight" value="98"/>
+        <ienumChoice choice="Dim Headlight"/>
+        <ienumChoice choice="Reverse Light"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Cruise Control" value="177"/>
+        <ienumChoice choice="Scale mph Report"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Squealing Brakes" value="215"/>
+      </ienumVal>
+    </ivariable>
+    <ivariable label=" - Neutral Only" CVname="53.10.1" CV="53" PI="10" SI="1"
+               default="64" comment="QSI" item="CV53.10.1">
+      <ienumVal>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Pop-off" value="12"/>
+        <ienumChoice choice="Blow down"/>
+        <ienumChoice choice="Injector"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Headlight" value="98"/>
+        <ienumChoice choice="Dim Headlight"/>
+        <ienumChoice choice="Reverse Light"/>
+        <ienumChoice choice="Start Up" value="144"/>
+        <ienumChoice choice="Shut Down"/>
+        <ienumChoice choice="Status Report" value="178"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Pumps" value="217"/>
+      </ienumVal>
+    </ivariable>
+
+    <ivariable label="Outout 11 - Forward/Reverse Only" CVname="53.11.0" CV="53" PI="11" SI="0"
+               default="10" comment="QSI" item="CV53.11.0">
+      <ienumVal>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Headlight" value="98"/>
+        <ienumChoice choice="Dim Headlight"/>
+        <ienumChoice choice="Reverse Light"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Cruise Control" value="177"/>
+        <ienumChoice choice="Scale mph Report"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Squealing Brakes" value="215"/>
+      </ienumVal>
+    </ivariable>
+    <ivariable label=" - Neutral Only" CVname="53.11.1" CV="53" PI="11" SI="1"
+               default="145" comment="QSI" item="CV53.11.1">
+      <ienumVal>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Pop-off" value="12"/>
+        <ienumChoice choice="Blow down"/>
+        <ienumChoice choice="Injector"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Headlight" value="98"/>
+        <ienumChoice choice="Dim Headlight"/>
+        <ienumChoice choice="Reverse Light"/>
+        <ienumChoice choice="Start Up" value="144"/>
+        <ienumChoice choice="Shut Down"/>
+        <ienumChoice choice="Status Report" value="178"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Pumps" value="217"/>
+      </ienumVal>
+    </ivariable>
+
+    <ivariable label="Outout 12 - Forward/Reverse Only" CVname="53.12.0" CV="53" PI="12" SI="0"
+               default="10" comment="QSI" item="CV53.12.0">
+      <ienumVal>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Headlight" value="98"/>
+        <ienumChoice choice="Dim Headlight"/>
+        <ienumChoice choice="Reverse Light"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Cruise Control" value="177"/>
+        <ienumChoice choice="Scale mph Report"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Squealing Brakes" value="215"/>
+      </ienumVal>
+    </ivariable>
+    <ivariable label=" - Neutral Only" CVname="53.12.1" CV="53" PI="12" SI="1"
+               default="12" comment="QSI" item="CV53.12.1">
+      <ienumVal>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Pop-off" value="12"/>
+        <ienumChoice choice="Blow down"/>
+        <ienumChoice choice="Injector"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Headlight" value="98"/>
+        <ienumChoice choice="Dim Headlight"/>
+        <ienumChoice choice="Reverse Light"/>
+        <ienumChoice choice="Start Up" value="144"/>
+        <ienumChoice choice="Shut Down"/>
+        <ienumChoice choice="Status Report" value="178"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Pumps" value="217"/>
+      </ienumVal>
+    </ivariable>
+
+    <ivariable label="Outout 13 - Forward/Reverse Only" CVname="53.13.0" CV="53" PI="13" SI="0"
+               default="10" comment="QSI" item="CV53.13.0">
+      <ienumVal>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Headlight" value="98"/>
+        <ienumChoice choice="Dim Headlight"/>
+        <ienumChoice choice="Reverse Light"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Cruise Control" value="177"/>
+        <ienumChoice choice="Scale mph Report"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Squealing Brakes" value="215"/>
+      </ienumVal>
+    </ivariable>
+    <ivariable label=" - Neutral Only" CVname="53.13.1" CV="53" PI="13" SI="1"
+               default="13" comment="QSI" item="CV53.13.1">
+      <ienumVal>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Pop-off" value="12"/>
+        <ienumChoice choice="Blow down"/>
+        <ienumChoice choice="Injector"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Headlight" value="98"/>
+        <ienumChoice choice="Dim Headlight"/>
+        <ienumChoice choice="Reverse Light"/>
+        <ienumChoice choice="Start Up" value="144"/>
+        <ienumChoice choice="Shut Down"/>
+        <ienumChoice choice="Status Report" value="178"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Pumps" value="217"/>
+      </ienumVal>
+    </ivariable>
+
+    <ivariable label="Outout 14 - Forward/Reverse Only" CVname="53.14.0" CV="53" PI="14" SI="0"
+               default="10" comment="QSI" item="CV53.14.0">
+      <ienumVal>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Headlight" value="98"/>
+        <ienumChoice choice="Dim Headlight"/>
+        <ienumChoice choice="Reverse Light"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Cruise Control" value="177"/>
+        <ienumChoice choice="Scale mph Report"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Squealing Brakes" value="215"/>
+      </ienumVal>
+    </ivariable>
+    <ivariable label=" - Neutral Only" CVname="53.14.1" CV="53" PI="14" SI="1"
+               default="10" comment="QSI" item="CV53.14.1">
+      <ienumVal>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Pop-off" value="12"/>
+        <ienumChoice choice="Blow down"/>
+        <ienumChoice choice="Injector"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Headlight" value="98"/>
+        <ienumChoice choice="Dim Headlight"/>
+        <ienumChoice choice="Reverse Light"/>
+        <ienumChoice choice="Start Up" value="144"/>
+        <ienumChoice choice="Shut Down"/>
+        <ienumChoice choice="Status Report" value="178"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Pumps" value="217"/>
+      </ienumVal>
+    </ivariable>
+
+    <ivariable label="Throttle Mode" CVname="56.4" CV="56" PI="4" default="1"
+               comment="QSI" item="CV56.4" mask="XXXXXXVV">
+      <ienumVal>
+        <ienumChoice choice="Standard Throttle Control"/>
+        <ienumChoice choice="Speed Control"/>
+        <ienumChoice choice="Regulated Throttle Control"/>
+      </ienumVal>
+    </ivariable>
+
+    <ivariable label="Speed Step to Scale MPH Scale Factor" CVname="56.10" CV="56" PI="10" default="64"
+               comment="QSI" item="CV56.10">
+      <indexedVal max="128"/> </ivariable>
+
+    <ivariable label="Chuff Interval Scale Factor" CVname="56.12" CV="56" PI="12" default="32"
+               comment="QSI" item="CV56.12">
+      <indexedVal max="128"/> </ivariable>
+
+<!-- CV 56.129 Engine ID Access (for ops mode) - TBD -->
+
+<!-- CV 56.254 About Quantum Decoder -->
+    <ivariable label="Product Model High Byte" CVname="56.254.4" CV="56" PI="254" SI="4"
+               readOnly="yes" comment="QSI" item="CV56.254.4"> <indexedVal/> </ivariable>
+    <ivariable label="Product Model Low Byte" CVname="56.254.5" CV="56" PI="254" SI="5"
+               readOnly="yes" comment="QSI" item="CV56.254.5"> <indexedVal/> </ivariable>
+    <ivariable label="Firmware Build Number" CVname="56.254.8" CV="56" PI="254" SI="8"
+               readOnly="yes" comment="QSI" item="CV56.254.8"> <indexedVal/> </ivariable>
+    <ivariable label="Firmware Build Date.Month" CVname="56.254.10" CV="56" PI="254" SI="10"
+               readOnly="yes" comment="QSI" item="CV56.254.10"> <indexedVal/> </ivariable>
+    <ivariable label="Firmware Build Date.Day" CVname="56.254.11" CV="56" PI="254" SI="11"
+               readOnly="yes" comment="QSI" item="CV56.254.11"> <indexedVal/> </ivariable>
+    <ivariable label="Firmware Build Date.Year" CVname="56.254.12" CV="56" PI="254" SI="12"
+               readOnly="yes" comment="QSI" item="CV56.254.12"> <indexedVal/> </ivariable>
+
+<!-- CV 56.255 Play Build Information (for ops mode) -->
+    <ivariable label="Play Product Identifier" CVname="56.255_0" CV="56" PI="255"
+               opsOnly="yes" writeOnly="yes" comment="QSI" item="CV56.255_0" default="0">
+    <indexedVal/> </ivariable>
+    <ivariable label="Firmware Build Date.Day" CVname="56.255_1" CV="56" PI="255"
+               opsOnly="yes" writeOnly="yes" comment="QSI" item="CV56.255_1" default="1">
+    <indexedVal/> </ivariable>
+    <ivariable label="Firmware Build Date.Year" CVname="56.255_2" CV="56" PI="255"
+               opsOnly="yes" writeOnly="yes" comment="QSI" item="CV56.255_2" default="2">
+    <indexedVal/> </ivariable>
+
+  </variables>
+  
+  <resets>
+  
+    <ifactReset label="Reset System Sound Control" CVname="56.128.51" CV="56" 
+                PI="128" SI="51" default="113" item="CV56.128.51"/>
+    <ifactReset label="Reset Individual Sounds" CVname="56.128.52" CV="56" 
+                PI="128" SI="52" default="113" item="CV56.128.52"/>
+    <ifactReset label="Reset Function Output Mappings" CVname="56.128.53" CV="56" 
+                PI="128" SI="53" default="113" item="CV56.128.53"/>
+    <ifactReset label="Reset QSI Feature Control" CVname="56.128.55" CV="56" 
+                PI="128" SI="55" default="113" item="CV56.128.55"/>
+    <ifactReset label="Reset QSI Configuration" CVname="56.128.56" CV="56" 
+                PI="128" SI="56" default="113" item="CV56.128.56"/>
+    <ifactReset label="Reset all standard NMRA CV's" CVname="56.128.253" CV="56" 
+                PI="128" SI="253" default="113" item="CV56.128.253"/>
+    <ifactReset label="Reset all QSI CV's" CVname="56.128.254" CV="56" 
+                PI="128" SI="254" default="113" item="CV56.128.254"/>
+    <ifactReset label="Reset all CV's" CVname="56.128.255" CV="56" 
+                PI="128" SI="255" default="113" item="CV56.128.255"/>
+
+  </resets>
+</decoder>
+
+<pane name="Sound / Volume Control">
+  <column>
+    <row>
+      <column>
+        <label label=" "/>
+        <label label="If nothing shows up in this tab, upgrade to JMRI 1.7"/>
+        <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
+        <label label=" "/>
+        <display item="CV51.0" format="hslider" tooltip="Sets CV 51.0 (0 - 127)"/>
+        <label label=" "/>
+        <display item="CV51.1" format="hslider"/>
+        <label label=" "/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV51.2" format="checkbox"/>
+        <label label=" "/>
+      </column>
+    </row>
+    <separator/>
+    <label label=" "/>
+    <row>
+      <column>
+        <display item="CV52.0" format="hslider"/>
+        <label label=" "/>
+        <display item="CV52.8" format="hslider"/>
+        <label label=" "/>
+        <display item="CV52.10" format="hslider"/>
+        <label label=" "/>
+        <display item="CV52.16" format="hslider"/>
+        <label label=" "/>
+        <display item="CV52.17" format="hslider"/>
+        <label label=" "/>
+        <display item="CV52.19" format="hslider"/>
+        <label label=" "/>
+        <display item="CV52.21" format="hslider"/>
+      </column>
+      <column>
+        <label label="           "/>
+      </column>
+      <column>
+        <display item="CV52.22" format="hslider"/>
+        <label label=" "/>
+        <display item="CV52.24" format="hslider"/>
+        <label label=" "/>
+        <display item="CV52.26" format="hslider"/>
+        <label label=" "/>
+        <display item="CV52.29" format="hslider"/>
+        <label label=" "/>
+        <display item="CV52.30" format="hslider"/>
+        <label label=" "/>
+        <display item="CV52.31" format="hslider"/>
+        <label label=" "/>
+        <display item="CV52.34" format="hslider"/>
+      </column>
+    </row>
+    <label label=" "/>
+  </column>
+</pane>
+
+<pane name="Function Output">
+  <column>
+    <row>
+      <column>
+        <label label=" "/>
+        <label label="If nothing shows up in this tab, upgrade to JMRI 1.7"/>
+        <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
+        <label label=" "/>
+        <label label="The first four Outputs are pre-assigned and can't be changed"/>
+        <label label="Do NOT assign a Function to more than one Output"/>
+        <label label=" "/>
+      </column>
+    </row>
+    <separator/>
+    <label label=" "/>
+    <row>
+      <column>
+        <display item="CV53.1.0"/>
+        <display item="CV53.2.0"/>
+        <display item="CV53.3.0"/>
+        <display item="CV53.4.0"/>
+        <display item="CV53.5.0"/>
+        <display item="CV53.6.0"/>
+        <display item="CV53.7.0"/>
+        <display item="CV53.8.0"/>
+        <display item="CV53.9.0"/>
+        <display item="CV53.10.0"/>
+        <display item="CV53.11.0"/>
+        <display item="CV53.12.0"/>
+        <display item="CV53.13.0"/>
+        <display item="CV53.14.0"/>
+      </column>
+      <column>
+        <display item="CV53.1.1"/>
+        <display item="CV53.2.1"/>
+        <display item="CV53.3.1"/>
+        <display item="CV53.4.1"/>
+        <display item="CV53.5.1"/>
+        <display item="CV53.6.1"/>
+        <display item="CV53.7.1"/>
+        <display item="CV53.8.1"/>
+        <display item="CV53.9.1"/>
+        <display item="CV53.10.1"/>
+        <display item="CV53.11.1"/>
+        <display item="CV53.12.1"/>
+        <display item="CV53.13.1"/>
+        <display item="CV53.14.1"/>
+      </column>
+    </row>
+    <label label=" "/>
+  </column>
+</pane>
+
+<pane name="Indexed CVs">
+  <column>
+        <label label=" "/>
+        <label label="If nothing shows up in this tab, upgrade to JMRI 1.7"/>
+        <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
+        <label label=" "/>
+    <indxcvtable/>
+  </column>
+</pane>
+
+<pane name="QSI Misc.">
+  <column>
+    <label label="When programming in Ops-mode, set Verbal Acknowledgement to disable"/>
+    <label label=" "/>
+    <display item="CV62 QSI Control"/>
+  </column>
+</pane>
+
+</decoder-config>
