@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: QSI_Articulated_Steam.xml,v 1.1 2005-06-14 00:13:54 innkeeper Exp $ -->
+<!-- $Id: QSI_Articulated_Steam.xml,v 1.2 2005-06-14 11:06:14 innkeeper Exp $ -->
 <decoder-config>
   <version author="Howard G. Penny" version="1" lastUpdated="20050613"/>
 
 <!-- version 1 - modified for QSI CV.PI.SI format - Howard -->
 
 <decoder>
-  <family name="QSI Articulated Steam" mfg="QSIndustries" lowVersionID="1" highVersionID="6" >
+  <family name="QSI Articulated Steam" mfg="QSIndustries" lowVersionID="2" highVersionID="6" >
     <model model="BLI AC5 Cab Forward 4-8-8-2" lowVersionID="5" 
            numFns="14" numOuts="14" productID="403" >
       <output name="1" label="Plug" connection="other" />
@@ -1142,7 +1142,7 @@
     <row>
       <column>
         <label label=" "/>
-        <label label="If nothing shows up in this tab, upgrade to JMRI 1.7"/>
+        <label label="If nothing shows up in this tab, upgrade to JMRI 1.5.8"/>
         <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
         <label label=" "/>
         <display item="CV51.0" format="hslider" tooltip="Sets CV 51.0 (0 - 127)"/>
@@ -1203,7 +1203,7 @@
     <row>
       <column>
         <label label=" "/>
-        <label label="If nothing shows up in this tab, upgrade to JMRI 1.7"/>
+        <label label="If nothing shows up in this tab, upgrade to JMRI 1.5.8"/>
         <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
         <label label=" "/>
         <label label="The first four Outputs are pre-assigned and can't be changed"/>
@@ -1254,7 +1254,7 @@
 <pane name="Indexed CVs">
   <column>
         <label label=" "/>
-        <label label="If nothing shows up in this tab, upgrade to JMRI 1.7"/>
+        <label label="If nothing shows up in this tab, upgrade to JMRI 1.5.8"/>
         <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
         <label label=" "/>
     <indxcvtable/>

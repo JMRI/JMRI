@@ -2,7 +2,7 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: QSI_Steam.xml,v 1.5 2005-06-13 23:39:13 innkeeper Exp $ -->
+<!-- $Id: QSI_Steam.xml,v 1.6 2005-06-14 11:06:15 innkeeper Exp $ -->
 <decoder-config>
   <version author="Howard G. Penny" version="4" lastUpdated="20050610"/>
 
@@ -1106,7 +1106,7 @@
     <row>
       <column>
         <label label=" "/>
-        <label label="If nothing shows up in this tab, upgrade to JMRI 1.7"/>
+        <label label="If nothing shows up in this tab, upgrade to JMRI 1.5.8"/>
         <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
         <label label=" "/>
         <display item="CV51.0" format="hslider" tooltip="Sets CV 51.0 (0 - 127)"/>
@@ -1167,7 +1167,7 @@
     <row>
       <column>
         <label label=" "/>
-        <label label="If nothing shows up in this tab, upgrade to JMRI 1.7"/>
+        <label label="If nothing shows up in this tab, upgrade to JMRI 1.5.8"/>
         <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
         <label label=" "/>
         <label label="The first four Outputs are pre-assigned and can't be changed"/>
@@ -1218,7 +1218,7 @@
 <pane name="Indexed CVs">
   <column>
         <label label=" "/>
-        <label label="If nothing shows up in this tab, upgrade to JMRI 1.7"/>
+        <label label="If nothing shows up in this tab, upgrade to JMRI 1.5.8"/>
         <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
         <label label=" "/>
     <indxcvtable/>
