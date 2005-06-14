@@ -24,7 +24,7 @@ import org.jdom.output.XMLOutputter;
  * @author    Bob Jacobsen     Copyright (C) 2001, 2002
  * @author    Dennis Miller    Copyright (C) 2004
  * @author    Howard G. Penny  Copyright (C) 2005
- * @version   $Revision: 1.16 $
+ * @version   $Revision: 1.17 $
  * @see       jmri.jmrit.roster.RosterEntry
  * @see       jmri.jmrit.roster.Roster
  */
@@ -72,7 +72,7 @@ class LocoFile extends XmlFile {
                 cvObject = (CvValue)(cvModel.allCvVector().elementAt(cv));
                 if (cvObject == null) {
                     log.warn("CV "+cv+" was in loco file, but not defined by the decoder definition");
-                    cvModel.addCV(name, false);
+                    cvModel.addCV(name, false, false, false);
                     cvObject = (CvValue)(cvModel.allCvVector().elementAt(cv));
                 }
                 cvObject.setValue(Integer.valueOf(value).intValue());

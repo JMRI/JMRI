@@ -17,7 +17,7 @@ import org.jdom.output.*;
 /**
  * Frame providing a table-organized command station programmer from decoder definition files
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class SymbolicProgFrame extends javax.swing.JFrame  {
 
@@ -125,7 +125,7 @@ public class SymbolicProgFrame extends javax.swing.JFrame  {
             });
         newCvButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    cvModel.addCV(newCvNum.getText(), false);
+                    cvModel.addCV(newCvNum.getText(), false, false, false);
                 }
             });
         newVarButton.addActionListener(new java.awt.event.ActionListener() {
