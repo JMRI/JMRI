@@ -2,13 +2,14 @@
 <!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
 
 <programmer-config>
-<!-- $Id: Comprehensive.xml,v 1.9 2005-06-14 05:46:01 jacobsen Exp $ -->
+<!-- $Id: Comprehensive.xml,v 1.10 2005-06-14 05:57:47 jacobsen Exp $ -->
 		<version author="Howard G. Penny"
 					version="8" lastUpdated="20050613"/>
 
       <!-- Version 4 - add consist control for functions (Simon Ginsburg) -->
       <!-- Version 4.1 - changed spelling of "behavior" (Jack Shall) -->
       <!-- Version 5 - modify format, add tooltips (Jack Shall) -->
+      <!-- Version 6 - added CV25 to Speed Control pane - wsthompson@earthlink.net -->
       <!-- Version 8 - added CV25 to Speed Control pane -->
       <!-- Version 8 - added manufacturer speed table selection to Speed Control pane -->
 
@@ -95,19 +96,18 @@
 					<display item="Vstart"
 						tooltip="Sets the starting voltage at throttle speed step 1" />
 					<display item="Vmid"
-						tooltip="Sets the voltage at mid throttle" />
-					<display item="Vhigh"
+						tooltip="Sets the voltage at mid throttle" /><display item="Vhigh"
 						tooltip="Sets the maximum voltage at full throttle" />
+
 					<display item="Speed Table/Mid Range Cab Speed Step"
-						tooltip="Sets voltage curve for  mid throttle, set Vstart and Vhigh first" />
+						tooltip="Sets voltage curve for mid throttle, set Vstart and Vhigh first" />
 
 				</column>
 				<column>
 					<display item="Vstart" format="hslider" label=""
 						tooltip="Sets the starting voltage at throttle speed step 1" />
 					<display item="Vmid" format="hslider" label=""
-						tooltip="Sets the voltage at mid throttle" />
-					<display item="Vhigh" format="hslider" label=""
+						tooltip="Sets the voltage at mid throttle" /><display item="Vhigh" format="hslider" label=""
 						tooltip="Sets the maximum voltage at full throttle" />
 				</column>
 			</row>
