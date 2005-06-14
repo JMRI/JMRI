@@ -30,7 +30,7 @@ import org.jdom.Element;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.48 $
+ * @version   $Revision: 1.49 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -709,7 +709,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     boolean doWrite() {
         _read = false;
         for (int i=0; i<paneList.size(); i++) {
-            if (log.isDebugEnabled()) log.debug("writeChanges calls writePaneAll on "+i);
+            if (log.isDebugEnabled()) log.debug("doWrite starts on "+i);
             _programmingPane = (PaneProgPane)paneList.get(i);
             // some programming operations are instant, so need to have listener registered at readPane
             _programmingPane.addPropertyChangeListener(this);
@@ -720,8 +720,8 @@ abstract public class PaneProgFrame extends JmriJFrame
                 running = _programmingPane.writePanesFull();
 
             if (running) {
-                                // operation in progress, stop loop until called back
-                if (log.isDebugEnabled()) log.debug("writeChanges expecting callback from writePane "+i);
+				// operation in progress, stop loop until called back
+                if (log.isDebugEnabled()) log.debug("doWrite expecting callback from writePane "+i);
                 return true;
             }
             else
@@ -731,7 +731,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         _programmingPane = null;
         writeChangesButton.setSelected(false);
         writeAllButton.setSelected(false);
-        if (log.isDebugEnabled()) log.debug("writeChanges found nothing to do");
+        if (log.isDebugEnabled()) log.debug("doWrite found nothing to do");
         return false;
     }
 
