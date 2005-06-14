@@ -7,6 +7,9 @@ import java.awt.event.*;
 /**
  * A very specific dialog for editing the properties of a FunctionButton
  * object.
+ *
+ * @author Paul Bender Copyright (C) 2005
+ * @version $Revision: 1.2 $
  */
 public class ControlPanelPropertyEditor extends JDialog
 {
