@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: QSI_Articulated_Steam.xml,v 1.2 2005-06-14 11:06:14 innkeeper Exp $ -->
+<!-- $Id: QSI_Articulated_Steam.xml,v 1.3 2005-06-14 21:32:16 innkeeper Exp $ -->
 <decoder-config>
   <version author="Howard G. Penny" version="1" lastUpdated="20050613"/>
 
@@ -220,18 +220,23 @@
         <enumChoice choice="Respond to Consist Address"/>
       </enumVal></variable>
 
-    <variable label="Consist Acceleration Adjustment" CV="23" mask="XVVVVVVV">
+    <variable label="Acceleration Adjustment" CV="23" mask="XVVVVVVV"
+              tooltip="This is used whenever acceleration is non zero" item="Consist Acceleration Adjustment" >
         <decVal max="127"/>
       </variable>
-    <variable label="Consist Acceleration Adjustment Sign" CV="23" mask="VXXXXXXX">
+    <variable label="Acceleration Adjustment Sign" CV="23" mask="VXXXXXXX"
+              item="Consist Acceleration Adjustment Sign" >
       <enumVal>
         <enumChoice choice="Adjustment Added"/>
         <enumChoice choice="Adjustment Subtracted"/>
       </enumVal></variable>
-    <variable label="Consist Deceleration Adjustment" CV="24" mask="XVVVVVVV">
+      
+    <variable label="Deceleration Adjustment" CV="24" mask="XVVVVVVV"
+              tooltip="This is used whenever deceleration is non zero" item="Consist Deceleration Adjustment" >
         <decVal max="127"/>
       </variable>
-    <variable label="Consist Deceleration Adjustment Sign" CV="24" mask="VXXXXXXX">
+    <variable label="Deceleration Adjustment Sign" CV="24" mask="VXXXXXXX"
+              item="Consist Deceleration Adjustment Sign" >
       <enumVal>
         <enumChoice choice="Adjustment Added"/>
         <enumChoice choice="Adjustment Subtracted"/>
@@ -529,7 +534,6 @@
     <variable label="F12 controls output 14" CV="46" mask="VXXXXXXX" minOut="14" minFn="12" default="1"> <enumVal>
       <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 
-    <!-- QSI-specific below here -->
     <variable label="Programming Verbal Acknowledgement" CV="62"
               comment="CV62" item="CV62 QSI Control" default="1">
       <enumVal>
@@ -539,11 +543,10 @@
     </variable>
 
     <!-- need to make this work for indexed CVs as well - TBD -->
-<!--
-    <variable label="Verbal CV Inquiry" CV="64" comment="CV64" item="Verbal CV Inquiry">
+    <variable label="Verbal CV Inquiry" CV="64" opsOnly="yes" writeOnly="yes"
+              comment="CV64" item="Verbal CV Inquiry">
       <decVal/>
     </variable>
--->
 
     <variable label="Forward Trim" CV="66" default="128">
       <decVal/>
@@ -1104,13 +1107,16 @@
 
 <!-- CV 56.255 Play Build Information (for ops mode) -->
     <ivariable label="Play Product Identifier" CVname="56.255_0" CV="56" PI="255"
-               opsOnly="yes" writeOnly="yes" comment="QSI" item="CV56.255_0" default="0">
+               opsOnly="yes" writeOnly="yes" infoOnly="yes"
+               comment="QSI" item="CV56.255_0" default="0">
     <indexedVal/> </ivariable>
     <ivariable label="Firmware Build Date.Day" CVname="56.255_1" CV="56" PI="255"
-               opsOnly="yes" writeOnly="yes" comment="QSI" item="CV56.255_1" default="1">
+               opsOnly="yes" writeOnly="yes" infoOnly="yes"
+               comment="QSI" item="CV56.255_1" default="1">
     <indexedVal/> </ivariable>
     <ivariable label="Firmware Build Date.Year" CVname="56.255_2" CV="56" PI="255"
-               opsOnly="yes" writeOnly="yes" comment="QSI" item="CV56.255_2" default="2">
+               opsOnly="yes" writeOnly="yes" infoOnly="yes"
+               comment="QSI" item="CV56.255_2" default="2">
     <indexedVal/> </ivariable>
 
   </variables>
@@ -1266,6 +1272,11 @@
     <label label="When programming in Ops-mode, set Verbal Acknowledgement to disable"/>
     <label label=" "/>
     <display item="CV62 QSI Control"/>
+    <label label=" "/>
+    <label label="When in Ops-mode, set Verbal Acknowledgement to enable for CV Inquiry"/>
+    <label label="Enter a CV you wish to hear and press -- Write changes on sheet"/>
+    <label label=" "/>
+    <display item="Verbal CV Inquiry"/>
   </column>
 </pane>
 
