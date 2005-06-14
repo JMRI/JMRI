@@ -3,7 +3,7 @@ package jmri;
 /**
  * Defines a simple place to get the JMRI version string.
  * @author  Bob Jacobsen   Copyright 2002
- * @version $Revision: 1.53 $
+ * @version $Revision: 1.54 $
  */
 
 public class Version {
@@ -15,5 +15,5 @@ public class Version {
      *
      * @return The current version string
      */
-    static public String name() { return "1.5.7"; }
+    static public String name() { return "1.5.8"; }
 }
