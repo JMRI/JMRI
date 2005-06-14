@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * <p> </p>
  *
  * @author  Howard G. Penny copyright (C) 2005
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 abstract class PositionableJComponent extends JComponent
                         implements MouseMotionListener, MouseListener,
@@ -204,7 +204,7 @@ abstract class PositionableJComponent extends JComponent
         parent.remove(this);
         // force redisplay
         parent.validate();
-        parent.repaint((int)p.getX(),(int)p.getY(),w,h);
+        parent.repaint((int)p.x,(int)p.y,w,h);
 
         // remove from persistance by flagging inactive
         active = false;

@@ -19,7 +19,7 @@ import java.awt.event.ActionEvent;
  * particular decoder.
  *
  * @author    Howard G. Penny    Copyright (C) 2005
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class ResetTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
     private String headers[] = {"Label", "Name",
@@ -151,7 +151,7 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
     }
 
     protected void performReset(int row) {
-        CvValue cv = (CvValue)rowVector.get(row);
+        CvValue cv = (CvValue)rowVector.elementAt(row);
         if (cv.piCv() > 0 && cv.iCv() > 0) {
             _iCv = cv;
             indexedWrite();
