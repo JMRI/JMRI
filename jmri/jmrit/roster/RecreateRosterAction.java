@@ -16,7 +16,7 @@ import org.jdom.Element;
  * Scans the roster directory for xml files, including any that are found.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class RecreateRosterAction extends AbstractAction {
 
@@ -43,8 +43,8 @@ public class RecreateRosterAction extends AbstractAction {
 
             // create a new entry from XML info - find the element
             Element loco = lroot.getChild("locomotive");
-            RosterEntry toEntry = new RosterEntry(loco);
             if (loco != null) {
+                RosterEntry toEntry = new RosterEntry(loco);
                 toEntry.setFileName(fullFromFilename);
 
                 // add to roster
