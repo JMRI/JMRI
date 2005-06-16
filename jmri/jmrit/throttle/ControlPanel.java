@@ -14,20 +14,14 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseAdapter;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JLayeredPane;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.JPopupMenu;
-import javax.swing.JMenuItem;
 import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -41,18 +35,13 @@ import org.jdom.Element;
  *  TODO: fix speed increments (14, 28)
  *
  * @author     glen
- * @version    $Revision: 1.34 $
+ * @version    $Revision: 1.33 $
  */
-public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener,ActionListener
+public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener
 {
 	private DccThrottle throttle;
 
 	private JSlider speedSlider;
-	private JSpinner speedSpinner;
-	private JRadioButton SpeedStep128Button;
-	private JRadioButton SpeedStep28Button;
-	private JRadioButton SpeedStep27Button;
-	private JRadioButton SpeedStep14Button;
 	private GridBagConstraints sliderConstraints;
 	private JRadioButton forwardButton, reverseButton;
 	private JButton stopButton;
@@ -60,12 +49,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	private JPanel buttonPanel;
 	private int speedIncrement;
         private boolean internalAdjust = false;
-
-	private JPopupMenu propertiesPopup;
-	private	JPanel spinnerPanel;
-	private	JPanel sliderPanel;
-
-	private boolean _displaySlider = true;
 
 	public int accelerateKey = 107; // numpad +;
 	public int decelerateKey = 109; // numpad -;
@@ -78,8 +61,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	public int stopKey = 111; // numpad /
 	public int idleKey = 106; // numpad *
 
-        // LocoNet really only has 126 speed steps i.e. 0..127 - 1 for em stop
-	private int MAX_SPEED = 126;
+          // LocoNet really only has 126 speed steps i.e. 0..127 - 1 for em stop
+	private static int MAX_SPEED = 126;
+	//TODO: correct always?
 
 	/**
 	 *  Constructor.
@@ -89,23 +73,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 		speedSlider = new JSlider(0, MAX_SPEED);
 		speedSlider.setValue(0);
 		SwingUtil.setFocusable(speedSlider,false);
-
-		speedSpinner = new JSpinner();
-                SpinnerNumberModel speedSpinnerModel=(SpinnerNumberModel)speedSpinner.getModel();
-                speedSpinnerModel.setMaximum(new Integer(MAX_SPEED));
-                speedSpinner.setModel(speedSpinnerModel);
-                speedSpinner.setValue(new Integer(0));
-		SwingUtil.setFocusable(speedSpinner,false);
-	
-		SpeedStep128Button = new JRadioButton("128 SS");
-		SpeedStep28Button = new JRadioButton("28 SS");
-		SpeedStep27Button = new JRadioButton("27 SS");
-		SpeedStep14Button= new JRadioButton("14 SS");
-
 		forwardButton = new JRadioButton("Forward");
 		reverseButton = new JRadioButton("Reverse");
-
-		propertiesPopup = new JPopupMenu();
 		initGUI();
 	}
 
@@ -150,14 +119,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 		//super.setEnabled(isEnabled);
 		forwardButton.setEnabled(isEnabled);
 		reverseButton.setEnabled(isEnabled);
-		SpeedStep128Button.setEnabled(isEnabled);
-		SpeedStep28Button.setEnabled(isEnabled);
-		SpeedStep27Button.setEnabled(isEnabled);
-		SpeedStep14Button.setEnabled(isEnabled);
 		stopButton.setEnabled(isEnabled);
 		idleButton.setEnabled(isEnabled);
 		speedSlider.setEnabled(isEnabled);
-		speedSpinner.setEnabled(isEnabled);
 	}
 
 	/**
@@ -172,68 +136,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	}
 
 	/**
-	 *  Set the GUI to match the speed steps of the current address.
-	 *
-	 * @param  Speed steps - one of 14,27,28,or 128.  Defaults to 128 
-	 * step mode
-	 */
-	public void setSpeedSteps(int steps)
-	{
-		if(steps == DccThrottle.SpeedStepMode14) {
-			SpeedStep14Button.setSelected(true);
-			SpeedStep27Button.setSelected(false);
-			SpeedStep28Button.setSelected(false);
-			SpeedStep128Button.setSelected(false);
-			MAX_SPEED=14;
-		} else  if(steps == DccThrottle.SpeedStepMode27) {
-			SpeedStep14Button.setSelected(false);
-			SpeedStep27Button.setSelected(true);
-			SpeedStep28Button.setSelected(false);
-			SpeedStep128Button.setSelected(false);
-			MAX_SPEED=27;
-		} else  if(steps == DccThrottle.SpeedStepMode28) {
-			SpeedStep14Button.setSelected(false);
-			SpeedStep27Button.setSelected(false);
-			SpeedStep28Button.setSelected(true);
-			SpeedStep128Button.setSelected(false);
-			MAX_SPEED=28;
-		} else  {
-			SpeedStep14Button.setSelected(false);
-			SpeedStep27Button.setSelected(false);
-			SpeedStep28Button.setSelected(false);
-			SpeedStep128Button.setSelected(true);
-			MAX_SPEED=126;
-		}
-                SpinnerNumberModel speedSpinnerModel=(SpinnerNumberModel)speedSpinner.getModel();
-                speedSpinnerModel.setMaximum(new Integer(MAX_SPEED));
-                speedSpinner.setModel(speedSpinnerModel);
-	}
-
-	/**
-	 *  Set the Speed Control selection method
-         *
-         *  @parm displaySlider boolean value, display speed slider or 
-	 *  display speed steps
-	 */
-	public void setSpeedController(boolean displaySlider) {
-		sliderPanel.setVisible(displaySlider);
-		if(displaySlider)
-			this.getLayeredPane().moveToFront(sliderPanel);
-		spinnerPanel.setVisible(!displaySlider);
-		if(!displaySlider)
-			this.getLayeredPane().moveToFront(spinnerPanel);
-		_displaySlider=displaySlider;
-	}
-
-	/**
-         *  Get the value indicating what speed input we're displaying
-	 *  
-         */
-	public boolean getDisplaySlider() {
-		return _displaySlider;
-	}
-
-	/**
 	 *  Set the GUI to match that the loco speed.
 	 *
 	 * @param  speedIncrement  : TODO
@@ -243,8 +145,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	{
 		this.speedIncrement = speedIncrement;
 		speedSlider.setValue(speed * speedIncrement);
-		// Spinner Speed should be the raw integer speed value
-		speedSpinner.setValue(new Integer(speed));
 	}
 
 	/**
@@ -252,14 +152,12 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	 */
 	private void initGUI()
 	{
-		//JPanel mainPanel = new JPanel();
-		JLayeredPane mainPanel = new JLayeredPane();
+		JPanel mainPanel = new JPanel();
 		this.setContentPane(mainPanel);
-		this.setLayeredPane(mainPanel);
 		mainPanel.setLayout(new BorderLayout());
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
-		sliderPanel = new JPanel();
+		JPanel sliderPanel = new JPanel();
 		sliderPanel.setLayout(new GridBagLayout());
 
 		GridBagConstraints constraints = new GridBagConstraints();
@@ -277,7 +175,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 		constraints.gridy = 0;
 
 		sliderPanel.add(speedSlider, constraints);
-		this.getLayeredPane().add(sliderPanel,BorderLayout.CENTER);
+		this.getContentPane().add(sliderPanel, BorderLayout.CENTER);
 		speedSlider.setOrientation(JSlider.VERTICAL);
 		speedSlider.setMajorTickSpacing(MAX_SPEED/2);
 		com.sun.java.util.collections.Hashtable labelTable = new com.sun.java.util.collections.Hashtable();
@@ -299,7 +197,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                                                 float newSpeed = (speedSlider.getValue() / ( MAX_SPEED * 1.0f ) ) ;
                                                 log.debug( "stateChanged: slider pos: " + speedSlider.getValue() + " speed: " + newSpeed );
 						throttle.setSpeedSetting( newSpeed );
-						speedSpinner.setValue(new Integer(speedSlider.getValue()));
 					}
 				   } else {
 					internalAdjust=false;
@@ -307,88 +204,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 				}
 			});
 
-		spinnerPanel = new JPanel();
-		spinnerPanel.setLayout(new GridBagLayout());
-
-		spinnerPanel.add(speedSpinner, constraints);
-		this.getLayeredPane().add(spinnerPanel,BorderLayout.CENTER);
-
-
-		// remove old actions
-		speedSpinner.addChangeListener(
-			new ChangeListener()
-			{
-				public void stateChanged(ChangeEvent e)
-				{
-                                    if ( !internalAdjust) {
-					//if (!speedSpinner.getValueIsAdjusting())
-					//{
-                                                float newSpeed = (((Integer)speedSpinner.getValue()).floatValue() / ( MAX_SPEED * 1.0f ) ) ;
-                                                log.debug( "stateChanged: spinner pos: " + speedSpinner.getValue() + " speed: " + newSpeed );
-						throttle.setSpeedSetting( newSpeed );
-						speedSlider.setValue(((Integer)speedSpinner.getValue()).intValue());
-					//}
-				   } else {
-					internalAdjust=false;
-				   }
-				}
-			});
-
-		ButtonGroup speedStepButtons = new ButtonGroup();
-		speedStepButtons.add(SpeedStep128Button);
-		speedStepButtons.add(SpeedStep28Button);
-		speedStepButtons.add(SpeedStep27Button);
-		speedStepButtons.add(SpeedStep14Button);
-		constraints.fill = GridBagConstraints.NONE;
-		constraints.gridy = 1;
-		spinnerPanel.add(SpeedStep128Button, constraints);
-		constraints.gridy = 2;
-		spinnerPanel.add(SpeedStep28Button, constraints);
-		constraints.gridy = 3;
-		spinnerPanel.add(SpeedStep27Button, constraints);
-		constraints.gridy = 4;
-		spinnerPanel.add(SpeedStep14Button, constraints);
-
-		SpeedStep14Button.addActionListener(
-			new ActionListener()
-			{
-				public void actionPerformed(ActionEvent e)
-				{
-					setSpeedSteps(DccThrottle.SpeedStepMode14);
-					throttle.setSpeedStepMode(DccThrottle.SpeedStepMode14);
-				}
-			});
-
-		SpeedStep27Button.addActionListener(
-			new ActionListener()
-			{
-				public void actionPerformed(ActionEvent e)
-				{
-					setSpeedSteps(DccThrottle.SpeedStepMode27);
-					throttle.setSpeedStepMode(DccThrottle.SpeedStepMode27);
-				}
-			});
-
-		SpeedStep28Button.addActionListener(
-			new ActionListener()
-			{
-				public void actionPerformed(ActionEvent e)
-				{
-					setSpeedSteps(DccThrottle.SpeedStepMode28);
-					throttle.setSpeedStepMode(DccThrottle.SpeedStepMode28);
-				}
-			});
-
-		SpeedStep128Button.addActionListener(
-			new ActionListener()
-			{
-				public void actionPerformed(ActionEvent e)
-				{
-					setSpeedSteps(DccThrottle.SpeedStepMode128);
-					throttle.setSpeedStepMode(DccThrottle.SpeedStepMode128);
-				}
-			});
-		
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridBagLayout());
 		this.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
@@ -455,7 +270,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 				public void actionPerformed(ActionEvent e)
 				{
 					speedSlider.setValue(0);
-					speedSpinner.setValue(new Integer(0));
 					throttle.setSpeedSetting(0);
 				}
 			});
@@ -469,21 +283,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 				}
 			});
 
-		JMenuItem propertiesItem = new JMenuItem("Properties");
-		propertiesItem.addActionListener(this);
-		propertiesPopup.add(propertiesItem);
-
-                //Add listener to components that can bring up popup menus.
-                MouseListener popupListener = new PopupListener(propertiesPopup);
-                this.addMouseListener(popupListener);
-
 		KeyListenerInstaller.installKeyListenerOnAllComponents(
 				new ControlPadKeyListener(), this);
-
-		// set by default which speed selection method is on top
-		this.getLayeredPane().moveToFront(spinnerPanel);
-		this.getLayeredPane().moveToFront(sliderPanel);
-		setSpeedController(_displaySlider);
 
 	}
 
@@ -493,7 +294,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	private void stop()
 	{
 		speedSlider.setValue(0);
-		speedSpinner.setValue(new Integer(0));
 		throttle.setSpeedSetting(-1);
 	}
 
@@ -522,7 +322,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	 *  A KeyAdapter that listens for the keys that work the control pad buttons
 	 *
 	 * @author     glen
-         * @version    $Revision: 1.34 $
+         * @version    $Revision: 1.33 $
 	 */
 	class ControlPadKeyListener extends KeyAdapter
 	{
@@ -542,13 +342,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 						speedSlider.setValue(speedSlider.getValue() + 1);
 					}
 				}
-				if (speedSpinner.isEnabled())
-				{
-					if (speedSpinner.getValue() != ((SpinnerNumberModel)speedSpinner.getModel()).getMaximum())
-					{
-						speedSpinner.setValue(new Integer(((Integer)speedSpinner.getValue()).intValue() + 1));
-					}
-				}
 			}
                         if ( e.getKeyCode() == accelerateKey2 )
                         {
@@ -557,13 +350,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                                         if (speedSlider.getValue() != speedSlider.getMaximum())
                                         {
                                                 speedSlider.setValue(speedSlider.getValue() + 10);
-                                        }
-                                }
-                                if (speedSpinner.isEnabled())
-                                {
-                                        if (speedSpinner.getValue() != ((SpinnerNumberModel)speedSpinner.getModel()).getMaximum())
-                                        {
-                                                speedSpinner.setValue(new Integer(((Integer)speedSpinner.getValue()).intValue() + 10));
                                         }
                                 }
                         }
@@ -576,13 +362,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 						speedSlider.setValue(speedSlider.getValue() - 1);
 					}
 				}
-				if (speedSpinner.isEnabled())
-				{
-					if (speedSpinner.getValue() != ((SpinnerNumberModel)speedSpinner.getModel()).getMinimum())
-					{
-						speedSpinner.setValue(new Integer(((Integer)speedSpinner.getValue()).intValue() - 1));
-					}
-				}
 			}
                         else if ( e.getKeyCode() == decelerateKey2 )
                         {
@@ -591,13 +370,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                                         if (speedSlider.getValue() != speedSlider.getMinimum())
                                         {
                                                 speedSlider.setValue(speedSlider.getValue() - 10);
-                                        }
-                                }
-                                if (speedSpinner.isEnabled())
-                                {
-                                        if (speedSpinner.getValue() != ((SpinnerNumberModel)speedSpinner.getModel()).getMinimum())
-                                        {
-                                                speedSpinner.setValue(new Integer(((Integer)speedSpinner.getValue()).intValue() - 10));
                                         }
                                 }
                         }
@@ -617,14 +389,14 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 			}
 			else if (e.getKeyCode() == stopKey)
 			{
-				if (speedSlider.isEnabled() || speedSpinner.isEnabled() )
+				if (speedSlider.isEnabled())
 				{
 					stop();
 				}
 			}
 			else if (e.getKeyCode() == idleKey)
 			{
-				if (speedSlider.isEnabled() || speedSpinner.isEnabled())
+				if (speedSlider.isEnabled())
 				{
 					speedSlider.setValue(0);
 				}
@@ -643,79 +415,12 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                    int newSliderSetting = java.lang.Math.round(speed * MAX_SPEED) ;
                    log.debug( "propertyChange: new speed float: " + speed + " slider pos: " + newSliderSetting ) ;
 		   speedSlider.setValue( newSliderSetting );
-		   speedSpinner.setValue(new Integer(newSliderSetting));
-		} else if (e.getPropertyName().equals("SpeedSteps")) {
-		   int steps=((Integer) e.getNewValue()).intValue();
-	           setSpeedSteps(steps);
 		} else if (e.getPropertyName().equals("IsForward")) {
 		   boolean Forward=((Boolean) e.getNewValue()).booleanValue();
 	           setIsForward(Forward);
 		}
 	}
 
-       /**
-        * Handle the selection from the popup menu.
-        * @param e The ActionEvent causing the action.
-        */
-       public void actionPerformed(ActionEvent e)
-       {
-		ControlPanelPropertyEditor editor =
-			new ControlPanelPropertyEditor(this);
-		editor.setVisible(true);
-       }
-
-    /**
-     * A PopupListener to handle mouse clicks and releases. Handles
-     * the popup menu.
-     */
-    class PopupListener extends MouseAdapter
-    {
-
-	JPopupMenu _menu;
-
-	PopupListener(JPopupMenu menu){
-		_menu=menu;
-	}
-
-        /**
-         * If the event is the popup trigger, which is dependent on
-         * the platform, present the popup menu. Otherwise change
-         * the state of the function depending on the locking state
-         * of the button.
-         * @param e The MouseEvent causing the action.
-         */
-        public void mousePressed(MouseEvent e)
-        {
-            if (log.isDebugEnabled()) log.debug("pressed "+(e.getModifiers() & e.BUTTON1_MASK)+" "+e.isPopupTrigger()
-                    +" "+(e.getModifiers() & (e.ALT_MASK+ e.META_MASK+e.CTRL_MASK))
-                    +(" "+e.ALT_MASK+"/"+e.META_MASK+"/"+e.CTRL_MASK));
-	    JInternalFrame panel= (JInternalFrame)e.getSource();
-            if (e.isPopupTrigger())
-            {
-                _menu.show(e.getComponent(),  
-                           e.getX(), e.getY());
-            }
-        }
-
-        /**
-         * If the event is the popup trigger, which is dependent on
-         * the platform, present the popup menu. Otherwise change
-         * the state of the function depending on the locking state
-         * of the button.
-         * @param e The MouseEvent causing the action.
-         */
-        public void mouseReleased(MouseEvent e)
-        {
-            if (log.isDebugEnabled()) log.debug("released "+(e.getModifiers()   & e.BUTTON1_MASK)+" "+e.isPopupTrigger()
-                    +" "+(e.getModifiers() & (e.ALT_MASK+e.META_MASK+e.CTRL_MASK)));
-	    JInternalFrame panel= (JInternalFrame)e.getSource();
-            if (e.isPopupTrigger())
-            {
-                _menu.show(e.getComponent(),   
-                           e.getX(), e.getY());
-            }
-        }
-    }
 
 	/**
 	 *  Collect the prefs of this object into XML Element
@@ -729,7 +434,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	public Element getXml()
 	{
 		Element me = new Element("ControlPanel");
-		me.addAttribute("displaySpeedSlider",String.valueOf(this._displaySlider));		
 		Element window = new Element("window");
 		WindowPreferences wp = new WindowPreferences();
 		com.sun.java.util.collections.ArrayList children =
@@ -749,17 +453,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	 * @param  e  The Element for this object.
 	 */
 	public void setXml(Element e)
-	{	
-		try {			
-			this.setSpeedController(e.getAttribute("displaySpeedSlider").getBooleanValue());
-		} catch (org.jdom.DataConversionException ex)
-		{
-			log.error("DataConverstionException in setXml: "+ex);
-		} catch (Exception em)
-		{
-			// in this case, recover by displaying the speed slider.
-			this.setSpeedController(true);
-        	}
+	{
 		Element window = e.getChild("window");
 		WindowPreferences wp = new WindowPreferences();
 		wp.setPreferences(this, window);

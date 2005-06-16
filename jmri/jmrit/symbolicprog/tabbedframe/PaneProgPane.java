@@ -58,7 +58,7 @@ import com.sun.java.util.collections.List;   // resolve ambiguity with package-l
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005
  * @author  D Miller Copyright 2003
- * @version	$Revision: 1.40 $
+ * @version	$Revision: 1.43 $
  * @see jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -402,6 +402,7 @@ public class PaneProgPane extends javax.swing.JPanel
             VariableValue var = _varModel.getVariable(varNum);
             if ( ( justChanges && var.isChanged() )
                     || ( !justChanges && var.isToRead() )
+                    || ( vState == VariableValue.UNKNOWN )        // always read UNKNOWN state
                 ) {
 
                 if (log.isDebugEnabled()) log.debug("start read of variable "+_varModel.getLabel(varNum));
@@ -417,7 +418,10 @@ public class PaneProgPane extends javax.swing.JPanel
             int cvNum = ((Integer)cvList.get(i)).intValue();
             CvValue cv = _cvModel.getCvByRow(cvNum);
             if (log.isDebugEnabled()) log.debug("nextRead cv index "+cvNum+" state "+cv.getState());
-            if (( !justChanges && cv.isToRead() )|| (justChanges && VariableValue.considerChanged(cv)) )  {
+            if (( !justChanges && cv.isToRead() )
+                || (justChanges && VariableValue.considerChanged(cv)) 
+                || ( cv.getState() == CvValue.UNKNOWN )  // always read UNKNOWN state
+                )  {
                if (log.isDebugEnabled()) log.debug("start read of cv "+cvNum);
                 setBusy(true);
                 if (_programmingCV != null) log.error("listener already set at read start");
@@ -471,13 +475,12 @@ public class PaneProgPane extends javax.swing.JPanel
      * Prepare a "write full sheet" operation.
      */
     public void prepWritePaneAll() {
-        writeAllButton.setSelected(true);
         justChanges = false;
         setToWrite(true);
     }
 
     /**
-     * Invoked by "Write full sheet" button to write all CVs.
+     * Invoked by "Write all sheets" button to write all CVs.
      */
     public boolean writePanesFull() {
         if (log.isDebugEnabled()) log.debug("writePanesFull starts");
@@ -485,6 +488,9 @@ public class PaneProgPane extends javax.swing.JPanel
     }
 
     boolean nextWrite() {
+        if (justChanges) writeChangesButton.setSelected(true);
+        else writeAllButton.setSelected(true);
+        
         // look for possible variables
         for (int i=0; i<varList.size(); i++) {
             int varNum = ((Integer)varList.get(i)).intValue();
@@ -493,7 +499,8 @@ public class PaneProgPane extends javax.swing.JPanel
             VariableValue var = _varModel.getVariable(varNum);
             if ( !var.getReadOnly()
                  &&  (( justChanges && var.isChanged())
-                        || ( !justChanges && var.isToWrite()) )
+                        || ( !justChanges && (var.isToWrite() || var.isChanged())) )
+                        || (vState == VariableValue.UNKNOWN)
                ) {
                 log.debug("start write of variable "+_varModel.getLabel(varNum));
 
@@ -509,7 +516,10 @@ public class PaneProgPane extends javax.swing.JPanel
             CvValue cv = _cvModel.getCvByRow( cvNum );
             if (log.isDebugEnabled()) log.debug("nextWrite cv index "+cvNum+" state "+cv.getState());
             if ( !cv.getReadOnly() &&
-                (( !justChanges && cv.isToWrite() )|| (justChanges && VariableValue.considerChanged(cv)) ))  {
+                (( !justChanges && cv.isToWrite() )
+                || (justChanges && VariableValue.considerChanged(cv)) )
+                || (cv.getState()== CvValue.UNKNOWN)
+                )  {
                 if (log.isDebugEnabled()) log.debug("start write of cv index "+cvNum);
                 setBusy(true);
                 if (_programmingCV != null) log.error("listener already set at write start");
