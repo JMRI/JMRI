@@ -2,9 +2,9 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: QSI_Steam.xml,v 1.8 2005-06-17 02:30:25 innkeeper Exp $ -->
+<!-- $Id: QSI_Steam.xml,v 1.9 2005-06-17 03:03:02 innkeeper Exp $ -->
 <decoder-config>
-  <version author="Howard G. Penny" version="8" lastUpdated="20050614"/>
+  <version author="Howard G. Penny" version="9" lastUpdated="20050616"/>
 
 <!-- version 1 - modified for QSI CV.PI.SI format - Howard -->
 <!-- version 2 - added new models                 - Howard -->
@@ -15,6 +15,7 @@
 <!-- version 7 - Changed labels and tooltips for CV 23 & 24 - Howard -->
 <!-- version 7 - Added CV 64 to QSI Misc. tab - Howard -->
 <!-- version 8 - Updated format of Sound/Volume tab - Howard -->
+<!-- version 9 - Updated info on misc. tab - Howard -->
 
 <decoder>
   <family name="QSI Steam" mfg="QSIndustries" lowVersionID="1" highVersionID="6">
@@ -1190,6 +1191,8 @@
         <label label="If nothing shows up in this tab, upgrade to JMRI 1.7.1"/>
         <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
         <label label=" "/>
+    		<separator/>
+        <label label=" "/>
         <label label="The first four Outputs are pre-assigned and can't be changed"/>
         <label label="Do NOT assign a Function to more than one Output"/>
         <label label=" "/>
@@ -1251,7 +1254,7 @@
     <label label=" "/>
     <display item="CV62 QSI Control"/>
     <label label=" "/>
-    <label label="When in Ops-mode, set Verbal Acknowledgement to enable for CV Inquiry"/>
+    <label label="When in Ops-mode"/>
     <label label="Enter a CV you wish to hear and press -- Write changes on sheet"/>
     <label label=" "/>
     <display item="Verbal CV Inquiry"/>

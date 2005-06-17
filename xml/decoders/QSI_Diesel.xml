@@ -1,10 +1,14 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
-<!-- $Id: QSI_Diesel.xml,v 1.1 2005-06-17 02:31:18 innkeeper Exp $ -->
+<!-- Copyright (C) JMRI 2005 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<!-- $Id: QSI_Diesel.xml,v 1.2 2005-06-17 03:03:02 innkeeper Exp $ -->
 <decoder-config>
-  <version author="Howard G. Penny" version="1" lastUpdated="20050414"/>
+  <version author="Howard G. Penny" version="2" lastUpdated="20050616"/>
 
 <!-- version 1 - modified for QSI CV.PI.SI format - Howard -->
+<!-- version 2 - added copyright information - Howard -->
+<!-- version 2 - Updated info on misc. tab - Howard -->
 
 <decoder>
   <family name="QSI Diesel" mfg="QSIndustries" lowVersionID="4" highVersionID="6">
@@ -470,7 +474,6 @@
     <variable label="F12 controls output 14" CV="46" mask="VXXXXXXX" minOut="14" minFn="12" default="1"> <enumVal>
       <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 
-    <!-- QSI-specific below here -->
     <variable label="Programming Verbal Acknowledgement" CV="62"
               comment="CV62" item="CV62 QSI Control" default="1">
       <enumVal>
@@ -480,11 +483,10 @@
     </variable>
 
     <!-- need to make this work for indexed CVs as well - TBD -->
-<!--
-    <variable label="Verbal CV Inquiry" CV="64" comment="CV64" item="Verbal CV Inquiry">
+    <variable label="Verbal CV Inquiry" CV="64" opsOnly="yes" writeOnly="yes"
+              comment="CV64" item="Verbal CV Inquiry">
       <decVal/>
     </variable>
--->
 
     <variable label="Forward Trim" CV="66" default="128">
       <decVal/>
@@ -1194,13 +1196,16 @@
 
 <!-- CV 56.255 Play Build Information (for ops mode) -->
     <ivariable label="Play Product Identifier" CVname="56.255_0" CV="56" PI="255"
-               opsOnly="yes" writeOnly="yes" comment="QSI" item="CV56.255_0" default="0">
+               opsOnly="yes" writeOnly="yes" infoOnly="yes"
+               comment="QSI" item="CV56.255_0" default="0">
     <indexedVal/> </ivariable>
     <ivariable label="Firmware Build Date.Day" CVname="56.255_1" CV="56" PI="255"
-               opsOnly="yes" writeOnly="yes" comment="QSI" item="CV56.255_1" default="1">
+               opsOnly="yes" writeOnly="yes" infoOnly="yes"
+               comment="QSI" item="CV56.255_1" default="1">
     <indexedVal/> </ivariable>
     <ivariable label="Firmware Build Date.Year" CVname="56.255_2" CV="56" PI="255"
-               opsOnly="yes" writeOnly="yes" comment="QSI" item="CV56.255_2" default="2">
+               opsOnly="yes" writeOnly="yes" infoOnly="yes"
+               comment="QSI" item="CV56.255_2" default="2">
     <indexedVal/> </ivariable>
 
   </variables>
@@ -1367,7 +1372,7 @@
     <label label=" "/>
     <display item="CV62 QSI Control"/>
     <label label=" "/>
-    <label label="When in Ops-mode, set Verbal Acknowledgement to enable for CV Inquiry"/>
+    <label label="When in Ops-mode"/>
     <label label="Enter a CV you wish to hear and press -- Write changes on sheet"/>
     <label label=" "/>
     <display item="Verbal CV Inquiry"/>
