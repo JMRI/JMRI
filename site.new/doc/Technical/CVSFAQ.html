@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CVSFAQ.html,v 1.6 2004-11-12 02:56:40 jacobsen Exp $ -->
+<!-- $Id: CVSFAQ.html,v 1.7 2005-06-18 15:21:59 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -158,7 +158,7 @@ menu and select "command line" to get a place to type these commands.
 On other computers, you can type them directly on the command line.
 
 
-<h3>What are those lines like <i>$Revision: 1.6 $</i> and <i>$Id: CVSFAQ.html,v 1.6 2004-11-12 02:56:40 jacobsen Exp $</i>?</h3>
+<h3>What are those lines like <i>$Revision: 1.7 $</i> and <i>$Id: CVSFAQ.html,v 1.7 2005-06-18 15:21:59 jacobsen Exp $</i>?</h3>
 <A id="refid"/>
 
 Those are automatically updated by CVS every time a new version of the 
@@ -189,6 +189,20 @@ are used to keep track of window layouts, etc.  To suppress these messages,
 just create a file in your home directory called ".cvsignore" and add a line 
 of ".DS_Store" to it (no quotes). CVS will then ignore all .DS_Store files in 
 all of your checked-out directory trees.
+
+<h3>What is the convention for tag names?</h3>
+<A id="tags"/>
+Typically, three types of tag names are used:
+<OL>
+<LI>"Release-1-5-4" - the tag defining a specific released version of the code.
+These are created during the release builds, and should not be changed.
+<LI>"Release-1-5-4-branch" - this is the branch-tag defining a "patch branch"
+for a specific release.  This is the only use we make of CVS branches; please
+note that we do not use branches for normal development.
+<LI>"rgj20050603a" - of the form "initials" "date" "some letter", these 
+can be used by individual developers to keep track of what they're doing.  All
+we ask is that you start a tag with your initials.
+</OL>
 
 <!-- Footer -->
     <hr class="hide">
