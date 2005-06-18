@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.html,v 1.25 2005-06-04 14:15:58 jacobsen Exp $ -->
+<!-- $Id: index.html,v 1.26 2005-06-18 15:21:44 jacobsen Exp $ -->
 <html lang="en">
 
 <head>
@@ -85,11 +85,14 @@
 	<ul>
 	<li>Production Versions</li>
 	    <UL>
+	    <LI><A href="../releasenotes/jmri1.6.html">JMRI 1.6</a>
 	    <LI><A href="../releasenotes/jmri1.4.html">JMRI 1.4</a>
 	    <LI><A href="../releasenotes/jmri1.2.5.html">JMRI 1.2.5</a>
 	    </UL>
 	    <li>Development Versions</li>
 	    <UL>
+	    <LI><A href="../releasenotes/jmri1.5.7.html">JMRI 1.7.1</a>
+	    <LI><A href="../releasenotes/jmri1.5.7.html">JMRI 1.5.8</a>
 	    <LI><A href="../releasenotes/jmri1.5.7.html">JMRI 1.5.7</a>
 	    <LI><A href="../releasenotes/jmri1.5.6.html">JMRI 1.5.6</a>
 	    <LI><A href="../releasenotes/jmri1.5.5.html">JMRI 1.5.5</a>
@@ -139,27 +142,35 @@
     <div id="teaser">
 	<h2>Latest News</h2>
 	<dl>
-	    <dt>Test version 1.5.7 released</dt>
+	    <dt>Production version 1.6 released</dt>
 	    <dd>
-	    <p>On June 3 2005, test version 1.5.7 was made available.</p>
+	    <p>On June 18 2005, production version 1.6 was made available.</p>
 	    
-	    <p>Version 1.5.7 has a long list of updates. For more
+	    Version 1.6 replaces version 1.4 as the current "production" version, recommended
+	    for first-time users. Please see the 
+	    <A HREF="#prod-rel">next section</A> for download and install
+	    information. 
+	    
+	    <dt>Test version 1.7.1 released</dt>
+	    <dd>
+	    <p>On June 18 2005, test version 1.7.1 was made available.</p>
+	    
+	    Version 1.7.1 can access indexed CVs in decoders, so DecoderPro
+	    should be able to do a much better job of programming QSI decoders.
+	    For more
 	    information, see the
 	    <A HREF="#latest">note</a>
 	    later on this page. 
-	    <P>
-	    Version 1.4 remains the current "production" version, recommended
-	    for first-time users. Please see the next section for download and install
-	    information.  We hope to make a new production version ("1.6") based
-	    on version 1.5.7 in the near future, so let us know whether version 1.5.7 
-	    does what you need.
+	  
+	    Version 1.6 is the current "production" version, recommended
+	    for first-time users. 
 	    
 	</dl>
     </div>
 
   <div class="list">
     <A ID="prod-rel"/>
-    <h2>JMRI 1.4 - Stable production release</h2>
+    <h2>JMRI 1.6 - Stable production release</h2>
     <dl>
     <dt class="im"><img src="../images/ico-jmri.gif" width="34" height="34" alt="JMRI 1.4 logo"></dt>
     <dd>
@@ -175,53 +186,33 @@
 
 	<A ID="prod-download"/><p class="dl"> Download: 
       <a
-      href="http://prdownloads.sourceforge.net/jmri/JMRI.1.4.hqx?download">
+      href="http://prdownloads.sourceforge.net/jmri/JMRI.1.6.hqx?download">
       MacOS X</a>
 
       <a
-      href="http://prdownloads.sourceforge.net/jmri/JMRI.1.4.Classic.hqx?download">
+      href="http://prdownloads.sourceforge.net/jmri/JMRI.1.6.Classic.hqx?download">
       MacOS Classic</a>
 
       <a
-      href="http://prdownloads.sourceforge.net/jmri/JMRI.1.4.exe?download">
+      href="http://prdownloads.sourceforge.net/jmri/JMRI.1.6.exe?download">
       Windows</a>
 
-      <a href="http://prdownloads.sourceforge.net/jmri/JMRI.1.4.tgz?download">
+      <a href="http://prdownloads.sourceforge.net/jmri/JMRI.1.6.tgz?download">
       Linux</a>
+
+      <a href="http://prdownloads.sourceforge.net/jmri/JMRI.1.6.zip?download">
+      OS/2</a>
       </p>
 
 	<h3>Notes:</H3>
 
-	<p>Panel files written by 1.3.11 and later versions may not be readable 
-	with versions before 1.3.0.  Older files will remain readable, but if 
-	you edit them with this version and then store them, you might not be 
-	able to read them if you go back to version 1.2.5.</p>
+    <P>These are things that people who are upgrading from a 1.5-series release have already dealt with, and don't need to worry about. If you are upgrading from the previous Production 1.4 release, please consider these.
 
-	<p>There is no OS/2 version of this release because our OS/2 test 
-	machine is no longer online.  If you have a suitable OS/2 machine and 
-	are willing to host our release testing, please let me know.</p>
+    <P>Paul Bender corrected sensor addressing for Lenz XPressNet in version 1.5.7. Unfortunately, this change will require modifications to existing panels used with XPressNet; Users will need to add 8 to the number of any existing XPressNet Sensor. Alternately, users can change the address in hardware by subtracting 1 from the LR10x address.
 
-	<p>If you are building your own copy of the program from the source code 
-	using Ant, please make sure to update the build.xml file. There have 
-	been some changes in the build procedure during the 1.3.9 build.</p>
+    <P>The CT Electonik decoders have been reworked and renamed in version 1.5.6. Users of these decoders (only) need to reread their roster or manually edit their roster.xml-file when they move from an earlier version, including 1.4.
 
-	<p>These downloads are significantly larger than version 1.3.5 and 
-	previous.  This is due to the addition of a help system starting in 
-	test version 1.3.8.</p>
-
-	<p>LocoNet sensor numbering has been changed starting in version 1.3.4! 
-	This will effect people who have panel files (.xml files containing 
-	panel definition) for LocoNet block occupancy sensors.  The sensor 
-	numbers now start with 1, not 0, so you'll have to edit the panel 
-	files to change e.g. LS0 to LS1, LS23 to LS24, etc.  This does not 
-	effect input via other (non-LocoNet) protocols, including C/MRI, NCE 
-	AIU, etc.  If you use LocoNet sensor numbers for the Speedometer, 
-	you'll have to increase them by one also.</p>
-
-	<p>If you have pre-1.2.3 roster entries that use Zimo decoder 
-	definitions, you'll have to recreate them.  The Zimo decoder 
-	definitions have been completely reworked in a better organization 
-	starting with test version 1.2.3.</p>
+    <P>The method for configuring the C/MRI protocol has changed since version 1.4. If you use the C/MRI protocol, you will have to reconfigure your preferences the first time you run this version.
 
 	<div style="clear: both"></div>
     </dd>
@@ -237,46 +228,18 @@
 
 	<dt class="im"><img src="../images/ico-jmri.gif" width="34" height="34" alt="JMRI logo"></dt>
     <A ID="latest"/>
-	<dt>JMRI Developer Release 1.5.7</dt>
+	<dt>JMRI Developer Release 1.7.1</dt>
 	<dd>
-	    <p>On June 3, 2005 test version 1.5.7 was made available.</p>
+	    <p>On June 18, 2005 test version 1.7.1 was made available.</p>
 	    
-	    <p>Version 1.5.7 has a long list of updates over the previous 1.5.6
-	    test version, including:
-	    <UL>
-	    
-	    <LI>Updates to Atlas, Bachmann, 
-	    <LI>Fixes to bugs in the panel editor. These avoid problems
-	    adding sensors, ensure that panels reload at the proper size, and
-	    improves handling of scrollbars.
-	    <LI>Improvements to the configuration tables, including
-	    more powerful sorting, ability to edit the values of more types,
-	    and better formatting.
-	    <LI>Improvements to the DecoderPro logic that controls which
-	    CVs and variables need to be read and written.  This should 
-	    result in significantly faster operation.
-	    <LI>Improvements to the infrastructure for Lenz, Digitrax and NCE
-	    communications.
-	    <LI>And <A HREF="../releasenotes/jmri1.5.7.html">more</a>!
-	    </UL>
-	    
-	    <P>
-	    Still, it is a <b>test version</b>
-	    and it's likely that bugs have been introduced.
-
+	    <p>Version 1.7.1 is mostly intended to allow adventurous
+	    users to test out the support for QSI locomotives with 
+	    indexed CVs. This new feature involves a lot of changes, 
+	    and it's possible that bugs have been introduced elsewhere as a result.
+	    	    
 	    <p class="dl">For the complete list of changes, see:
-	    <A href="../releasenotes/jmri1.5.7.html">JMRI 1.5.7 Release Notes</a></p>
+	    <A href="../releasenotes/jmri1.7.1.html">JMRI 1.7.1Release Notes</a></p>
 	    
-	    <p class="dl">Test version 1.5.7 also includes all the improvements
-	    on production version 1.4 that first appeared in test version 1.5.2 through 1.5.6; for
-	    a list of those, see the
-	    <A href="../releasenotes/jmri1.5.2.html">JMRI 1.5.2 Release Notes</a>,
-	    <A href="../releasenotes/jmri1.5.3.html">JMRI 1.5.3 Release Notes</a>,
-	    <A href="../releasenotes/jmri1.5.4.html">JMRI 1.5.4 Release Notes</a>
-	    <A href="../releasenotes/jmri1.5.5.html">JMRI 1.5.5 Release Notes</a>
-	    and
-	    <A href="../releasenotes/jmri1.5.5.html">JMRI 1.5.6 Release Notes</a>.
-	    </p>
 	</dd>
 
 	<!--
