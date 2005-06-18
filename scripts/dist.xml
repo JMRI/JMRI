@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.7 $ -->
+<!-- Revision $Revision: 1.8 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -283,6 +283,8 @@
 
     <move file="MacClassic/JMRI.hqx" tofile="JMRI.${number}.Classic.hqx" />
 	<echo message="upload Mac (2), OS2, Linux files"/>
+	<echo message="JMRI.${number}.hqx, JMRI.${number}.tgz, JMRI.${number}.Classic.hqx, JMRI.${number}.zip"/>
+    <echo message="if you get an error here, upload manually and move to step 4"
     <ftp server="upload.sourceforge.net"
          userid="ftp" password="jake@physics.berkeley.edu"
          action="put"
@@ -297,7 +299,8 @@
  
  <target name="release4" depends=""
  					description="part 4 of build a release; useage is ant -Drelease=R1.2.3 -Dnumber=1.2.3 release4">
-	<echo message="upload files"/>
+	<echo message="upload file Windows .exe file"/>
+	<echo message="if you get an error, upload manually, then ant uploadjavadoc"/>
     <ftp server="upload.sourceforge.net"
          userid="ftp" password="jake@physics.berkeley.edu"
          action="put"

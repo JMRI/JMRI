@@ -32,7 +32,7 @@ import jmri.util.com.sun.Comparator;
  * Based in part on SignalHeadTableAction.java by Bob Jacobson
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -763,7 +763,7 @@ public class RouteTableAction extends AbstractTableAction {
             }
             switch (c) {
                 case INCLUDE_COLUMN:  
-                    if (type == Boolean.FALSE) {
+					if (!((Boolean)type).booleanValue()) {
                         includeTurnout[rx] = false;
                     }
                     else {

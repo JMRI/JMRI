@@ -30,7 +30,7 @@ import javax.swing.JToggleButton;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2004
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class BDL16Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
 
@@ -38,7 +38,7 @@ public class BDL16Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
         super("BDL16 programmer");
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-        appendLine(provideAddressing("SE8"));  // add read/write buttons, address
+        appendLine(provideAddressing("BDL16"));  // add read/write buttons, address
 
         appendLine(commonrail);
         appendLine(polarity);

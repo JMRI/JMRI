@@ -10,13 +10,12 @@ import java.util.Vector;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author  Bob Jacobsen  Copyright (C) 2001
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.9 $
  */
 abstract public class AbstractThrottle implements DccThrottle {
     protected float speedSetting;
     protected float speedIncrement;
     protected int address;
-    protected int speedStepMode;
     protected boolean isForward;
     protected boolean f0, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12;
 
@@ -287,28 +286,6 @@ abstract public class AbstractThrottle implements DccThrottle {
      * This is used in the setFn implementations provided in this class.
      */
     abstract protected void sendFunctionGroup3();
-
-
-    /*
-     * setSpeedStepMode - set the speed step value.
-     * <P>
-     * specific implementations should override this function
-     * <P>
-     * @parm Mode - the current speed step mode - default should be 128
-     *              speed step mode in most cases
-     */
-     public void setSpeedStepMode(int Mode) {
-	speedStepMode = Mode;
-     }
-
-    /*
-     * getSpeedStepMode - get the current speed step value.
-     * <P>
-     */
-     public int getSpeedStepMode() {
-	return speedStepMode;
-     }
-
 
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractThrottle.class.getName());

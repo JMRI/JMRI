@@ -21,7 +21,7 @@ import jmri.jmrix.cmri.serial.SerialSensorManager;
  * Frame for user configuration of CMRI serial nodes
  * @author	Bob Jacobsen   Copyright (C) 2004
  * @author	Dave Duchamp   Copyright (C) 2004
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class NodeConfigFrame extends javax.swing.JFrame {
 
@@ -963,7 +963,7 @@ public class NodeConfigFrame extends javax.swing.JFrame {
         public void setValueAt(Object type,int r,int c) {
             if (c > 0) {
                 int index = (r*8) + (c-1);
-                if (type == Boolean.FALSE) {
+				if (!((Boolean)type).booleanValue()) {
                     searchlightBits[index] = false;
                     if (firstSearchlight[index]) {
                         searchlightBits[index+1] = false;
