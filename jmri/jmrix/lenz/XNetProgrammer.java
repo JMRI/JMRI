@@ -26,7 +26,7 @@ import java.beans.PropertyChangeEvent;
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Paul Bender  Copyright (c) 2003,2004,2005
- * @version $Revision: 2.10 $
+ * @version $Revision: 2.11 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -158,12 +158,25 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		   restartTimer(XNetProgrammerTimeout);
 
 		   // format and send message to go to program mode
-        	   if (_mode == Programmer.PAGEMODE)
-		       controller().sendXNetMessage(XNetMessage.getWritePagedCVMsg(CV, val), this);
-        	   else if (_mode == Programmer.DIRECTBITMODE || _mode == Programmer.DIRECTBYTEMODE)
-		       controller().sendXNetMessage(XNetMessage.getWriteDirectCVMsg(CV, val), this);
-        	   else // register mode by elimination 
-                       controller().sendXNetMessage(XNetMessage.getWriteRegisterMsg(registerFromCV(CV), val),this);
+        	   if (_mode == Programmer.PAGEMODE) {
+		       XNetMessage msg = XNetMessage.getWritePagedCVMsg(CV,val);
+		       if(_OneServiceOpPerEntry) {
+			  msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
+		       }
+		       controller().sendXNetMessage(msg, this);
+        	   } else if (_mode == Programmer.DIRECTBITMODE || _mode == Programmer.DIRECTBYTEMODE) {
+		       XNetMessage msg = XNetMessage.getWriteDirectCVMsg(CV,val);
+		       if(_OneServiceOpPerEntry) {
+			  msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
+		       }
+		       controller().sendXNetMessage(msg, this);
+        	   } else  { // register mode by elimination 
+		       XNetMessage msg = XNetMessage.getWriteRegisterMsg(registerFromCV(CV),val);
+		       if(_OneServiceOpPerEntry) {
+			  msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
+		       }
+                       controller().sendXNetMessage(msg,this);
+		   }
 		} catch (jmri.ProgrammerException e) {
 		  progState = NOTPROGRAMMING;
 		  throw e;
@@ -186,12 +199,25 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		   restartTimer(XNetProgrammerTimeout);
 
 		   // format and send message to go to program mode
-        	   if (_mode == Programmer.PAGEMODE)
-		       controller().sendXNetMessage(XNetMessage.getReadPagedCVMsg(CV), this);
-                   else if (_mode == Programmer.DIRECTBITMODE || _mode == Programmer.DIRECTBYTEMODE)
-		       controller().sendXNetMessage(XNetMessage.getReadDirectCVMsg(CV), this);
-        	   else // register mode by elimination		     
-		       controller().sendXNetMessage(XNetMessage.getReadRegisterMsg(registerFromCV(CV)), this);
+        	   if (_mode == Programmer.PAGEMODE) {
+		       XNetMessage msg=XNetMessage.getReadPagedCVMsg(CV);
+		       if(_OneServiceOpPerEntry) {
+			  msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
+		       }
+		       controller().sendXNetMessage(msg, this);
+		   } else if (_mode == Programmer.DIRECTBITMODE || _mode == Programmer.DIRECTBYTEMODE) {
+		       XNetMessage msg=XNetMessage.getReadDirectCVMsg(CV);
+		       if(_OneServiceOpPerEntry) {
+			  msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
+		       }
+		       controller().sendXNetMessage(msg, this);
+		   } else { // register mode by elimination    
+		       XNetMessage msg=XNetMessage.getReadRegisterMsg(registerFromCV(CV));
+		       if(_OneServiceOpPerEntry) {
+			  msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
+		       }
+		       controller().sendXNetMessage(msg, this);
+		   }
 		} catch (jmri.ProgrammerException e) {
 		  progState = NOTPROGRAMMING;
 		  throw e;
@@ -260,7 +286,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 			   notifyProgListenerEnd(_val, jmri.ProgListener.NotImplemented);
                            return;
             		} else if (m.getElement(0)==XNetConstants.CS_INFO && 
-			   m.getElement(1)==XNetConstants.BC_NORMAL_OPERATIONS) {
+				   m.getElement(1)==XNetConstants.BC_NORMAL_OPERATIONS && !_OneServiceOpPerEntry) {
 			   // We Exited Programming Mode early
 			   log.error("Service mode exited before sequence complete.");
 			   progState = NOTPROGRAMMING;
@@ -272,9 +298,6 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 			   log.error("Short Circuit While Programming Decoder");
 			   progState = NOTPROGRAMMING;
 			   stopTimer();
-			   if(_OneServiceOpPerEntry) {
-                       	     controller().sendXNetMessage(XNetMessage.getExitProgModeMsg(),this);				
-			   }
 			   notifyProgListenerEnd(_val, jmri.ProgListener.ProgrammingShort);
 			}
 		} else if (progState == INQUIRESENT) {
@@ -290,9 +313,6 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 				_val = m.getElement(3);
 			    }
 			    progState = NOTPROGRAMMING;
-			   if(_OneServiceOpPerEntry) {
-                       	     controller().sendXNetMessage(XNetMessage.getExitProgModeMsg(),this);				
-			   }
 			    stopTimer();
 			    // if this was a read, we cached the value earlier.  
 			    // If its a write, we're to return the original write value
@@ -309,9 +329,6 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 			    }
 			    progState = NOTPROGRAMMING;
 			    stopTimer();
-			    if(_OneServiceOpPerEntry) {
-                       	        controller().sendXNetMessage(XNetMessage.getExitProgModeMsg(),this);				
-			    }
 			    // if this was a read, we cached the value earlier.  If its a
 			    // write, we're to return the original write value
 			    notifyProgListenerEnd(_val, jmri.ProgListener.OK);
@@ -321,13 +338,10 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
                     	   // "data byte not found", e.g. no reply
 		    	   progState = NOTPROGRAMMING;
 		    	   stopTimer();
-			   if(_OneServiceOpPerEntry) {
-                       	     controller().sendXNetMessage(XNetMessage.getExitProgModeMsg(),this);				
-			   }
 		     	   notifyProgListenerEnd(_val, jmri.ProgListener.NoLocoDetected);
                	    	   return;
             		} else if (m.getElement(0)==XNetConstants.CS_INFO && 
-				   m.getElement(1)==XNetConstants.BC_NORMAL_OPERATIONS) {
+				   m.getElement(1)==XNetConstants.BC_NORMAL_OPERATIONS && !_OneServiceOpPerEntry) {
 		  	   // We Exited Programming Mode early
 		   	   log.error("Service Mode exited before sequence complete.");
 		   	   progState = NOTPROGRAMMING;
@@ -338,11 +352,8 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 			   m.getElement(1)==XNetConstants.PROG_SHORT_CIRCUIT) {
 			   // We experienced a short Circuit on the Programming Track
 			   log.error("Short Circuit While Programming Decoder");
-			   progState = NOTPROGRAMMING;
+			   	progState = NOTPROGRAMMING;
 			   stopTimer();
-			   if(_OneServiceOpPerEntry) {
-                       	     controller().sendXNetMessage(XNetMessage.getExitProgModeMsg(),this);				
-			   }
 			   notifyProgListenerEnd(_val, jmri.ProgListener.ProgrammingShort);
 			} else {
                            // nothing important, ignore
@@ -378,9 +389,6 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 			if (log.isDebugEnabled()) log.debug("timeout!");
 			// perhaps no loco present? Fail back to end of programming
 			progState = NOTPROGRAMMING;
-			if(_OneServiceOpPerEntry) {
-                       	   controller().sendXNetMessage(XNetMessage.getExitProgModeMsg(),this);				
-			}
 			notifyProgListenerEnd(_val, jmri.ProgListener.FailedTimeout);
 		}
 	}
