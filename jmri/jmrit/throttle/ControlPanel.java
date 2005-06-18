@@ -41,7 +41,7 @@ import org.jdom.Element;
  *  TODO: fix speed increments (14, 28)
  *
  * @author     glen
- * @version    $Revision: 1.34 $
+ * @version    $Revision: 1.35 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener,ActionListener
 {
@@ -65,7 +65,11 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	private	JPanel spinnerPanel;
 	private	JPanel sliderPanel;
 
-	private boolean _displaySlider = true;
+	/* Constants for speed selection method */
+	final public static int SLIDERDISPLAY = 0;
+	final public static int STEPDISPLAY = 1;
+
+	private int _displaySlider = SLIDERDISPLAY;
 
 	public int accelerateKey = 107; // numpad +;
 	public int decelerateKey = 109; // numpad -;
@@ -215,13 +219,20 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
          *  @parm displaySlider boolean value, display speed slider or 
 	 *  display speed steps
 	 */
-	public void setSpeedController(boolean displaySlider) {
-		sliderPanel.setVisible(displaySlider);
-		if(displaySlider)
-			this.getLayeredPane().moveToFront(sliderPanel);
-		spinnerPanel.setVisible(!displaySlider);
-		if(!displaySlider)
+	public void setSpeedController(int displaySlider) {
+		switch(displaySlider) {
+		   case STEPDISPLAY: {
 			this.getLayeredPane().moveToFront(spinnerPanel);
+			sliderPanel.setVisible(false);
+			spinnerPanel.setVisible(true);
+			break;
+			}
+		   default: {
+			this.getLayeredPane().moveToFront(sliderPanel);
+			sliderPanel.setVisible(true);
+			spinnerPanel.setVisible(false);
+		   }
+		}
 		_displaySlider=displaySlider;
 	}
 
@@ -229,7 +240,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
          *  Get the value indicating what speed input we're displaying
 	 *  
          */
-	public boolean getDisplaySlider() {
+	public int getDisplaySlider() {
 		return _displaySlider;
 	}
 
@@ -522,7 +533,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	 *  A KeyAdapter that listens for the keys that work the control pad buttons
 	 *
 	 * @author     glen
-         * @version    $Revision: 1.34 $
+         * @version    $Revision: 1.35 $
 	 */
 	class ControlPadKeyListener extends KeyAdapter
 	{
@@ -751,14 +762,14 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	public void setXml(Element e)
 	{	
 		try {			
-			this.setSpeedController(e.getAttribute("displaySpeedSlider").getBooleanValue());
+			this.setSpeedController(e.getAttribute("displaySpeedSlider").getIntValue());
 		} catch (org.jdom.DataConversionException ex)
 		{
 			log.error("DataConverstionException in setXml: "+ex);
 		} catch (Exception em)
 		{
 			// in this case, recover by displaying the speed slider.
-			this.setSpeedController(true);
+			this.setSpeedController(SLIDERDISPLAY);
         	}
 		Element window = e.getChild("window");
 		WindowPreferences wp = new WindowPreferences();

@@ -9,7 +9,7 @@ import java.awt.event.*;
  * object.
  *
  * @author Paul Bender Copyright (C) 2005
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class ControlPanelPropertyEditor extends JDialog
 {
@@ -18,7 +18,7 @@ public class ControlPanelPropertyEditor extends JDialog
     private JRadioButton displaySlider;
     private JRadioButton displaySteps;
 
-    private boolean _displaySlider;
+    private int _displaySlider;
 
     /**
      * Constructor. Create it and pack it.
@@ -57,21 +57,26 @@ public class ControlPanelPropertyEditor extends JDialog
         constraints.gridx = 0;
         constraints.gridy = 0;
 
+	ButtonGroup modeSelectionButtons = new ButtonGroup();
+
     	displaySlider=new JRadioButton("Display Speed Slider");
     	displaySteps=new JRadioButton("Display Speed Steps");
+
+	modeSelectionButtons.add(displaySlider);
+	modeSelectionButtons.add(displaySteps);
 
 	_displaySlider = control.getDisplaySlider();
 
         constraints.anchor = GridBagConstraints.CENTER;
-        constraints.gridx = 1;
+        constraints.gridy = 1;
         propertyPanel.add(displaySlider, constraints);
 
         constraints.anchor = GridBagConstraints.CENTER;
-        constraints.gridx = 2;
+        constraints.gridy = 2;
         propertyPanel.add(displaySteps, constraints);
 
-	displaySlider.setSelected(_displaySlider);
-	displaySteps.setSelected(!_displaySlider);
+	displaySlider.setSelected(_displaySlider==ControlPanel.SLIDERDISPLAY);
+	displaySteps.setSelected(_displaySlider==ControlPanel.STEPDISPLAY);
 
 	displaySlider.addActionListener(
         	new ActionListener()
@@ -80,7 +85,7 @@ public class ControlPanelPropertyEditor extends JDialog
                                 {
                                         displaySlider.setSelected(true);
                                         displaySteps.setSelected(false);
-					_displaySlider=true;
+					_displaySlider=ControlPanel.SLIDERDISPLAY;
                                 }
                         });
                 
@@ -91,7 +96,7 @@ public class ControlPanelPropertyEditor extends JDialog
                                 {
                                         displaySlider.setSelected(false);
                                         displaySteps.setSelected(true);
-					_displaySlider=false;
+					_displaySlider=ControlPanel.STEPDISPLAY;
                                 }
                         });
  
