@@ -25,8 +25,8 @@ import java.beans.PropertyChangeEvent;
  * <LI>Wait for Normal Operations Resumed broadcast
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @author Paul Bender  Copyright (c) 2003,2004
- * @version $Revision: 2.9 $
+ * @author Paul Bender  Copyright (c) 2003,2004,2005
+ * @version $Revision: 2.10 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -36,6 +36,13 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         // mode.  Used for determining if "OK" message is an aproriate 
 	// response to a request to a programming request. 
 	static private boolean _service_mode = false;
+
+	// As a temporary fix for version 1.6, we're going to use one 
+	// operation per service mode entry if we can't determine the 
+	// interface we're using (since the LI100 does not respond to 
+	// version inquiries - and we're having trouble with the LI100)
+
+	static private boolean _OneServiceOpPerEntry = true;
 
 	public XNetProgrammer() {
 		// error if more than one constructed?
@@ -47,6 +54,13 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
         // connect to listen
         controller().addXNetListener(~0, this);
+
+	// Build the LI version request message
+	XNetMessage msg = new XNetMessage(2);
+	msg.setElement(0,XNetConstants.LI_VERSION_REQUEST);
+        msg.setParity(); // Set the parity bit
+	//Then send to the controller
+        XNetTrafficController.instance().sendXNetMessage(msg,this);
 
     }
 
@@ -214,6 +228,9 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		     // mode results if progrstate is REQUESTSENT.
 		     _service_mode = false;
 		}
+		if(m.getElement(0)==XNetConstants.LI_VERSION_RESPONSE) {
+			_OneServiceOpPerEntry=false;
+		}
 
 		if (progState == NOTPROGRAMMING) {
 			// we get the complete set of replies now, so ignore these
@@ -255,6 +272,9 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 			   log.error("Short Circuit While Programming Decoder");
 			   progState = NOTPROGRAMMING;
 			   stopTimer();
+			   if(_OneServiceOpPerEntry) {
+                       	     controller().sendXNetMessage(XNetMessage.getExitProgModeMsg(),this);				
+			   }
 			   notifyProgListenerEnd(_val, jmri.ProgListener.ProgrammingShort);
 			}
 		} else if (progState == INQUIRESENT) {
@@ -270,6 +290,9 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 				_val = m.getElement(3);
 			    }
 			    progState = NOTPROGRAMMING;
+			   if(_OneServiceOpPerEntry) {
+                       	     controller().sendXNetMessage(XNetMessage.getExitProgModeMsg(),this);				
+			   }
 			    stopTimer();
 			    // if this was a read, we cached the value earlier.  
 			    // If its a write, we're to return the original write value
@@ -286,6 +309,9 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 			    }
 			    progState = NOTPROGRAMMING;
 			    stopTimer();
+			    if(_OneServiceOpPerEntry) {
+                       	        controller().sendXNetMessage(XNetMessage.getExitProgModeMsg(),this);				
+			    }
 			    // if this was a read, we cached the value earlier.  If its a
 			    // write, we're to return the original write value
 			    notifyProgListenerEnd(_val, jmri.ProgListener.OK);
@@ -295,6 +321,9 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
                     	   // "data byte not found", e.g. no reply
 		    	   progState = NOTPROGRAMMING;
 		    	   stopTimer();
+			   if(_OneServiceOpPerEntry) {
+                       	     controller().sendXNetMessage(XNetMessage.getExitProgModeMsg(),this);				
+			   }
 		     	   notifyProgListenerEnd(_val, jmri.ProgListener.NoLocoDetected);
                	    	   return;
             		} else if (m.getElement(0)==XNetConstants.CS_INFO && 
@@ -311,6 +340,9 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 			   log.error("Short Circuit While Programming Decoder");
 			   progState = NOTPROGRAMMING;
 			   stopTimer();
+			   if(_OneServiceOpPerEntry) {
+                       	     controller().sendXNetMessage(XNetMessage.getExitProgModeMsg(),this);				
+			   }
 			   notifyProgListenerEnd(_val, jmri.ProgListener.ProgrammingShort);
 			} else {
                            // nothing important, ignore
@@ -346,6 +378,9 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 			if (log.isDebugEnabled()) log.debug("timeout!");
 			// perhaps no loco present? Fail back to end of programming
 			progState = NOTPROGRAMMING;
+			if(_OneServiceOpPerEntry) {
+                       	   controller().sendXNetMessage(XNetMessage.getExitProgModeMsg(),this);				
+			}
 			notifyProgListenerEnd(_val, jmri.ProgListener.FailedTimeout);
 		}
 	}
