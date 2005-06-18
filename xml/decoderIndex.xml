@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 <decoderIndex-config>
-  <!--Written by JMRI version 1.5.7 on Thu Jun 02 23:53:49 PDT 2005 $Id: decoderIndex.xml,v 1.77 2005-06-03 14:20:52 jacobsen Exp $-->
-  <decoderIndex version="94">
+  <!--Written by JMRI version 1.7.1 on Sat Jun 18 08:20:34 PDT 2005 $Id: decoderIndex.xml,v 1.78 2005-06-18 15:23:27 jacobsen Exp $-->
+  <decoderIndex version="96">
     <mfgList>
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="" mfgID="" />
@@ -238,6 +238,7 @@
           <size length="2.877" width="0.667" height="0.173" units="inches" />
         </model>
         <model model="DH163L0" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="unspecified" nmraWarrant="no">
+          <output name="3" label="Pad" connection="solder" />
           <output name="4" label="Pad" connection="solder" />
           <output name="5" label="Pad" connection="solder" />
           <output name="6" label="Pad" connection="solder" />
@@ -867,6 +868,122 @@
           <output name="2" label="Pad 2" connection="solder" />
         </model>
       </family>
+      <family name="QSI Articulated Steam" mfg="QSIndustries" lowVersionID="2" highVersionID="6" type="locomotive" file="QSI_Articulated_Steam.xml">
+        <model model="BLI AC5 Cab Forward 4-8-8-2" lowVersionID="5" numFns="14" numOuts="14" productID="403" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="Plug" connection="other" />
+          <output name="2" label="Plug" connection="other" />
+          <output name="3" label="Snd" connection="other" />
+          <output name="4" label="Snd" connection="other" />
+          <output name="5" label="Snd" connection="other" />
+          <output name="6" label="Snd" connection="other" />
+          <output name="7" label="Snd" connection="other" />
+          <output name="8" label="Snd" connection="other" />
+          <output name="9" label="Snd" connection="other" />
+          <output name="10" label="Snd" connection="other" />
+          <output name="11" label="Snd" connection="other" />
+          <output name="12" label="Snd" connection="other" />
+          <output name="13" label="Snd" connection="other" />
+          <output name="14" label="Snd" connection="other" />
+        </model>
+        <model model="BLI N-W Class A 2-6-6-4" lowVersionID="2" highVersionID="5" numFns="14" numOuts="14" productID="400" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="Plug" connection="other" />
+          <output name="2" label="Plug" connection="other" />
+          <output name="3" label="Snd" connection="other" />
+          <output name="4" label="Snd" connection="other" />
+          <output name="5" label="Snd" connection="other" />
+          <output name="6" label="Snd" connection="other" />
+          <output name="7" label="Snd" connection="other" />
+          <output name="8" label="Snd" connection="other" />
+          <output name="9" label="Snd" connection="other" />
+          <output name="10" label="Snd" connection="other" />
+          <output name="11" label="Snd" connection="other" />
+          <output name="12" label="Snd" connection="other" />
+          <output name="13" label="Snd" connection="other" />
+          <output name="14" label="Snd" connection="other" />
+        </model>
+        <model model="BLI Pensy Duplex T1 4-4-4-4" lowVersionID="5" numFns="14" numOuts="14" productID="401" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="Plug" connection="other" />
+          <output name="2" label="Plug" connection="other" />
+          <output name="3" label="Snd" connection="other" />
+          <output name="4" label="Snd" connection="other" />
+          <output name="5" label="Snd" connection="other" />
+          <output name="6" label="Snd" connection="other" />
+          <output name="7" label="Snd" connection="other" />
+          <output name="8" label="Snd" connection="other" />
+          <output name="9" label="Snd" connection="other" />
+          <output name="10" label="Snd" connection="other" />
+          <output name="11" label="Snd" connection="other" />
+          <output name="12" label="Snd" connection="other" />
+          <output name="13" label="Snd" connection="other" />
+          <output name="14" label="Snd" connection="other" />
+        </model>
+        <model model="Lionel Challenger 4-6-6-4" lowVersionID="4" numFns="14" numOuts="14" productID="402" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="Plug" connection="other" />
+          <output name="2" label="Plug" connection="other" />
+          <output name="3" label="Snd" connection="other" />
+          <output name="4" label="Snd" connection="other" />
+          <output name="5" label="Snd" connection="other" />
+          <output name="6" label="Snd" connection="other" />
+          <output name="7" label="Snd" connection="other" />
+          <output name="8" label="Snd" connection="other" />
+          <output name="9" label="Snd" connection="other" />
+          <output name="10" label="Snd" connection="other" />
+          <output name="11" label="Snd" connection="other" />
+          <output name="12" label="Snd" connection="other" />
+          <output name="13" label="Snd" connection="other" />
+          <output name="14" label="Snd" connection="other" />
+        </model>
+        <model model="Life Like USRA 2-8-8-2" lowVersionID="6" numFns="14" numOuts="14" productID="404" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="Plug" connection="other" />
+          <output name="2" label="Plug" connection="other" />
+          <output name="3" label="Snd" connection="other" />
+          <output name="4" label="Snd" connection="other" />
+          <output name="5" label="Snd" connection="other" />
+          <output name="6" label="Snd" connection="other" />
+          <output name="7" label="Snd" connection="other" />
+          <output name="8" label="Snd" connection="other" />
+          <output name="9" label="Snd" connection="other" />
+          <output name="10" label="Snd" connection="other" />
+          <output name="11" label="Snd" connection="other" />
+          <output name="12" label="Snd" connection="other" />
+          <output name="13" label="Snd" connection="other" />
+          <output name="14" label="Snd" connection="other" />
+        </model>
+      </family>
+      <family name="QSI Diesel" mfg="QSIndustries" lowVersionID="4" highVersionID="6" type="locomotive" file="QSI_Diesel.xml">
+        <model model="Atlas B23-7" lowVersionID="6" productID="126" connector="unspecified" nmraWarrant="no" />
+        <model model="Atlas Dash 8-40CW,B" lowVersionID="6" productID="126" connector="unspecified" nmraWarrant="no" />
+        <model model="Atlas Dash 8-40CW,C" lowVersionID="6" productID="103" connector="unspecified" nmraWarrant="no" />
+        <model model="Atlas Dash 8-40CW,C (GE pump)" lowVersionID="6" productID="132" connector="unspecified" nmraWarrant="no" />
+        <model model="Atlas FM w/Mars" lowVersionID="6" productID="105" connector="unspecified" nmraWarrant="no" />
+        <model model="Atlas FM wo/Mars" lowVersionID="6" productID="106" connector="unspecified" nmraWarrant="no" />
+        <model model="Atlas SD24/26" lowVersionID="6" productID="111" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI AC6000" lowVersionID="6" productID="131" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI E3/E6 w/Mars" lowVersionID="6" productID="115" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI E3/E6 wo/Mars" lowVersionID="6" productID="116" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI E7 w/Mars" lowVersionID="6" productID="119" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI E7 wo/Mars" lowVersionID="6" productID="120" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI E3/E6 w/Mars" lowVersionID="6" productID="121" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI E3/E6 wo/Mars" lowVersionID="6" productID="122" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI E7A/B" lowVersionID="4" highVersionID="5" productID="100" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI GE C30-7" lowVersionID="6" productID="128" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI RSD-15" lowVersionID="6" productID="125" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI SD40" lowVersionID="6" productID="102" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI SW7/NW2" lowVersionID="6" productID="101" connector="unspecified" nmraWarrant="no" />
+        <model model="CHC RS 10" lowVersionID="6" productID="113" connector="unspecified" nmraWarrant="no" />
+        <model model="CHC RS 18" lowVersionID="6" productID="123" connector="unspecified" nmraWarrant="no" />
+        <model model="Life Like E6 w/Mars" lowVersionID="6" productID="107" connector="unspecified" nmraWarrant="no" />
+        <model model="Life Like E6 wo/Mars" lowVersionID="6" productID="108" connector="unspecified" nmraWarrant="no" />
+        <model model="Life Like GP9" lowVersionID="6" productID="112" connector="unspecified" nmraWarrant="no" />
+        <model model="Life Like GP20" lowVersionID="6" productID="112" connector="unspecified" nmraWarrant="no" />
+        <model model="Life Like U28B" lowVersionID="6" productID="130" connector="unspecified" nmraWarrant="no" />
+      </family>
+      <family name="QSI Electric" mfg="QSIndustries" lowVersionID="3" highVersionID="6" type="locomotive" file="QSI_Electric.xml">
+        <model model="BLI GG-1" lowVersionID="3" highVersionID="6" productID="200" connector="unspecified" nmraWarrant="no" />
+      </family>
+      <family name="QSI Gas Turbine" mfg="QSIndustries" lowVersionID="4" highVersionID="6" type="locomotive" file="QSI_Gas_Turbine.xml">
+        <model model="Lionel Veranda Turbine" lowVersionID="4" productID="500" connector="unspecified" nmraWarrant="no" />
+      </family>
       <family name="Quantum" mfg="QSIndustries" type="locomotive" file="QSI_Quantum.xml">
         <model model="Quantum" connector="unspecified" nmraWarrant="no" />
         <model model="Broadway Limited Hudson 4-6-4" lowVersionID="1" connector="unspecified" nmraWarrant="no" />
@@ -879,6 +996,38 @@
         <model model="Broadway Limited PRR M1a/b 4-8-2" lowVersionID="5" connector="unspecified" nmraWarrant="no" />
         <model model="Broadway Limited USRA Heavy Mikado 2-8-2" lowVersionID="5" connector="unspecified" nmraWarrant="no" />
         <model model="Broadway Limited AC5 Cab Forward" lowVersionID="5" connector="unspecified" nmraWarrant="no" />
+      </family>
+      <family name="QSI Steam" mfg="QSIndustries" lowVersionID="1" highVersionID="6" type="locomotive" file="QSI_Steam.xml">
+        <model model="BLI ATSF 3751 4-8-4" lowVersionID="5" numFns="14" numOuts="14" productID="305" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI ATSF 3800 Class 2-10-2 2-10-4" lowVersionID="6" numFns="14" numOuts="14" productID="316" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI C-O T1 Texas 2-10-4" lowVersionID="5" numFns="14" numOuts="14" productID="310" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI Hudson 4-6-4" lowVersionID="1" highVersionID="5" numFns="14" numOuts="14" productID="300" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI Mikado 2-8-2" lowVersionID="2" highVersionID="5" numFns="14" numOuts="14" productID="301" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI NYC S1b Niagara 4-8-4" lowVersionID="5" numFns="14" numOuts="14" productID="313" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI N-W J 4-8-4" lowVersionID="5" numFns="14" numOuts="14" productID="312" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI PRR J1 2-10-4" lowVersionID="5" numFns="14" numOuts="14" productID="306" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI PRR K4 4-6-2" lowVersionID="6" numFns="14" numOuts="14" productID="309" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI PRR M1a/b 4-8-2" lowVersionID="5" numFns="14" numOuts="14" productID="302" connector="unspecified" nmraWarrant="no">
+          <output name="1" label="Plug" connection="other" />
+          <output name="2" label="Plug" connection="other" />
+          <output name="3" label="Snd" connection="other" />
+          <output name="4" label="Snd" connection="other" />
+          <output name="5" label="Snd" connection="other" />
+          <output name="6" label="Snd" connection="other" />
+          <output name="7" label="Snd" connection="other" />
+          <output name="8" label="Snd" connection="other" />
+          <output name="9" label="Snd" connection="other" />
+          <output name="10" label="Snd" connection="other" />
+          <output name="11" label="Snd" connection="other" />
+          <output name="12" label="Snd" connection="other" />
+          <output name="13" label="Snd" connection="other" />
+          <output name="14" label="Snd" connection="other" />
+          <size length="3.490" width="1.105" height="0.785" units="inches" />
+        </model>
+        <model model="BLI On30 Consolidation 2-8-0" lowVersionID="5" highVersionID="5" numFns="14" numOuts="14" productID="303" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI On30 Consolidation 2-8-0 w/Xmas" lowVersionID="5" highVersionID="5" numFns="14" numOuts="14" productID="304" connector="unspecified" nmraWarrant="no" />
+        <model model="BLI UP Mountian 4-8-2" lowVersionID="6" numFns="14" numOuts="14" productID="307" connector="unspecified" nmraWarrant="no" />
+        <model model="P2K USRA 0-8-0" lowVersionID="6" numFns="14" numOuts="14" productID="315" connector="unspecified" nmraWarrant="no" />
       </family>
       <family name="DSD diesel" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_DSD_Diesel.xml">
         <model model="DSD diesel" numOuts="4" numFns="8" connector="unspecified" nmraWarrant="no">
