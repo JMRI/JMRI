@@ -2,7 +2,7 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2003, 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Digitrax_Basic.xml,v 1.13 2005-05-01 23:25:41 jacobsen Exp $ -->
+<!-- $Id: Digitrax_Basic.xml,v 1.14 2005-06-20 17:45:04 pbender Exp $ -->
 <decoder-config>
 		<version author="phil.grainger@ca.com" 
 					version="9" lastUpdated="20050112"/>
@@ -15,6 +15,7 @@
       <!-- Version 7.1 - changed spelling of "behavior" (Jack Shall) -->
             <!-- Version 8 - Added fifth function, also added DH83FX) Phil G -->
       <!-- Version 9 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" - Bob Jacobsen -->
+      <!-- Version 10 - fixed labels for Enable/Disable "Vstart/Vmid/Vfull in 128 step mode" - Paul Bender -->
 
 <decoder>
 	<family name="Basic FX" mfg="Digitrax" lowVersionID="91" highVersionID="111">
@@ -376,8 +377,8 @@
 			</variable>
 		<variable label="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXVXXXXX">
 			<enumVal>
-				<enumChoice choice="enabled"/>
-				<enumChoice choice="disabled"/>
+				<enumChoice choice="Enabled"/>
+				<enumChoice choice="Disabled"/>
 				</enumVal>
 			</variable>
 		<variable label="Short-circuit protection" CV="61" mask="XVXXXXXX"
