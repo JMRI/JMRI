@@ -21,7 +21,7 @@ import org.jdom.Attribute;
  * specific Turnout or AbstractTurnout subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
 
@@ -121,6 +121,9 @@ public abstract class AbstractTurnoutManagerConfigXML implements XmlAdapter {
                 Sensor s = InstanceManager.sensorManagerInstance().provideSensor(a.getValue());
                 t.provideSecondFeedbackSensor(s);
             }
+			
+			//  set initial state from sensor feedback if appropriate
+			t.setInitialKnownStateFromFeedback();
         }
     }
 
