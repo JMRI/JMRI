@@ -21,7 +21,7 @@ import java.util.Date;
  * Based in concept on AbstractSignalHead.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public abstract class AbstractLight extends AbstractNamedBean
     implements Light, java.io.Serializable {
@@ -267,6 +267,30 @@ public abstract class AbstractLight extends AbstractNamedBean
                     mControlSensor = InstanceManager.sensorManagerInstance().
                                             provideSensor(mControlSensorSystemName);
                     if (mControlSensor!=null) {
+						// if sensor state is currently known, set light accordingly
+						int kState = mControlSensor.getKnownState();
+						if (kState==Sensor.ACTIVE) { 
+							if (mControlSensorSense==Sensor.ACTIVE) {
+								// Turn light on
+								setState(ON);
+							}
+							else {
+								// Turn light off
+								setState(OFF);
+							}
+						}
+						else if (kState==Sensor.INACTIVE) {
+							if (mControlSensorSense==Sensor.INACTIVE) {
+								// Turn light on
+								setState(ON);
+							}
+							else {
+								// Turn light off
+								setState(OFF);
+							}
+						}
+					
+						// listen for change in sensor state
                         mControlSensor.addPropertyChangeListener(mSensorListener =
                                                 new java.beans.PropertyChangeListener() {
                                 public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -312,6 +336,8 @@ public abstract class AbstractLight extends AbstractNamedBean
 					// set up time as minutes in a day
 					mTimeOn = mFastClockOnHour * 60 + mFastClockOnMin;
 					mTimeOff = mFastClockOffHour * 60 + mFastClockOffMin;
+					// initialize light based on current fast time
+					updateClockControlLight ();
 					// set up to listen for time changes on a minute basis
 					mClock.addMinuteChangeListener( mTimebaseListener = 
 						new java.beans.PropertyChangeListener() {
@@ -319,11 +345,36 @@ public abstract class AbstractLight extends AbstractNamedBean
 								updateClockControlLight();
 							}
 						});
+					mActive = true;
                     break;
                 case TURNOUT_STATUS_CONTROL:
                     mControlTurnout = InstanceManager.turnoutManagerInstance().
                                             provideTurnout(mControlTurnoutSystemName);
                     if (mControlTurnout!=null) {
+						// set light based on current turnout state if known
+						int tState = mControlTurnout.getKnownState();
+						if (tState==Turnout.CLOSED) { 
+							if (mTurnoutState==Turnout.CLOSED) {
+								// Turn light on
+								setState(ON);
+							}
+							else {
+								// Turn light off
+								setState(OFF);
+							}
+						}
+						else if (tState==Turnout.THROWN) { 
+							if (mTurnoutState==Turnout.THROWN) {
+								// Turn light on
+								setState(ON);
+							}
+							else {
+								// Turn light off
+								setState(OFF);
+							}
+						}
+						
+						// listen for change in turnout state
                         mControlTurnout.addPropertyChangeListener(mTurnoutListener =
                                                 new java.beans.PropertyChangeListener() {
                                 public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -365,6 +416,9 @@ public abstract class AbstractLight extends AbstractNamedBean
                     mTimedControlSensor = InstanceManager.sensorManagerInstance().
                                             provideSensor(mTimedSensorSystemName);
                     if (mTimedControlSensor!=null) {
+						// set initial state off
+						setState(OFF);
+						// listen for change in timed control sensor state
                         mTimedControlSensor.addPropertyChangeListener(mTimedSensorListener =
                                                 new java.beans.PropertyChangeListener() {
                                 public void propertyChange(java.beans.PropertyChangeEvent e) {
