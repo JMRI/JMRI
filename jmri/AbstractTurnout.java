@@ -17,7 +17,7 @@ package jmri;
  *
  * Description:		Abstract class providing the basic logic of the Turnout interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean 
         implements Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -176,6 +176,52 @@ public abstract class AbstractTurnout extends AbstractNamedBean
 
     public Sensor getFirstSensor() { return _firstSensor; }
     public Sensor getSecondSensor()  { return _secondSensor; }
+    
+    public void setInitialKnownStateFromFeedback() {
+        if (_activeFeedbackType==ONESENSOR) {
+			// ONESENSOR feedback 
+			if (_firstSensor!=null) {
+				// set according to state of sensor
+				int sState = _firstSensor.getKnownState();
+				if (sState==Sensor.ACTIVE) 
+					newKnownState(THROWN);
+				else if (sState==Sensor.INACTIVE)
+					newKnownState(CLOSED);
+			}
+			else {
+				log.warn("expected Sensor 1 not defined - "+
+					getSystemName());
+				newKnownState(UNKNOWN);
+			}
+		}
+		else if (_activeFeedbackType==TWOSENSOR) {
+			// TWOSENSOR feedback
+			int s1State = Sensor.UNKNOWN;
+			int s2State = Sensor.UNKNOWN;
+			if (_firstSensor!=null)
+				s1State = _firstSensor.getKnownState();
+			else {
+				log.warn("expected Sensor 1 not defined - "+
+					getSystemName());
+			}
+			if (_secondSensor!=null)
+				s2State = _secondSensor.getKnownState();
+			else {
+				log.warn("expected Sensor 2 not defined - "+
+					getSystemName());
+			}
+			// set Turnout state according to sensors
+			if ((s1State==Sensor.ACTIVE) && (s2State==Sensor.INACTIVE))
+				newKnownState(THROWN);
+			else if ((s1State==Sensor.INACTIVE) && (s2State==Sensor.ACTIVE))
+				newKnownState(CLOSED);
+			else if (_knownState!=UNKNOWN)
+				newKnownState(UNKNOWN);
+		}
+		else {
+			// nothing required at this time for other modes
+		}
+	}
 
     /**
      * React to sensor changes by changing the KnownState

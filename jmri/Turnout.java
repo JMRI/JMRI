@@ -23,7 +23,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  * @see         jmri.AbstractTurnout
  * @see         jmri.TurnoutManager
  * @see         jmri.InstanceManager
@@ -178,8 +178,21 @@ public interface Turnout extends NamedBean {
      *<P>
      * Returns null if no Sensor recorded.
      */
-    public Sensor getSecondSensor();
+    public Sensor getSecondSensor();    
     
+    /**
+     * Sets the initial known state (CLOSED,THROWN,UNKNOWN) from feedback
+	 *    information, if appropriate.
+     *<P>
+	 * This method is designed to be called only when Turnouts are loaded
+	 *    and when a new Turnout is defined in the Turnout table.
+     *<P>
+     * No change to known state is made if feedback information is not
+	 *    available.  If feedback information is inconsistent, or if 
+	 *    sensor definition is missing in ONESENSOR and TWOSENSOR feedback,
+	 *    turnout state is set to UNKNOWN.
+     */
+    public void setInitialKnownStateFromFeedback();
     
 }
 
