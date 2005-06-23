@@ -62,7 +62,7 @@ import com.sun.java.util.collections.List;   // resolve ambiguity with package-l
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.44 $
+ * @version   $Revision: 1.45 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -298,7 +298,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * is the index of the Variable in the VariableTable.
      */
     List varList = new ArrayList();
-
+    int varListIndex;
     /**
      * This remembers the CVs on this pane for the Read/Write sheet
      * operation.  They are stored as a list of Integer objects, each of which
@@ -307,6 +307,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * entered here.  So far (sic), the only use of this is for the cvtable rep.
      */
     List cvList = new ArrayList();
+    int cvListIndex;
     /**
      * This remembers the indexed CVs on this pane for the Read/Write sheet
      * operation.  They are stored as a list of Integer objects, each of which
@@ -315,6 +316,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * for the IndexedCvTable rep.
      */
     List indxCvList = new ArrayList();
+    int indxCvListIndex;
 
     JToggleButton readChangesButton  = new JToggleButton("Read changes on sheet");
     JToggleButton readAllButton      = new JToggleButton("Read full sheet");
@@ -406,7 +408,9 @@ public class PaneProgPane extends javax.swing.JPanel
     public void prepReadPaneAll() {
         readAllButton.setSelected(true);
         justChanges = false;
-
+        varListIndex = 0;
+        cvListIndex = 0;
+        indxCvListIndex = 0;
         setToRead(true);
     }
 
@@ -524,31 +528,33 @@ public class PaneProgPane extends javax.swing.JPanel
      */
     boolean nextRead() {
         // look for possible variables
-        for (int i=0; i<varList.size(); i++) {
-            int varNum = ((Integer)varList.get(i)).intValue();
+        while ((varList.size() >= 0) && (varListIndex < varList.size())){
+            int varNum = ((Integer)varList.get(varListIndex)).intValue();
             int vState = _varModel.getState( varNum );
             if (log.isDebugEnabled()) log.debug("nextRead var index "+varNum+" state "+vState);
             VariableValue var = _varModel.getVariable(varNum);
-            if ( ( justChanges && var.isChanged() )
-                    || ( !justChanges && var.isToRead() )
-                    || ( vState == VariableValue.UNKNOWN )        // always read UNKNOWN state
+            varListIndex++;
+            if (( justChanges && var.isChanged() )
+                || ( !justChanges && var.isToRead() )
+                || ( vState == VariableValue.UNKNOWN )        // always read UNKNOWN state
                 ) {
 
                 if (log.isDebugEnabled()) log.debug("start read of variable "+_varModel.getLabel(varNum));
                 executeRead(var);
-                
+
                 if (log.isDebugEnabled()) log.debug("return from starting var read");
                 // the request may have instantaneously been satisfied...
                 return true;  // only make one request at a time!
             }
         }
         // found no variables needing read, try CVs
-        for (int i=0; i<cvList.size(); i++) {
-            int cvNum = ( (Integer) cvList.get(i)).intValue();
+        while ((cvList.size() >= 0) && (cvListIndex < cvList.size())) {
+            int cvNum = ((Integer)cvList.get(cvListIndex)).intValue();
             CvValue cv = _cvModel.getCvByRow(cvNum);
             if (log.isDebugEnabled()) log.debug("nextRead cv index "+cvNum+" state "+cv.getState());
+            cvListIndex++;
             if (( !justChanges && cv.isToRead() )
-                || (justChanges && VariableValue.considerChanged(cv)) 
+                || (justChanges && VariableValue.considerChanged(cv))
                 || ( cv.getState() == CvValue.UNKNOWN )  // always read UNKNOWN state
                 )  {
                if (log.isDebugEnabled()) log.debug("start read of cv "+cvNum);
@@ -567,16 +573,17 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         }
         // found no CVs needing read, try indexed CVs
-        for (int i=0; i<indxCvList.size(); i++) {
-            int indxVarNum = ( (Integer) indxCvList.get(i)).intValue();
+        while ((indxCvList.size() >= 0) && (indxCvListIndex < indxCvList.size())) {
+            int indxVarNum = ( (Integer) indxCvList.get(indxCvListIndex)).intValue();
             int indxState = _varModel.getState(indxVarNum);
             if (log.isDebugEnabled()) log.debug(
-                "nextRead indexed cv @ row index " + i + " state " + indxState);
+                "nextRead indexed cv @ row index " + indxCvListIndex + " state " + indxState);
             VariableValue iCv = _varModel.getVariable(indxVarNum);
+            indxCvListIndex++;
             if (iCv.isToRead()) {
                 if (!justChanges || (justChanges && (iCv.isChanged()))) {
                     String sz = "start read of indexed cv " +
-                        ( (CvValue) _indxCvModel.getCvByRow(i)).name();
+                        ((CvValue)_indxCvModel.getCvByRow(indxCvListIndex-1)).name();
                     if (log.isDebugEnabled()) log.debug(sz);
                     setBusy(true);
                     if (_programmingIndexedCV != null) log.error(
@@ -634,6 +641,9 @@ public class PaneProgPane extends javax.swing.JPanel
      */
     public void prepWritePaneAll() {
         justChanges = false;
+        varListIndex = 0;
+        cvListIndex = 0;
+        indxCvListIndex = 0;
         setToWrite(true);
     }
 
@@ -648,13 +658,14 @@ public class PaneProgPane extends javax.swing.JPanel
     boolean nextWrite() {
         if (justChanges) writeChangesButton.setSelected(true);
         else writeAllButton.setSelected(true);
-        
+
         // look for possible variables
-        for (int i=0; i<varList.size(); i++) {
-            int varNum = ((Integer)varList.get(i)).intValue();
+        while ((varList.size() >= 0) && (varListIndex < varList.size())){
+            int varNum = ((Integer)varList.get(varListIndex)).intValue();
             int vState = _varModel.getState( varNum );
             if (log.isDebugEnabled()) log.debug("nextWrite var index "+varNum+" state "+vState);
             VariableValue var = _varModel.getVariable(varNum);
+            varListIndex++;
             if ( !var.getReadOnly()
                  &&  (( justChanges && var.isChanged())
                         || ( !justChanges && (var.isToWrite() || var.isChanged())) )
@@ -669,10 +680,11 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         }
         // check for CVs to handle (e.g. for CV table)
-        for (int i=0; i<cvList.size(); i++) {
-            int cvNum = ((Integer)cvList.get(i)).intValue();
+        while ((cvList.size() >= 0) && (cvListIndex < cvList.size())) {
+            int cvNum = ((Integer)cvList.get(cvListIndex)).intValue();
             CvValue cv = _cvModel.getCvByRow( cvNum );
             if (log.isDebugEnabled()) log.debug("nextWrite cv index "+cvNum+" state "+cv.getState());
+            cvListIndex++;
             if ( !cv.getReadOnly() &&
                 (( !justChanges && cv.isToWrite() )
                 || (justChanges && VariableValue.considerChanged(cv)) )
@@ -693,16 +705,17 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         }
         // check for Indexed CVs to handle (e.g. for Indexed CV table)
-        for (int i=0; i<indxCvList.size(); i++) {
-            int indxVarNum = ( (Integer) indxCvList.get(i)).intValue();
+        while ((indxCvList.size() >= 0) && (indxCvListIndex < indxCvList.size())) {
+            int indxVarNum = ( (Integer) indxCvList.get(indxCvListIndex)).intValue();
             int indxState = _varModel.getState(indxVarNum);
             if (log.isDebugEnabled()) log.debug(
-                "nextWrite indexed cv @ row index " + i + " state " + indxState);
+                "nextWrite indexed cv @ row index " + indxCvListIndex + " state " + indxState);
             VariableValue iCv = _varModel.getVariable(indxVarNum);
+            indxCvListIndex++;
             if (iCv.isToWrite()) {
                 if (!justChanges ||(justChanges && iCv.isChanged())) {
                     String sz = "start write of indexed cv " +
-                        ( (CvValue) _indxCvModel.getCvByRow(i)).name();
+                        ( (CvValue) _indxCvModel.getCvByRow(indxCvListIndex-1)).name();
                     if (log.isDebugEnabled()) log.debug(sz);
 
                     setBusy(true);
@@ -916,9 +929,9 @@ public class PaneProgPane extends javax.swing.JPanel
                 c.add(cvScroll);
                 cs.gridwidth = 1;
 
-                // remember which CVs to read/write
+                // remember which indexed CVs to read/write
                 for (int j=0; j<_indxCvModel.getRowCount(); j++) {
-                    String sz = "CV"+_indxCvModel.getName(j);
+                    String sz = "CV" +_indxCvModel.getName(j);
                     int in = _varModel.findVarIndex(sz);
                     indxCvList.add(new Integer(in));
                 }
@@ -1054,10 +1067,13 @@ public class PaneProgPane extends javax.swing.JPanel
                 c.add(cvScroll);
                 cs.gridwidth = 1;
 
-                // remember which CVs to read/write
+                // remember which indexed CVs to read/write
                 for (int j=0; j<_indxCvModel.getRowCount(); j++) {
-                    indxCvList.add(new Integer(j));
+                    String sz = "CV" +_indxCvModel.getName(j);
+                    int in = _varModel.findVarIndex(sz);
+                    indxCvList.add(new Integer(in));
                 }
+
                 log.debug("end of building IndexedCvTable pane");
             }
             else if (name.equals("fnmapping")) {
