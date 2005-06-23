@@ -2,12 +2,13 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: QSI_Gas_Turbine.xml,v 1.2 2005-06-17 03:03:02 innkeeper Exp $ -->
+<!-- $Id: QSI_Gas_Turbine.xml,v 1.3 2005-06-23 22:57:33 innkeeper Exp $ -->
 <decoder-config>
-  <version author="Howard G. Penny" version="2" lastUpdated="20050616"/>
+  <version author="Howard G. Penny" version="3" lastUpdated="20050623"/>
 
 <!-- version 1 - modified for QSI CV.PI.SI format - Howard -->
 <!-- version 2 - Updated info on misc. tab - Howard -->
+<!-- version 3 - Updated function features with data from QSI - Howard -->
 
 <decoder>
   <family name="QSI Gas Turbine" mfg="QSIndustries" lowVersionID="4" highVersionID="6">
@@ -528,15 +529,15 @@
       <indexedVal max="15"/> </ivariable>
 
     <ivariable label="Output 1 - Forward/Reverse Only" CVname="53.1.0" CV="53" PI="1" SI="0"
-     default="96" comment="QSI" item="CV53.1.0" infoOnly="yes">
+     default="107" comment="QSI" item="CV53.1.0" infoOnly="yes">
       <ienumVal>
-        <ienumChoice choice="Directional Headlight" value="96"/>
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
       </ienumVal>
     </ivariable>
     <ivariable label=" - Neutral Only" CVname="53.1.1" CV="53" PI="1" SI="1"
-     default="96" comment="QSI" item="CV53.1.1" infoOnly="yes">
+     default="107" comment="QSI" item="CV53.1.1" infoOnly="yes">
       <ienumVal>
-        <ienumChoice choice="Directional Headlight" value="96"/>
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
       </ienumVal>
     </ivariable>
 
@@ -569,67 +570,61 @@
     <ivariable label="Output 4 - Forward/Reverse Only" CVname="53.4.0" CV="53" PI="4" SI="0"
      default="1" comment="QSI" item="CV53.4.0" infoOnly="yes">
       <ienumVal>
-        <ienumChoice choice="Whistle/Horn" value="1"/>
+        <ienumChoice choice="Horn" value="1"/>
         <ienumChoice choice="_________ place holder not used __________" value="1"/>
       </ienumVal>
     </ivariable>
     <ivariable label=" - Neutral Only" CVname="53.4.1" CV="53" PI="4" SI="1"
      default="1" comment="QSI" item="CV53.4.1" infoOnly="yes">
       <ienumVal>
-        <ienumChoice choice="Whistle/Horn" value="1"/>
+        <ienumChoice choice="Horn" value="1"/>
       </ienumVal>
     </ivariable>
 
     <ivariable label="Outout 5 - Forward/Reverse Only" CVname="53.5.0" CV="53" PI="5" SI="0"
      default="211" comment="QSI" item="CV53.5.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Diesel Cooling Fans" value="8"/>
         <ienumChoice choice="Long Air Let-off" value="9"/>
         <ienumChoice choice="Short Air Let-off"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Directional Headlight" value="96"/>
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
+        <ienumChoice choice="Directional Mars Light" value="102"/>
         <ienumChoice choice="Mars Light"/>
         <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
-        <ienumChoice choice="Cruise Control" value="177"/>
-        <ienumChoice choice="Scale mph Report and Status Report"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Scale mph Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
+        <ienumChoice choice="Squealing Brakes + Air Brakes" value="216"/>
       </ienumVal>
     </ivariable>
     <ivariable label=" - Neutral Only" CVname="53.5.1" CV="53" PI="5" SI="1"
      default="211" comment="QSI" item="CV53.5.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Diesel Cooling Fans" value="8"/>
         <ienumChoice choice="Long Air Let-off" value="9"/>
         <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Diesel &lt;-> Turbine" value="24"/>
         <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Directional Headlight" value="96"/>
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
+        <ienumChoice choice="Directional Mars Light" value="102"/>
         <ienumChoice choice="Mars Light"/>
         <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
-        <ienumChoice choice="Start Up" value="144"/>
-        <ienumChoice choice="Shut Down"/>
-        <ienumChoice choice="Scale mph Report and Status Report" value="178"/>
+        <ienumChoice choice="Startup" value="144"/>
+        <ienumChoice choice="Shutdown" value="145"/>
+        <ienumChoice choice="Status Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Pumps" value="217"/>
       </ienumVal>
@@ -638,53 +633,47 @@
     <ivariable label="Outout 6 - Forward/Reverse Only" CVname="53.6.0" CV="53" PI="6" SI="0"
      default="8" comment="QSI" item="CV53.6.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Diesel Cooling Fans" value="8"/>
         <ienumChoice choice="Long Air Let-off" value="9"/>
         <ienumChoice choice="Short Air Let-off"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Directional Headlight" value="96"/>
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
+        <ienumChoice choice="Directional Mars Light" value="102"/>
         <ienumChoice choice="Mars Light"/>
         <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
-        <ienumChoice choice="Cruise Control" value="177"/>
-        <ienumChoice choice="Scale mph Report and Status Report"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Scale mph Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
+        <ienumChoice choice="Squealing Brakes + Air Brakes" value="216"/>
       </ienumVal>
     </ivariable>
     <ivariable label=" - Neutral Only" CVname="53.6.1" CV="53" PI="6" SI="1"
      default="8" comment="QSI" item="CV53.6.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Diesel Cooling Fans" value="8"/>
         <ienumChoice choice="Long Air Let-off" value="9"/>
         <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Diesel &lt;-> Turbine" value="24"/>
         <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Directional Headlight" value="96"/>
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
+        <ienumChoice choice="Directional Mars Light" value="102"/>
         <ienumChoice choice="Mars Light"/>
         <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
-        <ienumChoice choice="Start Up" value="144"/>
-        <ienumChoice choice="Shut Down"/>
-        <ienumChoice choice="Scale mph Report and Status Report" value="178"/>
+        <ienumChoice choice="Startup" value="144"/>
+        <ienumChoice choice="Shutdown" value="145"/>
+        <ienumChoice choice="Status Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Pumps" value="217"/>
       </ienumVal>
@@ -693,53 +682,47 @@
     <ivariable label="Outout 7 - Forward/Reverse Only" CVname="53.7.0" CV="53" PI="7" SI="0"
      default="5" comment="QSI" item="CV53.7.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Diesel Cooling Fans" value="8"/>
         <ienumChoice choice="Long Air Let-off" value="9"/>
         <ienumChoice choice="Short Air Let-off"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Directional Headlight" value="96"/>
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
+        <ienumChoice choice="Directional Mars Light" value="102"/>
         <ienumChoice choice="Mars Light"/>
         <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
-        <ienumChoice choice="Cruise Control" value="177"/>
-        <ienumChoice choice="Scale mph Report and Status Report"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Scale mph Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
+        <ienumChoice choice="Squealing Brakes + Air Brakes" value="216"/>
       </ienumVal>
     </ivariable>
     <ivariable label=" - Neutral Only" CVname="53.7.1" CV="53" PI="7" SI="1"
      default="5" comment="QSI" item="CV53.7.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Diesel Cooling Fans" value="8"/>
         <ienumChoice choice="Long Air Let-off" value="9"/>
         <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Diesel &lt;-> Turbine" value="24"/>
         <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Directional Headlight" value="96"/>
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
+        <ienumChoice choice="Directional Mars Light" value="102"/>
         <ienumChoice choice="Mars Light"/>
         <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
-        <ienumChoice choice="Start Up" value="144"/>
-        <ienumChoice choice="Shut Down"/>
-        <ienumChoice choice="Scale mph Report and Status Report" value="178"/>
+        <ienumChoice choice="Startup" value="144"/>
+        <ienumChoice choice="Shutdown" value="145"/>
+        <ienumChoice choice="Status Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Pumps" value="217"/>
       </ienumVal>
@@ -748,53 +731,47 @@
     <ivariable label="Outout 8 - Forward/Reverse Only" CVname="53.8.0" CV="53" PI="8" SI="0"
      default="65" comment="QSI" item="CV53.8.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Diesel Cooling Fans" value="8"/>
         <ienumChoice choice="Long Air Let-off" value="9"/>
         <ienumChoice choice="Short Air Let-off"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Directional Headlight" value="96"/>
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
+        <ienumChoice choice="Directional Mars Light" value="102"/>
         <ienumChoice choice="Mars Light"/>
         <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
-        <ienumChoice choice="Cruise Control" value="177"/>
-        <ienumChoice choice="Scale mph Report and Status Report"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Scale mph Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
+        <ienumChoice choice="Squealing Brakes + Air Brakes" value="216"/>
       </ienumVal>
     </ivariable>
     <ivariable label=" - Neutral Only" CVname="53.8.1" CV="53" PI="8" SI="1"
      default="144" comment="QSI" item="CV53.8.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Diesel Cooling Fans" value="8"/>
         <ienumChoice choice="Long Air Let-off" value="9"/>
         <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Diesel &lt;-> Turbine" value="24"/>
         <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Directional Headlight" value="96"/>
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
+        <ienumChoice choice="Directional Mars Light" value="102"/>
         <ienumChoice choice="Mars Light"/>
         <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
-        <ienumChoice choice="Start Up" value="144"/>
-        <ienumChoice choice="Shut Down"/>
-        <ienumChoice choice="Scale mph Report and Status Report" value="178"/>
+        <ienumChoice choice="Startup" value="144"/>
+        <ienumChoice choice="Shutdown" value="145"/>
+        <ienumChoice choice="Status Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Pumps" value="217"/>
       </ienumVal>
@@ -803,53 +780,47 @@
     <ivariable label="Outout 9 - Forward/Reverse Only" CVname="53.9.0" CV="53" PI="9" SI="0"
      default="216" comment="QSI" item="CV53.9.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Diesel Cooling Fans" value="8"/>
         <ienumChoice choice="Long Air Let-off" value="9"/>
         <ienumChoice choice="Short Air Let-off"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Directional Headlight" value="96"/>
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
+        <ienumChoice choice="Directional Mars Light" value="102"/>
         <ienumChoice choice="Mars Light"/>
         <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
-        <ienumChoice choice="Cruise Control" value="177"/>
-        <ienumChoice choice="Scale mph Report and Status Report"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Scale mph Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
+        <ienumChoice choice="Squealing Brakes + Air Brakes" value="216"/>
       </ienumVal>
     </ivariable>
     <ivariable label=" - Neutral Only" CVname="53.9.1" CV="53" PI="9" SI="1"
      default="9" comment="QSI" item="CV53.9.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Diesel Cooling Fans" value="8"/>
         <ienumChoice choice="Long Air Let-off" value="9"/>
         <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Diesel &lt;-> Turbine" value="24"/>
         <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Directional Headlight" value="96"/>
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
+        <ienumChoice choice="Directional Mars Light" value="102"/>
         <ienumChoice choice="Mars Light"/>
         <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
-        <ienumChoice choice="Start Up" value="144"/>
-        <ienumChoice choice="Shut Down"/>
-        <ienumChoice choice="Scale mph Report and Status Report" value="178"/>
+        <ienumChoice choice="Startup" value="144"/>
+        <ienumChoice choice="Shutdown" value="145"/>
+        <ienumChoice choice="Status Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Pumps" value="217"/>
       </ienumVal>
@@ -858,108 +829,96 @@
     <ivariable label="Outout 10 - Forward/Reverse Only" CVname="53.10.0" CV="53" PI="10" SI="0"
      default="64" comment="QSI" item="CV53.10.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Diesel Cooling Fans" value="8"/>
         <ienumChoice choice="Long Air Let-off" value="9"/>
         <ienumChoice choice="Short Air Let-off"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Directional Headlight" value="96"/>
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
+        <ienumChoice choice="Directional Mars Light" value="102"/>
         <ienumChoice choice="Mars Light"/>
         <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
-        <ienumChoice choice="Cruise Control" value="177"/>
-        <ienumChoice choice="Scale mph Report and Status Report"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Scale mph Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
+        <ienumChoice choice="Squealing Brakes + Air Brakes" value="216"/>
       </ienumVal>
     </ivariable>
     <ivariable label=" - Neutral Only" CVname="53.10.1" CV="53" PI="10" SI="1"
      default="64" comment="QSI" item="CV53.10.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Diesel Cooling Fans" value="8"/>
         <ienumChoice choice="Long Air Let-off" value="9"/>
         <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Diesel &lt;-> Turbine" value="24"/>
         <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Directional Headlight" value="96"/>
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
+        <ienumChoice choice="Directional Mars Light" value="102"/>
         <ienumChoice choice="Mars Light"/>
         <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
-        <ienumChoice choice="Start Up" value="144"/>
-        <ienumChoice choice="Shut Down"/>
-        <ienumChoice choice="Scale mph Report and Status Report" value="178"/>
+        <ienumChoice choice="Startup" value="144"/>
+        <ienumChoice choice="Shutdown" value="145"/>
+        <ienumChoice choice="Status Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Pumps" value="217"/>
       </ienumVal>
     </ivariable>
 
     <ivariable label="Outout 11 - Forward/Reverse Only" CVname="53.11.0" CV="53" PI="11" SI="0"
-     default="177" comment="QSI" item="CV53.11.0">
+     default="10" comment="QSI" item="CV53.11.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Diesel Cooling Fans" value="8"/>
         <ienumChoice choice="Long Air Let-off" value="9"/>
         <ienumChoice choice="Short Air Let-off"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Directional Headlight" value="96"/>
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
+        <ienumChoice choice="Directional Mars Light" value="102"/>
         <ienumChoice choice="Mars Light"/>
         <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
-        <ienumChoice choice="Cruise Control" value="177"/>
-        <ienumChoice choice="Scale mph Report and Status Report"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Scale mph Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
+        <ienumChoice choice="Squealing Brakes + Air Brakes" value="216"/>
       </ienumVal>
     </ivariable>
     <ivariable label=" - Neutral Only" CVname="53.11.1" CV="53" PI="11" SI="1"
      default="145" comment="QSI" item="CV53.11.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Diesel Cooling Fans" value="8"/>
         <ienumChoice choice="Long Air Let-off" value="9"/>
         <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Diesel &lt;-> Turbine" value="24"/>
         <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Directional Headlight" value="96"/>
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
+        <ienumChoice choice="Directional Mars Light" value="102"/>
         <ienumChoice choice="Mars Light"/>
         <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
-        <ienumChoice choice="Start Up" value="144"/>
-        <ienumChoice choice="Shut Down"/>
-        <ienumChoice choice="Scale mph Report and Status Report" value="178"/>
+        <ienumChoice choice="Startup" value="144"/>
+        <ienumChoice choice="Shutdown" value="145"/>
+        <ienumChoice choice="Status Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Pumps" value="217"/>
       </ienumVal>
@@ -968,171 +927,149 @@
     <ivariable label="Outout 12 - Forward/Reverse Only" CVname="53.12.0" CV="53" PI="12" SI="0"
      default="178" comment="QSI" item="CV53.12.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Diesel Cooling Fans" value="8"/>
         <ienumChoice choice="Long Air Let-off" value="9"/>
         <ienumChoice choice="Short Air Let-off"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Directional Headlight" value="96"/>
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
+        <ienumChoice choice="Directional Mars Light" value="102"/>
         <ienumChoice choice="Mars Light"/>
         <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
-        <ienumChoice choice="Cruise Control" value="177"/>
-        <ienumChoice choice="Scale mph Report and Status Report"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Scale mph Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
+        <ienumChoice choice="Squealing Brakes + Air Brakes" value="216"/>
       </ienumVal>
     </ivariable>
     <ivariable label=" - Neutral Only" CVname="53.12.1" CV="53" PI="12" SI="1"
      default="178" comment="QSI" item="CV53.12.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Diesel Cooling Fans" value="8"/>
         <ienumChoice choice="Long Air Let-off" value="9"/>
         <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Diesel &lt;-> Turbine" value="24"/>
         <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Directional Headlight" value="96"/>
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
+        <ienumChoice choice="Directional Mars Light" value="102"/>
         <ienumChoice choice="Mars Light"/>
         <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
-        <ienumChoice choice="Start Up" value="144"/>
-        <ienumChoice choice="Shut Down"/>
-        <ienumChoice choice="Scale mph Report and Status Report" value="178"/>
+        <ienumChoice choice="Startup" value="144"/>
+        <ienumChoice choice="Shutdown" value="145"/>
+        <ienumChoice choice="Status Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Pumps" value="217"/>
       </ienumVal>
     </ivariable>
 
     <ivariable label="Outout 13 - Forward/Reverse Only" CVname="53.13.0" CV="53" PI="13" SI="0"
-     default="105" comment="QSI" item="CV53.13.0">
+     default="10" comment="QSI" item="CV53.13.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Diesel Cooling Fans" value="8"/>
         <ienumChoice choice="Long Air Let-off" value="9"/>
         <ienumChoice choice="Short Air Let-off"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Directional Headlight" value="96"/>
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
+        <ienumChoice choice="Directional Mars Light" value="102"/>
         <ienumChoice choice="Mars Light"/>
         <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
-        <ienumChoice choice="Cruise Control" value="177"/>
-        <ienumChoice choice="Scale mph Report and Status Report"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Scale mph Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
+        <ienumChoice choice="Squealing Brakes + Air Brakes" value="216"/>
       </ienumVal>
     </ivariable>
     <ivariable label=" - Neutral Only" CVname="53.13.1" CV="53" PI="13" SI="1"
-     default="105" comment="QSI" item="CV53.13.1">
+     default="10" comment="QSI" item="CV53.13.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Diesel Cooling Fans" value="8"/>
         <ienumChoice choice="Long Air Let-off" value="9"/>
         <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Diesel &lt;-> Turbine" value="24"/>
         <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Directional Headlight" value="96"/>
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
+        <ienumChoice choice="Directional Mars Light" value="102"/>
         <ienumChoice choice="Mars Light"/>
         <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
-        <ienumChoice choice="Start Up" value="144"/>
-        <ienumChoice choice="Shut Down"/>
-        <ienumChoice choice="Scale mph Report and Status Report" value="178"/>
+        <ienumChoice choice="Startup" value="144"/>
+        <ienumChoice choice="Shutdown" value="145"/>
+        <ienumChoice choice="Status Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Pumps" value="217"/>
       </ienumVal>
     </ivariable>
 
     <ivariable label="Outout 14 - Forward/Reverse Only" CVname="53.14.0" CV="53" PI="14" SI="0"
-     default="101" comment="QSI" item="CV53.14.0">
+     default="10" comment="QSI" item="CV53.14.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Diesel Cooling Fans" value="8"/>
         <ienumChoice choice="Long Air Let-off" value="9"/>
         <ienumChoice choice="Short Air Let-off"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Directional Headlight" value="96"/>
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
+        <ienumChoice choice="Directional Mars Light" value="102"/>
         <ienumChoice choice="Mars Light"/>
         <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
-        <ienumChoice choice="Cruise Control" value="177"/>
-        <ienumChoice choice="Scale mph Report and Status Report"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Scale mph Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
+        <ienumChoice choice="Squealing Brakes + Air Brakes" value="216"/>
       </ienumVal>
     </ivariable>
     <ivariable label=" - Neutral Only" CVname="53.14.1" CV="53" PI="14" SI="1"
-     default="101" comment="QSI" item="CV53.14.1">
+     default="10" comment="QSI" item="CV53.14.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Diesel Cooling Fans" value="8"/>
         <ienumChoice choice="Long Air Let-off" value="9"/>
         <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Diesel &lt;-> Turbine" value="24"/>
         <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Directional Headlight" value="96"/>
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
+        <ienumChoice choice="Directional Mars Light" value="102"/>
         <ienumChoice choice="Mars Light"/>
         <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
-        <ienumChoice choice="Start Up" value="144"/>
-        <ienumChoice choice="Shut Down"/>
-        <ienumChoice choice="Scale mph Report and Status Report" value="178"/>
+        <ienumChoice choice="Startup" value="144"/>
+        <ienumChoice choice="Shutdown" value="145"/>
+        <ienumChoice choice="Status Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Pumps" value="217"/>
-      </ienumVal>
+     </ienumVal>
     </ivariable>
-
-    <ivariable label="Ditch Light Hold Time (seconds)" CVname="55.110.5" CV="55" PI="110" SI="5" default="5"
-     comment="QSI" item="CV55.110.5" mask="XXXVVVVV">
-      <indexedVal max="31"/> </ivariable>
 
     <ivariable label="Throttle Mode" CVname="56.4" CV="56" PI="4" default="1"
                comment="QSI" item="CV56.4" mask="XXXXXXVV">
@@ -1145,10 +1082,6 @@
 
     <ivariable label="Speed Step to Scale MPH Scale Factor" CVname="56.10" CV="56" PI="10" default="64"
                comment="QSI" item="CV56.10">
-      <indexedVal max="128"/> </ivariable>
-
-    <ivariable label="Chuff Interval Scale Factor" CVname="56.12" CV="56" PI="12" default="32"
-               comment="QSI" item="CV56.12">
       <indexedVal max="128"/> </ivariable>
 
 <!-- CV 56.129 Engine ID Access (for ops mode) - TBD -->
