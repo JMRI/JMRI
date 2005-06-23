@@ -21,7 +21,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.21 $
+ * @version   $Revision: 1.22 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -459,14 +459,14 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
                 minVal = Integer.valueOf(a.getValue()).intValue();
             if ( (a = child.getAttribute("max")) != null)
                 maxVal = Integer.valueOf(a.getValue()).intValue();
-            iv = new IndexedVariableValue(row, name, comment,
+            iv = new IndexedVariableValue(row, name, comment, cvName,
                                           readOnly, infoOnly, writeOnly, opsOnly,
                                           cv, mask, minVal, maxVal, _indxCvModel.allIndxCvVector(),
                                           _status, item );
 
         } else if ( (child = e.getChild("ienumVal")) != null) {
             List l = child.getChildren("ienumChoice");
-            IndexedEnumVariableValue v1 = new IndexedEnumVariableValue(row, name, comment,
+            IndexedEnumVariableValue v1 = new IndexedEnumVariableValue(row, name, comment, cvName,
                 readOnly, infoOnly, writeOnly, opsOnly,
                 cv, mask, _indxCvModel.allIndxCvVector(),
                 _status, item);
@@ -690,10 +690,13 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     }
 
     public int findVarIndex(String name) {
-        for (int i=0; i<getRowCount(); i++)
+        for (int i=0; i<getRowCount(); i++) {
             if (name.equals(getItem(i))) return i;
-        for (int i=0; i<getRowCount(); i++)
             if (name.equals(getLabel(i))) return i;
+            try {
+                if (name.equals("CV"+((IndexedEnumVariableValue)rowVector.elementAt(i)).cvName())) return i;
+            } catch (Exception e){}
+        }
         return -1;
     }
 

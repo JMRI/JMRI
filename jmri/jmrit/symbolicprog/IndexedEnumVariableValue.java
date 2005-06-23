@@ -16,18 +16,19 @@ import com.sun.java.util.collections.List;
  * Extends VariableValue to represent a enumerated indexed variable.
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  *
  */
 public class IndexedEnumVariableValue extends VariableValue
     implements ActionListener, PropertyChangeListener {
 
-    public IndexedEnumVariableValue(int row, String name, String comment,
+    public IndexedEnumVariableValue(int row, String name, String comment, String cvName,
                                     boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                                     int cvNum, String mask,
                                     Vector v, JLabel status, String stdname) {
         super(name, comment, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _row    = row;
+        _cvName = cvName;
     }
 
     /**
@@ -38,6 +39,9 @@ public class IndexedEnumVariableValue extends VariableValue
     int _row;
     int _minVal;
     int _maxVal;
+
+    private String _cvName;
+    public String cvName() { return _cvName; }
 
     public CvValue[] usesCVs() {
         return new CvValue[]{
@@ -368,7 +372,7 @@ public class IndexedEnumVariableValue extends VariableValue
      * model between this object and the real JComboBox value.
      *
      * @author  Bob Jacobsen   Copyright (C) 2001
-     * @version $Revision: 1.2 $
+     * @version $Revision: 1.3 $
      */
     public class iVarComboBox extends JComboBox {
 

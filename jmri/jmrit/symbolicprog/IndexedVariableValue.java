@@ -23,17 +23,18 @@ import com.sun.java.util.collections.ArrayList;
  * Extends VariableValue to represent an indexed variable
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class IndexedVariableValue extends VariableValue
     implements ActionListener, PropertyChangeListener, FocusListener {
 
-    public IndexedVariableValue(int row, String name, String comment,
+    public IndexedVariableValue(int row, String name, String comment, String cvName,
                                 boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                                 int cvNum, String mask, int minVal, int maxVal,
                                 Vector v, JLabel status, String stdname) {
         super(name, comment, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _row    = row;
+        _cvName = cvName;
         _maxVal = maxVal;
         _minVal = minVal;
         _value = new JTextField("0", 3);
@@ -59,6 +60,9 @@ public class IndexedVariableValue extends VariableValue
     int _row;
     int _maxVal;
     int _minVal;
+
+    private String _cvName;
+    public String cvName() { return _cvName; }
 
     public void setTooltipText(String t) {
         super.setTooltipText(t);   // do default stuff
@@ -355,7 +359,7 @@ public class IndexedVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.1 $
+     * @version     $Revision: 1.2 $
      */
     public class VarTextField extends JTextField {
 
