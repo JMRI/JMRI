@@ -41,7 +41,7 @@ import org.jdom.Element;
  *  TODO: fix speed increments (14, 28)
  *
  * @author     glen
- * @version    $Revision: 1.36 $
+ * @version    $Revision: 1.37 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener,ActionListener
 {
@@ -103,7 +103,10 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 speedSpinner.setModel(speedSpinnerModel);
                 speedSpinner.setValue(new Integer(0));
 		SwingUtil.setFocusable(speedSpinner,false);
-		} catch (Exception e) {
+		} catch (NoClassDefFoundError e1) {
+			// we can't use a JSpinner Object.
+			speedSpinner = null;
+		} catch (Exception e2) {
 			// we can't use a JSpinner Object.
 			speedSpinner = null;
 		}
@@ -549,7 +552,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	 *  A KeyAdapter that listens for the keys that work the control pad buttons
 	 *
 	 * @author     glen
-         * @version    $Revision: 1.36 $
+         * @version    $Revision: 1.37 $
 	 */
 	class ControlPadKeyListener extends KeyAdapter
 	{
