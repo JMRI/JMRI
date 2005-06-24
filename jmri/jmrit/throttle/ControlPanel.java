@@ -41,7 +41,7 @@ import org.jdom.Element;
  *  TODO: fix speed increments (14, 28)
  *
  * @author     glen
- * @version    $Revision: 1.37 $
+ * @version    $Revision: 1.38 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener,ActionListener
 {
@@ -227,10 +227,29 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	}
 
 	/**
+	 *  Is this Speed Control selection method possible?
+         *
+         *  @parm displaySlider integer value. possible values:
+	 *	SLIDERDISPLAY  = use speed slider display
+	 *      STEPDISPLAY = use speed step display
+	 */
+	public boolean isSpeedControllerAvailable(int displaySlider) {
+		switch(displaySlider) {
+		   case STEPDISPLAY: 
+			return(speedSpinner!=null);
+		   case SLIDERDISPLAY:
+			return(speedSlider!=null);
+		   default:
+			return false;
+		}
+	}
+
+	/**
 	 *  Set the Speed Control selection method
          *
-         *  @parm displaySlider boolean value, display speed slider or 
-	 *  display speed steps
+         *  @parm displaySlider integer value. possible values:
+	 *	SLIDERDISPLAY  = use speed slider display
+	 *      STEPDISPLAY = use speed step display
 	 */
 	public void setSpeedController(int displaySlider) {
 		switch(displaySlider) {
@@ -552,7 +571,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	 *  A KeyAdapter that listens for the keys that work the control pad buttons
 	 *
 	 * @author     glen
-         * @version    $Revision: 1.37 $
+         * @version    $Revision: 1.38 $
 	 */
 	class ControlPadKeyListener extends KeyAdapter
 	{

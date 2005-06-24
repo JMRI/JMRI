@@ -9,7 +9,7 @@ import java.awt.event.*;
  * object.
  *
  * @author Paul Bender Copyright (C) 2005
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class ControlPanelPropertyEditor extends JDialog
 {
@@ -100,6 +100,12 @@ public class ControlPanelPropertyEditor extends JDialog
                                 }
                         });
  
+	// dissable the speed controls if the control panel says they 
+	// aren't possible
+	displaySlider.setEnabled(control.
+				isSpeedControllerAvailable(ControlPanel.SLIDERDISPLAY));
+	displaySteps.setEnabled(control.
+				isSpeedControllerAvailable(ControlPanel.STEPDISPLAY));
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, 2, 4, 4));
