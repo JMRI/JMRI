@@ -1,6 +1,6 @@
 <!-- Special build file for doing Java 1.1.8 compatibility tests -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.15 $ -->
+<!-- Revision $Revision: 1.16 $ -->
 
 <project name="JMRI" default="check" basedir=".">
 
@@ -100,7 +100,8 @@
                  jmri/util/RuntimeUtil.java, 
                  jmri/util/StringUtil.java, 
                  jmri/util/SwingUtil.java, 
-                 jmri/util/com/sun/TableSorter.java
+                 jmri/util/com/sun/TableSorter.java,
+                 jmri/jmrit/throttle/ControlPanel.java
            "
            
            target="1.1"
