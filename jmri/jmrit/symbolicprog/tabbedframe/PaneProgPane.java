@@ -62,7 +62,7 @@ import com.sun.java.util.collections.List;   // resolve ambiguity with package-l
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.45 $
+ * @version   $Revision: 1.46 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -394,6 +394,9 @@ public class PaneProgPane extends javax.swing.JPanel
                                             +indxCvList.size()+" indexed cvs" );
         readChangesButton.setSelected(true);
         justChanges = true;
+        varListIndex = 0;
+        cvListIndex = 0;
+        indxCvListIndex = 0;
         return nextRead();
     }
 
@@ -439,7 +442,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * Invoked by "Read Full All Sheets" button, this sets in motion a
      * continuing sequence of "read" operations on the
      * variables & CVs in the Pane.  The read all operation must have been
-     * previously prepared via a vall to prepReadPaneAll in this pane.
+     * previously prepared via a call to prepReadPaneAll in this pane.
      *
      * @return true is a read has been started, false if the pane is complete.
      */
@@ -501,7 +504,11 @@ public class PaneProgPane extends javax.swing.JPanel
         // get notified when that state changes so can repeat
         _programmingVar.addPropertyChangeListener(this);
         // and make the read request
-        _programmingVar.readAll();
+        if (justChanges &&(var.label()).equals("Speed Table")) {
+            _programmingVar.readChanges();
+        } else {
+            _programmingVar.readAll();
+        }
     }
 
     void executeWrite(VariableValue var) {
@@ -513,7 +520,11 @@ public class PaneProgPane extends javax.swing.JPanel
         // get notified when that state changes so can repeat
         _programmingVar.addPropertyChangeListener(this);
         // and make the write request
-        _programmingVar.writeAll();
+        if (justChanges &&(var.label()).equals("Speed Table")) {
+            _programmingVar.writeChanges();
+        } else {
+            _programmingVar.writeAll();
+        }
     }
 
     /**
@@ -580,26 +591,26 @@ public class PaneProgPane extends javax.swing.JPanel
                 "nextRead indexed cv @ row index " + indxCvListIndex + " state " + indxState);
             VariableValue iCv = _varModel.getVariable(indxVarNum);
             indxCvListIndex++;
-            if (iCv.isToRead()) {
-                if (!justChanges || (justChanges && (iCv.isChanged()))) {
-                    String sz = "start read of indexed cv " +
-                        ((CvValue)_indxCvModel.getCvByRow(indxCvListIndex-1)).name();
-                    if (log.isDebugEnabled()) log.debug(sz);
-                    setBusy(true);
-                    if (_programmingIndexedCV != null) log.error(
-                        "listener already set at read start");
-                    _programmingIndexedCV = _varModel.getVariable(indxVarNum);
-                    _read = true;
-                    // get notified when that state changes so can repeat
-                    _programmingIndexedCV.addPropertyChangeListener(this);
-                    // and make the read request
-                    _programmingIndexedCV.setToRead(false);
-                    _programmingIndexedCV.readAll();
-                    if (log.isDebugEnabled()) log.debug(
-                        "return from starting indexed CV read");
-                    // the request may have instantateously been satisfied...
-                    return true; // only make one request at a time!
-                }
+            if ((justChanges && iCv.isChanged())
+                || (!justChanges && iCv.isToRead())
+                || ( indxState == VariableValue.UNKNOWN )) {
+                String sz = "start read of indexed cv " +
+                    ((CvValue)_indxCvModel.getCvByRow(indxCvListIndex-1)).name();
+                if (log.isDebugEnabled()) log.debug(sz);
+                setBusy(true);
+                if (_programmingIndexedCV != null) log.error(
+                    "listener already set at read start");
+                _programmingIndexedCV = _varModel.getVariable(indxVarNum);
+                _read = true;
+                // get notified when that state changes so can repeat
+                _programmingIndexedCV.addPropertyChangeListener(this);
+                // and make the read request
+                _programmingIndexedCV.setToRead(false);
+                _programmingIndexedCV.readAll();
+                if (log.isDebugEnabled()) log.debug(
+                    "return from starting indexed CV read");
+                // the request may have instantateously been satisfied...
+                return true; // only make one request at a time!
             }
         }
         // nothing to program, end politely
@@ -623,6 +634,9 @@ public class PaneProgPane extends javax.swing.JPanel
         if (log.isDebugEnabled()) log.debug("writePaneChanges starts");
         writeChangesButton.setSelected(true);
         justChanges = true;
+        varListIndex = 0;
+        cvListIndex = 0;
+        indxCvListIndex = 0;
         return nextWrite();
     }
 
@@ -666,11 +680,11 @@ public class PaneProgPane extends javax.swing.JPanel
             if (log.isDebugEnabled()) log.debug("nextWrite var index "+varNum+" state "+vState);
             VariableValue var = _varModel.getVariable(varNum);
             varListIndex++;
-            if ( !var.getReadOnly()
+            if (!var.getReadOnly()
                  &&  (( justChanges && var.isChanged())
-                        || ( !justChanges && (var.isToWrite() || var.isChanged())) )
-                        || (vState == VariableValue.UNKNOWN)
-               ) {
+                      || ( !justChanges && (var.isToWrite() || var.isChanged())) )
+                 || (vState == VariableValue.UNKNOWN)
+                ) {
                 log.debug("start write of variable "+_varModel.getLabel(varNum));
 
                 executeWrite(var);
@@ -712,27 +726,27 @@ public class PaneProgPane extends javax.swing.JPanel
                 "nextWrite indexed cv @ row index " + indxCvListIndex + " state " + indxState);
             VariableValue iCv = _varModel.getVariable(indxVarNum);
             indxCvListIndex++;
-            if (iCv.isToWrite()) {
-                if (!justChanges ||(justChanges && iCv.isChanged())) {
-                    String sz = "start write of indexed cv " +
-                        ( (CvValue) _indxCvModel.getCvByRow(indxCvListIndex-1)).name();
-                    if (log.isDebugEnabled()) log.debug(sz);
+            if ((justChanges && iCv.isChanged())
+                || (!justChanges && iCv.isToRead())
+                || ( indxState == VariableValue.UNKNOWN )) {
+                String sz = "start write of indexed cv " +
+                    ( (CvValue) _indxCvModel.getCvByRow(indxCvListIndex-1)).name();
+                if (log.isDebugEnabled()) log.debug(sz);
 
-                    setBusy(true);
-                    if (_programmingIndexedCV != null) log.error(
-                        "listener already set at read start");
-                    _programmingIndexedCV = _varModel.getVariable(indxVarNum);
-                    _read = true;
-                    // get notified when that state changes so can repeat
-                    _programmingIndexedCV.addPropertyChangeListener(this);
-                    _programmingIndexedCV.setToWrite(false);
-                    // and make the write request
-                    _programmingIndexedCV.writeAll();
-                    if (log.isDebugEnabled()) log.debug(
-                        "return from starting indexed CV read");
-                    // the request may have instantateously been satisfied...
-                    return true; // only make one request at a time!
-                }
+                setBusy(true);
+                if (_programmingIndexedCV != null) log.error(
+                    "listener already set at read start");
+                _programmingIndexedCV = _varModel.getVariable(indxVarNum);
+                _read = true;
+                // get notified when that state changes so can repeat
+                _programmingIndexedCV.addPropertyChangeListener(this);
+                _programmingIndexedCV.setToWrite(false);
+                // and make the write request
+                _programmingIndexedCV.writeAll();
+                if (log.isDebugEnabled()) log.debug(
+                    "return from starting indexed CV read");
+                // the request may have instantateously been satisfied...
+                return true; // only make one request at a time!
             }
         }
         // nothing to program, end politely
@@ -759,6 +773,8 @@ public class PaneProgPane extends javax.swing.JPanel
         if (oldBusy != busy) prop.firePropertyChange("Busy", new Boolean(oldBusy), new Boolean(busy));
     }
 
+    private int retry = 0;
+
     /**
      * Get notification of a variable property change, specifically "busy" going to
      * false at the end of a programming operation. If we're in a programming
@@ -776,16 +792,40 @@ public class PaneProgPane extends javax.swing.JPanel
         if (e.getSource() == _programmingVar &&
             e.getPropertyName().equals("Busy") &&
             ((Boolean)e.getNewValue()).equals(Boolean.FALSE) ) {
+            if (_programmingVar.getState() == VariableValue.UNKNOWN) {
+                if (retry == 0) {
+                    varListIndex--;
+                    retry++;
+                } else {
+                    retry = 0;
+                }
+            }
             replyWhileProgrammingVar();
             return;
         } else if (e.getSource() == _programmingCV &&
                    e.getPropertyName().equals("Busy") &&
                    ((Boolean)e.getNewValue()).equals(Boolean.FALSE) ) {
+            if (_programmingCV.getState() == CvValue.UNKNOWN) {
+                if (retry == 0) {
+                    cvListIndex--;
+                    retry++;
+                } else {
+                    retry = 0;
+                }
+            }
             replyWhileProgrammingCV();
             return;
         } else if (e.getSource() == _programmingIndexedCV &&
                    e.getPropertyName().equals("Busy") &&
                    ((Boolean)e.getNewValue()).equals(Boolean.FALSE) ) {
+            if (_programmingIndexedCV.getState() == VariableValue.UNKNOWN) {
+                if (retry == 0) {
+                    indxCvListIndex--;
+                    retry++;
+                } else {
+                    retry = 0;
+                }
+            }
             replyWhileProgrammingIndxCV();
             return;
         } else {
