@@ -62,7 +62,7 @@ import com.sun.java.util.collections.List;   // resolve ambiguity with package-l
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.46 $
+ * @version   $Revision: 1.47 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -504,7 +504,7 @@ public class PaneProgPane extends javax.swing.JPanel
         // get notified when that state changes so can repeat
         _programmingVar.addPropertyChangeListener(this);
         // and make the read request
-        if (justChanges &&(var.label()).equals("Speed Table")) {
+        if (justChanges) {
             _programmingVar.readChanges();
         } else {
             _programmingVar.readAll();
@@ -520,7 +520,7 @@ public class PaneProgPane extends javax.swing.JPanel
         // get notified when that state changes so can repeat
         _programmingVar.addPropertyChangeListener(this);
         // and make the write request
-        if (justChanges &&(var.label()).equals("Speed Table")) {
+        if (justChanges) {
             _programmingVar.writeChanges();
         } else {
             _programmingVar.writeAll();
