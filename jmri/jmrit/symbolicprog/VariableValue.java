@@ -15,7 +15,7 @@ import javax.swing.*;
  *
  * @author   Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2004, 2005
  * @author   Howard G. Penny Copyright (C) 2005
- * @version  $Revision: 1.20 $
+ * @version  $Revision: 1.21 $
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
 
@@ -78,7 +78,12 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * @return true if to be considered changed
      */
     static public boolean considerChanged(CvValue c) {
-        return c.getState() == CvValue.EDITED;
+        int state = c.getState();
+        if (state == CvValue.EDITED || state == CvValue.UNKNOWN) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // handle incoming parameter notification
