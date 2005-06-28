@@ -20,7 +20,7 @@ import jmri.jmrix.lenz.XNetConstants;
 /**
  * Frame displaying (and logging) XpressNet messages
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version         $Revision: 2.10 $
+ * @version         $Revision: 2.11 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
@@ -159,17 +159,17 @@ import jmri.jmrix.lenz.XNetConstants;
 		} else if(l.getElement(0)==XNetConstants.BC_EMERGENCY_STOP &&
 			  l.getElement(1)==XNetConstants.BC_EVERYTHING_STOP) {
 				text= new String("Broadcast: Emergency Stop (track power on)");
-                /* Followed by Service Mode responces */
+                /* Followed by Service Mode responses */
 		} else if(l.getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONSE) {
 		  switch(l.getElement(1)) {
 		  case XNetConstants.CS_SERVICE_DIRECT_RESPONSE:
-				text = new String("Service Mode: Direct Programming Responce: CV:" +
+				text = new String("Service Mode: Direct Programming Response: CV:" +
 				       l.getElement(2) +
 				       " Value: " +
 				       l.getElement(3));
 				break;
 		  case XNetConstants.CS_SERVICE_REG_PAGE_RESPONSE:
-				text = new String("Service Mode: Register or Paged Mode Responce: CV:" +
+				text = new String("Service Mode: Register or Paged Mode Response: CV:" +
 				       l.getElement(2) +
 				       " Value: " +
 				       l.getElement(3));
