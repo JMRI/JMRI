@@ -26,7 +26,7 @@ import java.beans.PropertyChangeEvent;
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Paul Bender  Copyright (c) 2003,2004,2005
- * @version $Revision: 2.11 $
+ * @version $Revision: 2.12 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -144,7 +144,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 	int _cv;	// remember the cv being read/written
 
 	// programming interface
-	public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+	synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
 		if (log.isDebugEnabled()) log.debug("writeCV "+CV+" listens "+p);
 		useProgrammer(p);
 		_progRead = false;
@@ -162,18 +162,24 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		       XNetMessage msg = XNetMessage.getWritePagedCVMsg(CV,val);
 		       if(_OneServiceOpPerEntry) {
 			  msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
+			  /* We don't want an "OK" message to trigger a request for results */
+		     	  _service_mode = false;
 		       }
 		       controller().sendXNetMessage(msg, this);
         	   } else if (_mode == Programmer.DIRECTBITMODE || _mode == Programmer.DIRECTBYTEMODE) {
 		       XNetMessage msg = XNetMessage.getWriteDirectCVMsg(CV,val);
 		       if(_OneServiceOpPerEntry) {
 			  msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
+			  /* We don't want an "OK" message to trigger a request for results */
+		     	  _service_mode = false;
 		       }
 		       controller().sendXNetMessage(msg, this);
         	   } else  { // register mode by elimination 
 		       XNetMessage msg = XNetMessage.getWriteRegisterMsg(registerFromCV(CV),val);
 		       if(_OneServiceOpPerEntry) {
 			  msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
+			  /* We don't want an "OK" message to trigger a request for results */
+		     	  _service_mode = false;
 		       }
                        controller().sendXNetMessage(msg,this);
 		   }
@@ -183,11 +189,11 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 	        }
 	}
 
-	public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+	synchronized public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
 		readCV(CV, p);
 	}
 
-	public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+	synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
 		if (log.isDebugEnabled()) log.debug("readCV "+CV+" listens "+p);
 		useProgrammer(p);
 		_progRead = true;
@@ -203,18 +209,24 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		       XNetMessage msg=XNetMessage.getReadPagedCVMsg(CV);
 		       if(_OneServiceOpPerEntry) {
 			  msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
+			  /* We don't want an "OK" message to trigger a request for results */
+		     	  _service_mode = false;
 		       }
 		       controller().sendXNetMessage(msg, this);
 		   } else if (_mode == Programmer.DIRECTBITMODE || _mode == Programmer.DIRECTBYTEMODE) {
 		       XNetMessage msg=XNetMessage.getReadDirectCVMsg(CV);
 		       if(_OneServiceOpPerEntry) {
 			  msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
+			  /* We don't want an "OK" message to trigger a request for results */
+		     	  _service_mode = false;
 		       }
 		       controller().sendXNetMessage(msg, this);
 		   } else { // register mode by elimination    
 		       XNetMessage msg=XNetMessage.getReadRegisterMsg(registerFromCV(CV));
 		       if(_OneServiceOpPerEntry) {
 			  msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
+			  /* We don't want an "OK" message to trigger a request for results */
+		     	  _service_mode = false;
 		       }
 		       controller().sendXNetMessage(msg, this);
 		   }
