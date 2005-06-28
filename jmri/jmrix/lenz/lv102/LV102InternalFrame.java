@@ -17,7 +17,7 @@ import jmri.ProgrammerException;
  * It allows the user to set the Track Voltage  and E-line status.
  *
  * @author			Paul Bender  Copyright (C) 2005
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class LV102InternalFrame extends javax.swing.JInternalFrame implements jmri.ProgListener {
 
@@ -87,7 +87,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame implements jm
         {
            railComBox.addItem(validRailComStatus[i]);
         }
-	railComBox.setSelectedIndex(0);
+	railComBox.setSelectedIndex(1);
 
         CurrentStatus.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
         CurrentStatus.setVisible(true);
