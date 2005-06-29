@@ -2,18 +2,19 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: QSI_Diesel.xml,v 1.4 2005-06-28 23:23:28 innkeeper Exp $ -->
+<!-- $Id: QSI_Diesel.xml,v 1.5 2005-06-29 00:20:37 innkeeper Exp $ -->
 <decoder-config>
-  <version author="Howard G. Penny" version="4" lastUpdated="20050628"/>
+  <version author="Howard G. Penny" version="5" lastUpdated="20050628"/>
 
 <!-- version 1 - modified for QSI CV.PI.SI format - Howard -->
 <!-- version 2 - added copyright information - Howard -->
 <!-- version 2 - Updated info on misc. tab - Howard -->
 <!-- version 3 - added function output option - Howard -->
 <!-- version 4 - Removed QSI ver. 6 models to new file - Howard -->
+<!-- version 5 - corrected highVersionID for version 5 - Howard -->
 
 <decoder>
-  <family name="QSI Diesel" mfg="QSIndustries" lowVersionID="4" highVersionID="6">
+  <family name="QSI Diesel" mfg="QSIndustries" lowVersionID="4" highVersionID="5">
     <model model="BLI E7A/B" lowVersionID="4" highVersionID="5"
            numFns="14" numOuts="14" productID="100" />
   </family>
