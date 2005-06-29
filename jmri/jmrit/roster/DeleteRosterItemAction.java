@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
  * an "are you sure" dialog box before acting.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  * @see         jmri.jmrit.XmlFile
  */
 public class DeleteRosterItemAction extends AbstractAction {
@@ -49,7 +49,7 @@ public class DeleteRosterItemAction extends AbstractAction {
         // create a dialog to select the roster entry
         JComboBox selections = roster.fullRosterComboBox();
         int retval = JOptionPane.showOptionDialog(_who,
-                                                  "Select one roster entry", "Select roster entry",
+                                                  "Select one roster entry", "Delete roster entry",
                                                   0, JOptionPane.INFORMATION_MESSAGE, null,
                                                   new Object[]{"Cancel", "OK", selections}, null );
         log.debug("Dialog value "+retval+" selected "+selections.getSelectedIndex()+":"
@@ -111,10 +111,10 @@ public class DeleteRosterItemAction extends AbstractAction {
      */
     public static void main(String s[]) {
 
-    	// initialize log4j - from logging control file (lcf) only
-    	// if can find it!
-    	String logFile = "default.lcf";
-    	try {
+        // initialize log4j - from logging control file (lcf) only
+        // if can find it!
+        String logFile = "default.lcf";
+        try {
             if (new java.io.File(logFile).canRead()) {
                 org.apache.log4j.PropertyConfigurator.configure("default.lcf");
             } else {
