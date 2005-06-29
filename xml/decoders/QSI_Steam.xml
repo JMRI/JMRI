@@ -2,9 +2,9 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: QSI_Steam.xml,v 1.9 2005-06-17 03:03:02 innkeeper Exp $ -->
+<!-- $Id: QSI_Steam.xml,v 1.10 2005-06-29 00:23:10 innkeeper Exp $ -->
 <decoder-config>
-  <version author="Howard G. Penny" version="9" lastUpdated="20050616"/>
+  <version author="Howard G. Penny" version="10" lastUpdated="20050628"/>
 
 <!-- version 1 - modified for QSI CV.PI.SI format - Howard -->
 <!-- version 2 - added new models                 - Howard -->
@@ -16,13 +16,12 @@
 <!-- version 7 - Added CV 64 to QSI Misc. tab - Howard -->
 <!-- version 8 - Updated format of Sound/Volume tab - Howard -->
 <!-- version 9 - Updated info on misc. tab - Howard -->
+<!-- version 10 - Removed QSI ver. 6 models to new file - Howard -->
 
 <decoder>
-  <family name="QSI Steam" mfg="QSIndustries" lowVersionID="1" highVersionID="6">
+  <family name="QSI Steam" mfg="QSIndustries" lowVersionID="1" highVersionID="5">
     <model model="BLI ATSF 3751 4-8-4" lowVersionID="5" 
            numFns="14" numOuts="14" productID="305"/>
-    <model model="BLI ATSF 3800 Class 2-10-2 2-10-4" lowVersionID="6"
-           numFns="14" numOuts="14" productID="316"/>
     <model model="BLI C-O T1 Texas 2-10-4" lowVersionID="5"
            numFns="14" numOuts="14" productID="310"/>
     <model model="BLI Hudson 4-6-4" lowVersionID="1" highVersionID="5"
@@ -35,8 +34,6 @@
            numFns="14" numOuts="14" productID="312"/>
     <model model="BLI PRR J1 2-10-4" lowVersionID="5"
            numFns="14" numOuts="14" productID="306"/>
-    <model model="BLI PRR K4 4-6-2" lowVersionID="6"
-           numFns="14" numOuts="14" productID="309"/>
     <model model="BLI PRR M1a/b 4-8-2" lowVersionID="5"
            numFns="14" numOuts="14" productID="302">
       <output name="1" label="Plug" connection="other" />
@@ -55,14 +52,10 @@
       <output name="14" label="Snd" connection="other" />
       <size length="3.490" width="1.105" height="0.785" units="inches" />
     </model>
-    <model model="BLI On30 Consolidation 2-8-0" lowVersionID="5" highVersionID="5"
+    <model model="BLI On30 Consolidation 2-8-0" lowVersionID="5"
            numFns="14" numOuts="14" productID="303"/>
-    <model model="BLI On30 Consolidation 2-8-0 w/Xmas" lowVersionID="5" highVersionID="5"
+    <model model="BLI On30 Consolidation 2-8-0 w/Xmas" lowVersionID="5"
            numFns="14" numOuts="14" productID="304"/>
-    <model model="BLI UP Mountian 4-8-2" lowVersionID="6"
-           numFns="14" numOuts="14" productID="307"/>
-    <model model="P2K USRA 0-8-0" lowVersionID="6"
-           numFns="14" numOuts="14" productID="315"/>
   </family>
 
   <programming direct="yes" paged="yes"
@@ -622,19 +615,20 @@
     <ivariable label="Output 4 - Forward/Reverse Only" CVname="53.4.0" CV="53" PI="4" SI="0"
                default="1" comment="QSI" item="CV53.4.0" infoOnly="yes">
       <ienumVal>
-        <ienumChoice choice="Whistle/Horn" value="1"/>
+        <ienumChoice choice="Whistle" value="1"/>
       </ienumVal>
     </ivariable>
     <ivariable label=" - Neutral Only" CVname="53.4.1" CV="53" PI="4" SI="1"
                default="1" comment="QSI" item="CV53.4.1" infoOnly="yes">
       <ienumVal>
-        <ienumChoice choice="Whistle/Horn" value="1"/>
+        <ienumChoice choice="Whistle" value="1"/>
       </ienumVal>
     </ivariable>
 
     <ivariable label="Outout 5 - Forward/Reverse Only" CVname="53.5.0" CV="53" PI="5" SI="0"
                default="211" comment="QSI" item="CV53.5.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -654,6 +648,7 @@
     <ivariable label=" - Neutral Only" CVname="53.5.1" CV="53" PI="5" SI="1"
                default="211" comment="QSI" item="CV53.5.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -676,6 +671,7 @@
     <ivariable label="Outout 6 - Forward/Reverse Only" CVname="53.6.0" CV="53" PI="6" SI="0"
                default="8" comment="QSI" item="CV53.6.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -695,6 +691,7 @@
     <ivariable label=" - Neutral Only" CVname="53.6.1" CV="53" PI="6" SI="1"
                default="8" comment="QSI" item="CV53.6.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -717,6 +714,7 @@
     <ivariable label="Outout 7 - Forward/Reverse Only" CVname="53.7.0" CV="53" PI="7" SI="0"
                default="5" comment="QSI" item="CV53.7.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -736,6 +734,7 @@
     <ivariable label=" - Neutral Only" CVname="53.7.1" CV="53" PI="7" SI="1"
                default="5" comment="QSI" item="CV53.7.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -758,6 +757,7 @@
     <ivariable label="Outout 8 - Forward/Reverse Only" CVname="53.8.0" CV="53" PI="8" SI="0"
                default="65" comment="QSI" item="CV53.8.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -777,6 +777,7 @@
     <ivariable label=" - Neutral Only" CVname="53.8.1" CV="53" PI="8" SI="1"
                default="144" comment="QSI" item="CV53.8.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -799,6 +800,7 @@
     <ivariable label="Outout 9 - Forward/Reverse Only" CVname="53.9.0" CV="53" PI="9" SI="0"
                default="215" comment="QSI" item="CV53.9.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -818,6 +820,7 @@
     <ivariable label=" - Neutral Only" CVname="53.9.1" CV="53" PI="9" SI="1"
                default="14" comment="QSI" item="CV53.9.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -840,6 +843,7 @@
     <ivariable label="Outout 10 - Forward/Reverse Only" CVname="53.10.0" CV="53" PI="10" SI="0"
                default="64" comment="QSI" item="CV53.10.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -859,6 +863,7 @@
     <ivariable label=" - Neutral Only" CVname="53.10.1" CV="53" PI="10" SI="1"
                default="64" comment="QSI" item="CV53.10.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -881,6 +886,7 @@
     <ivariable label="Outout 11 - Forward/Reverse Only" CVname="53.11.0" CV="53" PI="11" SI="0"
                default="10" comment="QSI" item="CV53.11.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -900,6 +906,7 @@
     <ivariable label=" - Neutral Only" CVname="53.11.1" CV="53" PI="11" SI="1"
                default="145" comment="QSI" item="CV53.11.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -922,6 +929,7 @@
     <ivariable label="Outout 12 - Forward/Reverse Only" CVname="53.12.0" CV="53" PI="12" SI="0"
                default="10" comment="QSI" item="CV53.12.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -941,6 +949,7 @@
     <ivariable label=" - Neutral Only" CVname="53.12.1" CV="53" PI="12" SI="1"
                default="12" comment="QSI" item="CV53.12.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -963,6 +972,7 @@
     <ivariable label="Outout 13 - Forward/Reverse Only" CVname="53.13.0" CV="53" PI="13" SI="0"
                default="10" comment="QSI" item="CV53.13.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -982,6 +992,7 @@
     <ivariable label=" - Neutral Only" CVname="53.13.1" CV="53" PI="13" SI="1"
                default="13" comment="QSI" item="CV53.13.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -1004,6 +1015,7 @@
     <ivariable label="Outout 14 - Forward/Reverse Only" CVname="53.14.0" CV="53" PI="14" SI="0"
                default="10" comment="QSI" item="CV53.14.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -1023,6 +1035,7 @@
     <ivariable label=" - Neutral Only" CVname="53.14.1" CV="53" PI="14" SI="1"
                default="10" comment="QSI" item="CV53.14.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -1053,10 +1066,6 @@
 
     <ivariable label="Speed Step to Scale MPH Scale Factor" CVname="56.10" CV="56" PI="10" default="64"
                comment="QSI" item="CV56.10">
-      <indexedVal max="128"/> </ivariable>
-
-    <ivariable label="Chuff Interval Scale Factor" CVname="56.12" CV="56" PI="12" default="32"
-               comment="QSI" item="CV56.12">
       <indexedVal max="128"/> </ivariable>
 
 <!-- CV 56.129 Engine ID Access (for ops mode) - TBD -->
@@ -1240,11 +1249,19 @@
 
 <pane name="Indexed CVs">
   <column>
-    <label label=" "/>
-    <label label="If nothing shows up in this tab, upgrade to JMRI 1.7.1"/>
-    <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
-    <label label=" "/>
-    <indxcvtable/>
+    <row>
+      <column>
+        <label label=" "/>
+        <label label="If nothing shows up in this tab, upgrade to JMRI 1.7.1"/>
+        <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
+        <label label=" "/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <indxcvtable/>
+      </column>
+    </row>
   </column>
 </pane>
 
@@ -1254,7 +1271,7 @@
     <label label=" "/>
     <display item="CV62 QSI Control"/>
     <label label=" "/>
-    <label label="When in Ops-mode"/>
+    <label label="When in Ops-mode:"/>
     <label label="Enter a CV you wish to hear and press -- Write changes on sheet"/>
     <label label=" "/>
     <display item="Verbal CV Inquiry"/>
