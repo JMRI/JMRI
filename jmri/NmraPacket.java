@@ -28,10 +28,11 @@ package jmri;
  *            short vs long address type
  *
  * @author      Bob Jacobsen Copyright (C) 2001, 2003
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class NmraPacket {
 
+    
     public static byte[] accDecoderPkt(int addr, int active, int outputChannel) {
         // From the NMRA RP:
         // 0 10AAAAAA 0 1AAACDDD 0 EEEEEEEE 1
@@ -75,6 +76,28 @@ public class NmraPacket {
         retVal[2] = (byte) (retVal[0] ^ retVal[1]);
 
         return retVal;
+    }
+
+    /**
+     * Provide an accessory control packet via a simplified interface
+     * @param number Address of accessory output, starting with 1
+     * @param thrown true if the output is to be configured to the "closed", a.k.a. the
+     * "normal" or "unset" position
+     */
+    public static byte[] accDecoderPkt(int number, boolean closed) {
+        // dBit is the "channel" info, least 7 bits, for the packet
+        // The lowest channel bit represents CLOSED (1) and THROWN (0)
+        int dBits = (( (number-1) & 0x03) << 1 );  // without the low CLOSED vs THROWN bit
+        dBits = closed ? (dBits | 1) : dBits;
+
+        // aBits is the "address" part of the nmra packet, which starts with 1
+        int aBits = (( (number-1) & 0x1FC) >> 2 )+1;
+
+        // cBit is the control bit, we're always setting it active
+        int cBit = 1;
+
+        // get the packet
+        return NmraPacket.accDecoderPkt(aBits, cBit, dBits);
     }
 
     static byte[] locoSpeed14S(int address, int speedStep, boolean F0 ) {
