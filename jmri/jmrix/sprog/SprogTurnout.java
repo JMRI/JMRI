@@ -16,7 +16,7 @@ import jmri.Turnout;
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2005
  * @author J.M. (Mark) Knox Copyright (C) 2005
  *
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class SprogTurnout extends AbstractTurnout {
 
@@ -55,22 +55,8 @@ public class SprogTurnout extends AbstractTurnout {
     int _number;   // turnout number
 
     protected void sendMessage(boolean closed) {
-        // The address space in the packet starts with zero, not one
-
-        // dBit is the "channel" info, least 7 bits, for the packet
-        // The lowest channel bit represents CLOSED (1) and THROWN (0)
-        int dBits = (( (_number-1) & 0x03) << 1 );  // without the low CLOSED vs THROWN bit
-        dBits = closed ? (dBits | 1) : dBits;
-
-        // aBits is the "address" part of the nmra packet, which starts with 1
-        int aBits = (( (_number-1) & 0x1FC) >> 2 )+1;
-
-        // cBit is the control bit, we're always setting it active
-        int cBit = 1;
-
         // get the packet
-        if (log.isDebugEnabled()) log.debug("build packet from (addr, control, channel): "+aBits+" "+cBit+" "+dBits);
-        byte[] bl = NmraPacket.accDecoderPkt(aBits, cBit, dBits);
+        byte[] bl = NmraPacket.accDecoderPkt(_number, closed);
         if (log.isDebugEnabled()) log.debug("packet: "
                                             +Integer.toHexString(0xFF & bl[0])
                                             +" "+Integer.toHexString(0xFF & bl[1])
