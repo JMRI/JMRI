@@ -28,11 +28,11 @@ package jmri;
  *            short vs long address type
  *
  * @author      Bob Jacobsen Copyright (C) 2001, 2003
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class NmraPacket {
 
-    
+
     public static byte[] accDecoderPkt(int addr, int active, int outputChannel) {
         // From the NMRA RP:
         // 0 10AAAAAA 0 1AAACDDD 0 EEEEEEEE 1
@@ -91,7 +91,11 @@ public class NmraPacket {
         dBits = closed ? (dBits | 1) : dBits;
 
         // aBits is the "address" part of the nmra packet, which starts with 1
-        int aBits = (( (number-1) & 0x1FC) >> 2 )+1;
+        // 07/01/05 R.Scheffler - Removed the mask, this will allow any 'too high' numbers
+        // through to accDecoderPkt() above which will log the error if out of bounds. If we
+        // mask it here, then the number will 'wrap' without any indication that it did so.
+        int aBits = (number-1) >> 2;      // Divide by 4 to get the 'base'
+        aBits += 1;                       // Base is +1
 
         // cBit is the control bit, we're always setting it active
         int cBit = 1;
@@ -336,3 +340,4 @@ public class NmraPacket {
 
 
 /* @(#)NmraPacket.java */
+

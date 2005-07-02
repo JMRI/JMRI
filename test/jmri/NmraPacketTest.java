@@ -16,7 +16,7 @@ import junit.framework.Assert;
 public class NmraPacketTest extends TestCase {
 
     // output values for some of these tests were provided by Bob Scheffler
-    
+
 	// create an accessory decoder packet
 	public void testAccDecoderPacket1() {
 		// test fixed bits
@@ -96,7 +96,7 @@ public class NmraPacketTest extends TestCase {
 		// address 1024
 		byte[] ba = NmraPacket.accDecoderPkt(1024, true);
 		Assert.assertEquals("first byte ", 0x80, ba[0] & 0xFF);
-		Assert.assertEquals("second byte ", 0x8F, ba[1] & 0xFF);
+		Assert.assertEquals("second byte ", 0xBF, ba[1] & 0xFF);
 		Assert.assertEquals("third byte ", 0x3F, ba[2] & 0xFF);
 	}
 
