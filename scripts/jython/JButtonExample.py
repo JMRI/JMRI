@@ -7,7 +7,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 
 import java
 import javax.swing
@@ -21,5 +21,6 @@ b.actionPerformed = whenMyButtonClicked
 # create a frame to hold the button, put button in it, and display
 f = javax.swing.JFrame("custom button")
 f.contentPane.add(b)
+f.pack()
 f.show()
 
