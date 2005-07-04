@@ -2,13 +2,14 @@
 #
 # It listens to two sensors, running a locomotive back and 
 # forth between them by changing its direction when a sensor
-# detects the engine
+# detects the engine. You need to set the speed of the engine
+# using a throttle.
 #
-# Author: Bob Jacobsen, copyright 2004
+# Author: Bob Jacobsen, copyright 2004, 2005
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.7 $
+# $Revision: 1.8 $
 
 import jarray
 import jmri
