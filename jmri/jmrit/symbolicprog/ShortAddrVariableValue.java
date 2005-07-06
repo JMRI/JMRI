@@ -14,7 +14,7 @@ import javax.swing.*;
  * stored in two arrays for simplicity.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.8 $
+ * @version             $Revision: 1.9 $
  *
  */
 public class ShortAddrVariableValue extends DecVariableValue {
@@ -57,7 +57,7 @@ public class ShortAddrVariableValue extends DecVariableValue {
                           +cvNumbers[i]+" "+cv.number());
             cv.setToWrite(true);
             cv.setState(EDITED);
-            System.out.println("Mark to write "+cv.number());
+	    if(log.isDebugEnabled()) log.debug("Mark to write " +cv.number());
         }
     }
 
