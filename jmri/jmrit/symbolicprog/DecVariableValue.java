@@ -22,7 +22,7 @@ import com.sun.java.util.collections.ArrayList;
  * Decimal representation of a value.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.14 $
+ * @version             $Revision: 1.15 $
  *
  */
 public class DecVariableValue extends VariableValue
@@ -138,9 +138,7 @@ public class DecVariableValue extends VariableValue
     }
 
     public Component getRep(String format)  {
-        if (getReadOnly())  //
-            return updateRepresentation(new JLabel(_value.getText()));
-        else if (format.equals("vslider")) {
+        if (format.equals("vslider")) {
             DecVarSlider b = new DecVarSlider(this, _minVal, _maxVal);
             b.setOrientation(JSlider.VERTICAL);
             sliders.add(b);
@@ -156,6 +154,9 @@ public class DecVariableValue extends VariableValue
         }
         else {
             JTextField value = new VarTextField(_value.getDocument(),_value.getText(), 3, this);
+            if (getReadOnly()) {
+                value.setEditable(false);
+            }
             updateRepresentation(value);
             return value;
         }
