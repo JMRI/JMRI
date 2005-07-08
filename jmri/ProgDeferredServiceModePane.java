@@ -30,14 +30,14 @@ import jmri.ProgListener;
  * "set" operations by changing the actual service mode programmer state.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class ProgDeferredServiceModePane extends ProgModeSelector implements java.beans.PropertyChangeListener {
 
     ProgServiceModePane servicePane;
     JFrame setFrame;
     JLabel currentMode = new JLabel();
-    JButton setButton = new JButton("Set...");
+    public JButton setButton = new JButton("Set...");
 
     /**
      * Get the configured programmer
