@@ -14,6 +14,9 @@ import jmri.jmrit.symbolicprog.*;
 import jmri.util.JmriJFrame;
 import java.awt.Dimension;
 import java.awt.Font;
+
+import java.io.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -24,13 +27,18 @@ import com.sun.java.util.collections.ArrayList;
 import com.sun.java.util.collections.List;
 import org.jdom.Attribute;
 import org.jdom.Element;
+import jmri.util.GlassPane;
+import java.awt.event.ItemListener;
+import java.awt.Cursor;
+import java.awt.event.ItemEvent;
+import jmri.ProgDeferredServiceModePane;
 
 /**
  * Frame providing a command station programmer from decoder definition files.
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.49 $
+ * @version   $Revision: 1.50 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -45,12 +53,17 @@ abstract public class PaneProgFrame extends JmriJFrame
     JMenu               resetMenu    = null;
 
     Programmer          mProgrammer;
+    JPanel              modePane     = null;;
     boolean             _opsMode;
 
     RosterEntry         _rosterEntry    = null;
     RosterEntryPane     _rPane          = null;
 
     List                paneList        = new ArrayList();
+    int                 paneListIndex;
+
+    GlassPane           glassPane;
+    List                activeComponents = new ArrayList();
 
     String              filename        = null;
 
@@ -61,10 +74,10 @@ abstract public class PaneProgFrame extends JmriJFrame
     JToggleButton readAllButton = new JToggleButton("Read all sheets");
     JToggleButton writeAllButton = new JToggleButton("Write all sheets");
 
-    ActionListener l1;
-    ActionListener l2;
-    ActionListener l3;
-    ActionListener l4;
+    ItemListener l1;
+    ItemListener l2;
+    ItemListener l3;
+    ItemListener l4;
 
     /**
      * Abstract method to provide a JPanel setting the programming
@@ -131,11 +144,22 @@ abstract public class PaneProgFrame extends JmriJFrame
             readChangesButton.setEnabled(false);
             readChangesButton.setToolTipText("Button disabled because configured command station can't read CVs");
         }
-        readChangesButton.addActionListener( l1 = new ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (readChangesButton.isSelected()) readChanges();
+        readChangesButton.addItemListener(l1 = new ItemListener() {
+            public void itemStateChanged (ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    prepGlassPane(readChangesButton);
+                    readChangesButton.setText("Stop Read changes, all sheets");
+                    readChanges();
+                } else {
+                    if (_programmingPane != null) {
+                        _programmingPane.stopProgramming();
+                    }
+                    paneListIndex = paneList.size();
+                    readChangesButton.setText("Read changes on all sheets");
                 }
-            });
+            }
+        });
+
         readAllButton.setToolTipText("Read all values on all sheets from decoder. Warning: may take a long time!");
         // check with CVTable programmer to see if read is possible
         if (cvModel!= null && cvModel.getProgrammer()!= null
@@ -144,27 +168,55 @@ abstract public class PaneProgFrame extends JmriJFrame
             readAllButton.setEnabled(false);
             readAllButton.setToolTipText("Button disabled because configured command station can't read CVs");
         }
-        readAllButton.addActionListener( l3 = new ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (readAllButton.isSelected()) {
-                        readAll();
+        readAllButton.addItemListener(l3 = new ItemListener() {
+            public void itemStateChanged (ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    prepGlassPane(readAllButton);
+                    readAllButton.setText("Stop Read all sheets");
+                    readAll();
+                } else {
+                    if (_programmingPane != null) {
+                        _programmingPane.stopProgramming();
                     }
+                    paneListIndex = paneList.size();
+                    readAllButton.setText("Read all sheets");
                 }
-            });
+            }
+        });
+
         writeChangesButton.setToolTipText("Write highlighted values on all sheets to decoder");
-        writeChangesButton.addActionListener( l2 = new ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (writeChangesButton.isSelected()) writeChanges();
-                }
-            });
-        writeAllButton.setToolTipText("Write all values on all sheets to decoder");
-        writeAllButton.addActionListener( l4 = new ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (writeAllButton.isSelected()) {
-                        writeAll();
+        writeChangesButton.addItemListener(l2 = new ItemListener() {
+            public void itemStateChanged (ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    prepGlassPane(writeChangesButton);
+                    writeChangesButton.setText("Stop Write changes, all sheets");
+                    writeChanges();
+                } else {
+                    if (_programmingPane != null) {
+                        _programmingPane.stopProgramming();
                     }
+                    paneListIndex = paneList.size();
+                    writeChangesButton.setText("Write changes on all sheets");
                 }
-            });
+            }
+        });
+
+        writeAllButton.setToolTipText("Write all values on all sheets to decoder");
+        writeAllButton.addItemListener(l4 = new ItemListener() {
+            public void itemStateChanged (ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    prepGlassPane(writeAllButton);
+                    writeAllButton.setText("Stop Write all sheets");
+                    writeAll();
+                } else {
+                    if (_programmingPane != null) {
+                        _programmingPane.stopProgramming();
+                    }
+                    paneListIndex = paneList.size();
+                    writeAllButton.setText("Write all sheets");
+                }
+            }
+        });
 
         // most of the GUI is done from XML in readConfig() function
         // which configures the tabPane
@@ -179,7 +231,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         bottom.add(writeAllButton);
         pane.add(bottom);
 
-        JPanel modePane = getModePane();
+        modePane = getModePane();
         if (modePane!=null) {
             pane.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
             pane.add(modePane);
@@ -582,10 +634,10 @@ abstract public class PaneProgFrame extends JmriJFrame
     public void newPane(String name, Element pane, Element modelElem, boolean enableEmpty) {
 
         // create a panel to hold columns
-        PaneProgPane p = new PaneProgPane(name, pane, cvModel, iCvModel, variableModel, modelElem);
+        PaneProgPane p = new PaneProgPane(this, name, pane, cvModel, iCvModel, variableModel, modelElem);
 
         // how to handle the tab depends on whether it has contents and option setting
-        if ( enableEmpty || (p.cvList.size()!=0) || (p.varList.size()!=0 || (p.indxCvList.size()!=0)) ) {
+        if ( enableEmpty || (p.cvList.size()!=0) || (p.varList.size()!=0 || (p.indexedCvList.size()!=0)) ) {
             tabPane.addTab(name, p);  // always add if not empty
         } else if (getShowEmptyPanes()) {
             // here empty, but showing anyway as disabled
@@ -602,7 +654,79 @@ abstract public class PaneProgFrame extends JmriJFrame
         paneList.add(p);
     }
 
+    /**
+     *
+     */
+    void prepGlassPane(AbstractButton activeButton) {
+        if (glassPane != null) {
+            glassPane.dispose();
+        }
+        activeComponents.clear();
+        activeComponents.add(activeButton);
+        if (activeButton == readChangesButton || activeButton == readAllButton ||
+            activeButton == writeChangesButton || activeButton == writeAllButton) {
+            if (activeButton == readChangesButton) {
+                for (int i = 0; i < paneList.size(); i++) {
+                    activeComponents.add(((PaneProgPane) paneList.get(i)).readChangesButton);
+                }
+            } else if (activeButton == readAllButton) {
+                for (int i = 0; i < paneList.size(); i++) {
+                    activeComponents.add(((PaneProgPane) paneList.get(i)).readAllButton);
+                }
+            } else if (activeButton == writeChangesButton) {
+                for (int i = 0; i < paneList.size(); i++) {
+                    activeComponents.add(((PaneProgPane) paneList.get(i)).writeChangesButton);
+                }
+            } else if (activeButton == writeAllButton) {
+                for (int i = 0; i < paneList.size(); i++) {
+                    activeComponents.add(((PaneProgPane) paneList.get(i)).writeAllButton);
+                }
+            }
+        }
+        glassPane = new GlassPane(activeComponents, this.getContentPane(), this);
+        this.setGlassPane(glassPane);
+    }
+
+    void paneFinished() {
+        if (!isBusy()) {
+            if (glassPane != null) {
+                glassPane.setVisible(false);
+                glassPane.dispose();
+                glassPane = null;
+            }
+            setCursor(Cursor.getDefaultCursor());
+            enableButtons(true);
+        }
+    }
+
+    void enableButtons(boolean stat) {
+        readChangesButton.setEnabled(stat);
+        readAllButton.setEnabled(stat);
+        writeChangesButton.setEnabled(stat);
+        writeAllButton.setEnabled(stat);
+        if (modePane != null) {
+            ((ProgDeferredServiceModePane)modePane).setButton.setEnabled(stat);
+        }
+    }
+
     boolean justChanges;
+
+    boolean isBusy() { return _busy; }
+    private boolean _busy = false;
+    private void setBusy(boolean stat) {
+        _busy = stat;
+
+        for (int i = 0; i < paneList.size(); i++) {
+            if (stat) {
+                ((PaneProgPane)paneList.get(i)).enableButtons(false);
+            } else {
+                ((PaneProgPane)paneList.get(i)).enableButtons(true);
+            }
+        }
+        if (!stat) {
+            paneFinished();
+        }
+    }
 
     /**
      * invoked by "Read Changes" button, this sets in motion a
@@ -616,6 +740,15 @@ abstract public class PaneProgFrame extends JmriJFrame
     public boolean readChanges() {
         if (log.isDebugEnabled()) log.debug("readChanges starts");
         justChanges = true;
+        for (int i = 0; i < paneList.size(); i++) {
+            ((PaneProgPane)paneList.get(i)).setToRead(justChanges, true);
+        }
+        setBusy(true);
+        enableButtons(false);
+        readChangesButton.setEnabled(true);
+        glassPane.setVisible(true);
+        paneListIndex = 0;
+        // start operation
         return doRead();
     }
 
@@ -631,39 +764,45 @@ abstract public class PaneProgFrame extends JmriJFrame
     public boolean readAll() {
         if (log.isDebugEnabled()) log.debug("readAll starts");
         justChanges = false;
-
-        // prepare for common reads by doing a compare on all panes
-        for (int i=0; i<paneList.size(); i++) {
-            if (log.isDebugEnabled()) log.debug("doPrep on "+i);
-            ((PaneProgPane)paneList.get(i)).prepReadPaneAll();
+        for (int i = 0; i < paneList.size(); i++) {
+            ((PaneProgPane)paneList.get(i)).setToRead(justChanges, true);
         }
+        setBusy(true);
+        enableButtons(false);
+        readAllButton.setEnabled(true);
+        glassPane.setVisible(true);
+        paneListIndex = 0;
         // start operation
         return doRead();
     }
 
     boolean doRead() {
         _read = true;
-        for (int i=0; i<paneList.size(); i++) {
-            if (log.isDebugEnabled()) log.debug("doRead on "+i);
-            _programmingPane = (PaneProgPane)paneList.get(i);
+        while (paneListIndex < paneList.size()) {
+            if (log.isDebugEnabled()) log.debug("doRead on "+paneListIndex);
+            _programmingPane = (PaneProgPane)paneList.get(paneListIndex);
             // some programming operations are instant, so need to have listener registered at readPaneAll
             _programmingPane.addPropertyChangeListener(this);
             boolean running;
             if (justChanges)
                 running = _programmingPane.readPaneChanges();
             else
-                running = _programmingPane.readPanesFull();
+                running = _programmingPane.readPaneAll();
+
+            paneListIndex++;
 
             if (running) {
-                                // operation in progress, stop loop until called back
-                if (log.isDebugEnabled()) log.debug("doRead expecting callback from readPane "+i);
+                // operation in progress, stop loop until called back
+                if (log.isDebugEnabled()) log.debug("doRead expecting callback from readPane "+paneListIndex);
                 return true;
-            }
-            else
+            } else {
                 _programmingPane.removePropertyChangeListener(this);
+            }
         }
         // nothing to program, end politely
         _programmingPane = null;
+        enableButtons(true);
+        setBusy(false);
         readChangesButton.setSelected(false);
         readAllButton.setSelected(false);
         if (log.isDebugEnabled()) log.debug("doRead found nothing to do");
@@ -682,12 +821,14 @@ abstract public class PaneProgFrame extends JmriJFrame
     public boolean writeAll() {
         if (log.isDebugEnabled()) log.debug("writeAll starts");
         justChanges = false;
-
-        // prepare for common writes by doing a compare on all panes
-        for (int i=0; i<paneList.size(); i++) {
-            if (log.isDebugEnabled()) log.debug("doPrep on "+i);
-            ((PaneProgPane)paneList.get(i)).prepWritePaneAll();
+        for (int i = 0; i < paneList.size(); i++) {
+            ((PaneProgPane)paneList.get(i)).setToWrite(justChanges, true);
         }
+        setBusy(true);
+        enableButtons(false);
+        writeAllButton.setEnabled(true);
+        glassPane.setVisible(true);
+        paneListIndex = 0;
         return doWrite();
     }
 
@@ -703,25 +844,35 @@ abstract public class PaneProgFrame extends JmriJFrame
     public boolean writeChanges() {
         if (log.isDebugEnabled()) log.debug("writeChanges starts");
         justChanges = true;
+        for (int i = 0; i < paneList.size(); i++) {
+            ((PaneProgPane)paneList.get(i)).setToWrite(justChanges, true);
+        }
+        setBusy(true);
+        enableButtons(false);
+        writeChangesButton.setEnabled(true);
+        glassPane.setVisible(true);
+        paneListIndex = 0;
         return doWrite();
     }
 
     boolean doWrite() {
         _read = false;
-        for (int i=0; i<paneList.size(); i++) {
-            if (log.isDebugEnabled()) log.debug("doWrite starts on "+i);
-            _programmingPane = (PaneProgPane)paneList.get(i);
+        while (paneListIndex < paneList.size()) {
+            if (log.isDebugEnabled()) log.debug("doWrite starts on "+paneListIndex);
+            _programmingPane = (PaneProgPane)paneList.get(paneListIndex);
             // some programming operations are instant, so need to have listener registered at readPane
             _programmingPane.addPropertyChangeListener(this);
-           boolean running;
+            boolean running;
             if (justChanges)
                 running = _programmingPane.writePaneChanges();
             else
-                running = _programmingPane.writePanesFull();
+                running = _programmingPane.writePaneAll();
+
+            paneListIndex++;
 
             if (running) {
-				// operation in progress, stop loop until called back
-                if (log.isDebugEnabled()) log.debug("doWrite expecting callback from writePane "+i);
+                // operation in progress, stop loop until called back
+                if (log.isDebugEnabled()) log.debug("doWrite expecting callback from writePane "+paneListIndex);
                 return true;
             }
             else
@@ -729,6 +880,8 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
         // nothing to program, end politely
         _programmingPane = null;
+        enableButtons(true);
+        setBusy(false);
         writeChangesButton.setSelected(false);
         writeAllButton.setSelected(false);
         if (log.isDebugEnabled()) log.debug("doWrite found nothing to do");
@@ -804,7 +957,11 @@ abstract public class PaneProgFrame extends JmriJFrame
                 if (log.isDebugEnabled()) log.debug("restart writeAll");
                 doWrite();
             }
-            else if (log.isDebugEnabled()) log.debug("read/write end because button is lifted");
+            else {
+                if (log.isDebugEnabled()) log.debug(
+                    "read/write end because button is lifted");
+                setBusy(false);
+            }
         }
     }
 
@@ -855,10 +1012,10 @@ abstract public class PaneProgFrame extends JmriJFrame
         if (log.isDebugEnabled()) log.debug("dispose local");
 
         // remove listeners (not much of a point, though)
-        readChangesButton.removeActionListener(l1);
-        writeChangesButton.removeActionListener(l2);
-        readAllButton.removeActionListener(l3);
-        writeAllButton.removeActionListener(l4);
+        readChangesButton.removeItemListener(l1);
+        writeChangesButton.removeItemListener(l2);
+        readAllButton.removeItemListener(l3);
+        writeAllButton.removeItemListener(l4);
         if (_programmingPane != null) _programmingPane.removePropertyChangeListener(this);
 
         // dispose the list of panes

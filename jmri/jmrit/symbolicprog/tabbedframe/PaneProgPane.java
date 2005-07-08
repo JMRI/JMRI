@@ -17,13 +17,14 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.*;
 import java.util.StringTokenizer;
 import java.util.Vector;
 import java.awt.Color;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 
 import org.jdom.Attribute;
@@ -31,7 +32,7 @@ import org.jdom.Element;
 import com.sun.java.util.collections.Set;
 import com.sun.java.util.collections.HashSet;
 import com.sun.java.util.collections.ArrayList;
-import com.sun.java.util.collections.List;   // resolve ambiguity with package-level import
+import com.sun.java.util.collections.List;
 
 /**
  * Provides the individual panes for the TabbedPaneProgrammer.
@@ -62,7 +63,7 @@ import com.sun.java.util.collections.List;   // resolve ambiguity with package-l
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.47 $
+ * @version   $Revision: 1.48 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -70,13 +71,14 @@ public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
 
     CvTableModel _cvModel;
-    IndexedCvTableModel _indxCvModel;
+    IndexedCvTableModel _indexedCvModel;
     VariableTableModel _varModel;
+    PaneProgFrame _parentFrame;
 
-    ActionListener l1;
-    ActionListener l2;
-    ActionListener l3;
-    ActionListener l4;
+    ItemListener l1;
+    ItemListener l2;
+    ItemListener l3;
+    ItemListener l4;
 
     String mName = "";
     /**
@@ -93,6 +95,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * @param varModel Already existing TableModel containing the variable definitions
      * @param modelElem "model" element from the Decoder Index, used to check what decoder options are present.
      */
+
     public PaneProgPane(String name, Element pane, CvTableModel cvModel, VariableTableModel varModel, Element modelElem) {
 
         mName = name;
@@ -146,11 +149,13 @@ public class PaneProgPane extends javax.swing.JPanel
             readChangesButton.setEnabled(false);
             readChangesButton.setToolTipText("Button disabled because configured command station can't read CVs");
         }
-        readChangesButton.addActionListener( l1 = new ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (readChangesButton.isSelected()) readPaneChanges();
+        readChangesButton.addItemListener( l1 = new ItemListener() {
+            public void itemStateChanged (ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    readPaneChanges();
                 }
-            });
+            }
+        });
 
         readAllButton.setToolTipText("Read all values on this sheet from decoder. Warning: may take a long time!");
         if (cvModel.getProgrammer()!= null
@@ -159,25 +164,30 @@ public class PaneProgPane extends javax.swing.JPanel
             readAllButton.setEnabled(false);
             readAllButton.setToolTipText("Button disabled because configured command station can't read CVs");
         }
-        readAllButton.addActionListener( l2 = new ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (readAllButton.isSelected()) readPaneAll();
+        readAllButton.addItemListener( l2 = new ItemListener() {
+            public void itemStateChanged (ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    readPaneAll();
                 }
-            });
+            }
+        });
 
         writeChangesButton.setToolTipText("Write highlighted values on this sheet to decoder");
-        writeChangesButton.addActionListener( l3 = new ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (writeChangesButton.isSelected()) writePaneChanges();
+        writeChangesButton.addItemListener( l3 = new ItemListener() {
+            public void itemStateChanged (ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    writePaneChanges();
                 }
-            });
-
+            }
+        });
         writeAllButton.setToolTipText("Write all values on this sheet to decoder");
-        writeAllButton.addActionListener( l4 = new ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (writeAllButton.isSelected()) writePaneAll();
+        writeAllButton.addItemListener( l4 = new ItemListener() {
+            public void itemStateChanged (ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    writePaneAll();
                 }
-            });
+            }
+        });
 
         bottom.add(readChangesButton);
         bottom.add(writeChangesButton);
@@ -197,11 +207,12 @@ public class PaneProgPane extends javax.swing.JPanel
      * @param varModel Already existing TableModel containing the variable definitions
      * @param modelElem "model" element from the Decoder Index, used to check what decoder options are present.
      */
-    public PaneProgPane(String name, Element pane, CvTableModel cvModel, IndexedCvTableModel icvModel, VariableTableModel varModel, Element modelElem) {
+    public PaneProgPane(PaneProgFrame parent, String name, Element pane, CvTableModel cvModel, IndexedCvTableModel icvModel, VariableTableModel varModel, Element modelElem) {
 
+        _parentFrame = parent;
         mName = name;
         _cvModel = cvModel;
-        _indxCvModel = icvModel;
+        _indexedCvModel = icvModel;
         _varModel = varModel;
 
         // This is a JPanel containing a JScrollPane, containing a
@@ -251,11 +262,23 @@ public class PaneProgPane extends javax.swing.JPanel
             readChangesButton.setEnabled(false);
             readChangesButton.setToolTipText("Button disabled because configured command station can't read CVs");
         }
-        readChangesButton.addActionListener( l1 = new ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (readChangesButton.isSelected()) readPaneChanges();
+        readChangesButton.addItemListener(l1 = new ItemListener() {
+            public void itemStateChanged (ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    readChangesButton.setText("Stop Read changes on sheet");
+                    if (_parentFrame.isBusy() == false) {
+                        prepReadPane(true);
+                        prepGlassPane(readChangesButton);
+                        _parentFrame.glassPane.setVisible(true);
+                        readPaneChanges();
+                    }
+                } else {
+                    stopProgramming();
+                    readChangesButton.setText("Read changes on sheet");
+                    enableButtons(!_parentFrame.isBusy());
                 }
-            });
+            }
+        });
 
         readAllButton.setToolTipText("Read all values on this sheet from decoder. Warning: may take a long time!");
         if (cvModel.getProgrammer()!= null
@@ -264,25 +287,61 @@ public class PaneProgPane extends javax.swing.JPanel
             readAllButton.setEnabled(false);
             readAllButton.setToolTipText("Button disabled because configured command station can't read CVs");
         }
-        readAllButton.addActionListener( l2 = new ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (readAllButton.isSelected()) readPaneAll();
+        readAllButton.addItemListener(l2 = new ItemListener() {
+            public void itemStateChanged (ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    readAllButton.setText("Stop Read full sheet");
+                    if (_parentFrame.isBusy() == false) {
+                        prepReadPane(false);
+                        prepGlassPane(readAllButton);
+                        _parentFrame.glassPane.setVisible(true);
+                        readPaneAll();
+                    }
+                } else {
+                    stopProgramming();
+                    readAllButton.setText("Read full sheet");
+                    enableButtons(!_parentFrame.isBusy());
                 }
-            });
+            }
+        });
 
         writeChangesButton.setToolTipText("Write highlighted values on this sheet to decoder");
-        writeChangesButton.addActionListener( l3 = new ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (writeChangesButton.isSelected()) writePaneChanges();
+        writeChangesButton.addItemListener(l3 = new ItemListener() {
+            public void itemStateChanged (ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    writeChangesButton.setText("Stop Write changes on sheet");
+                    if (_parentFrame.isBusy() == false) {
+                        prepReadPane(true);
+                        prepGlassPane(writeChangesButton);
+                        _parentFrame.glassPane.setVisible(true);
+                        writePaneChanges();
+                    }
+                } else {
+                    stopProgramming();
+                    writeChangesButton.setText("Write changes on sheet");
+                    enableButtons(!_parentFrame.isBusy());
                 }
-            });
+            }
+        });
 
         writeAllButton.setToolTipText("Write all values on this sheet to decoder");
-        writeAllButton.addActionListener( l4 = new ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (writeAllButton.isSelected()) writePaneAll();
+        writeAllButton.addItemListener(l4 = new ItemListener() {
+            public void itemStateChanged (ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    writeAllButton.setText("Stop Write full sheet");
+                    if (_parentFrame.isBusy() == false) {
+                        prepReadPane(false);
+                        prepGlassPane(writeAllButton);
+                        _parentFrame.glassPane.setVisible(true);
+                        writePaneAll();
+                    }
+                } else {
+                    stopProgramming();
+                    writeAllButton.setText("Write full sheet");
+                    enableButtons(!_parentFrame.isBusy());
                 }
-            });
+            }
+        });
 
         bottom.add(readChangesButton);
         bottom.add(writeChangesButton);
@@ -315,8 +374,8 @@ public class PaneProgPane extends javax.swing.JPanel
      * we can read/write them as a variable.  So far (sic), the only use of this is
      * for the IndexedCvTable rep.
      */
-    List indxCvList = new ArrayList();
-    int indxCvListIndex;
+    List indexedCvList = new ArrayList();
+    int indexedCvListIndex;
 
     JToggleButton readChangesButton  = new JToggleButton("Read changes on sheet");
     JToggleButton readAllButton      = new JToggleButton("Read full sheet");
@@ -377,6 +436,17 @@ public class PaneProgPane extends javax.swing.JPanel
         return set;
     }
 
+    private void prepGlassPane(AbstractButton activeButton) {
+        _parentFrame.prepGlassPane(activeButton);
+    }
+
+    void enableButtons(boolean stat) {
+        readChangesButton.setEnabled(stat);
+        readAllButton.setEnabled(stat);
+        writeChangesButton.setEnabled(stat);
+        writeAllButton.setEnabled(stat);
+    }
+
     boolean justChanges;
 
     /**
@@ -391,30 +461,36 @@ public class PaneProgPane extends javax.swing.JPanel
         if (log.isDebugEnabled()) log.debug("readPane starts with "
                                             +varList.size()+" vars, "
                                             +cvList.size()+" cvs "
-                                            +indxCvList.size()+" indexed cvs" );
-        readChangesButton.setSelected(true);
-        justChanges = true;
-        varListIndex = 0;
-        cvListIndex = 0;
-        indxCvListIndex = 0;
+                                            +indexedCvList.size()+" indexed cvs" );
+        prepReadPane(true);
         return nextRead();
     }
 
     /**
-     * Prepare this pane for a readAll operation.
+     * Prepare this pane for a read operation.
      * <P>The read mechanism only reads
      * variables in certain states (and needs to do that to handle error
      * processing right now), so this is implemented by first
      * setting all variables and CVs on this pane to TOREAD via this method
      *
      */
-    public void prepReadPaneAll() {
-        readAllButton.setSelected(true);
-        justChanges = false;
+    public void prepReadPane(boolean onlyChanges) {
+        justChanges = onlyChanges;
+        enableButtons(false);
+        if (justChanges == true) {
+            readChangesButton.setEnabled(true);
+            readChangesButton.setSelected(true);
+        } else {
+            readAllButton.setSelected(true);
+            readAllButton.setEnabled(true);
+        }
+        if (_parentFrame.isBusy() == false) {
+            _parentFrame.enableButtons(false);
+        }
+        setToRead(justChanges, true);
         varListIndex = 0;
         cvListIndex = 0;
-        indxCvListIndex = 0;
-        setToRead(true);
+        indexedCvListIndex = 0;
     }
 
     /**
@@ -432,25 +508,8 @@ public class PaneProgPane extends javax.swing.JPanel
         if (log.isDebugEnabled()) log.debug("readAllPane starts with "
                                             +varList.size()+" vars, "
                                             +cvList.size()+" cvs "
-                                            +indxCvList.size()+" indexed cvs" );
-        prepReadPaneAll();
-        // start operation
-        return nextRead();
-    }
-
-    /**
-     * Invoked by "Read Full All Sheets" button, this sets in motion a
-     * continuing sequence of "read" operations on the
-     * variables & CVs in the Pane.  The read all operation must have been
-     * previously prepared via a call to prepReadPaneAll in this pane.
-     *
-     * @return true is a read has been started, false if the pane is complete.
-     */
-    public boolean readPanesFull() {
-        if (log.isDebugEnabled()) log.debug("readPanesFull starts with "
-                                            +varList.size()+" vars, "
-                                            +cvList.size()+" cvs "
-                                            +indxCvList.size()+" indexed cvs" );
+                                            +indexedCvList.size()+" indexed cvs" );
+        prepReadPane(false);
         // start operation
         return nextRead();
     }
@@ -458,41 +517,107 @@ public class PaneProgPane extends javax.swing.JPanel
     /**
      * Set the "ToRead" parameter in all variables and CVs on this pane
      */
-    void setToRead(boolean stat) {
-        for (int i=0; i<varList.size(); i++) {
-            int varNum = ((Integer)varList.get(i)).intValue();
-            VariableValue var = _varModel.getVariable(varNum);
-            var.setToRead(stat);
-        }
-        for (int i=0; i<cvList.size(); i++) {
-            int cvNum = ((Integer)cvList.get(i)).intValue();
-            CvValue cv = _cvModel.getCvByRow(cvNum);
-            cv.setToRead(stat);
-        }
-        for (int i=0; i<indxCvList.size(); i++) {
-            CvValue icv = _indxCvModel.getCvByRow(i);
-            icv.setToRead(stat);
+    void setToRead(boolean justChanges, boolean startProcess) {
+        if (!_parentFrame.isBusy() ||  // the frame has already setToRead
+           (!startProcess)) {  // we want to setToRead false if the pane's process is being stopped
+            for (int i = 0; i < varList.size(); i++) {
+                int varNum = ( (Integer) varList.get(i)).intValue();
+                VariableValue var = _varModel.getVariable(varNum);
+                if (justChanges) {
+                    if (var.isChanged()) {
+                        var.setToRead(startProcess);
+                    }
+                    else {
+                        var.setToRead(false);
+                    }
+                }
+                else {
+                    var.setToRead(startProcess);
+                }
+            }
+            for (int i = 0; i < cvList.size(); i++) {
+                int cvNum = ( (Integer) cvList.get(i)).intValue();
+                CvValue cv = _cvModel.getCvByRow(cvNum);
+                if (justChanges) {
+                    if (VariableValue.considerChanged(cv)) {
+                        cv.setToRead(startProcess);
+                    }
+                    else {
+                        cv.setToRead(false);
+                    }
+                }
+                else {
+                    cv.setToRead(startProcess);
+                }
+            }
+            for (int i = 0; i < indexedCvList.size(); i++) {
+                CvValue icv = _indexedCvModel.getCvByRow(i);
+                if (justChanges) {
+                    if (VariableValue.considerChanged(icv)) {
+                        icv.setToRead(startProcess);
+                    }
+                    else {
+                        icv.setToRead(false);
+                    }
+                }
+                else {
+                    icv.setToRead(startProcess);
+                }
+            }
         }
     }
 
     /**
      * Set the "ToWrite" parameter in all variables and CVs on this pane
      */
-    void setToWrite(boolean stat) {
-        for (int i=0; i<varList.size(); i++) {
-            int varNum = ((Integer)varList.get(i)).intValue();
-            VariableValue var = _varModel.getVariable(varNum);
-            var.setToWrite(stat);
-        }
-        for (int i=0; i<cvList.size(); i++) {
-            int cvNum = ((Integer)cvList.get(i)).intValue();
-            CvValue cv = _cvModel.getCvByRow(cvNum);
-            cv.setToWrite(stat);
-        }
-        for (int i=0; i<indxCvList.size(); i++) {
-            CvValue icv = _indxCvModel.getCvByRow(i);
-            icv.setToWrite(stat);
-        }
+    void setToWrite(boolean justChanges, boolean startProcess) {
+        if (!_parentFrame.isBusy() ||  // the frame has already setToWrite
+           (!startProcess)) {  // we want to setToRead false if the pane's process is being stopped
+           for (int i = 0; i < varList.size(); i++) {
+               int varNum = ( (Integer) varList.get(i)).intValue();
+               VariableValue var = _varModel.getVariable(varNum);
+               if (justChanges) {
+                   if (var.isChanged()) {
+                       var.setToWrite(startProcess);
+                   }
+                   else {
+                       var.setToWrite(false);
+                   }
+               }
+               else {
+                   var.setToWrite(startProcess);
+               }
+           }
+           for (int i = 0; i < cvList.size(); i++) {
+               int cvNum = ( (Integer) cvList.get(i)).intValue();
+               CvValue cv = _cvModel.getCvByRow(cvNum);
+               if (justChanges) {
+                   if (VariableValue.considerChanged(cv)) {
+                       cv.setToWrite(startProcess);
+                   }
+                   else {
+                       cv.setToWrite(false);
+                   }
+               }
+               else {
+                   cv.setToWrite(startProcess);
+               }
+           }
+           for (int i = 0; i < indexedCvList.size(); i++) {
+               CvValue icv = _indexedCvModel.getCvByRow(i);
+               if (justChanges) {
+                   if (VariableValue.considerChanged(icv)) {
+                       icv.setToWrite(startProcess);
+                   }
+                   else {
+                       icv.setToWrite(false);
+                   }
+               }
+               else {
+                   icv.setToWrite(startProcess);
+               }
+           }
+       }
     }
 
     void executeRead(VariableValue var) {
@@ -545,11 +670,7 @@ public class PaneProgPane extends javax.swing.JPanel
             if (log.isDebugEnabled()) log.debug("nextRead var index "+varNum+" state "+vState);
             VariableValue var = _varModel.getVariable(varNum);
             varListIndex++;
-            if (( justChanges && var.isChanged() )
-                || ( !justChanges && var.isToRead() )
-                || ( vState == VariableValue.UNKNOWN )        // always read UNKNOWN state
-                ) {
-
+            if (var.isToRead() || vState == VariableValue.UNKNOWN) {        // always read UNKNOWN state
                 if (log.isDebugEnabled()) log.debug("start read of variable "+_varModel.getLabel(varNum));
                 executeRead(var);
 
@@ -564,10 +685,7 @@ public class PaneProgPane extends javax.swing.JPanel
             CvValue cv = _cvModel.getCvByRow(cvNum);
             if (log.isDebugEnabled()) log.debug("nextRead cv index "+cvNum+" state "+cv.getState());
             cvListIndex++;
-            if (( !justChanges && cv.isToRead() )
-                || (justChanges && VariableValue.considerChanged(cv))
-                || ( cv.getState() == CvValue.UNKNOWN )  // always read UNKNOWN state
-                )  {
+            if (cv.isToRead() || cv.getState() == CvValue.UNKNOWN) {  // always read UNKNOWN state
                if (log.isDebugEnabled()) log.debug("start read of cv "+cvNum);
                 setBusy(true);
                 if (_programmingCV != null) log.error("listener already set at read start");
@@ -584,18 +702,16 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         }
         // found no CVs needing read, try indexed CVs
-        while ((indxCvList.size() >= 0) && (indxCvListIndex < indxCvList.size())) {
-            int indxVarNum = ( (Integer) indxCvList.get(indxCvListIndex)).intValue();
+        while ((indexedCvList.size() >= 0) && (indexedCvListIndex < indexedCvList.size())) {
+            int indxVarNum = ( (Integer) indexedCvList.get(indexedCvListIndex)).intValue();
             int indxState = _varModel.getState(indxVarNum);
             if (log.isDebugEnabled()) log.debug(
-                "nextRead indexed cv @ row index " + indxCvListIndex + " state " + indxState);
+                "nextRead indexed cv @ row index " + indexedCvListIndex + " state " + indxState);
             VariableValue iCv = _varModel.getVariable(indxVarNum);
-            indxCvListIndex++;
-            if ((justChanges && iCv.isChanged())
-                || (!justChanges && iCv.isToRead())
-                || ( indxState == VariableValue.UNKNOWN )) {
+            indexedCvListIndex++;
+            if (iCv.isToRead() || indxState == VariableValue.UNKNOWN) {
                 String sz = "start read of indexed cv " +
-                    ((CvValue)_indxCvModel.getCvByRow(indxCvListIndex-1)).name();
+                    ((CvValue)_indexedCvModel.getCvByRow(indexedCvListIndex-1)).cvName();
                 if (log.isDebugEnabled()) log.debug(sz);
                 setBusy(true);
                 if (_programmingIndexedCV != null) log.error(
@@ -618,6 +734,7 @@ public class PaneProgPane extends javax.swing.JPanel
         readChangesButton.setSelected(false);
         readAllButton.setSelected(false);  // reset both, as that's final state we want
         setBusy(false);
+        _parentFrame.paneFinished();
         return false;
     }
 
@@ -632,11 +749,7 @@ public class PaneProgPane extends javax.swing.JPanel
      */
     public boolean writePaneChanges() {
         if (log.isDebugEnabled()) log.debug("writePaneChanges starts");
-        writeChangesButton.setSelected(true);
-        justChanges = true;
-        varListIndex = 0;
-        cvListIndex = 0;
-        indxCvListIndex = 0;
+        prepWritePane(true);
         return nextWrite();
     }
 
@@ -646,33 +759,33 @@ public class PaneProgPane extends javax.swing.JPanel
      * Returns true if a write has been started, false if the pane is complete.
      */
     public boolean writePaneAll() {
-        prepWritePaneAll();
+        prepWritePane(false);
         return nextWrite();
     }
 
     /**
      * Prepare a "write full sheet" operation.
      */
-    public void prepWritePaneAll() {
-        justChanges = false;
+    public void prepWritePane(boolean onlyChanges) {
+        justChanges = onlyChanges;
+        enableButtons(false);
+        if (justChanges == true) {
+            writeChangesButton.setEnabled(true);
+            writeChangesButton.setSelected(true);
+        } else {
+            writeAllButton.setSelected(true);
+            writeAllButton.setEnabled(true);
+        }
+        if (_parentFrame.isBusy() == false) {
+            _parentFrame.enableButtons(false);
+        }
+        setToWrite(justChanges, true);
         varListIndex = 0;
         cvListIndex = 0;
-        indxCvListIndex = 0;
-        setToWrite(true);
-    }
-
-    /**
-     * Invoked by "Write all sheets" button to write all CVs.
-     */
-    public boolean writePanesFull() {
-        if (log.isDebugEnabled()) log.debug("writePanesFull starts");
-        return nextWrite();
+        indexedCvListIndex = 0;
     }
 
     boolean nextWrite() {
-        if (justChanges) writeChangesButton.setSelected(true);
-        else writeAllButton.setSelected(true);
-
         // look for possible variables
         while ((varList.size() >= 0) && (varListIndex < varList.size())){
             int varNum = ((Integer)varList.get(varListIndex)).intValue();
@@ -680,11 +793,7 @@ public class PaneProgPane extends javax.swing.JPanel
             if (log.isDebugEnabled()) log.debug("nextWrite var index "+varNum+" state "+vState);
             VariableValue var = _varModel.getVariable(varNum);
             varListIndex++;
-            if (!var.getReadOnly()
-                 &&  (( justChanges && var.isChanged())
-                      || ( !justChanges && (var.isToWrite() || var.isChanged())) )
-                 || (vState == VariableValue.UNKNOWN)
-                ) {
+            if (var.isToWrite() || vState == VariableValue.UNKNOWN) {
                 log.debug("start write of variable "+_varModel.getLabel(varNum));
 
                 executeWrite(var);
@@ -699,11 +808,7 @@ public class PaneProgPane extends javax.swing.JPanel
             CvValue cv = _cvModel.getCvByRow( cvNum );
             if (log.isDebugEnabled()) log.debug("nextWrite cv index "+cvNum+" state "+cv.getState());
             cvListIndex++;
-            if ( !cv.getReadOnly() &&
-                (( !justChanges && cv.isToWrite() )
-                || (justChanges && VariableValue.considerChanged(cv)) )
-                || (cv.getState()== CvValue.UNKNOWN)
-                )  {
+            if (cv.isToWrite() || cv.getState()== CvValue.UNKNOWN) {
                 if (log.isDebugEnabled()) log.debug("start write of cv index "+cvNum);
                 setBusy(true);
                 if (_programmingCV != null) log.error("listener already set at write start");
@@ -719,18 +824,16 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         }
         // check for Indexed CVs to handle (e.g. for Indexed CV table)
-        while ((indxCvList.size() >= 0) && (indxCvListIndex < indxCvList.size())) {
-            int indxVarNum = ( (Integer) indxCvList.get(indxCvListIndex)).intValue();
+        while ((indexedCvList.size() >= 0) && (indexedCvListIndex < indexedCvList.size())) {
+            int indxVarNum = ( (Integer) indexedCvList.get(indexedCvListIndex)).intValue();
             int indxState = _varModel.getState(indxVarNum);
             if (log.isDebugEnabled()) log.debug(
-                "nextWrite indexed cv @ row index " + indxCvListIndex + " state " + indxState);
+                "nextWrite indexed cv @ row index " + indexedCvListIndex + " state " + indxState);
             VariableValue iCv = _varModel.getVariable(indxVarNum);
-            indxCvListIndex++;
-            if ((justChanges && iCv.isChanged())
-                || (!justChanges && iCv.isToRead())
-                || ( indxState == VariableValue.UNKNOWN )) {
+            indexedCvListIndex++;
+            if (iCv.isToWrite() || indxState == VariableValue.UNKNOWN) {
                 String sz = "start write of indexed cv " +
-                    ( (CvValue) _indxCvModel.getCvByRow(indxCvListIndex-1)).name();
+                    ( (CvValue) _indexedCvModel.getCvByRow(indexedCvListIndex-1)).cvName();
                 if (log.isDebugEnabled()) log.debug(sz);
 
                 setBusy(true);
@@ -754,6 +857,7 @@ public class PaneProgPane extends javax.swing.JPanel
         writeChangesButton.setSelected(false);
         writeAllButton.setSelected(false);
         setBusy(false);
+        _parentFrame.paneFinished();
         return false;
     }
 
@@ -820,7 +924,7 @@ public class PaneProgPane extends javax.swing.JPanel
                    ((Boolean)e.getNewValue()).equals(Boolean.FALSE) ) {
             if (_programmingIndexedCV.getState() == VariableValue.UNKNOWN) {
                 if (retry == 0) {
-                    indxCvListIndex--;
+                    indexedCvListIndex--;
                     retry++;
                 } else {
                     retry = 0;
@@ -835,6 +939,7 @@ public class PaneProgPane extends javax.swing.JPanel
             return;
         }
     }
+
     public void replyWhileProgrammingVar() {
         if (log.isDebugEnabled()) log.debug("correct event for programming variable, restart operation");
         // remove existing listener
@@ -867,7 +972,21 @@ public class PaneProgPane extends javax.swing.JPanel
         else if (_read && readAllButton.isSelected()) nextRead();
         else if (writeChangesButton.isSelected()) nextWrite();   // was writePaneChanges
         else if (writeAllButton.isSelected()) nextWrite();
-        else if (log.isDebugEnabled()) log.debug("No operation to restart");
+        else {
+            if (log.isDebugEnabled()) log.debug("No operation to restart");
+            if (isBusy()) {
+                _parentFrame.paneFinished();
+                setBusy(false);
+            }
+        }
+    }
+
+    void stopProgramming() {
+        setToRead(false, false);
+        setToWrite(false, false);
+        varListIndex = varList.size();
+        cvListIndex = cvList.size();
+        indexedCvListIndex = indexedCvList.size();
     }
 
     /**
@@ -952,7 +1071,7 @@ public class PaneProgPane extends javax.swing.JPanel
             }
             else if (name.equals("indxcvtable")) {
                 log.debug("starting to build IndexedCvTable pane");
-                JTable indxcvTable   = new JTable(_indxCvModel);
+                JTable indxcvTable   = new JTable(_indexedCvModel);
                 JScrollPane cvScroll = new JScrollPane(indxcvTable);
                 indxcvTable.setDefaultRenderer(JTextField.class, new ValueRenderer());
                 indxcvTable.setDefaultRenderer(JButton.class, new ValueRenderer());
@@ -970,10 +1089,10 @@ public class PaneProgPane extends javax.swing.JPanel
                 cs.gridwidth = 1;
 
                 // remember which indexed CVs to read/write
-                for (int j=0; j<_indxCvModel.getRowCount(); j++) {
-                    String sz = "CV" +_indxCvModel.getName(j);
+                for (int j=0; j<_indexedCvModel.getRowCount(); j++) {
+                    String sz = "CV" +_indexedCvModel.getName(j);
                     int in = _varModel.findVarIndex(sz);
-                    indxCvList.add(new Integer(in));
+                    indexedCvList.add(new Integer(in));
                 }
 
                 log.debug("end of building IndexedCvTable pane");
@@ -1090,7 +1209,7 @@ public class PaneProgPane extends javax.swing.JPanel
             }
             else if (name.equals("indxcvtable")) {
                 log.debug("starting to build IndexedCvTable pane");
-                JTable	indxcvTable	= new JTable(_indxCvModel);
+                JTable	indxcvTable	= new JTable(_indexedCvModel);
                 JScrollPane cvScroll = new JScrollPane(indxcvTable);
                 indxcvTable.setDefaultRenderer(JTextField.class, new ValueRenderer());
                 indxcvTable.setDefaultRenderer(JButton.class, new ValueRenderer());
@@ -1108,10 +1227,10 @@ public class PaneProgPane extends javax.swing.JPanel
                 cs.gridwidth = 1;
 
                 // remember which indexed CVs to read/write
-                for (int j=0; j<_indxCvModel.getRowCount(); j++) {
-                    String sz = "CV" +_indxCvModel.getName(j);
+                for (int j=0; j<_indexedCvModel.getRowCount(); j++) {
+                    String sz = "CV" +_indexedCvModel.getName(j);
                     int in = _varModel.findVarIndex(sz);
-                    indxCvList.add(new Integer(in));
+                    indexedCvList.add(new Integer(in));
                 }
 
                 log.debug("end of building IndexedCvTable pane");
@@ -1282,10 +1401,10 @@ public class PaneProgPane extends javax.swing.JPanel
         // remove components
         removeAll();
 
-        readChangesButton.removeActionListener(l1);
-        readAllButton.removeActionListener(l2);
-        writeChangesButton.removeActionListener(l3);
-        writeAllButton.removeActionListener(l4);
+        readChangesButton.removeItemListener(l1);
+        readAllButton.removeItemListener(l2);
+        writeChangesButton.removeItemListener(l3);
+        writeAllButton.removeItemListener(l4);
         l1 = l2 = l3 = l4 = null;
 
         if (_programmingVar != null) _programmingVar.removePropertyChangeListener(this);
@@ -1301,8 +1420,8 @@ public class PaneProgPane extends javax.swing.JPanel
         varList = null;
         cvList.clear();
         cvList = null;
-        indxCvList.clear();
-        indxCvList = null;
+        indexedCvList.clear();
+        indexedCvList = null;
 
         // dispose of any panels
         for (int i=0; i<panelList.size(); i++) {
@@ -1323,7 +1442,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
         // these are disposed elsewhere
         _cvModel = null;
-        _indxCvModel = null;
+        _indexedCvModel = null;
         _varModel = null;
     }
 
