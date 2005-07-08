@@ -18,17 +18,17 @@ import javax.swing.text.Document;
 /**
  * Extends VariableValue to represent a NMRA long address
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  *
  */
 public class LongAddrVariableValue extends VariableValue
     implements ActionListener, PropertyChangeListener, FocusListener {
 
-    public LongAddrVariableValue(String name, String comment,
+    public LongAddrVariableValue(String name, String comment, String cvName,
                                  boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                                  int cvNum, String mask, int minVal, int maxVal,
                                  Vector v, JLabel status, String stdname) {
-        super(name, comment, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
+        super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
         _value = new JTextField("0", 5);
@@ -178,12 +178,12 @@ public class LongAddrVariableValue extends VariableValue
         return (considerChanged(cv1)||considerChanged(cv2));
     }
 
-    public void setToRead(boolean state) { 
-        ((CvValue)_cvVector.elementAt(getCvNum())).setToRead(state); 
-        ((CvValue)_cvVector.elementAt(getCvNum()+1)).setToRead(state); 
+    public void setToRead(boolean state) {
+        ((CvValue)_cvVector.elementAt(getCvNum())).setToRead(state);
+        ((CvValue)_cvVector.elementAt(getCvNum()+1)).setToRead(state);
     }
 
-    public boolean isToRead() { 
+    public boolean isToRead() {
         return ((CvValue)_cvVector.elementAt(getCvNum())).isToRead() || ((CvValue)_cvVector.elementAt(getCvNum()+1)).isToRead();
     }
 
@@ -192,7 +192,7 @@ public class LongAddrVariableValue extends VariableValue
         ((CvValue)_cvVector.elementAt(getCvNum()+1)).setToWrite(state);
     }
 
-    public boolean isToWrite() { 
+    public boolean isToWrite() {
         return ((CvValue)_cvVector.elementAt(getCvNum())).isToWrite() || ((CvValue)_cvVector.elementAt(getCvNum()+1)).isToWrite();
     }
 

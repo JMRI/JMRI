@@ -14,17 +14,17 @@ import javax.swing.*;
  * stored in two arrays for simplicity.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.9 $
+ * @version             $Revision: 1.10 $
  *
  */
 public class ShortAddrVariableValue extends DecVariableValue {
 
-    public ShortAddrVariableValue(String name, String comment,
+    public ShortAddrVariableValue(String name, String comment, String cvName,
                                   boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                                   int cvNum, String mask,
                                   Vector v, JLabel status, String stdname) {
         // specify min, max value explicitly
-        super(name, comment, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, 1, 127, v, status, stdname);
+        super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, 1, 127, v, status, stdname);
 
         // add default overwrites as per NMRA spec
         firstFreeSpace = 0;
@@ -57,7 +57,7 @@ public class ShortAddrVariableValue extends DecVariableValue {
                           +cvNumbers[i]+" "+cv.number());
             cv.setToWrite(true);
             cv.setState(EDITED);
-	    if(log.isDebugEnabled()) log.debug("Mark to write " +cv.number());
+            if(log.isDebugEnabled()) log.debug("Mark to write " +cv.number());
         }
     }
 

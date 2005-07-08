@@ -18,17 +18,17 @@ import jmri.progdebugger.*;
  * Test EnumVariableValue
  *
  * @author		Bob Jacobsen  Copyright 2003
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 
 public class EnumVariableValueTest extends VariableValueTest {
 
     // abstract members invoked by tests in parent VariableValueTest class
-    VariableValue makeVar(String label, String comment,
+    VariableValue makeVar(String label, String comment, String cvName,
                           boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                           int cvNum, String mask, int minVal, int maxVal,
                           Vector v, JLabel status, String item) {
-        EnumVariableValue v1 = new EnumVariableValue(label, comment, readOnly, infoOnly, writeOnly, opsOnly,
+        EnumVariableValue v1 = new EnumVariableValue(label, comment, "", readOnly, infoOnly, writeOnly, opsOnly,
                                                      cvNum, mask, minVal, maxVal,
                                                      v, status, item);
         v1.nItems(9);
@@ -76,7 +76,7 @@ public class EnumVariableValueTest extends VariableValueTest {
         CvValue cv = new CvValue(81, p);
         v.setElementAt(cv, 81);
         // create a variable pointed at CV 81, loaded as 5, manually notified
-        VariableValue variable = makeVar("label", "comment", false, false, false, false, 81, "XXVVVVXX", 0, 255, v, null, null);
+        VariableValue variable = makeVar("label", "comment", "", false, false, false, false, 81, "XXVVVVXX", 0, 255, v, null, null);
         setValue(variable, "5");
 
         // now get value, check
@@ -149,7 +149,7 @@ public class EnumVariableValueTest extends VariableValueTest {
         v.setElementAt(cv, 81);
 
         // text
-        EnumVariableValue v1 = new EnumVariableValue("label check", null, false, false, false, false,
+        EnumVariableValue v1 = new EnumVariableValue("label check", null, "", false, false, false, false,
                                                          81, "XXXXXXXX", 0, 2, v, null, null);
         v1.nItems(5);
         v1.addItem("name0");

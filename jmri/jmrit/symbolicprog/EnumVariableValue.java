@@ -16,16 +16,16 @@ import com.sun.java.util.collections.List;
  * Extends VariableValue to represent a enumerated variable.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
 
-    public EnumVariableValue(String name, String comment,
+    public EnumVariableValue(String name, String comment, String cvName,
                              boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                              int cvNum, String mask, int minVal, int maxVal,
                              Vector v, JLabel status, String stdname) {
-        super(name, comment, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
+        super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
     }
@@ -297,7 +297,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * model between this object and the real JComboBox value.
      *
      * @author			Bob Jacobsen   Copyright (C) 2001
-     * @version         $Revision: 1.15 $
+     * @version         $Revision: 1.16 $
      */
     public class VarComboBox extends JComboBox {
 

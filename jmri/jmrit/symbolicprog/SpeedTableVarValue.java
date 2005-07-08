@@ -58,7 +58,7 @@ import javax.swing.event.ChangeListener;
  * be removed.
  *<P>
  * @author	Bob Jacobsen, Alex Shepherd   Copyright (C) 2001, 2004
- * @version	$Revision: 1.24 $
+ * @version	$Revision: 1.25 $
  *
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
@@ -72,11 +72,11 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     /**
      * Create the object with a "standard format ctor".
      */
-    public SpeedTableVarValue(String name, String comment,
+    public SpeedTableVarValue(String name, String comment, String cvName,
                               boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                               int cvNum, String mask, int minVal, int maxVal,
                               Vector v, JLabel status, String stdname, int entries) {
-        super(name, comment, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
+        super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
 
         nValues = entries;
         _min = minVal;
@@ -243,7 +243,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             int currentState = cv.getState();
             int currentValue = cv.getValue();
 
-            DecVariableValue decVal = new DecVariableValue("val"+i,"", false, false, false, false,
+            DecVariableValue decVal = new DecVariableValue("val"+i,"","", false, false, false, false,
                                                            getCvNum()+i, "VVVVVVVV", _min, _max,
                                                            _cvVector, _status, "");
             decVal.setValue(currentValue);

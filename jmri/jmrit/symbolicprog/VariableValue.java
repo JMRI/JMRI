@@ -15,7 +15,7 @@ import javax.swing.*;
  *
  * @author   Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2004, 2005
  * @author   Howard G. Penny Copyright (C) 2005
- * @version  $Revision: 1.21 $
+ * @version  $Revision: 1.22 $
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
 
@@ -93,11 +93,12 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     abstract public Object rangeVal();
 
     // methods implemented here:
-    public VariableValue(String label, String comment,
+    public VariableValue(String label, String comment, String cvName,
                          boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                          int cvNum, String mask, Vector v, JLabel status, String item) {
         _label = label;
         _comment = comment;
+        _cvName = cvName;
         _readOnly = readOnly;
         _infoOnly = infoOnly;
         _writeOnly = writeOnly;
@@ -117,8 +118,11 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     // common information - none of these are bound
     public String label() { return _label; }
     public String item() { return _item; }
+    public String cvName() { return _cvName; }
     private String _label;
     private String _item;
+    private String _cvName;
+
     protected Vector _cvVector;   // Vector of CV objects used to look up CVs
     protected JLabel _status = null;
 

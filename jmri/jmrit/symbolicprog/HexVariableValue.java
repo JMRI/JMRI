@@ -28,11 +28,11 @@ import javax.swing.text.Document;
  */
 public class HexVariableValue extends DecVariableValue {
 
-        public HexVariableValue(String name, String comment,
+        public HexVariableValue(String name, String comment, String cvName,
                                 boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                                 int cvNum, String mask, int minVal, int maxVal,
                                 Vector v, JLabel status, String stdname) {
-            super(name, comment, readOnly,  infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, stdname);
+            super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, stdname);
         }
 
         void updatedTextField() {

@@ -19,7 +19,7 @@ import jmri.*;
  * Programmer used to access it is a data member.
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -121,7 +121,7 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     public String getName(int row) {  // name is text number
-        return ""+((CvValue)_indxCvDisplayVector.elementAt(row)).name();
+        return ""+((CvValue)_indxCvDisplayVector.elementAt(row)).cvName();
     }
 
     public String getValString(int row) {
@@ -131,7 +131,7 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
     public int getCvByName(String name) {
         int row = 0;
         while(row < _numRows) {
-            if(((CvValue)_indxCvDisplayVector.elementAt(row)).name().compareTo(name) == 0) {
+            if(((CvValue)_indxCvDisplayVector.elementAt(row)).cvName().compareTo(name) == 0) {
                 return row;
             }
             row++;
@@ -145,7 +145,7 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
     public Object getValueAt(int row, int col) {
         switch (col) {
             case NAMECOLUMN:
-                return ""+((CvValue)_indxCvDisplayVector.elementAt(row)).name();
+                return ""+((CvValue)_indxCvDisplayVector.elementAt(row)).cvName();
             case PICOLUMN:
                 return ""+((CvValue)_indxCvDisplayVector.elementAt(row)).piVal();
             case SICOLUMN:

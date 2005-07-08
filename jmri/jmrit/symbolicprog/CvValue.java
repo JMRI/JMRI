@@ -24,7 +24,7 @@ import javax.swing.JTextField;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.15 $
+ * @version   $Revision: 1.16 $
  */
 public class CvValue extends AbstractValue implements ProgListener {
 
@@ -36,9 +36,9 @@ public class CvValue extends AbstractValue implements ProgListener {
         _tableEntry.setBackground(COLOR_UNKNOWN);
     }
 
-    public CvValue(int num, String name, int piCv, int piVal, int siCv, int siVal, int iCv, Programmer pProgrammer) {
+    public CvValue(int num, String cvName, int piCv, int piVal, int siCv, int siVal, int iCv, Programmer pProgrammer) {
         _num   = num;
-        _name  = name;
+        _cvName  = cvName;
         _piCv  = piCv;
         _piVal = piVal;
         _siCv  = siCv;
@@ -53,8 +53,8 @@ public class CvValue extends AbstractValue implements ProgListener {
     public int number() { return _num; }
     private int _num;
 
-    public String name() { return _name; }
-    private String _name;
+    public String cvName() { return _cvName; }
+    private String _cvName = "";
 
     public int piCv() { return _piCv; }
     private int _piCv;

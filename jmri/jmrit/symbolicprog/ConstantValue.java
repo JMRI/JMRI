@@ -22,16 +22,16 @@ import com.sun.java.util.collections.ArrayList;
  * Note that there's no CV associated with this.
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
- * @version   $Revision: 1.11 $
+ * @version   $Revision: 1.12 $
  *
  */
 public class ConstantValue extends VariableValue {
 
-    public ConstantValue(String name, String comment,
+    public ConstantValue(String name, String comment, String cvName,
                          boolean readOnly, boolean infoOnly, boolean writeOnly,  boolean opsOnly,
                          int cvNum, String mask, int minVal, int maxVal,
                          Vector v, JLabel status, String stdname) {
-        super(name, comment, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
+        super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
         _value = new JComboBox();
@@ -144,16 +144,16 @@ public class ConstantValue extends VariableValue {
 
     public void setToRead(boolean state) {}
 
-    public boolean isToRead() { 
+    public boolean isToRead() {
         return false;
     }
 
     public void setToWrite(boolean state) {}
 
-    public boolean isToWrite() { 
+    public boolean isToWrite() {
         return false;
     }
-    
+
     public void readChanges() {
          if (isChanged()) readAll();
     }

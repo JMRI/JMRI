@@ -17,7 +17,7 @@ import jmri.progdebugger.*;
 
 /**
  * @author			Bob Jacobsen
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class ComboCheckBoxTest extends TestCase {
 
@@ -31,7 +31,7 @@ public class ComboCheckBoxTest extends TestCase {
         v.setElementAt(cv, 81);
         if (log.isDebugEnabled()) log.debug("Enum variable created, loaded");
 
-        EnumVariableValue var = new EnumVariableValue("name", "comment", false, false, false, false, 81, "XXVVVVXX", 0, 255, v, null, null);
+        EnumVariableValue var = new EnumVariableValue("name", "comment", "", false, false, false, false, 81, "XXVVVVXX", 0, 255, v, null, null);
         addTestItems(var);
         if (log.isDebugEnabled()) log.debug("Enum variable created");
 
@@ -64,7 +64,7 @@ public class ComboCheckBoxTest extends TestCase {
         CvValue cv = new CvValue(81, p);
         cv.setValue(3);
         v.setElementAt(cv, 81);
-        EnumVariableValue var = new EnumVariableValue("name", "comment", false, false, false, false, 81, "XXVVVVXX", 0, 255, v, null, null);
+        EnumVariableValue var = new EnumVariableValue("name", "comment", "", false, false, false, false, 81, "XXVVVVXX", 0, 255, v, null, null);
         addTestItems(var);
         JComboBox combo = (JComboBox)(var.getValue());
 

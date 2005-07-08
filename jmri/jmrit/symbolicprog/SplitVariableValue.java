@@ -26,18 +26,18 @@ import javax.swing.text.Document;
  *</PRE>
  * decoders.
  * @author			Bob Jacobsen   Copyright (C) 2002, 2003, 2004
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  *
  */
 public class SplitVariableValue extends VariableValue
     implements ActionListener, PropertyChangeListener, FocusListener {
 
-    public SplitVariableValue(String name, String comment,
+    public SplitVariableValue(String name, String comment, String cvName,
                               boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                               int cvNum, String mask, int minVal, int maxVal,
                               Vector v, JLabel status, String stdname,
                               int pSecondCV, int pFactor, int pOffset, String uppermask) {
-        super(name, comment, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
+        super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
         _value = new JTextField("0", 5);
@@ -352,7 +352,7 @@ public class SplitVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.12 $
+     * @version     $Revision: 1.13 $
      */
     public class VarTextField extends JTextField {
 
