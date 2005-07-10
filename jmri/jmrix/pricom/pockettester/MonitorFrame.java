@@ -22,7 +22,7 @@ import java.io.InputStream;
  * For more info on the product, see {@link http://www.pricom.com}
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class MonitorFrame extends jmri.jmrix.AbstractMonFrame {
 
@@ -250,11 +250,11 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame {
 
     synchronized void sendBytes(byte[] bytes) {
         try {
-            for (int i=0; i<bytes.length; i++) {
+            for (int i=0; i<bytes.length-1; i++) {
                 ostream.write(bytes[i]);
                 wait(3);
             }
-            final byte endbyte = 13;
+            final byte endbyte = bytes[bytes.length-1];
             ostream.write(endbyte);
         } catch (java.io.IOException e) {
             log.error("Exception on output: "+e);
@@ -328,18 +328,19 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame {
 
             // try to set it for communication via SerialDriver
             try {
-                // Doc says 7 bits, but 8 seems needed
-                activeSerialPort.setSerialPortParams(38400, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+                // 115.2Kbaud. 8-bits, 1-stop, no parity
+                activeSerialPort.setSerialPortParams(115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (javax.comm.UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port "+portName+": "+e.getMessage());
                 return "Cannot set serial parameters on port "+portName+": "+e.getMessage();
             }
 
+            // NO hardware handshaking, but for consistancy, set the Modem Control Lines
             // set RTS high, DTR high
             activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
             activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
 
-            // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
+            // disable flow control; None is needed or used
             activeSerialPort.setFlowControlMode(0);
 
             // set timeout
@@ -350,8 +351,8 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame {
             serialStream = new DataInputStream(activeSerialPort.getInputStream());
             ostream = activeSerialPort.getOutputStream();
 
-            // make less verbose
-            sendBytes(new byte[]{(byte)'L',(byte)'-',10,13});
+            // start the DUMP
+            sendBytes(new byte[]{(byte)'g'});
             // purge contents, if any
             int count = serialStream.available();
             log.debug("input stream shows "+count+" bytes available");
@@ -433,11 +434,14 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame {
             int i;
             for (i = 0; i < maxMsg; i++) {
                 char char1 = (char) serialStream.readByte();
-                if (char1 == 13) {  // 13 is the CR at the end; done this
+                if (char1 == 10) {  // 10 is the LF at the end; done this
                                     // way to be coding-independent
                     break;
                 }
-                msg.append(char1);
+                // Strip off the CR and LF
+                if (char1 != 10 && char1 != 13) {
+                  msg.append(char1);
+                }
             }
 
             // create the String to display (as String has .equals)
