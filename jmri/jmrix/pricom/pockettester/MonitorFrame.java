@@ -22,7 +22,7 @@ import java.io.InputStream;
  * For more info on the product, see {@link http://www.pricom.com}
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class MonitorFrame extends jmri.jmrix.AbstractMonFrame {
 
@@ -37,6 +37,9 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame {
         Vector v = getPortNames();
         for (int i=0; i<v.size(); i++)
             portBox.addItem(v.elementAt(i));
+        speedBox.setToolTipText("Select baud rate configured into the Pocket Tester");
+        speedBox.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+        speedBox.setSelectedItem("115200");
         openPortButton.setText("Open");
         openPortButton.setToolTipText("Configure program to use selected port");
         openPortButton.addActionListener(new java.awt.event.ActionListener() {
@@ -56,6 +59,8 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame {
         p1.setLayout(new FlowLayout());
         p1.add(new JLabel("Serial port: "));
         p1.add(portBox);
+        p1.add(new JLabel("Speed: "));
+        p1.add(speedBox);
         p1.add(openPortButton);
         getContentPane().add(p1);
 
@@ -65,8 +70,8 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame {
         p2.add(checkButton);
         checkButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sendBytes(new byte[]{(byte)'?'});
-                sendBytes(new byte[]{(byte)'L',(byte)'-'});
+                sendBytes(new byte[]{(byte)'G'});
+                sendBytes(new byte[]{(byte)'F'});
             }
         });
 
@@ -75,169 +80,44 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame {
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             ButtonGroup g = new ButtonGroup();
             JRadioButton b;
-            b= new JRadioButton("Verbose");
+            b= new JRadioButton("Show all");
             g.add(b);
             p.add(b);
             b.setSelected(true);
+            b.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    sendBytes(new byte[]{(byte)'F'});
+                }
+            });
+            b= new JRadioButton("Only show accessory decoder packets");
+            g.add(b);
+            p.add(b);
+            b.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    sendBytes(new byte[]{(byte)'A'});
+                }
+            });
+            p2.add(p);
+            b= new JRadioButton("Only show mobile decoder packets");
+            g.add(b);
+            p.add(b);
+            b.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    sendBytes(new byte[]{(byte)'M'});
+                }
+            });
+            p2.add(p);
+        }  // end group controlling filtering
+
+        {
+            JButton b = new JButton("Get version");
             b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     sendBytes(new byte[]{(byte)'V'});
                 }
             });
-            b= new JRadioButton("Hex with preamble symbol");
-            g.add(b);
-            p.add(b);
-            b.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'H',(byte)'0'});
-                }
-            });
-            p2.add(p);
-            b= new JRadioButton("Hex without preamble symbol");
-            g.add(b);
-            p.add(b);
-            b.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'H',(byte)'2'});
-                }
-            });
-            p2.add(p);
-            b= new JRadioButton("Hex with preamble in hex");
-            g.add(b);
-            p.add(b);
-            b.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'H',(byte)'4'});
-                }
-            });
-            p2.add(p);
-        }  // end hex/verbose group
-
-        {
-            JPanel p = new JPanel();
-            p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-            ButtonGroup g = new ButtonGroup();
-            JRadioButton b;
-            b= new JRadioButton("Hide speed packets");
-            g.add(b);
-            p.add(b);
-            b.setSelected(true);
-            b.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'L',(byte)'-'});
-                }
-            });
-            b= new JRadioButton("Show speed packets");
-            g.add(b);
-            p.add(b);
-            b.setToolTipText("This setting overloads the display with data");
-            b.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'L',(byte)'+'});
-                }
-            });
-            p2.add(p);
-        }  // speed off/on
-
-        {
-            JPanel p = new JPanel();
-            p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-            ButtonGroup g = new ButtonGroup();
-            JRadioButton b;
-            b= new JRadioButton("Hide acc packets");
-            g.add(b);
-            p.add(b);
-            b.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'A',(byte)'-'});
-                }
-            });
-            b= new JRadioButton("Show acc packets");
-            g.add(b);
-            p.add(b);
-            b.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'A',(byte)'+'});
-                }
-            });
-            b.setSelected(true);
-            p2.add(p);
-        }  // acc off/on
-
-        {
-            JPanel p = new JPanel();
-            p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-            ButtonGroup g = new ButtonGroup();
-            JRadioButton b;
-            b= new JRadioButton("Acc addresses single");
-            g.add(b);
-            p.add(b);
-            b.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'A',(byte)'S'});
-                }
-            });
-            b= new JRadioButton("Acc addresses paired");
-            g.add(b);
-            p.add(b);
-            b.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'A',(byte)'P'});
-                }
-            });
-            b.setSelected(true);
-            p2.add(p);
-        }  // acc single/double
-
-        {
-            JPanel p = new JPanel();
-            p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-            ButtonGroup g = new ButtonGroup();
-            JRadioButton b;
-            b= new JRadioButton("Hide reset packets");
-            g.add(b);
-            p.add(b);
-            b.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'R',(byte)'-'});
-                }
-            });
-            b= new JRadioButton("Show reset packets");
-            g.add(b);
-            p.add(b);
-            b.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'R',(byte)'+'});
-                }
-            });
-            b.setSelected(true);
-            p2.add(p);
-        }  // reset off/on
-
-        {
-            JPanel p = new JPanel();
-            p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-            ButtonGroup g = new ButtonGroup();
-            JRadioButton b;
-            b= new JRadioButton("Hide idle packets");
-            g.add(b);
-            p.add(b);
-            b.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'I',(byte)'-'});
-                }
-            });
-            b= new JRadioButton("Show idle packets");
-            g.add(b);
-            p.add(b);
-            b.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    sendBytes(new byte[]{(byte)'I',(byte)'+'});
-                }
-            });
-            b.setSelected(true);
-            p2.add(p);
-        }  // idle off/on
+            p2.add(b);
+        }
 
         getContentPane().add(p2);
     }
@@ -248,6 +128,11 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame {
         return "PRICOM Pocket Tester";
     }
 
+    /**
+     * Send output bytes, e.g. characters controlling operation, to the
+     * tester with small delays between the characters.  This is 
+     * used to reduce overrrun problems.
+     */
     synchronized void sendBytes(byte[] bytes) {
         try {
             for (int i=0; i<bytes.length-1; i++) {
@@ -271,6 +156,7 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame {
         // can't change this anymore
         openPortButton.setEnabled(false);
         portBox.setEnabled(false);
+        speedBox.setEnabled(false);
         // Open the port
         openPort((String)portBox.getSelectedItem(), "JMRI");
         // start the reader
@@ -282,6 +168,8 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame {
     Thread readerThread;
 
     protected javax.swing.JComboBox portBox = new javax.swing.JComboBox();
+    protected javax.swing.JComboBox speedBox 
+            = new javax.swing.JComboBox(new String[]{"9600", "19200", "38400", "57600", "115200"});
     protected javax.swing.JButton openPortButton = new javax.swing.JButton();
 
     public void dispose() {
@@ -328,8 +216,11 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame {
 
             // try to set it for communication via SerialDriver
             try {
-                // 115.2Kbaud. 8-bits, 1-stop, no parity
-                activeSerialPort.setSerialPortParams(115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+                // get selected speed
+                int speed = 115200;
+                speed = Integer.parseInt((String)speedBox.getSelectedItem());
+                // 8-bits, 1-stop, no parity
+                activeSerialPort.setSerialPortParams(speed, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (javax.comm.UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port "+portName+": "+e.getMessage());
                 return "Cannot set serial parameters on port "+portName+": "+e.getMessage();
