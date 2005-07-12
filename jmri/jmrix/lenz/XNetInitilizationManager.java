@@ -9,43 +9,36 @@ package jmri.jmrix.lenz;
  * based on the Command Station Type.
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 2.2 $
+ * @version			$Revision: 2.3 $
  */
-public class XNetInitilizationManager implements XNetListener {
+public class XNetInitilizationManager {
 
-    private boolean done = false;
+    private Thread initThread = null;
+    private final static int InitTimeout = 30000;
 
     public XNetInitilizationManager() {
-      // Register as a Listener
-	 XNetTrafficController.instance().addXNetListener(~0,this);
-      //Send Information request to LI100/LI100
-      /* First, we need to send a request for the Command Station
-         hardware and software version */
-	 XNetMessage msg=XNetTrafficController.instance()
-                                             .getCommandStation()
-                                             .getCSVersionRequestMessage();
-        // The constructor MUST wait until we get the 
-        // initilization to exit.
+	/* spawn a thread to request version information and wait for the 
+	   command station to respond */
+	if(log.isDebugEnabled()) log.debug("Starting XPressNet Initilization Process");
+	initThread= new Thread(new XNetInitilizer(this));
 
-        //Then Send the version request to the controller
-        XNetTrafficController.instance().sendXNetMessage(msg,this);
-
-        // We'll check for a fixed time period (30 seconds) to see if 
-        // we've gotten a response to our message. This way the program 
-        // will start even if the layout is not powered.
-        for(int i=0;i<30;i++) {
-        // The done variable forces us to quit when we get a response to 
-        // our XPressnet Message.  
-          if(done) break;
+	// Since we can't currently reconfigure the user interface after  
+	// initilization, We need to wait for the initilization thread 
+	// to finish before we can continue.  The wait  can be removed IF 
+	// we revisit the GUI initilization process.
+	synchronized(this) {
            if (log.isDebugEnabled()) log.debug("start wait");
-           try {
-                  synchronized(this) {
-                  wait(1000);
-                  }
+              try {
+	         this.wait();
                } catch (java.lang.InterruptedException ei) {}
-           if (log.isDebugEnabled()) log.debug("end wait");
+               if (log.isDebugEnabled()) log.debug("end wait");
         }
 
+	init();
+    }
+
+    private void init() {
+	if(log.isDebugEnabled()) log.debug("Init called");
         float CSSoftwareVersion = XNetTrafficController.instance()
                                        .getCommandStation()
                                        .getCommandStationSoftwareVersion();
@@ -92,8 +85,8 @@ public class XNetInitilizationManager implements XNetListener {
               jmri.InstanceManager.setProgrammerManager(new jmri.jmrix.lenz.XNetProgrammerManager(jmri.jmrix.lenz.XNetProgrammer.instance()));
               /* the "raw" Command Station only works on systems that support   
                  Ops Mode Programming */
-              /* jmri.InstanceManager.setCommandStation(XNetTrafficController.instance()
-                                             .getCommandStation());*/
+              jmri.InstanceManager.setCommandStation(XNetTrafficController.instance()
+                                             .getCommandStation());
 	      /* the consist manager has to be set up AFTER the programmer, to 
 	      prevent the default consist manager from being loaded on top of it */
 	      jmri.InstanceManager.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager());
@@ -105,23 +98,85 @@ public class XNetInitilizationManager implements XNetListener {
               jmri.InstanceManager.setProgrammerManager(new jmri.jmrix.lenz.XNetProgrammerManager(jmri.jmrix.lenz.XNetProgrammer.instance()));
               /* the "raw" Command Station only works on systems that support   
                  Ops Mode Programming */
-              /*jmri.InstanceManager.setCommandStation(XNetTrafficController.instance()
-                                             .getCommandStation());*/
+              jmri.InstanceManager.setCommandStation(XNetTrafficController.instance()
+                                             .getCommandStation());
 	      /* the consist manager has to be set up AFTER the programmer, to 
 	      prevent the default consist manager from being loaded on top of it */
 	      jmri.InstanceManager.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager());
             }
         }
-        // After the Constructor runs, we can dispose of this class
-        dispose();
+	if(log.isDebugEnabled()) log.debug("XPressNet Initilization Complete");
     }
 
-    // listen for the responses from the LI100/LI101
-    public void message(XNetReply l) {
-       // Check to see if this is a response with the Command Station 
-       // Version Info
-       if(l.getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONSE)
-       {
+    /* Interal class to configure the XNet implementation */
+    class XNetInitilizer implements Runnable, XNetListener {
+
+       private javax.swing.Timer initTimer; // Timer used to let he 
+					    // command station response time 
+					    // out, and configure the defaults.
+	
+       private Object parent = null;
+
+       public XNetInitilizer(Object Parent) {
+
+	  parent = Parent;
+
+	  // Initilize and start initilization timeout timer.
+	  initTimer = new javax.swing.Timer(InitTimeout,
+				new java.awt.event.ActionListener() {
+				   public void actionPerformed(
+					java.awt.event.ActionEvent e) {
+					/* If the timer times out, notify any 
+					   waiting objects, and dispose of
+					   this thread */
+					if(log.isDebugEnabled()) 
+						log.debug("Timeout waiting for Command Station Response");
+					finish();
+				      }
+	      			   });
+          initTimer.setInitialDelay(InitTimeout);
+          initTimer.start();
+
+         // Register as an XPressNet Listener
+	    XNetTrafficController.instance().addXNetListener(~0,this);
+
+         //Send Information request to LI100/LI100
+         /* First, we need to send a request for the Command Station
+            hardware and software version */
+	    XNetMessage msg=XNetTrafficController.instance()
+                                                 .getCommandStation()
+                                                 .getCSVersionRequestMessage();
+
+          //Then Send the version request to the controller
+          XNetTrafficController.instance().sendXNetMessage(msg,this);	  
+
+	}
+
+       public void run() {
+       }
+
+       private void finish() {
+		initTimer.stop();
+	        // Notify the parent
+	        try {
+	     	  synchronized(parent) {
+	  	     parent.notify();
+		  }
+  		} catch(Exception e) {
+		   log.error("Exception " +e + "while notifying initilization thread.");
+		}
+	        if(log.isDebugEnabled()) 
+		   log.debug("Notification Sent");
+		// Then dispose of this object
+		dispose();
+       }
+
+       // listen for the responses from the LI100/LI101
+       public void message(XNetReply l) {
+          // Check to see if this is a response with the Command Station 
+          // Version Info
+          if(l.getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONSE)
+          {
               // This is the Command Station Software Version Response
               if(l.getElement(1)==XNetConstants.CS_SOFTWARE_VERSION)
 	      {
@@ -131,18 +186,18 @@ public class XNetInitilizationManager implements XNetListener {
   	        XNetTrafficController.instance()
                                      .getCommandStation()
                                      .setCommandStationType(l);
-              }
-              done=true;
-              //this.notify();
+		finish();
+	      }
+          }
        }
-    }
 
-    // listen for the messages to the LI100/LI101
-    public void message(XNetMessage l) {
-    }
+       // listen for the messages to the LI100/LI101
+       public void message(XNetMessage l) {
+       }
    
-    public void dispose() {
-       XNetTrafficController.instance().removeXNetListener(~0,this);
+       public void dispose() {
+          XNetTrafficController.instance().removeXNetListener(~0,this);
+       }
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XNetInitilizationManager.class.getName());
