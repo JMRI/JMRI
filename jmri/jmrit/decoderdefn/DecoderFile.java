@@ -20,7 +20,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.9 $
+ * @version   $Revision: 1.10 $
  * @see       jmri.jmrit.decoderdefn.DecoderIndexFile
  */
 public class DecoderFile extends XmlFile {
@@ -80,6 +80,7 @@ public class DecoderFile extends XmlFile {
     String _model     = null;
     String _family    = null;
     String _filename  = null;
+    String _productID = null;
     int _numFns  = -1;
     int _numOuts  = -1;
     Element _element = null;
@@ -94,7 +95,10 @@ public class DecoderFile extends XmlFile {
 
     public String getModelComment() { return _element.getAttributeValue("comment"); }
     public String getFamilyComment() { return _element.getParent().getAttributeValue("comment"); }
-    public String getProductID() { return _element.getAttributeValue("productID"); }
+    public String getProductID() {
+       _productID = _element.getAttributeValue("productID");
+       return _productID;
+   }
 
     public Element getModelElement() { return _element; }
 
@@ -173,7 +177,7 @@ public class DecoderFile extends XmlFile {
                          +e.getAttribute("item")+" exception: "+ex);
             }
             // load each row
-            if (variableModel.setIndxRow(row, e) == row) {
+            if (variableModel.setIndxRow(row, e, _productID) == row) {
                 // if this one existed, we will not update the row count.
                 row++;
             }
