@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a DCC decoder as a component, esp. information -->
 <!-- on how to program it. -->
-<!-- $Revision: 1.38 $ -->
+<!-- $Revision: 1.39 $ -->
 
 <!-- This DTD is Copyright 1999, 2000, 2001, 2003, 2004 Bob Jacobsen & JMRI. -->
 <!-- You may freely use it subject to the Open Source Artistic               -->
@@ -24,7 +24,7 @@
 <!-- The family element identifies the decoder. It must be kept consistent -->
 <!-- with the family & decoder elements in the decoderIndex-config.dtd (though -->
 <!-- the "file" attribute is added) -->
-<!ELEMENT family (model*) >
+<!ELEMENT family (productIDalgorithm*, model*) >
 <!-- file attribute is not present here, as the name is gathered from the file itself -->
 <!ATTLIST family name      		CDATA #REQUIRED>  <!-- family name used for identification -->
 <!ATTLIST family mfg       		CDATA #REQUIRED>  <!-- mfg name used for identification   -->
@@ -35,6 +35,29 @@
 <!-- Note that these are defaults for the 'decoder' attributes of same name, not an override -->
 <!ATTLIST family lowVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
 <!ATTLIST family highVersionID 	CDATA #IMPLIED >  <!-- CV07 value, default blank means any   -->
+
+<!ELEMENT productIDalgorithm (none | simple | simpleIndexed | pairedMethodA | indexedPairMethodA) >
+
+<!ELEMENT none EMPTY >
+
+<!ELEMENT simple EMPTY >
+<!ATTLIST simple CV CDATA #REQUIRED >
+
+<!ELEMENT simpleIndexed (indexedProductID) >
+
+<!ELEMENT pairedMethodA EMPTY >
+<!ATTLIST pairedMethodA CV1 CDATA #REQUIRED >
+<!ATTLIST pairedMethodA CV2 CDATA #REQUIRED >
+
+<!ELEMENT indexedPairMethodA (indexedProductID, indexedProductID) >
+
+<!ELEMENT indexedProductID EMPTY >
+<!ATTLIST indexedProductID use (1|2|3|4) "1" >
+<!ATTLIST indexedProductID PICV     CDATA #REQUIRED >
+<!ATTLIST indexedProductID PIval    CDATA #REQUIRED >
+<!ATTLIST indexedProductID SICV     CDATA #IMPLIED  >
+<!ATTLIST indexedProductID SIval    CDATA #IMPLIED  >
+<!ATTLIST indexedProductID prodIdCV CDATA #REQUIRED >
 
 <!ELEMENT model (versionCV*, output*, size?)* >
 <!ATTLIST model model     	CDATA #REQUIRED>  <!-- model name used for identification -->
@@ -142,6 +165,8 @@
 <!ATTLIST ivariable opsOnly   (yes | no) "no">
 <!ATTLIST ivariable writeOnly (yes | no) "no">
 <!ATTLIST ivariable default	  CDATA #IMPLIED >
+<!ATTLIST ivariable include   CDATA #IMPLIED >
+<!ATTLIST ivariable exclude   CDATA #IMPLIED >
 <!ATTLIST ivariable comment	  CDATA #IMPLIED >
 <!ATTLIST ivariable item      CDATA #IMPLIED > <!-- item name for this function if different -->
 <!ATTLIST ivariable minFn     CDATA #IMPLIED > <!-- min number of fns in decoder for this to be valid -->
@@ -171,11 +196,15 @@
 <!ATTLIST enumChoice comment  CDATA #IMPLIED >
 
 <!ELEMENT ienumVal (ienumChoice*) >
+<!ATTLIST ienumVal include CDATA #IMPLIED >
+<!ATTLIST ienumVal exclude CDATA #IMPLIED >
 <!ATTLIST ienumVal comment CDATA #IMPLIED>
 
 <!ELEMENT ienumChoice EMPTY>
 <!ATTLIST ienumChoice choice   CDATA #REQUIRED >
 <!ATTLIST ienumChoice value    CDATA #IMPLIED >  <!-- if present, must be numeric -->
+<!ATTLIST ienumChoice include  CDATA #IMPLIED >
+<!ATTLIST ienumChoice exclude  CDATA #IMPLIED >
 <!ATTLIST ienumChoice comment  CDATA #IMPLIED >
 
 <!ELEMENT speedTableVal (speedTableEntry*) >
