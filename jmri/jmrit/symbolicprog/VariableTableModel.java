@@ -21,7 +21,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.23 $
+ * @version   $Revision: 1.24 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -382,7 +382,28 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     private int _siCv = -1;
     public int siCv() {return _siCv;}
 
-    public int setIndxRow(int row, Element e) {
+    boolean isIncluded(String include, String productID) {
+        int i = 0;
+        while (i < include.length()) {
+            if (include.startsWith(productID, i)) {
+                return true;
+            }
+            i = include.indexOf(',',i) + 1;
+            if (i == 0) {
+                i = include.length();
+            }
+        }
+        return false;
+    }
+
+    public int setIndxRow(int row, Element e, String productID) {
+        if (e.getAttributeValue("include") != null) {
+            String include = e.getAttributeValue("include");
+            if (isIncluded(include, productID) == false) {
+                return row - 1;
+            }
+        }
+
         // get the values for the VariableValue ctor
         String name = e.getAttribute("label").getValue(); 	// Note the name variable is actually the label attribute
         if (log.isDebugEnabled()) log.debug("Starting to setRow \""+name+"\"");
@@ -475,19 +496,29 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
                 cv, mask, _indxCvModel.allIndxCvVector(),
                 _status, item);
             iv = v1;
+            for (int x = 0; x < l.size(); x++) {
+                Element ex = (Element)l.get(x);
+                String include = ex.getAttributeValue("include");
+                if (include != null && !isIncluded(include, productID)) {
+                    l.remove(x);
+                    x--;
+                }
+            }
             v1.nItems(l.size());
             for (int k=0; k< l.size(); k++) {
                 Element enumChElement = (Element)l.get(k);
                 // is a value specified?
                 Attribute valAttr = enumChElement.getAttribute("value");
-                if ( valAttr==null)
-                    v1.addItem(enumChElement.getAttribute("choice").getValue());
+                if (valAttr == null)
+                    v1.addItem(enumChElement.getAttribute("choice").
+                               getValue());
                 else {
-                    v1.addItem(enumChElement.getAttribute("choice").getValue(),
+                    v1.addItem(enumChElement.getAttribute("choice").
+                               getValue(),
                                Integer.parseInt(valAttr.getValue()));
-               }
-           }
-           v1.lastItem();
+                }
+            }
+            v1.lastItem();
 
         } else {
             reportBogus();
