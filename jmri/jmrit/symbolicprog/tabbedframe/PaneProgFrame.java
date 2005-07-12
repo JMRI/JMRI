@@ -38,7 +38,7 @@ import jmri.ProgDeferredServiceModePane;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.50 $
+ * @version   $Revision: 1.51 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -399,6 +399,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             decoderRoot = df.rootFromName(df.fileLocation+df.getFilename());
         } catch (Exception e) { log.error("Exception while loading decoder XML file: "+df.getFilename()+" exception: "+e); }
         // load variables from decoder tree
+        df.getProductID();
         df.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
         // load reset from decoder tree
         if (variableModel.piCv() >= 0) {
