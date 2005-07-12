@@ -26,7 +26,7 @@ import javax.swing.text.Document;
  *</PRE>
  * decoders.
  * @author			Bob Jacobsen   Copyright (C) 2002, 2003, 2004
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  *
  */
 public class SplitVariableValue extends VariableValue
@@ -76,8 +76,8 @@ public class SplitVariableValue extends VariableValue
 
     public CvValue[] usesCVs() {
         return new CvValue[]{
-            (CvValue)_cvVector.elementAt(getCvNum()),
-            (CvValue)_cvVector.elementAt(mSecondCV+1)};
+            (CvValue) _cvVector.elementAt(getCvNum()),
+            (CvValue) _cvVector.elementAt(getSecondCvNum())};
     }
 
     int mSecondCV;
@@ -352,7 +352,7 @@ public class SplitVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.13 $
+     * @version     $Revision: 1.14 $
      */
     public class VarTextField extends JTextField {
 
@@ -407,7 +407,7 @@ public class SplitVariableValue extends VariableValue
         if (log.isDebugEnabled()) log.debug("dispose");
         if (_value != null) _value.removeActionListener(this);
         ((CvValue)_cvVector.elementAt(getCvNum())).removePropertyChangeListener(this);
-        ((CvValue)_cvVector.elementAt(getCvNum()+1)).removePropertyChangeListener(this);
+        ((CvValue)_cvVector.elementAt(getSecondCvNum())).removePropertyChangeListener(this);
 
         _value = null;
         // do something about the VarTextField
