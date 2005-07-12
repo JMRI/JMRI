@@ -2,16 +2,18 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: QSI_Diesel_Ver6.xml,v 1.1 2005-06-28 23:21:30 innkeeper Exp $ -->
+<!-- $Id: QSI_Diesel_Ver6.xml,v 1.2 2005-07-12 01:24:40 innkeeper Exp $ -->
 <decoder-config>
-  <version author="Howard G. Penny" version="1" lastUpdated="20050628"/>
+  <version author="Howard G. Penny" version="2" lastUpdated="20050711"/>
 
 <!-- version 1 - modified for QSI CV.PI.SI format version 6 - Howard -->
+<!-- version 2 - added "include" attributes to some indexed variables so
+                 that models would get the proper set of choices - Howard -->
 
 <decoder>
   <family name="QSI Diesel Ver. 6" mfg="QSIndustries" lowVersionID="6" >
     <model model="Atlas B23-7" lowVersionID="6"
-           numFns="14" numOuts="14" productID="126" />
+           numFns="14" numOuts="14" productID="127" />
     <model model="Atlas Dash 8-40CW,B" lowVersionID="6"
            numFns="14" numOuts="14" productID="126" />
     <model model="Atlas Dash 8-40CW,C" lowVersionID="6"
@@ -583,16 +585,27 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
-        <ienumChoice choice="Mars Light"/>
-        <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
+        <ienumChoice choice="Automatic Cab Lights" value="101"
+                     include="101,102" />
+        <ienumChoice choice="Directional Mars Light" value="102"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Strobe Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Number Board Lights" value="105"
+                     include="101,106,107,108,115,119,120,121,122,131" />
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Directional Headlight + Directional Ditch Lights" value="108"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Directional Ditch Lights" value="109"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Ditch Lights" value="110"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Stobe Ditch Lights" value="111"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Air Brakes" value="176"/>
         <ienumChoice choice="Scale mph Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
@@ -615,16 +628,26 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
-        <ienumChoice choice="Mars Light"/>
-        <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
+        <ienumChoice choice="Automatic Cab Lights" value="101"
+                     include="101,102" />
+        <ienumChoice choice="Directional Mars Light" value="102"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Strobe Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Number Board Lights" value="105"
+                     include="101,106,107,108,115,119,120,121,122,131" />
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Directional Headlight + Directional Ditch Lights" value="108"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Directional Ditch Lights" value="109"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Ditch Lights" value="110"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Stobe Ditch Lights" value="111"
+                     include="103,126,131,132" />
         <ienumChoice choice="Start Up" value="144"/>
         <ienumChoice choice="Shut Down"/>
         <ienumChoice choice="Status Report" value="178"/>
@@ -650,16 +673,27 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
-        <ienumChoice choice="Mars Light"/>
-        <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
+        <ienumChoice choice="Automatic Cab Lights" value="101"
+                     include="101,102" />
+        <ienumChoice choice="Directional Mars Light" value="102"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Strobe Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Number Board Lights" value="105"
+                     include="101,106,107,108,115,119,120,121,122,131" />
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Directional Headlight + Directional Ditch Lights" value="108"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Directional Ditch Lights" value="109"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Ditch Lights" value="110"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Stobe Ditch Lights" value="111"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Air Brakes" value="176"/>
         <ienumChoice choice="Scale mph Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
@@ -682,16 +716,26 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
-        <ienumChoice choice="Mars Light"/>
-        <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
+        <ienumChoice choice="Automatic Cab Lights" value="101"
+                     include="101,102" />
+        <ienumChoice choice="Directional Mars Light" value="102"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Strobe Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Number Board Lights" value="105"
+                     include="101,106,107,108,115,119,120,121,122,131" />
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Directional Headlight + Directional Ditch Lights" value="108"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Directional Ditch Lights" value="109"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Ditch Lights" value="110"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Stobe Ditch Lights" value="111"
+                     include="103,126,131,132" />
         <ienumChoice choice="Start Up" value="144"/>
         <ienumChoice choice="Shut Down"/>
         <ienumChoice choice="Status Report" value="178"/>
@@ -717,16 +761,27 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
-        <ienumChoice choice="Mars Light"/>
-        <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
+        <ienumChoice choice="Automatic Cab Lights" value="101"
+                     include="101,102" />
+        <ienumChoice choice="Directional Mars Light" value="102"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Strobe Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Number Board Lights" value="105"
+                     include="101,106,107,108,115,119,120,121,122,131" />
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Directional Headlight + Directional Ditch Lights" value="108"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Directional Ditch Lights" value="109"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Ditch Lights" value="110"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Stobe Ditch Lights" value="111"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Air Brakes" value="176"/>
         <ienumChoice choice="Scale mph Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
@@ -749,16 +804,26 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
-        <ienumChoice choice="Mars Light"/>
-        <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
+        <ienumChoice choice="Automatic Cab Lights" value="101"
+                     include="101,102" />
+        <ienumChoice choice="Directional Mars Light" value="102"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Strobe Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Number Board Lights" value="105"
+                     include="101,106,107,108,115,119,120,121,122,131" />
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Directional Headlight + Directional Ditch Lights" value="108"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Directional Ditch Lights" value="109"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Ditch Lights" value="110"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Stobe Ditch Lights" value="111"
+                     include="103,126,131,132" />
         <ienumChoice choice="Start Up" value="144"/>
         <ienumChoice choice="Shut Down"/>
         <ienumChoice choice="Status Report" value="178"/>
@@ -784,16 +849,27 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
-        <ienumChoice choice="Mars Light"/>
-        <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
+        <ienumChoice choice="Automatic Cab Lights" value="101"
+                     include="101,102" />
+        <ienumChoice choice="Directional Mars Light" value="102"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Strobe Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Number Board Lights" value="105"
+                     include="101,106,107,108,115,119,120,121,122,131" />
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Directional Headlight + Directional Ditch Lights" value="108"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Directional Ditch Lights" value="109"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Ditch Lights" value="110"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Stobe Ditch Lights" value="111"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Air Brakes" value="176"/>
         <ienumChoice choice="Scale mph Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
@@ -816,16 +892,26 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
-        <ienumChoice choice="Mars Light"/>
-        <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
+        <ienumChoice choice="Automatic Cab Lights" value="101"
+                     include="101,102" />
+        <ienumChoice choice="Directional Mars Light" value="102"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Strobe Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Number Board Lights" value="105"
+                     include="101,106,107,108,115,119,120,121,122,131" />
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Directional Headlight + Directional Ditch Lights" value="108"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Directional Ditch Lights" value="109"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Ditch Lights" value="110"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Stobe Ditch Lights" value="111"
+                     include="103,126,131,132" />
         <ienumChoice choice="Start Up" value="144"/>
         <ienumChoice choice="Shut Down"/>
         <ienumChoice choice="Status Report" value="178"/>
@@ -851,16 +937,27 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
-        <ienumChoice choice="Mars Light"/>
-        <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
+        <ienumChoice choice="Automatic Cab Lights" value="101"
+                     include="101,102" />
+        <ienumChoice choice="Directional Mars Light" value="102"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Strobe Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Number Board Lights" value="105"
+                     include="101,106,107,108,115,119,120,121,122,131" />
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Directional Headlight + Directional Ditch Lights" value="108"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Directional Ditch Lights" value="109"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Ditch Lights" value="110"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Stobe Ditch Lights" value="111"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Air Brakes" value="176"/>
         <ienumChoice choice="Scale mph Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
@@ -883,16 +980,26 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
-        <ienumChoice choice="Mars Light"/>
-        <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
+        <ienumChoice choice="Automatic Cab Lights" value="101"
+                     include="101,102" />
+        <ienumChoice choice="Directional Mars Light" value="102"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Strobe Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Number Board Lights" value="105"
+                     include="101,106,107,108,115,119,120,121,122,131" />
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Directional Headlight + Directional Ditch Lights" value="108"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Directional Ditch Lights" value="109"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Ditch Lights" value="110"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Stobe Ditch Lights" value="111"
+                     include="103,126,131,132" />
         <ienumChoice choice="Start Up" value="144"/>
         <ienumChoice choice="Shut Down"/>
         <ienumChoice choice="Status Report" value="178"/>
@@ -918,16 +1025,27 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
-        <ienumChoice choice="Mars Light"/>
-        <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
+        <ienumChoice choice="Automatic Cab Lights" value="101"
+                     include="101,102" />
+        <ienumChoice choice="Directional Mars Light" value="102"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Strobe Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Number Board Lights" value="105"
+                     include="101,106,107,108,115,119,120,121,122,131" />
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Directional Headlight + Directional Ditch Lights" value="108"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Directional Ditch Lights" value="109"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Ditch Lights" value="110"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Stobe Ditch Lights" value="111"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Air Brakes" value="176"/>
         <ienumChoice choice="Scale mph Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
@@ -950,16 +1068,26 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
-        <ienumChoice choice="Mars Light"/>
-        <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
+        <ienumChoice choice="Automatic Cab Lights" value="101"
+                     include="101,102" />
+        <ienumChoice choice="Directional Mars Light" value="102"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Strobe Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Number Board Lights" value="105"
+                     include="101,106,107,108,115,119,120,121,122,131" />
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Directional Headlight + Directional Ditch Lights" value="108"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Directional Ditch Lights" value="109"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Ditch Lights" value="110"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Stobe Ditch Lights" value="111"
+                     include="103,126,131,132" />
         <ienumChoice choice="Start Up" value="144"/>
         <ienumChoice choice="Shut Down"/>
         <ienumChoice choice="Status Report" value="178"/>
@@ -985,16 +1113,27 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
-        <ienumChoice choice="Mars Light"/>
-        <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
+        <ienumChoice choice="Automatic Cab Lights" value="101"
+                     include="101,102" />
+        <ienumChoice choice="Directional Mars Light" value="102"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Strobe Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Number Board Lights" value="105"
+                     include="101,106,107,108,115,119,120,121,122,131" />
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Directional Headlight + Directional Ditch Lights" value="108"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Directional Ditch Lights" value="109"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Ditch Lights" value="110"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Stobe Ditch Lights" value="111"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Air Brakes" value="176"/>
         <ienumChoice choice="Scale mph Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
@@ -1017,16 +1156,26 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
-        <ienumChoice choice="Mars Light"/>
-        <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
+        <ienumChoice choice="Automatic Cab Lights" value="101"
+                     include="101,102" />
+        <ienumChoice choice="Directional Mars Light" value="102"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Strobe Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Number Board Lights" value="105"
+                     include="101,106,107,108,115,119,120,121,122,131" />
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Directional Headlight + Directional Ditch Lights" value="108"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Directional Ditch Lights" value="109"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Ditch Lights" value="110"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Stobe Ditch Lights" value="111"
+                     include="103,126,131,132" />
         <ienumChoice choice="Start Up" value="144"/>
         <ienumChoice choice="Shut Down"/>
         <ienumChoice choice="Status Report" value="178"/>
@@ -1052,16 +1201,27 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
-        <ienumChoice choice="Mars Light"/>
-        <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
+        <ienumChoice choice="Automatic Cab Lights" value="101"
+                     include="101,102" />
+        <ienumChoice choice="Directional Mars Light" value="102"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Strobe Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Number Board Lights" value="105"
+                     include="101,106,107,108,115,119,120,121,122,131" />
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Directional Headlight + Directional Ditch Lights" value="108"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Directional Ditch Lights" value="109"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Ditch Lights" value="110"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Stobe Ditch Lights" value="111"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Air Brakes" value="176"/>
         <ienumChoice choice="Scale mph Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
@@ -1084,16 +1244,26 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
-        <ienumChoice choice="Mars Light"/>
-        <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
+        <ienumChoice choice="Automatic Cab Lights" value="101"
+                     include="101,102" />
+        <ienumChoice choice="Directional Mars Light" value="102"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Strobe Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Number Board Lights" value="105"
+                     include="101,106,107,108,115,119,120,121,122,131" />
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Directional Headlight + Directional Ditch Lights" value="108"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Directional Ditch Lights" value="109"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Ditch Lights" value="110"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Stobe Ditch Lights" value="111"
+                     include="103,126,131,132" />
         <ienumChoice choice="Start Up" value="144"/>
         <ienumChoice choice="Shut Down"/>
         <ienumChoice choice="Status Report" value="178"/>
@@ -1119,16 +1289,27 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
-        <ienumChoice choice="Mars Light"/>
-        <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
+        <ienumChoice choice="Automatic Cab Lights" value="101"
+                     include="101,102" />
+        <ienumChoice choice="Directional Mars Light" value="102"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Strobe Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Number Board Lights" value="105"
+                     include="101,106,107,108,115,119,120,121,122,131" />
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Directional Headlight + Directional Ditch Lights" value="108"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Directional Ditch Lights" value="109"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Ditch Lights" value="110"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Stobe Ditch Lights" value="111"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Air Brakes" value="176"/>
         <ienumChoice choice="Scale mph Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
@@ -1151,16 +1332,26 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
-        <ienumChoice choice="Mars Light"/>
-        <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
+        <ienumChoice choice="Automatic Cab Lights" value="101"
+                     include="101,102" />
+        <ienumChoice choice="Directional Mars Light" value="102"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Strobe Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Number Board Lights" value="105"
+                     include="101,106,107,108,115,119,120,121,122,131" />
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Directional Headlight + Directional Ditch Lights" value="108"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Directional Ditch Lights" value="109"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Ditch Lights" value="110"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Stobe Ditch Lights" value="111"
+                     include="103,126,131,132" />
         <ienumChoice choice="Start Up" value="144"/>
         <ienumChoice choice="Shut Down"/>
         <ienumChoice choice="Status Report" value="178"/>
@@ -1186,16 +1377,27 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
-        <ienumChoice choice="Mars Light"/>
-        <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
+        <ienumChoice choice="Automatic Cab Lights" value="101"
+                     include="101,102" />
+        <ienumChoice choice="Directional Mars Light" value="102"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Strobe Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Number Board Lights" value="105"
+                     include="101,106,107,108,115,119,120,121,122,131" />
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Directional Headlight + Directional Ditch Lights" value="108"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Directional Ditch Lights" value="109"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Ditch Lights" value="110"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Stobe Ditch Lights" value="111"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Air Brakes" value="176"/>
         <ienumChoice choice="Scale mph Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
@@ -1218,16 +1420,26 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
-        <ienumChoice choice="Mars Light"/>
-        <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
+        <ienumChoice choice="Automatic Cab Lights" value="101"
+                     include="101,102" />
+        <ienumChoice choice="Directional Mars Light" value="102"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Strobe Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Number Board Lights" value="105"
+                     include="101,106,107,108,115,119,120,121,122,131" />
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Directional Headlight + Directional Ditch Lights" value="108"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Directional Ditch Lights" value="109"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Ditch Lights" value="110"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Stobe Ditch Lights" value="111"
+                     include="103,126,131,132" />
         <ienumChoice choice="Start Up" value="144"/>
         <ienumChoice choice="Shut Down"/>
         <ienumChoice choice="Status Report" value="178"/>
@@ -1253,16 +1465,27 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
-        <ienumChoice choice="Mars Light"/>
-        <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
+        <ienumChoice choice="Automatic Cab Lights" value="101"
+                     include="101,102" />
+        <ienumChoice choice="Directional Mars Light" value="102"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Strobe Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Number Board Lights" value="105"
+                     include="101,106,107,108,115,119,120,121,122,131" />
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Directional Headlight + Directional Ditch Lights" value="108"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Directional Ditch Lights" value="109"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Ditch Lights" value="110"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Stobe Ditch Lights" value="111"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Air Brakes" value="176"/>
         <ienumChoice choice="Scale mph Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
@@ -1285,16 +1508,26 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
-        <ienumChoice choice="Mars Light"/>
-        <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
+        <ienumChoice choice="Automatic Cab Lights" value="101"
+                     include="101,102" />
+        <ienumChoice choice="Directional Mars Light" value="102"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Strobe Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Number Board Lights" value="105"
+                     include="101,106,107,108,115,119,120,121,122,131" />
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Directional Headlight + Directional Ditch Lights" value="108"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Directional Ditch Lights" value="109"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Ditch Lights" value="110"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Stobe Ditch Lights" value="111"
+                     include="103,126,131,132" />
         <ienumChoice choice="Start Up" value="144"/>
         <ienumChoice choice="Shut Down"/>
         <ienumChoice choice="Status Report" value="178"/>
@@ -1320,16 +1553,27 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
-        <ienumChoice choice="Mars Light"/>
-        <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
+        <ienumChoice choice="Automatic Cab Lights" value="101"
+                     include="101,102" />
+        <ienumChoice choice="Directional Mars Light" value="102"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Strobe Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Number Board Lights" value="105"
+                     include="101,106,107,108,115,119,120,121,122,131" />
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Directional Headlight + Directional Ditch Lights" value="108"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Directional Ditch Lights" value="109"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Ditch Lights" value="110"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Stobe Ditch Lights" value="111"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Air Brakes" value="176"/>
         <ienumChoice choice="Scale mph Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
@@ -1352,16 +1596,26 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
-        <ienumChoice choice="Mars Light"/>
-        <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
+        <ienumChoice choice="Automatic Cab Lights" value="101"
+                     include="101,102" />
+        <ienumChoice choice="Directional Mars Light" value="102"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Strobe Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Number Board Lights" value="105"
+                     include="101,106,107,108,115,119,120,121,122,131" />
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Directional Headlight + Directional Ditch Lights" value="108"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Directional Ditch Lights" value="109"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Ditch Lights" value="110"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Stobe Ditch Lights" value="111"
+                     include="103,126,131,132" />
         <ienumChoice choice="Start Up" value="144"/>
         <ienumChoice choice="Shut Down"/>
         <ienumChoice choice="Status Report" value="178"/>
@@ -1387,16 +1641,27 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
-        <ienumChoice choice="Mars Light"/>
-        <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
+        <ienumChoice choice="Automatic Cab Lights" value="101"
+                     include="101,102" />
+        <ienumChoice choice="Directional Mars Light" value="102"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Strobe Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Number Board Lights" value="105"
+                     include="101,106,107,108,115,119,120,121,122,131" />
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Directional Headlight + Directional Ditch Lights" value="108"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Directional Ditch Lights" value="109"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Ditch Lights" value="110"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Stobe Ditch Lights" value="111"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Air Brakes" value="176"/>
         <ienumChoice choice="Scale mph Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
@@ -1419,16 +1684,26 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
-        <ienumChoice choice="Mars Light"/>
-        <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
+        <ienumChoice choice="Automatic Cab Lights" value="101"
+                     include="101,102" />
+        <ienumChoice choice="Directional Mars Light" value="102"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Strobe Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Number Board Lights" value="105"
+                     include="101,106,107,108,115,119,120,121,122,131" />
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Directional Headlight + Directional Ditch Lights" value="108"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Directional Ditch Lights" value="109"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Ditch Lights" value="110"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Stobe Ditch Lights" value="111"
+                     include="103,126,131,132" />
         <ienumChoice choice="Start Up" value="144"/>
         <ienumChoice choice="Shut Down"/>
         <ienumChoice choice="Status Report" value="178"/>
@@ -1454,16 +1729,27 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
-        <ienumChoice choice="Mars Light"/>
-        <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
+        <ienumChoice choice="Automatic Cab Lights" value="101"
+                     include="101,102" />
+        <ienumChoice choice="Directional Mars Light" value="102"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Strobe Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Number Board Lights" value="105"
+                     include="101,106,107,108,115,119,120,121,122,131" />
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Directional Headlight + Directional Ditch Lights" value="108"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Directional Ditch Lights" value="109"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Ditch Lights" value="110"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Stobe Ditch Lights" value="111"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Air Brakes" value="176"/>
         <ienumChoice choice="Scale mph Report" value="178"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
@@ -1486,16 +1772,26 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Automatic Cab Lights"/>
-        <ienumChoice choice="Directional Mars Light"/>
-        <ienumChoice choice="Mars Light"/>
-        <ienumChoice choice="Strobe Mars Light"/>
-        <ienumChoice choice="Number Board Lights"/>
-        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"/>
-        <ienumChoice choice="Directional Headlight + Directional Ditch Lights"/>
-        <ienumChoice choice="Directional Ditch Lights"/>
-        <ienumChoice choice="Ditch Lights"/>
-        <ienumChoice choice="Stobe Ditch Lights"/>
+        <ienumChoice choice="Automatic Cab Lights" value="101"
+                     include="101,102" />
+        <ienumChoice choice="Directional Mars Light" value="102"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Strobe Mars Light"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Number Board Lights" value="105"
+                     include="101,106,107,108,115,119,120,121,122,131" />
+        <ienumChoice choice="Directional Headlight + Directional Mars Light" value="107"
+                     include="100,107,115,119,121" />
+        <ienumChoice choice="Directional Headlight + Directional Ditch Lights" value="108"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Directional Ditch Lights" value="109"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Ditch Lights" value="110"
+                     include="103,126,131,132" />
+        <ienumChoice choice="Stobe Ditch Lights" value="111"
+                     include="103,126,131,132" />
         <ienumChoice choice="Start Up" value="144"/>
         <ienumChoice choice="Shut Down"/>
         <ienumChoice choice="Status Report" value="178"/>
@@ -1505,7 +1801,8 @@
     </ivariable>
 
     <ivariable label="Ditch Light Hold Time (seconds)" CVname="55.110.5" CV="55" PI="110" SI="5" default="5"
-               comment="QSI" item="CV55.110.5" mask="XXXVVVVV"
+               item="CV55.110.5" mask="XXXVVVVV"
+               include="103,126,131,132"
                tooltip="0 to 31 seconds">
       <indexedVal max="31"/> </ivariable>
 
