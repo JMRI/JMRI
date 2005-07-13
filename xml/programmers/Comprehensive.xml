@@ -2,9 +2,9 @@
 <!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
 
 <programmer-config>
-<!-- $Id: Comprehensive.xml,v 1.10 2005-06-14 05:57:47 jacobsen Exp $ -->
+<!-- $Id: Comprehensive.xml,v 1.11 2005-07-13 05:29:11 innkeeper Exp $ -->
 		<version author="Howard G. Penny"
-					version="8" lastUpdated="20050613"/>
+					version="11" lastUpdated="20050713"/>
 
       <!-- Version 4 - add consist control for functions (Simon Ginsburg) -->
       <!-- Version 4.1 - changed spelling of "behavior" (Jack Shall) -->
@@ -12,6 +12,7 @@
       <!-- Version 6 - added CV25 to Speed Control pane - wsthompson@earthlink.net -->
       <!-- Version 8 - added CV25 to Speed Control pane -->
       <!-- Version 8 - added manufacturer speed table selection to Speed Control pane -->
+      <!-- Version 11 - updated tooltip for Decoder Version -->
 
 <programmer decoderFilePanes="yes">
 
@@ -46,7 +47,7 @@
 			<display item="Manufacturer"
 				tooltip="The manufacturer's ID number (read only)" />
 			<display item="Decoder Version"
-				tooltip="The decoder version number (if used) (read only)" />
+				tooltip="The decoder version number (read only)" />
 			<display item="Product number"
 				tooltip="The decoder product number (if used) (read only)" />
 		</column>
