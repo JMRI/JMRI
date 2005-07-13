@@ -23,7 +23,7 @@ import com.sun.java.util.collections.ArrayList;
  * Extends VariableValue to represent an indexed variable
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 public class IndexedVariableValue extends VariableValue
     implements ActionListener, PropertyChangeListener, FocusListener {
@@ -66,7 +66,7 @@ public class IndexedVariableValue extends VariableValue
     }
 
     public CvValue[] usesCVs() {
-        return new CvValue[]{(CvValue)_cvVector.elementAt(getCvNum())};
+        return new CvValue[]{(CvValue)_cvVector.elementAt(_row)};
     }
 
     public Object rangeVal() {
@@ -355,7 +355,7 @@ public class IndexedVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.3 $
+     * @version     $Revision: 1.4 $
      */
     public class VarTextField extends JTextField {
 
