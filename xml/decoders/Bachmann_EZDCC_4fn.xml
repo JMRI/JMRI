@@ -2,15 +2,16 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: Bachmann_EZDCC_4fn.xml,v 1.1 2005-06-03 13:25:41 jacobsen Exp $ -->
+<!-- $Id: Bachmann_EZDCC_4fn.xml,v 1.2 2005-07-14 02:19:10 jacobsen Exp $ -->
 <decoder-config>
 		<version author="Bob Jacobsen"
-			version="1" lastUpdated="20050531" />
+			version="2" lastUpdated="20050621" />
 			<!-- Made from the Lenz_DriveSelect.xml file version 5 -->
+			<!-- Version 2 adds lowVersionID from Ian Birchenough -->
 
 <decoder>
 	<family name="Bachmann 4-function decoders" mfg="Bachmann Trains">
-		<model model="Bachmann 4-function decoders" numOuts="4" numFns="8"/>
+		<model model="Bachmann 4-function decoders" numOuts="4" numFns="8" lowVersionID="46"/>
 	</family>
 
 	<programming direct="yes" paged="yes"
