@@ -17,7 +17,7 @@ import jmri.ProgrammerException;
  * It allows the user to set the Track Voltage  and E-line status.
  *
  * @author			Paul Bender  Copyright (C) 2005
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class LV102InternalFrame extends javax.swing.JInternalFrame implements jmri.ProgListener {
 
@@ -57,10 +57,15 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame implements jm
 	
         pane3.add(writeSettingsButton);
 
+	// Set the reset to Defaults button label and tool tip
+	defaultButton.setText(rb.getString("LV102DefaultButtonLabel"));
+	defaultButton.setToolTipText(rb.getString("LV102DefaultButtonToolTip"));
+
 	// Set the reset button label and tool tip
 	resetButton.setText(rb.getString("LV102ResetButtonLabel"));
 	resetButton.setToolTipText(rb.getString("LV102ResetButtonToolTip"));
 
+        pane3.add(defaultButton);
         pane3.add(resetButton);
         getContentPane().add(pane3);
 
@@ -71,7 +76,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame implements jm
         {
            voltBox.addItem(validVoltage[i]);
         }
-	voltBox.setSelectedIndex(10);
+	voltBox.setSelectedIndex(23);
 
         eLineBox.setVisible(true);
         eLineBox.setToolTipText(rb.getString("LV102ELineTip"));
@@ -79,7 +84,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame implements jm
         {
            eLineBox.addItem(validELineStatus[i]);
         }
-	eLineBox.setSelectedIndex(0);
+	eLineBox.setSelectedIndex(3);
 
         railComBox.setVisible(true);
         railComBox.setToolTipText(rb.getString("LV102RailComTip"));
@@ -87,11 +92,11 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame implements jm
         {
            railComBox.addItem(validRailComStatus[i]);
         }
-	railComBox.setSelectedIndex(1);
+	railComBox.setSelectedIndex(2);
 
         CurrentStatus.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
         CurrentStatus.setVisible(true);
-	CurrentStatus.setText(rb.getString("LV102StatusInitial"));
+	//CurrentStatus.setText(rb.getString("LV102StatusInitial"));
         getContentPane().add(CurrentStatus);
 
         // and prep for display
@@ -109,7 +114,16 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame implements jm
         resetButton.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                 	resetLV102Settings();
+			resetButton.setSelected(false);
+                }
+            }
+        );
 
+        // install reset to defaults button handler
+        defaultButton.addActionListener( new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                	defaultLV102Settings();
+			defaultButton.setSelected(false);
                 }
             }
         );
@@ -161,16 +175,17 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame implements jm
     JLabel CurrentStatus = new JLabel(" ");
 
     JToggleButton writeSettingsButton = new JToggleButton("Write to LV102");
-    JToggleButton resetButton = new JToggleButton("Reset to Factory Defaults");
+    JToggleButton resetButton = new JToggleButton("Reset to Initial Values");
+    JToggleButton defaultButton = new JToggleButton("Reset to Factory Defaults");
 
-    protected String [] validVoltage= new String[]{"11V","11.5V","12V","12.5V","13V","13.5V","14V","14.5V","15V","15.5V","16V (factory default)","16.5V","17V","17.5V","18V","18.5V","19V","19.5V","20V","20.5V","21V","21.5V","22V"};
-    protected int [] validVoltageValues = new int[]{22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44};
+    protected String [] validVoltage= new String[]{"11V","11.5V","12V","12.5V","13V","13.5V","14V","14.5V","15V","15.5V","16V (factory default)","16.5V","17V","17.5V","18V","18.5V","19V","19.5V","20V","20.5V","21V","21.5V","22V",""};
+    protected int [] validVoltageValues = new int[]{22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,0};
 
-    protected String [] validELineStatus = new String[]{rb.getString("LV102ELineActive"),rb.getString("LV102ELineInactive"),rb.getString("LV102ELineDefault")};
-    protected int [] validELineStatusValues = new int[]{90,91,99};
+    protected String [] validELineStatus = new String[]{rb.getString("LV102ELineActive"),rb.getString("LV102ELineInactive"),rb.getString("LV102ELineDefault"),""};
+    protected int [] validELineStatusValues = new int[]{90,91,99,0};
 
-    protected String [] validRailComStatus = new String[]{rb.getString("LV102RailComActive"),rb.getString("LV102RailComInactive")};
-    protected int [] validRailComStatusValues = new int[]{93,92};
+    protected String [] validRailComStatus = new String[]{rb.getString("LV102RailComActive"),rb.getString("LV102RailComInactive"),""};
+    protected int [] validRailComStatusValues = new int[]{93,92,0};
 
     //Send Power Station settings
     void writeLV102Settings() {
@@ -190,6 +205,16 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame implements jm
             } catch(ProgrammerException e) {
               // Don't do anything with this yet
             }
+	  
+	  /* Pause briefly to give the booster a chance to change 
+	     into It's programming mode */
+          synchronized(this) {
+		try {
+			wait(250);
+		} catch(java.lang.InterruptedException ie1) {
+			// Don't do anything with this yet
+		}
+	  }
 
           /* Next, send the ops mode programing command for the voltage 
           we want */
@@ -214,6 +239,17 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame implements jm
             } catch(ProgrammerException e) {
               // Don't do anything with this yet
             }
+
+	  /* Pause briefly to give the booster a chance to change 
+	     into It's programming mode */
+          synchronized(this) {
+		try {
+			wait(250);
+		} catch(java.lang.InterruptedException ie2) {
+			// Don't do anything with this yet
+		}
+	  }
+
           /* Next, send the ops mode programing command for the E line 
              Status we want */
     	  try {
@@ -238,7 +274,18 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame implements jm
             } catch(ProgrammerException e) {
               // Don't do anything with this yet
             }
-          /* Next, send the ops mode programing command for the E line 
+
+	  /* Pause briefly to give the booster a chance to change 
+	     into It's programming mode */
+          synchronized(this) {
+		try {
+			wait(250);
+		} catch(java.lang.InterruptedException ie3) {
+			// Don't do anything with this yet
+		}
+	  }
+
+          /* Next, send the ops mode programing command for the RailComm
              Status we want */
     	  try {
               opsProg.writeCV(7,validRailComStatusValues[railComBox.getSelectedIndex()],this);
@@ -270,11 +317,21 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame implements jm
 	        }
         }      
 
-    // Set to default values.  Voltage is 16, E Line is Active. 
-    void resetLV102Settings() {
+    // Set to LV102 default values.  Voltage is 16, E Line is Active, 
+    // Railcom is innactive.
+    void defaultLV102Settings() {
 	voltBox.setSelectedIndex(10);
 	eLineBox.setSelectedIndex(0);
+	railComBox.setSelectedIndex(1);
 	CurrentStatus.setText(rb.getString("LV102StatusInitial"));
+    }
+
+    // Set to initial values.
+    void resetLV102Settings() {
+	voltBox.setSelectedIndex(23);
+	eLineBox.setSelectedIndex(3);
+	railComBox.setSelectedIndex(2);
+	CurrentStatus.setText("");
     }
 
     public void dispose() {
