@@ -19,10 +19,10 @@ import java.io.InputStream;
  * When opened, the user must first select a serial port and click "Start".
  * The rest of the GUI then appears.
  * <P>
- * For more info on the product, see {@link http://www.pricom.com}
+ * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class MonitorFrame extends jmri.jmrix.AbstractMonFrame {
 

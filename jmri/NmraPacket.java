@@ -28,7 +28,7 @@ package jmri;
  *            short vs long address type
  *
  * @author      Bob Jacobsen Copyright (C) 2001, 2003
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public class NmraPacket {
 
@@ -81,7 +81,7 @@ public class NmraPacket {
     /**
      * Provide an accessory control packet via a simplified interface
      * @param number Address of accessory output, starting with 1
-     * @param thrown true if the output is to be configured to the "closed", a.k.a. the
+     * @param closed true if the output is to be configured to the "closed", a.k.a. the
      * "normal" or "unset" position
      */
     public static byte[] accDecoderPkt(int number, boolean closed) {
@@ -297,7 +297,18 @@ public class NmraPacket {
         }
         return retVal;
     }
-
+    
+    /**
+     * Provide an NMRA control instruction
+     *<P>Note that the NMRA draft of Fall 2004 only defines the value
+     * of "1" for the "function parameter", calling that the value for
+     * "volume control".  However, DCC systems in the wild have been
+     * observed to use 0x7F for the function byte for volume control.
+     * @param address  DCC locomotive address
+     * @param longAddr true if this is a long address, false if short address
+     * @param function see note above
+     * @param value  value to be sent in analog control instruction
+     */
     public static byte[]  analogControl(int address, boolean longAddr,
                                         int function, int value) {
 
