@@ -13,7 +13,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 
 import jmri
 
@@ -33,7 +33,7 @@ class OpsProgExample(jmri.jmrit.automat.AbstractAutomaton) :
         
         # get references to sample layout objects
         self.sensor = sensors.provideSensor(self.sensorName)
-        self.programmer = jmri.InstanceManager.programmerManagerInstance().getOpsModeProgrammer(self.longAddress, self.locoNumber)
+        self.programmer = programmers.getOpsModeProgrammer(self.longAddress, self.locoNumber)
 
         # get initial state and set the CV as needed
         self.now = self.sensor.getKnownState()
