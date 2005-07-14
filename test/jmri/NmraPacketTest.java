@@ -129,6 +129,26 @@ public class NmraPacketTest extends TestCase {
 		Assert.assertEquals("fifth byte ",  0xF2, ba[4] & 0xFF);
 	}
 
+	public void testAnalog1() {
+		// "typical packet" test
+		byte[] ba = NmraPacket.analogControl(60, false, 1, 00);
+		Assert.assertEquals("first byte ",  0x3C, ba[0] & 0xFF);
+		Assert.assertEquals("second byte ", 0x3D, ba[1] & 0xFF);
+		Assert.assertEquals("third byte ",  0x01, ba[2] & 0xFF);
+		Assert.assertEquals("fourth byte ", 0x00, ba[3] & 0xFF);
+		Assert.assertEquals("fifth byte ",  0x3C^0x3D^0x01, ba[4] & 0xFF);
+	}
+
+	public void testAnalog2() {
+		// "typical packet" test
+		byte[] ba = NmraPacket.analogControl(60, false, 1, 12);
+		Assert.assertEquals("first byte ",  0x3C, ba[0] & 0xFF);
+		Assert.assertEquals("second byte ", 0x3D, ba[1] & 0xFF);
+		Assert.assertEquals("third byte ",  0x01, ba[2] & 0xFF);
+		Assert.assertEquals("fourth byte ", 0x0C, ba[3] & 0xFF);
+		Assert.assertEquals("fifth byte ",  0x3C^0x3D^0x01^0x0C, ba[4] & 0xFF);
+	}
+
 	// from here down is testing infrastructure
 	public NmraPacketTest(String s) {
 		super(s);
