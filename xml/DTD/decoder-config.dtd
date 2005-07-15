@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a DCC decoder as a component, esp. information -->
 <!-- on how to program it. -->
-<!-- $Revision: 1.39 $ -->
+<!-- $Revision: 1.40 $ -->
 
 <!-- This DTD is Copyright 1999, 2000, 2001, 2003, 2004 Bob Jacobsen & JMRI. -->
 <!-- You may freely use it subject to the Open Source Artistic               -->
@@ -148,7 +148,7 @@
 <!ATTLIST variable inOptions CDATA #IMPLIED > <!-- variable present if any of the options are present -->
 <!ATTLIST variable tooltip   CDATA #IMPLIED > <!-- variable-specific tooltip, see also programmer DTD -->
 
-<!ELEMENT ivariable  (ienumVal | indexedVal) >
+<!ELEMENT ivariable  (ienumVal | indexedVal | indexedPairVal) >
 <!ATTLIST ivariable label  CDATA #REQUIRED>  <!-- manufacturer's name used for identification -->
 <!ATTLIST ivariable CVname CDATA #REQUIRED>  <!-- CV name of an indexed value -->
 <!ATTLIST ivariable CV     CDATA #REQUIRED>  <!-- CV number containing value  -->
@@ -240,6 +240,16 @@
 <!ATTLIST indexedVal min CDATA "0" >          <!-- smallest acceptable value  -->
 <!ATTLIST indexedVal max CDATA "255" >        <!-- largest acceptable value   -->
 <!ATTLIST indexedVal comment CDATA #IMPLIED>
+
+<!ELEMENT indexedPairVal EMPTY >
+<!ATTLIST indexedPairVal highCVname CDATA #REQUIRED>  <!-- CV name of an indexed value -->
+<!ATTLIST indexedPairVal min        CDATA "0" >       <!-- smallest acceptable value -->
+<!ATTLIST indexedPairVal max        CDATA "255" >
+<!ATTLIST indexedPairVal default    CDATA #IMPLIED>
+<!ATTLIST indexedPairVal factor     CDATA "1">        <!-- cv*factor+offset is variable value -->
+<!ATTLIST indexedPairVal offset     CDATA "0">
+<!ATTLIST indexedPairVal comment    CDATA #IMPLIED>
+<!ATTLIST indexedPairVal upperMask  CDATA "VVVVVVVV"> <!-- mask of bits within upper CV -->
 
 
 <!-- A constant represents a fixed value, but is treated -->
