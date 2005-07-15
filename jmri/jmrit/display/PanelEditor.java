@@ -49,7 +49,7 @@ import com.sun.java.util.collections.ArrayList;
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @version $Revision: 1.50 $
+ * @version $Revision: 1.51 $
  */
 
 public class PanelEditor extends JmriJFrame {
@@ -238,8 +238,10 @@ public class PanelEditor extends JmriJFrame {
 
 
             turnoutRIconEditor = new MultiIconEditor(4);
-            turnoutRIconEditor.setIcon(0, "Closed:","resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif");
-            turnoutRIconEditor.setIcon(1, "Thrown", "resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif");
+            turnoutRIconEditor.setIcon(0,InstanceManager.turnoutManagerInstance().getClosedText()+":",
+				"resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif");
+            turnoutRIconEditor.setIcon(1,InstanceManager.turnoutManagerInstance().getThrownText()+":", 
+				"resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif");
             turnoutRIconEditor.setIcon(2, "Inconsistent:", "resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif");
             turnoutRIconEditor.setIcon(3, "Unknown:","resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif");
             turnoutRIconEditor.complete();
@@ -282,8 +284,10 @@ public class PanelEditor extends JmriJFrame {
 
 
             turnoutLIconEditor = new MultiIconEditor(4);
-            turnoutLIconEditor.setIcon(0, "Closed:","resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif");
-            turnoutLIconEditor.setIcon(1, "Thrown", "resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif");
+            turnoutLIconEditor.setIcon(0,InstanceManager.turnoutManagerInstance().getClosedText()+":",
+				"resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif");
+            turnoutLIconEditor.setIcon(1,InstanceManager.turnoutManagerInstance().getThrownText()+":", 
+				"resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif");
             turnoutLIconEditor.setIcon(2, "Inconsistent:", "resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif");
             turnoutLIconEditor.setIcon(3, "Unknown:","resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif");
             turnoutLIconEditor.complete();

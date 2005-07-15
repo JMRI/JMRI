@@ -27,7 +27,7 @@ import javax.swing.JComboBox;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -53,6 +53,9 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
 
     public TurnoutTableAction() { this("Turnout Table");}
+	
+	String closedText = InstanceManager.turnoutManagerInstance().getClosedText();
+	String thrownText = InstanceManager.turnoutManagerInstance().getThrownText();
 
     /**
      * Create the JTable DataModel, along with the changes
@@ -107,8 +110,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     			if (col==KNOWNCOL) {
     				String name = (String)sysNameList.get(row);
     				Turnout t = InstanceManager.turnoutManagerInstance().getBySystemName(name);
-                    if (t.getKnownState()==Turnout.CLOSED) return "Closed";
-                    if (t.getKnownState()==Turnout.THROWN) return "Thrown";
+                    if (t.getKnownState()==Turnout.CLOSED) return closedText;
+                    if (t.getKnownState()==Turnout.THROWN) return thrownText;
                     if (t.getKnownState()==Turnout.INCONSISTENT) return "Inconsistent";
                     else return "Unknown";
     			} else if (col==MODECOL) {
@@ -159,8 +162,8 @@ public class TurnoutTableAction extends AbstractTableAction {
             public String getValue(String name) {
                 int val = InstanceManager.turnoutManagerInstance().getBySystemName(name).getCommandedState();
                 switch (val) {
-                case Turnout.CLOSED: return rbean.getString("TurnoutStateClosed");
-                case Turnout.THROWN: return rbean.getString("TurnoutStateThrown");
+                case Turnout.CLOSED: return closedText;
+                case Turnout.THROWN: return thrownText;
                 case Turnout.UNKNOWN: return rbean.getString("BeanStateUnknown");
                 case Turnout.INCONSISTENT: return rbean.getString("BeanStateInconsistent");
                 default: return "Unexpected value: "+val;
@@ -174,7 +177,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 else ((Turnout)t).setCommandedState(Turnout.CLOSED);
             }
             public JButton configureButton() {
-                return new JButton("Thrown");
+				return new JButton(thrownText);
             }
 
             public void configureTable(JTable table) {

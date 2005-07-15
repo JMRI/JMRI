@@ -32,7 +32,7 @@ import javax.swing.JOptionPane;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -353,9 +353,9 @@ public class LightTableAction extends AbstractTableAction {
             field1c.setToolTipText( rb.getString("LightTurnoutHint") );
             f2Label.setText( rb.getString("LightTurnoutSense") );
             stateBox.removeAllItems();
-            stateBox.addItem( rbean.getString("TurnoutStateClosed") );
+			stateBox.addItem(InstanceManager.turnoutManagerInstance().getClosedText());
             turnoutClosedIndex = 0;
-            stateBox.addItem( rbean.getString("TurnoutStateThrown") );
+			stateBox.addItem(InstanceManager.turnoutManagerInstance().getThrownText());
             turnoutThrownIndex = 1;
             stateBox.setToolTipText( rb.getString("LightTurnoutSenseHint") );
             f2Label.setVisible(true);
@@ -757,8 +757,8 @@ public class LightTableAction extends AbstractTableAction {
 			}
             // Initialize the requested Turnout State
             int tState = Turnout.CLOSED;
-            if ( stateBox.getSelectedItem().equals(rbean.getString
-                                                    ("TurnoutStateThrown")) ) {
+            if ( stateBox.getSelectedItem().equals(InstanceManager.
+				turnoutManagerInstance().getThrownText()) ) {
                 tState = Turnout.THROWN;
             }
             g.setControlTurnout(turnoutSystemName);

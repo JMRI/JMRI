@@ -12,7 +12,7 @@ import jmri.TurnoutManager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
     /**
@@ -113,6 +113,26 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
             return ( (TurnoutManager)mgrs.get(0)).newTurnout(systemName, userName);
         }
     }
+    	
+	/**
+	 * Get text to be used for the Turnout.CLOSED state in user communication.
+	 * Allows text other than "CLOSED" to be use with certain hardware system 
+	 * to represent the Turnout.CLOSED state.  
+	 * Defaults to the primary manager.  This means that the primary manager sets the terminology
+	 * used.  Note: the primary manager need not override the method in AbstractTurnoutManager if
+	 * "CLOSED" is the desired terminology.
+	 */
+	public String getClosedText() { return ( (TurnoutManager)mgrs.get(0)).getClosedText(); };
+	
+	/**
+	 * Get text to be used for the Turnout.THROWN state in user communication.
+	 * Allows text other than "THROWN" to be use with certain hardware system 
+	 * to represent the Turnout.THROWN state.
+	 * Defaults to the primary manager.  This means that the primary manager sets the terminology
+	 * used.  Note: the primary manager need not override the method in AbstractTurnoutManager if
+	 * "THROWN" is the desired terminology.
+	 */
+	public String getThrownText() { return ( (TurnoutManager)mgrs.get(0)).getThrownText(); };
 
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ProxyTurnoutManager.class.getName());

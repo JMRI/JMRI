@@ -6,10 +6,12 @@ package jmri;
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
     implements TurnoutManager {
+
+    final java.util.ResourceBundle rbt = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
     public char typeLetter() { return 'T'; }
 
@@ -73,6 +75,20 @@ public abstract class AbstractTurnoutManager extends AbstractManager
 
         return s;
     }
+    	
+	/**
+	 * Get text to be used for the Turnout.CLOSED state in user communication.
+	 * Allows text other than "CLOSED" to be use with certain hardware system 
+	 * to represent the Turnout.CLOSED state.
+	 */
+	public String getClosedText() { return rbt.getString("TurnoutStateClosed"); };
+	
+	/**
+	 * Get text to be used for the Turnout.THROWN state in user communication.
+	 * Allows text other than "THROWN" to be use with certain hardware system 
+	 * to represent the Turnout.THROWN state.
+	 */
+	public String getThrownText() { return rbt.getString("TurnoutStateThrown"); };
 
     /**
      * Internal method to invoke the factory, after all the

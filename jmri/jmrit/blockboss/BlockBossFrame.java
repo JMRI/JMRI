@@ -2,6 +2,7 @@
 
 package jmri.jmrit.blockboss;
 
+import jmri.InstanceManager;
 import jmri.Turnout;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -30,7 +31,7 @@ import javax.swing.*;
  * The individual items all share data models to simplify the logic.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
 public class BlockBossFrame extends JFrame {
@@ -235,7 +236,7 @@ public class BlockBossFrame extends JFrame {
         line = new JPanel();
         line.add(new JLabel("Red When Turnout "));
         line.add(tmProtectTurnoutField);
-        line.add(new JLabel("Is Thrown"));
+        line.add(new JLabel("Is "+InstanceManager.turnoutManagerInstance().getThrownText()));
         modeTrailMain.add(line);
 
         line = new JPanel();
@@ -262,7 +263,7 @@ public class BlockBossFrame extends JFrame {
         line = new JPanel();
         line.add(new JLabel("Red When Turnout "));
         line.add(tdProtectTurnoutField);
-        line.add(new JLabel("Is Closed"));
+        line.add(new JLabel("Is "+InstanceManager.turnoutManagerInstance().getClosedText()));
         modeTrailDiv.add(line);
 
         line = new JPanel();
@@ -295,14 +296,14 @@ public class BlockBossFrame extends JFrame {
         line.add(new JLabel("To Protect Signal "));
         line.add(fNextSignalField1);
         line.add(fNextSignalField1Alt);
-        line.add(new JLabel("When Turnout is Closed"));
+        line.add(new JLabel("When Turnout is "+InstanceManager.turnoutManagerInstance().getClosedText()));
          modeFacing.add(line);
 
         line = new JPanel();
         line.add(new JLabel("And Protect Signal "));
         line.add(fNextSignalField2);
         line.add(fNextSignalField2Alt);
-        line.add(new JLabel("When Turnout is Thrown"));
+        line.add(new JLabel("When Turnout is "+InstanceManager.turnoutManagerInstance().getThrownText()));
         modeFacing.add(line);
 
         line = new JPanel();

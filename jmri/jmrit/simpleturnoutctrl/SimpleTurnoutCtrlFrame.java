@@ -12,7 +12,7 @@ import javax.swing.JMenuBar;
 /**
  * Frame controlling a single turnout
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.beans.PropertyChangeListener {
 
@@ -36,18 +36,20 @@ public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.b
         adrTextField.setVisible(true);
         adrTextField.setToolTipText("turnout number being controlled");
 
-        throwButton.setText("Thrown");
+        throwButton.setText(InstanceManager.turnoutManagerInstance().getThrownText());
         throwButton.setVisible(true);
-        throwButton.setToolTipText("Press to set turnout 'thrown'");
+        throwButton.setToolTipText("Press to set turnout '"+
+			InstanceManager.turnoutManagerInstance().getThrownText()+"'");
         throwButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     throwButtonActionPerformed(e);
                 }
             });
 
-        closeButton.setText("Closed");
+        closeButton.setText(InstanceManager.turnoutManagerInstance().getClosedText());
         closeButton.setVisible(true);
-        closeButton.setToolTipText("Press to set turnout 'closed'");
+        closeButton.setToolTipText("Press to set turnout '"+
+			InstanceManager.turnoutManagerInstance().getClosedText()+"'");
         closeButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     closeButtonActionPerformed(e);
@@ -149,10 +151,10 @@ public class SimpleTurnoutCtrlFrame extends javax.swing.JFrame implements java.b
                 nowStateLabel.setText("<unknown>");
                 return;
             case Turnout.CLOSED:
-                nowStateLabel.setText("Closed");
+                nowStateLabel.setText(InstanceManager.turnoutManagerInstance().getClosedText());
                 return;
             case Turnout.THROWN:
-                nowStateLabel.setText("Thrown");
+                nowStateLabel.setText(InstanceManager.turnoutManagerInstance().getThrownText());
                 return;
             default:
                 nowStateLabel.setText("<inconsistent>");

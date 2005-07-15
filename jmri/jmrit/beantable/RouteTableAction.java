@@ -32,7 +32,7 @@ import jmri.util.com.sun.Comparator;
  * Based in part on SignalHeadTableAction.java by Bob Jacobson
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -84,6 +84,12 @@ public class RouteTableAction extends AbstractTableAction {
         f.setTitle("Route Table");
     }
 
+	String setStateClosed = 
+			"Set "+InstanceManager.turnoutManagerInstance().getClosedText();
+	String setStateThrown =
+			"Set "+InstanceManager.turnoutManagerInstance().getThrownText();
+//	String setStateToggle = "Toggle";
+
     String[] sensorModes = new String[]{"On Active", "On Inactive", "Veto Active", "Veto Inactive"};
     
     JFrame addFrame = null;
@@ -132,9 +138,10 @@ public class RouteTableAction extends AbstractTableAction {
 
     void addPressed(ActionEvent e) {
         // Initialize the turnout list
+		String setStateClosed = "Set "+InstanceManager.turnoutManagerInstance().getClosedText();
         for (int i = 0; i<MAX_TURNOUTS ; i++ ) {
             includeTurnout[i] = false;
-            setState[i] = "CLOSED";
+			setState[i] = setStateClosed;
             includedPosition[i] = 0;
         }
         turnoutSysNameList = InstanceManager.turnoutManagerInstance().getSystemNameList();
@@ -219,30 +226,31 @@ public class RouteTableAction extends AbstractTableAction {
             routeTurnoutTable.setPreferredScrollableViewportSize(new 
                                                             java.awt.Dimension(480,100));
             JComboBox stateCombo = new JComboBox();
-            stateCombo.addItem("CLOSED");
-            stateCombo.addItem("THROWN");
+   			stateCombo.addItem(setStateClosed);
+			stateCombo.addItem(setStateThrown);
+//			stateCombo.addItem("Toggle");
             TableColumnModel routeTurnoutColumnModel = routeTurnoutTable.getColumnModel();
             TableColumn includeColumn = routeTurnoutColumnModel.
                                                 getColumn(RouteTurnoutModel.INCLUDE_COLUMN);
             includeColumn.setResizable(false);
-            includeColumn.setMinWidth(55);
-            includeColumn.setMaxWidth(65);
+            includeColumn.setMinWidth(50);
+            includeColumn.setMaxWidth(60);
             TableColumn sNameColumn = routeTurnoutColumnModel.
                                                 getColumn(RouteTurnoutModel.SNAME_COLUMN);
             sNameColumn.setResizable(true);
-            sNameColumn.setMinWidth(70);
-            sNameColumn.setMaxWidth(90);
+            sNameColumn.setMinWidth(75);
+            sNameColumn.setMaxWidth(95);
             TableColumn uNameColumn = routeTurnoutColumnModel.
                                                 getColumn(RouteTurnoutModel.UNAME_COLUMN);
             uNameColumn.setResizable(true);
-            uNameColumn.setMinWidth(200);
-            uNameColumn.setMaxWidth(250);
+            uNameColumn.setMinWidth(210);
+            uNameColumn.setMaxWidth(260);
             TableColumn stateColumn = routeTurnoutColumnModel.
                                                 getColumn(RouteTurnoutModel.STATE_COLUMN);
             stateColumn.setCellEditor(new DefaultCellEditor(stateCombo));
             stateColumn.setResizable(false);
-            stateColumn.setMinWidth(70);
-            stateColumn.setMaxWidth(80);
+            stateColumn.setMinWidth(90);
+            stateColumn.setMaxWidth(100);
             JScrollPane routeTurnoutScrollPane = new JScrollPane(routeTurnoutTable);
             p2x.add(routeTurnoutScrollPane,BorderLayout.CENTER);
             contentPane.add(p2x);
@@ -279,9 +287,9 @@ public class RouteTableAction extends AbstractTableAction {
             cTurnout.setText("");
             cTurnout.setToolTipText("Enter a Turnout system name (real or phantom) for throttle control.");
             p34.add(new JLabel("   Turnout State: "));
-            cTurnoutStateBox.addItem( rbean.getString("TurnoutStateClosed") );
+            cTurnoutStateBox.addItem(InstanceManager.turnoutManagerInstance().getClosedText());
             turnoutClosedIndex = 0;
-            cTurnoutStateBox.addItem( rbean.getString("TurnoutStateThrown") );
+            cTurnoutStateBox.addItem(InstanceManager.turnoutManagerInstance().getThrownText());
             turnoutThrownIndex = 1;
             cTurnoutStateBox.setToolTipText("Setting control Turnout to selected state will trigger Route.");
             p34.add(cTurnoutStateBox);
@@ -447,12 +455,14 @@ public class RouteTableAction extends AbstractTableAction {
         int state = 0;
         for (int i = 0; i<numTurnouts; i++) {
             if (includeTurnout[i]) {
-                if (setState[i].equals("CLOSED") ) {
+                if (setState[i].equals(setStateClosed) ) {
                     state = Turnout.CLOSED;
                 }
-                else {
+                else if (setState[i].equals(setStateThrown) ) {
                     state = Turnout.THROWN;
                 }
+//				else {
+//					state = Route.TOGGLE;
                 g.addTurnoutToRoute((String)turnoutSysNameList.get(i),state);
                 numIncluded ++;
             }
@@ -522,8 +532,7 @@ public class RouteTableAction extends AbstractTableAction {
                         t.getSystemName()+"' to Route '"+g.getSystemName()+"'.");
             }
             // set up control turnout state
-            if ( cTurnoutStateBox.getSelectedItem().equals(rbean.getString
-                                                    ("TurnoutStateThrown")) ) {
+            if ( cTurnoutStateBox.getSelectedItem().equals(setStateThrown) ) {
                 g.setControlTurnoutState(jmri.Turnout.THROWN);
             }
             else {
@@ -565,13 +574,19 @@ public class RouteTableAction extends AbstractTableAction {
                 if (g.isTurnoutIncluded(tSysName)) {
                     includeTurnout[i] = true;
                     tState = g.getTurnoutSetState(tSysName);
-                    setState[i] = "CLOSED";
-                    if (tState==Turnout.THROWN) {
-                        setState[i] = "THROWN";
+					if (tState==Turnout.CLOSED) {
+						setState[i] = setStateClosed;
+					}
+                    else if (tState==Turnout.THROWN) {
+                        setState[i] = setStateThrown;
                     }
+//					else if (tState==Route.TOGGLE) {
+//						setState[i] = setStateToggle;
+//					}
                 }
                 else {
                     includeTurnout[i] = false;
+					setState[i] = setStateClosed;
                 }
             }
         }
