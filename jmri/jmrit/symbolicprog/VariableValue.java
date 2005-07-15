@@ -15,7 +15,7 @@ import javax.swing.*;
  *
  * @author   Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2004, 2005
  * @author   Howard G. Penny Copyright (C) 2005
- * @version  $Revision: 1.22 $
+ * @version  $Revision: 1.23 $
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
 
@@ -189,7 +189,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * to be sufficient for many subclasses.
      */
     public void setToRead(boolean state) {
-        if (getInfoOnly()) state = false;
+        if (getInfoOnly() || getWriteOnly()) state = false;
         ((CvValue)_cvVector.elementAt(getCvNum())).setToRead(state);
     }
     /**
