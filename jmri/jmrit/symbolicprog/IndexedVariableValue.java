@@ -23,7 +23,7 @@ import com.sun.java.util.collections.ArrayList;
  * Extends VariableValue to represent an indexed variable
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 public class IndexedVariableValue extends VariableValue
     implements ActionListener, PropertyChangeListener, FocusListener {
@@ -142,9 +142,7 @@ public class IndexedVariableValue extends VariableValue
     }
 
     public Component getRep(String format)  {
-        if (getReadOnly())  //
-            return updateRepresentation(new JLabel(_value.getText()));
-        else if (format.equals("vslider")) {
+        if (format.equals("vslider")) {
             IndexedVarSlider b = new IndexedVarSlider(this, _minVal, _maxVal);
             b.setOrientation(JSlider.VERTICAL);
             sliders.add(b);
@@ -181,6 +179,9 @@ public class IndexedVariableValue extends VariableValue
         }
         else {
             JTextField value = new VarTextField(_value.getDocument(),_value.getText(), 3, this);
+            if (getReadOnly() || getInfoOnly()) {
+                value.setEditable(false);
+            }
             updateRepresentation(value);
             return value;
         }
@@ -355,7 +356,7 @@ public class IndexedVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.4 $
+     * @version     $Revision: 1.5 $
      */
     public class VarTextField extends JTextField {
 
@@ -407,7 +408,11 @@ public class IndexedVariableValue extends VariableValue
    // clean up connections when done
    public void dispose() {
        if (log.isDebugEnabled()) log.debug("dispose");
-       if (_value != null) _value.removeActionListener(this);
+       if (_value != null) {
+           _value.removeActionListener(this);
+           _value.removeFocusListener(this);
+           _value.removePropertyChangeListener(this);
+       }
        ((CvValue)_cvVector.elementAt(_row)).removePropertyChangeListener(this);
 
        _value = null;
