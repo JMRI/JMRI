@@ -2,9 +2,9 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: QSI_Articulated_Steam.xml,v 1.5 2005-06-17 03:03:02 innkeeper Exp $ -->
+<!-- $Id: QSI_Articulated_Steam.xml,v 1.6 2005-07-15 03:10:59 innkeeper Exp $ -->
 <decoder-config>
-  <version author="Howard G. Penny" version="5" lastUpdated="20050616"/>
+  <version author="Howard G. Penny" version="6" lastUpdated="20050714"/>
 
 <!-- version 1 - modified for QSI CV.PI.SI format - Howard -->
 <!-- version 2 - Changed "upgrade" notice on tabs to reflect 1.5.8 - Howard -->
@@ -13,9 +13,12 @@
 <!-- version 4 - added copyright information - Howard -->
 <!-- version 4 - updated format of Sound/Volume tab - Howard -->
 <!-- version 5 - Updated info on misc. tab - Howard -->
+<!-- version 6 - Removed QSI ver. 6 models to new file - Howard -->
+<!-- version 6 - Added product number ivariable and build information
+                   on Misc. pane - Howard -->
 
 <decoder>
-  <family name="QSI Articulated Steam" mfg="QSIndustries" lowVersionID="2" highVersionID="6" >
+  <family name="QSI Articulated Steam" mfg="QSIndustries" lowVersionID="2" highVersionID="5" >
     <model model="BLI AC5 Cab Forward 4-8-8-2" lowVersionID="5" 
            numFns="14" numOuts="14" productID="403" >
       <output name="1" label="Plug" connection="other" />
@@ -69,23 +72,6 @@
     </model>
     <model model="Lionel Challenger 4-6-6-4" lowVersionID="4"
            numFns="14" numOuts="14" productID="402" >
-      <output name="1" label="Plug" connection="other" />
-      <output name="2" label="Plug" connection="other" />
-      <output name="3" label="Snd" connection="other" />
-      <output name="4" label="Snd" connection="other" />
-      <output name="5" label="Snd" connection="other" />
-      <output name="6" label="Snd" connection="other" />
-      <output name="7" label="Snd" connection="other" />
-      <output name="8" label="Snd" connection="other" />
-      <output name="9" label="Snd" connection="other" />
-      <output name="10" label="Snd" connection="other" />
-      <output name="11" label="Snd" connection="other" />
-      <output name="12" label="Snd" connection="other" />
-      <output name="13" label="Snd" connection="other" />
-      <output name="14" label="Snd" connection="other" />
-    </model>
-    <model model="Life Like USRA 2-8-8-2" lowVersionID="6"
-           numFns="14" numOuts="14"  productID="404" >
       <output name="1" label="Plug" connection="other" />
       <output name="2" label="Plug" connection="other" />
       <output name="3" label="Snd" connection="other" />
@@ -673,6 +659,7 @@
     <ivariable label="Outout 5 - Forward/Reverse Only" CVname="53.5.0" CV="53" PI="5" SI="0"
                default="211" comment="QSI" item="CV53.5.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -682,8 +669,8 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Air Brakes" value="176"/>
-        <ienumChoice choice="Cruise Control" value="177"/>
+        <ienumChoice choice="Cruise Control" value="177"
+                     include="400,402" />
         <ienumChoice choice="Scale mph Report"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
@@ -692,6 +679,7 @@
     <ivariable label=" - Neutral Only" CVname="53.5.1" CV="53" PI="5" SI="1"
                default="211" comment="QSI" item="CV53.5.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -714,6 +702,7 @@
     <ivariable label="Outout 6 - Forward/Reverse Only" CVname="53.6.0" CV="53" PI="6" SI="0"
                default="8" comment="QSI" item="CV53.6.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -723,8 +712,8 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Air Brakes" value="176"/>
-        <ienumChoice choice="Cruise Control" value="177"/>
+        <ienumChoice choice="Cruise Control" value="177"
+                     include="400,402" />
         <ienumChoice choice="Scale mph Report"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
@@ -733,6 +722,7 @@
     <ivariable label=" - Neutral Only" CVname="53.6.1" CV="53" PI="6" SI="1"
                default="8" comment="QSI" item="CV53.6.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -755,6 +745,7 @@
     <ivariable label="Outout 7 - Forward/Reverse Only" CVname="53.7.0" CV="53" PI="7" SI="0"
                default="5" comment="QSI" item="CV53.7.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -764,8 +755,8 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Air Brakes" value="176"/>
-        <ienumChoice choice="Cruise Control" value="177"/>
+        <ienumChoice choice="Cruise Control" value="177"
+                     include="400,402" />
         <ienumChoice choice="Scale mph Report"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
@@ -774,6 +765,7 @@
     <ivariable label=" - Neutral Only" CVname="53.7.1" CV="53" PI="7" SI="1"
                default="5" comment="QSI" item="CV53.7.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -796,6 +788,7 @@
     <ivariable label="Outout 8 - Forward/Reverse Only" CVname="53.8.0" CV="53" PI="8" SI="0"
                default="65" comment="QSI" item="CV53.8.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -805,8 +798,8 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Air Brakes" value="176"/>
-        <ienumChoice choice="Cruise Control" value="177"/>
+        <ienumChoice choice="Cruise Control" value="177"
+                     include="400,402" />
         <ienumChoice choice="Scale mph Report"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
@@ -815,6 +808,7 @@
     <ivariable label=" - Neutral Only" CVname="53.8.1" CV="53" PI="8" SI="1"
                default="144" comment="QSI" item="CV53.8.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -837,6 +831,7 @@
     <ivariable label="Outout 9 - Forward/Reverse Only" CVname="53.9.0" CV="53" PI="9" SI="0"
                default="215" comment="QSI" item="CV53.9.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -846,8 +841,8 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Air Brakes" value="176"/>
-        <ienumChoice choice="Cruise Control" value="177"/>
+        <ienumChoice choice="Cruise Control" value="177"
+                     include="400,402" />
         <ienumChoice choice="Scale mph Report"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
@@ -856,6 +851,7 @@
     <ivariable label=" - Neutral Only" CVname="53.9.1" CV="53" PI="9" SI="1"
                default="14" comment="QSI" item="CV53.9.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -878,6 +874,7 @@
     <ivariable label="Outout 10 - Forward/Reverse Only" CVname="53.10.0" CV="53" PI="10" SI="0"
                default="64" comment="QSI" item="CV53.10.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -887,8 +884,8 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Air Brakes" value="176"/>
-        <ienumChoice choice="Cruise Control" value="177"/>
+        <ienumChoice choice="Cruise Control" value="177"
+                     include="400,402" />
         <ienumChoice choice="Scale mph Report"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
@@ -897,6 +894,7 @@
     <ivariable label=" - Neutral Only" CVname="53.10.1" CV="53" PI="10" SI="1"
                default="64" comment="QSI" item="CV53.10.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -919,6 +917,7 @@
     <ivariable label="Outout 11 - Forward/Reverse Only" CVname="53.11.0" CV="53" PI="11" SI="0"
                default="10" comment="QSI" item="CV53.11.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -928,8 +927,8 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Air Brakes" value="176"/>
-        <ienumChoice choice="Cruise Control" value="177"/>
+        <ienumChoice choice="Cruise Control" value="177"
+                     include="400,402" />
         <ienumChoice choice="Scale mph Report"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
@@ -938,6 +937,7 @@
     <ivariable label=" - Neutral Only" CVname="53.11.1" CV="53" PI="11" SI="1"
                default="145" comment="QSI" item="CV53.11.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -960,6 +960,7 @@
     <ivariable label="Outout 12 - Forward/Reverse Only" CVname="53.12.0" CV="53" PI="12" SI="0"
                default="10" comment="QSI" item="CV53.12.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -969,8 +970,8 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Air Brakes" value="176"/>
-        <ienumChoice choice="Cruise Control" value="177"/>
+        <ienumChoice choice="Cruise Control" value="177"
+                     include="400,402" />
         <ienumChoice choice="Scale mph Report"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
@@ -979,6 +980,7 @@
     <ivariable label=" - Neutral Only" CVname="53.12.1" CV="53" PI="12" SI="1"
                default="12" comment="QSI" item="CV53.12.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -1001,6 +1003,7 @@
     <ivariable label="Outout 13 - Forward/Reverse Only" CVname="53.13.0" CV="53" PI="13" SI="0"
                default="10" comment="QSI" item="CV53.13.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -1010,8 +1013,8 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Air Brakes" value="176"/>
-        <ienumChoice choice="Cruise Control" value="177"/>
+        <ienumChoice choice="Cruise Control" value="177"
+                     include="400,402" />
         <ienumChoice choice="Scale mph Report"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
@@ -1020,6 +1023,7 @@
     <ivariable label=" - Neutral Only" CVname="53.13.1" CV="53" PI="13" SI="1"
                default="13" comment="QSI" item="CV53.13.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -1042,6 +1046,7 @@
     <ivariable label="Outout 14 - Forward/Reverse Only" CVname="53.14.0" CV="53" PI="14" SI="0"
                default="10" comment="QSI" item="CV53.14.0">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -1051,8 +1056,8 @@
         <ienumChoice choice="Headlight" value="98"/>
         <ienumChoice choice="Dim Headlight"/>
         <ienumChoice choice="Reverse Light"/>
-        <ienumChoice choice="Air Brakes" value="176"/>
-        <ienumChoice choice="Cruise Control" value="177"/>
+        <ienumChoice choice="Cruise Control" value="177"
+                     include="400,402" />
         <ienumChoice choice="Scale mph Report"/>
         <ienumChoice choice="Coupler Effect" value="211"/>
         <ienumChoice choice="Squealing Brakes" value="215"/>
@@ -1061,6 +1066,7 @@
     <ivariable label=" - Neutral Only" CVname="53.14.1" CV="53" PI="14" SI="1"
                default="10" comment="QSI" item="CV53.14.1">
       <ienumVal>
+        <ienumChoice choice="None" value="0"/>
         <ienumChoice choice="Dynamic Brakes" value="5"/>
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
@@ -1081,7 +1087,7 @@
     </ivariable>
 
     <ivariable label="Throttle Mode" CVname="56.4" CV="56" PI="4" default="1"
-               comment="QSI" item="CV56.4" mask="XXXXXXVV">
+               include="400,402" item="CV56.4" mask="XXXXXXVV">
       <ienumVal>
         <ienumChoice choice="Standard Throttle Control"/>
         <ienumChoice choice="Speed Control"/>
@@ -1091,10 +1097,6 @@
 
     <ivariable label="Speed Step to Scale MPH Scale Factor" CVname="56.10" CV="56" PI="10" default="64"
                comment="QSI" item="CV56.10">
-      <indexedVal max="128"/> </ivariable>
-
-    <ivariable label="Chuff Interval Scale Factor" CVname="56.12" CV="56" PI="12" default="32"
-               comment="QSI" item="CV56.12">
       <indexedVal max="128"/> </ivariable>
 
 <!-- CV 56.129 Engine ID Access (for ops mode) - TBD -->
@@ -1112,6 +1114,12 @@
                readOnly="yes" comment="QSI" item="CV56.254.11"> <indexedVal/> </ivariable>
     <ivariable label="Firmware Build Date.Year" CVname="56.254.12" CV="56" PI="254" SI="12"
                readOnly="yes" comment="QSI" item="CV56.254.12"> <indexedVal/> </ivariable>
+
+<!-- QSI Product ID -->
+    <ivariable label="Product number" CVname="56.254.5" CV="56" PI="254" SI="5"
+               readOnly="yes" item="Product number" >
+        <indexedPairVal highCVname="56.254.4" factor="256" />
+    </ivariable>
 
 <!-- CV 56.255 Play Build Information (for ops mode) -->
     <ivariable label="Play Product Identifier" CVname="56.255_0" CV="56" PI="255"
@@ -1288,11 +1296,16 @@
 
 <pane name="QSI Misc.">
   <column>
+    <display item="CV56.254.8"/>
+    <display item="CV56.254.10"/>
+    <display item="CV56.254.11"/>
+    <display item="CV56.254.12"/>
+    <label label=" "/>
     <label label="When programming in Ops-mode, set Verbal Acknowledgement to disable"/>
     <label label=" "/>
     <display item="CV62 QSI Control"/>
     <label label=" "/>
-    <label label="When in Ops-mode"/>
+    <label label="When in Ops-mode:"/>
     <label label="Enter a CV you wish to hear and press -- Write changes on sheet"/>
     <label label=" "/>
     <display item="Verbal CV Inquiry"/>
