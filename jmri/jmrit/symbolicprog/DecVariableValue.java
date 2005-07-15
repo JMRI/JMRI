@@ -22,7 +22,7 @@ import com.sun.java.util.collections.ArrayList;
  * Decimal representation of a value.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.16 $
+ * @version             $Revision: 1.17 $
  *
  */
 public class DecVariableValue extends VariableValue
@@ -154,7 +154,7 @@ public class DecVariableValue extends VariableValue
         }
         else {
             JTextField value = new VarTextField(_value.getDocument(),_value.getText(), 3, this);
-            if (getReadOnly()) {
+            if (getReadOnly() || getInfoOnly()) {
                 value.setEditable(false);
             }
             updateRepresentation(value);
