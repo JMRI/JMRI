@@ -63,7 +63,7 @@ import com.sun.java.util.collections.List;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.49 $
+ * @version   $Revision: 1.50 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -275,6 +275,9 @@ public class PaneProgPane extends javax.swing.JPanel
                 } else {
                     stopProgramming();
                     readChangesButton.setText("Read changes on sheet");
+                    if (_parentFrame.isBusy()) {
+                        readChangesButton.setEnabled(false);
+                    }
                 }
             }
         });
@@ -299,6 +302,9 @@ public class PaneProgPane extends javax.swing.JPanel
                 } else {
                     stopProgramming();
                     readAllButton.setText("Read full sheet");
+                    if (_parentFrame.isBusy()) {
+                        readAllButton.setEnabled(false);
+                    }
                 }
             }
         });
@@ -317,6 +323,9 @@ public class PaneProgPane extends javax.swing.JPanel
                 } else {
                     stopProgramming();
                     writeChangesButton.setText("Write changes on sheet");
+                    if (_parentFrame.isBusy()) {
+                        writeChangesButton.setEnabled(false);
+                    }
                 }
             }
         });
@@ -335,6 +344,9 @@ public class PaneProgPane extends javax.swing.JPanel
                 } else {
                     stopProgramming();
                     writeAllButton.setText("Write full sheet");
+                    if (_parentFrame.isBusy()) {
+                        writeAllButton.setEnabled(false);
+                    }
                 }
             }
         });
