@@ -63,7 +63,7 @@ import com.sun.java.util.collections.List;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.48 $
+ * @version   $Revision: 1.49 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -275,7 +275,6 @@ public class PaneProgPane extends javax.swing.JPanel
                 } else {
                     stopProgramming();
                     readChangesButton.setText("Read changes on sheet");
-                    enableButtons(!_parentFrame.isBusy());
                 }
             }
         });
@@ -300,7 +299,6 @@ public class PaneProgPane extends javax.swing.JPanel
                 } else {
                     stopProgramming();
                     readAllButton.setText("Read full sheet");
-                    enableButtons(!_parentFrame.isBusy());
                 }
             }
         });
@@ -319,7 +317,6 @@ public class PaneProgPane extends javax.swing.JPanel
                 } else {
                     stopProgramming();
                     writeChangesButton.setText("Write changes on sheet");
-                    enableButtons(!_parentFrame.isBusy());
                 }
             }
         });
@@ -338,7 +335,6 @@ public class PaneProgPane extends javax.swing.JPanel
                 } else {
                     stopProgramming();
                     writeAllButton.setText("Write full sheet");
-                    enableButtons(!_parentFrame.isBusy());
                 }
             }
         });
@@ -874,6 +870,9 @@ public class PaneProgPane extends javax.swing.JPanel
     protected void setBusy(boolean busy) {
         boolean oldBusy = _busy;
         _busy = busy;
+        if (!busy && !_parentFrame.isBusy()) {
+            enableButtons(true);
+        }
         if (oldBusy != busy) prop.firePropertyChange("Busy", new Boolean(oldBusy), new Boolean(busy));
     }
 
