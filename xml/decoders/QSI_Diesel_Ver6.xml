@@ -2,13 +2,15 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: QSI_Diesel_Ver6.xml,v 1.2 2005-07-12 01:24:40 innkeeper Exp $ -->
+<!-- $Id: QSI_Diesel_Ver6.xml,v 1.3 2005-07-15 02:35:03 innkeeper Exp $ -->
 <decoder-config>
-  <version author="Howard G. Penny" version="2" lastUpdated="20050711"/>
+  <version author="Howard G. Penny" version="3" lastUpdated="20050714"/>
 
 <!-- version 1 - modified for QSI CV.PI.SI format version 6 - Howard -->
 <!-- version 2 - added "include" attributes to some indexed variables so
                  that models would get the proper set of choices - Howard -->
+<!-- version 3 - Added product number ivariable and build information
+                   on Misc. pane - Howard -->
 
 <decoder>
   <family name="QSI Diesel Ver. 6" mfg="QSIndustries" lowVersionID="6" >
@@ -1826,6 +1828,12 @@
     <ivariable label="Firmware Build Date.Year" CVname="56.254.12" CV="56" PI="254" SI="12"
                readOnly="yes" comment="QSI" item="CV56.254.12"> <indexedVal/> </ivariable>
 
+<!-- QSI Product ID -->
+    <ivariable label="Product number" CVname="56.254.5" CV="56" PI="254" SI="5"
+               readOnly="yes" item="Product number" >
+        <indexedPairVal highCVname="56.254.4" factor="256" />
+    </ivariable>
+
 <!-- CV 56.255 Play Build Information (for ops mode) -->
     <ivariable label="Play Product Identifier" CVname="56.255_0" CV="56" PI="255"
                opsOnly="yes" writeOnly="yes" infoOnly="yes"
@@ -2014,6 +2022,11 @@
 
 <pane name="QSI Misc.">
   <column>
+    <display item="CV56.254.8"/>
+    <display item="CV56.254.10"/>
+    <display item="CV56.254.11"/>
+    <display item="CV56.254.12"/>
+    <label label=" "/>
     <label label="When programming in Ops-mode, set Verbal Acknowledgement to disable"/>
     <label label=" "/>
     <display item="CV62 QSI Control"/>
