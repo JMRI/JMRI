@@ -30,6 +30,9 @@ import org.jdom.Element;
 import jmri.util.GlassPane;
 import java.awt.event.ItemListener;
 import java.awt.Cursor;
+
+import java.awt.Rectangle;
+
 import java.awt.event.ItemEvent;
 import jmri.ProgDeferredServiceModePane;
 
@@ -38,7 +41,7 @@ import jmri.ProgDeferredServiceModePane;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.51 $
+ * @version   $Revision: 1.52 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -659,6 +662,8 @@ abstract public class PaneProgFrame extends JmriJFrame
      *
      */
     void prepGlassPane(AbstractButton activeButton) {
+        List rectangles = new ArrayList();
+
         if (glassPane != null) {
             glassPane.dispose();
         }
@@ -683,8 +688,11 @@ abstract public class PaneProgFrame extends JmriJFrame
                     activeComponents.add(((PaneProgPane) paneList.get(i)).writeAllButton);
                 }
             }
+            for (int i = 0; i < tabPane.getTabCount(); i++) {
+                rectangles.add(tabPane.getUI().getTabBounds(tabPane,i));
+            }
         }
-        glassPane = new GlassPane(activeComponents, this.getContentPane(), this);
+        glassPane = new GlassPane(activeComponents, rectangles, this.getContentPane(), this);
         this.setGlassPane(glassPane);
     }
 

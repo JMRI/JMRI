@@ -16,14 +16,14 @@ import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
  * cursor during reads and writes.
  *
  * @author  Howard G. Penny   Copyright (C) 2005
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class GlassPane extends JComponent {
 
     CBListener listener;
 
-    public GlassPane(List components, Container contentPane, PaneProgFrame parent) {
-        listener = new CBListener(components, this, contentPane, parent);
+    public GlassPane(List components, List rectangles, Container contentPane, PaneProgFrame parent) {
+        listener = new CBListener(components, rectangles, this, contentPane, parent);
         addMouseListener(listener);
         addMouseMotionListener(listener);
     }
@@ -41,14 +41,16 @@ public class GlassPane extends JComponent {
 class CBListener extends MouseInputAdapter {
     PaneProgFrame parentFrame;
     List liveComponents;
+    List liveRectangles;
     GlassPane glassPane;
     Container contentPane;
     boolean inDrag = false;
 
-    public CBListener(List objects,
+    public CBListener(List objects, List rectangles,
                       GlassPane glassPane, Container contentPane, PaneProgFrame parent) {
         this.parentFrame = parent;
         this.liveComponents = objects;
+        this.liveRectangles = rectangles;
         this.glassPane = glassPane;
         this.contentPane = contentPane;
     }
@@ -114,6 +116,13 @@ class CBListener extends MouseInputAdapter {
 
         for (int i = 0; i < liveComponents.size(); i++) {
             if (component.equals(liveComponents.get(i))) {
+                inButton = true;
+                testForDrag(eventID);
+            }
+        }
+
+        for (int i = 0; i < liveRectangles.size(); i++) {
+            if (((Rectangle)liveRectangles.get(i)).contains(containerPoint)) {
                 inButton = true;
                 testForDrag(eventID);
             }
