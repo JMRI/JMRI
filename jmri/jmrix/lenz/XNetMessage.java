@@ -13,7 +13,7 @@ import java.io.Serializable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2003,2004
- * @version			$Revision: 2.7 $
+ * @version			$Revision: 2.8 $
  *
  */
 public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Serializable {
@@ -66,8 +66,8 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
 
     // note that the opcode is part of the message, so we treat it
     // directly
-    // WARNING: use this only with opcodes that have the number of
-    // arguments following included. Otherwise, just use setElement
+    // WARNING: use this only with opcodes that have a variable number 
+    // of arguments following included. Otherwise, just use setElement
 	public void setOpCode(int i) {
         if (i>0xF || i<0) {
             log.error("Opcode invalid: "+i);
@@ -276,6 +276,74 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         /* Element 5 is the lower 8 bits of the cv */
         m.setElement(5, ((0x00ff & cv)-1));
         m.setElement(6, val);
+        return m;
+    }
+
+    public static XNetMessage getVerifyOpsModeCVMsg(int AH,int AL,int cv,int val) {
+        XNetMessage m = new XNetMessage(8);
+        m.setElement(0, XNetConstants.OPS_MODE_PROG_REQ);
+        m.setElement(1, XNetConstants.OPS_MODE_PROG_WRITE_REQ);
+        m.setElement(2, AH);
+        m.setElement(3, AL);
+        /* Element 4 is 0xE4 + the upper two  bits of the 10 bit CV address.
+        NOTE: This is the track packet CV, not the human readable CV, so 
+        it's value actually is one less than what we normally think of it as.*/
+        int temp=(cv -1) & 0x0300;
+        temp=temp/0x00FF;
+        m.setElement(4,0xE4+temp);
+        /* Element 5 is the lower 8 bits of the cv */
+        m.setElement(5, ((0x00ff & cv)-1));
+        m.setElement(6, val);
+        return m;
+    }
+
+    public static XNetMessage getBitWriteOpsModeCVMsg(int AH,int AL,int cv, int bit, boolean value) {
+        XNetMessage m = new XNetMessage(8);
+        m.setElement(0, XNetConstants.OPS_MODE_PROG_REQ);
+        m.setElement(1, XNetConstants.OPS_MODE_PROG_WRITE_REQ);
+        m.setElement(2, AH);
+        m.setElement(3, AL);
+        /* Element 4 is 0xE8 + the upper two  bits of the 10 bit CV address.
+        NOTE: This is the track packet CV, not the human readable CV, so 
+        it's value actually is one less than what we normally think of it as.*/
+        int temp=(cv -1) & 0x0300;
+        temp=temp/0x00FF;
+        m.setElement(4,0xE8+temp);
+        /* Element 5 is the lower 8 bits of the cv */
+        m.setElement(5, ((0x00ff & cv)-1));
+	/* Since this is a bit write, Element 6 is:
+		0xE0 +
+		bit 3 is the value to write
+		bit's 0-2 are the location of the bit we are changing */
+	if(value == true)
+        	m.setElement(6, ((0xe8) | (bit & 0xff)) );
+	else // value == false
+        	m.setElement(6, ((0xe0) | (bit & 0xff)) );
+        return m;
+    }
+
+    public static XNetMessage getBitVerifyOpsModeCVMsg(int AH,int AL,int cv,int bit, boolean value) {
+        XNetMessage m = new XNetMessage(8);
+        m.setElement(0, XNetConstants.OPS_MODE_PROG_REQ);
+        m.setElement(1, XNetConstants.OPS_MODE_PROG_WRITE_REQ);
+        m.setElement(2, AH);
+        m.setElement(3, AL);
+        /* Element 4 is 0xE8 + the upper two  bits of the 10 bit CV address.
+        NOTE: This is the track packet CV, not the human readable CV, so 
+        it's value actually is one less than what we normally think of it as.*/
+        int temp=(cv -1) & 0x0300;
+        temp=temp/0x00FF;
+        m.setElement(4,0xE8+temp);
+        /* Element 5 is the lower 8 bits of the cv */
+        m.setElement(5, ((0x00ff & cv)-1));
+	/* Since this is a bit verify, Element 6 is:
+		0xF0 +
+		bit 3 is the value to write
+		bit's 0-2 are the location of the bit we are changing */
+	if(value == true)
+        	m.setElement(6, ((0xf8) | (bit & 0xff)) );
+	else // value == false
+        	m.setElement(6, ((0xf0) | (bit & 0xff)) );
         return m;
     }
 
