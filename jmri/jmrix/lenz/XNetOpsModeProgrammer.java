@@ -13,12 +13,13 @@ import jmri.*;
  *
  * @see            jmri.Programmer
  * @author         Paul Bender Copyright (C) 2003
- * @version        $Revision: 2.4 $
+ * @version        $Revision: 2.5 $
  */
 
 public class XNetOpsModeProgrammer implements Programmer,XNetListener 
 {
 
+    private int _mode;
     int mAddressHigh;
     int mAddressLow;
     int progState=0;
@@ -49,17 +50,25 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
     }
 
     public void readCV(int CV, ProgListener p) throws ProgrammerException {
-           /* read is not yet implemented by XPressNet*/
+           XNetMessage msg=XNetMessage.getVerifyOpsModeCVMsg(mAddressHigh,mAddressLow,CV,value);
+	   XNetTrafficController.instance().sendXNetMessage(msg,this);
+           /* We can trigger a read to an LRC120, but the information is not
+	      currently sent back to us via the XPressNet */
            p.programmingOpReply(CV,jmri.ProgListener.NotImplemented);
     }
 
     public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
-           /* read is not yet implemented by XPressNet*/
+           XNetMessage msg=XNetMessage.getVerifyOpsModeCVMsg(mAddressHigh,mAddressLow,CV,val);
+	   XNetTrafficController.instance().sendXNetMessage(msg,this);
+           /* We can trigger a read to an LRC120, but the information is not
+	      currently sent back to us via the XPressNet */
            p.programmingOpReply(val,jmri.ProgListener.NotImplemented);
     }
 
     public void setMode(int mode) {
-        if (mode!=Programmer.OPSBYTEMODE) {
+        if (mode==Programmer.OPSBYTEMODE) {
+		_mode=mode;
+	} else {
             reportBadMode(mode);
         }
     }
@@ -69,7 +78,7 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
     }
 
     public int  getMode() {
-        return Programmer.OPSBYTEMODE;
+        return _mode;
     }
 
     public boolean hasMode(int mode) {
@@ -77,12 +86,14 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
     }
 
     /**
-     * Can this ops-mode programmer read back values?  For now, no,
-     * but maybe later.
-     * @return always false for now
+     * Can this ops-mode programmer read back values?
+     * Indirectly we can, though this requires an external display 
+     * (a Lenz LRC120) and enabling railcom.
+     * @return true to allow us to trigger an ops mode read
      */
     public boolean getCanRead() {
-        return false;
+	//return false;
+	return true;
     }
 
     public String decodeErrorCode(int i) {
