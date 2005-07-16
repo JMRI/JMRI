@@ -4,7 +4,7 @@
  * Description:          Frame object for manipulating consists.
  *
  * @author               Paul Bender Copyright (C) 2003
- * @version              $Revision: 1.10 $
+ * @version              $Revision: 1.11 $
  */
 
 
@@ -388,8 +388,9 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 		_status.setText("Ready");
 	   }
 	   consistModel.setConsist(null);
-           locoDirectionNormal.setSelected(true);
-	   locoDirectionNormal.setEnabled(false);
+	
+           canAdd();
+
 	   return;
 	}
 	int address=Integer.parseInt(adrTextField.getText());
@@ -413,7 +414,7 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 	else
 		locoDirectionNormal.setEnabled(true);
 
-	log.debug("Recall Consist " + address);
+	if(log.isDebugEnabled()) log.debug("Recall Consist " + address);
 
 	// What type of consist is this?
 	if(selectedConsist.getConsistType()==Consist.ADVANCED_CONSIST) {
@@ -429,6 +430,7 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 		_Consist_Type=Consist.CS_CONSIST;
 	}
 
+	canAdd();
     }
 
     public void resetLocoButtonActionPerformed(java.awt.event.ActionEvent e) {
