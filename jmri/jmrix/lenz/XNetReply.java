@@ -7,7 +7,7 @@ package jmri.jmrix.lenz;
  *<P>
  *
  * @author			Paul Bender Copyright (C) 2004
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  *
  */
 public class XNetReply extends jmri.jmrix.AbstractMRReply {
@@ -213,9 +213,12 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      */
     public int getThrottleMsgAddr() {
         if (this.isThrottleCommand()) {
-            int a1 = this.getElement(3);
-            int a2 = this.getElement(4);
-            return ((a1 * 100) + a2);
+            int a1 = this.getElement(2);
+            int a2 = this.getElement(3);
+	    if(a1==0) 
+	       return(a2);
+	    else 	
+               return (((a1 * 256) & 0xFF00) + (a2 &0xFF) - 0xC000);
         }
         else return -1;
     }
