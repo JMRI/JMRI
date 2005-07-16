@@ -20,7 +20,7 @@ import jmri.jmrix.lenz.XNetConstants;
 /**
  * Frame displaying (and logging) XpressNet messages
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version         $Revision: 2.11 $
+ * @version         $Revision: 2.12 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
@@ -425,17 +425,32 @@ import jmri.jmrix.lenz.XNetConstants;
 		  switch(l.getElement(1)) {
 		  case XNetConstants.OPS_MODE_PROG_WRITE_REQ:
 				text = new String("Operations Mode Programming Request: ");
-				if((l.getElement(4) & 0xEC)==0xEC) {
+				if((l.getElement(4) & 0xEC)==0xEC || (l.getElement(4) & 0xE4)==0xE4) {
+				   if((l.getElement(4) & 0xEC)==0xEC) {
 					text = text + new String("Byte Mode Write: ");
- 				} else if((l.getElement(4) & 0xE8)==0xE8) {
-					text = text + new String("Bit Mode Write: ");
-				}
-				text = text + new String(l.getElement(6)
-					+" to Register "
+				   } else if((l.getElement(4) & 0xE4)==0xE4) {
+					text = text + new String("Byte Mode Verify: ");
+				   }
+				   text = text + new String(l.getElement(6)
+					+" to CV "
 					+ (1+l.getElement(5)+((l.getElement(4)&0x03)<<8))
 					+" For Decoder Address "
 					+calcLocoAddress(l.getElement(2),l.getElement(3)));
 				break;
+ 				} else if((l.getElement(4) & 0xE8)==0xE8) {
+					if((l.getElement(6) & 0x10) == 0x10) {
+					   text = text + new String("Bit Mode Write: ");
+					} else {
+					   text = text + new String("Bit Mode Verify: ");
+					}
+					text = text + new String(((l.getElement(6) &0x08)>>3)
+					   +" to CV "
+					   + (1+l.getElement(5)+((l.getElement(4)&0x03)<<8))
+					   +" bit " 
+					   + (l.getElement(6)&0x07)
+					   +" For Decoder Address "
+					   +calcLocoAddress(l.getElement(2),l.getElement(3)));
+				}
 		  default:
 			text = l.toString();
 		  }
