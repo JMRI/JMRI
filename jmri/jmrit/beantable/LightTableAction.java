@@ -32,7 +32,7 @@ import javax.swing.JOptionPane;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -389,7 +389,7 @@ public class LightTableAction extends AbstractTableAction {
      * Responds to the Create button
      */
     void createPressed(ActionEvent e) {
-        String suName = systemName.getText();
+        String suName = systemName.getText().toUpperCase();;
         String uName = userName.getText();
         // Does System Name have a valid format
         if (!InstanceManager.lightManagerInstance().validSystemNameFormat(suName)) {
@@ -493,7 +493,7 @@ public class LightTableAction extends AbstractTableAction {
      */
     void editPressed(ActionEvent e) {
         // check if a Light with this name already exists
-        String suName = systemName.getText();
+        String suName = systemName.getText().toUpperCase();
         String sName = InstanceManager.lightManagerInstance().normalizeSystemName(suName);
         if (sName=="") {
             // Entered system name has invalid format
@@ -735,19 +735,22 @@ public class LightTableAction extends AbstractTableAction {
             // Set type of control
             g.setControlType(Light.TURNOUT_STATUS_CONTROL);
             // Get turnout control information
-            String turnoutSystemName = field1c.getText();
+            String turnoutSystemName = field1c.getText().toUpperCase();
             // Ensure that this Turnout is not already a Light
-            String testSN = turnoutSystemName.substring(0,1)+"L"+
-                    turnoutSystemName.substring(2,turnoutSystemName.length());
-            Light testLight = InstanceManager.lightManagerInstance().
+			if (turnoutSystemName.charAt(1)=='T') {
+				// must be a standard format name (not just a number)
+				String testSN = turnoutSystemName.substring(0,1)+"L"+
+						turnoutSystemName.substring(2,turnoutSystemName.length());
+				Light testLight = InstanceManager.lightManagerInstance().
                                         getBySystemName(testSN);
-            if (testLight != null) {
-                // Requested turnout bit is already assigned to a Light
-                status2.setText( rb.getString("LightWarn3")+" "+testSN+"." );
-                error = true;
-            }
-            else {
-                // Requested turnout bit is no assigned to a Light
+				if (testLight != null) {
+					// Requested turnout bit is already assigned to a Light
+					status2.setText( rb.getString("LightWarn3")+" "+testSN+"." );
+					error = true;
+				}
+			}
+            if (!error) {
+                // Requested turnout bit is not assigned to a Light
                 t = InstanceManager.turnoutManagerInstance().
                                     provideTurnout(turnoutSystemName);
             }

@@ -12,7 +12,7 @@ import jmri.ReporterManager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class ProxyReporterManager extends AbstractProxyManager implements ReporterManager {
     /**
@@ -31,14 +31,15 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
         Reporter t = getReporter(name);
         if (t!=null) return t;
         // if the systemName is specified, find that system
+		String sName = name.toUpperCase();
         for (int i=0; i<mgrs.size(); i++) {
-            if ( ( (ReporterManager)mgrs.get(i)).systemLetter() == name.charAt(0) )
-                return ((ReporterManager)mgrs.get(i)).newReporter(name, null);
+            if ( ( (ReporterManager)mgrs.get(i)).systemLetter() == sName.charAt(0) )
+                return ((ReporterManager)mgrs.get(i)).newReporter(sName, null);
         }
         // did not find a manager, allow it to default to the primary
         log.debug("Did not find manager for name "+name+", assume it's a number");
         return ((ReporterManager)mgrs.get(0)).newReporter(
-                    ((ReporterManager)mgrs.get(0)).makeSystemName(name), null);
+                    ((ReporterManager)mgrs.get(0)).makeSystemName(sName), null);
     }
 
 
@@ -49,8 +50,9 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
      */
     public Reporter getBySystemName(String systemName) {
         Reporter t = null;
+		String sName = systemName.toUpperCase();
         for (int i=0; i<mgrs.size(); i++) {
-            t = ( (ReporterManager)mgrs.get(i)).getBySystemName(systemName);
+            t = ( (ReporterManager)mgrs.get(i)).getBySystemName(sName);
             if (t!=null) return t;
         }
         return null;
@@ -98,7 +100,8 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
      * be looking them up.
      * @return requested Sensor object (never null)
      */
-    public Reporter newReporter(String systemName, String userName) {
+    public Reporter newReporter(String sysName, String userName) {
+		String systemName = sysName.toUpperCase();
         // if the systemName is specified, find that system
         if (systemName != null) {
             Sensor t = null;

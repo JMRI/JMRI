@@ -5,7 +5,7 @@ package jmri;
 /**
  * Abstract base implementation of the SensorManager interface.
  * @author			Bob Jacobsen Copyright (C) 2001, 2003
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public abstract class AbstractSensorManager extends AbstractManager implements SensorManager {
 
@@ -14,28 +14,31 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
     public Sensor provideSensor(String name) {
         Sensor t = getSensor(name);
         if (t!=null) return t;
-        if (name.startsWith(""+systemLetter()+typeLetter()))
-            return newSensor(name, null);
+		String sName = name.toUpperCase();
+        if (sName.startsWith(""+systemLetter()+typeLetter()))
+            return newSensor(sName, null);
         else
-            return newSensor(makeSystemName(name), null);
+            return newSensor(makeSystemName(sName), null);
     }
 
     public Sensor getSensor(String name) {
         Sensor t = getByUserName(name);
         if (t!=null) return t;
-
+	
         return getBySystemName(name);
     }
 
     public Sensor getBySystemName(String key) {
-        return (Sensor)_tsys.get(key);
+		String name = key.toUpperCase();
+        return (Sensor)_tsys.get(name);
     }
 
     public Sensor getByUserName(String key) {
         return (Sensor)_tuser.get(key);
     }
 
-    public Sensor newSensor(String systemName, String userName) {
+    public Sensor newSensor(String sysName, String userName) {
+		String systemName = sysName.toUpperCase();
         if (log.isDebugEnabled()) log.debug("newSensor:"
                                             +( (systemName==null) ? "null" : systemName)
                                             +";"+( (userName==null) ? "null" : userName));

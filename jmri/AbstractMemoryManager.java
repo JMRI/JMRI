@@ -6,7 +6,7 @@ package jmri;
  * Abstract partial implementation of a MemoryManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public abstract class AbstractMemoryManager extends AbstractManager
     implements MemoryManager {
@@ -16,10 +16,11 @@ public abstract class AbstractMemoryManager extends AbstractManager
     public Memory provideMemory(String name) {
         Memory t = getMemory(name);
         if (t!=null) return t;
-        if (name.startsWith(""+systemLetter()+typeLetter()))
-            return newMemory(name, null);
+		String sName = name.toUpperCase();
+        if (sName.startsWith(""+systemLetter()+typeLetter()))
+            return newMemory(sName, null);
         else
-            return newMemory(makeSystemName(name), null);
+            return newMemory(makeSystemName(sName), null);
     }
 
     public Memory getMemory(String name) {
@@ -30,14 +31,16 @@ public abstract class AbstractMemoryManager extends AbstractManager
     }
 
     public Memory getBySystemName(String key) {
-        return (Memory)_tsys.get(key);
+		String name = key.toUpperCase();
+        return (Memory)_tsys.get(name);
     }
 
     public Memory getByUserName(String key) {
         return (Memory)_tuser.get(key);
     }
 
-    public Memory newMemory(String systemName, String userName) {
+    public Memory newMemory(String sysName, String userName) {
+		String systemName = sysName.toUpperCase();
         if (log.isDebugEnabled()) log.debug("new Memory:"
                                             +( (systemName==null) ? "null" : systemName)
                                             +";"+( (userName==null) ? "null" : userName));

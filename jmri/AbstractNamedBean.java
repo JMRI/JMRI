@@ -8,7 +8,7 @@ package jmri;
  * Implements the parameter binding support.
  *
  * @author      Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public abstract class AbstractNamedBean implements NamedBean, java.io.Serializable {
 
@@ -21,7 +21,7 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     }
 
     public AbstractNamedBean(String sys) {
-        mSystemName = sys;
+        mSystemName = sys.toUpperCase();
         mUserName = null;
     }
     public AbstractNamedBean(String sys, String user) {

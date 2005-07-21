@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  * MemoryTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 public class MemoryTableAction extends AbstractTableAction {
@@ -135,7 +135,7 @@ public class MemoryTableAction extends AbstractTableAction {
     void okPressed(ActionEvent e) {
         String user = userName.getText();
         if (user.equals("")) user=null;
-        String sName = sysName.getText();
+        String sName = sysName.getText().toUpperCase();
         InstanceManager.memoryManagerInstance().newMemory(sName, user);
     }
     private boolean noWarn = false;

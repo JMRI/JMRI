@@ -6,7 +6,7 @@ package jmri;
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
     implements TurnoutManager {
@@ -18,10 +18,11 @@ public abstract class AbstractTurnoutManager extends AbstractManager
     public Turnout provideTurnout(String name) {
         Turnout t = getTurnout(name);
         if (t!=null) return t;
-        if (name.startsWith(""+systemLetter()+typeLetter()))
-            return newTurnout(name, null);
+		String sName = name.toUpperCase();
+        if (sName.startsWith(""+systemLetter()+typeLetter()))
+            return newTurnout(sName, null);
         else
-            return newTurnout(makeSystemName(name), null);
+            return newTurnout(makeSystemName(sName), null);
     }
 
     public Turnout getTurnout(String name) {
@@ -32,14 +33,16 @@ public abstract class AbstractTurnoutManager extends AbstractManager
     }
 
     public Turnout getBySystemName(String key) {
-        return (Turnout)_tsys.get(key);
+		String name = key.toUpperCase();
+        return (Turnout)_tsys.get(name);
     }
 
     public Turnout getByUserName(String key) {
         return (Turnout)_tuser.get(key);
     }
 
-    public Turnout newTurnout(String systemName, String userName) {
+    public Turnout newTurnout(String sysName, String userName) {
+		String systemName = sysName.toUpperCase();
         if (log.isDebugEnabled()) log.debug("newTurnout:"
                                             +( (systemName==null) ? "null" : systemName)
                                             +";"+( (userName==null) ? "null" : userName));

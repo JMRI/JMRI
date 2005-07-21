@@ -12,7 +12,7 @@ import jmri.TurnoutManager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
     /**
@@ -31,14 +31,15 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
         Turnout t = getTurnout(name);
         if (t!=null) return t;
         // if the systemName is specified, find that system
+		String sName = name.toUpperCase();
         for (int i=0; i<mgrs.size(); i++) {
-            if ( ( (TurnoutManager)mgrs.get(i)).systemLetter() == name.charAt(0) )
-                return ((TurnoutManager)mgrs.get(i)).newTurnout(name, null);
+            if ( ( (TurnoutManager)mgrs.get(i)).systemLetter() == sName.charAt(0) )
+                return ((TurnoutManager)mgrs.get(i)).newTurnout(sName, null);
         }
         // did not find a manager, allow it to default to the primary
-        log.debug("Did not find manager for name "+name+", assume it's a number");
+        log.debug("Did not find manager for name "+sName+", assume it's a number");		
         return ((TurnoutManager)mgrs.get(0)).newTurnout(
-                    ((TurnoutManager)mgrs.get(0)).makeSystemName(name), null);
+                    ((TurnoutManager)mgrs.get(0)).makeSystemName(sName), null);
     }
 
 
@@ -48,9 +49,10 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
      * @return requested Turnout object or null if none exists
      */
     public Turnout getBySystemName(String systemName) {
+		String sName = systemName.toUpperCase();
         Turnout t = null;
         for (int i=0; i<mgrs.size(); i++) {
-            t = ( (TurnoutManager)mgrs.get(i)).getBySystemName(systemName);
+            t = ( (TurnoutManager)mgrs.get(i)).getBySystemName(sName);
             if (t!=null) return t;
         }
         return null;
@@ -98,8 +100,9 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
      * be looking them up.
      * @return requested Sensor object (never null)
      */
-    public Turnout newTurnout(String systemName, String userName) {
+    public Turnout newTurnout(String sysName, String userName) {
         // if the systemName is specified, find that system
+		String systemName = sysName.toUpperCase();
         if (systemName != null) {
             Sensor t = null;
             for (int i=0; i<mgrs.size(); i++) {

@@ -8,7 +8,7 @@ package jmri;
  * Note that this does not enforce any particular system naming convention
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class DefaultRouteManager extends AbstractManager
     implements RouteManager, java.beans.PropertyChangeListener {
@@ -35,7 +35,8 @@ public class DefaultRouteManager extends AbstractManager
         r = getBySystemName(systemName);
         if (r!=null) return null;
         // Route does not exist, create a new route
-        r = new DefaultRoute(systemName,userName);
+		String sName = systemName.toUpperCase();
+        r = new DefaultRoute(sName,userName);
         if (r!=null) {
             // save in the maps
             register(r);
@@ -54,7 +55,8 @@ public class DefaultRouteManager extends AbstractManager
         return getBySystemName(name);
     }
 
-    public Route getBySystemName(String key) {
+    public Route getBySystemName(String name) {
+		String key = name.toUpperCase();
         return (Route)_tsys.get(key);
     }
 

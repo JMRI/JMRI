@@ -6,7 +6,7 @@ package jmri;
  * Abstract partial implementation of a ReporterManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public abstract class AbstractReporterManager extends AbstractManager
     implements ReporterManager {
@@ -16,10 +16,11 @@ public abstract class AbstractReporterManager extends AbstractManager
     public Reporter provideReporter(String name) {
         Reporter t = getReporter(name);
         if (t!=null) return t;
-        if (name.startsWith(""+systemLetter()+typeLetter()))
-            return newReporter(name, null);
+		String sName = name.toUpperCase();
+        if (sName.startsWith(""+systemLetter()+typeLetter()))
+            return newReporter(sName, null);
         else
-            return newReporter(makeSystemName(name), null);
+            return newReporter(makeSystemName(sName), null);
     }
 
     public Reporter getReporter(String name) {
@@ -30,14 +31,16 @@ public abstract class AbstractReporterManager extends AbstractManager
     }
 
     public Reporter getBySystemName(String key) {
-        return (Reporter)_tsys.get(key);
+		String name = key.toUpperCase();
+        return (Reporter)_tsys.get(name);
     }
 
     public Reporter getByUserName(String key) {
         return (Reporter)_tuser.get(key);
     }
 
-    public Reporter newReporter(String systemName, String userName) {
+    public Reporter newReporter(String sysName, String userName) {
+		String systemName = sysName.toUpperCase();
         if (log.isDebugEnabled()) log.debug("new Reporter:"
                                             +( (systemName==null) ? "null" : systemName)
                                             +";"+( (userName==null) ? "null" : userName));

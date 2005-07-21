@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  * ReporterTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 public class ReporterTableAction extends AbstractTableAction {
@@ -127,7 +127,7 @@ public class ReporterTableAction extends AbstractTableAction {
     void okPressed(ActionEvent e) {
         String user = userName.getText();
         if (user.equals("")) user=null;
-        String sName = sysName.getText();
+        String sName = sysName.getText().toUpperCase();
         InstanceManager.reporterManagerInstance().newReporter(sName, user);
     }
     private boolean noWarn = false;

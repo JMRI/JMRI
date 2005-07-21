@@ -11,7 +11,7 @@ import jmri.SensorManager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class ProxySensorManager extends AbstractProxyManager
                             implements SensorManager {
@@ -32,14 +32,15 @@ public class ProxySensorManager extends AbstractProxyManager
         Sensor t = getSensor(name);
         if (t!=null) return t;
         // if the systemName is specified, find that system
+		String sName = name.toUpperCase();
         for (int i=0; i<mgrs.size(); i++) {
-            if ( ( (SensorManager)mgrs.get(i)).systemLetter() == name.charAt(0) )
-                return ((SensorManager)mgrs.get(i)).newSensor(name, null);
+            if ( ( (SensorManager)mgrs.get(i)).systemLetter() == sName.charAt(0) )
+                return ((SensorManager)mgrs.get(i)).newSensor(sName, null);
         }
         // did not find a manager, allow it to default to the primary
-        log.debug("Did not find manager for name "+name+", assume it's a number");
+        log.debug("Did not find manager for name "+sName+", assume it's a number");
         return ((SensorManager)mgrs.get(0)).newSensor(
-                    ((SensorManager)mgrs.get(0)).makeSystemName(name), null);
+                    ((SensorManager)mgrs.get(0)).makeSystemName(sName), null);
     }
 
 
@@ -49,9 +50,10 @@ public class ProxySensorManager extends AbstractProxyManager
      * @return requested Turnout object or null if none exists
      */
     public Sensor getBySystemName(String systemName) {
+		String sName = systemName.toUpperCase();
         Sensor t = null;
         for (int i=0; i<mgrs.size(); i++) {
-            t = ( (SensorManager)mgrs.get(i)).getBySystemName(systemName);
+            t = ( (SensorManager)mgrs.get(i)).getBySystemName(sName);
             if (t!=null) return t;
         }
         return null;
@@ -99,7 +101,8 @@ public class ProxySensorManager extends AbstractProxyManager
      * be looking them up.
      * @return requested Sensor object (never null)
      */
-    public Sensor newSensor(String systemName, String userName) {
+    public Sensor newSensor(String sysName, String userName) {
+		String systemName = sysName.toUpperCase();
         // if the systemName is specified, find that system
         if (systemName != null) {
             Sensor t = null;

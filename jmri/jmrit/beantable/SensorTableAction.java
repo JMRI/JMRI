@@ -23,7 +23,7 @@ import javax.swing.JTextField;
  * SensorTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 
 public class SensorTableAction extends AbstractTableAction {
@@ -120,7 +120,7 @@ public class SensorTableAction extends AbstractTableAction {
     void okPressed(ActionEvent e) {
         String user = userName.getText();
         if (user.equals("")) user=null;
-        InstanceManager.sensorManagerInstance().newSensor(sysName.getText(), user);
+        InstanceManager.sensorManagerInstance().newSensor(sysName.getText().toUpperCase(), user);
     }
 
     static final org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SensorTableAction.class.getName());

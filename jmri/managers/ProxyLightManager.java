@@ -13,7 +13,7 @@ import jmri.LightManager;
  * Based on ProxySensorManager
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class ProxyLightManager extends AbstractProxyManager
                             implements LightManager {
@@ -43,15 +43,16 @@ public class ProxyLightManager extends AbstractProxyManager
     public Light provideLight(String name) {
         Light t = getLight(name);
         if (t!=null) return t;
+		String sName = name.toUpperCase();
         // if the systemName is specified, find that system
         for (int i=0; i<mgrs.size(); i++) {
-            if ( ( (LightManager)mgrs.get(i)).systemLetter() == name.charAt(0) )
-                return ((LightManager)mgrs.get(i)).newLight(name, null);
+            if ( ( (LightManager)mgrs.get(i)).systemLetter() == sName.charAt(0) )
+                return ((LightManager)mgrs.get(i)).newLight(sName, null);
         }
         // did not find a manager, allow it to default to the primary
-        log.debug("Did not find manager for name "+name+", assume it's a number");
+        log.debug("Did not find manager for name "+sName+", assume it's a number");
         return ((LightManager)mgrs.get(0)).newLight(
-                    ((LightManager)mgrs.get(0)).makeSystemName(name), null);
+                    ((LightManager)mgrs.get(0)).makeSystemName(sName), null);
     }
 
     /**
@@ -61,8 +62,9 @@ public class ProxyLightManager extends AbstractProxyManager
      */
     public Light getBySystemName(String systemName) {
         Light t = null;
+		String sName = systemName.toUpperCase();
         for (int i=0; i<mgrs.size(); i++) {
-            t = ( (LightManager)mgrs.get(i)).getBySystemName(systemName);
+            t = ( (LightManager)mgrs.get(i)).getBySystemName(sName);
             if (t!=null) return t;
         }
         return null;
@@ -110,7 +112,8 @@ public class ProxyLightManager extends AbstractProxyManager
      * be looking them up.
      * @return requested Light object (never null)
      */
-    public Light newLight(String systemName, String userName) {
+    public Light newLight(String sysName, String userName) {
+		String systemName = sysName.toUpperCase();
         // if the systemName is specified, find that system
         if (systemName != null) {
             Light t = null;

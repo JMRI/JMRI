@@ -14,7 +14,7 @@ import com.sun.java.util.collections.Collections;
  * Based on AbstractSignalHeadManager.java and AbstractSensorManager.java
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public abstract class AbstractLightManager extends AbstractManager
     implements LightManager, java.beans.PropertyChangeListener {
@@ -42,10 +42,11 @@ public abstract class AbstractLightManager extends AbstractManager
     public Light provideLight(String name) {
         Light t = getLight(name);
         if (t!=null) return t;
-        if (name.startsWith(""+systemLetter()+typeLetter()))
-            return newLight(name, null);
+		String sName = name.toUpperCase();
+        if (sName.startsWith(""+systemLetter()+typeLetter()))
+            return newLight(sName, null);
         else
-            return newLight(makeSystemName(name), null);
+            return newLight(makeSystemName(sName), null);
     }
 
     /**
@@ -65,7 +66,8 @@ public abstract class AbstractLightManager extends AbstractManager
     /**
      * Locate a Light by its system name
      */
-    public Light getBySystemName(String key) {
+    public Light getBySystemName(String name) {
+		String key = name.toUpperCase();
         return (Light)_tsys.get(key);
     }
 
@@ -99,7 +101,8 @@ public abstract class AbstractLightManager extends AbstractManager
      * be looking them up.
      * @return requested Light object (never null)
      */
-    public Light newLight(String systemName, String userName) {
+    public Light newLight(String sysName, String userName) {
+		String systemName = sysName.toUpperCase();
         if (log.isDebugEnabled()) log.debug("newLight:"
                                             +( (systemName==null) ? "null" : systemName)
                                             +";"+( (userName==null) ? "null" : userName));

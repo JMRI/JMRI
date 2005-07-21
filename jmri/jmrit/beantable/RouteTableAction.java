@@ -32,7 +32,7 @@ import jmri.util.com.sun.Comparator;
  * Based in part on SignalHeadTableAction.java by Bob Jacobson
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -407,7 +407,7 @@ public class RouteTableAction extends AbstractTableAction {
      */
     void createPressed(ActionEvent e) {
         // Get system name and user name
-        String sName = name.getText();
+        String sName = name.getText().toUpperCase();
         String uName = userName.getText();
         // check if a Route with this system name already exists
         Route g = jmri.InstanceManager.routeManagerInstance().getBySystemName(sName);
@@ -550,7 +550,7 @@ public class RouteTableAction extends AbstractTableAction {
      */
     void editPressed(ActionEvent e) {
         // identify the Route with this name if it already exists
-        String sName = name.getText();
+        String sName = name.getText().toUpperCase();
         Route g = jmri.InstanceManager.routeManagerInstance().getBySystemName(sName);
         if (g==null) {
             // Route does not exist, so cannot be edited
