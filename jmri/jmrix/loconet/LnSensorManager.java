@@ -10,7 +10,7 @@ import jmri.Sensor;
  * System names are "LSnnn", where nnn is the sensor number without padding.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class LnSensorManager extends jmri.AbstractSensorManager implements LocoNetListener {
 
@@ -68,8 +68,85 @@ public class LnSensorManager extends jmri.AbstractSensorManager implements LocoN
         // the "+ 1" in the following converts to throttle-visible numbering
         return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1);
     }
+	
+    /**
+     * Requests status updates from all layout sensors.
+	 */
+	public void updateAll() {
+		if (!busy) {
+			setUpdateBusy();
+			LnSensorUpdateThread thread = new LnSensorUpdateThread(this);
+			thread.start();
+		}
+	}
+
+    /**
+     * Method to set Route busy when commands are being issued to 
+     *   Route turnouts
+	 */
+    public void setUpdateBusy() {
+		busy = true;
+	}
+
+    /**
+     * Method to set Route not busy when all commands have been
+     *   issued to Route turnouts
+	 */
+    public void setUpdateNotBusy() {
+		busy = false;
+	}
+	
+	private boolean busy = false;
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnSensorManager.class.getName());
+
+}
+
+/**
+ * Class providing a thread to update sensor states
+ */
+class LnSensorUpdateThread extends Thread
+{
+	/**
+	 * Constructs the thread
+	 */
+	public LnSensorUpdateThread (LnSensorManager sensorManager) {
+		sm = sensorManager;
+		tc = LnTrafficController.instance();
+	}
+	
+	/** 
+	 * Runs the thread - sends 8 commands to query status of all stationary sensors
+	 *     per LocoNet PE Specs, page 12-13
+	 * Thread waits 500 msec between commands after a 2 sec initial wait.
+	 */
+	public void run () {
+		byte sw1[] = {0x78,0x79,0x7a,0x7b,0x78,0x79,0x7a,0x7b};
+		byte sw2[] = {0x27,0x27,0x27,0x27,0x07,0x07,0x07,0x07};
+		// create and initialize loconet message
+        LocoNetMessage m = new LocoNetMessage(4);
+        m.setOpCode(LnConstants.OPC_SW_REQ);
+		try {
+			Thread.sleep(1500);
+		}
+		catch (InterruptedException e) {
+		}
+		for (int k = 0; k < 8; k++) {
+			try {
+				Thread.sleep(500);
+			}
+			catch (InterruptedException e) {
+				break;
+			}
+			m.setElement(1,sw1[k]);
+			m.setElement(2,sw2[k]);
+			tc.sendLocoNetMessage(m);
+		}
+		sm.setUpdateNotBusy();
+	}
+	
+	private LnSensorManager sm = null;
+	private LnTrafficController tc = null;
 
 }
 

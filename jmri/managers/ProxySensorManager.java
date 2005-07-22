@@ -11,7 +11,7 @@ import jmri.SensorManager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class ProxySensorManager extends AbstractProxyManager
                             implements SensorManager {
@@ -117,6 +117,9 @@ public class ProxySensorManager extends AbstractProxyManager
             return ( (SensorManager)mgrs.get(0)).newSensor(systemName, userName);
         }
     }
+
+	// null implementation to satisfy the SensorManager interface
+	public void updateAll() {  };
 
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(ProxySensorManager.class.getName());

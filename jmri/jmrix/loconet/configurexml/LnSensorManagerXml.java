@@ -12,7 +12,7 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LnSensorManagerXml extends jmri.configurexml.AbstractSensorManagerConfigXML {
 
@@ -33,6 +33,8 @@ public class LnSensorManagerXml extends jmri.configurexml.AbstractSensorManagerC
         LnSensorManager mgr = LnSensorManager.instance();
         // load individual sensors
         loadSensors(sensors);
+		// Request the status of these sensors from the layout, if appropriate.
+		mgr.updateAll();
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LnSensorManagerXml.class.getName());

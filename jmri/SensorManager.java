@@ -7,7 +7,7 @@ import com.sun.java.util.collections.List;
 /**
  * Interface for controlling sensors.
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public interface SensorManager extends Manager {
 
@@ -64,6 +64,16 @@ public interface SensorManager extends Manager {
     public Sensor getBySystemName(String s);
 
     public List getSystemNameList();
+	
+    /**
+     * Requests status of all layout sensors under this Sensor Manager.
+	 * This method may be invoked whenever the status of sensors needs to be updated from
+	 *		the layout, for example, when an XML configuration file is read in.
+	 * Note that there is a null implementation of this method in AbstractSensorManager.
+	 *		This method only needs be implemented in system-specific Sensor Managers where
+	 *		readout of sensor status from the layout is possible.
+	 */
+	public void updateAll();
 
 }
 

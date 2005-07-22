@@ -5,7 +5,7 @@ package jmri;
 /**
  * Abstract base implementation of the SensorManager interface.
  * @author			Bob Jacobsen Copyright (C) 2001, 2003
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public abstract class AbstractSensorManager extends AbstractManager implements SensorManager {
 
@@ -81,6 +81,15 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
      * @return new null
      */
     abstract protected Sensor createNewSensor(String systemName, String userName);
+	
+    /**
+     * Requests status of all layout sensors under this Sensor Manager.
+	 * This method may be invoked whenever the status of sensors needs to be updated from
+	 *		the layout, for example, when an XML configuration file is read in.
+	 * Note that this null implementation only needs be implemented in system-specific 
+	 *		Sensor Managers where readout of sensor status from the layout is possible.
+	 */
+	public void updateAll() { };
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(AbstractSensorManager.class.getName());
 }
