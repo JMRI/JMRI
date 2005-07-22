@@ -90,6 +90,15 @@ public abstract class AbstractTurnoutMgrTest extends TestCase {
 		Assert.assertTrue(null == l.getByUserName("foo"));
 		Assert.assertTrue(null == l.getBySystemName("bar"));
 	}
+	
+	public void testUpperLower() {
+		// sample address object
+		TurnoutAddress a = new TurnoutAddress(getSystemName(31), "user");
+
+		Turnout t = l.provideTurnout("31");
+		String name = t.getSystemName();
+		Assert.assertTrue(t.equals(l.getTurnout(name.toLowerCase())));
+	}
 
 	public void testRename() {
 		// get turnout
