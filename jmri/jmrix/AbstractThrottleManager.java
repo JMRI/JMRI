@@ -12,7 +12,7 @@ import com.sun.java.util.collections.ArrayList;
  * Based on Glen Oberhauser's original LnThrottleManager implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 abstract public class AbstractThrottleManager implements ThrottleManager {
 	
@@ -35,11 +35,12 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * is located, the ThrottleListener gets a callback via the ThrottleListener.notifyThrottleFound
      * method.
      * @param address The decoder address desired.
+     * @param isLong True if this is a request for a DCC long (extended) address.
      * @param l The ThrottleListener awaiting notification of a found throttle.
      * @return True if the request will continue, false if the request will not
      * be made. False may be returned if a the throttle is already in use.
      */
-    public boolean requestThrottle(int address, ThrottleListener l) {
+    public boolean requestThrottle(int address, boolean isLong, ThrottleListener l) {
         boolean throttleFree = true;
         if (throttleListeners == null) {
             throttleListeners = new HashMap(5);
@@ -66,6 +67,24 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     }
 
     /**
+     * Request a throttle, given a decoder address. When the decoder address
+     * is located, the ThrottleListener gets a callback via the ThrottleListener.notifyThrottleFound
+     * method.
+     * <P>
+     * This is a convenience version of the call, which uses system-specific
+     * logic to tell whether the address is a short or long form.
+     * @param address The decoder address desired.
+     * @param l The ThrottleListener awaiting notification of a found throttle.
+     * @return True if the request will continue, false if the request will not
+     * be made. False may be returned if a the throttle is already in use.
+     */
+    public boolean requestThrottle(int address, ThrottleListener l) {
+        boolean isLong = true;
+        if (canBeShortAddress(address)) isLong = false;
+        return requestThrottle(address, isLong, l);
+    }
+
+    /**
      * Abstract member to actually do the work of configuring a new throttle,
      * perhaps via interaction with the DCC system
      */
@@ -74,9 +93,10 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     /**
      * Cancel a request for a throttle
      * @param address The decoder address desired.
+     * @param isLong True if this is a request for a DCC long (extended) address.
      * @param l The ThrottleListener cancelling request for a throttle.
      */
-    public void cancelThrottleRequest(int address, ThrottleListener l) {
+    public void cancelThrottleRequest(int address, boolean isLong, ThrottleListener l) {
         if (throttleListeners != null) {
             Integer addressKey = new Integer(address);
 			ArrayList a = (ArrayList)throttleListeners.get(addressKey);
@@ -86,6 +106,20 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 					a.remove(i);
 			}
         }
+    }
+
+    /**
+     * Cancel a request for a throttle.
+     * <P>
+     * This is a convenience version of the call, which uses system-specific
+     * logic to tell whether the address is a short or long form.
+     * @param address The decoder address desired.
+     * @param l The ThrottleListener cancelling request for a throttle.
+     */
+    public void cancelThrottleRequest(int address, ThrottleListener l) {
+        boolean isLong = true;
+        if (canBeShortAddress(address)) isLong = false;
+        cancelThrottleRequest(address, isLong, l);
     }
 
     /**
