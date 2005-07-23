@@ -4,7 +4,7 @@
  * Description:          Frame object for manipulating consists.
  *
  * @author               Paul Bender Copyright (C) 2003
- * @version              $Revision: 1.11 $
+ * @version              $Revision: 1.12 $
  */
 
 
@@ -38,6 +38,7 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 
     javax.swing.JLabel textLocoLabel = new javax.swing.JLabel();
     javax.swing.JTextField locoTextField = new javax.swing.JTextField(4);
+    jmri.jmrit.throttle.ShortLongSelector shortLong = new jmri.jmrit.throttle.ShortLongSelector();
     javax.swing.JComboBox locoRosterBox;
 
     javax.swing.JButton addLocoButton = new javax.swing.JButton();
@@ -138,6 +139,8 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
         locoTextField.setVisible(true);
         locoTextField.setToolTipText("Address of A New Locomotive to add to the consist");
 
+        shortLong.setToolTipText("select short or long address for new loco");
+        
         locoRosterBox = Roster.instance().fullRosterComboBox();
         locoRosterBox.insertItemAt("",0);
         locoRosterBox.setSelectedIndex(0);
@@ -204,6 +207,8 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 
         locoPanel.add(textLocoLabel);
         locoPanel.add(locoTextField);
+        if (!InstanceManager.throttleManagerInstance().addressTypeUnique()) 
+            locoPanel.add(shortLong);
         locoPanel.add(locoRosterBox);
         locoPanel.add(locoDirectionNormal);
 
@@ -352,7 +357,7 @@ public class ConsistToolFrame extends javax.swing.JFrame implements jmri.Consist
 	  jmri.jmrit.throttle.ThrottleFrame tf=
 		jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
 		int address=Integer.parseInt(adrTextField.getText());
-		tf.notifyAddressChosen(address);
+		tf.notifyAddressChosen(address, false);  // consist is always a short address
 		tf.setVisible(true);
     	}
 
