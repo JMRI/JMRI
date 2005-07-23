@@ -16,17 +16,18 @@ package jmri;
  * invoked by one or more Sensors (up to the maximum allowed).
  *
  * @author			Dave Duchamp Copyright (C) 2004
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public interface Route extends NamedBean {
 
-    public static final int MAX_TURNOUTS_PER_ROUTE = 50;
+    public static final int MAX_TURNOUTS_PER_ROUTE = 100;
     public static final int MAX_CONTROL_SENSORS = 3;
+	public static final int TOGGLE = 0x08;
 
     /**
      * Method to add a Turnout to the list of Turnouts in this Route
-     * 'turnoutState' must be Turnout.CLOSED or Turnout.THROWN, depending
-     *      on how the Turnout is to be switched when this Route is set
+     * 'turnoutState' must be Turnout.CLOSED, Turnout.THROWN, or Route.TOGGLE, depending
+     *      depending on how the Turnout is to be switched when this Route is set
      */
     public boolean addTurnoutToRoute(String turnoutSystemName, int turnoutState);
 

@@ -15,7 +15,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class DefaultRouteManagerXml implements XmlAdapter {
 
@@ -66,7 +66,10 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                     if (r.getTurnoutSetState(rTurnout)==jmri.Turnout.THROWN) {
                         sState = "THROWN";
                     }
-                    rElem.addAttribute("state", sState);
+                    else if (r.getTurnoutSetState(rTurnout)==Route.TOGGLE) {
+                        sState = "TOGGLE";
+                    }
+                   rElem.addAttribute("state", sState);
                     elem.addContent(rElem);
                     index ++;
                 }
@@ -191,6 +194,9 @@ public class DefaultRouteManagerXml implements XmlAdapter {
                         if (rState.equals("THROWN")) {
                             tSetState = jmri.Turnout.THROWN;
                         }
+						else if (rState.equals("TOGGLE")) {
+							tSetState = Route.TOGGLE;
+						}
                         // Add turnout to route
                         r.addTurnoutToRoute(tSysName, tSetState);
                     }

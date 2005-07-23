@@ -32,7 +32,7 @@ import jmri.util.com.sun.Comparator;
  * Based in part on SignalHeadTableAction.java by Bob Jacobson
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -84,11 +84,11 @@ public class RouteTableAction extends AbstractTableAction {
         f.setTitle("Route Table");
     }
 
-	String setStateClosed = 
-			"Set "+InstanceManager.turnoutManagerInstance().getClosedText();
-	String setStateThrown =
-			"Set "+InstanceManager.turnoutManagerInstance().getThrownText();
-//	String setStateToggle = "Toggle";
+	String stateThrown = InstanceManager.turnoutManagerInstance().getThrownText();
+	String stateClosed = InstanceManager.turnoutManagerInstance().getClosedText();
+	String setStateClosed = "Set "+stateClosed;
+	String setStateThrown = "Set "+stateThrown;
+	String setStateToggle = "Toggle";
 
     String[] sensorModes = new String[]{"On Active", "On Inactive", "Veto Active", "Veto Inactive"};
     
@@ -138,7 +138,6 @@ public class RouteTableAction extends AbstractTableAction {
 
     void addPressed(ActionEvent e) {
         // Initialize the turnout list
-		String setStateClosed = "Set "+InstanceManager.turnoutManagerInstance().getClosedText();
         for (int i = 0; i<MAX_TURNOUTS ; i++ ) {
             includeTurnout[i] = false;
 			setState[i] = setStateClosed;
@@ -228,7 +227,7 @@ public class RouteTableAction extends AbstractTableAction {
             JComboBox stateCombo = new JComboBox();
    			stateCombo.addItem(setStateClosed);
 			stateCombo.addItem(setStateThrown);
-//			stateCombo.addItem("Toggle");
+			stateCombo.addItem(setStateToggle);
             TableColumnModel routeTurnoutColumnModel = routeTurnoutTable.getColumnModel();
             TableColumn includeColumn = routeTurnoutColumnModel.
                                                 getColumn(RouteTurnoutModel.INCLUDE_COLUMN);
@@ -287,9 +286,9 @@ public class RouteTableAction extends AbstractTableAction {
             cTurnout.setText("");
             cTurnout.setToolTipText("Enter a Turnout system name (real or phantom) for throttle control.");
             p34.add(new JLabel("   Turnout State: "));
-            cTurnoutStateBox.addItem(InstanceManager.turnoutManagerInstance().getClosedText());
+            cTurnoutStateBox.addItem(stateClosed);
             turnoutClosedIndex = 0;
-            cTurnoutStateBox.addItem(InstanceManager.turnoutManagerInstance().getThrownText());
+            cTurnoutStateBox.addItem(stateThrown);
             turnoutThrownIndex = 1;
             cTurnoutStateBox.setToolTipText("Setting control Turnout to selected state will trigger Route.");
             p34.add(cTurnoutStateBox);
@@ -461,8 +460,9 @@ public class RouteTableAction extends AbstractTableAction {
                 else if (setState[i].equals(setStateThrown) ) {
                     state = Turnout.THROWN;
                 }
-//				else {
-//					state = Route.TOGGLE;
+				else {
+					state = Route.TOGGLE;
+				}
                 g.addTurnoutToRoute((String)turnoutSysNameList.get(i),state);
                 numIncluded ++;
             }
@@ -532,7 +532,7 @@ public class RouteTableAction extends AbstractTableAction {
                         t.getSystemName()+"' to Route '"+g.getSystemName()+"'.");
             }
             // set up control turnout state
-            if ( cTurnoutStateBox.getSelectedItem().equals(setStateThrown) ) {
+            if ( cTurnoutStateBox.getSelectedItem().equals(stateThrown) ) {
                 g.setControlTurnoutState(jmri.Turnout.THROWN);
             }
             else {
@@ -580,9 +580,14 @@ public class RouteTableAction extends AbstractTableAction {
                     else if (tState==Turnout.THROWN) {
                         setState[i] = setStateThrown;
                     }
-//					else if (tState==Route.TOGGLE) {
-//						setState[i] = setStateToggle;
-//					}
+					else if (tState==Route.TOGGLE) {
+						setState[i] = setStateToggle;
+					}
+					else {
+						setState[i] = setStateClosed;
+						log.error ("Unrecognized set state for Turnout " +
+										tSysName + " in Route " + sName);
+					}
                 }
                 else {
                     includeTurnout[i] = false;

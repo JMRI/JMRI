@@ -6,7 +6,7 @@ package jmri;
  * Class providing the basic logic of the Route interface.
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class DefaultRoute extends AbstractNamedBean
     implements Route, java.io.Serializable {
@@ -43,7 +43,7 @@ public class DefaultRoute extends AbstractNamedBean
      
     /**
      * Method to add a Turnout to the list of Turnouts in this Route
-     * 'turnoutState' must be Turnout.CLOSED or Turnout.THROWN, depending
+     * 'turnoutState' must be Turnout.CLOSED, Turnout.THROWN, or Route.TOGGLE, depending
      *      on how the Turnout is to be switched when this Route is set
      */
     public boolean addTurnoutToRoute(String turnoutSystemName, int turnoutState) {
@@ -52,7 +52,8 @@ public class DefaultRoute extends AbstractNamedBean
             log.warn("Reached maximum number of turnouts for Route: "+getSystemName() );
             return false;
         }
-        if ((turnoutState!=Turnout.THROWN) && (turnoutState!=Turnout.CLOSED)) {
+        if ((turnoutState!=Turnout.THROWN) && (turnoutState!=Turnout.CLOSED)
+								&& (turnoutState!=Route.TOGGLE)) {
             log.warn("Illegal Turnout state for Route: "+getSystemName() );
             return false;
         }        
@@ -409,6 +410,15 @@ class SetRouteThread extends Thread
 			if (t!=null) {
 				int state = r.getRouteTurnoutState(k);
 				if (state!=-1) {
+					if (state==Route.TOGGLE) {
+						int st = t.getKnownState();
+						if (st==Turnout.CLOSED) {
+							state = Turnout.THROWN;
+						}
+						else {
+							state = Turnout.CLOSED;
+						}
+					}
 					t.setCommandedState(state);
 					try {
 						Thread.sleep(250);
