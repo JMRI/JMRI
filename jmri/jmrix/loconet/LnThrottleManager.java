@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractThrottleManager;
  *
  * @see SlotManager
  * @author		Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.17 $
+ * @version 		$Revision: 1.18 $
  */
 public class LnThrottleManager extends AbstractThrottleManager implements ThrottleManager, SlotListener {
     private SlotManager slotManager;
@@ -61,5 +61,23 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     	notifyThrottleKnown(throttle, s.locoAddr());
     }
 
+    /**
+     * Address 128 and above is a long address
+     **/
+    public boolean canBeLongAddress(int address) {
+        return (address>=128);
+    }
+    
+    /**
+     * Address 127 and below is a short address
+     **/
+    public boolean canBeShortAddress(int address) {
+        return (address<=127);
+    }
+
+    /**
+     * Are there any ambiguous addresses (short vs long) on this system?
+     */
+    public boolean addressTypeUnique() { return true; }
 
 }

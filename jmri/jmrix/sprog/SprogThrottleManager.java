@@ -6,7 +6,7 @@ import jmri.jmrix.AbstractThrottleManager;
  * SPROG implementation of a ThrottleManager.
  * <P>
  * @author	    Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class SprogThrottleManager extends AbstractThrottleManager {
 
@@ -49,6 +49,25 @@ public class SprogThrottleManager extends AbstractThrottleManager {
             log.warn("Single SPROG Throttle already in use");
         }
     }
+
+    /**
+     * Address 100 and above is a long address
+     **/
+    public boolean canBeLongAddress(int address) {
+        return (address>=100);
+    }
+    
+    /**
+     * Address 99 and below is a short address
+     **/
+    public boolean canBeShortAddress(int address) {
+        return (address<=99);
+    }
+
+    /**
+     * Are there any ambiguous addresses (short vs long) on this system?
+     */
+    public boolean addressTypeUnique() { return true; }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogThrottleManager.class.getName());
 

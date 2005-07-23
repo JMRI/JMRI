@@ -6,7 +6,7 @@ import jmri.jmrix.AbstractThrottleManager;
  * NCE implementation of a ThrottleManager.
  * <P>
  * @author	    Bob Jacobsen  Copyright (C) 2001, Modified by Kelly Loyd
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class EasyDccThrottleManager extends AbstractThrottleManager {
 
@@ -34,6 +34,25 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
     // KSL 20040409 - EasyDcc does not have a 'dispatch' function.
     public boolean hasDispatchFunction() { return false; }
     
+    /**
+     * Address 100 and above is a long address
+     **/
+    public boolean canBeLongAddress(int address) {
+        return (address>=100);
+    }
+    
+    /**
+     * Address 99 and below is a short address
+     **/
+    public boolean canBeShortAddress(int address) {
+        return (address<=99);
+    }
+
+    /**
+     * Are there any ambiguous addresses (short vs long) on this system?
+     */
+    public boolean addressTypeUnique() { return true; }
+
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccThrottleManager.class.getName());
 
 }
