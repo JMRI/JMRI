@@ -5,8 +5,10 @@ import java.awt.*;
 import java.awt.event.*;
 import com.sun.java.util.collections.*;
 import java.beans.*;
+import javax.swing.BoxLayout;
 
 import jmri.DccThrottle;
+import jmri.InstanceManager;
 import jmri.jmrit.roster.*;
 import org.jdom.Element;
 
@@ -14,6 +16,9 @@ import org.jdom.Element;
  * A JInternalFrame that provides a way for the user to enter a
  * decoder address. This class also store AddressListeners and
  * notifies them when the user enters a new address.
+ *
+ * @author     glen   Copyright (C) 2002
+ * @version    $Revision: 1.23 $
  */
 public class AddressPanel extends JInternalFrame
 {
@@ -22,6 +27,7 @@ public class AddressPanel extends JInternalFrame
 
     private ArrayList listeners;
     private JTextField addressField;
+    private ShortLongSelector shortLong;
     private int currentAddress;
 
 	private JButton releaseButton;
@@ -79,7 +85,7 @@ public class AddressPanel extends JInternalFrame
 	  currentAddress=t.getDccAddress();
 	  addressField.setText(address);
 	}
-	if(jmri.InstanceManager.throttleManagerInstance()
+	if(InstanceManager.throttleManagerInstance()
 			       .hasDispatchFunction()) {
         	dispatchButton.setEnabled(true);
 	}
@@ -127,7 +133,13 @@ public class AddressPanel extends JInternalFrame
          addressField = new JTextField();
          addressField.setColumns(4);
          addressField.setFont(new Font("", Font.PLAIN, 32));
-         mainPanel.add(addressField, constraints);
+         shortLong = new ShortLongSelector();
+         JPanel p = new JPanel();
+         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+         p.add(addressField);
+         if (!InstanceManager.throttleManagerInstance().addressTypeUnique()) 
+            p.add(shortLong);
+         mainPanel.add(p, constraints);
 
          setButton = new JButton("Set");
          constraints.gridx = GridBagConstraints.RELATIVE;
@@ -268,7 +280,7 @@ public class AddressPanel extends JInternalFrame
 					 AddressListener l = (AddressListener)listeners.get(i);
 					 log.debug("Notify address listener "+l);
 					 currentAddress = value.intValue();
-					 l.notifyAddressChosen(currentAddress);
+					 l.notifyAddressChosen(currentAddress, shortLong.isLong(currentAddress));
 				 }
 			 }
          }
@@ -304,7 +316,7 @@ public class AddressPanel extends JInternalFrame
 			 {
 				 AddressListener l = (AddressListener)listeners.get(i);
 				 log.debug("Notify address listener "+l);
-				 l.notifyAddressReleased(currentAddress);
+				 l.notifyAddressReleased(currentAddress, shortLong.isLong(currentAddress));
 			 }
 		 }
 	 }
