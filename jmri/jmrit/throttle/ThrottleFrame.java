@@ -36,7 +36,7 @@ import org.jdom.Element;
  *  directed by the interface.
  *
  * @author     Glen Oberhauser
- * @version    $Revision: 1.24 $
+ * @version    $Revision: 1.25 $
  */
 public class ThrottleFrame extends JmriJFrame implements AddressListener, ThrottleListener
 {
@@ -86,10 +86,10 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
      * Receive notification that a new address has been selected.
      * @param address The address that is now selected.
      */
-    public void notifyAddressChosen(int address)
+    public void notifyAddressChosen(int address, boolean isLong)
 	{
 		boolean requestOK =
-			InstanceManager.throttleManagerInstance().requestThrottle(address, this);
+			InstanceManager.throttleManagerInstance().requestThrottle(address, isLong, this);
 		if (!requestOK)
 		{
 			JOptionPane.showMessageDialog(this, "Address in use by another throttle.");
@@ -100,7 +100,7 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
 	 * Receive notification that an address has been released or dispatched
 	 * @param address The address released/dispatched
 	 */
-	public void notifyAddressReleased(int address)
+	public void notifyAddressReleased(int address, boolean isLong)
 	{
 		InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
 		controlPanel.notifyThrottleDisposed();
