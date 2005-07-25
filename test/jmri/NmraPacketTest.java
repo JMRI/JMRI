@@ -149,6 +149,12 @@ public class NmraPacketTest extends TestCase {
 		Assert.assertEquals("fifth byte ",  0x3C^0x3D^0x01^0x0C, ba[4] & 0xFF);
 	}
 
+	public void testAddressShortLoco1() {
+	    byte [] ba = new byte[]{};
+	    NmraPacket.extractAddressNumber(ba);
+	    NmraPacket.extractAddressType(ba);
+    }
+        
 	// from here down is testing infrastructure
 	public NmraPacketTest(String s) {
 		super(s);
