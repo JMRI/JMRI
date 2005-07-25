@@ -28,7 +28,7 @@ package jmri;
  *            short vs long address type
  *
  * @author      Bob Jacobsen Copyright (C) 2001, 2003
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 public class NmraPacket {
 
@@ -357,8 +357,44 @@ public class NmraPacket {
         }
         return true;  // passes test, hence OK
     }
-                                         
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NmraPacket.class.getName());
+                           
+    static final public int NO_ADDRESS = 1;
+    static final public int LOCO_SHORT_ADDRESS = 2;
+    static final public int LOCO_LONG_ADDRESS = 4;
+    static final public int ACCESSORY_SHORT_ADDRESS = 8;
+
+    /**
+     * Extract the address type from an NMRA packet.
+     *<P>
+     * This finds and returns the type of address within a specific
+     * packet, e.g. "the stationary decoder space".
+     */
+    static int extractAddressType(byte[] packet) {
+        return 0;
+    }
+
+    /**
+     * Extract the numerical address from an NMRA packet.
+     *<P>
+     * This finds and returns the numerical address within a specific
+     * type, e.g. "first address within the stationary decoder space".
+     */
+    static int extractAddressNumber(byte[] packet) {
+        return 0;
+    }
+
+     /**
+     * Extract the instruction from an NMRA packet
+     *<P>
+     * This finds and returns the instruction bits within a specific
+     * type of packet/instruction, masking off the other bits.
+     *
+     */
+    static int extractInstruction(byte[] packet) {
+        return 0;
+    }
+
+   static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NmraPacket.class.getName());
 }
 
 
