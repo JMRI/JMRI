@@ -24,7 +24,7 @@ import com.sun.java.util.collections.Vector;
 
 /**
  * @author	Bob Jacobsen Copyright 2001, 2002, 2003, 2004
- * @version         $Revision: 1.10 $
+ * @version         $Revision: 1.11 $
  */
 public class PaneProgPaneTest extends TestCase {
 
@@ -33,6 +33,12 @@ public class PaneProgPaneTest extends TestCase {
     // test creating columns in a pane
     public void testColumn() {
         setupDoc();
+        PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
+                                                 "test frame", "programmers/Basic.xml",
+                                                 p, false) {
+            // dummy implementations
+            JPanel getModePane() { return null; }
+        };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         if (log.isDebugEnabled()) log.debug("CvTableModel ctor complete");
@@ -42,7 +48,7 @@ public class PaneProgPaneTest extends TestCase {
 
         // create test object with special implementation of the newColumn(String) operation
         colCount = 0;
-        PaneProgPane p = new PaneProgPane("name", pane1, cvModel, varModel, null) {
+        PaneProgPane p = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null) {
                 public JPanel newColumn(Element e, boolean a, Element el) { colCount++; return new JPanel();}
             };
 
@@ -52,6 +58,12 @@ public class PaneProgPaneTest extends TestCase {
     // test specifying variables in columns
     public void testVariables() {
         setupDoc();  // make sure XML document is ready
+        PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
+                                                 "test frame", "programmers/Basic.xml",
+                                                 p, false) {
+            // dummy implementations
+            JPanel getModePane() { return null; }
+        };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
@@ -60,7 +72,7 @@ public class PaneProgPaneTest extends TestCase {
 
         // create test object with special implementation of the newVariable(String) operation
         varCount = 0;
-        PaneProgPane p = new PaneProgPane("name", pane1, cvModel, varModel, null) {
+        PaneProgPane p = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null) {
                 public void newVariable(Element e, JComponent p, GridBagLayout g, GridBagConstraints c, boolean a)
                 { varCount++; }
             };
@@ -71,6 +83,12 @@ public class PaneProgPaneTest extends TestCase {
     // test storage of programming info in list
     public void testVarListFill() {
         setupDoc();  // make sure XML document is ready
+        PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
+                                                 "test frame", "programmers/Basic.xml",
+                                                 p, false) {
+            // dummy implementations
+            JPanel getModePane() { return null; }
+        };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
@@ -97,7 +115,7 @@ public class PaneProgPaneTest extends TestCase {
         if (log.isDebugEnabled()) log.debug("Two elements loaded");
 
         // test by invoking
-        PaneProgPane p = new PaneProgPane("name", pane1, cvModel, varModel, null);
+        PaneProgPane p = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null);
         assertEquals("variable list length", 2, p.varList.size());
         assertEquals("1st variable index ", new Integer(1), p.varList.get(0));
         assertEquals("2nd variable index ", new Integer(0), p.varList.get(1));
@@ -108,6 +126,13 @@ public class PaneProgPaneTest extends TestCase {
         if (log.isDebugEnabled()) log.debug("testPaneRead starts");
         // initialize the system
         setupDoc();  // make sure XML document is ready
+
+        PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
+                                                 "test frame", "programmers/Basic.xml",
+                                                 p, false) {
+            // dummy implementations
+            JPanel getModePane() { return null; }
+        };
 
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
@@ -130,7 +155,7 @@ public class PaneProgPaneTest extends TestCase {
             .addContent( new Element("decVal"));
         varModel.setRow(1, el1);
 
-        PaneProgPane progPane = new PaneProgPane("name", pane1, cvModel, varModel, null);
+        PaneProgPane progPane = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null);
 
         // test by invoking
         progPane.readPaneAll();
@@ -157,6 +182,12 @@ public class PaneProgPaneTest extends TestCase {
         // initialize the system
         setupDoc();  // make sure XML document is ready
 
+        PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
+                                                 "test frame", "programmers/Basic.xml",
+                                                 p, false) {
+            // dummy implementations
+            JPanel getModePane() { return null; }
+        };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
@@ -179,7 +210,8 @@ public class PaneProgPaneTest extends TestCase {
         varModel.setRow(1, el1);
         if (log.isDebugEnabled()) log.debug("Two elements loaded");
 
-        PaneProgPane progPane = new PaneProgPane("name", pane1, cvModel, varModel, null);
+//        PaneProgPane progPane = new PaneProgPane("name", pane1, cvModel, varModel, null);
+        PaneProgPane progPane = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null);
 
         // test by invoking
         progPane.writePaneAll();
@@ -207,6 +239,12 @@ public class PaneProgPaneTest extends TestCase {
         // initialize the system
         setupDoc();  // make sure XML document is ready
 
+        PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
+                                                 "test frame", "programmers/Basic.xml",
+                                                 p, false) {
+            // dummy implementations
+            JPanel getModePane() { return null; }
+        };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
@@ -248,7 +286,7 @@ public class PaneProgPaneTest extends TestCase {
             .addContent( new Element("decVal"));
         varModel.setRow(row++, el3);
 
-        PaneProgPane progPane = new PaneProgPane("name", pane1, cvModel, varModel, null);
+        PaneProgPane progPane = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null);
 
         // start actual testing
         Assert.assertEquals("number of all CVs to read ", 29, progPane.countOpsNeeded(true,false));
