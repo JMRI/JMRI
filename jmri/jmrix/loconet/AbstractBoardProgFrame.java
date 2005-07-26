@@ -32,7 +32,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author  Bob Jacobsen   Copyright (C) 2004
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 abstract public class AbstractBoardProgFrame extends JFrame implements LocoNetListener {
 
@@ -253,7 +253,8 @@ abstract public class AbstractBoardProgFrame extends JFrame implements LocoNetLi
         // are we reading? If not, ignore
         if (state == 0) return;
         // check for right type, unit
-        if (m.getOpCode() != 0xb4 || m.getElement(1) != 0x00)  return;
+        if (m.getOpCode() != 0xb4 
+            || ( (m.getElement(1) != 0x00) && (m.getElement(1) != 0x50) ) )  return;
 
         // LACK with 0 in opcode; assume its to us.  Note that there
         // should be a 0x50 in the opcode, not zero, but this is what we
