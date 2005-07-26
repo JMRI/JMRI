@@ -63,7 +63,7 @@ import com.sun.java.util.collections.List;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.50 $
+ * @version   $Revision: 1.51 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -315,7 +315,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     writeChangesButton.setText("Stop Write changes on sheet");
                     if (_parentFrame.isBusy() == false) {
-                        prepReadPane(true);
+                        prepWritePane(true);
                         prepGlassPane(writeChangesButton);
                         _parentFrame.glassPane.setVisible(true);
                         writePaneChanges();
@@ -336,7 +336,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     writeAllButton.setText("Stop Write full sheet");
                     if (_parentFrame.isBusy() == false) {
-                        prepReadPane(false);
+                        prepWritePane(false);
                         prepGlassPane(writeAllButton);
                         _parentFrame.glassPane.setVisible(true);
                         writePaneAll();
