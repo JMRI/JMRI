@@ -1,4 +1,4 @@
-// SimpleTurnoutCtrlAction.java
+// ConsistToolAction.java
 
 package jmri.jmrit.consisttool;
 
@@ -10,14 +10,14 @@ import java.awt.event.ActionEvent;
  * ConsistToolFrame object
  *
  * @author              Paul Bender Copyright (C) 2003
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
  public class ConsistToolAction extends AbstractAction {
 
     public ConsistToolAction(String s) {
 	super(s);
 
-	// disable ourself if there is no primary turnout manager available
+	// disable ourself if there is no consist manager available
         if (jmri.InstanceManager.consistManagerInstance()==null) {
             setEnabled(false);
         }
@@ -36,4 +36,4 @@ import java.awt.event.ActionEvent;
 }
 
 
-/* @(#)SimpleTurnoutCtrlAction.java */
+/* @(#)ConsistToolAction.java */
