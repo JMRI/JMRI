@@ -33,7 +33,7 @@ import java.util.Vector;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.30 $
+ * @version     $Revision: 1.31 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
@@ -41,6 +41,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // error if more than one constructed?
         if (self != null)
             log.debug("Creating too many SlotManager objects");
+
+        // need a longer LONG_TIMEOUT for Fleischman command stations
+        LONG_TIMEOUT=180000;
 
         // initialize slot array
         for (int i=0; i<=127; i++) _slots[i] = new LocoNetSlot(i);

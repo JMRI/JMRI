@@ -1,21 +1,24 @@
 package jmri.jmrix;
 
 import jmri.DccThrottle;
+import jmri.LocoAddress;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Vector;
 
 /**
  * An abstract implementation of DccThrottle.
- * Based on Glen Oberhauser's original LnThrottleManager implementation
+ * Based on Glen Oberhauser's original LnThrottleManager implementation.
+ * <P>
+ * Note that this implements DccThrottle, not Throttle directly, so 
+ * it has some DCC-specific content.
  *
- * @author  Bob Jacobsen  Copyright (C) 2001
- * @version $Revision: 1.10 $
+ * @author  Bob Jacobsen  Copyright (C) 2001, 2005
+ * @version $Revision: 1.11 $
  */
 abstract public class AbstractThrottle implements DccThrottle {
     protected float speedSetting;
     protected float speedIncrement;
-    protected int address;
     protected int speedStepMode;
     protected boolean isForward;
     protected boolean f0, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12;
@@ -98,30 +101,6 @@ abstract public class AbstractThrottle implements DccThrottle {
         return f12;
     }
 
-    /**
-     * Locomotive identification.  The exact format is defined by the
-     * specific implementation, but its intended that this is a user-specified
-     * name like "UP 777", or whatever convention the user wants to employ.
-     *
-     * This is an unbound parameter.
-     */
-    public String getLocoIdentification() {
-        return "";
-    }
-
-
-    /**
-     * Locomotive address.  The exact format is defined by the
-     * specific implementation, but for DCC systems it is intended that this
-     * will be the DCC address in the form "nnnn" (extended) vs "nnn" or "nn" (short).
-     * Non-DCC systems may use a different form.
-     *
-     * This is an unbound parameter.
-     */
-    public String getLocoAddress() {
-        return "";
-    }
-
 
     // register for notification if any of the properties change
     public void removePropertyChangeListener(PropertyChangeListener l) {
@@ -183,10 +162,6 @@ abstract public class AbstractThrottle implements DccThrottle {
     public void release() {
         if (!active) log.warn("release called when not active");
         dispose();
-    }
-
-    public int getDccAddress() {
-        return address;
     }
 
     /**

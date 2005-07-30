@@ -1,5 +1,7 @@
 package jmri.jmrix.nce;
 
+import jmri.LocoAddress;
+import jmri.DccLocoAddress;
 import jmri.jmrix.AbstractThrottle;
 
 /**
@@ -12,14 +14,14 @@ import jmri.jmrix.AbstractThrottle;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class NceThrottle extends AbstractThrottle
 {
     /**
      * Constructor.
      */
-    public NceThrottle(int address)
+    public NceThrottle(DccLocoAddress address)
     {
         super();
 
@@ -44,12 +46,16 @@ public class NceThrottle extends AbstractThrottle
 
     }
 
+    DccLocoAddress address;
+
+    public LocoAddress getLocoAddress() { return address; }
 
     /**
      * Send the message to set the state of functions F0, F1, F2, F3, F4.
      */
     protected void sendFunctionGroup1() {
-        byte[] result = jmri.NmraPacket.function0Through4Packet(address, (address>=100),
+        byte[] result = jmri.NmraPacket.function0Through4Packet(address.getNumber(), 
+                                         address.isLongAddress(),
                                          getF0(), getF1(), getF2(), getF3(), getF4());
 
         NceMessage m = NceMessage.sendPacketMessage(result);
@@ -63,7 +69,8 @@ public class NceThrottle extends AbstractThrottle
      */
     protected void sendFunctionGroup2() {
 
-        byte[] result = jmri.NmraPacket.function5Through8Packet(address, (address>=100),
+        byte[] result = jmri.NmraPacket.function5Through8Packet(address.getNumber(), 
+                                         address.isLongAddress(),
                                          getF5(), getF6(), getF7(), getF8());
 
         NceMessage m = NceMessage.sendPacketMessage(result);
@@ -77,7 +84,8 @@ public class NceThrottle extends AbstractThrottle
      */
     protected void sendFunctionGroup3() {
 
-        byte[] result = jmri.NmraPacket.function9Through12Packet(address, (address>=100),
+        byte[] result = jmri.NmraPacket.function9Through12Packet(address.getNumber(), 
+                                         address.isLongAddress(),
                                          getF9(), getF10(), getF11(), getF12());
 
         NceMessage m = NceMessage.sendPacketMessage(result);
@@ -98,7 +106,8 @@ public class NceThrottle extends AbstractThrottle
         if (value>127) value = 127;    // max possible speed
         if (value<0) value = 1;        // emergency stop
 
-        byte[] result = jmri.NmraPacket.speedStep128Packet(address, (address>=100), value, isForward);
+        byte[] result = jmri.NmraPacket.speedStep128Packet(address.getNumber(), 
+                                         address.isLongAddress(), value, isForward);
 
         NceMessage m = NceMessage.queuePacketMessage(result);
 

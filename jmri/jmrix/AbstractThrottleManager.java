@@ -1,6 +1,8 @@
 package jmri.jmrix;
 
 import jmri.DccThrottle;
+import jmri.LocoAddress;
+import jmri.DccLocoAddress;
 import jmri.ThrottleListener;
 import jmri.ThrottleManager;
 import com.sun.java.util.collections.HashMap;
@@ -12,7 +14,7 @@ import com.sun.java.util.collections.ArrayList;
  * Based on Glen Oberhauser's original LnThrottleManager implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 abstract public class AbstractThrottleManager implements ThrottleManager {
 	
@@ -40,26 +42,26 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * @return True if the request will continue, false if the request will not
      * be made. False may be returned if a the throttle is already in use.
      */
-    public boolean requestThrottle(int address, boolean isLong, ThrottleListener l) {
+    public boolean requestThrottle(int address, boolean isLongAddress, ThrottleListener l) {
         boolean throttleFree = true;
         if (throttleListeners == null) {
             throttleListeners = new HashMap(5);
         }
 
 		// put the list in if not present
-        Integer addressKey = new Integer(address);
-		if (!throttleListeners.containsKey(addressKey))
-			throttleListeners.put(addressKey, new ArrayList());
+		DccLocoAddress la = new DccLocoAddress(address, isLongAddress);
+		if (!throttleListeners.containsKey(la))
+			throttleListeners.put(la, new ArrayList());
 
 		// get the corresponding list to check length
-		ArrayList a = (ArrayList)throttleListeners.get(addressKey);
+		ArrayList a = (ArrayList)throttleListeners.get(la);
 		
 		// check length
         if (singleUse() && (a.size()>0)) {
             throttleFree= false;
         } else if (a.size() == 0) {
         	a.add(l);
-            requestThrottleSetup(address);
+            requestThrottleSetup(la);
         } else {
         	a.add(l);
         }
@@ -86,9 +88,9 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 
     /**
      * Abstract member to actually do the work of configuring a new throttle,
-     * perhaps via interaction with the DCC system
+     * usually via interaction with the DCC system
      */
-    abstract public void requestThrottleSetup(int address);
+    abstract public void requestThrottleSetup(LocoAddress a);
 
     /**
      * Cancel a request for a throttle
@@ -129,16 +131,15 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * This method creates a throttle for all ThrottleListeners of that address
      * and notifies them via the ThrottleListener.notifyThrottleFound method.
      */
-    public void notifyThrottleKnown(DccThrottle throttle, int addr) {
+    public void notifyThrottleKnown(DccThrottle throttle, LocoAddress addr) {
         log.debug("notifyThrottleKnown for "+addr);
-        Integer addressKey = new Integer(addr);
-		ArrayList a = (ArrayList)throttleListeners.get(addressKey);
+		ArrayList a = (ArrayList)throttleListeners.get(addr);
 		for (int i = 0; i<a.size(); i++) {
       	 	ThrottleListener l = (ThrottleListener)a.get(i);
             log.debug("Notify listener");
             l.notifyThrottleFound(throttle);
         }
-        throttleListeners.remove(addressKey);
+        throttleListeners.remove(addr);
     }
   
     /**

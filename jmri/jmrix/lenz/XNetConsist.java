@@ -5,7 +5,7 @@
  * it uses the XPressNet specific commands to build a consist.
  *
  * @author                      Paul Bender Copyright (C) 2004
- * @version                     $Revision: 2.5 $
+ * @version                     $Revision: 2.6 $
  */
 
 package jmri.jmrix.lenz;
@@ -17,6 +17,7 @@ import com.sun.java.util.collections.ArrayList;
 
 import jmri.Consist;
 import jmri.ConsistListener;
+import jmri.DccLocoAddress;
 
 public class XNetConsist extends jmri.DccConsist implements XNetListener {
 
@@ -277,10 +278,11 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
            // In order to do this, we have to pull up both throttles,
            // and check that the direction of the trailing locomotive
            // is correct relative to the lead locomotive.
-                
-           XNetThrottle lead= new XNetThrottle(Integer.parseInt((String)ConsistList.get(0)));
+           int addrNumber = Integer.parseInt((String)ConsistList.get(0));
+           DccLocoAddress address = new DccLocoAddress(addrNumber,XNetThrottleManager.isLongAddress(addrNumber));
+           XNetThrottle lead= new XNetThrottle(address);
 		
-	   XNetThrottle trail = new XNetThrottle(LocoAddress);
+	   XNetThrottle trail = new XNetThrottle( new DccLocoAddress(LocoAddress,XNetThrottleManager.isLongAddress(LocoAddress)));
 
            if(directionNormal) {
               if(log.isDebugEnabled()) log.debug("DOUBLE HEADER: Set direction of trailing locomotive same as lead locomotive");

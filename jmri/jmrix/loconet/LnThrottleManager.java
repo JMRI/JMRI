@@ -3,6 +3,9 @@ package jmri.jmrix.loconet;
 import jmri.DccThrottle;
 import jmri.ThrottleListener;
 import jmri.ThrottleManager;
+import jmri.LocoAddress;
+import jmri.DccLocoAddress;
+
 import com.sun.java.util.collections.HashMap;
 
 import jmri.jmrix.AbstractThrottleManager;
@@ -15,7 +18,7 @@ import jmri.jmrix.AbstractThrottleManager;
  *
  * @see SlotManager
  * @author		Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.18 $
+ * @version 		$Revision: 1.19 $
  */
 public class LnThrottleManager extends AbstractThrottleManager implements ThrottleManager, SlotListener {
     private SlotManager slotManager;
@@ -41,8 +44,8 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
 	 * This returns directly, having arranged for the Throttle
 	 * object to be delivered via callback
 	 */
-	public void requestThrottleSetup(int address) {
-    	slotManager.slotFromLocoAddress(address, this);
+	public void requestThrottleSetup(LocoAddress address) {
+    	slotManager.slotFromLocoAddress(((DccLocoAddress)address).getNumber(), this);
 	}
 	
 
@@ -58,26 +61,33 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      */
     public void notifyChangedSlot(LocoNetSlot s) {
     	DccThrottle throttle = new LocoNetThrottle(s);
-    	notifyThrottleKnown(throttle, s.locoAddr());
+    	notifyThrottleKnown(throttle, new DccLocoAddress(s.locoAddr(),isLongAddress(s.locoAddr()) ) );
     }
 
     /**
      * Address 128 and above is a long address
      **/
     public boolean canBeLongAddress(int address) {
-        return (address>=128);
+        return isLongAddress(address);
     }
     
     /**
      * Address 127 and below is a short address
      **/
     public boolean canBeShortAddress(int address) {
-        return (address<=127);
+        return !isLongAddress(address);
     }
 
     /**
      * Are there any ambiguous addresses (short vs long) on this system?
      */
     public boolean addressTypeUnique() { return true; }
+
+    /*
+     * Local method for deciding short/long address
+     */
+    static boolean isLongAddress(int num) {
+        return (num>=128);
+    }
 
 }

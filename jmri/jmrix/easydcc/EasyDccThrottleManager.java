@@ -1,12 +1,18 @@
 package jmri.jmrix.easydcc;
 
+import jmri.LocoAddress;
+import jmri.DccLocoAddress;
+
 import jmri.jmrix.AbstractThrottleManager;
 
 /**
- * NCE implementation of a ThrottleManager.
+ * EasyDCC implementation of a ThrottleManager.
  * <P>
- * @author	    Bob Jacobsen  Copyright (C) 2001, Modified by Kelly Loyd
- * @version         $Revision: 1.2 $
+ * Based on early NCE code.
+ *
+ * @author	    Bob Jacobsen  Copyright (C) 2001, 2005
+ * @author Modified by Kelly Loyd
+ * @version         $Revision: 1.3 $
  */
 public class EasyDccThrottleManager extends AbstractThrottleManager {
 
@@ -17,7 +23,7 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
         super();
     }
 
-    public void requestThrottleSetup(int address) {
+    public void requestThrottleSetup(LocoAddress address) {
         // KSL 20040409 - EasyDcc does not require feedback afaik
         // don't quite know if the EasyDcc requires feedback.
         // may need to extend this.
@@ -28,7 +34,7 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
            radio throttles. 
         */
         log.debug("new EasyDccThrottle for "+address);
-        notifyThrottleKnown(new EasyDccThrottle(address), address);
+        notifyThrottleKnown(new EasyDccThrottle((DccLocoAddress)address), address);
     }
     
     // KSL 20040409 - EasyDcc does not have a 'dispatch' function.
@@ -38,20 +44,27 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
      * Address 100 and above is a long address
      **/
     public boolean canBeLongAddress(int address) {
-        return (address>=100);
+        return isLongAddress(address);
     }
     
     /**
      * Address 99 and below is a short address
      **/
     public boolean canBeShortAddress(int address) {
-        return (address<=99);
+        return !isLongAddress(address);
     }
 
     /**
      * Are there any ambiguous addresses (short vs long) on this system?
      */
     public boolean addressTypeUnique() { return true; }
+
+    /*
+     * Local method for deciding short/long address
+     */
+    static boolean isLongAddress(int num) {
+        return (num>=100);
+    }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(EasyDccThrottleManager.class.getName());
 

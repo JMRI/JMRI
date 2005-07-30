@@ -1,25 +1,29 @@
 package jmri.jmrix.xpa;
 
+import jmri.LocoAddress;
+import jmri.DccLocoAddress;
+
 import jmri.jmrix.AbstractThrottle;
 
 /**
  * An XPA+Modem implementation of the Throttle for XPressNet Systems
  *
  * @author  Paul Bender  Copyright (C) 2004
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class XpaThrottle extends AbstractThrottle {
 
     private int speedvalue;
-
+    private int address;
+    
     /**
      * Constructor
      */
-    public XpaThrottle(int address) {
+    public XpaThrottle(LocoAddress address) {
        super();
-       this.address=address;
-       this.speedIncrement=1;
-       this.isForward=true;
+       this.address      = ((DccLocoAddress) address).getNumber();
+       this.speedIncrement = 1;
+       this.isForward    = true;
        this.speedSetting = 0;
        this.f0           = false;
        this.f1           = false;
@@ -31,8 +35,8 @@ public class XpaThrottle extends AbstractThrottle {
        this.f7           = false;
        this.f8           = false;
        this.f9           = false;
-       this.f10           = false;
-       this.f11           = false;
+       this.f10          = false;
+       this.f11          = false;
        this.speedvalue   = 0;
        if (log.isDebugEnabled()) { 
 	 log.debug("XpaThrottle constructor called for address " + address); 
@@ -200,6 +204,10 @@ public class XpaThrottle extends AbstractThrottle {
     public void sendFunctionGroup2(){};
     public void sendFunctionGroup3(){};
 
+    public LocoAddress getLocoAddress() {
+        return new DccLocoAddress(address, XpaThrottleManager.isLongAddress(address));
+    }
+    
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(XpaThrottle.class.getName());
 

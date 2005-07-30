@@ -1,5 +1,8 @@
 package jmri.jmrix.sprog;
 
+import jmri.LocoAddress;
+import jmri.DccLocoAddress;
+
 import jmri.jmrix.AbstractThrottle;
 import jmri.util.StringUtil;
 
@@ -12,14 +15,14 @@ import jmri.util.StringUtil;
  * Based on the {@link jmri.jmrix.nce.NceThrottle} implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SprogThrottle extends AbstractThrottle
 {
     /**
      * Constructor.
      */
-    public SprogThrottle(int address)
+    public SprogThrottle(LocoAddress address)
     {
         super();
 
@@ -38,12 +41,13 @@ public class SprogThrottle extends AbstractThrottle
         this.f10           = false;
         this.f11           = false;
         this.f12           = false;
-        this.address      = address;
+        this.address      = ((DccLocoAddress)address).getNumber();
         this.isForward    = true;
 
     }
 
     SprogCommandStation station = new SprogCommandStation();
+    private int address;
 
     /**
      * Send the message to set the state of functions F0, F1, F2, F3, F4.
@@ -129,6 +133,10 @@ public class SprogThrottle extends AbstractThrottle
     public void dispose() {
         // if this object has registered any listeners, remove those.
         super.dispose();
+    }
+
+    public LocoAddress getLocoAddress() {
+        return new DccLocoAddress(address, SprogThrottleManager.isLongAddress(address));
     }
 
     // initialize logging

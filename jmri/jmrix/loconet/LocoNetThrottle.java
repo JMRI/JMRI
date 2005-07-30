@@ -1,7 +1,10 @@
 package jmri.jmrix.loconet;
 
-import jmri.jmrix.AbstractThrottle;
+import jmri.LocoAddress;
+import jmri.DccLocoAddress;
 import jmri.InstanceManager;
+
+import jmri.jmrix.AbstractThrottle;
 
 /**
  * An implementation of DccThrottle via AbstractThrottle with code specific
@@ -11,11 +14,12 @@ import jmri.InstanceManager;
  * with values from 0 to 127.
  * <P>
  * @author  Glen Oberhauser, Bob Jacobsen  Copyright (C) 2003, 2004
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     private LocoNetSlot slot;
     private LocoNetInterface network;
+    private int address;
 
     /**
      * Constructor
@@ -301,6 +305,11 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         // f9 through f12 are not in the slot
 
     }
+
+    public LocoAddress getLocoAddress() {
+        return new DccLocoAddress(address, LnThrottleManager.isLongAddress(address));
+    }
+
     // initialize logging
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(LocoNetThrottle.class.getName());
 

@@ -1,5 +1,8 @@
 package jmri.jmrix.easydcc;
 
+import jmri.LocoAddress;
+import jmri.DccLocoAddress;
+
 import jmri.jmrix.AbstractThrottle;
 
 /**
@@ -12,14 +15,14 @@ import jmri.jmrix.AbstractThrottle;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, modified 2004 by Kelly Loyd
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class EasyDccThrottle extends AbstractThrottle
 {
     /**
      * Constructor.
      */
-    public EasyDccThrottle(int address)
+    public EasyDccThrottle(DccLocoAddress address)
     {
         super();
 
@@ -49,7 +52,8 @@ public class EasyDccThrottle extends AbstractThrottle
      * Send the message to set the state of functions F0, F1, F2, F3, F4.
      */
     protected void sendFunctionGroup1() {
-        byte[] result = jmri.NmraPacket.function0Through4Packet(address, (address>=100),
+        byte[] result = jmri.NmraPacket.function0Through4Packet(address.getNumber(), 
+                                         address.isLongAddress(),
                                          getF0(), getF1(), getF2(), getF3(), getF4());
 
         /* Format of EasyDcc 'send' command 
@@ -80,7 +84,8 @@ public class EasyDccThrottle extends AbstractThrottle
      */
     protected void sendFunctionGroup2() {
 
-        byte[] result = jmri.NmraPacket.function5Through8Packet(address, (address>=100),
+        byte[] result = jmri.NmraPacket.function5Through8Packet(address.getNumber(), 
+                                         address.isLongAddress(),
                                          getF5(), getF6(), getF7(), getF8());
 
         EasyDccMessage m = new EasyDccMessage(4+3*result.length);
@@ -105,7 +110,8 @@ public class EasyDccThrottle extends AbstractThrottle
      */
     protected void sendFunctionGroup3() {
 
-        byte[] result = jmri.NmraPacket.function9Through12Packet(address, (address>=100),
+        byte[] result = jmri.NmraPacket.function9Through12Packet(address.getNumber(), 
+                                         address.isLongAddress(),
                                          getF9(), getF10(), getF11(), getF12());
 
         EasyDccMessage m = new EasyDccMessage(4+3*result.length);
@@ -137,7 +143,8 @@ public class EasyDccThrottle extends AbstractThrottle
         if (value>127) value = 127;    // max possible speed
         if (value<0) value = 1;        // emergency stop
 
-        byte[] result = jmri.NmraPacket.speedStep128Packet(address, (address>=100), value, isForward);
+        byte[] result = jmri.NmraPacket.speedStep128Packet(address.getNumber(), 
+                                         address.isLongAddress(), value, isForward);
 
         EasyDccMessage m = new EasyDccMessage(1+3*result.length);
         // for EasyDCC, sending a speed command involves:
@@ -161,9 +168,7 @@ public class EasyDccThrottle extends AbstractThrottle
         setSpeedSetting(speedSetting);  // send the command
     }
 
-    boolean isLongAddr(int address) {
-        return address>=100;
-    }
+    private DccLocoAddress address;
     
     /**
      * Finished with this throttle.  Right now, this does nothing,
@@ -180,7 +185,8 @@ public class EasyDccThrottle extends AbstractThrottle
         // setSpeedSetting(0);
         int value = 0;
  
-        byte[] result = jmri.NmraPacket.speedStep128Packet(address, isLongAddr(address), value, isForward);
+        byte[] result = jmri.NmraPacket.speedStep128Packet(address.getNumber(), 
+                                         address.isLongAddress(), value, isForward);
     	// KSL 20040409 - this is messy, as I only wanted 
     	// the address to be sent. 
     	EasyDccMessage m = new EasyDccMessage(7);
@@ -190,7 +196,7 @@ public class EasyDccThrottle extends AbstractThrottle
         int i = 0;  // message index counter
         m.setElement(i++, 'D');
 
-        if (isLongAddr(address)) {
+        if (address.isLongAddress()) {
             m.setElement(i++, ' ');
             m.addIntAsTwoHex(result[0]&0xFF,i);
             i = i+2;
@@ -226,6 +232,10 @@ public class EasyDccThrottle extends AbstractThrottle
         release();
         
         super.dispose();
+    }
+
+    public LocoAddress getLocoAddress() {
+        return address;
     }
 
     // initialize logging

@@ -1,12 +1,16 @@
 package jmri.jmrix.sprog;
 
+import jmri.LocoAddress;
+import jmri.DccLocoAddress;
+
+
 import jmri.jmrix.AbstractThrottleManager;
 
 /**
  * SPROG implementation of a ThrottleManager.
  * <P>
  * @author	    Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class SprogThrottleManager extends AbstractThrottleManager {
 
@@ -29,14 +33,14 @@ public class SprogThrottleManager extends AbstractThrottleManager {
         throttleInUse = false;
     }
 
-    public void requestThrottleSetup(int address) {
+    public void requestThrottleSetup(LocoAddress address) {
         // The SPROG protocol doesn't require an interaction with the command
         // station for this, so set the address and immediately trigger the callback
         // if a throttle is not in use.
         if (!throttleInUse) {
             throttleInUse = true;
             log.debug("new SprogThrottle for "+address);
-            String addr = ""+address;
+            String addr = ""+((DccLocoAddress)address).getNumber();
             SprogMessage m = new SprogMessage(2+addr.length());
             int i = 0;
             m.setElement(i++,'A');
@@ -54,20 +58,27 @@ public class SprogThrottleManager extends AbstractThrottleManager {
      * Address 100 and above is a long address
      **/
     public boolean canBeLongAddress(int address) {
-        return (address>=100);
+        return isLongAddress(address);
     }
     
     /**
      * Address 99 and below is a short address
      **/
     public boolean canBeShortAddress(int address) {
-        return (address<=99);
+        return !isLongAddress(address);
     }
 
     /**
      * Are there any ambiguous addresses (short vs long) on this system?
      */
     public boolean addressTypeUnique() { return true; }
+
+    /*
+     * Local method for deciding short/long address
+     */
+    static boolean isLongAddress(int num) {
+        return (num>=100);
+    }
 
     static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(SprogThrottleManager.class.getName());
 

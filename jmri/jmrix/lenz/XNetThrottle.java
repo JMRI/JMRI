@@ -2,13 +2,16 @@ package jmri.jmrix.lenz;
 
 import jmri.jmrix.AbstractThrottle;
 import jmri.DccThrottle;
+import jmri.LocoAddress;
+import jmri.DccLocoAddress;
+
 import javax.swing.JOptionPane;
 
 /**
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
  * @author     Paul Bender (C) 2002,2003,2004
- * @version    $Revision: 2.5 $
+ * @version    $Revision: 2.6 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -27,6 +30,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 
     private int requestState=THROTTLEIDLE;
 
+    private int address;
+
     /**
      * Constructor
      */
@@ -40,10 +45,10 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     /**
      * Constructor
      */
-    public XNetThrottle(int address)
+    public XNetThrottle(LocoAddress address)
     {
        super();
-       this.setDccAddress(address);
+       this.setDccAddress(((DccLocoAddress)address).getNumber());
        this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;
        this.speedStepMode=DccThrottle.SpeedStepMode128;
 //       this.isForward=true;
@@ -447,32 +452,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         sendFunctionGroup3();
     }
 
-
-    /**
-     * Locomotive identification.  The exact format is defined by the
-     * specific implementation, but its intended that this is a user-specified
-     * name like "UP 777", or whatever convention the user wants to employ.
-     *
-     * This is an unbound parameter.
-     */
-    public String getLocoIdentification()
-    {
-        return "";
-    }
-
-
-    /**
-     * Locomotive address.  The exact format is defined by the
-     * specific implementation, but for DCC systems it is intended that this
-     * will be the DCC address in the form "nnnn" (extended) vs "nnn" or "nn" (short).
-     * Non-DCC systems may use a different form.
-     *
-     * This is an unbound parameter.
-     */
-    public String getLocoAddress()
-    {
-        return "";
-    }
 
     /**
      * Dispose when finished with this object.  After this, further usage of
@@ -1039,6 +1018,10 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     private void stopStatusTimer() {
            if(statTimer!=null) statTimer.stop();
+    }
+
+    public LocoAddress getLocoAddress() {
+        return new DccLocoAddress(address, XNetThrottleManager.isLongAddress(address));
     }
 
     // register for notification
