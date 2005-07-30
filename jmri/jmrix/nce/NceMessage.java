@@ -9,7 +9,7 @@ package jmri.jmrix.nce;
  * class handles the response from the command station.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -153,7 +153,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     static public NceMessage sendPacketMessage(byte[] bytes) {
         if (useBinary) {
             if (bytes.length<3 || bytes.length>6)
-                log.error("Send of NCE track packet too long:"+(bytes.length)+
+                log.error("Send of NCE track packet too short or long:"+(bytes.length)+
                     " packet:"+bytes);
             NceMessage m = new NceMessage(2+bytes.length);
             m.setBinary(true);
